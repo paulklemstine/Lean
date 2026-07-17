@@ -3,37 +3,37 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "0daa61af",
-    "description": "The AdS/CFT correspondence says that a gravitational theory in the bulk of anti-de Sitter space is equivalent to a conformal field theory on the boundary. What if prime numbers have a holographic dual? Define the prime hologram: for each prime p, define its 'boundary' as the ring Z/pZ and its 'bulk' as the p-adic field Q_p. Conjecture: The Riemann zeta function zeta(s) = prod_p (1 - p^{-s})^{-1} is the holographic partition function: the product over primes (boundary) encodes the same information as the completed zeta function Xi(s) (bulk). The functional equation Xi(s) = Xi(1-s) is the holographic duality: bulk physics at depth s equals boundary physics at depth 1-s. The prime counting function pi(x) ~ x/log(x) is the bulk volume, while the Chebyshev function theta(x) = sum_{p<=x} log(p) is the boundary area. The AdS/CFT dictionary: bulk gravity mode at depth s <-> boundary CFT operator of dimension 1-s. Test: verify that the pair correlation of zeta zeros matches GUE random matrices (bulk = quantum gravity in AdS, boundary = CFT random matrix ensemble). Compute the 'prime partition function' Z(beta) = prod_p (1 - e^{-beta log p})^{-1} and show it equals the bulk partition function. Impact: the Riemann Hypothesis is equivalent to a holographic stability condition \u2014 zeros on the critical line means the bulk geometry is stable against perturbations.",
+    "consumed_by_exp_id": "",
+    "description": "Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in PA without revealing any step of the proof. Conjecture: Every theorem provable in Peano Arithmetic has a zero-knowledge proof whose communication complexity is polynomial in the length of the theorem statement (not the proof). This follows from the PCP theorem combined with the fact that PA-proofs can be arithmetized. The zero-knowledge protocol: (1) Prover commits to each proof step using a collision-resistant hash. (2) Verifier randomly challenges one proof step. (3) Prover opens that step and shows it follows from the axioms. Repeating O(k) times gives soundness error 2^{-k}. The proof is zero-knowledge because the verifier only sees one random step per challenge. Test: implement a zero-knowledge proof system for propositional tautologies and prove that a verifier learns nothing beyond the validity of the tautology. Impact: mathematicians can certify results without revealing their methods \u2014 a mathematical equivalent of sealed-bid auctions for proof strategies.",
+    "domains": [
+      "Novelty",
+      "Cryptography"
+    ],
+    "id": "fd_0126",
+    "priority_score": 0.89,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-16T15:16:12.438268+00:00",
+    "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The integers Z live on a line, but what happens to arithmetic on a curved space? Define hyperbolic integers Z_H as the set of points in the Poincar\u00e9 disk that are images of Z under a discrete subgroup Gamma of PSL(2,R). Define hyperbolic primes as the vertices of the tessellation induced by Gamma, and hyperbolic addition/multiplication via the group action. Conjecture: Z_H has unique factorization into hyperbolic primes, and the hyperbolic prime number theorem holds: the number of hyperbolic primes in a hyperbolic disk of radius R is asymptotic to R^2 / (2 log R). The hyperbolic zeta function zeta_H(s) = sum_{n in Z_H, |n|_H > 0} 1/|n|_H^{2s} satisfies a functional equation and has zeros only on the critical line Re(s) = 1/2. Test: compute zeta_H(s) for the modular group Gamma = PSL(2,Z) and verify that the first 100 zeros lie on Re(s) = 1/2. Impact: number theory on curved spaces \u2014 where primes are geometric objects and the Riemann Hypothesis might be PROVABLE.",
     "domains": [
       "Novelty",
       "NumberTheory"
     ],
-    "id": "fd_0213",
-    "priority_score": 0.91,
+    "id": "fd_0124",
+    "priority_score": 0.87,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-17T11:14:23.393138+00:00",
-    "title": "Holographic Primes: The Prime Number AdS/CFT Correspondence"
+    "status": "available",
+    "timestamp": "2026-07-16T15:16:12.414388+00:00",
+    "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk"
   },
   {
-    "consumed_by_exp_id": "186c9eac",
-    "description": "There are mathematical objects whose existence we can prove but whose specific properties are unknowable \u2014 theorems that cast shadows without being visible. Define a dark theorem as a statement T such that: (1) PA proves 'there exists x such that T(x)', but (2) for every specific n, PA does NOT prove T(n). The classic example is the Paris-Harrington theorem: the strengthened finite Ramsey theorem is true but not provable in PA. But dark theorems go further: they assert the existence of objects that no specific instance can be verified. Conjecture: The set of dark theorems is dense in the space of all Pi_2 statements \u2014 most true Pi_2 statements are dark. Moreover, there is a hierarchy of darkness: a dark theorem of level k is one where PA proves 'there exist at least k values of x such that T(x)' but cannot identify any specific one. The hierarchy is strict: level k+1 dark theorems are strictly harder to prove than level k. Test: construct explicit dark theorems of levels 1, 2, 3 using the Paris-Harrington principle and the Kirby-Paris hydra theorem. Prove the density conjecture by counting Pi_2 statements. Impact: most true mathematical statements are dark \u2014 they assert existence without the possibility of verification. This is not incompleteness; it is a new form of mathematical unknowability.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0210",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-17T11:14:23.271386+00:00",
-    "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
-  },
-  {
-    "consumed_by_exp_id": "dcd7a4b2",
+    "consumed_by_exp_id": "",
     "description": "Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION \u2014 simultaneously equal to multiple values until observed? Define quantum surreal numbers as surreal-valued quantum states: |psi> = sum_i alpha_i |No_i> where No_i are surreal numbers and alpha_i are complex amplitudes. Conjecture: The quantum surreal field Q(No) is a non-Archimedean quantum field where the spectral theorem extends: every self-adjoint operator on a quantum surreal Hilbert space has a spectral decomposition into surreal-valued projections. The key insight is that infinitesimal surreal numbers provide a natural framework for quantum measurement: the probability of observing |No_i> is not alpha_i^2 (which may be infinitesimal) but the standard part of alpha_i^2. Test: construct the quantum surreal number |psi> = (1/sqrt(2))|0> + (1/sqrt(2))|epsilon> where epsilon is an infinitesimal surreal, and prove that measuring |psi> gives 0 with probability st(1/2) = 1/2 and epsilon with probability st(1/2 * epsilon^2) = 0 \u2014 the infinitesimal is unobservable! Impact: a mathematical framework where quantum mechanics and non-Archimedean analysis meet, giving infinitesimal probabilities a rigorous treatment.",
     "domains": [
       "Novelty"
@@ -42,68 +42,9 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-16T15:16:12.425510+00:00",
     "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 408bb225 (Q=0.760), which proved 12 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Deja vu \u2014 the feeling that you've experienced something before \u2014 is a fixed point in a dynamical system. Model cognitive state as a function f: S -> S mapping current brain state to next brain state. A deja vu is a state s such that f^n(s) = s for some n > 0 \u2014 a periodic point of the cognitive dynam",
-    "domains": [
-      "Tropical"
-    ],
-    "id": "push_408bb225_392fd3d5",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "408bb225",
-    "status": "available",
-    "timestamp": "2026-07-17T11:50:06.214262+00:00",
-    "title": "Deepening: The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Mathematics is full of impossibility theorems \u2014 things that CANNOT be done. But impossibility theorems are themselves beautiful mathematical objects. Catalog and interconnect the great impossibilities: (1) Squaring the circle (pi is transcendental, Lindemann 1882). (2) Trisecting the angle (cos 20 degrees has degree 3 over Q, Wantzel 1837). (3) Doubling the cube (cube root of 2 has degree 3, Wantzel 1837). (4) Solving the quintic by radicals (A_5 is not solvable, Abel-Ruffini 1824). (5) The Borsuk-Ulam impossibility (every continuous map S^n -> R^n has a point where f(x) = f(-x)). (6) Arrow's impossibility (no voting system is simultaneously fair, complete, and non-dictatorial). (7) Heisenberg's uncertainty (Delta x * Delta p >= hbar/2). Conjecture: These impossibility theorems are connected by a deep structural principle \u2014 each one arises because a certain group action is not free. Squaring the circle fails because Gal(Q(pi)/Q) acts freely. Solving the quintic fails because A_5 acts freely on the roots. Arrow's theorem fails because the symmetric group acts freely on preferences. Heisenberg fails because the Heisenberg group acts freely on phase space. The unified principle: a task is impossible iff the relevant group action is free. Test: verify that each impossibility theorem corresponds to a free group action. Prove the converse: if a group G acts freely on a set X, then there exists a G-equivariant task that is impossible on X. Impact: all impossibility is the same impossibility \u2014 every CAN'T is a reflection of a free group action.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0218",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-17T12:07:10.998059+00:00",
-    "title": "Impossibility Results for Fun: Things That Cannot Be Done (But We Try Anyway)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Conway's surreal numbers No form the largest totally ordered field, containing all real numbers, all ordinals, and all infinitesimals. But No is a proper class, not a set. What topology does it have? Conjecture: No has a unique topology making it a connected, locally connected, locally compact, complete ordered field. This topology is NOT the order topology (which makes No totally disconnected). Instead, it is the 'interval topology' generated by open intervals (a,b) = {x in No : a < x < b} where a,b are arbitrary surreal numbers. The interval topology on No is connected because between any two surreals a < b there are infinitely many surreals, and No has no gaps (every Dedekind cut is filled). Moreover, No is contractible in this topology \u2014 every surreal number can be continuously deformed to 0 via the homotopy H(x,t) = x * {t | 0} where {t | 0} is the surreal number between t and 0. Test: prove that No with the interval topology is connected. Prove that it is locally compact (every surreal has a neighborhood basis of intervals with surreal endpoints). Prove that No is contractible. Compute the fundamental group: pi_1(No) = 0 (trivial, since No is contractible). Impact: the largest ordered field has a natural topology that makes it contractible \u2014 every surreal number is connected to every other by a continuous path.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0219",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-17T12:07:11.024787+00:00",
-    "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
-  },
-  {
-    "consumed_by_exp_id": "58e34414",
-    "description": "The brain's connectome is a braid: neurons fire in sequences that interleave like strands of a braid group. Formalize this: a cognitive process is an element of the braid group B_n where n is the number of brain regions. Two cognitive processes are equivalent if their braids are related by Reidemeister moves (cognitive equivalence). Conjecture: The Jones polynomial of a cognitive braid is invariant under cognitive equivalence and encodes the information content of the thought. A thought with Jones polynomial V(t) = 1 is a trivial thought (equivalent to no thinking). A thought with V(t) = -t^2 + t + 1 is a creative thought (it contains a trefoil knot \u2014 the simplest non-trivial braid). The information content of a thought is log(|V(e^{2pi i/3})|), which measures the quantum dimension of the braid. Test: compute the Jones polynomial of braids representing simple cognitive processes (linear reasoning: trivial braid, creative insight: trefoil, confused thinking: figure-eight knot) and verify that the quantum dimension correlates with subjective ratings of thought quality. Impact: thinking IS braiding. The topology of your thoughts determines their quality. Creative insights are literally knotted.",
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0211",
-    "priority_score": 0.81,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-17T11:14:23.303169+00:00",
-    "title": "Knots That Think: Cognition as Braiding in Category Theory"
   },
   {
     "consumed_by_exp_id": "",
@@ -1579,7 +1520,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Counting Odd Cycles in Graphs with Bounded Circumference"
   },
   {
-    "consumed_by_exp_id": "8b90ccda",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Generalizations of nets and Latin squares' and formalize its key results. Abstract: We examine combinatorial structures which generalize $(k,n)$-nets, orthogonal arrays, and mutually orthogonal Latin squares. By a reticulation we mean of a point set and two collections (types) of families of lines such that two lines of different types meet in exactly one point and each family of lines partitions the point set. The number of points incident with any line depends only upon the type of the line, and every point is incident with the same number of lines of a given type. Each choice of one line family of each type leads to an arrangement of the points into a rectangular grid. Recording the line containing a given point in the corresponding position of an array gives to a generalization of sets of mutually orthogonal Latin squares, dubbed a cooperative system. A cooperative system consists of a collection of column-Latin matrices and a collection of row-Latin matrices such that each column-Latin matrix is orthogonal to each row-Latin matrix. Recording lines which contain a",
     "domains": [
       "Algebra",
@@ -1589,7 +1530,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.10890v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-16T14:59:52.606942+00:00",
     "title": "ArXiv paper: Generalizations of nets and Latin squares"
   },
@@ -2523,12 +2464,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'A memorial tribute: Adriano Garsia (1928--2024)' and formalize its key results. Abstract: Adriano Mario Garsia was born in Tunis on August 20, 1928, to a Tunisian-Italian family. He lived on a farm there until the end of World War II, then moved to Rome. After finishing high school, he was sent to the United States to live with relatives in Woyming and eventually made his way to California, becoming a student of Charles Loewner at Stanford in the early 1950s. Following his Ph.D., Adriano held positions at MIT, the University of Minnesota, and Caltech before joining the nascent mathematics department at the University of California, San Diego, in 1966 where he spent the remainder of his career. He passed away in San Diego on October 6, 2024, at the age of 96.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0198",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.14184v1",
+    "status": "available",
+    "timestamp": "2026-07-17T12:24:24.101681+00:00",
+    "title": "ArXiv paper: A memorial tribute: Adriano Garsia (1928--2024)"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Recognition of algebraic matroids is undecidable' and formalize its key results. Abstract: We prove that the recognition problem for algebraic matroids is undecidable. Explicitly, this means that there is no algorithm that takes as input a finite set $S$ and a function $r\\colon\\mathcal{P}(S) \\to \\mathbb{Z}_{\\ge 0}$ (where $\\mathcal{P}(S)$ is the power set) and decides whether there exists a pair of fields $F \\subset K$, and a function $f\\colon S \\to K$, such that for all $A \\subseteq S$: $\\mathrm{tr.deg}_{K/F}(f(A)) = r(A)$. This problem is known to be decidable if the characteristic of the fields involved is constrained to be zero. We prove that it is undecidable if the characteristic is either left unspecified (in which case a realization over any characteristic is accepted) or fixed to be a prime $p$. The proof relies on Hrushovski--Zilber's Group Configuration Theorem and on the work of Evans and Hrushovski on \"Projective Planes in Algebraically Closed Fields\". We relate two different such projective planes, and eventually construct a reduction from the solvability of Di",
     "domains": [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_0198",
+    "id": "fd_0199",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14907v1",
@@ -2543,7 +2498,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_0199",
+    "id": "fd_0200",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14878v1",
@@ -2557,7 +2512,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0200",
+    "id": "fd_0201",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.15034v1",
@@ -2571,7 +2526,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0201",
+    "id": "fd_0202",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14872v1",
@@ -2585,7 +2540,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0202",
+    "id": "fd_0203",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14961v1",
@@ -2600,7 +2555,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0203",
+    "id": "fd_0204",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14693v1",
@@ -2615,7 +2570,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0204",
+    "id": "fd_0205",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14732v1",
@@ -2630,7 +2585,7 @@ window.FUTURE_DIRECTIONS = [
       "Physics",
       "Algebra"
     ],
-    "id": "fd_0205",
+    "id": "fd_0206",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14797v1",
@@ -2644,7 +2599,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_0206",
+    "id": "fd_0207",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14774v1",
@@ -2658,7 +2613,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0207",
+    "id": "fd_0208",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14715v1",
@@ -2668,121 +2623,46 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Universal Asymptotics and Exact Enumeration of Eulerian Maps' and formalize its key results. Abstract: We calculate the asymptotics of the number of connected, labeled, genus $g$ Eulerian maps with an arbitrary degree sequence, in the limit as the total number of vertices tends to infinity. This asymptotic is universal, in the sense that the leading order term depends on only finitely many map characteristics. The constant factor in this formula is related to the Painlev\u00e9 I equation. Our methods combine the analysis of the recurrence coefficients associated to a particular family of orthogonal polynomials, and the theory of analytic combinatorics of several variables. We also derive an exact formula for the number of connected, labeled, genus $1$ Eulerian maps. These are the first results on this kind of enumeration problem for $g\\geq 1$, non-regular (mixed-valence) maps.",
+    "description": "Investigate the ArXiv paper 'The Spine: A Supersingular Highway' and formalize its key results. Abstract: We consider the structure of the spine of the supersingular $\\ell$-isogeny graph for one of the cases which arXiv:2502.03613 was not able to fully describe, $\\ell = 2$ and $p = 71, 119\\pmod{120}$. We find the distance, eccentricity, and diameter functions, of the components of the spine without the non-trivial edge not defined over $\\mathbb{F}_p$. Using these functions, we find the mean diameter of the spine and show how this value distinguishes the different structures of the spine. Thus, allowing us to use explicit computations to provide heuristics on the behavior of the spine's structure as $p$ varies.",
     "domains": [
       "Bridges"
     ],
     "id": "fd_0209",
     "priority_score": 0.8,
     "research_mode": "team",
-    "source_exp_id": "2607.14342v1",
+    "source_exp_id": "2607.14572v1",
     "status": "available",
+    "timestamp": "2026-07-17T09:24:18.119678+00:00",
+    "title": "ArXiv paper: The Spine: A Supersingular Highway"
+  },
+  {
+    "consumed_by_exp_id": "186c9eac",
+    "description": "Investigate the ArXiv paper 'Universal Asymptotics and Exact Enumeration of Eulerian Maps' and formalize its key results. Abstract: We calculate the asymptotics of the number of connected, labeled, genus $g$ Eulerian maps with an arbitrary degree sequence, in the limit as the total number of vertices tends to infinity. This asymptotic is universal, in the sense that the leading order term depends on only finitely many map characteristics. The constant factor in this formula is related to the Painlev\u00e9 I equation. Our methods combine the analysis of the recurrence coefficients associated to a particular family of orthogonal polynomials, and the theory of analytic combinatorics of several variables. We also derive an exact formula for the number of connected, labeled, genus $1$ Eulerian maps. These are the first results on this kind of enumeration problem for $g\\geq 1$, non-regular (mixed-valence) maps.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0210",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.14342v1",
+    "status": "in_progress",
     "timestamp": "2026-07-17T10:58:54.145618+00:00",
     "title": "ArXiv paper: Universal Asymptotics and Exact Enumeration of Eulerian Maps"
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Mendeleev organized 63 elements into a periodic table that predicted undiscovered elements. Can we do the same for finite groups? Classify all finite groups of order <= 2000 (there are approximately 10^15 of them, so we need a structural organization). Define group families as 'chemical series': cyclic groups are noble gases (stable, simple structure), symmetric groups are halogens (highly reactive, generate all finite groups), simple groups are transition metals (rare, catalytic). Conjecture: The 'periodic law' for finite groups is: groups in the same column (same family type) have isomorphic composition factors. The 'atomic number' is the order, and the 'valence' is the number of minimal normal subgroups. Groups with the same composition factors but different orders are 'isotopes' \u2014 they share chemical properties (solubility = solvability, reactivity = generation capacity). Test: construct a periodic table of groups of order <= 100, organizing them by composition factors. Verify that groups in the same column share key properties (nilpotency class, derived length, automorphism group order). Predict the properties of undiscovered groups (e.g., order 120, composition factors {2,2,2,3,5}) before looking them up. Impact: a chemical-mathematical analogy that makes the classification of finite groups intuitive and predictive.",
+    "description": "Deja vu \u2014 the feeling that you've experienced something before \u2014 is a fixed point in a dynamical system. Model cognitive state as a function f: S -> S mapping current brain state to next brain state. A deja vu is a state s such that f^n(s) = s for some n > 0 \u2014 a periodic point of the cognitive dynamical system. Conjecture: By Sharkovsky's theorem, the existence of a period-3 orbit in the cognitive dynamics (three distinct states that cycle) implies chaos in the sense of Li-Yorke, meaning there exist uncountably many cognitive trajectories that are neither periodic nor convergent. Moreover, the set of deja vu states (periodic points of f) is dense in the cognitive state space S if f is continuous and S is an interval. The frequency of deja vu (occurring in ~70% of people) corresponds to the natural density of periodic points in a typical chaotic map. Test: model cognitive dynamics as a logistic map f(x) = rx(1-x) on [0,1] with parameter r chosen to match empirical deja vu frequencies. For r = 3.83 (period-3 window), compute the density of periodic points and compare to the 70% lifetime incidence. Impact: deja vu is not a glitch \u2014 it's a mathematical inevitability of continuous cognitive dynamics. Any continuous cognitive map with a period-3 orbit MUST have deja vu.",
     "domains": [
       "Novelty",
-      "Algebra"
+      "Computation"
     ],
-    "id": "fd_0212",
-    "priority_score": 0.77,
+    "id": "fd_0174",
+    "priority_score": 0.78,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-07-17T11:14:23.323989+00:00",
-    "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Cycle 5f139cd0 (Q=0.710) proved 0 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in ",
-    "domains": [
-      "Applications"
-    ],
-    "id": "sorry_fill_5f139cd0_1309dbfc",
-    "priority_score": 0.76,
-    "research_mode": "team",
-    "source_exp_id": "5f139cd0",
-    "status": "available",
-    "timestamp": "2026-07-17T11:50:23.795489+00:00",
-    "title": "Close Proofs: Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem With"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions: Avoidance Sequences Beyond a Singleton\n\n## 1. Growing forbidden-sum sets\n\nLet each new term be the least positive integer outside the set of all sums of two distinct earlier terms. Conjecture that, after specifying a nonrepetition convention, the counting function has a deterministic polynomial growth exponent and that this exponent is stable under any finite change of the initial conditions.\n\nThe key insight is that avoiding one sum collapses immediately, whereas avoiding a growing set can make the least admissible value migrate upward.\n\nWhy now? The singleton rule has been completely classified, isolating the exact structural ingredient that must change before a density question becomes meaningful.\n\n## 2. Classification by forbidden-set cardinality\n\nFor a recurrence choosing the least positive integer outside a forbidden set of at most `r(n)` earlier linear combinations, conjecture a sharp dichotomy: bounded `r(n)` permits a bounded trajectory, while suitable linearly growing `r(n)` forces at least linear growth. Determine the optimal threshold and construct extremizers.\n\nThe key insight is that the least-excluded operation is controlled first by how many small integers can be forbidden, rather than by the magnitudes of the linear combinations themselves.\n\nWhy now? The constant trajectory supplies the cardinality-one endpoint, and the failure of the proposed quadratic law suggests that forbidden-set complexity is the correct parameter.\n\n## 3. Exact asymptotics of the displayed increment model\n\nFor the displayed sequence defined by `D(0)=1` and `D(n+1)=D(n)+n`, conjecture that every shifted rational normalization admits a complete asymptotic expansion through order `n\u207b\u00b2`, and classify all integer-valued affine perturbations having the same leading coefficient.\n\nThe key insight is that the exact triangular closed form converts asymptotic questions into a rigid classification of integer-valued quadratic polynomials.\n\nWhy now? The exact identity proves that the leading coefficient is `1/2`, providing a corrected benchmark against which nontrivial avoidance models can be compared.\n\n## 4. Ratio-limit phase transition\n\nFor least-excluded recurrences based on earlier sums, conjecture that bounded forbidden-set size forces consecutive ratios to approach one whenever the sequence is unbounded and eventually monotone, while persistent ratio oscillation bounded away from one requires forbidden sets of unbounded size.\n\nThe key insight is that excluding only finitely many candidates per stage cannot repeatedly create multiplicative jumps once the sequence fills small gaps densely.\n\nWhy now? The literal model has ratio exactly one, contradicting the proposed oscillation and turning the ratio question into a testable structural phase-transition problem.\n\n## 5. Additive-combinatorial density law\n\nFor the increasing greedy sequence obtained by excluding every value representable as a sum of two earlier selected values, conjecture that the selected set and its restricted sumset satisfy complementary density bounds governed by small-doubling phenomena. Seek a sharp inequality relating upper density to the doubling constant of long initial segments.\n\nThe key insight is that complement density belongs naturally to additive combinatorics only when the forbidden objects form an actual sumset, not a singleton sum of the last two terms.\n\nWhy now? The definitional boundary identified here separates a degenerate recurrence from a genuine sumset-avoidance process and gives a precise corrected setting for the original density ambition.\n",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0214",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "f0c4ce45",
-    "status": "available",
-    "timestamp": "2026-07-17T11:32:21.132620+00:00",
-    "title": "Let each new term be the least positive integer outside the set of all sums of t"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\n## 1. Measure-calibrated recurrence incidence\n\nFix a distribution of logistic parameters, an absolutely continuous distribution of initial states, a finite observation horizon, and a tolerance for approximate return. Determine whether these quantities can be identified from a 70% lifetime recurrence incidence, and test whether the inferred parameter mass concentrates near periodic windows.\n\nThe key insight is that incidence is a probability over subjects and finite observations, whereas density of periodic points is a topological property of an infinite-time state space.\n\nWhy now? The contraction counterexample and the period-three numerical experiment isolate the missing probabilistic ingredients, making the calibration problem precise and falsifiable.\n\n## 2. Tropical spectral criterion for exact recurrence\n\nClassify min-plus matrices whose projective dynamics contain an exact period-three orbit, and determine whether such an orbit can coexist with strict Hilbert-projective contraction on the same invariant component.\n\nThe key insight is that tropical eigenstates exhibit linear additive drift, so exact recurrence is governed by cancellation of spectral drift together with projective cycling.\n\nWhy now? The established iterate formula converts a dynamical question into explicit spectral and projective constraints that can be tested on finite matrices.\n\n## 3. Guarded density theorem for interval maps\n\nFind the weakest checkable hypotheses\u2014such as topological transitivity, absence of attracting intervals, or a suitable mixing condition\u2014under which periodic points of a continuous interval map are dense, and construct sharp counterexamples when each hypothesis is removed.\n\nThe key insight is that continuity supplies fixed-point tools but not orbit dispersion; density requires an additional mechanism that repeatedly stretches or mixes intervals.\n\nWhy now? A complete contraction counterexample identifies continuity as the exact point of failure and provides a baseline against which stronger hypotheses can be evaluated.\n\n## 4. Quantitative period-three robustness at parameter 3.83\n\nEnclose the attracting period-three orbit for the logistic map at `r=3.83` in three rational intervals and prove that the third iterate maps each interval strictly into itself with derivative magnitude uniformly below one. Then determine the maximal certified parameter interval over which these enclosures persist.\n\nThe key insight is that a period-three window can be established quantitatively through interval trapping and contraction, without conflating it with global Li\u2013Yorke behavior.\n\nWhy now? Stable numerical iterates consistently approach the same three values from several initial states, providing concrete targets for rigorous interval bounds.\n\n## 5. Semiconjugacy-invariant recurrence observables\n\nCharacterize which recurrence statistics are preserved under many-to-one observation maps, and quantify how coarse cognitive observables can create apparent returns that are absent in the underlying state dynamics.\n\nThe key insight is that true periodicity passes forward through semiconjugacy, but an observed periodic orbit need not lift to a periodic microscopic state.\n\nWhy now? The transport theorem proves one direction exactly, leaving a sharply formulated converse problem with direct consequences for interpreting observed recurrence.\n",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_0216",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "408bb225",
-    "status": "available",
-    "timestamp": "2026-07-17T11:50:01.394432+00:00",
-    "title": "Fix a distribution of logistic parameters, an absolutely continuous distribution"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\n## What was established\n\n`AffineDuality.lean` formalizes a finite additive-group identification protocol and proves a cross-domain connection between affine symmetry and cryptographic proof properties:\n\n1. Translation by the challenge-dependent witness is a permutation of random tapes.\n2. Reindexing by that permutation makes real and simulated transcript multisets exactly equal.\n3. Consequently, the verifier's view is independent of which valid witness is used.\n4. Conversely, subtracting accepting responses to opposite challenges at the same commitment extracts a witness.\n\nThe bridge clarifies why privacy and extraction are compatible: one transcript is hidden by translation symmetry, while extraction needs two correlated transcripts sharing a commitment.\n\n## Limits of the mission's proposed protocol\n\nThe broad claim in the prompt is not proved here. In particular, committing to every raw PA-proof step and opening one uniformly random step has catch probability only `1/n` when an `n`-step alleged proof contains one bad step. Repeating only `O(k)` times therefore does not generally yield soundness error `2^{-k}`; direct repetition needs a number of rounds depending on `n`. Moreover, opening a raw proof step can reveal proof information, so \u201cthe verifier sees only one random step\u201d is not by itself a zero-knowledge simulation argument.\n\nA statement-polynomial communication theorem would require a succinct argument system and explicit computational assumptions. It does not follow merely by combining arithmetization with a one-step challenge. For unrestricted PA theorems, the relation between statement length and potentially unbounded proof length must also be treated carefully.\n\n## Concrete extensions\n\n1. **Probability measures rather than multisets.** Lift the exact finite multiset equality to equality of `PMF` distributions and then to statistical distance zero.\n2. **Malicious-verifier zero knowledge.** The current theorem is honest-verifier zero knowledge for a fixed Boolean challenge. Add a simulator for adaptive challenge selection, likely using rewinding or a stronger commitment abstraction.\n3. **Parallel repetition.** Define vectors of transcripts and prove completeness, simulation, and a `2^{-k}` knowledge-soundness bound when each round has a Boolean challenge and special soundness.\n4. **Commitment layer.** Replace the ideal additive transcript with a binding/hiding commitment interface. State exactly whether each guarantee is perfect, statistical, or computational.\n5. **Propositional validity reduction.** Formalize a reduction from propositional tautology validity to an appropriate proof relation. Any polynomial-size claim must confront the standard complexity barrier rather than silently assuming short proofs for all tautologies.\n6. **PCP composition.** Connect a locally testable encoding to the protocol only after proving a robust soundness gap and a simulator for local openings. This is the missing ingredient in the raw-step proposal.\n7. **PA arithmetization.** Define proof syntax, primitive-recursive proof checking, and encoding size. Then state communication bounds against the encoded proof/relation with all security parameters explicit.\n",
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_0217",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "5f139cd0",
-    "status": "available",
-    "timestamp": "2026-07-17T11:50:12.008973+00:00",
-    "title": "`AffineDuality.lean` formalizes a finite additive-group identification protocol "
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future directions\n\nThe formal development isolates a rigorous object naturally attached to the modular group: the integer-translation orbit of `i` in the upper half-plane, transported to the Poincar\u00e9 disk by the Cayley transform. It proves exact radii, injectivity, symmetry, boundary convergence, radial ordering, and the exact finite count `2N+1`.\n\nThe broader proposal requires substantial clarification before its headline conjectures can be stated faithfully:\n\n1. **Specify the arithmetic object.** An orbit of an action is a set, not automatically a ring. Transporting integer addition and multiplication along an injective orbit parametrization is possible for this translation orbit, but it depends on the parametrization and does not make tessellation vertices into prime elements. A next formalization should define the transported operations and prove the ring is isomorphic to `\u2124`; its unique factorization would then follow from ordinary integer arithmetic rather than hyperbolic geometry.\n\n2. **Separate orbit points, tessellation vertices, and prime geodesics.** These are different geometric objects. For a cofinite Fuchsian group, the established number-theoretic analogue concerns primitive closed geodesics and the Selberg zeta function. A meaningful next target is a finite combinatorial encoding of reduced hyperbolic conjugacy classes for `PSL(2,\u2124)`.\n\n3. **Use hyperbolic rather than Euclidean cutoffs.** The present theorem deliberately gives an exact Euclidean radial cutoff for a cusp orbit. Since these points approach the ideal boundary, hyperbolic distance grows differently. One can next define the disk-model hyperbolic distance from zero and derive an exact formula for this orbit, then count points below hyperbolic radius.\n\n4. **Formalize M\u00f6bius actions.** Define real `2\u00d72` determinant-one matrices modulo sign, their fractional-linear action on the upper half-plane, the Cayley equivalence with the disk, and prove preservation of the appropriate metric. This would connect the elementary orbit developed here to the full modular group.\n\n5. **Do not identify the proposed series with the Riemann or Selberg zeta function without a theorem.** The expression in the prompt lacks a specified norm and convergence region. Its functional equation and zero distribution therefore have no well-defined formal statement yet. After choosing a canonical length spectrum and multiplicities, define a finite truncation first, prove convergence in a half-plane, and only then investigate analytic continuation.\n\n6. **Zero computations require certified complex analysis.** A defensible \u201cfirst 100 zeros\u201d result would need a precise zeta function, interval/ball arithmetic, argument-principle counts, and proofs that each isolating rectangle contains exactly one zero. Floating-point values alone would not prove critical-line membership, and exact membership is generally stronger than numerical evidence can establish.\n",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0220",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "535698fb",
-    "status": "available",
-    "timestamp": "2026-07-17T12:07:34.357747+00:00",
-    "title": "The formal development isolates a rigorous object naturally attached to the modu"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future directions\n\n## What the formal result establishes\n\n`Catalog/MachineLearning/FiniteGroupPeriodicLaw.lean` proves an infinite counterexample family to prediction from coarse \u201cperiodic-table coordinates.\u201d For every odd `n > 1`, the cyclic group `C_(2n)` and the dihedral group `D_(2n)` have:\n\n- the same finite order, `2n`;\n- the same group exponent, `2n`;\n- different cyclicity;\n- different commutativity.\n\nThe file also proves that the cyclic comparison group's center is the whole group, whereas the odd dihedral comparison group's center is trivial. At order six it verifies the concrete `C\u2086` versus `D\u2086` witness, and computes that `C\u2086` has two automorphisms.\n\nThis does not directly refute the statement that a column *defined by* composition factors shares composition factors; that statement is tautological. It does refute the stronger predictive hope that a few coarse coordinates such as order and exponent force basic structural properties.\n\n## Strong next formal targets\n\n1. **Composition-factor equality for the order-six witness.** Formalize normal/composition series for `C\u2086` and `D\u2086 \u2245 S\u2083`, proving that both have factors `C\u2082` and `C\u2083` while retaining the structural differences already proved. This would directly test the proposed column invariant.\n\n2. **Different automorphism-group orders in one composition-factor column.** Prove `|Aut(C\u2086)| = 2` (already done) and `|Aut(S\u2083)| = 6`, then connect `DihedralGroup 3` to `S\u2083`. This would formally show that composition factors do not determine automorphism-group order.\n\n3. **Derived length versus composition factors.** Build examples with identical multisets of abelian simple factors but distinct derived lengths. Candidate small groups should first be checked against a finite-group database and then represented intrinsically in Lean.\n\n4. **Nilpotency is not controlled by composition factors.** Compare groups whose composition factors are all cyclic of prime order but where one is nilpotent and another is not. `C\u2086` versus `S\u2083` is again a natural minimal example: both are solvable, but only `C\u2086` is nilpotent.\n\n5. **A faithful table schema.** Rather than a single \u201ccolumn,\u201d use a layered fingerprint: order, composition-factor multiset, extension data, center order, derived length, nilpotency class, and automorphism-group order. Formalize which entries are invariants under isomorphism and exhibit independence results between entries.\n\n6. **Finite census boundary.** A classification through order 100 is best imported from a certified enumeration rather than recreated by brute force in Lean. The useful formal target is a checker: encode multiplication tables, verify the group axioms, compute normal series and invariants, and prove the generated report correct.\n\n## Methodological caution\n\nComposition factors record the simple layers but forget how those layers are assembled. Extension data is therefore indispensable. Any predictive \u201cperiodic law\u201d should be evaluated against pairs of nonisomorphic extensions with the same factors, not merely against groups sharing an order.\n",
-    "domains": [
-      "Algebra",
-      "Logic"
-    ],
-    "id": "fd_0221",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "ad5825e2",
-    "status": "available",
-    "timestamp": "2026-07-17T12:07:42.915172+00:00",
-    "title": "`Catalog/MachineLearning/FiniteGroupPeriodicLaw.lean` proves an infinite counter"
+    "timestamp": "2026-07-17T03:25:44.358073+00:00",
+    "title": "The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
   },
   {
     "consumed_by_exp_id": "58ca9013",
@@ -2798,35 +2678,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-17T03:25:44.329567+00:00",
     "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
-  },
-  {
-    "consumed_by_exp_id": "87b73bf0",
-    "description": "Every real number defines a musical scale: map the digits 0-9 to frequencies f_n = 220 * 2^{n/12} (the A minor pentatonic scale extended). The number pi = 3.14159265... produces the sequence E4, C5, C#5, D5, D#5, F5, E5, A4, G5, C5... \u2014 a melody. Conjecture: The melody of pi is not periodic (because pi is irrational) but has musical structure: the autocorrelation of the digit sequence at lag 12 (one octave) is positive and statistically significant. This means pi has more octave-related notes than expected by chance \u2014 pi 'favors' notes separated by octaves. Similarly, e 'favors' perfect fifths (lag 7) and sqrt(2) 'favors' minor thirds (lag 3). The musical structure of transcendental numbers reflects their continued fraction properties: numbers with bounded partial quotients have more consonant melodies. Test: compute the digit autocorrelation of pi, e, and sqrt(2) at lags 0-12 (representing unison through octave). Perform a chi-squared test comparing to the uniform distribution. Generate the 'music' of each constant and analyze for tonal centers. Impact: transcendental numbers have musical souls \u2014 their digit sequences contain hidden harmonies that reflect their deepest arithmetic properties.",
-    "domains": [
-      "Novelty",
-      "NumberTheory"
-    ],
-    "id": "fd_0215",
-    "priority_score": 0.72,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-17T11:49:41.055962+00:00",
-    "title": "The Sound of Pi: Musical Structure in Transcendental Constants"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Cycle 535698fb (Q=0.660) proved 14 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The integers Z live on a line, but what happens to arithmetic on a curved space? Define hyperbolic integers Z_H as the set of points in the Poincar\u00e9 disk that are images of Z under a discrete subgroup",
-    "domains": [
-      "Applications"
-    ],
-    "id": "sorry_fill_535698fb_730c7946",
-    "priority_score": 0.7100000000000001,
-    "research_mode": "team",
-    "source_exp_id": "535698fb",
-    "status": "available",
-    "timestamp": "2026-07-17T12:07:38.921601+00:00",
-    "title": "Close Proofs: Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk"
   },
   {
     "consumed_by_exp_id": "",
