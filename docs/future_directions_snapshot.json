@@ -3029,6 +3029,44 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Two problems on booksize and triangular edges in Nosal graphs' and formalize its key results. Abstract: A graph $G$ with $m$ edges is said to be a Nosal graph if $ρ(G)>\\sqrt{m}$. For a graph $G$, we write $bk(G)$ for its maximum book size and $τ(G)$ for the number of edges contained in triangles. Li, Liu and Zhang [J. Combin. Theory Ser. B 179 (2026) 219--249] proved that every $m$-edge Nosal graph satisfies $bk(G)> \\frac{1}{24}\\sqrt{m}$ and $τ(G) > \\frac{1}{12}\\sqrt{m}$. Recently, Zhai, Li and Lou [arXiv:2601.10163v2] proved that every $m$-edge Nosal graph satisfies $bk(G)> \\frac{1}{9}\\sqrt{m}$. In this paper, we establish the following result: Every $m$-edge graph $G$ with no isolated vertices and $ρ(G)\\geq \\sqrt{m}$ that is not isomorphic to any complete bipartite graph satisfies $bk(G)\\geq\\frac{ρ(G)}{3}$ and $τ(G)\\geq ρ(G)$. As direct consequences, we answer a question of Li, Liu and Zhang [J. Combin. Theory Ser. B 179 (2026) 219--249] and confirm a conjecture of Li, Feng and Peng [J. Graph Theory 110 (4) (2025) 408--425].",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0176",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2607.15071v1",
+    "status": "available",
+    "timestamp": "2026-07-17T04:12:35.016360+00:00",
+    "title": "ArXiv paper: Two problems on booksize and triangular edges in Nosal graphs"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'A Census of New Snake-in-the-Box Records' and formalize its key results. Abstract: The snake-in-the-box problem, introduced by Kautz in 1958, asks for the longest induced (chordless) path, called a snake, in the hypercube graph $Q_n$. The maximum length $a(n)$ is known in each dimension $n \\leq 8$. We give snakes that are longer than the previous best-known in every dimension from $9$ to $13$, improving the lower bound on $a(n)$. All record-length paths are provided in a computer-verifiable dataset.",
+    "domain_bridges": [],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0176",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2607.15270v1",
+    "status": "available",
+    "timestamp": "2026-07-17T04:12:38.554073+00:00",
+    "title": "ArXiv paper: A Census of New Snake-in-the-Box Records"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Deja vu — the feeling that you've experienced something before — is a fixed point in a dynamical system. Model cognitive state as a function f: S -> S mapping current brain state to next brain state. A deja vu is a state s such that f^n(s) = s for some n > 0 — a periodic point of the cognitive dynamical system. Conjecture: By Sharkovsky's theorem, the existence of a period-3 orbit in the cognitive dynamics (three distinct states that cycle) implies chaos in the sense of Li-Yorke, meaning there exist uncountably many cognitive trajectories that are neither periodic nor convergent. Moreover, the set of deja vu states (periodic points of f) is dense in the cognitive state space S if f is continuous and S is an interval. The frequency of deja vu (occurring in ~70% of people) corresponds to the natural density of periodic points in a typical chaotic map. Test: model cognitive dynamics as a logistic map f(x) = rx(1-x) on [0,1] with parameter r chosen to match empirical deja vu frequencies. For r = 3.83 (period-3 window), compute the density of periodic points and compare to the 70% lifetime incidence. Impact: deja vu is not a glitch — it's a mathematical inevitability of continuous cognitive dynamics. Any continuous cognitive map with a period-3 orbit MUST have deja vu.",
     "domain_bridges": [],
     "domains": [
