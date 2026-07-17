@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "3c80004e",
-      "domain": "Physics",
-      "key_insight": "# Future Directions: Extensive Equivariant Invariants of Composite Systems\n\n## 1. Grothendieck completion of finite free ℤ₂-systems\n\nThe commutative monoid of finite nonempty free ℤ₂-systems under joi",
-      "quality_score": 0.9,
-      "sorry_count": 4,
-      "theorem_count": 46,
-      "timestamp": "2026-07-15T05:40:44",
-      "title": "Constructive, lower-bound half of the co-index theory"
-    },
-    {
       "cycle_id": "e72af703",
       "domain": "MachineLearning",
       "key_insight": "# Future Directions: Factorial Codes Beyond Finite Reconstruction\n\n## 1. Equivariant insertion statistics\n\n**Conjecture.** Under the recursive factorial-code classification, conjugation by an adjacent",
@@ -499,19 +489,19 @@
       "theorem_count": 4,
       "timestamp": "2026-07-17T09:24:10",
       "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
+    },
+    {
+      "cycle_id": "bcfc30de",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions: Guarded Circular Proofs\n\n## 1. Algebraic-domain completion of finite proof approximants\n\nFor a finitary sequent calculus, order partial proof trees by information content, with an",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-07-17T09:40:03",
+      "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "17340490",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Topology of Knotted Light\n\n`KnottedLight.lean` formalizes the topological charge of an orbital-angular-momentum\n(OAM) laser beam as an honest contour-integral winding number and",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-13T23:31:53",
-      "title": "Close Proofs: The Topology of Knotted Light: How Laser Beams Get Tangled"
-    },
     {
       "cycle_id": "7547cdb0",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 4,
       "timestamp": "2026-07-17T09:24:10",
       "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
+    },
+    {
+      "cycle_id": "bcfc30de",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions: Guarded Circular Proofs\n\n## 1. Algebraic-domain completion of finite proof approximants\n\nFor a finitary sequent calculus, order partial proof trees by information content, with an",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-07-17T09:40:03",
+      "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "58c6edf0",
-      "domain": "Pythagorean",
-      "name": "subset_of_forceSequence",
-      "quality": 0.73
-    },
-    {
-      "cycle_id": "58c6edf0",
-      "domain": "Pythagorean",
-      "name": "card_le_of_forceSequence",
-      "quality": 0.73
-    },
-    {
-      "cycle_id": "4e53cd7c",
-      "domain": "Pythagorean",
-      "name": "shiftedHankel_quadratic_identity",
-      "quality": 0.7
-    },
     {
       "cycle_id": "4e53cd7c",
       "domain": "Pythagorean",
@@ -2803,9 +2785,27 @@
       "domain": "Geometry",
       "name": "real_eq_simulated_reindexed",
       "quality": 0.7
+    },
+    {
+      "cycle_id": "bcfc30de",
+      "domain": "Cryptography",
+      "name": "prime_eq_three_of_three_dvd",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "bcfc30de",
+      "domain": "Cryptography",
+      "name": "prime_mod_nine_ne_zero",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "bcfc30de",
+      "domain": "Cryptography",
+      "name": "prime_mod_nine_ne_six",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-17T09:24:10",
+  "last_updated": "2026-07-17T09:40:03",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "4055f798",
-        "quality": 0.7906799999999999,
-        "theorems": 11,
-        "title": "The Library of Babel: Combinatorics of the Universal Library"
-      },
-      {
         "cycle_id": "583299ca",
         "quality": 0.7779935103225806,
         "theorems": 11,
@@ -3389,6 +3383,12 @@
         "quality": 0.61,
         "theorems": 11,
         "title": "ArXiv paper: Even smaller universal posets"
+      },
+      {
+        "cycle_id": "bcfc30de",
+        "quality": 0.72,
+        "theorems": 8,
+        "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
       }
     ],
     "Geometry": [
