@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-17T09:40:03.682111+00:00",
+  "last_updated": "2026-07-17T11:32:33.772771+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -23651,6 +23651,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-17T09:40:03.626097+00:00",
       "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 7,
+      "domain": "Bridges",
+      "duration_seconds": 3866.8816294670105,
+      "end_time": 1784287897.6120253,
+      "files_integrated": 5,
+      "job_id": "f0c4ce45",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19d",
+      "phase_a_quality_score": 0.68,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19d",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.55,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.72,
+        "composite": 0.514,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.7,
+        "novelty": 0.58,
+        "proof_depth": 0.66,
+        "usefulness": 0.82
+      },
+      "quality_score": 0.68,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1784284030.7303958,
+      "strategy_count": 0,
+      "theorem_count": 20,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 13,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-17T11:32:33.562999+00:00",
+      "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
     }
   ]
 }
