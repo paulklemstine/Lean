@@ -3087,13 +3087,32 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Alternating adjacent-sum polytopes: transfer matrices and Ehrhart series' and formalize its key results. Abstract: We study a period-two family of adjacent-sum lattice polytopes whose consecutive-coordinate bounds alternate between $s$ and $s+1$. This provides a simple non-uniform deformation of the classical uniform model while retaining an explicit transfer-matrix structure. The lattice-point counts exhibit a parity split: the odd- and even-dimensional sequences have distinct rational generating functions with a common denominator. The odd-dimensional series satisfies a Möbius recurrence and admits an arctangent closed form, whereas the even-dimensional series obeys a coupled recurrence. Their common dominant pole determines the exponential growth in both parity classes. For the cyclic model obtained by adding a constraint between the first and last coordinates, the count becomes a matrix trace. The two cyclic parity classes again have rational generating functions with the same denominator; the even-dimensional numerator has a Jacobi-derivative form, while the odd-dimensional one is given by an ",
+    "domain_bridges": [],
+    "domains": [
+      "Cryptography"
+    ],
+    "id": "fd_0184",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2607.14887v1",
+    "status": "available",
+    "timestamp": "2026-07-17T06:45:30.630076+00:00",
+    "title": "ArXiv paper: Alternating adjacent-sum polytopes: transfer matrices and Ehrhart series"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Recognition of algebraic matroids is undecidable' and formalize its key results. Abstract: We prove that the recognition problem for algebraic matroids is undecidable. Explicitly, this means that there is no algorithm that takes as input a finite set $S$ and a function $r\\colon\\mathcal{P}(S) \\to \\mathbb{Z}_{\\ge 0}$ (where $\\mathcal{P}(S)$ is the power set) and decides whether there exists a pair of fields $F \\subset K$, and a function $f\\colon S \\to K$, such that for all $A \\subseteq S$: $\\mathrm{tr.deg}_{K/F}(f(A)) = r(A)$. This problem is known to be decidable if the characteristic of the fields involved is constrained to be zero. We prove that it is undecidable if the characteristic is either left unspecified (in which case a realization over any characteristic is accepted) or fixed to be a prime $p$. The proof relies on Hrushovski--Zilber's Group Configuration Theorem and on the work of Evans and Hrushovski on \"Projective Planes in Algebraically Closed Fields\". We relate two different such projective planes, and eventually construct a reduction from the solvability of Di",
     "domain_bridges": [],
     "domains": [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_0184",
+    "id": "fd_0185",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -3113,7 +3132,7 @@
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_0185",
+    "id": "fd_0186",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -3132,7 +3151,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0186",
+    "id": "fd_0187",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -3141,6 +3160,25 @@
     "status": "available",
     "timestamp": "2026-07-17T06:29:55.509259+00:00",
     "title": "ArXiv paper: Shifted S-templates and improved lower bounds for Schur numbers"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Erdős-Ko-Rado-type problem for hypergraph matchings' and formalize its key results. Abstract: Given integers $1\\leq t\\leq k$, a family of $k$-matchings in a complete $r$-partite $r$-uniform hypergraph is said to be $t$-intersecting if any two of its members share at least $t$ common edges. This concept unifies several well-studied classes of intersecting families, including classical intersecting families, intersecting families of permutations, partial permutations, and generalized permutations, as well as intersecting families of injections. In this paper we employ two approaches to determine the maximum size of $t$-intersecting families of $k$-matchings and to characterize the extremal families that attain this bound. Using a recent result of Keller, Lifshitz, Minzer, and Sheinfeld on $t$-intersecting families of permutations, we obtain Erdős-Ko-Rado-type theorems whose thresholds depend only on $t$. We also develop a $t$-cover-based approach that offers a complementary characterization of the extremal families.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0188",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2607.14872v1",
+    "status": "available",
+    "timestamp": "2026-07-17T06:45:33.977459+00:00",
+    "title": "ArXiv paper: Erdős-Ko-Rado-type problem for hypergraph matchings"
   },
   {
     "ambition_level": "extension",
