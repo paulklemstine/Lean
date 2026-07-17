@@ -3010,25 +3010,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Products of simplices are canonically Ramsey' and formalize its key results. Abstract: A set of points $C \\subset \\mathbb{R}^n$ is called canonically Ramsey if there is some set of points $S\\subset \\mathbb{R}^{n'}$ such that any colouring of $S$, using any number of colours, must contain either a monochromatic copy of $C$ or a rainbow copy of $C$. Mao, Ozeki, and Wang introduced this notion, showing that 30-60-90 triangles are canonically Ramsey. Since then, various other canonically Ramsey configurations have been identified. The author showed that cuboids are canonically Ramsey, while Ge, Shu, Xu, and Yu recently showed that simplices are canonically Ramsey. We extend both of these results, proving that all products of simplices are canonically Ramsey.",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra"
-    ],
-    "id": "fd_0175",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.15264v1",
-    "status": "available",
-    "timestamp": "2026-07-17T03:57:00.492646+00:00",
-    "title": "ArXiv paper: Products of simplices are canonically Ramsey"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Two problems on booksize and triangular edges in Nosal graphs' and formalize its key results. Abstract: A graph $G$ with $m$ edges is said to be a Nosal graph if $ρ(G)>\\sqrt{m}$. For a graph $G$, we write $bk(G)$ for its maximum book size and $τ(G)$ for the number of edges contained in triangles. Li, Liu and Zhang [J. Combin. Theory Ser. B 179 (2026) 219--249] proved that every $m$-edge Nosal graph satisfies $bk(G)> \\frac{1}{24}\\sqrt{m}$ and $τ(G) > \\frac{1}{12}\\sqrt{m}$. Recently, Zhai, Li and Lou [arXiv:2601.10163v2] proved that every $m$-edge Nosal graph satisfies $bk(G)> \\frac{1}{9}\\sqrt{m}$. In this paper, we establish the following result: Every $m$-edge graph $G$ with no isolated vertices and $ρ(G)\\geq \\sqrt{m}$ that is not isomorphic to any complete bipartite graph satisfies $bk(G)\\geq\\frac{ρ(G)}{3}$ and $τ(G)\\geq ρ(G)$. As direct consequences, we answer a question of Li, Liu and Zhang [J. Combin. Theory Ser. B 179 (2026) 219--249] and confirm a conjecture of Li, Feng and Peng [J. Graph Theory 110 (4) (2025) 408--425].",
     "domain_bridges": [],
     "domains": [
@@ -3043,25 +3024,6 @@
     "status": "available",
     "timestamp": "2026-07-17T04:12:35.016360+00:00",
     "title": "ArXiv paper: Two problems on booksize and triangular edges in Nosal graphs"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'A Census of New Snake-in-the-Box Records' and formalize its key results. Abstract: The snake-in-the-box problem, introduced by Kautz in 1958, asks for the longest induced (chordless) path, called a snake, in the hypercube graph $Q_n$. The maximum length $a(n)$ is known in each dimension $n \\leq 8$. We give snakes that are longer than the previous best-known in every dimension from $9$ to $13$, improving the lower bound on $a(n)$. All record-length paths are provided in a computer-verifiable dataset.",
-    "domain_bridges": [],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0176",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.15270v1",
-    "status": "available",
-    "timestamp": "2026-07-17T04:12:38.554073+00:00",
-    "title": "ArXiv paper: A Census of New Snake-in-the-Box Records"
   },
   {
     "ambition_level": "extension",
@@ -3086,12 +3048,50 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Products of simplices are canonically Ramsey' and formalize its key results. Abstract: A set of points $C \\subset \\mathbb{R}^n$ is called canonically Ramsey if there is some set of points $S\\subset \\mathbb{R}^{n'}$ such that any colouring of $S$, using any number of colours, must contain either a monochromatic copy of $C$ or a rainbow copy of $C$. Mao, Ozeki, and Wang introduced this notion, showing that 30-60-90 triangles are canonically Ramsey. Since then, various other canonically Ramsey configurations have been identified. The author showed that cuboids are canonically Ramsey, while Ge, Shu, Xu, and Yu recently showed that simplices are canonically Ramsey. We extend both of these results, proving that all products of simplices are canonically Ramsey.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0178",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2607.15264v1",
+    "status": "available",
+    "timestamp": "2026-07-17T03:57:00.492646+00:00",
+    "title": "ArXiv paper: Products of simplices are canonically Ramsey"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'A Census of New Snake-in-the-Box Records' and formalize its key results. Abstract: The snake-in-the-box problem, introduced by Kautz in 1958, asks for the longest induced (chordless) path, called a snake, in the hypercube graph $Q_n$. The maximum length $a(n)$ is known in each dimension $n \\leq 8$. We give snakes that are longer than the previous best-known in every dimension from $9$ to $13$, improving the lower bound on $a(n)$. All record-length paths are provided in a computer-verifiable dataset.",
+    "domain_bridges": [],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0179",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2607.15270v1",
+    "status": "available",
+    "timestamp": "2026-07-17T04:12:38.554073+00:00",
+    "title": "ArXiv paper: A Census of New Snake-in-the-Box Records"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Double $L$-values of Negative Weight Admitting Series Representations' and formalize its key results. Abstract: In this paper, we construct double $L$-values of negative weight that admit series representations. In our construction, we use the Thue-Morse sequence, which appears in combinatorics on words and automatic sequences.",
     "domain_bridges": [],
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0177",
+    "id": "fd_0180",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -3124,7 +3124,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "5ac3d516",
+    "consumed_by_exp_id": "18617733",
     "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist — 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 — they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures — combinatorial digit problems that are easy to state but may be as hard as factoring.",
     "domain_bridges": [],
     "domains": [
