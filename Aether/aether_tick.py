@@ -1226,9 +1226,14 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
 
     # 3. Retry any queued retries first, before discovering new directions.
     queued_retries = [j for j in extractor.inflight.values() if j.status == "retry_queued"]
+    if queued_retries:
+        server_running = await extractor.aristotle.get_active_jobs_count()
+        
     for queued in queued_retries:
-        if extractor._count_inflight_dispatched() >= max_inflight:
-            print(f"[Tick] No capacity to drain queued retries ({extractor._count_inflight_dispatched()}/{max_inflight} inflight)")
+        local_inflight = extractor._count_inflight_dispatched()
+        current_inflight = max(local_inflight, server_running) if server_running >= 0 else local_inflight
+        if current_inflight >= max_inflight:
+            print(f"[Tick] No capacity to drain queued retries ({current_inflight}/{max_inflight} inflight, {server_running} on server)")
             break
         try:
             queued.status = "preparing"
@@ -1255,6 +1260,10 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                 queued.status = "failed"
                 queued.error_message = f"Queued retry dispatch failed: {e}"
                 extractor._release_direction(queued)
+        
+        # We just dispatched a retry, so the server running count goes up
+        if server_running >= 0:
+            server_running += 1
         extractor._save_inflight()
 
     # 3b. Refresh external signal feed (arXiv/OEIS/LMFDB → FutureDirections)
@@ -1266,7 +1275,10 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
         print(f"[Tick] External signal refresh failed: {e}")
 
     # 4. Dispatch new jobs up to max_inflight (with novelty track)
-    current_inflight = extractor._count_inflight_dispatched()
+    local_inflight = extractor._count_inflight_dispatched()
+    server_running = await extractor.aristotle.get_active_jobs_count()
+    current_inflight = max(local_inflight, server_running) if server_running >= 0 else local_inflight
+    print(f"[Tick] Inflight check: {local_inflight} local tracking, {server_running} actual on server -> using {current_inflight}")
     slots_available = max(0, max_inflight - current_inflight)
 
     # Domain saturation: exclude domains with ≥3 inflight jobs from new dispatches
@@ -1343,7 +1355,9 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
             print(f"[Tick] Failed to dispatch injected issues: {e}")
 
         # Recalculate slots available in case injected issues consumed them
-        current_inflight = extractor._count_inflight_dispatched()
+        local_inflight = extractor._count_inflight_dispatched()
+        server_running = await extractor.aristotle.get_active_jobs_count()
+        current_inflight = max(local_inflight, server_running) if server_running >= 0 else local_inflight
         slots_available = max(0, max_inflight - current_inflight)
 
         standard_slots = max(0, slots_available - novelty_slots)

@@ -52,6 +52,16 @@ class AristotleSDKClient:
         if self.api_key:
             aristotlelib.set_api_key(self.api_key)
 
+    async def get_active_jobs_count(self) -> int:
+        """Get the number of currently running jobs on the Aristotle server."""
+        try:
+            projs = await aristotlelib.Project.list_projects()
+            running = [p for p in projs if p.status == aristotlelib.ProjectStatus.RUNNING]
+            return len(running)
+        except Exception as e:
+            print(f"[Aristotle] Failed to list projects: {e}")
+            return -1
+
     async def submit_lean_project_only(
         self,
         prompt: str,
