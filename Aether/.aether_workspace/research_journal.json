@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "ce15dd8e",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — The Uncanny Valley of Mathematics\n\nThe file `Catalog/Applications/UncannyValley.lean` formalizes a concrete cubic\nmodel `UV(x) = x³ − 3x` of Mori's uncanny-valley acceptance curv",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-07-13T20:48:23",
-      "title": "Close Proofs: The Uncanny Valley of Mathematics: When Proofs Are Almost Right"
-    },
-    {
       "cycle_id": "49ddee39",
       "domain": "Applications",
       "key_insight": "# Future Directions: Sharp maximal excess of the ℤ₂ co-index under joins\n\nThis cycle established the constructive, lower-bound half of the co-index theory:\nthe join of free ℤ₂-complexes satisfies\n`coi",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-17T06:13:47",
       "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
+    },
+    {
+      "cycle_id": "e2a481c0",
+      "domain": "Probability",
+      "key_insight": "# Future directions\n\n1. **Tableau-level crystal data.** Define semistandard Young tableaux, crystal operators, descent compositions, and the quasicrystal equivalence relation. This would connect the a",
+      "quality_score": 0.65,
+      "sorry_count": 0,
+      "theorem_count": 4,
+      "timestamp": "2026-07-17T06:13:55",
+      "title": "ArXiv paper: Contractions and applications of crystal skeletons: Young quasisymmetric and Stanley sy"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.75
     }
   ],
-  "last_updated": "2026-07-17T06:13:47",
+  "last_updated": "2026-07-17T06:13:55",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "935491ef",
-        "quality": 0.70296,
-        "theorems": 14,
-        "title": "Minimal dimension of non-γ-positive symmetric edge polytopes"
-      },
-      {
         "cycle_id": "5156da6e",
         "quality": 0.5183991264367817,
         "theorems": 12,
@@ -3823,6 +3817,12 @@
         "quality": 0.61,
         "theorems": 18,
         "title": "ArXiv paper: On the maximum size of $B_3$-free families"
+      },
+      {
+        "cycle_id": "e2a481c0",
+        "quality": 0.65,
+        "theorems": 4,
+        "title": "ArXiv paper: Contractions and applications of crystal skeletons: Young quasisymm"
       }
     ],
     "Pythagorean": [
