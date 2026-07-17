@@ -1,41 +1,30 @@
-# Computational evidence
+# Computational Evidence
 
-## Small cases
+## Small-case calculations
 
-For alphabet size `q` and book length `n`, direct enumeration predicts `q^n` books.
+For an alphabet of size `q` and fixed volume length `n`, direct enumeration gives `q^n` volumes. Representative cases are:
 
-| `q` | `n` | number of books |
-|---:|---:|---:|
-| 2 | 1 | 2 |
-| 2 | 2 | 4 |
-| 2 | 3 | 8 |
-| 3 | 2 | 9 |
-| 4 | 4 | 256 |
-| 4 | 16 | 4,294,967,296 |
+| `q` | `n` | volumes `q^n` | address bits `ceil(log₂(q^n))` |
+|---:|---:|---:|---:|
+| 2 | 3 | 8 | 3 |
+| 3 | 2 | 9 | 4 |
+| 4 | 4 | 256 | 8 |
+| 4 | 16 | 4,294,967,296 | 32 |
 
-A specified full book is represented once, so its uniform probability is the reciprocal of the table entry. For the mini-library this is `1 / 4,294,967,296`.
+The mini-library therefore has exactly `2^32` volumes. A single exact target has probability `1/2^32` under uniform sampling.
 
-For a library of size `L`, the number of functions from books to books is `L^L`. Small cases show the cardinality gap used by the formal obstruction:
+For a library with `m` volumes, the space of complete address tables has `m^m` members. Distributed storage in `N` volumes has `m^N` states. For `m ≥ 2`, exhaustive comparison in the small cases confirms that `m^N < m^m` exactly when `N < m`, matching the proved threshold.
 
-| `L` | catalog tables `L^L` |
-|---:|---:|
-| 2 | 4 |
-| 3 | 27 |
-| 4 | 256 |
-| 5 | 3,125 |
+## OEIS search results
 
-## OEIS search
+No OEIS lookup is needed for the principal sequence: for fixed alphabet size `q`, the volume counts are the elementary geometric sequence `q^n`. The cyclic de Bruijn edge count is likewise `q^n`; no sequence identification is used in the results.
 
-The fixed-alphabet counts as book length varies are geometric sequences `q^n`; no specialized OEIS identification is needed for the proof. For `q = 4`, the initial terms are `1, 4, 16, 64, 256, 1024, ...`.
+## Counterexample hunt
 
-## Counterexample hunt and specification checks
+The proposed heuristic that proof probability is determined by theorem length and a complexity exponent cannot be tested without fixing an encoding, parser, kernel, environmental declarations, and an acceptance predicate. Two checkers over the same volume space may accept different numbers of texts, including zero, one, or many. This motivates the exact checker theorem, which exposes the accepted-set cardinality explicitly.
 
-The informal claim that no single volume can encode “the catalog” is too strong if “the catalog” means one particular computable enumeration: the base-`q` decoder is a short description of a bijection between addresses and books. The sound counting statement is instead that no book-valued injective encoding can represent **all possible catalog tables**, because there are `L^L > L` such tables for `L ≥ 2`.
+The claim that one volume contains a complete arbitrary address table fails by cardinality as soon as the library has at least two volumes. The boundary cases are necessary: a zero- or one-volume library does not satisfy the strict growth argument.
 
-Likewise, an exact numerical probability of a “valid Lean 4 proof” cannot be computed from theorem name and alphabet size alone. It depends on a fixed encoding and a fixed decidable acceptance predicate. The formalization exposes that predicate and proves the exact ratio `accepted_count / q^n`.
+## Table interpretation
 
-No counterexample was found to the finite cardinality formulas. Boundary cases were checked conceptually: when `q^n` is 0 or 1, the strict catalog-table gap fails, which is why the theorem assumes `2 ≤ q^n`.
-
-## De Bruijn comparison
-
-A cyclic de Bruijn sequence of order 16 on four symbols has cyclic length `4^16 = 4,294,967,296`, one starting position for each length-16 word. The formal artifact currently verifies a base-four bijective catalog of exactly that many words; it does not claim to have formalized the cyclic overlap construction.
+The numerical mini-library catalog is a lossless bijective index into 32-bit addresses. It does not by itself assert cyclic overlap, constant-time inverse lookup, or a polynomial-time de Bruijn construction; those stronger algorithmic requirements are separated as future conjectures.

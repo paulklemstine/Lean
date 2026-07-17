@@ -2347,12 +2347,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'D-coloring of planar graphs' and formalize its key results. Abstract: A proper edge-coloring of a graph $G$ is a D-coloring if every subgraph isomorphic to $K_4-e$ is rainbow. The minimum number of colors in such a coloring is the D-chromatic index $\u03c7'_D(G)$. Wang conjectured that every planar graph of maximum degree $\u0394\\ge 4$ satisfies $\u03c7'_D(G) \\le 9$ for $\u0394= 4$, $\u03c7'_D(G) \\le 10$ for $\u0394= 5$, and $\u03c7'_D(G) \\le 2\u0394- 1$ for $\u0394\\ge 6$. We prove that every planar graph $G$ satisfies \\[ \u03c7_D'(G) \\leq \\begin{cases} 9, & \u0394(G) \\leq 4, \\\\ 10, & \u0394(G) = 5, \\\\ 2\u0394(G) - 1, & \u0394(G) \\geq 33. \\end{cases} \\] Each bound is best possible in its stated range. Consequently, Wang's conjecture remains open only for $6 \\le \u0394\\le 32$.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0187",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.14837v1",
+    "status": "available",
+    "timestamp": "2026-07-17T07:32:50.518523+00:00",
+    "title": "ArXiv paper: D-coloring of planar graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Recognition of algebraic matroids is undecidable' and formalize its key results. Abstract: We prove that the recognition problem for algebraic matroids is undecidable. Explicitly, this means that there is no algorithm that takes as input a finite set $S$ and a function $r\\colon\\mathcal{P}(S) \\to \\mathbb{Z}_{\\ge 0}$ (where $\\mathcal{P}(S)$ is the power set) and decides whether there exists a pair of fields $F \\subset K$, and a function $f\\colon S \\to K$, such that for all $A \\subseteq S$: $\\mathrm{tr.deg}_{K/F}(f(A)) = r(A)$. This problem is known to be decidable if the characteristic of the fields involved is constrained to be zero. We prove that it is undecidable if the characteristic is either left unspecified (in which case a realization over any characteristic is accepted) or fixed to be a prime $p$. The proof relies on Hrushovski--Zilber's Group Configuration Theorem and on the work of Evans and Hrushovski on \"Projective Planes in Algebraically Closed Fields\". We relate two different such projective planes, and eventually construct a reduction from the solvability of Di",
     "domains": [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_0187",
+    "id": "fd_0188",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14907v1",
@@ -2367,7 +2382,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_0188",
+    "id": "fd_0189",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14878v1",
@@ -2381,7 +2396,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0189",
+    "id": "fd_0190",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.15034v1",
@@ -2395,7 +2410,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0190",
+    "id": "fd_0191",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14872v1",
@@ -2409,7 +2424,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0191",
+    "id": "fd_0192",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14961v1",
@@ -2424,13 +2439,28 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0192",
+    "id": "fd_0193",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14693v1",
     "status": "available",
     "timestamp": "2026-07-17T07:17:15.241913+00:00",
     "title": "ArXiv paper: Aperiodic tile sets from Sturmian lattices"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'HJ numbers revisited' and formalize its key results. Abstract: We improve the bounds on the Hales-Jewett numbers to a tower of exponentiations. Earlier it was $WaW$ (that is, iterations of towers which are themselves iterated exponentiations). We improve the inductive step there (induction on the size of the alphabet, $|\u039b|$) to 2-exponentiations, instead of towers. In the longer work in typing, (A) We present this inductive step as a partition theorem in its own right; (but in this preliminary version we make it just serve the bound on HJ numbers). (B) We shall deal with the density version of Hales-Jewett with similar bound. We are also dealing with the Graham-Rothschild Theorem and the Affine Ramsey Theorem and the polynomial case, and give background.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0194",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.14732v1",
+    "status": "available",
+    "timestamp": "2026-07-17T07:32:53.951032+00:00",
+    "title": "ArXiv paper: HJ numbers revisited"
   },
   {
     "consumed_by_exp_id": "",
