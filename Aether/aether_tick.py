@@ -1314,14 +1314,17 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
         except Exception as e:
             print(f"[Tick] Failed to inject GitHub issues: {e}")
 
-        # Dispatch injected issues bypassing max_inflight
+        # Dispatch injected issues (respecting max_inflight)
         try:
             from research_memory import FutureDirectionsManager
             local_fd = FutureDirectionsManager(extractor.workspace)
             injected = [d for d in local_fd._directions if d.status == "available" and getattr(d, "source", "") == "github_injection"]
             if injected:
                 for fd in injected:
-                    print(f"[Tick] Bypassing max_inflight to dispatch injected issue: {fd.title}")
+                    if extractor._count_inflight_dispatched() >= max_inflight:
+                        print(f"[Tick] Reached max_inflight ({max_inflight}); leaving injected issue queued: {fd.title}")
+                        break
+                    print(f"[Tick] Dispatching injected issue: {fd.title}")
                     try:
                         job = extractor.discover(forced_direction=fd)
                         job = await extractor.dispatch_async(job)
@@ -1338,6 +1341,10 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                         traceback.print_exc()
         except Exception as e:
             print(f"[Tick] Failed to dispatch injected issues: {e}")
+
+        # Recalculate slots available in case injected issues consumed them
+        current_inflight = extractor._count_inflight_dispatched()
+        slots_available = max(0, max_inflight - current_inflight)
 
         standard_slots = max(0, slots_available - novelty_slots)
         wild_slots = min(novelty_slots, slots_available)
