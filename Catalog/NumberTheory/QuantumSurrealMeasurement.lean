@@ -1,5 +1,5 @@
-import Catalog.Geometry.QuantumSurreal.Basic
-import Catalog.Geometry.QuantumSurreal.StandardPartMeasure
+import Geometry.QuantumSurreal.Basic
+import Geometry.QuantumSurreal.StandardPartMeasure
 
 /-!
 # Quantum surreal measurement: label invariance and the equal-amplitude obstruction
