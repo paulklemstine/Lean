@@ -18,21 +18,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
   },
   {
-    "consumed_by_exp_id": "1003d095",
-    "description": "Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in PA without revealing any step of the proof. Conjecture: Every theorem provable in Peano Arithmetic has a zero-knowledge proof whose communication complexity is polynomial in the length of the theorem statement (not the proof). This follows from the PCP theorem combined with the fact that PA-proofs can be arithmetized. The zero-knowledge protocol: (1) Prover commits to each proof step using a collision-resistant hash. (2) Verifier randomly challenges one proof step. (3) Prover opens that step and shows it follows from the axioms. Repeating O(k) times gives soundness error 2^{-k}. The proof is zero-knowledge because the verifier only sees one random step per challenge. Test: implement a zero-knowledge proof system for propositional tautologies and prove that a verifier learns nothing beyond the validity of the tautology. Impact: mathematicians can certify results without revealing their methods \u2014 a mathematical equivalent of sealed-bid auctions for proof strategies.",
-    "domains": [
-      "Novelty",
-      "Cryptography"
-    ],
-    "id": "fd_0126",
-    "priority_score": 0.89,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-16T15:16:12.438268+00:00",
-    "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The integers Z live on a line, but what happens to arithmetic on a curved space? Define hyperbolic integers Z_H as the set of points in the Poincar\u00e9 disk that are images of Z under a discrete subgroup Gamma of PSL(2,R). Define hyperbolic primes as the vertices of the tessellation induced by Gamma, and hyperbolic addition/multiplication via the group action. Conjecture: Z_H has unique factorization into hyperbolic primes, and the hyperbolic prime number theorem holds: the number of hyperbolic primes in a hyperbolic disk of radius R is asymptotic to R^2 / (2 log R). The hyperbolic zeta function zeta_H(s) = sum_{n in Z_H, |n|_H > 0} 1/|n|_H^{2s} satisfies a functional equation and has zeros only on the critical line Re(s) = 1/2. Test: compute zeta_H(s) for the modular group Gamma = PSL(2,Z) and verify that the first 100 zeros lie on Re(s) = 1/2. Impact: number theory on curved spaces \u2014 where primes are geometric objects and the Riemann Hypothesis might be PROVABLE.",
     "domains": [
@@ -60,6 +45,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-16T15:16:12.425510+00:00",
     "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The brain's connectome is a braid: neurons fire in sequences that interleave like strands of a braid group. Formalize this: a cognitive process is an element of the braid group B_n where n is the number of brain regions. Two cognitive processes are equivalent if their braids are related by Reidemeister moves (cognitive equivalence). Conjecture: The Jones polynomial of a cognitive braid is invariant under cognitive equivalence and encodes the information content of the thought. A thought with Jones polynomial V(t) = 1 is a trivial thought (equivalent to no thinking). A thought with V(t) = -t^2 + t + 1 is a creative thought (it contains a trefoil knot \u2014 the simplest non-trivial braid). The information content of a thought is log(|V(e^{2pi i/3})|), which measures the quantum dimension of the braid. Test: compute the Jones polynomial of braids representing simple cognitive processes (linear reasoning: trivial braid, creative insight: trefoil, confused thinking: figure-eight knot) and verify that the quantum dimension correlates with subjective ratings of thought quality. Impact: thinking IS braiding. The topology of your thoughts determines their quality. Creative insights are literally knotted.",
+    "domains": [
+      "Novelty",
+      "Geometry"
+    ],
+    "id": "fd_0223",
+    "priority_score": 0.81,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-17T13:28:40.977519+00:00",
+    "title": "Knots That Think: Cognition as Braiding in Category Theory"
   },
   {
     "consumed_by_exp_id": "",
@@ -2837,6 +2837,35 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-17T13:12:10.340274+00:00",
     "title": "This development formalizes the finite coordinate core of Curtin's *Generalizati"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Minimal Modularity Lifting for Genus Two\n\n## 1. Integral stable-Yoshida modularity lifting\n\nLet a four-dimensional residual symplectic representation arise by automorphic induction from a nearly ordinary Hilbert modular eigencuspform over a real quadratic field. Under minimal ramification and the standard residual irreducibility and regularity conditions, the universal minimal ordinary deformation ring should be isomorphic, integrally and not merely after inverting the residue characteristic, to the localized genus-two ordinary Hecke algebra.\n\n**The key insight is...** the stable Yoshida description should turn the residual four-dimensional problem into a controlled two-dimensional deformation problem while preserving the symplectic polarization needed on the Siegel side.\n\n**Why now?** The algebraic consequences of such an isomorphism\u2014transport of points, uniqueness, and freeness\u2014can be treated uniformly, so the remaining task is sharply localized in the arithmetic construction and patching argument.\n\n## 2. Two-variable finite-flat strengthening\n\nIn the stable-Yoshida minimal setting, the universal ordinary deformation ring should be finite flat, and generically \u00e9tale, over the two-variable Iwasawa weight algebra; moreover, its rank should equal the multiplicity of the corresponding ordinary Hecke component.\n\n**The key insight is...** freeness should reflect a constant arithmetic multiplicity across weight space, while generic \u00e9taleness should follow from the vanishing of the relevant adjoint Selmer obstruction at a Zariski-dense set of classical points.\n\n**Why now?** Freeness is already naturally transported by the `R = T` identification, leaving rank and ramification as concrete invariants that can falsify or refine the conjecture.\n\n## 3. Rigidity beyond very regular weights\n\nUniqueness of an ordinary Hida family through a stable-Yoshida genus-two eigenform should continue to hold at all noncritical cohomological weights, with failure occurring precisely on an explicitly describable congruence or endoscopic locus.\n\n**The key insight is...** uniqueness is fundamentally a statement about the local degree and reducedness of the weight map, rather than about a particular numerical regularity bound.\n\n**Why now?** The abstract uniqueness mechanism identifies surjectivity and local ring structure as the decisive inputs, suggesting a direct investigation of the exact boundary where regularity can be weakened.\n\n## 4. Companion-family stratification\n\nWhen uniqueness fails at a critical or congruence point, the number of ordinary genus-two families through that point should be governed by the dimension of an ordinary adjoint Selmer group, with tangent directions partitioned according to refinements of the local crystalline representation.\n\n**The key insight is...** distinct families agreeing at one classical eigensystem should be detected infinitesimally by the kernel of the tangent map from the deformation space to weight space.\n\n**Why now?** The uniqueness theorem has a precise algebraic failure mode\u2014loss of effective surjective control\u2014so tangent-space calculations offer a falsifiable explanation for every additional branch.\n\n## 5. Higher-degree Yoshida-type induction\n\nFor suitable totally real extensions and polarized nearly ordinary Hilbert modular forms, automorphic induction should yield analogous minimal modularity lifting theorems for higher-genus symplectic groups, with one Iwasawa variable for each independent ordinary weight direction.\n\n**The key insight is...** the transport consequences of `R = T` are independent of genus; only the construction of the comparison map, local deformation conditions, and automorphy input change.\n\n**Why now?** The separation of formal commutative algebra from arithmetic hypotheses provides a stable template against which higher-rank proposals can be tested without conflating universal consequences with genus-specific arguments.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0224",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "d1663b23",
+    "status": "available",
+    "timestamp": "2026-07-17T13:29:11.392766+00:00",
+    "title": "Let a four-dimensional residual symplectic representation arise by automorphic i"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle d1663b23 (Q=0.700) proved 0 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'A minimal modularity lifting theorem for Siegel modular forms' and formalize its key results. Abstract: We prove a minimal modularity lifting theorem (in the spirit of Gen",
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_d1663b23_44cb6a25",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "d1663b23",
+    "status": "available",
+    "timestamp": "2026-07-17T13:29:16.297936+00:00",
+    "title": "Close Proofs: ArXiv paper: A minimal modularity lifting theorem for Siegel modular f"
   },
   {
     "consumed_by_exp_id": "58ca9013",

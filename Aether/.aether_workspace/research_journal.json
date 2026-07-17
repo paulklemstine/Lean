@@ -1,26 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "d4584015",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions: Adjoint Selmer Rigidity\n\n## 1. Derived rigidity without residual adequacy\n\n**Conjecture.** Let a regular algebraic cuspidal automorphic representation of a general linear group ov",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-15T06:16:57",
-      "title": "ArXiv paper: Adjoint Bloch--Kato Selmer groups of regular algebraic automorphic Galois representatio"
-    },
-    {
-      "cycle_id": "80f7c124",
-      "domain": "Shared",
-      "key_insight": "# Future Directions: triangle holonomy beyond the second moment\n\n## Result of this cycle\n\n`Shared/SeidelTriangleHolonomy.lean` establishes a cross-domain bridge among\nthree viewpoints:\n\n1. **spectral",
-      "quality_score": 0.73,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-07-15T06:52:13",
-      "title": "Elementary spectral-moment foundations of Seidel"
-    },
-    {
       "cycle_id": "2ed994b6",
       "domain": "Novelty",
       "key_insight": "# Orderly Friedman numbers: results and future directions\n\n## Formal results obtained\n\n`Catalog/OrderlyFriedman.lean` gives an explicit expression language and a certificate predicate.  A valid certif",
@@ -499,29 +479,29 @@
       "theorem_count": 0,
       "timestamp": "2026-07-17T12:07:43",
       "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
+    },
+    {
+      "cycle_id": "d1663b23",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Minimal Modularity Lifting for Genus Two\n\n## 1. Integral stable-Yoshida modularity lifting\n\nLet a four-dimensional residual symplectic representation arise by automorphic inductio",
+      "quality_score": 0.7,
+      "sorry_count": 3,
+      "theorem_count": 0,
+      "timestamp": "2026-07-17T13:29:16",
+      "title": "ArXiv paper: A minimal modularity lifting theorem for Siegel modular forms"
+    },
+    {
+      "cycle_id": "dcd7a4b2",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions: Quantum Surreal Observation\n\n## 1. Finite-dimensional non-Archimedean spectral calculus\n\n**Conjecture.** Let an ordered non-Archimedean real-closed field carry a standard-part map",
+      "quality_score": 0.75,
+      "sorry_count": 3,
+      "theorem_count": 0,
+      "timestamp": "2026-07-17T13:29:21",
+      "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "3903c2d7",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nBold, falsifiable conjectures arising from the Fibonacci Pythagorean triple family\n`a = F n·F(n+3)`, `b = 2·F(n+1)·F(n+2)`, `c = F(n+1)²+F(n+2)² = F(2n+3)`.\n\n## 1. Primitivity dic",
-      "quality_score": 0.82,
-      "sorry_count": 4,
-      "theorem_count": 10,
-      "timestamp": "2026-07-14T01:53:27",
-      "title": "Bypassed"
-    },
-    {
-      "cycle_id": "6af180ae",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nDerived from the generalized multinomial convolution identity\n$$\\sum_{i_1+\\cdots+i_m=d}\\ \\prod_{j=1}^{m}\\binom{a+i_j}{a}=\\binom{ma+d+m-1}{d},$$\nand its multichoose reformulation\n$",
-      "quality_score": 0.86,
-      "sorry_count": 4,
-      "theorem_count": 12,
-      "timestamp": "2026-07-14T01:53:43",
-      "title": "Deepening: Generalized Multinomial Convolution Identity for Latin Rectangle Enumeration"
-    },
     {
       "cycle_id": "cf19c51c",
       "domain": "Novelty",
@@ -2501,6 +2481,26 @@
       "theorem_count": 25,
       "timestamp": "2026-07-17T13:12:16",
       "title": "ArXiv paper: Generalizations of nets and Latin squares"
+    },
+    {
+      "cycle_id": "d1663b23",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Minimal Modularity Lifting for Genus Two\n\n## 1. Integral stable-Yoshida modularity lifting\n\nLet a four-dimensional residual symplectic representation arise by automorphic inductio",
+      "quality_score": 0.7,
+      "sorry_count": 3,
+      "theorem_count": 0,
+      "timestamp": "2026-07-17T13:29:16",
+      "title": "ArXiv paper: A minimal modularity lifting theorem for Siegel modular forms"
+    },
+    {
+      "cycle_id": "dcd7a4b2",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions: Quantum Surreal Observation\n\n## 1. Finite-dimensional non-Archimedean spectral calculus\n\n**Conjecture.** Let an ordered non-Archimedean real-closed field carry a standard-part map",
+      "quality_score": 0.75,
+      "sorry_count": 3,
+      "theorem_count": 0,
+      "timestamp": "2026-07-17T13:29:21",
+      "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
     }
   ],
   "key_theorems": [
@@ -2805,22 +2805,8 @@
       "quality": 0.76
     }
   ],
-  "last_updated": "2026-07-17T13:12:16",
+  "last_updated": "2026-07-17T13:29:21",
   "open_questions": [
-    {
-      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "71637775",
-      "domain": "Novelty",
-      "sorry_count": 4,
-      "timestamp": "2026-07-15T00:42:35"
-    },
-    {
-      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "50098ece",
-      "domain": "Novelty",
-      "sorry_count": 4,
-      "timestamp": "2026-07-15T00:42:59"
-    },
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "dbf870e8",
@@ -3016,6 +3002,20 @@
       "domain": "Applications",
       "sorry_count": 3,
       "timestamp": "2026-07-17T12:07:38"
+    },
+    {
+      "context": "+    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; +    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; +    ∀ i < k, c i = ",
+      "cycle_id": "d1663b23",
+      "domain": "Applications",
+      "sorry_count": 3,
+      "timestamp": "2026-07-17T13:29:16"
+    },
+    {
+      "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
+      "cycle_id": "dcd7a4b2",
+      "domain": "Tropical",
+      "sorry_count": 3,
+      "timestamp": "2026-07-17T13:29:21"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "19cecd78",
-        "quality": 0.69,
-        "theorems": 12,
-        "title": "ArXiv paper: Far-apart Erdős--Pósa property of long cycles"
-      },
-      {
         "cycle_id": "557a7f03",
         "quality": 0.66,
         "theorems": 10,
@@ -3141,6 +3135,12 @@
         "quality": 0.66,
         "theorems": 14,
         "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk"
+      },
+      {
+        "cycle_id": "d1663b23",
+        "quality": 0.7,
+        "theorems": 0,
+        "title": "ArXiv paper: A minimal modularity lifting theorem for Siegel modular forms"
       }
     ],
     "Bridges": [
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "fb4de3e5",
-        "quality": 0.78,
-        "theorems": 23,
-        "title": "Hofstadter: Fluid Concepts and Creative Analogies — Analogy as a Mathematical Op"
-      },
-      {
         "cycle_id": "538f30a2",
         "quality": 0.78,
         "theorems": 47,
@@ -4009,6 +4003,12 @@
         "quality": 0.76,
         "theorems": 12,
         "title": "The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
+      },
+      {
+        "cycle_id": "dcd7a4b2",
+        "quality": 0.75,
+        "theorems": 0,
+        "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
       }
     ]
   }

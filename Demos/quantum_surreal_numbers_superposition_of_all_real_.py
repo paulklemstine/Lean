@@ -1,142 +1,145 @@
 #!/usr/bin/env python3
-"""Numerical demonstrations for finite quantum-surreal measurement.
+"""Numerical demonstrations for quantum surreal observation.
 
-Floating-point parameters approximate infinitesimal limits; surreal labels are
-represented by strings because their magnitude never enters the Born weights.
+Floating-point arithmetic has no genuine infinitesimals.  The parameter sweeps
+below display the real limiting behavior that standard-part observation captures:
+(1, epsilon) has Born weights approaching (1, 0), while equal amplitudes remain
+(1/2, 1/2).  Exact lexicographic pairs model first-order infinitesimals without
+floating-point approximation.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass
-from math import isclose, sqrt
-from typing import Hashable, Iterable, Sequence
-
-Label = Hashable
+from fractions import Fraction
+from math import isclose
+from typing import Iterable, Sequence
 
 
 @dataclass(frozen=True)
-class Branch:
-    """A labelled branch with a real amplitude."""
+class LexValue:
+    """A rational lexicographic value a + b*epsilon."""
 
-    label: Label
-    amplitude: float
+    real: Fraction
+    infinitesimal: Fraction
+
+    def __add__(self, other: "LexValue") -> "LexValue":
+        return LexValue(
+            self.real + other.real,
+            self.infinitesimal + other.infinitesimal,
+        )
+
+    def standard_part(self) -> Fraction:
+        return self.real
 
 
-def born_probabilities(branches: Iterable[Branch]) -> dict[Label, float]:
-    """Combine equal labels and return normalized squared amplitudes.
-
-    Raises:
-        ValueError: if the combined state has zero squared norm.
-    """
-    combined: dict[Label, float] = {}
-    for branch in branches:
-        combined[branch.label] = combined.get(branch.label, 0.0) + branch.amplitude
-    norm_sq = sum(amplitude * amplitude for amplitude in combined.values())
+def born_weights(amplitudes: Sequence[float]) -> list[float]:
+    """Return normalized squared amplitudes for a nonzero real state."""
+    norm_sq = sum(a * a for a in amplitudes)
     if norm_sq == 0.0:
-        raise ValueError("Born probabilities are undefined for the zero state")
-    return {
-        label: amplitude * amplitude / norm_sq
-        for label, amplitude in combined.items()
-    }
+        raise ValueError("The state must have nonzero squared norm.")
+    return [(a * a) / norm_sq for a in amplitudes]
 
 
-def equal_amplitude_demo(scales: Sequence[float]) -> list[tuple[float, float, float]]:
-    """Show that a common nonzero scale leaves both branch weights at one half."""
-    rows: list[tuple[float, float, float]] = []
-    for scale in scales:
-        probabilities = born_probabilities(
-            [Branch("0", scale), Branch("epsilon (infinitesimal label)", scale)]
+def epsilon_state_weights(epsilon: float) -> tuple[float, float]:
+    """Born weights of |0> + epsilon |1>."""
+    if epsilon < 0.0:
+        raise ValueError("epsilon must be nonnegative")
+    first, second = born_weights([1.0, epsilon])
+    return first, second
+
+
+def equal_amplitude_weights(amplitude: float) -> tuple[float, float]:
+    """Born weights of two distinct labels with a common nonzero amplitude."""
+    if amplitude == 0.0:
+        raise ValueError("amplitude must be nonzero")
+    first, second = born_weights([amplitude, amplitude])
+    return first, second
+
+
+def reservoir_event_mass(
+    n_visible: int, visible_indices: Iterable[int], includes_reservoir: bool
+) -> LexValue:
+    """Compute exact mass (ordinary, infinitesimal) of a reservoir event."""
+    if n_visible < 0:
+        raise ValueError("n_visible must be nonnegative")
+    indices = set(visible_indices)
+    if any(i < 0 or i >= n_visible for i in indices):
+        raise ValueError("visible index outside the outcome space")
+    reservoir_flag = Fraction(int(includes_reservoir))
+    infinitesimal = Fraction(len(indices) - n_visible * int(includes_reservoir))
+    return LexValue(reservoir_flag, infinitesimal)
+
+
+def tropical_reservoir_integral(
+    reservoir_value: float, visible_values: Sequence[float], penalty: float
+) -> tuple[float, str, float]:
+    """Return max-plus value, a maximizing label, and the stability margin."""
+    if penalty >= 0.0:
+        raise ValueError("penalty must be negative")
+    visible_scores = [value + penalty for value in visible_values]
+    if not visible_scores:
+        return reservoir_value, "reservoir", float("inf")
+    best_visible_score = max(visible_scores)
+    best_visible_index = visible_scores.index(best_visible_score)
+    margin = reservoir_value - best_visible_score
+    if reservoir_value >= best_visible_score:
+        return reservoir_value, "reservoir", margin
+    return best_visible_score, f"visible[{best_visible_index}]", margin
+
+
+def demonstrate_epsilon_collapse() -> None:
+    print("\n1. Infinitesimal-amplitude limit")
+    print("epsilon       weight(0)              weight(1)              sum")
+    for epsilon in (1.0, 0.1, 0.01, 0.001, 0.0001):
+        w0, w1 = epsilon_state_weights(epsilon)
+        print(f"{epsilon:<12g} {w0:<22.16g} {w1:<22.16g} {w0 + w1:.16g}")
+        assert isclose(w0 + w1, 1.0, rel_tol=0.0, abs_tol=1e-15)
+
+
+def demonstrate_label_invariance() -> None:
+    print("\n2. Equal-amplitude obstruction")
+    for amplitude in (1.0, 1e-3, 1e6):
+        weights = equal_amplitude_weights(amplitude)
+        print(f"common amplitude {amplitude:g}: weights = {weights}")
+        assert all(isclose(weight, 0.5) for weight in weights)
+    print("Changing the labels, even to infinitesimal labels, does not enter this calculation.")
+
+
+def demonstrate_dirac_collapse() -> None:
+    print("\n3. Lexicographic reservoir and standard-part collapse")
+    n = 4
+    events = [
+        ("one visible atom", [0], False),
+        ("all visible atoms", range(n), False),
+        ("reservoir only", [], True),
+        ("whole space", range(n), True),
+    ]
+    for name, visible, reservoir in events:
+        mass = reservoir_event_mass(n, visible, reservoir)
+        print(
+            f"{name:18s}: exact=({mass.real}, {mass.infinitesimal}), "
+            f"standard part={mass.standard_part()}"
         )
-        rows.append((scale, probabilities["0"], probabilities["epsilon (infinitesimal label)"]))
-    return rows
+    assert reservoir_event_mass(n, range(n), True) == LexValue(Fraction(1), Fraction(0))
 
 
-def suppressed_amplitude_demo(
-    deltas: Sequence[float],
-) -> list[tuple[float, float, float]]:
-    """Approach the standard-part limit using amplitudes 1 and delta."""
-    rows: list[tuple[float, float, float]] = []
-    for delta in deltas:
-        probabilities = born_probabilities(
-            [Branch("ordinary branch", 1.0), Branch("small-amplitude branch", delta)]
-        )
-        rows.append(
-            (
-                delta,
-                probabilities["ordinary branch"],
-                probabilities["small-amplitude branch"],
-            )
-        )
-    return rows
-
-
-def permute_labels(
-    amplitudes: Sequence[float], labels: Sequence[Label]
-) -> dict[Label, float]:
-    """Attach amplitudes to labels and calculate their Born probabilities."""
-    if len(amplitudes) != len(labels):
-        raise ValueError("amplitudes and labels must have equal lengths")
-    return born_probabilities(Branch(label, amplitude) for label, amplitude in zip(labels, amplitudes))
-
-
-def lexicographic_standard_part(weight: tuple[float, int]) -> float:
-    """Return the ordinary coordinate of an (ordinary, infinitesimal) weight."""
-    return weight[0]
-
-
-def discrete_bridge_demo(atom_count: int) -> tuple[float, list[float]]:
-    """Return standard parts of total mass and purely infinitesimal atoms."""
-    if atom_count < 1:
-        raise ValueError("atom_count must be positive")
-    total_weight = (1.0, atom_count)
-    atom_weights = [(0.0, 1) for _ in range(atom_count)]
-    return (
-        lexicographic_standard_part(total_weight),
-        [lexicographic_standard_part(weight) for weight in atom_weights],
-    )
-
-
-def print_table(title: str, headings: Sequence[str], rows: Sequence[Sequence[object]]) -> None:
-    """Print a compact aligned table without third-party dependencies."""
-    rendered = [[str(value) for value in row] for row in rows]
-    widths = [len(heading) for heading in headings]
-    for row in rendered:
-        widths = [max(width, len(value)) for width, value in zip(widths, row)]
-    print(f"\n{title}")
-    print(" | ".join(heading.ljust(width) for heading, width in zip(headings, widths)))
-    print("-+-".join("-" * width for width in widths))
-    for row in rendered:
-        print(" | ".join(value.ljust(width) for value, width in zip(row, widths)))
+def demonstrate_tropical_bridge() -> None:
+    print("\n4. Tropical stability and escape")
+    stable = tropical_reservoir_integral(3.0, [2.0, 4.0, 1.0], -2.0)
+    escaped = tropical_reservoir_integral(3.0, [2.0, 6.5, 1.0], -2.0)
+    print(f"stable observable: value={stable[0]}, winner={stable[1]}, margin={stable[2]}")
+    print(f"escape observable: value={escaped[0]}, winner={escaped[1]}, margin={escaped[2]}")
+    assert stable[1] == "reservoir" and stable[2] >= 0.0
+    assert escaped[1] != "reservoir" and escaped[2] < 0.0
 
 
 def main() -> None:
-    """Run all demonstrations and assert the key finite identities."""
-    scales = [1.0 / sqrt(2.0), 1e-3, 1e-12, 1e-100]
-    equal_rows = equal_amplitude_demo(scales)
-    assert all(isclose(left, 0.5) and isclose(right, 0.5) for _, left, right in equal_rows)
-    print_table(
-        "Equal amplitudes: label magnitude and common scale do not affect weights",
-        ("common amplitude", "P(0)", "P(epsilon label)"),
-        [(f"{a:.3e}", f"{p0:.12f}", f"{pe:.12f}") for a, p0, pe in equal_rows],
-    )
-
-    deltas = [1e-1, 1e-2, 1e-4, 1e-8]
-    suppressed_rows = suppressed_amplitude_demo(deltas)
-    print_table(
-        "Relative amplitude suppression approaches the standard-part collapse",
-        ("delta", "P(ordinary)", "P(small amplitude)"),
-        [(f"{d:.0e}", f"{p0:.12f}", f"{p1:.12e}") for d, p0, p1 in suppressed_rows],
-    )
-    assert suppressed_rows[-1][2] < suppressed_rows[0][2]
-    assert all(isclose(p0 + p1, 1.0) for _, p0, p1 in suppressed_rows)
-
-    first = permute_labels([2.0, 1.0], ["zero", "epsilon"])
-    second = permute_labels([2.0, 1.0], ["infinity", "minus omega"])
-    assert list(first.values()) == list(second.values()) == [0.8, 0.2]
-    print("\nRelabelling test:", first, "->", second)
-
-    total, atoms = discrete_bridge_demo(4)
-    assert total == 1.0 and atoms == [0.0] * 4
-    print("Discrete bridge: standard total =", total, "; atom standard parts =", atoms)
+    print("Quantum Surreal Observation — numerical demonstrations")
+    demonstrate_epsilon_collapse()
+    demonstrate_label_invariance()
+    demonstrate_dirac_collapse()
+    demonstrate_tropical_bridge()
 
 
 if __name__ == "__main__":
