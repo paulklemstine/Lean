@@ -1,237 +1,406 @@
-# The Holographic Depth Algebra: A Number-Theoretic Framework for Prime-Bulk Duality
+# Holographic Primes: Finite Euler Products, Bulk Occupation Sums, and Tropical Vacua
+
+**Aristotle**  
+**17 July 2026**
 
 ## Abstract
 
-We introduce the **Holographic Depth Algebra (HDA)**, a novel mathematical structure that formalizes the analogy between the prime factorization of integers and the AdS/CFT correspondence of theoretical physics. The HDA assigns a positive weight w(p) to each prime p, inducing a completely additive "depth" function on positive integers. In the canonical instance (w(p) = log p), the depth coincides with the natural logarithm, and the Euler product ζ(s) = ∏_p (1 - p^{-s})⁻¹ becomes the "holographic partition function." We prove 15 theorems establishing the mathematical foundations of this framework, including: (1) a **holographic reconstruction principle** showing that completely additive functions on ℕ⁺ are uniquely determined by their values on primes; (2) a **holographic entropy bound** relating the local free energy to the Boltzmann weight, analogous to the Ryu-Takayanagi formula; (3) an **arithmetic renormalization group** satisfying a semigroup law; and (4) a **multiplicative reconstruction theorem** extending the holographic principle to multiplicative arithmetic functions. All results are formalized and verified in Lean 4 with the Mathlib library.
+We develop a finite and unconditional partition-function model in which local prime modes form a boundary description and their joint occupation profiles form a bulk description. For an arbitrary finite mode set $I$, real local energies $E_i$, occupation cutoff $N$, and inverse temperature $\beta$, the product of local geometric partition sums is exactly the Gibbs sum over all occupation profiles. Specializing to primes $p<x$ with energy $E_p=\log p$ yields a finite prime holographic factorization. Removing the occupation and prime cutoffs in the region of absolute convergence recovers the Euler product $\prod_p(1-p^{-\beta})^{-1}=\zeta(\beta)$ for $\beta>1$, together with its exponential logarithmic representation. We then tropicalize the bulk model: nonnegative local energies imply that the minimum bulk energy is the vacuum value $0$, and logarithmic prime energies satisfy this hypothesis. A finite-state bound quantifies convergence of normalized log partition functions to the tropical value. Algorithms for product evaluation, direct bulk enumeration, and cutoff diagnostics are presented. The results isolate an exact algebraic core for the holographic metaphor while distinguishing it from unproved claims about analytic continuation, the completed functional equation, zero statistics, or the Riemann Hypothesis.
 
 ## 1. Introduction
 
-The AdS/CFT correspondence, proposed by Maldacena [1], establishes a duality between a gravitational theory in the bulk of (d+1)-dimensional anti-de Sitter space and a conformal field theory on its d-dimensional boundary. This "holographic principle" has become one of the most influential ideas in theoretical physics, with applications ranging from black hole thermodynamics to condensed matter physics.
+Euler products compress global arithmetic into independent local factors. Statistical mechanics performs a related compression: when a Hamiltonian is a sum of uncoupled local energies, its partition function factors into local partition functions. The common algebra is distributivity together with the exponential law. The present model makes this common structure explicit by treating each selected prime as a local bosonic mode and each vector of occupation numbers as a bulk configuration.
 
-In this paper, we develop a precise mathematical framework for studying an analogous structure in number theory. Our starting observation is that the prime factorization of integers provides a natural "holographic" decomposition: the primes form a "boundary" whose local data (p-adic valuations) determines the "bulk" structure (the arithmetic of ℤ). The Euler product formula makes this precise — the Riemann zeta function, which encodes global arithmetic information, factorizes into local contributions from individual primes.
+The word *holographic* is used here in a restricted mathematical sense. The boundary is the factored collection of local partition sums, while the bulk is the expanded occupation lattice. The two descriptions are exactly equal at finite cutoffs. No geometric spacetime or gravitational dynamics is assumed. This disciplined use of the analogy is important: a finite Euler factorization does not itself imply the reflection law of the completed zeta function, random-matrix statistics for zeta zeros, or a stability interpretation of the critical line.
 
-### 1.1 Main Contributions
+Three levels of the construction should be kept separate. First, finite factorization is an algebraic theorem valid for arbitrary real energies and arbitrary real $\beta$. Second, the infinite prime identity is analytic and is asserted only for $\beta>1$, where the Euler product converges absolutely. Third, tropicalization is an order-theoretic statement: when energies are nonnegative, minimization selects the vacuum.
 
-1. **The Holographic Depth Algebra (HDA)**: A parameterized family of completely additive depth functions on ℕ⁺, indexed by positive weight functions on primes (Definition 2.1).
+This separation clarifies both the scope and the utility of the model. The finite identity provides exact test cases and efficient algorithms. The infinite identity connects the system to $\zeta$. The tropical theorem identifies a stable zero-energy ground state. Together they form a foundation on which sharper questions about cutoff removal, archimedean completion, and spectral correlations can be posed.
 
-2. **Holographic Reconstruction Principle**: Boundary data (values on primes) uniquely determines bulk data (values on all positive integers) for completely additive functions (Theorem 5.1) and multiplicative functions (Theorem 5.2).
+## 2. Finite occupation systems
 
-3. **Holographic Entropy Bound**: The bulk free energy -F_p(β) = -log(1 - p^{-β}) is bounded by p^{-β}/(1 - p^{-β}), a number-theoretic analogue of the Ryu-Takayanagi formula (Theorem 4.1).
+### 2.1 Modes, occupations, and energies
 
-4. **Arithmetic Renormalization Group**: A one-parameter semigroup of operators R_β that rescale arithmetic functions by n^{-β}, satisfying R_α ∘ R_β = R_{α+β} (Theorem 7.1).
+Let $I$ be a finite set. A function $E:I\to\mathbb{R}$ assigns a local energy $E_i$ to each mode $i$. Fix an integer $N\geq0$. The finite occupation space is
 
-5. **Spectral Gap**: The minimum depth increment in the canonical HDA is log 2, the boundary entropy of the smallest prime (Theorem 6.1).
+$$
+\Omega_{I,N}=\{a:I\to\{0,1,\ldots,N\}\}.
+$$
 
-## 2. The Holographic Depth Algebra
+Thus $a_i$ records the number of quanta occupying mode $i$. The cardinality of this space is
 
-### Definition 2.1 (Holographic Depth Algebra)
+$$
+|\Omega_{I,N}|=(N+1)^{|I|}.
+$$
 
-A **Holographic Depth Algebra** is a pair (P, w) where P is the set of primes and w : P → ℝ₊ is a positive weight function. The associated structures are:
+**Definition 2.1 (Bulk Hamiltonian).** For $a\in\Omega_{I,N}$, define
 
-- **Bulk depth**: For n ∈ ℕ⁺, depth(n) = ∑_{p | n} v_p(n) · w(p), where v_p is the p-adic valuation.
-- **Local partition function**: Z_p(β) = (1 - p^{-β})⁻¹ for each prime p.
-- **Local free energy**: F_p(β) = log(1 - p^{-β}).
-- **Boltzmann weight**: b_p(β) = p^{-β}.
-- **Boundary entropy**: S(p) = log(p).
+$$
+H_{E,N}(a)=\sum_{i\in I}a_iE_i.
+$$
 
-### The Canonical Instance
+The system is noninteracting because the Hamiltonian contains no cross-terms between distinct modes.
 
-Setting w(p) = log(p) gives depth(n) = log(n) and connects directly to the Riemann zeta function via the Euler product.
+**Definition 2.2 (Bulk Gibbs partition function).** For inverse temperature $\beta\in\mathbb{R}$, define
 
-**Theorem 2.1** (Canonical HDA). The weight function w(p) = log(p) satisfies w(p) > 0 for all primes p, and the induced depth function depth(n) = log(n) is completely additive.
+$$
+Z_{\mathrm{bulk}}(E,N,\beta)
+=\sum_{a\in\Omega_{I,N}}e^{-\beta H_{E,N}(a)}.
+$$
 
-*Proof.* Positivity: log(p) > 0 since p ≥ 2 > 1. Complete additivity: log(mn) = log(m) + log(n) for all positive m, n. ∎
+**Definition 2.3 (Boundary partition function).** Define the local partition sum at mode $i$ by
 
-### Definition 2.2 (Completely Additive Function)
+$$
+Z_i(E_i,N,\beta)=\sum_{n=0}^{N}e^{-\beta nE_i},
+$$
 
-A function f : ℕ → ℝ is **completely additive** if f(1) = 0 and f(mn) = f(m) + f(n) for all positive m, n.
+and the boundary partition function by
 
-Note the contrast with *additive* functions (where the identity holds only for coprime m, n) and *completely multiplicative* functions (where f(mn) = f(m)f(n)).
+$$
+Z_{\mathrm{boundary}}(E,N,\beta)
+=\prod_{i\in I}Z_i(E_i,N,\beta).
+$$
 
-**Theorem 2.2** (PEGB Boundary). The function log is NOT completely multiplicative: log(2·2) = log(4) = 2log(2), but log(2)·log(2) = (log 2)² ≠ 2log(2) since log(2) ≠ 2.
+The bulk representation has exponentially many summands in $|I|$, whereas the factored boundary representation has $|I|$ sums of $N+1$ terms.
 
-## 3. Local Partition Function Properties
+### 2.2 Factorization
 
-### Theorem 3.1 (Boltzmann Weight Bounds)
+**Lemma 2.4 (Boltzmann factorization).** For every occupation profile $a\in\Omega_{I,N}$,
 
-For any prime p and β > 0:
-$$0 < p^{-\beta} < 1$$
+$$
+e^{-\beta H_{E,N}(a)}
+=\prod_{i\in I}e^{-\beta a_iE_i}.
+$$
 
-*Proof.* Since p ≥ 2, we have p^β > 1 for β > 0, giving 0 < p^{-β} = 1/p^β < 1. ∎
+**Proof sketch.** Substitute the definition of $H_{E,N}$ and apply $e^{u+v}=e^ue^v$ repeatedly over the finite sum. No positivity assumption is required. $\square$
 
-### Theorem 3.2 (Partition Function Positivity)
+**Theorem 2.5 (Finite Holographic Factorization).** For every finite set $I$, every energy function $E:I\to\mathbb{R}$, every $N\geq0$, and every $\beta\in\mathbb{R}$,
 
-For any prime p and β > 0: Z_p(β) > 0.
+$$
+Z_{\mathrm{boundary}}(E,N,\beta)
+=Z_{\mathrm{bulk}}(E,N,\beta).
+$$
 
-*Proof.* From Theorem 3.1, 0 < p^{-β} < 1, so 0 < 1 - p^{-β} < 1, giving Z_p(β) = (1 - p^{-β})⁻¹ > 0. ∎
+**Proof sketch.** Expand the finite product
 
-### Theorem 3.3 (Partition Function Exceeds Unity)
+$$
+\prod_{i\in I}\left(\sum_{n=0}^{N}e^{-\beta nE_i}\right).
+$$
 
-For any prime p and β > 0: Z_p(β) > 1.
+A term in the expansion is obtained by choosing one $n=a_i$ at each mode, so choices are in bijection with functions $a\in\Omega_{I,N}$. The resulting term is $\prod_i e^{-\beta a_iE_i}$, which equals $e^{-\beta H_{E,N}(a)}$ by Lemma 2.4. Summing over all choices gives the bulk sum. $\square$
 
-*Proof.* Since 0 < 1 - p^{-β} < 1, its reciprocal exceeds 1. ∎
+The theorem is the precise boundary/bulk dictionary in this model. It is stronger than a numerical coincidence: the expansion establishes a weight-preserving bijection between product choices and occupation profiles.
 
-**PEGB for Theorem 3.3:**
-- **P**roof: As above.
-- **E**xample: Z_2(1) = (1 - 1/2)⁻¹ = 2; Z_3(1) = (1 - 1/3)⁻¹ = 3/2.
-- **G**eneralization: Z_p(β) → 1 as β → ∞ (the "deep bulk" limit).
-- **B**oundary: At β = 0, Z_p(0) = (1 - 1)⁻¹ is undefined — the partition function has a pole.
+### 2.3 Edge cases
 
-### Theorem 3.4 (Free Energy Non-Positivity)
+The identity includes $N=0$, when every mode is forced into its vacuum and both sides equal $1$. It also includes $I=\varnothing$, when the empty product equals $1$ and the unique empty occupation profile has energy $0$. Negative energies and negative $\beta$ do not invalidate finite factorization, although they change its thermodynamic interpretation. Positivity becomes relevant only for ground-state results and infinite convergence.
 
-For any prime p and β > 0: F_p(β) = log(1 - p^{-β}) ≤ 0.
+## 3. Prime modes and arithmetic states
 
-*Proof.* Since 0 < 1 - p^{-β} < 1, its logarithm is non-positive. ∎
+Fix an integer cutoff $x\geq0$ and define
 
-## 4. The Holographic Entropy Bound
+$$
+P_x=\{p\in\mathbb{N}:p<x\text{ and }p\text{ is prime}\}.
+$$
 
-### Lemma 4.1 (Analytic Inequality)
+This is a finite mode set.
 
-For 0 < x < 1: -log(1 - x) ≤ x/(1-x).
+**Definition 3.1 (Prime energy).** For $p\in P_x$, let
 
-*Proof.* The inequality log(y) ≥ 1 - 1/y for y > 0 (a consequence of log(t) ≤ t - 1) applied with y = 1 - x gives log(1-x) ≥ 1 - 1/(1-x) = -x/(1-x), whence -log(1-x) ≤ x/(1-x). ∎
+$$
+E_p=\log p.
+$$
 
-### Theorem 4.1 (Holographic Entropy Bound)
+Every prime satisfies $p\geq2$, hence $E_p\geq0$.
 
-For any prime p and β > 0:
-$$-F_p(\beta) = -\log(1 - p^{-\beta}) \leq \frac{p^{-\beta}}{1 - p^{-\beta}}$$
+For an occupation profile $a:P_x\to\{0,\ldots,N\}$, define
 
-*Proof.* Direct application of Lemma 4.1 with x = p^{-β} ∈ (0,1). ∎
+$$
+H_{x,N}(a)=\sum_{p\in P_x}a_p\log p.
+$$
 
-**PEGB for Theorem 4.1:**
-- **P**roof: As above.
-- **E**xample: For p=2, β=1: -log(1/2) = log(2) ≈ 0.693, and (1/2)/(1/2) = 1. Indeed 0.693 ≤ 1.
-- **G**eneralization: The bound extends to any geometric series factor (1-x)⁻¹ with 0 < x < 1, not just prime Boltzmann weights.
-- **B**oundary: The bound is tight as x → 0 (large β): both sides are asymptotic to x = p^{-β}.
+The associated integer is
 
-### Physical Interpretation
+$$
+m(a)=\prod_{p\in P_x}p^{a_p}.
+$$
 
-This bound is the number-theoretic analogue of the **Ryu-Takayanagi formula** in holographic entanglement entropy. The left side -F_p(β) is the "entanglement entropy" of the bulk mode at prime p. The right side is determined by the "area" of the boundary (the Boltzmann weight). The bound says: bulk entropy ≤ boundary area, exactly as in AdS/CFT.
+Taking logarithms gives $H_{x,N}(a)=\log m(a)$, while exponentiation gives
 
-## 5. Holographic Reconstruction
+$$
+e^{-\beta H_{x,N}(a)}=m(a)^{-\beta}.
+$$
 
-### Theorem 5.1 (Additive Reconstruction)
+Unique factorization makes $a\mapsto m(a)$ injective. Its image is precisely the positive integers all of whose prime divisors are below $x$ and whose prime exponents do not exceed $N$.
 
-If f, g : ℕ → ℝ are completely additive and f(p) = g(p) for all primes p, then f(n) = g(n) for all n ≥ 1.
+**Theorem 3.2 (Finite Prime Hologram).** For every $x,N\in\mathbb{N}$ and every $\beta\in\mathbb{R}$,
 
-*Proof.* By strong induction on n. Base: f(1) = 0 = g(1). Inductive step: for n ≥ 2, let p = min_fac(n). Then n = p · (n/p) with n/p < n. By complete additivity, f(n) = f(p) + f(n/p). By hypothesis, f(p) = g(p). By induction, f(n/p) = g(n/p). Hence f(n) = g(n). ∎
+$$
+\prod_{p\in P_x}\sum_{n=0}^{N}p^{-\beta n}
+=
+\sum_{a:P_x\to\{0,\ldots,N\}}
+\exp\!\left(-\beta\sum_{p\in P_x}a_p\log p\right).
+$$
 
-### Theorem 5.2 (Multiplicative Reconstruction)
+Equivalently,
 
-If f, g : ℕ → ℝ are multiplicative with f(1) = g(1) = 1, and f(p^k) = g(p^k) for all primes p and k ≥ 1, then f(n) = g(n) for all n ≥ 1.
+$$
+\prod_{p\in P_x}\sum_{n=0}^{N}p^{-\beta n}
+=
+\sum_{m\in S_{x,N}}m^{-\beta},
+$$
 
-*Proof.* By strong induction on n. For n ≥ 2, let p = min_fac(n) and k = v_p(n). Write n = p^k · m with gcd(p, m) = 1 and m < n. By multiplicativity, f(n) = f(p^k)·f(m) and g(n) = g(p^k)·g(m). By hypothesis, f(p^k) = g(p^k). By induction, f(m) = g(m). ∎
+where $S_{x,N}$ is the finite set of positive integers whose prime factors lie below $x$ and whose prime exponents are at most $N$.
 
-**PEGB for Theorem 5.1:**
-- **P**roof: Strong induction using unique factorization.
-- **E**xample: The function Ω(n) (number of prime factors with multiplicity) is the unique completely additive function with Ω(p) = 1 for all primes.
-- **G**eneralization: Theorem 5.2 extends to multiplicative functions, needing values on all prime powers.
-- **B**oundary: NOT true for merely additive functions. Consider f(p) = g(p) for all primes, but f(p²) ≠ g(p²) — the condition f(p^k) = k·f(p) is NOT guaranteed by additivity alone.
+**Proof sketch.** Apply Theorem 2.5 to $I=P_x$ and $E_p=\log p$. The identity $e^{-\beta n\log p}=p^{-\beta n}$ gives the displayed boundary factors. The integer formulation follows from unique factorization. $\square$
 
-## 6. Spectral Gap
+**Example 3.3.** Let $P_x=\{2,3\}$ and $N=2$. Then
 
-### Theorem 6.1 (Spectral Gap = log 2)
+$$
+Z=(1+2^{-\beta}+2^{-2\beta})(1+3^{-\beta}+3^{-2\beta}).
+$$
 
-For all n ≥ 1: log(2n) = log(n) + log(2).
+The nine bulk profiles correspond to $2^a3^b$ with $0\leq a,b\leq2$. At $\beta=1$, both descriptions sum the reciprocals of $1,2,3,4,6,9,12,18,36$.
 
-*Proof.* Immediate from log(2n) = log(2) + log(n). ∎
+## 4. Infinite occupation and the zeta function
 
-### Theorem 6.2 (Strict Monotonicity)
+For fixed $p$ and real $\beta>0$, the occupation cutoff may be removed by the geometric-series identity
 
-The function n ↦ log(n+1) is strictly monotone on ℕ.
+$$
+\sum_{n=0}^{\infty}p^{-\beta n}=(1-p^{-\beta})^{-1}.
+$$
 
-*Proof.* If m < n then m+1 < n+1, so log(m+1) < log(n+1) since log is strictly increasing on ℝ₊. ∎
+For finitely many primes this limit poses no difficulty. Removing the prime cutoff requires stronger convergence.
 
-### Physical Interpretation
+**Definition 4.1 (Infinite prime partition function).** For real $\beta>1$, define
 
-The spectral gap log(2) is the "mass gap" of the holographic system — the minimum energy for an excitation above the vacuum. In AdS/CFT, the mass gap is determined by the curvature of the bulk geometry. Here, it is determined by the smallest prime, reflecting the fact that 2 is the "lightest particle" in the arithmetic universe.
+$$
+Z_{\mathrm{prime}}(\beta)
+=\prod_p(1-p^{-\beta})^{-1},
+$$
 
-## 7. The Arithmetic Renormalization Group
+where the product ranges over all primes.
 
-### Definition 7.1 (RG Operator)
+**Theorem 4.2 (Infinite Prime Partition Identity).** If $\beta>1$, then
 
-For β ∈ ℝ, the **arithmetic RG operator** R_β acts on functions f : ℕ → ℝ by:
-$$(R_\beta f)(n) = f(n) \cdot n^{-\beta}$$
+$$
+Z_{\mathrm{prime}}(\beta)=\zeta(\beta).
+$$
 
-### Theorem 7.1 (Semigroup Law)
+**Proof sketch.** In the half-plane $\operatorname{Re}(s)>1$, the Dirichlet series $\sum_{n\geq1}n^{-s}$ converges absolutely. Unique factorization expands the absolutely convergent product of geometric series into that Dirichlet series, with each integer occurring exactly once. Setting $s=\beta$ gives the claim. $\square$
 
-R_α ∘ R_β = R_{α+β} for all α, β ∈ ℝ.
+**Corollary 4.3 (Logarithmic representation).** If $\beta>1$, then
 
-*Proof.* (R_α(R_β f))(n) = (R_β f)(n) · n^{-α} = f(n) · n^{-β} · n^{-α} = f(n) · n^{-(α+β)} = (R_{α+β} f)(n). ∎
+$$
+\exp\!\left(\sum_p-\log(1-p^{-\beta})\right)=\zeta(\beta).
+$$
 
-### Theorem 7.2 (Identity)
+**Proof sketch.** Absolute convergence permits taking logarithms of the positive Euler factors and summing them, after which exponentiation recovers the product. $\square$
 
-R_0 = id.
+The condition $\beta>1$ is essential to this argument. The completed zeta function and its reflection law require analytic continuation and an archimedean gamma factor. They are not consequences of finite distributivity.
 
-*Proof.* (R_0 f)(n) = f(n) · n^0 = f(n). ∎
+## 5. Tropical dequantization and the vacuum
 
-**PEGB for Theorem 7.1:**
-- **P**roof: Direct computation using n^a · n^b = n^{a+b}.
-- **E**xample: R_1(R_1 f)(n) = f(n)/n², and R_2 f(n) = f(n)/n². ✓
-- **G**eneralization: The semigroup extends to a group action of (ℝ, +) since R_{-β} is the inverse of R_β.
-- **B**oundary: At n = 0, R_β f(0) = f(0) · 0^{-β}, which is ill-defined — the RG flow is only well-defined on ℕ⁺.
+Tropicalization replaces a thermal sum by extremal energy data. For a finite nonempty configuration space $\Omega$ and Hamiltonian $H:\Omega\to\mathbb{R}$, define
 
-## 8. The Euler Product and Functional Equation
+$$
+\mathcal{T}(H)=\inf_{a\in\Omega}H(a).
+$$
 
-### Theorem 8.1 (Holographic Factorization)
+Because $\Omega$ is finite, the infimum is a minimum.
 
-For Re(s) > 1:
-$$\zeta(s) = \prod_p \frac{1}{1 - p^{-s}}$$
+**Lemma 5.1 (Nonnegativity of the bulk Hamiltonian).** If $E_i\geq0$ for all $i\in I$, then $H_{E,N}(a)\geq0$ for every $a\in\Omega_{I,N}$.
 
-This is the foundational identity of the holographic framework: the global partition function factorizes into local contributions, one for each boundary mode.
+**Proof sketch.** Every occupation number $a_i$ is nonnegative, so each product $a_iE_i$ is nonnegative. Their finite sum is nonnegative. $\square$
 
-### Theorem 8.2 (Holographic Duality)
+**Lemma 5.2 (Vacuum energy).** The vacuum profile $a^{(0)}$, defined by $a_i^{(0)}=0$ for every $i$, satisfies
 
-$$\Xi(1-s) = \Xi(s)$$
+$$
+H_{E,N}(a^{(0)})=0.
+$$
 
-The completed zeta function is self-dual under s ↔ 1-s. This is the number-theoretic analogue of bulk/boundary duality.
+**Proof sketch.** Every summand is $0\cdot E_i=0$. $\square$
 
-### Theorem 8.3 (Infinite Boundary)
+**Theorem 5.3 (Tropical Vacuum Theorem).** If every local energy is nonnegative, then
 
-The sum ∑_p 1/p diverges. The holographic boundary has infinite "area."
+$$
+\mathcal{T}(H_{E,N})=0.
+$$
 
-## 9. Conjectures and Open Problems
+**Proof sketch.** Lemma 5.1 gives the lower bound $\mathcal{T}(H_{E,N})\geq0$. Lemma 5.2 exhibits a configuration of energy $0$, giving the reverse bound. $\square$
 
-### Conjecture 9.1 (Riemann Hypothesis as Holographic Stability)
+**Corollary 5.4 (Prime Tropical Vacuum).** For every prime cutoff $x$ and occupation cutoff $N$,
 
-All non-trivial zeros of ζ(s) satisfy Re(s) = 1/2.
+$$
+\mathcal{T}(H_{x,N})=0.
+$$
 
-**Holographic interpretation**: The zeros are resonances of the bulk geometry. The conjecture states that all resonances occur at the duality-fixed depth, meaning the holographic system is "maximally symmetric."
+**Proof sketch.** Prime energies satisfy $\log p\geq0$, so Theorem 5.3 applies. This includes an empty prime set, whose unique empty profile has energy $0$. $\square$
 
-**Computational test**: Verified for the first 10¹³ zeros (Platt, 2021).
+### 5.1 Quantitative low-temperature convergence
 
-### Conjecture 9.2 (Prime Gap Holographic Bound)
+For nonnegative energies, the vacuum contributes $1$ to the partition sum and every Boltzmann weight is at most $1$. Writing $M=(N+1)^{|I|}$ therefore gives
 
-For consecutive primes p_n < p_{n+1}, the gap satisfies:
-$$p_{n+1} - p_n \leq C \cdot (\log p_n)^2$$
-for some constant C.
+$$
+1\leq Z_{\mathrm{bulk}}(E,N,\beta)\leq M
+$$
 
-**Holographic interpretation**: The boundary modes (primes) cannot be arbitrarily far apart; the holographic consistency of the bulk geometry constrains their distribution.
+for $\beta>0$. Consequently,
 
-## 10. Discussion
+$$
+0\leq\frac{1}{\beta}\log Z_{\mathrm{bulk}}(E,N,\beta)
+\leq\frac{|I|\log(N+1)}{\beta}.
+$$
 
-The Holographic Depth Algebra provides a rigorous mathematical framework for studying the "holographic" structure of prime numbers. While the analogy with AdS/CFT is suggestive rather than exact, several features are remarkably parallel:
+Thus the normalized log partition converges to $0$, the tropical vacuum energy, as $\beta\to\infty$. This bound depends only on the number of states; sharper estimates can use the first excitation gap.
 
-| AdS/CFT | Prime Holography |
-|---------|-----------------|
-| Bulk spacetime | Positive integers ℕ⁺ |
-| Boundary CFT | Primes P |
-| Partition function | Riemann zeta function ζ(s) |
-| Local operators | Euler factors (1-p^{-s})⁻¹ |
-| Holographic reconstruction | Unique prime factorization |
-| Ryu-Takayanagi bound | -log(1-x) ≤ x/(1-x) |
-| Functional equation | Ξ(s) = Ξ(1-s) |
-| Mass gap | log(2) |
-| RG flow | Arithmetic rescaling R_β |
+## 6. Algorithms
 
-The key mathematical novelty is the HDA structure itself, which provides a parameterized family of depth functions on ℕ⁺ with rich algebraic and analytic properties. The reconstruction theorems (Theorems 5.1 and 5.2) formalize the "holographic principle" in a purely number-theoretic context, showing that boundary data (values on primes) determines bulk data (values on all integers).
+### 6.1 Boundary product evaluation
 
-## References
+Given a list of primes $p_1,\ldots,p_k$, $N$, and $\beta$, compute each local sum $\sum_{n=0}^Np_j^{-\beta n}$ and multiply. Direct summation uses $O(kN)$ arithmetic operations and $O(1)$ auxiliary storage. A closed geometric formula can reduce the arithmetic count to $O(k)$ away from the removable case $p_j^{-\beta}=1$.
 
-[1] J. Maldacena, "The Large N Limit of Superconformal Field Theories and Supergravity," *Adv. Theor. Math. Phys.* 2 (1998) 231-252.
+### 6.2 Bulk enumeration
 
-[2] S. Ryu and T. Takayanagi, "Holographic Derivation of Entanglement Entropy from AdS/CFT," *Phys. Rev. Lett.* 96 (2006) 181602.
+Iterate over all $(N+1)^k$ occupation vectors, compute $H(a)=\sum_ja_j\log p_j$, and accumulate $e^{-\beta H(a)}$. This costs $O(k(N+1)^k)$ operations and is exponentially slower, but it directly exposes the state space and is ideal for validating factorization on small instances.
 
-[3] H. L. Montgomery, "The Pair Correlation of Zeros of the Zeta Function," *Proc. Symp. Pure Math.* 24 (1973) 181-193.
+### 6.3 Tropical ground-state evaluation
 
-[4] A. M. Odlyzko, "On the Distribution of Spacings Between Zeros of the Zeta Function," *Math. Comp.* 48 (1987) 273-308.
+For logarithmic prime energies, no enumeration is needed: all energies are nonnegative and the vacuum exists, so the answer is $0$. For a general finite noninteracting model with occupations from $0$ through $N$, the same conclusion holds whenever all local energies are nonnegative. If negative energies are allowed, each such mode minimizes energy at occupation $N$, giving the separable minimum $\sum_i\min(0,NE_i)$.
+
+### 6.4 Cutoff diagnostics
+
+For $\beta>1$, one may compare the finite product with a numerical approximation to $\zeta(\beta)$. Two errors are conceptually independent. The occupation-tail error comes from replacing each infinite geometric series by its first $N+1$ terms. The prime-tail error comes from omitting primes at or above $x$. Exact finite factorization ensures that these are approximation errors, not boundary/bulk discrepancies.
+
+## 7. Applications and interpretation
+
+The model offers a compact representation of a large combinatorial space. A bulk with $(N+1)^k$ states is represented by $k$ local factors. This is the same computational advantage exploited by generating functions, independent-particle models, and tensor factorizations.
+
+Arithmetically, each occupation profile is a bounded prime factorization. The Hamiltonian is the logarithm of the represented integer, and the Gibbs weight is its inverse power. The zeta function therefore appears as a grand canonical partition function for unrestricted prime exponents in its convergence region.
+
+Tropically, logarithmic energies turn multiplication of integers into addition of energies, while low temperature turns the logarithm of a sum into an extremum. The vacuum theorem is the min-plus shadow of the thermal system. It is robust but limited: it reports the ground energy, not the excited spectrum or correlations.
+
+The holographic terminology highlights a change of organization rather than a new equality beyond Euler factorization. The “boundary” lists independent local modes; the “bulk” lists simultaneous global configurations. Exact equality follows because the modes do not interact. Introducing interactions would generally destroy the simple product and would require a more sophisticated boundary encoding.
+
+## 8. Error structure and finite-size analysis
+
+The exact factorization permits a clean distinction among three limits: the low-temperature limit $\beta\to\infty$, the occupation limit $N\to\infty$, and the prime limit $x\to\infty$. These limits answer different questions and need not be taken at the same rate.
+
+For a fixed finite prime set and $\beta>0$, put $q_p=p^{-\beta}$. The omitted tail of the local geometric series is
+
+$$
+\sum_{n=N+1}^{\infty}q_p^n=\frac{q_p^{N+1}}{1-q_p}.
+$$
+
+Equivalently, the truncated local factor satisfies
+
+$$
+\sum_{n=0}^{N}q_p^n
+=\frac{1-q_p^{N+1}}{1-q_p}.
+$$
+
+Thus the finite-occupation boundary partition can be written exactly as
+
+$$
+Z_{x,N}(\beta)
+=\prod_{p\in P_x}\frac{1-p^{-\beta(N+1)}}{1-p^{-\beta}}.
+$$
+
+Relative to the same finite prime system with unrestricted occupations, the ratio is
+
+$$
+\frac{Z_{x,N}(\beta)}{Z_{x,\infty}(\beta)}
+=\prod_{p\in P_x}\left(1-p^{-\beta(N+1)}\right).
+$$
+
+This formula isolates the occupation error exactly. In particular, for fixed $x$ and $\beta>0$, the ratio tends to $1$ as $N\to\infty$.
+
+When $\beta>1$, the remaining prime-tail ratio is
+
+$$
+\frac{\zeta(\beta)}{Z_{x,\infty}(\beta)}
+=\prod_{p\geq x}(1-p^{-\beta})^{-1}.
+$$
+
+Its logarithm is a positive tail
+
+$$
+\sum_{p\geq x}-\log(1-p^{-\beta}),
+$$
+
+which tends to zero by absolute convergence. The occupation and prime errors therefore enter through distinct products. This independence is one of the practical benefits of the finite formulation.
+
+Low temperature behaves differently. With fixed $x$ and $N$, let $\Delta$ denote the least positive energy, if an excited state exists. Since the least prime mode has energy at least $\log2$, one may take $\Delta\geq\log2$ whenever the finite prime set is nonempty and $N\geq1$. Then
+
+$$
+0\leq Z_{x,N}(\beta)-1\leq\bigl((N+1)^{|P_x|}-1\bigr)e^{-\beta\Delta}.
+$$
+
+This exponential estimate sharpens the state-count bound and shows direct concentration on the vacuum. It also explains why the tropical limit discards most thermal information: all excited contributions vanish exponentially, leaving only the minimum energy and, under a finer normalization, its degeneracy.
+
+### 8.1 Numerical invariants
+
+Several quantities provide robust diagnostics. The factorization residual is
+
+$$
+R=\left|Z_{\mathrm{boundary}}-Z_{\mathrm{bulk}}\right|,
+$$
+
+which should vanish up to rounding error. The normalized tropical proxy is $\beta^{-1}\log Z$, which approaches $0$. The occupation ratio compares $Z_{x,N}$ with $Z_{x,\infty}$, while the prime ratio compares $Z_{x,\infty}$ with $\zeta(\beta)$ for $\beta>1$. Reporting all four prevents one source of approximation from being mistaken for another.
+
+### 8.2 Order of limits
+
+Although the three limits are compatible in familiar regimes, their meanings should not be conflated. Taking $\beta\to\infty$ first at fixed cutoffs erases all excited states and returns the vacuum, so subsequent enlargement of the prime set still leaves the tropical value at $0$. Taking $N\to\infty$ first at fixed $x$ and $\beta>0$ produces a finite Euler product. Taking $x\to\infty$ after that requires $\beta>1$ to reach the ordinary zeta Euler product. At $\beta\leq1$, the positive-real product diverges, and no rearrangement of the finite factorization supplies a convergent ordinary limit.
+
+This observation prevents a common conceptual error. The tropical vacuum is stable under all finite cutoffs, but that stability does not imply convergence of the thermal partition at fixed finite temperature. Ground-state energy and total state weight are different observables. An infinite system can have a perfectly well-defined minimum energy while its unnormalized partition sum diverges because too many excited states contribute.
+
+### 8.3 Compact encoding and computational scale
+
+Suppose there are $k$ prime modes and each allows $N+1$ occupations. The bulk table contains $(N+1)^k$ entries. By contrast, the boundary data consist of $k$ lists, each with $N+1$ weights. Thus the factored form requires $O(kN)$ explicit local data rather than $O((N+1)^k)$ global data. This is an exponential compression in the number of modes.
+
+The compression is exact only because the Hamiltonian is additive. If one adds an interaction term such as $J_{pq}a_pa_q$, then the Boltzmann weight no longer splits into independent one-mode factors. One can still seek structured representations—factor graphs, transfer matrices, or tensor networks—but the elementary Euler product is lost. In this sense, exact prime factorization corresponds to a noninteracting arithmetic gas.
+
+There is a complementary probabilistic interpretation. After division by $Z$, the Gibbs weights define a probability distribution on occupation profiles. Finite factorization implies that the coordinates are independent, with
+
+$$
+\mathbb{P}(a_p=n)=
+\frac{p^{-\beta n}}{\sum_{j=0}^{N}p^{-\beta j}}.
+$$
+
+Consequently, expectations of additive observables split into sums of local expectations. For example,
+
+$$
+\mathbb{E}[H]=\sum_{p\in P_x}(\log p)\,\mathbb{E}[a_p].
+$$
+
+This independence explains both the product formula and its limitation for spectral questions. Nontrivial connected correlations vanish between distinct modes in the basic ensemble. Any proposed comparison with correlated zero statistics must therefore introduce conditioning, smoothing, collective observables, interactions, or another mechanism that creates correlations rather than assuming they follow from normalization alone.
+
+## 9. Scope and limitations
+
+The established conclusions are:
+
+1. finite boundary products equal finite bulk occupation sums for arbitrary local energies;
+2. logarithmic prime energies yield an exact finite prime specialization;
+3. the unrestricted prime partition equals $\zeta(\beta)$ for $\beta>1$;
+4. nonnegative energies force tropical ground energy $0$;
+5. finite normalized log partition functions approach that value with a state-count bound.
+
+Several attractive statements remain outside these conclusions. The functional equation concerns a completed zeta function containing an archimedean factor and depends on analytic continuation. Pair correlation concerns the distribution of complex zeros, not merely the positive-real Euler product. The Riemann Hypothesis cannot be identified with stability until a precise dynamical system and an equivalence between its stability spectrum and zeta zeros are constructed. Calling these directions conjectural is not a weakness; it identifies exactly what additional mathematics must be supplied.
+
+## 10. Future research
+
+A first problem is joint removal of the prime and occupation cutoffs with an explicit error decomposition. Since the finite theorem makes the boundary/bulk equality exact, the only errors arise from omitted prime modes and geometric tails.
+
+A second problem is archimedean completion. The gamma factor should be treated as a distinguished local sector at infinity. Any reflection law resembling $s\mapsto1-s$ must incorporate this sector and analytic continuation.
+
+A third direction is tropicalizing the completed functional equation. Suitable logarithmic scaling may produce a piecewise-linear reflection principle with a controlled finite-temperature defect.
+
+A fourth direction is spectral. Centered fluctuations of occupation energies can be studied through two-point functions and compared, after explicit smoothing and scaling, with conjectural pair-correlation kernels for high zeta zeros. The finite model is useful here because every cutoff is transparent and numerical claims are falsifiable.
+
+Finally, a stability interpretation of the critical line requires a defined geometry, perturbation operator, and theorem relating spectral stability to zero locations. The present vacuum theorem supplies only the finite nonnegative ground-state component of such a program.
+
+## 11. Conclusion
+
+A finite product of local partition sums and a finite Gibbs sum over occupation profiles are two exact descriptions of one system. Assigning energy $\log p$ to prime mode $p$ turns the bulk into bounded prime factorizations and the boundary into a truncated Euler product. In the absolute-convergence region, removing cutoffs recovers $\zeta(\beta)$. Under tropical dequantization, nonnegative prime energies select the vacuum energy $0$.
+
+These statements provide a precise mathematical core for “holographic primes.” Their strength comes from maintaining clear boundaries: finite algebraic factorization, convergent infinite analysis, and tropical minimization are established; completed duality and spectral stability remain research questions. That distinction makes the framework both reliable and extensible.
