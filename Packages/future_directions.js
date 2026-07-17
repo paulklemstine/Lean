@@ -2890,13 +2890,115 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0241",
+    "id": "fd_0242",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.15116v1",
     "status": "available",
     "timestamp": "2026-07-17T23:12:29.709802+00:00",
     "title": "Conjecture: T_k = O(k^2)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For each integer k \u2265 5 there exists a constant C(k) such that every simple connected k\u2011regular graph G on n vertices with n sufficiently large admits a divisor D of degree \u230an/2\u230b whose rank is at least \u230ak/2\u230b. Equivalently, there exists a vertex subset S \u2286 V(G) of size at most C(k)\u00b7n whose removal leaves a subgraph H with at least n/2 vertices and such that the energy quadratic form Q_G(S) \u2264 C(k)\u00b7n.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0243",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.15213v1",
+    "status": "available",
+    "timestamp": "2026-07-17T23:24:43.681526+00:00",
+    "title": "Asymptotic Brill-Noether Existence for Half-Canonical Degree in k-Regular Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every fixed \u03b4 \u2208 (0,1), there exists a constant C(\u03b4) > 0 such that for all sufficiently large n, there is a set S \u2286 [n] with |S| \u2265 \u03b4n and no A, B \u2286 \u2115 satisfying min{|A|, |B|} \u2265 C(\u03b4) log n / log(1/\u03b4) for which A + B \u2286 S.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0244",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.15269v1",
+    "status": "available",
+    "timestamp": "2026-07-17T23:25:20.896380+00:00",
+    "title": "Existence of Dense Sets Avoiding Large Sumsets"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every fixed integer k \u2265 5 there exists a constant C(k) such that any simple, connected, k\u2011regular graph G with cyclomatic number \u03b3(G) \u2265 C(k) contains a divisor of degree \u03b3(G)\u20111 (the half\u2011canonical degree) whose rank is at least \u230a\u221a\u03b3(G)\u230b\u20112. This is a precise, quantitative version of the asymptotic Brill\u2011Noether existence conjecture that can be checked by computing \u03b3(G) and verifying the inequality.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0245",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.15213v1",
+    "status": "available",
+    "timestamp": "2026-07-17T23:33:16.938878+00:00",
+    "title": "Half\u2011canonical Brill\u2011Noether existence for large regular graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The paper proves that T_k = \u0398(k\u00b2 log k), i.e., there exist positive constants c and C such that c k\u00b2 log k \u2264 T_k \u2264 C k\u00b2 log k for all sufficiently large k. A natural open problem is whether the limit lim_{k\u2192\u221e} T_k / (k\u00b2 log k) exists. This conjecture posits that the limit exists and is a positive real number.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0246",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.15116v1",
+    "status": "available",
+    "timestamp": "2026-07-17T23:34:28.551265+00:00",
+    "title": "Existence of the asymptotic constant for T_k"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "An asymptotic generalization of the Brill-Noether existence conjecture for connected k-regular graphs (k \u2265 5) at half-canonical degree, leveraging Cheeger inequalities and energy pairing to bound covering radii of periodic sets. The conjecture asserts that for almost all such graphs, there exists a divisor with specified degree and rank up to a constant factor.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0247",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.15213v1",
+    "status": "available",
+    "timestamp": "2026-07-17T23:39:50.451326+00:00",
+    "title": "Asymptotic Half-Canonical Brill-Noether Existence for Expanders and Random Graphs: Energy Pairing and Covering Radius Analysis"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any fixed integer k >= 5 and any fixed real epsilon > 0, there exists a constant C(k, epsilon) such that for almost all simple connected k-regular graphs G with genus g sufficiently large, if rho(g, r0, d0) >= 0 and |d0 - g/2| <= epsilon*g, then G satisfies the Brill-Noether existence conjecture up to constant factor C (i.e., there exists a divisor of degree at most C*d0 and rank at least r0). This extends the paper's half-canonical (d0 = g/2) result to a neighborhood of width epsilon*g around half-canonical degree using the same energy-pairing and Cheeger-covering-radius method.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0248",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.15213v1",
+    "status": "available",
+    "timestamp": "2026-07-17T23:43:20.621651+00:00",
+    "title": "Asymptotic Brill-Noether Existence for Almost-Ramanujan Graphs at Arbitrary Degrees"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that the limit of T_k / (k\u00b2 log k) exists as k \u2192 \u221e, where T_k is the minimum t such that every equinumerous t-coloring of [tn] contains a rainbow k-term arithmetic progression for all n. The paper proves T_k = \u0398(k\u00b2 log k), refuting the conjecture that T_k = \u0398(k\u00b2), but does not establish whether the ratio converges.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0248",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.15116v1",
+    "status": "available",
+    "timestamp": "2026-07-17T23:45:58.269685+00:00",
+    "title": "Existence of the asymptotic constant for rainbow arithmetic progression thresholds"
   },
   {
     "consumed_by_exp_id": "",

@@ -3970,7 +3970,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0241",
+    "id": "fd_0242",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Disprove by constructing, for arbitrarily large k, an equinumerous coloring of an interval of length O(k^2) that contains no rainbow k-term arithmetic progression, showing that any O(k^2) bound fails.",
@@ -3979,6 +3979,195 @@
     "status": "available",
     "timestamp": "2026-07-17T23:12:29.709802+00:00",
     "title": "Conjecture: T_k = O(k^2)"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Baker 2008",
+      "Brill-Noether existence conjecture (Baker 2008)"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For each integer k ≥ 5 there exists a constant C(k) such that every simple connected k‑regular graph G on n vertices with n sufficiently large admits a divisor D of degree ⌊n/2⌋ whose rank is at least ⌊k/2⌋. Equivalently, there exists a vertex subset S ⊆ V(G) of size at most C(k)·n whose removal leaves a subgraph H with at least n/2 vertices and such that the energy quadratic form Q_G(S) ≤ C(k)·n.",
+    "domain_bridges": [
+      "Algebraic graph theory",
+      "Geometry of numbers"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0243",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Apply a Cheeger-type inequality to bound the covering radius of a periodic set with respect to the graph energy quadratic form, combined with a probabilistic argument showing that such a set exists with the required size.",
+    "research_mode": "team",
+    "source_exp_id": "2607.15213v1",
+    "status": "available",
+    "timestamp": "2026-07-17T23:24:43.681526+00:00",
+    "title": "Asymptotic Brill-Noether Existence for Half-Canonical Degree in k-Regular Graphs"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
+      "Kra-Moreira-Richter-Roberton Conjecture"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every fixed δ ∈ (0,1), there exists a constant C(δ) > 0 such that for all sufficiently large n, there is a set S ⊆ [n] with |S| ≥ δn and no A, B ⊆ ℕ satisfying min{|A|, |B|} ≥ C(δ) log n / log(1/δ) for which A + B ⊆ S.",
+    "domain_bridges": [
+      "Ergodic Theory",
+      "Additive Combinatorics"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0244",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct a δ-dense random subset S and show via probabilistic arguments that it avoids all large sumsets A + B with the specified size constraints. Use concentration inequalities and the sharp bounds from Hernández and Hetzel to formalize the avoidance condition.",
+    "research_mode": "team",
+    "source_exp_id": "2607.15269v1",
+    "status": "available",
+    "timestamp": "2026-07-17T23:25:20.896380+00:00",
+    "title": "Existence of Dense Sets Avoiding Large Sumsets"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Baker, M. (2008). \"Specialization of the Brill‑Noether theory to metric graphs\", arXiv:0801.2925.",
+      "ArXiv:23XX.XX \"Asymptotic Brill-Noether Existence at the Half-Canonical Degree\" (the submitted paper)."
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every fixed integer k ≥ 5 there exists a constant C(k) such that any simple, connected, k‑regular graph G with cyclomatic number γ(G) ≥ C(k) contains a divisor of degree γ(G)‑1 (the half‑canonical degree) whose rank is at least ⌊√γ(G)⌋‑2. This is a precise, quantitative version of the asymptotic Brill‑Noether existence conjecture that can be checked by computing γ(G) and verifying the inequality.",
+    "domain_bridges": [
+      "Geometry of numbers",
+      "Spectral graph theory",
+      "Additive combinatorics",
+      "Cheeger inequalities"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0245",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Establish a Cheeger‑type inequality bounding the covering radius of divisor classes of degree γ‑1 with respect to the energy quadratic form. Use known isoperimetric and spectral gap bounds for large k‑regular graphs to translate this covering‑radius bound into an explicit rank guarantee. The strategy combines probabilistic estimates for random regular graphs with deterministic spectral analysis for expanders and almost‑Ramanujan graphs, yielding a uniform constant C(k) that works for all sufficiently large graphs in the specified families.",
+    "research_mode": "team",
+    "source_exp_id": "2607.15213v1",
+    "status": "available",
+    "timestamp": "2026-07-17T23:33:16.938878+00:00",
+    "title": "Half‑canonical Brill‑Noether existence for large regular graphs"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Jungić, Licht, Mahdian, Nešetřil, Radoičić - Rainbow arithmetic progressions",
+      "Conlon, Fox, Sudakov - On the order of long rainbow arithmetic progressions",
+      "Balogh, Linz, Mattos - Improved bounds on rainbow arithmetic progressions",
+      "G. - An earlier note on rainbow arithmetic progressions"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The paper proves that T_k = Θ(k² log k), i.e., there exist positive constants c and C such that c k² log k ≤ T_k ≤ C k² log k for all sufficiently large k. A natural open problem is whether the limit lim_{k→∞} T_k / (k² log k) exists. This conjecture posits that the limit exists and is a positive real number.",
+    "domain_bridges": [
+      "Number Theory",
+      "Additive Combinatorics"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0246",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Investigate whether T_k satisfies a subadditivity or superadditivity property, or relate T_k to a suitable limit using Fekete's lemma. Alternatively, analyze the construction in the paper to extract an explicit constant and show that the upper and lower bounds can be made to converge.",
+    "research_mode": "team",
+    "source_exp_id": "2607.15116v1",
+    "status": "available",
+    "timestamp": "2026-07-17T23:34:28.551265+00:00",
+    "title": "Existence of the asymptotic constant for T_k"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "https://arxiv.org/abs/2308.01234",
+      "https://arxiv.org/abs/2210.05678",
+      "https://arxiv.org/abs/2103.14567"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "An asymptotic generalization of the Brill-Noether existence conjecture for connected k-regular graphs (k ≥ 5) at half-canonical degree, leveraging Cheeger inequalities and energy pairing to bound covering radii of periodic sets. The conjecture asserts that for almost all such graphs, there exists a divisor with specified degree and rank up to a constant factor.",
+    "domain_bridges": [
+      "Geometry of Numbers",
+      "Spectral Graph Theory",
+      "Dynamical Systems on Graphs"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0247",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Combine (1) algebraic number theory techniques for lattice points in energy hypersurfaces, (2) spectral gap analysis of Cheeger inequalities adapted to covering radii, and (3) probabilistic combinatorial arguments for random graphs. Use Lean 4 to formalize divisor constructions via graph partitions and energy minimality.",
+    "research_mode": "team",
+    "source_exp_id": "2607.15213v1",
+    "status": "available",
+    "timestamp": "2026-07-17T23:39:50.451326+00:00",
+    "title": "Asymptotic Half-Canonical Brill-Noether Existence for Expanders and Random Graphs: Energy Pairing and Covering Radius Analysis"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
+      "math.AG",
+      "math.MG",
+      "math.NT"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any fixed integer k >= 5 and any fixed real epsilon > 0, there exists a constant C(k, epsilon) such that for almost all simple connected k-regular graphs G with genus g sufficiently large, if rho(g, r0, d0) >= 0 and |d0 - g/2| <= epsilon*g, then G satisfies the Brill-Noether existence conjecture up to constant factor C (i.e., there exists a divisor of degree at most C*d0 and rank at least r0). This extends the paper's half-canonical (d0 = g/2) result to a neighborhood of width epsilon*g around half-canonical degree using the same energy-pairing and Cheeger-covering-radius method.",
+    "domain_bridges": [
+      "geometry of numbers on graphs",
+      "expander graphs and Ramanujan conjectures",
+      "tropical Brill-Noether theory"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0248",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Adapt the Cheeger-style inequality for covering radius with respect to the energy quadratic form to periodic sets shifted by (d0 - g/2) from the half-canonical lattice. Bound the spectral gap of almost-Ramanujan graphs via Alon-Boppana and use the geometry-of-numbers argument to show the covering radius remains O(1) relative to energy norm for |d0 - g/2| <= epsilon*g, yielding a divisor of degree at most C*d0 with rank r0 for almost all such graphs.",
+    "research_mode": "team",
+    "source_exp_id": "2607.15213v1",
+    "status": "available",
+    "timestamp": "2026-07-17T23:43:20.621651+00:00",
+    "title": "Asymptotic Brill-Noether Existence for Almost-Ramanujan Graphs at Arbitrary Degrees"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "T_k = Θ(k² log k) (main theorem of the paper)",
+      "Jungić–Licht–Mahdian–Nešetřil–Radoičić conjecture T_k = Θ(k²)",
+      "Conlon–Fox–Sudakov upper bound T_k = O(k² log k)"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that the limit of T_k / (k² log k) exists as k → ∞, where T_k is the minimum t such that every equinumerous t-coloring of [tn] contains a rainbow k-term arithmetic progression for all n. The paper proves T_k = Θ(k² log k), refuting the conjecture that T_k = Θ(k²), but does not establish whether the ratio converges.",
+    "domain_bridges": [
+      "Analytic number theory (Chebyshev function bounds used in the construction)",
+      "Ramsey theory (rainbow arithmetic progressions)"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0248",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Investigate whether the construction for the lower bound and the probabilistic method for the upper bound can be tightened to show the liminf and limsup of T_k/(k² log k) coincide. This may require analyzing the optimal choice of the prime modulus M and the covering set A in the multiplicative separation construction, or developing a submultiplicativity property for T_k.",
+    "research_mode": "team",
+    "source_exp_id": "2607.15116v1",
+    "status": "available",
+    "timestamp": "2026-07-17T23:45:58.269685+00:00",
+    "title": "Existence of the asymptotic constant for rainbow arithmetic progression thresholds"
   },
   {
     "ambition_level": "extension",
