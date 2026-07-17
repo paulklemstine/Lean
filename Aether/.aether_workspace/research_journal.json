@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "a0f7e73c",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Log-Concavity in the d-Hoggatt Hierarchy\n\nThis cycle formalized (in `HoggattTotals.lean`) the **sharp `d = 1` vs `d = 2`\ndichotomy** for the *total* d-Hoggatt numbers `H_d(n) = ∑",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 17,
-      "timestamp": "2026-07-13T23:31:37",
-      "title": "Sharp dichotomy for the *total* d-Hoggatt numbers"
-    },
-    {
       "cycle_id": "664b3442",
       "domain": "Applications",
       "key_insight": "# Future Directions: Time-Travel Logic / Causal Consistency\n\nThe file `Catalog/Logic/TimeTravelCausalConsistency.lean` formalizes causal loops and\nthe Novikov self-consistency principle:\n\n* `consisten",
@@ -2501,6 +2491,16 @@
       "theorem_count": 15,
       "timestamp": "2026-07-17T08:36:16",
       "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
+    },
+    {
+      "cycle_id": "463376b0",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions for Quantum-Surreal Measurement\n\n## 1. Finite-dimensional non-Archimedean spectral decomposition\n\n**Conjecture.** Every self-adjoint endomorphism of a finite-dimensional inner-prod",
+      "quality_score": 0.66,
+      "sorry_count": 3,
+      "theorem_count": 0,
+      "timestamp": "2026-07-17T09:08:07",
+      "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-17T08:36:16",
+  "last_updated": "2026-07-17T09:08:07",
   "open_questions": [
-    {
-      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "8ceb2563",
-      "domain": "Novelty",
-      "sorry_count": 4,
-      "timestamp": "2026-07-14T22:36:24"
-    },
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
       "cycle_id": "12ea9340",
@@ -3016,6 +3009,13 @@
       "domain": "Logic",
       "sorry_count": 1,
       "timestamp": "2026-07-17T05:57:49"
+    },
+    {
+      "context": "-    sorry+  have hchecked := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩); -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun ",
+      "cycle_id": "463376b0",
+      "domain": "NumberTheory",
+      "sorry_count": 3,
+      "timestamp": "2026-07-17T09:08:07"
     }
   ],
   "research_threads": {
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "c38e66e4",
-        "quality": 0.82,
-        "theorems": 14,
-        "title": "Power‑of‑Two Perfect Matching Count in Class B Graphs"
-      },
-      {
         "cycle_id": "bb33d4fa",
         "quality": 0.78,
         "theorems": 13,
@@ -3699,6 +3693,12 @@
         "quality": 0.67,
         "theorems": 14,
         "title": "ArXiv paper: Quantum Latin Squares of Order Six with Cardinalities Nineteen, Twe"
+      },
+      {
+        "cycle_id": "463376b0",
+        "quality": 0.66,
+        "theorems": 0,
+        "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
       }
     ],
     "Physics": [
