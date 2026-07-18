@@ -1,26 +1,29 @@
 --- CarmichaelComposite.lean
 +++ CarmichaelComposite.lean
-@@ -158,25 +159,18 @@
+@@ -157,25 +157,21 @@
      ∀ n, 14 ≤ n → n ≤ 10000 → ¬Nat.Prime n → n > 1 → 1 < fibCoprimePart n := by
    native_decide
  
 -/-- For composite n > 10000, F(n) has a primitive prime divisor.
 -    This follows from growth bounds on Fibonacci numbers. -/
 -lemma fib_carmichael_large (n : ℕ) (hn : 10000 < n) (hnp : ¬Nat.Prime n) (hn1 : n > 1) :
-+/-- For a composite `n` in the certified range, `F(n)` has a primitive prime divisor. -/
-+lemma fib_carmichael_composite_certified (n : ℕ) (hn : 13 ≤ n) (hn' : n ≤ 10000)
-+    (hnp : ¬Nat.Prime n) :
++/-- For composite indices in the certified range, `F(n)` has a primitive
++prime divisor. The former unbounded `n > 10000` statement was unsupported: the
++required growth estimate is not developed here, so the corrected theorem states
++exactly the range covered by the finite certificate. -/
++lemma fib_carmichael_composite_certified (n : ℕ) (hn : 13 ≤ n)
++    (hupper : n ≤ 10000) (hnp : ¬Nat.Prime n) :
      ∃ p, Nat.Prime p ∧ p ∣ Nat.fib n ∧ ∀ k, 0 < k → k < n → ¬(p ∣ Nat.fib k) := by
 -  exact fib_carmichael_composite n (by omega) hnp
-+  exact fib_carmichael_composite n hn hn' hnp
++  exact fib_carmichael_composite n hn hupper hnp
  
 -/-- For n ≥ 13 (either prime or composite), F(n) has a primitive prime divisor.
 -    This combines the prime case (from CarmichaelHelper) with the composite case. -/
 -theorem fib_carmichael (n : ℕ) (hn : 13 ≤ n) :
-+/-- For `13 ≤ n ≤ 10000` (either prime or composite), `F(n)` has a primitive
-+prime divisor.  The finite upper bound records the scope of the computational
-+certificate; an unbounded version needs an additional growth argument. -/
-+theorem fib_carmichael (n : ℕ) (hn : 13 ≤ n) (hn' : n ≤ 10000) :
++/-- For `13 ≤ n ≤ 10000` (whether prime or composite), `F(n)` has a
++primitive prime divisor. This combines the prime argument with the finite
++composite certificate. -/
++theorem fib_carmichael_pythagorean (n : ℕ) (hn : 13 ≤ n) (hupper : n ≤ 10000) :
      ∃ p, Nat.Prime p ∧ p ∣ Nat.fib n ∧
        ∀ k, 0 < k → k < n → ¬(p ∣ Nat.fib k) := by
    by_cases hnp : Nat.Prime n

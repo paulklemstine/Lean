@@ -61,6 +61,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 18410e31 (Q=0.770), which proved 12 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: When a theorem prover searches for a proof, it explores a tree of possible derivation steps. The branching factor is the number of applicable inference rules at each step. Define the proof-search fractal dimension D(T) of a theorem T as the Hausdorff dimension of the set of all successful proof path",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_18410e31_ecb9fdf8",
+    "lineage_refs": [],
+    "priority_score": 0.87,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "18410e31",
+    "status": "available",
+    "timestamp": "2026-07-18T09:21:32.306900+00:00",
+    "title": "Deepening: Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle e9a483ed (Q=0.760), which proved 8 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: L-functions are the DNA of mathematics — each one encodes deep arithmetic information. But how many L-functions ARE there? The L-function universe is vast: (1) The Riemann zeta function (1 L-function), (2) Dirichlet L-functions (countably many), (3) L-functions of elliptic curves (uncountably many, ",
     "domain_bridges": [],
     "domains": [
@@ -175,6 +194,25 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Cycle 18410e31 (Q=0.770) proved 12 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: When a theorem prover searches for a proof, it explores a tree of possible derivation steps. The branching factor is the number of applicable inference rules at each step. Define the proof-search frac",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_18410e31_fcdd9dd6",
+    "lineage_refs": [],
+    "priority_score": 0.8200000000000001,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "18410e31",
+    "status": "available",
+    "timestamp": "2026-07-18T09:21:32.344494+00:00",
+    "title": "Close Proofs: Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
     "consumed_by_exp_id": "21c08839",
     "description": "Proofs are static objects, but what if proofs could improve? Define a proof refinement system where each proof P has a complexity C(P) = length(P) + depth(P) + number of lemmas, and a proof P' is a refinement of P if P' proves the same theorem with C(P') < C(P). Conjecture: For every theorem T provable in ZFC, there exists a sequence of refinements P = P_0, P_1, P_2, ... such that C(P_n) is non-increasing and the limit P_infinity is the simplest proof of T (in the sense of Kolmogorov complexity). Moreover, the refinement process halts: there exists N such that C(P_N) = C(P_{N+1}) = ... = C(P_infinity). The key insight: proof simplification is a well-founded process because the complexity is a natural number that decreases at each step. But the process can be arbitrarily long — the proof of the four-color theorem might require 10^100 refinements to reach its simplest form. Test: formalize the refinement system in Lean 4. Starting from the statement of the irrationality of sqrt(2), generate refinements by eliminating unnecessary lemmas, shortening case splits, and removing redundant quantifiers. Measure C(P) at each step and verify it decreases. Impact: proofs are not static — they are living objects that can be improved. The simplest proof of a theorem is the LIMIT of the refinement process, and this limit ALWAYS exists.",
     "domain_bridges": [],
@@ -191,26 +229,6 @@
     "status": "in_progress",
     "timestamp": "2026-07-18T03:44:45.986581+00:00",
     "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "f48abc37",
-    "description": "Mendeleev's periodic table arranges elements by atomic number Z, but Z is just the charge of the nucleus. Conjecture: the periodic table is the spectrum of an operator on a Hilbert space of dimension equal to the number of stable isotopes. Define the 'nuclear Hamiltonian' H on L^2(R^3) by H = -hbar^2/(2m) * nabla^2 + V(r) where V(r) encodes the strong and electromagnetic forces. The eigenvalues E_n of H give the binding energies of nuclei, and Z_n = round(E_n / E_0) gives the atomic numbers. The 'periodicity' of the table arises because the eigenvalues of H have shell structure (like the hydrogen atom): the n-th shell has degeneracy 2n^2 (from the angular momentum quantum number), giving shell sizes 2, 8, 18, 32, 50, 72 — the noble gas atomic numbers 2, 10, 28, 60, 110 are the cumulative sums. The 'stability islands' (magic numbers 2, 8, 20, 28, 50, 82, 126) correspond to extra degeneracies in the nuclear potential. Test: solve the Schrodinger equation for a Woods-Saxon potential (model nuclear potential) and show that the eigenvalue degeneracies match the periodic table structure. Compute the 'predicted' periodic table from the eigenvalues and compare with reality. Impact: chemistry IS applied spectral theory. The periodic table is the spectrum of a Hamiltonian, and every chemical property is an eigenvalue.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Physics"
-    ],
-    "id": "fd_0282",
-    "lineage_refs": [],
-    "priority_score": 0.82,
-    "proof_strategy": "Define the nuclear Hamiltonian H = -hbar^2/(2m) * nabla^2 + V(r) where V(r) = -V_0 / (1 + exp((r-R)/a)) (Woods-Saxon potential). Solve the radial Schrodinger equation for H in spherical coordinates. The eigenvalues E_{n,l} have degeneracy 2(2l+1) (spin-orbit coupling doubles the angular momentum degeneracy). The magic numbers arise when a shell is completely filled: cumulative degeneracies give 2, 6+2=8, 6+2+10+2=20, etc. (with spin-orbit splitting). Compute: solve the Schrodinger equation numerically for V_0 = 50 MeV, R = 1.2*A^{1/3} fm, a = 0.5 fm. Extract eigenvalues and compare with observed nuclear binding energies. The key insight: spin-orbit coupling (V_{ls} = V_{ls0} * (1/r) * dV/dr * L dot S) splits the (n,l) levels into (n,l,j=l+1/2) and (n,l,j=l-1/2), creating the magic numbers 2, 8, 20, 28, 50, 82, 126. Test: compute eigenvalues for A=4 to A=300 and verify shell closures at magic numbers.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T06:56:07.277476+00:00",
-    "title": "The Periodic Table Is a Lie: Elements as Eigenvalues of Spacetime"
   },
   {
     "ambition_level": "extension",
@@ -4680,26 +4698,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "18410e31",
-    "description": "When a theorem prover searches for a proof, it explores a tree of possible derivation steps. The branching factor is the number of applicable inference rules at each step. Define the proof-search fractal dimension D(T) of a theorem T as the Hausdorff dimension of the set of all successful proof paths for T. If D(T) < 1, the proof is 'easy' (few paths work, so search is focused). If D(T) > 1, the proof is 'hard' (many paths must be explored). Conjecture: For theorems in ZFC, D(T) = 1 + O(1/length(T)). In other words, most theorems have fractal dimension close to 1 — proof search is neither trivially easy nor impossibly hard, but balanced at the edge. Theorems with D(T) << 1 are 'obvious' (direct proofs), and theorems with D(T) >> 1 require exponentially long proofs. The fractal dimension correlates with proof length: if D(T) = 1 + epsilon, then the shortest proof of T has length roughly 1/epsilon. Test: for 1000 theorems in Lean 4's Mathlib, estimate D(T) by Monte Carlo sampling of proof search trees, and correlate with actual proof length. Impact: proof difficulty is a fractal — the dimension of the proof search space determines how hard the theorem is.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0274",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "Define the proof search tree for a theorem T: nodes are proof states, edges are inference rule applications, and leaves are states where T is proved or a contradiction is reached. Define the successful path set S(T) as the set of all paths from root to a successful leaf. Define D(T) = dim_H(S(T)) as the Hausdorff dimension. Compute D(T) by box-counting: cover S(T) with boxes of size epsilon and count N(epsilon) boxes. Then D(T) = lim_{epsilon -> 0} log(N(epsilon))/log(1/epsilon). For a balanced binary tree of depth d with 2^d leaves, D = log(2)/log(2) = 1. For a sparse tree with branching factor b < 2, D = log(b)/log(2) < 1. Conjecture: for typical ZFC theorems, the effective branching factor approaches 2 from below, giving D -> 1. Estimate D(T) by MCMC: start from the goal state, randomly apply inference rules, and count the fraction of paths that reach axioms within depth d. D(T) = log(fraction * branching_factor) / log(2). Test: compute for 1000 Mathlib theorems.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T06:02:41.344792+00:00",
-    "title": "Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "# Future directions\n\n## Mathematical interpretation\n\nThe formal development treats a finite graph cellular sheaf through its two-term\ncochain complex `C⁰ → C¹`. It proves the exact identities\n\n- `b₀ + rank δ = dim C⁰`,\n- `b₁ + rank δ = dim C¹`, and\n- `b₀ + b₁ + 2 rank δ = dim C⁰ + dim C¹`.\n\nConsequently, `H¹ = 0` means that the coboundary is surjective, while maximal\n`H⁰` means that the coboundary is zero. These conditions can coexist only when\nthe degree-one cochain space has dimension zero. This exposes an important\nlimitation in the proposed virality heuristic: for fixed stalk spaces, maximizing\n`H⁰` and minimizing `H¹` are not independent goals.\n\n## Recommended next formal steps\n\n1. Define an actual finite graph cellular sheaf with vertex stalks, edge stalks,\n   and restriction maps, then construct its coboundary from an orientation.\n2. Prove orientation-independence of `b₀` and `b₁`.\n3. Relate `H⁰` to compatible families of local sections, rather than calling its\n   dimension the number of interpretations. Over an infinite field, dimension is\n   not cardinality.\n4. Formalize constant sheaves on connected and disconnected graphs and prove that\n   `dim H⁰` equals the number of connected components.\n5. Study sheaves whose stalk dimensions reflect detected communities, and state\n   precisely which changes in restriction maps increase or decrease each Betti\n   number.\n6. Separate three empirical quantities: reach, semantic diversity, and observed\n   transmission failures. Test whether any of them is statistically predicted by\n   `b₀`, `b₁`, stalk dimensions, or coboundary rank.\n\n## Empirical work not certified here\n\nNo Twitter/X dataset was supplied, so the proposed 1000-node correlation study was\nnot performed. Such a study would also require a justified procedure for deriving\nstalks and restriction maps from data, a preregistered virality measure, temporal\ncontrols, community-detection sensitivity analysis, and held-out validation.\nThe Lean results certify the linear-algebraic constraints of the model; they do\nnot establish that meme virality is topological or that content quality is\nirrelevant.\n",
     "domain_bridges": [],
@@ -4921,6 +4919,46 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: Geometry and Cost in Proof Search\n\n## 1. Entropy-rate law for stationary pruning\n\nFor a finite-branching search whose admissible decisions are generated by a stationary ergodic process, the normalized Hausdorff dimension of successful paths equals the process's conditional entropy rate divided by the logarithm of the ambient branching factor.\n\nThe key insight is that the exact density law for periodic pruning is the zero-memory case of a Shannon–McMillan phenomenon on derivation trees. **Why now?** Periodic models provide exact benchmarks at complete periods, making finite-memory and ergodic extensions sharply falsifiable.\n\n## 2. Dimension–cost law under unbiased traversal\n\nFor an unbiased breadth-first traversal of a regular `b`-ary search tree with successful-prefix dimension `d < 1`, the expected number of visited nodes before reaching depth `n` is exponential with rate `b^(1-d)`, subject to a uniform extension condition on successful prefixes.\n\nThe key insight is that codimension, rather than dimension excess above one, measures the proportion of branches lost at each scale. **Why now?** The ambient upper bound rules out the proposed super-unit regime and identifies `1-d` as the natural candidate exponent.\n\n## 3. Policy separation at fixed dimension\n\nThere exist two computable traversal policies on the same successful-prefix tree with identical positive dimension for which one has polynomial expected discovery time and the other has exponential expected discovery time.\n\nThe key insight is that fractal geometry describes abundance but not visitation order. **Why now?** Arbitrary terminal length already shows that geometry alone cannot determine proof length; the next test is to separate policies while holding the entire successful-path set fixed.\n\n## 4. Oscillatory search spectra\n\nThere exists a decidable, aperiodically pruned binary search whose lower and upper normalized dimensions are any prescribed rational pair `0 ≤ a < b ≤ 1`, while its finite-scale estimates attain neighborhoods of both endpoints infinitely often.\n\nThe key insight is that alternating long periodic blocks should independently control lower and upper exponential growth rates. **Why now?** Exact periodic dimensions and exact complete-period estimates supply the blocks needed for a constructive oscillation theorem.\n\n## 5. Statistically consistent dimension estimation\n\nFor finite-state Markov pruning with transition probabilities bounded away from zero, a path-sampling estimator recovers the successful-set dimension with exponentially decaying error probability, uniformly over model size after an explicit mixing-time correction.\n\nThe key insight is that successful-prefix growth becomes an additive functional of a finite-state chain. **Why now?** Exact periodic benchmarks expose bias directly and provide calibration cases before moving to large theorem corpora.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Logic",
+      "Computation"
+    ],
+    "id": "fd_0297",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "18410e31",
+    "status": "available",
+    "timestamp": "2026-07-18T09:21:26.582496+00:00",
+    "title": "For a finite-branching search whose admissible decisions are generated by a stat"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Spectral Shell Models of the Periodic Table\n\n## 1. Spin–orbit splitting recovers the nuclear magic sequence\n\nConstruct a finite-dimensional shell Hamiltonian whose oscillator term has multiplicity `(N+1)(N+2)` and whose angular spin–orbit perturbation is proportional to `L·S`. Conjecture that an explicit physically admissible ordering of the split levels has cumulative closures `2, 8, 20, 28, 50, 82, 126`.\n\nThe key insight is that the bare oscillator succeeds exactly through `20` and fails precisely where spin–orbit splitting becomes decisive, so the discrepancy identifies the missing operator rather than merely showing numerical error.\n\nWhy now? The exact oscillator filling polynomial and its first divergence from the empirical sequence provide a sharply delimited baseline against which every proposed perturbation can be tested.\n\n## 2. Madelung ordering as a spectral perturbation theorem\n\nLet orbitals `(n,l)` have unperturbed Coulomb energy depending only on `n`, and perturb them by a term that is strictly increasing in `n+l`, with ties broken by `n`. Conjecture that there is a quantitative open region of perturbation parameters for which the first 118 orbital occupations follow the Madelung order.\n\nThe key insight is that the false Coulomb closures `2,10,28,60,110` arise from exact degeneracy in `l`; lifting that degeneracy in a controlled order can convert a hydrogenic spectrum into the observed block structure.\n\nWhy now? The cumulative Coulomb theorem isolates the degeneracy that must be broken and supplies exact gap sizes for perturbative inequalities.\n\n## 3. Stability of closed-shell counts under symmetry-preserving perturbations\n\nFor a finite self-adjoint Hamiltonian decomposed into irreducible angular-momentum sectors, conjecture that sufficiently small perturbations commuting with the symmetry action preserve cumulative shell multiplicities whenever adjacent spectral clusters have a positive gap.\n\nThe key insight is that periodic structure depends on spectral projections and their ranks, not on exact numerical eigenvalues; ranks should remain constant until a gap closes.\n\nWhy now? The diagonal shell model gives explicit eigenvectors and multiplicities, making it possible to formulate a quantitative gap condition and then broaden from diagonal matrices to general Hermitian operators.\n\n## 4. Woods–Saxon spectral certification with interval bounds\n\nFor a radial Woods–Saxon potential with a standard spin–orbit term and parameter intervals calibrated to medium and heavy nuclei, conjecture that certified eigenvalue enclosures preserve the ordering needed for closures at `28`, `50`, and `82` throughout nontrivial parameter boxes.\n\nThe key insight is that a useful comparison with experiment requires robust eigenvalue inequalities over parameter ranges, not a single floating-point diagonalization.\n\nWhy now? The exact combinatorial shell counts identify the required multiplicities, while modern interval eigensolvers can test whether realistic potentials realize them stably.\n\n## 5. No universal energy-rounding scale recovers atomic number\n\nFor any fixed positive scale `E₀`, conjecture that nuclear binding energies across all stable isotopes cannot satisfy `round(E/E₀)=Z` consistently, even after choosing one representative isotope per element.\n\nThe key insight is that binding energy is controlled primarily by mass number and saturation, whereas atomic number is a charge count; a universal scalar rounding rule discards the independent neutron degree of freedom.\n\nWhy now? The shell-spectrum results clarify the valid role of multiplicity while separating it from the stronger and falsifiable claim that energy values themselves encode atomic numbers by uniform rounding.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Physics",
+      "Algebra"
+    ],
+    "id": "fd_0298",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "f48abc37",
+    "status": "available",
+    "timestamp": "2026-07-18T09:21:36.004707+00:00",
+    "title": "Construct a finite-dimensional shell Hamiltonian whose oscillator term has multi"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Cycle d1663b23 (Q=0.700) proved 0 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'A minimal modularity lifting theorem for Siegel modular forms' and formalize its key results. Abstract: We prove a minimal modularity lifting theorem (in the spirit of Gen",
     "domain_bridges": [],
     "domains": [
@@ -4974,6 +5012,26 @@
     "status": "available",
     "timestamp": "2026-07-17T14:03:03.735341+00:00",
     "title": "Close Proofs: Dark Mathematics: Theorems That Exist But Cannot Be Found"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "The Erdos-Renyi random graph G(n, p) has n vertices where each edge appears independently with probability p. At p = log(n)/n, G(n,p) becomes connected. But what if p is COMPLEX? Define G(n, z) where z is a complex number: each edge (i,j) appears with 'probability' z, meaning the edge weight is z instead of 0 or 1. The resulting 'complex graph' is a weighted complete graph where edge (i,j) has weight z if the edge exists and 0 otherwise. The adjacency matrix A_z has entries that are either z or 0. Conjecture: The complex eigenvalues of A_z trace out a circle of radius |z|*sqrt(n) in the complex plane, centered at the origin. As n -> infinity, the empirical spectral distribution of A_z converges to the circular law (like the Ginibre ensemble) because A_z is a random matrix with i.i.d. entries of mean z*p and variance |z|^2*p*(1-p). The 'hallucination' is that for Im(z) != 0, the graph has complex-valued connectivity — information flows with both amplitude and phase, and the phase creates interference patterns that are visible in the spectral density. Test: generate A_z for n = 1000 with z = 0.5 + 0.3i, compute eigenvalues, and verify they lie in a disk of radius sqrt(n)*|z|. Compare with the Ginibre ensemble prediction. Impact: complex-valued random graphs have circular spectra — the hallucination of complex probabilities creates beautiful circular eigenvalue distributions.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_0296",
+    "lineage_refs": [],
+    "priority_score": 0.73,
+    "proof_strategy": "Define G(n, z) as a random graph on n vertices where each edge (i,j) appears with probability p = Re(z)/|z| if |z| <= 1, or p = 1/|z| if |z| > 1, and the edge weight is z if present and 0 if absent. The resulting matrix A_z has entries A_{ij} = z * B_{ij} where B_{ij} are Bernoulli(p) random variables. The expected value E[A_{ij}] = z*p and Var(A_{ij}) = |z|^2 * p * (1-p). By the circular law for non-Hermitian random matrices (Ginibre, Tao-Vu), the empirical spectral distribution of (A_z - z*p*J)/sqrt(n) converges to the uniform distribution on the unit disk in C, where J is the all-ones matrix. Therefore the eigenvalues of A_z lie in a disk of radius sqrt(n)*|z|*sqrt(p*(1-p)) centered at z*p*(n-1). For z = 0.5 + 0.3i and p = 0.5, the center is at z*0.5*n and the radius is sqrt(n)*|z|*0.5. Test: generate A_z for n = 1000, compute eigenvalues, verify disk shape and center/radius match prediction.",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-18T09:20:55.078260+00:00",
+    "title": "Erdos-Renyi on Acid: Random Graphs That Hallucinate"
   },
   {
     "ambition_level": "extension",

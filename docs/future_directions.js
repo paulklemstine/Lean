@@ -47,6 +47,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 18410e31 (Q=0.770), which proved 12 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: When a theorem prover searches for a proof, it explores a tree of possible derivation steps. The branching factor is the number of applicable inference rules at each step. Define the proof-search fractal dimension D(T) of a theorem T as the Hausdorff dimension of the set of all successful proof path",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_18410e31_ecb9fdf8",
+    "priority_score": 0.87,
+    "research_mode": "team",
+    "source_exp_id": "18410e31",
+    "status": "available",
+    "timestamp": "2026-07-18T09:21:32.306900+00:00",
+    "title": "Deepening: Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle e9a483ed (Q=0.760), which proved 8 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: L-functions are the DNA of mathematics \u2014 each one encodes deep arithmetic information. But how many L-functions ARE there? The L-function universe is vast: (1) The Riemann zeta function (1 L-function), (2) Dirichlet L-functions (countably many), (3) L-functions of elliptic curves (uncountably many, ",
     "domains": [
       "Computation"
@@ -129,6 +143,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-18T09:05:18.164692+00:00",
     "title": "Deepening: Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 18410e31 (Q=0.770) proved 12 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: When a theorem prover searches for a proof, it explores a tree of possible derivation steps. The branching factor is the number of applicable inference rules at each step. Define the proof-search frac",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_18410e31_fcdd9dd6",
+    "priority_score": 0.8200000000000001,
+    "research_mode": "team",
+    "source_exp_id": "18410e31",
+    "status": "available",
+    "timestamp": "2026-07-18T09:21:32.344494+00:00",
+    "title": "Close Proofs: Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
   },
   {
     "consumed_by_exp_id": "21c08839",
@@ -3398,21 +3426,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "`Tropical/DarkMathematics.lean` treats provability as an abstract predicate `Pr "
   },
   {
-    "consumed_by_exp_id": "18410e31",
-    "description": "When a theorem prover searches for a proof, it explores a tree of possible derivation steps. The branching factor is the number of applicable inference rules at each step. Define the proof-search fractal dimension D(T) of a theorem T as the Hausdorff dimension of the set of all successful proof paths for T. If D(T) < 1, the proof is 'easy' (few paths work, so search is focused). If D(T) > 1, the proof is 'hard' (many paths must be explored). Conjecture: For theorems in ZFC, D(T) = 1 + O(1/length(T)). In other words, most theorems have fractal dimension close to 1 \u2014 proof search is neither trivially easy nor impossibly hard, but balanced at the edge. Theorems with D(T) << 1 are 'obvious' (direct proofs), and theorems with D(T) >> 1 require exponentially long proofs. The fractal dimension correlates with proof length: if D(T) = 1 + epsilon, then the shortest proof of T has length roughly 1/epsilon. Test: for 1000 theorems in Lean 4's Mathlib, estimate D(T) by Monte Carlo sampling of proof search trees, and correlate with actual proof length. Impact: proof difficulty is a fractal \u2014 the dimension of the proof search space determines how hard the theorem is.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0274",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T06:02:41.344792+00:00",
-    "title": "Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "# Future directions\n\n## Mathematical interpretation\n\nThe formal development treats a finite graph cellular sheaf through its two-term\ncochain complex `C\u2070 \u2192 C\u00b9`. It proves the exact identities\n\n- `b\u2080 + rank \u03b4 = dim C\u2070`,\n- `b\u2081 + rank \u03b4 = dim C\u00b9`, and\n- `b\u2080 + b\u2081 + 2 rank \u03b4 = dim C\u2070 + dim C\u00b9`.\n\nConsequently, `H\u00b9 = 0` means that the coboundary is surjective, while maximal\n`H\u2070` means that the coboundary is zero. These conditions can coexist only when\nthe degree-one cochain space has dimension zero. This exposes an important\nlimitation in the proposed virality heuristic: for fixed stalk spaces, maximizing\n`H\u2070` and minimizing `H\u00b9` are not independent goals.\n\n## Recommended next formal steps\n\n1. Define an actual finite graph cellular sheaf with vertex stalks, edge stalks,\n   and restriction maps, then construct its coboundary from an orientation.\n2. Prove orientation-independence of `b\u2080` and `b\u2081`.\n3. Relate `H\u2070` to compatible families of local sections, rather than calling its\n   dimension the number of interpretations. Over an infinite field, dimension is\n   not cardinality.\n4. Formalize constant sheaves on connected and disconnected graphs and prove that\n   `dim H\u2070` equals the number of connected components.\n5. Study sheaves whose stalk dimensions reflect detected communities, and state\n   precisely which changes in restriction maps increase or decrease each Betti\n   number.\n6. Separate three empirical quantities: reach, semantic diversity, and observed\n   transmission failures. Test whether any of them is statistically predicted by\n   `b\u2080`, `b\u2081`, stalk dimensions, or coboundary rank.\n\n## Empirical work not certified here\n\nNo Twitter/X dataset was supplied, so the proposed 1000-node correlation study was\nnot performed. Such a study would also require a justified procedure for deriving\nstalks and restriction maps from data, a preregistered virality measure, temporal\ncontrols, community-detection sensitivity analysis, and held-out validation.\nThe Lean results certify the linear-algebraic constraints of the model; they do\nnot establish that meme virality is topological or that content quality is\nirrelevant.\n",
     "domains": [
@@ -3579,6 +3592,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: Geometry and Cost in Proof Search\n\n## 1. Entropy-rate law for stationary pruning\n\nFor a finite-branching search whose admissible decisions are generated by a stationary ergodic process, the normalized Hausdorff dimension of successful paths equals the process's conditional entropy rate divided by the logarithm of the ambient branching factor.\n\nThe key insight is that the exact density law for periodic pruning is the zero-memory case of a Shannon\u2013McMillan phenomenon on derivation trees. **Why now?** Periodic models provide exact benchmarks at complete periods, making finite-memory and ergodic extensions sharply falsifiable.\n\n## 2. Dimension\u2013cost law under unbiased traversal\n\nFor an unbiased breadth-first traversal of a regular `b`-ary search tree with successful-prefix dimension `d < 1`, the expected number of visited nodes before reaching depth `n` is exponential with rate `b^(1-d)`, subject to a uniform extension condition on successful prefixes.\n\nThe key insight is that codimension, rather than dimension excess above one, measures the proportion of branches lost at each scale. **Why now?** The ambient upper bound rules out the proposed super-unit regime and identifies `1-d` as the natural candidate exponent.\n\n## 3. Policy separation at fixed dimension\n\nThere exist two computable traversal policies on the same successful-prefix tree with identical positive dimension for which one has polynomial expected discovery time and the other has exponential expected discovery time.\n\nThe key insight is that fractal geometry describes abundance but not visitation order. **Why now?** Arbitrary terminal length already shows that geometry alone cannot determine proof length; the next test is to separate policies while holding the entire successful-path set fixed.\n\n## 4. Oscillatory search spectra\n\nThere exists a decidable, aperiodically pruned binary search whose lower and upper normalized dimensions are any prescribed rational pair `0 \u2264 a < b \u2264 1`, while its finite-scale estimates attain neighborhoods of both endpoints infinitely often.\n\nThe key insight is that alternating long periodic blocks should independently control lower and upper exponential growth rates. **Why now?** Exact periodic dimensions and exact complete-period estimates supply the blocks needed for a constructive oscillation theorem.\n\n## 5. Statistically consistent dimension estimation\n\nFor finite-state Markov pruning with transition probabilities bounded away from zero, a path-sampling estimator recovers the successful-set dimension with exponentially decaying error probability, uniformly over model size after an explicit mixing-time correction.\n\nThe key insight is that successful-prefix growth becomes an additive functional of a finite-state chain. **Why now?** Exact periodic benchmarks expose bias directly and provide calibration cases before moving to large theorem corpora.\n",
+    "domains": [
+      "Logic",
+      "Computation"
+    ],
+    "id": "fd_0297",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "18410e31",
+    "status": "available",
+    "timestamp": "2026-07-18T09:21:26.582496+00:00",
+    "title": "For a finite-branching search whose admissible decisions are generated by a stat"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle d1663b23 (Q=0.700) proved 0 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'A minimal modularity lifting theorem for Siegel modular forms' and formalize its key results. Abstract: We prove a minimal modularity lifting theorem (in the spirit of Gen",
     "domains": [
       "Applications"
@@ -3619,6 +3647,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-17T14:03:03.735341+00:00",
     "title": "Close Proofs: Dark Mathematics: Theorems That Exist But Cannot Be Found"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Erdos-Renyi random graph G(n, p) has n vertices where each edge appears independently with probability p. At p = log(n)/n, G(n,p) becomes connected. But what if p is COMPLEX? Define G(n, z) where z is a complex number: each edge (i,j) appears with 'probability' z, meaning the edge weight is z instead of 0 or 1. The resulting 'complex graph' is a weighted complete graph where edge (i,j) has weight z if the edge exists and 0 otherwise. The adjacency matrix A_z has entries that are either z or 0. Conjecture: The complex eigenvalues of A_z trace out a circle of radius |z|*sqrt(n) in the complex plane, centered at the origin. As n -> infinity, the empirical spectral distribution of A_z converges to the circular law (like the Ginibre ensemble) because A_z is a random matrix with i.i.d. entries of mean z*p and variance |z|^2*p*(1-p). The 'hallucination' is that for Im(z) != 0, the graph has complex-valued connectivity \u2014 information flows with both amplitude and phase, and the phase creates interference patterns that are visible in the spectral density. Test: generate A_z for n = 1000 with z = 0.5 + 0.3i, compute eigenvalues, and verify they lie in a disk of radius sqrt(n)*|z|. Compare with the Ginibre ensemble prediction. Impact: complex-valued random graphs have circular spectra \u2014 the hallucination of complex probabilities creates beautiful circular eigenvalue distributions.",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_0296",
+    "priority_score": 0.73,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-18T09:20:55.078260+00:00",
+    "title": "Erdos-Renyi on Acid: Random Graphs That Hallucinate"
   },
   {
     "consumed_by_exp_id": "12b45ad4",
