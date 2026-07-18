@@ -1,63 +1,31 @@
 # Computational Evidence
 
-The formal result of this project is:
+## Small cases
 
-> The chromatic number of the Sudoku constraint graph on an `n²×n²` grid equals `n²`
-> (for `n ≥ 1`), and — equivalently, via the CSP ↔ graph-coloring bridge — every empty
-> `n²×n²` Sudoku is solvable, witnessed by an explicit arithmetic filling.
+The critical numerical claim was tested first at the level of ensemble definitions rather than solver timing. For block sizes `n = 2, 3, 4`, restricting any completed grid to any chosen clue set preserves that completed grid as a witness. Consequently, in the deletion-from-solution ensemble, the satisfiability probabilities are exactly:
 
-Two computational checks support the proof.
+| Block size | Grid size | Number of retained clues | Satisfiability probability |
+|---:|---:|---:|---:|
+| 2 | 4×4 | 0 through 16 | 1 |
+| 3 | 9×9 | 0 through 81 | 1 |
+| 4 | 16×16 | 0 through 256 | 1 |
 
-## 1. The explicit filling is a valid Sudoku for small `n`
+This directly contradicts an ensemble-independent drop in solvability at densities `3/4`, `8/9`, or `15/16`. The conclusion is not a sampling artifact: it follows for every subset of every valid completion.
 
-The construction used in `sudokuVal` is
+## Sequence search
 
-```
-sudokuVal n r c = (n * (r % n) + r / n + c) % (n * n)
-```
+The natural structural counts in the construction are the grid side lengths `n²` and cell counts `n⁴`, giving `1, 4, 9, 16, …` and `1, 16, 81, 256, …`. No OEIS identification is needed for the argument; these are the square and fourth-power sequences arising directly from the definition of generalized Sudoku.
 
-We verified in Lean that the induced `n²×n²` grid satisfies **all** Sudoku constraints
-(each row, each column, and each `n×n` block contains every symbol exactly once) for
-`n = 2, 3, 4, 5`:
+## Counterexample hunt
 
-```lean
-def f (n r c : Nat) : Nat := (n*(r % n) + r / n + c) % (n*n)
-def nodup (l : List Nat) : Bool := l.dedup.length == l.length
-def valid (n : Nat) : Bool := Id.run do
-  let N := n*n
-  for r in List.range N do
-    if !nodup ((List.range N).map (fun c => f n r c)) then return false
-  for c in List.range N do
-    if !nodup ((List.range N).map (fun r => f n r c)) then return false
-  for bA in List.range n do
-    for bB in List.range n do
-      let mut vals := []
-      for i in List.range n do
-        for j in List.range n do
-          vals := f n (n*bA+i) (n*bB+j) :: vals
-      if !nodup vals then return false
-  return true
-#eval [valid 2, valid 3, valid 4, valid 5]   -- [true, true, true, true]
-```
+The universal-density formulation was challenged by varying the clue-generation law while holding clue count fixed. The deletion-from-solution law is a countermodel: every generated instance is solvable at every clue count. Therefore density alone cannot determine an existence threshold. Independently sampled clue values may behave differently, but that is a distinct ensemble and requires separate analysis.
 
-Output: `[true, true, true, true]`. This confirms the upper-bound half of the theorem
-(a proper `n²`-coloring exists) on concrete instances before it was proved in full generality.
+## Relevant table
 
-## 2. Sanity check of the chromatic-number value
+| Proposed density | Proposed interpretation | Structural countermodel |
+|---:|---|---|
+| `(n²-1)/n²` | universal solvability threshold | retain exactly that fraction of any valid completion |
+| any density in `[0,1]` | density determines solvability | restrictions of a completion remain solvable |
+| high density | instances become trivially unsatisfiable | a fully filled valid grid is solvable |
 
-The lower bound `χ ≥ n²` is witnessed by a single full row: its `n²` cells are pairwise
-in the same row, hence mutually adjacent, forming a clique of size `n²`. Since any graph
-satisfies `χ(G) ≥ ω(G)` (clique number), `χ ≥ n²`. Combined with the explicit coloring
-giving `χ ≤ n²`, we get `χ = n²`. For the standard `9×9` Sudoku (`n = 3`) this gives
-`χ = 9`, matching the well-known fact that the Sudoku graph is `9`-chromatic.
-
-## Relationship to the phase-transition framing
-
-The original mission framing (a solution-probability phase transition at critical clue
-density `d_c = (n²-1)/n²`) is an *empirical/asymptotic* statement about **random partially
-filled** instances and is not a closed-form theorem. What is rigorously provable — and what
-this project delivers — is the exact structural invariant underlying the CSP: the number of
-symbols `n²` is simultaneously the chromatic number of the constraint graph. The clique of
-size `n²` (a full row/column/block) is precisely the "hard core" of maximally mutually
-constrained cells; it is the graph-theoretic object that forces the symbol count and around
-which instance hardness concentrates. See `FUTURE_DIRECTIONS.md`.
+The formal development additionally establishes an explicit completion for every positive block size, so the countermodel is nonempty throughout the generalized family.

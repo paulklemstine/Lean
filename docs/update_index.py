@@ -177,7 +177,7 @@ def update_index():
 
     for f in json_files:
         try:
-            with open(f, 'r', encoding='utf-8') as file:
+            with open(f, 'r', encoding='utf-8-sig') as file:
                 data = json.load(file)
         except Exception as e:
             print(f"Error processing {f}: {e}")
