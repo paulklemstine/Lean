@@ -1,150 +1,94 @@
 #!/usr/bin/env python3
-"""Numerical demonstrations for singleton sum avoidance and triangular growth."""
+"""Numerical demonstrations for the literal anti-Fibonacci exclusion rule."""
 
 from __future__ import annotations
 
-from dataclasses import dataclass
 from fractions import Fraction
-from math import gcd
-from typing import Iterable, List
+from math import comb
+from typing import Iterable
 
 
 def least_positive_avoiding_sum(x: int, y: int) -> int:
-    """Return the least positive integer unequal to x + y.
-
-    The mathematical results concern positive predecessors. Validation is kept
-    explicit so the boundary case x + y == 1 cannot be silently confused with
-    that setting.
-    """
-    if x <= 0 or y <= 0:
-        raise ValueError("x and y must be positive integers")
-    forbidden = x + y
-    candidate = 1
-    while candidate == forbidden:
-        candidate += 1
-    return candidate
+    """Return the least positive integer unequal to x + y."""
+    if x < 0 or y < 0:
+        raise ValueError("x and y must be nonnegative")
+    return 2 if x + y == 1 else 1
 
 
-def literal_sequence(length: int) -> List[int]:
-    """Generate the literal anti-Fibonacci sequence with initial values 1, 1."""
-    if length < 0:
-        raise ValueError("length must be nonnegative")
-    if length == 0:
-        return []
-    if length == 1:
+def anti_fibonacci_prefix(last_index: int) -> list[int]:
+    """Generate A_0 through A_last_index by the literal recurrence."""
+    if last_index < 0:
+        raise ValueError("last_index must be nonnegative")
+    if last_index == 0:
         return [1]
     values = [1, 1]
-    while len(values) < length:
-        values.append(least_positive_avoiding_sum(values[-2], values[-1]))
+    for _ in range(2, last_index + 1):
+        values.append(least_positive_avoiding_sum(values[-1], values[-2]))
     return values
 
 
-def displayed_sequence(length: int) -> List[int]:
-    """Generate D(0)=1 and D(n+1)=D(n)+n for n >= 0."""
-    if length < 0:
-        raise ValueError("length must be nonnegative")
-    values: List[int] = []
-    current = 1
-    for n in range(length):
-        values.append(current)
-        current += n
-    return values
+def anti_fibonacci_closed_form(index: int) -> int:
+    """Evaluate the proved closed form A_n = 1."""
+    if index < 0:
+        raise ValueError("index must be nonnegative")
+    return 1
 
 
-def displayed_closed(n: int) -> int:
-    """Evaluate D(n) = 1 + n(n-1)/2 exactly."""
-    if n < 0:
-        raise ValueError("n must be nonnegative")
-    return 1 + n * (n - 1) // 2
+def normalized_value(index: int) -> Fraction:
+    """Return the exact rational value A_n / n^2 for positive n."""
+    if index <= 0:
+        raise ValueError("index must be positive")
+    return Fraction(anti_fibonacci_closed_form(index), index * index)
 
 
-def quarter_square(n: int) -> int:
-    """Evaluate floor(n^2/4) for n >= 0."""
-    if n < 0:
-        raise ValueError("n must be nonnegative")
-    return n * n // 4
+def sum_two_edges(vertex_count: int) -> list[tuple[int, int]]:
+    """List edges {i,j} for which A_i + A_j = 2."""
+    if vertex_count < 0:
+        raise ValueError("vertex_count must be nonnegative")
+    return [
+        (i, j)
+        for i in range(vertex_count)
+        for j in range(i + 1, vertex_count)
+        if anti_fibonacci_closed_form(i) + anti_fibonacci_closed_form(j) == 2
+    ]
 
 
-@dataclass(frozen=True)
-class BoundWitness:
-    """A certificate that D(n) exceeds floor(n^2/4) by more than C."""
-
-    bound: int
-    k: int
-    index: int
-    displayed_value: int
-    quarter_square_value: int
-    discrepancy: int
+def format_fraction(value: Fraction) -> str:
+    """Format an exact fraction compactly."""
+    return str(value.numerator) if value.denominator == 1 else f"{value.numerator}/{value.denominator}"
 
 
-def quarter_square_bound_witness(bound: int) -> BoundWitness:
-    """Construct the even-index witness n=2(C+2) for a proposed bound C."""
-    if bound < 0:
-        raise ValueError("bound must be nonnegative")
-    k = bound + 2
-    n = 2 * k
-    d = displayed_closed(n)
-    q = quarter_square(n)
-    discrepancy = d - q
-    assert discrepancy == k * (k - 1) + 1
-    assert discrepancy > bound
-    return BoundWitness(bound, k, n, d, q, discrepancy)
-
-
-def normalized_displayed(n: int) -> Fraction:
-    """Return the exact rational value D(n)/n^2 for n > 0."""
-    if n <= 0:
-        raise ValueError("n must be positive")
-    return Fraction(displayed_closed(n), n * n)
-
-
-def verify_prefix(length: int) -> None:
-    """Check the defining identities throughout a finite prefix."""
-    literal = literal_sequence(length)
-    assert all(value == 1 for value in literal)
-    assert all(gcd(literal[i + 1], literal[i]) == 1 for i in range(len(literal) - 1))
-
-    displayed = displayed_sequence(length)
-    for n, value in enumerate(displayed):
-        assert value == displayed_closed(n)
-        assert 2 * value == n * (n - 1) + 2
-        if n + 1 < length:
-            assert displayed[n + 1] == value + n
-
-
-def format_fraction(value: Fraction, digits: int = 12) -> str:
-    """Format an exact fraction with its decimal approximation."""
-    return f"{value.numerator}/{value.denominator} = {float(value):.{digits}f}"
+def print_normalization_table(indices: Iterable[int]) -> None:
+    """Print exact and floating-point quadratic normalizations."""
+    print("\nQuadratic normalization")
+    print(f"{'n':>12} {'A_n':>6} {'exact A_n/n^2':>24} {'decimal':>16}")
+    for n in indices:
+        value = normalized_value(n)
+        print(
+            f"{n:>12,} {anti_fibonacci_closed_form(n):>6} "
+            f"{format_fraction(value):>24} {float(value):>16.12g}"
+        )
 
 
 def main() -> None:
-    """Run demonstrations of all key identities and asymptotic comparisons."""
-    verify_prefix(10_000)
+    prefix = anti_fibonacci_prefix(16)
+    print("Literal recurrence prefix A_0,...,A_16:")
+    print(prefix)
+    assert prefix == [1] * 17
+    assert all(anti_fibonacci_closed_form(n) == prefix[n] for n in range(17))
 
-    print("Literal singleton-avoidance sequence (first 12 terms):")
-    print(literal_sequence(12))
-    print("Every term is 1; every consecutive ratio is therefore exactly 1.\n")
+    print_normalization_table([1, 2, 10, 100, 1_000, 1_000_000])
+    millionth = normalized_value(1_000_000)
+    assert millionth == Fraction(1, 1_000_000_000_000)
+    print(f"\nExact millionth normalized value: {format_fraction(millionth)}")
 
-    print("Displayed increment sequence (first 12 terms):")
-    print(displayed_sequence(12))
-    print("Closed-form checks: D(6) =", displayed_closed(6), ", D(8) =", displayed_closed(8))
-    print()
-
-    print("Normalized values D(n)/n^2 (approaching 1/2):")
-    for n in (10, 100, 1_000, 1_000_000):
-        ratio = normalized_displayed(n)
-        print(f"  n={n:>9,}: {format_fraction(ratio)}")
-    print()
-
-    print("Explicit witnesses against bounded quarter-square discrepancy:")
-    for bound in (0, 1, 10, 100, 10_000):
-        witness = quarter_square_bound_witness(bound)
-        print(
-            f"  C={bound:>5}: n={witness.index:>6}, "
-            f"D(n)-floor(n^2/4)={witness.discrepancy} > C"
-        )
-
-    print("\nAll finite checks passed; the displayed values agree with the exact formulas.")
+    n = 8
+    edges = sum_two_edges(n)
+    expected = comb(n, 2)
+    print(f"\nSum-to-two graph on {n} indices:")
+    print(f"edges = {len(edges)}; complete-graph count = C({n},2) = {expected}")
+    print(edges)
+    assert len(edges) == expected
 
 
 if __name__ == "__main__":

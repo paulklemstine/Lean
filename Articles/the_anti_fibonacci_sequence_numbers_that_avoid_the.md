@@ -1,159 +1,160 @@
-# The Anti-Fibonacci Mirage: What Happens When a Recurrence Avoids One Sum?
+# The Anti-Fibonacci Paradox: How an Exclusion Rule Collapses to One
 
-The Fibonacci sequence is a machine for turning addition into growth. Begin with two ones, add the latest pair, and the familiar procession appears: $1,1,2,3,5,8,\ldots$. Its neighboring ratios drift toward the golden ratio, $\varphi=(1+\sqrt5)/2$. That convergence has made Fibonacci growth a universal metaphor, appearing in accounts of branching plants, population models, algorithms, and spiraling patterns.
+## A sequence that refuses to begin
 
-Now reverse the instruction. Instead of choosing the sum of the previous two terms, choose the *smallest positive integer that is not that sum*. This sounds like a recipe for a rebellious “anti-Fibonacci” sequence: a process that dodges the additive command at every step and perhaps develops a new kind of growth.
+The Fibonacci sequence grows from one of mathematics’ most famous local rules: add the two previous terms. Starting with $1,1$, it continues $2,3,5,8,\ldots$. Its neighboring-term ratios settle toward the golden ratio, and its simple recurrence reappears in subjects ranging from population models to computer algorithms.
 
-A proposed example was
+What happens if we reverse the instruction? Consider the proposed “anti-Fibonacci” rule:
 
-$$
-1,1,2,4,7,11,16,22,29,\ldots,
-$$
+> Start with $A_0=A_1=1$. For each later index, choose the smallest positive integer that is not equal to the sum of the two preceding terms.
 
-accompanied by an alluring story: quadratic growth near $n^2/4$, ratios oscillating between $1$ and $2$, and an additive complement of density zero. But the smallest word in the rule—“smallest”—changes everything. The literal process does not produce that list. In fact, it does not grow at all.
+At first glance, the word “not” seems to promise a dramatically different sequence—perhaps a greedy escape from Fibonacci growth. One might expect a list such as $1,1,2,4,7,11,16,\ldots$, with each term carefully dodging an additive constraint. Claims of quadratic growth and unusual ratio oscillation might then seem plausible.
 
-This is not merely a technical correction. It is a lesson about greedy definitions, the difference between avoiding one forbidden value and avoiding a growing forbidden set, and the value of checking the first logical consequence of a rule before studying its asymptotics.
+But there is a trap hidden in plain language. At each step, the rule forbids only one number: the sum of the previous two terms. Almost every positive integer remains legal. In particular, the smallest positive integer, $1$, remains legal unless the forbidden sum itself is $1$.
 
-## The trap hidden in “smallest”
+That observation settles the entire recurrence.
 
-Suppose the two previous terms are positive integers $x$ and $y$. Their sum satisfies
+## The one-number exclusion principle
 
-$$
-x+y\ge 2.
-$$
-
-The number $1$ is therefore positive and is certainly not equal to $x+y$. Since no positive integer is smaller than $1$, the smallest positive integer unequal to $x+y$ must be $1$.
-
-That one-line observation settles the recurrence.
-
-**Least-avoidance lemma.** If $x$ and $y$ are positive integers, then the least positive integer $z$ satisfying $z\ne x+y$ is $z=1$.
-
-The proof is immediate: positivity gives $x+y\ge2$, so $1$ is admissible; minimality then forces $z\le1$, while positivity forces $z\ge1$.
-
-Define a literal anti-Fibonacci trajectory to be a sequence $(A_n)_{n\ge0}$ with $A_0=A_1=1$ such that, for every $n\ge0$, the term $A_{n+2}$ is the least positive integer different from $A_n+A_{n+1}$. The lemma applies at every stage. Starting from positive terms, the next term is $1$, so positivity persists forever.
-
-**Classification theorem.** There is exactly one literal anti-Fibonacci trajectory, namely
+For nonnegative integers $x$ and $y$, define $L(x,y)$ to be the least positive integer different from $x+y$. There are only two cases:
 
 $$
-A_n=1\qquad\text{for every }n\ge0.
+L(x,y)=
+\begin{cases}
+2,&x+y=1,\\
+1,&x+y\ne 1.
+\end{cases}
 $$
 
-An induction proves the statement. The first two terms are $1$. If the relevant predecessors are positive—indeed, if they are both $1$—the least-avoidance lemma makes the next term $1$. Conversely, the constant-one sequence satisfies the rule because $1\ne1+1$ and $1$ is the smallest positive integer.
+Why? If $x+y\ne1$, then $1$ is positive, is not forbidden, and is automatically the least legal choice. If $x+y=1$, then $1$ is forbidden and $2$ is the next positive integer. This is not an approximation or a heuristic. It is the exact closed form of the greedy choice.
 
-The proposed ratio oscillation disappears as well. Every consecutive ratio is exactly
+This tiny lemma is the key to the paradox. Feed it the proposed initial values. Since $A_0+A_1=2$, the forbidden number at the first recurrence step is $2$. The least positive integer different from $2$ is not $2$; it is $1$. Thus $A_2=1$. The same calculation repeats forever: whenever the two preceding values are both $1$, their sum is $2$, so the next value is again $1$.
 
-$$
-\frac{A_{n+1}}{A_n}=\frac11=1.
-$$
+We therefore obtain the central result.
 
-Even the basic number theory becomes degenerate but clean: every consecutive pair is coprime, since
+**Constant-Sequence Theorem.** If $A_0=A_1=1$ and
 
 $$
-\gcd(A_{n+1},A_n)=\gcd(1,1)=1.
+A_{n+2}=\min\{m\in\mathbb Z_{>0}:m\ne A_{n+1}+A_n\},
 $$
 
-The sequence avoids the golden ratio not by staging dramatic oscillations, but by refusing to leave home.
+then $A_n=1$ for every nonnegative integer $n$.
 
-## Where the displayed numbers really come from
+The proof is a two-step induction. The two base cases are given. If two consecutive terms equal $1$, then their sum is $2$, and the least positive integer unequal to $2$ is $1$. Hence the next term is also $1$.
 
-The list $1,1,2,4,7,11,16,\ldots$ is not random. Look at its successive increases:
+The proposed sequence does not grow slowly. It does not grow at all.
+
+## Why the advertised prefix cannot arise
+
+The displayed list $1,1,2,4,7,11,16,\ldots$ already conflicts with the literal rule at its third entry. After $1,1$, the single forbidden value is $2$, yet the list chooses exactly $2$. At the following step, even if one accepted that choice, the previous sum would be $3$, while the list chooses $4$ despite $1$ being legal and smaller.
+
+There is another revealing pattern. The displayed values satisfy
+
+$$
+1,1,2,4,7,11,16,\ldots
+$$
+
+with successive differences
 
 $$
 0,1,2,3,4,5,\ldots.
 $$
 
-Thus the displayed list follows a different and perfectly coherent recurrence. Define $(D_n)_{n\ge0}$ by
+For the shown indices this gives
 
 $$
-D_0=1,\qquad D_{n+1}=D_n+n.
+1+\frac{n(n-1)}{2},
 $$
 
-This yields $D_1=1$, $D_2=2$, $D_3=4$, $D_4=7$, and so on. Summing the increments gives an exact triangular-number formula.
+which has leading quadratic coefficient $1/2$, not $1/4$. Thus the prefix, the verbal recurrence, and the proposed asymptotic law point in three different directions. Before asking how fast such an object grows, one must first decide which object is intended.
 
-**Triangular growth theorem.** For every $n\ge0$,
+This is a broadly useful lesson in mathematical modeling. Words such as “avoid,” “new,” and “greedy” often conceal the real state space. Avoid what—one number, all earlier sums, or every value used before? Choose the least candidate among all positive integers, among unused integers, or among integers larger than the previous term? Each interpretation creates a different problem.
 
-$$
-D_n=1+\frac{n(n-1)}2.
-$$
+## The asymptotic reversal
 
-Indeed, the total increase from $D_0$ to $D_n$ is $0+1+\cdots+(n-1)=n(n-1)/2$. Equivalently, one may use induction: adding $n$ to $1+n(n-1)/2$ produces $1+n(n+1)/2$, the formula at index $n+1$.
-
-This identity explains every displayed value, including $D_6=16$ and $D_8=29$. It also identifies the true leading behavior:
+For the literal sequence, quadratic normalization is immediate. Since $A_n=1$,
 
 $$
-D_n=\frac12n^2-\frac12n+1.
+\frac{A_n}{n^2}=\frac{1}{n^2}
 $$
 
-Consequently,
+for every positive $n$. Consequently,
 
 $$
-\frac{D_n}{n^2}=\frac12-\frac{1}{2n}+\frac1{n^2}\longrightarrow\frac12
+\lim_{n\to\infty}\frac{A_n}{n^2}=0.
 $$
 
-as $n\to\infty$. The coefficient is $1/2$, not $1/4$.
+The proposed limit $1/4$ is therefore impossible. A sequence cannot converge to two distinct real numbers, and $0\ne1/4$.
 
-## Why a bounded correction cannot rescue the quarter-square law
-
-Perhaps the proposed estimate $D_n=\lfloor n^2/4\rfloor+O(1)$ could survive despite the wrong-looking coefficient? An exact even-index calculation rules this out decisively.
-
-Let
+The millionth-index computation dramatizes the scale of the discrepancy. At $n=1{,}000{,}000$,
 
 $$
-Q(n)=\left\lfloor\frac{n^2}{4}\right\rfloor.
+\frac{A_{1{,}000{,}000}}{(1{,}000{,}000)^2}
+=\frac{1}{1{,}000{,}000{,}000{,}000}.
 $$
 
-At an even index $n=2k$, there is no rounding ambiguity: $Q(2k)=k^2$. The triangular formula gives
+That is $10^{-12}$, already extremely close to zero and nowhere near $0.25$.
+
+Neighboring-term ratios are equally uncomplicated. Because every term is positive and equal to $1$,
 
 $$
-D_{2k}=1+\frac{(2k)(2k-1)}2=2k^2-k+1.
+\frac{A_{n+1}}{A_n}=1
 $$
 
-Therefore
+for every $n$. The ratio neither approaches the golden ratio nor oscillates between $1$ and $2$; it is identically $1$.
+
+## A graph hidden inside the collapse
+
+Even a collapsed recurrence can expose an interesting structural bridge. Take the first $n$ time indices as vertices. Connect two distinct indices whenever the values at those times sum to $2$.
+
+Because every value is $1$, every pair of distinct vertices qualifies:
 
 $$
-D_{2k}=Q(2k)+k(k-1)+1.
+A_i+A_j=1+1=2.
 $$
 
-**Unbounded-discrepancy theorem.** For every nonnegative constant $C$, there exists an index $n$ such that
+The resulting graph is the complete graph on $n$ vertices. It has exactly
 
 $$
-Q(n)+C<D_n.
+\binom n2=\frac{n(n-1)}2
 $$
 
-To see this, choose $k$ large enough that $k(k-1)+1>C$ and set $n=2k$. The exact even-index identity gives the desired inequality. Thus no fixed error band can turn the quarter-square model into a valid description of the displayed sequence. The gap itself grows quadratically.
+edges, the largest possible edge count for a simple graph on $n$ vertices.
 
-This matters because asymptotic notation can sometimes hide substantial local errors, but it cannot hide the wrong leading coefficient. A term of size $n^2/2$ cannot remain within a bounded distance of one of size $n^2/4$.
+**Complete-Graph Theorem.** For the sequence generated by the literal exclusion rule, the graph joining distinct indices $i$ and $j$ when $A_i+A_j=2$ is complete. Its edge count is $\binom n2$ on the first $n$ indices.
 
-## A greedy-algorithm lesson
+The proof is one line once the constant-sequence theorem is known: every pair has values $1$ and $1$. This connector is more than decorative. It illustrates a recurring mathematical strategy: turn an additive relation among numbers into adjacency in a graph. For more substantial greedy sequences, graph density, cliques, and forbidden subgraphs can reveal additive structure that is hard to see directly.
 
-The central distinction is between avoiding a *singleton* and avoiding a *set that grows*. At each stage of the literal rule, exactly one integer is forbidden: the current sum $A_n+A_{n+1}$. But that sum is at least $2$, leaving the smallest candidate, $1$, untouched. The magnitude of the forbidden number is irrelevant. What controls a least-excluded process is whether the forbidden set covers the small candidates.
+Here the additive relation is maximally dense. Every possible edge appears. If a repaired anti-Fibonacci rule produced a genuinely varying sequence, the same graph construction could measure how frequently a target sum occurs.
 
-This principle appears throughout discrete mathematics and computer science. A greedy scheduler chooses the first available time slot; a graph-coloring routine chooses the least color absent from a neighborhood; a memory allocator chooses the first free block. Forcing such an algorithm upward requires blocking an initial segment of its choices. Excluding one distant option usually has no effect at all.
+## What a genuine anti-Fibonacci problem might be
 
-A genuinely nontrivial anti-additive sequence should therefore forbid many values. One natural redesign is to choose the least positive integer that is not representable as a sum of two distinct earlier selected terms. As the history grows, so does the forbidden sumset. Another version could additionally require new terms to be unused, preventing a constant trajectory. These changes do not merely patch the original rule; they create new mathematical objects whose growth depends on additive structure and the rate at which small integers become forbidden.
+The failure is not in the desire to build an additive-avoidance sequence. The failure is in asking one forbidden value to do more work than it can.
 
-The number of forbidden candidates is likely to be more important than their size. If only a bounded number of values are excluded at each step, some small admissible number may repeatedly survive. If a linearly growing family of combinations is excluded, the least admissible value can migrate. That is where questions about density, polynomial growth, and ratio behavior become meaningful.
+A richer definition could require each new term to be unused and larger than the previous term. It could also forbid the new term from belonging to the set of sums of two earlier values. One possible template is:
 
-## Reading a sequence before naming it
+$$
+B_{n+1}=\min\{m>B_n:m\notin\{B_i+B_j:0\le i,j\le n\}\}.
+$$
 
-There is a broader art to diagnosing a numerical pattern. A short list rarely determines its own law. The values $1,1,2,4,7,11,16$ can be continued in infinitely many ways, so the name attached to them cannot substitute for a definition. Two quick tests are especially revealing.
+This is only an example, not a claim that it reproduces the displayed prefix. It makes explicit three ingredients absent from the original wording: the candidate must move forward, all earlier pairwise sums matter, and the forbidden set changes globally rather than containing a single number.
 
-First, substitute the initial values into the claimed recurrence. With predecessors $1$ and $1$, the forbidden sum is $2$. The least positive integer other than $2$ is $1$, so the claimed next value $2$ fails immediately. This local check is stronger than calculating a million terms from an unrelated generator: it tests whether the generator and definition agree.
+Once a corrected rule is fixed, meaningful questions emerge. Does the sequence exist indefinitely? Is it strictly increasing? What fraction of positive integers does it occupy? How large is the restricted sumset? Does a quadratic normalization converge? Can an associated graph have controlled edge density or forbidden cliques?
 
-Second, inspect finite differences. The displayed values have first differences $0,1,2,3,4,5$, whose differences are constantly $1$. Constant second differences signal a quadratic polynomial, just as constant first differences signal a linear one. This observation points directly to triangular numbers and the coefficient $1/2$.
+The phrase “the complement” would also need clarification. It might mean positive integers not appearing as sequence values, or it might mean integers outside a set of earlier-term sums. Those are different universes, with potentially different densities.
 
-These tests serve different purposes. Substitution validates a recurrence; differences identify algebraic structure in data. Together they prevent an attractive narrative from outrunning its mathematical object.
+## A five-second test before a million-step experiment
 
-The same discipline matters in applications. A scheduling policy described as “choose the first free slot except one prohibited slot” may repeatedly choose the opening slot, even if simulations were built around steadily increasing times. A security protocol, allocation rule, or biological model can likewise behave very differently when “exclude this value” is confused with “exclude all values generated so far.” Boundary cases are not distractions: they often determine the system.
+The proposal included a natural computational challenge: generate a million terms and watch the quotient $A_n/n^2$. Such experiments are often excellent guides. Here, however, a semantic check outruns the computer. Ask only what happens after the initial pair. The sum is $2$, so the rule demands the least positive integer other than $2$. That number is $1$. One more step produces exactly the same state, and the future is settled.
 
-## The counterpoint to Fibonacci, correctly understood
+This “small-state test” is useful far beyond integer sequences. Before simulating a model, inspect its boundary cases, fixed points, and smallest admissible choices. Greedy systems are especially sensitive because minimization amplifies tiny omissions in a definition. If reuse is permitted, the smallest object may be selected forever. If only one obstacle is removed from an infinite candidate set, the obstacle may have almost no effect.
 
-The literal rule was advertised as an opposite of Fibonacci growth. It is an opposite, but not in the anticipated way. Fibonacci repeatedly selects one special sum, and that repeated selection creates exponential structure. The anti-rule rejects only that single sum, but then greedily selects the smallest remaining positive integer. Since $1$ is always available, the process collapses to a fixed point.
+Computation still has an illuminating role. A short program can implement both the literal recurrence and the closed form, compare them over any requested range, print normalized values, and construct the associated graph. The output makes the theorem visible: every row contains $1$, normalized values decay like $1/n^2$, and an $n$-vertex sum-to-two graph contains all $\binom n2$ possible edges. The experiment is no longer being asked to discover the law; it becomes a transparent demonstration of an exact argument.
 
-Meanwhile, the attractive list $1,1,2,4,7,11,16,\ldots$ has its own identity: it is one plus the sequence of triangular numbers. Its quadratic growth is exact, elementary, and governed by coefficient $1/2$. It neither implements the literal avoidance rule nor shadows $n^2/4$ within bounded error.
+## The deeper moral
 
-The episode offers a productive kind of mathematical failure. A conjecture can be false for a deep reason, or it can be false because its definition quietly says something else. Here the boundary case $1$ exposes the issue immediately. Once that is recognized, two clean theories emerge: a completely classified singleton-avoidance process and an exact triangular increment model.
+Mathematical definitions are small programs written in ordinary language. A single quantifier can change their behavior completely. “Not equal to the previous sum” excludes one value. “Not equal to any sum of two earlier terms” excludes a whole evolving set. “Least positive integer” repeatedly pulls the construction back toward $1$ unless additional conditions prevent reuse.
 
-The next challenge is not to force the original predictions onto either one. It is to formulate an avoidance rule rich enough to support them. Such a redesign could connect greedy algorithms with additive combinatorics: how quickly do earlier pair-sums cover the small integers, how sparse can the selected values become, and what growth laws survive changes in the starting data? Those are genuine open directions because the forbidden landscape expands with the history.
+The anti-Fibonacci proposal is therefore valuable precisely because it fails so cleanly. Its apparent complexity evaporates into a two-case minimum. The resulting theorems are exact: the sequence is constant, its quadratic normalization tends to zero, its millionth normalized value is $10^{-12}$, and its sum-to-two graph is complete with $\binom n2$ edges.
 
-The moral is simple enough to carry beyond this example. Before asking how fast a recursively defined object grows, determine what its rule actually permits at the smallest scale. To make a greedy sequence climb, one must obstruct more than a single rung.
+Before searching for the golden ratio’s opposite, one must first specify the rules of escape. In this case, the number $1$ does not merely win the race. It is allowed to return to the starting line forever.

@@ -1,8 +1,11 @@
-# Singleton Sum Avoidance and the Triangular Increment Model
+# The Anti-Fibonacci Exclusion Rule: Degeneracy, Exact Asymptotics, and an Extremal Graph Connector
+
+**Aristotle**  
+**July 18, 2026**
 
 ## Abstract
 
-We analyze a proposed “anti-Fibonacci” recurrence in which each new term is the smallest positive integer unequal to the sum of the preceding two terms. The least-excluded wording makes the recurrence rigid: for positive predecessors their sum is at least $2$, so $1$ is always the least admissible value. With initial values $1,1$, the unique trajectory is therefore constant. Every consecutive ratio equals $1$, and every consecutive pair has greatest common divisor $1$. We separately analyze the frequently associated list $1,1,2,4,7,11,16,\ldots$. That list obeys the increment recurrence $D_{n+1}=D_n+n$, not the singleton sum-avoidance recurrence, and has the exact closed form $D_n=1+n(n-1)/2$. Hence $D_n/n^2\to1/2$. On even indices it differs from $\lfloor n^2/4\rfloor$ by exactly $k(k-1)+1$ at index $2k$, proving that the discrepancy from the proposed quarter-square law is unbounded. These results isolate the structural weakness of singleton avoidance and motivate recurrences with growing forbidden sets.
+We analyze the recurrence obtained by starting with $A_0=A_1=1$ and defining each subsequent term to be the least positive integer unequal to the sum of the preceding two terms. Although this rule has been proposed as an additive-avoidance counterpart to the Fibonacci recurrence, its exclusion set at each step is a singleton. We prove that the least positive integer outside such a singleton is $2$ only when the forbidden value is $1$, and is $1$ otherwise. It follows by two-step induction that $A_n=1$ for every $n\ge0$. Consequently, the displayed prefix $1,1,2,4,7,11,16,\ldots$ is incompatible with the recurrence; the normalized sequence $A_n/n^2$ converges to $0$, not $1/4$; and its value at the millionth index is exactly $10^{-12}$. We also associate a graph to the recurrence by joining time indices whose values sum to $2$. This graph is complete and therefore has exactly $\binom n2$ edges on $n$ vertices. These results expose a specification issue of general relevance to greedy additive constructions: a meaningful global avoidance process must state its candidate universe, reuse policy, monotonicity requirements, and complete forbidden set. We conclude by outlining corrected families of additive-avoidance problems whose asymptotics and graph invariants may be nontrivial.
 
 ## 1. Introduction
 
@@ -12,410 +15,386 @@ $$
 F_{n+2}=F_{n+1}+F_n
 $$
 
-turns a local additive instruction into exponential growth. For positive initial data, consecutive ratios approach the golden ratio $\varphi=(1+\sqrt5)/2$. It is natural to ask whether an “anti-Fibonacci” instruction—one that avoids the same local sum—produces contrasting asymptotic behavior.
+turns a local additive instruction into exponential growth. With positive initial values, ratios of consecutive terms approach the golden ratio. This familiar behavior motivates the search for an “anti-Fibonacci” construction that avoids addition rather than enforcing it.
 
-Consider the literal rule: begin with $A_0=A_1=1$, and let $A_{n+2}$ be the smallest positive integer that is not equal to $A_n+A_{n+1}$. This rule has been associated with the displayed list
-
-$$
-1,1,2,4,7,11,16,22,29,\ldots,
-$$
-
-and with conjectures of quarter-square growth, nonconvergent consecutive ratios, and sparse additive complements. The purpose of this paper is to resolve the definitions before addressing asymptotics.
-
-The decisive observation is elementary. If $x$ and $y$ are positive, then $x+y\ge2$. Therefore $1$ is unequal to $x+y$, and it is already the smallest positive integer. The literal rule consequently selects $1$ at every stage. The resulting trajectory is unique and constant.
-
-The displayed list nevertheless has a transparent mathematical origin. Its successive increments are $0,1,2,3,\ldots$, so it follows the recurrence $D_{n+1}=D_n+n$. It is exactly one plus a triangular number and grows with leading coefficient $1/2$, not $1/4$. Thus two distinct models have been conflated: a singleton-avoidance model that collapses and an increment model that grows quadratically.
-
-This distinction illustrates a general principle for greedy least-excluded constructions. Their behavior is controlled not merely by the magnitude of forbidden values but by coverage of the smallest candidates. Forbidding a single value at least $2$ cannot dislodge the candidate $1$. Nontrivial growth requires additional restrictions, such as nonrepetition or a forbidden set of many earlier sums.
-
-The paper is organized as follows. Section 2 defines the literal least-avoidance relation and the displayed increment model. Section 3 classifies all literal trajectories with initial values $1,1$. Section 4 derives the exact closed form of the displayed sequence. Section 5 disproves the quarter-square bounded-error conjecture and records the corrected asymptotics. Section 6 gives algorithms and complexity bounds. Section 7 discusses applications to greedy constructions and additive combinatorics, and Section 8 proposes extensions with genuinely growing forbidden sets.
-
-## 2. Definitions and preliminary observations
-
-Throughout, $\mathbb N=\{0,1,2,\ldots\}$, while “positive integer” means an element of $\{1,2,3,\ldots\}$.
-
-### 2.1. Least avoidance of a single sum
-
-**Definition 2.1 (least positive integer avoiding a sum).** Given $x,y,z\in\mathbb N$, we say that $z$ is the least positive integer avoiding the sum $x+y$ if:
-
-1. $z>0$;
-2. $z\ne x+y$; and
-3. for every positive integer $k$ with $k\ne x+y$, one has $z\le k$.
-
-The third condition supplies the essential minimality. Merely asking for some positive integer different from $x+y$ would leave infinitely many choices and would not define a recurrence.
-
-**Definition 2.2 (literal anti-Fibonacci trajectory).** A sequence $(A_n)_{n\ge0}$ of natural numbers is a literal anti-Fibonacci trajectory if $A_0=A_1=1$ and, for every $n\ge0$, the term $A_{n+2}$ is the least positive integer avoiding $A_n+A_{n+1}$ in the sense of Definition 2.1.
-
-The positivity requirement is crucial. If arbitrary integer predecessors were permitted, their sum could equal $1$, and the least admissible positive integer would then be $2$. Under Definition 2.2, however, positivity starts at the initial terms and is preserved by the rule itself.
-
-### 2.2. The displayed increment sequence
-
-**Definition 2.3 (displayed increment model).** Define $(D_n)_{n\ge0}$ by
+Consider the following literal proposal. Set $A_0=A_1=1$. For each $n\ge0$, let $A_{n+2}$ be the smallest positive integer that is not equal to $A_{n+1}+A_n$. The intended intuition is that each new value dodges the sum of its two predecessors. A proposed prefix is
 
 $$
-D_0=1,
-\qquad
-D_{n+1}=D_n+n
-\quad(n\ge0).
+1,1,2,4,7,11,16,\ldots,
 $$
 
-The first values are
+and proposed asymptotic behavior includes $A_n\sim n^2/4$, failure of the neighboring-term ratio to converge, and sparsity of a complementary additive set.
+
+The literal recurrence does not support any of these conclusions. The difficulty is not subtle asymptotic analysis but a mismatch between the intended global notion of avoidance and the actual local exclusion. At every step exactly one positive integer is prohibited. Unless that integer is $1$, the least legal positive integer is $1$. Because the initial pair sums to $2$, the process immediately returns $1$ and remains there.
+
+The purpose of this paper is fourfold. First, we give the exact minimization lemma underlying the recurrence. Second, we derive the complete closed form and all immediate analytic consequences. Third, we encode an additive relation among time indices as a graph and identify the resulting extremal object. Fourth, we explain which pieces of data must be added before a repaired additive-avoidance sequence can sustain meaningful questions about growth or density.
+
+The conclusions are exact rather than experimental. They also illustrate a useful methodological principle: asymptotic conjectures should be preceded by a semantic audit of the recurrence. A greedy definition must identify not only what is forbidden, but also the universe over which minimization occurs.
+
+This distinction matters because local and global avoidance have fundamentally different combinatorics. A local condition may remove only one candidate at a time, leaving the bottom of the positive integers untouched. A global condition can accumulate enough exclusions to force sustained growth. The two mechanisms should not be expected to share prefixes, growth exponents, ratio behavior, or density laws. Establishing which mechanism a sentence actually defines is therefore part of the mathematics, not merely a matter of notation.
+
+## 2. Definitions and elementary structure
+
+We work in the nonnegative integers $\mathbb N=\{0,1,2,\ldots\}$ and write $\mathbb Z_{>0}$ for the positive integers.
+
+### Definition 2.1 (Least positive value avoiding one sum)
+
+For $x,y\in\mathbb N$, define
 
 $$
-D_0=1,
-\ D_1=1,
-\ D_2=2,
-\ D_3=4,
-\ D_4=7,
-\ D_5=11,
-\ D_6=16.
+L(x,y)=\min\{m\in\mathbb Z_{>0}:m\ne x+y\}.
 $$
 
-This definition captures the displayed data exactly. It is not an avoidance condition: it specifies a deterministic additive increment.
+The defining set is nonempty because it excludes at most one positive integer. The next lemma computes this minimum exactly.
 
-**Definition 2.4 (quarter-square comparison).** For $n\ge0$, let
+### Lemma 2.2 (Singleton-exclusion formula)
 
-$$
-Q(n)=\left\lfloor\frac{n^2}{4}\right\rfloor.
-$$
-
-We will compare $D_n$ with $Q(n)$. A statement of the form $D_n=Q(n)+O(1)$ means that there is a constant $C\ge0$ such that $|D_n-Q(n)|\le C$ for all sufficiently large $n$. We prove a stronger negation: for every $C\ge0$, some $n$ satisfies $D_n>Q(n)+C$.
-
-## 3. Complete classification of the literal rule
-
-The classification rests on a local lemma.
-
-**Lemma 3.1 (least-avoidance lemma).** Let $x$ and $y$ be positive integers. If $z$ is the least positive integer unequal to $x+y$, then $z=1$.
-
-**Proof sketch.** Since $x,y\ge1$, we have $x+y\ge2$, and hence $1\ne x+y$. Thus $1$ is an admissible positive candidate. By minimality, $z\le1$. Since $z$ is positive, $z\ge1$. Therefore $z=1$. $\square$
-
-The lemma shows that no detailed information about $x$ and $y$ is needed beyond positivity. In particular, the size of their sum has no influence on the output.
-
-**Theorem 3.2 (uniqueness of the literal trajectory).** If $(A_n)_{n\ge0}$ is a literal anti-Fibonacci trajectory, then
+For all $x,y\in\mathbb N$,
 
 $$
-A_n=1
+L(x,y)=
+\begin{cases}
+2,&x+y=1,\\
+1,&x+y\ne1.
+\end{cases}
 $$
 
-for every $n\ge0$.
+Moreover, $L(x,y)>0$, $L(x,y)\ne x+y$, and for every positive integer $m$ satisfying $m\ne x+y$, one has $L(x,y)\le m$.
 
-**Proof sketch.** The initial conditions give $A_0=A_1=1$. Proceed by strong induction on $n$. The cases $n=0,1$ are given. For $n\ge2$, write $n=m+2$. The earlier values $A_m$ and $A_{m+1}$ are $1$ by induction, hence positive. Lemma 3.1 applied to the defining step yields $A_{m+2}=1$. $\square$
+**Proof sketch.** If $x+y\ne1$, then $1$ is a positive admissible value. No positive integer is smaller, so the minimum is $1$. If $x+y=1$, then $1$ is excluded while $2$ is admissible, making $2$ the minimum. Positivity, avoidance, and minimality follow in the corresponding case. $\square$
 
-Existence must be checked as well as uniqueness.
+The formula shows that the operation depends only on whether the forbidden sum equals $1$. Its size and all other arithmetic features are irrelevant.
 
-**Theorem 3.3 (existence of the constant trajectory).** The constant sequence $A_n=1$ for all $n\ge0$ is a literal anti-Fibonacci trajectory.
+### Definition 2.3 (Literal anti-Fibonacci recurrence)
 
-**Proof sketch.** The initial conditions are immediate. At every step the forbidden sum is $1+1=2$. The value $1$ is positive, differs from $2$, and is the least positive integer. Hence every step satisfies the rule. $\square$
+Define $A:\mathbb N\to\mathbb N$ by
 
-Together, Theorems 3.2 and 3.3 give a complete classification: the literal model has exactly one trajectory.
+$$
+A_0=1,\qquad A_1=1,
+$$
 
-Two immediate consequences address the proposed ratio behavior and a basic arithmetic property.
+and, for every $n\ge0$,
 
-**Corollary 3.4 (constant consecutive ratio).** For every literal anti-Fibonacci trajectory and every $n\ge0$,
+$$
+A_{n+2}=L(A_{n+1},A_n).
+$$
+
+Equivalently,
+
+$$
+A_{n+2}=\min\{m\in\mathbb Z_{>0}:m\ne A_{n+1}+A_n\}.
+$$
+
+This definition faithfully expresses the local exclusion of exactly the preceding two-term sum. It imposes no requirement that terms be distinct, unused, increasing, or outside a sumset formed from all earlier values.
+
+## 3. Collapse of the recurrence
+
+### Theorem 3.1 (Constant-Sequence Theorem)
+
+For every $n\in\mathbb N$,
+
+$$
+A_n=1.
+$$
+
+**Proof sketch.** Use two-step induction. The base values $A_0=A_1=1$ hold by definition. Suppose two consecutive values are $A_n=A_{n+1}=1$. Then their sum is $2$, which is not $1$. Lemma 2.2 therefore gives
+
+$$
+A_{n+2}=L(1,1)=1.
+$$
+
+The induction propagates the value $1$ to every index. $\square$
+
+This theorem gives the full sequence, not merely its eventual behavior:
+
+$$
+(A_n)_{n\ge0}=(1,1,1,1,1,\ldots).
+$$
+
+### Corollary 3.2 (Failure of the displayed prefix)
+
+The literal recurrence does not generate the prefix $1,1,2,4,7,11,16,\ldots$. In particular,
+
+$$
+A_2\ne2\qquad\text{and}\qquad A_3\ne4.
+$$
+
+**Proof sketch.** Theorem 3.1 gives $A_2=A_3=1$. Since $1\ne2$ and $1\ne4$, both inequalities follow. $\square$
+
+There is also a direct semantic contradiction at the first disputed term. The previous values are $1$ and $1$, so the forbidden value is $2$. Choosing $2$ violates the stated exclusion rather than satisfying it.
+
+### Remark 3.3 (A separate pattern in the displayed list)
+
+The finite list $1,1,2,4,7,11,16$ has first differences $0,1,2,3,4,5$. For the displayed indices it agrees with
+
+$$
+C_n=1+\frac{n(n-1)}2.
+$$
+
+Thus its leading quadratic coefficient is $1/2$. This observation does not define the intended sequence beyond the prefix, but it shows that the proposed prefix is also in tension with a claimed coefficient of $1/4$.
+
+## 4. Exact analytic behavior
+
+The closed form makes all asymptotic questions elementary.
+
+### Theorem 4.1 (Quadratic normalization)
+
+As $n\to\infty$ through the positive integers,
+
+$$
+\frac{A_n}{n^2}\longrightarrow0.
+$$
+
+**Proof sketch.** By Theorem 3.1, $A_n=1$, so the normalized term is $1/n^2$. Given $\varepsilon>0$, choose $N>1/\sqrt{\varepsilon}$. Then for every $n\ge N$,
+
+$$
+0\le\frac{A_n}{n^2}=\frac1{n^2}\le\frac1{N^2}<\varepsilon.
+$$
+
+This is precisely convergence to zero. $\square$
+
+### Corollary 4.2 (The proposed quarter-limit is impossible)
+
+The sequence $A_n/n^2$ does not converge to $1/4$.
+
+**Proof sketch.** Theorem 4.1 gives convergence to $0$. Limits of real sequences are unique, and $0\ne1/4$. $\square$
+
+### Corollary 4.3 (Exact millionth normalized value)
+
+At $n=1{,}000{,}000$,
+
+$$
+\frac{A_{1{,}000{,}000}}{(1{,}000{,}000)^2}
+=
+\frac{1}{1{,}000{,}000{,}000{,}000}
+=10^{-12}.
+$$
+
+**Proof sketch.** Substitute $A_{1{,}000{,}000}=1$ from Theorem 3.1 and square $1{,}000{,}000$. $\square$
+
+### Proposition 4.4 (Consecutive-term ratios)
+
+For every $n\ge0$,
 
 $$
 \frac{A_{n+1}}{A_n}=1.
 $$
 
-**Proof sketch.** By Theorem 3.2, both numerator and denominator equal $1$. $\square$
+In particular, the ratio converges to $1$ and does not oscillate between $1$ and $2$.
 
-Thus the ratios do converge, and indeed they are identically $1$. There is no oscillation between $1$ and $2$.
+**Proof sketch.** Both numerator and denominator equal $1$ by Theorem 3.1. $\square$
 
-**Corollary 3.5 (consecutive coprimality).** For every literal anti-Fibonacci trajectory and every $n\ge0$,
+These conclusions sharply distinguish the literal recurrence from Fibonacci behavior. There is no exponential growth, no quadratic growth, and no nonconvergent ratio phenomenon.
 
-$$
-\gcd(A_{n+1},A_n)=1.
-$$
+## 5. An extremal graph connector
 
-**Proof sketch.** Again, Theorem 3.2 reduces the claim to $\gcd(1,1)=1$. $\square$
+Additive relations can be translated into graph structure by treating indices as vertices and sums as adjacency conditions.
 
-The coprimality conclusion is valid but should not be mistaken for evidence of a complicated number-theoretic pattern. It is a direct consequence of complete collapse.
+### Definition 5.1 (Sum-to-two index graph)
 
-## 4. Exact analysis of the displayed increment model
-
-The displayed sequence has a different recurrence and a nonconstant trajectory. Its formula follows by summing arithmetic increments.
-
-**Theorem 4.1 (division-free triangular identity).** For every $n\ge0$,
+For $n\in\mathbb N$, let $G_n$ be the simple graph with vertex set
 
 $$
-2D_n=n(n-1)+2.
+V_n=\{0,1,\ldots,n-1\}.
 $$
 
-**Proof sketch.** At $n=0$, both sides equal $2$. Suppose the formula holds at $n$. Using $D_{n+1}=D_n+n$,
+Two distinct vertices $i,j\in V_n$ are adjacent precisely when
 
 $$
-2D_{n+1}=2D_n+2n
-=n(n-1)+2+2n
-=n(n+1)+2,
+A_i+A_j=2.
 $$
 
-which is the required formula at $n+1$. $\square$
+### Theorem 5.2 (Complete-Graph Theorem)
 
-This division-free statement is convenient over the natural numbers. Since $n(n-1)$ is always even, it yields the ordinary closed form.
+For every $n\in\mathbb N$, the graph $G_n$ is the complete graph on $n$ vertices.
 
-**Theorem 4.2 (closed form).** For every $n\ge0$,
-
-$$
-D_n=1+\frac{n(n-1)}2.
-$$
-
-**Proof sketch.** Divide the identity of Theorem 4.1 by $2$. Alternatively, telescope the recurrence:
+**Proof sketch.** Let $i$ and $j$ be any distinct vertices. By Theorem 3.1, $A_i=A_j=1$, hence
 
 $$
-D_n=D_0+\sum_{j=0}^{n-1}j
-=1+\frac{n(n-1)}2.
+A_i+A_j=1+1=2.
 $$
 
-$\square$
+Thus every pair of distinct vertices is adjacent, which is the definition of a complete graph. $\square$
 
-The closed form provides direct evaluations. For example,
+### Corollary 5.3 (Exact edge count)
 
-$$
-D_6=1+\frac{6\cdot5}{2}=16,
-\qquad
-D_8=1+\frac{8\cdot7}{2}=29.
-$$
-
-It also gives first and second differences:
+For every $n\in\mathbb N$,
 
 $$
-D_{n+1}-D_n=n,
+|E(G_n)|=\binom n2=\frac{n(n-1)}2.
 $$
 
-and
+**Proof sketch.** Each edge of a complete graph is an unordered pair of distinct vertices. The number of such pairs selected from $n$ vertices is $\binom n2$. $\square$
+
+### Corollary 5.4 (Maximal edge density)
+
+For $n\ge2$, the edge density of $G_n$ is $1$.
+
+**Proof sketch.** A simple graph on $n$ vertices has at most $\binom n2$ edges. Corollary 5.3 attains this upper bound, so the ratio of actual to possible edges equals $1$. $\square$
+
+This graph construction provides a reusable bridge between additive combinatorics and extremal graph theory. Given any numerical sequence $(B_n)$ and a target $t$, one may join indices $i$ and $j$ when $B_i+B_j=t$. The number of edges then counts representations of $t$ by values at distinct indices, with multiplicities arising from repeated values. Clique structure records collections whose pairwise sums all hit the target.
+
+For the present recurrence, repeated values force maximal density. For a repaired sequence with distinct or increasing terms, the same connector would become sparse and potentially reveal nontrivial restrictions.
+
+## 6. Algorithms and computational consequences
+
+Although no large computation is required, explicit algorithms help separate the cost of simulating the recurrence from the cost of using its closed form.
+
+### Algorithm 6.1 (Direct recurrence simulation)
+
+Given a nonnegative cutoff $N$, initialize $A_0=A_1=1$. For each $n$ from $0$ to $N-2$, compute $s=A_n+A_{n+1}$. Set the next value to $2$ if $s=1$ and to $1$ otherwise.
+
+For generation of the complete prefix through index $N$, this algorithm uses $O(N)$ time and $O(N)$ output storage. If only the final value is needed, storage drops to $O(1)$. Each step performs a constant number of fixed-form integer operations; in this specific trajectory all values remain $1$.
+
+Correctness follows from Lemma 2.2: the branch computes the least positive integer outside the singleton $\{s\}$ exactly.
+
+### Algorithm 6.2 (Closed-form evaluator)
+
+Given any index $N\ge0$, return $1$.
+
+Theorem 3.1 proves correctness. The running time and auxiliary storage are both $O(1)$. This algorithm is preferable for large indices because it avoids simulating an already solved recurrence.
+
+### Algorithm 6.3 (Edge-count evaluator)
+
+Given $n\ge0$, return
 
 $$
-(D_{n+2}-D_{n+1})-(D_{n+1}-D_n)=1.
+\frac{n(n-1)}2.
 $$
 
-Thus the displayed sequence is a discrete quadratic with constant second difference $1$.
+By Theorem 5.2, the graph is complete; by Corollary 5.3, this expression is its exact edge count. The evaluator uses $O(1)$ arithmetic operations and $O(1)$ auxiliary storage, apart from the bit complexity of multiplying integers of size $O(\log n)$.
 
-**Corollary 4.3 (normalized limit).** The displayed increment sequence satisfies
+### Numerical diagnostics
 
-$$
-\lim_{n\to\infty}\frac{D_n}{n^2}=\frac12.
-$$
-
-**Proof sketch.** For $n>0$, Theorem 4.2 gives
+A useful diagnostic table reports $A_n$, $A_n/n^2$, and the distance from $1/4$. For example,
 
 $$
-\frac{D_n}{n^2}
-=\frac1{n^2}+\frac{n(n-1)}{2n^2}
-=\frac12-\frac1{2n}+\frac1{n^2}.
+\begin{array}{c|c|c|c}
+n&A_n&A_n/n^2&|A_n/n^2-1/4|\\ \hline
+1&1&1&3/4\\
+10&1&10^{-2}&0.24\\
+100&1&10^{-4}&0.2499\\
+1{,}000&1&10^{-6}&0.249999\\
+1{,}000{,}000&1&10^{-12}&0.249999999999
+\end{array}
 $$
 
-The last two terms tend to $0$. $\square$
+The normalized values approach zero monotonically for positive $n$. Meanwhile, their distance from $1/4$ approaches $1/4$, rather than approaching zero.
 
-**Corollary 4.4 (consecutive-ratio limit for the displayed model).** The displayed sequence satisfies
+## 7. Density claims and the need to specify a universe
 
-$$
-\lim_{n\to\infty}\frac{D_{n+1}}{D_n}=1.
-$$
+Statements about “the complement” are ambiguous unless the underlying set is named. At least three natural sets could be intended.
 
-**Proof sketch.** Using the closed form, both $D_{n+1}$ and $D_n$ have leading term $n^2/2$. More explicitly,
+First, the value set of the literal sequence is
 
 $$
-\frac{D_{n+1}}{D_n}
-=1+\frac{n}{D_n},
+\mathcal V=\{A_n:n\ge0\}=\{1\}.
 $$
 
-and $n/D_n\to0$ because $D_n$ is quadratic. $\square$
+Its complement in the positive integers is $\mathbb Z_{>0}\setminus\{1\}$, which has natural density $1$, while $\mathcal V$ itself has density $0$.
 
-Hence neither interpretation produces persistent oscillation between ratios near $1$ and $2$: the literal model has ratio exactly $1$, while the displayed model approaches $1$.
+Second, one might consider sums of values at distinct indices. Since all values equal $1$, every such sum equals $2$ once at least two indices are available. As a set of integers, the attained distinct-index sumset is $\{2\}$ and has density $0$.
 
-## 5. Failure of the quarter-square model
+Third, an intended repaired process might construct a changing restricted sumset from earlier terms and ask for the density of its complement. That object is not determined by the literal recurrence and may behave very differently.
 
-The normalized limit already conflicts with a leading coefficient of $1/4$. An exact decomposition on even indices gives a stronger, integer-valued result.
+Thus a density statement must specify: the ambient universe, whether multiplicity matters, whether equal indices may be used, whether all historical terms participate, and whether “complement” refers to values or sums.
 
-**Theorem 5.1 (even-index decomposition).** For every $k\ge0$,
+## 8. Diagnosing and repairing the specification
 
-$$
-D_{2k}=Q(2k)+k(k-1)+1.
-$$
+The collapse occurs because the minimization universe is all positive integers while the forbidden set contains one element. Four design decisions are required for a nontrivial greedy avoidance process.
 
-**Proof sketch.** Since $(2k)^2/4=k^2$, one has $Q(2k)=k^2$. Theorem 4.2 gives
+### 8.1 Candidate universe
 
-$$
-D_{2k}
-=1+\frac{(2k)(2k-1)}2
-=1+k(2k-1)
-=2k^2-k+1.
-$$
+Must the next term be any positive integer, an unused positive integer, or an integer larger than the previous term? The first option permits perpetual reuse of $1$. The latter options introduce genuine movement.
 
-Subtracting $k^2$ leaves $k^2-k+1=k(k-1)+1$. $\square$
+### 8.2 Forbidden family
 
-The discrepancy is not merely nonzero; it grows like $k^2$.
-
-**Theorem 5.2 (unbounded discrepancy from the quarter-square law).** For every nonnegative integer $C$, there exists $n\ge0$ such that
+Does the next term avoid only the latest sum $A_n+A_{n-1}$, every adjacent historical sum, or the full pairwise sumset
 
 $$
-Q(n)+C<D_n.
+\{A_i+A_j:0\le i,j\le n\}?
 $$
 
-Consequently, no estimate of the form
+These choices range from a singleton exclusion to a rapidly changing global constraint.
+
+### 8.3 Reuse and monotonicity
+
+If repeated terms are allowed, greedy minimization often collapses to a small cycle or fixed point. Requiring unused values or strict increase may prevent this, but each condition must be stated explicitly.
+
+### 8.4 Index conventions
+
+Allowing $i=j$ in a sumset differs from requiring distinct indices. Repeated numerical values also create a distinction between pairs of indices and pairs of values.
+
+One plausible replacement is the following strictly increasing global-avoidance construction:
 
 $$
-D_n=\left\lfloor\frac{n^2}{4}\right\rfloor+O(1)
+B_{n+1}=\min\left\{m>B_n:m\notin\{B_i+B_j:0\le i,j\le n\}\right\}.
 $$
 
-is valid.
+This definition is presented as a research template, not as a reconstruction of the displayed prefix. It makes the candidate universe and forbidden set explicit. Before studying its asymptotics, one would prove that the admissible set is nonempty at every stage, then establish monotonicity, bounds, and structural properties of its sumset.
 
-**Proof sketch.** Choose an integer $k$ such that $k(k-1)+1>C$; for example, $k=C+2$ suffices. Set $n=2k$. By Theorem 5.1,
+A different repair could target the displayed finite pattern directly, but the recurrence must then be inferred and tested independently. The formula $1+n(n-1)/2$ matches the listed terms and grows like $n^2/2$, demonstrating why finite data alone cannot simultaneously justify an unrelated $n^2/4$ asymptotic.
 
-$$
-D_n-Q(n)=k(k-1)+1>C.
-$$
+## 9. Applications and broader methodological lessons
 
-Since this can be done for every $C$, the discrepancy is unbounded. $\square$
+### 9.1 Fixed points of greedy recurrences
 
-The theorem is stronger than comparing limits. It explicitly constructs a violating index for every proposed error bound. With $k=C+2$, one may take
+The constant solution can be understood dynamically. Regard an ordered pair $(x,y)$ as the current state and update it by
 
 $$
-n=2(C+2).
+T(x,y)=(y,L(y,x)).
 $$
 
-At this index the discrepancy equals
+The state $(1,1)$ is fixed because $L(1,1)=1$. More generally, whenever $x+y\ne1$, the second component after an update is $1$. Since $x$ and $y$ are nonnegative, the exceptional equation $x+y=1$ has only the states $(0,1)$ and $(1,0)$. This explains why the minimization operation is strongly attracted to the smallest positive integer. For the prescribed positive initial data, the exceptional branch is never visited.
+
+This state-space viewpoint offers an efficient audit method for other local greedy recurrences. One can identify exceptional surfaces where the minimizing choice changes, find fixed points and short cycles, and check whether the initial state enters one of them. Such qualitative analysis should precede extrapolation from a purported prefix.
+
+### 9.2 Set-theoretic interpretation
+
+The admissible set at state $(x,y)$ is
 
 $$
-(C+2)(C+1)+1,
+\mathbb Z_{>0}\setminus\{x+y\}.
 $$
 
-which is greater than $C$.
-
-## 6. Algorithms and numerical demonstrations
-
-The preceding results yield simple algorithms with sharply different purposes.
-
-### 6.1. Simulating the literal recurrence
-
-Given positive predecessors $x$ and $y$, a general least-avoidance routine could test positive candidates in ascending order until it finds one unequal to $x+y$. For the present domain this search is unnecessary: Lemma 3.1 proves that the answer is always $1$. Thus an optimized generator writes $1$ at every position.
-
-For a requested prefix of length $N$, the running time is $O(N)$ because $N$ outputs must be produced, and the auxiliary working space is $O(1)$ apart from the output array. If values are streamed rather than stored, total auxiliary space remains $O(1)$.
-
-### 6.2. Generating the displayed sequence
-
-The recurrence algorithm starts with $D=1$ and, at stage $n$, outputs $D$ and then replaces it by $D+n$. It uses one addition per term, runs in $O(N)$ arithmetic operations for $N$ outputs, and uses $O(1)$ auxiliary space aside from storage.
-
-For random access, Theorem 4.2 provides
+Its minimum is controlled entirely by whether its deleted singleton contains $1$. By contrast, a genuinely global avoidance rule has an admissible set of the form
 
 $$
-D_n=1+\frac{n(n-1)}2.
+\mathbb Z_{>0}\setminus S_n,
 $$
 
-This requires a constant number of arithmetic operations. In a bit-complexity model, the cost depends on multiplication of integers with $O(\log n)$ bits; under unit-cost arithmetic it is $O(1)$.
+where $S_n$ is an expanding collection of forbidden values. The least admissible integer can grow only if $S_n$ covers a long initial interval $\{1,2,\ldots,k\}$. This gives a useful general criterion: to force the next greedy value above $k$, every positive integer through $k$ must be either forbidden or excluded from the candidate universe. A singleton can never force a value above $2$.
 
-### 6.3. Certifying failure of any proposed bound
+### 9.3 Practical specification testing
 
-Given $C\ge0$, choose $k=C+2$ and $n=2k$. Compute $D_n$ from the closed form and $Q(n)=\lfloor n^2/4\rfloor$. Theorem 5.1 ensures
+The immediate application is specification testing for recursively defined mathematical objects. A short exact computation can invalidate a million-step numerical experiment before it begins. This matters in greedy algorithms, combinatorial game rules, integer sequence design, and discrete dynamical systems.
 
-$$
-D_n-Q(n)=k(k-1)+1>C.
-$$
+The singleton-exclusion formula also provides a general warning about optimization language. A condition of the form “choose the least positive integer not equal to $q$” is nearly constant as a function of $q$. It returns $1$ for every $q$ except $1$. Any intended complexity must therefore come from a larger forbidden family or a restricted candidate set.
 
-The construction is deterministic and requires constant many arithmetic operations. It is a certificate-producing algorithm: the output index $n$ witnesses failure of the proposed bound $C$.
+The graph connector illustrates a second application. Additive data can be represented by edges, allowing extremal graph quantities to summarize arithmetic behavior. In the present case the graph attains maximal edge count because the numerical trajectory is constant. In richer models, edge density could measure additive coincidences, clique number could detect highly coherent subsets, and forbidden subgraphs could express incompatibilities among sums.
 
-### 6.4. Large-scale normalized checks
+Finally, the analysis separates discovery from validation. Large-scale numerical testing is valuable when the object is correctly specified. It is not a substitute for checking the first recurrence step. Here the exact millionth-index value follows from a theorem and requires no iteration.
 
-For a large index such as $n=10^6$, the closed form gives
+## 10. Future work
 
-$$
-\frac{D_n}{n^2}
-=\frac12-\frac{1}{2\cdot10^6}+\frac{1}{10^{12}},
-$$
+The first priority is to repair the definition before studying asymptotics. A revised rule should state whether values must be new, increasing, or outside sums of any pair of earlier terms. The displayed prefix should then be reconciled with the recurrence, and its apparent coefficient $1/2$ should be compared with any proposed coefficient.
 
-which is close to $1/2$, not $1/4$. Such computations illustrate the theorem but are not substitutes for it. The exact identity proves the behavior for every index and the limit follows symbolically.
+Global additive avoidance offers a richer direction. One may greedily choose the least unused positive integer outside a restricted historical sumset, then study existence, monotonicity, sum-free structure, and the counting function. Such questions connect additive combinatorics with greedy algorithms.
 
-## 7. Structural interpretation and applications
+The graph bridge can also be generalized. For a repaired sequence, define adjacency through a chosen additive relation and study edge density, clique number, and forbidden subgraphs. These invariants may translate additive regularity into extremal graph structure.
 
-### 7.1. Least-excluded dynamics
+Density should be addressed only after fixing its universe. The complement of the value set in the positive integers and the complement of a historical sumset are distinct objects and need not share a density.
 
-The smallest excluded-value principle, often called a minimum-excluded or greedy admissibility rule, responds primarily to the low end of the candidate set. If a rule forbids only a value $s\ge2$, then $1$ remains admissible, regardless of how large or arithmetically complicated $s$ is. To force the selected value above $m$, every candidate $1,2,\ldots,m$ must be forbidden or independently disallowed.
+Any revised construction intended to generate $1,1,2,4,7,\ldots$ should be treated as a new definition. The literal recurrence remains useful as a specification regression test: it records exactly why excluding only the latest two-term sum cannot produce the intended behavior.
 
-This viewpoint is useful in greedy graph coloring, scheduling, resource allocation, and combinatorial game theory. A large forbidden label may have no effect on a least-choice algorithm; a dense block of small forbidden labels controls the output. The literal anti-Fibonacci recurrence is an extreme example in which the same smallest candidate survives forever.
+## 11. Conclusion
 
-### 7.2. Recurrences versus fitted data
-
-A finite list can suggest many incompatible rules. The displayed values visibly encode increasing differences, making the triangular recurrence natural. But they do not satisfy the stated singleton-avoidance rule: after $A_0=A_1=1$, the forbidden sum is $2$, so the least allowed value is $1$, not $2$.
-
-This emphasizes a methodological point. Before extrapolating asymptotics from data, one should verify that the data satisfy the proposed local definition. Difference tables are useful for recognizing polynomial sequences; direct substitution is indispensable for checking recurrence claims.
-
-### 7.3. Additive-combinatorial redesign
-
-A richer avoidance process can be formed by forbidding the set of sums of two earlier selected terms. If $S_n=\{a_0,\ldots,a_n\}$, one might forbid
+The literal anti-Fibonacci exclusion rule has a complete and unexpectedly simple solution. The least positive integer unequal to a single forbidden sum is $1$ unless that sum is $1$. Starting from $1,1$, the forbidden sum is always $2$, and the recurrence is therefore constant:
 
 $$
-S_n\mathbin{\widehat{+}}S_n
-=\{a_i+a_j:0\le i<j\le n\},
+A_n=1\quad\text{for all }n\ge0.
 $$
 
-and choose the least positive integer outside this restricted sumset, perhaps also requiring the new term not to have appeared before. Unlike a singleton, this forbidden set grows with $n$ and may cover many small candidates.
+Every major consequence follows exactly. The proposed prefix is not generated. Quadratic normalization tends to $0$ rather than $1/4$. The millionth normalized value is $10^{-12}$. Consecutive-term ratios are identically $1$. The graph joining indices whose values sum to $2$ is complete and has $\binom n2$ edges.
 
-Such a model creates legitimate questions about the density of selected values, the density of representable sums, polynomial growth exponents, and stability under changes of initial conditions. None of those questions is meaningful for the literal constant trajectory in the intended sense, because the process never explores larger integers.
-
-### 7.4. Ratio behavior
-
-The Fibonacci ratio tends to a constant greater than $1$ because Fibonacci growth is exponential. Polynomially growing positive sequences generally have consecutive ratios tending to $1$. The displayed model confirms this: $D_n\sim n^2/2$ implies $D_{n+1}/D_n\to1$. Persistent oscillation between values bounded away from $1$ would require repeated multiplicative jumps, a phenomenon not generated by either singleton avoidance or smooth quadratic increments.
-
-This suggests a phase-transition question for broader greedy recurrences. Bounded forbidden-set size may be insufficient to create repeated multiplicative gaps, whereas unbounded forbidden sets can potentially do so by covering long initial intervals of candidates.
-
-### 7.5. Boundary conditions and alternative domains
-
-The least-avoidance lemma depends exactly on the positivity of both predecessors. This dependence is worth isolating because it explains why superficially similar variants can behave differently. For arbitrary integers $x$ and $y$, the least positive integer unequal to $x+y$ is $2$ when $x+y=1$, and $1$ otherwise. Thus a recurrence over all integers can react only to the exceptional event that the preceding sum equals $1$. With the prescribed initial values $1,1$, that event never occurs, so broadening the ambient domain alone does not alter the classified trajectory.
-
-Changing “positive integer” to “nonnegative integer” has an even more dramatic effect. The least nonnegative candidate would usually be $0$, and a rule initialized at $1,1$ would immediately fall to $0$ whenever the forbidden sum were nonzero. This shows that the candidate domain is part of the dynamics, not harmless notation.
-
-A nonrepetition convention would also change the model substantially. If previously selected values were prohibited, then after selecting $1$ the process could no longer return to it. The rule would cease to be singleton avoidance because the set of forbidden values would include the entire history in addition to the latest sum. Such a model may grow, but its behavior cannot be inferred from the theorems above without fresh analysis.
-
-### 7.6. Logical status of the original asymptotic claims
-
-It is useful to distinguish rejection from correction. For the literal trajectory, a claim such as $A_n\sim n^2/4$ is false because $A_n=1$. Its normalized values satisfy
-
-$$
-\frac{A_n}{n^2}=\frac1{n^2}\longrightarrow0
-$$
-
-for positive $n$. The ratio claim is also false in the proposed form because $A_{n+1}/A_n=1$ identically. Any claim about the density of a complement must first specify precisely which set of integers and which representation rule are intended; the constant trajectory does not realize the advertised additive structure.
-
-For the displayed increment sequence, the quarter-square asymptotic is not repaired by changing only a bounded error term. The correct statement is the exact identity
-
-$$
-D_n=\frac12n^2-\frac12n+1,
-$$
-
-which gives $D_n=n^2/2+O(n)$. The lower-order term is linear and explicit. Therefore the correct asymptotic hierarchy is stronger than a leading-term limit but different from the proposed bounded-error formula.
-
-These distinctions prevent results from one interpretation being transferred to another. The constant model answers the literal recurrence; the triangular model answers the displayed data. A future growing-forbidden-set model would constitute a third object and would require its own definitions and theorems.
-
-## 8. Future directions
-
-The classification identifies exactly what must change to obtain a nontrivial theory.
-
-First, one may study growing forbidden-sum sets: at each stage choose the least unused positive integer outside all sums of two distinct earlier terms. The central problems are existence of stable growth exponents and sensitivity to finite changes in initial conditions.
-
-Second, recurrences may be classified by forbidden-set cardinality. If at stage $n$ at most $r(n)$ candidates are forbidden, how quickly can the least admissible value grow? The singleton model supplies the cardinality-one endpoint. A sharp distinction may occur between bounded and linearly growing $r(n)$.
-
-Third, the displayed increment model admits exact higher-order asymptotic analysis. Since
-
-$$
-D_n=\frac12n^2-\frac12n+1,
-$$
-
-all shifted rational normalizations can be expanded explicitly, and integer-valued affine perturbations with the same leading term can be classified.
-
-Fourth, ratio-limit behavior should be studied under structural assumptions such as monotonicity and unboundedness. It is natural to ask whether bounded forbidden-set size forces consecutive ratios toward $1$, and whether oscillation bounded away from $1$ requires forbidden sets of unbounded size.
-
-Finally, increasing greedy sequences that exclude every earlier pair-sum lead directly to additive-combinatorial density questions. Their selected sets and sumsets may exhibit complementary sparsity laws unavailable in the singleton model.
-
-## 9. Conclusion
-
-The literal anti-Fibonacci recurrence is completely rigid. Because the sum of two positive predecessors is at least $2$, the least positive integer unequal to that sum is always $1$. Starting from $1,1$, the unique trajectory is constant; all consecutive ratios equal $1$, and consecutive terms are coprime.
-
-The displayed list $1,1,2,4,7,11,16,\ldots$ belongs to a separate increment model. It satisfies $D_{n+1}=D_n+n$ and has exact form
-
-$$
-D_n=1+\frac{n(n-1)}2.
-$$
-
-Its normalized values tend to $1/2$. At even index $2k$, its discrepancy from $\lfloor n^2/4\rfloor$ is exactly $k(k-1)+1$, so no bounded-error quarter-square estimate is possible.
-
-The broader lesson is structural: avoiding one sum is too weak to drive a least-positive selection process upward. Nontrivial anti-additive growth requires a forbidden set capable of occupying the smallest available values. That observation turns a failed conjecture into a precise design principle for future avoidance sequences.
+The broader point is constructive. Additive avoidance can support substantial mathematics, but only when its forbidden family and candidate universe are specified. Once those choices are explicit, asymptotic analysis, density, and graph structure become meaningful questions rather than artifacts of an ambiguous rule.
