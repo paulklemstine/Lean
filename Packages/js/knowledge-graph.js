@@ -22,7 +22,7 @@
 
         const graphNodes = rawNodes.map(n => ({
             ...n,
-            x: 0, y: 0, vx: 0, vy: 0,
+            x: (Math.random() - 0.5) * 100, y: (Math.random() - 0.5) * 100, vx: 0, vy: 0,
             targetX: 0, targetY: 0,
             mass: 1.0 + (n.priority_score ?? 0.5) * 2.0,  // heavier = more priority
             radius: 16 + ((n.priority_score ?? 0.5) ** 0.7) * 20,    // bigger = more priority
