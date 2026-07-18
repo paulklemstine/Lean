@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "2758a31c",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\n## What this cycle establishes\n\n`Catalog/Bridges/MatsunoIwasawaMonoidHom.lean` deepens the algebraic model of the\ntwo classical **Iwasawa invariants** `μ` and `λ` (built in `Matsu",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 25,
-      "timestamp": "2026-07-14T05:23:54",
-      "title": "Deepening: `MatsunoIwasawaBridge.lean` builds a self-contained algebraic model of the two"
-    },
-    {
       "cycle_id": "33954867",
       "domain": "Applications",
       "key_insight": "# Future Directions: from `E₄² = E₈` to sharper Eisenstein arithmetic\n\nThis cycle formalized the **arithmetic residue** of the identity `E₄² = E₈` as a\n*connector* between modular forms and elementary",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-18T00:42:46",
       "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
+    },
+    {
+      "cycle_id": "0f8a1331",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n## Result established\n\n`Catalog/Applications/HyperbolicNumberTheory/CayleyPythagoreanBridge.lean` gives a precise replacement for the underspecified “hyperbolic integers” proposal",
+      "quality_score": 0.67,
+      "sorry_count": 0,
+      "theorem_count": 7,
+      "timestamp": "2026-07-18T00:59:51",
+      "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-18T00:42:46",
+  "last_updated": "2026-07-18T00:59:51",
   "open_questions": [
     {
       "context": "",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "7d82c497",
-        "quality": 0.7,
-        "theorems": 11,
-        "title": "ArXiv paper: Fractal uncertainty principle over $\\mathbb{Q}_p$"
-      },
-      {
         "cycle_id": "e2f5c991",
         "quality": 0.72,
         "theorems": 15,
@@ -3637,6 +3631,12 @@
         "quality": 0.65,
         "theorems": 12,
         "title": "ArXiv paper: Record compositions of alternating permutations and noncommutative "
+      },
+      {
+        "cycle_id": "0f8a1331",
+        "quality": 0.67,
+        "theorems": 7,
+        "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk"
       }
     ],
     "NumberTheory": [
