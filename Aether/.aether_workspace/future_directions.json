@@ -865,7 +865,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Even smaller universal posets' and formalize its key results. Abstract: We show that for every $η>0$ and sufficiently large $n$, there exists a poset of size $2^{(1+η)n/2}$ containing all the $n$-element posets as induced subposets. This improves a recent result of Bastide, Groenland and Nenadov. Our proof provides a labeling scheme preserving transitivity, inspired by the Boolean lattice. Among other tools, we use the Szemerédi Regularity Lemma.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Cryptography",
         "Logic"
@@ -1516,7 +1516,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper '$p$-adic Sum-Product, Projections, and Furstenberg Sets' and formalize its key results. Abstract: Let $p$ be a prime number. We prove the sharp Furstenberg set bound in the $p$-adic plane $\\mathbb{Q}_p^2$: every $(s,t)$-Furstenberg set $E\\subset\\mathbb{Q}_p^2$ satisfies $$ \\dim_H E\\ge \\min\\left\\{s+t,\\frac{3s+t}{2},s+1\\right\\}. $$ This matches the sharp lower bound in the Euclidean plane. We also derive two related consequences: a $p$-adic projection theorem for the maps $π_θ(x,y)=x+θy$, together with the corresponding exceptional set estimate giving a $p$-adic analogue of Oberlin's projection question; and a discretized fractal sum-product estimate over $\\mathbb{Q}_p$, showing that sufficiently non-concentrated subsets of $\\mathbb{Z}_p^\\times$ cannot have both small sum set and small product set. The proof follows the projection-theoretic and multiscale machinery developed in the Euclidean works of Orponen-Shmerkin (arXiv:2301.10199) and Ren-Wang (arXiv:2308.08819). The main task is to rebuild this machinery in the non-archimedean setting, and along the way we develop several new $",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Logic"
@@ -2692,7 +2692,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Expansions of $\\binom{pn}{p+r}$ in Shifted Binomial Bases and a Modular Symmetry Criterion' and formalize its key results. Abstract: We study the expansion of the polynomial $g_{p,r}(n) = \\binom{pn}{p+r}$ (for integers $p \\ge 2$ and $r \\ge 1$) in the shifted binomial basis $\\bigl\\{\\binom{n+k-1}{p+r}\\bigr\\}$. Using generating functions and finite differences, we obtain a closed-form formula for the expansion coefficients $B_{p,r,k}$. We then characterize when the coefficient sequence is palindromic, showing that it exhibits reflection symmetry on its support if and only if $r \\equiv 1 \\pmod{p}$. The proof combines an analysis of the sequence's support with the root structure of $\\binom{pX}{p+r}$. Under the same congruence condition, we show that $p$ divides every coefficient. For $r=1$, the leading coefficient simplifies to $p C_p$, where $C_p$ is the $p$-th Catalan number. Finally, computations for small values of $p$ and $r$ show that the resulting coefficient sequences coincide with selected rows of $p$-decimated multinomial triangles (OEIS A027907 and A008287).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Logic"
       ],
@@ -2812,7 +2812,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Induced-Minor-Closed Classes have Linear, Square-Root, or Sub-Polynomial Tree-Independence' and formalize its key results. Abstract: An independent set in a graph $G$ is a set of pairwise non-adjacent vertices. A tree decomposition of $G$ is a pair $(T, χ)$ where $T$ is a tree and $χ: V(T) \\rightarrow 2^{V(G)}$ is a function satisfying two axioms: for every edge $uv \\in E(G)$ there is an $x \\in V(T)$ such that $\\{u,v\\} \\subseteq χ(x)$, and for every vertex $u \\in V(G)$ the set $\\{x \\in V(T) | u \\in χ(x)\\}$ induces a non-empty and connected subtree of $T$. The sets $χ(x)$ for $x \\in V(T)$ are called the bags of the tree decomposition. The tree-independence number of $G$ is the minimum taken over all tree decompositions of $G$ of the maximum size of an independent set of the graph induced by a bag of the decomposition. A graph $H$ is an induced minor of a graph $G$ if a graph isomorphic to $H$ can be obtained from $G$ by vertex deletions and edge contractions. We prove that for every $t\\in\\mathbb{N}$ there exists an $ε> 0$ such that every graph $G$ either contains the complete bipartite graph $K_{t,t}$ or the wall $W_",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Logic"
       ],
@@ -3096,7 +3096,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Proximity Measures for Classes of Phylogenetic Networks' and formalize its key results. Abstract: Phylogenetic networks are used to represent the evolutionary history of species. Due to biological interpretations and computational advantages, researchers have focused on restricted classes of phylogenetic networks, such as tree-child, orchard, and tree-based. These classes capture different notions of tree-likeness: tree-child networks require every internal vertex to have a taxon reachable by a tree path, orchard networks are trees with horizontal arcs (for modelling histories rife with horizontal gene transfers), and tree-based networks are trees with additional (not-necessarily horizontal) arcs. A natural question to ask is ``how far is a given network from belonging to a particular class?'' This motivates the study of proximity measures, which measure the minimum number of graph modifications required to transform a network into one belonging to a particular class. In this paper, we consider three proximity measures based on leaf addition, valid arc deletion, and arc deletion. W",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Algebra",
         "Logic"
@@ -3382,7 +3382,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Disproofs of two conjectures concerning nondeficient numbers' and formalize its key results. Abstract: A positive integer $n$ is said to be nondeficient if $σ(n) \\geq 2n$. Letting the positive divisors of a positive integer $n$ be written as $1 = d_0 < d_1 < \\cdots < d_k < d_{k+1} = n$, and letting $\\mathcal{S}$ denote a set of integers, if there exist values $λ_j \\in \\mathcal{S}$ such that $1 + \\sum_{j=1}^{k} λ_j d_j = n$, then $n$ is said to be an $\\mathcal{S}$-perfect number. Ross, in 2024, introduced the study of $\\mathcal{S}$-perfect numbers, and concluded with two conjectures that each concern both $\\{ -1, 1 \\}$-perfect numbers and nondeficient numbers. We disprove both of these conjectures.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Logic"
@@ -3585,7 +3585,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Overfull Conjecture for graphs with maximum degree 4' and formalize its key results. Abstract: Let $G$ be a simple graph with maximum degree $Δ(G)$. The graph $G$ is overfull if $\\left|E(G)\\right|> Δ(G)\\lfloor |V(G)|/2\\rfloor$. In 1986, Chetwynd and Hilton proposed the Overfull Conjecture: If $G$ is a simple graph with $Δ(G)>\\frac{|V(G)|}{3}$, then $G$ is a Class $2$ graph if and only if $G$ contains an overfull subgraph $H$ with $Δ(H)=Δ(G)$. In this paper, we give a proof of this conjecture for graphs with maximum degree $4$.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Logic"
@@ -4273,7 +4273,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Moment-based PPT criteria for random bipartite states' and formalize its key results. Abstract: Moment-based relaxations of the positive partial transpose (PPT) criterion have been recently introduced, as a hierarchy of entanglement criteria involving only experimentally accessible quantities of a given bipartite state. The goal of this work is to study their typical detection performance on high-dimensional bipartite systems. Concretely, we investigate whether random bipartite mixed states on $\\mathbb C^d\\otimes\\mathbb C^d$, obtained as the marginal over an environment $\\mathbb C^s$ of a uniformly distributed pure state, generically satisfy or violate them. For each fixed level $m\\in\\mathbb N$ in this hierarchy of moment-based PPT criteria, we are able to identify a threshold environment dimension $s=λ_md^2$ at which the behavior of the associated random state switches from violating to satisfying it, with probability going to $1$ as $d$ grows. The proof combines combinatorics of permutations techniques to estimate the average value of moments of partially transposed random stat",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Computation",
         "Logic"
@@ -5373,7 +5373,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Cyclic Sieving for Staircase Plane Partitions via Crystals and Electrical Networks' and formalize its key results. Abstract: We prove a cyclic sieving result for the action of promotion on the staircase plane partitions of height two. Our proof has two major algebraic inputs: an interpretation of this promotion action in terms of tensor powers of the spin crystal that was recently studied by Pappe--Pfannerer--Schilling--Simone, and the bush basis of the degree two part of the coordinate ring of the space of electrical networks that was recently introduced by Gao--Lam--Xu. Moreover, we explain how the existence of an electrical canonical basis in all degrees would yield cyclic sieving for promotion of staircase plane partitions of all heights.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Algebra",
         "Logic"
@@ -5414,7 +5414,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Strongly complete sets and a conjecture of Erdős' and formalize its key results. Abstract: A set $A\\subseteq\\mathbb{N}$ is called $\\textit{complete}$ if every sufficiently large integer can be written as a sum of distinct elements of $A$. It is $\\textit{strongly complete}$ if it remains complete after one deletes finitely many elements from it. We show that $A\\subseteq\\mathbb{N}$ is strongly complete whenever \\[ \\big|A\\cap(2^k,2^{k+1}]\\big|\\ge6 \\] for every sufficiently large $k\\in\\mathbb{N}$, and \\[ \\sum_{a\\in A}\\|aθ\\|=\\infty, \\quad\\forallθ\\in\\mathbb{R}\\setminus\\mathbb{Z}. \\] In particular, this resolves a 1961 conjecture of Erdős. The proof builds on previous work of Bergelson and Simmons. Our approach also allows us to establish a more general strong-completeness criterion with suitable ordered blocks in place of dyadic intervals.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Logic"
@@ -5455,7 +5455,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Edge-decomposition into Two Triangular Forests is NP-complete' and formalize its key results. Abstract: Let $\\mathcal F$ be a graph class that is closed under topological minors and 1-sums, has decidable membership, contains a triangle, and is not the class of all graphs. Recently, Lee, Liu, and Tsai [ICALP 2026] showed that the edge-decomposition problem into $k \\geq 3$ elements of $\\mathcal F$ is NP-hard. In particular, their general hardness reduction covers a long-standing problem on outerthickness (when $\\mathcal F$ is the class of outerplanar graphs). On the other hand, it is well known that decomposing a graph into forests is polynomial-time solvable, as implied by work of Edmonds [J. Res. Natl. Bur. Stand. B. 1965]. In this paper, we take a first step toward determining the complexity of edge-decomposition problems into just two graphs (the case $k=2$). We consider the simplest possible graph class $\\mathcal F$ satisfying the criteria above: the triangular forests, that is, graphs in which every 2-connected component is a triangle. We prove that determining whether a graph can be",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Computation",
         "Logic"
@@ -5660,7 +5660,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Independent Sets in Multiset Profile Graphs via Weighted Local Covers' and formalize its key results. Abstract: The discrete simplex consists of the nonnegative integer vectors $a=(a_1,\\ldots,a_q)$ whose coordinates sum to $d$. Equivalently, its vertices are the multiplicity profiles of size-$d$ multisets over $q$ symbols. Two vertices are adjacent when one is obtained from the other by decreasing one coordinate by one and increasing another coordinate by one. We study the maximum size $α_q(d)$ of an independent set in this graph. Our upper bounds cover the graph by translated smaller graphs and assign them nonnegative weights. For fixed $q$, the weights depend on only finitely many capped profiles, so one finite rational linear system can prove a bound for every sufficiently large $d$. The method gives new proofs of the known cases $q=3$ and $q=4$ and determines $α_q(d)$ exactly for $q=5$ and $q=7$ in every degree. It also determines the largest classes of natural additive colorings for general $q$. In the opposite regime, with $d$ fixed and $q$ growing, it solves degree five for $q\\ge7$, gives",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Algebra",
         "Logic"
@@ -7491,7 +7491,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Efficient Hamilton covers and linear arboricity of random graphs' and formalize its key results. Abstract: A Hamilton cover of a graph is a collection of Hamilton cycles whose union contains all edges. Since each Hamilton cycle covers two edges at every vertex, every Hamilton cover has size at least $\\lceil Δ(G)/2\\rceil$. We prove that this lower bound is tight for binomial random graphs $G(n,p)$ throughout the widest possible range of edge probabilities: if $ω(n)\\to\\infty$ and \\[ \\frac{\\log n+\\log\\log n+ω(n)}{n} \\le p=p(n) \\le 1-\\frac{ω(n)}{n^{2}}, \\] then $G\\sim G(n,p)$ with high probability has a Hamilton cover of size $\\left\\lceil \\frac{Δ(G)}{2}\\right\\rceil. $ The main new contribution is the sparse regime near the Hamiltonicity threshold, where we prove a conjecture of Draganić, Glock, Munhá Correia and Sudakov. Our proof develops constructive tools for decomposing such graphs into controlled forest systems and extending them, using reserved pseudorandom structure, into Hamilton cycles. We also prove the corresponding hitting-time result for the random graph process, answering a questi",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Computation",
         "Logic"
@@ -8142,7 +8142,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Recognition of algebraic matroids is undecidable' and formalize its key results. Abstract: We prove that the recognition problem for algebraic matroids is undecidable. Explicitly, this means that there is no algorithm that takes as input a finite set $S$ and a function $r\\colon\\mathcal{P}(S) \\to \\mathbb{Z}_{\\ge 0}$ (where $\\mathcal{P}(S)$ is the power set) and decides whether there exists a pair of fields $F \\subset K$, and a function $f\\colon S \\to K$, such that for all $A \\subseteq S$: $\\mathrm{tr.deg}_{K/F}(f(A)) = r(A)$. This problem is known to be decidable if the characteristic of the fields involved is constrained to be zero. We prove that it is undecidable if the characteristic is either left unspecified (in which case a realization over any characteristic is accepted) or fixed to be a prime $p$. The proof relies on Hrushovski--Zilber's Group Configuration Theorem and on the work of Evans and Hrushovski on \"Projective Planes in Algebraically Closed Fields\". We relate two different such projective planes, and eventually construct a reduction from the solvability of Di",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Algebra",
         "Logic"
@@ -9481,7 +9481,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\n## What was established\n\nThe formal development proves a general finite-tag amplification theorem. Relative to an abstract provability predicate, one dark existential predicate yields dark predicates with 1, 2, 3, and in fact every positive finite number of distinct tagged witnesses. The tagged coding is proved to enumerate every tag over every originally named object. It also proves that any named witness-extraction principle rules darkness out.\n\nThis gives a concrete obstruction to the proposed strict hierarchy: witness count alone is not an invariant measure of proof-theoretic hardness. Irrelevant finite tags amplify the level without adding mathematical information.\n\n## Important correction to the mission framing\n\nParis–Harrington and Kirby–Paris hydra independence do not by themselves instantiate the definition given in the prompt. Their usual statements are universal termination/finite combinatorics claims independent of PA, whereas the proposed definition requires PA to prove an existential while proving no numeral instance. An explicit PA example therefore needs a carefully fixed arithmetization of syntax, a naming map, and a nonstandard or intensional predicate; it cannot be inferred merely by citing those independence theorems.\n\nLikewise, “dense in the space of Pi_2 statements” is undefined until a topology or asymptotic density on formula codes is selected. Raw counting of formulas is coding-dependent: harmless syntactic padding can arbitrarily change frequencies. Any meaningful density theorem should first prove robustness under acceptable changes of Gödel numbering.\n\n## Next formal targets\n\n1. Instantiate `Prov` with a concrete arithmetized first-order proof calculus for PA and prove `SupportsFiniteTagging` by primitive-recursive transformations of proof codes.\n2. Investigate whether a genuine dark predicate exists under the exact external reading of `PA ⊬ T(n)`. Compare this with the numerical existence property and witness properties of fragments such as HA and constructive arithmetic.\n3. Define an equivalence relation identifying predicates that differ only by finite tags or primitive-recursive bijections, then seek a hierarchy on equivalence classes.\n4. Replace raw formula counting by a specified measure (for example, prefix-free program probability or bounded-length density under a fixed grammar) and prove which conclusions survive recoding.\n5. Formalize the distinction between:\n   - PA proving an existential with no PA-provable numeral instance;\n   - a true existential whose instances are undecidable;\n   - a universal Pi_2 principle independent of PA.\n6. Test candidate examples from nonstandard models, Rosser-style constructions, and recursively inseparable sets. Every candidate must include a proof that PA proves the existential and a metatheorem excluding every standard named instance.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Logic",
         "Algebra"
@@ -9823,7 +9823,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions: Recurrence in Cognitive Dynamics\n\n## 1. Observation-invariant recurrence spectra\n\n**Conjecture.** For compact metric cognitive systems related by a topological conjugacy, the exact-period spectrum, topological entropy, and existence of Li–Yorke scrambled sets are simultaneously invariant; under a merely finite-to-one observation map, exact periods can only decrease by divisibility.\n\nThe key insight is that faithful semiconjugacy already preserves exact period pointwise, while loss of injectivity is the precise mechanism by which an observed cycle can collapse. **Why now?** The finite-state embedding and exact-period transport results isolate the hypotheses needed to extend recurrence invariance from individual states to global entropy and chaos.\n\n## 2. Measured recurrence instead of point density\n\n**Conjecture.** In a parametrized family of cognitive observation models, lifetime recurrence incidence is determined by the measure of an observation-thickened recurrent set, not by the cardinality or topological density of periodic points; the two quantities can vary independently even among maps with dense periodic points.\n\nThe key insight is that population incidence is probabilistic, whereas density of periodic points is topological and carries no canonical percentage. **Why now?** The contraction counterexample rules out continuity as a sufficient explanation, and the faithful-observation theorem supplies a principled way to state how measurement changes recurrence.\n\n## 3. Period-three forcing with cognitive observability\n\n**Conjecture.** Let a continuous interval map have an exact period-three orbit and let an observation map separate the three orbit states by a fixed positive margin. Then there is a quantitative lower bound, depending only on that margin and a modulus of continuity, for the number of distinguishable finite observation words of length `n`, growing exponentially in `n`.\n\nThe key insight is that period three should force symbolic complexity only when the observation process can distinguish the forced orbit structure. **Why now?** Exact period three has been converted into an explicit three-state embedding, making quantitative separation the natural next hypothesis rather than an implicit assumption.\n\n## 4. Logistic parameter windows and robust recurrence\n\n**Conjecture.** Near the parameter `r = 3.83`, the logistic family admits an open parameter interval with an attracting exact three-cycle whose basin has positive Lebesgue measure, while the fixed-point set remains measure zero throughout that interval.\n\nThe key insight is that robust observed recurrence should be modeled through basin measure and attraction, not through the density of the periodic points themselves. **Why now?** The exact fixed states and critical value at `3.83` are known algebraically, so the remaining problem is a falsifiable stability and basin-measure calculation.\n\n## 5. Tropical drift as a recurrence obstruction\n\n**Conjecture.** For an irreducible min-plus cognitive transition matrix, a tropical eigenstate is periodic in the ordinary state space exactly when its eigenvalue is zero; modulo additive constants, every tropical eigenstate is fixed, and eventual projective recurrence is governed by the cyclicity of the critical graph.\n\nThe key insight is that a tropical eigenvalue records linear drift, so quotienting by global activation offset separates genuine recurrence from uniform translation. **Why now?** Zero-eigenvalue recurrence and the full iterate drift formula are already established, leaving critical-graph cyclicity as the concrete bridge from tropical spectral theory to periodic cognition.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Algebra",
         "Geometry"
@@ -10477,7 +10477,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\n## What the formal development establishes\n\nThe original proposal mixes two different notions. The files now separate them.\n\n1. In `Pythagorean/EscherStaircases.lean`, an ascending chain indexed by `ℕ` has\n   intersection equal to its first term:\n\n   \\[\n   I_0 \\subseteq I_1 \\subseteq I_2 \\subseteq \\cdots\n   \\quad\\Longrightarrow\\quad\n   \\bigcap_n I_n=I_0.\n   \\]\n\n   Moreover, zero belongs to every ideal and hence to every intersection of ideals.\n   Thus merely requiring the intersection to contain zero does not define an\n   additional “looping” phenomenon.\n\n2. The proposed divisibility family has the containment direction reversed.\n   Divisibility by `2^(n+1)` is stronger than divisibility by `2^n`. The ideals\n   `(2^n)` in `ℤ` are proved to form a strictly descending chain with zero\n   intersection. `Catalog/Algebra/EscherDivisibilityDisproof.lean` proves the same\n   strict reversal for the pointwise divisibility ideals in the function ring\n   `ℤ → ℤ`.\n\n3. `Catalog/Algebra/EscherStaircase.lean` adopts the coherent replacement\n\n   \\[\n   \\operatorname{EscherStaircase}(R)\n   \\;:\\!\\!\\Longleftrightarrow\\;\n   \\exists I:\\mathbb N\\to\\operatorname{Ideal}(R),\\; I\\text{ is strictly increasing}.\n   \\]\n\n   It proves that this is equivalent to failure of `IsNoetherianRing`. It also\n   constructs an explicit staircase in the product ring `ℕ → ℤ`, beginning at the\n   zero ideal, and proves that the p-adic integers admit no such staircase.\n\n4. `Catalog/Algebra/EscherStaircasePolynomial.lean` constructs the strict chain\n\n   \\[\n   (0) \\subsetneq (x_0) \\subsetneq (x_0,x_1) \\subsetneq \\cdots\n   \\]\n\n   in the countably generated polynomial ring. Its strictness is certified by a\n   specialization homomorphism that kills the old variables but not the new one.\n   The file concludes that this polynomial ring is not Noetherian.\n\n5. `Catalog/Algebra/EscherStaircaseHilbert.lean` proves the complementary Hilbert\n   basis results: polynomial rings in finitely many variables over a field, and the\n   ordinary univariate polynomial ring, admit no Escher staircase. It packages this\n   with the countably generated example as a finite/countable-variable dichotomy.\n\nThese results are complete Lean proofs. They do **not** establish a numerical\n“Escher height”: under the coherent existence definition, the invariant is a\nNoetherian/non-Noetherian dichotomy rather than Krull dimension.\n\n## Status of the original examples\n\n### Integer-valued polynomials\n\nFor\n\n\\[\nJ_n=\\{f\\in\\operatorname{Int}(\\mathbb Z):f(\\mathbb Z)\\subseteq 2^n\\mathbb Z\\},\n\\]\n\none has `J_(n+1) ⊆ J_n`, not the reverse. Constant polynomials witness strictness:\nthe constant `2^n` belongs to `J_n` but not to `J_(n+1)`. Consequently this family\ncannot witness failure of the ascending chain condition. A direct Lean construction\nof `Int(ℤ)` remains worthwhile, but it would formalize a descending filtration, not\nthe claimed ascending staircase.\n\n### Finitely many polynomial variables\n\nFor a field `k`, `k[x₁,…,xₙ]` is Noetherian, so it has no infinite strictly\nascending chain of ideals. Its Krull dimension is `n`, but that is a separate\ninvariant defined using chains of prime ideals. Calling this number an Escher height\nwould require a new definition and proofs that the definition agrees with Krull\ndimension.\n\n### All algebraic integers\n\nThe requested numerical height is not currently well-defined. A meaningful future\nproject should first choose one of the established invariants below and only then\nstudy the ring of all algebraic integers.\n\n## Concrete continuation projects\n\n1. **Formalize integer-valued polynomials.** Define `Int(ℤ)` as the subring of\n   `ℚ[X]` whose elements take integral values on integers. Define the value-\n   divisibility ideals, prove they are antitone and strictly decreasing using\n   constants, and prove their intersection is zero by evaluation and polynomial\n   extensionality.\n\n2. **Develop Krull dimension independently.** Use strict chains of prime ideals and\n   connect finite-variable polynomial rings to the standard dimension theorem. This\n   is the mathematically appropriate interpretation of the number of variables.\n\n3. **Study adic separation.** For an ideal `I`, investigate `⋂ n, I^n = 0`. The\n   formalized powers-of-two theorem is the elementary model. General continuations\n   include separated filtrations and Krull-intersection hypotheses.\n\n4. **Generalize explicit non-Noetherian witnesses.** Extend the variable-ideal\n   construction from a countable variable set to arbitrary infinite index types,\n   extracting a countable sequence of distinct variables under suitable choice or\n   embedding assumptions.\n\n5. **Analyze algebraic integers with a precise target.** Possible targets include\n   explicit ascending chains witnessing non-Noetherianity, prime-ideal chains for\n   Krull dimension, or descending valuation filtrations. These should not be merged\n   into one invariant without a theorem relating them.\n\nThe formal development therefore resolves the logical inconsistency in the original\nstaircase and supplies rigorous replacements: failure of ACC for ascending chains,\nKrull dimension for prime chains, and adic separation for descending powers.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Algebra",
         "Logic"
@@ -11297,7 +11297,7 @@
       "depth_estimate": 3,
       "description": "# Dark Mathematics — results and future directions\n\n## Formal results\n\n`Tropical/DarkMathematics.lean` treats provability as an abstract predicate `Pr : Prop → Prop` with the minimal rule that provability is preserved by valid implication. It proves:\n\n1. **Level 1 equals ordinary darkness.** The proposed base definition and the one-witness version coincide.\n2. **The proposed strict hierarchy collapses.** From any dark predicate `T`, tagging a hidden witness by `Fin k` constructs a level-`k` dark predicate for every finite `k`. Thus levels 1, 2, and 3 require no successively stronger independence principles. On a fixed predicate, level `l` implies every lower level `k ≤ l`.\n3. **Dark predicates are exactly an incompleteness phenomenon in the relevant sense.** They cannot occur for semantic truth, in a theory with the numerical existence property, or when the theory is sound and complete for the instances under consideration.\n4. **Canonical construction from an undecided sentence.** If a theory proves `U ∨ ¬U` but proves neither `U` nor `¬U`, the Boolean predicate selecting those alternatives is dark. Tagging it produces every finite level.\n5. **Provable concrete instances refute darkness.** Any family with even one provable named instance fails the definition.\n\nThese statements are kernel-checked and contain no `sorry` or added axioms.\n\n## Disproved or unsupported mission claims\n\n### The strict level hierarchy is false as stated\n\nCounting distinct witnesses does not measure proof-theoretic strength when the predicate's domain may change. The formal tagging construction sends a witness `x` to the distinct pairs `(i,x)`, one for each `i : Fin k`, while each tagged assertion is definitionally just `T x`. A strict hierarchy would need restrictions preventing such coding, plus a precise reducibility or strength relation.\n\n### Paris–Harrington and hydra do not directly provide the requested dark predicates\n\nTheir standard independence statements concern a universal assertion (or totality) not provable in PA. Each fixed finite Paris–Harrington instance and each fixed finite hydra computation is, in the ordinary setup, finitely checkable and provable in PA. Therefore indexing the usual finite instances gives the opposite of condition (2). The formal theorem `provable_instance_refutes_dark` captures this obstruction.\n\n### “Dense” and “most” are not defined by counting formulas\n\nThe collection of syntactic Pi-2 sentences is countable. Density requires a topology, and “most” requires a measure or an asymptotic-density convention together with a fixed Gödel numbering and length model. Raw counting is presentation-dependent: harmless recodings and padding can alter syntactic frequencies without changing mathematical content. Consequently the density conjecture has no invariant theorem statement yet and was not silently replaced by a weaker claim.\n\n### This is a form of incompleteness\n\nThe split construction turns any sentence independent of a classical theory into a dark existential over `Bool`. It therefore shows that the definition repackages undecidability/incompleteness rather than separating a new phenomenon from incompleteness.\n\n## Promising corrected questions\n\n1. Fix a recursively axiomatized theory, an explicit arithmetized proof predicate, a formula class, and a computable numbering; then formalize the abstract results for that syntax.\n2. Prohibit witness tagging by fixing the domain and a natural equivalence/reducibility relation. Ask whether levels separate under many-one or interpretability reductions.\n3. Replace “density” by a specified model: prefix-free program-size density, bounded Gödel-code density, or Baire-category notions on completions of a theory. Prove invariance results before interpreting any proportion.\n4. Investigate constructive theories with existence properties. The proved `no_dark_of_numericalExistenceProperty` theorem predicts that the original notion disappears there.\n5. For Paris–Harrington or hydra, study dark predicates built from undecidable *global bounds* or consistency statements, not from their concrete finite instances. Any such construction must prove both formalized PA-provability of the existential and PA-unprovability of every named instance.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Logic",
         "Algebra"
@@ -11707,7 +11707,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\n## What was established\n\nThe completed development has two complementary formalizations. `Catalog/NumberTheory/GodelCasino.lean` studies finite sequences of unit bets and their accuracy probabilities. `Catalog/output-final_aristotle/Logic/GodelCasino.lean` studies statements as Boolean-valued functions on a finite space of possible worlds, with uniform expected profit and optimal betting.\n\nTogether they establish the following conclusions.\n\n1. **No unconditional winning strategy.** For every deterministic Boolean strategy and every world, complementing all truth values negates the total payoff. Hence no strategy wins strictly in both worlds, every strategy has a world with nonpositive payoff, and the direct adversarial world forces the exact payoff `-n`.\n2. **Sharp conditional expected-profit criterion.** If `p i` is the probability that prediction `i` is correct, expected payoff is\n   `2 * (∑ i, p i) - n`. It is positive exactly when aggregate accuracy exceeds `n/2`. A per-card lower bound `q` yields payoff at least `n(2q-1)`. Thus accuracy at least `2/3` yields at least `n/3`, and the 1000-card constant-accuracy instance has expected payoff exactly `1000/3`.\n3. **Known versus unresolved cards.** If `d` cards are predicted with certainty and `u` cards are fair guesses, expected payoff is exactly `d`; uncertainty itself supplies no positive edge.\n4. **Finite possible-world semantics.** Valid and unsatisfiable statements can be bet on with expected profit `1`, while balanced statements have expected and optimal profit `0`. An explicit balanced independent statement on the two-world space `Bool` therefore refutes a universal `1/3` lower bound. Abstract proof-system soundness suffices to recover the positive result for provable statements.\n\n## Interpretation of the original conjecture\n\nThe unconditional conjecture does not follow merely from logical independence. Independence from a formal theory does not assign a probability distribution or give the player predictive information. Moreover, statements whose truth values vary between models do not have a single model-independent Boolean settlement rule unless a semantics or distinguished model is specified. The claimed “one third of arithmetic statements” also requires a precise encoding, size measure, sampling distribution, and proved density theorem; the arithmetic hierarchy alone does not provide that fraction.\n\nThe formal results identify the missing assumption exactly: positive expected profit requires aggregate prediction accuracy strictly greater than one half. The proposed `1/3` profit per round follows from `2/3` accuracy, but logical decidability or independence by itself does not establish that accuracy.\n\n## Further formalization\n\n- Define a probability space of encoded formulas, a settlement semantics, and a measurable strategy, then lift the finite rational calculation to Mathlib expectation.\n- Formalize randomized strategies and prove a minimax/no-free-lunch theorem against complement-symmetric distributions.\n- Introduce abstention, asymmetric odds, transaction costs, and calibration; derive the corresponding sharp profitability threshold.\n- Choose a concrete Gödel coding and bounded formula language. Enumerate formulas by code length and replace the unsupported density assertion with experimentally measured finite proportions and, if possible, asymptotic theorems.\n- Distinguish syntactic provability, standard-model arithmetic truth, and truth in a selected set-theoretic model. Any casino settlement rule must choose one explicitly.\n- Model conservative extensions only after defining what payoff they generate; conservativity is a relation between theories, not a Boolean prediction of an undecided sentence.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Computation",
         "Logic"
@@ -11738,24 +11738,24 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "a7676cc9",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
       "description": "Infinite chess is chess on an infinite board. It is known that there are positions where White can force checkmate but only in omega (the first infinite ordinal) moves. Conjecture: There exists a position on the infinite chess board where White can force checkmate in exactly omega^omega moves, but not in fewer. More precisely, define the game value v(P) of a position P as the smallest ordinal alpha such that White can force checkmate in at most alpha moves. The known results give positions with v(P) = omega. The conjecture is that v(P) can be arbitrarily large below omega^omega. The key construction: create a position where White must first solve a 'puzzle' that takes omega moves, and then another puzzle that takes omega moves for each of omega starting positions, giving omega^2 total moves. Iterating, one can reach omega^n for any n, and omega^omega by a diagonal argument. Test: construct explicit positions with game values omega, omega^2, omega^3, and omega^omega on the infinite board. Verify by computation that no strategy achieves checkmate in fewer moves. Impact: chess on an infinite board has transfinite game values — the complexity of checkmate goes beyond the finite ordinals into the transfinite.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Novelty",
         "Logic"
       ],
       "github_issue": 0,
       "id": "fd_0284",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-18T07:29:31.843995+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -11770,7 +11770,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-18T07:28:26.518814+00:00",
       "title": "Infinite Chess: Checkmate in Omega Moves"

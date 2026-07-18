@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "57481379",
-      "domain": "Physics",
-      "key_insight": "# Future Directions\n\n## 1. A complete phase-invariant certificate for the order-six cardinality-19 matrix\n\nConjecture: the eighth-root Butson matrix underlying the cardinality-19 construction has exac",
-      "quality_score": 0.75,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-07-16T03:36:30",
-      "title": "ArXiv paper: Quantum Latin Squares of Order Six with Cardinalities Nineteen, Twenty-One, and Twenty-"
-    },
-    {
       "cycle_id": "8d2137d3",
       "domain": "Combinatorics",
       "key_insight": "# Future directions\n\n## Completion status\n\nAll Lean declarations delivered for this mission now have complete proof terms: the\nremaining mixed-radix bridge lemmas were proved, and an inherited Fibonac",
@@ -499,19 +489,19 @@
       "theorem_count": 19,
       "timestamp": "2026-07-18T06:56:52",
       "title": "Godel's Casino: Incomplete but Winnable Games"
+    },
+    {
+      "cycle_id": "70b6aa60",
+      "domain": "Logic",
+      "key_insight": "# Future Directions: From Evaluation to Certification\n\n## 1. Effective zero-exclusion certificates for completed L-functions\n\n**Conjecture.** There is a uniform certificate language for standard compl",
+      "quality_score": 0.76,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-18T07:29:17",
+      "title": "The L-Function Oracle: What If We Could Compute L-Functions Instantly?"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "b2384a8a",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Descendant limit laws in random recursive DAGs\n\nDerived from the current cycle, whose contributions are: (i) the complete moment\ndescription of the Gamma`(d,1)` limit target, (ii",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-07-14T10:25:51",
-      "title": "Limit Distribution of Descendants in Random d-DAGs"
-    },
     {
       "cycle_id": "ef403dbc",
       "domain": "Applications",
@@ -2501,6 +2491,16 @@
       "theorem_count": 10,
       "timestamp": "2026-07-18T07:29:07",
       "title": "The Prime Number Crossword: Filling the Gaps in the Primes"
+    },
+    {
+      "cycle_id": "70b6aa60",
+      "domain": "Logic",
+      "key_insight": "# Future Directions: From Evaluation to Certification\n\n## 1. Effective zero-exclusion certificates for completed L-functions\n\n**Conjecture.** There is a uniform certificate language for standard compl",
+      "quality_score": 0.76,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-18T07:29:17",
+      "title": "The L-Function Oracle: What If We Could Compute L-Functions Instantly?"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.75
     }
   ],
-  "last_updated": "2026-07-18T07:29:07",
+  "last_updated": "2026-07-18T07:29:17",
   "open_questions": [
     {
       "context": "",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "acc2ac17",
-        "quality": 0.72,
-        "theorems": 46,
-        "title": "The P vs NP of Cooking: Computational Complexity of Recipes"
-      },
-      {
         "cycle_id": "4de79d68",
         "quality": 0.83,
         "theorems": 56,
@@ -3513,6 +3507,12 @@
         "quality": 0.75,
         "theorems": 707,
         "title": "Phantom Topologies: Spaces That Change When You Look at Them"
+      },
+      {
+        "cycle_id": "70b6aa60",
+        "quality": 0.76,
+        "theorems": 0,
+        "title": "The L-Function Oracle: What If We Could Compute L-Functions Instantly?"
       }
     ],
     "MachineLearning": [

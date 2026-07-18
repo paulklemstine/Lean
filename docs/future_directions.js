@@ -46,21 +46,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Tropical Cryptocurrency: Mining on the Min-Plus Semiring"
   },
   {
-    "consumed_by_exp_id": "70b6aa60",
-    "description": "Suppose we had an oracle that computes L(s, chi) for any L-function and any complex s in O(1) time. What theorems would follow? Conjecture: The L-function oracle implies (1) The Riemann Hypothesis (compute zeros directly), (2) The BSD conjecture (compute the order of vanishing at s=1), (3) The Sato-Tate conjecture (compute the distribution of a_p), (4) Langlands functoriality (compare L-functions on both sides of the functoriality lift), and (5) A polynomial-time algorithm for factoring (the L-function of an elliptic curve E over Z/nZ detects factors of n). But the oracle also implies IMPOSSIBILITY results: (6) P != NP (because NP-complete problems would reduce to L-function computations that the oracle solves in O(1), contradicting the time hierarchy theorem if P = NP). Wait \u2014 the oracle solves L-function computations in O(1), so if P = NP, then NP problems can be encoded as L-function computations and solved instantly, but the oracle's existence is an axiom, not a theorem. The correct statement: the L-function oracle collapses the polynomial hierarchy to L-function computations. Test: prove that the Riemann Hypothesis follows from the oracle. Prove that BSD follows. Prove that factoring is in P given the oracle. Impact: understanding what an L-function oracle implies tells us exactly how powerful L-functions are \u2014 and how far we are from proving things about them.",
-    "domains": [
-      "Novelty",
-      "NumberTheory"
-    ],
-    "id": "fd_0239",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-17T18:38:28.485948+00:00",
-    "title": "The L-Function Oracle: What If We Could Compute L-Functions Instantly?"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Two quantum particles are entangled if measuring one instantly affects the other. But entanglement is also a topological property: if you represent the state of two qubits as a curve in R^3, entanglement IS the linking number. Conjecture: For any pure state of two qubits |psi> in C^2 tensor C^2, the concurrence C(psi) = 2|alpha*delta - beta*gamma| (where psi = alpha|00> + beta|01> + gamma|10> + delta|11>) equals the absolute value of the linking number of two curves derived from the Hopf fibration applied to psi. Specifically, map psi to S^7 via normalization, then project to S^4 via the Hopf map, and the preimages of two points in S^4 are linked circles in S^7 whose linking number equals the concurrence. This means: entanglement is MEASURED by topology, and maximally entangled states correspond to the Hopf link (linking number 1). Test: for 1000 random two-qubit states, compute the concurrence and the linking number of the Hopf preimages, and verify they are equal. Prove the equality for the Bell states. Impact: quantum entanglement is not mysterious \u2014 it is the linking number of the Hopf fibration. Two particles are entangled if and only if their Hopf preimages are linked.",
     "domains": [
@@ -3040,21 +3025,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem With"
   },
   {
-    "consumed_by_exp_id": "f0f3cf3d",
-    "description": "Prime gaps \u2014 the spaces between consecutive primes \u2014 are like empty cells in a crossword puzzle. The gaps are 1, 2, 2, 4, 2, 4, 2, 4, 6, 2, 6, 4, 2, 4, 6, 6, 2, 6, 4, 2, ... (OEIS A001223). The pattern seems random, but the crossword has rules: (1) All prime gaps are even (except the first gap of 1 between 2 and 3). (2) A gap g can only appear at position n if n+g is prime and all of n+1, n+2, ..., n+g-1 are composite. (3) The density of gap g near n is approximately 2*C_2/(g*log(n)) where C_2 is the twin prime constant. Conjecture: The prime gap crossword is uniquely solvable \u2014 given the pattern of gaps up to N, the next prime is determined with probability 1 - O(1/log(N)). More precisely, the conditional probability that the next prime after p is p + g, given all primes up to p, is approximately 2*C_2/g * (1/log(p)) * product_{q prime, q | g} (q-1)/(q-2). This is the Hardy-Littlewood conjecture for prime gaps. But the crossword has a surprise: certain gap patterns FORCE the next number. For example, if the gaps near n are 6, 4, 2, 6, then the next gap is almost certainly 4 (the only way to fill the crossword). Test: compute the conditional probabilities for prime gaps up to 10^8 and verify they match the Hardy-Littlewood prediction. Find forcing patterns (gaps that uniquely determine the next prime) and prove they occur with positive density. Impact: prime gaps are not random \u2014 they are a solvable crossword puzzle with deterministic rules.",
-    "domains": [
-      "Novelty",
-      "NumberTheory"
-    ],
-    "id": "fd_0269",
-    "priority_score": 0.78,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T04:27:28.017562+00:00",
-    "title": "The Prime Number Crossword: Filling the Gaps in the Primes"
-  },
-  {
     "consumed_by_exp_id": "71fc60c7",
     "description": "Elementary cellular automata (ECAs) are the 256 rules that update a 1D binary array based on its 3-cell neighborhood. Rule 110 is Turing-complete. But ECAs can also be viewed as polynomial maps over GF(2): the state s = (s_0, s_1, ..., s_{n-1}) is a vector over GF(2), and the update rule is s -> f(s) where f is a degree-3 polynomial (since the rule depends on 3 cells). Conjecture: The algebraic variety V(f) = {s : f(s) = s} (fixed points of the ECA) has dimension equal to the 'complexity class' of the rule. For simple rules (e.g., Rule 0, which is all zeros), V(f) has dimension 0 (a single point). For complex rules (e.g., Rule 110), V(f) has maximal dimension. The Grothendieck-style approach: each ECA defines a sheaf on the state space, and the global sections of this sheaf classify the possible stable configurations. Rule 110's sheaf has the richest section structure, corresponding to its Turing-completeness. Test: compute dim(V(f)) for all 256 ECAs and verify that the dimension correlates with Wolfram's complexity classification (Class 1: dim=0, Class 2: dim<=n/2, Class 3: dim>=n/2, Class 4: dim=n). Impact: cellular automata are algebraic varieties, and their complexity is the dimension of their fixed-point variety.",
     "domains": [
@@ -3082,6 +3052,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-17T18:03:33.034163+00:00",
     "title": "Close Proofs: Holographic Primes: The Prime Number AdS/CFT Correspondence"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Infinite chess is chess on an infinite board. It is known that there are positions where White can force checkmate but only in omega (the first infinite ordinal) moves. Conjecture: There exists a position on the infinite chess board where White can force checkmate in exactly omega^omega moves, but not in fewer. More precisely, define the game value v(P) of a position P as the smallest ordinal alpha such that White can force checkmate in at most alpha moves. The known results give positions with v(P) = omega. The conjecture is that v(P) can be arbitrarily large below omega^omega. The key construction: create a position where White must first solve a 'puzzle' that takes omega moves, and then another puzzle that takes omega moves for each of omega starting positions, giving omega^2 total moves. Iterating, one can reach omega^n for any n, and omega^omega by a diagonal argument. Test: construct explicit positions with game values omega, omega^2, omega^3, and omega^omega on the infinite board. Verify by computation that no strategy achieves checkmate in fewer moves. Impact: chess on an infinite board has transfinite game values \u2014 the complexity of checkmate goes beyond the finite ordinals into the transfinite.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0284",
+    "priority_score": 0.76,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-18T07:28:26.518814+00:00",
+    "title": "Infinite Chess: Checkmate in Omega Moves"
   },
   {
     "consumed_by_exp_id": "",
@@ -3502,6 +3487,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-18T06:56:46.945502+00:00",
     "title": "The completed development has two complementary formalizations. `Catalog/NumberT"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n1. Define the increasing enumeration of primes and prove that adjacent values\n   satisfy `ConsecutivePrimes`, connecting this elementary API to indexed gap\n   sequences already present elsewhere in the catalog.\n2. Formalize finite word occurrence in a gap sequence and distinguish two notions:\n   deterministic forcing (all occurrences have one continuation) and empirical\n   concentration (one continuation has high finite-sample frequency).\n3. Search bounded ranges for candidate patterns, but certify every reported result\n   with Lean evaluation or explicit primality certificates. The proposed\n   `(6,4,2,6) \u2192 4` rule must not be reused: a formal counterexample is included.\n4. State a precise finite experiment for the Hardy--Littlewood heuristic: choose\n   windows in `p`, define observed counts and expected singular-series weights,\n   and publish residuals with a stated metric. \u201cConditional probability given all\n   primes up to p\u201d is otherwise not mathematically defined.\n5. Treat positive-density claims as conditional results under an explicitly stated\n   prime-tuple conjecture. An unconditional positive-density theorem for exact\n   prescribed consecutive-prime patterns would require major analytic number\n   theory well beyond the elementary deterministic rules proved here.\n6. Extend the current theorem chain with modular obstructions from primes other\n   than 2: residue coverage can rule out candidate prime constellations, but it\n   does not generally force a unique next gap.\n",
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_0285",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "f0f3cf3d",
+    "status": "available",
+    "timestamp": "2026-07-18T07:29:02.159842+00:00",
+    "title": "1. Define the increasing enumeration of primes and prove that adjacent values"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: From Evaluation to Certification\n\n## 1. Effective zero-exclusion certificates for completed L-functions\n\n**Conjecture.** There is a uniform certificate language for standard completed L-functions such that a certificate of size polynomial in the conductor and height verifies that a prescribed rectangle contains exactly a stated number of zeros.\n\nThe key insight is that exact point evaluation is local, whereas zero classification becomes algorithmic only after adding argument-variation bounds and effective control of truncation error.\n\n**Why now?** The finite-observation obstruction isolates the missing datum precisely: a rigorous local-to-global modulus rather than faster evaluation. This makes certificate size and verification cost concrete quantities to investigate.\n\n## 2. Effective analytic-rank bounds from arithmetic complexity\n\n**Conjecture.** For elliptic curves over the rationals, a computable bound depending polynomially on conductor data determines how many Taylor coefficients at the central point must be examined before the first nonzero coefficient appears.\n\nThe key insight is that uniqueness of the first nonzero coefficient is elementary once its existence below a known bound is guaranteed; the substantive arithmetic problem is to produce that bound uniformly.\n\n**Why now?** Separating finite jet search from the nonvanishing bound turns an informal \u201ccompute the order of vanishing\u201d proposal into a falsifiable quantitative conjecture.\n\n## 3. Certified factor extraction from bad local Euler data\n\n**Conjecture.** There is a deterministic family of auxiliary arithmetic objects attached to a composite integer `n` for which a polynomial number of exact local-factor queries yields, through an explicitly checkable decoder, a proper divisor of `n`.\n\nThe key insight is that an evaluator contributes to factoring only when a proved decoder converts its outputs into divisibility certificates; evaluation speed alone has no arithmetic content.\n\n**Why now?** The reduction framework identifies the exact target: construct the query family and prove the decoder certificate, rather than assuming that an elliptic curve over a non-field automatically reveals a factor.\n\n## 4. Converse rigidity from finite local agreement\n\n**Conjecture.** Within a bounded-conductor automorphic family, agreement of explicitly bounded local Euler factors forces equality of the associated global representation, with a bound polynomial in the analytic conductor.\n\nThe key insight is that unrestricted finite samples admit interpolation perturbations, so any valid finite comparison theorem must draw its force from rigidity of the restricted family.\n\n**Why now?** This formulation converts the vague proposal to establish functoriality by comparing L-functions into a quantitative converse problem with a definite agreement threshold.\n\n## 5. Oracle-relative hierarchy transfer with explicit query budgets\n\n**Conjecture.** For natural oracle-complete targets arising from arithmetic evaluation, every level of a suitably encoded polynomial hierarchy admits a uniform bounded-query reduction, while no corresponding unrelativized complexity-class separation follows without an oracle-elimination theorem.\n\nThe key insight is that completeness and reduction composition transfer oracle access through a class, but do not erase the oracle or imply an absolute separation such as `P \u2260 NP`.\n\n**Why now?** The one-query transfer theorem supplies the structural base on which query counts, uniformity, and oracle elimination can be studied independently.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0286",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "70b6aa60",
+    "status": "available",
+    "timestamp": "2026-07-18T07:29:11.927861+00:00",
+    "title": "**Conjecture.** There is a uniform certificate language for standard completed L"
   },
   {
     "consumed_by_exp_id": "",
