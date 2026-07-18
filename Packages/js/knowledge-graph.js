@@ -285,7 +285,9 @@
         }
 
         // Minimum-image delta for Klein bottle topology — finds shortest path between two points
-        function minImageDelta(ax, ay, bx, by) {
+        const _miResult = { dx: 0, dy: 0, d2: 0 };
+        const _miResult2 = { dx: 0, dy: 0, d2: 0 };
+        function minImageDelta(ax, ay, bx, by, out = _miResult) {
             let bestDx = bx - ax, bestDy = by - ay;
             let bestD2 = bestDx * bestDx + bestDy * bestDy;
             // X-ghost (Y-flipped): Möbius twist on X-axis
@@ -297,7 +299,10 @@
             gx = -bx; let gy2 = by > ay ? by - WORLD_SIZE : by + WORLD_SIZE;
             dx = gx - ax; dy = gy2 - ay; d2 = dx * dx + dy * dy;
             if (d2 < bestD2) { bestDx = dx; bestDy = dy; bestD2 = d2; }
-            return { dx: bestDx, dy: bestDy, d2: bestD2 };
+            out.dx = bestDx;
+            out.dy = bestDy;
+            out.d2 = bestD2;
+            return out;
         }
 
         // Check if line segment AB crosses segment CD
@@ -651,14 +656,16 @@
                 if (dragCluster && aDomain === dragCluster) continue;
 
                 // Central attractor + Dark Energy expansion
-                const coreDelta = minImageDelta(a.x, a.y, 0, 0);
+                const coreDelta = minImageDelta(a.x, a.y, 0, 0); // uses _miResult
                 const coreR2 = coreDelta.d2;
+                const coreDx = coreDelta.dx;
+                const coreDy = coreDelta.dy;
                 const coreR = Math.sqrt(coreR2) || 1;
                 const gravity = G_CORE * CORE_MASS * a.mass / (coreR2 + SOFTENING * SOFTENING);
                 const darkEnergy = 0.05 * a.mass; // Constant outward push (increased to prevent clumping)
                 const coreForce = gravity - darkEnergy;
-                a.vx += (coreDelta.dx / coreR) * coreForce;
-                a.vy += (coreDelta.dy / coreR) * coreForce;
+                a.vx += (coreDx / coreR) * coreForce;
+                a.vy += (coreDy / coreR) * coreForce;
 
                 for (let j = i + 1; j < graphNodes.length; j++) {
                     const b = graphNodes[j];
@@ -667,7 +674,12 @@
                     if (dragCluster && bDomain === dragCluster) continue;
 
                     // Minimum-image delta: shortest path through Klein bottle topology
-                    const mi = minImageDelta(a.x, a.y, b.x, b.y);
+                    // Quick bounding box check to save math on distant nodes
+                    const rawDx = b.x - a.x;
+                    const rawDy = b.y - a.y;
+                    if (Math.abs(rawDx) > 2000 || Math.abs(rawDy) > 2000) continue;
+                    
+                    const mi = minImageDelta(a.x, a.y, b.x, b.y); // uses _miResult
                     const dx = mi.dx, dy = mi.dy;
                     const d2 = mi.d2;
                     const d = Math.sqrt(d2) || 1;
@@ -1446,8 +1458,8 @@
             graphEdges.forEach(e => {
                 const a = nodeMap[e.source], b = nodeMap[e.target];
                 if (!a || !b) return;
-                const miAB = minImageDelta(a.x, a.y, b.x, b.y);
-                const miBA = minImageDelta(b.x, b.y, a.x, a.y);
+                const miAB = minImageDelta(a.x, a.y, b.x, b.y, _miResult);
+                const miBA = minImageDelta(b.x, b.y, a.x, a.y, _miResult2);
                 if (miAB.d2 > EDGE_DRAW_DISTANCE * EDGE_DRAW_DISTANCE) return;
 
                 const colA = nodeColor(a), colB = nodeColor(b);
@@ -1537,7 +1549,7 @@
                     ctx.fill();
                 }
                 // Side 2: ghost mirror (source→target on other side)
-                const miBA = minImageDelta(b.x, b.y, a.x, a.y);
+                const miBA = minImageDelta(b.x, b.y, a.x, a.y, _miResult2);
                 const hx2 = b.x + miBA.dx * (1 - tHead);
                 const hy2 = b.y + miBA.dy * (1 - tHead);
                 const tx2 = b.x + miBA.dx * (1 - tTail);

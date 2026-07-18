@@ -3622,6 +3622,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## Scope and interpretation\n\nThe proposed \u201ccake\u201d language does not by itself define a mathematical category, an isomorphism relation, a moduli functor, or a probability distribution. Moreover, a smooth projective real variety is not generally a manifold with boundary, so the original base/frosting description cannot literally be used without substantial revision. The formal result therefore isolates a precise and non-vacuous probability model: labelled cherries occupy finitely many distinguishable slots, and valid decorations are collision-free placements.\n\nThe exact theorem proved in `CakeResearch/CherryConfiguration.lean` identifies valid placements with embeddings `Fin g \u21aa Fin m`, counts them by the falling factorial, characterizes existence and impossibility, and proves bounds and exact zero/one criteria for their uniform probability. In particular, for a nonempty slot set the probability is zero exactly when there are more cherries than slots, and it is one exactly when there is at most one cherry. The file also formalizes the arithmetic dimension prediction `3g - 3 + n`, including the genus 2\u20135 table. These arithmetic identities are consequences of the proposed formula; they are not a construction or proof of the dimension of an actual moduli space.\n\n## Computational evidence\n\nA separate evidence file was omitted to respect the requested output restriction to Lean files, this document, and the mandatory JSON evaluation. Instead the evidence is kernel-checked in `ten_slot_probability_table`. For 0 through 5 labelled cherries in 10 slots, the exact no-collision probabilities are:\n\n| cherries | probability |\n|---:|---:|\n| 0 | 1 |\n| 1 | 1 |\n| 2 | 9/10 |\n| 3 | 18/25 |\n| 4 | 63/125 |\n| 5 | 189/625 |\n\nThe formal zero criterion also supplies a complete counterexample boundary: with a nonempty set of slots, collision-free probability is zero exactly when the number of cherries exceeds the number of slots. No OEIS search was needed because the counting sequence is the standard falling factorial `m.descFactorial g`, already identified symbolically rather than inferred from samples.\n\n## Next formal developments\n\n1. Define cakes consistently, preferably as stable pointed smooth proper curves over a specified field rather than real projective varieties with boundary.\n2. Define families, flavor-preserving isomorphisms, and the moduli functor. Only then can a genuine reconstruction/uniqueness theorem be stated and checked for truth.\n3. Replace discrete slots by the ordered configuration space `Conf_g(X)`, prove that its complement is the finite union of pairwise diagonals, and show those diagonals have measure zero for suitable atomless measures.\n4. Distinguish genus from the number of marked points. For a closed orientable genus-`h` surface, the first Betti number is `2h`, not `h`; cherries should naturally be a separate marked-point parameter `n`.\n5. Formalize deformation theory: identify the tangent space with `H\u00b9(C,T_C)`, apply Riemann\u2013Roch and vanishing of infinitesimal automorphisms for genus at least two, and derive dimension `3h-3`.\n6. For pointed curves, prove dimension `3h-3+n` and the stability condition `2h-2+n > 0`.\n7. Develop a finite enumeration only after specifying what \u201ctopologically distinct cake\u201d means. Cherry positions vary continuously, so literal enumeration is impossible unless configurations are quotiented by a precise equivalence or discretized.\n8. Formalize Teichm\u00fcller space independently of cherry motion: unpointed Teichm\u00fcller space has real dimension `6h-6` for `h \u2265 2`, while marked points add real dimension `2n`.\n",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_0301",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "c49f6946",
+    "status": "available",
+    "timestamp": "2026-07-18T09:54:20.800277+00:00",
+    "title": "The proposed \u201ccake\u201d language does not by itself define a mathematical category, "
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle d1663b23 (Q=0.700) proved 0 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'A minimal modularity lifting theorem for Siegel modular forms' and formalize its key results. Abstract: We prove a minimal modularity lifting theorem (in the spirit of Gen",
     "domains": [
       "Applications"
@@ -3664,7 +3679,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Dark Mathematics: Theorems That Exist But Cannot Be Found"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4920904c",
     "description": "The Erdos-Renyi random graph G(n, p) has n vertices where each edge appears independently with probability p. At p = log(n)/n, G(n,p) becomes connected. But what if p is COMPLEX? Define G(n, z) where z is a complex number: each edge (i,j) appears with 'probability' z, meaning the edge weight is z instead of 0 or 1. The resulting 'complex graph' is a weighted complete graph where edge (i,j) has weight z if the edge exists and 0 otherwise. The adjacency matrix A_z has entries that are either z or 0. Conjecture: The complex eigenvalues of A_z trace out a circle of radius |z|*sqrt(n) in the complex plane, centered at the origin. As n -> infinity, the empirical spectral distribution of A_z converges to the circular law (like the Ginibre ensemble) because A_z is a random matrix with i.i.d. entries of mean z*p and variance |z|^2*p*(1-p). The 'hallucination' is that for Im(z) != 0, the graph has complex-valued connectivity \u2014 information flows with both amplitude and phase, and the phase creates interference patterns that are visible in the spectral density. Test: generate A_z for n = 1000 with z = 0.5 + 0.3i, compute eigenvalues, and verify they lie in a disk of radius sqrt(n)*|z|. Compare with the Ginibre ensemble prediction. Impact: complex-valued random graphs have circular spectra \u2014 the hallucination of complex probabilities creates beautiful circular eigenvalue distributions.",
     "domains": [
       "Novelty",
@@ -3674,7 +3689,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.73,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-18T09:20:55.078260+00:00",
     "title": "Erdos-Renyi on Acid: Random Graphs That Hallucinate"
   },
@@ -3708,19 +3723,19 @@ window.FUTURE_DIRECTIONS = [
     "title": "Ramanujan's Taxicab Number as a Sum of Three Cubes: 1729 Revisited"
   },
   {
-    "consumed_by_exp_id": "c49f6946",
-    "description": "A cake is a smooth projective variety over R: it has a base (a smooth manifold with boundary), frosting (a sheaf of sections supported on the boundary), and layers (a stratification by codimension). The Fundamental Theorem of Cakes states: every cake C is uniquely determined (up to isomorphism of flavor) by its base B, its frosting sheaf F, and its layer stratification L. The frosting sheaf is a locally free sheaf of rank 1 (the cake has uniform frosting thickness) supported on the boundary of the base. The stratification is a flag of subvarieties C = L_0 > L_1 > ... > L_k = {point} where L_i has codimension i and represents the i-th layer. Conjecture: the moduli space of cakes of genus g (g = number of cherries on top) has dimension 3g-3 for g >= 2, mirroring the moduli space of Riemann surfaces. The cherry number g corresponds to the first Betti number of the cake surface, and the moduli are the positions of the g cherries on the surface. Test: enumerate all topologically distinct cakes with g <= 5 cherries and verify that the moduli space has dimension 3g-3. Compute the Teichmuller space of cakes by varying the cherry positions. Impact: cakes are algebraic varieties, and the mathematics of cake decoration IS the mathematics of moduli spaces.",
+    "consumed_by_exp_id": "",
+    "description": "The Fermi paradox asks: if intelligent life is common, where is everyone? The pigeonhole principle answers: if there are more pigeons than holes, at least one hole contains more than one pigeon. Apply this to the cosmos: there are approximately 10^22 stars in the observable universe (pigeons) and approximately 10^10 habitable-zone planets (holes). By the pigeonhole principle, at least one habitable planet contains at least 10^12 stars' worth of interest... wait, that's the wrong way around. Correct: there are ~10^10 habitable planets (pigeons) and ~4.5 billion years of time (holes). By the pigeonhole principle, at least one time period of one year contains at least 2 habitable planets developing intelligence. But we observe zero contacts. Conjecture: The resolution is that intelligent life is NOT common \u2014 the expected number of technological civilizations in the observable universe is less than 1. More precisely: if we model the Drake equation with honest probability estimates, P(technological civilization per habitable planet) < 10^{-10}, making the expected number of civilizations < 10^0 = 1. The Fermi paradox is not a paradox at all \u2014 it is the pigeonhole principle correctly predicting that with very few pigeons (civilizations) and very many holes (planets + time), most holes are empty. Test: compute the Drake equation with conservative estimates and verify that E[civilizations] < 1. Impact: we are alone because probability says so. The universe is mostly empty because that's what the math predicts.",
     "domains": [
       "Novelty",
-      "Algebra"
+      "Computation"
     ],
-    "id": "fd_0287",
-    "priority_score": 0.68,
+    "id": "fd_0300",
+    "priority_score": 0.65,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T07:44:57.477984+00:00",
-    "title": "The Fundamental Theorem of Cakes: Algebraic Geometry of Baking"
+    "status": "available",
+    "timestamp": "2026-07-18T09:54:04.511190+00:00",
+    "title": "The Fermi Paradox as a Pigeonhole Principle: Why We Are Alone"
   },
   {
     "consumed_by_exp_id": "",

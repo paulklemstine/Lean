@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "656eecef",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Cone Colorful Carathéodory (general dimension)\n\nThis cycle proves the **cone colorful Carathéodory theorem in arbitrary finite\ndimension** (`Catalog/Novelty/ConeColorfulCaratheod",
-      "quality_score": 0.84,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-14T14:32:53",
-      "title": "Deepening: Cone Colorful Carathéodory Theorem"
-    },
-    {
       "cycle_id": "85360393",
       "domain": "Applications",
       "key_insight": "# Future Directions — Engel's Interval Packing Theorem\n\n## What is proved (`Speculative/EngelIntervalPacking.lean`)\n\nThe file fixes the correct (disjointness) formalization of interval packings in the",
@@ -2501,6 +2491,16 @@
       "theorem_count": 57,
       "timestamp": "2026-07-18T09:37:50",
       "title": "The P vs NP of Cooking: Computational Complexity of Recipes"
+    },
+    {
+      "cycle_id": "c49f6946",
+      "domain": "Probability",
+      "key_insight": "# Future directions\n\n## Scope and interpretation\n\nThe proposed “cake” language does not by itself define a mathematical category, an isomorphism relation, a moduli functor, or a probability distributi",
+      "quality_score": 0.62,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-07-18T09:54:25",
+      "title": "The Fundamental Theorem of Cakes: Algebraic Geometry of Baking"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-18T09:37:50",
+  "last_updated": "2026-07-18T09:54:25",
   "open_questions": [
     {
       "context": "",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "5156da6e",
-        "quality": 0.5183991264367817,
-        "theorems": 12,
-        "title": "The Aharoni-Korman Conjecture for Well-Founded FAC Posets"
-      },
-      {
         "cycle_id": "90ef345f",
         "quality": 0.83,
         "theorems": 751,
@@ -3823,6 +3817,12 @@
         "quality": 0.65,
         "theorems": 4,
         "title": "ArXiv paper: Contractions and applications of crystal skeletons: Young quasisymm"
+      },
+      {
+        "cycle_id": "c49f6946",
+        "quality": 0.62,
+        "theorems": 15,
+        "title": "The Fundamental Theorem of Cakes: Algebraic Geometry of Baking"
       }
     ],
     "Pythagorean": [

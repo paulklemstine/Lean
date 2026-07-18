@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-18T09:37:50.361874+00:00",
+  "last_updated": "2026-07-18T09:54:25.402758+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -25630,6 +25630,7 @@
       "outcome_quality": 0.69,
       "phase": "A_only",
       "phase_a_prompt_version": "v27",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v27",
@@ -25658,6 +25659,48 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-18T09:37:50.285495+00:00",
       "title": "The P vs NP of Cooking: Computational Complexity of Recipes"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 20,
+      "domain": "Probability",
+      "duration_seconds": 995.5607235431671,
+      "end_time": 1784368449.808602,
+      "files_integrated": 2,
+      "job_id": "c49f6946",
+      "outcome_quality": 0.62,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v28",
+      "phase_b_skip_reason": "low_quality_near_miss",
+      "phase_b_skipped": true,
+      "prompt_version": "v28",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.67,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.78,
+        "composite": 0.465,
+        "cross_domain": 0.5,
+        "grade": "partial",
+        "importance": 0.5,
+        "novelty": 0.46,
+        "proof_depth": 0.62,
+        "usefulness": 0.72
+      },
+      "quality_score": 0.62,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1784367454.2478786,
+      "strategy_count": 0,
+      "theorem_count": 15,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 12,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-18T09:54:25.362384+00:00",
+      "title": "The Fundamental Theorem of Cakes: Algebraic Geometry of Baking"
     }
   ]
 }
