@@ -107,6 +107,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle ee626e30 (Q=0.760), which proved 14 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The shadowing lemma says that near an approximate orbit of a chaotic system, there exists a true orbit. In other words, every 'almost correct' trajectory of a chaotic map has a 'truly correct' trajectory nearby. This means that numerical errors in chaotic simulations are not bugs \u2014 they are SHADOWS ",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "push_ee626e30_e6136064",
+    "priority_score": 0.86,
+    "research_mode": "team",
+    "source_exp_id": "ee626e30",
+    "status": "available",
+    "timestamp": "2026-07-18T03:54:54.432626+00:00",
+    "title": "Deepening: Chaos as a Computable Shadow: The Shadowing Lemma for Real Programs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Domain Shared has declined by 0.164 over recent cycles (recent avg=0.696 vs prior=0.860). Take a completely fresh approach \u2014 different proof techniques, new definitions, or a different subfield within this domain. Avoid repeating approaches that have been producing diminishing returns.",
     "domains": [
       "Shared"
@@ -133,21 +147,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-17T14:13:42.052368+00:00",
     "title": "Impossibility Results for Fun: Things That Cannot Be Done (But We Try Anyway)"
-  },
-  {
-    "consumed_by_exp_id": "ee626e30",
-    "description": "The shadowing lemma says that near an approximate orbit of a chaotic system, there exists a true orbit. In other words, every 'almost correct' trajectory of a chaotic map has a 'truly correct' trajectory nearby. This means that numerical errors in chaotic simulations are not bugs \u2014 they are SHADOWS of real trajectories. Conjecture: Every program that computes a chaotic map f: R^n -> R^n has the property that its floating-point output is shadowed by a true orbit of f. More precisely, for every epsilon > 0, there exists delta > 0 such that if x_0, x_1, ..., x_N is a delta-pseudo-orbit (|x_{n+1} - f(x_n)| < delta for all n), then there exists a true orbit y_0, y_1, ..., y_N with |x_n - y_n| < epsilon for all n. The shadowing time N(epsilon, delta) grows at most polynomially in 1/delta for hyperbolic maps. Test: implement the logistic map f(x) = 4x(1-x) in floating-point and compute 10^6 iterations. For each floating-point orbit, use binary search to find the shadowing true orbit. Verify that the shadowing distance is at most 10^{-10} for floating-point precision 10^{-16}. Impact: numerical chaos is not error \u2014 it is a computable shadow of mathematical truth. Your computer's rounding errors are tracing out REAL orbits of the chaotic system.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0250",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T00:59:30.928895+00:00",
-    "title": "Chaos as a Computable Shadow: The Shadowing Lemma for Real Programs"
   },
   {
     "consumed_by_exp_id": "",
@@ -3328,6 +3327,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: Computable Shadows of Chaotic Dynamics\n\n## 1. Certified shadowing from cone-field data\n\n**Conjecture.** A program implementing a differentiable map on a compact invariant set, together with machine-checkable stable/unstable cone bounds and a uniform local rounding certificate, admits a computable horizon-independent shadowing radius. The radius should be extractable from the cone expansion, contraction, angle separation, and rounding constants.\n\nThe key insight is that a raw Lipschitz estimate records only worst-case expansion, whereas hyperbolic cone data records the directional cancellation that makes classical shadowing possible.\n\n**Why now?** The finite-horizon geometric estimate isolates exactly the step that loses uniformity, so the missing directional structure and the constants it must replace are explicit and testable.\n\n## 2. Backward-error semantics for floating-point chaotic programs\n\n**Conjecture.** For a specified IEEE-754 implementation of a polynomial dynamical system, every finite execution avoiding overflow and exceptional values can be translated into an exact real pseudo-orbit whose local defect is bounded by a compositional expression in unit roundoff and the intermediate magnitudes.\n\nThe key insight is that floating-point execution should first be interpreted as a certified pseudo-orbit; only then should a dynamical shadowing theorem be applied.\n\n**Why now?** The abstract pseudo-orbit theorem already consumes precisely such a local defect certificate, leaving a sharply delimited semantics problem rather than an informal appeal to \u201cprecision.\u201d\n\n## 3. Adaptive logistic-map shadowing beyond the global factor four\n\n**Conjecture.** For pseudo-orbits of the parameter-four logistic map that remain a certified distance from the critical point, a product of local derivative envelopes yields an exponentially smaller shadowing budget than the uniform factor `4^N`, and this adaptive budget is asymptotically sharp on periodic itineraries.\n\nThe key insight is that the interval-wide Lipschitz constant four discards orbit information; local derivative products retain the actual itinerary-dependent amplification.\n\n**Why now?** Forward invariance and the global certificate are established, providing a baseline against which a local, itinerary-sensitive refinement can be quantitatively compared.\n\n## 4. Residual networks as nonautonomous shadowing systems\n\n**Conjecture.** A depth-varying residual system `x \u21a6 x + g_n(x)` with certified constants `L_n` admits a pseudo-orbit bound governed by products of `(1+L_n)`, and under a summability or averaged contraction condition this bound becomes uniform in depth.\n\nThe key insight is that residual robustness and numerical shadowing are instances of the same nonautonomous error recurrence, but varying layers permit stability mechanisms invisible in a single worst-case constant.\n\n**Why now?** The autonomous residual bridge identifies the common calculus; the next test is whether layerwise structure can convert a geometric finite-depth estimate into a uniform guarantee.\n\n## 5. Polynomial shadowing horizons from quantitative hyperbolicity\n\n**Conjecture.** For computable uniformly hyperbolic maps with rational cone certificates, the maximum certifiable shadowing horizon at fixed tolerance grows at least polynomially in the reciprocal local defect when all certificate arithmetic is performed at logarithmic precision.\n\nThe key insight is that dynamical existence, numerical conditioning, and computational complexity must be controlled simultaneously; none alone establishes a feasible shadowing algorithm.\n\n**Why now?** The current geometric bound exposes an exponential obstruction for continuity-only arguments, making quantitative hyperbolicity the natural candidate mechanism for a polynomial complexity law.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0264",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "ee626e30",
+    "status": "available",
+    "timestamp": "2026-07-18T03:54:53.550842+00:00",
+    "title": "**Conjecture.** A program implementing a differentiable map on a compact invaria"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle d1663b23 (Q=0.700) proved 0 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'A minimal modularity lifting theorem for Siegel modular forms' and formalize its key results. Abstract: We prove a minimal modularity lifting theorem (in the spirit of Gen",
     "domains": [
       "Applications"
@@ -3355,7 +3369,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Dark Mathematics: Theorems That Exist But Cannot Be Found"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e456357e",
     "description": "The Fibonacci sequence is defined by F(n+1) = F(n) + F(n-1) and converges to the golden ratio. Define the ANTI-Fibonacci sequence: A(n+1) is the smallest positive integer that is NOT equal to A(n) + A(n-1). The sequence begins 1, 1, 2, 4, 7, 11, 16, ... (each term avoids being the sum of the two previous terms). Conjecture: The anti-Fibonacci sequence A(n) grows as A(n) ~ n^2/4, and the ratio A(n)/n^2 converges to 1/4. More precisely, A(n) = floor(n^2/4) + O(1). The sequence avoids the golden ratio entirely \u2014 the ratio A(n+1)/A(n) does NOT converge, instead oscillating between 1 and 2. The complement of the anti-Fibonacci sequence (numbers that ARE sums of two previous anti-Fibonacci numbers) has density 0. Test: compute A(n) for n up to 10^6 and verify A(n)/n^2 approaches 1/4. Prove A(n) = floor(n^2/4) + O(1) by induction. Impact: a beautiful counterpoint to the Fibonacci sequence \u2014 instead of converging to a constant, it grows quadratically while systematically avoiding addition.",
     "domains": [
       "Novelty",
@@ -3365,7 +3379,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.73,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-17T03:25:44.329567+00:00",
     "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
   },
