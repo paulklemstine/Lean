@@ -1,52 +1,38 @@
-# Computational Evidence: Tropical / F₁ Euler Correspondence
+# Computational evidence
 
-We test the conjecture that, for a toric variety built from projective spaces
-`ℙ^d` (dual to the standard `d`-simplex) under Cartesian products, the Euler
-characteristic of the variety equals the number of vertices of the associated
-polytope (its "F₁-points").
+The formal target is the fixed-point count for finite toric orbit models, plus the standard-simplex and product families.
 
-## Model
+## Small cases
 
-A variety in this class is encoded as a term of `ToricPoly`:
-`simplex d` denotes `ℙ^d`; `prod P Q` denotes the product `X_P × X_Q`, whose
-polytope is the product polytope.
+For the standard `n`-simplex model, every maximal cone contributes one zero-dimensional orbit and hence one Euler unit.
 
-- **Vertices** (F₁-points): `Δ_d` has `d+1` vertices; a product polytope's
-  vertex count is the product of the factors' vertex counts.
-- **Betti numbers**: for `ℙ^d`, the cohomology is `ℤ` in each even degree
-  `0, 2, …, 2d` and `0` otherwise; products obey the Künneth (antidiagonal
-  convolution) formula.
-- **Euler characteristic**: the honest alternating sum
-  `χ = Σ_k (-1)^k b_k` over degrees `0 … 2·dim`.
+| `n` | vertices / maximal cones | Euler count |
+|---:|---:|---:|
+| 0 | 1 | 1 |
+| 1 | 2 | 2 |
+| 2 | 3 | 3 |
+| 3 | 4 | 4 |
+| 4 | 5 | 5 |
+| 5 | 6 | 6 |
 
-## Small-case calculations
+For products, the predicted count is `(m+1)(n+1)`:
 
-| Variety            | Polytope            | vertices | Betti (nonzero degrees)      | χ  |
-|--------------------|---------------------|----------|------------------------------|----|
-| `ℙ^0` (point)      | `Δ_0`               | 1        | b₀=1                         | 1  |
-| `ℙ^1`              | segment `Δ_1`       | 2        | b₀=b₂=1                      | 2  |
-| `ℙ^5`              | `Δ_5`               | 6        | b₀=…=b₁₀=1                   | 6  |
-| `ℙ^2 × ℙ^3`        | `Δ_2 × Δ_3`         | 12       | Künneth of the two spectra   | 12 |
-| `(ℙ^1)^3` (cube)   | `[0,1]^3`           | 8        | binomial `2^3` distribution  | 8  |
+| `(m,n)` | product fixed points | product Euler count |
+|---:|---:|---:|
+| (1,1) | 4 | 4 |
+| (1,2) | 6 | 6 |
+| (2,2) | 9 | 9 |
+| (2,3) | 12 | 12 |
+| (3,3) | 16 | 16 |
 
-Each computed `χ` matches the vertex count exactly. These values are reproduced
-directly by evaluation of the `eulerChar` and `vertices` functions in the
-accompanying development.
+These entire infinite families are proved in `Tropical/TropicalFOne/FixedPointEuler.lean`, rather than accepted from this table.
+
+## OEIS
+
+The simplex counts `1,2,3,4,5,…` are the positive integers (OEIS A000027). This identification is only contextual and is not used in the proof.
 
 ## Counterexample hunt
 
-We evaluated `eulerChar P = vertices P` on all products of simplices with total
-dimension up to 6 (simplices `Δ_0 … Δ_6` and their pairwise/triple products).
-No counterexample was found; the general statement is then proved
-(`eulerChar_eq_vertices`).
+The unrestricted claim that the number of lattice points of a polytope equals the degree of its toric variety is false under standard conventions. For the interval `[0,d]`, the lattice-point count is `d+1`, while the degree of the corresponding polarized projective line is `d`. Thus the project focuses on the valid Euler-characteristic/vertex correspondence and does not formalize the false lattice-point/degree equality.
 
-## Structural observation
-
-Two ingredients make the identity hold:
-1. **No odd cohomology** — all odd Betti numbers vanish, so the signs in `χ`
-   never produce cancellation and `χ` collapses to the *total* Betti number.
-2. **Multiplicativity** — the total Betti number is multiplicative under products
-   (a truncated Cauchy product of finitely supported sequences), matching the
-   multiplicativity of vertex counts of product polytopes.
-
-Together these force `χ = Σ b_k = #vertices`.
+No counterexample exists to the finite-orbit theorem under its stated hypotheses: each positive-dimensional torus orbit contributes zero by definition of the Euler measure, and each zero-dimensional orbit contributes one. The Lean proof checks this for arbitrary finite cone types, not merely sampled cases.
