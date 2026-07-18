@@ -134,7 +134,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "[Reset] Fresh approach in Shared"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3aa7c983",
     "description": "Mathematics is full of impossibility theorems \u2014 things that CANNOT be done. But impossibility theorems are themselves beautiful mathematical objects. Catalog and interconnect the great impossibilities: (1) Squaring the circle (pi is transcendental, Lindemann 1882). (2) Trisecting the angle (cos 20 degrees has degree 3 over Q, Wantzel 1837). (3) Doubling the cube (cube root of 2 has degree 3, Wantzel 1837). (4) Solving the quintic by radicals (A_5 is not solvable, Abel-Ruffini 1824). (5) The Borsuk-Ulam impossibility (every continuous map S^n -> R^n has a point where f(x) = f(-x)). (6) Arrow's impossibility (no voting system is simultaneously fair, complete, and non-dictatorial). (7) Heisenberg's uncertainty (Delta x * Delta p >= hbar/2). Conjecture: These impossibility theorems are connected by a deep structural principle \u2014 each one arises because a certain group action is not free. Squaring the circle fails because Gal(Q(pi)/Q) acts freely. Solving the quintic fails because A_5 acts freely on the roots. Arrow's theorem fails because the symmetric group acts freely on preferences. Heisenberg fails because the Heisenberg group acts freely on phase space. The unified principle: a task is impossible iff the relevant group action is free. Test: verify that each impossibility theorem corresponds to a free group action. Prove the converse: if a group G acts freely on a set X, then there exists a G-equivariant task that is impossible on X. Impact: all impossibility is the same impossibility \u2014 every CAN'T is a reflection of a free group action.",
     "domains": [
       "Novelty",
@@ -144,7 +144,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-17T14:13:42.052368+00:00",
     "title": "Impossibility Results for Fun: Things That Cannot Be Done (But We Try Anyway)"
   },
