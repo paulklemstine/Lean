@@ -4175,6 +4175,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The Collatz conjecture (3n+1 problem) states that every positive integer eventually reaches 1 under the map T(n) = n/2 (n even) or 3n+1 (n odd). Despite being verified up to 2^68, a proof remains elusive. Conjecture: the Collatz conjecture is independent of Peano Arithmetic (PA). That is, PA can neither prove nor refute the statement 'for all n, the Collatz sequence starting at n eventually reaches 1'. This would mean the conjecture is TRUE (in the standard model) but UNPROVABLE in PA. The argument: the Collatz map is a Diophantine function that grows faster than any provably total computable function in PA. Specifically, the halting problem for Collatz (does the orbit of n reach 1?) is at least as hard as the consistency of PA, which by Godel's second incompleteness theorem is unprovable in PA. Conjecture: the Collatz conjecture is equivalent to Con(PA) over a weak base theory, meaning that if PA is consistent, then PA does not prove Collatz. Test: formalize the equivalence between Collatz and Con(PA) in Lean 4. Show that a counterexample to Collatz (an n whose orbit diverges or cycles) would imply not-Con(PA). Impact: Collatz might be the simplest true-but-unprovable statement in arithmetic \u2014 a concrete example of Godel's incompleteness.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0365",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-18T22:55:51.806243+00:00",
+    "title": "The Collatz Conjecture Is Undecidable: What If 3n+1 Can't Be Proved?"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle d1663b23 (Q=0.700) proved 0 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'A minimal modularity lifting theorem for Siegel modular forms' and formalize its key results. Abstract: We prove a minimal modularity lifting theorem (in the spirit of Gen",
     "domains": [
       "Applications"
