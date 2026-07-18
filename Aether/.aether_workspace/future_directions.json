@@ -11123,11 +11123,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "f0f3cf3d",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -11140,7 +11140,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0269",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-18T06:03:26.057256+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -11155,7 +11155,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-18T04:27:28.017562+00:00",
       "title": "The Prime Number Crossword: Filling the Gaps in the Primes"
@@ -11879,6 +11879,7 @@
     "±p_1^{a_1}": 1
   },
   "selection_log": [
+    "famous_subtask",
     "famous_subtask",
     "famous_subtask",
     "famous_subtask"
