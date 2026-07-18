@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "85360393",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Engel's Interval Packing Theorem\n\n## What is proved (`Speculative/EngelIntervalPacking.lean`)\n\nThe file fixes the correct (disjointness) formalization of interval packings in the",
-      "quality_score": 0.6,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-14T15:40:56",
-      "title": "Engel's Interval Packing Theorem"
-    },
-    {
       "cycle_id": "2c734846",
       "domain": "Applications",
       "key_insight": "# Future Directions — Tangled Hierarchies: Proof Systems That Reference Their Own Soundness\n\nThe file `TangledSoundness.lean` develops the semantic core of self-referential\nproof systems: a chain from",
@@ -2501,6 +2491,16 @@
       "theorem_count": 15,
       "timestamp": "2026-07-18T09:54:25",
       "title": "The Fundamental Theorem of Cakes: Algebraic Geometry of Baking"
+    },
+    {
+      "cycle_id": "c3aba433",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: The 1729 Cubic Surface\n\n## 1. Complete the integral-point census at moderate height\n\n**Conjecture.** Up to permutation, the only nonzero integral solutions of\n\\(x^3+y^3+z^3=1729\\)",
+      "quality_score": 0.68,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-07-18T10:21:55",
+      "title": "Ramanujan's Taxicab Number as a Sum of Three Cubes: 1729 Revisited"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-18T09:54:25",
+  "last_updated": "2026-07-18T10:21:55",
   "open_questions": [
     {
       "context": "",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "851ec568",
-        "quality": 0.68,
-        "theorems": 4,
-        "title": "ArXiv paper: A few remarks on the Baez-Duarte Criterion"
-      },
-      {
         "cycle_id": "5759ba2d",
         "quality": 0.72,
         "theorems": 20,
@@ -3637,6 +3631,12 @@
         "quality": 0.69,
         "theorems": 57,
         "title": "The P vs NP of Cooking: Computational Complexity of Recipes"
+      },
+      {
+        "cycle_id": "c3aba433",
+        "quality": 0.68,
+        "theorems": 16,
+        "title": "Ramanujan's Taxicab Number as a Sum of Three Cubes: 1729 Revisited"
       }
     ],
     "NumberTheory": [
