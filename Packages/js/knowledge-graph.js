@@ -229,7 +229,7 @@
     // ─── Layout constants (space battle / nuclear dynamics) ───
     const CLUSTER_RADIUS = 15000;     // Distance of cluster centroids from center
     const NODE_SPACING = 3000;         // Spacing between nodes within a cluster
-    const WORLD_SIZE = 180000000;         // Universe extent — Möbius-Klein bottle
+    const WORLD_SIZE = 18000000;         // Universe extent — Möbius-Klein bottle
     const WORLD_HALF = WORLD_SIZE / 2;
     const K_SPRING = 0;              // No continuous spring — edges are lazy
     const REST_LENGTH = 9000;          // Rest length for provenance springs
@@ -244,7 +244,7 @@
     const MIN_REPULSION_DIST = 2400;    // Bumper collision radius
     const DAMPING = 0.998;              // Friction — reduced to keep graph energetic
     const NODE_RADIUS = 22;
-    const MAX_VELOCITY = 250.0;        // Gentle cap scaled to large universe
+    const MAX_VELOCITY = 100.0;        // Gentle cap scaled to large universe
     const BOUNCE = 1.0;              // Elastic — conserves momentum AND kinetic energy
     const THRUST_DURATION = 3.0;     // Seconds of visual rocket flame after collision
 
