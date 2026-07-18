@@ -574,7 +574,7 @@
       "catalog_references": [],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "ae36b246",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -601,7 +601,7 @@
       "source": "",
       "source_exp_id": "2607.11753v1",
       "source_path": "http://arxiv.org/abs/2607.11753v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-15T07:28:27.663774+00:00",
       "title": "ArXiv paper: On the maximum size of $B_3$-free families"
