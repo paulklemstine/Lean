@@ -18,6 +18,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 091f8315 (Q=0.800), which proved 46 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The logistic map f(x) = r*x*(1-x) for r = 4 exhibits chaotic dynamics: small changes in initial conditions lead to exponentially diverging trajectories (Lyapunov exponent lambda = log(2)). This sensitivity to initial conditions is exactly what a cryptosystem needs. Conjecture: The logistic map at r ",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_091f8315_1a45e00d",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "091f8315",
+    "status": "available",
+    "timestamp": "2026-07-18T19:30:11.383608+00:00",
+    "title": "Deepening: Cryptography from Chaos: Encrypting with the Logistic Map"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 4920904c (Q=0.800), which proved 46 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Erdos-Renyi random graph G(n, p) has n vertices where each edge appears independently with probability p. At p = log(n)/n, G(n,p) becomes connected. But what if p is COMPLEX? Define G(n, z) where z is a complex number: each edge (i,j) appears with 'probability' z, meaning the edge weight is z in",
     "domains": [
       "Logic"
@@ -261,7 +275,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: A decomposition of Weyl group multiple Dirichlet series for symmetrizable Kac-Moody root systems"
   },
   {
-    "consumed_by_exp_id": "ae36b246",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'On the maximum size of $B_3$-free families' and formalize its key results. Abstract: A family $\\mathcal{G}$ of sets is a weak copy of the poset $(P,\\leqslant)$ if there exists a bijection $\u03b9:P\\rightarrow \\mathcal{G}$ with $\u03b9(p)\\subset \u03b9(q)$ whenever $p\\leqslant q$. $\\mathcal{G}$ is a strong copy if $\u03b9(p)\\subset \u03b9(q)$ if and only if $p\\leqslant q$ holds. A family is weak (strong) $P$-free if it does not contain any weak (strong) copies of $P$. For a poset $P$, let $e(P)$ ($e^*(P)$) denote the most number of middle layers of $2^{[n]}$ that does not contain a weak (strong) copy of $P$. Ellis, Ivan, and Leader were the first to show the existence of posets $P$ for which there exists a positive real $\\varepsilon_P$ such that $La(n,P)\\ge (e(P)+\\varepsilon_P)\\binom{n}{\\lfloor n/2}$ and $La^*(n,P)\\ge (e^*(P)+\\varepsilon_P)\\binom{n}{\\lfloor n/2}$ holds, where $La(n,P)$ ($La^*(n,P)$) denotes the maximum size of a weak (strong) $P$-free family $\\mathcal{F}\\subseteq 2^{[n]}$. More precisely, they showed that $P=B_d$ are such posets for all $d\\ge 4$, where $B_d$ is the Boolean latt",
     "domains": [
       "Bridges"
@@ -270,7 +284,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11753v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T07:28:27.663774+00:00",
     "title": "ArXiv paper: On the maximum size of $B_3$-free families"
   },
@@ -3009,6 +3023,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The Collatz map T: N -> N defined by T(n) = n/2 if n even, 3n+1 if n odd, is conjectured to always reach 1. The Collatz conjecture is equivalent to: the orbit of every n under T eventually reaches the cycle {1, 4, 2, 1}. Define the Collatz Fourier transform: F_T(omega) = sum_{n=1}^{N} e^{2*pi*i*omega*T(n)/n} for N large. Conjecture: F_T has a spectral gap: |F_T(omega)| < C for all irrational omega, where C < sqrt(N). This would mean that the Collatz map does not concentrate energy at any irrational frequency \u2014 it is 'mixing' in the Fourier sense. Moreover, the spectral gap is related to the convergence rate: the wider the gap, the faster the orbit reaches 1. Conjecture: for the orbit of n, the number of steps to reach 1 is O(log(n)), which is equivalent to F_T having a spectral gap of width Omega(1/log(n)). Test: compute F_T for n up to 10^6 and measure the spectral gap. Compare with the spectral gaps of related maps (5n+1, 7n+1) which do NOT always converge. Impact: the Collatz conjecture is a spectral gap problem. Convergence to 1 means the Fourier transform has no resonances at irrational frequencies.",
+    "domains": [
+      "Novelty",
+      "NumberTheory"
+    ],
+    "id": "fd_0353",
+    "priority_score": 0.79,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-18T19:29:43.481814+00:00",
+    "title": "The Fourier Analysis of Collatz: Spectral Gaps in the 3n+1 Map"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle 1003d095 (Q=0.740) proved 0 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in ",
     "domains": [
       "Applications"
@@ -3035,6 +3064,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-18T15:34:30.695533+00:00",
     "title": "The P vs NP of Sudoku: Phase Transitions in Constraint Satisfaction"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Sperner's lemma states that any proper coloring of a triangulated simplex with n+1 colors has at least one fully colored simplex. This is a combinatorial analog of Brouwer's fixed point theorem. Nash's theorem states that every finite game has a mixed strategy Nash equilibrium, proved using Kakutani's fixed point theorem. Conjecture: Sperner's lemma directly implies Nash's theorem. Specifically, given an n-player game with strategies S_1, ..., S_n, construct the n-simplex Delta = Delta(S_1 x ... x S_n) of mixed strategy profiles. Define a Sperner coloring of Delta by: color vertex v with color i if player i's best response to v is strategy i. By Sperner's lemma, there exists a fully colored simplex. The center of this simplex is an approximate Nash equilibrium (each player is approximately best-responding). Taking the limit as the triangulation gets finer gives an exact Nash equilibrium. Conjecture: this construction gives a constructive proof of Nash's theorem that yields a triangulation-based algorithm for finding Nash equilibria with complexity O(N^{n}) where N is the total number of pure strategies. Test: implement the Sperner-based algorithm for 2-player games and verify it finds all Nash equilibria. Impact: Nash equilibria are combinatorial fixed points. Sperner's lemma is the fundamental theorem of game theory.",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_0354",
+    "priority_score": 0.77,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-18T19:29:43.512493+00:00",
+    "title": "Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theory"
   },
   {
     "consumed_by_exp_id": "",
@@ -3846,21 +3890,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "The formal results show that the proposed Hausdorff-dimension conjectures are fa"
   },
   {
-    "consumed_by_exp_id": "091f8315",
-    "description": "The logistic map f(x) = r*x*(1-x) for r = 4 exhibits chaotic dynamics: small changes in initial conditions lead to exponentially diverging trajectories (Lyapunov exponent lambda = log(2)). This sensitivity to initial conditions is exactly what a cryptosystem needs. Conjecture: The logistic map at r = 4 is a secure pseudorandom generator. Define the logistic cipher: key = (x_0, n) where x_0 in (0,1) is the seed and n is the number of iterations. The keystream is K = (f^n(x_0), f^{n+1}(x_0), ...) where f^n denotes the n-th iterate. The ciphertext is C = M XOR K where M is the plaintext. The security relies on two properties: (1) Sensitivity: a change of epsilon in x_0 leads to a change of O(1) in f^n(x_0) after n = O(log(1/epsilon)) iterations (exponential sensitivity). (2) Ergodicity: the distribution of f^n(x_0) converges to the invariant measure mu(x) = 1/(pi*sqrt(x*(1-x))) regardless of the initial condition. Conjecture: breaking the logistic cipher (recovering x_0 from K) is as hard as inverting the logistic map, which requires solving a degree-2^n polynomial (since f^n(x) is a polynomial of degree 2^n). This is exponential in n. Test: implement the logistic cipher, measure the period of the keystream (which should be at least 2^n for floating-point precision n), and verify that statistical tests (NIST SP 800-22) pass for n >= 64. Impact: chaos IS cryptography \u2014 the logistic map's sensitivity to initial conditions is the same property that makes encryption secure.",
-    "domains": [
-      "Novelty",
-      "Cryptography"
-    ],
-    "id": "fd_0329",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T14:10:57.503191+00:00",
-    "title": "Cryptography from Chaos: Encrypting with the Logistic Map"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "# Future Directions\n\n- Replace the parity-normalized action model by an explicit cubical set whose vertices are recipes, edges are elementary substitutions, and higher cubes encode commuting independent substitutions.\n- Prove geometric realization results for that cubical set, including contractibility of the full Boolean cube and the homotopy type of selected subcomplexes.\n- Distinguish a recipe fiber (all recipes producing one flavor profile) from its substitution graph. The two-point `S\u2070` claim requires the fiber to contain exactly two isolated vertices; merely having one binary ingredient coordinate produces an edge if that substitution is allowed.\n- Model ordered cooking operations before quotienting by commuting and cancellation relations. This is necessary for meaningful nontrivial loops; the present parity-normalized model proves that all normalized loops are trivial.\n- Formalize empirical recipe data as a finite simplicial complex, specify a reproducible rule for simplices, and compute certified homology. A list of 100 recipes alone does not determine a simplicial complex or homotopy groups.\n- Introduce a flavor map from a quantitative ingredient/process space to a taste space, then study fibers under explicit continuity and regularity assumptions. No general CW-complex conclusion follows without such assumptions.\n",
     "domains": [
@@ -4068,6 +4097,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-18T19:25:00.615512+00:00",
     "title": "For an explicit Bernoulli missingness model on records and features, determine w"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## 1. Quantified prediction from the angle-doubling coordinate\n\nFor every fixed bit-extraction rule with finitely many interval boundaries, determine\nwhether a polynomial-time predictor can exploit the angle-doubling representation to\nobtain a non-negligible next-bit advantage on a positive-measure set of seeds.\n\nThe key insight is that exponential separation in the state coordinate coexists with\nan exact shift-like evolution in the angular coordinate.\n\nWhy now? The closed iterate formula isolates the coordinate in which prediction should\nbe analyzed and removes polynomial degree as a proxy for computational hardness.\n\n## 2. Complete inverse-tree classification\n\nClassify the distinct real preimages of a target after \\(n\\) updates, including all\ncollisions caused by reflection, critical points, endpoints, and periodic branches,\nand derive an exact formula for the number of distinct depth-\\(n\\) ancestors.\n\nThe key insight is that the apparent degree \\(2^n\\) counts algebraic multiplicity, while\ntrigonometric symmetry organizes roots into a highly structured branching tree.\n\nWhy now? An explicit square-root inverse branch and the reflection identity provide the\nbase cases needed to separate generic binary branching from exceptional collapse.\n\n## 3. Precision-specific period spectrum\n\nFor each explicitly specified rounding rule and each word size \\(p\\), determine the\nentire cycle-length spectrum of the resulting finite logistic map and test whether its\nmaximum cycle is exponentially large while its median cycle remains substantially\nsmaller.\n\nThe key insight is that state-space cardinality supplies only an upper bound on first\nrepetition; arithmetic rounding determines the actual functional graph.\n\nWhy now? The universal lower-bound conjecture is ruled out by short exceptional orbits,\nso the meaningful replacement is a rounding-sensitive distributional classification.\n\n## 4. Invariant-measure theorem with sharp exceptional set\n\nIdentify the strongest seed class for which empirical orbit measures converge to the\narcsine invariant measure, and characterize the periodic, preperiodic, and other\nexceptional seeds excluded from that class.\n\nThe key insight is that angle doubling transfers the question to binary expansions,\nwhere normality and periodicity can be stated precisely.\n\nWhy now? Fixed and absorbing orbit counterexamples show that \u201cregardless of initial\ncondition\u201d is untenable, while the semiconjugacy indicates the correct almost-everywhere\nreplacement.\n\n## 5. Statistical quality versus cryptographic indistinguishability\n\nConstruct families of logistic-map bitstreams that pass prescribed finite statistical\nbatteries yet admit an explicit distinguisher based on reflection, inverse branches, or\nangular-coordinate relations.\n\nThe key insight is that distributional test success and computational next-bit security\nmeasure fundamentally different properties.\n\nWhy now? Exact seed collisions and structured inversion supply concrete algebraic\nfeatures from which distinguishers can be designed and compared with empirical tests.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0355",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "091f8315",
+    "status": "available",
+    "timestamp": "2026-07-18T19:30:06.888655+00:00",
+    "title": "For every fixed bit-extraction rule with finitely many interval boundaries, dete"
   },
   {
     "consumed_by_exp_id": "",

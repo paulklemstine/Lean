@@ -1,203 +1,331 @@
-# Persistent Homology of the Prime Point Cloud: The Zero-Dimensional Barcode as the Prime Gap Sequence
+# Persistent Connectivity of Prime Point Clouds on the Real Line
 
 ## Abstract
 
-We study the zero-dimensional persistent homology of the point cloud formed by the prime numbers on the real line, with the $n$-th prime $p_n$ placed at position $p_n$. Under the Vietoris–Rips filtration — connect two points whenever they lie within a scale parameter $\varepsilon$ — the merging of connected components as $\varepsilon$ increases is recorded by the $H_0$ barcode. Our central structural result is a complete characterization of connectivity for *any* strictly increasing point cloud on a line: two points share an $\varepsilon$-connected component if and only if every consecutive gap between them is at most $\varepsilon$ (the **Single-Linkage Theorem**). As an immediate corollary, the death scale of the merge between neighboring points equals the gap between them, so the $H_0$ barcode is precisely the multiset of consecutive gaps. Specializing to the primes, the $i$-th finite bar has death scale equal to the $i$-th prime gap $p_{i+1}-p_i$. This dictionary lets us restate a classical open problem topologically: **the twin prime conjecture is equivalent to the assertion that the prime barcode contains infinitely many bars of length $2$.** We give complete proofs of the structural theorems, describe algorithms for computing the barcode from a prime sieve, discuss the connection to the Prime Number Theorem and to Poisson comparison models, and outline a research program relating prime-gap distribution theory to barcode statistics.
-
-**Keywords:** persistent homology, Vietoris–Rips filtration, prime gaps, twin prime conjecture, single-linkage clustering, topological data analysis, prime number theorem.
-
----
+We study Vietoris–Rips filtrations of finite strictly increasing point clouds on the real line, with prime numbers as the motivating example. The deterministic structure is completely controlled by consecutive spacings. At scale $\varepsilon$, two ordered points are connected if and only if every intervening consecutive gap is at most $\varepsilon$; consequently, their connection threshold is the maximum intervening gap. For a finite cloud, the finite death times in zeroth persistent homology are therefore exactly the consecutive gaps, with multiplicity, together with one infinite class. For the cloud $\{2,3,5,7,11,13\}$, the endpoint connection threshold is $4$. We also establish a geometric obstruction to a proposed higher-dimensional interpretation: if an edge spans an intermediate point on the line, both shorter edges are already present, so the Vietoris–Rips flag complex fills the associated triangle. Twin-prime edges consequently do not generate one-dimensional holes in this model. We formulate an efficient barcode algorithm, explain how local normalized prime-gap statistics may be compared cautiously with an inhomogeneous Poisson heuristic, and identify alternative embeddings capable of supporting nontrivial higher-dimensional arithmetic topology.
 
 ## 1. Introduction
 
-Topological data analysis (TDA) studies the "shape" of data by tracking how topological features — connected components, loops, voids — appear and disappear as a scale parameter is varied. The central object is the **persistence barcode**, a multiset of intervals $[b, d)$ recording the birth $b$ and death $d$ of each feature. Features with long bars are robust; short bars are typically dismissed as noise. This framework has proven remarkably effective at extracting structure from noisy, high-dimensional point clouds.
+Let $p_1=2,p_2=3,p_3=5,\ldots$ denote the increasing sequence of primes. Viewing a finite initial segment as a point cloud in $\mathbb R$ invites the use of persistent homology: connect nearby primes at a growing distance scale and record the birth and death of topological features. This viewpoint appears to promise a geometric encoding of prime gaps, exceptional local clusters, and perhaps special pairs such as twin primes.
 
-The prime numbers furnish an unusual and appealing test object. Placing the $n$-th prime $p_n$ at coordinate $p_n \in \mathbb{R}$ produces an infinite point cloud on the line whose geometry is entirely determined by the sequence of **prime gaps** $g_n = p_{n+1} - p_n$. The gap sequence
-$$1,\,2,\,2,\,4,\,2,\,4,\,2,\,4,\,6,\,2,\,6,\,4,\,2,\,4,\,\dots$$
-(the differences $3-2,\,5-3,\,7-5,\,11-7,\dots$) is one of the most studied and least understood sequences in mathematics. This paper asks what the zero-dimensional persistent homology of the prime cloud looks like, and answers it completely.
+The first objective of this paper is to determine exactly what the ordinary Vietoris–Rips filtration can detect in this one-dimensional embedding. The answer in dimension zero is complete and elementary but consequential. Every connectivity question reduces to consecutive gaps. No nonconsecutive edge can bypass a gap before that gap itself enters the filtration. Thus the zeroth persistence barcode is not merely correlated with gap data; its finite death multiset is the consecutive-gap multiset.
 
-The answer is clean because the ambient space is one-dimensional. Our main structural theorem shows that on a line, single-linkage connectivity is governed entirely by the gap sequence, and hence the $H_0$ barcode is a lossless recording of that sequence. Applied to the primes, this identifies the topology with the arithmetic and, most strikingly, reformulates the twin prime conjecture as a statement about the recurrence of a length-$2$ bar.
+The second objective is corrective. A suggested interpretation associates one-dimensional persistent holes with even prime gaps and imagines a class at the twin-prime scale. In an ordinary Vietoris–Rips complex, every clique is filled. For ordered real points, an edge joining two outer points forces edges from each outer point to every intermediate point. In particular, any apparent three-edge cycle is filled immediately. A twin-prime pair is a short edge, not a hole.
 
-### 1.1 Contributions
+The third objective is methodological. A Poisson process with local intensity approximately $1/\log X$ is a useful heuristic benchmark for prime gaps near $X$, but exact distributional equality is impossible: prime gaps are discrete and, after the initial pair, even. A defensible comparison must be local, normalized, and expressed through a specified statistic. The exact topological theorem and the approximate statistical hypothesis must remain separate.
 
-1. **A single-linkage characterization on the line** (Theorem 3.1): for a strictly increasing point cloud, two indices $i \le j$ are $\varepsilon$-connected iff all intervening gaps are $\le \varepsilon$.
-2. **Barcode = gap multiset** (Theorem 3.2): the death scale of the adjacent merge at index $i$ is exactly $p_{i+1} - p_i$.
-3. **Prime specialization** (Theorem 4.1): the $i$-th finite bar of the prime barcode has death scale equal to the $i$-th prime gap.
-4. **Topological twin prime conjecture** (Theorem 4.3): infinitude of twin primes $\iff$ infinitely many bars of length $2$.
-5. **Algorithms and numerics** (Sections 5–6): explicit computation from a sieve, empirical validation of the average-gap law, and comparison with a Poisson null model.
+The results apply to every finite strictly increasing real point cloud. Primes enter only through their ordered positions and gap sequence. This generality exposes both the strength and limitation of the model: it gives an exact and efficient summary of spacings, while discarding arithmetic information not encoded by Euclidean distance on the line.
 
----
+## 2. Ordered point clouds and Rips filtrations
 
-## 2. Definitions and setup
+### 2.1. Basic definitions
 
-Throughout, a *point cloud* is a function $p : \mathbb{N} \to \mathbb{R}$; we write $p_n = p(n)$. We assume $p$ is **strictly increasing**, $p_0 < p_1 < p_2 < \cdots$, which holds for the primes.
+Let
 
-**Definition 2.1 (Vietoris–Rips adjacency).** For a scale $\varepsilon \ge 0$, points at indices $a$ and $b$ are *adjacent at scale $\varepsilon$* when
-$$|p_a - p_b| \le \varepsilon.$$
-We denote this relation $\mathrm{Adj}_\varepsilon(a,b)$. It is reflexive (for $\varepsilon \ge 0$) and symmetric.
+$$
+X=\{x_0,x_1,\ldots,x_{n-1}\}\subset\mathbb R,
+\qquad x_0<x_1<\cdots<x_{n-1}.
+$$
 
-**Definition 2.2 (connected component).** Two indices lie in the same $\varepsilon$-connected component when they are related by the reflexive–transitive closure of $\mathrm{Adj}_\varepsilon$. We write $\mathrm{Conn}_\varepsilon(a,b)$ for this equivalence relation. Concretely, $\mathrm{Conn}_\varepsilon(a,b)$ holds iff there is a finite chain $a = c_0, c_1, \dots, c_m = b$ with $\mathrm{Adj}_\varepsilon(c_t, c_{t+1})$ for each $t$.
+For $0\le k<n-1$, define the consecutive gap
 
-The **$H_0$ persistence** of the filtration $(\mathrm{Conn}_\varepsilon)_{\varepsilon \ge 0}$ tracks the number of components as $\varepsilon$ increases: each component is a *bar*, born when it first appears and dying when it merges into an older component. For a discrete increasing sequence, all components are present ("born") at $\varepsilon = 0$; the informative data is the multiset of *death scales* of the finite bars.
+$$
+g_k=x_{k+1}-x_k>0.
+$$
 
-**Definition 2.3 (gap).** The $n$-th gap of $p$ is $g_n = p_{n+1} - p_n > 0$.
+For a scale $\varepsilon\ge0$, the proximity graph $G_\varepsilon(X)$ has vertex set $\{0,\ldots,n-1\}$ and an edge between $i$ and $j$ precisely when
 
-**Definition 2.4 (prime point cloud).** Let $P(n) = p_{n+1}$, the $(n{+}1)$-st prime placed on the real line, indexed so that $P(0) = 2,\ P(1) = 3,\ P(2) = 5,\dots$ (formally $P(n)$ is the $n$-th term of the increasing enumeration of the primes). The **$n$-th prime gap** is
-$$\mathrm{primeGap}(n) = P(n+1) - P(n),$$
-a positive integer for every $n$.
+$$
+|x_i-x_j|\le\varepsilon.
+$$
 
----
+The Vietoris–Rips complex $\operatorname{VR}_\varepsilon(X)$ is the flag complex of this graph: a finite set of vertices spans a simplex if every pair in the set is joined by an edge. In particular, a three-clique is filled by a $2$-simplex.
 
-## 3. The structural theorems (general point cloud on a line)
+Two vertices are **connected at scale $\varepsilon$** if a finite path in $G_\varepsilon(X)$ joins them. The connected components of $G_\varepsilon(X)$ represent the generators of $H_0(\operatorname{VR}_\varepsilon(X))$. Because an edge present at scale $\varepsilon$ remains present at every $\delta\ge\varepsilon$, the graphs and complexes form filtrations:
 
-The key phenomenon is that on a line, connectivity is a strictly local, order-respecting property. Two preliminary lemmas isolate the two halves of this fact.
+$$
+G_\varepsilon(X)\subseteq G_\delta(X),
+\qquad
+\operatorname{VR}_\varepsilon(X)\subseteq\operatorname{VR}_\delta(X).
+$$
 
-**Lemma 3.0a (a gap is dominated by any straddling span).** If $p$ is strictly increasing and $a \le k < b$, then
-$$p_{k+1} - p_k \;\le\; p_b - p_a.$$
-*Proof.* Monotonicity gives $p_a \le p_k$ and $p_{k+1} \le p_b$ (the latter since $k+1 \le b$). Subtracting, $p_{k+1} - p_k \le p_b - p_a$. $\qquad\blacksquare$
+Thus connected components may merge as scale increases but cannot split.
 
-**Lemma 3.0b (an edge certifies its interior gaps).** If $p$ is strictly increasing and $\mathrm{Adj}_\varepsilon(a,b)$ holds, then for every $k$ with $\min(a,b) \le k < \max(a,b)$ we have $p_{k+1} - p_k \le \varepsilon$.
-*Proof.* Assume WLOG $a \le b$ (the relation is symmetric). Then $|p_a - p_b| = p_b - p_a \le \varepsilon$. By Lemma 3.0a, $p_{k+1}-p_k \le p_b - p_a \le \varepsilon$. $\qquad\blacksquare$
+### 2.2. Persistence conventions
 
-**Lemma 3.0c (small gaps chain into connectivity).** If $p$ is strictly increasing, $\varepsilon \ge 0$, and $p_{k+1} - p_k \le \varepsilon$ for all $k$ with $i \le k < i+n$, then $\mathrm{Conn}_\varepsilon(i, i+n)$.
-*Proof.* Induct on $n$. For $n = 0$ the claim is reflexivity. For the step, the inductive hypothesis gives $\mathrm{Conn}_\varepsilon(i, i+n)$, and the hypothesis at $k = i+n$ gives $p_{i+n+1} - p_{i+n} \le \varepsilon$, i.e. $\mathrm{Adj}_\varepsilon(i+n, i+n+1)$; appending this edge yields $\mathrm{Conn}_\varepsilon(i, i+n+1)$. $\qquad\blacksquare$
+At scale zero, distinct points form $n$ components. Under the standard elder-rule interpretation of zero-dimensional persistence, each merger kills one finite class, while one component survives indefinitely. The $H_0$ barcode therefore consists of $n-1$ finite intervals and one infinite interval. Since every class is born at scale $0$ for a point cloud with distinct points, the finite barcode is determined by its death multiset.
 
-**Lemma 3.0d (connectivity forces small interior gaps).** If $p$ is strictly increasing and $\mathrm{Conn}_\varepsilon(a,b)$, then for every $k$ with $\min(a,b) \le k < \max(a,b)$ we have $p_{k+1}-p_k \le \varepsilon$.
-*Proof.* Induct on the length of the connecting chain. The base case is trivial (the interval is empty). For the inductive step $\mathrm{Conn}_\varepsilon(a,c)$ and $\mathrm{Adj}_\varepsilon(c,b)$: any target index $k$ in the interval $[\min(a,b), \max(a,b))$ lies either in the interval associated with the sub-chain $a \leftrightarrow c$ or in the interval $[\min(c,b),\max(c,b))$ certified by the final edge via Lemma 3.0b; in the first case apply the inductive hypothesis, in the second apply Lemma 3.0b. The two sub-intervals always cover $[\min(a,b),\max(a,b))$. $\qquad\blacksquare$
+When several gaps have the same length, several mergers may occur at the same scale. A multiset, rather than a set, is therefore essential.
 
-Combining Lemmas 3.0c and 3.0d yields the central theorem.
+For indices $i\le j$, define the connection threshold
 
-**Theorem 3.1 (Single-Linkage on a line).** Let $p$ be strictly increasing and $\varepsilon \ge 0$. For indices $i \le j$,
-$$\mathrm{Conn}_\varepsilon(i, j) \iff \big(\forall k,\ i \le k < j \Rightarrow p_{k+1} - p_k \le \varepsilon\big).$$
-*Proof.* ($\Rightarrow$) is Lemma 3.0d, noting $\min(i,j) = i$ and $\max(i,j) = j$. ($\Leftarrow$) is Lemma 3.0c with $n = j - i$. $\qquad\blacksquare$
+$$
+\tau(i,j)=\inf\{\varepsilon\ge0: i\text{ and }j\text{ are connected in }G_\varepsilon(X)\}.
+$$
 
-**Interpretation.** The $\varepsilon$-connected components are exactly the *maximal runs of consecutive gaps that are all $\le \varepsilon$*. A single gap exceeding $\varepsilon$ severs the cloud; a block of small gaps fuses into one component. This is precisely single-linkage clustering, and on a line it is complete and exact.
+We set $\tau(i,i)=0$. The main theorem identifies $\tau(i,j)$ exactly.
 
-**Theorem 3.2 (Adjacent merge = gap).** For $p$ strictly increasing and $\varepsilon \ge 0$,
-$$\mathrm{Conn}_\varepsilon(i, i+1) \iff p_{i+1} - p_i \le \varepsilon.$$
-Hence the death scale of the merge of the components containing $p_i$ and $p_{i+1}$ equals the gap $p_{i+1} - p_i$.
-*Proof.* Apply Theorem 3.1 with $j = i+1$; the range $i \le k < i+1$ contains only $k = i$, so the right-hand side reduces to $p_{i+1}-p_i \le \varepsilon$. $\qquad\blacksquare$
+## 3. Deterministic connectivity theory
 
-**Corollary 3.3 (Barcode = gap multiset).** For a strictly increasing point cloud on a line, the multiset of finite $H_0$ bar lengths (death scales) equals the multiset of consecutive gaps $\{\,p_{n+1}-p_n : n \ge 0\,\}$. The barcode is a lossless encoding of the gap sequence.
+### Lemma 3.1 (Filtration monotonicity)
 
----
+If $\varepsilon\le\delta$, every edge of $G_\varepsilon(X)$ is an edge of $G_\delta(X)$, and any two vertices connected at scale $\varepsilon$ remain connected at scale $\delta$.
 
-## 4. The prime point cloud
+**Proof sketch.** The edge condition $|x_i-x_j|\le\varepsilon$ and the inequality $\varepsilon\le\delta$ imply $|x_i-x_j|\le\delta$. Applying this observation to every edge of a path preserves the path. $\square$
 
-**Theorem 4.1 (Prime death scale = prime gap).** For every $i$,
-$$P(i+1) - P(i) = \mathrm{primeGap}(i),$$
-where the right side is the $i$-th prime gap as a real number. Consequently the $i$-th finite bar of the prime barcode has death scale equal to the $i$-th prime gap.
-*Proof.* Immediate from Definition 2.4; the cast from integer to real preserves the difference because $P(i+1) \ge P(i)$. $\qquad\blacksquare$
+### Lemma 3.2 (Long edges force shorter edges)
 
-**Theorem 4.2 (Prime adjacent merge).** For $\varepsilon \ge 0$ and every $i$,
-$$\mathrm{Conn}_\varepsilon(i, i+1) \iff \mathrm{primeGap}(i) \le \varepsilon.$$
-*Proof.* Combine Theorem 3.2 (with $p = P$, which is strictly increasing since the prime enumeration is strictly increasing) and Theorem 4.1. $\qquad\blacksquare$
+Let $i\le j\le k$. If $|x_k-x_i|\le\varepsilon$, then
 
-We now reach the main arithmetic payoff.
+$$
+|x_j-x_i|\le\varepsilon
+\qquad\text{and}\qquad
+|x_k-x_j|\le\varepsilon.
+$$
 
-**Theorem 4.3 (Twin primes as a barcode statement).** The following are equivalent:
-1. There are infinitely many primes $p$ with $p + 2$ also prime (the twin prime conjecture).
-2. There are infinitely many indices $n$ with $\mathrm{primeGap}(n) = 2$.
-3. The prime $H_0$ barcode contains infinitely many bars of length $2$.
+**Proof sketch.** Ordering gives
 
-*Proof.* $(2)\iff(3)$ is Theorem 4.1: a bar of death scale $2$ is exactly an index with prime gap $2$. We prove $(1)\iff(2)$.
+$$
+0\le x_j-x_i\le x_k-x_i
+$$
 
-$(1)\Rightarrow(2)$: Suppose there are infinitely many twin pairs. Given any bound $a$, we must find an index $n > a$ with $\mathrm{primeGap}(n) = 2$. Because twin pairs are unbounded, choose a prime $p$ with $p+2$ prime and with the prime-counting index of $p$ exceeding $a$; write $n$ for the index of $p$ in the prime enumeration, so $P(n) = p$ and $n > a$. It remains to show the *next* prime after $p$ is $p+2$, i.e. $P(n+1) = p+2$. Certainly $P(n+1) \le p+2$ because $p+2$ is a prime greater than $p$. And $P(n+1) \ge p+2$ because there is no prime strictly between $p$ and $p+2$: the only candidate is $p+1$, which for $p \ge 2$ has the opposite parity to $p$ and, being even and greater than $2$, is composite (and the base case $p=2$ is handled directly, its successor being $3$, though $2$ is not a lower twin). Hence $P(n+1) = p+2$ and $\mathrm{primeGap}(n) = 2$.
+and
 
-$(2)\Rightarrow(1)$: Suppose infinitely many indices $n$ have $\mathrm{primeGap}(n) = 2$. Given any bound, choose such an $n$ large enough that $P(n)$ exceeds it. Then $P(n)$ is prime and $P(n) + 2 = P(n+1)$ is prime, so $(P(n), P(n)+2)$ is a twin pair with $P(n)$ arbitrarily large. Hence twin pairs are unbounded. $\qquad\blacksquare$
+$$
+0\le x_k-x_j\le x_k-x_i.
+$$
 
-**Remark 4.4.** The equivalence is genuine, not a definitional restatement. The connectivity relation $\mathrm{Conn}_\varepsilon$ is the honest reflexive–transitive closure of the Rips adjacency graph — the real component-merging process — and Theorem 3.1 establishes that it coincides with the gap condition as a *theorem*. The twin prime equivalence is proved over the honest sets in both directions.
+Since the absolute values equal these nonnegative differences, both shorter distances are bounded by the outer distance. $\square$
 
----
+This elementary interval property is central. It implies that a nonlocal edge never appears without all edges from its endpoints to intervening vertices.
 
-## 5. Algorithms
+### Lemma 3.3 (A large consecutive gap is an edge cut)
 
-### 5.1 Computing the finite barcode
+Suppose $g_k=x_{k+1}-x_k>\varepsilon$. If $a\le k<b$, then $a$ and $b$ are not adjacent in $G_\varepsilon(X)$. Equivalently, every edge has both endpoints in $\{0,\ldots,k\}$ or both endpoints in $\{k+1,\ldots,n-1\}$.
 
-By Corollary 3.3, computing the finite $H_0$ barcode of the prime cloud up to $N$ reduces to listing consecutive prime gaps.
+**Proof sketch.** Monotonicity of the points yields $x_a\le x_k<x_{k+1}\le x_b$. Hence
 
-```
-Algorithm PRIME-BARCODE(N):
-  input:  bound N
-  output: multiset of finite H_0 bar lengths for primes ≤ N
-  1. primes ← SIEVE(N)                      # sieve of Eratosthenes
-  2. bars ← empty list
-  3. for i in 0 .. len(primes) - 2:
-  4.     bars.append(primes[i+1] - primes[i])   # Theorem 4.1
-  5. return bars
-```
+$$
+|x_b-x_a|=x_b-x_a\ge x_{k+1}-x_k=g_k>\varepsilon.
+$$
 
-Complexity: the sieve is $O(N \log\log N)$ time and $O(N)$ space; the gap pass is $O(\pi(N))$ where $\pi(N) \sim N/\log N$ is the number of primes up to $N$. The barcode is thus computed essentially as fast as the primes themselves.
+Thus the edge condition fails. $\square$
 
-### 5.2 Component count at a scale
+### Corollary 3.4 (A large gap separates components)
 
-To recover the number of $\varepsilon$-connected components (the number of bars still alive at scale $\varepsilon$), count the gaps exceeding $\varepsilon$ and add one: each oversized gap is a cut point separating two components.
+Under the hypotheses of Lemma 3.3, no vertex at or left of $k$ is connected at scale $\varepsilon$ to a vertex at or right of $k+1$.
 
-```
-Algorithm COMPONENTS-AT(gaps, ε):
-  1. cuts ← number of g in gaps with g > ε
-  2. return cuts + 1
-```
+**Proof sketch.** Every path crossing from one side to the other would contain a first edge whose endpoints lie on opposite sides of the cut. Lemma 3.3 excludes such an edge. $\square$
 
-This is a direct corollary of Theorem 3.1: components are maximal runs of gaps $\le \varepsilon$, and consecutive runs are separated exactly by gaps $> \varepsilon$.
+### Lemma 3.5 (Small consecutive gaps provide a path)
 
-### 5.3 Twin-bar counting
+Let $i\le j$. If $g_k\le\varepsilon$ for every $i\le k<j$, then $i$ and $j$ are connected in $G_\varepsilon(X)$.
 
-To test Theorem 4.3 empirically, count bars of length exactly $2$ up to $N$:
+**Proof sketch.** Each pair $(k,k+1)$ for $i\le k<j$ is an edge. Concatenating these edges gives the path
 
-```
-Algorithm TWIN-BAR-COUNT(N):
-  1. gaps ← PRIME-BARCODE(N)
-  2. return number of g in gaps with g == 2
-```
+$$
+i,i+1,\ldots,j.
+$$
 
-The conjecture predicts this count grows without bound as $N \to \infty$ (Hardy–Littlewood heuristics predict $\sim 2 C_2 \, N / (\log N)^2$, with $C_2 \approx 0.6601$ the twin prime constant).
+$\square$
 
----
+### Theorem 3.6 (Exact connectivity criterion)
 
-## 6. Numerical results and the Poisson comparison
+For a finite strictly increasing real point cloud and indices $i\le j$, the vertices $i$ and $j$ are connected at scale $\varepsilon$ if and only if
 
-### 6.1 The average-gap law
+$$
+g_k\le\varepsilon
+\quad\text{for every }i\le k<j.
+$$
 
-Because the barcode is the gap multiset, the mean finite bar length over the first $N$ primes is the telescoping average
-$$\frac{1}{N}\sum_{i=0}^{N-1}\big(P(i+1) - P(i)\big) = \frac{P(N) - P(0)}{N} = \frac{p_{N+1} - 2}{N}.$$
-By the Prime Number Theorem, $p_{N} \sim N \log N$, so the mean bar length near $x = p_N$ is asymptotic to $\log x$. Empirically, for primes below $10^6$ the mean gap is close to $\log(10^6) \approx 13.8$. This is the exact sense in which "the average bar length is the average prime gap."
+**Proof sketch.** If all intervening gaps are at most $\varepsilon$, Lemma 3.5 supplies the consecutive-edge path. Conversely, suppose some intervening gap $g_k$ exceeds $\varepsilon$. Since $i\le k<j$, Corollary 3.4 places $i$ and $j$ on opposite sides of a component-separating cut. They cannot be connected. $\square$
 
-### 6.2 The Poisson null model
+### Corollary 3.7 (Exact endpoint threshold)
 
-A natural random comparison is a Poisson point process on $[2, x]$ with local intensity $1/\log t$ (matching the prime density). For such a process, the spacings between consecutive points are approximately independent exponential random variables with mean $\log x$, so its $H_0$ barcode has exponentially distributed bar lengths. The primes agree with this model in the *first moment* (mean bar length $\sim \log x$) but deviate sharply in the *fine structure*:
+For $i<j$,
 
-- **Parity rigidity.** Past the first gap, every prime gap is even (all primes beyond $2$ are odd), so the prime barcode has bars only at even lengths, whereas the Poisson model spreads mass over all positive reals.
-- **Small-gap enhancement.** Gaps of $2$, $4$, $6$ are over-represented relative to the naive exponential prediction, reflecting the Hardy–Littlewood correlation structure.
+$$
+\tau(i,j)=\max_{i\le k<j}g_k.
+$$
 
-Quantifying this deviation — for instance, showing the fraction of length-$2$ bars stays bounded away from the Poisson prediction — is a concrete program (see Future Directions).
+In particular, the full cloud becomes connected at scale
 
-### 6.3 What the computation shows
+$$
+\tau(0,n-1)=\max_{0\le k<n-1}g_k.
+$$
 
-Sieving to $10^6$ yields $\pi(10^6) = 78498$ primes and $78497$ finite bars. The histogram of bar lengths is supported on the even integers (plus the single length-$1$ bar from the gap $3-2$), peaks at small even values, and has mean near $13.8$. Length-$2$ bars (twins) persist all the way to the top of the range — the empirical shadow of the twin prime conjecture reformulated in Theorem 4.3.
+**Proof sketch.** By Theorem 3.6, the set of scales at which $i$ and $j$ are connected is exactly the interval of scales greater than or equal to every intervening gap. Its least element is their maximum. $\square$
 
----
+The result may also be stated without an explicit maximum: connectivity at scale $\varepsilon$ is equivalent to the pointwise family of inequalities $g_k\le\varepsilon$ over the index interval.
 
-## 7. Discussion
+## 4. Zeroth persistence is the gap multiset
 
-The one-dimensional setting is what makes the prime barcode exactly computable: connectivity on a line is inherently local and order-preserving, so the barcode degenerates to the gap multiset (Corollary 3.3). This is simultaneously a strength — it gives a complete, exact answer and a clean dictionary between arithmetic and topology — and a limitation: the zero-dimensional homology on a line can never see higher features such as loops, because a line supports no essential cycles.
+### Theorem 4.1 (Zeroth barcode theorem)
 
-The value of the reformulation is conceptual and programmatic. It repackages the entire theory of prime-gap frequencies (Polignac-type conjectures, gap moments, the small-gaps breakthroughs) as statements about barcode multiplicities and moments, and it exhibits the twin prime conjecture as a *persistence* statement: a single feature of the prime cloud's shape that either recurs forever or eventually vanishes.
+Let $X=\{x_0<\cdots<x_{n-1}\}$. The persistent $H_0$ barcode of its Vietoris–Rips filtration contains one interval $[0,\infty)$ and $n-1$ finite intervals whose death times, counted with multiplicity, are
 
----
+$$
+\{g_0,g_1,\ldots,g_{n-2}\}.
+$$
 
-## 8. Future directions
+Equivalently, the minimum spanning tree of the complete Euclidean graph on $X$ is the adjacent chain, with edge weights equal to the consecutive gaps.
 
-**8.1 The gap-value spectrum is the set of barcode step-points.** The set of scales at which the component count strictly decreases should equal the set of values attained by the gap sequence, with each even $2k$ occurring as a gap contributing a positive-density family of bars of that death scale. On a line the barcode losslessly records the gap multiset, so Polignac-type distributional questions become questions about the multiplicity of individual bar lengths.
+**Proof sketch.** For each threshold $\varepsilon$, Theorem 3.6 shows that components are exactly the maximal consecutive blocks obtained by cutting the ordered list at gaps larger than $\varepsilon$. Therefore the number of components is
 
-**8.2 A persistence-stability form of the average-gap law.** The empirical distribution of the first $N$ finite bar lengths, rescaled by $\log p_N$, should converge to a fixed limiting profile; in particular the mean bar length is asymptotic to $\log p_N$. The mean-length statement is the telescoping identity $(p_{N+1} - 2)/N$, controlled directly by the Prime Number Theorem; the higher moments and the shape of the limiting profile remain open.
+$$
+\beta_0(\varepsilon)=1+\#\{k:g_k>\varepsilon\}.
+$$
 
-**8.3 Higher homology from a two-dimensional prime lattice.** Embedding primes as the planar cloud $p_n \mapsto (p_n, p_{n+1})$ and running the Rips filtration should produce a first non-trivial $H_1$ class whose birth scale is governed by admissible gap patterns $(g_n, g_{n+1})$, with the shortest persistent loop corresponding to the smallest admissible triple of consecutive gaps. Genuine loops require three non-collinear points, which on the gap side is a constraint on consecutive gap *pairs* rather than single gaps.
+Whenever $\varepsilon$ passes a gap value, one boundary disappears for each occurrence of that value, producing the same number of component mergers. Hence the finite death multiset is the gap multiset. One component remains after all cuts disappear and persists indefinitely. The minimum-spanning-tree formulation follows because the adjacent chain connects all vertices, while every cut between $x_k$ and $x_{k+1}$ requires any spanning tree to use a crossing edge of weight at least $g_k$. $\square$
 
-**8.4 Barcode rigidity distinguishes primes from random gap models.** The prime barcode should differ measurably from that of a Poisson process of matching local intensity: the fraction of length-$2$ bars stays bounded away from the Poisson prediction, detectable purely from the barcode.
+A useful corollary is an exact survival-count formula. If $D$ denotes the multiset of finite death times, then
 
----
+$$
+\#\{d\in D:d>\varepsilon\}=\beta_0(\varepsilon)-1.
+$$
 
-## 9. Conclusion
+Thus the empirical survival function of finite $H_0$ bars is simply the empirical survival function of consecutive gaps.
 
-We have shown that the zero-dimensional persistent homology of the prime point cloud on the line is, exactly and losslessly, the sequence of prime gaps. Two structural theorems — the Single-Linkage characterization and the Adjacent-Merge identity — reduce the barcode to the gap multiset for any increasing cloud, and the prime specialization ties each bar to a prime gap. The culminating result recasts the twin prime conjecture as a purely topological assertion: the prime barcode contains infinitely many bars of length $2$. Primes, in short, have a shape, and their shape is their gaps.
+### Example 4.2 (The first six primes)
+
+Consider
+
+$$
+X=\{2,3,5,7,11,13\}.
+$$
+
+Its consecutive gaps are
+
+$$
+(1,2,2,4,2).
+$$
+
+The finite $H_0$ death multiset is therefore $\{1,2,2,2,4\}$, and there is one infinite bar. More explicitly:
+
+- for $0\le\varepsilon<1$, there are $6$ components;
+- for $1\le\varepsilon<2$, there are $5$ components;
+- for $2\le\varepsilon<4$, there are $2$ components, namely $\{2,3,5,7\}$ and $\{11,13\}$;
+- for $\varepsilon\ge4$, there is $1$ component.
+
+Consequently, $2$ and $13$ are connected if and only if $4\le\varepsilon$. The gap $11-7=4$ is the unique last barrier.
+
+## 5. Higher-dimensional obstruction on the line
+
+### Theorem 5.1 (Ordered-triangle filling theorem)
+
+Let $x_i\le x_j\le x_k$. If the outer edge $\{i,k\}$ belongs to $G_\varepsilon(X)$, then the edges $\{i,j\}$ and $\{j,k\}$ also belong to $G_\varepsilon(X)$. Consequently, the three vertices span a filled $2$-simplex in $\operatorname{VR}_\varepsilon(X)$.
+
+**Proof sketch.** Lemma 3.2 supplies both shorter edges. Together with the assumed outer edge, the vertices form a clique. By the defining flag property of a Vietoris–Rips complex, every clique spans a simplex. $\square$
+
+### Corollary 5.2 (No three-point Rips hole from an ordered triple)
+
+No three ordered points on the real line support an unfilled triangular $1$-cycle at any scale in an ordinary Vietoris–Rips filtration.
+
+**Proof sketch.** Before the longest of the three edges appears, the triangular boundary is incomplete. When the longest edge appears, all three edges are present and Theorem 5.1 fills the triangle simultaneously. There is no scale interval on which the boundary exists without its interior. $\square$
+
+### Consequence for twin primes
+
+If $p$ and $p+2$ are twin primes, their distance-$2$ edge appears at scale $2$. This event can merge two $H_0$ components, depending on neighboring edges, but it does not by itself create an $H_1$ class. In particular, the persistence or infinitude of twin-prime pairs cannot be represented as a single one-dimensional bar extending from scale $2$ to infinity in this construction.
+
+The obstruction is not specific to primes. It follows from one-dimensional ordering and the flag-complex rule. Connected unit interval graphs admit a strong elimination structure, and their clique complexes are expected to collapse to a point componentwise. The ordered-triangle theorem proves the local obstruction needed to reject the proposed triangular mechanism; a complete dismantling proof would establish vanishing reduced homology in all positive dimensions.
+
+## 6. Algorithms
+
+### 6.1. Direct gap-barcode algorithm
+
+**Input:** a finite list of distinct real points.
+
+**Output:** finite $H_0$ death times and the infinite bar.
+
+1. Sort the points into $x_0<\cdots<x_{n-1}$.
+2. Compute $g_k=x_{k+1}-x_k$ for $0\le k<n-1$.
+3. Sort the gaps if an ordered barcode is desired.
+4. Return finite intervals $[0,g_k)$, with multiplicity, and one interval $[0,\infty)$.
+
+Sorting arbitrary input costs $O(n\log n)$ time. Gap computation costs $O(n)$ time and $O(n)$ output space. If the input is already ordered, the unsorted death multiset is produced in $O(n)$ time. This avoids constructing $O(n^2)$ pairwise distances or a general boundary matrix.
+
+### 6.2. Connectivity-query algorithm
+
+After preprocessing the gap array for range maxima, the threshold between endpoints $i<j$ is the range maximum of $g_i,\ldots,g_{j-1}$. A sparse table uses $O(n\log n)$ preprocessing time and space and answers static queries in $O(1)$ time. A segment tree uses $O(n)$ space, $O(n)$ construction time, and $O(\log n)$ query time. For a single query, a direct scan costs $O(j-i)$.
+
+### 6.3. Local prime-gap comparison
+
+To compare prime data near a large location $X$ with a Poisson heuristic:
+
+1. generate primes in a specified window $[X,X+H]$;
+2. compute consecutive gaps whose two endpoints lie in the window;
+3. normalize each gap by $\log X$;
+4. compare the empirical survival function with $e^{-t}$;
+5. report a chosen discrepancy, such as the Kolmogorov–Smirnov distance;
+6. record the window, endpoint convention, sample size, and whether any parameter was fitted.
+
+By Theorem 4.1, this procedure is simultaneously a comparison of normalized finite $H_0$ bar lengths. The statistical calculation does not alter the deterministic theorem.
+
+## 7. Statistical interpretation for prime numbers
+
+The prime number theorem motivates the local density approximation $1/\log X$ near a large $X$. A homogeneous Poisson process with this intensity has exponential gap density
+
+$$
+f_X(t)=\frac{1}{\log X}\exp\!\left(-\frac{t}{\log X}\right),
+\qquad t\ge0,
+$$
+
+and mean $\log X$. Its normalized gaps $T/\log X$ have unit exponential survival function
+
+$$
+\Pr(T/\log X>u)=e^{-u}.
+$$
+
+This is a benchmark, not an exact model. For all primes beyond $2$, consecutive primes are odd, so their differences are even integers. The empirical prime-gap measure is supported on a discrete arithmetic lattice, whereas the exponential law is absolutely continuous. Exact equality in distribution is therefore impossible. Congruence restrictions modulo small primes further produce dependencies absent from an independent Poisson process.
+
+The nonconstant intensity also matters. Combining gaps from a broad interval without normalization mixes different local scales. A comparison should use windows $[X,X+H]$ narrow enough that $\log x$ changes little relative to the intended precision, yet wide enough to contain a useful sample. These competing asymptotic requirements must be stated rather than hidden.
+
+A goodness-of-fit claim requires a defined statistic. For normalized observations $z_1,\ldots,z_m$, one option is
+
+$$
+D_m=\sup_{t\ge0}|F_m(t)-(1-e^{-t})|,
+$$
+
+where $F_m$ is the empirical distribution function. Interpreting $D_m$ through the classical independent-sample null distribution would itself be heuristic because prime gaps are not independent. Quantile comparisons and survival plots remain useful descriptive tools, provided they are not promoted to exact arithmetic laws.
+
+## 8. Applications and extensions
+
+The exact $H_0$ characterization has several practical uses. First, it compresses connectivity information. The entire filtration of connected components is encoded by $n-1$ numbers rather than all pairwise distances. Second, it gives immediate interpretability: a long finite bar is exactly a large adjacent spacing, and clusters at scale $\varepsilon$ are maximal runs separated by gaps exceeding $\varepsilon$. Third, it provides a baseline for validating general persistent-homology software on one-dimensional data.
+
+For arithmetic data, persistence summaries can compare windows or sequences. One may examine distributions of normalized death times, counts above selected thresholds, maximum-bar growth, or changes across residue-restricted subsets. Every such statistic should be understood as a transformation of gap data in this embedding.
+
+To obtain nontrivial higher-dimensional information, the representation must change. Promising alternatives include:
+
+1. **Delay-coordinate gap embeddings.** Map an index $k$ to $(g_k,g_{k+1},\ldots,g_{k+d-1})\in\mathbb R^d$. Recurring multi-gap patterns may then form loops or higher-dimensional structures.
+2. **Residue-feature embeddings.** Represent primes or prime neighborhoods by vectors of residues modulo selected moduli, preserving congruence information erased by location alone.
+3. **Weighted or non-flag complexes.** Modify simplex-filling rules so that a clique does not automatically erase an arithmetically meaningful cycle.
+4. **Witness complexes from arithmetic relations.** Use divisibility, admissible constellations, or shared modular obstructions to define witnesses and landmarks.
+5. **Multiparameter filtrations.** Combine Euclidean gap scale with an arithmetic parameter such as modulus, tuple admissibility, or local density.
+
+Each alternative changes the mathematical object. Conclusions about such enriched constructions must not be attributed to the ordinary Rips complex of the prime locations in $\mathbb R$.
+
+## 9. Discussion
+
+The one-dimensional model succeeds precisely because order dominates geometry. A single large consecutive gap is a cut respected by every edge and every path. Conversely, a chain of small consecutive gaps is already sufficient for connectivity. The maximum intervening gap is therefore a minimax distance: among all paths between two ordered points, the adjacent chain minimizes the largest edge, and its bottleneck is the largest local gap.
+
+This minimax interpretation connects persistent connectivity with single-linkage clustering and minimum spanning trees. Cutting the adjacent chain at edges above $\varepsilon$ produces exactly the single-linkage clusters. The dendrogram merge heights are the sorted gaps. Persistent $H_0$, hierarchical clustering, and one-dimensional minimum spanning trees are three descriptions of the same structure.
+
+The higher-dimensional correction is equally instructive. A cycle in the proximity graph need not represent homology in its flag complex, because clique boundaries are filled. Confusing graph cycles with topological holes is especially risky in ordered data, where interval geometry creates many forced chords and simplices. Any arithmetic interpretation must account for the filling rule, not merely the appearance of selected edges.
+
+The results also delimit the role of machine-learning language. Persistent features can serve as inputs to statistical or learning pipelines, but no classifier can recover arithmetic distinctions discarded by the representation. If two ordered clouds have the same consecutive-gap multiset, their finite $H_0$ barcodes agree even if the order of gaps differs; richer summaries or embeddings are needed to retain sequence order and congruence structure.
+
+## 10. Future work
+
+A natural first extension is a complete collapse theorem for Vietoris–Rips complexes of finite subsets of $\mathbb R$. An elimination ordering for interval graphs should show that every connected component of the clique complex is contractible, proving vanishing reduced homology in every positive dimension.
+
+A second direction is statistical. Local normalized prime-gap barcodes should be studied with clearly specified windows, normalization, discrepancy statistics, and dependence-aware uncertainty assessments. The parity obstruction should be built into any null model, perhaps through conditioned or sieved random processes rather than a raw Poisson process.
+
+A third direction is representational. Delay embeddings retain ordered blocks of gaps and can be compared across dimensions and window locations. Residue-aware and multiparameter constructions may expose arithmetic patterns unavailable on the line. Their stability, computational cost, and interpretability require separate analysis.
+
+Finally, the exact barcode theorem suggests scalable studies over very large prime ranges. Because only consecutive gaps are required, streaming algorithms can update histograms, survival curves, maxima, and selected persistence summaries without storing pairwise distances.
+
+## 11. Conclusion
+
+For a strictly increasing real point cloud, connectivity in the Vietoris–Rips filtration is exact and local: two points are connected at scale $\varepsilon$ exactly when every intervening consecutive gap is at most $\varepsilon$. Their connection threshold is the largest such gap, and the finite $H_0$ death multiset of a finite cloud is precisely its consecutive-gap multiset. Applied to $2,3,5,7,11,13$, this gives endpoint threshold $4$.
+
+The same ordering rules out the proposed triangular source of $H_1$: an outer edge forces both shorter edges, and the flag complex fills the triangle. Twin primes generate short edges, not persistent holes. The correct role of the one-dimensional topology is therefore clear. It offers an exact geometric language for gap structure and an efficient basis for statistical summaries, while genuinely higher-dimensional arithmetic topology demands a richer embedding or a different complex.

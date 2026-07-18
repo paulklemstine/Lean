@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "57f0b740",
-      "domain": "Logic",
-      "key_insight": "# Future Directions\n\n## What the formalization establishes\n\nThe literal observer definition does not produce a nontrivial numerical invariant. For every topology `τ`, the `Unit`-indexed family whose o",
-      "quality_score": 0.75,
-      "sorry_count": 1,
-      "theorem_count": 707,
-      "timestamp": "2026-07-17T05:57:49",
-      "title": "Phantom Topologies: Spaces That Change When You Look at Them"
-    },
-    {
       "cycle_id": "16941ff7",
       "domain": "Novelty",
       "key_insight": "# Future Directions: Separated Filtrations and Chain Geometry\n\n## 1. Integer-valued polynomial filtration\n\nLet \\(\\operatorname{Int}(\\mathbb Z)\\) be the ring of rational polynomials taking integer valu",
@@ -499,19 +489,19 @@
       "theorem_count": 21,
       "timestamp": "2026-07-18T19:24:50",
       "title": "The Uncertainty Principle Is a Fourier Thing: Position-Momentum Duality"
+    },
+    {
+      "cycle_id": "091f8315",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n## 1. Quantified prediction from the angle-doubling coordinate\n\nFor every fixed bit-extraction rule with finitely many interval boundaries, determine\nwhether a polynomial-time pre",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 46,
+      "timestamp": "2026-07-18T19:30:11",
+      "title": "Cryptography from Chaos: Encrypting with the Logistic Map"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "50098ece",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Positional Number Systems and Primitive Divisors\n\nThis cycle closed the outstanding gaps in the bridge between the factorial number\nsystem and the general mixed‑radix theory, and",
-      "quality_score": 0.84,
-      "sorry_count": 4,
-      "theorem_count": 26,
-      "timestamp": "2026-07-15T00:42:59",
-      "title": "Close Proofs: The prior cycle (`CosetGuesswork.lean`) proved the exact coset-exponen"
-    },
     {
       "cycle_id": "c23e4bea",
       "domain": "Applications",
@@ -2501,21 +2491,19 @@
       "theorem_count": 21,
       "timestamp": "2026-07-18T19:24:50",
       "title": "The Uncertainty Principle Is a Fourier Thing: Position-Momentum Duality"
+    },
+    {
+      "cycle_id": "091f8315",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n## 1. Quantified prediction from the angle-doubling coordinate\n\nFor every fixed bit-extraction rule with finitely many interval boundaries, determine\nwhether a polynomial-time pre",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 46,
+      "timestamp": "2026-07-18T19:30:11",
+      "title": "Cryptography from Chaos: Encrypting with the Logistic Map"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "ee626e30",
-      "domain": "MachineLearning",
-      "name": "over",
-      "quality": 0.76
-    },
-    {
-      "cycle_id": "ee626e30",
-      "domain": "MachineLearning",
-      "name": "for",
-      "quality": 0.76
-    },
     {
       "cycle_id": "ee626e30",
       "domain": "MachineLearning",
@@ -2803,9 +2791,21 @@
       "domain": "MachineLearning",
       "name": "for",
       "quality": 0.73
+    },
+    {
+      "cycle_id": "091f8315",
+      "domain": "Novelty",
+      "name": "eisensteinNormSq_pow",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "091f8315",
+      "domain": "Novelty",
+      "name": "sigma_pow_injective",
+      "quality": 0.8
     }
   ],
-  "last_updated": "2026-07-18T19:24:50",
+  "last_updated": "2026-07-18T19:30:11",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "16941ff7",
-        "quality": 0.75,
-        "theorems": 0,
-        "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
-      },
-      {
         "cycle_id": "6da0544e",
         "quality": 0.65,
         "theorems": 12,
@@ -3637,6 +3631,12 @@
         "quality": 0.8,
         "theorems": 14,
         "title": "Deepening: The Topology of Knotted Light: How Laser Beams Get Tangled"
+      },
+      {
+        "cycle_id": "091f8315",
+        "quality": 0.8,
+        "theorems": 46,
+        "title": "Cryptography from Chaos: Encrypting with the Logistic Map"
       }
     ],
     "NumberTheory": [

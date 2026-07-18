@@ -1,236 +1,123 @@
-"""
-Persistent Homology of the Prime Point Cloud
-============================================
+#!/usr/bin/env python3
+"""Numerical demonstrations for Rips persistence of ordered prime clouds.
 
-Numerical demonstrations of the results in the accompanying paper.
-
-Central facts demonstrated here:
-
-  * On a line, two points of a strictly increasing cloud lie in the same
-    epsilon-connected component iff every consecutive gap between them is <= eps
-    (the Single-Linkage Theorem).
-
-  * Consequently the finite zero-dimensional (H_0) persistence barcode of the
-    prime point cloud is EXACTLY the multiset of consecutive prime gaps:
-    the i-th finite bar has death scale p_{i+1} - p_i.
-
-  * The twin prime conjecture is equivalent to the barcode containing infinitely
-    many bars of length 2.
-
-  * The mean bar length over the first N primes telescopes to (p_{N+1} - 2)/N and
-    is asymptotic to log(x), the Prime Number Theorem prediction.
-
-The script is self-contained: it only uses the Python standard library.
+Only the Python standard library is required.  The script computes primes, consecutive
+spacings, exact zero-dimensional Rips death times, connectivity thresholds, component
+partitions, and a descriptive comparison with the unit exponential distribution.
 """
 
 from __future__ import annotations
 
-import math
-from collections import Counter
-from typing import Dict, List, Tuple
+from dataclasses import dataclass
+from math import exp, isqrt, log
+from typing import Iterable, Sequence
 
 
-# ---------------------------------------------------------------------------
-# Primes and gaps
-# ---------------------------------------------------------------------------
-def sieve_primes(bound: int) -> List[int]:
-    """Return all primes <= bound via the sieve of Eratosthenes."""
-    if bound < 2:
+@dataclass(frozen=True)
+class BarcodeSummary:
+    """Finite H0 death times and the count of infinite bars."""
+
+    finite_deaths: tuple[int, ...]
+    infinite_bars: int = 1
+
+
+def primes_up_to(limit: int) -> list[int]:
+    """Return all primes at most ``limit`` by the sieve of Eratosthenes."""
+    if limit < 2:
         return []
-    is_prime = bytearray([1]) * (bound + 1)
-    is_prime[0] = is_prime[1] = 0
-    for i in range(2, int(bound**0.5) + 1):
-        if is_prime[i]:
-            is_prime[i * i : bound + 1 : i] = b"\x00" * len(
-                range(i * i, bound + 1, i)
-            )
-    return [i for i in range(2, bound + 1) if is_prime[i]]
+    sieve = bytearray(b"\x01") * (limit + 1)
+    sieve[0:2] = b"\x00\x00"
+    for p in range(2, isqrt(limit) + 1):
+        if sieve[p]:
+            start = p * p
+            sieve[start : limit + 1 : p] = b"\x00" * (((limit - start) // p) + 1)
+    return [n for n, flag in enumerate(sieve) if flag]
 
 
-def prime_gaps(primes: List[int]) -> List[int]:
-    """Consecutive prime gaps g_i = p_{i+1} - p_i.
-
-    By the Adjacent-Merge Theorem these are exactly the finite H_0 bar lengths
-    (death scales) of the prime point cloud.
-    """
-    return [primes[i + 1] - primes[i] for i in range(len(primes) - 1)]
+def consecutive_gaps(points: Sequence[int]) -> list[int]:
+    """Compute consecutive gaps after validating strict increase."""
+    if any(a >= b for a, b in zip(points, points[1:])):
+        raise ValueError("points must be strictly increasing")
+    return [b - a for a, b in zip(points, points[1:])]
 
 
-# ---------------------------------------------------------------------------
-# The H_0 barcode
-# ---------------------------------------------------------------------------
-def h0_barcode(primes: List[int]) -> List[int]:
-    """The finite H_0 barcode of the prime cloud = the gap multiset (Cor. 3.3)."""
-    return prime_gaps(primes)
+def h0_barcode(points: Sequence[int]) -> BarcodeSummary:
+    """Return the exact H0 barcode: sorted gaps and one infinite bar."""
+    if not points:
+        return BarcodeSummary((), 0)
+    return BarcodeSummary(tuple(sorted(consecutive_gaps(points))), 1)
 
 
-def components_at_scale(gaps: List[int], eps: float) -> int:
-    """Number of epsilon-connected components (bars alive at scale eps).
-
-    By the Single-Linkage Theorem components are maximal runs of gaps <= eps,
-    separated exactly by gaps > eps; hence #components = #(gaps > eps) + 1.
-    """
-    cuts = sum(1 for g in gaps if g > eps)
-    return cuts + 1
-
-
-def brute_force_components_at_scale(positions: List[int], eps: float) -> int:
-    """Independent union-find computation of components, to check the formula.
-
-    Uses the genuine Vietoris-Rips connectivity: union i, j whenever
-    |pos_i - pos_j| <= eps.  On a line only adjacent unions can matter, but we
-    check all adjacent pairs explicitly with a union-find structure.
-    """
-    n = len(positions)
-    parent = list(range(n))
-
-    def find(x: int) -> int:
-        while parent[x] != x:
-            parent[x] = parent[parent[x]]
-            x = parent[x]
-        return x
-
-    def union(a: int, b: int) -> None:
-        ra, rb = find(a), find(b)
-        if ra != rb:
-            parent[ra] = rb
-
-    for i in range(n - 1):
-        if positions[i + 1] - positions[i] <= eps:
-            union(i, i + 1)
-    return len({find(i) for i in range(n)})
+def connection_threshold(points: Sequence[int], i: int, j: int) -> int:
+    """Return the first Rips scale at which indexed endpoints are connected."""
+    if not 0 <= i < len(points) or not 0 <= j < len(points):
+        raise IndexError("endpoint index out of range")
+    if i > j:
+        i, j = j, i
+    if i == j:
+        return 0
+    return max(consecutive_gaps(points[i : j + 1]))
 
 
-# ---------------------------------------------------------------------------
-# Twin bars
-# ---------------------------------------------------------------------------
-def twin_bar_count(gaps: List[int]) -> int:
-    """Number of length-2 bars = number of twin prime pairs (Thm 4.3)."""
-    return sum(1 for g in gaps if g == 2)
+def components_at_scale(points: Sequence[int], epsilon: float) -> list[list[int]]:
+    """Partition ordered points at each consecutive gap larger than ``epsilon``."""
+    if epsilon < 0:
+        raise ValueError("epsilon must be nonnegative")
+    if not points:
+        return []
+    consecutive_gaps(points)  # validation
+    components: list[list[int]] = [[points[0]]]
+    for left, right in zip(points, points[1:]):
+        if right - left <= epsilon:
+            components[-1].append(right)
+        else:
+            components.append([right])
+    return components
 
 
-def hardy_littlewood_twin_estimate(bound: int) -> float:
-    """Hardy-Littlewood prediction 2 C_2 * N / (log N)^2 for twins below `bound`."""
-    C2 = 0.6601618158  # twin prime constant
-    if bound < 3:
-        return 0.0
-    # integral form is more accurate, but the leading term suffices for a demo
-    return 2 * C2 * bound / (math.log(bound) ** 2)
+def empirical_exponential_ks(samples: Iterable[float]) -> float:
+    """Return the descriptive KS distance to the unit exponential CDF."""
+    values = sorted(samples)
+    if not values:
+        raise ValueError("at least one sample is required")
+    if values[0] < 0:
+        raise ValueError("samples must be nonnegative")
+    n = len(values)
+    distance = 0.0
+    for rank, value in enumerate(values, start=1):
+        target = 1.0 - exp(-value)
+        distance = max(distance, abs(rank / n - target), abs((rank - 1) / n - target))
+    return distance
 
 
-# ---------------------------------------------------------------------------
-# Average-gap law
-# ---------------------------------------------------------------------------
-def mean_bar_length(primes: List[int]) -> float:
-    """Mean finite bar length = (p_N - p_0)/N by telescoping (Sec 6.1)."""
-    n = len(primes) - 1
-    return (primes[-1] - primes[0]) / n
-
-
-def bar_length_histogram(gaps: List[int]) -> Dict[int, int]:
-    """Multiplicity of each bar length (barcode of the primes)."""
-    return dict(sorted(Counter(gaps).items()))
-
-
-# ---------------------------------------------------------------------------
-# Demonstrations
-# ---------------------------------------------------------------------------
-def demo_single_linkage(bound: int = 200) -> None:
-    print("=" * 68)
-    print("DEMO 1  Single-Linkage Theorem: formula vs. union-find")
-    print("=" * 68)
-    primes = sieve_primes(bound)
-    gaps = prime_gaps(primes)
-    print(f"primes <= {bound}: {primes}")
-    for eps in [1, 2, 4, 6, 8, 14]:
-        formula = components_at_scale(gaps, eps)
-        brute = brute_force_components_at_scale(primes, eps)
-        flag = "OK" if formula == brute else "MISMATCH!"
-        print(f"  eps={eps:3d}:  formula #components={formula:4d}   "
-              f"union-find={brute:4d}   [{flag}]")
-    print()
-
-
-def demo_barcode_is_gaps(bound: int = 100) -> None:
-    print("=" * 68)
-    print("DEMO 2  The H_0 barcode IS the prime gap sequence")
-    print("=" * 68)
-    primes = sieve_primes(bound)
-    barcode = h0_barcode(primes)
-    print(f"primes <= {bound}:")
-    print(f"  {primes}")
-    print("Finite H_0 bar lengths (= death scales = prime gaps):")
-    print(f"  {barcode}")
-    print("Bar-length multiplicities (barcode histogram):")
-    for length, mult in bar_length_histogram(barcode).items():
-        print(f"    length {length:3d}: {'#' * mult} ({mult})")
-    print()
-
-
-def demo_twin_bars(bound: int = 1_000_000) -> None:
-    print("=" * 68)
-    print("DEMO 3  Twin prime conjecture = infinitely many length-2 bars")
-    print("=" * 68)
-    primes = sieve_primes(bound)
-    gaps = prime_gaps(primes)
-    print(f"{'N (bound)':>12} | {'#length-2 bars':>15} | {'H-L estimate':>14}")
-    print("-" * 48)
-    for b in [1_000, 10_000, 100_000, 1_000_000]:
-        if b > bound:
-            continue
-        sub = [p for p in primes if p <= b]
-        subgaps = prime_gaps(sub)
-        actual = twin_bar_count(subgaps)
-        est = hardy_littlewood_twin_estimate(b)
-        print(f"{b:>12} | {actual:>15} | {est:>14.1f}")
-    print("Length-2 bars keep appearing -> twin prime conjecture (open).")
-    print()
-
-
-def demo_average_gap_law(bound: int = 1_000_000) -> None:
-    print("=" * 68)
-    print("DEMO 4  Average bar length ~ log(x)  (Prime Number Theorem)")
-    print("=" * 68)
-    primes = sieve_primes(bound)
-    print(f"{'x = largest prime':>18} | {'mean bar length':>16} | {'log(x)':>10}")
-    print("-" * 52)
-    for b in [1_000, 10_000, 100_000, 1_000_000]:
-        if b > bound:
-            continue
-        sub = [p for p in primes if p <= b]
-        mean = mean_bar_length(sub)
-        print(f"{sub[-1]:>18} | {mean:>16.4f} | {math.log(sub[-1]):>10.4f}")
-    print()
-
-
-def demo_poisson_comparison(bound: int = 1_000_000) -> None:
-    print("=" * 68)
-    print("DEMO 5  Prime barcode vs. Poisson null model")
-    print("=" * 68)
-    primes = sieve_primes(bound)
-    gaps = prime_gaps(primes)
-    total = len(gaps)
-    even = sum(1 for g in gaps if g % 2 == 0)
-    print(f"primes <= {bound}:  {total} finite bars")
-    print(f"  fraction of even-length bars : {even / total:.6f}  "
-          f"(parity rigidity: -> 1)")
-    frac2 = twin_bar_count(gaps) / total
-    # Poisson(mean m) would give P(gap == 2) ~ (1/m) e^{-2/m}, continuous model;
-    # here we report the observed fraction for contrast.
-    m = mean_bar_length(primes)
-    poisson_like = (1.0 / m) * math.exp(-2.0 / m)
-    print(f"  observed fraction of length-2 bars : {frac2:.6f}")
-    print(f"  crude exponential(mean={m:.2f}) density at 2 : {poisson_like:.6f}")
-    print("  Small even gaps are over-represented vs. the memoryless model.")
-    print()
+def normalized_prime_gaps(limit: int, window_start: int) -> list[float]:
+    """Normalize prime gaps in ``[window_start, limit]`` by ``log(window_start)``."""
+    if window_start <= 1 or limit <= window_start:
+        raise ValueError("require 1 < window_start < limit")
+    local = [p for p in primes_up_to(limit) if p >= window_start]
+    return [gap / log(window_start) for gap in consecutive_gaps(local)]
 
 
 def main() -> None:
-    demo_single_linkage(bound=200)
-    demo_barcode_is_gaps(bound=100)
-    demo_twin_bars(bound=1_000_000)
-    demo_average_gap_law(bound=1_000_000)
-    demo_poisson_comparison(bound=1_000_000)
+    first_six = [2, 3, 5, 7, 11, 13]
+    print("First-six-prime cloud:", first_six)
+    print("Consecutive gaps:", consecutive_gaps(first_six))
+    print("Finite H0 death times:", h0_barcode(first_six).finite_deaths)
+    print("Connection threshold from 2 to 13:", connection_threshold(first_six, 0, 5))
+    for epsilon in (0, 1, 2, 3, 4):
+        print(f"Components at epsilon={epsilon}: {components_at_scale(first_six, epsilon)}")
+
+    limit, start = 100_000, 50_000
+    primes = primes_up_to(limit)
+    local = [p for p in primes if p >= start]
+    normalized = normalized_prime_gaps(limit, start)
+    print(f"\nPrimes up to {limit}: {len(primes)}")
+    print(f"Local window [{start}, {limit}] contains {len(local)} primes and {len(normalized)} gaps")
+    print(f"Mean local gap: {sum(consecutive_gaps(local)) / len(normalized):.4f}")
+    print(f"Reference log({start}): {log(start):.4f}")
+    print(f"Mean normalized gap: {sum(normalized) / len(normalized):.4f}")
+    print(f"Descriptive KS distance to Exp(1): {empirical_exponential_ks(normalized):.4f}")
+    print("Note: this is a descriptive comparison, not an independence-based hypothesis test.")
 
 
 if __name__ == "__main__":
