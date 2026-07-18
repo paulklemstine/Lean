@@ -914,31 +914,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const iframe = document.createElement('iframe');
                 iframe.srcdoc = srcdoc;
-                iframe.style.cssText = 'width:100%;max-width:800px;margin:0 auto;border:none;border-radius:0 0 12px 12px;min-height:60px;display:block;background:transparent;';
+                iframe.style.cssText = 'width:100%;max-width:800px;margin:0 auto;border:none;min-height:60px;display:block;background:transparent;';
                 
                 const card = document.createElement('div');
                 card.className = 'code-card';
                 card.style.cssText = 'margin-bottom: 12px; display: flex; flex-direction: column; align-items: center;';
 
-                const header = document.createElement('div');
-                header.className = 'code-header';
-
-                const title = document.createElement('span');
-                title.className = 'code-title';
-                title.textContent = item.name || `Interactive Demo ${idx + 1}`;
-
-                header.style.cssText = 'width: 100%; max-width: 800px; margin: 0 auto;';
-                header.appendChild(title);
+                iframe.style.borderRadius = '12px';
 
                 const content = document.createElement('div');
                 content.className = 'interactive-demo-content';
-                content.style.cssText = 'background: transparent; color: #222; border-radius: 0 0 12px 12px; overflow: visible; display: flex; justify-content: center; width: 100%;';
+                content.style.cssText = 'background: transparent; color: #222; overflow: visible; display: flex; justify-content: center; width: 100%;';
+                content.style.borderRadius = '12px';
 
                 // Register this iframe so the message listener can resize it
                 window._aetherDemoIframes[uniqueId] = iframe;
 
                 content.appendChild(iframe);
-                card.appendChild(header);
                 card.appendChild(content);
                 container.appendChild(card);
             }
