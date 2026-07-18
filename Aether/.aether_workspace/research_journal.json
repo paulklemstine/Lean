@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "5759ba2d",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\n## Verified in this development\n\n1. **General packing and upper colouring.** A linearly `s`-stable `k`-set obeys the sharp span bound. This yields the canonical upper colouring wi",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 20,
-      "timestamp": "2026-07-16T10:22:17",
-      "title": "ArXiv paper: The chromatic number of 3-stable Kneser graphs"
-    },
-    {
       "cycle_id": "d1512647",
       "domain": "Applications",
       "key_insight": "# Future Directions: Rectangle Piercing, Packing, and Relaxation Gaps\n\n## 1. A complete coordinate certificate for the 64-rectangle family\n\n**Conjecture.** There is an integer-coordinate realization o",
@@ -499,19 +489,19 @@
       "theorem_count": 14,
       "timestamp": "2026-07-18T15:35:26",
       "title": "Deepening: The Topology of Knotted Light: How Laser Beams Get Tangled"
+    },
+    {
+      "cycle_id": "6e1b10f7",
+      "domain": "Applications",
+      "key_insight": "# Future directions\n\nThe formal result in `Catalog/Bridges/GraphZetaPrimeCycle.lean` isolates one adjacency-eigenvalue factor of the Bass–Ihara determinant and proves three parts of the graph-zeta dic",
+      "quality_score": 0.74,
+      "sorry_count": 0,
+      "theorem_count": 46,
+      "timestamp": "2026-07-18T15:35:58",
+      "title": "The Zeta Function of a Graph: Number Theory on Networks"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "1207283c",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Good manifolds in an `n`-nice polytope\n\nThis cycle established the exact two-layer structure of the maximal\ngood-manifold count `a(n)`: a dominant geometric layer `2^n` and a sub",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 22,
-      "timestamp": "2026-07-14T23:11:48",
-      "title": "The verified cycle established that the maximal number of good manifolds in an"
-    },
     {
       "cycle_id": "a25c6e48",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 14,
       "timestamp": "2026-07-18T15:35:26",
       "title": "Deepening: The Topology of Knotted Light: How Laser Beams Get Tangled"
+    },
+    {
+      "cycle_id": "6e1b10f7",
+      "domain": "Applications",
+      "key_insight": "# Future directions\n\nThe formal result in `Catalog/Bridges/GraphZetaPrimeCycle.lean` isolates one adjacency-eigenvalue factor of the Bass–Ihara determinant and proves three parts of the graph-zeta dic",
+      "quality_score": 0.74,
+      "sorry_count": 0,
+      "theorem_count": 46,
+      "timestamp": "2026-07-18T15:35:58",
+      "title": "The Zeta Function of a Graph: Number Theory on Networks"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "d69a2aa8",
-      "domain": "Algebra",
-      "name": "tropical_pair_concave",
-      "quality": 0.79
-    },
-    {
-      "cycle_id": "d69a2aa8",
-      "domain": "Algebra",
-      "name": "is",
-      "quality": 0.79
-    },
-    {
-      "cycle_id": "5ae7f8c1",
-      "domain": "Algebra",
-      "name": "exists_gt_natCast",
-      "quality": 0.85
-    },
     {
       "cycle_id": "5ae7f8c1",
       "domain": "Algebra",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "logDeriv_intervalIntegrable",
       "quality": 0.8
+    },
+    {
+      "cycle_id": "6e1b10f7",
+      "domain": "Applications",
+      "name": "localFactor_factor",
+      "quality": 0.74
+    },
+    {
+      "cycle_id": "6e1b10f7",
+      "domain": "Applications",
+      "name": "spectralPowerSum_recurrence",
+      "quality": 0.74
+    },
+    {
+      "cycle_id": "6e1b10f7",
+      "domain": "Applications",
+      "name": "spectralPowerSum_zero",
+      "quality": 0.74
     }
   ],
-  "last_updated": "2026-07-18T15:35:26",
+  "last_updated": "2026-07-18T15:35:58",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "d1663b23",
-        "quality": 0.7,
-        "theorems": 0,
-        "title": "ArXiv paper: A minimal modularity lifting theorem for Siegel modular forms"
-      },
-      {
         "cycle_id": "1003d095",
         "quality": 0.74,
         "theorems": 0,
@@ -3141,6 +3135,12 @@
         "quality": 0.75,
         "theorems": 0,
         "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
+      },
+      {
+        "cycle_id": "6e1b10f7",
+        "quality": 0.74,
+        "theorems": 46,
+        "title": "The Zeta Function of a Graph: Number Theory on Networks"
       }
     ],
     "Bridges": [

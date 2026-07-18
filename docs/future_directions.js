@@ -158,21 +158,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Quantum Entanglement as Algebraic Topology: The Linking Number Is Entanglement"
   },
   {
-    "consumed_by_exp_id": "6e1b10f7",
-    "description": "The Ihara zeta function of a finite graph G is zeta_G(u) = prod_{[C]} (1 - u^{|C|})^{-1} where the product is over prime cycles (closed walks that are not powers of shorter walks). For a (q+1)-regular graph, zeta_G(u) = (1-u^2)^{-(n-1)(q-1)/2} * det(I - A*u + (q-1)*u^2*I)^{-1} where A is the adjacency matrix. This is the graph analog of the Riemann zeta function. Conjecture: The Riemann hypothesis holds for zeta_G if and only if G is a Ramanujan graph (all non-trivial eigenvalues of the adjacency matrix satisfy |lambda| <= 2*sqrt(q)). This is a theorem of Ihara, but the deeper conjecture is: the zeta function of a Ramanujan graph encodes the same spectral information as the Riemann zeta function restricted to the critical strip. Specifically, if zeta_G satisfies RH, then the 'prime cycles' of G are distributed like the primes in Z, and the 'explicit formula' for zeta_G (analogous to the explicit formula for the Riemann zeta) relates the cycle counts to the eigenvalues of A. Test: compute zeta_G for 10 Ramanujan graphs (paley graphs, lubotzky-phillips-sarnak graphs) and verify the Riemann hypothesis. Compare the 'prime cycle counting function' with the prime counting function pi(x). Impact: graphs have zeta functions, Ramanujan graphs satisfy RH, and the prime cycles in a graph are distributed like the primes in Z.",
-    "domains": [
-      "Novelty",
-      "NumberTheory"
-    ],
-    "id": "fd_0306",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T10:38:59.865229+00:00",
-    "title": "The Zeta Function of a Graph: Number Theory on Networks"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The Riemann zeta function zeta(s) has zeros at the non-trivial points s = 1/2 + i*gamma_n where gamma_n are the imaginary parts of the zeros. The Fourier transform of the zero counting function N(t) = #{gamma_n <= t} is related to the distribution of primes by the explicit formula. But what if we take the Fourier transform of zeta itself? Define Z(t) = zeta(1/2 + it) as a function of the real variable t. The Fourier transform Z_hat(w) = integral_{-inf}^{inf} Z(t) * e^{-2*pi*i*w*t} dt. Conjecture: Z_hat(w) has sharp peaks at w = log(p)/2*pi for each prime p. This is because the explicit formula expresses zeta(1/2+it) as a sum over primes: zeta(1/2+it) ~ sum_{p} p^{-1/2-it} = sum_{p} e^{-it*log(p)} / sqrt(p), which is a sum of complex exponentials with frequencies log(p). The Fourier transform of a sum of exponentials is a sum of delta functions at the frequencies log(p)/2*pi. So Z_hat(w) = sum_{p} delta(w - log(p)/2*pi) / sqrt(p) + (error from zeros and smooth terms). The peaks at w = log(p)/2*pi give a 'spectrogram' of the primes. Test: compute Z_hat(w) numerically for the first 10^6 zeros and verify the peaks at log(2)/2*pi, log(3)/2*pi, log(5)/2*pi, etc. Impact: you can HEAR the primes by playing the Fourier transform of the Riemann zeta function \u2014 each prime is a distinct note.",
     "domains": [
@@ -4022,6 +4007,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-18T15:35:20.390071+00:00",
     "title": "1. **Finite multimode superpositions.** Extend `winding_mul_zpow` from two modes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe formal result in `Catalog/Bridges/GraphZetaPrimeCycle.lean` isolates one adjacency-eigenvalue factor of the Bass\u2013Ihara determinant and proves three parts of the graph-zeta dictionary:\n\n1. the quadratic factor splits through two reciprocal roots;\n2. their power sums form a Lucas recurrence;\n3. a finite explicit formula identifies those power sums as the coefficients obtained from the factor's logarithmic-derivative numerator, with an exact truncation boundary;\n4. the Ramanujan bound places every zero of the local factor on the critical circle.\n\nThis is deliberately a local spectral theorem, not a formalization of the full Bass determinant formula or of primitive non-backtracking cycle enumeration.\n\n## Next formal targets\n\n- Define oriented edges and the Hashimoto non-backtracking matrix of a finite simple graph.\n- Prove that `trace(B^n)` counts rooted closed non-backtracking walks of length `n`.\n- Use M\u00f6bius inversion to pass from rooted walks to primitive cycle counts. This would turn the local coefficient formula proved here into the full graph analogue of the prime-power explicit formula.\n- Formalize the Bass determinant identity connecting the Hashimoto determinant to the adjacency and degree matrices.\n- Lift `ramanujan_critical_circle` from one nontrivial eigenvalue to the product over the complete nontrivial spectrum, while separating the trivial poles.\n- Instantiate the theory for concrete Paley and Lubotzky\u2013Phillips\u2013Sarnak graphs. Exact finite-field adjacency matrices and certified characteristic-polynomial factorizations would permit the proposed ten-graph experiment without relying on floating-point eigenvalues.\n- Compare primitive-cycle counts with `q^n/n`, rather than directly with the classical `\u03c0(x)`: graph cycle length is discrete and the natural main term depends on graph degree. A precise comparison to integer primes should specify a normalization before claiming matching distributions.\n\n## Scope warning\n\nThe proved bridge does not establish that graph prime cycles have the same statistical distribution as primes in the integers, nor that finite graph zeta functions encode the Riemann zeta function on its critical strip. Those stronger claims need additional definitions and hypotheses and should not be inferred from the local-factor theorem.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0343",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "6e1b10f7",
+    "status": "available",
+    "timestamp": "2026-07-18T15:35:36.058416+00:00",
+    "title": "The formal result in `Catalog/Bridges/GraphZetaPrimeCycle.lean` isolates one adj"
   },
   {
     "consumed_by_exp_id": "",
