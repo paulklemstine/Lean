@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "4e53cd7c",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions: Moment Thresholds for Random Bipartite States\n\n## 1. Exact fixed-level induced-state threshold\n\nFor every fixed hierarchy level `m ≥ 2`, there is a unique constant `λ_m > 0` such",
-      "quality_score": 0.7,
-      "sorry_count": 3,
-      "theorem_count": 16,
-      "timestamp": "2026-07-16T05:48:53",
-      "title": "ArXiv paper: Moment-based PPT criteria for random bipartite states"
-    },
-    {
       "cycle_id": "cca295e6",
       "domain": "Shared",
       "key_insight": "# Future directions\n\n## Completed formalization\n\n`Construction.lean` is a self-contained finite-set formalization of the\npair-star 3-uniform hypergraph from the paper. All declarations have complete\np",
@@ -499,19 +489,19 @@
       "theorem_count": 19,
       "timestamp": "2026-07-18T12:48:43",
       "title": "The Mathematics of Jigsaw Puzzles: NP-Completeness and Topology"
+    },
+    {
+      "cycle_id": "b596d3d1",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions: Geometry Beyond Integer Linking\n\n## 1. A real-valued Hopf-geometric concurrence functional\n\nThere exists a canonically normalized real-valued functional on the quaternionic Hopf g",
+      "quality_score": 0.75,
+      "sorry_count": 0,
+      "theorem_count": 21,
+      "timestamp": "2026-07-18T13:21:34",
+      "title": "Quantum Entanglement as Algebraic Topology: The Linking Number Is Entanglement"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "07d73c91",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — The Topology of the Forcing Multiverse\n\nThis cycle established that the necessity and possibility operators of the forcing\nmultiverse are the interior and closure operators of th",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 51,
-      "timestamp": "2026-07-14T18:39:56",
-      "title": "This cycle formalizes, in Lean 4 with Mathlib, the *combinatorial core* of the"
-    },
     {
       "cycle_id": "14656387",
       "domain": "Novelty",
@@ -2501,21 +2491,19 @@
       "theorem_count": 19,
       "timestamp": "2026-07-18T12:48:43",
       "title": "The Mathematics of Jigsaw Puzzles: NP-Completeness and Topology"
+    },
+    {
+      "cycle_id": "b596d3d1",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions: Geometry Beyond Integer Linking\n\n## 1. A real-valued Hopf-geometric concurrence functional\n\nThere exists a canonically normalized real-valued functional on the quaternionic Hopf g",
+      "quality_score": 0.75,
+      "sorry_count": 0,
+      "theorem_count": 21,
+      "timestamp": "2026-07-18T13:21:34",
+      "title": "Quantum Entanglement as Algebraic Topology: The Linking Number Is Entanglement"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "3c755fa4",
-      "domain": "Combinatorics",
-      "name": "trace_pow_eq_traceSeq",
-      "quality": 0.73
-    },
-    {
-      "cycle_id": "322b88bd",
-      "domain": "Geometry",
-      "name": "perfect_completeness",
-      "quality": 0.7
-    },
     {
       "cycle_id": "322b88bd",
       "domain": "Geometry",
@@ -2803,9 +2791,21 @@
       "domain": "Shared",
       "name": "litSat_complement",
       "quality": 0.74
+    },
+    {
+      "cycle_id": "b596d3d1",
+      "domain": "Pythagorean",
+      "name": "eisensteinNormSq_pow",
+      "quality": 0.75
+    },
+    {
+      "cycle_id": "b596d3d1",
+      "domain": "Pythagorean",
+      "name": "sigma_pow_injective",
+      "quality": 0.75
     }
   ],
-  "last_updated": "2026-07-18T12:48:43",
+  "last_updated": "2026-07-18T13:21:34",
   "open_questions": [
     {
       "context": "",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "ef5b75b5",
-        "quality": 0.91,
-        "theorems": 3,
-        "title": "Topological charge of an orbital-angular-momentum bea"
-      },
-      {
         "cycle_id": "7385ba7c",
         "quality": 0.91,
         "theorems": 1,
@@ -3885,6 +3879,12 @@
         "quality": 0.77,
         "theorems": 7,
         "title": "Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
+      },
+      {
+        "cycle_id": "b596d3d1",
+        "quality": 0.75,
+        "theorems": 21,
+        "title": "Quantum Entanglement as Algebraic Topology: The Linking Number Is Entanglement"
       }
     ],
     "Shared": [

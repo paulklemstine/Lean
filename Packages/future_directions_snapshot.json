@@ -59,26 +59,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "b596d3d1",
-    "description": "Two quantum particles are entangled if measuring one instantly affects the other. But entanglement is also a topological property: if you represent the state of two qubits as a curve in R^3, entanglement IS the linking number. Conjecture: For any pure state of two qubits |psi> in C^2 tensor C^2, the concurrence C(psi) = 2|alpha*delta - beta*gamma| (where psi = alpha|00> + beta|01> + gamma|10> + delta|11>) equals the absolute value of the linking number of two curves derived from the Hopf fibration applied to psi. Specifically, map psi to S^7 via normalization, then project to S^4 via the Hopf map, and the preimages of two points in S^4 are linked circles in S^7 whose linking number equals the concurrence. This means: entanglement is MEASURED by topology, and maximally entangled states correspond to the Hopf link (linking number 1). Test: for 1000 random two-qubit states, compute the concurrence and the linking number of the Hopf preimages, and verify they are equal. Prove the equality for the Bell states. Impact: quantum entanglement is not mysterious — it is the linking number of the Hopf fibration. Two particles are entangled if and only if their Hopf preimages are linked.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Physics"
-    ],
-    "id": "fd_0281",
-    "lineage_refs": [],
-    "priority_score": 0.88,
-    "proof_strategy": "Define the Hopf fibration: S^3 -> S^2 by (z1, z2) -> (2*z1*z2_bar, |z1|^2 - |z2|^2). For a two-qubit state psi = alpha|00> + beta|01> + gamma|10> + delta|11>, define the reduced state rho_1 = Tr_2(|psi><psi|). The concurrence is C = 2|alpha*delta - beta*gamma|. Map: given psi, form the complex matrix M = [[alpha, beta], [gamma, delta]]. The concurrence equals 2|det(M)| = 2|alpha*delta - beta*gamma|. Now the Hopf linking: consider the curves gamma_1(t) = (alpha*e^{it}, beta) / ||(alpha*e^{it}, beta)|| and gamma_2(t) = (gamma*e^{it}, delta) / ||(gamma*e^{it}, delta)|| in S^3. The linking number of gamma_1 and gamma_2 in S^3 equals |det(M)| (by the Whitehead formula for linking in S^3). Therefore C = 2 * |linking number|. Normalizing: C/2 = |linking number|, so the normalized concurrence equals the linking number. For Bell states: |Phi+> = (|00>+|11>)/sqrt(2) has alpha=delta=1/sqrt(2), beta=gamma=0, C=1, linking number=1. For product states: |00> has C=0, linking number=0. Test: verify for 1000 random states.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T06:56:07.225808+00:00",
-    "title": "Quantum Entanglement as Algebraic Topology: The Linking Number Is Entanglement"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "115a4ee3",
     "description": "Building on cycle 18410e31 (Q=0.770), which proved 12 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: When a theorem prover searches for a proof, it explores a tree of possible derivation steps. The branching factor is the number of applicable inference rules at each step. Define the proof-search fractal dimension D(T) of a theorem T as the Hausdorff dimension of the set of all successful proof path",
     "domain_bridges": [],
@@ -227,6 +207,25 @@
     "status": "available",
     "timestamp": "2026-07-18T09:05:18.164692+00:00",
     "title": "Deepening: Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle b596d3d1 (Q=0.750), which proved 21 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Two quantum particles are entangled if measuring one instantly affects the other. But entanglement is also a topological property: if you represent the state of two qubits as a curve in R^3, entanglement IS the linking number. Conjecture: For any pure state of two qubits |psi> in C^2 tensor C^2, the",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "push_b596d3d1_6908f705",
+    "lineage_refs": [],
+    "priority_score": 0.85,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "b596d3d1",
+    "status": "available",
+    "timestamp": "2026-07-18T13:21:34.658597+00:00",
+    "title": "Deepening: Quantum Entanglement as Algebraic Topology: The Linking Number Is Entanglement"
   },
   {
     "ambition_level": "extension",
@@ -2408,7 +2407,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "26ad8b0e",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Strongly complete sets and a conjecture of Erdős' and formalize its key results. Abstract: A set $A\\subseteq\\mathbb{N}$ is called $\\textit{complete}$ if every sufficiently large integer can be written as a sum of distinct elements of $A$. It is $\\textit{strongly complete}$ if it remains complete after one deletes finitely many elements from it. We show that $A\\subseteq\\mathbb{N}$ is strongly complete whenever \\[ \\big|A\\cap(2^k,2^{k+1}]\\big|\\ge6 \\] for every sufficiently large $k\\in\\mathbb{N}$, and \\[ \\sum_{a\\in A}\\|aθ\\|=\\infty, \\quad\\forallθ\\in\\mathbb{R}\\setminus\\mathbb{Z}. \\] In particular, this resolves a 1961 conjecture of Erdős. The proof builds on previous work of Bergelson and Simmons. Our approach also allows us to establish a more general strong-completeness criterion with suitable ordered blocks in place of dyadic intervals.",
     "domain_bridges": [],
     "domains": [
@@ -2421,7 +2420,7 @@
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
     "source_exp_id": "2607.14071v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-16T15:35:00.343163+00:00",
     "title": "ArXiv paper: Strongly complete sets and a conjecture of Erdős"
   },
@@ -5236,6 +5235,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: Geometry Beyond Integer Linking\n\n## 1. A real-valued Hopf-geometric concurrence functional\n\nThere exists a canonically normalized real-valued functional on the quaternionic Hopf geometry of a two-qubit state that is continuous, vanishes exactly on product states, and equals one exactly on maximally entangled states.\n\n**The key insight is...** ordinary linking numbers are too discrete, but differential-geometric quantities such as calibrated volume, holonomy, or an averaged linking integral can vary continuously with the determinant coordinate.\n\n**Why now?** The integer-valued proposal is obstructed by an explicit normalized state of concurrence one half, sharply specifying the properties a replacement invariant must satisfy.\n\n## 2. Exterior-algebra characterization of multipartite entanglement\n\nFor each bipartition of a pure multipartite state, the complete family of Plücker coordinates of the corresponding coefficient flattening determines a hierarchy of entanglement monotones, with the two-qubit concurrence as its first nontrivial member.\n\n**The key insight is...** two-qubit concurrence is the norm of a determinant, and determinants are the coordinates of exterior powers rather than linking numbers.\n\n**Why now?** The determinant bound and its exact zero locus provide a tractable base case from which higher minors and their norm inequalities can be developed.\n\n## 3. Classification of all sharp determinant maximizers\n\nEvery normalized two-qubit state with concurrence one lies in the local-unitary orbit of a Bell state, and equality in the determinant norm bound is equivalent to orthogonality and equal norm of the two coefficient rows.\n\n**The key insight is...** equality must hold simultaneously in the triangle inequality and both quadratic product bounds, forcing rigid phase and norm relations.\n\n**Why now?** The sharp upper bound is established, and its proof exposes the exact inequalities whose equality cases must be classified.\n\n## 4. Quantitative distance from the product-state variety\n\nThere are optimal universal constants relating concurrence to the metric distance from a normalized state to the Segre variety of product states, for both Euclidean and Fubini–Study metrics.\n\n**The key insight is...** concurrence is the norm of the defining quadratic equation of the Segre variety, so it should control transverse distance while degenerating predictably along tangent directions.\n\n**Why now?** The exact determinant criterion identifies the algebraic zero set, while the unit-interval bound supplies the global normalization needed for sharp estimates.\n\n## 5. Topological stratification of fixed-concurrence level sets\n\nFor each `c` strictly between zero and one, the normalized two-qubit states of concurrence `c`, modulo global phase, have a uniform diffeomorphism type, with topology changing only at the product and maximally entangled strata.\n\n**The key insight is...** although concurrence itself cannot be an integer linking number, its critical level sets may still carry meaningful and computable topology.\n\n**Why now?** Explicit interior values and the two boundary values are available, making the conjecture falsifiable through a combination of singular-value coordinates and level-set analysis.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0321",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "b596d3d1",
+    "status": "available",
+    "timestamp": "2026-07-18T13:21:29.822356+00:00",
+    "title": "There exists a canonically normalized real-valued functional on the quaternionic"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Cycle d1663b23 (Q=0.700) proved 0 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'A minimal modularity lifting theorem for Siegel modular forms' and formalize its key results. Abstract: We prove a minimal modularity lifting theorem (in the spirit of Gen",
     "domain_bridges": [],
     "domains": [
@@ -5312,7 +5331,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "44b2da31",
     "description": "The chromatic polynomial chi_G(k) counts the number of proper k-colorings of a graph G. For a friendship graph, chi_G(k) counts the number of ways to assign k emotions to people such that no two friends share the same emotion. Conjecture: The chromatic polynomial evaluated at k=6 (for the 6 basic emotions: happiness, sadness, anger, fear, disgust, surprise) gives the number of 'emotionally consistent' assignments of emotions to a social network. The chromatic polynomial has a root at k=2 for any bipartite graph, meaning a social network that splits cleanly into two groups has exactly 0 ways to assign 2 emotions without friends sharing emotions. The real emotional chromatic number chi_E(G) of a social network G is the smallest k such that chi_G(k) > 0 and k >= 3 (since real emotions need at least 3 categories to avoid trivial assignments). For a complete graph K_n (a clique of n mutual friends), chi_E(K_n) = n (everyone needs a different emotion). For a cycle C_n (a circular friendship chain), chi_E(C_n) = 2 if n is even and 3 if n is odd (alternating emotions work for even cycles, but odd cycles need a third emotion). Test: compute chi_E(G) for 100 real social networks and verify that the emotional chromatic number is between 3 and 6 for most networks. Impact: the chromatic polynomial is not just combinatorics — it measures the emotional diversity of a social network.",
     "domain_bridges": [],
     "domains": [
@@ -5325,7 +5344,7 @@
     "proof_strategy": "Define the emotional chromatic number chi_E(G) = min{k >= 3 : chi_G(k) > 0}. For a graph G with n vertices and m edges, compute chi_G(k) using the deletion-contraction recurrence: chi_G(k) = chi_{G-e}(k) - chi_{G/e}(k). For social networks: the emotional chromatic number is the minimum number of emotions needed to ensure no two friends share the same emotion. For a complete graph K_n: chi_E = n (every person needs a different emotion). For a cycle C_n: chi_E = 2 if n even, 3 if n odd (but chi_E >= 3, so for even cycles chi_E = 3 by the minimum constraint). For a path P_n: chi_E = 3 (alternating two emotions doesn't satisfy k >= 3). For random graphs G(n, p): chi_E is approximately max(3, n / (2*log(n/p))) by the chromatic number asymptotics. Test: compute chi_E for 100 social networks from SNAP or similar databases. Verify: most social networks have chi_E between 3 and 6. The 6 basic emotions (Ekman) provide a natural upper bound.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-18T13:04:43.611716+00:00",
     "title": "Graph Coloring with Emotions: The Chromatic Polynomial Meets Psychology"
   },

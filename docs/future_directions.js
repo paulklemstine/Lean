@@ -45,21 +45,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Tropical Cryptocurrency: Mining on the Min-Plus Semiring"
   },
   {
-    "consumed_by_exp_id": "b596d3d1",
-    "description": "Two quantum particles are entangled if measuring one instantly affects the other. But entanglement is also a topological property: if you represent the state of two qubits as a curve in R^3, entanglement IS the linking number. Conjecture: For any pure state of two qubits |psi> in C^2 tensor C^2, the concurrence C(psi) = 2|alpha*delta - beta*gamma| (where psi = alpha|00> + beta|01> + gamma|10> + delta|11>) equals the absolute value of the linking number of two curves derived from the Hopf fibration applied to psi. Specifically, map psi to S^7 via normalization, then project to S^4 via the Hopf map, and the preimages of two points in S^4 are linked circles in S^7 whose linking number equals the concurrence. This means: entanglement is MEASURED by topology, and maximally entangled states correspond to the Hopf link (linking number 1). Test: for 1000 random two-qubit states, compute the concurrence and the linking number of the Hopf preimages, and verify they are equal. Prove the equality for the Bell states. Impact: quantum entanglement is not mysterious \u2014 it is the linking number of the Hopf fibration. Two particles are entangled if and only if their Hopf preimages are linked.",
-    "domains": [
-      "Novelty",
-      "Physics"
-    ],
-    "id": "fd_0281",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T06:56:07.225808+00:00",
-    "title": "Quantum Entanglement as Algebraic Topology: The Linking Number Is Entanglement"
-  },
-  {
     "consumed_by_exp_id": "115a4ee3",
     "description": "Building on cycle 18410e31 (Q=0.770), which proved 12 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: When a theorem prover searches for a proof, it explores a tree of possible derivation steps. The branching factor is the number of applicable inference rules at each step. Define the proof-search fractal dimension D(T) of a theorem T as the Hausdorff dimension of the set of all successful proof path",
     "domains": [
@@ -170,6 +155,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-18T09:05:18.164692+00:00",
     "title": "Deepening: Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle b596d3d1 (Q=0.750), which proved 21 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Two quantum particles are entangled if measuring one instantly affects the other. But entanglement is also a topological property: if you represent the state of two qubits as a curve in R^3, entanglement IS the linking number. Conjecture: For any pure state of two qubits |psi> in C^2 tensor C^2, the",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "push_b596d3d1_6908f705",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "b596d3d1",
+    "status": "available",
+    "timestamp": "2026-07-18T13:21:34.658597+00:00",
+    "title": "Deepening: Quantum Entanglement as Algebraic Topology: The Linking Number Is Entanglement"
   },
   {
     "consumed_by_exp_id": "6e1b10f7",
@@ -1794,7 +1793,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Cyclic Sieving for Staircase Plane Partitions via Crystals and Electrical Networks"
   },
   {
-    "consumed_by_exp_id": "26ad8b0e",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Strongly complete sets and a conjecture of Erd\u0151s' and formalize its key results. Abstract: A set $A\\subseteq\\mathbb{N}$ is called $\\textit{complete}$ if every sufficiently large integer can be written as a sum of distinct elements of $A$. It is $\\textit{strongly complete}$ if it remains complete after one deletes finitely many elements from it. We show that $A\\subseteq\\mathbb{N}$ is strongly complete whenever \\[ \\big|A\\cap(2^k,2^{k+1}]\\big|\\ge6 \\] for every sufficiently large $k\\in\\mathbb{N}$, and \\[ \\sum_{a\\in A}\\|a\u03b8\\|=\\infty, \\quad\\forall\u03b8\\in\\mathbb{R}\\setminus\\mathbb{Z}. \\] In particular, this resolves a 1961 conjecture of Erd\u0151s. The proof builds on previous work of Bergelson and Simmons. Our approach also allows us to establish a more general strong-completeness criterion with suitable ordered blocks in place of dyadic intervals.",
     "domains": [
       "Pythagorean",
@@ -1804,7 +1803,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14071v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-16T15:35:00.343163+00:00",
     "title": "ArXiv paper: Strongly complete sets and a conjecture of Erd\u0151s"
   },
@@ -3811,6 +3810,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-18T12:48:42.770410+00:00",
     "title": "Conjecture: deciding whether a finite multiset of non-rotatable square pieces wi"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Geometry Beyond Integer Linking\n\n## 1. A real-valued Hopf-geometric concurrence functional\n\nThere exists a canonically normalized real-valued functional on the quaternionic Hopf geometry of a two-qubit state that is continuous, vanishes exactly on product states, and equals one exactly on maximally entangled states.\n\n**The key insight is...** ordinary linking numbers are too discrete, but differential-geometric quantities such as calibrated volume, holonomy, or an averaged linking integral can vary continuously with the determinant coordinate.\n\n**Why now?** The integer-valued proposal is obstructed by an explicit normalized state of concurrence one half, sharply specifying the properties a replacement invariant must satisfy.\n\n## 2. Exterior-algebra characterization of multipartite entanglement\n\nFor each bipartition of a pure multipartite state, the complete family of Pl\u00fccker coordinates of the corresponding coefficient flattening determines a hierarchy of entanglement monotones, with the two-qubit concurrence as its first nontrivial member.\n\n**The key insight is...** two-qubit concurrence is the norm of a determinant, and determinants are the coordinates of exterior powers rather than linking numbers.\n\n**Why now?** The determinant bound and its exact zero locus provide a tractable base case from which higher minors and their norm inequalities can be developed.\n\n## 3. Classification of all sharp determinant maximizers\n\nEvery normalized two-qubit state with concurrence one lies in the local-unitary orbit of a Bell state, and equality in the determinant norm bound is equivalent to orthogonality and equal norm of the two coefficient rows.\n\n**The key insight is...** equality must hold simultaneously in the triangle inequality and both quadratic product bounds, forcing rigid phase and norm relations.\n\n**Why now?** The sharp upper bound is established, and its proof exposes the exact inequalities whose equality cases must be classified.\n\n## 4. Quantitative distance from the product-state variety\n\nThere are optimal universal constants relating concurrence to the metric distance from a normalized state to the Segre variety of product states, for both Euclidean and Fubini\u2013Study metrics.\n\n**The key insight is...** concurrence is the norm of the defining quadratic equation of the Segre variety, so it should control transverse distance while degenerating predictably along tangent directions.\n\n**Why now?** The exact determinant criterion identifies the algebraic zero set, while the unit-interval bound supplies the global normalization needed for sharp estimates.\n\n## 5. Topological stratification of fixed-concurrence level sets\n\nFor each `c` strictly between zero and one, the normalized two-qubit states of concurrence `c`, modulo global phase, have a uniform diffeomorphism type, with topology changing only at the product and maximally entangled strata.\n\n**The key insight is...** although concurrence itself cannot be an integer linking number, its critical level sets may still carry meaningful and computable topology.\n\n**Why now?** Explicit interior values and the two boundary values are available, making the conjecture falsifiable through a combination of singular-value coordinates and level-set analysis.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0321",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "b596d3d1",
+    "status": "available",
+    "timestamp": "2026-07-18T13:21:29.822356+00:00",
+    "title": "There exists a canonically normalized real-valued functional on the quaternionic"
   },
   {
     "consumed_by_exp_id": "",
