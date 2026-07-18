@@ -117,21 +117,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "[Reset] Fresh approach in Shared"
   },
   {
-    "consumed_by_exp_id": "d3ef6e43",
-    "description": "The Langlands program connects Galois groups (shapes) to automorphic forms (colors). Think of it this way: a Galois group is the group of symmetries of a shape (like the rotational symmetries of a polygon). An automorphic form is a coloring that respects the shape's symmetries (like a coloring of the polygon's vertices that is invariant under rotation). The Langlands correspondence says: for every 'shape' (Galois representation), there is a matching 'color' (automorphic form) and vice versa. Conjecture: This correspondence is a bijection between irreducible representations of Gal(Q_bar/Q) and cuspidal automorphic representations of GL_n over Q. For n=1, this is class field theory (every abelian extension of Q corresponds to a Dirichlet character). For n=2, this is the modularity theorem (every elliptic curve over Q corresponds to a weight-2 cusp form). The toddler version: each shape has exactly one matching color, and each color has exactly one matching shape. Test: verify the correspondence for all degree-2 extensions of Q up to discriminant 1000. Verify that each quadratic field Q(sqrt(d)) corresponds to a Dirichlet character chi_d via the correspondence chi_d(p) = (d/p) (Legendre symbol). Impact: Langlands is just shape-color matching. Shapes and colors are two ways of seeing the same mathematical object.",
-    "domains": [
-      "Novelty",
-      "NumberTheory"
-    ],
-    "id": "fd_0291",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T08:01:11.261092+00:00",
-    "title": "Langlands for Toddlers: Galois Groups as Shapes, Automorphic Forms as Colors"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 717f7483 (Q=0.750), which proved 19 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Godel's incompleteness theorem says there are true statements that cannot be proved. But what if we turn incompleteness into a GAME? Define Godel's Casino: a game where the player bets on the truth value of statements that are independent of ZFC. The house deals cards representing arithmetic stateme",
     "domains": [
@@ -160,7 +145,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6e1b10f7",
     "description": "The Ihara zeta function of a finite graph G is zeta_G(u) = prod_{[C]} (1 - u^{|C|})^{-1} where the product is over prime cycles (closed walks that are not powers of shorter walks). For a (q+1)-regular graph, zeta_G(u) = (1-u^2)^{-(n-1)(q-1)/2} * det(I - A*u + (q-1)*u^2*I)^{-1} where A is the adjacency matrix. This is the graph analog of the Riemann zeta function. Conjecture: The Riemann hypothesis holds for zeta_G if and only if G is a Ramanujan graph (all non-trivial eigenvalues of the adjacency matrix satisfy |lambda| <= 2*sqrt(q)). This is a theorem of Ihara, but the deeper conjecture is: the zeta function of a Ramanujan graph encodes the same spectral information as the Riemann zeta function restricted to the critical strip. Specifically, if zeta_G satisfies RH, then the 'prime cycles' of G are distributed like the primes in Z, and the 'explicit formula' for zeta_G (analogous to the explicit formula for the Riemann zeta) relates the cycle counts to the eigenvalues of A. Test: compute zeta_G for 10 Ramanujan graphs (paley graphs, lubotzky-phillips-sarnak graphs) and verify the Riemann hypothesis. Compare the 'prime cycle counting function' with the prime counting function pi(x). Impact: graphs have zeta functions, Ramanujan graphs satisfy RH, and the prime cycles in a graph are distributed like the primes in Z.",
     "domains": [
       "Novelty",
@@ -170,7 +155,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-18T10:38:59.865229+00:00",
     "title": "The Zeta Function of a Graph: Number Theory on Networks"
   },
@@ -3694,6 +3679,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-18T10:39:14.961320+00:00",
     "title": "**Conjecture.** For every certificate tree, augmenting redundant-restatement eli"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe completed Lean development proves the local arithmetic dictionary for the quadratic\ncharacter `\u03c7_D(p) = (D/p)`: ramification gives color `0`, and unramified primes split into\nsquare/color `1` and nonsquare/color `-1` cases. It is uniform in every integer parameter\n`D` and every prime `p`, so it applies in particular to every fundamental discriminant with\nabsolute value at most 1000.\n\nThe original mission's global claims are substantially larger than this local core. A faithful\nnext phase should proceed as follows.\n\n1. **Fundamental discriminants.** Define the predicate characterizing quadratic-field\n   discriminants (`D \u2261 1 mod 4` and squarefree, or `D = 4m` with the standard congruence\n   and squarefreeness conditions), and prove uniqueness of the quadratic field attached to\n   each such `D`.\n2. **Certified bounded enumeration.** Construct a finite list of all fundamental\n   discriminants satisfying `|D| \u2264 1000`, prove soundness and completeness of that list,\n   and derive the exact count in Lean. This is the missing part of the proposed bounded test;\n   no unchecked count is asserted here.\n3. **Global Dirichlet characters.** Package the Kronecker symbol `n \u21a6 (D/n)` as a Mathlib\n   `DirichletCharacter`, including the prime `2` and composite moduli. Prove its conductor is\n   `|D|` for fundamental `D` and connect evaluation at odd primes to `quadraticColor`.\n4. **Quadratic fields and Frobenius.** Formalize the quadratic extension `\u211a(\u221aD)`, identify\n   its Galois group with a two-element group, and prove the Frobenius splitting criterion at\n   every unramified prime. This would turn the local Legendre-symbol classification into an\n   explicit shape-to-color statement.\n5. **Injectivity and surjectivity in the quadratic case.** Prove distinct fundamental\n   discriminants yield distinct primitive quadratic Dirichlet characters, and conversely\n   classify primitive quadratic characters by fundamental discriminants. This is the precise\n   finite-order degree-one correspondence relevant to quadratic fields.\n6. **Scope correction for higher rank.** The broad statement in the prompt\u2014an unrestricted\n   bijection between all irreducible representations of `Gal(\u211a\u0304/\u211a)` and cuspidal automorphic\n   representations of `GL_n`\u2014should not be used as a theorem without the customary\n   continuity, semisimplicity, ramification, algebraicity, and compatibility hypotheses.\n   Likewise, the modularity theorem concerns elliptic curves (and associated suitable\n   two-dimensional representations), not every conceivable `n = 2` representation.\n\nNo OEIS sequence is needed for the uniform local theorem. If the certified bounded\nfundamental-discriminant enumeration is completed, its ordered list or counting function can\nthen be compared against a relevant external sequence.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0310",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "d3ef6e43",
+    "status": "available",
+    "timestamp": "2026-07-18T11:59:31.909422+00:00",
+    "title": "The completed Lean development proves the local arithmetic dictionary for the qu"
   },
   {
     "consumed_by_exp_id": "",

@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "e6dfc1d4",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — μ-extension of Matsuno's formula\n\n## Summary of what was established\n\nThe file `Catalog/Novelty/MatsunoMuExtension.lean` studies, in **contrarian mode**, the\narithmetic model\n`la",
-      "quality_score": 0.78,
-      "sorry_count": 1,
-      "theorem_count": 26,
-      "timestamp": "2026-07-14T16:16:10",
-      "title": "Extension of Matsuno's Formula for Non-Vanishing μ-Invariants"
-    },
-    {
       "cycle_id": "3361b315",
       "domain": "Novelty",
       "key_insight": "# Future Directions — The Topology of Knotted Light\n\nThis cycle established the topological charge of an orbital-angular-momentum beam\nas an additive invariant governed by a contour-integral **product",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-18T10:39:19",
       "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
+    },
+    {
+      "cycle_id": "d3ef6e43",
+      "domain": "Probability",
+      "key_insight": "# Future directions\n\nThe completed Lean development proves the local arithmetic dictionary for the quadratic\ncharacter `χ_D(p) = (D/p)`: ramification gives color `0`, and unramified primes split into",
+      "quality_score": 0.51,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-07-18T11:59:36",
+      "title": "Langlands for Toddlers: Galois Groups as Shapes, Automorphic Forms as Colors"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-18T10:39:19",
+  "last_updated": "2026-07-18T11:59:36",
   "open_questions": [
     {
       "context": "",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "90ef345f",
-        "quality": 0.83,
-        "theorems": 751,
-        "title": "The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
-      },
-      {
         "cycle_id": "478ae68b",
         "quality": 0.72,
         "theorems": 20,
@@ -3823,6 +3817,12 @@
         "quality": 0.62,
         "theorems": 15,
         "title": "The Fundamental Theorem of Cakes: Algebraic Geometry of Baking"
+      },
+      {
+        "cycle_id": "d3ef6e43",
+        "quality": 0.51,
+        "theorems": 13,
+        "title": "Langlands for Toddlers: Galois Groups as Shapes, Automorphic Forms as Colors"
       }
     ],
     "Pythagorean": [

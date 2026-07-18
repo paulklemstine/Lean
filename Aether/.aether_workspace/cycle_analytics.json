@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-18T10:39:19.776695+00:00",
+  "last_updated": "2026-07-18T11:59:36.819399+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -25874,6 +25874,48 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-18T10:39:19.725404+00:00",
       "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 21,
+      "domain": "Probability",
+      "duration_seconds": 2881.8418729305267,
+      "end_time": 1784375963.3448195,
+      "files_integrated": 3,
+      "job_id": "d3ef6e43",
+      "outcome_quality": 0.51,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v25",
+      "phase_b_skip_reason": "low_quality_near_miss",
+      "phase_b_skipped": true,
+      "prompt_version": "v25",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.48,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.72,
+        "composite": 0.386,
+        "cross_domain": 0.5,
+        "grade": "partial",
+        "importance": 0.46,
+        "novelty": 0.28,
+        "proof_depth": 0.52,
+        "usefulness": 0.63
+      },
+      "quality_score": 0.51,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1784373081.5029466,
+      "strategy_count": 0,
+      "theorem_count": 13,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 12,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-18T11:59:36.764134+00:00",
+      "title": "Langlands for Toddlers: Galois Groups as Shapes, Automorphic Forms as Colors"
     }
   ]
 }
