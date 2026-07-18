@@ -60,7 +60,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "115a4ee3",
     "description": "Building on cycle 18410e31 (Q=0.770), which proved 12 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: When a theorem prover searches for a proof, it explores a tree of possible derivation steps. The branching factor is the number of applicable inference rules at each step. Define the proof-search fractal dimension D(T) of a theorem T as the Hausdorff dimension of the set of all successful proof path",
     "domain_bridges": [],
     "domains": [
@@ -72,7 +72,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "18410e31",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-18T09:21:32.306900+00:00",
     "title": "Deepening: Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
   },
