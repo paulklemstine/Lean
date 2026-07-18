@@ -1,36 +1,32 @@
-# Computational evidence
+# Computational Evidence
 
 ## Small-case calculations
 
-The formal development uses the family
+The first decisive collision occurs at order six.
 
-| odd `n` | order `2n` | cyclic exponent | dihedral exponent | cyclic commutative? | dihedral commutative? |
-|---:|---:|---:|---:|:---:|:---:|
-| 3 | 6 | 6 | 6 | yes | no |
-| 5 | 10 | 10 | 10 | yes | no |
-| 7 | 14 | 14 | 14 | yes | no |
-| 9 | 18 | 18 | 18 | yes | no |
-| 11 | 22 | 22 | 22 | yes | no |
+| Object | Order | Prime ledger | Multiplication |
+|---|---:|---|---|
+| cyclic group `Z/6Z` | 6 | `[2, 3]` | commutative |
+| symmetric group `S_3` | 6 | `[2, 3]` | noncommutative |
 
-For a cyclic group of order `2n`, the exponent is `2n`. For a dihedral group of order `2n`, the exponent is `lcm(n,2)`, which equals `2n` when `n` is odd. The Lean theorem proves this uniformly rather than relying on the table.
+For `S_3`, let `a = (0 1)` and `b = (1 2)`. Their products differ: one sends `0` through the path determined by `b` then `a`, while the reverse product sends it through `a` then `b`. Thus the common atomic number and prime ledger do not determine commutativity.
 
-At the first case, order six, `C₆` has two automorphisms (`φ(6)=2`). Its center is the entire group, while the center of `D₆` is trivial.
+A second calculation is symbolic rather than enumerative. If factor orders are `d_1, ..., d_r`, repeated use of the finite quotient product formula gives
 
-## OEIS search
+`|G| = d_1 · ... · d_r`.
 
-No OEIS search is relevant: the central claim compares structural invariants of two explicit infinite families and does not introduce a new integer sequence.
+Consequently, two groups with literally the same multiset of composition factors, including multiplicity, necessarily have the same order. The proposed use of “isotope” for groups with the same composition factors but different orders is therefore inconsistent unless multiplicities are discarded or “same” is weakened.
+
+## OEIS search results
+
+No sequence claim is needed for the obstruction, so no OEIS identification is relevant. The evidence concerns a structural collision between invariants rather than a numerical sequence.
 
 ## Counterexample hunt
 
-The candidate universal heuristic was that coarse shared coordinates might predict structural behavior. The smallest tested pair already fails:
+The universal claim tested was: equal atomic number and equal prime-factor ledger determine multiplication-sensitive properties. The pair `Z/6Z` and `S_3` is a counterexample. It is representative because both groups have the same two prime composition-factor orders, while the nontrivial semidirect action in `S_3` is absent from the cyclic group.
 
-- `C₆` and `D₆` both have order 6;
-- both have exponent 6;
-- `C₆` is cyclic and commutative;
-- `D₆` is noncyclic and noncommutative.
+The stronger phrase “same composition factors but different orders” was also tested abstractly. It has no examples when composition factors are counted with multiplicity, because their orders multiply to the group order.
 
-The failure persists for every odd `n > 1`, as formally proved. No counterexample exists to this proved family statement under its hypotheses.
+## Scope of the evidence
 
-## Scope
-
-These calculations do not constitute a census of groups of order at most 100. They isolate and verify a precise obstruction to the proposed predictive organization: even order plus exponent does not determine basic group structure.
+This evidence does not enumerate all groups of order at most 100. Instead it targets the earliest possible structural failure of the proposed organizing law. A complete census would add data, but it cannot repair a universal classification rule already contradicted at order six.
