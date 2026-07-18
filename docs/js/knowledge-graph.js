@@ -174,6 +174,7 @@
         let time = 0;
         let timeScale = 1;
 
+        const MAX_FIREWORKS = 4;
         const lasers = [];        // {sx, sy, tx, ty, time, duration, color}
         const fireworks = [];     // {x, y, phase, particles[], color, startTime}
         let lastAmbientFirework = 0;
