@@ -4203,7 +4203,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "71fc60c7",
     "description": "Elementary cellular automata (ECAs) are the 256 rules that update a 1D binary array based on its 3-cell neighborhood. Rule 110 is Turing-complete. But ECAs can also be viewed as polynomial maps over GF(2): the state s = (s_0, s_1, ..., s_{n-1}) is a vector over GF(2), and the update rule is s -> f(s) where f is a degree-3 polynomial (since the rule depends on 3 cells). Conjecture: The algebraic variety V(f) = {s : f(s) = s} (fixed points of the ECA) has dimension equal to the 'complexity class' of the rule. For simple rules (e.g., Rule 0, which is all zeros), V(f) has dimension 0 (a single point). For complex rules (e.g., Rule 110), V(f) has maximal dimension. The Grothendieck-style approach: each ECA defines a sheaf on the state space, and the global sections of this sheaf classify the possible stable configurations. Rule 110's sheaf has the richest section structure, corresponding to its Turing-completeness. Test: compute dim(V(f)) for all 256 ECAs and verify that the dimension correlates with Wolfram's complexity classification (Class 1: dim=0, Class 2: dim<=n/2, Class 3: dim>=n/2, Class 4: dim=n). Impact: cellular automata are algebraic varieties, and their complexity is the dimension of their fixed-point variety.",
     "domain_bridges": [],
     "domains": [
@@ -4216,7 +4216,7 @@
     "proof_strategy": "Encode ECA state as vector s in GF(2)^n. Rule r defines update f_r(s)_i = g(s_{i-1}, s_i, s_{i+1}) where g is the truth table of rule r, viewed as a polynomial over GF(2). For example, Rule 110: g(a,b,c) = a + b + ac + bc (mod 2). Fixed points satisfy f_r(s) = s, a system of n polynomial equations over GF(2). Compute dim(V(f_r)) using Groebner basis methods. For Rule 0: f_0(s) = 0, so V = {0}, dim = 0. For Rule 255: f_255(s) = 1+s, V = {1+s = s} = {1=0} = empty, dim = -1 (no fixed points). For Rule 110: f_110(s) = s + s_{i-1} + s_i + s_{i-1}*s_{i+1} + s_i*s_{i+1}, dim(V) = n - rank(Jacobian of f-s). Conjecture: dim(V(f_r)) correlates with Wolfram class. Test: compute dim(V(f_r)) for all 256 rules with n=20 and compare to Wolfram classification.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-18T06:18:54.772301+00:00",
     "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
   },
