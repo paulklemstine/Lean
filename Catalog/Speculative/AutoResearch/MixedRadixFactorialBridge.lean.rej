@@ -1,6 +1,6 @@
 --- MixedRadixFactorialBridge.lean
 +++ MixedRadixFactorialBridge.lean
-@@ -42,25 +42,28 @@
+@@ -42,22 +42,35 @@
  
  open MixedRadix
  
@@ -11,11 +11,8 @@
 +mixed-radix value agrees with the factorial-system value.
 +-/
  theorem value_eq (c : Nat → Nat) (k : Nat) :
-     MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by
--  unfold MixedRadix.value FactorialNumberSystem.value
--  apply Finset.sum_congr rfl
--  intro i hi
--  rw [MixedRadix.factorial_radixProd]
+-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry
++    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by
 +  exact Finset.sum_congr rfl fun i _ => by
 +    rw [MixedRadix.factorial_radixProd]
  
@@ -24,9 +21,8 @@
 +Mixed-radix validity for `b i = i + 1` coincides with factorial validity.
 +-/
  theorem valid_iff (c : Nat → Nat) (k : Nat) :
-     MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by
--  rw [MixedRadix.factorial_valid_iff]
--  rfl
+-    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry
++    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by
 +  exact MixedRadix.factorial_valid_iff c k
  
 -/-- **The factorial uniqueness theorem, re-derived from the general one.**
@@ -39,4 +35,12 @@
 +-/
  theorem factorial_value_unique_via_mixed {c d : Nat → Nat} {k : Nat}
      (hc : FactorialNumberSystem.Valid c k) (hd : FactorialNumberSystem.Valid d k)
+     (hv : FactorialNumberSystem.value c k = FactorialNumberSystem.value d k) :
+-    ∀ i < k, c i = d i := by sorry
++    ∀ i < k, c i = d i := by
++  apply MixedRadix.value_unique
++  · exact (valid_iff c k).2 hc
++  · exact (valid_iff d k).2 hd
++  · simpa only [value_eq] using hv
+ 
  

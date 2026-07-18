@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "a8d24466",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions: Arithmetic on Hyperbolic Orbits\n\n## 1. Primitive conjugacy classes as geometric primes\n\nFor the modular group, define a hyperbolic prime to be a primitive hyperbolic conjugacy cla",
-      "quality_score": 0.73,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-07-15T07:28:14",
-      "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk"
-    },
-    {
       "cycle_id": "cf605784",
       "domain": "NumberTheory",
       "key_insight": "# Future Directions — Toughness as an order-monotone invariant\n\nThe completed development in `Catalog/Shared/ToughnessOrder.lean` proves that component count after a fixed vertex deletion is antitone",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-17T18:04:18",
       "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
+    },
+    {
+      "cycle_id": "dfbea393",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions: Quantum States with Non-Archimedean Probabilities\n\n## 1. Standard-part Born measures on arbitrary finite supports\n\n**Conjecture.** Let a finitely supported state have finite hyper",
+      "quality_score": 0.71,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-18T00:42:46",
+      "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "bec8fe46",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: cubic spectral gaps of swap reconfiguration chains\n\nThis cycle closed the two-sided estimate for the one-dimensional swap model: the\nspectral gap of the weighted path swap chain i",
-      "quality_score": 0.85,
-      "sorry_count": 4,
-      "theorem_count": 0,
-      "timestamp": "2026-07-14T04:50:27",
-      "title": "Close Proofs: Tight spectral gap exponent for the fixed-genus chord swap chain"
-    },
     {
       "cycle_id": "2758a31c",
       "domain": "Applications",
@@ -2501,6 +2491,16 @@
       "theorem_count": 13,
       "timestamp": "2026-07-18T00:42:35",
       "title": "The Sound of Pi: Musical Structure in Transcendental Constants"
+    },
+    {
+      "cycle_id": "dfbea393",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions: Quantum States with Non-Archimedean Probabilities\n\n## 1. Standard-part Born measures on arbitrary finite supports\n\n**Conjecture.** Let a finitely supported state have finite hyper",
+      "quality_score": 0.71,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-18T00:42:46",
+      "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-18T00:42:35",
+  "last_updated": "2026-07-18T00:42:46",
   "open_questions": [
     {
       "context": "",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "492f9d48",
-        "quality": 0.8151999999999999,
-        "theorems": 28,
-        "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
-      },
-      {
         "cycle_id": "643186e8",
         "quality": 0.82,
         "theorems": 18,
@@ -3079,6 +3073,12 @@
         "quality": 0.73,
         "theorems": 13,
         "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showin"
+      },
+      {
+        "cycle_id": "dfbea393",
+        "quality": 0.71,
+        "theorems": 0,
+        "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
       }
     ],
     "Applications": [

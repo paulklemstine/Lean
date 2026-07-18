@@ -63,20 +63,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk"
   },
   {
-    "consumed_by_exp_id": "dfbea393",
-    "description": "Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION \u2014 simultaneously equal to multiple values until observed? Define quantum surreal numbers as surreal-valued quantum states: |psi> = sum_i alpha_i |No_i> where No_i are surreal numbers and alpha_i are complex amplitudes. Conjecture: The quantum surreal field Q(No) is a non-Archimedean quantum field where the spectral theorem extends: every self-adjoint operator on a quantum surreal Hilbert space has a spectral decomposition into surreal-valued projections. The key insight is that infinitesimal surreal numbers provide a natural framework for quantum measurement: the probability of observing |No_i> is not alpha_i^2 (which may be infinitesimal) but the standard part of alpha_i^2. Test: construct the quantum surreal number |psi> = (1/sqrt(2))|0> + (1/sqrt(2))|epsilon> where epsilon is an infinitesimal surreal, and prove that measuring |psi> gives 0 with probability st(1/2) = 1/2 and epsilon with probability st(1/2 * epsilon^2) = 0 \u2014 the infinitesimal is unobservable! Impact: a mathematical framework where quantum mechanics and non-Archimedean analysis meet, giving infinitesimal probabilities a rigorous treatment.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_0125",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-16T15:16:12.425510+00:00",
-    "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Domain Shared has declined by 0.164 over recent cycles (recent avg=0.696 vs prior=0.860). Take a completely fresh approach \u2014 different proof techniques, new definitions, or a different subfield within this domain. Avoid repeating approaches that have been producing diminishing returns.",
     "domains": [
@@ -2947,7 +2933,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0245",
+    "id": "fd_0246",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.15269v1",
@@ -3164,6 +3150,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## What the formal result establishes\n\n`Catalog/Computation/SoundOfPi.lean` audits the proposed digit-to-note model before undertaking statistical tests.  With pitch offset equal to the decimal digit, every generated note lies between 0 and 9 semitones above the base frequency.  Thus any two generated notes are at most 9 semitones apart, and no generated pair can be an octave (12 semitones) apart.  A repeated digit at temporal lag 12 is instead a unison.  This distinction is independent of which real number supplies the digits.\n\n## Necessary corrections to the research hypothesis\n\n1. **Separate temporal and pitch lags.** Autocorrelation at sequence lag 12 compares digit positions twelve time steps apart; it does not measure a twelve-semitone interval. To study musical intervals, use the distribution of `|d\u1d62 - d\u2c7c|` (or pitch classes modulo 12) for a clearly specified pair of positions.\n2. **Choose a map capable of octaves.** The proposed map has only offsets 0\u20139. An octave statistic requires either a larger alphabet, octave registers, or another mapping whose image contains pitches 12 semitones apart.\n3. **Specify autocorrelation.** State whether digits are centered, which finite prefix is used, and whether the statistic is Pearson autocorrelation, equality frequency, or another quantity. These are not equivalent.\n4. **Pre-register significance tests.** Testing 13 lags for three constants creates multiple-comparison issues. Give the null model, sample size, test statistic, correction, and significance threshold in advance.\n5. **Do not infer infinite-digit laws from finite prefixes.** A significant finite-prefix statistic would be empirical evidence about that prefix, not a theorem about \u03c0, e, or \u221a2. Irrationality only rules out eventually periodic decimal expansions; it does not imply normality or a particular autocorrelation law.\n6. **Clarify the continued-fraction claim.** \u03c0 and e do not have bounded partial quotients established by the proposal, while \u221a2 does. A theorem connecting decimal digit consonance to continued-fraction coefficients would require a precise statistic and substantial new number theory.\n\n## Next formal developments\n\n* Define finite digit words and exact equality counts at lag `\u2113`.\n* Prove general bounds `0 \u2264 count \u2264 N - \u2113` and identify lag-zero behavior.\n* Define interval histograms separately from temporal autocorrelation.\n* Encode supplied finite decimal prefixes as certified data and prove their exact count tables by kernel-checked computation.\n* Formalize the elementary theorem that an eventually periodic base-10 expansion represents a rational number, then use known irrationality results to obtain non-eventual-periodicity for \u03c0, e, and \u221a2 where library support permits.\n* Only after the statistic and data are fixed, formalize rational-valued chi-squared calculations and their assumptions.\n\nNo claim of a statistically significant preference is made here because the request provides neither a prefix length nor digit data nor a precise statistic and null test.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0247",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "9f14a31b",
+    "status": "available",
+    "timestamp": "2026-07-18T00:42:28.894209+00:00",
+    "title": "`Catalog/Computation/SoundOfPi.lean` audits the proposed digit-to-note model bef"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Quantum States with Non-Archimedean Probabilities\n\n## 1. Standard-part Born measures on arbitrary finite supports\n\n**Conjecture.** Let a finitely supported state have finite hyperreal amplitudes and appreciable nonzero squared norm. Then taking the standard part of every normalized Born weight produces a nonnegative real probability distribution of total mass one. Its support is exactly the set of branches whose normalized weights are appreciable and have positive standard part.\n\nThe key insight is that standard part should commute with finite sums once all summands are finite, while appreciability of the norm prevents normalization from magnifying an infinitesimal numerator into a visible weight.\n\n**Why now?** Normalization and the disappearance of one infinitesimal branch have been established separately; the finite-support theorem would unify them into a complete measurement law.\n\n## 2. Observational equivalence as a quotient of non-Archimedean state space\n\n**Conjecture.** For appreciably normalized finite states, equality of all standard-part Born probabilities defines an equivalence relation compatible with relabelling and with tensoring by an appreciably normalized ancillary state. The quotient admits a canonical map to the simplex of real probability distributions.\n\nThe key insight is that infinitesimal perturbations of amplitudes can change exact hyperreal weights without changing any observed probability, suggesting that observation is naturally a quotient rather than an injective representation.\n\n**Why now?** The equal-amplitude and infinitesimal-amplitude results isolate both sides of this equivalence: ket labels alone do not alter probabilities, whereas infinitesimal changes can disappear under observation.\n\n## 3. A finite-dimensional spectral theorem over a real-closed non-Archimedean field\n\n**Conjecture.** Every symmetric matrix over a real-closed non-Archimedean ordered field is orthogonally diagonalizable after passing to the field's algebraic real closure, and every finite eigenvalue has a standard-part eigenvalue satisfying the characteristic polynomial of the entrywise standard-part matrix, under a uniform finiteness hypothesis.\n\nThe key insight is that the algebraic spectral theorem and the standard-part map address different layers: diagonalization is controlled by real closedness, while observational eigenvalues require finiteness and compatibility of standard part with polynomial evaluation.\n\n**Why now?** The present measurement model is diagonal in a fixed surreal-indexed basis. A matrix theorem is the next testable step toward genuine observables without prematurely asserting an infinite-dimensional spectral theorem.\n\n## 4. Dirac collapse for finite lexicographic probability towers\n\n**Conjecture.** Replace pairs of rationals by finite lexicographic towers `\u211a^(k+1)`. Successively projecting away the last coordinate yields a filtration of observations, and an event first becomes visible precisely at the earliest coordinate where its mass is nonzero. Every normalized nonnegative finite measure therefore determines a hierarchy of real-valued shadow measures.\n\nThe key insight is that the first-coordinate standard part proved here is the first stage of a general valuation-like filtration, not an isolated construction.\n\n**Why now?** The two-coordinate model already exhibits exact normalization, finite additivity, and collapse to a Dirac measure; finite towers provide a concrete setting in which higher-order infinitesimal visibility can be tested.\n\n## 5. Tensor-product stability of infinitesimal invisibility\n\n**Conjecture.** If a branch in one appreciably normalized finite state has infinitesimal amplitude, then every product branch containing it has zero observed probability after tensoring with any finite state whose squared norm is finite and appreciable. Conversely, tensoring two appreciable branches preserves positive observed weight whenever both standard-part weights are positive.\n\nThe key insight is that product amplitudes multiply and standard part is multiplicative on finite hyperreals, so invisibility should form a tensor ideal among branches.\n\n**Why now?** Single-state invisibility is known, but compositional stability is essential before the model can represent composite systems or independent experiments.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0248",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "dfbea393",
+    "status": "available",
+    "timestamp": "2026-07-18T00:42:39.750259+00:00",
+    "title": "**Conjecture.** Let a finitely supported state have finite hyperreal amplitudes "
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle d1663b23 (Q=0.700) proved 0 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'A minimal modularity lifting theorem for Siegel modular forms' and formalize its key results. Abstract: We prove a minimal modularity lifting theorem (in the spirit of Gen",
     "domains": [
       "Applications"
@@ -3206,21 +3222,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
   },
   {
-    "consumed_by_exp_id": "9f14a31b",
-    "description": "Every real number defines a musical scale: map the digits 0-9 to frequencies f_n = 220 * 2^{n/12} (the A minor pentatonic scale extended). The number pi = 3.14159265... produces the sequence E4, C5, C#5, D5, D#5, F5, E5, A4, G5, C5... \u2014 a melody. Conjecture: The melody of pi is not periodic (because pi is irrational) but has musical structure: the autocorrelation of the digit sequence at lag 12 (one octave) is positive and statistically significant. This means pi has more octave-related notes than expected by chance \u2014 pi 'favors' notes separated by octaves. Similarly, e 'favors' perfect fifths (lag 7) and sqrt(2) 'favors' minor thirds (lag 3). The musical structure of transcendental numbers reflects their continued fraction properties: numbers with bounded partial quotients have more consonant melodies. Test: compute the digit autocorrelation of pi, e, and sqrt(2) at lags 0-12 (representing unison through octave). Perform a chi-squared test comparing to the uniform distribution. Generate the 'music' of each constant and analyze for tonal centers. Impact: transcendental numbers have musical souls \u2014 their digit sequences contain hidden harmonies that reflect their deepest arithmetic properties.",
-    "domains": [
-      "Novelty",
-      "NumberTheory"
-    ],
-    "id": "fd_0229",
-    "priority_score": 0.72,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-17T14:02:27.283106+00:00",
-    "title": "The Sound of Pi: Musical Structure in Transcendental Constants"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
     "domains": [
@@ -3233,5 +3234,19 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-15T05:23:22.329230+00:00",
     "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 9f14a31b (Q=0.600) proved 13 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Every real number defines a musical scale: map the digits 0-9 to frequencies f_n = 220 * 2^{n/12} (the A minor pentatonic scale extended). The number pi = 3.14159265... produces the sequence E4, C5, C",
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_9f14a31b_0a775a6a",
+    "priority_score": 0.65,
+    "research_mode": "team",
+    "source_exp_id": "9f14a31b",
+    "status": "available",
+    "timestamp": "2026-07-18T00:42:35.429117+00:00",
+    "title": "Close Proofs: The Sound of Pi: Musical Structure in Transcendental Constants"
   }
 ];
