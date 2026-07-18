@@ -6,6 +6,13 @@
         if (!canvas) return;
         const ctx = canvas.getContext('2d');
         if (!ctx) return;
+        
+        // Offscreen canvas for background caching
+        const bgCanvas = document.createElement('canvas');
+        const bgCtx = bgCanvas.getContext('2d', { alpha: false });
+        let bgNeedsUpdate = true;
+        let lastTheme = document.body.classList.contains('light-theme');
+        
         const welcomeScreen = document.getElementById('welcome-screen');
 
         // ─── Data ───
@@ -175,12 +182,7 @@
         let timeScale = 1;
 
         // ─── Space battle visual effect arrays (hard-capped for performance) ───
-        const MAX_EXPLOSIONS = 8;
-        const MAX_FLAME_PARTICLES = 200;
-        const MAX_SPARKS_PER_EXPLOSION = 20;
         const MAX_FIREWORKS = 4;
-        const explosions = [];    // {x, y, time, strength, sparks[], shockRadius}
-        const flameParticles = []; // {x, y, vx, vy, life, color, size}
         const lasers = [];        // {sx, sy, tx, ty, time, duration, color}
         const fireworks = [];     // {x, y, phase, particles[], color, startTime}
         let lastAmbientFirework = 0;
@@ -597,29 +599,7 @@
                             n.thrustStrength = 1.0;
                             n.thrustSpin = Math.random() > 0.5 ? 1 : -1;
                         }
-                        if (dist < circle.r && explosions.length < MAX_EXPLOSIONS) {
-                            const hitX = circle.cx + (dx / dist) * circle.r;
-                            const hitY = circle.cy + (dy / dist) * circle.r;
-                            const sparks = [];
-                            const sparkCount = 6 + Math.floor(penetration * 0.01);
-                            for (let s = 0; s < sparkCount; s++) {
-                                const angle = Math.atan2(dy, dx) + (Math.random() - 0.5) * 1.2;
-                                const speed = 800 + Math.random() * 2000;
-                                sparks.push({
-                                    x: hitX, y: hitY,
-                                    vx: Math.cos(angle) * speed,
-                                    vy: Math.sin(angle) * speed,
-                                    life: 0.3 + Math.random() * 0.4,
-                                    hue: 180 + Math.random() * 60,  // cyan-blue force field color
-                                    size: 1 + Math.random() * 2
-                                });
-                            }
-                            explosions.push({
-                                x: hitX, y: hitY, time: time,
-                                strength: Math.min(1, penetration * 0.002),
-                                sparks, shockRadius: 0, isChain: false
-                            });
-                        }
+                        
                     }
                 }
             }
@@ -726,32 +706,7 @@
                             b.thrustSpin = Math.random() > 0.5 ? 1 : -1;
 
                             // Spawn explosion at contact point (skip for connected — gentle contact)
-                            if (!isConnected && explosions.length < MAX_EXPLOSIONS) {
-                                const cx = (a.x + b.x) * 0.5;
-                                const cy = (a.y + b.y) * 0.5;
-                                const sparkCount = Math.min(MAX_SPARKS_PER_EXPLOSION, 8 + Math.floor(Math.abs(relVn) * 5));
-                                const sparks = [];
-                                for (let s = 0; s < sparkCount; s++) {
-                                    const angle = Math.random() * Math.PI * 2;
-                                    const speed = 1500 + Math.random() * 6000 * Math.abs(relVn);
-                                    const hue = isChain ? (30 + Math.random() * 30) : (20 + Math.random() * 40);
-                                    sparks.push({
-                                        x: cx, y: cy,
-                                        vx: Math.cos(angle) * speed,
-                                        vy: Math.sin(angle) * speed,
-                                        life: 0.5 + Math.random() * 0.8,
-                                        hue: hue,
-                                        size: 1 + Math.random() * 3
-                                    });
-                                }
-                                explosions.push({
-                                    x: cx, y: cy, time: time,
-                                    strength: Math.min(1, Math.abs(relVn) * 0.3),
-                                    sparks: sparks,
-                                    shockRadius: 0,
-                                    isChain: isChain
-                                });
-                            }
+                            
                         }
                         // Overlap separation: mass-proportional to conserve center of mass
                         const overlap = MIN_REPULSION_DIST - d;
@@ -780,47 +735,7 @@
                         n.thrustAngle += n.thrustSpin * 0.016; 
                         
 
-                        // Spawn flame particles (capped) — visual only, no velocity change
-                        if (flameParticles.length < MAX_FLAME_PARTICLES && Math.random() < 0.6) {
-                            const spread = 0.4;
-                            const r1Angle = n.thrustAngle + Math.PI/2;
-                            const r2Angle = n.thrustAngle - Math.PI/2;
-                            
-                            const angle1 = n.thrustAngle + Math.PI + (Math.random() - 0.5) * spread;
-                            flameParticles.push({
-                                x: n.x + Math.cos(r1Angle) * n.radius * 0.8,
-                                y: n.y + Math.sin(r1Angle) * n.radius * 0.8,
-                                vx: Math.cos(angle1) * (900 + Math.random() * 1800) + n.vx * 0.3,
-                                vy: Math.sin(angle1) * (900 + Math.random() * 1800) + n.vy * 0.3,
-                                life: 0.15 + Math.random() * 0.25,
-                                hue: 20 + Math.random() * 30,
-                                size: 1 + Math.random() * 2.5
-                            });
-                            
-                            const angle2 = n.thrustAngle + Math.PI + (Math.random() - 0.5) * spread;
-                            flameParticles.push({
-                                x: n.x + Math.cos(r2Angle) * n.radius * 0.8,
-                                y: n.y + Math.sin(r2Angle) * n.radius * 0.8,
-                                vx: Math.cos(angle2) * (900 + Math.random() * 1800) + n.vx * 0.3,
-                                vy: Math.sin(angle2) * (900 + Math.random() * 1800) + n.vy * 0.3,
-                                life: 0.15 + Math.random() * 0.25,
-                                hue: 20 + Math.random() * 30,
-                                size: 1 + Math.random() * 2.5
-                            });
-                        }
                         
-                        // Apply spiral thrust to velocity
-                        const thrustForce = 800.0 * n.thrustStrength * (1 - thrustAge / THRUST_DURATION);
-                        n.vx += Math.cos(n.thrustAngle) * thrustForce * 0.016;
-                        n.vy += Math.sin(n.thrustAngle) * thrustForce * 0.016;
-                        const spinDir = n.thrustSpin || 1;
-                        n.vx += Math.cos(n.thrustAngle + Math.PI/2) * thrustForce * spinDir * 0.6 * 0.016;
-                        n.vy += Math.sin(n.thrustAngle + Math.PI/2) * thrustForce * spinDir * 0.6 * 0.016;
-                    } else {
-                        n.thrustTime = 0;
-                        n.thrustSpin = 0;
-                    }
-                }
 
                 n.vx *= DAMPING;
                 n.vy *= DAMPING;
@@ -925,318 +840,13 @@
                 if (!anyCross) break;
             }
 
-            // ─── Update explosions ───
-            for (let i = explosions.length - 1; i >= 0; i--) {
-                const e = explosions[i];
-                e.shockRadius += 6000 * 0.016; // expand shockwave
-                let alive = false;
-                for (const s of e.sparks) {
-                    s.x += s.vx * 0.016;
-                    s.y += s.vy * 0.016;
-                    s.vx *= 0.96;
-                    s.vy *= 0.96;
-                    s.life -= 0.016;
-                    if (s.life > 0) alive = true;
-                }
-                if (!alive && e.shockRadius > 4500) {
-                    explosions.splice(i, 1);
-                }
-            }
-
-            // ─── Update flame particles ───
-            for (let i = flameParticles.length - 1; i >= 0; i--) {
-                const p = flameParticles[i];
-                p.x += p.vx * 0.016;
-                p.y += p.vy * 0.016;
-                p.vx *= 0.95;
-                p.vy *= 0.95;
-                p.life -= 0.016;
-                if (p.life <= 0) flameParticles.splice(i, 1);
-            }
-
-            // ─── Update lasers ───
-            for (let i = lasers.length - 1; i >= 0; i--) {
-                if (time - lasers[i].time > lasers[i].duration) lasers.splice(i, 1);
-            }
-
-            // ─── Random laser fire ───
-            if (lasers.length < 3 && Math.random() < 0.0008 && graphNodes.length > 1) {
-                const src = graphNodes[Math.floor(Math.random() * graphNodes.length)];
-                // Find nearest other node
-                let nearest = null, nearDist = 300;
-                for (const n of graphNodes) {
-                    if (n === src) continue;
-                    const dd = Math.sqrt((n.x - src.x) ** 2 + (n.y - src.y) ** 2);
-                    if (dd < nearDist) { nearDist = dd; nearest = n; }
-                }
-                if (nearest) {
-                    lasers.push({
-                        sx: src.x, sy: src.y,
-                        tx: nearest.x, ty: nearest.y,
-                        time: time, duration: 0.15,
-                        hue: Math.random() * 360
-                    });
-                }
-            }
-
-            // ─── Update fireworks ───
-            for (let i = fireworks.length - 1; i >= 0; i--) {
-                const fw = fireworks[i];
-                let alive = false;
-                for (const p of fw.particles) {
-                    p.x += p.vx * 0.016;
-                    p.y += p.vy * 0.016;
-                    p.vy += 900 * 0.016; // gravity
-                    p.vx *= 0.98;
-                    p.vy *= 0.98;
-                    p.life -= 0.016;
-                    if (p.life > 0) alive = true;
-                }
-                if (!alive) fireworks.splice(i, 1);
-            }
-
-            // ─── Ambient fireworks ───
-            if (fireworks.length < MAX_FIREWORKS && time - lastAmbientFirework > 25) {
-                lastAmbientFirework = time;
-                spawnFirework(W * 0.2 + Math.random() * W * 0.6, H * 0.2 + Math.random() * H * 0.4, 15);
-            }
-        }
-
-        // ─── Firework spawner ───
-        function spawnFirework(wx, wy, count) {
-            const hue = Math.random() * 360;
-            const particles = [];
-            for (let i = 0; i < count; i++) {
-                const angle = Math.random() * Math.PI * 2;
-                const speed = 2400 + Math.random() * 4500;
-                particles.push({
-                    x: wx, y: wy,
-                    vx: Math.cos(angle) * speed,
-                    vy: Math.sin(angle) * speed - 1200,
-                    life: 0.8 + Math.random() * 0.7,
-                    hue: hue + Math.random() * 40 - 20,
-                    size: 1.5 + Math.random() * 2,
-                    crackle: Math.random() < 0.15
-                });
-            }
-            fireworks.push({ x: wx, y: wy, particles: particles, color: hue, startTime: time });
-        }
-
-        // ─── Shape renderers ───
-        function project3D(points3d, rotX, rotY) {
-            const cosX = Math.cos(rotX), sinX = Math.sin(rotX);
-            const cosY = Math.cos(rotY), sinY = Math.sin(rotY);
-            return points3d.map(([x, y, z]) => {
-                const y1 = y * cosX - z * sinX;
-                const z1 = y * sinX + z * cosX;
-                const x2 = x * cosY - z1 * sinY;
-                const z2 = x * sinY + z1 * cosY;
-                return [x2, y1];
-            });
-        }
-
-        function drawShape(ctx, x, y, r, shape, rot, color, isHovered) {
-            ctx.save();
-            ctx.translate(x, y);
-            const scale = isHovered ? 1.25 : 1.0;
-            ctx.scale(scale, scale);
-
-            const h = color.h, s = color.s, l = color.l;
-            const strokeColor = `hsl(${h}, ${s}%, ${l}%)`;
-            const innerGlow = ctx.createRadialGradient(0, 0, 0, 0, 0, r);
-            innerGlow.addColorStop(0, `hsla(${h}, ${s}%, ${Math.min(l + 40, 98)}%, 0.9)`);
-            innerGlow.addColorStop(0.4, `hsla(${h}, ${s}%, ${l + 10}%, 0.5)`);
-            innerGlow.addColorStop(1, `hsla(${h}, ${s}%, ${l}%, 0.0)`);
-
-            // Inner glow
-            ctx.beginPath();
-            ctx.arc(0, 0, r * 1.1, 0, Math.PI * 2);
-            ctx.fillStyle = innerGlow;
-            ctx.fill();
-
-            const rotX = rot * 0.7;
-            const rotY = rot;
-
-            // Define 3D vertices for each shape
-            let edges3d = [];
-            const S = r * 0.75; // shape scale
-
-            switch (shape) {
-                case 'tetrahedron': {
-                    const v = [[1,1,1],[1,-1,-1],[-1,1,-1],[-1,-1,1]];
-                    edges3d = [[0,1],[0,2],[0,3],[1,2],[1,3],[2,3]];
-                    const p = project3D(v.map(c => c.map(c2 => c2 * S)), rotX, rotY);
-                    ctx.strokeStyle = strokeColor; ctx.lineWidth = 1.5;
-                    edges3d.forEach(([a,b]) => { ctx.beginPath(); ctx.moveTo(p[a][0], p[a][1]); ctx.lineTo(p[b][0], p[b][1]); ctx.stroke(); });
-                    break;
-                }
-                case 'cube': {
-                    const v = [];
-                    for (let sx = -1; sx <= 1; sx += 2) for (let sy = -1; sy <= 1; sy += 2) for (let sz = -1; sz <= 1; sz += 2) v.push([sx, sy, sz]);
-                    const edgePairs = [[0,1],[0,2],[0,4],[1,3],[1,5],[2,3],[2,6],[3,7],[4,5],[4,6],[5,7],[6,7]];
-                    const p = project3D(v.map(c => c.map(c2 => c2 * S * 0.7)), rotX, rotY);
-                    ctx.strokeStyle = strokeColor; ctx.lineWidth = 1.5;
-                    edgePairs.forEach(([a,b]) => { ctx.beginPath(); ctx.moveTo(p[a][0], p[a][1]); ctx.lineTo(p[b][0], p[b][1]); ctx.stroke(); });
-                    break;
-                }
-                case 'octahedron': {
-                    const v = [[1,0,0],[-1,0,0],[0,1,0],[0,-1,0],[0,0,1],[0,0,-1]];
-                    const edgePairs = [[0,2],[0,3],[0,4],[0,5],[1,2],[1,3],[1,4],[1,5],[2,4],[2,5],[3,4],[3,5]];
-                    const p = project3D(v.map(c => c.map(c2 => c2 * S)), rotX, rotY);
-                    ctx.strokeStyle = strokeColor; ctx.lineWidth = 1.5;
-                    edgePairs.forEach(([a,b]) => { ctx.beginPath(); ctx.moveTo(p[a][0], p[a][1]); ctx.lineTo(p[b][0], p[b][1]); ctx.stroke(); });
-                    break;
-                }
-                case 'dodecahedron': {
-                    const phi = (1 + Math.sqrt(5)) / 2;
-                    const v = [];
-                    for (let sx = -1; sx <= 1; sx += 2) for (let sy = -1; sy <= 1; sy += 2) for (let sz = -1; sz <= 1; sz += 2) v.push([sx, sy, sz]);
-                    for (let sx = -1; sx <= 1; sx += 2) for (let sy = -1; sy <= 1; sy += 2) { v.push([0, sx / phi, sy * phi]); v.push([sx / phi, sy * phi, 0]); v.push([sy * phi, 0, sx / phi]); }
-                    const edgePairs = [];
-                    for (let i = 0; i < v.length; i++) for (let j = i + 1; j < v.length; j++) {
-                        const dx = v[i][0] - v[j][0], dy = v[i][1] - v[j][1], dz = v[i][2] - v[j][2];
-                        if (Math.abs(Math.sqrt(dx*dx+dy*dy+dz*dz) - 2/phi) < 0.01) edgePairs.push([i, j]);
-                    }
-                    const p = project3D(v.map(c => c.map(c2 => c2 * S * 0.55)), rotX, rotY);
-                    ctx.strokeStyle = strokeColor; ctx.lineWidth = 1.2;
-                    edgePairs.forEach(([a,b]) => { ctx.beginPath(); ctx.moveTo(p[a][0], p[a][1]); ctx.lineTo(p[b][0], p[b][1]); ctx.stroke(); });
-                    break;
-                }
-                case 'icosahedron': {
-                    const phi = (1 + Math.sqrt(5)) / 2;
-                    const v = [[0,1,phi],[0,1,-phi],[0,-1,phi],[0,-1,-phi],[1,phi,0],[1,-phi,0],[-1,phi,0],[-1,-phi,0],[phi,0,1],[phi,0,-1],[-phi,0,1],[-phi,0,-1]];
-                    const edgePairs = [[0,2],[0,4],[0,6],[0,8],[0,10],[1,3],[1,4],[1,6],[1,9],[1,11],[2,5],[2,7],[2,8],[2,10],[3,5],[3,7],[3,9],[3,11],[4,6],[4,8],[4,9],[5,7],[5,8],[5,9],[6,10],[6,11],[7,10],[7,11],[8,9],[10,11]];
-                    const p = project3D(v.map(c => c.map(c2 => c2 * S * 0.5)), rotX, rotY);
-                    ctx.strokeStyle = strokeColor; ctx.lineWidth = 1.5;
-                    edgePairs.forEach(([a,b]) => { ctx.beginPath(); ctx.moveTo(p[a][0], p[a][1]); ctx.lineTo(p[b][0], p[b][1]); ctx.stroke(); });
-                    break;
-                }
-                case 'star': {
-                    // 5-pointed star
-                    const spikes = 5, outerR = S, innerR = S * 0.4;
-                    ctx.beginPath();
-                    for (let i = 0; i < spikes * 2; i++) {
-                        const r2 = i % 2 === 0 ? outerR : innerR;
-                        const angle = (i * Math.PI / spikes) - Math.PI / 2 + rot;
-                        const sx = Math.cos(angle) * r2, sy = Math.sin(angle) * r2;
-                        if (i === 0) ctx.moveTo(sx, sy); else ctx.lineTo(sx, sy);
-                    }
-                    ctx.closePath();
-                    ctx.strokeStyle = strokeColor; ctx.lineWidth = 1.8;
-                    ctx.stroke();
-                    // Inner glow fill
-                    const starGlow = ctx.createRadialGradient(0, 0, 0, 0, 0, innerR);
-                    starGlow.addColorStop(0, `hsla(${h}, ${s}%, ${Math.min(l+30,95)}%, 0.5)`);
-                    starGlow.addColorStop(1, `hsla(${h}, ${s}%, ${l}%, 0.0)`);
-                    ctx.fillStyle = starGlow; ctx.fill();
-                    break;
-                }
-                case 'hexagonal_prism': {
-                    const v = [], edgeP = [];
-                    for (let i = 0; i < 6; i++) {
-                        const a = Math.PI / 3 * i;
-                        v.push([Math.cos(a)*S, S*0.6, Math.sin(a)*S]);
-                        v.push([Math.cos(a)*S, -S*0.6, Math.sin(a)*S]);
-                    }
-                    for (let i = 0; i < 6; i++) { edgeP.push([i*2, i*2+1]); edgeP.push([i*2, ((i+1)%6)*2]); edgeP.push([i*2+1, ((i+1)%6)*2+1]); }
-                    const p = project3D(v, rotX, rotY);
-                    ctx.strokeStyle = strokeColor; ctx.lineWidth = 1.3;
-                    edgeP.forEach(([a,b]) => { ctx.beginPath(); ctx.moveTo(p[a][0], p[a][1]); ctx.lineTo(p[b][0], p[b][1]); ctx.stroke(); });
-                    break;
-                }
-                case 'sphere_rings': {
-                    // Circle with orbital ring
-                    ctx.beginPath(); ctx.arc(0, 0, S * 0.7, 0, Math.PI * 2);
-                    ctx.strokeStyle = strokeColor; ctx.lineWidth = 1.5; ctx.stroke();
-                    // Ring (ellipse)
-                    const ringPts = [];
-                    for (let i = 0; i <= 36; i++) {
-                        const a = (i / 36) * Math.PI * 2;
-                        ringPts.push(project3D([[Math.cos(a)*S*1.1, 0, Math.sin(a)*S*1.1]], rotX*1.3, rotY*0.7)[0]);
-                    }
-                    ctx.beginPath();
-                    ringPts.forEach((p2, i) => i === 0 ? ctx.moveTo(p2[0], p2[1]) : ctx.lineTo(p2[0], p2[1]));
-                    ctx.strokeStyle = `hsla(${h}, ${s}%, ${Math.min(l+20,90)}%, 0.6)`;
-                    ctx.lineWidth = 1; ctx.stroke();
-                    break;
-                }
-                case 'diamond': {
-                    // Elongated octahedron (top/bottom points)
-                    const v = [[0,1.3*S,0],[S*0.7,0,0],[0,0,S*0.7],[-S*0.7,0,0],[0,0,-S*0.7],[0,-1.3*S,0]];
-                    const edgeP = [[0,1],[0,2],[0,3],[0,4],[1,2],[2,3],[3,4],[4,1],[1,5],[2,5],[3,5],[4,5]];
-                    const p = project3D(v, rotX, rotY);
-                    ctx.strokeStyle = strokeColor; ctx.lineWidth = 1.5;
-                    edgeP.forEach(([a,b]) => { ctx.beginPath(); ctx.moveTo(p[a][0], p[a][1]); ctx.lineTo(p[b][0], p[b][1]); ctx.stroke(); });
-                    break;
-                }
-                case 'triangular_prism': {
-                    const v = [];
-                    for (let i = 0; i < 3; i++) {
-                        const a = (i / 3) * Math.PI * 2 - Math.PI / 2;
-                        v.push([Math.cos(a)*S, S*0.6, Math.sin(a)*S]);
-                        v.push([Math.cos(a)*S, -S*0.6, Math.sin(a)*S]);
-                    }
-                    const edgeP = [[0,1],[2,3],[4,5],[0,2],[2,4],[0,4],[1,3],[3,5],[1,5]];
-                    const p = project3D(v, rotX, rotY);
-                    ctx.strokeStyle = strokeColor; ctx.lineWidth = 1.3;
-                    edgeP.forEach(([a,b]) => { ctx.beginPath(); ctx.moveTo(p[a][0], p[a][1]); ctx.lineTo(p[b][0], p[b][1]); ctx.stroke(); });
-                    break;
-                }
-                case 'pentagonal_prism': {
-                    const v = [], edgeP = [];
-                    for (let i = 0; i < 5; i++) {
-                        const a = (i / 5) * Math.PI * 2 - Math.PI / 2;
-                        v.push([Math.cos(a)*S, S*0.6, Math.sin(a)*S]);
-                        v.push([Math.cos(a)*S, -S*0.6, Math.sin(a)*S]);
-                    }
-                    for (let i = 0; i < 5; i++) { edgeP.push([i*2, i*2+1]); edgeP.push([i*2, ((i+1)%5)*2]); edgeP.push([i*2+1, ((i+1)%5)*2+1]); }
-                    const p = project3D(v, rotX, rotY);
-                    ctx.strokeStyle = strokeColor; ctx.lineWidth = 1.3;
-                    edgeP.forEach(([a,b]) => { ctx.beginPath(); ctx.moveTo(p[a][0], p[a][1]); ctx.lineTo(p[b][0], p[b][1]); ctx.stroke(); });
-                    break;
-                }
-                case 'star_of_david': {
-                    // Two overlapping triangles
-                    for (let t = 0; t < 2; t++) {
-                        ctx.beginPath();
-                        for (let i = 0; i < 3; i++) {
-                            const a = (i / 3) * Math.PI * 2 + t * Math.PI / 3 + rot;
-                            const px = Math.cos(a) * S, py = Math.sin(a) * S;
-                            if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
-                        }
-                        ctx.closePath();
-                        ctx.strokeStyle = strokeColor; ctx.lineWidth = 1.5; ctx.stroke();
-                    }
-                    const sdGlow = ctx.createRadialGradient(0, 0, 0, 0, 0, S * 0.5);
-                    sdGlow.addColorStop(0, `hsla(${h}, ${s}%, ${Math.min(l+30,95)}%, 0.4)`);
-                    sdGlow.addColorStop(1, `hsla(${h}, ${s}%, ${l}%, 0.0)`);
-                    ctx.fillStyle = sdGlow; ctx.fill();
-                    break;
-                }
-                default: {
-                    // Fallback: circle
-                    ctx.beginPath(); ctx.arc(0, 0, S * 0.7, 0, Math.PI * 2);
-                    ctx.strokeStyle = strokeColor; ctx.lineWidth = 1.5; ctx.stroke();
-                    break;
-                }
-            }
-
-            // Outer glow ring
-            if (isHovered) {
-                ctx.beginPath();
-                ctx.arc(0, 0, r * 1.3, 0, Math.PI * 2);
-                ctx.strokeStyle = `hsla(${h}, ${s}%, ${Math.min(l+20,90)}%, 0.4)`;
-                ctx.lineWidth = 2;
-                ctx.stroke();
-            }
-
-            ctx.restore();
-        }
-
-        // ─── Render ───
+            // ─── Render ───
         function resize() {
             W = canvas.width = canvas.offsetWidth;
             H = canvas.height = canvas.offsetHeight;
+            bgCanvas.width = W;
+            bgCanvas.height = H;
+            bgNeedsUpdate = true;
         }
 
         function worldToScreen(wx, wy) {
@@ -1289,45 +899,58 @@
 
             // Background: parallax nebula
             const isLightMode = document.body.classList.contains('light-theme');
-            const bgGrad = ctx.createLinearGradient(0, 0, 0, H);
-            if (isLightMode) {
-                bgGrad.addColorStop(0, '#f8f9fa');
-                bgGrad.addColorStop(1, '#e9ecef');
-            } else {
-                bgGrad.addColorStop(0, '#0d0d2b');
-                bgGrad.addColorStop(0.5, '#0a0a1a');
-                bgGrad.addColorStop(1, '#050510');
+            if (isLightMode !== lastTheme) {
+                bgNeedsUpdate = true;
+                lastTheme = isLightMode;
             }
-            ctx.fillStyle = bgGrad;
-            ctx.fillRect(0, 0, W, H);
 
-            // Second nebula glow (Parallax)
-            const prlxX1 = (W * 0.7) - (camera.x * 0.02);
-            const prlxY1 = (H * 0.6) - (camera.y * 0.02);
-            const neb2 = ctx.createRadialGradient(prlxX1, prlxY1, 0, prlxX1, prlxY1, Math.max(W, H) * 0.8);
-            if (isLightMode) {
-                neb2.addColorStop(0, 'rgba(100, 150, 255, 0.05)');
-                neb2.addColorStop(1, 'rgba(255, 255, 255, 0.0)');
-            } else {
-                neb2.addColorStop(0, 'rgba(60, 20, 80, 0.15)');
-                neb2.addColorStop(1, 'rgba(10, 10, 26, 0.0)');
-            }
-            ctx.fillStyle = neb2;
-            ctx.fillRect(0, 0, W, H);
+            if (bgNeedsUpdate) {
+                const bgGrad = bgCtx.createLinearGradient(0, 0, 0, H);
+                if (isLightMode) {
+                    bgGrad.addColorStop(0, '#f8f9fa');
+                    bgGrad.addColorStop(1, '#e9ecef');
+                } else {
+                    bgGrad.addColorStop(0, '#0d0d2b');
+                    bgGrad.addColorStop(0.5, '#0a0a1a');
+                    bgGrad.addColorStop(1, '#050510');
+                }
+                bgCtx.fillStyle = bgGrad;
+                bgCtx.fillRect(0, 0, W, H);
 
-            // Third nebula cloud (Parallax)
-            const prlxX2 = (W * 0.2) - (camera.x * 0.04);
-            const prlxY2 = (H * 0.8) - (camera.y * 0.04);
-            const neb3 = ctx.createRadialGradient(prlxX2, prlxY2, 0, prlxX2, prlxY2, Math.max(W, H) * 0.6);
-            if (isLightMode) {
-                neb3.addColorStop(0, 'rgba(100, 200, 255, 0.05)');
-                neb3.addColorStop(1, 'rgba(255, 255, 255, 0.0)');
-            } else {
-                neb3.addColorStop(0, 'rgba(20, 40, 80, 0.1)');
-                neb3.addColorStop(1, 'rgba(10, 10, 26, 0.0)');
+                // Second nebula glow (Cached)
+                const prlxX1 = W * 0.7;
+                const prlxY1 = H * 0.6;
+                const neb2 = bgCtx.createRadialGradient(prlxX1, prlxY1, 0, prlxX1, prlxY1, Math.max(W, H) * 0.8);
+                if (isLightMode) {
+                    neb2.addColorStop(0, 'rgba(100, 150, 255, 0.05)');
+                    neb2.addColorStop(1, 'rgba(255, 255, 255, 0.0)');
+                } else {
+                    neb2.addColorStop(0, 'rgba(60, 20, 80, 0.15)');
+                    neb2.addColorStop(1, 'rgba(10, 10, 26, 0.0)');
+                }
+                bgCtx.fillStyle = neb2;
+                bgCtx.fillRect(0, 0, W, H);
+
+                // Third nebula cloud (Cached)
+                const prlxX2 = W * 0.2;
+                const prlxY2 = H * 0.8;
+                const neb3 = bgCtx.createRadialGradient(prlxX2, prlxY2, 0, prlxX2, prlxY2, Math.max(W, H) * 0.6);
+                if (isLightMode) {
+                    neb3.addColorStop(0, 'rgba(100, 200, 255, 0.05)');
+                    neb3.addColorStop(1, 'rgba(255, 255, 255, 0.0)');
+                } else {
+                    neb3.addColorStop(0, 'rgba(20, 40, 80, 0.1)');
+                    neb3.addColorStop(1, 'rgba(10, 10, 26, 0.0)');
+                }
+                bgCtx.fillStyle = neb3;
+                bgCtx.fillRect(0, 0, W, H);
+                bgNeedsUpdate = false;
             }
-            ctx.fillStyle = neb3;
-            ctx.fillRect(0, 0, W, H);
+            
+            // Draw cached background
+            ctx.globalCompositeOperation = 'source-over';
+            ctx.drawImage(bgCanvas, 0, 0);
+            ctx.globalCompositeOperation = 'lighter';
 
             // Stars with shimmer
             stars.forEach(s => {
@@ -1434,22 +1057,19 @@
             // Helper: draw one edge line from (ax,ay) to (bx,by) in screen space
             function drawEdgeBeam(sa, sb, colA, colB, glowAlpha, coreAlpha, lineW) {
                 const blendH = (colA.h + colB.h) / 2;
-                // Wide glow line
+                // Wide glow line (Solid instead of shadow/gradient)
                 ctx.beginPath();
                 ctx.moveTo(sa.x, sa.y);
                 ctx.lineTo(sb.x, sb.y);
                 ctx.strokeStyle = `hsla(${blendH}, 70%, 70%, ${glowAlpha})`;
                 ctx.lineWidth = lineW * 6;
                 ctx.stroke();
-                // Core line (gradient)
+                // Core line (Solid instead of gradient)
                 ctx.beginPath();
                 ctx.moveTo(sa.x, sa.y);
                 ctx.lineTo(sb.x, sb.y);
                 if (isFinite(sa.x) && isFinite(sa.y) && isFinite(sb.x) && isFinite(sb.y)) {
-                    const edgeGrad = ctx.createLinearGradient(sa.x, sa.y, sb.x, sb.y);
-                    edgeGrad.addColorStop(0, `hsla(${colA.h}, ${colA.s}%, ${Math.min(colA.l + 20, 90)}%, ${coreAlpha})`);
-                    edgeGrad.addColorStop(1, `hsla(${colB.h}, ${colB.s}%, ${Math.min(colB.l + 20, 90)}%, ${coreAlpha})`);
-                    ctx.strokeStyle = edgeGrad;
+                    ctx.strokeStyle = `hsla(${blendH}, 80%, 85%, ${coreAlpha})`;
                     ctx.lineWidth = lineW;
                     ctx.stroke();
                 }
@@ -1501,7 +1121,7 @@
             edgeParticles.forEach(p => {
                 const a = nodeMap[p.edge.source], b = nodeMap[p.edge.target];
                 if (!a || !b) return;
-                const miAB = minImageDelta(a.x, a.y, b.x, b.y);
+                const miAB = minImageDelta(a.x, a.y, b.x, b.y, _miResult);
                 const dist = Math.sqrt(miAB.d2);
                 if (dist > EDGE_DRAW_DISTANCE) return;
 
@@ -1532,13 +1152,10 @@
                 if (isInView(hx1, hy1, 50) || isInView(tx1, ty1, 50)) {
                     // Laser streak line
                     if (isFinite(st1.x) && isFinite(st1.y) && isFinite(sh1.x) && isFinite(sh1.y)) {
-                        const grad = ctx.createLinearGradient(st1.x, st1.y, sh1.x, sh1.y);
-                        grad.addColorStop(0, `hsla(${blendH}, 80%, 80%, 0)`);
-                        grad.addColorStop(1, `hsla(${blendH}, 100%, 90%, ${alpha})`);
                         ctx.beginPath();
                         ctx.moveTo(st1.x, st1.y);
                         ctx.lineTo(sh1.x, sh1.y);
-                        ctx.strokeStyle = grad;
+                        ctx.strokeStyle = `hsla(${blendH}, 90%, 85%, ${alpha * 0.7})`;
                         ctx.lineWidth = pSize * camera.zoom * 1.5;
                         ctx.stroke();
                     }
@@ -1558,9 +1175,6 @@
                 const st2 = worldToScreen(tx2, ty2);
                 if (isInView(hx2, hy2, 50) || isInView(tx2, ty2, 50)) {
                     if (isFinite(st2.x) && isFinite(st2.y) && isFinite(sh2.x) && isFinite(sh2.y)) {
-                        const grad2 = ctx.createLinearGradient(st2.x, st2.y, sh2.x, sh2.y);
-                        grad2.addColorStop(0, `hsla(${blendH}, 80%, 80%, 0)`);
-                        grad2.addColorStop(1, `hsla(${blendH}, 100%, 90%, ${alpha * 0.5})`);
                         ctx.beginPath();
                         ctx.moveTo(st2.x, st2.y);
                         ctx.lineTo(sh2.x, sh2.y);
@@ -1672,62 +1286,7 @@
                 }
             });
 
-            flameParticles.forEach(p => {
-                const sp = worldToScreen(p.x, p.y);
-                const alpha = Math.max(0, p.life / 0.4);
-                ctx.beginPath();
-                ctx.arc(sp.x, sp.y, p.size * camera.zoom * alpha, 0, Math.PI * 2);
-                ctx.fillStyle = `hsla(${p.hue}, 100%, ${60 + 30 * alpha}%, ${alpha * 0.8})`;
-                ctx.fill();
-            });
-
-            // ─── Explosion shockwave rings ───
-            explosions.forEach(e => {
-                if (e.shockRadius > 0 && e.shockRadius < 4500) {
-                    const alpha = Math.max(0, 0.4 * (1 - e.shockRadius / 4500));
-                    const sp = worldToScreen(e.x, e.y);
-                    const sr = e.shockRadius * camera.zoom;
-                    ctx.beginPath();
-                    ctx.arc(sp.x, sp.y, sr, 0, Math.PI * 2);
-                    const ringColor = e.isChain ? `hsla(40, 100%, 80%, ${alpha})` : `hsla(200, 80%, 80%, ${alpha})`;
-                    ctx.strokeStyle = ringColor;
-                    ctx.lineWidth = 2 * camera.zoom;
-                    ctx.stroke();
-                }
-            });
-
-            // ─── Explosion sparks ───
-            explosions.forEach(e => {
-                e.sparks.forEach(s => {
-                    if (s.life <= 0) return;
-                    const alpha = Math.max(0, s.life / 1.0);
-                    const sp = worldToScreen(s.x, s.y);
-                    ctx.beginPath();
-                    ctx.arc(sp.x, sp.y, s.size * camera.zoom * alpha, 0, Math.PI * 2);
-                    ctx.fillStyle = `hsla(${s.hue}, 100%, ${50 + 40 * alpha}%, ${alpha})`;
-                    ctx.fill();
-                });
-            });
-
-            // ─── Explosion flash overlay ───
-            explosions.forEach(e => {
-                const flashAge = time - e.time;
-                if (flashAge > 0.2) return;
-                const alpha = (1 - flashAge / 0.2) * e.strength * 0.4;
-                const sp = worldToScreen(e.x, e.y);
-                const flashR = 80 * camera.zoom;
-                if (isFinite(sp.x) && isFinite(sp.y) && isFinite(flashR) && flashR > 0) {
-                    const flashGrad = ctx.createRadialGradient(sp.x, sp.y, 0, sp.x, sp.y, flashR);
-                    flashGrad.addColorStop(0, `rgba(255, 255, 240, ${alpha})`);
-                    flashGrad.addColorStop(1, `rgba(255, 200, 100, 0)`);
-                    ctx.fillStyle = flashGrad;
-                    ctx.beginPath();
-                    ctx.arc(sp.x, sp.y, flashR, 0, Math.PI * 2);
-                    ctx.fill();
-                }
-            });
-
-            // ─── Fireworks ───
+// ─── Fireworks ───
             fireworks.forEach(fw => {
                 fw.particles.forEach(p => {
                     if (p.life <= 0) return;
