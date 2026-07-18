@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "7acc7a45",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Sharp excess of ℤ₂-coindex under suspension\n\n## What this cycle established (unconditionally)\n\nThe file `Catalog/Novelty/Z2CoindexSuspension.lean` develops a self-contained combin",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 24,
-      "timestamp": "2026-07-14T03:41:54",
-      "title": "Close Proofs: This cycle established, unconditionally, the constructive lower-bound "
-    },
-    {
       "cycle_id": "bec8fe46",
       "domain": "Novelty",
       "key_insight": "# Future Directions: cubic spectral gaps of swap reconfiguration chains\n\nThis cycle closed the two-sided estimate for the one-dimensional swap model: the\nspectral gap of the weighted path swap chain i",
@@ -2501,6 +2491,16 @@
       "theorem_count": 7,
       "timestamp": "2026-07-17T18:22:10",
       "title": "The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
+    },
+    {
+      "cycle_id": "9f14a31b",
+      "domain": "Applications",
+      "key_insight": "# Future directions\n\n## What the formal result establishes\n\n`Catalog/Computation/SoundOfPi.lean` audits the proposed digit-to-note model before undertaking statistical tests.  With pitch offset equal",
+      "quality_score": 0.6,
+      "sorry_count": 1,
+      "theorem_count": 13,
+      "timestamp": "2026-07-18T00:42:35",
+      "title": "The Sound of Pi: Musical Structure in Transcendental Constants"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-17T18:22:10",
+  "last_updated": "2026-07-18T00:42:35",
   "open_questions": [
-    {
-      "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
-      "cycle_id": "da85fe77",
-      "domain": "Computation",
-      "sorry_count": 3,
-      "timestamp": "2026-07-15T02:32:33"
-    },
     {
       "context": "",
       "cycle_id": "4b27af05",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 3,
       "timestamp": "2026-07-17T18:04:18"
+    },
+    {
+      "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hn2⟩)",
+      "cycle_id": "9f14a31b",
+      "domain": "Applications",
+      "sorry_count": 1,
+      "timestamp": "2026-07-18T00:42:35"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "08676759",
-        "quality": 0.69,
-        "theorems": 17,
-        "title": "ArXiv paper: Polynomial-Time Evaluation of Aardal-Lenstra Denumerants via Consta"
-      },
-      {
         "cycle_id": "d1512647",
         "quality": 0.71,
         "theorems": 5,
@@ -3141,6 +3135,12 @@
         "quality": 0.67,
         "theorems": 7,
         "title": "The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
+      },
+      {
+        "cycle_id": "9f14a31b",
+        "quality": 0.6,
+        "theorems": 13,
+        "title": "The Sound of Pi: Musical Structure in Transcendental Constants"
       }
     ],
     "Bridges": [

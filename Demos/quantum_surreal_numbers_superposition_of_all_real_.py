@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
-"""Numerical demonstrations for quantum surreal observation.
+"""Numerical illustrations of standard-part non-Archimedean measurement.
 
-Floating-point arithmetic has no genuine infinitesimals.  The parameter sweeps
-below display the real limiting behavior that standard-part observation captures:
-(1, epsilon) has Born weights approaching (1, 0), while equal amplitudes remain
-(1/2, 1/2).  Exact lexicographic pairs model first-order infinitesimals without
-floating-point approximation.
+Floating-point numbers do not contain genuine infinitesimals.  The epsilon-state
+examples therefore use small positive real parameters to display the real family
+whose limiting shadow is the standard-part result.  The lexicographic model is
+represented exactly by rational pairs.
 """
 
 from __future__ import annotations
@@ -13,133 +12,119 @@ from __future__ import annotations
 from dataclasses import dataclass
 from fractions import Fraction
 from math import isclose
-from typing import Iterable, Sequence
+from typing import Dict, Hashable, Iterable, Mapping, Sequence, Tuple, TypeVar
+
+Label = TypeVar("Label", bound=Hashable)
 
 
 @dataclass(frozen=True)
-class LexValue:
-    """A rational lexicographic value a + b*epsilon."""
+class LexWeight:
+    """Exact value a + b*delta in the two-level lexicographic field."""
 
-    real: Fraction
+    dominant: Fraction
     infinitesimal: Fraction
 
-    def __add__(self, other: "LexValue") -> "LexValue":
-        return LexValue(
-            self.real + other.real,
+    def __add__(self, other: "LexWeight") -> "LexWeight":
+        return LexWeight(
+            self.dominant + other.dominant,
             self.infinitesimal + other.infinitesimal,
         )
 
     def standard_part(self) -> Fraction:
-        return self.real
+        """Return the observable dominant coordinate."""
+        return self.dominant
 
 
-def born_weights(amplitudes: Sequence[float]) -> list[float]:
-    """Return normalized squared amplitudes for a nonzero real state."""
-    norm_sq = sum(a * a for a in amplitudes)
+def born_distribution(amplitudes: Mapping[Label, float]) -> Dict[Label, float]:
+    """Compute normalized squared-amplitude weights in O(number of labels)."""
+    norm_sq = sum(value * value for value in amplitudes.values())
     if norm_sq == 0.0:
-        raise ValueError("The state must have nonzero squared norm.")
-    return [(a * a) / norm_sq for a in amplitudes]
+        raise ValueError("The zero state has no normalized Born distribution.")
+    return {label: value * value / norm_sq for label, value in amplitudes.items()}
 
 
-def epsilon_state_weights(epsilon: float) -> tuple[float, float]:
-    """Born weights of |0> + epsilon |1>."""
-    if epsilon < 0.0:
-        raise ValueError("epsilon must be nonnegative")
-    first, second = born_weights([1.0, epsilon])
-    return first, second
+def epsilon_state_weights(epsilon: float) -> Tuple[float, float]:
+    """Return weights of |0> + epsilon|1> for a positive real proxy epsilon."""
+    if epsilon <= 0.0:
+        raise ValueError("epsilon must be positive")
+    weights = born_distribution({"0": 1.0, "1": epsilon})
+    return weights["0"], weights["1"]
 
 
-def equal_amplitude_weights(amplitude: float) -> tuple[float, float]:
-    """Born weights of two distinct labels with a common nonzero amplitude."""
+def equal_amplitude_weights(
+    first_label: Label, second_label: Label, amplitude: float
+) -> Dict[Label, float]:
+    """Compute the equal-amplitude law for two distinct labels."""
+    if first_label == second_label:
+        raise ValueError("Labels must be distinct coordinates.")
     if amplitude == 0.0:
-        raise ValueError("amplitude must be nonzero")
-    first, second = born_weights([amplitude, amplitude])
-    return first, second
+        raise ValueError("The common amplitude must be nonzero.")
+    return born_distribution({first_label: amplitude, second_label: amplitude})
 
 
-def reservoir_event_mass(
-    n_visible: int, visible_indices: Iterable[int], includes_reservoir: bool
-) -> LexValue:
-    """Compute exact mass (ordinary, infinitesimal) of a reservoir event."""
-    if n_visible < 0:
-        raise ValueError("n_visible must be nonnegative")
-    indices = set(visible_indices)
-    if any(i < 0 or i >= n_visible for i in indices):
-        raise ValueError("visible index outside the outcome space")
-    reservoir_flag = Fraction(int(includes_reservoir))
-    infinitesimal = Fraction(len(indices) - n_visible * int(includes_reservoir))
-    return LexValue(reservoir_flag, infinitesimal)
+def lexicographic_event_weight(
+    visible_count: int, selected_visible: Iterable[int], includes_reservoir: bool
+) -> LexWeight:
+    """Compute exact event mass in the n-visible-atom reservoir model."""
+    if visible_count < 0:
+        raise ValueError("visible_count must be nonnegative")
+    selected = set(selected_visible)
+    if any(index < 0 or index >= visible_count for index in selected):
+        raise ValueError("A selected visible index is outside the sample space.")
+    result = LexWeight(Fraction(0), Fraction(len(selected)))
+    if includes_reservoir:
+        result += LexWeight(Fraction(1), Fraction(-visible_count))
+    return result
 
 
-def tropical_reservoir_integral(
-    reservoir_value: float, visible_values: Sequence[float], penalty: float
-) -> tuple[float, str, float]:
-    """Return max-plus value, a maximizing label, and the stability margin."""
-    if penalty >= 0.0:
-        raise ValueError("penalty must be negative")
-    visible_scores = [value + penalty for value in visible_values]
-    if not visible_scores:
-        return reservoir_value, "reservoir", float("inf")
-    best_visible_score = max(visible_scores)
-    best_visible_index = visible_scores.index(best_visible_score)
-    margin = reservoir_value - best_visible_score
-    if reservoir_value >= best_visible_score:
-        return reservoir_value, "reservoir", margin
-    return best_visible_score, f"visible[{best_visible_index}]", margin
+def print_epsilon_table(exponents: Sequence[int]) -> None:
+    """Display convergence toward the standard-part shadow (1, 0)."""
+    print("\nEpsilon-amplitude state |0> + epsilon|1>")
+    print(f"{'epsilon':>14} {'P(0)':>20} {'P(1)':>20} {'sum':>12}")
+    for exponent in exponents:
+        epsilon = 10.0 ** (-exponent)
+        p0, p1 = epsilon_state_weights(epsilon)
+        print(f"{epsilon:14.3e} {p0:20.16f} {p1:20.12e} {p0 + p1:12.9f}")
+        assert isclose(p0 + p1, 1.0, rel_tol=0.0, abs_tol=1e-15)
 
 
-def demonstrate_epsilon_collapse() -> None:
-    print("\n1. Infinitesimal-amplitude limit")
-    print("epsilon       weight(0)              weight(1)              sum")
-    for epsilon in (1.0, 0.1, 0.01, 0.001, 0.0001):
-        w0, w1 = epsilon_state_weights(epsilon)
-        print(f"{epsilon:<12g} {w0:<22.16g} {w1:<22.16g} {w0 + w1:.16g}")
-        assert isclose(w0 + w1, 1.0, rel_tol=0.0, abs_tol=1e-15)
+def print_label_invariance_demo() -> None:
+    """Show that a tiny numerical label does not suppress an equal amplitude."""
+    tiny_label = 1.0e-100
+    weights = equal_amplitude_weights(0.0, tiny_label, 7.25)
+    print("\nEqual amplitudes on labels 0 and 1e-100")
+    for label, probability in weights.items():
+        print(f"label={label!r:>8}: probability={probability:.6f}")
+    assert all(isclose(value, 0.5) for value in weights.values())
 
 
-def demonstrate_label_invariance() -> None:
-    print("\n2. Equal-amplitude obstruction")
-    for amplitude in (1.0, 1e-3, 1e6):
-        weights = equal_amplitude_weights(amplitude)
-        print(f"common amplitude {amplitude:g}: weights = {weights}")
-        assert all(isclose(weight, 0.5) for weight in weights)
-    print("Changing the labels, even to infinitesimal labels, does not enter this calculation.")
-
-
-def demonstrate_dirac_collapse() -> None:
-    print("\n3. Lexicographic reservoir and standard-part collapse")
-    n = 4
-    events = [
-        ("one visible atom", [0], False),
-        ("all visible atoms", range(n), False),
-        ("reservoir only", [], True),
-        ("whole space", range(n), True),
+def print_lexicographic_demo(visible_count: int) -> None:
+    """Enumerate representative events and their exact and observed weights."""
+    print(f"\nLexicographic model with {visible_count} visible atoms")
+    examples = [
+        ([], False, "empty event"),
+        ([0], False, "one visible atom"),
+        (range(visible_count), False, "all visible atoms"),
+        ([], True, "reservoir only"),
+        (range(visible_count), True, "whole space"),
     ]
-    for name, visible, reservoir in events:
-        mass = reservoir_event_mass(n, visible, reservoir)
+    for selected, reservoir, name in examples:
+        weight = lexicographic_event_weight(visible_count, selected, reservoir)
         print(
-            f"{name:18s}: exact=({mass.real}, {mass.infinitesimal}), "
-            f"standard part={mass.standard_part()}"
+            f"{name:20} exact=({weight.dominant}, {weight.infinitesimal}) "
+            f"observed={weight.standard_part()}"
         )
-    assert reservoir_event_mass(n, range(n), True) == LexValue(Fraction(1), Fraction(0))
-
-
-def demonstrate_tropical_bridge() -> None:
-    print("\n4. Tropical stability and escape")
-    stable = tropical_reservoir_integral(3.0, [2.0, 4.0, 1.0], -2.0)
-    escaped = tropical_reservoir_integral(3.0, [2.0, 6.5, 1.0], -2.0)
-    print(f"stable observable: value={stable[0]}, winner={stable[1]}, margin={stable[2]}")
-    print(f"escape observable: value={escaped[0]}, winner={escaped[1]}, margin={escaped[2]}")
-    assert stable[1] == "reservoir" and stable[2] >= 0.0
-    assert escaped[1] != "reservoir" and escaped[2] < 0.0
+    whole = lexicographic_event_weight(
+        visible_count, range(visible_count), includes_reservoir=True
+    )
+    assert whole == LexWeight(Fraction(1), Fraction(0))
 
 
 def main() -> None:
-    print("Quantum Surreal Observation — numerical demonstrations")
-    demonstrate_epsilon_collapse()
-    demonstrate_label_invariance()
-    demonstrate_dirac_collapse()
-    demonstrate_tropical_bridge()
+    """Run all demonstrations and internal consistency checks."""
+    print_epsilon_table([1, 2, 3, 4, 6])
+    print_label_invariance_demo()
+    print_lexicographic_demo(3)
 
 
 if __name__ == "__main__":

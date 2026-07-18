@@ -1,210 +1,202 @@
-# Quantum Surreal Observation: When Infinitesimal Possibilities Disappear
+# When Infinitesimals Enter the Quantum Lottery
 
-## A probability smaller than every ordinary number
+## A journey from surreal labels to observable probabilities
 
-Imagine a detector facing two doors. Behind the first is an ordinary signal. Behind the second is a signal so faint that its strength is positive, yet smaller than every positive real threshold one could name. The second signal is not zero. It lives on an infinitesimal scale.
+Imagine a number line that does not stop at the largest finite magnitude, because there is no largest one, and does not run out of room between zero and every positive real number. Conway’s surreal numbers form such a landscape. They contain the real numbers, but also infinite quantities and positive infinitesimals: numbers greater than zero yet smaller than every positive real number. The resulting ordered field is an irresistible setting for asking a quantum question: what would it mean to place number-labelled alternatives into superposition when both the labels and the probability calculus can reach beyond ordinary real arithmetic?
 
-Ordinary real numbers cannot express that distinction: a positive real number always exceeds some positive threshold. Non-Archimedean number systems can. They contain positive infinitesimals such as $\varepsilon$, satisfying
+The answer begins with an important separation of roles. A label tells us *which outcome* a branch represents. An amplitude tells us *how much statistical weight* that branch carries. Confusing those roles leads to a seductive but false prediction: that an outcome labelled by an infinitesimal number should itself be nearly impossible to observe. The mathematics says otherwise. Infinitesimal invisibility belongs to amplitudes, not labels.
 
-$$
-0<\varepsilon<r
-$$
+This distinction produces a clean finite theory of non-Archimedean measurement. It also suggests a broader principle: an exotic probability model may contain finer information than ordinary observation can reveal. The operation called the **standard part** turns that fine-scale model into its classical shadow.
 
-for every positive real number $r$. They can also contain infinitely large values and still obey familiar algebraic rules. This makes them natural candidates for describing idealized physical hierarchies in which one effect is present exactly, but invisible at ordinary resolution.
+## Two kinds of extraordinary number
 
-Now add quantum superposition. Let basis states be labelled by surreal numbers, the vast ordered field that contains all real numbers together with infinite and infinitesimal quantities. A finite quantum surreal state has the form
+Surreal numbers and hyperreal numbers play different parts in the story.
 
-$$
-|\psi\rangle=\sum_i a_i|s_i\rangle,
-$$
-
-where each $s_i$ is a surreal label and each amplitude $a_i$ belongs to a non-Archimedean extension of the real numbers. The state may therefore contain branches with ordinary amplitudes and branches with genuinely infinitesimal amplitudes.
-
-The central question is simple to ask: what does an ordinary observer see?
-
-## Standard part as an observation map
-
-A finite non-Archimedean number $x$ lies infinitely close to a unique ordinary real number. That real number is called its **standard part**, written $\operatorname{st}(x)$. Thus $\operatorname{st}(3+\varepsilon)=3$, while $\operatorname{st}(\varepsilon)=0$. Standard part does not claim that $\varepsilon$ equals zero. It says that the distinction disappears at real-valued observational resolution.
-
-For a state $|\psi\rangle$, define its squared norm by
+A surreal number may serve as a basis label. We write the ket associated with a surreal number $s$ as $|s\rangle$. A finite state is a formal superposition
 
 $$
-\|\psi\|^2=\sum_i a_i^2.
+|\psi\rangle=\sum_{s\in S} a_s|s\rangle,
 $$
 
-For simplicity the amplitudes here are real; complex amplitudes would replace $a_i^2$ by $|a_i|^2$. The exact Born weight of branch $i$ is
+where $S$ is a finite set of surreal numbers and the amplitudes $a_s$ belong to a non-Archimedean ordered field of hyperreal numbers. “Non-Archimedean” means that this field contains nonzero infinitesimals. A positive hyperreal $\eta$ is infinitesimal if
 
 $$
-w_i=\frac{a_i^2}{\|\psi\|^2},
+0<\eta<r
 $$
 
-and its observed probability is
+for every positive real number $r$.
+
+A finite hyperreal lies infinitely close to a unique real number. Its **standard part**, written $\operatorname{st}(x)$, is that real number. Thus $\operatorname{st}(3+\eta)=3$ and $\operatorname{st}(\eta)=0$ whenever $\eta$ is infinitesimal. Standard part does not claim that $\eta$ equals zero in the richer field. It says that ordinary real-valued observation cannot distinguish $\eta$ from zero.
+
+For a state with real or hyperreal amplitudes, define its squared norm by
 
 $$
-p_i=\operatorname{st}(w_i).
+\|\psi\|^2=\sum_{s\in S}a_s^2.
 $$
 
-This two-level description separates exact non-Archimedean probability from ordinary observed probability.
-
-The first basic result is normalization. For every state with nonzero squared norm, the exact weights sum to one:
+For simplicity the amplitudes here are ordered-field scalars, so squaring replaces the complex absolute square familiar from conventional quantum mechanics. The exact Born weight of branch $s$ is
 
 $$
-\sum_i w_i=1.
+P_*(s\mid\psi)=\frac{a_s^2}{\|\psi\|^2}.
 $$
 
-The proof is the same cancellation familiar from ordinary quantum theory: summing the numerators reproduces $\|\psi\|^2$, which is then divided by itself. The result matters because infinitesimal probabilities are not discarded before normalization; they participate in an exact probability calculus.
-
-The second result is the **Infinitesimal Branch Theorem**. If $a_j$ is infinitesimal and the total squared norm $\|\psi\|^2$ is appreciable—that is, not infinitesimal—then
+This value is hyperreal. The probability visible to an ordinary observer is
 
 $$
-p_j=0.
+P_{\mathrm{obs}}(s\mid\psi)=\operatorname{st}\!\left(P_*(s\mid\psi)\right).
 $$
 
-Indeed, $a_j^2$ is infinitesimal. Dividing it by an appreciable finite quantity leaves it infinitesimal, and standard part sends that weight to zero. The appreciability condition is essential. If the entire state lived at an even smaller scale, normalization could magnify one infinitesimal amplitude into an observed probability of one.
+The subscript on $P_*$ is a reminder that this is the fine-grained, non-Archimedean weight, before observation removes infinitesimal detail.
 
-## The decisive two-branch experiment
+## Conservation survives the larger number system
 
-Take the state
+The first reassurance is that nothing happens to normalization. For every finite state with $\|\psi\|^2\ne0$, the exact weights satisfy the **Born Normalization Theorem**:
+
+$$
+\sum_{s\in S}P_*(s\mid\psi)=1.
+$$
+
+The proof is the same algebra that works over the reals:
+
+$$
+\sum_{s\in S}\frac{a_s^2}{\|\psi\|^2}
+=\frac{\sum_{s\in S}a_s^2}{\|\psi\|^2}
+=1.
+$$
+
+The richer field introduces tiny positive weights, but it does not lose or create total exact mass.
+
+A second theorem explains when such tiny weights disappear observationally. Call a positive finite hyperreal **appreciable** if it is not infinitesimal. The **Infinitesimal-Branch Theorem** states: if $a_s$ is infinitesimal and the total squared norm $\|\psi\|^2$ is appreciable, then
+
+$$
+P_{\mathrm{obs}}(s\mid\psi)=0.
+$$
+
+Why is appreciability essential? Squaring an infinitesimal amplitude still gives an infinitesimal. Dividing it by an appreciable denominator keeps it infinitesimal, and standard part sends it to zero. But if the entire state had an even smaller norm, normalization could magnify a tiny numerator into an appreciable ratio. Smallness is relational. An infinitesimal branch is invisible only against an appreciable total scale.
+
+## The corrected epsilon experiment
+
+Let $\varepsilon$ be a positive infinitesimal and consider
 
 $$
 |\psi_\varepsilon\rangle=|0\rangle+\varepsilon|1\rangle.
 $$
 
-Its exact squared norm is $1+\varepsilon^2$. The exact Born weights are
+Its squared norm is
 
 $$
-w_0=\frac{1}{1+\varepsilon^2},\qquad
-w_1=\frac{\varepsilon^2}{1+\varepsilon^2}.
+\|\psi_\varepsilon\|^2=1+\varepsilon^2.
 $$
 
-Both are legitimate nonnegative quantities and they add to one. Yet their observed probabilities are
+The exact weights are therefore
 
 $$
-\operatorname{st}(w_0)=1,
+P_*(0\mid\psi_\varepsilon)=\frac{1}{1+\varepsilon^2},
 \qquad
-\operatorname{st}(w_1)=0.
+P_*(1\mid\psi_\varepsilon)=\frac{\varepsilon^2}{1+\varepsilon^2}.
 $$
 
-The infinitesimal branch is mathematically present but observationally absent.
-
-There is, however, a crucial trap. Suppose one instead writes
+Both are legitimate hyperreal probabilities, and they sum exactly to one. Yet their observed probabilities are
 
 $$
-|\phi\rangle=\frac{1}{\sqrt2}|0\rangle+rac{1}{\sqrt2}|\varepsilon\rangle.
+P_{\mathrm{obs}}(0\mid\psi_\varepsilon)=1,
+\qquad
+P_{\mathrm{obs}}(1\mid\psi_\varepsilon)=0.
 $$
 
-The label $\varepsilon$ is infinitesimal, but its amplitude is not. Measurement probabilities depend on amplitudes, not on the arithmetic sizes of labels. More generally, if $s\ne t$ are any two surreal labels and $a\ne0$ is a common amplitude, then
+The infinitesimal branch has not been deleted. It survives in the fine-scale state and carries a strictly positive exact weight. It vanishes only after passage to ordinary real observation.
+
+This resembles familiar threshold effects in science. A detector can be governed by a faithful microscopic model while reporting a coarser macroscopic outcome. The standard-part rule is not an arbitrary cutoff such as “ignore everything below $10^{-12}$.” It is scale-independent: every genuine infinitesimal is removed, while every positive appreciable standard component remains.
+
+## Why an infinitesimal label is not enough
+
+Now consider the initially tempting state
 
 $$
-|\phi\rangle=a|s\rangle+a|t\rangle
+|\phi\rangle=\frac{1}{\sqrt{2}}|0\rangle+rac{1}{\sqrt{2}}|\varepsilon\rangle.
 $$
 
-has squared norm $2a^2$, exact weight $1/2$ on each branch, and observed probability $1/2$ on each branch. This is the **Equal-Amplitude Obstruction**: making a basis label infinitesimal cannot suppress a branch whose amplitude remains appreciable.
-
-That distinction is the conceptual hinge of the theory. Labels identify alternatives. Amplitudes allocate probability mass.
-
-## A finite reservoir of infinitesimal mass
-
-The same phenomenon appears without quantum notation. Consider $n$ visible atoms $v_1,\ldots,v_n$ and one reservoir atom $r$. Use ordered pairs of rational numbers to represent quantities
+The second label is infinitesimal, but its amplitude is not. The two branches have equal nonzero amplitudes. More generally, for any two distinct surreal labels $s$ and $t$ and any nonzero amplitude $a$, define
 
 $$
-(a,b)\equiv a+b\varepsilon,
+|\phi_{s,t,a}\rangle=a|s\rangle+a|t\rangle.
 $$
 
-ordered lexicographically: the ordinary component $a$ is compared first, and the infinitesimal component $b$ breaks ties. Give every visible atom weight $\varepsilon=(0,1)$ and the reservoir weight
+The **Equal-Amplitude Theorem** states that both exact Born weights and both observed probabilities are one half:
 
 $$
-1-n\varepsilon=(1,-n).
+P_*(s\mid\phi_{s,t,a})=P_*(t\mid\phi_{s,t,a})=\frac12,
 $$
 
-The total is exactly one. For an event $A$, let $k(A)$ be the number of visible atoms in $A$, and let $\chi_r(A)$ equal $1$ when $r\in A$ and $0$ otherwise. Then its exact probability is
+and
 
 $$
-\mu(A)=\bigl(\chi_r(A),\,k(A)-n\chi_r(A)\bigr).
+P_{\mathrm{obs}}(s\mid\phi_{s,t,a})
+=P_{\mathrm{obs}}(t\mid\phi_{s,t,a})=\frac12.
 $$
 
-Taking standard part means retaining the first coordinate. Therefore
+Indeed, the squared norm is $2a^2$, so each ratio is $a^2/(2a^2)=1/2$. Nothing in this calculation examines whether $s$ or $t$ is finite, infinite, or infinitesimal. Labels select orthogonal alternatives; amplitudes allocate weight.
+
+Consequently, the proposed prediction that $|0\rangle$ occurs with probability $1/2$ while $|\varepsilon\rangle$ occurs with probability $0$ is incompatible with the Born rule when their amplitudes are equal. The corrected experiment is $|0\rangle+\varepsilon|1\rangle$, where the infinitesimal appears in the amplitude. This is more than a technical adjustment. It marks the conceptual boundary between the geometry of outcomes and the statistics of outcomes.
+
+## A classical shadow: infinitesimal atoms and a reservoir
+
+The same phenomenon can be seen without quantum notation. Consider a finite sample space containing $n$ visible atoms, labelled $1,\dots,n$, and one reservoir atom $\bot$. Use ordered pairs of rationals to encode numbers of the form
+
+$$
+a+b\delta,
+$$
+
+where $\delta$ is a formal positive infinitesimal and comparison is lexicographic: the real-scale coefficient $a$ is compared first, and $b$ breaks ties.
+
+Assign each visible atom weight $\delta$ and the reservoir weight $1-n\delta$. An event containing $k$ visible atoms has weight
+
+$$
+\mu(A)=
+\begin{cases}
+k\delta, & \bot\notin A,\\
+1-(n-k)\delta, & \bot\in A.
+\end{cases}
+$$
+
+These weights are finitely additive and the whole sample space has exact mass one. Define standard part by
+
+$$
+\operatorname{st}(a+b\delta)=a.
+$$
+
+The **Dirac Collapse Theorem** says
 
 $$
 \operatorname{st}(\mu(A))=
 \begin{cases}
-1,&r\in A,\\
-0,&r\notin A.
+1, & \bot\in A,\\
+0, & \bot\notin A.
 \end{cases}
 $$
 
-This is precisely the Dirac probability concentrated at the reservoir. Every visible atom has exact positive infinitesimal mass but observed mass zero; the whole space has observed mass one. Moreover, because both exact probability and standard part are additive here, disjoint events remain additive after observation.
+Thus every visible atom has exact positive infinitesimal mass but observed mass zero, while the reservoir carries observed mass one. The observed measure is the Dirac measure concentrated at $\bot$. It remains finitely additive because taking the first coordinate respects addition.
 
-This finite model gives the quantum collapse a classical shadow. In both settings an additive non-Archimedean theory retains infinitesimal mass exactly, while standard part produces an ordinary probability supported only on appreciable branches.
+This discrete model and the epsilon state share the same signature: exact normalization, positive infinitesimal components, and a standard-part shadow that concentrates on the appreciable sector.
 
-## The tropical shadow
+## What this framework offers
 
-There is another way to forget small scales: tropical, or max-plus, mathematics. Ordinary addition is replaced by maximum, while multiplication becomes addition. This algebra often appears when exponential scales are converted into logarithmic rates. On a finite outcome space, a max-plus integral takes the form
+The immediate achievement is modest but precise. It is not yet an infinite-dimensional spectral theory, nor a complete replacement for complex quantum mechanics. It is a finite measurement calculus that cleanly separates three layers:
 
-$$
-\mathcal{T}_W(f)=\max_x\bigl(f(x)+W(x)\bigr),
-$$
+1. surreal numbers can label an extraordinarily rich space of outcomes;
+2. hyperreal amplitudes can encode infinitesimal statistical distinctions;
+3. standard part maps those distinctions to ordinary real probabilities.
 
-where $W(x)$ is a tropical weight and $f$ is an observable.
+That separation could matter wherever a model contains effects smaller than every fixed real threshold. In perturbation theory, infinitesimal components can preserve ordering information without contaminating leading-order predictions. In decision theory, lexicographic probabilities express priorities that ordinary probabilities compress. In asymptotic physics, a non-Archimedean state can retain idealized residual branches while its classical shadow records only macroscopic outcomes.
 
-Give the reservoir weight $W(r)=0$ and every visible atom the same negative penalty $W(v_i)=M$, where $M<0$. Then
+The framework also gives a warning. Exotic labels do not automatically imply exotic statistics. An infinite energy label, an infinitesimal position label, or a late-born surreal label changes the identity of an outcome, not its probability. Statistical suppression must enter through amplitudes or through the measurement map.
 
-$$
-\mathcal{T}_W(f)=\max\left(f(r),\max_i(f(v_i)+M)\right).
-$$
+## The next staircase
 
-The **Reservoir Selection Theorem** says that if
+Several questions now become sharply posed. For an arbitrary finite state with finite amplitudes and appreciable norm, do all standard-part Born weights form a real probability distribution of total mass one? Can states that differ only infinitesimally be identified through observational equivalence, and is that identification preserved under tensor products? Can symmetric matrices over a real-closed non-Archimedean field be diagonalized in a way whose finite eigenvalues descend under standard part? Can multiple layers of infinitesimals produce a hierarchy of observations rather than a single collapse?
 
-$$
-f(v_i)+M\le f(r)
-$$
+Each question asks how much fine structure survives when one passes from an enriched number system to ordinary data. The central lesson is already visible. Infinitesimals need not be treated as sloppy approximations or discarded errors. They can be exact mathematical quantities whose observational shadow is zero. A branch may be present, positive, and normalized in the microscopic arithmetic while remaining absent from every real-valued measurement.
 
-for every visible atom, then
+In practical terms, the theory offers a disciplined language for separating exact structure from reported structure. It records distinctions at every infinitesimal scale, specifies the map by which those distinctions are forgotten, and proves that the dominant probabilities remain coherent. That combination is valuable whenever “too small to observe” must not be confused with “mathematically absent.”
 
-$$
-\mathcal{T}_W(f)=f(r).
-$$
-
-The proof simply examines the finite maximum: every penalized visible value is bounded above by the reservoir value, and the reservoir itself is among the candidates.
-
-This creates a bridge between standard-part observation and tropical selection. Standard part turns the infinitesimal measure into a Dirac probability at $r$. Max-plus selection also chooses $r$, provided the observable does not reward a visible outcome enough to overcome its penalty.
-
-The condition cannot be omitted. A visible value with $f(v_i)>f(r)-M$ wins the tropical maximum even though its standard-part probability is still zero. The two procedures therefore do not become the same arithmetic. Standard part is additive and produces probabilities; tropicalization is idempotent and selects dominant logarithmic scales. What they share is a support-selection law in a stable regime.
-
-## A microscope with adjustable resolution
-
-One way to picture standard part is as a microscope with a fixed macroscopic screen. The exact theory records the specimen at arbitrarily fine scale; the screen displays only its real shadow. If two finite quantities differ by an infinitesimal, the screen gives them the same reading. This is not an approximation inserted midway through the calculation. Exact arithmetic is completed first, and observation is applied afterward.
-
-That order matters. In the epsilon state, replacing $\varepsilon$ by zero before computing the norm would happen to give the same final observed probabilities, but it would destroy the exact positive weight of the weak branch and conceal the normalization mechanism. The non-Archimedean calculation instead preserves
-
-$$
-\frac{\varepsilon^2}{1+\varepsilon^2}>0
-$$
-
-all the way to the observation map. It can therefore distinguish an impossible event, whose exact weight is zero, from an infinitesimally possible event, whose exact weight is positive but whose standard part vanishes.
-
-The reservoir model makes this distinction especially vivid. The $n$ visible atoms jointly carry exact mass $n\varepsilon$. Their observed union still has mass zero because a finite sum of infinitesimals is infinitesimal. Meanwhile the reservoir carries $1-n\varepsilon$, slightly less than one in the exact ordering, but has observed mass one. Nothing is lost from the exact total:
-
-$$
-(1-n\varepsilon)+n\varepsilon=1.
-$$
-
-Observation changes resolution, not the prior algebra.
-
-Tropicalization offers a different microscope. Rather than taking the real number infinitely close to a finite value, it converts competition among scales into a maximum among scores. A negative penalty marks visible branches as subdominant. The observable $f$ can tilt the competition, and the inequality $f(v_i)+M\le f(r)$ tells exactly how much tilt the reservoir can withstand. The stability margin
-
-$$
-\Delta=f(r)-\max_i\bigl(f(v_i)+M\bigr)
-$$
-
-measures the remaining protection. If $\Delta>0$, reservoir selection is robust under perturbations smaller than $\Delta$. At $\Delta=0$, the system lies on a tie boundary. If $\Delta<0$, a visible outcome escapes.
-
-## Why the distinction matters
-
-Infinitesimals offer a disciplined language for idealization. A branch can be nonzero without surviving ordinary observation. That idea is relevant wherever models combine exact small effects with finite-resolution outputs: rare-event asymptotics, perturbation theory, hierarchical optimization, Bayesian models with vanishing priors, and multiscale physical systems.
-
-The results also impose boundaries. One cannot hide an outcome by giving it a tiny label. One cannot equate standard-part expectation with tropical maximization for arbitrary observables. And one cannot erase the appreciability hypothesis from the infinitesimal branch theorem. Each limitation reveals which structure is doing the work.
-
-The emerging picture has three layers. Exact non-Archimedean normalization remembers every infinitesimal contribution. Standard part maps that exact theory to ordinary additive probability. Tropicalization records dominant scale and, under a quantitative stability inequality, selects the same surviving outcome. The reservoir stands at the intersection: probability one in the classical shadow, maximal weight in the tropical shadow, and the sole appreciable branch in the quantum example.
-
-A probability may be positive and still leave no ordinary trace. The mathematics does not confuse absence with invisibility; it explains precisely how one becomes the other.
+That is the peculiar beauty of the non-Archimedean quantum lottery: everything counts exactly, even what can never be seen.
