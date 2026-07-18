@@ -7,16 +7,6 @@
       "quality_score": 0.76,
       "sorry_count": 0,
       "theorem_count": 0,
-      "timestamp": "2026-07-15T21:42:41",
-      "title": "ArXiv paper: Improving Upper Bounds for the Maximum Clique Problem using Reduction Rules"
-    },
-    {
-      "cycle_id": "d68f278c",
-      "domain": "Applications",
-      "key_insight": "# Future directions\n\n- Formalize the paper's exact `(k, ωᵘ)`-core, `(k, ωᵘ)`-truss, and `(k, d, ωᵘ)`-truss definitions as graph operators and identify them with the generic seed rule proved here.\n- Ex",
-      "quality_score": 0.76,
-      "sorry_count": 0,
-      "theorem_count": 0,
       "timestamp": "2026-07-15T21:54:37",
       "title": "ArXiv paper: Improving Upper Bounds for the Maximum Clique Problem using Reduction Rules"
     },
@@ -499,19 +489,19 @@
       "theorem_count": 14,
       "timestamp": "2026-07-18T03:54:54",
       "title": "Chaos as a Computable Shadow: The Shadowing Lemma for Real Programs"
+    },
+    {
+      "cycle_id": "ad1766b1",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n## Formal conclusions\n\nThe file `Speculative/MoebiusArithmetic.lean` separates the topology from the proposed arithmetic and proves the following.\n\n### Disproved\n\n1. **Coordinatew",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-18T04:11:01",
+      "title": "Arithmetic on the Moebius Band: A Number System with a Twist"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "769cd692",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: from the general dimension law to the excess spectrum\n\nThis cycle detached the \"+1 dimension per suspension\" phenomenon from the\noctahedral base: the suspension tower `Sᵏ(K)` of *",
-      "quality_score": 0.78,
-      "sorry_count": 1,
-      "theorem_count": 51,
-      "timestamp": "2026-07-14T07:30:03",
-      "title": "**suspension tower** `Sᵏ(K)` of a free ℤ₂-complex as"
-    },
     {
       "cycle_id": "efa2b99e",
       "domain": "Applications",
@@ -2501,6 +2491,16 @@
       "theorem_count": 14,
       "timestamp": "2026-07-18T03:54:54",
       "title": "Chaos as a Computable Shadow: The Shadowing Lemma for Real Programs"
+    },
+    {
+      "cycle_id": "ad1766b1",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n## Formal conclusions\n\nThe file `Speculative/MoebiusArithmetic.lean` separates the topology from the proposed arithmetic and proves the following.\n\n### Disproved\n\n1. **Coordinatew",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-18T04:11:01",
+      "title": "Arithmetic on the Moebius Band: A Number System with a Twist"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.76
     }
   ],
-  "last_updated": "2026-07-18T03:54:54",
+  "last_updated": "2026-07-18T04:11:01",
   "open_questions": [
     {
       "context": "",
@@ -3585,12 +3585,6 @@
         "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
       },
       {
-        "cycle_id": "d1e62d74",
-        "quality": 0.6,
-        "theorems": 0,
-        "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
-      },
-      {
         "cycle_id": "851ec568",
         "quality": 0.68,
         "theorems": 4,
@@ -3637,6 +3631,12 @@
         "quality": 0.61,
         "theorems": 18,
         "title": "The Unreasonable Effectiveness of the Number 163"
+      },
+      {
+        "cycle_id": "ad1766b1",
+        "quality": 0.7,
+        "theorems": 0,
+        "title": "Arithmetic on the Moebius Band: A Number System with a Twist"
       }
     ],
     "NumberTheory": [
