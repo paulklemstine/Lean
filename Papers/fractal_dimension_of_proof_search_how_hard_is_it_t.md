@@ -1,45 +1,28 @@
-# Computational Evidence — Proof-Search Fractal Dimension
+# Computational Evidence
 
-We model a self-similar proof-search space as a complete `b`-ary tree in which
-exactly `s` of the `b` branches at each node extend to a full proof.
+## Small-case calculations
 
-## 1. Small-case calculations
+For periodic pruning with period `3` and free residues `{0,1}`, the numbers of free decision levels at depths `0` through `12` are:
 
-Successful paths of depth `n` = `s^n`; candidate paths = `b^n`.
+| depth `n` | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| free levels | 0 | 1 | 2 | 2 | 3 | 4 | 4 | 5 | 6 | 6 | 7 | 8 | 8 |
+| successful prefixes | 1 | 2 | 4 | 4 | 8 | 16 | 16 | 32 | 64 | 64 | 128 | 256 | 256 |
 
-| b | s | n | succ = s^n | total = b^n | D = log s / log b | total^D |
-|---|---|---|-----------|-------------|-------------------|---------|
-| 2 | 1 | 5 | 1         | 32          | 0.0000            | 1       |
-| 2 | 2 | 5 | 32        | 32          | 1.0000            | 32      |
-| 3 | 2 | 4 | 16        | 81          | 0.6309            | 16.000  |
-| 8 | 2 | 3 | 8         | 512         | 0.3333            | 8.000   |
-| 10| 3 | 6 | 729       | 1000000     | 0.4771            | 729.00  |
+At depths `3, 6, 9, 12`, the logarithmic estimate is exactly `2/3`. The theorem `finiteEstimate_at_periods` establishes this equality for every complete period and every admissible residue set.
 
-The last column confirms the **bridge identity** `succ = total^D` numerically:
-`total^D = (b^n)^(log s / log b) = s^n` in every row.
+For period `2` with one free residue, successful-prefix counts begin `1, 2, 2, 4, 4, 8, 8`; complete even depths have estimate exactly `1/2`.
 
-## 2. Density / codimension law
+## Counterexample hunt
 
-The success density `(s/b)^n = total^(D-1)`.  For `b = 3, s = 2`:
-`(2/3)^n` versus `(3^n)^(log2/log3 − 1)` agree (both `0.667, 0.444, 0.296, …`),
-so the codimension `1 − D ≈ 0.369` is the exponential pruning rate.
+The proposed `D > 1` regime was tested against the normalization `log₂(successful prefixes at depth n)/n`. Since there are at most `2^n` binary prefixes, every finite estimate is at most `1`, and the limiting upper dimension is at most `1`. Thus every positive candidate excess `1 + ε` is excluded, not merely absent from a finite sample.
 
-## 3. Boundary / counterexample hunt
+The claim that dimension determines shortest-proof length also fails without extra compatibility assumptions. The same successful-prefix profile can be paired with any designated terminal length. This is represented by `SearchInstance`, and `dimension_does_not_determine_length` proves the resulting family for every rational dimension in `[0,1]` and every natural length.
 
-* `s = b` gives `D = 1` **exactly** and only then (checked for all `2 ≤ b ≤ 20`):
-  no `s < b` produces `D = 1`.  This refutes the naive reading of the informal
-  conjecture that generic theorems sit at `D = 1`; `D = 1` is a sharp threshold.
-* No self-similar *subset* of the boundary can have `D > 1`: since `s ≤ b`,
-  `D = log s / log b ≤ 1`.  The informal "`D > 1` for hard theorems" is therefore
-  false under this (subset) normalisation; the correct hardness invariant is the
-  codimension `1 − D` (slow pruning ⇔ small codimension ⇔ expensive search).
+## OEIS search results
 
-## 4. Entropy / Fekete average
+No OEIS signal was supplied, and these periodic count sequences are elementary powers of two with periodic exponents rather than evidence for an unidentified integer sequence. An OEIS attribution was therefore unnecessary.
 
-`L(n) = log(s^n) = n log s`, so `L(n)/n = log s` for all `n ≥ 1` — the per-depth
-growth is already constant, i.e. Fekete's average is attained exactly.  For
-`s = 2`: `L(n)/n = 0.6931…` for every `n`, matching `searchEntropy_tendsto`.
+## Interpretation
 
-All identities above are proved in
-`Catalog/Bridges/ProofSearchFractalDimension.lean` and
-`Catalog/Bridges/ProofSearchEntropyFekete.lean`.
+The calculations support using codimension `1-D` as a pruning exponent. They do not support inferring runtime from dimension alone: a traversal policy and a law relating successful prefixes to terminal proofs are additional required data.
