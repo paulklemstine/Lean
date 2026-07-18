@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "16941ff7",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Separated Filtrations and Chain Geometry\n\n## 1. Integer-valued polynomial filtration\n\nLet \\(\\operatorname{Int}(\\mathbb Z)\\) be the ring of rational polynomials taking integer valu",
-      "quality_score": 0.75,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-17T06:13:47",
-      "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
-    },
-    {
       "cycle_id": "18617733",
       "domain": "Physics",
       "key_insight": "# Future directions\n\n## What is now proved\n\n`VampireBestiary/VampireUnitCurve.lean` isolates the exact digit-multiset core of a fang factorization and proves, in every base `b ≥ 2`,\n\n\\[\n(x-1)(y-1)=1 \\",
@@ -499,19 +489,19 @@
       "theorem_count": 46,
       "timestamp": "2026-07-18T19:30:11",
       "title": "Cryptography from Chaos: Encrypting with the Logistic Map"
+    },
+    {
+      "cycle_id": "d13e4521",
+      "domain": "MachineLearning",
+      "key_insight": "# Future directions\n\n## What is now rigorous\n\n`Catalog/MachineLearning/PrimeRipsTopology.lean` proves a reusable deterministic core for every strictly increasing real point sequence:\n\n1. Rips edges an",
+      "quality_score": 0.74,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-18T19:30:15",
+      "title": "Persistent Homology of Prime Numbers: The Topology of Arithmetic"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "c23e4bea",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: the coindex as a complete combinatorial invariant\n\nThis cycle closed the gap between the two halves of the join law for the ℤ₂-coindex of free\nℤ₂-sets. The lower half (a construct",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 18,
-      "timestamp": "2026-07-15T00:43:23",
-      "title": "Deepening: Constructive, lower-bound half of the co-index theory"
-    },
     {
       "cycle_id": "cc9e6854",
       "domain": "Applications",
@@ -2501,6 +2491,16 @@
       "theorem_count": 46,
       "timestamp": "2026-07-18T19:30:11",
       "title": "Cryptography from Chaos: Encrypting with the Logistic Map"
+    },
+    {
+      "cycle_id": "d13e4521",
+      "domain": "MachineLearning",
+      "key_insight": "# Future directions\n\n## What is now rigorous\n\n`Catalog/MachineLearning/PrimeRipsTopology.lean` proves a reusable deterministic core for every strictly increasing real point sequence:\n\n1. Rips edges an",
+      "quality_score": 0.74,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-18T19:30:15",
+      "title": "Persistent Homology of Prime Numbers: The Topology of Arithmetic"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8
     }
   ],
-  "last_updated": "2026-07-18T19:30:11",
+  "last_updated": "2026-07-18T19:30:15",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "dc502c2d",
-        "quality": 0.91,
-        "theorems": 42,
-        "title": "This cycle deepens the theory of two-player **well-founded (transfinite) games**"
-      },
-      {
         "cycle_id": "e72af703",
         "quality": 0.91,
         "theorems": 13,
@@ -3575,6 +3569,12 @@
         "quality": 0.73,
         "theorems": 21,
         "title": "The Uncertainty Principle Is a Fourier Thing: Position-Momentum Duality"
+      },
+      {
+        "cycle_id": "d13e4521",
+        "quality": 0.74,
+        "theorems": 0,
+        "title": "Persistent Homology of Prime Numbers: The Topology of Arithmetic"
       }
     ],
     "Novelty": [
