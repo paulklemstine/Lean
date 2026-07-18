@@ -1,26 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "c5a6c2ed",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Orderly Friedman Numbers\n\n## 1. Fixed-block closure theorem\n\n**Conjecture.** Every orderly Friedman certificate for a positive `k`-digit block `b` whose expression remains nontriv",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 91,
-      "timestamp": "2026-07-15T08:58:17",
-      "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers ("
-    },
-    {
-      "cycle_id": "772aa8b4",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: The Three-Halves Steering Word\n\n## 1. Superlinear factor complexity\n\nLet `T` be the nearest-integer steering word of the orbit `(3/2)^n`. Its factor complexity should satisfy\n\\[\n\\",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-07-15T18:44:42",
-      "title": "ArXiv paper: Superlinear complexity of the $(3/2)^n$ steering word"
-    },
-    {
       "cycle_id": "d68f278c",
       "domain": "Applications",
       "key_insight": "# Future directions\n\n- Formalize the paper's exact `(k, ωᵘ)`-core, `(k, ωᵘ)`-truss, and `(k, d, ωᵘ)`-truss definitions as graph operators and identify them with the generic seed rule proved here.\n- Ex",
@@ -499,29 +479,29 @@
       "theorem_count": 11,
       "timestamp": "2026-07-18T03:22:53",
       "title": "Tropical Cryptocurrency: Mining on the Min-Plus Semiring"
+    },
+    {
+      "cycle_id": "5ae7f8c1",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions\n\n## What the formal result establishes\n\nThe proposed “interval topology” is the ordinary order topology: open intervals and open rays generate the same topology on a linear order.",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-07-18T03:54:50",
+      "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
+    },
+    {
+      "cycle_id": "ee626e30",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions: Computable Shadows of Chaotic Dynamics\n\n## 1. Certified shadowing from cone-field data\n\n**Conjecture.** A program implementing a differentiable map on a compact invariant set, tog",
+      "quality_score": 0.76,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-18T03:54:54",
+      "title": "Chaos as a Computable Shadow: The Shadowing Lemma for Real Programs"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "0abd0edb",
-      "domain": "Novelty",
-      "key_insight": "# Future directions: AVD‑total chromatic number of central graphs of regular graphs\n\n## What is proved (`Regular.lean`, 0 `sorry`)\n\nWorking with a self‑contained model of total colourings (proper vert",
-      "quality_score": 0.78,
-      "sorry_count": 4,
-      "theorem_count": 26,
-      "timestamp": "2026-07-14T06:54:01",
-      "title": "Close Proofs: Exact AVD‑total chromatic number of central graphs of regular graphs"
-    },
-    {
-      "cycle_id": "b97ab468",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nThis cycle establishes that the canonical Euclidean √2 configuration — the standard basis\nof `ℝ^n`, all pairs at distance exactly `√2` — exhibits a *sharp* Vietoris–Rips threshold",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 18,
-      "timestamp": "2026-07-14T07:29:42",
-      "title": "This project formalizes a **cross-domain connector** (v27 \"Connector\" mission): "
-    },
     {
       "cycle_id": "769cd692",
       "domain": "Novelty",
@@ -2501,45 +2481,29 @@
       "theorem_count": 11,
       "timestamp": "2026-07-18T03:22:53",
       "title": "Tropical Cryptocurrency: Mining on the Min-Plus Semiring"
+    },
+    {
+      "cycle_id": "5ae7f8c1",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions\n\n## What the formal result establishes\n\nThe proposed “interval topology” is the ordinary order topology: open intervals and open rays generate the same topology on a linear order.",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-07-18T03:54:50",
+      "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
+    },
+    {
+      "cycle_id": "ee626e30",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions: Computable Shadows of Chaotic Dynamics\n\n## 1. Certified shadowing from cone-field data\n\n**Conjecture.** A program implementing a differentiable map on a compact invariant set, tog",
+      "quality_score": 0.76,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-18T03:54:54",
+      "title": "Chaos as a Computable Shadow: The Shadowing Lemma for Real Programs"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "7d82c497",
-      "domain": "Novelty",
-      "name": "subset_of_forceSequence",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "7d82c497",
-      "domain": "Novelty",
-      "name": "card_le_of_forceSequence",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "e2f5c991",
-      "domain": "Novelty",
-      "name": "card_forceStep",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "e2f5c991",
-      "domain": "Novelty",
-      "name": "subset_of_forceSequence",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "e2f5c991",
-      "domain": "Novelty",
-      "name": "forceSequence_antisymm",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "7d82c497",
-      "domain": "Novelty",
-      "name": "subset_of_forceStep",
-      "quality": 0.7
-    },
     {
       "cycle_id": "7d82c497",
       "domain": "Novelty",
@@ -2803,9 +2767,45 @@
       "domain": "Algebra",
       "name": "is",
       "quality": 0.79
+    },
+    {
+      "cycle_id": "5ae7f8c1",
+      "domain": "Algebra",
+      "name": "exists_gt_natCast",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "5ae7f8c1",
+      "domain": "Algebra",
+      "name": "exists_positive_below_powHalf",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "5ae7f8c1",
+      "domain": "Algebra",
+      "name": "exists_positive_below_scaled_powHalf",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "ee626e30",
+      "domain": "MachineLearning",
+      "name": "over",
+      "quality": 0.76
+    },
+    {
+      "cycle_id": "ee626e30",
+      "domain": "MachineLearning",
+      "name": "for",
+      "quality": 0.76
+    },
+    {
+      "cycle_id": "ee626e30",
+      "domain": "MachineLearning",
+      "name": "equal_amplitude_pair_bornProb",
+      "quality": 0.76
     }
   ],
-  "last_updated": "2026-07-18T03:22:53",
+  "last_updated": "2026-07-18T03:54:54",
   "open_questions": [
     {
       "context": "",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "c37c01fa",
-        "quality": 0.83,
-        "theorems": 30,
-        "title": "Deepening: The Fractal Dimension of Mathematical Truth"
-      },
-      {
         "cycle_id": "a06d4115",
         "quality": 0.72,
         "theorems": 30,
@@ -3079,6 +3073,12 @@
         "quality": 0.79,
         "theorems": 11,
         "title": "Tropical Cryptocurrency: Mining on the Min-Plus Semiring"
+      },
+      {
+        "cycle_id": "5ae7f8c1",
+        "quality": 0.85,
+        "theorems": 19,
+        "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
       }
     ],
     "Applications": [
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "e2c082ff",
-        "quality": 0.82,
-        "theorems": 9,
-        "title": "Lower bounds on clique densities using generalized inverses"
-      },
-      {
         "cycle_id": "e978b5fe",
         "quality": 0.78,
         "theorems": 1210,
@@ -3575,6 +3569,12 @@
         "quality": 0.69,
         "theorems": 25,
         "title": "ArXiv paper: Generalizations of nets and Latin squares"
+      },
+      {
+        "cycle_id": "ee626e30",
+        "quality": 0.76,
+        "theorems": 14,
+        "title": "Chaos as a Computable Shadow: The Shadowing Lemma for Real Programs"
       }
     ],
     "Novelty": [

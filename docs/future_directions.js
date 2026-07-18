@@ -19,6 +19,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 5ae7f8c1 (Q=0.850), which proved 19 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Conway's surreal numbers No form the largest totally ordered field, containing all real numbers, all ordinals, and all infinitesimals. But No is a proper class, not a set. What topology does it have? Conjecture: No has a unique topology making it a connected, locally connected, locally compact, comp",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "push_5ae7f8c1_18f2b361",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "5ae7f8c1",
+    "status": "available",
+    "timestamp": "2026-07-18T03:54:50.138087+00:00",
+    "title": "Deepening: Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "There are mathematical objects whose existence we can prove but whose specific properties are unknowable \u2014 theorems that cast shadows without being visible. Define a dark theorem as a statement T such that: (1) PA proves 'there exists x such that T(x)', but (2) for every specific n, PA does NOT prove T(n). The classic example is the Paris-Harrington theorem: the strengthened finite Ramsey theorem is true but not provable in PA. But dark theorems go further: they assert the existence of objects that no specific instance can be verified. Conjecture: The set of dark theorems is dense in the space of all Pi_2 statements \u2014 most true Pi_2 statements are dark. Moreover, there is a hierarchy of darkness: a dark theorem of level k is one where PA proves 'there exist at least k values of x such that T(x)' but cannot identify any specific one. The hierarchy is strict: level k+1 dark theorems are strictly harder to prove than level k. Test: construct explicit dark theorems of levels 1, 2, 3 using the Paris-Harrington principle and the Kirby-Paris hydra theorem. Prove the density conjecture by counting Pi_2 statements. Impact: most true mathematical statements are dark \u2014 they assert existence without the possibility of verification. This is not incompleteness; it is a new form of mathematical unknowability.",
     "domains": [
       "Novelty",
@@ -77,7 +91,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The L-Function Oracle: What If We Could Compute L-Functions Instantly?"
   },
   {
-    "consumed_by_exp_id": "e9a483ed",
+    "consumed_by_exp_id": "3f360a5c",
     "description": "L-functions are the DNA of mathematics \u2014 each one encodes deep arithmetic information. But how many L-functions ARE there? The L-function universe is vast: (1) The Riemann zeta function (1 L-function), (2) Dirichlet L-functions (countably many), (3) L-functions of elliptic curves (uncountably many, one per j-invariant), (4) L-functions of modular forms (countably many, but indexed by weight and level), (5) L-functions of Galois representations (enormous family). Conjecture: The set of 'natural' L-functions (those satisfying the Selberg class axioms: analytic continuation, functional equation, Euler product, Ramanujan bound) is COUNTABLE. This means the universe of well-behaved L-functions is no bigger than the integers, despite each individual L-function encoding infinitely much information. The Selberg class is a universe of countable stars, each one an entire galaxy. Test: prove that the Selberg class is countable by showing that each L-function is determined by a finite set of data (degree, conductor, root number, Euler factors at finitely many primes). Enumerate the first 100 elements of the Selberg class ordered by conductor. Impact: the mathematical universe of L-functions is countable \u2014 there are only as many well-behaved L-functions as integers. Each one contains infinite depth, but there are only countably many of them.",
     "domains": [
       "Novelty",
@@ -88,7 +102,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "in_progress",
-    "timestamp": "2026-07-18T03:38:36.284707+00:00",
+    "timestamp": "2026-07-18T03:44:46.017475+00:00",
     "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
   },
   {
@@ -121,21 +135,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Impossibility Results for Fun: Things That Cannot Be Done (But We Try Anyway)"
   },
   {
-    "consumed_by_exp_id": "5ae7f8c1",
-    "description": "Conway's surreal numbers No form the largest totally ordered field, containing all real numbers, all ordinals, and all infinitesimals. But No is a proper class, not a set. What topology does it have? Conjecture: No has a unique topology making it a connected, locally connected, locally compact, complete ordered field. This topology is NOT the order topology (which makes No totally disconnected). Instead, it is the 'interval topology' generated by open intervals (a,b) = {x in No : a < x < b} where a,b are arbitrary surreal numbers. The interval topology on No is connected because between any two surreals a < b there are infinitely many surreals, and No has no gaps (every Dedekind cut is filled). Moreover, No is contractible in this topology \u2014 every surreal number can be continuously deformed to 0 via the homotopy H(x,t) = x * {t | 0} where {t | 0} is the surreal number between t and 0. Test: prove that No with the interval topology is connected. Prove that it is locally compact (every surreal has a neighborhood basis of intervals with surreal endpoints). Prove that No is contractible. Compute the fundamental group: pi_1(No) = 0 (trivial, since No is contractible). Impact: the largest ordered field has a natural topology that makes it contractible \u2014 every surreal number is connected to every other by a continuous path.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0236",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-17T18:21:33.240666+00:00",
-    "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
-  },
-  {
     "consumed_by_exp_id": "ee626e30",
     "description": "The shadowing lemma says that near an approximate orbit of a chaotic system, there exists a true orbit. In other words, every 'almost correct' trajectory of a chaotic map has a 'truly correct' trajectory nearby. This means that numerical errors in chaotic simulations are not bugs \u2014 they are SHADOWS of real trajectories. Conjecture: Every program that computes a chaotic map f: R^n -> R^n has the property that its floating-point output is shadowed by a true orbit of f. More precisely, for every epsilon > 0, there exists delta > 0 such that if x_0, x_1, ..., x_N is a delta-pseudo-orbit (|x_{n+1} - f(x_n)| < delta for all n), then there exists a true orbit y_0, y_1, ..., y_N with |x_n - y_n| < epsilon for all n. The shadowing time N(epsilon, delta) grows at most polynomially in 1/delta for hyperbolic maps. Test: implement the logistic map f(x) = 4x(1-x) in floating-point and compute 10^6 iterations. For each floating-point orbit, use binary search to find the shadowing true orbit. Verify that the shadowing distance is at most 10^{-10} for floating-point precision 10^{-16}. Impact: numerical chaos is not error \u2014 it is a computable shadow of mathematical truth. Your computer's rounding errors are tracing out REAL orbits of the chaotic system.",
     "domains": [
@@ -162,7 +161,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-07-18T03:38:36.235877+00:00",
+    "timestamp": "2026-07-18T03:44:45.986581+00:00",
     "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
   },
   {
@@ -3311,6 +3310,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-18T03:22:48.562780+00:00",
     "title": "Conjecture: If messages are restricted by a sparse system of integer difference "
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## What the formal result establishes\n\nThe proposed \u201cinterval topology\u201d is the ordinary order topology: open intervals and open rays generate the same topology on a linear order. The formal development shows that this topology on Mathlib\u2019s universe-relative `Surreal` type is **totally separated**, hence totally disconnected and not connected. It also proves:\n\n- every path in `Surreal` is constant;\n- `Surreal` is not path connected and not contractible;\n- nevertheless, the fundamental group at every basepoint is trivial.\n\nThe last point is the connector: trivial fundamental group does not imply contractibility. Here it follows for the opposite reason from the proposed one\u2014there are no nonconstant loops because there are no nonconstant paths at all.\n\n## Why density and \u201cno gaps\u201d do not prove connectedness\n\nOrder density alone is insufficient. The rational line is densely ordered but disconnected. For a linear order with its order topology, connectedness requires a strong order-completeness condition in addition to density. Surreal numbers have a different obstruction: their non-Archimedean hierarchy creates clopen additive cuts.\n\nGiven `x < y`, the proof constructs a positive surreal `\u03b5` such that\n\n`n \u03b5 < y - x`\n\nfor every natural number `n`. The set\n\n`{z | \u2203 n : \u2115, z < x + n \u03b5}`\n\nis both open and closed, contains `x`, and excludes `y`. This separates every pair of distinct points.\n\n## Proper-class caveat\n\nLean cannot place a literal proper class inside its ordinary type theory. Mathlib\u2019s `Surreal.{u}` is a universe-relative type of numeric pre-games modulo equivalence. The key boundedness theorem applies to families whose index type is small relative to that universe. The connector theorem is therefore a precise theorem about each such universe-relative surreal line. A class-topological treatment of Conway\u2019s full `No` would require an explicit theory of large/class-indexed topologies and should not silently be identified with ordinary set-based topology.\n\n## Local compactness\n\nThe statement \u201cevery point has a neighborhood basis of intervals with surreal endpoints\u201d is a statement about the order topology, not local compactness. Local compactness additionally requires compact neighborhoods. A future development should characterize compact intervals in universe-relative `Surreal` and determine whether any nontrivial compact neighborhoods exist. One promising route is to use the clopen finite-step cuts to construct open covers of candidate intervals with no finite subcover.\n\n## Stronger algebraic-topological consequences\n\nSince every continuous map from a connected space to `Surreal` is constant, one can aim to formalize:\n\n1. every map from a sphere `S\u207f` to `Surreal` is constant;\n2. all positive-dimensional homotopy groups are trivial at every basepoint;\n3. singular simplices in positive degree are constant, leading to vanishing reduced singular homology in positive degrees;\n4. path components are singletons while connected components are also singletons.\n\nThese results would sharpen the distinction between weak algebraic invariants and global contractibility: all based homotopy groups may vanish even though the space is highly disconnected and noncontractible.\n\n## Alternative topologies\n\nA genuinely connected topology on surreal numbers, if desired, cannot be the topology generated by ordinary order intervals. Future work could investigate:\n\n- coarse class topologies not induced by the linear order;\n- topologies on bounded-birthday strata and their direct-limit behavior;\n- quotient or valuation topologies that collapse non-Archimedean scale cuts;\n- whether field operations remain continuous under any such connected topology.\n\nAny uniqueness conjecture should first specify the class/set framework, separation axioms, continuity of field operations, and the exact meaning of completeness and local compactness for a proper class.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0263",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "5ae7f8c1",
+    "status": "available",
+    "timestamp": "2026-07-18T03:54:44.224707+00:00",
+    "title": "The proposed \u201cinterval topology\u201d is the ordinary order topology: open intervals "
   },
   {
     "consumed_by_exp_id": "",

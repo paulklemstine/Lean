@@ -1,196 +1,475 @@
-# The Shadowing Lemma as a Computable Shadow: Formal Verification of Orbit Shadowing in Dynamical Systems
+# Finite-Horizon Shadowing Certificates for Numerical Dynamics, Logistic Iteration, and Residual Systems
+
+**Aristotle**  
+**July 18, 2026**
 
 ## Abstract
 
-We present a formal development of the shadowing lemma for discrete dynamical systems, mechanically verified in a proof assistant. Our formalization introduces the novel concept of a *Shadowing Certificate* — a computational witness that bundles a pseudo-orbit, its shadowing true orbit, and a verified distance bound into a single certified object. We prove the contractive shadowing lemma with an explicit bound of δ/(1−L) for maps with Lipschitz constant L < 1, establish shadowing uniqueness for expansive maps, and demonstrate pseudo-orbit stability under map perturbation. These results provide a rigorous mathematical foundation for the claim that numerical simulations of chaotic systems, despite accumulating floating-point errors, faithfully track genuine mathematical trajectories.
-
-**Keywords**: Shadowing lemma, pseudo-orbit, dynamical systems, chaos, formal verification, contraction mapping, expansive map, numerical orbit tracking
-
----
+We develop a self-contained quantitative theory for comparing a finite pseudo-orbit with an exact orbit of a Lipschitz dynamical system. If a sequence has one-step defect at most $\delta$ under an $L$-Lipschitz map, then the exact orbit beginning at the same initial point remains within $\delta\sum_{k=0}^{n-1}L^k$ at time $n$. This discrete Gronwall estimate yields a horizon-independent radius $\delta/(1-L)$ for contractions. We specialize the theory to the parameter-four logistic map $f(x)=4x(1-x)$, prove invariance of $[0,1]$ and a Lipschitz constant of four there, and obtain the closed certificate $\delta(4^n-1)/3$. Hence $\delta(4^N-1)\leq3\varepsilon$ suffices for tolerance $\varepsilon$ through horizon $N$. We also show that residual dynamics $z\mapsto z+g(z)$ inherit the same calculus with amplification factor $1+L$ when $g$ is $L$-Lipschitz. The results separate local numerical semantics from dynamical amplification and clarify why Lipschitz continuity alone cannot establish horizon-independent shadowing for expanding chaotic systems. Algorithms for defect auditing, precision selection, and finite-horizon certification are presented together with applications to numerical simulation and depth-wise robustness in machine learning.
 
 ## 1. Introduction
 
-The shadowing lemma, first established by Anosov (1967) and Bowen (1975) for uniformly hyperbolic dynamical systems, is one of the most powerful tools connecting numerical computation with rigorous mathematics. It asserts that every sufficiently accurate approximate orbit (pseudo-orbit) of a hyperbolic map is shadowed — i.e., uniformly approximated — by a genuine orbit of the system.
+Numerical dynamics replaces exact iteration by a sequence of approximate updates. Even when the mathematical rule is deterministic, finite precision, approximate function evaluation, quantization, and communication noise introduce a fresh discrepancy at every step. In a stable system those defects may decay; in an expanding system they may be amplified. A rigorous interpretation of a computed trajectory must therefore answer two distinct questions:
 
-This paper presents a complete formal development of shadowing theory for metric space dynamical systems. Our contributions include:
+1. How large is the local defect produced by the computation?
+2. How does the underlying map propagate discrepancies?
 
-1. **Novel definitions** of pseudo-orbits, shadowing, and the Shadowing Certificate structure
-2. **The contractive shadowing lemma** with an explicit geometric-series bound
-3. **Shadowing uniqueness** for expansive maps via the triangle inequality
-4. **Perturbation stability** of pseudo-orbits under map approximation
-5. **Quantitative bounds** on the shadowing amplification ratio
+Conflating these questions leads to overly broad claims about chaotic computation. A floating-point format does not by itself specify a uniform local error: the bound depends on intermediate magnitudes and exceptional behavior. Conversely, a local error certificate does not by itself guarantee long-time accuracy: the dynamics may amplify each defect.
 
-All results are verified in Lean 4 with the Mathlib library.
+This paper establishes the baseline consequence of a local defect bound and Lipschitz continuity. The result is a finite-horizon shadowing certificate, in which the shadowing exact orbit starts from the same initial state as the pseudo-orbit. The error is governed by a geometric sum. This estimate is elementary, general, computable, and often conservative. Its limitations are informative: when $L>1$, it grows exponentially and cannot provide the horizon-independent conclusion associated with classical hyperbolic shadowing.
 
-## 2. Definitions
+The parameter-four logistic map provides a concrete test. Its unit interval is invariant and its global Lipschitz constant there is four. A pseudo-orbit confined to that interval is therefore certified against the same-initial-condition exact orbit by $\delta(4^n-1)/3$. This directly converts a desired tolerance and horizon into a sufficient local precision requirement. It also shows why a million-step, $10^{-10}$ guarantee cannot be inferred from a $10^{-16}$ local defect using only the global constant.
 
-### 2.1 Pseudo-Orbits
+The same recurrence appears in residual learning systems. For a residual block $F(z)=z+g(z)$, an $L$-Lipschitz residual branch gives a $(1+L)$-Lipschitz block. Numerical orbit stability and depth-wise perturbation propagation are thus instances of a common error calculus.
 
-Let (X, d) be a pseudo-metric space and f: X → X a continuous map.
+Our contributions are:
 
-**Definition 2.1** (δ-Pseudo-Orbit). A sequence x: ℕ → X is a *δ-pseudo-orbit of f up to step N* if for all n < N,
+- a finite-horizon theorem for pseudo-orbits of Lipschitz maps on normed spaces;
+- a uniform shadowing radius for contractions;
+- invariant-region and Lipschitz estimates for the parameter-four logistic map;
+- a closed-form logistic-map tolerance certificate;
+- a residual-system theorem connecting dynamical shadowing and network robustness;
+- auditable algorithms that keep empirical defect measurement separate from mathematical propagation.
 
-$$d(x_{n+1}, f(x_n)) < \delta.$$
+## 2. Setting and definitions
 
-This captures the notion of an "approximately correct" trajectory: each step is within δ of where it should be under the true dynamics, but small errors accumulate.
+Let $E$ be a normed real vector space with norm $\lVert\cdot\rVert$, and let $f:E\to E$.
 
-### 2.2 True Orbits
+**Definition 2.1 (Exact orbit).** Given $y_0\in E$, the exact orbit generated by $f$ is the sequence $(y_n)_{n\geq0}$ defined by
 
-**Definition 2.2** (True Orbit). A sequence y: ℕ → X is a *true orbit of f* if for all n,
+$$
+y_n=f^n(y_0),
+$$
 
-$$y_{n+1} = f(y_n).$$
+or equivalently by $y_0$ as given and $y_{n+1}=f(y_n)$.
 
-The canonical true orbit starting at y₀ is defined recursively:
+**Definition 2.2 (Finite pseudo-orbit).** Let $\delta\geq0$ and $N$ be a nonnegative integer. A sequence $x_0,x_1,\ldots,x_N$ is a $\delta$-pseudo-orbit of $f$ through horizon $N$ if
 
-$$\text{trueOrbitOf}(f, y_0)(0) = y_0, \quad \text{trueOrbitOf}(f, y_0)(n+1) = f(\text{trueOrbitOf}(f, y_0)(n)).$$
+$$
+\lVert x_{n+1}-f(x_n)\rVert\leq\delta
+$$
 
-**Theorem 2.3.** The canonical true orbit agrees with function iteration: trueOrbitOf(f, y₀)(n) = f^n(y₀).
+for every integer $n$ with $0\leq n<N$. The quantity
 
-### 2.3 Shadowing
+$$
+d_n=\lVert x_{n+1}-f(x_n)\rVert
+$$
 
-**Definition 2.4** (ε-Shadowing). A sequence y *ε-shadows* x *up to step N* if for all n ≤ N,
+is the local defect at step $n$.
 
-$$d(x_n, y_n) \leq \varepsilon.$$
+**Definition 2.3 (Lipschitz dynamics).** The map $f$ is $L$-Lipschitz if $L\geq0$ and
 
-**Definition 2.5** (Shadowing Property). A map f has the *(δ, ε)-shadowing property up to length N* if every δ-pseudo-orbit of f of length N is ε-shadowed by some true orbit.
+$$
+\lVert f(a)-f(b)\rVert\leq L\lVert a-b\rVert
+$$
 
-**Definition 2.6** (Uniform Shadowing Property). A map f has the *uniform shadowing property* if for every ε > 0, there exists δ > 0 such that f has the (δ, ε)-shadowing property for all lengths N.
+for all $a,b\in E$.
 
-### 2.4 Contractivity and Expansivity
+**Definition 2.4 (Same-initial-condition shadow).** For a reported sequence $(x_n)$, its canonical exact comparison orbit is
 
-**Definition 2.7** (Contractive Map). A map f is *contractive with constant L* if 0 ≤ L < 1 and d(f(a), f(b)) ≤ L · d(a, b) for all a, b.
+$$
+y_n=f^n(x_0).
+$$
 
-**Definition 2.8** (Expansive Map). A map f is *expansive with constant c* if c > 0 and whenever d(f^n(x), f^n(y)) ≤ c for all n ≥ 0, we have x = y.
+This is a particular shadowing witness. Classical shadowing results may select a different $y_0$ to exploit hyperbolic geometry; no such adjustment is used here.
 
-### 2.5 Shadowing Certificates (Novel)
+**Definition 2.5 (Certified horizon).** Given tolerance $\varepsilon>0$, a horizon $N$ is certified if the available hypotheses imply
 
-**Definition 2.9** (Shadowing Certificate). A *Shadowing Certificate* for a pseudo-orbit x of f up to step N is a structure containing:
-- A starting point y₀ ∈ X for the shadowing true orbit
-- A bound ε ≥ 0
-- A tolerance δ > 0
-- A proof that x is a δ-pseudo-orbit of f
-- A proof that trueOrbitOf(f, y₀) ε-shadows x up to step N
+$$
+\lVert x_n-y_n\rVert\leq\varepsilon
+$$
 
-This structure packages the existential witness of the shadowing lemma into a concrete, inspectable object. It represents the key conceptual insight that numerical chaos is not random error but *certified shadowing* of genuine dynamics.
+for every $0\leq n\leq N$.
 
-## 3. Main Results
+The distinction between $d_n$ and the global discrepancy $e_n=\lVert x_n-y_n\rVert$ is essential. The former concerns implementation of one step; the latter combines every earlier defect with the dynamics.
 
-### 3.1 The Contractive Shadowing Lemma
+## 3. The one-step inequality
 
-**Theorem 3.1** (Inductive Shadowing Bound). Let f be contractive with constant L, and let x be a δ-pseudo-orbit of f up to step N. Then for all n ≤ N,
+The entire theory is driven by a triangle inequality.
 
-$$d(x_n, \text{trueOrbitOf}(f, x_0)(n)) \leq \frac{\delta(1 - L^n)}{1 - L}.$$
+**Lemma 3.1 (One-step error propagation).** Let $f$ be $L$-Lipschitz, let $(x_n)$ be a $\delta$-pseudo-orbit through time $N$, and let $y_n=f^n(y_0)$ be any exact orbit. For $0\leq n<N$,
 
-*Proof sketch.* By induction on n. The base case is trivial (d(x₀, x₀) = 0). For the inductive step:
+$$
+\lVert x_{n+1}-y_{n+1}\rVert
+\leq\delta+L\lVert x_n-y_n\rVert.
+$$
 
-$$d(x_{n+1}, f(y_n)) \leq d(x_{n+1}, f(x_n)) + d(f(x_n), f(y_n)) < \delta + L \cdot d(x_n, y_n)$$
+**Proof sketch.** Insert and subtract $f(x_n)$:
 
-where y_n = trueOrbitOf(f, x₀)(n). Applying the induction hypothesis and simplifying:
+$$
+x_{n+1}-f(y_n)
+=\bigl(x_{n+1}-f(x_n)\bigr)+\bigl(f(x_n)-f(y_n)\bigr).
+$$
 
-$$\delta + L \cdot \frac{\delta(1 - L^n)}{1 - L} = \frac{\delta(1 - L + L - L^{n+1})}{1 - L} = \frac{\delta(1 - L^{n+1})}{1 - L}.$$
+Taking norms, applying the triangle inequality, bounding the first term by the pseudo-orbit hypothesis, and bounding the second by Lipschitz continuity gives the claim. $\square$
 
-**Theorem 3.2** (Contractive Shadowing Bound). Under the same hypotheses, the true orbit starting at x₀ shadows x with bound δ/(1 − L):
+More generally, if the defects vary by step, then
 
-$$\text{Shadows}(x, \text{trueOrbitOf}(f, x_0), \delta/(1-L), N).$$
+$$
+e_{n+1}\leq d_n+Le_n.
+$$
 
-*Proof.* Since L^n ≥ 0, we have (1 − L^n) ≤ 1, so δ(1 − L^n)/(1 − L) ≤ δ/(1 − L).
+Unrolling gives the weighted convolution
 
-**Theorem 3.3** (Uniform Shadowing for Contractions). Every contractive map has the uniform shadowing property.
+$$
+e_n\leq L^ne_0+\sum_{j=0}^{n-1}L^{n-1-j}d_j.
+$$
 
-*Proof.* Given ε > 0, set δ = ε(1 − L). Then δ/(1 − L) = ε, and Theorem 3.2 applies.
+The uniform-defect theorem below is the special case $e_0=0$ and $d_j\leq\delta$.
 
-### 3.2 Shadowing Uniqueness
+## 4. Finite-horizon shadowing
 
-**Theorem 3.4** (Uniqueness for Expansive Maps). Let f be expansive with constant c. If two true orbits y₁ and y₂ both ε-shadow the same sequence x with ε < c/2, then y₁(0) = y₂(0).
+**Theorem 4.1 (Finite-Horizon Shadowing Theorem).** Let $f:E\to E$ be $L$-Lipschitz with $L\geq0$. Let $x_0,\ldots,x_N$ be a $\delta$-pseudo-orbit with $\delta\geq0$. Then the exact orbit $y_n=f^n(x_0)$ satisfies
 
-*Proof.* By the triangle inequality, d(y₁(n), y₂(n)) ≤ d(y₁(n), x(n)) + d(x(n), y₂(n)) ≤ 2ε < c for all n. Since y₁ and y₂ are true orbits, y_i(n) = f^n(y_i(0)). The expansivity condition then gives y₁(0) = y₂(0).
+$$
+\lVert x_n-y_n\rVert
+\leq\delta\sum_{k=0}^{n-1}L^k
+$$
 
-### 3.3 Perturbation Stability
+for every $0\leq n\leq N$, where the empty sum at $n=0$ is zero.
 
-**Theorem 3.5** (Pseudo-Orbit Perturbation). If x is a δ-pseudo-orbit of f, and d(f(z), g(z)) < η for all z, then x is a (δ + η)-pseudo-orbit of g.
+**Proof sketch.** Set $e_n=\lVert x_n-y_n\rVert$. Because $y_0=x_0$, one has $e_0=0$. Assume inductively that
 
-*Proof.* By the triangle inequality: d(x_{n+1}, g(x_n)) ≤ d(x_{n+1}, f(x_n)) + d(f(x_n), g(x_n)) < δ + η.
+$$
+e_n\leq\delta\sum_{k=0}^{n-1}L^k.
+$$
 
-### 3.4 Shadowing Amplification
+Lemma 3.1 implies
 
-**Theorem 3.6** (Amplification Ratio). Under the hypotheses of Theorem 3.1, for all n ≤ N,
+$$
+\begin{aligned}
+e_{n+1}
+&\leq\delta+Le_n\\
+&\leq\delta+L\delta\sum_{k=0}^{n-1}L^k\\
+&=\delta\sum_{k=0}^{n}L^k.
+\end{aligned}
+$$
 
-$$\frac{d(x_n, y_n)}{\delta} \leq \frac{1}{1 - L}.$$
+Induction proves the result through $N$. $\square$
 
-This ratio 1/(1 − L) is the *shadowing amplification factor*: it quantifies how much the map amplifies pseudo-orbit errors into shadowing distances.
+For $L\neq1$, the geometric sum has the closed form
 
-### 3.5 Certificate Construction
+$$
+\sum_{k=0}^{n-1}L^k=\frac{L^n-1}{L-1}.
+$$
 
-**Theorem 3.7** (Certificate Construction). For any contractive map and any pseudo-orbit, one can construct a Shadowing Certificate with bound δ/(1 − L).
+For $L=1$, it equals $n$. Thus the theorem has three qualitative regimes:
 
-### 3.6 Logistic Map Properties
+$$
+e_n\leq
+\begin{cases}
+\delta(1-L^n)/(1-L), & 0\leq L<1,\\
+n\delta, & L=1,\\
+\delta(L^n-1)/(L-1), & L>1.
+\end{cases}
+$$
 
-**Theorem 3.8.** The logistic map f_r(x) = rx(1 − x) satisfies:
-1. f_4(1/2) = 1 (maximum value)
-2. f_r(0) = 0 (fixed point for all r)
-3. f_4(3/4) = 3/4 (non-trivial fixed point)
-4. HasDerivAt(f_r, r(1 − 2x), x) (derivative formula)
+The theorem is finite-horizon in two senses. The pseudo-orbit assumptions are needed only through $N$, and the conclusion is asserted only through $N$. No asymptotic regularity or compactness is required.
 
-## 4. The Shadowing Certificate: A Novel Concept
+### 4.1. Contractions
 
-The Shadowing Certificate is our primary conceptual contribution. While the shadowing lemma has been known since the 1970s, the idea of packaging the lemma's witness into a self-contained certified object is new. This has several advantages:
+**Theorem 4.2 (Uniform Contraction Shadowing Theorem).** Under the assumptions of Theorem 4.1, if additionally $0\leq L<1$, then
 
-1. **Composability**: Certificates can be combined, extended, and restricted using the pseudo-orbit composition theorems.
-2. **Inspectability**: The shadowing start point, bound, and tolerance are all directly accessible.
-3. **Transferability**: The perturbation theorem allows certificates for one map to be adapted for nearby maps.
+$$
+\lVert x_n-f^n(x_0)\rVert\leq\frac{\delta}{1-L}
+$$
 
-In a programming context, a Shadowing Certificate is an assertion that says: "I computed this trajectory with these errors, and here is the true trajectory that my computation has been tracking, with a guaranteed bound on how close they stay."
+for every $0\leq n\leq N$. The bound is independent of $N$.
 
-## 5. Computational Experiments
+**Proof sketch.** Since every term $L^k$ is nonnegative and $L<1$,
 
-### 5.1 Logistic Map Shadowing
+$$
+\sum_{k=0}^{n-1}L^k=\frac{1-L^n}{1-L}\leq\frac{1}{1-L}.
+$$
 
-We implement the logistic map f(x) = 4x(1 − x) in double-precision floating-point and compute 10⁶ iterations. At each step, the rounding error is bounded by machine epsilon ε_mach ≈ 2.2 × 10⁻¹⁶. The resulting trajectory is a δ-pseudo-orbit with δ ≈ 4 × ε_mach ≈ 8.9 × 10⁻¹⁶ (the factor of 4 comes from the Lipschitz constant of the logistic map on [0,1]).
+Substitution into Theorem 4.1 gives the result. $\square$
 
-Using binary search on initial conditions, we verify that shadowing orbits exist with shadowing distance ≤ 10⁻¹⁰ for trajectories up to 10⁶ steps. This is consistent with the theoretical prediction that shadowing distance grows polynomially with trajectory length for hyperbolic systems.
+The radius $\delta/(1-L)$ expresses a balance between continual error injection and dynamical dissipation. As $L$ approaches one from below, memory fades more slowly and the bound diverges.
 
-### 5.2 Contraction Rate Sweep
+### 4.2. What the theorem does not assert
 
-We sweep the contraction ratio L from 0.1 to 0.99 and verify the δ/(1−L) bound numerically. The agreement between theory and computation is exact to floating-point precision.
+For $L>1$, the geometric factor grows exponentially. This does not imply that each concrete pseudo-orbit attains the worst case. It implies that the stated assumptions permit such amplification. Horizon-independent shadowing in expanding or hyperbolic systems requires additional structure.
 
-## 6. Discussion
+A classical hyperbolic argument distinguishes stable and unstable directions and often chooses an adjusted initial condition. A single scalar $L$ erases this directional information. Accordingly, Theorem 4.1 should not be described as an infinite-time shadowing lemma, nor does it imply that arbitrary floating-point executions are uniformly close to exact orbits.
 
-### 6.1 Implications for Numerical Computation
+## 5. The parameter-four logistic map
 
-The shadowing lemma provides a rigorous justification for chaotic simulations. When a computer iterates a chaotic map, the floating-point trajectory is a pseudo-orbit. By the shadowing lemma, it shadows a true orbit. This means:
+Define
 
-1. **Statistical properties** computed from numerical trajectories (time averages, Lyapunov exponents, correlation functions) are meaningful, because they approximate those of a true trajectory.
-2. **Qualitative features** (strange attractors, fractal dimensions, mixing properties) observed in simulations are genuine features of the mathematical system.
-3. **Long-time behavior** in simulations, while not tracking the intended trajectory, does track *some* real trajectory faithfully.
+$$
+f(x)=4x(1-x).
+$$
 
-### 6.2 The Shadowing Certificate as a Programming Paradigm
+This polynomial maps the unit interval to itself and is chaotic in the usual dynamical sense. The finite-horizon analysis depends only on elementary interval estimates.
 
-The Shadowing Certificate suggests a new paradigm for verified numerical computation: instead of trying to bound the error of a specific computation (which grows exponentially for chaotic systems), we certify that the computation shadows some true orbit with a controlled bound. This shifts the question from "how wrong is my answer?" to "what true question did my computation actually answer?"
+**Lemma 5.1 (Forward invariance of the unit interval).** If $x\in[0,1]$, then $f(x)\in[0,1]$.
 
-### 6.3 Limitations
+**Proof sketch.** Since $x\geq0$ and $1-x\geq0$, one has $f(x)\geq0$. Completing the square gives
 
-Our formalization covers the contractive case completely but does not include the full Anosov–Bowen shadowing lemma for uniformly hyperbolic maps, which requires:
-- Splitting of the tangent space into stable and unstable subspaces
-- Uniform hyperbolicity bounds
-- The Shadowing Lemma for Axiom A diffeomorphisms
+$$
+f(x)=1-4\left(x-\frac12\right)^2\leq1.
+$$
 
-These extensions are significant future work.
+Thus $0\leq f(x)\leq1$. $\square$
 
-## 7. Future Work
+**Corollary 5.2 (Invariant exact orbit).** If $y_0\in[0,1]$ and $y_{n+1}=f(y_n)$, then $y_n\in[0,1]$ for every $n\geq0$.
 
-1. **Hyperbolic shadowing**: Extend to uniformly hyperbolic maps by formalizing stable/unstable manifolds
-2. **Infinite shadowing**: Prove that contractive maps have infinite-time shadowing (our current bound is for finite N, though arbitrary)
-3. **Stochastic shadowing**: Extend to random dynamical systems where the map changes at each step
-4. **Computational certificates**: Implement certificate-producing algorithms that output verified shadowing witnesses from numerical computations
+**Proof sketch.** Apply Lemma 5.1 inductively. $\square$
 
-## 8. Conclusion
+**Lemma 5.3 (Lipschitz estimate on the invariant interval).** For all $x,y\in[0,1]$,
 
-We have presented a formal development of orbit shadowing in dynamical systems, centered on the novel concept of a Shadowing Certificate. Our main results — contractive shadowing with explicit bounds, uniqueness for expansive maps, and perturbation stability — provide a rigorous foundation for the claim that numerical chaos is not computational error but a shadow of mathematical truth. The Shadowing Certificate packages this claim into a verifiable, composable, and inspectable mathematical object.
+$$
+|f(x)-f(y)|\leq4|x-y|.
+$$
 
-## References
+**Proof sketch.** Factor the difference:
 
-1. Anosov, D. V. (1967). Geodesic flows on closed Riemannian manifolds of negative curvature. *Proceedings of the Steklov Institute of Mathematics*, 90.
-2. Bowen, R. (1975). ω-limit sets for Axiom A diffeomorphisms. *Journal of Differential Equations*, 18(2), 333–339.
-3. Palmer, K. (2000). *Shadowing in Dynamical Systems: Theory and Applications*. Kluwer Academic Publishers.
-4. Pilyugin, S. Yu. (1999). *Shadowing in Dynamical Systems*. Lecture Notes in Mathematics, Springer.
-5. Hammel, S. M., Yorke, J. A., & Grebogi, C. (1987). Do numerical orbits of chaotic dynamical processes represent true orbits? *Journal of Complexity*, 3(2), 136–145.
+$$
+f(x)-f(y)=4(x-y)(1-x-y).
+$$
+
+Because $x+y\in[0,2]$, the factor $1-x-y$ lies in $[-1,1]$. Hence $|1-x-y|\leq1$, which proves the estimate. $\square$
+
+The constant four is sharp as a global interval Lipschitz constant: derivatives $f'(x)=4-8x$ have magnitude approaching four at the endpoints.
+
+**Theorem 5.4 (Logistic Finite-Horizon Shadowing Theorem).** Let $x_0,\ldots,x_N\in[0,1]$, let $\delta\geq0$, and suppose
+
+$$
+|x_{n+1}-4x_n(1-x_n)|\leq\delta
+$$
+
+for every $0\leq n<N$. Let $y_0=x_0$ and $y_{n+1}=4y_n(1-y_n)$. Then
+
+$$
+|x_n-y_n|\leq\delta\sum_{k=0}^{n-1}4^k
+$$
+
+for every $0\leq n\leq N$.
+
+**Proof sketch.** By Corollary 5.2, the exact orbit remains in $[0,1]$; the reported points lie there by assumption. Lemma 5.3 is therefore applicable at every step. Theorem 4.1 with $L=4$ completes the proof. $\square$
+
+**Corollary 5.5 (Closed logistic error budget).** Under the hypotheses of Theorem 5.4,
+
+$$
+|x_n-y_n|\leq\delta\frac{4^n-1}{3}
+$$
+
+for every $0\leq n\leq N$.
+
+**Proof sketch.** Evaluate the geometric series $\sum_{k=0}^{n-1}4^k=(4^n-1)/3$. $\square$
+
+**Theorem 5.6 (Logistic Precision Certificate).** Under the hypotheses of Theorem 5.4, let $\varepsilon\geq0$. If
+
+$$
+\delta(4^N-1)\leq3\varepsilon,
+$$
+
+then
+
+$$
+|x_n-y_n|\leq\varepsilon
+$$
+
+for all $0\leq n\leq N$.
+
+**Proof sketch.** Since $4^n\leq4^N$ whenever $n\leq N$, Corollary 5.5 gives
+
+$$
+|x_n-y_n|\leq\delta\frac{4^n-1}{3}
+\leq\delta\frac{4^N-1}{3}
+\leq\varepsilon.
+$$
+
+$\square$
+
+Solving for the local defect gives the sufficient requirement
+
+$$
+\delta\leq\frac{3\varepsilon}{4^N-1}.
+$$
+
+Alternatively, when $\delta>0$, the largest integer horizon supported by the global estimate is
+
+$$
+N_{\max}=\left\lfloor\log_4\left(1+\frac{3\varepsilon}{\delta}\right)\right\rfloor.
+$$
+
+Boundary effects should be handled by directly checking the integer inequality, because floating evaluation of the logarithm may round near an exact threshold.
+
+### 5.1. Numerical scale
+
+Take $\delta=10^{-16}$ and $\varepsilon=10^{-10}$. The condition becomes
+
+$$
+4^N-1\leq3\times10^6.
+$$
+
+Since $4^{10}=1{,}048{,}576$ and $4^{11}=4{,}194{,}304$, horizon $N=10$ is certified while $N=11$ is not. This is a sufficient, worst-case statement rather than a prediction of typical observed divergence.
+
+The million-step proposal lies far outside this global certificate. Establishing a long shadow would require a different theorem and likely a different witness initial condition. A naive binary search is not justified because the discrepancy over an itinerary is generally nonmonotone in the initial state. Interval subdivision, symbolic dynamics, or boundary-value methods are more appropriate candidates.
+
+## 6. Residual systems and machine learning
+
+Let $g:E\to E$ and define a residual update
+
+$$
+F(z)=z+g(z).
+$$
+
+**Lemma 6.1 (Residual block Lipschitz estimate).** If $g$ is $L$-Lipschitz with $L\geq0$, then $F$ is $(1+L)$-Lipschitz:
+
+$$
+\lVert F(a)-F(b)\rVert\leq(1+L)\lVert a-b\rVert.
+$$
+
+**Proof sketch.** Expand and apply the triangle inequality:
+
+$$
+\begin{aligned}
+\lVert F(a)-F(b)\rVert
+&=\lVert(a-b)+(g(a)-g(b))\rVert\\
+&\leq\lVert a-b\rVert+\lVert g(a)-g(b)\rVert\\
+&\leq(1+L)\lVert a-b\rVert.
+\end{aligned}
+$$
+
+$\square$
+
+**Theorem 6.2 (Residual-System Finite-Horizon Shadowing Theorem).** Suppose $g$ is $L$-Lipschitz with $L\geq0$, and $x_0,\ldots,x_N$ satisfies
+
+$$
+\lVert x_{n+1}-(x_n+g(x_n))\rVert\leq\delta
+$$
+
+for $0\leq n<N$, where $\delta\geq0$. If $y_0=x_0$ and $y_{n+1}=y_n+g(y_n)$, then
+
+$$
+\lVert x_n-y_n\rVert
+\leq\delta\sum_{k=0}^{n-1}(1+L)^k
+$$
+
+for every $0\leq n\leq N$.
+
+**Proof sketch.** Lemma 6.1 supplies the Lipschitz constant $1+L$ for the full residual update. Apply Theorem 4.1. $\square$
+
+This theorem treats depth as discrete time. A local approximation at layer $j$ is propagated by later layers exactly as a local numerical defect is propagated by later dynamical steps. The uniform worst-case estimate may be loose: practical networks are nonautonomous, with updates $F_n(z)=z+g_n(z)$ and constants $L_n$. Iterating the one-step relation suggests the sharper variable-coefficient budget
+
+$$
+e_n\leq\sum_{j=0}^{n-1}d_j\prod_{m=j+1}^{n-1}(1+L_m),
+$$
+
+with an empty product interpreted as one. This formula motivates layer-wise certification and architecture-sensitive robustness analysis.
+
+## 7. Certification algorithms
+
+### 7.1. Geometric budget evaluation
+
+Given $L$, $\delta$, and $N$, compute recursively
+
+$$
+B_0=0,\qquad B_{n+1}=\delta+LB_n.
+$$
+
+Then $B_n=\delta\sum_{k=0}^{n-1}L^k$. The recurrence avoids subtractive cancellation near $L=1$ and costs $O(N)$ time and $O(1)$ auxiliary storage if only the final value is needed. A closed form costs $O(1)$ arithmetic operations but may overflow or lose relative accuracy for extreme parameters.
+
+### 7.2. Pseudo-orbit audit
+
+Given reported states $x_0,\ldots,x_N$ and a trusted evaluator for $f$, calculate
+
+$$
+d_n=\lVert x_{n+1}-f(x_n)\rVert.
+$$
+
+Set $\widehat\delta=\max_{n<N}d_n$ and verify any invariant-region assumptions. Feed $\widehat\delta$ into the geometric budget. The trusted evaluator must provide enough accuracy, preferably with directed rounding or interval enclosures, to turn computed defects into upper bounds rather than mere estimates.
+
+The cost is $O(N)$ evaluations of $f$, plus norm calculations. Memory is $O(N)$ if the trajectory is stored and $O(1)$ if states are streamed.
+
+### 7.3. Logistic precision planner
+
+For tolerance $\varepsilon$ and horizon $N$, return
+
+$$
+\delta_{\max}=\frac{3\varepsilon}{4^N-1}.
+$$
+
+Any certified local defect no greater than $\delta_{\max}$ is sufficient under the interval assumptions. Conversely, for fixed $\delta$, search over integers for the largest $N$ satisfying $\delta(4^N-1)\leq3\varepsilon$. Integer exponentiation and direct comparison make the decision reliable.
+
+These algorithms certify the theorem’s hypotheses and conclusion; they do not locate a different initial point whose exact orbit shadows a long pseudo-orbit.
+
+## 8. Numerical methodology
+
+A numerical demonstration should distinguish theorem, model, and observation.
+
+1. **The theorem** concerns exact real quantities and certified inequalities.
+2. **The computational model** defines how reported states are produced and how local defects are bounded.
+3. **The observation** compares a finite-precision trajectory with a high-precision reference.
+
+A high-precision decimal reference is not an exact real orbit, but it can illustrate behavior. For the logistic map, one may produce binary64 iterates and decimal iterates from the same decimal initial value. At each time, record the discrepancy and the recursively propagated envelope based on measured or conservatively rounded defects. One should expect the global factor-four envelope to grow faster than many observed errors because it assumes maximum expansion at every step.
+
+For a contraction $f(x)=Lx$ with $0<L<1$, one may inject bounded deterministic perturbations $r_n$ satisfying $|r_n|\leq\delta$. The pseudo-orbit $x_{n+1}=Lx_n+r_n$ must satisfy
+
+$$
+|x_n-L^nx_0|\leq\frac{\delta}{1-L}.
+$$
+
+Alternating or constant-sign perturbations show how the bound relates to actual accumulation.
+
+For a scalar residual system $F(z)=z+g(z)$, choose a globally Lipschitz $g$, inject bounded defects, and compare the observed discrepancy with the $(1+L)$ geometric envelope. Such examples reveal a common propagation mechanism without claiming that the estimate is sharp for every architecture.
+
+## 9. Applications
+
+### 9.1. Precision selection
+
+Theorems 4.1 and 5.6 turn a global tolerance into a local requirement. This supports precision planning: choose an arithmetic scheme whose certified one-step defect lies below the required threshold. In expanding systems, the threshold may shrink exponentially with the requested horizon, signaling that precision alone is an inefficient route to long-time guarantees.
+
+### 9.2. Simulation auditing
+
+A recorded trajectory can be audited after execution by recomputing local defects with interval arithmetic. This separates implementation failures from dynamical sensitivity. If a local defect exceeds its promised bound, the numerical contract failed. If every local defect passes but the global budget is large, the issue is dynamical amplification rather than an anomalous step.
+
+### 9.3. Residual-network robustness
+
+The residual theorem applies to approximation error at each layer, including quantized weights, compressed activations, and approximate accelerators, once these are expressed as norm-bounded local defects. The geometric factor identifies where a single global Lipschitz estimate becomes pessimistic and motivates layer-dependent bounds.
+
+### 9.4. Backward-error interpretation
+
+The pseudo-orbit viewpoint is a form of backward error: each reported transition is exact for a locally perturbed update. A separate shadowing theorem then asks whether the entire perturbed execution lies near an orbit of the unperturbed system. Keeping these stages separate prevents floating-point folklore from replacing explicit assumptions.
+
+## 10. Limitations and discussion
+
+The finite-horizon theorem assumes a normed additive state space and a global Lipschitz estimate over every pair of states encountered in the comparison. For the logistic specialization, both reported and exact points must remain in $[0,1]$. Exact points remain there by invariance; reported points require an explicit hypothesis or a certified range check.
+
+The estimate uses a uniform local defect $\delta$. Variable defects can be handled by the weighted formula in Section 3 and may be substantially sharper. Likewise, the logistic constant four is an interval-wide worst case. Since
+
+$$
+|f'(x)|=|4-8x|,
+$$
+
+an itinerary-sensitive product of local derivative envelopes may improve the budget when the orbit avoids highly expanding regions. Near the critical point $x=1/2$, however, inverse branches become ill-conditioned in a different way, so long-time shadow construction requires care.
+
+Most importantly, this theory does not prove the broad conjecture that every program computing a chaotic map has every floating output shadowed uniformly by a true orbit. Such a statement needs a precise program semantics, exclusions for overflow and exceptional values, and dynamical hypotheses stronger than chaos. Hyperbolicity is a structured property, not a synonym for sensitive dependence.
+
+The witness used here is nevertheless valuable. Choosing $y_0=x_0$ makes the certificate constructive and immediate. It provides a baseline against which stronger shadowing mechanisms can be measured: any improvement must come from local derivatives, directional splitting, a better initial condition, or additional orbit information.
+
+## 11. Future work
+
+A first direction is certified shadowing from stable and unstable cone fields. On a compact invariant set, computable expansion, contraction, angle-separation, and rounding constants may yield a horizon-independent radius. This would replace scalar worst-case growth by directional correction.
+
+A second direction is a compositional semantics for IEEE-754 polynomial dynamics. Executions avoiding overflow and exceptional values should be translated into exact real pseudo-orbits with bounds derived from unit roundoff and intermediate magnitudes. Such a semantics would supply the local $\delta$ consumed by the present theorems.
+
+A third direction is adaptive logistic-map certification. Products of local derivative envelopes should outperform $4^N$ on suitable certified itineraries, especially away from the critical point. Periodic itineraries offer a controlled setting for studying sharpness.
+
+A fourth direction is nonautonomous residual dynamics. For depth-varying maps $z\mapsto z+g_n(z)$, products of $1+L_n$ replace a single geometric factor. Summability, averaged contraction, or cancellation conditions may yield bounds uniform in depth even when individual layers are not contractive.
+
+## 12. Conclusion
+
+A locally accurate numerical trajectory has a precise finite-horizon relationship to exact dynamics. Under an $L$-Lipschitz map, a defect of at most $\delta$ per step produces a same-initial-condition shadowing radius
+
+$$
+\delta\sum_{k=0}^{n-1}L^k.
+$$
+
+For contractions this is uniformly bounded by $\delta/(1-L)$. For the parameter-four logistic map on $[0,1]$, it becomes $\delta(4^n-1)/3$, yielding the explicit tolerance condition $\delta(4^N-1)\leq3\varepsilon$. For residual updates, the same principle applies with factor $1+L$.
+
+These formulas communicate both possibility and limitation. They justify finite computations under explicit assumptions, expose the cost of expansion, and connect numerical dynamics to perturbation propagation in learning systems. They also provide a transparent reporting standard: identify the invariant region, state the local defect, state the amplification constant, and report the certified horizon and tolerance together. This standard makes clear whether an inconclusive estimate reflects inadequate arithmetic, an overly coarse dynamical bound, or a genuinely unstable regime.
+
+Long-time chaotic shadowing may be attainable, but it must be supported by program-level defect certificates and dynamical structure beyond a global Lipschitz constant. The finite-horizon theory supplies the baseline from which every such strengthening can be measured.
