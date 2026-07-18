@@ -767,9 +767,6 @@
                         n.thrustSpin = n.thrustSpin || ((Math.random() > 0.5 ? 1 : -1) * (15 + Math.random() * 10));
                         n.thrustAngle += n.thrustSpin * 0.016; 
                         
-                        const thrustForce = 150.0;
-                        n.vx += Math.cos(n.thrustAngle) * thrustForce * 0.016;
-                        n.vy += Math.sin(n.thrustAngle) * thrustForce * 0.016;
 
                         // Spawn flame particles (capped) — visual only, no velocity change
                         if (flameParticles.length < MAX_FLAME_PARTICLES && Math.random() < 0.6) {
