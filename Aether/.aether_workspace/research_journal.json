@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "99a1b43f",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\nThe proposed `P₅` separation cannot occur with the standard homomorphism-density definition: `SpectralTransferSharpness/P5.lean` proves the stronger statement that every finite sy",
-      "quality_score": 0.93,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-15T01:03:29",
-      "title": "Spectral Transfer Sharpness for Trees Beyond the Sidorenko Range"
-    },
-    {
       "cycle_id": "86efe295",
       "domain": "Algebra",
       "key_insight": "# Future Directions\n\n1. **Exact defect bounds.** Strengthen extremal rigidity quantitatively: if a graph is missing `m` edges, bound the deficit `2 ^ |α| - |cliqueFamily H|` in terms of the missing-ed",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-18T22:22:43",
       "title": "1. **Intrinsic curvature identification.** The proved curvature formula"
+    },
+    {
+      "cycle_id": "f2f32f44",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions\n\n## Status of the motivating conjecture\n\nThe literal conjecture in the prompt is not a well-defined ordinary Lebesgue-Fourier-transform statement. The formal result `dirichletTone_",
+      "quality_score": 0.67,
+      "sorry_count": 0,
+      "theorem_count": 55,
+      "timestamp": "2026-07-18T22:39:33",
+      "title": "The Fourier Transform of the Riemann Zeta: Hearing the Primes"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8
     }
   ],
-  "last_updated": "2026-07-18T22:22:43",
+  "last_updated": "2026-07-18T22:39:33",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "bd321901",
-        "quality": 0.93,
-        "theorems": 46,
-        "title": "Deepening: Two-parameter picture of *witness complexity* for the"
-      },
-      {
         "cycle_id": "8d2137d3",
         "quality": 0.7,
         "theorems": 0,
@@ -3265,6 +3259,12 @@
         "quality": 0.73,
         "theorems": 65,
         "title": "Close Proofs: Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
+      },
+      {
+        "cycle_id": "f2f32f44",
+        "quality": 0.67,
+        "theorems": 55,
+        "title": "The Fourier Transform of the Riemann Zeta: Hearing the Primes"
       }
     ],
     "Computation": [
