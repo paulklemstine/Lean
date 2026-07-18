@@ -1,477 +1,440 @@
-# Transfinite Game Values in Infinite Chess: An Explicit Hierarchy from $\omega$ to $\omega^\omega$
+# Transfinite Values in Countably Branching Winning Games: From $\omega$ to $\omega^\omega$
+
+**Aristotle**  
+**July 18, 2026**
 
 ## Abstract
 
-Infinite chess — chess played on an unbounded board $\mathbb{Z} \times \mathbb{Z}$ —
-exhibits a phenomenon impossible in the finite game: positions from which the
-winner can *force* checkmate, yet in no finite number of moves. The natural
-measure of the length of such a forced win is not an integer but an **ordinal**,
-the *game value* $v(P)$: the least ordinal $\alpha$ such that the winner can
-guarantee mate within $\alpha$ moves. We develop a faithful abstract model of
-forced-win game trees and their ordinal values, and prove that arbitrarily
-large transfinite game values below $\omega^\omega$ are realised by explicit
-positions. Our central structural result is that a sequential-composition
-operation on games — *grafting* — realises ordinal addition on game values.
-Using grafting together with a countably branching "delay" node, we construct
-explicit positions of value $\omega$, of value $\omega^n$ for every natural
-number $n$, and, by a diagonal construction, of value $\omega^\omega$. We prove
-that these values form a strictly increasing hierarchy and that the diagonal
-position strictly dominates every finite power $\omega^n$, including the fact
-that the mate-in-$\omega$ position admits no finite move bound.
-
-**Keywords:** infinite chess, transfinite game values, ordinal arithmetic,
-game trees, ordinal suprema, checkmate, mate-in-omega, $\omega^\omega$.
-
----
+Infinite chess motivates winning positions for which checkmate is inevitable although no finite move bound is uniform over all defenses. This paper isolates the ordinal timing mechanism in a self-contained class of well-founded, countably branching winning game trees. A terminal node has value $0$; a forced move takes a successor; and an adversarial countable choice takes the supremum of the successor values of its continuations. We define sequential composition by replacing every terminal leaf of one game with a second game and prove that its value is ordinal addition in the order dictated by traversal. From a basic unbounded finite delay, we construct games of exact value $\omega^n$ for every natural number $n$. A diagonal countable choice over these games has exact value $\omega^\omega$. The values are strictly increasing, the diagonal value dominates every finite power, and each computed value is the unique least sufficient forcing budget. Finite truncation algorithms provide numerical illustrations while also clarifying why finite computation cannot establish the universal transfinite lower bounds. The results concern abstract game trees; realizing these trees as legal positions of orthodox pieces on an infinite board remains a separate geometric problem.
 
 ## 1. Introduction
 
-Ordinary chess is a finite game: every position has a definite game-theoretic
-value, and every forced checkmate arrives within a bounded, finite number of
-moves. On an **infinite** board — chess played with the usual pieces on the
-lattice $\mathbb{Z} \times \mathbb{Z}$, with no edges — this finiteness fails in
-a spectacular way. There exist positions from which one player, say White, can
-force checkmate against any defence, and yet for which *no finite number of
-moves* suffices to guarantee mate uniformly. The correct measure of the length
-of such a win is a transfinite **ordinal**.
+In a finite game graph, a forced win has a finite uniform bound: if indefinitely long avoidance were possible, repetition or an infinite path would obstruct well-founded victory. Infinite games behave differently. An adversary may choose among delays of every finite length. Each individual play terminates, yet no natural number bounds all plays.
 
-Formally, for a position $P$ from which White has a forced win, the **game
-value** $v(P)$ is defined to be the least ordinal $\alpha$ such that White can
-force checkmate in at most $\alpha$ moves. The best-known example is the
-*mate-in-$\omega$* position, where $v(P) = \omega$: White wins, but Black can
-delay mate by any finite number of moves he chooses, so no finite bound is
-valid.
+Ordinals are the appropriate measures of such game trees. The first infinite ordinal $\omega$ is the order type of the natural numbers. It describes an unbounded family of finite delays. Higher values record nested forms of delay. The value $\omega^2$, for example, represents an unbounded finite number of blocks, each having omega-scale complexity. Iterating gives $\omega^n$, and taking a diagonal supremum over all finite exponents gives $\omega^\omega$.
 
-This paper answers the natural next question: **how large can $v(P)$ be?** We
-prove that the game values realised by explicit positions climb through a rich
-transfinite hierarchy. Specifically, we exhibit positions of value $\omega$,
-positions of value $\omega^n$ for every $n \in \mathbb{N}$, and a diagonal
-position of value $\omega^\omega$, and we show these values strictly increase and
-that $\omega^\omega$ strictly dominates every $\omega^n$.
+We study a minimal model containing exactly the operations needed for this hierarchy. White, the designated winner, has only forced continuations; Black, the delaying player, may choose from a countable family. This restriction removes irrelevant minimization while preserving the central ordinal phenomenon. The model is best viewed as the timing skeleton that a more concrete game construction would need to simulate.
 
-### 1.1 Contributions
-
-1. A clean, faithful **model of forced-win game trees** with three node types —
-   a checkmate leaf, a unique-continuation *winner* node, and a countably
-   branching *loser* node — and a transfinite-recursive definition of their
-   ordinal game value (Section 3).
-2. A **sequential-composition** operation (*grafting*) on games, together with
-   the structural theorem that grafting realises ordinal addition:
-   $v(A \frown B) = v(B) + v(A)$ (Section 4).
-3. An **explicit mate-in-$\omega$** position with $v = \omega$, together with a
-   proof that this win has no finite bound (Section 5).
-4. An **explicit power hierarchy**: positions of value exactly $\omega^n$ for
-   every $n$, built by iterated grafting, and a proof that these values are
-   strictly increasing (Section 6).
-5. A **diagonal construction** yielding an explicit position of value
-   $\omega^\omega$, strictly above every $\omega^n$ (Section 7).
-
-### 1.2 Modelling philosophy
-
-To isolate the *ordinal analysis* from the intricate combinatorics of pieces on
-an unbounded board, we model the relevant game trees directly. This is standard
-practice in the theory of infinite games: the ordinal game value depends only on
-the tree of forced continuations and on which player moves at each node, not on
-the geometry that produced the tree. Two node types suffice to realise every
-ordinal below $\omega^\omega$: a *winner* node with a single forced continuation
-(the winner is one move from a determined successor), and a *loser* node offering
-a countable family of continuations (the loser chooses how to delay). This is
-precisely the structure that the concrete infinite-chess positions of the
-mate-in-$\omega$ tradition exhibit, and it is exactly what our target values
-require.
-
----
+The paper makes five principal claims. First, grafting one game after another realizes ordinal addition. Second, a countable family of finite countdowns has exact value $\omega$. Third, recursively nesting countable choice and finite sequential composition realizes $\omega^n$ for every $n<\omega$. Fourth, diagonal choice realizes $\omega^\omega$. Fifth, these values are exact least forcing budgets, so no smaller ordinal can suffice.
 
 ## 2. Ordinal preliminaries
 
-We recall the facts of ordinal arithmetic used throughout. Ordinals extend the
-natural numbers past infinity: after $0, 1, 2, \dots$ comes the first infinite
-ordinal $\omega$, then $\omega + 1, \omega + 2, \dots$, then
-$\omega \cdot 2, \omega \cdot 3, \dots$, then $\omega^2, \omega^3, \dots$, and so
-on.
-
-- **Order-sensitivity of addition.** Ordinal addition is associative but *not*
-  commutative. Crucially, $n + \omega = \omega$ for every finite $n$, whereas
-  $\omega + n > \omega$. Adding a finite quantity *on the left* of an infinite
-  ordinal is absorbed; adding it *on the right* genuinely lengthens.
-- **Suprema.** Every set of ordinals has a least upper bound (supremum). For a
-  countable family $(a_k)_{k \in \mathbb{N}}$ we write $\sup_k a_k$. In
-  particular $\sup_n n = \omega$ and $\sup_k (\omega \cdot k) = \omega^2$.
-- **Left addition is a normal function.** For fixed $a$, the map
-  $x \mapsto a + x$ is continuous and strictly increasing, so it commutes with
-  suprema: $a + \sup_k f(k) = \sup_k (a + f(k))$. This single fact drives every
-  value computation below.
-- **Monotonicity of exponentiation.** Since $\omega > 1$, the map
-  $n \mapsto \omega^n$ is strictly increasing, and
-  $\omega^n < \omega^\omega$ for every finite $n$, with
-  $\omega^\omega = \sup_n \omega^n$.
-
-Throughout, $\mathbb{N} = \{0, 1, 2, \dots\}$ and ordinal operations use
-standard conventions.
-
----
-
-## 3. Games and their ordinal values
-
-### 3.1 Game trees
-
-**Definition 3.1 (Game).** A *game* (winning game tree) is one of:
-
-- $M$ — a leaf, representing a delivered checkmate;
-- $W(g)$ — a *winner* node with a unique forced continuation $g$ (White is
-  exactly one move from the position $g$);
-- $L(f)$ — a *loser* node with a countable family of continuations
-  $f : \mathbb{N} \to \mathrm{Game}$ (Black chooses which continuation to play).
-
-Every game is a well-founded tree built from these constructors: $M$ at the
-leaves, $W$ for the winner's forced moves, and $L$ for the loser's countable
-choices.
-
-### 3.2 The game value
-
-**Definition 3.2 (Game value).** The *game value* $v : \mathrm{Game} \to
-\mathrm{Ord}$ is defined by transfinite recursion on the tree:
+An **ordinal** is the order type of a well-ordered set. Natural numbers are the finite ordinals. Their supremum is the first infinite ordinal
 
 $$
-v(M) = 0, \qquad
-v(W(g)) = v(g) + 1, \qquad
-v(L(f)) = \sup_{n \in \mathbb{N}} \bigl(v(f(n)) + 1\bigr).
+\omega=\sup_{n<\omega}n.
 $$
 
-The interpretation matches optimal play. A delivered checkmate needs no further
-moves, so its value is $0$. At a winner node the winner makes one move and
-reaches $g$, contributing $v(g) + 1$; since the continuation is forced there is
-nothing to optimise. At a loser node the loser chooses the continuation that
-delays mate as long as possible, and the value is the supremum over his options,
-each incremented by the move made to reach it. (In general the winner minimises
-and the loser maximises; with the single-child winner node the minimisation is
-trivial, which is all our target values require.)
-
-**Lemma 3.3 (Left addition commutes with countable suprema).** For any ordinal
-$a$ and any $f : \mathbb{N} \to \mathrm{Ord}$,
-$$
-a + \sup_n f(n) = \sup_n \bigl(a + f(n)\bigr).
-$$
-*Proof sketch.* The map $x \mapsto a + x$ is a normal (continuous, strictly
-increasing) ordinal function, and normal functions preserve suprema of bounded
-families; the range of $f$ is bounded above since ordinals below a fixed bound
-form a set. $\square$
-
----
-
-## 4. Sequential composition: grafting and additivity
-
-The engine of the construction is an operation that plays one game to
-completion and then continues with another.
-
-**Definition 4.1 (Graft).** For games $A, B$, the graft $A \frown B$ replaces
-every checkmate leaf $M$ of $A$ with a fresh copy of $B$. Recursively:
+Ordinal addition and multiplication encode ordered concatenation. They are associative but generally not commutative. In particular,
 
 $$
-M \frown B = B, \qquad
-W(g) \frown B = W(g \frown B), \qquad
-L(f) \frown B = L\bigl(n \mapsto f(n) \frown B\bigr).
+1+\omega=\omega,\qquad \omega+1>\omega.
 $$
 
-Intuitively: "first solve $A$; the instant you would have been mated, you find
-yourself at the start of $B$; now solve $B$."
-
-**Theorem 4.2 (Additivity of game value).** For all games $A, B$,
-$$
-v\bigl(A \frown B\bigr) = v(B) + v(A).
-$$
-
-*Proof sketch.* Induction on the structure of $A$.
-
-- **Base ($A = M$).** $M \frown B = B$ and $v(B) + v(M) = v(B) + 0 = v(B)$.
-- **Winner ($A = W(g)$).** By the inductive hypothesis
-  $v(g \frown B) = v(B) + v(g)$, so
-  $$
-  v(W(g) \frown B) = v(g \frown B) + 1 = (v(B) + v(g)) + 1 = v(B) + (v(g)+1)
-    = v(B) + v(W(g)),
-  $$
-  using associativity of ordinal addition.
-- **Loser ($A = L(f)$).** By the inductive hypothesis, for each $n$,
-  $v(f(n) \frown B) = v(B) + v(f(n))$. Hence
-  $$
-  v(L(f) \frown B)
-    = \sup_n \bigl(v(B) + v(f(n)) + 1\bigr)
-    = v(B) + \sup_n \bigl(v(f(n)) + 1\bigr)
-    = v(B) + v(L(f)),
-  $$
-  where the middle step is Lemma 3.3 (left addition commutes with the supremum),
-  together with $a + (b+1) = (a+b)+1$. $\square$
-
-Note the **order** on the right-hand side: the outer game $A$ appears on the
-right of the sum. This is not a convention but a necessity, forced by the
-non-commutativity of ordinal addition, and it is exactly what makes grafting
-compose values correctly.
-
-**Definition 4.3 (Iterated graft).** For $k \in \mathbb{N}$ and a game $A$, write
-$A^{\frown k}$ for $k$ sequential copies of $A$:
-$$
-A^{\frown 0} = M, \qquad
-A^{\frown (k+1)} = A \frown A^{\frown k}.
-$$
-
-**Lemma 4.4 (Value of iterated graft).** $v(A^{\frown k}) = v(A) \cdot k$.
-
-*Proof sketch.* Induction on $k$. The base case gives $v(M) = 0 = v(A)\cdot 0$.
-For the step, Theorem 4.2 gives
-$v(A^{\frown(k+1)}) = v(A^{\frown k}) + v(A) = v(A)\cdot k + v(A)
-= v(A)\cdot(k+1)$. $\square$
-
----
-
-## 5. Value $\omega$: the classical mate-in-$\omega$
-
-**Definition 5.1 (Prefixing forced moves).** Let $W^n(g)$ denote $g$ with $n$
-forced winner moves prefixed: $W^0(g) = g$ and $W^{n+1}(g) = W(W^n(g))$. Then
-$v(W^n(g)) = v(g) + n$.
-
-**Definition 5.2 (Finite game).** $F_n = W^n(M)$ is a forced win in exactly $n$
-moves; indeed $v(F_n) = n$.
-
-**Definition 5.3 (Mate-in-$\omega$ position).** The position
-$$
-P_\omega = L\bigl(n \mapsto F_n\bigr)
-$$
-is a loser node where Black chooses a natural number $n$, after which White mates
-in exactly $n$ further forced moves.
-
-**Theorem 5.4.** $v(P_\omega) = \omega$.
-
-*Proof sketch.* By definition
-$v(P_\omega) = \sup_n (v(F_n) + 1) = \sup_n (n + 1)$.
-Every $n + 1$ is a finite ordinal, hence $\le \omega$, so the supremum is
-$\le \omega$. Conversely, for any ordinal $w < \omega$ we have $w = m$ for some
-$m \in \mathbb{N}$, and $w < m + 1 \le \sup_n(n+1)$; thus no ordinal below
-$\omega$ is an upper bound. Therefore the supremum equals $\omega$. $\square$
-
-**Theorem 5.5 (No finite bound).** There is no $n \in \mathbb{N}$ with
-$v(P_\omega) = n$.
-
-*Proof sketch.* $v(P_\omega) = \omega$ by Theorem 5.4, and $\omega > n$ for every
-finite $n$. $\square$
-
-Theorems 5.4 and 5.5 together capture the defining feature of infinite chess:
-White forces mate, but no finite move count is a valid guarantee.
-
----
-
-## 6. The power hierarchy: value $\omega^n$
-
-We now iterate the delay-and-graft construction to climb the powers of $\omega$.
-
-**Lemma 6.1 (A multiplicative supremum).** For any ordinal $v > 0$,
-$$
-\sup_{k \in \mathbb{N}} \bigl(v \cdot k + 1\bigr) = v \cdot \omega.
-$$
-*Proof sketch.* ($\le$) For each $n$, $v\cdot n + 1 \le v\cdot(n+1) \le v\cdot\omega$
-since $n + 1 \le \omega$ and multiplication on the left is monotone. ($\ge$) Each
-partial product $v\cdot k \le v\cdot k + 1$ lies below the supremum, and
-$\sup_k v\cdot k = v\cdot \omega$ because left multiplication is continuous in
-its right argument. $\square$
-
-**Definition 6.2 (Power positions).** Define a family $Q_n$ of positions by
-$$
-Q_0 = W(M), \qquad
-Q_{n+1} = L\bigl(k \mapsto Q_n^{\frown k}\bigr).
-$$
-That is: $Q_0$ is a one-move win; and at level $n+1$, Black chooses $k$ and White
-must then solve $k$ sequential copies of the level-$n$ position.
-
-**Theorem 6.3.** For every $n \in \mathbb{N}$, $v(Q_n) = \omega^n$.
-
-*Proof sketch.* Induction on $n$.
-
-- **Base.** $v(Q_0) = v(W(M)) = 0 + 1 = 1 = \omega^0$.
-- **Step.** Assume $v(Q_n) = \omega^n$. Then
-  $$
-  v(Q_{n+1}) = \sup_k \bigl(v(Q_n^{\frown k}) + 1\bigr)
-    = \sup_k \bigl(\omega^n \cdot k + 1\bigr),
-  $$
-  using Lemma 4.4. By Lemma 6.1 (with $v = \omega^n > 0$) this equals
-  $\omega^n \cdot \omega = \omega^{n+1}$. $\square$
-
-**Corollary 6.4 (Realisability).** For every $n$ there is an explicit position of
-value $\omega^n$, namely $Q_n$.
-
-**Theorem 6.5 (Strict monotonicity).** The map $n \mapsto v(Q_n) = \omega^n$ is
-strictly increasing.
-
-*Proof sketch.* Since $\omega > 1$, exponentiation with base $\omega$ is strictly
-monotone in the exponent, so $m < n$ implies $\omega^m < \omega^n$. $\square$
-
----
-
-## 7. The diagonal position: value $\omega^\omega$
-
-The staircase $\omega, \omega^2, \omega^3, \dots$ consists entirely of *finite*
-powers. A single diagonal construction leaps past all of them.
-
-**Lemma 7.1 (An exponential supremum).**
-$$
-\sup_{n \in \mathbb{N}} \bigl(\omega^n + 1\bigr) = \omega^\omega.
-$$
-*Proof sketch.* ($\le$) For each $n$, $\omega^n + 1 \le \omega^{n+1} \le
-\omega^\omega$ since $n + 1 \le \omega$ and exponentiation is monotone in the
-exponent. ($\ge$) Given any $x < \omega^\omega$, because $x \mapsto \omega^x$ is a
-normal function and $\omega^\omega = \sup_n \omega^n$, there is some $n$ with
-$x < \omega^n \le \omega^n + 1 \le \sup_m(\omega^m + 1)$. Hence no ordinal below
-$\omega^\omega$ bounds the family, so the supremum is $\omega^\omega$. $\square$
-
-**Definition 7.2 (Diagonal position).** The diagonal position is
-$$
-D = L\bigl(n \mapsto Q_n\bigr),
-$$
-a loser node where Black chooses $n$ and White must then solve the $\omega^n$
-position $Q_n$.
-
-**Theorem 7.3.** $v(D) = \omega^\omega$.
-
-*Proof sketch.* By definition and Theorem 6.3,
-$$
-v(D) = \sup_n \bigl(v(Q_n) + 1\bigr) = \sup_n \bigl(\omega^n + 1\bigr)
-  = \omega^\omega,
-$$
-the last equality being Lemma 7.1. $\square$
-
-**Theorem 7.4 (Strict domination).** For every $n \in \mathbb{N}$,
-$$
-v(Q_n) < v(D), \qquad \text{i.e.}\qquad \omega^n < \omega^\omega.
-$$
-
-*Proof sketch.* By Theorems 6.3 and 7.3 the claim is $\omega^n < \omega^\omega$.
-Writing $\omega^n$ as $\omega$ raised to the finite exponent $n$ and using that
-exponentiation with base $\omega > 1$ is strictly increasing in the exponent,
-this reduces to $n < \omega$, which holds for every natural number. $\square$
-
-Thus $\omega^\omega$ is genuinely unreachable within the finite-power hierarchy:
-no $Q_n$ attains it, and the diagonal position sits strictly above the entire
-staircase.
-
----
-
-## 8. The hierarchy, summarised
-
-Collecting the results, the explicit positions realise a strictly increasing
-transfinite hierarchy of game values:
+For a sequence $(\alpha_n)_{n<\omega}$, its supremum $\sup_n\alpha_n$ is the least ordinal greater than or equal to every $\alpha_n$. Left addition by a fixed ordinal is continuous at countable suprema:
 
 $$
-\underbrace{1}_{Q_0} < \underbrace{\omega}_{Q_1}
-< \underbrace{\omega^2}_{Q_2} < \underbrace{\omega^3}_{Q_3}
-< \cdots < \underbrace{\omega^\omega}_{D}.
+a+\sup_{n<\omega}\alpha_n
+=
+\sup_{n<\omega}(a+\alpha_n).
 $$
 
-- Every value $\omega^n$ is attained by an explicit position (Corollary 6.4).
-- The values strictly increase (Theorem 6.5).
-- The diagonal position attains $\omega^\omega$ (Theorem 7.3) and strictly
-  dominates every $\omega^n$ (Theorem 7.4).
-- The mate-in-$\omega$ position $P_\omega$ (equivalently $Q_1$ in value) has no
-  finite bound (Theorems 5.4–5.5).
+This follows from the continuity of ordinal addition in its right argument. The identity is the algebraic heart of the composition theorem below.
 
-The two combinatorial primitives responsible for the entire hierarchy are
-strikingly economical: a **winner node** with a single forced continuation
-(realising $+1$, hence ordinal addition through grafting) and a **countably
-branching loser node** (realising suprema, hence the passage to limits). Ordinal
-addition, multiplication (as iterated addition), and exponentiation (as iterated
-limits) all emerge from these two primitives.
+Ordinal powers of $\omega$ satisfy
 
----
+$$
+\omega^0=1,
+\qquad
+\omega^{n+1}=\omega^n\cdot\omega,
+\qquad
+\omega^\omega=\sup_{n<\omega}\omega^n.
+$$
 
-## 9. Algorithms
+For every natural number $n$, one has $\omega^n<\omega^{n+1}$ and $\omega^n<\omega^\omega$.
 
-The constructions are effective: given a target ordinal in the range covered,
-one can *build the game tree* and *compute its value* symbolically.
+## 3. Winning game trees and their values
 
-**Algorithm 9.1 (Symbolic value computation).** Represent ordinals below
-$\omega^\omega$ in Cantor normal form as finite lists of (exponent, coefficient)
-pairs. Recurse over the game tree: $v(M) = 0$; $v(W(g)) = v(g) \oplus 1$ (ordinal
-successor); and for $L(f)$, evaluate $f(0), f(1), \dots$ until the sequence of
-values $v(f(k)) \oplus 1$ stabilises in its dominant Cantor term or is seen to
-diverge, returning the ordinal supremum. Because our loser families are monotone
-(finite games of increasing length, or grafted stacks of increasing height), the
-supremum is the limit of the leading Cantor term.
+### Definition 3.1 (Game trees)
 
-**Algorithm 9.2 (Graft and iterated graft).** To realise $\alpha + \beta$ as a
-game value, build games $A, B$ with $v(A) = \beta$ and $v(B) = \alpha$ and output
-$A \frown B$; Theorem 4.2 certifies the value. To realise $v(A)\cdot k$, output
-$A^{\frown k}$; Lemma 4.4 certifies it. To realise a limit such as
-$v(A)\cdot\omega$ or a diagonal supremum, wrap the family in a loser node $L$.
+A **countably branching forced-win game tree** is generated recursively from three constructors:
 
-**Algorithm 9.3 (Building a target power).** To construct a position of value
-$\omega^n$, unfold the family $Q$: start from $W(M)$ and, $n$ times, replace the
-current game $G$ by $L(k \mapsto G^{\frown k})$. To reach $\omega^\omega$, wrap
-the whole family $(Q_n)_n$ in a single loser node.
+1. a terminal node, representing delivered mate;
+2. a forced-step node with one child;
+3. a Black-choice node with children $(G_n)_{n<\omega}$ indexed by the natural numbers.
 
----
+Every object is generated by finitely applying these constructors along each branch, although the overall tree may have unbounded finite depth and transfinite rank.
 
-## 10. Applications and interpretation
+### Definition 3.2 (Game value)
 
-Game values are the honest measure of any *guaranteed-but-unbounded* process.
+The value $V(G)$ is defined recursively by
 
-- **Termination without a modulus.** A procedure that always halts but whose
-  adversary can force arbitrarily long (yet finite) runs has termination ordinal
-  $\omega$; nested such procedures have $\omega^2, \omega^3, \dots$; a diagonal
-  over the nesting depth reaches $\omega^\omega$. Infinite chess makes these
-  abstract termination ordinals concrete and inspectable.
-- **Adversarial scheduling.** When an adversary chooses among countably many
-  delaying options at each of several stages, the total worst-case length is
-  precisely the ordinal our loser-node/graft calculus computes.
-- **Pedagogy of the transfinite.** The construction gives a tactile route into
-  ordinal arithmetic: $+1$ is a forced move, $\cdot\, k$ is a stack of $k$
-  puzzles, $\cdot\,\omega$ and $\omega^{(\cdot)}$ are the loser's countable
-  choices, and non-commutativity of $+$ is visibly the difference between
-  finishing a short task before versus after a long one.
+$$
+V(\mathrm{Mate})=0,
+$$
 
----
+$$
+V(\mathrm{Step}(G))=V(G)+1,
+$$
 
-## 11. Discussion and future work
+and
 
-The present hierarchy stops at $\omega^\omega$ because two primitives (the winner
-node and the loser node) suffice for exactly that range, matching the target of
-the construction. Several extensions are natural.
+$$
+V(\mathrm{Choice}(G_0,G_1,\ldots))
+=
+\sup_{n<\omega}(V(G_n)+1).
+$$
 
-1. **Beyond $\omega^\omega$.** The same building blocks generalise: a supremum
-   over a family whose values cofinally approach any given limit realises that
-   limit. One expects to prove that *every* ordinal below $\varepsilon_0$ is a
-   game value, by recursion on Cantor normal form — grafting for $+$, a
-   multiplication combinator for $\cdot$, and a diagonal supremum for
-   $\omega^{(\cdot)}$.
+The successor in the last formula charges one move for Black’s choice. Black delays by selecting a continuation of greatest available rank. If no child has maximal rank, the supremum records the least uniform budget covering them all.
 
-2. **A minimality/optimality theorem.** One can formalise that $v(P)$ is exactly
-   the least ordinal in which the winner can force a win, by defining an explicit
-   strategy semantics (the winner's move-count ordinal) and proving it agrees
-   with $v$. This upgrades "cannot be done in fewer moves" from a definitional
-   fact to a theorem about explicit play.
+### Definition 3.3 (Sufficient forcing budget)
 
-3. **Branching winner nodes.** Extending the model with a genuine winner-supremum
-   node (the winner chooses among many moves, value = infimum) and proving that
-   infimum commutes with left addition would yield the full min/sup value
-   calculus.
+An ordinal $\alpha$ is a **sufficient forcing budget** for $G$ if
 
-4. **Connection to the literal board.** Bridging these abstract trees to a
-   concrete piece-and-square model on $\mathbb{Z} \times \mathbb{Z}$ would realise
-   the mate-in-$\omega$, $\omega^n$, and $\omega^\omega$ positions as literal
-   chess positions, recovering the transfinite game-value phenomena of infinite
-   chess at the level of actual play.
+$$
+V(G)\le \alpha.
+$$
 
-5. **Reusable ordinal lemmas.** The auxiliary facts — left addition commuting
-   with countable suprema, $\sup_k(v\cdot k + 1) = v\cdot\omega$, and
-   $\sup_n(\omega^n + 1) = \omega^\omega$ — are clean statements about how
-   ordinal $+$, $\cdot$, and exponentiation interact with countable suprema, and
-   are of independent interest.
+This definition separates two assertions: a value is sufficient if it bounds the tree, and it is exact if every smaller budget fails.
 
----
+### Proposition 3.4 (Least-budget principle)
+
+For every game $G$, the value $V(G)$ is the unique least sufficient forcing budget.
+
+**Proof sketch.** Reflexivity gives $V(G)\le V(G)$, so the value itself is sufficient. If $\alpha$ is any sufficient budget, its definition says exactly that $V(G)\le\alpha$. Thus no sufficient budget lies below the value. Uniqueness follows from antisymmetry of ordinal order. $\square$
+
+This elementary proposition will turn each value computation into a lower-bound theorem automatically.
+
+## 4. Sequential composition
+
+### Definition 4.1 (Grafting)
+
+Given games $A$ and $B$, their **graft** $A\triangleright B$ is obtained by replacing every terminal leaf of $A$ with a fresh copy of $B$. Operationally, one first resolves $A$ and then continues with $B$. Recursively,
+
+$$
+\mathrm{Mate}\triangleright B=B,
+$$
+
+$$
+\mathrm{Step}(A)\triangleright B
+=
+\mathrm{Step}(A\triangleright B),
+$$
+
+and grafting distributes through every child of a Black-choice node.
+
+### Lemma 4.2 (Left addition and countable suprema)
+
+For every ordinal $a$ and sequence $(b_n)_{n<\omega}$,
+
+$$
+a+\sup_{n<\omega}b_n
+=
+\sup_{n<\omega}(a+b_n).
+$$
+
+**Proof sketch.** The map $b\mapsto a+b$ is increasing and continuous in the ordinal topology. The right-hand side is an upper bound for every $a+b_n$. Conversely, any upper bound for all $a+b_n$ bounds their supremum, which by continuity equals $a+\sup_n b_n$. $\square$
+
+### Theorem 4.3 (Sequential Composition Theorem)
+
+For all games $A$ and $B$,
+
+$$
+V(A\triangleright B)=V(B)+V(A).
+$$
+
+**Proof sketch.** Proceed by structural induction on $A$. If $A$ is terminal, grafting returns $B$, and the formula is $V(B)=V(B)+0$. For a forced step, the induction hypothesis and associativity yield
+
+$$
+V(\mathrm{Step}(A)\triangleright B)
+=V(B)+V(A)+1
+=V(B)+(V(A)+1).
+$$
+
+For a Black-choice node with children $A_n$, distribute grafting over the children, apply the induction hypothesis, and use Lemma 4.2:
+
+$$
+\begin{aligned}
+V(\mathrm{Choice}(A_n)\triangleright B)
+&=\sup_n(V(A_n\triangleright B)+1)\\
+&=\sup_n(V(B)+V(A_n)+1)\\
+&=V(B)+\sup_n(V(A_n)+1).
+\end{aligned}
+$$
+
+The final term is $V(B)+V(A)$. $\square$
+
+The order $V(B)+V(A)$ is not typographical. The outer tree $A$ contributes in the right argument of ordinal addition. Because ordinal addition is directional, reversing the terms would give a false general statement.
+
+### Corollary 4.4 (Finite iteration)
+
+Let $A^{[k]}$ denote $k$ sequential copies of $A$, with $A^{[0]}$ terminal. Then
+
+$$
+V(A^{[k]})=V(A)\cdot k.
+$$
+
+**Proof sketch.** Induct on $k$. The zero case has value $0$. The successor case follows from the composition theorem and the recursive identity for multiplication by a successor. $\square$
+
+## 5. The mate-in-omega construction
+
+For $n<\omega$, define $F_n$ to be a chain of exactly $n$ forced steps ending at mate.
+
+### Lemma 5.1 (Finite countdown value)
+
+For every natural number $n$,
+
+$$
+V(F_n)=n.
+$$
+
+**Proof sketch.** Induction on $n$. The empty chain is terminal and has value $0$. Adding one forced step takes the successor of the previous value. $\square$
+
+### Definition 5.2 (Unbounded finite delay)
+
+Let $G_\omega$ be the Black-choice game whose $n$th child is $F_n$.
+
+### Theorem 5.3 (Mate-in-Omega Theorem)
+
+The exact value of $G_\omega$ is
+
+$$
+V(G_\omega)=\omega.
+$$
+
+**Proof sketch.** By the choice rule and Lemma 5.1,
+
+$$
+V(G_\omega)=\sup_{n<\omega}(n+1).
+$$
+
+Every term is finite and hence at most $\omega$. Conversely, every finite ordinal occurs below some $n+1$. Therefore the least upper bound is precisely $\omega$. $\square$
+
+### Corollary 5.4 (No finite bound)
+
+For every natural number $N$, the budget $N$ is insufficient for $G_\omega$.
+
+**Proof sketch.** Since $N<\omega=V(G_\omega)$, the least-budget principle rules out $N$. Concretely, Black chooses a branch longer than $N$. $\square$
+
+The corollary captures the distinction between branchwise termination and uniform finite boundedness: every chosen countdown ends, but the family has no finite ceiling.
+
+## 6. A hierarchy of finite powers
+
+### Definition 6.1 (Power games)
+
+Define games $G_n$ recursively. Let $G_0$ be one forced step followed by mate. Given $G_n$, let $G_{n+1}$ be a Black-choice node whose $k$th continuation consists of $k$ sequential copies of $G_n$.
+
+The following ordinal identity drives the induction.
+
+### Lemma 6.2 (Unbounded finite repetition)
+
+For every positive ordinal $v$,
+
+$$
+\sup_{k<\omega}(v\cdot k+1)=v\cdot\omega.
+$$
+
+**Proof sketch.** Each $v\cdot k+1$ lies below or at $v\cdot(k+1)$, and $k+1<\omega$, so the supremum is at most $v\cdot\omega$. For the reverse inequality, every $v\cdot k$ is at most $v\cdot k+1$ and hence at most the displayed supremum. Taking the supremum over $k$ yields $v\cdot\omega$ below it. $\square$
+
+### Theorem 6.3 (Finite-Power Hierarchy Theorem)
+
+For every natural number $n$,
+
+$$
+V(G_n)=\omega^n.
+$$
+
+**Proof sketch.** For $n=0$, the game is one forced step, so its value is $1=\omega^0$. Suppose $V(G_n)=\omega^n$. By Corollary 4.4, the continuation containing $k$ copies has value $\omega^n\cdot k$. The choice rule and Lemma 6.2 give
+
+$$
+V(G_{n+1})
+=
+\sup_{k<\omega}(\omega^n\cdot k+1)
+=
+\omega^n\cdot\omega
+=
+\omega^{n+1}.
+$$
+
+Induction completes the proof. $\square$
+
+### Corollary 6.4 (Explicit target levels)
+
+There are explicit games of exact values
+
+$$
+\omega,\qquad \omega^2,\qquad \omega^3.
+$$
+
+The first may be taken as $G_1$, while $G_2$ and $G_3$ supply the next two values.
+
+### Theorem 6.5 (Strict growth)
+
+The sequence $(V(G_n))_{n<\omega}$ is strictly increasing. Equivalently, if $m<n$, then
+
+$$
+V(G_m)<V(G_n).
+$$
+
+**Proof sketch.** By Theorem 6.3, this is the standard strict monotonicity of $\omega^n$ in the natural exponent, using $1<\omega$. $\square$
+
+## 7. Diagonalization and $\omega^\omega$
+
+### Definition 7.1 (Diagonal game)
+
+Let $D$ be the Black-choice game whose $n$th continuation is $G_n$. Thus Black first chooses the depth of the finite-power hierarchy that White must solve.
+
+### Lemma 7.2 (Diagonal supremum)
+
+One has
+
+$$
+\sup_{n<\omega}(\omega^n+1)=\omega^\omega.
+$$
+
+**Proof sketch.** For the upper bound, $\omega^n+1\le\omega^{n+1}<\omega^\omega$ for every $n$. For the lower bound, every ordinal $x<\omega^\omega$ lies below some finite power $\omega^n$; this is the cofinality of the sequence of finite powers in $\omega^\omega$. Hence $x$ lies below one term of the displayed supremum. Since every $x<\omega^\omega$ does so, the supremum is at least $\omega^\omega$. $\square$
+
+### Theorem 7.3 (Diagonal Value Theorem)
+
+The diagonal game has exact value
+
+$$
+V(D)=\omega^\omega.
+$$
+
+**Proof sketch.** Apply the Black-choice rule, Theorem 6.3, and Lemma 7.2:
+
+$$
+V(D)
+=
+\sup_{n<\omega}(V(G_n)+1)
+=
+\sup_{n<\omega}(\omega^n+1)
+=
+\omega^\omega.
+$$
+
+Exactness follows from the least-budget principle. $\square$
+
+### Corollary 7.4 (Domination of every finite level)
+
+For each natural number $n$,
+
+$$
+V(G_n)<V(D).
+$$
+
+Consequently, no budget $\omega^n$ suffices for $D$.
+
+**Proof sketch.** Substitute the computed values and use $\omega^n<\omega^\omega$. $\square$
+
+### Corollary 7.5 (Universal lower bound below the diagonal)
+
+If $\alpha<\omega^\omega$, then $\alpha$ is not a sufficient forcing budget for $D$.
+
+**Proof sketch.** The value of $D$ is $\omega^\omega$, so sufficiency would require $\omega^\omega\le\alpha$, contradicting $\alpha<\omega^\omega$. $\square$
+
+This is stronger than checking each finite-power budget separately. It excludes every ordinal below $\omega^\omega$, including ordinals lying strictly between successive powers.
+
+## 8. Algorithms and finite numerical illustrations
+
+Ordinals at and above $\omega$ are not represented by ordinary integer runtimes. A numerical demonstration therefore studies finite truncations and symbolic normal forms.
+
+### 8.1 Truncated delay profiles
+
+Fix a cutoff $K$. Replace every countable Black choice by the finite menu $0,1,\ldots,K$. At level one, the available finite chain lengths are $0$ through $K$. At level two, an outer choice selects up to $K$ copies of a level-one module. The maximum truncated branch length grows recursively as
+
+$$
+T_0(K)=1,
+\qquad
+T_{n+1}(K)=K\,T_n(K)+1.
+$$
+
+This recurrence is not the transfinite value formula; it is a finite shadow obtained after imposing a global cutoff. Its purpose is visual: each additional hierarchy level introduces another layer of adversarial repetition.
+
+The recurrence can be evaluated in $O(d)$ arithmetic operations for depth $d$. If integers are measured by bit complexity, the cost also depends on the growing bit length of $T_d(K)$.
+
+### 8.2 Symbolic ordinal signatures
+
+For the exact hierarchy, a compact signature records $\omega^n$ by its exponent $n$, and $\omega^\omega$ by a distinguished diagonal marker. Comparison is then immediate: finite exponents compare as integers, and every finite exponent lies below the diagonal marker. This symbolic procedure runs in constant time for machine-sized exponents, or in time linear in the bit length of arbitrary-precision exponents.
+
+### 8.3 Why exhaustive search is insufficient
+
+No finite cutoff certifies the statement “for every natural choice.” Increasing $K$ produces evidence consistent with unboundedness, but it never reaches all choices. Likewise, computing the first million finite levels does not establish their supremum. The exact results depend on ordinal supremum arguments and cofinality, not empirical extrapolation.
+
+## 9. Applications and interpretation
+
+The model supplies a general language for adversarial termination. In scheduling, every job sequence may finish while no uniform finite response bound exists. In program analysis, nested loops controlled by adversarially chosen finite parameters can be ranked by $\omega$, $\omega^2$, and higher ordinals. In rewriting systems, ordinal-valued measures prove termination even when natural-valued countdowns cannot capture nested phases. In game semantics, grafting explains why sequential tasks compose by directional ordinal addition.
+
+For infinite chess, the trees describe the desired timing behavior. A spatial gadget representing countable Black choice would allow Black to select an arbitrarily distant or complicated defensive resource. A forced-step gadget would ensure White has only one meaningful progression. A grafting interface would connect the completion of one tactical module to the start of another. If these gadgets could be isolated and composed without shortcuts, the abstract hierarchy would transfer to board positions.
+
+## 10. Scope and limitations
+
+The constructions in this paper are abstract game trees, not legal positions of orthodox chess pieces on $\mathbb Z\times\mathbb Z$. They establish the ordinal architecture and its exact values. They do not establish that a king, rook, bishop, knight, and pawn configuration realizes every transition.
+
+That distinction matters particularly for $\omega^\omega$. A board realization must place or generate all finite-level modules within one locally finite position, preserve the applicable convention on finite initial support, and prevent long-range pieces from interacting across modules. It must also prove that White cannot bypass a module and that Black cannot escape the intended well-founded tree.
+
+The model also omits genuine White-choice nodes. General winning games assign a White node the infimum of successor values after charging a move, because White minimizes the time to mate. Forced continuations suffice for the present hierarchy, but a complete minimax theory should include both infima and suprema.
+
+## 11. Future work
+
+The next step is to define full infinite-chess positions on the integer lattice, including finite piece support, sliding paths, attacks, check, legal turns, checkmate, and promotion. Alternating strategy trees should then be related to the minimax ordinal recursion.
+
+A reusable gadget theory would specify ports, isolation invariants, and simulation relations. Separate constructions should realize forced steps, countable delaying choices, and sequential grafting. The central geometric theorem would show that distant copies do not interfere through unbounded rook, bishop, or queen lines.
+
+Once those components are available, they may be composed to seek legal board positions of values $\omega$, $\omega^2$, and $\omega^3$. The diagonal stage requires one board that coherently houses all finite levels and still meets local finiteness and initial-support conventions. Finally, adding genuine White choices would broaden the theory from forced tactical corridors to arbitrary minimax game trees.
 
 ## 12. Conclusion
 
-Chess on an unbounded board realises transfinite game values. We built explicit
-positions of value $\omega$, of value $\omega^n$ for every $n$, and of value
-$\omega^\omega$, from just two primitives — a forced winner move and a countably
-branching loser choice — glued by a grafting operation that realises ordinal
-addition. These values form a strictly increasing hierarchy in which
-$\omega^\omega$ strictly dominates every finite power. The complexity of
-checkmate, freed from the board's edges, is measured not by the natural numbers
-but by the ordinals.
+Countable adversarial choice converts unbounded finite delay into the ordinal $\omega$. Sequential grafting realizes directional ordinal addition, finite repetition realizes multiplication by natural numbers, recursive nesting realizes every $\omega^n$, and diagonal choice realizes $\omega^\omega$. Each value is exact: it is sufficient, and every smaller budget fails.
+
+The resulting hierarchy explains how every individual play can terminate while the family of plays exceeds every finite—and then every finite-power—bound. It provides a precise mathematical blueprint for transfinite timing in infinite games, while leaving the geometric realization by legal chess pieces as a clearly identified next problem.
+## Appendix A. Worked structural examples
+
+The first constructions can be expanded directly from the recursion, which helps distinguish ordinary large numbers from ordinal structure.
+
+### A.1 A finite branch
+
+Consider a chain of four forced steps followed by mate. Reading backward from the leaf gives values $0$, $1$, $2$, $3$, and $4$. Nothing transfinite occurs because the tree has a fixed finite height.
+
+Now place chains of lengths $0$, $1$, $2$, and $3$ below one Black-choice node. Its value is
+
+$$
+\sup\{0+1,1+1,2+1,3+1\}=4.
+$$
+
+A finite menu still has a maximum and therefore a finite value. The transition to $\omega$ occurs only when Black has all natural-number choices.
+
+### A.2 Two omega-scale modules
+
+Suppose a game of value $\omega$ must be resolved twice in sequence. The composition theorem gives
+
+$$
+\omega+\omega=\omega\cdot 2.
+$$
+
+This is larger than $\omega$: after the first unbounded finite phase is completed, a second independent unbounded finite phase remains. More generally, $k$ copies have value $\omega k$. If Black may choose $k$ without finite bound, the supremum is
+
+$$
+\sup_{k<\omega}(\omega k+1)=\omega^2.
+$$
+
+Thus $\omega^2$ does not mean one countdown of “infinite length.” It means an unbounded finite sequence of phases, each phase itself admitting an unbounded finite delay.
+
+### A.3 Directionality of composition
+
+Ordinal order makes the placement of a finite cleanup phase significant. A finite task before an omega-scale task has combined ordinal signature $n+\omega=\omega$: the later cofinal family absorbs the fixed initial segment. An omega-scale task followed by one additional forced step has signature $\omega+1$, which is strictly larger than $\omega$. The grafting theorem tracks this direction exactly. This is why sequential systems cannot generally be analyzed by commutative arithmetic.
+
+### A.4 The diagonal response to a proposed bound
+
+Suppose someone proposes a finite-level budget $\omega^7$ for the diagonal game. Black chooses the continuation $G_8$, whose exact value is $\omega^8$, and the proposed budget fails. If the proposed budget is not itself a pure power—for example, an ordinal below $\omega^\omega$ with several terms in Cantor normal form—its largest exponent is still finite. Choosing a sufficiently higher $G_n$ defeats it. This is the operational content of cofinality in the proof of the Diagonal Value Theorem.
+
+## Appendix B. Proof architecture at a glance
+
+The argument has a short dependency chain. The recursive value equations first establish finite countdowns. Continuity of left ordinal addition across countable suprema then supports the Sequential Composition Theorem. That theorem yields the finite-iteration formula. Unbounded finite repetition converts a positive value $v$ into $v\omega$. Starting from $1$, induction therefore produces $\omega^n$. Finally, the cofinal sequence
+
+$$
+1,\omega,\omega^2,\omega^3,\ldots
+$$
+
+has supremum $\omega^\omega$, yielding the diagonal game. The least-budget principle converts every equality into both an upper strategy bound and a strict impossibility result below that bound. No numerical extrapolation is used in this chain.

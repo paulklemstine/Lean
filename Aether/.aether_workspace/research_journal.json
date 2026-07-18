@@ -7,26 +7,6 @@
       "quality_score": 0.71,
       "sorry_count": 0,
       "theorem_count": 13,
-      "timestamp": "2026-07-16T05:31:09",
-      "title": "ArXiv paper: Ray and end spaces: characterizations and classification up to homeomorphism"
-    },
-    {
-      "cycle_id": "573ee086",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions\n\n## 1. Robust local encodings of arithmetic derivations\n\n**Conjecture.** There is an explicit encoding of every finite Peano-arithmetic derivation into a locally testable object su",
-      "quality_score": 0.73,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-07-16T05:31:57",
-      "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
-    },
-    {
-      "cycle_id": "352675e9",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\n## 1. Coherent levelwise classification\n\n**Conjecture.** Two coordinate-tree ray spaces are homeomorphic whenever their finite levels admit a coherent family of bijections preserv",
-      "quality_score": 0.71,
-      "sorry_count": 0,
-      "theorem_count": 13,
       "timestamp": "2026-07-16T05:32:08",
       "title": "ArXiv paper: Ray and end spaces: characterizations and classification up to homeomorphism"
     },
@@ -499,29 +479,29 @@
       "theorem_count": 23,
       "timestamp": "2026-07-18T09:21:36",
       "title": "The Periodic Table Is a Lie: Elements as Eigenvalues of Spacetime"
+    },
+    {
+      "cycle_id": "0ebc2749",
+      "domain": "NumberTheory",
+      "key_insight": "# Future directions\n\nThe present development settles the algebraic core: exact period classifies all return times, a primitive orbit has the expected number of distinct points, and every positive crit",
+      "quality_score": 0.77,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-18T10:22:04",
+      "title": "The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
+    },
+    {
+      "cycle_id": "a7676cc9",
+      "domain": "Applications",
+      "key_insight": "# Future directions\n\n## What is formalized\n\n`Core.lean` gives a self-contained ordinal analysis of explicit countably branching winning game trees. It constructs:\n\n- `omegaGame`, with value exactly `ω",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-18T10:22:08",
+      "title": "Infinite Chess: Checkmate in Omega Moves"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "2c734846",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Tangled Hierarchies: Proof Systems That Reference Their Own Soundness\n\nThe file `TangledSoundness.lean` develops the semantic core of self-referential\nproof systems: a chain from",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-07-14T15:41:13",
-      "title": "Close Proofs: Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
-    },
-    {
-      "cycle_id": "202302de",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — The Möbius discriminant and log-behaviour of combinatorial totals\n\nThis cycle isolated a single scalar invariant — the **Möbius discriminant**\n`Δ = γβ − αδ` attached to a first-o",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 20,
-      "timestamp": "2026-07-14T15:58:15",
-      "title": "This cycle formalized (in `HoggattTotals.lean`) the **sharp `d = 1` vs `d = 2`"
-    },
     {
       "cycle_id": "16f220a2",
       "domain": "Novelty",
@@ -2501,6 +2481,26 @@
       "theorem_count": 16,
       "timestamp": "2026-07-18T10:21:55",
       "title": "Ramanujan's Taxicab Number as a Sum of Three Cubes: 1729 Revisited"
+    },
+    {
+      "cycle_id": "0ebc2749",
+      "domain": "NumberTheory",
+      "key_insight": "# Future directions\n\nThe present development settles the algebraic core: exact period classifies all return times, a primitive orbit has the expected number of distinct points, and every positive crit",
+      "quality_score": 0.77,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-18T10:22:04",
+      "title": "The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
+    },
+    {
+      "cycle_id": "a7676cc9",
+      "domain": "Applications",
+      "key_insight": "# Future directions\n\n## What is formalized\n\n`Core.lean` gives a self-contained ordinal analysis of explicit countably branching winning game trees. It constructs:\n\n- `omegaGame`, with value exactly `ω",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-18T10:22:08",
+      "title": "Infinite Chess: Checkmate in Omega Moves"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-18T10:21:55",
+  "last_updated": "2026-07-18T10:22:08",
   "open_questions": [
     {
       "context": "",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "fe20b520",
-        "quality": 0.6,
-        "theorems": 0,
-        "title": "ArXiv paper: Limit laws for component-pruned sparse random graphs and percolated"
-      },
-      {
         "cycle_id": "5f139cd0",
         "quality": 0.71,
         "theorems": 0,
@@ -3141,6 +3135,12 @@
         "quality": 0.75,
         "theorems": 23,
         "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
+      },
+      {
+        "cycle_id": "a7676cc9",
+        "quality": 0.7,
+        "theorems": 0,
+        "title": "Infinite Chess: Checkmate in Omega Moves"
       }
     ],
     "Bridges": [
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "f9bf2df0",
-        "quality": 0.82,
-        "theorems": 16,
-        "title": "Isomorphisms of Meaning: When Structures Collide"
-      },
-      {
         "cycle_id": "47a54792",
         "quality": 0.82,
         "theorems": 21,
@@ -3699,6 +3693,12 @@
         "quality": 0.75,
         "theorems": 19,
         "title": "Godel's Casino: Incomplete but Winnable Games"
+      },
+      {
+        "cycle_id": "0ebc2749",
+        "quality": 0.77,
+        "theorems": 0,
+        "title": "The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
       }
     ],
     "Physics": [
