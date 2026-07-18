@@ -227,7 +227,7 @@
         const CORE_MASS = 80.0;         // Mass of the invisible central attractor
         const COULOMB_REPULSION = 500000.0; // Repulsive charge between nodes
         // Static repulsion pushes nodes apart, gravity pulls them together, rocket thrust on collision pushes apart
-        const SOFTENING = 9000;            // Softening distance (larger = gentler at close range)
+        const SOFTENING = 200;             // Softening distance (larger = gentler at close range)
         const MIN_REPULSION_DIST = 2400;    // Bumper collision radius
         const DAMPING = 0.992;              // Friction — system stabilizes over ~3s
         const NODE_RADIUS = 22;
@@ -484,7 +484,7 @@
                 const dampFx = (mi.dx / d) * relVn * EDGE_DAMPING;
                 const dampFy = (mi.dy / d) * relVn * EDGE_DAMPING;
                 a.vx += fx - dampFx; a.vy += fy - dampFy;
-                b.vx -= fx + dampFx; b.vy -= fy + dampFy;
+                b.vx -= fx - dampFx; b.vy -= fy - dampFy;
             });
 
             // ─── Edge crossing avoidance: uncross overlapping edges, keep them uncrossed ───
@@ -788,7 +788,7 @@
 
                 // Cap velocity to prevent ejections, and enforce minimum velocity
                 let speed = Math.sqrt(n.vx * n.vx + n.vy * n.vy);
-                const MIN_VELOCITY = 25.0;
+                const MIN_VELOCITY = 2.0;
                 if (speed < MIN_VELOCITY) {
                     if (speed === 0) {
                         const angle = Math.random() * Math.PI * 2;
