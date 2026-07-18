@@ -911,7 +911,7 @@
             });
 
             // ─── Hard edge crossing constraint: project nodes apart until no edges cross ───
-            for (let uncrossIter = 0; uncrossIter < 3; uncrossIter++) {
+            for (let uncrossIter = 0; uncrossIter < 1; uncrossIter++) {
                 let anyCross = false;
                 for (let i = 0; i < graphEdges.length; i++) {
                     const e1 = graphEdges[i];
@@ -923,6 +923,13 @@
                             e1.target === e2.source || e1.target === e2.target) continue;
                         const c = nodeMap[e2.source], d = nodeMap[e2.target];
                         if (!c || !d) continue;
+                        // Fast AABB check
+                        if (Math.min(a.x, b.x) > Math.max(c.x, d.x) ||
+                            Math.max(a.x, b.x) < Math.min(c.x, d.x) ||
+                            Math.min(a.y, b.y) > Math.max(c.y, d.y) ||
+                            Math.max(a.y, b.y) < Math.min(c.y, d.y)) {
+                            continue;
+                        }
                         if (segmentsCross(a.x, a.y, b.x, b.y, c.x, c.y, d.x, d.y)) {
                             anyCross = true;
                             // Push opposite node pairs apart — equal and opposite (momentum conserved)
@@ -1470,10 +1477,7 @@
                 ctx.moveTo(sa.x, sa.y);
                 ctx.lineTo(sb.x, sb.y);
                 if (isFinite(sa.x) && isFinite(sa.y) && isFinite(sb.x) && isFinite(sb.y)) {
-                    const edgeGrad = ctx.createLinearGradient(sa.x, sa.y, sb.x, sb.y);
-                    edgeGrad.addColorStop(0, `hsla(${colA.h}, ${colA.s}%, ${Math.min(colA.l + 20, 90)}%, ${coreAlpha})`);
-                    edgeGrad.addColorStop(1, `hsla(${colB.h}, ${colB.s}%, ${Math.min(colB.l + 20, 90)}%, ${coreAlpha})`);
-                    ctx.strokeStyle = edgeGrad;
+                    ctx.strokeStyle = `hsla(${blendH}, 80%, 80%, ${coreAlpha})`;
                     ctx.lineWidth = lineW;
                     ctx.stroke();
                 }
@@ -1556,13 +1560,10 @@
                 if (isInView(hx1, hy1, 50) || isInView(tx1, ty1, 50)) {
                     // Laser streak line
                     if (isFinite(st1.x) && isFinite(st1.y) && isFinite(sh1.x) && isFinite(sh1.y)) {
-                        const grad = ctx.createLinearGradient(st1.x, st1.y, sh1.x, sh1.y);
-                        grad.addColorStop(0, `hsla(${blendH}, 80%, 80%, 0)`);
-                        grad.addColorStop(1, `hsla(${blendH}, 100%, 90%, ${alpha})`);
                         ctx.beginPath();
                         ctx.moveTo(st1.x, st1.y);
                         ctx.lineTo(sh1.x, sh1.y);
-                        ctx.strokeStyle = grad;
+                        ctx.strokeStyle = `hsla(${blendH}, 100%, 90%, ${alpha * 0.6})`;
                         ctx.lineWidth = pSize * camera.zoom * 1.5;
                         ctx.stroke();
                     }
@@ -1582,13 +1583,10 @@
                 const st2 = worldToScreen(tx2, ty2);
                 if (isInView(hx2, hy2, 50) || isInView(tx2, ty2, 50)) {
                     if (isFinite(st2.x) && isFinite(st2.y) && isFinite(sh2.x) && isFinite(sh2.y)) {
-                        const grad2 = ctx.createLinearGradient(st2.x, st2.y, sh2.x, sh2.y);
-                        grad2.addColorStop(0, `hsla(${blendH}, 80%, 80%, 0)`);
-                        grad2.addColorStop(1, `hsla(${blendH}, 100%, 90%, ${alpha * 0.5})`);
                         ctx.beginPath();
                         ctx.moveTo(st2.x, st2.y);
                         ctx.lineTo(sh2.x, sh2.y);
-                        ctx.strokeStyle = grad2;
+                        ctx.strokeStyle = `hsla(${blendH}, 100%, 90%, ${alpha * 0.3})`;
                         ctx.lineWidth = pSize * camera.zoom;
                         ctx.stroke();
                     }
@@ -1683,15 +1681,8 @@
                     ctx.closePath();
                     
                     if (isFinite(rX) && isFinite(rY) && isFinite(tipX) && isFinite(tipY)) {
-                        const flameGrad = ctx.createLinearGradient(rX, rY, tipX, tipY);
-                        flameGrad.addColorStop(0, `hsla(40, 100%, 90%, ${0.7 * decay})`);
-                        flameGrad.addColorStop(0.3, `hsla(25, 100%, 70%, ${0.5 * decay})`);
-                        flameGrad.addColorStop(1, `hsla(0, 100%, 50%, 0)`);
-                        ctx.fillStyle = flameGrad;
-                        ctx.shadowBlur = 20 * camera.zoom;
-                        ctx.shadowColor = `hsla(30, 100%, 60%, ${decay})`;
+                        ctx.fillStyle = `hsla(30, 100%, 75%, ${0.5 * decay})`;
                         ctx.fill();
-                        ctx.shadowBlur = 0;
                     }
                 }
             });
@@ -1800,23 +1791,15 @@
                 const glowScale = isHovered ? (5.0 + 1.0 * Math.sin(time * 15)) : (1.8 + massBright * 1.2);
                 const glowSize = r * glowScale;
                 if (isFinite(sp.x) && isFinite(sp.y) && isFinite(r) && isFinite(glowSize) && r > 0 && glowSize > 0) {
-                    const outerGlow = ctx.createRadialGradient(sp.x, sp.y, r * 0.5, sp.x, sp.y, glowSize);
-                    if (isHovered) {
-                        outerGlow.addColorStop(0, `hsla(${col.h}, 100%, 90%, 0.9)`);
-                        outerGlow.addColorStop(0.3, `hsla(${col.h}, 100%, 70%, 0.6)`);
-                        outerGlow.addColorStop(0.7, `hsla(${col.h}, 100%, 50%, 0.2)`);
-                        outerGlow.addColorStop(1, `hsla(${col.h}, 100%, 20%, 0)`);
-                    } else {
-                        outerGlow.addColorStop(0, `hsla(${col.h}, ${col.s}%, ${Math.min(col.l + 20, 90)}%, ${0.15 + massBright * 0.15})`);
-                        outerGlow.addColorStop(0.5, `hsla(${col.h}, ${col.s}%, ${col.l}%, ${0.05 + massBright * 0.05})`);
-                        outerGlow.addColorStop(1, `hsla(${col.h}, ${col.s}%, ${col.l}%, 0)`);
+                    const hueIndex = Math.max(0, Math.min(360, Math.floor(col.h || 0)));
+                    const sprite = glowSprites[hueIndex];
+                    if (sprite) {
+                        ctx.globalCompositeOperation = 'lighter';
+                        ctx.globalAlpha = isHovered ? 1.0 : (0.2 + massBright * 0.2);
+                        ctx.drawImage(sprite, sp.x - glowSize, sp.y - glowSize, glowSize * 2, glowSize * 2);
+                        ctx.globalAlpha = 1.0;
+                        ctx.globalCompositeOperation = 'source-over';
                     }
-                    ctx.beginPath();
-                    ctx.arc(sp.x, sp.y, glowSize, 0, Math.PI * 2);
-                    ctx.fillStyle = outerGlow;
-                    ctx.globalCompositeOperation = 'lighter';
-                    ctx.fill();
-                    ctx.globalCompositeOperation = 'source-over';
                 }
 
                 node.rotAngle += node.rotSpeed * 0.016;
@@ -1840,16 +1823,14 @@
                     const standoutPulse = 1 + 0.2 * Math.sin(time * 3 + node.phase);
                     const glowR = r * 2.2 * standoutPulse;
                     if (isFinite(sp.x) && isFinite(sp.y) && isFinite(r) && isFinite(glowR) && r > 0 && glowR > 0) {
-                        const standoutGlow = ctx.createRadialGradient(sp.x, sp.y, r * 0.5, sp.x, sp.y, glowR);
-                        standoutGlow.addColorStop(0, `hsla(45, 100%, 75%, 0.2)`);
-                        standoutGlow.addColorStop(0.5, `hsla(45, 100%, 65%, 0.06)`);
-                        standoutGlow.addColorStop(1, `hsla(45, 100%, 55%, 0)`);
-                        ctx.beginPath();
-                        ctx.arc(sp.x, sp.y, glowR, 0, Math.PI * 2);
-                        ctx.fillStyle = standoutGlow;
-                        ctx.globalCompositeOperation = 'lighter';
-                        ctx.fill();
-                        ctx.globalCompositeOperation = 'source-over';
+                        const sprite = glowSprites[45];
+                        if (sprite) {
+                            ctx.globalCompositeOperation = 'lighter';
+                            ctx.globalAlpha = 0.25;
+                            ctx.drawImage(sprite, sp.x - glowR, sp.y - glowR, glowR * 2, glowR * 2);
+                            ctx.globalAlpha = 1.0;
+                            ctx.globalCompositeOperation = 'source-over';
+                        }
                     }
                     ctx.beginPath();
                     ctx.arc(sp.x, sp.y, r + 4 * camera.zoom, 0, Math.PI * 2);
