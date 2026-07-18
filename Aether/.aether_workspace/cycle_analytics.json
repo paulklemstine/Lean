@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-18T04:11:23.784703+00:00",
+  "last_updated": "2026-07-18T04:28:04.520694+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -24940,6 +24940,48 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-18T04:11:23.738843+00:00",
       "title": "The Monster Group's Secret Message: Moonshine Beyond the j-Function"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 3,
+      "domain": "Combinatorics",
+      "duration_seconds": 1020.243426322937,
+      "end_time": 1784348858.562536,
+      "files_integrated": 2,
+      "job_id": "f8479bcf",
+      "outcome_quality": 0.59,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v19b",
+      "phase_b_skip_reason": "low_quality_near_miss",
+      "phase_b_skipped": true,
+      "prompt_version": "v19b",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.42,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.86,
+        "composite": 0.4445,
+        "cross_domain": 0.5,
+        "grade": "partial",
+        "importance": 0.45,
+        "novelty": 0.52,
+        "proof_depth": 0.64,
+        "usefulness": 0.68
+      },
+      "quality_score": 0.59,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1784347838.3191097,
+      "strategy_count": 0,
+      "theorem_count": 0,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-18T04:28:04.473684+00:00",
+      "title": "Knots That Think: Cognition as Braiding in Category Theory"
     }
   ]
 }
