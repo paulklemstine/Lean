@@ -580,7 +580,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'On the maximum size of $B_3$-free families' and formalize its key results. Abstract: A family $\\mathcal{G}$ of sets is a weak copy of the poset $(P,\\leqslant)$ if there exists a bijection $ι:P\\rightarrow \\mathcal{G}$ with $ι(p)\\subset ι(q)$ whenever $p\\leqslant q$. $\\mathcal{G}$ is a strong copy if $ι(p)\\subset ι(q)$ if and only if $p\\leqslant q$ holds. A family is weak (strong) $P$-free if it does not contain any weak (strong) copies of $P$. For a poset $P$, let $e(P)$ ($e^*(P)$) denote the most number of middle layers of $2^{[n]}$ that does not contain a weak (strong) copy of $P$. Ellis, Ivan, and Leader were the first to show the existence of posets $P$ for which there exists a positive real $\\varepsilon_P$ such that $La(n,P)\\ge (e(P)+\\varepsilon_P)\\binom{n}{\\lfloor n/2}$ and $La^*(n,P)\\ge (e^*(P)+\\varepsilon_P)\\binom{n}{\\lfloor n/2}$ holds, where $La(n,P)$ ($La^*(n,P)$) denotes the maximum size of a weak (strong) $P$-free family $\\mathcal{F}\\subseteq 2^{[n]}$. More precisely, they showed that $P=B_d$ are such posets for all $d\\ge 4$, where $B_d$ is the Boolean latt",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Bridges"
       ],
@@ -1232,7 +1232,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'On lower bounds for canonical heights of the map $φ(X,Y)=(Y,X+Y^D+b)$' and formalize its key results. Abstract: We give a lower bound for the canonical height associated to Hénon maps $φ(X,Y)=(Y,X+Y^D+B)$ of non-periodic points when $D>2,$ extending previous work for $D=2$ in \\cite{Ingram1}.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Bridges"
       ],
@@ -1395,7 +1395,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Odd Parts of Derivative Period Polynomials and a Logarithmic Transition Scale' and formalize its key results. Abstract: Let $f$ be a normalized level-one Hecke eigenform of even weight $k$, and let $Q_{f,m}$ be the period polynomial formed from the critical values of the $m$-th derivative of its completed $L$-function. We study the odd part $Q^-_{f,m}(z)=(Q_{f,m}(z)-Q_{f,m}(-z))/2$, retaining the zero at the origin forced by oddness. A unit-circle theorem for the full polynomial does not settle this problem: taking an odd part can create off-circle zeros even when the original polynomial has all of its zeros on the unit circle. We prove that there is an absolute $K_0$ such that, for every even $k\\ge K_0$, every normalized level-one Hecke eigenform $f$ of weight $k$, and every integer $m\\ge0$, the nonzero zeros of $Q^-_{f,m}$ off the unit circle, if any, form a single real reciprocal quartet $\\{\\pm b,\\pm b^{-1}\\}$ with $0<b<1$. For each fixed weight, all nonzero zeros are simple and lie on the unit circle once $m$ is sufficiently large. Hence any failure of the real-or-unit-circle containment is confined",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Bridges"
       ],
@@ -1435,7 +1435,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Cover numbers by graph families bounded by certain graph parameters' and formalize its key results. Abstract: The cover number of a graph by a graph class $\\mathcal P$ is the least number of $\\mathcal P$-graphs necessary to cover its edges. A classical theorem of Harary, Hsu and Miller gives an exact formula for the cover number by the class of graphs with chromatic number at most $k$. We investigate analogous questions for the case of the fractional chromatic number $χ_f$ and the local chromatic number $ψ$. We prove that an analogous formula cannot hold in the case of the cover number by graphs of fractional chromatic number at most $β$, and find a lower and an upper bound, that gives rise to interesting asymptotic questions. We also investigate this cover number for small specific graphs. In the case of the cover number by graphs with local chromatic number at most $k$, we find an upper bound in terms of $ψ$, and a lower bound in terms of $ω$.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Bridges"
       ],
@@ -1719,7 +1719,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'On Agreement Subtrees in Multiple Pylogenetic Trees' and formalize its key results. Abstract: Snir and Yuster [Discrete Appl. Math. 347 (2026) 160--171] asked for the least number $h(k)$ such that $k$ unrooted binary phylogenetic trees on the same $h(k)$ leaves always share a common quartet. We give a new upper bound for the $k$-tree version of the Maximum Agreement Subtree problem, namely an upper bound for the number of leaves, on which $k$ unrooted binary phylogenetic trees always share a common induced binary subtree on $n$ leaves, which is a four-times iterated exponential function. For $h(k)$, this implies a four-times iterated exponential upper bound. We also set an exponential lower bound for $h(k)$.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Bridges"
       ],
@@ -2124,7 +2124,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Curious identities involving Legendre polynomials and Apéry-like numbers' and formalize its key results. Abstract: In this paper, we establish some curious identities involving Legendre polynomials and the first kind of Apéry-like numbers. As applications, many new supercongruences are deduced.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Bridges"
       ],
@@ -2367,7 +2367,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Domination-packing ratio for planar and unit disk graphs' and formalize its key results. Abstract: The domination number $γ(G)$ of a graph $G$ is the smallest possible size of a vertex set that intersects every radius-$1$ ball of $G$, and the packing number $ρ(G)$ is the maximum number of pairwise vertex-disjoint radius-$1$ balls. We prove that $\\frac{γ(G)}{ρ(G)}\\le 5$ for every planar graph and $\\frac{γ(G)}{ρ(G)} \\le \\frac{18\\sqrt3}π\\approx 9.924$ for every unit disk graph, thus yielding Erdős-Pósa-type bounds for the hypergraph of radius-$1$ balls in the two graph classes. This improves upon results of Gutiérrez and Paul, and Dúcz and Gujgiczer, who in turn lowered bounds of Bonamy, Csikós, Gujgiczer and Yuditsky, and Böhme and Mohar. For both graph classes, the best known lower bound on the optimal constant remains $3$.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Bridges"
       ],
@@ -2732,7 +2732,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'A few remarks on the Baez-Duarte Criterion' and formalize its key results. Abstract: The goal of this paper is to derive a few very interesting lemmas related to the Báez-Duarte criterion.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Bridges"
       ],
@@ -3056,7 +3056,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Sufficient conditions for $(K_2 \\cup kK_1)$-free graphs to be Hamilton-connected' and formalize its key results. Abstract: The toughness of a non-complete graph $G$, denoted $τ(G)$, is defined as \\[ τ(G) = \\min\\left\\{ \\frac{|S|}{ω(G-S)} : S \\subseteq V(G),\\ ω(G-S) \\geq 2 \\right\\}, \\] where $ω(G-S)$ is the number of components of $G - S$. For a complete graph $G$, we define $τ(G) = \\infty$. A graph $G$ is $t$-tough if $τ(G) \\geq t$. For a positive integer $k$, a graph $G$ is $(K_2 \\cup kK_1)$-free if it contains no induced subgraph isomorphic to $K_2 \\cup kK_1$. Recently, Liu \\cite{liu} showed that every $2k$-connected $(K_2 \\cup kK_1)$-free graph $G$ with $τ(G) > 1$ is Hamilton-connected. In this paper, we strengthen this result by proving that every $(k+1)$-connected $(K_2 \\cup kK_1)$-free graph $G$ with $τ(G) > 1$ and minimum degree $δ(G) \\geq 2k$ is Hamilton-connected. Moreover, by imposing restrictions to the independence number $α(G)$, we prove that every $k$-connected $(K_2 \\cup kK_1)$-free graph $G$ of order $n$ with $2k+1 \\leq α(G) < \\frac{n}{2}$ and $δ(G) \\geq 2k$ is Hamilton-connected, and that t",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Bridges"
       ],
@@ -3504,7 +3504,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Positivity and tails of Jacobi theta series' and formalize its key results. Abstract: Using elementary $q$-series manipulations, we establish a positivity property for the tails of the Jacobi theta series. Specifically, for integers $k\\ge 1$ and $n\\ge 0$, define \\[ \\sum_{n\\ge0}\\sum_{m\\in\\mathbb{Z}}J_{k,n}(m)z^m q^{n} = \\frac{(-1)^k q^{-\\binom{k+1}{2}}}{(z)_{\\infty}(q/z)_\\infty} \\sum_{j\\ge k}(-1)^jq^{\\binom{j+1}{2}}z^{-j}(1-z^{2j+1}), \\] where $(a)_\\infty:=\\prod_{n\\ge0}(1-aq^n)$ denotes the $q$-shifted factorial. We prove that for all integers $k\\ge 1$ and $n\\ge 0$, the coefficients $J_{k,n}(m)$ are positive for all integers $-(k+n)\\le m\\le k+n$.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Bridges"
       ],
@@ -4071,7 +4071,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Beyond Mock Modularity: Elliptic Corrections for Higher Dyson Ranks' and formalize its key results. Abstract: When $m = 1$, the Dyson rank generating function is a classical bridge between partition theory, Ramanujan's mock theta functions, and the theory of harmonic Maass forms and nonholomorphic Jacobi forms. The rank is a statistic on partitions, and the higher Dyson systems, for $m \\geq 2$, are a natural multivariable refinement of it, combining $m$ graded rank contributions. Unlike the classical case, these higher systems are not expected to fit the mock-modular framework, which raises the question of what analytic structure governs them. We show that their root-of-unity specializations carry a hidden elliptic structure. A finite $q$-difference recurrence produces an explicit polynomial obstruction to the expected index $m$ elliptic transformation law, and because the obstruction is finite, its partial fractions canonically determine finitely many Appell--Lerch correction terms that remove it. The corrected functions satisfy a twisted index $m$ elliptic law; a natural translation removes ",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Bridges"
@@ -4152,7 +4152,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'On strongly regular signed graphs of higher girth' and formalize its key results. Abstract: Strongly regular signed graphs are an extension of strongly regular graphs to the realm of signed graphs, that is, graphs where each edge is positive or negative. Unlike with ordinary strongly regular graphs, most kinds of signed counterparts with girth 4 or higher are describable in terms of known structures. We prove that those with girth 4 that are bipartite are classified by designs of two kinds: weighing matrix designs and symmetric block designs. Those of girth 5 are few and readily described. There are none of higher girth. Those with girth 4 that are not bipartite are unsolved.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Bridges"
       ],
@@ -5619,7 +5619,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Matroid correspondence' and formalize its key results. Abstract: Motivated by algebraic correspondences and linear operators associated with volume and Lorentzian polynomials, we introduce matroid correspondences and their polymatroid analogues. A matroid correspondence defines a functor between poset categories of matroids whose morphisms are matroid quotients, and various standard functors, including deletion, contraction, free extension, truncation, intersection, union, and pullback, arise in this way. We show that these correspondences preserve representability and algebraicity under natural hypotheses. In the polymatroid setting, we establish compatibility with multisymmetric lifts. Finally, we relate this construction to the supports of linear operators with Lorentzian symbols.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Bridges"
@@ -5904,7 +5904,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Local and global average degree in bipartite graphs' and formalize its key results. Abstract: Let $F_{\\mathrm{bip}}(n)$ denote the maximum, over all $n$-vertex bipartite graphs without isolated vertices, of the ratio of the minimum local average degree to the global average degree. We prove that $F_{\\mathrm{bip}}(n)=\\frac14\\sqrt n+\\frac38+o(1)$. This answers a problem posed by Tuza.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Bridges"
       ],
@@ -6680,7 +6680,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Hardness of Vertex Splitting: Cographs, Chordal Graphs, and Beyond' and formalize its key results. Abstract: Vertex splitting replaces a vertex (v) by two nonadjacent vertices whose neighborhoods together equal (N(v)). A split is \\emph{exclusive} if these neighborhoods are disjoint and \\emph{shallow} if no newly created vertex is split again. For a graph property (Π), \\textsc{(Π)-Vertex Splitting} asks whether at most (k) splits can transform a graph (G) into one satisfying (Π). We continue the systematic study of this operation and settle several open problems. First, we prove that \\textsc{Cograph Vertex Splitting} is \\textsf{NP}-complete, even on graphs of girth at least 5, resolving a question of Firbas and Sorge (ISAAC 2024). More generally, \\textsc{(P_t)-free Vertex Splitting} is \\textsf{NP}-complete for every fixed (t\\geq 4). We also prove that \\textsc{Chordal Vertex Splitting} and \\textsc{Unit-Interval Vertex Splitting} are \\textsf{NP}-complete, resolving two questions of Abu-Khzam, Chakraborty, Isenmann, and Oijid (IWOCA 2026). Our hardness results extend to the exclusive and shallow ",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Bridges"
       ],
@@ -7329,7 +7329,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'A Census of New Snake-in-the-Box Records' and formalize its key results. Abstract: The snake-in-the-box problem, introduced by Kautz in 1958, asks for the longest induced (chordless) path, called a snake, in the hypercube graph $Q_n$. The maximum length $a(n)$ is known in each dimension $n \\leq 8$. We give snakes that are longer than the previous best-known in every dimension from $9$ to $13$, improving the lower bound on $a(n)$. All record-length paths are provided in a computer-verifiable dataset.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Bridges"
       ],
@@ -7777,7 +7777,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Discrete Einstein metrics on unicyclic graphs' and formalize its key results. Abstract: In earlier work with Cheng and Hua we showed that on a finite tree the discrete Einstein metrics of the Lin--Lu--Yau curvature are the Perron eigenvector of an edge-indexed Ricci matrix. We extend this theory to unicyclic graphs. We determine exactly when the tree picture persists -- the balanced regime, where the spectrum becomes periodic rather than Dirichlet-type -- and compute it in closed form for bare cycles and for regular suns (cycles with pendant leaves); for a single decorated vertex on a long cycle it persists up to an explicit golden-ratio threshold. Beyond this regime the problem is piecewise-linear, and phenomena impossible on a tree appear: the Einstein metric can be non-unique, or absent -- a triangle with a pendant leaf carries none. For the regular suns we prove that it exists and is unique.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Bridges"
       ],
@@ -7899,7 +7899,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'The optimal $χ$-bound for $\\{P_6, \\text{dart}, K_4\\}$-free graphs' and formalize its key results. Abstract: A \\textit{diamond} is a graph obtained from \\(K_4\\) by removing an edge, and a \\textit{dart} is a graph obtained from a diamond by adding a pendant edge to a vertex of degree 3. We prove that every $\\{P_6, \\text{dart}, K_4\\}$-free graph is 6-colorable. This improves the previous bound of 7 due to Hong and Xu \\cite{HongXu2025} and resolves their open question on the optimality of the bound. Our result also extends a theorem of Karthick and Mishra~\\cite{KarthickMishra2018}, who proved 6-colorability for the class of \\(\\{P_6, \\text{diamond}, K_4\\}\\)-free graphs.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Bridges"
       ],
@@ -8102,7 +8102,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'A memorial tribute: Adriano Garsia (1928--2024)' and formalize its key results. Abstract: Adriano Mario Garsia was born in Tunis on August 20, 1928, to a Tunisian-Italian family. He lived on a farm there until the end of World War II, then moved to Rome. After finishing high school, he was sent to the United States to live with relatives in Woyming and eventually made his way to California, becoming a student of Charles Loewner at Stanford in the early 1950s. Following his Ph.D., Adriano held positions at MIT, the University of Minnesota, and Caltech before joining the nascent mathematics department at the University of California, San Diego, in 1966 where he spent the remainder of his career. He passed away in San Diego on October 6, 2024, at the age of 96.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Bridges"
       ],
@@ -8304,7 +8304,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'On the Log-Concavity of the D'Arcais Polynomials for Normalised Functions' and formalize its key results. Abstract: A sequence $(a_n)_{n \\in \\mathbb{N}}$ of non-negative real numbers is called log-concave at $n$ if $a_n^2 \\geq a_{n+1}a_{n-1}$. This property has been generalised in various ways to families of polynomials. We introduce a new variant and show that certain types of D'Arcais polynomials have the respective properties at certain points.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Bridges"
       ],
@@ -8507,7 +8507,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Several families of incommensurable noncompact hyperbolic Coxeter polytopes' and formalize its key results. Abstract: We classify all 141 finite-volume hyperbolic Coxeter five-dimensional polytopes with eight facets, of which 125 are noncompact. Using maximal-cusp density and a noncompact analog of Bogachev-Douba-Raimbault's argument, we construct infinitely many pairwise incommensurable noncompact Coxeter polytopes in dimensions 4, 5, 6, 7, and 9, with the number of commensurability classes growing at least exponentially in volume.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Bridges"
       ],
@@ -8547,7 +8547,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'The Spine: A Supersingular Highway' and formalize its key results. Abstract: We consider the structure of the spine of the supersingular $\\ell$-isogeny graph for one of the cases which arXiv:2502.03613 was not able to fully describe, $\\ell = 2$ and $p = 71, 119\\pmod{120}$. We find the distance, eccentricity, and diameter functions, of the components of the spine without the non-trivial edge not defined over $\\mathbb{F}_p$. Using these functions, we find the mean diameter of the spine and show how this value distinguishes the different structures of the spine. Thus, allowing us to use explicit computations to provide heuristics on the behavior of the spine's structure as $p$ varies.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Bridges"
       ],
@@ -8877,7 +8877,7 @@
         "probabilistic method",
         "Ramsey theory"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Bridges"
       ],
@@ -8966,7 +8966,7 @@
         "Probabilistic Methods",
         "Erdős-type Problems"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Bridges"
       ],
@@ -9063,7 +9063,7 @@
         "probabilistic_method",
         "ramsey_theory"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Bridges"
       ],
@@ -9578,7 +9578,7 @@
         "Ergodic theory results for positive density sets",
         "Probabilistic combinatorics techniques"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Bridges"
       ],
@@ -10098,7 +10098,7 @@
         "Ramsey theory",
         "probabilistic method in number theory"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Bridges"
       ],
@@ -14166,7 +14166,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\nThe formal result in `Catalog/Bridges/GraphZetaPrimeCycle.lean` isolates one adjacency-eigenvalue factor of the Bass–Ihara determinant and proves three parts of the graph-zeta dictionary:\n\n1. the quadratic factor splits through two reciprocal roots;\n2. their power sums form a Lucas recurrence;\n3. a finite explicit formula identifies those power sums as the coefficients obtained from the factor's logarithmic-derivative numerator, with an exact truncation boundary;\n4. the Ramanujan bound places every zero of the local factor on the critical circle.\n\nThis is deliberately a local spectral theorem, not a formalization of the full Bass determinant formula or of primitive non-backtracking cycle enumeration.\n\n## Next formal targets\n\n- Define oriented edges and the Hashimoto non-backtracking matrix of a finite simple graph.\n- Prove that `trace(B^n)` counts rooted closed non-backtracking walks of length `n`.\n- Use Möbius inversion to pass from rooted walks to primitive cycle counts. This would turn the local coefficient formula proved here into the full graph analogue of the prime-power explicit formula.\n- Formalize the Bass determinant identity connecting the Hashimoto determinant to the adjacency and degree matrices.\n- Lift `ramanujan_critical_circle` from one nontrivial eigenvalue to the product over the complete nontrivial spectrum, while separating the trivial poles.\n- Instantiate the theory for concrete Paley and Lubotzky–Phillips–Sarnak graphs. Exact finite-field adjacency matrices and certified characteristic-polynomial factorizations would permit the proposed ten-graph experiment without relying on floating-point eigenvalues.\n- Compare primitive-cycle counts with `q^n/n`, rather than directly with the classical `π(x)`: graph cycle length is discrete and the natural main term depends on graph degree. A precise comparison to integer primes should specify a normalization before claiming matching distributions.\n\n## Scope warning\n\nThe proved bridge does not establish that graph prime cycles have the same statistical distribution as primes in the integers, nor that finite graph zeta functions encode the Riemann zeta function on its critical strip. Those stronger claims need additional definitions and hypotheses and should not be inferred from the local-factor theorem.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -14894,11 +14894,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "99a8a1e3",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -14911,7 +14911,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0361",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-18T23:29:34.286231+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -14926,7 +14926,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-18T22:22:14.403617+00:00",
       "title": "The Borsuk-Ulam Theorem Implies Arrow's Impossibility: Social Choice Is Topology"
@@ -16062,10 +16062,10 @@
     "famous_subtask",
     "famous_subtask",
     "famous_subtask",
-    "famous_subtask",
     "cross_domain_bridge",
     "famous_subtask",
     "abduction_followup",
+    "famous_subtask",
     "famous_subtask",
     "famous_subtask",
     "famous_subtask",

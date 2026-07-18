@@ -1,44 +1,46 @@
-# Computational Evidence: Hypercube Homological Codes
+# Computational evidence: hypercube graph HQECC conjectures
 
-## Small-case calculations
+## Small cases
 
-The hypercube graph `Qₙ` has `V = 2ⁿ` vertices and `E = n·2ⁿ⁻¹` edges and is
-connected, so its first Betti number (circuit rank), equal to the number of
-logical qubits of `HQECC(Qₙ)`, is `β₁ = E − V + 1`:
+For the hypercube graph `Q_n`, the vertex and edge counts are
+`V(n)=2^n` and `E(n)=n·2^(n-1)`.  Since `Q_n` is connected, its graph-cycle
+rank is `E-V+1`.
 
-| n | V = 2ⁿ | E = n·2ⁿ⁻¹ | β₁ = E − V + 1 | closed form 2ⁿ⁻¹(n−2)+1 |
-|---|--------|------------|----------------|--------------------------|
-| 0 | 1      | 0          | 0              | —                        |
-| 1 | 2      | 1          | 0              | 2⁰·(−1)+1 = 0            |
-| 2 | 4      | 4          | **1**          | 2¹·0+1 = 1               |
-| 3 | 8      | 12         | 5              | 2²·1+1 = 5               |
-| 4 | 16     | 32         | **17**         | 2³·2+1 = 17             |
-| 5 | 32     | 80         | 49             | 2⁴·3+1 = 49             |
-| 6 | 64     | 192        | **129**        | 2⁵·4+1 = 129           |
-| 7 | 128    | 448        | 321            | 2⁶·5+1 = 321           |
-| 8 | 256    | 1024       | **769**        | 2⁷·6+1 = 769           |
+| n | V | E | E−V+1 | proposed logical qubits | graph girth (n≥2) | proposed `2^(n/2)` (even n) |
+|---:|---:|---:|---:|---:|---:|---:|
+| 1 | 2 | 1 | 0 | 1 | acyclic | — |
+| 2 | 4 | 4 | 1 | 1 | 4 | 2 |
+| 3 | 8 | 12 | 5 | 1 | 4 | — |
+| 4 | 16 | 32 | 17 | 1 | 4 | 4 |
+| 5 | 32 | 80 | 49 | 1 | 4 | — |
+| 6 | 64 | 192 | 129 | 1 | 4 | 8 |
+| 7 | 128 | 448 | 321 | 1 | 4 | — |
+| 8 | 256 | 1024 | 769 | 1 | 4 | 16 |
 
-The mission's test cases `Q₄, Q₆, Q₈` give `17, 129, 769` logical qubits — **not**
-`1`. The value `β₁ = 1` occurs uniquely at `n = 2` (the 4-cycle).
+The sequence through `n=8` is `0, 0, 1, 5, 17, 49, 129, 321, 769`.
+These values are certified in `HypercubeCounterexample.lean` by the closed-form
+theorem and explicit `Q_4`, `Q_6`, and `Q_8` corollaries.  The constant girth
+claim is certified in `HypercubeDistance.lean` for every `n ≥ 2`.
+
+## OEIS search
+
+No OEIS lookup was used.  The exact closed form
+`2^(n-1)(n-2)+1` is proved directly, so sequence identification is unnecessary.
 
 ## Counterexample hunt
 
-The universal claim "HQECC(Qₙ) encodes 1 qubit for all n" is refuted by the very
-first non-boundary case `n = 3` (β₁ = 5) and every larger `n`. The claim's only
-truthful instance is the boundary case `n = 2`. This is captured formally by
-`Hypercube.betti1_eq_one_iff` (`β₁ = 1 ↔ n = 2`) and `Hypercube.betti1_ge_five`
-(`n ≥ 3 ⟹ β₁ ≥ 5`).
+The first counterexample to “one logical qubit for every hypercube graph” is
+`Q_1` (cycle rank zero); among dimensions with cycles, the first is `Q_3`, with
+cycle rank five.  The requested cases are all counterexamples:
+`Q_4`, `Q_6`, and `Q_8` have ranks `17`, `129`, and `769`.
 
-## OEIS
+The proposed systolic growth also fails from `n=6` onward among requested even
+cases: the graph girth remains four, whereas the proposed values are eight and
+sixteen for `Q_6` and `Q_8`.
 
-The Betti sequence `0, 0, 1, 5, 17, 49, 129, 321, 769, …` is
-`a(n) = (n−2)·2ⁿ⁻¹ + 1` (for `n ≥ 1`), matching the circuit rank of the
-`n`-cube graph.
+## Interpretation caveat
 
-## Method
-
-All entries above are reproduced by evaluating the defined function `betti1` and
-are certified by the accompanying proofs (`betti1_closed`, and the exact
-evaluations `betti1_four`, `betti1_six`, `betti1_eight`). The distance parameter
-is left to `FUTURE_DIRECTIONS.md`; the encoded-dimension parameter, the focus of
-this cycle, is fully settled.
+Graph girth is only the primal systole.  The distance of a CSS code is generally
+the minimum of primal and dual logical weights.  Consequently, the formal girth
+result refutes the proposed *systolic scaling*, but does not silently assume that
+girth alone is the complete CSS distance.

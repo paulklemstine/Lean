@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "3c755fa4",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions: Arithmetic of Modular Hyperbolic Orbits\n\n## 1. Universal trace multiplication polynomials\n\nFor every positive integer $m$, there should be a unique monic integral polynomial $C_m$",
-      "quality_score": 0.73,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-07-17T08:35:59",
-      "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk"
-    },
-    {
       "cycle_id": "322b88bd",
       "domain": "Geometry",
       "key_insight": "# Future Directions\n\n1. Generalize the Boolean challenge space to a finite field and prove the corresponding special-soundness extractor and exact knowledge error.\n2. Replace multiset equality by equa",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-18T22:22:43",
       "title": "1. **Intrinsic curvature identification.** The proved curvature formula"
+    },
+    {
+      "cycle_id": "bcb31ca6",
+      "domain": "Bridges",
+      "key_insight": "# Future directions\n\n1. **Exact fiber cardinality.** Upgrade the explicit injection of `2^n` seeds to an equality characterizing the entire fiber `{x ∈ (0,1) | f^[n] x = y}`. This requires proving eve",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-18T23:29:22",
+      "title": "Deepening: Cryptography from Chaos: Encrypting with the Logistic Map"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "41e1526b",
-      "domain": "Logic",
-      "key_insight": "# Future Directions: Clique-to-Clique Density\n\n## 1. Sharp generalized-inverse lower envelope\n\nFor every pair of integers `2 ≤ s < t`, determine the exact lower envelope of the normalized `t`-clique c",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 5,
-      "timestamp": "2026-07-15T01:49:38",
-      "title": "Deepening: Asymptotic Clique-to-Clique Density Bound"
-    },
     {
       "cycle_id": "37f1d216",
       "domain": "Computation",
@@ -2501,6 +2491,16 @@
       "theorem_count": 15,
       "timestamp": "2026-07-18T23:29:11",
       "title": "Galois Theory of Cellular Automata: Which Rules Have Reversible Dynamics?"
+    },
+    {
+      "cycle_id": "bcb31ca6",
+      "domain": "Bridges",
+      "key_insight": "# Future directions\n\n1. **Exact fiber cardinality.** Upgrade the explicit injection of `2^n` seeds to an equality characterizing the entire fiber `{x ∈ (0,1) | f^[n] x = y}`. This requires proving eve",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-18T23:29:22",
+      "title": "Deepening: Cryptography from Chaos: Encrypting with the Logistic Map"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8
     }
   ],
-  "last_updated": "2026-07-18T23:29:11",
+  "last_updated": "2026-07-18T23:29:22",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "4f5260f0",
-        "quality": 0.83,
-        "theorems": 19,
-        "title": "Rucker: Infinity and the Mind — Formalizing Different Sizes of Infinity"
-      },
-      {
         "cycle_id": "de167401",
         "quality": 0.78,
         "theorems": 11,
@@ -3203,6 +3197,12 @@
         "quality": 0.76,
         "theorems": 0,
         "title": "Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
+      },
+      {
+        "cycle_id": "bcb31ca6",
+        "quality": 0.83,
+        "theorems": 0,
+        "title": "Deepening: Cryptography from Chaos: Encrypting with the Logistic Map"
       }
     ],
     "Combinatorics": [
