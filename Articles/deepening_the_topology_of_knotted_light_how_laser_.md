@@ -1,176 +1,158 @@
-# The Topology of Knotted Light: How Laser Beams Get Tangled
+# The Arithmetic of Knotted Light
 
-## A twist you cannot untwist
+## When darkness becomes a thread
 
-Shine an ordinary laser at a wall and you get a bright dot. But light can be
-sculpted. With the right optics, a beam can be given a *twist* — its wavefronts
-spiral around the propagation axis like the threads of a screw. Such a beam
-carries **orbital angular momentum** (OAM): as it travels, it corkscrews through
-space. Down the very center of that corkscrew runs a thread of perfect
-darkness, a line where the light's amplitude vanishes exactly. This dark thread
-is the beam's **phase singularity**, and it is the object at the heart of this
-story.
+A laser beam looks, at first glance, like the simplest possible object: a bright line traveling through space. Yet inside a carefully shaped beam there can be a hidden skeleton made not of light, but of darkness. Along this skeleton the optical amplitude is exactly zero, so the wave’s phase cannot be assigned. These phase singularities can bend into loops, link with one another, and trace knots. A trefoil-shaped dark filament inside a luminous field is one of the most striking examples of “knotted light.”
 
-The amount of twist is not a matter of degree. It is an *integer*. A beam can
-carry one unit of twist, or two, or seventeen, or negative three (a corkscrew of
-the opposite handedness) — but never one-and-a-half. This integer is called the
-**topological charge** of the beam. It is one of the cleanest examples in all of
-physics of a quantity that nature refuses to let vary continuously: it can only
-jump.
+The geometry is spectacular, but it is sustained by a quieter piece of mathematics. Around a dark filament, the optical phase winds. Walk once around the filament and the phase may complete one turn, several turns, or the same number of turns in the opposite direction. This signed count is the local topological charge. It is closely related to orbital angular momentum, and it governs how optical vortices combine.
 
-Why can't it vary smoothly? Because it is a *topological* quantity — a property
-of shape that survives bending, stretching, and squeezing. You can dim the beam,
-widen it, pass it through a lens, or dress it up with any smooth envelope you
-like, and the integer stays put. To change it you would have to tear something —
-to create or destroy a thread of darkness. That robustness is exactly why knotted
-light is being explored for high-capacity optical communication, for trapping and
-spinning microscopic particles, and for encoding information in a way that resists
-noise.
+The central message of this article is an arithmetic law for such winding: multiplication of nonvanishing optical modes adds their charges; taking a positive power multiplies charge; inversion reverses it; and an arbitrary integer-powered product produces the corresponding integer linear combination of charges. The rules resemble ordinary algebra because they arise from one of calculus’s most useful identities—the logarithmic derivative turns multiplication into addition.
 
-This article explains what that integer *is*, mathematically, and proves that it
-behaves the way physicists have long assumed — that twists add up, that they are
-conserved, that the dark envelope of a real beam cannot hide them, and, in a
-surprising final twist, that for the special beams whose dark threads are tied
-into knots, the topological charge is secretly an *arithmetic* fact about the
-knot.
+## A loop around the singularity
 
-## Counting the twist: the winding number
+To isolate the essential mechanism, imagine sampling a complex optical field along a closed circular path surrounding a suspected vortex. Parameterize one turn by an angle $\theta$ from $0$ to $2\pi$, and denote the sampled complex amplitude by $\gamma(\theta)$. We require three regularity conditions: $\gamma$ is differentiable, its chosen derivative $\gamma'$ is continuous, and $\gamma(\theta)\neq 0$ everywhere on the sampling loop. The last condition is crucial. The contour may enclose darkness, but it must not pass through darkness.
 
-To pin down the twist as a number, look at a single ring around the beam axis and
-follow the light's phase as you walk once around the circle. The phase of a wave
-is the position in its cycle — crest, trough, and everything between — and we can
-represent the complex amplitude of the beam at azimuthal angle $\theta$ as a
-point moving in the plane. As $\theta$ runs from $0$ to $2\pi$, that point traces
-a closed loop. The **winding number** counts how many times the loop encircles
-the origin, and with what handedness.
+The contour-integral winding is
 
-There is a beautiful formula for this count, borrowed from complex analysis. If
-$\varphi(\theta)$ is the complex amplitude around the loop, its winding number is
+$$
+W(\gamma)=\frac{1}{2\pi i}\int_0^{2\pi}\frac{\gamma'(\theta)}{\gamma(\theta)}\,d\theta.
+$$
 
-$$w(\varphi) \;=\; \frac{1}{2\pi i} \oint \frac{\varphi'(\theta)}{\varphi(\theta)}\, d\theta.$$
+For a genuinely closed loop, this familiar integral measures the net number of turns made by the image of $\gamma$ around the origin of the complex plane. The present results concern the analytic laws obeyed by this integral under multiplication, powers, and inversion. Those laws require smoothness and nonvanishing, but not the separate quantization theorem asserting that every closed-loop winding is an integer.
 
-The integrand $\varphi'/\varphi$ is the *logarithmic derivative* — the rate at
-which the logarithm of $\varphi$ changes. Its real part tracks how the amplitude
-grows or shrinks (which returns to where it started, contributing nothing over a
-full loop), while its imaginary part tracks the accumulating phase. Integrate,
-divide by $2\pi i$, and the amplitude bookkeeping cancels, leaving precisely the
-net number of turns.
+The simplest model is the pure helical mode
 
-For the archetypal twisted beam, the phase around the ring is
-$\varphi(\theta) = e^{i\ell\theta}$, where $\ell$ is an integer. Walking once
-around, the phase advances by $2\pi\ell$; the loop encircles the origin exactly
-$\ell$ times. The formula confirms it cleanly:
+$$
+\gamma_m(\theta)=e^{im\theta},
+$$
 
-$$w\!\left(e^{i\ell\theta}\right) = \ell.$$
+where $m$ is an integer. Since $\gamma_m'/\gamma_m=im$, direct integration gives $W(\gamma_m)=m$. A positive value means one orientation of phase circulation, while a negative value means the reverse.
 
-**The winding number equals the topological charge.** This is our first
-theorem, and it is the anchor for everything that follows.
+## Why products add
 
-## The product rule: why twists add
+Suppose $\gamma$ and $\delta$ are two smooth complex fields that never vanish along the contour. Their coherent product is the pointwise field
 
-Here is where the story deepens. Suppose you overlap two twisted beams so that
-their amplitudes multiply — one carrying charge $\ell$, the other charge $m$.
-Physicists expect the combined beam to carry charge $\ell + m$: twists add. But
-*why*? The easy answer leans on the special form $e^{i\ell\theta}$: multiply two
-exponentials and their exponents add. That argument, though, only works for that
-one convenient ansatz.
+$$
+(\gamma\delta)(\theta)=\gamma(\theta)\delta(\theta).
+$$
 
-The deeper truth is that additivity has nothing to do with exponentials at all.
-It is a structural law of the winding-number integral itself. The key is the
-logarithmic derivative's response to a product. By the ordinary Leibniz rule,
-$(\varphi\psi)' = \varphi'\psi + \varphi\psi'$, and dividing through by
-$\varphi\psi$ gives the clean splitting
+The product is again smooth and nowhere zero. More importantly, the product rule gives
 
-$$\frac{(\varphi\psi)'}{\varphi\psi} = \frac{\varphi'}{\varphi} + \frac{\psi'}{\psi}.$$
+$$
+\frac{(\gamma\delta)'(\theta)}{\gamma(\theta)\delta(\theta)}
+=
+\frac{\gamma'(\theta)}{\gamma(\theta)}+
+\frac{\delta'(\theta)}{\delta(\theta)}.
+$$
 
-The logarithmic derivative of a product is the *sum* of the logarithmic
-derivatives. Integrate both sides around the loop and divide by $2\pi i$, and you
-obtain the **contour-integral product rule**:
+Integrating both sides yields the **Winding Product Theorem**:
 
-$$w(\varphi \cdot \psi) = w(\varphi) + w(\psi),$$
+> If $\gamma$ and $\delta$ are differentiable complex fields with continuous derivatives and neither vanishes on the contour, then their product is also smooth and nonvanishing there, and
+> $$
+> W(\gamma\delta)=W(\gamma)+W(\delta).
+> $$
 
-valid for *any* two loops that are differentiable, nowhere zero, and have
-continuous logarithmic derivatives — no exponential ansatz required. This is the
-structural heart of charge conservation in knotted light. Additivity of optical
-charge, and the fact that superposing many beams sums their charges, both fall
-out as genuine corollaries of this single law rather than as accidents of a
-formula. Overlap a whole family of beams with charges $\ell_1, \ell_2, \ldots$
-and the total charge is $\sum_i \ell_i$ — total optical charge is conserved.
+This is charge conservation in its cleanest analytic form. The two modes may have complicated amplitude and phase variations; they need not be pure helices. As long as neither crosses zero on the chosen contour, multiplication makes their winding contributions add exactly.
 
-## The dark envelope hides nothing
+There is a useful physical picture. Multiplying complex amplitudes adds their phases. If one mode advances by three turns while another retreats by one, their product advances by two turns. The integral does not have to inspect the full spatial knot to record this local balance. It sees the phase circulation on the boundary.
 
-A real laser beam is not pure phase. The workhorse of the laboratory is the
-**Laguerre–Gauss beam**, whose amplitude near the axis looks like
+## Repetition amplifies charge
 
-$$A(r,\theta) = r^{|\ell|}\, e^{i\ell\theta}.$$
+Now multiply a mode by itself $n$ times. The resulting field is $\gamma^n$. Repeated use of the product theorem suggests that its charge should be $n$ times the original charge. The smoothness statement and the winding statement can be established together by induction.
 
-The factor $r^{|\ell|}$ is the *radial envelope*: it forces the amplitude to
-vanish on the axis $r = 0$ (that is the dark thread, the phase singularity) and
-grows as you move outward. A skeptic might worry that this real, position-
-dependent envelope muddies the clean integer charge. It does not.
+The **Natural Power Theorem** says:
 
-The reason is that the winding number is blind to any nowhere-zero, single-valued
-envelope. Rescaling a loop by a nonzero constant $c$ leaves its winding number
-untouched — $w(c\,\varphi) = w(\varphi)$ — because the constant contributes zero
-to the logarithmic derivative. Along any ring of fixed radius $r > 0$, the
-envelope $r^{|\ell|}$ *is* just such a constant. So the full physical amplitude
-carries exactly the same charge as its bare phase:
+> If $\gamma$ is smooth and nowhere zero on the contour, then for every natural number $n$, the field $\gamma^n$ is smooth and nowhere zero, with derivative
+> $$
+> (\gamma^n)'=n\gamma^{n-1}\gamma',
+> $$
+> and its winding satisfies
+> $$
+> W(\gamma^n)=nW(\gamma).
+> $$
 
-$$w\big(A(r,\cdot)\big) = \ell \qquad \text{for every } r > 0.$$
+The case $n=0$ is not an awkward exception. The zeroth power is the constant field $1$, whose derivative and winding are both zero. The induction step multiplies $\gamma^n$ by one additional copy of $\gamma$, so the product theorem adds one more $W(\gamma)$.
 
-The integer twist is a robust label of the beam, immune to the amplitude
-dressing that any real optical system imposes. That is precisely what makes it
-useful as a carrier of information.
+This law explains how high-charge vortices can be assembled algebraically. Starting from a unit-charge mode and raising it to the fifth power creates a field with charge five along the same contour, provided no zero lies on that contour.
 
-## Knots, and a bridge to number theory
+## Mirrors made by inversion
 
-Now for the most surprising turn. So far the dark thread has been a straight line
-down the beam axis. But with cleverly engineered beams the phase singularity can
-be bent into a closed loop in three-dimensional space — and not just any loop, but
-a genuine **knot**. The simplest nontrivial example is the **trefoil**, the
-familiar three-crossing pretzel knot.
+Negative powers require inversion. For a nonzero complex field, define the inverse field pointwise by $\gamma^{-1}(\theta)=1/\gamma(\theta)$. It remains smooth and nonvanishing, and calculus gives
 
-These knotted singularities belong to a family called **torus knots**, each
-labeled by a pair of integers $(p, q)$: the singularity winds $p$ times one way
-and $q$ times the other around an invisible doughnut. The trefoil is the
-$(2, 3)$ torus knot. For such a beam, the twist measured on a meridional ring —
-the *meridional charge* — is the product $p \cdot q$. The trefoil therefore
-carries charge $2 \cdot 3 = 6$.
+$$
+(\gamma^{-1})'(\theta)=-\frac{\gamma'(\theta)}{\gamma(\theta)^2}.
+$$
 
-And here is the bridge. A torus $(p, q)$ is a genuine, single-strand knot — as
-opposed to several separate loops tangled together — exactly when $p$ and $q$
-share no common factor, that is, when they are **coprime**. And coprimality is
-*precisely* the condition under which the product $p \cdot q$ equals the **least
-common multiple** $\operatorname{lcm}(p, q)$. So for any coprime torus-knot beam:
+Its winding could be computed directly, but there is a more revealing argument. The product $\gamma^{-1}\gamma$ is the constant field $1$. By the product theorem,
 
-$$w = p \cdot q = \operatorname{lcm}(p, q).$$
+$$
+W(\gamma^{-1})+W(\gamma)=W(1)=0.
+$$
 
-For the trefoil, $\operatorname{lcm}(2, 3) = 6$, matching its charge exactly.
+Hence the **Inversion Theorem** states
 
-Read that again. On the left is a *topological* invariant — a winding number,
-computed by an integral around a loop of light. On the right is an *arithmetic*
-invariant — the least common multiple, a fact about the divisibility of two whole
-numbers. The condition that the singularity be a single connected knot rather
-than a split collection of links is the very same condition that makes these two
-numbers agree. A property of tangled light turns out to be a property of the
-numbers that name the tangle.
+$$
+W(\gamma^{-1})=-W(\gamma).
+$$
 
-## Why it matters
+In optical language, inversion reverses the phase circulation. It turns every advancing phase twist into a retreating one while preserving the absence of zeros along the contour.
 
-There is a recurring lesson in physics: the quantities that survive are the ones
-that cannot change by a little. Electric charge, quantum spin, the number of
-times a vortex loops — these are integers, and their integrality is what makes
-them dependable. The topological charge of knotted light joins that company. We
-have seen that it is a winding number; that it obeys an exact product rule and so
-adds and is conserved under superposition; that the physical envelope of a real
-beam cannot alter it; and that, for knotted beams, it is quietly an arithmetic
-fact about the knot.
+Combining natural powers with inversion gives the **Integer Power Theorem**:
 
-Practically, the robustness of this integer is what lets engineers pack many
-independent channels of information into a single beam of light, each channel
-riding a different value of $\ell$, all of them stable against the smudging that
-plagues ordinary optical signals. Conceptually, the appearance of the least
-common multiple where one expected only geometry is a reminder that the deepest
-structures in mathematics do not respect our departmental boundaries. Twisted
-light, contour integrals, and elementary number theory turn out to be three views
-of a single integer — the one you cannot untwist.
+> For every integer $k$ and every smooth field $\gamma$ that is nonzero along the contour, the field $\gamma^k$ is smooth and nonzero there, and
+> $$
+> W(\gamma^k)=kW(\gamma).
+> $$
+
+Positive $k$ repeats the mode, $k=0$ erases its winding by producing the constant field, and negative $k$ repeats the inverse mode.
+
+## A two-mode charge synthesizer
+
+The strongest result combines two arbitrary modes with independent integer weights. Let $k$ and $\ell$ be integers, and form
+
+$$
+F(\theta)=\gamma(\theta)^k\delta(\theta)^\ell.
+$$
+
+Both powered modes remain smooth and nonvanishing. Applying the product theorem once and the integer power theorem twice gives the **Two-Mode Integer Superposition Theorem**:
+
+> If $\gamma$ and $\delta$ are smooth complex fields that never vanish on the contour, then for any integers $k$ and $\ell$,
+> $$
+> W\!\left(\gamma^k\delta^\ell\right)
+> =kW(\gamma)+\ell W(\delta).
+> $$
+
+Despite the traditional word “superposition,” the operation here is coherent multiplication, not additive interference. That distinction matters: a sum of two nonzero fields can cancel and create new zeros on the contour, whereas a product of nonzero fields cannot. Multiplication therefore provides a particularly stable algebra for charge design.
+
+For pure helices $\gamma_p(\theta)=e^{ip\theta}$ and $\delta_q(\theta)=e^{iq\theta}$, the combined field is
+
+$$
+\gamma_p(\theta)^k\delta_q(\theta)^\ell
+=e^{i(kp+\ell q)\theta},
+$$
+
+so the output charge is $kp+\ell q$. For example, taking $p=2$, $q=-3$, $k=4$, and $\ell=-1$ produces charge $11$. The formula remains valid far beyond ideal helical waves: smooth amplitude modulation can be added, and the phase may accelerate or slow around the contour, provided the field stays nonzero.
+
+## What this does—and does not—say about knots
+
+A winding number around a contour is local information. It records how phase circulates around a singular filament, but it does not by itself identify whether that filament forms a trefoil, a figure-eight knot, or an unknot in three-dimensional space. Knot type concerns the global embedding of the zero set; winding charge concerns the behavior of the field around that set. The two structures interact, but they are not interchangeable.
+
+This separation is useful. Local charge laws can be applied at many cross-sections of a three-dimensional beam. If singular filaments move and braid while avoiding the boundary contour, the winding provides a conserved ledger of phase circulation. To turn that intuition into a full deformation theory, one would next prove homotopy invariance and analyze how local charges redistribute when zeros merge or split.
+
+Nor do the results above alone prove quantization for every closed smooth loop. They establish exact algebraic identities for the contour integral. A complementary classification theorem would show that closed nonvanishing loops always have integer winding and that zero winding is equivalent to the existence of a periodic complex logarithm. Together, those facts would connect the calculus directly to the topology of the punctured plane.
+
+## An algebra beneath the spectacle
+
+Knotted light is often introduced through dramatic images: luminous volumes pierced by dark trefoils, phase sheets spiraling around invisible cores, and optical vortices behaving like threads. Beneath that imagery lies a compact algebra.
+
+Nonvanishing smooth modes are closed under multiplication, inversion, and integer powers. The winding map turns multiplication into addition, inversion into negation, and exponentiation into integer scaling. In symbols,
+
+$$
+W(\gamma\delta)=W(\gamma)+W(\delta),\qquad
+W(\gamma^{-1})=-W(\gamma),\qquad
+W(\gamma^k)=kW(\gamma).
+$$
+
+These equations are more than shortcuts for calculation. They show that optical phase charge can be composed predictably. A complicated field may be built from simpler factors, and its winding can be read from an integer-weighted sum rather than recomputed from scratch.
+
+The dark thread inside a beam may twist into an elaborate knot, but around any safe contour its phase obeys a remarkably orderly arithmetic. Multiplication adds twists. Inversion flips them. Powers amplify them. The topology of light begins with this simple ledger of turns.
