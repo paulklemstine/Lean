@@ -15,7 +15,7 @@ where the kets `|Noᵢ⟩` are indexed by *surreal numbers* `Noᵢ : Surreal` an
 `a_i` live in the ordered, non-Archimedean field of *hyperreals* `ℝ*`.  Formally this is the free
 `ℝ*`-module on the surreal numbers, i.e. a finitely supported map `Surreal →₀ ℝ*`.
 
-The novelty is the **measurement rule**.  Because amplitudes are hyperreal, the Born weight
+The central feature is the **measurement rule**.  Because amplitudes are hyperreal, the Born weight
 `|a_i|² / ‖ψ‖²` of a branch can be a genuine *infinitesimal*.  The *observed* probability of a
 branch is defined to be the **standard part** of its Born weight,
 
@@ -32,34 +32,45 @@ exactly `0`, even though its exact (hyperreal) Born weight is strictly positive.
 * `observedProb_infinitesimal_eq_zero` — **unobservability of infinitesimal branches**: if the
   amplitude on a ket is infinitesimal and the total weight is appreciable, the observed
   probability of that ket is `0`.
+* `equal_amplitude_pair_observedProb` — equal nonzero amplitudes give probability `1/2` each,
+  independently of the arithmetic size of the surreal ket labels.
 * `epsilon_test` — the corrected worked example `|ψ⟩ = |0⟩ + ε|1⟩` (with `ε` the canonical
   positive infinitesimal): the standard branch `|0⟩` is observed with probability `1` and the
   infinitesimal branch `|1⟩` with probability `0`.
 
 ## Relation to the catalog
 
-This file is the *quantum / spectral* half of a two-file study.  Its companion,
-`Catalog/Geometry/QuantumSurreal/StandardPartMeasure.lean`, revisits the infinitesimal
-probability model of `Catalog/Novelty/InfinitesimalFiniteProbability.lean` and proves that the
-standard-part functional collapses that infinitesimal measure onto a genuine real (Dirac)
-measure — exactly the classical shadow of the quantum collapse proved here.
+This is the *quantum / spectral* half of a two-part study.  Its companion revisits a finite
+infinitesimal probability model and proves that the standard-part functional collapses that
+measure onto a genuine real Dirac measure — exactly the classical shadow of the quantum collapse
+proved here.
 
 -- !-- Lab Notes -- !--
-Hypothesis (Hypothesizer): amplitudes valued in a non-Archimedean field let a superposition
-carry branches whose Born weight is a positive infinitesimal.  Conjecture: under the
-standard-part measurement rule such branches are *observationally invisible* while total
-probability is preserved.
+Hypothesis (Hypothesizer), ranked by expected impact:
+1. A finite-dimensional spectral theorem over real-closed non-Archimedean fields should descend
+   under standard part to the ordinary spectral theorem for finite observables.
+2. Standard-part Born weights of every appreciably normalized finite state should form a real
+   probability distribution.
+3. Observational equivalence of states should be a congruence for tensor products.
+4. Branches with infinitesimal normalized amplitude should form a tensor ideal of invisible
+   outcomes.
+5. The standard-part shadow of the catalog's lexicographic infinitesimal measure should be a
+   Dirac measure.
+6. Merely assigning an infinitesimal surreal *label* to a ket should not alter its probability
+   when amplitudes remain equal.
+The present cycle tests Conjectures 2, 4, 5, and 6 in finite settings.
 
 Experiment (Experimenter): computed the two-branch state `|0⟩ + ε|1⟩`.  Exact Born weights are
 `1/(1+ε²)` and `ε²/(1+ε²)`; their standard parts are `1` and `0`.  This validated both the
-normalization and the collapse before formalization.
+normalization and the collapse before the general proof.
 
 Analysis (Analyst): the original mission "test" was internally inconsistent — it assigned the
 infinitesimal branch the *appreciable* amplitude `1/√2` yet claimed observed probability `0`.
-The mathematically consistent statement puts the *infinitesimal* on the amplitude, not merely on
-the ket label.  `epsilon_test` records the corrected version.
+The equal-amplitude theorems disprove that prediction: two distinct labels with equal nonzero
+amplitudes each have probability `1/2`.  The mathematically consistent test puts the infinitesimal
+on the amplitude, not merely on the ket label; `epsilon_test` records this corrected version.
 
-Critique (Critic): none of the three main theorems is vacuous.  `bornProb_sum_eq_one` needs the
+Critique (Critic): none of the main theorems is vacuous.  `bornProb_sum_eq_one` needs the
 genuine hypothesis `normSq ψ ≠ 0`; `observedProb_infinitesimal_eq_zero` needs the total weight to
 be *appreciable* (`¬ Infinitesimal (normSq ψ)`) — dropping it makes the claim false, since an
 infinitesimal branch inside an even-more-infinitesimal total can have observed probability `1`.
@@ -123,6 +134,29 @@ theorem normSq_pair (s t : Surreal.{0}) (a b : ℝ*) (hst : s ≠ t) :
   rw [Finsupp.sum_of_support_subset _ hsub _ (by intro i _; simp)]
   rw [Finset.sum_pair hst]
   simp [hst, Ne.symm hst]
+
+/-
+**Equal amplitudes ignore the ket labels.**  For any two distinct surreal kets carrying the
+same nonzero hyperreal amplitude, both exact Born weights are `1/2`.  In particular, merely
+labelling one branch by an infinitesimal surreal cannot make that branch unobservable.
+-/
+theorem equal_amplitude_pair_bornProb (s t : Surreal.{0}) (a : ℝ*) (hst : s ≠ t) (ha : a ≠ 0) :
+    bornProb (single s a + single t a) s = (1 : ℝ*) / 2 ∧
+      bornProb (single s a + single t a) t = (1 : ℝ*) / 2 := by
+  unfold bornProb;
+  rw [ normSq_pair s t a a hst ] ; ring_nf ; aesop;
+
+/-
+The observed probabilities of two distinct, equally weighted surreal kets are both `1/2`.
+Thus observation depends on amplitudes rather than the arithmetic size of the ket labels.
+-/
+theorem equal_amplitude_pair_observedProb (s t : Surreal.{0}) (a : ℝ*)
+    (hst : s ≠ t) (ha : a ≠ 0) :
+    observedProb (single s a + single t a) s = (1 : ℝ) / 2 ∧
+      observedProb (single s a + single t a) t = (1 : ℝ) / 2 := by
+  unfold observedProb; simp +decide [ *, equal_amplitude_pair_bornProb ] ;
+  convert Hyperreal.isSt_refl_real _;
+  grind +suggestions
 
 /-- The corrected worked example `|ψ⟩ = |0⟩ + ε|1⟩` with `ε` the canonical positive infinitesimal. -/
 noncomputable def psiTest : QSurreal := single (0 : Surreal.{0}) 1 + single (1 : Surreal.{0}) ε
