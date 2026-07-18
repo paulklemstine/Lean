@@ -3385,7 +3385,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "`Tropical/DarkMathematics.lean` treats provability as an abstract predicate `Pr "
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "18410e31",
     "description": "When a theorem prover searches for a proof, it explores a tree of possible derivation steps. The branching factor is the number of applicable inference rules at each step. Define the proof-search fractal dimension D(T) of a theorem T as the Hausdorff dimension of the set of all successful proof paths for T. If D(T) < 1, the proof is 'easy' (few paths work, so search is focused). If D(T) > 1, the proof is 'hard' (many paths must be explored). Conjecture: For theorems in ZFC, D(T) = 1 + O(1/length(T)). In other words, most theorems have fractal dimension close to 1 \u2014 proof search is neither trivially easy nor impossibly hard, but balanced at the edge. Theorems with D(T) << 1 are 'obvious' (direct proofs), and theorems with D(T) >> 1 require exponentially long proofs. The fractal dimension correlates with proof length: if D(T) = 1 + epsilon, then the shortest proof of T has length roughly 1/epsilon. Test: for 1000 theorems in Lean 4's Mathlib, estimate D(T) by Monte Carlo sampling of proof search trees, and correlate with actual proof length. Impact: proof difficulty is a fractal \u2014 the dimension of the proof search space determines how hard the theorem is.",
     "domains": [
       "Novelty",
@@ -3395,7 +3395,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-18T06:02:41.344792+00:00",
     "title": "Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
   },

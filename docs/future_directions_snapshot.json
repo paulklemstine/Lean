@@ -4662,7 +4662,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "18410e31",
     "description": "When a theorem prover searches for a proof, it explores a tree of possible derivation steps. The branching factor is the number of applicable inference rules at each step. Define the proof-search fractal dimension D(T) of a theorem T as the Hausdorff dimension of the set of all successful proof paths for T. If D(T) < 1, the proof is 'easy' (few paths work, so search is focused). If D(T) > 1, the proof is 'hard' (many paths must be explored). Conjecture: For theorems in ZFC, D(T) = 1 + O(1/length(T)). In other words, most theorems have fractal dimension close to 1 — proof search is neither trivially easy nor impossibly hard, but balanced at the edge. Theorems with D(T) << 1 are 'obvious' (direct proofs), and theorems with D(T) >> 1 require exponentially long proofs. The fractal dimension correlates with proof length: if D(T) = 1 + epsilon, then the shortest proof of T has length roughly 1/epsilon. Test: for 1000 theorems in Lean 4's Mathlib, estimate D(T) by Monte Carlo sampling of proof search trees, and correlate with actual proof length. Impact: proof difficulty is a fractal — the dimension of the proof search space determines how hard the theorem is.",
     "domain_bridges": [],
     "domains": [
@@ -4675,7 +4675,7 @@
     "proof_strategy": "Define the proof search tree for a theorem T: nodes are proof states, edges are inference rule applications, and leaves are states where T is proved or a contradiction is reached. Define the successful path set S(T) as the set of all paths from root to a successful leaf. Define D(T) = dim_H(S(T)) as the Hausdorff dimension. Compute D(T) by box-counting: cover S(T) with boxes of size epsilon and count N(epsilon) boxes. Then D(T) = lim_{epsilon -> 0} log(N(epsilon))/log(1/epsilon). For a balanced binary tree of depth d with 2^d leaves, D = log(2)/log(2) = 1. For a sparse tree with branching factor b < 2, D = log(b)/log(2) < 1. Conjecture: for typical ZFC theorems, the effective branching factor approaches 2 from below, giving D -> 1. Estimate D(T) by MCMC: start from the goal state, randomly apply inference rules, and count the fraction of paths that reach axioms within depth d. D(T) = log(fraction * branching_factor) / log(2). Test: compute for 1000 Mathlib theorems.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-18T06:02:41.344792+00:00",
     "title": "Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
   },
