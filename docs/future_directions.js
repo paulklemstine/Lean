@@ -31,7 +31,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Tropical Cryptocurrency: Mining on the Min-Plus Semiring"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b596d3d1",
     "description": "Two quantum particles are entangled if measuring one instantly affects the other. But entanglement is also a topological property: if you represent the state of two qubits as a curve in R^3, entanglement IS the linking number. Conjecture: For any pure state of two qubits |psi> in C^2 tensor C^2, the concurrence C(psi) = 2|alpha*delta - beta*gamma| (where psi = alpha|00> + beta|01> + gamma|10> + delta|11>) equals the absolute value of the linking number of two curves derived from the Hopf fibration applied to psi. Specifically, map psi to S^7 via normalization, then project to S^4 via the Hopf map, and the preimages of two points in S^4 are linked circles in S^7 whose linking number equals the concurrence. This means: entanglement is MEASURED by topology, and maximally entangled states correspond to the Hopf link (linking number 1). Test: for 1000 random two-qubit states, compute the concurrence and the linking number of the Hopf preimages, and verify they are equal. Prove the equality for the Bell states. Impact: quantum entanglement is not mysterious \u2014 it is the linking number of the Hopf fibration. Two particles are entangled if and only if their Hopf preimages are linked.",
     "domains": [
       "Novelty",
@@ -41,7 +41,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-18T06:56:07.225808+00:00",
     "title": "Quantum Entanglement as Algebraic Topology: The Linking Number Is Entanglement"
   },
@@ -1737,7 +1737,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Cyclic Sieving for Staircase Plane Partitions via Crystals and Electrical Networks"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "26ad8b0e",
     "description": "Investigate the ArXiv paper 'Strongly complete sets and a conjecture of Erd\u0151s' and formalize its key results. Abstract: A set $A\\subseteq\\mathbb{N}$ is called $\\textit{complete}$ if every sufficiently large integer can be written as a sum of distinct elements of $A$. It is $\\textit{strongly complete}$ if it remains complete after one deletes finitely many elements from it. We show that $A\\subseteq\\mathbb{N}$ is strongly complete whenever \\[ \\big|A\\cap(2^k,2^{k+1}]\\big|\\ge6 \\] for every sufficiently large $k\\in\\mathbb{N}$, and \\[ \\sum_{a\\in A}\\|a\u03b8\\|=\\infty, \\quad\\forall\u03b8\\in\\mathbb{R}\\setminus\\mathbb{Z}. \\] In particular, this resolves a 1961 conjecture of Erd\u0151s. The proof builds on previous work of Bergelson and Simmons. Our approach also allows us to establish a more general strong-completeness criterion with suitable ordered blocks in place of dyadic intervals.",
     "domains": [
       "Pythagorean",
@@ -1747,7 +1747,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14071v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T15:35:00.343163+00:00",
     "title": "ArXiv paper: Strongly complete sets and a conjecture of Erd\u0151s"
   },
@@ -3022,7 +3022,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem With"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "154045db",
     "description": "A jigsaw puzzle has N pieces, each with 4 edges. The 'signature' of a piece is the tuple (top, right, bottom, left) of edge types (flat, tab, blank). Two pieces fit together if their adjacent edges are complementary (tab meets blank). Conjecture: Solving a jigsaw puzzle is NP-complete. The reduction: given a 3-SAT formula with n variables and m clauses, construct a jigsaw puzzle with N = 2n + m + 2 pieces where the only valid assembly corresponds to a satisfying assignment. Variable pieces: each variable x_i has two pieces (TRUE and FALSE), one with a tab and one with a blank on the assignment edge. Only one can be placed (mutual exclusion via complementary edges). Clause pieces: each clause C_j is a piece that has three input edges (one per literal) and one output edge. The piece fits only if at least one input edge is connected to a TRUE literal piece. The top-left corner and bottom-right corner enforce the boundary. Test: construct the reduction explicitly for a small 3-SAT instance (e.g., (x1 OR x2 OR NOT x3) AND (NOT x1 OR x3)) and verify the puzzle has a solution iff the formula is satisfiable. Impact: jigsaw puzzles are NP-complete, so the satisfying snap you feel when completing a puzzle is literally the same as solving a hard computational problem.",
     "domains": [
       "Novelty",
@@ -3032,7 +3032,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.77,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-18T09:04:45.744241+00:00",
     "title": "The Mathematics of Jigsaw Puzzles: NP-Completeness and Topology"
   },
@@ -3049,21 +3049,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-17T18:03:33.034163+00:00",
     "title": "Close Proofs: Holographic Primes: The Prime Number AdS/CFT Correspondence"
-  },
-  {
-    "consumed_by_exp_id": "a7676cc9",
-    "description": "Infinite chess is chess on an infinite board. It is known that there are positions where White can force checkmate but only in omega (the first infinite ordinal) moves. Conjecture: There exists a position on the infinite chess board where White can force checkmate in exactly omega^omega moves, but not in fewer. More precisely, define the game value v(P) of a position P as the smallest ordinal alpha such that White can force checkmate in at most alpha moves. The known results give positions with v(P) = omega. The conjecture is that v(P) can be arbitrarily large below omega^omega. The key construction: create a position where White must first solve a 'puzzle' that takes omega moves, and then another puzzle that takes omega moves for each of omega starting positions, giving omega^2 total moves. Iterating, one can reach omega^n for any n, and omega^omega by a diagonal argument. Test: construct explicit positions with game values omega, omega^2, omega^3, and omega^omega on the infinite board. Verify by computation that no strategy achieves checkmate in fewer moves. Impact: chess on an infinite board has transfinite game values \u2014 the complexity of checkmate goes beyond the finite ordinals into the transfinite.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0284",
-    "priority_score": 0.76,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T07:28:26.518814+00:00",
-    "title": "Infinite Chess: Checkmate in Omega Moves"
   },
   {
     "consumed_by_exp_id": "",
@@ -3649,6 +3634,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-18T10:21:59.947911+00:00",
     "title": "The present development settles the algebraic core: exact period classifies all "
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## What is formalized\n\n`Core.lean` gives a self-contained ordinal analysis of explicit countably branching winning game trees. It constructs:\n\n- `omegaGame`, with value exactly `\u03c9`;\n- `opowGame n`, with value exactly `\u03c9 ^ n`, including explicit `\u03c9\u00b2` and `\u03c9\u00b3` witnesses;\n- `omegaOmegaGame`, with value exactly `\u03c9 ^ \u03c9`.\n\nSequential composition is represented by `graft`, whose value is proved to be ordinal addition in the correct order. Iterated composition and countable delaying choices then yield the power hierarchy. The file also proves strict growth, domination of every finite level by the diagonal game, and exact lower bounds via `ForcesWithin`: no ordinal smaller than the computed value is a sufficient budget.\n\n## Scope limitation\n\nThese are abstract game trees modeling the timing mechanism behind infinite-chess constructions, not legal configurations of orthodox pieces on `\u2124 \u00d7 \u2124`. Consequently, the work proves the ordinal game-tree construction but does **not** prove that the trees embed into legal infinite chess positions. No finite computation can establish the transfinite universal lower bounds; those are instead proved symbolically in Lean. This is why a separate computational-evidence artifact was not produced.\n\n## Next formal steps\n\n1. Define full infinite-chess positions: finite piece support on `\u2124 \u00d7 \u2124`, legal sliding-piece paths, check, legal turns, checkmate, and promotion rules.\n2. Define alternating strategy trees and prove that their rank agrees with the minimax game-value recursion, including White infima and Black suprema.\n3. Build a reusable gadget interface with ports, isolation invariants, and a simulation theorem from an abstract `Game` into legal board play.\n4. Realize `step`, countable Black choice, and `graft` as chess gadgets. The crucial obligation is a no-interference theorem ensuring distant copies cannot be bypassed by long-range pieces.\n5. Compose those simulations to obtain actual board positions of values `\u03c9`, `\u03c9\u00b2`, and `\u03c9\u00b3`.\n6. For `\u03c9 ^ \u03c9`, prove that one locally finite diagonal board can contain all finite-level gadgets while preserving finite initial support if the chosen chess convention requires it. This is the main gap between the present ordinal theorem and the requested chess-position conjecture.\n7. Extend the abstract datatype with genuine White-choice nodes and prove general minimax composition laws, rather than using only forced White continuations.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0305",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "a7676cc9",
+    "status": "available",
+    "timestamp": "2026-07-18T10:22:07.462514+00:00",
+    "title": "`Core.lean` gives a self-contained ordinal analysis of explicit countably branch"
   },
   {
     "consumed_by_exp_id": "",

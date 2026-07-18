@@ -1259,6 +1259,11 @@
         function resize() {
             W = canvas.width = canvas.offsetWidth;
             H = canvas.height = canvas.offsetHeight;
+            if (typeof bgCanvas !== 'undefined') {
+                bgCanvas.width = W;
+                bgCanvas.height = H;
+                bgNeedsUpdate = true;
+            }
         }
 
         function worldToScreen(wx, wy) {
@@ -1362,16 +1367,13 @@
                     if (shimmerPhase > 0.9) twinkle = 1.0;
                 }
                 const alpha = s.brightness * twinkle;
-                ctx.beginPath();
-                ctx.arc(sp.x, sp.y, s.r * camera.zoom, 0, Math.PI * 2);
+                const sr = s.r * camera.zoom;
                 ctx.fillStyle = isLightMode ? `rgba(50, 80, 150, ${alpha * 0.3})` : `rgba(200, 200, 255, ${alpha})`;
-                ctx.fill();
+                ctx.fillRect(sp.x - sr, sp.y - sr, sr * 2, sr * 2);
                 // Lens flare for bright large stars
                 if (s.r > 1.0 && alpha > 0.6) {
-                    ctx.beginPath();
-                    ctx.arc(sp.x, sp.y, s.r * camera.zoom * 3, 0, Math.PI * 2);
                     ctx.fillStyle = isLightMode ? `rgba(50, 80, 150, ${alpha * 0.05})` : `rgba(200, 200, 255, ${alpha * 0.1})`;
-                    ctx.fill();
+                    ctx.fillRect(sp.x - sr * 3, sp.y - sr * 3, sr * 6, sr * 6);
                 }
             });
 
