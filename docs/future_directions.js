@@ -3022,21 +3022,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Improved constant in Erd\u0151s sumset avoidance for dense subsets"
   },
   {
-    "consumed_by_exp_id": "fc5e97aa",
-    "description": "Every mathematical proof is a directed acyclic graph (DAG): nodes are statements, edges are implications, and the acyclicity comes from the fact that you can't prove A from B and B from A without a circular argument (which is not a valid proof). Conjecture: The DAG of all mathematical proofs has a scale-free structure: the in-degree distribution follows a power law P(k) ~ k^{-gamma} with gamma \u2248 2.5. This means most theorems are proved from a small number of foundational results (the 'hubs'), and there are exponentially many theorems that depend on these hubs. The top 10 hub theorems in mathematics are: (1) Zorn's Lemma, (2) The Intermediate Value Theorem, (3) The Fundamental Theorem of Calculus, (4) The Sylow Theorems, (5) The Baire Category Theorem, (6) Hahn-Banach Theorem, (7) Urysohn's Lemma, (8) The Pigeonhole Principle, (9) Induction, (10) The Law of Excluded Middle. Conjecture: removing any of the top 10 hubs disconnects the proof DAG into at least 2 large components, each containing more than 10% of all theorems. This means mathematics is fragile: removing one foundational theorem makes many other theorems unprovable. Test: construct the proof DAG from Lean 4's Mathlib (all proofs and their dependencies), compute the in-degree distribution, and verify the power law. Impact: mathematics is a scale-free network, and its most important theorems are its most connected nodes \u2014 the hubs that hold the entire structure together.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0309",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T10:55:04.572187+00:00",
-    "title": "Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Cycle dcd7a4b2 (Q=0.750) proved 0 theorems in Tropical but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION \u2014 simulta",
     "domains": [
@@ -3107,6 +3092,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-17T18:03:33.034163+00:00",
     "title": "Close Proofs: Holographic Primes: The Prime Number AdS/CFT Correspondence"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Bach's chorales are the gold standard of Western harmony. But what if we could MEASURE the harmonic complexity using topology? Encode each chord as a point in a 12-dimensional space (one dimension per pitch class). A sequence of chords traces a path in this space. Compute the persistent homology of the point cloud of all chords in a Bach chorale. Conjecture: Bach's chorales have persistent H_1 (1-dimensional cycles) that survive across a wide range of scales, indicating circular harmonic motion (the circle of fifths). In contrast, random chord sequences have H_1 bars that die quickly. The longest H_1 bar in a Bach chorale corresponds to the circle of fifths \u2014 the fundamental harmonic cycle. Pop music has shorter H_1 bars (less complex harmonic cycles). Atonal music has no persistent H_1 (no harmonic cycles). Test: compute persistent homology barcodes for 100 Bach chorales, 100 pop songs, and 100 atonal pieces. Verify: Bach has H_1 bars of length > 0.5 (in normalized pitch-class space), pop has bars of length 0.2-0.5, atonal has no persistent H_1. Impact: the topology of music IS its harmonic structure. Bach's genius is literally topological \u2014 his music has longer harmonic cycles.",
+    "domains": [
+      "Novelty",
+      "Geometry"
+    ],
+    "id": "fd_0334",
+    "priority_score": 0.76,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-18T15:00:46.000861+00:00",
+    "title": "Persistent Homology of Musical Harmony: The Topology of Bach"
   },
   {
     "consumed_by_exp_id": "",
@@ -3949,6 +3949,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## 1. Stable exponents under dependency extraction\n\n**Conjecture.** For a fixed, versioned mathematical corpus, the tail exponent of theorem reuse remains within a narrow interval when dependencies are measured under three distinct policies: direct constant references, transitive references, and references after collapsing definitional expansions.\n\nThe key insight is that a scale-free claim is scientifically meaningful only if it is stable under reasonable choices of graph extraction. **Why now?** The structural results separate universal consequences of acyclicity from corpus-dependent statistics, making extraction sensitivity the first falsifiable obstacle.\n\n## 2. Width\u2013depth growth across mathematical domains\n\n**Conjecture.** In each sufficiently large subject area, the minimum number of incomparable statements forced by bounded dependency depth grows superlinearly in the logarithm of corpus size.\n\nThe key insight is that topological depth controls antichain width through rank collisions, so domain growth can be studied without assuming a power law. **Why now?** A rigorous finite width\u2013depth mechanism is available, and domain-level rank histograms provide a direct empirical test.\n\n## 3. Robustness is governed by redundancy, not degree alone\n\n**Conjecture.** After controlling for out-degree, the number of internally vertex-disjoint weak dependency paths through a theorem predicts deletion damage substantially better than degree centrality.\n\nThe key insight is that dense acyclic order networks can have high-degree vertices yet remain connected after every single deletion; alternate routes, rather than degree alone, determine fragility. **Why now?** The robust total-order family supplies an explicit null model against which articulation-based claims can be compared.\n\n## 4. No universal historical hub list\n\n**Conjecture.** The identity and ordering of the ten most reused named theorems vary substantially across algebra, analysis, topology, and combinatorics, even after normalizing for domain size and theorem age.\n\nThe key insight is that global prominence may be an aggregation artifact produced by mixing dependency networks with different vocabularies and foundational conventions. **Why now?** The failure of acyclicity to enforce hubs makes stratified, falsifiable ranking comparisons necessary.\n\n## 5. Rank-conditioned heavy tails\n\n**Conjecture.** If a heavy-tailed reuse law exists, its exponent depends systematically on topological rank: early foundational layers have a heavier out-degree tail than late layers.\n\nThe key insight is that a single global exponent discards the hierarchy that every finite acyclic dependency network necessarily possesses. **Why now?** Canonical ancestor ranks provide a principled stratification for testing whether the apparent tail is structural or a mixture of heterogeneous layers.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0335",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "fc5e97aa",
+    "status": "available",
+    "timestamp": "2026-07-18T15:01:25.646049+00:00",
+    "title": "**Conjecture.** For a fixed, versioned mathematical corpus, the tail exponent of"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle d1663b23 (Q=0.700) proved 0 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'A minimal modularity lifting theorem for Siegel modular forms' and formalize its key results. Abstract: We prove a minimal modularity lifting theorem (in the spirit of Gen",
     "domains": [
       "Applications"
@@ -4017,5 +4032,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-18T00:42:35.429117+00:00",
     "title": "Close Proofs: The Sound of Pi: Musical Structure in Transcendental Constants"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Category theory studies objects and morphisms between them. A joke has a setup (an object) and a punchline (a morphism that subverts expectations). Define the category Joke where objects are setups and morphisms are punchlines. A joke J: S -> P is a morphism from setup S to punchline P that factors through an unexpected category. The humor of a joke is measured by its 'surprise': the distance between the expected punchline (the limit of the setup category) and the actual punchline. Conjecture: The funniest jokes are those where the setup category has a colimit that is far from the limit. Formally, if S is a setup with expected resolution lim(S) and the actual punchline P is a colimit colim(S'), then the humor H(J) = d(lim(S), colim(S')), where d is a metric on the category of punchlines. Puns have H close to 0 (the punchline is near the expected resolution). Absurdist humor has H large (the punchline is in a completely different category). The universal property of jokes: a joke J is universal if for any other joke J' with the same setup, there is a unique natural transformation J => J'. The funniest jokes are universal \u2014 they are the terminal objects in the category of jokes with a given setup. Test: formalize 100 jokes as category-theoretic objects and compute H(J) for each. Correlate with human funniness ratings. Impact: humor is a colimit. The funnier the joke, the further the punchline is from the expected limit of the setup.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0333",
+    "priority_score": 0.62,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-18T15:00:45.963440+00:00",
+    "title": "The Category Theory of Jokes: Universal Properties of Humor"
   }
 ];

@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-18T14:44:30.155060+00:00",
+  "last_updated": "2026-07-18T15:01:35.537823+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -26361,6 +26361,7 @@
       "outcome_quality": 0.63,
       "phase": "A_only",
       "phase_a_prompt_version": "v24",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v24",
@@ -26475,6 +26476,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-18T14:44:30.030892+00:00",
       "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 8,
+      "domain": "Bridges",
+      "duration_seconds": 1029.1807136535645,
+      "end_time": 1784386864.2478166,
+      "files_integrated": 9,
+      "job_id": "fc5e97aa",
+      "outcome_quality": 0.76,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19b",
+      "phase_a_quality_score": 0.76,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19b",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.71,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.88,
+        "composite": 0.5695,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.72,
+        "novelty": 0.67,
+        "proof_depth": 0.76,
+        "usefulness": 0.82
+      },
+      "quality_score": 0.76,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1784385835.067103,
+      "strategy_count": 0,
+      "theorem_count": 0,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-18T15:01:35.498166+00:00",
+      "title": "Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
     }
   ]
 }

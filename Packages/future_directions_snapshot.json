@@ -4179,26 +4179,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "fc5e97aa",
-    "description": "Every mathematical proof is a directed acyclic graph (DAG): nodes are statements, edges are implications, and the acyclicity comes from the fact that you can't prove A from B and B from A without a circular argument (which is not a valid proof). Conjecture: The DAG of all mathematical proofs has a scale-free structure: the in-degree distribution follows a power law P(k) ~ k^{-gamma} with gamma ≈ 2.5. This means most theorems are proved from a small number of foundational results (the 'hubs'), and there are exponentially many theorems that depend on these hubs. The top 10 hub theorems in mathematics are: (1) Zorn's Lemma, (2) The Intermediate Value Theorem, (3) The Fundamental Theorem of Calculus, (4) The Sylow Theorems, (5) The Baire Category Theorem, (6) Hahn-Banach Theorem, (7) Urysohn's Lemma, (8) The Pigeonhole Principle, (9) Induction, (10) The Law of Excluded Middle. Conjecture: removing any of the top 10 hubs disconnects the proof DAG into at least 2 large components, each containing more than 10% of all theorems. This means mathematics is fragile: removing one foundational theorem makes many other theorems unprovable. Test: construct the proof DAG from Lean 4's Mathlib (all proofs and their dependencies), compute the in-degree distribution, and verify the power law. Impact: mathematics is a scale-free network, and its most important theorems are its most connected nodes — the hubs that hold the entire structure together.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0309",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Construct the proof DAG: nodes = theorems in Mathlib, edges = (A, B) if theorem A is used in the proof of theorem B. Compute in-degree distribution P(k) = #{theorems with k dependents}/N. Fit power law P(k) ~ k^{-gamma} using maximum likelihood estimation (Clauset-Shalizi-Newman method). Compute hub scores: theorems with highest in-degree are the hubs. Identify the top 10 hubs by in-degree. Test robustness: for each of the top 10 hubs, remove the hub and all its outgoing edges, and compute the size of the largest connected component. If the DAG is scale-free with gamma ≈ 2.5, removing a hub should fragment the DAG into components of size proportional to N^{1/(gamma-1)}. Compute: for gamma = 2.5, component sizes after hub removal are ~ N^{0.67} ≈ N^{2/3}. Test: build the DAG from Mathlib's dependency graph and verify.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T10:55:04.572187+00:00",
-    "title": "Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Cycle dcd7a4b2 (Q=0.750) proved 0 theorems in Tropical but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION — simulta",
     "domain_bridges": [],
@@ -4237,7 +4217,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "950806e8",
     "description": "A dataset with missing values is a sheaf on a poset: the poset is the set of feature subsets (ordered by inclusion), and the sheaf assigns to each feature subset the set of complete observations on those features. The missing data creates 'holes' in the sheaf: H^0 measures the global sections (complete observations) and H^1 measures the obstructions to patching local observations into global ones. Conjecture: For a dataset with missing rate r, the dimension of H^1 is approximately r * n * (r * log(1/r)), where n is the number of features. This means: the 'amount of missing information' grows super-linearly with the missing rate, and imputation is fundamentally harder than interpolation because H^1 > 0 means there is no consistent way to fill in the missing data. The sheaf-theoretic imputation: fill in missing values by finding the section s in H^0 that minimizes the coboundary delta(s) in H^1. This is the maximum likelihood imputation under the assumption that the data is locally consistent. Test: generate synthetic datasets with known ground truth, introduce missing values at rate r, compute H^0 and H^1 of the data sheaf, and verify dim(H^1) ~ r*n*r*log(1/r). Compare sheaf-theoretic imputation with standard methods (mean, KNN, MICE). Impact: missing data is a topological problem, and the sheaf cohomology tells you exactly how much information is lost and whether it can be recovered.",
     "domain_bridges": [],
     "domains": [
@@ -4250,7 +4230,7 @@
     "proof_strategy": "Define the data sheaf: for a dataset with n features and m observations, the poset P is the set of feature subsets S subset {1,...,n} ordered by inclusion. The sheaf F assigns to each S the set of observations that have all features in S present (complete rows restricted to columns in S). The restriction maps F(S) -> F(T) for T subset S are projections that drop columns in S\\T. Define H^0(F) = ker(delta_0) = global sections (observations complete on ALL features). Define H^1(F) = ker(delta_1)/im(delta_0) = obstructions to patching local observations into global ones. Compute delta_0 and delta_1 using the Cech complex. Estimate dim(H^1): for missing rate r and n features, each observation is missing r*n features on average. The expected number of complete observations is m*(1-r)^n (each feature present with probability 1-r). The obstruction dim(H^1) grows with the number of incompatible local patches. Each missing feature creates a potential obstruction. Estimated dim(H^1) ~ m * r * (1-(1-r)^n) ~ m * r * n * r for small r. Test: generate data from a known multivariate normal, introduce MCAR missing values at rate r, compute H^0 and H^1, fit dim(H^1) ~ C * r * n * r * log(1/r).",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-18T12:31:56.960691+00:00",
     "title": "Sheaf Cohomology of Data: The Topology of Missing Information"
   },
@@ -4292,6 +4272,26 @@
     "status": "available",
     "timestamp": "2026-07-17T18:03:33.034163+00:00",
     "title": "Close Proofs: Holographic Primes: The Prime Number AdS/CFT Correspondence"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Bach's chorales are the gold standard of Western harmony. But what if we could MEASURE the harmonic complexity using topology? Encode each chord as a point in a 12-dimensional space (one dimension per pitch class). A sequence of chords traces a path in this space. Compute the persistent homology of the point cloud of all chords in a Bach chorale. Conjecture: Bach's chorales have persistent H_1 (1-dimensional cycles) that survive across a wide range of scales, indicating circular harmonic motion (the circle of fifths). In contrast, random chord sequences have H_1 bars that die quickly. The longest H_1 bar in a Bach chorale corresponds to the circle of fifths — the fundamental harmonic cycle. Pop music has shorter H_1 bars (less complex harmonic cycles). Atonal music has no persistent H_1 (no harmonic cycles). Test: compute persistent homology barcodes for 100 Bach chorales, 100 pop songs, and 100 atonal pieces. Verify: Bach has H_1 bars of length > 0.5 (in normalized pitch-class space), pop has bars of length 0.2-0.5, atonal has no persistent H_1. Impact: the topology of music IS its harmonic structure. Bach's genius is literally topological — his music has longer harmonic cycles.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Geometry"
+    ],
+    "id": "fd_0334",
+    "lineage_refs": [],
+    "priority_score": 0.76,
+    "proof_strategy": "Encode each chord as a binary vector in {0,1}^12 (pitch class set). Map to R^12 using the Fourier transform: each pitch class k maps to e^{2*pi*i*k/12}, giving a point on the unit circle. A chord maps to the sum of its pitch class vectors, normalized. Compute persistent homology of the point cloud of all chords in a piece using Vietoris-Rips complexes. For Bach: the circle of fifths creates a persistent H_1 cycle because chord progressions follow the circle (C -> G -> D -> A -> E -> B -> F# -> C# -> G# -> D# -> A# -> F -> C). This cycle survives across multiple scales. For pop: the cycle is shorter (typically I -> V -> vi -> IV -> I, a 4-chord loop). For atonal: no persistent cycle. Compute: Rips filtration for epsilon = 0.1, 0.2, ..., 1.0. Measure H_1 bar lengths. Test: verify Bach H_1 bars > 0.5, pop H_1 bars 0.2-0.5, atonal H_1 bars < 0.2.",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-18T15:00:46.000861+00:00",
+    "title": "Persistent Homology of Musical Harmony: The Topology of Bach"
   },
   {
     "ambition_level": "extension",
@@ -5416,6 +5416,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## 1. Stable exponents under dependency extraction\n\n**Conjecture.** For a fixed, versioned mathematical corpus, the tail exponent of theorem reuse remains within a narrow interval when dependencies are measured under three distinct policies: direct constant references, transitive references, and references after collapsing definitional expansions.\n\nThe key insight is that a scale-free claim is scientifically meaningful only if it is stable under reasonable choices of graph extraction. **Why now?** The structural results separate universal consequences of acyclicity from corpus-dependent statistics, making extraction sensitivity the first falsifiable obstacle.\n\n## 2. Width–depth growth across mathematical domains\n\n**Conjecture.** In each sufficiently large subject area, the minimum number of incomparable statements forced by bounded dependency depth grows superlinearly in the logarithm of corpus size.\n\nThe key insight is that topological depth controls antichain width through rank collisions, so domain growth can be studied without assuming a power law. **Why now?** A rigorous finite width–depth mechanism is available, and domain-level rank histograms provide a direct empirical test.\n\n## 3. Robustness is governed by redundancy, not degree alone\n\n**Conjecture.** After controlling for out-degree, the number of internally vertex-disjoint weak dependency paths through a theorem predicts deletion damage substantially better than degree centrality.\n\nThe key insight is that dense acyclic order networks can have high-degree vertices yet remain connected after every single deletion; alternate routes, rather than degree alone, determine fragility. **Why now?** The robust total-order family supplies an explicit null model against which articulation-based claims can be compared.\n\n## 4. No universal historical hub list\n\n**Conjecture.** The identity and ordering of the ten most reused named theorems vary substantially across algebra, analysis, topology, and combinatorics, even after normalizing for domain size and theorem age.\n\nThe key insight is that global prominence may be an aggregation artifact produced by mixing dependency networks with different vocabularies and foundational conventions. **Why now?** The failure of acyclicity to enforce hubs makes stratified, falsifiable ranking comparisons necessary.\n\n## 5. Rank-conditioned heavy tails\n\n**Conjecture.** If a heavy-tailed reuse law exists, its exponent depends systematically on topological rank: early foundational layers have a heavier out-degree tail than late layers.\n\nThe key insight is that a single global exponent discards the hierarchy that every finite acyclic dependency network necessarily possesses. **Why now?** Canonical ancestor ranks provide a principled stratification for testing whether the apparent tail is structural or a mixture of heterogeneous layers.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0335",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "fc5e97aa",
+    "status": "available",
+    "timestamp": "2026-07-18T15:01:25.646049+00:00",
+    "title": "**Conjecture.** For a fixed, versioned mathematical corpus, the tail exponent of"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Cycle d1663b23 (Q=0.700) proved 0 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'A minimal modularity lifting theorem for Siegel modular forms' and formalize its key results. Abstract: We prove a minimal modularity lifting theorem (in the spirit of Gen",
     "domain_bridges": [],
     "domains": [
@@ -5507,5 +5527,25 @@
     "status": "available",
     "timestamp": "2026-07-18T00:42:35.429117+00:00",
     "title": "Close Proofs: The Sound of Pi: Musical Structure in Transcendental Constants"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Category theory studies objects and morphisms between them. A joke has a setup (an object) and a punchline (a morphism that subverts expectations). Define the category Joke where objects are setups and morphisms are punchlines. A joke J: S -> P is a morphism from setup S to punchline P that factors through an unexpected category. The humor of a joke is measured by its 'surprise': the distance between the expected punchline (the limit of the setup category) and the actual punchline. Conjecture: The funniest jokes are those where the setup category has a colimit that is far from the limit. Formally, if S is a setup with expected resolution lim(S) and the actual punchline P is a colimit colim(S'), then the humor H(J) = d(lim(S), colim(S')), where d is a metric on the category of punchlines. Puns have H close to 0 (the punchline is near the expected resolution). Absurdist humor has H large (the punchline is in a completely different category). The universal property of jokes: a joke J is universal if for any other joke J' with the same setup, there is a unique natural transformation J => J'. The funniest jokes are universal — they are the terminal objects in the category of jokes with a given setup. Test: formalize 100 jokes as category-theoretic objects and compute H(J) for each. Correlate with human funniness ratings. Impact: humor is a colimit. The funnier the joke, the further the punchline is from the expected limit of the setup.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0333",
+    "lineage_refs": [],
+    "priority_score": 0.62,
+    "proof_strategy": "Define the category Joke: objects are setups (functors from a small category to the category of expectations), morphisms are punchlines (natural transformations between setup functors). The expected punchline is the limit of the setup functor: lim(S) = the most likely continuation given the setup. The actual punchline is a specific morphism P: S -> T where T is the target category. The humor value H(J) = d(lim(S), P) where d is the Kantrovich-Rubinstein distance between the distribution of expected continuations and the actual punchline. For puns: S = 'Why did the chicken cross the road?', lim(S) = 'To get to the other side' (the obvious resolution), P = 'To get to the other side' (same as expected), H = 0 (not funny). For absurdist humor: S = 'Why did the chicken cross the road?', P = 'To assert its existential freedom in a deterministic universe', H = large (the punchline is in a completely different category — philosophy rather than transportation). Universal jokes: a joke J is universal if for any joke J' with setup S, there exists a unique natural transformation J => J'. This means J subverts the setup in the most extreme way possible. Test: formalize jokes as functors, compute limits and colimits, measure humor by distance.",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-18T15:00:45.963440+00:00",
+    "title": "The Category Theory of Jokes: Universal Properties of Humor"
   }
 ]
