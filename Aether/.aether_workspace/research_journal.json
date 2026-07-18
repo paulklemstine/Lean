@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "ef88d58c",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nThis cycle deepened the μ-extension of Matsuno's formula by building a\n**cross-domain connector**: the file\n`Catalog/Bridges/MatsunoArithmeticPolynomialBridge.lean` shows that the",
-      "quality_score": 0.83,
-      "sorry_count": 6,
-      "theorem_count": 41,
-      "timestamp": "2026-07-14T20:28:08",
-      "title": "Deepening: Extension of Matsuno's Formula for Non-Vanishing μ-Invariants"
-    },
-    {
       "cycle_id": "0725f80e",
       "domain": "Novelty",
       "key_insight": "# Future Directions — The Möbius discriminant, deepened\n\nThis cycle isolated the scalar **Möbius discriminant** `Δ = γβ − αδ` of a\nfirst-order multiplicative recurrence `(α n + β)·a(n+1) = (γ n + δ)·a",
@@ -2501,6 +2491,16 @@
       "theorem_count": 8,
       "timestamp": "2026-07-18T13:54:59",
       "title": "Fractal Number Theory: Hausdorff Dimension of Prime Distributions"
+    },
+    {
+      "cycle_id": "fb82936b",
+      "domain": "Physics",
+      "key_insight": "# Future Directions\n\n- Replace the parity-normalized action model by an explicit cubical set whose vertices are recipes, edges are elementary substitutions, and higher cubes encode commuting independe",
+      "quality_score": 0.63,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-07-18T14:44:03",
+      "title": "Homotopy Type Theory of Cooking Recipes: Paths Between Dishes"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-18T13:54:59",
+  "last_updated": "2026-07-18T14:44:03",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "7473e6ed",
-        "quality": 0.82,
-        "theorems": 14,
-        "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
-      },
-      {
         "cycle_id": "22a6ce83",
         "quality": 0.91,
         "theorems": 17,
@@ -3761,6 +3755,12 @@
         "quality": 0.56,
         "theorems": 10,
         "title": "The Prime Number Crossword: Filling the Gaps in the Primes"
+      },
+      {
+        "cycle_id": "fb82936b",
+        "quality": 0.63,
+        "theorems": 10,
+        "title": "Homotopy Type Theory of Cooking Recipes: Paths Between Dishes"
       }
     ],
     "Probability": [
