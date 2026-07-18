@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "33954867",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: from `E₄² = E₈` to sharper Eisenstein arithmetic\n\nThis cycle formalized the **arithmetic residue** of the identity `E₄² = E₈` as a\n*connector* between modular forms and elementary",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 17,
-      "timestamp": "2026-07-14T05:59:46",
-      "title": "This cycle isolated and proved the arithmetic residue of the identity"
-    },
-    {
       "cycle_id": "797ab793",
       "domain": "Applications",
       "key_insight": "# Future Directions: the functorial excess of the ℤ₂-coindex under suspension\n\nThis cycle deepened the constructive lower-bound theory of the ℤ₂-coindex of combinatorial\nspheres from an *existence* st",
@@ -2501,6 +2491,16 @@
       "theorem_count": 7,
       "timestamp": "2026-07-18T00:59:51",
       "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk"
+    },
+    {
+      "cycle_id": "406a341d",
+      "domain": "Pythagorean",
+      "key_insight": "# Future directions\n\n## What the formal development establishes\n\nThe original proposal mixes two different notions. The files now separate them.\n\n1. In `Pythagorean/EscherStaircases.lean`, an ascendin",
+      "quality_score": 0.63,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-07-18T01:16:35",
+      "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-18T00:59:51",
+  "last_updated": "2026-07-18T01:16:35",
   "open_questions": [
     {
       "context": "",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "cd5a9d7d",
-        "quality": 0.82,
-        "theorems": 11,
-        "title": "The Ramsey Theory of DNA: Subsequence Avoidance in Genetic Codes"
-      },
-      {
         "cycle_id": "b4ccc3c5",
         "quality": 0.7,
         "theorems": 47,
@@ -3885,6 +3879,12 @@
         "quality": 0.67,
         "theorems": 20,
         "title": "ArXiv paper: From roots to paths: graphs simultaneously irregular with respect t"
+      },
+      {
+        "cycle_id": "406a341d",
+        "quality": 0.63,
+        "theorems": 10,
+        "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
       }
     ],
     "Shared": [

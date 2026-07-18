@@ -7,22 +7,19 @@ import Mathlib
 /-!
 # The standard part collapses an infinitesimal measure to a Dirac measure
 
-This file is the *classical shadow* companion to
-`Catalog/Geometry/QuantumSurreal/Basic.lean`.  There, amplitudes of a quantum surreal state live
-in the hyperreals `ℝ*` and the measurement rule is the standard part `Hyperreal.st : ℝ* → ℝ`; an
-infinitesimal branch becomes unobservable.  Here we prove the exact order-theoretic analogue for
-the finitely additive infinitesimal probability model of
-`Catalog/Novelty/InfinitesimalFiniteProbability.lean`.
+This is the *classical shadow* companion to the quantum-surreal state model.  There, amplitudes
+live in the hyperreals `ℝ*` and the measurement rule is the standard part
+`Hyperreal.st : ℝ* → ℝ`; an infinitesimal branch becomes unobservable.  Here we prove the exact
+order-theoretic analogue for a finitely additive infinitesimal probability model.
 
 That model uses the value ring `LexRat = ℚ × ℚ`, where `(a, b)` denotes `a + b·ε` with `ε` a
 positive infinitesimal.  The sample space `Option (Fin n)` has `n` "visible" atoms each of weight
 `ε` and one "reservoir" atom `none` of weight `1 - n·ε`, giving total mass `1`.
 
 The `LexRat` construction, its atom weights, event probability `prob`, `visiblePart`, the closed
-form `prob_eq_closed_form` and finite additivity `prob_union_disjoint` are **reproduced verbatim**
-from `Catalog/Novelty/InfinitesimalFiniteProbability.lean` (each catalog file imports only
-`Mathlib`, so shared objects are reproduced rather than cross-imported).  The new content is the
-*standard-part functional* and the collapse theorem.
+form `prob_eq_closed_form` and finite additivity `prob_union_disjoint` describe the underlying
+finite infinitesimal model.  The new content is the *standard-part functional* and the collapse
+theorem.
 
 ## New results
 
@@ -60,7 +57,7 @@ it annihilates infinitesimal probability while preserving normalization and addi
 -/
 
 /-- The value type of the infinitesimal probability model: a pair `(a, b)` read as `a + b·ε`.
-Reproduced from `Catalog/Novelty/InfinitesimalFiniteProbability.lean`. -/
+The first coordinate is the appreciable part and the second is infinitesimal. -/
 abbrev LexRat := ℚ × ℚ
 
 namespace LexRat
