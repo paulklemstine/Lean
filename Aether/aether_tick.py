@@ -831,7 +831,7 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                     "quality_score": phase_a_q,
                 }
                 # Dispatch Phase B
-                job = await extractor.dispatch_phase_b_async(job)
+                job = await extractor.dispatch_phase_b_async(job, max_inflight=max_inflight)
                 if job.status == "failed":
                     # Phase B dispatch failed — fall back to A_only integration
                     print(f"[Tick] Phase B dispatch failed, falling back to A_only: {job.error_message}")
@@ -1244,7 +1244,7 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
             if queued.job_id in extractor.inflight:
                 del extractor.inflight[queued.job_id]
             queued.project_id = project_id
-            queued.status = "dispatched"
+            queued.status = "B_dispatched" if getattr(queued, "phase", "") == "B" else "dispatched"
             queued.dispatch_time = time.time()
             extractor.inflight[project_id] = queued
             # Retry-queued dispatches skip the discover path, but the direction
@@ -1333,7 +1333,10 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
             injected = [d for d in local_fd._directions if d.status == "available" and getattr(d, "source", "") == "github_injection"]
             if injected:
                 for fd in injected:
-                    if extractor._count_inflight_dispatched() >= max_inflight:
+                    local_inflight = extractor._count_inflight_dispatched()
+                    server_running = await extractor.aristotle.get_active_jobs_count()
+                    current_inflight = max(local_inflight, server_running) if server_running >= 0 else local_inflight
+                    if current_inflight >= max_inflight:
                         print(f"[Tick] Reached max_inflight ({max_inflight}); leaving injected issue queued: {fd.title}")
                         break
                     print(f"[Tick] Dispatching injected issue: {fd.title}")

@@ -479,7 +479,7 @@ class KnowledgeExtractor:
         # (the Lean files are already there as inputs)
         return job
 
-    async def dispatch_phase_b_async(self, job: "ResearchJob") -> "ResearchJob":
+    async def dispatch_phase_b_async(self, job: "ResearchJob", max_inflight: int = 9) -> "ResearchJob":
         """Dispatch Phase B to Aristotle using the Phase B prompt.
 
         Builds a new Aristotle project with the Phase B prompt and submits
@@ -498,8 +498,21 @@ class KnowledgeExtractor:
             job.error_message = "Could not build Phase B project directory"
             return job
 
+        old_project_id = job.project_id
+
+        # If there is no capacity, queue Phase B instead of dispatching.
+        if self._count_inflight_dispatched() >= max_inflight:
+            print(f"[Dispatch-B] Queueing Phase B for {job.job_id[:8]}: at max_inflight ({self._count_inflight_dispatched()}/{max_inflight})")
+            job.status = "retry_queued"
+            job.retry_queued_time = time.time()
+            job.project_id = old_project_id
+            if old_project_id and old_project_id in self.inflight:
+                del self.inflight[old_project_id]
+            self.inflight[job.job_id] = job
+            self._save_inflight()
+            return job
+
         try:
-            old_project_id = job.project_id
             project_id = await self._dispatch_to_aristotle(job)
             if old_project_id and old_project_id in self.inflight:
                 del self.inflight[old_project_id]
@@ -512,9 +525,19 @@ class KnowledgeExtractor:
             self._save_inflight()
             print(f"[Dispatch-B] Aristotle project: {project_id} (Phase B for {phase_a_project_dir.name if phase_a_project_dir else '?'})")
         except Exception as e:
-            job.status = "failed"
-            job.error_message = f"Phase B dispatch failed: {e}"
-            print(f"[Dispatch-B] FAILED: {e}")
+            if self._is_queue_full_error(e):
+                print(f"[Dispatch-B] Aristotle queue full for {job.job_id[:8]}; queuing Phase B")
+                job.status = "retry_queued"
+                job.retry_queued_time = time.time()
+                job.project_id = old_project_id
+                if old_project_id and old_project_id in self.inflight:
+                    del self.inflight[old_project_id]
+                self.inflight[job.job_id] = job
+                self._save_inflight()
+            else:
+                job.status = "failed"
+                job.error_message = f"Phase B dispatch failed: {e}"
+                print(f"[Dispatch-B] FAILED: {e}")
         return job
 
     def _count_inflight_dispatched(self) -> int:
