@@ -233,7 +233,7 @@
         const NODE_RADIUS = 22;
         const MAX_VELOCITY = 250.0;        // Gentle cap scaled to large universe
         const BOUNCE = 1.0;              // Elastic — conserves momentum AND kinetic energy
-        const THRUST_DURATION = 0.5;     // Seconds of visual rocket flame after collision
+        const THRUST_DURATION = 3.0;     // Seconds of visual rocket flame after collision
 
         // ─── Domain-clustered layout ───
         const DOMAIN_ORDER = ['Algebra','Tropical','Geometry','Cryptography','Physics',
@@ -586,6 +586,10 @@
                         n.vx += (dx / dist) * force;
                         n.vy += (dy / dist) * force;
                         // Spawn explosion at boundary if deep penetration
+                        if (dist < circle.r) {
+                            n.thrustTime = time;
+                            n.thrustAngle = Math.atan2(dy, dx);
+                        }
                         if (dist < circle.r && explosions.length < MAX_EXPLOSIONS) {
                             const hitX = circle.cx + (dx / dist) * circle.r;
                             const hitY = circle.cy + (dy / dist) * circle.r;
@@ -752,15 +756,36 @@
                 if (n.thrustTime > 0) {
                     const thrustAge = time - n.thrustTime;
                     if (thrustAge < THRUST_DURATION) {
+                        n.thrustSpin = n.thrustSpin || ((Math.random() > 0.5 ? 1 : -1) * (15 + Math.random() * 10));
+                        n.thrustAngle += n.thrustSpin * 0.016; 
+                        
+                        const thrustForce = 150.0;
+                        n.vx += Math.cos(n.thrustAngle) * thrustForce * 0.016;
+                        n.vy += Math.sin(n.thrustAngle) * thrustForce * 0.016;
+
                         // Spawn flame particles (capped) — visual only, no velocity change
-                        if (flameParticles.length < MAX_FLAME_PARTICLES && Math.random() < 0.3) {
+                        if (flameParticles.length < MAX_FLAME_PARTICLES && Math.random() < 0.6) {
                             const spread = 0.4;
-                            const angle = n.thrustAngle + Math.PI + (Math.random() - 0.5) * spread;
+                            const r1Angle = n.thrustAngle + Math.PI/2;
+                            const r2Angle = n.thrustAngle - Math.PI/2;
+                            
+                            const angle1 = n.thrustAngle + Math.PI + (Math.random() - 0.5) * spread;
                             flameParticles.push({
-                                x: n.x - Math.cos(n.thrustAngle) * n.radius * 0.8,
-                                y: n.y - Math.sin(n.thrustAngle) * n.radius * 0.8,
-                                vx: Math.cos(angle) * (900 + Math.random() * 1800) + n.vx * 0.3,
-                                vy: Math.sin(angle) * (900 + Math.random() * 1800) + n.vy * 0.3,
+                                x: n.x + Math.cos(r1Angle) * n.radius * 0.8,
+                                y: n.y + Math.sin(r1Angle) * n.radius * 0.8,
+                                vx: Math.cos(angle1) * (900 + Math.random() * 1800) + n.vx * 0.3,
+                                vy: Math.sin(angle1) * (900 + Math.random() * 1800) + n.vy * 0.3,
+                                life: 0.15 + Math.random() * 0.25,
+                                hue: 20 + Math.random() * 30,
+                                size: 1 + Math.random() * 2.5
+                            });
+                            
+                            const angle2 = n.thrustAngle + Math.PI + (Math.random() - 0.5) * spread;
+                            flameParticles.push({
+                                x: n.x + Math.cos(r2Angle) * n.radius * 0.8,
+                                y: n.y + Math.sin(r2Angle) * n.radius * 0.8,
+                                vx: Math.cos(angle2) * (900 + Math.random() * 1800) + n.vx * 0.3,
+                                vy: Math.sin(angle2) * (900 + Math.random() * 1800) + n.vy * 0.3,
                                 life: 0.15 + Math.random() * 0.25,
                                 hue: 20 + Math.random() * 30,
                                 size: 1 + Math.random() * 2.5
@@ -768,6 +793,7 @@
                         }
                     } else {
                         n.thrustTime = 0;
+                        n.thrustSpin = 0;
                     }
                 }
 
