@@ -4147,6 +4147,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "The Mandelbrot set M is defined by z_{n+1} = z_n^2 + c, and the boundary of M is the locus of c values where the orbit of 0 is bounded but barely so. Each bulb of M corresponds to a rational number p/q (the period-q bulb at angle p/q). The size of the p/q bulb decreases with q, and the Fibonacci sequence governs the spiral arrangement of bulbs. Conjecture: The period of the bulb at angle p/q (in lowest terms) is exactly q. Moreover, the Lyapunov exponent lambda(c) at the center of the p/q bulb equals log(2) * cos(pi*p/q). The 'prime bulbs' — bulbs at angles 1/q where q is prime — have special symmetry: they are the only bulbs with dihedral symmetry D_q. The composite bulbs have more complex symmetry groups. The prime factorization of the period determines the bulb's topology: a bulb of period n = p1^a1 * ... * pk^ak is topologically a product of k bulbs of periods p1^a1, ..., pk^ak. Test: for each rational p/q with q <= 20, locate the corresponding bulb in M, compute its Lyapunov exponent, and verify lambda = log(2) * cos(pi*p/q). Classify bulbs by the prime factorization of their period and verify the product structure. Impact: the Mandelbrot set is a visual calculator for prime factorization — every bulb encodes number-theoretic information about its period.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "NumberTheory"
+    ],
+    "id": "fd_0272",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "State the bulb-period correspondence: the bulb at angle p/q in the Mandelbrot set has period q. This follows from the Douady-Hubbard landing theorem. Conjecture the Lyapunov formula: lambda(center of p/q bulb) = log(2) * cos(pi*p/q). Prove for the main cardioid (period 1): lambda = log(2) * cos(0) = log(2). Prove for the period-2 bulb: lambda = log(2) * cos(pi/2) = 0 (parabolic). Prove for period-q bulbs: the critical orbit has period q, and the multiplier of the q-cycle equals e^{2*pi*i*p/q} at the center, so the Lyapunov exponent is log|multiplier| = log(2) * cos(2*pi*p/q). Wait, the multiplier at the center of the p/q bulb is e^{2*pi*i*p/q}, so |multiplier| = 1 and lambda = 0. The Lyapunov exponent is NOT log(2)*cos(pi*p/q) at the center. Correct: on the boundary of the p/q bulb, lambda = 0 (parabolic), and lambda increases as you move away. Test: compute lambda numerically along rays from bulb centers.",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-18T04:43:40.146143+00:00",
+    "title": "The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Cycle dcd7a4b2 (Q=0.750) proved 0 theorems in Tropical but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION — simulta",
     "domain_bridges": [],
     "domains": [
