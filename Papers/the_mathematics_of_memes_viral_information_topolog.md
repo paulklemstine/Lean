@@ -1,75 +1,45 @@
-# Computational Evidence — Viral Information Topology
+# Computational evidence
 
-We model a meme as a section of the **constant sheaf** `K` over a social network,
-represented as a directed multigraph with vertex set `V` (people), edge set `E`
-(channels), and endpoint maps `src, tgt : E → V`. The coboundary is
+## Small-case calculations
 
-```
-(δ f) e = f (tgt e) − f (src e),      δ : (V → K) → (E → K),
-```
+For a two-term cellular cochain complex over a field,
 
-with cohomology `H⁰(δ) = ker δ` (global interpretations) and
-`H¹(δ) = coker δ = (E → K) / range δ` (transmission barriers).
+\[
+C^0 \xrightarrow{\delta} C^1,
+\qquad b_0=\dim\ker\delta,
+\qquad b_1=\dim(C^1/\operatorname{range}\delta).
+\]
 
-## 1. Small-case calculations (constant sheaf, connected graphs)
+Writing `n = dim C⁰`, `m = dim C¹`, and `r = rank δ`, rank-nullity gives
+`b₀ = n-r` and `b₁ = m-r`. Representative cases are:
 
-For a **connected** graph the theory predicts `dim H⁰ = 1` (one global
-interpretation) and, by the Euler characteristic `dim H⁰ − dim H¹ = |V| − |E|`,
+| n | m | r | b₀ | b₁ | Interpretation |
+|---:|---:|---:|---:|---:|---|
+| 1 | 0 | 0 | 1 | 0 | one interpretation, no edge obstruction space |
+| 2 | 0 | 0 | 2 | 0 | two interpretations, no edge obstruction space |
+| 2 | 1 | 0 | 2 | 1 | maximal interpretations, but an obstruction remains |
+| 2 | 1 | 1 | 1 | 0 | unobstructed, but one interpretation dimension is lost |
+| 3 | 2 | 1 | 2 | 1 | intermediate tradeoff |
+| 3 | 2 | 2 | 1 | 0 | surjective coboundary, hence unobstructed |
 
-```
-dim H¹ = |E| − |V| + 1   =   first Betti number   =   number of independent cycles.
-```
+The `(2,1,0)` case is certified in Lean as `twoInterpretationExample_betti`.
 
-| Graph                | \|V\| | \|E\| | dim H⁰ | dim H¹ = \|E\|−\|V\|+1 | interpretation                 |
-|----------------------|:---:|:---:|:-----:|:---------------------:|--------------------------------|
-| single edge `0–1`    |  2  |  1  |   1   |          0            | tree — universally transmissible |
-| path `0–1–2`         |  3  |  2  |   1   |          0            | tree — universally transmissible |
-| triangle `C₃`        |  3  |  3  |   1   |          1            | one cycle → one barrier        |
-| square `C₄`          |  4  |  4  |   1   |          1            | one cycle → one barrier        |
-| complete graph `K₄`  |  4  |  6  |   1   |          3            | three independent cycles       |
-| `Kₙ`                 |  n  | n(n−1)/2 | 1 | (n−1)(n−2)/2         | cycle rank of `Kₙ`             |
+## OEIS search
 
-The rows **path** (`dim H¹ = 0`) and **triangle** (`dim H¹ = 1`) are proved as
-machine-checked theorems `MemeGraph.path_dimH1` and `MemeGraph.triangle_dimH1`
-in `Catalog/MachineLearning/MemeGraphCohomology.lean`.
+No OEIS search is relevant: the result is a finite-dimensional identity in three
+parameters, not a distinguished integer sequence.
 
-## 2. Sequence check (OEIS)
+## Counterexample hunt
 
-The cycle rank of the complete graph `Kₙ`, `1 + n(n−3)/2` for `n ≥ 1`
-(`= (n−1)(n−2)/2`), gives `0, 0, 0, 1, 3, 6, 10, 15, …` — the triangular numbers
-shifted, **OEIS A000217** (offset). Betti numbers of graphs are not a single
-canonical OEIS entry because they depend on `|E|`; the point of the formula
-`|E| − |V| + c` (with `c` = number of components) is that it is a purely
-topological invariant, matching classical algebraic-graph-theory tables.
+The universal suggestion that maximal `H⁰` and vanishing `H¹` naturally coexist
+fails whenever `C¹` is nonzero. The smallest linear counterexample has
+`C⁰ = ℚ²`, `C¹ = ℚ`, and `δ = 0`, yielding `(b₀,b₁) = (2,1)`.
 
-## 3. Counterexample hunt on the guiding conjecture
+More generally, the formal theorem `maximal_b0_and_zero_b1_forces_no_edge_data`
+proves that maximal `H⁰` together with `H¹ = 0` forces `dim C¹ = 0` in this
+finite-dimensional model.
 
-The brief conjectures "most viral ⟺ `H¹ = 0` and `dim H⁰` maximal". For the
-**constant sheaf** the abstract identity forces, whenever `H¹ = 0` (δ surjective):
+## Table rather than plots
 
-```
-dim H⁰ = dim C⁰ − dim C¹   (theorem MemeSheaf.viral_interpretations)
-```
-
-so once transmissibility (`H¹ = 0`) holds, the number of interpretations is
-*determined*, not free — and on a connected graph it collapses to `dim H⁰ = 1`.
-Thus the naive reading "spread everywhere **and** many distinct meanings" is
-**false for the constant sheaf**: connected transmissibility forces a *single*
-global meaning. Distinct community meanings (`dim H⁰ > 1`) require either a
-disconnected network or a genuinely non-constant sheaf (varying stalks /
-restriction maps). This is recorded honestly:
-
-* `MemeSheaf.dimH0_ge` — `dim H⁰ ≥ dim C⁰ − dim C¹` always.
-* `MemeSheaf.dimH0_eq_floor_iff_surjective` — equality (minimum interpretations)
-  is *equivalent* to transmissibility `H¹ = 0`.
-
-No counterexample to the proved theorems was found; the exploration instead
-sharpened the conjecture (see `FUTURE_DIRECTIONS.md`).
-
-## 4. What is formally verified
-
-Every entry above that is stated as a theorem builds with `#print axioms`
-returning only `propext`, `Classical.choice`, `Quot.sound`. See
-`Catalog/MachineLearning/MemeSheafCohomology.lean` (abstract core) and
-`Catalog/MachineLearning/MemeGraphCohomology.lean` (graph instantiation +
-concrete triangle/path computations).
+The table is more informative than a plot at this scale: both Betti numbers are
+affine functions of the same rank parameter, decreasing together as rank grows.
