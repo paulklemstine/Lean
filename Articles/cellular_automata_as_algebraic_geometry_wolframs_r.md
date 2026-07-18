@@ -1,180 +1,138 @@
-# When Wolfram Met Grothendieck: The Secret Geometry of Cellular Automata
+# Cellular Automata as Algebraic Geometry: What Fixed Points Really Reveal
 
-## A universe on a strip of graph paper
+A row of black and white cells seems an unlikely place to look for algebraic geometry. Yet every tick of an elementary cellular automaton hides a polynomial calculation. Each cell reads three bits—its left neighbor, itself, and its right neighbor—and replaces itself according to a fixed lookup table. There are only $256$ such tables, but their behavior ranges from immediate extinction to intricate moving structures and universal computation.
 
-Imagine a long row of cells, each one either black or white, stretching off to the
-horizon. A single, rigid law tells every cell what color to become next, and it may
-consult only itself and its two immediate neighbors. Then time ticks, all cells
-update at once, and the row is reborn. Repeat forever.
+This algebraic viewpoint is illuminating, but it also carries a warning. A tempting slogan says that a more complicated automaton should have a larger geometric space of fixed configurations. The fixed points tell a subtler story. Rule $110$, famous for supporting universal computation, can have only one fixed configuration under a broad connectivity condition. Rule $204$, which merely copies every cell, fixes every possible configuration. Thus the size—or dimension—of a fixed-point set does not measure dynamical complexity by itself.
 
-This is an *elementary cellular automaton*, and despite the almost insulting
-simplicity of the setup, these systems are one of the great surprises of modern
-science. There are exactly $256$ possible laws — one for each way of assigning a
-new color to every one of the eight possible three-cell patterns — and Stephen
-Wolfram famously numbered them $0$ through $255$ and sorted them into four classes
-of behavior. Some settle into a boring uniform field. Some produce stripes and
-nested triangles. Some dissolve into what looks for all the world like noise. And a
-rare few generate structures that drift, collide, and interact like particles in a
-tiny physics.
+The useful discovery is not the slogan but the framework that exposes why it fails.
 
-One of those rare rules, **Rule 110**, is *Turing-complete*: with the right initial
-row of black and white cells, it can compute anything any computer can compute. A
-one-dimensional line of pixels, updated by a three-cell rule, is a universal
-computer. That fact alone should make you suspicious that something deep is going
-on beneath the surface.
+## From lookup tables to polynomials
 
-This article is about a different — and, at first glance, wildly unrelated — way of
-looking at these systems. It comes from *algebraic geometry*, the branch of
-mathematics that studies shapes defined by polynomial equations: circles, spheres,
-elliptic curves, and their higher-dimensional cousins called **varieties**. The
-punchline is that every cellular automaton *is* such a shape. And chasing that idea
-leads to a genuinely surprising discovery about where complexity really lives.
+An elementary cellular automaton uses a local rule
 
-## Coloring by arithmetic
+$$
+f:\{0,1\}^3\longrightarrow\{0,1\}.
+$$
 
-The first move is to stop thinking of black and white and start thinking of $0$ and
-$1$. Not ordinary integers, but the two elements of the *binary field*, written
-$\mathrm{GF}(2)$. In this field addition is the logical "exclusive or":
-$$0+0 = 0, \quad 0+1 = 1, \quad 1+1 = 0.$$
-That last equation — $1+1=0$ — is the whole magic. Multiplication is ordinary
-(it is just the logical "and"). With these two operations, $\{0,1\}$ becomes a
-bona fide number system in which we can add, subtract, and multiply exactly as in
-high-school algebra.
+There are $8$ possible three-cell neighborhoods and $2$ possible outputs for each, so the number of rules is
 
-Now here is the crucial observation. A local rule takes three inputs $a$, $b$, $c$
-(the left neighbor, the cell itself, the right neighbor), each $0$ or $1$, and
-returns a single output. But *any* function from $\{0,1\}^3$ to $\{0,1\}$ can be
-written as a polynomial in $a$, $b$, $c$ over $\mathrm{GF}(2)$ — and because
-$x^2 = x$ for $x \in \{0,1\}$, that polynomial uses each variable at most once, so
-it has degree at most $3$. Every one of the $256$ rules is secretly a cubic
-polynomial. For example:
+$$
+2^8=256.
+$$
 
-- **Rule 0**, which paints everything white, is simply $g(a,b,c) = 0$.
-- **Rule 204**, which leaves every cell alone, is $g(a,b,c) = b$.
-- **Rule 90**, which produces the beautiful Sierpiński triangle, is $g(a,b,c) = a + c$.
-- **Rule 150** is $g(a,b,c) = a + b + c$.
-- **Rule 110**, the universal computer, is the genuine cubic
-  $$g(a,b,c) = b + c + bc + abc.$$
+Now identify the two symbols with the field $\mathbb F_2$, where addition is exclusive-or and multiplication is logical conjunction. Every Boolean function of three variables then has a unique algebraic normal form
 
-A whole row of cells on a loop of length $n$ is then a vector
-$s = (s_0, s_1, \dots, s_{n-1})$ over $\mathrm{GF}(2)$, and one tick of the clock
-sends $s$ to a new vector whose $i$-th entry is $g(s_{i-1}, s_i, s_{i+1})$, with the
-indices wrapping around the loop.
+$$
+f(l,c,r)=a_0+a_1l+a_2c+a_3lc+a_4r+a_5lr+a_6cr+a_7lcr,
+$$
 
-## The shape hiding inside a rule
+with coefficients $a_j\in\mathbb F_2$. The degree is at most $3$ because the inputs satisfy $l^2=l$, $c^2=c$, and $r^2=r$ on Boolean values. The coefficients are recovered from the truth table by Möbius inversion on the Boolean cube. For example, $a_0=f(0,0,0)$ and $a_1=f(1,0,0)+f(0,0,0)$, with addition in $\mathbb F_2$.
 
-Among all the configurations a rule can visit, the most special are those it leaves
-*unchanged* — the **fixed points**, the still lifes of this pixelated world. A row
-$s$ is fixed when applying the rule gives back exactly $s$, which is to say when
-$$s_i = g(s_{i-1}, s_i, s_{i+1}) \quad \text{for every } i.$$
-These are $n$ polynomial equations in $n$ unknowns over $\mathrm{GF}(2)$. The set of
-all solutions is precisely what algebraic geometers call an **affine variety** — the
-solution shape of a system of polynomial equations. We write it $V(g)$.
+This is more than a change of notation. A row of $n$ cells is a point
 
-So each cellular automaton, that most combinatorial of objects, hands us a geometric
-one: its fixed-point variety. And every variety has a **dimension**, a measure of
-how many independent directions you can move within it while staying a solution. A
-single isolated point has dimension $0$. A line has dimension $1$. The whole space
-of configurations has dimension $n$. Over the binary field these dimensions are not
-abstractions: a variety that happens to be a *linear* subspace of dimension $d$
-contains exactly $2^d$ points, so we can count solutions and read off the dimension
-directly.
+$$
+s=(s_0,\ldots,s_{n-1})\in\mathbb F_2^n.
+$$
 
-This sets up an irresistible conjecture, and it was the starting point of the
-investigation: **maybe the dimension of a rule's fixed-point variety measures its
-complexity.** Wolfram's boring Class 1 rules would have tiny, zero-dimensional
-varieties; his chaotic and computational Class 3 and 4 rules would have big,
-high-dimensional ones. The Turing-complete Rule 110, the crown jewel, would sit at
-the very top with the maximal dimension $n$. It is a beautiful idea: complexity as
-geometric size.
+Once left- and right-neighbor maps $L,R:\{0,\ldots,n-1\}\to\{0,\ldots,n-1\}$ are chosen, the global update is the polynomial map $F:\mathbb F_2^n\to\mathbb F_2^n$ given coordinatewise by
 
-## The beautiful idea is wrong
+$$
+F(s)_i=f(s_{L(i)},s_i,s_{R(i)}).
+$$
 
-It is exactly wrong. And the way it fails is more interesting than the way it might
-have succeeded.
+Periodic boundaries, reflecting boundaries, and more unusual network couplings all fit into this single definition.
 
-Let us actually compute the varieties. The trivial rules behave as expected at
-first. Rule 0 fixes only the all-white row, so $V = \{0\}$, a single point of
-dimension $0$. Rule 204, the do-nothing identity, fixes *every* row, so its variety
-is the entire space of dimension $n$ — as large as a variety can be. The two shift
-rules (**Rule 170** and **Rule 240**), which slide the pattern left or right, fix
-exactly the *constant* rows (all-black or all-white), a line of dimension $1$.
+## Fixed points as solutions of equations
 
-The additive rules are where number theory sneaks in. A row is fixed by **Rule 90**
-precisely when it obeys the Fibonacci-like recurrence
-$$s_{i+1} = s_i + s_{i-1} \pmod 2.$$
-The Fibonacci sequence modulo $2$ runs $0, 1, 1, 0, 1, 1, 0, \dots$ — it repeats
-with period $3$. On a loop, the recurrence can close up consistently only when the
-loop length is a multiple of that period. So Rule 90 has a nontrivial fixed
-pattern *exactly when $3$ divides $n$*, in which case its variety jumps to
-dimension $2$ (four solutions); otherwise it collapses to the lone point $0$. The
-governing number, $3$, is the *Pisano period* of $2$ — the period of Fibonacci
-modulo $2$ — and it can be seen as the multiplicative order of the tiny
-$2\times 2$ companion matrix
-$$T = \begin{pmatrix} 0 & 1 \\ 1 & 1 \end{pmatrix}$$
-over the binary field, which satisfies $T^3 = I$ and nothing smaller. Linear
-dynamics, cellular automata, and elementary number theory all meet on the number
-$3$. **Rule 150** tells a parallel story with two-periodicity ($s_{i+2} = s_i$)
-in place of Fibonacci: its variety has dimension $2$ on even loops and dimension
-$1$ on odd ones.
+A stable configuration is a fixed point: $F(s)=s$. Coordinate by coordinate, it solves
 
-And now the punchline. What of Rule 110, the universal computer, the rule that was
-supposed to reign at maximal dimension? Compute its fixed-point variety and it
-**collapses to a single point.** The only configuration Rule 110 leaves unchanged
-is the all-white row. Its variety is $\{0\}$, dimension $0$ — the *smallest
-possible*, the same as the utterly trivial Rule 0.
+$$
+f(s_{L(i)},s_i,s_{R(i)})-s_i=0
+\qquad (0\le i<n),
+$$
 
-Here is why, and it is a lovely little argument. Suppose a row is fixed by Rule 110
-and some cell is white ($s_i = 0$). Plugging $b = s_i = 0$ into the rule's
-polynomial $b + c + bc + abc$, every term carrying a factor of $b$ vanishes, and
-the fixed-point equation at that site reduces to forcing the *right neighbor* to be
-white too. So a single white cell propagates its color rightward, one step at a
-time, all the way around the loop — proving the whole row is white. The only other
-possibility, the all-black row, one checks directly is not fixed by Rule 110. Hence
-white everywhere is the *only* still life. The richest, most computationally
-powerful rule in the entire catalog has the poorest possible landscape of stable
-states.
+where subtraction and addition agree in $\mathbb F_2$. To describe Boolean states algebraically, one should also impose
 
-## The moral: complexity is degree, not size
+$$
+s_i^2-s_i=0.
+$$
 
-So the tempting slogan "complexity equals dimension" is false, and spectacularly
-so — the ordering is inverted. The Turing-complete Rule 110 sits at dimension $0$;
-the do-nothing identity Rule 204 sits at dimension $n$. On any loop of length two or
-more, the identity's variety has exponentially more points than Rule 110's. If
-dimension measured anything about dynamical richness, this could not happen.
+The resulting equations define a fixed-point scheme, while their $\mathbb F_2$-valued solutions are exactly the stable binary configurations. That distinction matters: the number of rational points and the Krull dimension of a coordinate ring are different invariants. Once all Boolean relations are included for finite $n$, the coordinate ring is finite and its Krull dimension is $0$, even when there are many fixed points. Counting fixed states is therefore not the same as measuring geometric dimension.
 
-But the failure points to the right answer. Look again at the rules whose varieties
-are large and well-behaved: Rules 90, 150, 170, 240, 204. Every one of them is
-**linear** (or affine) — its defining polynomial has degree $1$. Their fixed-point
-sets are flat subspaces, their dimensions are controlled by clean arithmetic
-(Pisano periods, parities, matrix orders), and they are precisely Wolfram's
-tame, predictable rules. Rule 110, by contrast, is a *genuine cubic*: its
-polynomial $b + c + bc + abc$ has that irreducibly nonlinear $abc$ term, and it is
-that nonlinearity — not any largeness — that both collapses its variety and powers
-its universal computation.
+Three rules make the lesson vivid.
 
-The true invariant separating the tame from the universal is therefore not the
-*size* of the fixed-point shape but the *degree* of the polynomial that carves it
-out — equivalently, whether the variety is linear or curved. Complexity does not
-live in how big a rule's geometry is. It lives in how *bent* that geometry is.
+## Rule $0$: total extinction
 
-## Why this is more than a curiosity
+Rule $0$ outputs $0$ for every neighborhood. Therefore $F(s)$ is the all-zero row for every initial state. A fixed state must equal its update, so it must be all zero. Conversely, the all-zero state is fixed. Hence, for every array size and every choice of neighbor maps, Rule $0$ has exactly one fixed configuration.
 
-The dictionary "automaton $\leftrightarrow$ variety" is worth having in both
-directions. It lets the vast machinery of algebra — linear algebra, the theory of
-finite fields, companion matrices and their orders — be brought to bear on
-questions about cellular automata that look, on their face, purely combinatorial.
-The exact count of still lifes for every additive rule, on every loop length, falls
-straight out of the order of a small matrix over $\mathrm{GF}(2)$; no simulation
-required.
+This matches intuition: a rule that erases everything has a single resting place.
 
-More broadly, it is a small, sharp instance of a recurring lesson in mathematics:
-the interesting structure of a system is often not its most obvious quantitative
-feature. Here the obvious feature — the dimension, the raw head-count of stable
-states — is a red herring. The real signal is qualitative: is the defining
-polynomial linear, or does it genuinely curve? That question separates the rules
-that draw fractals from the one that runs programs, and it does so without a single
-step of simulation. Two continents of mathematics that grew up worlds apart —
-Wolfram's computational universe of blinking cells and Grothendieck's cathedral of
-varieties and schemes — turn out to be describing the same landscape, and the view
-from the border is worth the trip.
+## Rule $204$: maximal stillness
+
+Rule $204$ returns the center bit. Its local polynomial is simply
+
+$$
+f(l,c,r)=c.
+$$
+
+Consequently $F(s)_i=s_i$ at every site, regardless of the boundary convention. Every state is fixed. Since an $n$-cell binary array has $2^n$ states, Rule $204$ has exactly $2^n$ fixed configurations.
+
+Yet Rule $204$ is dynamically trivial: time does nothing. Maximal fixed-point count here means maximal stillness, not maximal computational power.
+
+## Rule $110$: rich evolution, sparse equilibrium
+
+Rule $110$ has outputs, in neighborhood order $000,001,010,011,100,101,110,111$,
+
+$$
+0,1,1,1,0,1,1,0.
+$$
+
+Its all-zero configuration is fixed because $000$ maps to $0$. Its all-one configuration is not fixed on any nonempty array because $111$ maps to $0$. Thus Rule $110$ always has at least one fixed state but strictly fewer than the ambient total of $2^n$.
+
+A stronger theorem follows from a tiny local observation. Suppose $s$ is fixed and $s_i=0$. At site $i$, the center bit is $0$. Among Rule $110$ neighborhoods with center $0$, a right bit equal to $1$ produces output $1$, not the required output $0$. Therefore
+
+$$
+s_i=0\quad\Longrightarrow\quad s_{R(i)}=0.
+$$
+
+Zeros propagate forward along the right-neighbor map.
+
+Assume now that $R$ has one forward orbit: for every pair of sites $i,j$, some nonnegative iterate $R^k(i)$ equals $j$. This is a connectivity condition saying that repeatedly moving right from any site eventually reaches every site. In a fixed Rule $110$ state, the all-one state is impossible, so at least one site is zero. Zero propagation and the one-orbit condition then force every site to be zero. We obtain the **Rule $110$ Singleton Fixed-Point Theorem**: on a nonempty finite array whose right-neighbor map has one forward orbit, the all-zero configuration is the unique fixed configuration.
+
+The proof is short, but its interpretation is powerful. Rule $110$ can generate complicated spacetime behavior precisely while having almost no static behavior. Computation lives in transients, moving defects, periodic structures, and interactions—not necessarily in equilibria.
+
+## Why the original complexity idea breaks
+
+The proposed correspondence “simple means few fixed points; universal means maximal fixed-point dimension” fails in two independent ways.
+
+First, fixed-point count reverses the expected ranking. The identity-like Rule $204$ has all $2^n$ states fixed, while Rule $110$ may have only one. Second, geometric dimension is not interchangeable with point count. For a finite Boolean state space equipped with the equations $s_i^2-s_i=0$, every fixed-point coordinate ring is zero-dimensional. A collection of $2^n$ isolated points is larger than a single point in cardinality, but not in Krull dimension.
+
+This does not make algebraic geometry irrelevant. It tells us to ask better questions. One may compare coordinate rings without collapsing them to one number, study polynomial equations for periodic orbits, examine how solution counts grow with $n$, or organize local data with a precisely defined sheaf. But none of these structures should be presumed to encode computational universality before a theorem establishes the connection.
+
+## A practical computational pipeline
+
+For a chosen rule and finite boundary convention, the basic experiment is transparent:
+
+1. Decode the rule number into its eight truth-table outputs.
+2. Convert the truth table into eight algebraic-normal-form coefficients.
+3. Enumerate the $2^n$ states, apply the synchronous update, and retain those satisfying $F(s)=s$.
+4. Optionally build the Boolean polynomial equations and compare point counts across sizes and rules.
+
+Exhaustive enumeration costs on the order of $n2^n$ bit operations for one rule, so it is ideal for small arrays. The algebraic normal form takes constant work for a three-input rule. For larger systems, symbolic elimination, constraint solving, transfer matrices, or orbit-specific algorithms can replace brute force.
+
+Simple numerical examples immediately recover the theorems. On a cyclic row, Rule $0$ has one fixed state for every tested $n$. Rule $204$ has $2^n$. Rule $110$ has only the zero state because the cyclic right shift is a single orbit. The contrast becomes sharper as $n$ grows: at $n=12$, Rule $204$ fixes all $4096$ configurations, while Rule $110$ fixes one.
+
+## Geometry after the correction
+
+The meeting of cellular automata and algebraic geometry remains fertile. The right lesson is methodological. A truth table can indeed be turned into a polynomial. Stable configurations can indeed be cut out by equations. But a proposed complexity invariant must survive elementary counterexamples and must distinguish cardinality, dimension, and dynamics.
+
+For Rule $110$, the richest object is unlikely to be its fixed-point set. More promising targets include solutions of $F^p(s)=s$ for periods $p>1$, the growth of orbit languages with system size, polynomial encodings of spacetime diagrams, and structures that preserve how local patterns glue across regions. Universality concerns arbitrarily long evolution; an invariant designed to detect it should remember time.
+
+The algebra therefore delivers both a bridge and a boundary. Every elementary cellular automaton is a cubic Boolean polynomial system, and its fixed states form an algebraically defined set. Yet equilibrium geometry alone cannot rank computational complexity. Sometimes the most complicated machine has one place to rest, while the simplest machine rests everywhere.
+## What the equations let us see
+
+Once a rule is written as a polynomial, questions that look unrelated become parts of one picture. A fixed pattern is a solution of simultaneous equations. A repeating pattern of temporal period $p$ is a solution of $F^p(s)=s$. A local implication, such as the forward spread of zero in a Rule $110$ equilibrium, becomes a constraint that travels through the graph of neighbor relations. This is useful in applications where cells represent genes, switches, pixels, agents, or components of a distributed circuit: one can ask which global steady states are compatible with local response laws.
+
+The framework is also honest about scale. Exhausting all $2^n$ configurations becomes expensive quickly, but the local polynomial always has only eight coefficients. That compact representation can reveal linearity, interaction terms, and symmetries before any global enumeration begins. Rule $204$ has only the center term; its enormous stable set is then obvious. Rule $110$ includes nonlinear interactions, yet its equilibrium constraints collapse under cyclic connectivity. Algebra and dynamics answer different questions, and their contrast is itself informative.
+
+Most importantly, a failed conjecture here is productive. It replaces a vague analogy with exact definitions and testable alternatives. Instead of asking whether “geometric richness” sounds like “computational richness,” one can specify a ring, a family of system sizes, a boundary convention, and an invariant. One can then prove a theorem, compute a table, or find a counterexample. That is how a metaphor becomes mathematics.
