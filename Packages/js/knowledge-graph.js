@@ -185,6 +185,28 @@
         const fireworks = [];     // {x, y, phase, particles[], color, startTime}
         let lastAmbientFirework = 0;
 
+        // ─── Performance Caching ───
+        const bgCanvas = document.createElement('canvas');
+        const bgCtx = bgCanvas.getContext('2d', { alpha: false });
+        let bgNeedsUpdate = true;
+
+        const glowSprites = [];
+        (function initGlowSprites() {
+            for (let h = 0; h <= 360; h++) {
+                const c = document.createElement('canvas');
+                c.width = 64; c.height = 64;
+                const cctx = c.getContext('2d');
+                const grad = cctx.createRadialGradient(32, 32, 4, 32, 32, 32);
+                grad.addColorStop(0, `hsla(${h}, 100%, 90%, 0.9)`);
+                grad.addColorStop(0.3, `hsla(${h}, 100%, 70%, 0.6)`);
+                grad.addColorStop(0.7, `hsla(${h}, 100%, 50%, 0.2)`);
+                grad.addColorStop(1, `hsla(${h}, 100%, 20%, 0)`);
+                cctx.fillStyle = grad;
+                cctx.fillRect(0, 0, 64, 64);
+                glowSprites[h] = c;
+            }
+        })();
+
         // ─── Stars (deep space backdrop) ───
         const stars = [];
         for (let i = 0; i < 250; i++) {
