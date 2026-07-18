@@ -174,7 +174,16 @@
         let time = 0;
         let timeScale = 1;
 
+        // ─── Space battle visual effect arrays (hard-capped for performance) ───
+        const MAX_EXPLOSIONS = 8;
+        const MAX_FLAME_PARTICLES = 200;
+        const MAX_SPARKS_PER_EXPLOSION = 20;
+        const MAX_FIREWORKS = 4;
+        const explosions = [];    // {x, y, time, strength, sparks[], shockRadius}
+        const flameParticles = []; // {x, y, vx, vy, life, color, size}
         const lasers = [];        // {sx, sy, tx, ty, time, duration, color}
+        const fireworks = [];     // {x, y, phase, particles[], color, startTime}
+        let lastAmbientFirework = 0;
 
         // ─── Stars (deep space backdrop) ───
         const stars = [];
@@ -370,7 +379,7 @@
             graphEdges.forEach(e => {
                 const a = nodeMap[e.source], b = nodeMap[e.target];
                 if (!a || !b) return;
-                const mi = minImageDelta(a.x, a.y, b.y, b.x);
+                const mi = minImageDelta(a.x, a.y, b.x, b.y);
                 if (mi.d2 <= EDGE_DRAW_DISTANCE * EDGE_DRAW_DISTANCE) union(e.source, e.target);
             });
             const components = new Map();
@@ -581,6 +590,36 @@
                         const force = FIELD_STRENGTH * penetration / (circle.r + FIELD_MARGIN);
                         n.vx += (dx / dist) * force;
                         n.vy += (dy / dist) * force;
+                        // Spawn explosion at boundary if deep penetration
+                        if (dist < circle.r) {
+                            n.thrustTime = time;
+                            n.thrustAngle = Math.atan2(dy, dx);
+                            n.thrustStrength = 1.0;
+                            n.thrustSpin = Math.random() > 0.5 ? 1 : -1;
+                        }
+                        if (dist < circle.r && explosions.length < MAX_EXPLOSIONS) {
+                            const hitX = circle.cx + (dx / dist) * circle.r;
+                            const hitY = circle.cy + (dy / dist) * circle.r;
+                            const sparks = [];
+                            const sparkCount = 6 + Math.floor(penetration * 0.01);
+                            for (let s = 0; s < sparkCount; s++) {
+                                const angle = Math.atan2(dy, dx) + (Math.random() - 0.5) * 1.2;
+                                const speed = 800 + Math.random() * 2000;
+                                sparks.push({
+                                    x: hitX, y: hitY,
+                                    vx: Math.cos(angle) * speed,
+                                    vy: Math.sin(angle) * speed,
+                                    life: 0.3 + Math.random() * 0.4,
+                                    hue: 180 + Math.random() * 60,  // cyan-blue force field color
+                                    size: 1 + Math.random() * 2
+                                });
+                            }
+                            explosions.push({
+                                x: hitX, y: hitY, time: time,
+                                strength: Math.min(1, penetration * 0.002),
+                                sparks, shockRadius: 0, isChain: false
+                            });
+                        }
                     }
                 }
             }
@@ -661,6 +700,7 @@
                         const relVn = relVx * nx + relVy * ny;
                         if (relVn > 0) {
                             // Chain reaction detection: visual effects scale with collision cascade
+                            const isChain = (a.thrustTime > 0 || b.thrustTime > 0);
                             // Connected nodes get inelastic collisions (absorb energy, no bouncing)
                             const isConnected = areConnected(a.id, b.id);
                             const bounce = isConnected ? 0.1 : 1.5;  // super-elastic for unconnected
@@ -684,6 +724,34 @@
                             b.thrustAngle = Math.atan2(ny, nx) + (Math.random() - 0.5) * Math.PI * 0.6;
                             b.thrustStrength = isConnected ? 0.05 : Math.min(1, Math.abs(relVn) * 0.5);
                             b.thrustSpin = Math.random() > 0.5 ? 1 : -1;
+
+                            // Spawn explosion at contact point (skip for connected — gentle contact)
+                            if (!isConnected && explosions.length < MAX_EXPLOSIONS) {
+                                const cx = (a.x + b.x) * 0.5;
+                                const cy = (a.y + b.y) * 0.5;
+                                const sparkCount = Math.min(MAX_SPARKS_PER_EXPLOSION, 8 + Math.floor(Math.abs(relVn) * 5));
+                                const sparks = [];
+                                for (let s = 0; s < sparkCount; s++) {
+                                    const angle = Math.random() * Math.PI * 2;
+                                    const speed = 1500 + Math.random() * 6000 * Math.abs(relVn);
+                                    const hue = isChain ? (30 + Math.random() * 30) : (20 + Math.random() * 40);
+                                    sparks.push({
+                                        x: cx, y: cy,
+                                        vx: Math.cos(angle) * speed,
+                                        vy: Math.sin(angle) * speed,
+                                        life: 0.5 + Math.random() * 0.8,
+                                        hue: hue,
+                                        size: 1 + Math.random() * 3
+                                    });
+                                }
+                                explosions.push({
+                                    x: cx, y: cy, time: time,
+                                    strength: Math.min(1, Math.abs(relVn) * 0.3),
+                                    sparks: sparks,
+                                    shockRadius: 0,
+                                    isChain: isChain
+                                });
+                            }
                         }
                         // Overlap separation: mass-proportional to conserve center of mass
                         const overlap = MIN_REPULSION_DIST - d;
@@ -710,6 +778,36 @@
                     if (thrustAge < THRUST_DURATION) {
                         n.thrustSpin = n.thrustSpin || ((Math.random() > 0.5 ? 1 : -1) * (15 + Math.random() * 10));
                         n.thrustAngle += n.thrustSpin * 0.016; 
+                        
+
+                        // Spawn flame particles (capped) — visual only, no velocity change
+                        if (flameParticles.length < MAX_FLAME_PARTICLES && Math.random() < 0.6) {
+                            const spread = 0.4;
+                            const r1Angle = n.thrustAngle + Math.PI/2;
+                            const r2Angle = n.thrustAngle - Math.PI/2;
+                            
+                            const angle1 = n.thrustAngle + Math.PI + (Math.random() - 0.5) * spread;
+                            flameParticles.push({
+                                x: n.x + Math.cos(r1Angle) * n.radius * 0.8,
+                                y: n.y + Math.sin(r1Angle) * n.radius * 0.8,
+                                vx: Math.cos(angle1) * (900 + Math.random() * 1800) + n.vx * 0.3,
+                                vy: Math.sin(angle1) * (900 + Math.random() * 1800) + n.vy * 0.3,
+                                life: 0.15 + Math.random() * 0.25,
+                                hue: 20 + Math.random() * 30,
+                                size: 1 + Math.random() * 2.5
+                            });
+                            
+                            const angle2 = n.thrustAngle + Math.PI + (Math.random() - 0.5) * spread;
+                            flameParticles.push({
+                                x: n.x + Math.cos(r2Angle) * n.radius * 0.8,
+                                y: n.y + Math.sin(r2Angle) * n.radius * 0.8,
+                                vx: Math.cos(angle2) * (900 + Math.random() * 1800) + n.vx * 0.3,
+                                vy: Math.sin(angle2) * (900 + Math.random() * 1800) + n.vy * 0.3,
+                                life: 0.15 + Math.random() * 0.25,
+                                hue: 20 + Math.random() * 30,
+                                size: 1 + Math.random() * 2.5
+                            });
+                        }
                         
                         // Apply spiral thrust to velocity
                         const thrustForce = 800.0 * n.thrustStrength * (1 - thrustAge / THRUST_DURATION);
@@ -827,6 +925,35 @@
                 if (!anyCross) break;
             }
 
+            // ─── Update explosions ───
+            for (let i = explosions.length - 1; i >= 0; i--) {
+                const e = explosions[i];
+                e.shockRadius += 6000 * 0.016; // expand shockwave
+                let alive = false;
+                for (const s of e.sparks) {
+                    s.x += s.vx * 0.016;
+                    s.y += s.vy * 0.016;
+                    s.vx *= 0.96;
+                    s.vy *= 0.96;
+                    s.life -= 0.016;
+                    if (s.life > 0) alive = true;
+                }
+                if (!alive && e.shockRadius > 4500) {
+                    explosions.splice(i, 1);
+                }
+            }
+
+            // ─── Update flame particles ───
+            for (let i = flameParticles.length - 1; i >= 0; i--) {
+                const p = flameParticles[i];
+                p.x += p.vx * 0.016;
+                p.y += p.vy * 0.016;
+                p.vx *= 0.95;
+                p.vy *= 0.95;
+                p.life -= 0.016;
+                if (p.life <= 0) flameParticles.splice(i, 1);
+            }
+
             // ─── Update lasers ───
             for (let i = lasers.length - 1; i >= 0; i--) {
                 if (time - lasers[i].time > lasers[i].duration) lasers.splice(i, 1);
@@ -851,6 +978,48 @@
                     });
                 }
             }
+
+            // ─── Update fireworks ───
+            for (let i = fireworks.length - 1; i >= 0; i--) {
+                const fw = fireworks[i];
+                let alive = false;
+                for (const p of fw.particles) {
+                    p.x += p.vx * 0.016;
+                    p.y += p.vy * 0.016;
+                    p.vy += 900 * 0.016; // gravity
+                    p.vx *= 0.98;
+                    p.vy *= 0.98;
+                    p.life -= 0.016;
+                    if (p.life > 0) alive = true;
+                }
+                if (!alive) fireworks.splice(i, 1);
+            }
+
+            // ─── Ambient fireworks ───
+            if (fireworks.length < MAX_FIREWORKS && time - lastAmbientFirework > 25) {
+                lastAmbientFirework = time;
+                spawnFirework(W * 0.2 + Math.random() * W * 0.6, H * 0.2 + Math.random() * H * 0.4, 15);
+            }
+        }
+
+        // ─── Firework spawner ───
+        function spawnFirework(wx, wy, count) {
+            const hue = Math.random() * 360;
+            const particles = [];
+            for (let i = 0; i < count; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const speed = 2400 + Math.random() * 4500;
+                particles.push({
+                    x: wx, y: wy,
+                    vx: Math.cos(angle) * speed,
+                    vy: Math.sin(angle) * speed - 1200,
+                    life: 0.8 + Math.random() * 0.7,
+                    hue: hue + Math.random() * 40 - 20,
+                    size: 1.5 + Math.random() * 2,
+                    crackle: Math.random() < 0.15
+                });
+            }
+            fireworks.push({ x: wx, y: wy, particles: particles, color: hue, startTime: time });
         }
 
         // ─── Shape renderers ───
@@ -1459,12 +1628,13 @@
                 ctx.stroke();
             });
 
-            // ─── Rocket flame trails ───
+            // ─── Rocket flame trails + flame particles ───
             graphNodes.forEach(node => {
                 if (!node.thrustTime || node.thrustTime <= 0) return;
                 const thrustAge = time - node.thrustTime;
                 if (thrustAge >= THRUST_DURATION) return;
                 const decay = 1 - thrustAge / THRUST_DURATION;
+                const col = nodeColor(node);
                 const sp = worldToScreen(node.x, node.y);
                 const r = node.radius * camera.zoom;
                 // Flame cone opposite to thrust direction
@@ -1500,6 +1670,86 @@
                         ctx.shadowBlur = 0;
                     }
                 }
+            });
+
+            flameParticles.forEach(p => {
+                const sp = worldToScreen(p.x, p.y);
+                const alpha = Math.max(0, p.life / 0.4);
+                ctx.beginPath();
+                ctx.arc(sp.x, sp.y, p.size * camera.zoom * alpha, 0, Math.PI * 2);
+                ctx.fillStyle = `hsla(${p.hue}, 100%, ${60 + 30 * alpha}%, ${alpha * 0.8})`;
+                ctx.fill();
+            });
+
+            // ─── Explosion shockwave rings ───
+            explosions.forEach(e => {
+                if (e.shockRadius > 0 && e.shockRadius < 4500) {
+                    const alpha = Math.max(0, 0.4 * (1 - e.shockRadius / 4500));
+                    const sp = worldToScreen(e.x, e.y);
+                    const sr = e.shockRadius * camera.zoom;
+                    ctx.beginPath();
+                    ctx.arc(sp.x, sp.y, sr, 0, Math.PI * 2);
+                    const ringColor = e.isChain ? `hsla(40, 100%, 80%, ${alpha})` : `hsla(200, 80%, 80%, ${alpha})`;
+                    ctx.strokeStyle = ringColor;
+                    ctx.lineWidth = 2 * camera.zoom;
+                    ctx.stroke();
+                }
+            });
+
+            // ─── Explosion sparks ───
+            explosions.forEach(e => {
+                e.sparks.forEach(s => {
+                    if (s.life <= 0) return;
+                    const alpha = Math.max(0, s.life / 1.0);
+                    const sp = worldToScreen(s.x, s.y);
+                    ctx.beginPath();
+                    ctx.arc(sp.x, sp.y, s.size * camera.zoom * alpha, 0, Math.PI * 2);
+                    ctx.fillStyle = `hsla(${s.hue}, 100%, ${50 + 40 * alpha}%, ${alpha})`;
+                    ctx.fill();
+                });
+            });
+
+            // ─── Explosion flash overlay ───
+            explosions.forEach(e => {
+                const flashAge = time - e.time;
+                if (flashAge > 0.2) return;
+                const alpha = (1 - flashAge / 0.2) * e.strength * 0.4;
+                const sp = worldToScreen(e.x, e.y);
+                const flashR = 80 * camera.zoom;
+                if (isFinite(sp.x) && isFinite(sp.y) && isFinite(flashR) && flashR > 0) {
+                    const flashGrad = ctx.createRadialGradient(sp.x, sp.y, 0, sp.x, sp.y, flashR);
+                    flashGrad.addColorStop(0, `rgba(255, 255, 240, ${alpha})`);
+                    flashGrad.addColorStop(1, `rgba(255, 200, 100, 0)`);
+                    ctx.fillStyle = flashGrad;
+                    ctx.beginPath();
+                    ctx.arc(sp.x, sp.y, flashR, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            });
+
+            // ─── Fireworks ───
+            fireworks.forEach(fw => {
+                fw.particles.forEach(p => {
+                    if (p.life <= 0) return;
+                    const alpha = Math.max(0, p.life / 1.5);
+                    const sp = worldToScreen(p.x, p.y);
+                    const sz = p.size * camera.zoom * alpha;
+                    ctx.beginPath();
+                    ctx.arc(sp.x, sp.y, sz, 0, Math.PI * 2);
+                    ctx.fillStyle = `hsla(${p.hue}, 100%, ${50 + 40 * alpha}%, ${alpha * 0.9})`;
+                    ctx.fill();
+                    // Tiny trail
+                    if (p.life > 0.3) {
+                        const trailX = sp.x - p.vx * 0.02 * camera.zoom;
+                        const trailY = sp.y - p.vy * 0.02 * camera.zoom;
+                        ctx.beginPath();
+                        ctx.moveTo(sp.x, sp.y);
+                        ctx.lineTo(trailX, trailY);
+                        ctx.strokeStyle = `hsla(${p.hue}, 100%, 70%, ${alpha * 0.4})`;
+                        ctx.lineWidth = sz * 0.5;
+                        ctx.stroke();
+                    }
+                });
             });
 
             // Nodes
