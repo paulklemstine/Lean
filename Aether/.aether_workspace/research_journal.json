@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "86efe295",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions\n\n1. **Exact defect bounds.** Strengthen extremal rigidity quantitatively: if a graph is missing `m` edges, bound the deficit `2 ^ |α| - |cliqueFamily H|` in terms of the missing-ed",
-      "quality_score": 0.91,
-      "sorry_count": 4,
-      "theorem_count": 33,
-      "timestamp": "2026-07-15T01:49:32",
-      "title": "Deepening: This project formalizes a **cross-domain connector** (v27 \"Connector\" mission): "
-    },
-    {
       "cycle_id": "41e1526b",
       "domain": "Logic",
       "key_insight": "# Future Directions: Clique-to-Clique Density\n\n## 1. Sharp generalized-inverse lower envelope\n\nFor every pair of integers `2 ≤ s < t`, determine the exact lower envelope of the normalized `t`-clique c",
@@ -2501,6 +2491,16 @@
       "theorem_count": 55,
       "timestamp": "2026-07-18T22:39:33",
       "title": "The Fourier Transform of the Riemann Zeta: Hearing the Primes"
+    },
+    {
+      "cycle_id": "ac5fc431",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n## 1. Uniform finite-ring criterion for elementary reversibility\n\n**Conjecture.** An elementary binary cellular automaton is reversible on every finite periodic ring if and only i",
+      "quality_score": 0.69,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-07-18T23:29:11",
+      "title": "Galois Theory of Cellular Automata: Which Rules Have Reversible Dynamics?"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8
     }
   ],
-  "last_updated": "2026-07-18T22:39:33",
+  "last_updated": "2026-07-18T23:29:11",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "6da0544e",
-        "quality": 0.65,
-        "theorems": 12,
-        "title": "ArXiv paper: Record compositions of alternating permutations and noncommutative "
-      },
-      {
         "cycle_id": "0f8a1331",
         "quality": 0.67,
         "theorems": 7,
@@ -3637,6 +3631,12 @@
         "quality": 0.8,
         "theorems": 46,
         "title": "Cryptography from Chaos: Encrypting with the Logistic Map"
+      },
+      {
+        "cycle_id": "ac5fc431",
+        "quality": 0.69,
+        "theorems": 15,
+        "title": "Galois Theory of Cellular Automata: Which Rules Have Reversible Dynamics?"
       }
     ],
     "NumberTheory": [
