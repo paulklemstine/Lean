@@ -1,42 +1,25 @@
 # Computational evidence
 
-The central issue is order-theoretic and is resolved symbolically rather than by large computation. Small cases nevertheless expose the orientation error immediately.
+The decisive issue is containment direction, so only elementary small cases are needed.
 
-## Small-case calculations
+| `n` | generator `2^n` | ideal `(2^n)` | relation to next ideal |
+|---:|---:|---|---|
+| 0 | 1 | all integers | `(2) ⊊ (1)` |
+| 1 | 2 | even integers | `(4) ⊊ (2)` |
+| 2 | 4 | multiples of 4 | `(8) ⊊ (4)` |
+| 3 | 8 | multiples of 8 | `(16) ⊊ (8)` |
+| 4 | 16 | multiples of 16 | `(32) ⊊ (16)` |
 
-For the divisibility conditions `D_n = {f | ∀z, 2^n ∣ f(z)}`:
+At each step, `2^(n+1)` is divisible by `2^n`, while `2^n` is not divisible by `2^(n+1)`. Hence the chain is descending and strict.
 
-| n | required divisibility | constant separator |
-|---:|---:|---:|
-| 0 | 1 | 1 is in `D_0`, not `D_1` |
-| 1 | 2 | 2 is in `D_1`, not `D_2` |
-| 2 | 4 | 4 is in `D_2`, not `D_3` |
-| 3 | 8 | 8 is in `D_3`, not `D_4` |
-| 4 | 16 | 16 is in `D_4`, not `D_5` |
-
-Hence `D_{n+1} ⊊ D_n`, contrary to the proposed ascending orientation. The general calculation and strictness witness are proved in Lean in `Catalog/Algebra/EscherDivisibilityDisproof.lean`.
-
-For the variable ideals in `k[x₀,x₁,…]`:
-
-| n | rung `V_n` | separator for `V_n ⊊ V_{n+1}` |
-|---:|---|---|
-| 0 | `(0)` | `x₀` |
-| 1 | `(x₀)` | `x₁` |
-| 2 | `(x₀,x₁)` | `x₂` |
-| 3 | `(x₀,x₁,x₂)` | `x₃` |
-
-The general non-membership of the new variable is formally proved using a polynomial evaluation homomorphism.
-
-## OEIS search
-
-No OEIS search is relevant. The displayed values `1,2,4,8,16,…` are simply powers of two, and the research question concerns inclusion of ideals rather than discovery of an integer sequence.
+For the proposed integer-valued-polynomial family, the same constant polynomials give immediate tests. The constant polynomial `2^n` takes values in `2^n ℤ`, but not in `2^(n+1) ℤ`. Thus the claimed ascending containment fails at every tested—and indeed every—stage.
 
 ## Counterexample hunt
 
-- The advertised `2^n` construction is a counterexample to its own claimed orientation: it descends strictly.
-- Finite polynomial rings are counterexamples to the claim that staircase height should equal the finite number of variables under the stated staircase definition: Hilbert's basis theorem rules out every infinite strict ascending chain.
-- The supposedly extra “loop-back” condition, interpreted as containing zero in the intersection, holds for every collection of ideals and therefore does not distinguish examples.
+The universal motivating assertion is already contradicted at the first step: the constant polynomial `2` belongs to the value-divisibility ideal for `n = 1`, but it does not belong to the ideal for `n = 2`. Therefore `I_1 ⊆ I_2` is false.
 
-## Summary
+The extra intersection condition based on zero supplies no discrimination: zero lies in every ideal, so it lies in every intersection of ideals.
 
-The finite table agrees with the fully general Lean proofs: divisibility powers descend, finite-variable polynomial rings admit no staircase, and countably infinite-variable polynomial rings admit an explicit ascending staircase.
+## OEIS and plots
+
+The generators are the standard powers-of-two sequence `1, 2, 4, 8, 16, …` (OEIS A000079). No plot is needed because the formal question is order-theoretic rather than asymptotic. The Lean development proves the general containment facts and the zero-intersection theorem, rather than relying on these calculations.
