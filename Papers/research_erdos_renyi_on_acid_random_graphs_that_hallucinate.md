@@ -1,290 +1,511 @@
-# Spectral Theory of Complex-Weighted Random Graphs: Collinearity, Normality, and the Failure of the Circular Law
+# Phase Locking and Spectral Obstructions in Complex-Weighted Undirected Erdős–Rényi Graphs
+
+**Aristotle**  
+**July 18, 2026**
 
 ## Abstract
 
-We develop the spectral theory of complex-weighted graphs G(n, z), where each edge carries a uniform complex weight z ∈ ℂ. We prove that the adjacency matrix A_z factors as z · B, where B is the {0,1} Boolean adjacency matrix (Theorem 1), and derive five main consequences:
-
-1. **Normality** (Theorem 4): A_z is always a normal matrix, hence unitarily diagonalizable.
-2. **Spectral Collinearity** (Theorem 6): All eigenvalues of A_z lie on a single line through the origin in ℂ.
-3. **Walk Phase Accumulation** (Theorem 5): The k-th matrix power satisfies A_z^k = z^k · B^k.
-4. **Eigenvector Inheritance** (Theorem 7): Every eigenvector of B is an eigenvector of A_z with eigenvalue scaled by z.
-5. **Frobenius-Topology Identity** (Theorem 8): tr(A_z* · A_z) = |z|² · |E_directed|.
-
-These results demonstrate that the circular law prediction for complex-weighted random graphs fails in the symmetric (undirected) case, while remaining valid for directed graphs. All results have been formally verified in Lean 4 with Mathlib.
-
-**Keywords**: complex weighted graphs, spectral graph theory, random matrix theory, circular law, normal matrices, Erdős-Rényi model
-
----
+We analyze an undirected Bernoulli graph in which each present edge receives one fixed complex amplitude $z$. The Bernoulli parameter $p\in[0,1]$ remains real and governs edge presence; the complex number $z$ is an edge weight, not a probability. For every finite realization, the weighted adjacency matrix factors as $A_z=zB$, where $B$ is the real symmetric zero–one adjacency matrix. This elementary identity creates a complete obstruction to the proposed circular spectral law. The matrix $A_z$ is normal, its adjoint is $A_{\overline z}$, and every eigenvalue is obtained by multiplying a real eigenvalue of $B$ by $z$. Hence the spectrum is confined to the line $z\mathbb R$, both before and after centering, rather than filling a disk. We prove a deterministic row-sum bound $|\lambda|\le |z|R$, establish exact scaling of expected weighted subgraph counts, and exhibit the complete graph on four vertices as a finite counterexample to the universal radius $|z|\sqrt n$. We then give algorithms for simulation and structural diagnostics and explain why directed, centered models—not fixed-phase undirected ones—are the appropriate candidates for circular-law behavior.
 
 ## 1. Introduction
 
-### 1.1 Motivation
+The Erdős–Rényi model $G(n,p)$ places an edge independently between each unordered pair of $n$ vertices with probability $p$. Its adjacency matrix is real symmetric, and therefore has a real spectrum. A tempting complex extension gives every present edge a common amplitude $z\in\mathbb C$. Since the entries are then either $0$ or $z$, one might compare the result with a non-Hermitian random matrix and predict a circular cloud of eigenvalues with fluctuation radius on the order of $|z|\sqrt n$.
 
-The Erdős-Rényi random graph G(n, p) is the foundational model of random graph theory. Each of the $\binom{n}{2}$ possible edges appears independently with probability p, generating a rich landscape of phase transitions as p varies. The spectral theory of these random graphs — the study of eigenvalues of their adjacency matrices — connects graph theory to random matrix theory through Wigner's semicircle law and its variants.
+That comparison overlooks two structural facts. First, the entries mirrored across the diagonal are identical rather than independent. Second, the same phase multiplies every present edge. Consequently, the entire random matrix is a complex scalar multiple of a real symmetric matrix. The complex phase rotates all eigenvalues together and cannot create angular dispersion.
 
-A natural extension is to consider complex-valued edge weights. In quantum information theory, graph states are defined via adjacency matrices with complex entries. In signal processing on graphs, Fourier analysis requires complex-valued graph operators. In mathematical physics, transfer matrices of lattice models naturally have complex entries.
+This paper develops the finite-dimensional theory behind that obstruction. No asymptotic theorem is needed to disprove the circular-law interpretation: line confinement holds exactly for every realization and every size. The analysis also separates three issues that are easily conflated:
 
-We define the **complex weighted graph** G(n, z) for z ∈ ℂ: an undirected simple graph on n vertices where each present edge carries weight z and each absent edge carries weight 0. The adjacency matrix A_z has entries z or 0.
+1. **edge probability**, represented by a real $p\in[0,1]$;
+2. **edge amplitude**, represented by a complex $z$;
+3. **matrix symmetry**, determined by whether edges are undirected, directed, or paired by complex conjugation.
 
-### 1.2 The Circular Law Hypothesis
+The main results are as follows.
 
-Given the success of the circular law for random matrices with i.i.d. complex entries (Ginibre 1965, Tao-Vu 2010), one might conjecture that the empirical spectral distribution of A_z converges to a uniform distribution on a disk of radius |z| · √(p(1-p)) · √n. This is the "circular law hypothesis" for complex-weighted random graphs.
+* **Scalar factorization and phase locking.** If $B$ is the ordinary adjacency matrix, then $A_z=zB$ and $\sigma(A_z)=z\sigma(B)\subseteq z\mathbb R$.
+* **Adjoint relation and normality.** One has $A_z^*=A_{\overline z}$ and $A_zA_z^*=A_z^*A_z$.
+* **Deterministic radial control.** A row-sum bound $R$ for $B$ yields $|\lambda|\le |z|R$ for every weighted eigenvalue.
+* **Finite obstruction to a universal square-root disk.** For the complete graph on four vertices, $3z$ is an eigenvalue and lies outside the disk of radius $2|z|$ whenever $z\ne0$.
+* **Expected weighted count formula.** Common complex weighting rotates and dilates the usual real first moment: $\mathbb E[zN]=z\sum_r p^{|S_r|}$.
 
-**Our main result is that this hypothesis is false for undirected graphs.** The symmetry constraint forces the eigenvalue distribution to collapse from a 2D disk onto a 1D line segment. We provide a complete explanation via the scalar factorization A_z = z · B and the resulting normality of A_z.
+These statements show that normality alone is not the decisive property. General normal matrices may have two-dimensional spectra. Here the stronger scalar–symmetric factorization forces line confinement. They also show that a disk bound must not be confused with disk filling.
 
-### 1.3 Organization
+## 2. The model
 
-Section 2 presents definitions. Section 3 proves the scalar factorization and its immediate consequences. Section 4 establishes normality. Section 5 develops the spectral collinearity theory. Section 6 treats walk phase accumulation. Section 7 discusses the Frobenius norm identity. Section 8 examines when the circular law does apply (directed graphs). Section 9 discusses applications and open problems.
+### 2.1 Undirected Bernoulli graphs
 
----
+Let $V=\{1,\dots,n\}$, and let
 
-## 2. Definitions
+$$
+E_0=\bigl\{\{i,j\}:1\le i<j\le n\bigr\}
+$$
 
-### Definition 2.1 (Complex Weighted Graph)
+be the set of possible loopless undirected edges. Fix $p\in[0,1]$. For each $e\in E_0$, choose an independent Bernoulli random variable $X_e$ with
 
-A **complex weighted graph** G = (n, z, E) consists of:
-- A positive integer n (number of vertices, indexed by Fin n)
-- A complex number z ∈ ℂ (the edge weight)
-- A symmetric, irreflexive Boolean function E : Fin n × Fin n → {0, 1}
+$$
+\mathbb P(X_e=1)=p,\qquad \mathbb P(X_e=0)=1-p.
+$$
 
-The **Boolean adjacency matrix** is B ∈ M_n(ℂ) with B_{ij} = E(i,j).
+A realization determines a graph $G$. Its indicator adjacency matrix $B\in\mathbb R^{n\times n}$ is defined by
 
-The **complex adjacency matrix** is A_z ∈ M_n(ℂ) with (A_z)_{ij} = z · E(i,j).
+$$
+B_{ij}=\begin{cases}
+X_{\{i,j\}},&i\ne j,\\
+0,&i=j.
+\end{cases}
+$$
 
-### Definition 2.2 (Edge Pair Count)
+Thus $B_{ij}=B_{ji}$ and $B=B^{\mathsf T}=B^*$. In particular, $B$ is Hermitian and all of its eigenvalues are real.
 
-The **directed edge pair count** is |E_dir| = |{(i,j) : E(i,j) = 1}|. For symmetric E, |E_dir| = 2|E|.
+### 2.2 Fixed complex amplitude
 
-### Definition 2.3 (Vertex Degree)
+Fix $z\in\mathbb C$. The complex-weighted adjacency matrix $A_z$ is
 
-The **degree** of vertex i is deg(i) = |{j : E(i,j) = 1}|.
+$$
+(A_z)_{ij}=\begin{cases}
+z,&B_{ij}=1,\\
+0,&B_{ij}=0.
+\end{cases}
+$$
 
-### Definition 2.4 (Spectral Collinearity)
+The parameter $p$ is the probability and $z$ is the amplitude. This distinction prevents an invalid interpretation of a general complex number as a probability.
 
-A matrix M ∈ M_n(ℂ) has **collinear spectrum** with direction w ∈ ℂ if there exists a Hermitian matrix H ∈ M_n(ℂ) such that M = w · H.
+### Definition 2.1 (Fixed-amplitude complex graph)
 
-### Definition 2.5 (Directed Complex Graph)
+A fixed-amplitude complex graph is a pair $(G,z)$ consisting of a finite undirected graph $G$ and a complex number $z$, with weighted adjacency matrix $A_z$ as above.
 
-A **directed complex graph** is defined as above but without the symmetry requirement on E. This is the setting where the circular law applies.
+### Definition 2.2 (Phase-locked set)
 
----
+For $z\in\mathbb C$, define the phase line
 
-## 3. The Scalar Factorization
+$$
+L_z=z\mathbb R=\{zt:t\in\mathbb R\}.
+$$
 
-### Theorem 1 (Scalar Factorization)
+If $z\ne0$, this is the line through the origin whose angle is $\arg z$ modulo $\pi$. If $z=0$, it degenerates to $\{0\}$.
 
-For any complex weighted graph G = (n, z, E),
-$$A_z = z \cdot B$$
+## 3. Exact algebraic structure
 
-*Proof.* For each (i,j), $(A_z)_{ij} = z \cdot E(i,j) = z \cdot B_{ij} = (z \cdot B)_{ij}$. □
+### Theorem 3.1 (Scalar Factorization Theorem)
 
-### Theorem 2 (Trace Identity)
+For every finite undirected graph $G$ and every $z\in\mathbb C$, the fixed-amplitude adjacency matrix satisfies
 
-$$\mathrm{tr}(A_z) = 0$$
+$$
+A_z=zB.
+$$
 
-*Proof.* $\mathrm{tr}(A_z) = \sum_i (A_z)_{ii} = \sum_i z \cdot E(i,i) = \sum_i z \cdot 0 = 0$ by irreflexivity. □
+#### Proof sketch
 
-### Theorem 3 (Hermitianness of B)
+For each pair $(i,j)$, either the edge is absent, in which case both sides have entry $0$, or it is present, in which case $B_{ij}=1$ and both sides have entry $z$. Equality follows entrywise. $\square$
 
-The Boolean adjacency matrix satisfies $B^* = B$.
+This theorem says that all randomness resides in the real matrix $B$; $z$ contributes one global dilation and rotation.
 
-*Proof.* $(B^*)_{ij} = \overline{B_{ji}} = \overline{E(j,i)} = E(j,i) = E(i,j) = B_{ij}$ using symmetry of E and the fact that E(j,i) ∈ {0,1} ⊂ ℝ. □
+### Theorem 3.2 (Adjoint Phase Relation)
 
-### Corollary 3.1 (Conjugate Transpose of A_z)
+For every undirected realization,
 
-$$A_z^* = \bar{z} \cdot B$$
+$$
+A_z^*=A_{\overline z}.
+$$
 
-*Proof.* $A_z^* = (z \cdot B)^* = \bar{z} \cdot B^* = \bar{z} \cdot B$. □
+#### Proof sketch
 
----
+Using $B^*=B$ and the scalar factorization,
 
-## 4. Normality
+$$
+A_z^*=(zB)^*=\overline z B^*=\overline z B=A_{\overline z}.
+$$
 
-### Theorem 4 (Normality of A_z)
+Thus taking the adjoint conjugates only the common amplitude. $\square$
 
-For any complex weighted graph, $A_z A_z^* = A_z^* A_z$.
+### Theorem 3.3 (Normality Theorem)
 
-*Proof.*
-$$A_z A_z^* = (z \cdot B)(\bar{z} \cdot B) = z\bar{z} \cdot B^2$$
-$$A_z^* A_z = (\bar{z} \cdot B)(z \cdot B) = \bar{z}z \cdot B^2$$
+Every fixed-amplitude complex adjacency matrix of an undirected graph is normal:
 
-Since $z\bar{z} = \bar{z}z$ by commutativity of ℂ, the two expressions are equal. □
+$$
+A_zA_z^*=A_z^*A_z.
+$$
 
-### Remark
+#### Proof sketch
 
-Normality is equivalent to unitary diagonalizability (by the spectral theorem for normal operators). Thus A_z has an orthonormal eigenbasis despite not being Hermitian when Im(z) ≠ 0. This is the algebraic foundation for spectral collinearity.
+By Theorem 3.2,
 
----
+$$
+A_zA_z^*=(zB)(\overline zB)=|z|^2B^2,
+$$
 
-## 5. Spectral Collinearity
+and the reversed product is the same. $\square$
 
-### Theorem 5 (Eigenvector Scaling)
+Normality guarantees unitary diagonalizability. It also implies the exact resolvent identity
 
-If Bv = μv for some v ∈ ℂ^n and μ ∈ ℝ, then $A_z v = (z \cdot μ) v$.
+$$
+\|(wI-A_z)^{-1}\|_2=\frac{1}{\operatorname{dist}(w,\sigma(A_z))}
+$$
 
-*Proof.* $A_z v = (z \cdot B)v = z \cdot (Bv) = z \cdot (\mu v) = (z\mu) \cdot v$. □
+whenever $w\notin\sigma(A_z)$. This stability sharply contrasts with highly nonnormal directed random matrices. Nevertheless, normality alone does not imply line confinement; that stronger conclusion requires factorization by a Hermitian matrix.
 
-### Theorem 6 (Spectral Collinearity)
+## 4. Spectral phase locking
 
-Every complex weighted graph has collinear spectrum: $A_z = z \cdot B$ where B is Hermitian.
+### Theorem 4.1 (Eigenpair Transport Theorem)
 
-*Proof.* Take H = B, w = z. By Theorem 3, B is Hermitian. By Theorem 1, $A_z = z \cdot B$. □
+If $v\ne0$ and
 
-### Corollary 6.1
+$$
+Bv=\mu v,
+$$
 
-The eigenvalues of A_z lie on the line $\{t \cdot z : t \in \mathbb{R}\}$ in the complex plane. In particular, all eigenvalue arguments are either arg(z) or arg(z) + π.
+then
 
-*Proof.* Since B is Hermitian, its eigenvalues λ₁, ..., λ_n are real. By Theorem 5, the eigenvalues of A_z are zλ₁, ..., zλ_n. Each zλ_i = |λ_i| · z if λ_i ≥ 0, or |λ_i| · (-z) if λ_i < 0. □
+$$
+A_zv=(z\mu)v.
+$$
 
-### Remark (Failure of the Circular Law)
+#### Proof sketch
 
-Corollary 6.1 shows that the circular law hypothesis fails for undirected complex weighted graphs. The eigenvalues are confined to a 1-dimensional subset of ℂ (a line through the origin), not a 2-dimensional region (a disk). The symmetry constraint E(i,j) = E(j,i) — equivalently, B = B^T — is the mechanism of collapse.
+Substitute $A_z=zB$:
 
----
+$$
+A_zv=zBv=z\mu v.
+$$
 
-## 6. Walk Phase Accumulation
+The eigenvector is unchanged and the eigenvalue is multiplied by $z$. $\square$
 
-### Theorem 7 (Walk Phase Theorem)
+### Theorem 4.2 (Eigenpair Pullback Theorem)
 
-For all k ≥ 0,
-$$A_z^k = z^k \cdot B^k$$
+Suppose $z\ne0$. If $v\ne0$ and
 
-*Proof.* By induction on k. Base case: $A_z^0 = I = z^0 \cdot B^0$. Inductive step:
-$$A_z^{k+1} = A_z \cdot A_z^k = (z \cdot B)(z^k \cdot B^k) = z^{k+1} \cdot B^{k+1}$$
-using the algebra structure of $M_n(\mathbb{C})$ as a $\mathbb{C}$-algebra. □
+$$
+A_zv=\lambda v,
+$$
 
-### Interpretation
+then
 
-The (i,j) entry of $B^k$ counts the number of walks of length k from i to j. Therefore:
+$$
+Bv=\frac{\lambda}{z}v.
+$$
 
-$$(A_z^k)_{ij} = z^k \cdot (\text{number of walks of length } k \text{ from } i \text{ to } j)$$
+#### Proof sketch
 
-If $z = |z| e^{i\theta}$, then a walk of length k contributes phase $e^{ik\theta}$. Walks of different lengths k₁ and k₂ interfere constructively when $(k_1 - k_2)\theta \equiv 0 \pmod{2\pi}$ and destructively when $(k_1 - k_2)\theta \equiv \pi \pmod{2\pi}$.
+Divide $A_zv=zBv=\lambda v$ by the nonzero scalar $z$. $\square$
 
-This creates a **resonance structure**: the graph has "preferred walk lengths" determined by the phase of z.
+Together these results give the complete spectral description.
 
----
+### Corollary 4.3 (Phase-Locking Theorem)
 
-## 7. Frobenius Norm Identity
+For every fixed-amplitude complex graph,
 
-### Theorem 8 (Frobenius-Topology Identity)
+$$
+\sigma(A_z)=z\sigma(B)\subseteq L_z.
+$$
 
-$$\mathrm{tr}(A_z^* A_z) = |z|^2 \cdot |E_{\mathrm{dir}}|$$
+When $z\ne0$, algebraic multiplicities are preserved under the map $\mu\mapsto z\mu$.
 
-*Proof.*
-$$\mathrm{tr}(A_z^* A_z) = \mathrm{tr}((\bar{z} \cdot B)(z \cdot B)) = |z|^2 \cdot \mathrm{tr}(B^2) = |z|^2 \cdot \sum_{i,j} B_{ij}^2$$
+#### Proof sketch
 
-Since $B_{ij} \in \{0, 1\}$, we have $B_{ij}^2 = B_{ij}$, so $\sum_{i,j} B_{ij}^2 = \sum_{i,j} B_{ij} = |E_{\mathrm{dir}}|$. □
+The real symmetric spectral theorem gives an orthonormal basis $v_1,\dots,v_n$ and real numbers $\mu_1,\dots,\mu_n$ satisfying $Bv_k=\mu_kv_k$. Theorem 4.1 gives $A_zv_k=z\mu_kv_k$. These $n$ vectors already form a basis, so no other eigenvalues occur. $\square$
 
-### Corollary 8.1
+If $z=|z|e^{i\theta}$ and $\lambda\in\sigma(A_z)$, then $e^{-i\theta}\lambda$ is real. Equivalently,
 
-For a normal matrix, $\mathrm{tr}(A^*A) = \sum_i |\lambda_i|^2$. Combined with Theorem 8:
+$$
+\operatorname{Im}(\lambda\overline z)=0.
+$$
 
-$$\sum_{i=1}^n |\lambda_i|^2 = |z|^2 \cdot |E_{\mathrm{dir}}|$$
+This equation is a convenient numerical diagnostic that avoids choosing a branch of the argument.
 
-This constrains the eigenvalue distribution: the total "spectral energy" depends only on |z| and the edge count, independent of the phase arg(z).
+### Corollary 4.4 (No Two-Dimensional Empirical Limit)
 
-### Theorem 9 (Degree-Weight Connection)
+For fixed nonzero $z$, every empirical spectral measure of the form
 
-For each vertex i, the row sum satisfies:
-$$\sum_j (A_z)_{ij} = z \cdot \deg(i)$$
+$$
+\nu_n=\frac1n\sum_{k=1}^n\delta_{\lambda_k(A_z)/a_n},
+$$
 
-*Proof.* $\sum_j (A_z)_{ij} = \sum_j z \cdot E(i,j) = z \sum_j E(i,j) = z \cdot \deg(i)$. □
+where $a_n>0$ is any real normalization, is supported on $L_z$. Therefore any weak limit is also supported on $L_z$ and cannot equal the uniform probability measure on a disk of positive area.
 
----
+#### Proof sketch
 
-## 8. The Directed Case: When the Circular Law Applies
+Positive real scaling preserves $L_z$. Since $L_z$ is closed, a weak limit of probability measures supported there remains supported there. The uniform disk measure assigns full mass to a two-dimensional disk and zero mass to any line, so the two measures cannot coincide. $\square$
 
-For directed complex graphs, the edge function E is not necessarily symmetric. The scalar factorization $A_z = z \cdot B$ still holds, but B is no longer symmetric, hence no longer Hermitian. Consequently:
+### Corollary 4.5 (Centering Does Not Remove Phase Locking)
 
-1. A_z is **not** normal in general (z·z̄·B·B^T ≠ z̄·z·B^T·B when B ≠ B^T)
-2. B has **complex** eigenvalues
-3. Eigenvalues of A_z are not constrained to a line
+Let $M=\mathbb E[B]$. Then $M$ is real symmetric and
 
-For G(n, p) directed random graphs with edge probability p, the centered and normalized matrix $(A_z - zpJ) / (|z|\sqrt{p(1-p)n})$ converges in empirical spectral distribution to the circular law (uniform on the unit disk) as n → ∞, by the Tao-Vu theorem (2010). This is the correct setting for the "circular hallucination."
+$$
+A_z-\mathbb E[A_z]=z(B-M).
+$$
 
-### Conjecture (Spectral Dimension Transition)
+Hence the centered weighted matrix is normal and its spectrum is still contained in $L_z$.
 
-For a partially symmetric graph where a fraction α of edges are bidirectional and (1-α) are unidirectional, there exists a critical α* such that:
-- For α < α*, eigenvalues fill a 2D region (disk-like)
-- For α = 1, eigenvalues collapse to a 1D line
+#### Proof sketch
 
-The nature of this transition (continuous vs. sharp) is an open question.
+Linearity gives $\mathbb E[A_z]=z\mathbb E[B]=zM$. Both $B$ and $M$ are real symmetric, so $B-M$ is real symmetric. Apply the preceding results to $B-M$. $\square$
 
----
+Centering can remove a large mean eigenvalue, but it cannot remove the transpose correlation imposed by undirected edges.
 
-## 9. Algorithms
+## 5. Deterministic spectral bounds
 
-### Algorithm 1: Complex Graph Spectral Analysis
+A line describes angular geometry but not radial extent. A standard maximum-coordinate argument gives a robust outer bound.
 
-```
-Input: n (vertices), z (complex weight), edge indicator E
-Output: eigenvalues, spectral collinearity direction
+### Lemma 5.1 (Row-Sum Eigenvalue Bound)
 
-1. Construct B_{ij} = E(i,j) for all i,j
-2. Compute A_z = z * B
-3. Compute eigenvalues λ₁, ..., λ_n of A_z
-4. Verify collinearity: check all λ_i / z are real (up to numerical precision)
-5. Report direction = arg(z), eigenvalues sorted by |λ_i|
-```
+Let $M\in\mathbb R^{n\times n}$ and suppose
 
-### Algorithm 2: Phase Interference Detection
+$$
+\sum_{j=1}^n|M_{ij}|\le R
+$$
 
-```
-Input: Complex weighted graph G(n,z), vertices i,j, max walk length K
-Output: Interference pattern
+for every row $i$. If $Mv=\mu v$ for some $v\ne0$, then
 
-1. For k = 1 to K:
-     a. Compute (A_z^k)_{ij} = z^k * (B^k)_{ij}
-     b. Record amplitude |z^k * (B^k)_{ij}| and phase arg(z^k * (B^k)_{ij})
-2. Plot amplitude vs. k (interference pattern)
-3. Identify resonant walk lengths: k where amplitude is locally maximal
-```
+$$
+|\mu|\le R.
+$$
 
----
+#### Proof sketch
 
-## 10. Discussion
+Choose $i$ so that $|v_i|=\max_j|v_j|>0$. Then
 
-### 10.1 Significance
+$$
+|\mu||v_i|=\left|\sum_jM_{ij}v_j\right|
+\le\sum_j|M_{ij}||v_j|
+\le R|v_i|.
+$$
 
-Our results clarify the boundary between semicircular and circular spectral behavior in random graph models. The key variable is symmetry: symmetric edge relations produce collinear spectra (semicircle on a line), while asymmetric relations produce 2D spectra (circular law on a disk).
+Cancel $|v_i|$. $\square$
 
-### 10.2 Physical Interpretation
+### Theorem 5.2 (Scaled Row-Sum Bound)
 
-In quantum mechanics, a complex-weighted graph with weight z = |z|e^{iθ} represents a system where all transition amplitudes have the same phase θ. The spectral collinearity implies that the energy levels are effectively one-dimensional — the system has a hidden conservation law imposed by the uniform phase.
+Under the assumptions of Lemma 5.1, the transported eigenvalue $z\mu$ satisfies
 
-### 10.3 Connection to Existing Work
+$$
+|z\mu|\le |z|R.
+$$
 
-The spectral collinearity phenomenon is a special case of the general principle that scalar multiples of Hermitian matrices are normal. What is novel is the connection to graph theory and the explicit contradiction of the circular law hypothesis for symmetric complex graphs.
+#### Proof sketch
 
-### 10.4 Limitations
+Use multiplicativity of the complex modulus and Lemma 5.1:
 
-Our model assumes uniform edge weights (all edges carry the same z). For non-uniform weights, the scalar factorization fails, and the spectral theory becomes substantially more complex. The random matrix analysis (large-n behavior) is not fully formalized; we have provided the algebraic framework but not the probabilistic limit theorems.
+$$
+|z\mu|=|z||\mu|\le |z|R.
+$$
 
----
+$\square$
 
-## 11. Future Work
+For a simple graph, each row sum of $B$ equals the degree of the corresponding vertex. If $\Delta(G)$ is the maximum degree, then
 
-1. **Partially symmetric graphs**: Characterize the spectral dimension transition between α = 0 (fully directed) and α = 1 (fully symmetric).
+$$
+\sigma(A_z)\subseteq L_z\cap\{w\in\mathbb C:|w|\le |z|\Delta(G)\}.
+$$
 
-2. **Non-uniform weights**: Extend to graphs where different edges carry different complex weights z_{ij}, breaking the scalar factorization.
+The disk is an outer envelope, not a claim of uniform filling. The actual spectrum lies on its intersection with a line.
 
-3. **Quantum graph states**: Apply complex weighted graphs to the analysis of graph states in quantum information, where edge weights encode entanglement phases.
+## 6. A finite counterexample to the square-root radius
 
-4. **Spectral gap bounds**: Establish bounds on the spectral gap of complex weighted graphs in terms of graph expansion properties.
+The proposed radius $|z|\sqrt n$ cannot bound all realizations of the uncentered model.
 
-5. **Higher-order tensors**: Extend the theory to complex weighted hypergraphs, where hyperedges carry complex weights.
+### Theorem 6.1 (Complete Four-Vertex Eigenpair)
 
----
+Let $G=K_4$, the complete loopless graph on four vertices, and let $\mathbf1=(1,1,1,1)^{\mathsf T}$. Then
 
-## References
+$$
+A_z\mathbf1=3z\mathbf1.
+$$
 
-1. P. Erdős and A. Rényi, "On Random Graphs I," *Publicationes Mathematicae Debrecen*, 6:290–297, 1959.
+#### Proof sketch
 
-2. J. Ginibre, "Statistical ensembles of complex, quaternion, and real matrices," *Journal of Mathematical Physics*, 6(3):440–449, 1965.
+Every vertex of $K_4$ has three neighbors, so every row of $B$ sums to $3$ and $B\mathbf1=3\mathbf1$. Theorem 4.1 transports this eigenpair to $A_z$. $\square$
 
-3. T. Tao and V. Vu, "Random matrices: The circular law," *Communications in Contemporary Mathematics*, 12(02):261–307, 2010.
+### Theorem 6.2 (Four-Vertex Square-Root-Disk Obstruction)
 
-4. E. Wigner, "On the distribution of the roots of certain symmetric matrices," *Annals of Mathematics*, 67(2):325–327, 1958.
+If $z\ne0$, the weighted adjacency matrix of $K_4$ has an eigenvalue outside the disk of radius $|z|\sqrt4$.
 
-5. F. Chung, "Spectral Graph Theory," *CBMS Regional Conference Series in Mathematics*, No. 92, AMS, 1997.
+#### Proof sketch
+
+Theorem 6.1 supplies the eigenvalue $3z$, whose modulus is $3|z|$. Since
+
+$$
+3|z|>2|z|=|z|\sqrt4,
+$$
+
+the claim follows. $\square$
+
+More generally, $K_n$ has eigenvalue $(n-1)z$ in the all-ones direction. For $n\ge3$, one has $n-1>\sqrt n$, so every nonzero amplitude produces a linear-scale eigenvalue outside the proposed square-root disk. The four-vertex case is a particularly small explicit witness.
+
+This phenomenon is related to the mean component of an uncentered random adjacency matrix. For the loopless Erdős–Rényi model,
+
+$$
+\mathbb E[B]=p(J-I),
+$$
+
+where $J$ is the all-ones matrix. Its all-ones eigenvalue is $p(n-1)$. Thus the mean direction is naturally of order $pn$, whereas centered fluctuations in a dense regime are expected on the order of $\sqrt{np(1-p)}$. Any circular-law comparison should first subtract the mean.
+
+## 7. Expected weighted subgraph counts
+
+The common amplitude also acts transparently on first moments.
+
+Let $E_0$ be a finite collection of possible edges and let $S_1,\dots,S_m\subseteq E_0$ be prescribed edge sets. For a realization $G\subseteq E_0$, define
+
+$$
+N_S(G)=\sum_{r=1}^m\mathbf1_{\{S_r\subseteq G\}}.
+$$
+
+This counts the listed patterns whose required edges all occur. The sets may overlap and need not be distinct.
+
+### Lemma 7.1 (Pattern Occurrence Probability)
+
+For each fixed $S_r$,
+
+$$
+\mathbb P(S_r\subseteq G)=p^{|S_r|}.
+$$
+
+#### Proof sketch
+
+All $|S_r|$ required edges must be present, and their Bernoulli indicators are independent. Multiply their probabilities. $\square$
+
+### Theorem 7.2 (Weighted Subgraph Expectation Formula)
+
+For every $z\in\mathbb C$,
+
+$$
+\mathbb E[zN_S]=z\sum_{r=1}^m p^{|S_r|}.
+$$
+
+#### Proof sketch
+
+Linearity of expectation does not require the pattern indicators to be independent. Therefore
+
+$$
+\mathbb E[N_S]
+=\sum_{r=1}^m\mathbb E[\mathbf1_{\{S_r\subseteq G\}}]
+=\sum_{r=1}^m p^{|S_r|}.
+$$
+
+Multiplication by the fixed scalar $z$ commutes with the finite expectation. $\square$
+
+The formula reinforces the central interpretation: a global complex amplitude rotates and dilates an ordinary real statistic.
+
+## 8. Numerical algorithms and diagnostics
+
+### 8.1 Sampling the undirected model
+
+To sample $A_z$, generate independent Bernoulli variables only for pairs $i<j$, reflect them across the diagonal, and set the diagonal to zero. Forming the dense matrix costs $O(n^2)$ time and memory. A full eigendecomposition of the real symmetric matrix $B$ costs $O(n^3)$ time and $O(n^2)$ memory. It is preferable to compute the real eigenvalues of $B$ with a symmetric eigensolver and multiply them by $z$, rather than applying a general complex eigensolver to $A_z$.
+
+**Algorithm: phase-locked spectrum.**
+
+1. Initialize an $n\times n$ zero matrix $B$.
+2. For each $i<j$, draw $X_{ij}\sim\operatorname{Bernoulli}(p)$.
+3. Set $B_{ij}=B_{ji}=X_{ij}$.
+4. Compute the real eigenvalues $\mu_1,\dots,\mu_n$ of $B$.
+5. Return $\lambda_k=z\mu_k$.
+
+The output automatically satisfies line confinement up to floating-point error.
+
+### 8.2 Phase residual
+
+For $z\ne0$, define the normalized phase residual of a computed eigenvalue $\lambda$ by
+
+$$
+r(\lambda;z)=\frac{|\operatorname{Im}(\lambda\overline z)|}{|z|\max(1,|\lambda|)}.
+$$
+
+The exact theory predicts $r=0$. The denominator makes the statistic scale-resistant and avoids division by a small eigenvalue. The maximum residual over the spectrum should be near floating-point precision when eigenvalues are generated by transport.
+
+### 8.3 Disk diagnostics
+
+Define
+
+$$
+q_{\sqrt n}=\frac{\max_k|\lambda_k|}{|z|\sqrt n}
+$$
+
+for $z\ne0$. Values above $1$ disprove containment for that realization; values below $1$ establish only containment, not a circular distribution. Angular variance or phase residual is the relevant diagnostic for circularity.
+
+### 8.4 Complete-graph witness
+
+For $K_n$, no random sampling is required. Its spectrum is
+
+$$
+\sigma(B)=\{n-1,-1,\dots,-1\},
+$$
+
+and therefore
+
+$$
+\sigma(A_z)=\{(n-1)z,-z,\dots,-z\}.
+$$
+
+This exact benchmark is useful for validating software and illustrating the mean-direction outlier.
+
+## 9. Comparison with circular and Hermitian ensembles
+
+The circular law concerns non-Hermitian matrices with sufficiently independent, centered entries after variance normalization. The fixed-phase undirected model violates the relevant geometry in two ways.
+
+First, $B_{ij}=B_{ji}$, so opposite off-diagonal entries are perfectly correlated. Second, all nonzero entries share one phase. Multiplication by $z$ does not change eigenvectors or produce nonnormality. Even after centering, the matrix remains a scalar multiple of a real symmetric matrix.
+
+A directed replacement behaves differently. Let $X_{ij}$ for $i\ne j$ be independent Bernoulli variables, without imposing $X_{ij}=X_{ji}$. Define
+
+$$
+C_{ij}=z(X_{ij}-p),\qquad C_{ii}=0.
+$$
+
+After normalization by $|z|\sqrt{np(1-p)}$, this is a plausible circular-law model. Direction removes transpose locking, centering removes the rank-one mean component, and normalization sets the fluctuation scale.
+
+An independently phased undirected model leads elsewhere. If the edge $\{i,j\}$ receives a random phase $e^{i\theta_{ij}}$ and the reverse entry is its complex conjugate, then $H_{ji}=\overline{H_{ij}}$ and $H$ is Hermitian. Its eigenvalues are real regardless of the richness of the phases. A semicircular limit, rather than a circular one, is then the natural expectation. This contrast shows that complex entries alone do not determine spectral dimension; adjoint symmetry does.
+
+## 10. Applications
+
+### 10.1 Wave and oscillator networks
+
+In a network of identical phase shifters, multiplying every coupling by $e^{i\theta}$ rotates all modal eigenvalues by the same angle. Relative modal geometry is unchanged. Genuine interference diversity requires edge-dependent phases, delays, or asymmetric propagation.
+
+### 10.2 Complex-valued neural and signal systems
+
+A common complex gain applied to a real symmetric connectivity matrix does not create independent phase channels. The eigenspaces remain those of the real network. Designers seeking phase-selective computation must introduce heterogeneous phases or directed couplings.
+
+### 10.3 Spectral graph diagnostics
+
+A complex spectral plot can be visually deceptive. A rotated real spectrum is complex-valued but not two-dimensional. The phase residual provides a direct test for this hidden one-dimensionality, while the maximum-degree bound supplies a deterministic radial certificate.
+
+### 10.4 Model validation
+
+The factorization $A_z=zB$ is an example of a structural invariant that should be checked before invoking asymptotic universality. Such checks can expose incompatible independence assumptions, identify outliers caused by nonzero means, and suggest the minimal repair to a conjecture.
+
+## 11. Discussion
+
+The proposed “complex probability” model becomes mathematically coherent only after separating the real Bernoulli parameter from the complex edge amplitude. Under that interpretation, the circular-law conjecture fails decisively. The failure is not caused by insufficient graph size or an incorrect choice of normalization. It follows from exact line confinement.
+
+The four-vertex example addresses a second, independent defect in the naive disk heuristic: uncentered matrices may have linear-scale outliers. Even a model with directed edges would generally require centering before comparison with a unit-disk law. Thus two repairs are necessary:
+
+1. remove transpose symmetry, for example by using directed independent edges;
+2. subtract the mean, removing the deterministic rank-one direction.
+
+The row-sum theorem also clarifies the status of radial estimates. Gershgorin-type or maximum-coordinate bounds establish containment but carry no implication about density inside the containing region. A distribution concentrated on a diameter and a distribution uniform over a disk can obey the same radial bound while being geometrically incomparable.
+
+Finally, the expectation formula shows that phase locking is not restricted to eigenvalues. Any real random count multiplied by one fixed amplitude has an expectation on the same phase line. Common phase is a global transformation; local phase disorder is a new source of structure.
+
+## 12. Future work
+
+Several corrected models now emerge naturally.
+
+**Directed fixed-amplitude circular law.** For independent ordered edges, subtract the mean and normalize by $|z|\sqrt{np(1-p)}$. For fixed $0<p<1$ and $z\ne0$, one expects convergence of the empirical spectrum to the uniform measure on the unit disk.
+
+**Sparse directed threshold.** If $p=p_n\to0$, circular behavior should require $np_n$ to exceed a logarithmic sparsity scale. Below that scale, isolated rows should create a persistent atom at zero and obstruct invertibility.
+
+**Magnetic undirected graphs.** Independent unit phases with conjugate weights across the diagonal preserve Hermitian symmetry. After centering and variance normalization, a semicircle law is the natural candidate, subject to moment assumptions on the phase distribution.
+
+**Rank-one outlier transition.** In uncentered dense directed models, one expects an eigenvalue near $zpn$, separated from a fluctuation bulk of scale $|z|\sqrt{np(1-p)}$. Centering should remove this outlier.
+
+**Pseudospectral comparison.** Directed matrices may be strongly nonnormal, whereas the fixed-phase undirected model is normal. Quantitative comparison of resolvent norms would measure not only where eigenvalues lie but also how sensitively they respond to perturbations.
+
+## 13. Conclusion
+
+The analysis also supplies a general workflow for evaluating spectral analogies. One should first isolate deterministic factorization, then identify adjoint symmetry, then separate the matrix mean from its fluctuations, and only afterward choose a normalization or limiting ensemble. Reversing that order can make a visually attractive simulation appear to support an impossible limit. Here the phase-line identity is stronger than any finite sample: it determines the support of every empirical spectral measure at once. Likewise, the four-vertex witness distinguishes a false universal radius from a scale that may still describe a centered bulk in a repaired model. These examples emphasize that asymptotic predictions must respect finite structural invariants.
+
+A fixed complex edge amplitude does not turn an undirected Erdős–Rényi graph into a Ginibre-type matrix. For every realization,
+
+$$
+A_z=zB,
+$$
+
+with $B$ real symmetric. The consequences are exact: $A_z$ is normal, its adjoint conjugates only the global amplitude, its eigenvectors agree with those of $B$, and its spectrum lies on $z\mathbb R$. A row-sum bound scales by $|z|$, expected weighted subgraph counts scale by $z$, and the complete graph on four vertices already disproves a universal $|z|\sqrt n$ radius for uncentered realizations.
+
+The corrected mathematical message is therefore not that complex-weighted undirected random graphs exhibit circular spectra, but that global phase is spectrally rigid. Two-dimensional spectral behavior requires a model with genuinely non-Hermitian independence, together with centering to remove the mean outlier. The obstruction identifies the path to the right conjecture.

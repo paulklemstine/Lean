@@ -1,97 +1,161 @@
-# When Graphs Dream in Complex Numbers
+# Erdős–Rényi on Acid: Why These Random Graphs Refuse to Hallucinate a Circle
 
-## The Hidden Geometry of Imaginary Connections
+## A seductive picture
 
-What happens when the edges of a network carry not just strength, but *direction* in an abstract sense — not the direction of an arrow, but the direction of a complex number, with both amplitude and phase?
+Imagine a network in which every connection carries not merely a strength but a phase. A signal crossing an edge may be amplified, delayed, or turned through an angle in the complex plane. Such networks arise naturally whenever oscillations matter: alternating-current circuits, wave propagation, synchronized oscillators, quantum transport, and phase-aware neural systems. It is tempting to expect their spectra—the collections of characteristic frequencies encoded by their adjacency matrices—to spread across the complex plane in rich, two-dimensional clouds.
 
-This is not a metaphor. It is a precise mathematical construction with surprising consequences that challenge a widespread intuition from random matrix theory.
+Now begin with the classical Erdős–Rényi random graph. There are $n$ vertices, and each undirected edge is independently present with a real probability $p$ between $0$ and $1$. Give every present edge the same complex amplitude $z$, while absent edges retain weight $0$. One might guess that the eigenvalues should occupy a disk of radius roughly $|z|\sqrt n$, perhaps resembling the circular law for matrices with independent entries.
 
----
+That guess is vivid, plausible—and wrong.
 
-## The Classical Story: Random Graphs and Eigenvalues
+The obstruction is not asymptotic, subtle, or statistical. It is exact for every graph of every finite size. The weighted adjacency matrix is simply a complex number times a real symmetric matrix. A common phase rotates the entire spectrum rigidly; it does not create independent phases among the eigenvalues. Instead of filling a disk, every eigenvalue lies on one straight line through the origin.
 
-In 1959, Paul Erdős and Alfréd Rényi asked a deceptively simple question: if you take *n* points and connect each pair independently with probability *p*, what does the resulting graph look like? Their answer launched an entire field. The Erdős-Rényi random graph G(n, p) undergoes a dramatic phase transition: below a critical threshold, the graph is a scattered collection of small clusters; above it, a giant connected component suddenly emerges, like water crystallizing into ice.
+This is a useful cautionary tale about randomness. Randomness in which edges exist is not the same thing as randomness in how complex phases are assigned. A model can look “complex-valued” while remaining spectrally one-dimensional.
 
-But graphs are not just about which vertices are connected. They carry spectral information — the eigenvalues of their adjacency matrices. For a random graph with *n* vertices, the eigenvalues of the adjacency matrix follow predictable distributions as *n* grows large. The largest eigenvalue shoots off to infinity (proportional to the average degree), while the remaining eigenvalues settle into Eugene Wigner's famous semicircle law, bunched symmetrically around zero on the real number line.
+## Separating probability from amplitude
 
-This is all well-understood territory. The eigenvalues are real because adjacency matrices of undirected graphs are symmetric. End of story — or so one might think.
+A complex number should not be called a probability. Probabilities are real numbers in $[0,1]$. The coherent model therefore uses two distinct parameters:
 
-## Complex Weights: A New Kind of Graph
+* $p\in[0,1]$ is the probability that an undirected edge exists;
+* $z\in\mathbb C$ is the amplitude attached to every edge that exists.
 
-Now imagine replacing the 0-or-1 edge weights with a complex number *z*. Every edge that exists gets weight *z = a + bi*, where *i* = √(−1). Every absent edge stays at 0. The result is what we call a **complex weighted graph** G(n, z).
+For a realized graph, let $B$ be its ordinary adjacency matrix: $B_{ij}=1$ when vertices $i$ and $j$ are connected and $B_{ij}=0$ otherwise. Because the graph is undirected, $B_{ij}=B_{ji}$, so $B$ is real and symmetric. The complex-weighted adjacency matrix $A_z$ has entries
 
-Why would anyone do this? One motivation comes from quantum mechanics, where transition amplitudes between states are complex numbers. Another comes from signal processing, where phase information is as important as amplitude. A third comes from pure mathematical curiosity: what happens to the spectral theory when we rotate edges into the complex plane?
+$$
+(A_z)_{ij}=\begin{cases}
+z,&\text{if the edge }\{i,j\}\text{ is present},\\
+0,&\text{otherwise}.
+\end{cases}
+$$
 
-The naive prediction, extrapolating from random matrix theory, is dramatic. The Ginibre ensemble — the canonical random matrix model with independent complex entries — has eigenvalues that fill a disk in the complex plane, distributed uniformly. This is the famous *circular law*. So one might guess that complex-weighted random graphs would have eigenvalues scattered across a disk of radius |z|·√n, a beautiful circular pattern in the complex plane.
+Entry by entry, this says simply
 
-**This prediction is wrong.** And understanding *why* it is wrong reveals a deep structural truth about how symmetry constrains spectral geometry.
+$$
+A_z=zB.
+$$
 
-## The Scalar Factorization: An Elegant Surprise
+That identity is the whole story’s hinge.
 
-The key insight is almost embarrassingly simple, yet its consequences are profound. If every edge carries the same complex weight *z*, then the adjacency matrix A_z can be written as:
+Write $z=|z|e^{i\theta}$. Since $B$ is real symmetric, all its eigenvalues $\mu_1,\dots,\mu_n$ are real and it possesses an orthonormal basis of eigenvectors. If $Bv=\mu v$, then
 
-**A_z = z · B**
+$$
+A_zv=zBv=z\mu v.
+$$
 
-where B is the ordinary {0, 1} adjacency matrix. The complex-weighted matrix is just a scalar multiple of the Boolean matrix.
+Thus $v$ is still an eigenvector, and its new eigenvalue is $z\mu$. Every spectral point belongs to
 
-This factorization is the master key. It unlocks everything:
+$$
+z\mathbb R=\{zt:t\in\mathbb R\},
+$$
 
-**Eigenvalue scaling.** If *v* is an eigenvector of B with eigenvalue λ (which is real, since B is a real symmetric matrix), then *v* is also an eigenvector of A_z with eigenvalue *z*·λ. The eigenvectors don't change at all — only the eigenvalues get multiplied by *z*.
+a line through the origin at angle $\theta$ (with the two rays differing by $\pi$). Multiplication by $|z|$ dilates the real spectrum; multiplication by $e^{i\theta}$ rotates it. Nothing spreads sideways.
 
-**Spectral collinearity.** Since the eigenvalues of B are real numbers, the eigenvalues of A_z are all of the form *z*·λ for real λ. These points lie on a single line through the origin in the complex plane — the line in direction arg(*z*). There is no disk. There is no circle. The eigenvalues are *collinear*.
+We may call this the **Phase-Locking Theorem**: for any finite undirected graph whose present edges all receive one fixed complex amplitude $z$, the weighted spectrum is the ordinary real spectrum multiplied by $z$. If $z\ne0$, the correspondence works in reverse as well: every eigenvalue $\lambda$ of $A_z$ pulls back to the real eigenvalue $\lambda/z$ of $B$.
 
-This is a striking contrast with the circular law. The symmetry of the graph — the fact that edge {i,j} has the same weight as edge {j,i} — forces the eigenvalue distribution to collapse from a two-dimensional disk onto a one-dimensional line.
+## Normal, but not circular
 
-## Normality: Why Complex Graphs Are Well-Behaved
+There is another exact structural result. The conjugate transpose of $A_z$ is
 
-There's a beautiful algebraic reason why this collapse happens. The matrix A_z is *normal*: it commutes with its own conjugate transpose. In formulas:
+$$
+A_z^*=\overline z B=A_{\overline z}.
+$$
 
-A_z · A_z* = A_z* · A_z
+Consequently,
 
-This is not obvious from the definition — A_z is not Hermitian (self-adjoint) when z has a nonzero imaginary part. But the proof is elegant. Since A_z = z·B and B is real symmetric (hence Hermitian), we get:
+$$
+A_zA_z^*=|z|^2B^2=A_z^*A_z.
+$$
 
-A_z · A_z* = (z·B)(z̄·B) = z·z̄ · B² = z̄·z · B² = (z̄·B)(z·B) = A_z* · A_z
+So $A_z$ is a **normal matrix**. Normal matrices have exceptionally stable spectral geometry: they can be diagonalized by a unitary change of basis, and for them the distance from a point to the spectrum controls the resolvent exactly.
 
-The critical step uses only that multiplication of complex numbers is commutative: z·z̄ = z̄·z. That's it. The commutativity of ℂ, combined with the Hermitianness of B, guarantees normality.
+But normality by itself does not force eigenvalues onto a line. A diagonal matrix can be normal while having diagonal entries scattered anywhere in the plane. The stronger fact here is the scalar–symmetric factorization $A_z=zB$. That factorization supplies both normality and phase locking.
 
-Normal matrices are the "nice" matrices of linear algebra — they are exactly the matrices that can be diagonalized by a unitary transformation. This means A_z has a complete orthonormal basis of eigenvectors, and its spectral theory is as clean as possible.
+This distinction explains why comparison with the Ginibre ensemble is misleading. A Ginibre matrix has independently fluctuating, non-Hermitian entries. Its lack of transpose symmetry allows eigenvalues to spread over area. In an undirected graph, however, the entries across the diagonal are tied together: $B_{ij}=B_{ji}$. Giving both entries the same fixed phase preserves that dependence. The matrix may no longer be Hermitian when $z$ is nonreal, but it remains a scalar multiple of a Hermitian matrix.
 
-## Walk Interference: Phase Accumulation
+## A four-vertex warning against the naive radius
 
-Perhaps the most evocative consequence is what happens to walks. In a classical graph, the (i,j) entry of A^k counts the number of walks of length k from vertex i to vertex j. In a complex weighted graph:
+Perhaps the line could still fit inside the proposed disk of radius $|z|\sqrt n$? Not always. The complete graph on four vertices gives an immediate counterexample.
 
-**A_z^k = z^k · B^k**
+Its unweighted adjacency matrix has $0$ on the diagonal and $1$ everywhere else. The all-ones vector $\mathbf 1$ is an eigenvector because every row sums to $3$:
 
-A walk of length k accumulates a complex phase of z^k. If z = |z|·e^{iθ}, then a k-step walk picks up phase e^{ikθ}. Walks of different lengths contribute different phases.
+$$
+B\mathbf 1=3\mathbf 1.
+$$
 
-This creates an interference pattern. Two-step walks contribute phase z². Three-step walks contribute phase z³. If θ is chosen so that kθ is a multiple of 2π for some k but not others, certain walk lengths constructively interfere while others destructively cancel. The graph develops a complex-valued "resonance structure" determined by the interplay of topology and phase.
+After weighting,
 
-## The Frobenius Connection
+$$
+A_z\mathbf 1=3z\mathbf 1.
+$$
 
-The Frobenius norm — the sum of squared absolute values of all matrix entries — connects spectral data to graph topology through a clean identity:
+The corresponding eigenvalue has modulus $3|z|$. Yet the proposed radius for $n=4$ is
 
-tr(A_z* · A_z) = |z|² · E_directed
+$$
+|z|\sqrt4=2|z|.
+$$
 
-where E_directed is the number of ordered edge pairs. For normal matrices, this trace also equals the sum of squared eigenvalue magnitudes. So the total "spectral energy" of the complex graph is determined entirely by |z| and the edge count — the phase of z is irrelevant to the total energy, even though it dramatically affects the spatial distribution of eigenvalues.
+For every nonzero $z$, $3|z|>2|z|$. This is the **Four-Vertex Outlier Theorem**: the complete four-vertex realization already places an eigenvalue outside the conjectured square-root disk.
 
-## When Does the Circular Law Apply?
+The example reveals a familiar phenomenon in random-matrix theory. An uncentered adjacency matrix has a nonzero mean. In dense graphs, the all-ones direction can create an eigenvalue of order $pn$, while random fluctuations live on the smaller scale $\sqrt{np(1-p)}$. A square-root radius cannot contain a linear-scale mean outlier. Centering the matrix is therefore essential even after one repairs the symmetry problem.
 
-Our analysis reveals precisely when the circular law prediction fails: it fails for *symmetric* (undirected) graphs. The symmetry constraint B = B^T forces A_z to be normal, which forces spectral collinearity.
+## What a correct bound looks like
 
-For *directed* graphs — where the edge from i to j can exist independently of the edge from j to i — the matrix A_z is no longer normal. The scalar factorization still holds (A_z = z·B), but now B is not symmetric, so B has complex eigenvalues in general. The eigenvalues of A_z are z·λ_i where the λ_i are themselves complex, and there is no reason for collinearity.
+A disk can still provide a deterministic outer bound, but its radius must come from row sums rather than wishful analogy. Suppose a real matrix $M$ has an eigenpair $Mv=\mu v$ with $v\ne0$, and every row has absolute sum at most $R$:
 
-In the large-n limit with independent directed edges, the Tao-Vu circular law theorem applies (after centering and rescaling), and eigenvalues do fill a disk. The "hallucination" of complex probabilities — eigenvalues spreading into two dimensions — is real, but only for directed graphs. Undirected graphs, constrained by symmetry, can only dream in one dimension.
+$$
+\sum_j |M_{ij}|\le R\qquad\text{for every }i.
+$$
 
-## The Bigger Picture
+Choose an index where $|v_i|$ is maximal. The eigenvalue equation and triangle inequality give $|\mu|\le R$. After multiplying the matrix by $z$, the transported eigenvalue satisfies the **Scaled Row-Sum Bound**
 
-This work sits at the intersection of random matrix theory, spectral graph theory, and complex analysis. The main lesson is a cautionary tale about extrapolation: intuitions from one class of random matrices (Ginibre, with independent entries) do not automatically transfer to another (symmetric matrices with complex scalar weighting).
+$$
+|z\mu|\le |z|R.
+$$
 
-The spectral collinearity phenomenon also has a physical interpretation. In quantum mechanics, a complex-weighted graph represents a system where transition amplitudes have a fixed phase relationship. The collinearity of eigenvalues means the energy spectrum is effectively one-dimensional — the system has "fewer degrees of freedom" than a generic complex matrix would suggest. The symmetry of the graph imposes a hidden conservation law on the spectrum.
+For a simple graph, $R$ may be taken as the maximum degree $\Delta$, yielding $|\lambda|\le |z|\Delta$. This disk contains the spectrum, but it says nothing about whether the disk is filled. In the fixed-phase undirected model, the spectrum still occupies only its central line.
 
-Looking forward, the most intriguing direction is the boundary between order and chaos: what happens for *partially* symmetric graphs, where some edges are bidirectional and others are unidirectional? As the fraction of symmetric edges increases, do the eigenvalues gradually collapse from a disk onto a line? Is there a phase transition — a critical symmetry fraction at which the spectral dimension drops from 2 to 1? These questions connect complex weighted graphs to deep problems in random matrix universality and the geometry of eigenvalue distributions.
+## Expectations rotate too
 
-The mathematics of complex-weighted graphs is young, but its central message is clear: **symmetry controls spectral geometry**. In the complex plane, what you see depends not just on what connections exist, but on whether those connections respect the fundamental symmetry of being bidirectional. Break that symmetry, and eigenvalues spread into two dimensions. Preserve it, and they are forever confined to a line.
+The same separation between probability and amplitude clarifies subgraph statistics. Let $S_1,\dots,S_m$ be prescribed finite edge sets. For a random graph $G$, define
 
----
+$$
+N(G)=\sum_{r=1}^m \mathbf 1_{\{S_r\subseteq G\}},
+$$
 
-*The results described in this article have been rigorously verified using computer-assisted proof technology, ensuring mathematical certainty beyond what traditional peer review can provide.*
+the number of prescribed patterns whose required edges are all present. Independence gives
+
+$$
+\mathbb E[N]=\sum_{r=1}^m p^{|S_r|}.
+$$
+
+If each occurrence is assigned the common complex weight $z$, linearity of expectation yields the **Weighted Subgraph Expectation Formula**
+
+$$
+\mathbb E[zN]=z\sum_{r=1}^m p^{|S_r|}.
+$$
+
+Once again, a fixed complex amplitude only rotates and dilates a real quantity. It does not generate a two-dimensional distribution by itself.
+
+## The experiment that tells the truth
+
+Take $n=1000$, $p=\log(n)/n$, and $z=0.5+0.3i$. A numerical simulation should construct an undirected Bernoulli adjacency matrix $B$, form $A_z=zB$, and compute its eigenvalues. Plotting those values in the complex plane will not produce a circular cloud. Up to numerical roundoff, each eigenvalue $\lambda$ obeys
+
+$$
+\operatorname{Im}(\lambda\overline z)=0,
+$$
+
+which is an equation for the line $z\mathbb R$.
+
+One may also compare the spectrum with the disk of radius $|z|\sqrt n$. Whether every sampled point lies inside that disk depends on the mean outlier and sparsity. At $p=\log(n)/n$, the leading uncentered eigenvalue is typically on the scale $|z|\log n$, while $|z|\sqrt n$ is larger for sufficiently large $n$; so the sample may happen to fit. But containment in one experiment is not evidence for a circular law. The decisive observation is angular: the points remain phase-locked to a line.
+
+Centering replaces $B$ by $B-\mathbb E B$, but this difference is still real symmetric. Therefore $z(B-\mathbb E B)$ remains phase-locked. Centering removes the mean direction; it cannot undo undirected transpose symmetry.
+
+## How to make circles possible
+
+A genuine circular-law model needs independent non-Hermitian fluctuations. One natural repair is to direct the graph. For each ordered pair $i\ne j$, choose the edge $i\to j$ independently with probability $p$. Give a present edge amplitude $z$, subtract the mean, and divide by the fluctuation scale $|z|\sqrt{np(1-p)}$. The entries across the diagonal are no longer forced to agree, so a two-dimensional limiting spectrum becomes plausible.
+
+Another modification keeps an undirected geometry but assigns independent phases to edges, placing conjugate values across the diagonal. That creates a Hermitian magnetic adjacency matrix. Its eigenvalues remain real, suggesting semicircular rather than circular behavior after normalization. This is not a failure of complex phases; it is a demonstration that adjoint symmetry, not the vocabulary of “complex weights,” determines spectral dimension.
+
+The central lesson reaches beyond random graphs. In any model of phase-aware information flow, global phase and local phase disorder are profoundly different. A single common phase changes coordinates. Independent phases change interactions. The former rotates an existing picture; the latter can create interference.
+
+The graph that was supposed to hallucinate a circle does something more instructive: it refuses. Its refusal identifies exactly which assumptions make circular spectra possible—direction, centering, and sufficiently independent fluctuations—and which merely decorate a one-dimensional spectrum with complex notation.
