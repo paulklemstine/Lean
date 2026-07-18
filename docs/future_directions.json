@@ -10395,7 +10395,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\n## Result established\n\n`Catalog/Applications/HyperbolicNumberTheory/CayleyPythagoreanBridge.lean` gives a precise replacement for the underspecified “hyperbolic integers” proposal. For the integer-translation subgroup of the modular group, it studies the Cayley image\n\n\\[\nz_n=\\frac{n}{n+2i}.\n\\]\n\nIt proves simultaneously that:\n\n1. every `z_n` lies strictly inside the Poincaré disk;\n2. the orbit lies on the horocycle `|2z_n-1|²=1`, tangent to the ideal boundary at `1`;\n3. clearing the horocycle equation produces the integral right-triangle identity\n   \\[(n^2-4)^2+(4n)^2=(n^2+4)^2.\\]\n\nThis is the connector: a modular cusp orbit in hyperbolic geometry and Euclid-style Pythagorean triples are two realizations of one circle equation.\n\n## Natural formal extensions\n\n1. **Primitivity classification.** Prove an exact formula for\n   `gcd (n² - 4) (4n)` and classify when the resulting Pythagorean triple is primitive after normalization.\n2. **Rational parametrization equivalence.** Show that every rational point on the horocycle except its tangency point comes from a unique rational parameter, then identify integral modular parameters as a distinguished discrete subset.\n3. **Hyperbolic metric formulation.** Add the Poincaré distance and prove the exact distance of `z_n` from the origin, relating cusp escape to logarithmic growth in `|n|`.\n4. **General cusp width.** Replace `2i` by a positive integral width and derive the corresponding family\n   `(n²-w², 2wn, n²+w²)`.\n5. **Matrix-level modular action.** Represent translations by determinant-one matrices, prove compatibility of the Cayley transform with their Möbius action, and connect the horocycle equation directly to the parabolic trace condition.\n6. **Counting theorem.** Count orbit points below a Euclidean or hyperbolic radial cutoff and compare the resulting one-dimensional cusp law with ambient hyperbolic area growth.\n7. **Primitive geodesics and Selberg zeta.** A meaningful prime theory should use primitive hyperbolic conjugacy classes (closed geodesics), not arbitrary tessellation vertices. Formalizing this requires definitions of primitive classes, lengths, and the Selberg zeta product before any prime-geodesic or zero statement can be posed.\n\n## Scope boundaries\n\nThe original proposed `Z_H`, multiplication, prime vertices, norm, and zeta series are not specified well enough to support unique factorization, a prime number theorem, or a zero computation. In particular, tessellation vertices do not automatically inherit a canonical multiplicative monoid, and a claim about “the first 100 zeros” requires a precise analytic function, continuation, zero ordering, and certified numerical enclosures. None of those conjectural claims is asserted here. The proved connector instead uses canonical data from the modular translation orbit and makes no unverified spectral claim.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -14033,11 +14033,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "cbc5314c",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -14050,7 +14050,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0340",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-18T15:36:12.851310+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -14065,7 +14065,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-18T15:34:30.695533+00:00",
       "title": "The P vs NP of Sudoku: Phase Transitions in Constraint Satisfaction"
@@ -14074,11 +14074,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "74205c89",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -14091,7 +14091,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0341",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-18T15:36:31.594872+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -14106,7 +14106,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-18T15:34:30.935342+00:00",
       "title": "Topological Quantum Compiling: Braid Groups as Universal Gates"
@@ -14367,7 +14367,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 71fc60c7 (Q=0.750), which proved 23 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Elementary cellular automata (ECAs) are the 256 rules that update a 1D binary array based on its 3-cell neighborhood. Rule 110 is Turing-complete. But ECAs can also be viewed as polynomial maps over GF(2): the state s = (s_0, s_1, ..., s_{n-1}) is a vector over GF(2), and the update rule is s -> f(s",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Applications"
       ],
@@ -14687,7 +14687,7 @@
       "depth_estimate": 3,
       "description": "Cycle 1003d095 (Q=0.740) proved 0 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in ",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Applications"
       ],
@@ -14807,7 +14807,7 @@
       "depth_estimate": 3,
       "description": "Cycle 9f14a31b (Q=0.600) proved 13 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Every real number defines a musical scale: map the digits 0-9 to frequencies f_n = 220 * 2^{n/12} (the A minor pentatonic scale extended). The number pi = 3.14159265... produces the sequence E4, C5, C",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Applications"
       ],
@@ -14847,7 +14847,7 @@
       "depth_estimate": 3,
       "description": "Cycle d1663b23 (Q=0.700) proved 0 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'A minimal modularity lifting theorem for Siegel modular forms' and formalize its key results. Abstract: We prove a minimal modularity lifting theorem (in the spirit of Gen",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Applications"
       ],
@@ -15041,11 +15041,11 @@
     "famous_subtask",
     "famous_subtask",
     "famous_subtask",
-    "famous_subtask",
-    "famous_subtask",
     "cross_domain_bridge",
     "famous_subtask",
     "abduction_followup",
+    "famous_subtask",
+    "famous_subtask",
     "famous_subtask",
     "famous_subtask"
   ]
