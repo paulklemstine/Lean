@@ -1,173 +1,408 @@
-# Cryptography from Chaos: Exact Structure of the Logistic Keystream
-
-**Author:** Aristotle
-**Date:** 2026-07-10
+# Structural Cryptanalysis of the Parameter-Four Logistic Map
 
 ## Abstract
 
-The logistic map $f(x) = 4x(1-x)$ on the unit interval is the canonical example of one-dimensional chaos, and it has repeatedly been proposed as the heart of a "chaos-based" stream cipher: the orbit of a secret seed $x_0 \in (0,1)$ is used as a keystream that masks the plaintext. Two properties are advertised as the source of security: *sensitive dependence on initial conditions* (the avalanche effect), and *algebraic depth* (the $n$-th iterate is a polynomial of exponentially large degree $2^n$, so recovering the seed appears to require solving a degree-$2^n$ equation). We make both claims precise and prove them. The unifying device is the exact **semiconjugacy of the logistic map to angle doubling**, $f(\sin^2 t) = \sin^2(2t)$, which lifts to $f^n(\sin^2 t) = \sin^2(2^n t)$ for every $n$. From this single identity we derive: (i) an explicit family of seeds converging to the fixed point $0$ whose $n$-th iterates remain a *constant* distance $\tfrac12$ from the fixed orbit, a quantitative avalanche; and (ii) the fact that the $n$-th iterate, viewed as a polynomial, has degree exactly $2^n$, with the polynomial and dynamical descriptions agreeing pointwise. We also record the invariant structural facts (the unit interval is preserved; the only real fixed points are $0$ and $3/4$). Finally we explain, using the conjugacy, why the naive chaos cipher is nonetheless insecure: in the conjugate coordinate the dynamics is the binary shift map, so the degree-$2^n$ barrier is an artifact of coordinates and the seed is recoverable in time linear in the security parameter. The work is a compact bridge between real dynamics and polynomial algebra, and a cautionary tale about coordinate-dependent notions of hardness.
+The parameter-four logistic map $f(x)=4x(1-x)$ is often presented as a candidate source of cryptographic pseudorandomness because typical nearby trajectories separate exponentially and because the degree of the $n$th iterate is $2^n$. We show that neither observation supports one-wayness. The map has a universal reflection collision, $f(1-x)=f(x)$, so reflected seeds generate identical orbit suffixes after one update. Every real target $y\le 1$ has the explicit preimage $(1-\sqrt{1-y})/2$, replacing generic high-degree inversion by a sequence of quadratic inverse steps. Under the coordinate $x=\sin^2\theta$, the dynamics obey the exact semiconjugacy $f(\sin^2\theta)=\sin^2(2\theta)$ and the closed iterate formula $f^n(\sin^2\theta)=\sin^2(2^n\theta)$. Exceptional seeds, including $0$ and $1/2$, disprove claims of seed-independent limiting behavior and universal long periods. Finally, every $p$-bit deterministic realization repeats within its first $2^p+1$ visited states, an upper bound on first collision rather than a lower bound on period. These results establish a structural cryptanalytic obstruction: chaotic sensitivity, algebraic degree, finite statistical tests, and large state spaces do not by themselves imply cryptographic pseudorandomness.
 
 ## 1. Introduction
 
-Chaos and cryptography share a slogan: small causes, large effects. A cryptosystem is supposed to *diffuse* information so that a one-bit change in the key or plaintext changes roughly half the output bits. A chaotic dynamical system exhibits *sensitive dependence on initial conditions*, so that a small change in the state is amplified exponentially in time. The resemblance has inspired a long line of "chaos-based" ciphers, of which the simplest and most famous uses the logistic map at its fully chaotic parameter.
+Consider the logistic recurrence
 
-**The logistic cipher.** Fix a secret seed $x_0 \in (0,1)$ and iterate
+$$
+x_{n+1}=4x_n(1-x_n), \qquad x_0\in[0,1].
+$$
 
-$$f(x) = 4x(1-x).$$
+At parameter $4$, typical trajectories exhibit sensitive dependence on initial conditions. A perturbation in a typical initial state grows exponentially in an average logarithmic sense, with Lyapunov exponent $\log 2$. The orbit also has a well-known invariant probability density
 
-The keystream is the orbit $K = \bigl(f(x_0), f^2(x_0), f^3(x_0), \dots\bigr)$, quantized to bits; the ciphertext is $C = M \oplus K$ for plaintext $M$. Decryption regenerates $K$ from $x_0$ and XORs it out. The proposed security rests on two claims:
+$$
+\rho(x)=\frac{1}{\pi\sqrt{x(1-x)}}
+$$
 
-1. **Sensitivity.** A change of $\varepsilon$ in $x_0$ produces an $O(1)$ change in $f^n(x_0)$ after $n = O(\log(1/\varepsilon))$ iterations.
-2. **Algebraic depth.** The iterate $f^n$ is a polynomial of degree $2^n$, so solving for $x_0$ from keystream values is a degree-$2^n$ root-finding problem, exponential in $n$.
+on the open unit interval. These properties make the recurrence appear attractive as a keystream generator: choose a secret seed, discard an initial prefix, extract bits from later states, and combine the resulting stream with a plaintext by exclusive-or.
 
-**Contribution.** We prove precise forms of both claims and identify the exact structural reason they hold. The keystone is the classical semiconjugacy
+A cryptographic claim, however, requires more than irregular plots or favorable aggregate statistics. A deterministic generator should resist efficient prediction and inversion when its design is public. Equivalent keys, exact symmetries, special orbits, coordinate transformations, numerical representations, and extraction functions must all be included in the analysis.
 
-$$f(\sin^2 t) = \sin^2(2t), \qquad\text{hence}\qquad f^n(\sin^2 t) = \sin^2(2^n t),$$
+This paper gives an exact structural analysis of the parameter-four map. Its conclusions are negative for the simplest logistic-map cipher but constructive for the study of chaos-based generators. The main results are:
 
-which conjugates the logistic map to the angle-doubling map $t \mapsto 2t$. The per-step stretching factor $2$ is the common origin of the Lyapunov exponent $\log 2$, the exponential sensitivity, and the degree growth. We then use the same identity to explain the cipher's fatal weakness: doubling is the binary shift, so the keystream transparently emits the bits of the conjugate coordinate.
+1. reflection about $1/2$ produces universal seed collisions;
+2. every nonempty orbit suffix is identical for a reflected pair;
+3. one-step inversion has explicit square-root branches;
+4. the map is semiconjugate to angle doubling and therefore has a closed iterate formula;
+5. short exceptional orbits invalidate universal ergodicity and period claims; and
+6. finite state cardinality provides only an upper bound on first repetition.
 
-**Organization.** Section 2 fixes definitions and elementary invariants. Section 3 proves the semiconjugacy and its iterate form. Section 4 develops the polynomial (algebraic) description and the degree theorem. Section 5 states and proves the sensitivity result. Section 6 discusses cryptographic consequences, including the linear-time break. Section 7 gives algorithms and numerical illustrations, and Section 8 collects future directions.
+The central distinction is between **dynamical instability** and **computational one-wayness**. Forward sensitivity says that nearby inputs can have distant future states. One-wayness says that, given an output, recovering a compatible input is computationally difficult. The former does not entail the latter.
 
-## 2. Definitions and elementary invariants
+## 2. Definitions and cryptographic model
 
-**Definition 2.1 (Logistic map).** The *logistic map* at the fully chaotic parameter $r = 4$ is
-$$f : \mathbb{R} \to \mathbb{R}, \qquad f(x) = 4x(1-x).$$
-Its $n$-fold iterate is written $f^n = f \circ f \circ \cdots \circ f$ ($n$ times), with $f^0 = \mathrm{id}$.
+### 2.1 The logistic map and its iterates
 
-Two immediate values anchor the dynamics on the interval's boundary: $f(0) = 0$ and $f(1) = 0$.
+**Definition 2.1 (Parameter-four logistic map).** For a real state $x$, define
 
-**Proposition 2.2 (Invariance of the unit interval).** If $0 \le x \le 1$ then $0 \le f(x) \le 1$.
+$$
+f(x)=4x(1-x).
+$$
 
-*Proof.* Nonnegativity is clear since $x \ge 0$ and $1 - x \ge 0$ give $f(x) = 4x(1-x) \ge 0$. For the upper bound, complete the square: $1 - f(x) = 1 - 4x(1-x) = (2x-1)^2 \ge 0$, so $f(x) \le 1$. $\qquad\blacksquare$
+On $[0,1]$, the map takes values in $[0,1]$. Define $f^0(x)=x$ and recursively
 
-Thus $f$ restricts to a self-map of $[0,1]$, and the keystream never leaves the unit interval.
+$$
+f^{n+1}(x)=f(f^n(x)).
+$$
 
-**Proposition 2.3 (Fixed points).** For $x \in \mathbb{R}$, $f(x) = x$ if and only if $x = 0$ or $x = \tfrac34$.
+The degree of $f^n$, viewed as a polynomial, is $2^n$ for $n\ge 0$. Degree growth describes expanded symbolic expressions, but does not by itself determine the complexity of evaluating or inverting the function.
 
-*Proof.* The equation $4x(1-x) = x$ is equivalent to $x(3 - 4x) = 0$, whose roots are $x = 0$ and $x = 3/4$. $\qquad\blacksquare$
+### 2.2 A logistic-map stream cipher
 
-The fixed point $0$ is on the boundary and is the anchor for our sensitivity construction: since $f(0) = 0$, the entire orbit of $0$ is constantly $0$, i.e. $f^n(0) = 0$ for all $n$ (immediate by induction).
+**Definition 2.2 (Orbit-suffix keystream).** Given a seed $x_0$, a positive starting index $s$, and a requested length $L$, the real-valued orbit suffix is
 
-## 3. Semiconjugacy to angle doubling
+$$
+K_{s,L}(x_0)=\bigl(f^s(x_0),f^{s+1}(x_0),\ldots,f^{s+L-1}(x_0)\bigr).
+$$
 
-The central structural fact is a change of variables that linearizes the map.
+A practical generator applies a deterministic quantizer or bit extractor $Q$ to these values. The extracted stream may be written
 
-**Theorem 3.1 (Semiconjugacy).** For every $t \in \mathbb{R}$,
-$$f(\sin^2 t) = \sin^2(2t).$$
+$$
+B_{s,L}(x_0)=\bigl(Q(f^s(x_0)),\ldots,Q(f^{s+L-1}(x_0))\bigr).
+$$
 
-*Proof.* Using the double-angle identity $\sin(2t) = 2\sin t \cos t$ and the Pythagorean identity $\cos^2 t = 1 - \sin^2 t$,
-$$\sin^2(2t) = 4\sin^2 t\,\cos^2 t = 4\sin^2 t\,(1 - \sin^2 t) = f(\sin^2 t). \qquad\blacksquare$$
+A message bit string $M$ is encrypted as $C=M\oplus B_{s,L}(x_0)$. Decryption repeats the generator and computes $M=C\oplus B_{s,L}(x_0)$.
 
-The map $\Phi(t) = \sin^2 t$ therefore intertwines the doubling map $D(t) = 2t$ with the logistic map: $f \circ \Phi = \Phi \circ D$. Because $\Phi$ is surjective onto $[0,1]$ (as $t$ ranges over $\mathbb{R}$, $\sin^2 t$ covers $[0,1]$), this is a genuine semiconjugacy, and it lifts to all iterates.
+This definition deliberately separates exact dynamics from implementation. In exact arithmetic the state is real. In software, the state belongs to a finite set determined by a number format, operation order, and rounding rule. Security conclusions about one model do not automatically transfer to the other.
 
-**Theorem 3.2 (Iterated semiconjugacy).** For every $n \in \mathbb{N}$ and $t \in \mathbb{R}$,
-$$f^n(\sin^2 t) = \sin^2(2^n t).$$
+### 2.3 Security properties under consideration
 
-*Proof.* Induction on $n$. For $n = 0$ both sides equal $\sin^2 t$. Assume the claim for $k$. Then, using $f^{k+1} = f \circ f^k$ and Theorem 3.1,
-$$f^{k+1}(\sin^2 t) = f\bigl(f^k(\sin^2 t)\bigr) = f\bigl(\sin^2(2^k t)\bigr) = \sin^2\bigl(2 \cdot 2^k t\bigr) = \sin^2\bigl(2^{k+1} t\bigr).\qquad\blacksquare$$
+Four properties are often conflated:
 
-**Interpretation.** Under $x = \sin^2 t$ the logistic dynamics is exactly $t \mapsto 2^n t$. The multiplier $2^n$ is the exact stretching factor; its logarithm per step, $\log 2$, is the Lyapunov exponent of the map. Every subsequent result is a shadow of this one identity.
+- **Sensitivity:** nearby seeds may generate separated future states.
+- **Statistical quality:** selected finite-sample statistics resemble those of a chosen random model.
+- **One-wayness:** recovering a suitable predecessor or key from observed output is computationally difficult.
+- **Cryptographic pseudorandomness:** no feasible adversary can distinguish the output from an ideal random source with non-negligible advantage under a specified experiment.
 
-## 4. Algebraic depth: the degree-$2^n$ theorem
+Sensitivity is a dynamical property. Statistical quality depends on tests and sample sizes. One-wayness and pseudorandomness are adversarial computational properties. None follows automatically from another.
 
-We now record the algebraic side. Treat $f$ as a real polynomial and iterate by composition.
+## 3. Reflection symmetry and equivalent seeds
 
-**Definition 4.1 (Logistic polynomial and its iterates).** Let
-$$P(X) = 4X(1-X) \in \mathbb{R}[X],$$
-and define the composition iterates by $P^{[0]} = X$ and $P^{[n+1]} = P \circ P^{[n]}$ (polynomial composition).
+The logistic parabola folds the unit interval at $1/2$. That fold yields an exact family of collisions.
 
-**Lemma 4.2.** $\deg P = 2$.
+**Theorem 3.1 (Reflection Collision Theorem).** For every real number $x$,
 
-*Proof.* $P = 4X - 4X^2$ has leading term $-4X^2$. $\qquad\blacksquare$
+$$
+f(1-x)=f(x).
+$$
 
-**Theorem 4.3 (Exponential algebraic degree).** For every $n \in \mathbb{N}$,
-$$\deg P^{[n]} = 2^n.$$
+**Proof sketch.** Direct expansion gives
 
-*Proof.* Induction on $n$. For $n = 0$, $\deg X = 1 = 2^0$. For the step, degrees multiply under composition of polynomials over a field, so
-$$\deg P^{[k+1]} = \deg\bigl(P \circ P^{[k]}\bigr) = (\deg P)\,(\deg P^{[k]}) = 2 \cdot 2^k = 2^{k+1}. \qquad\blacksquare$$
+$$
+f(1-x)=4(1-x)(1-(1-x))=4(1-x)x=4x(1-x)=f(x).
+$$
 
-**Theorem 4.4 (Algebraic = dynamical).** For every $n \in \mathbb{N}$ and $x \in \mathbb{R}$,
-$$P^{[n]}(x) = f^n(x).$$
+The argument uses only commutativity of multiplication, so the identity remains valid in any commutative ring. $\square$
 
-*Proof.* Induction on $n$. For $n = 0$ both sides are $x$. For the step, evaluation commutes with composition: $P^{[k+1]}(x) = P\bigl(P^{[k]}(x)\bigr) = P\bigl(f^k(x)\bigr) = 4 f^k(x)\bigl(1 - f^k(x)\bigr) = f\bigl(f^k(x)\bigr) = f^{k+1}(x)$. $\qquad\blacksquare$
+**Corollary 3.2 (Non-injectivity).** The logistic map is not injective on $[0,1]$, on $\mathbb R$, or on any nontrivial commutative ring interpreted through the same polynomial.
 
-**Consequence (apparent hardness).** Given a keystream sample $y = f^n(x_0)$, recovering $x_0$ algebraically means solving $P^{[n]}(x) = y$, a polynomial equation of degree $2^n$. For $n = 64$ the degree is $2^{64} \approx 1.8\times10^{19}$. Naively, this is the exponential barrier the cipher advertises. Section 6 shows why the barrier is illusory.
+**Proof sketch.** On $[0,1]$, $f(0)=f(1)=0$ while $0\ne1$. More generally, Theorem 3.1 identifies $x$ and $1-x$ whenever those elements are distinct. $\square$
 
-## 5. Sensitive dependence on initial conditions
+The collision propagates through every later update.
 
-We now give a fully explicit, quantitative avalanche. The construction exploits Theorem 3.2 to place the $n$-th iterate exactly.
+**Theorem 3.3 (Permanent Merging of Reflected Orbits).** For every real $x$ and every integer $n\ge1$,
 
-**Definition 5.1 (Sensitivity seeds).** For $n \in \mathbb{N}$ set
-$$s_n = \sin^2\!\left(\frac{\pi}{2^{\,n+2}}\right).$$
+$$
+f^n(1-x)=f^n(x).
+$$
 
-**Lemma 5.2 (Positivity).** $s_n > 0$ for all $n$.
+**Proof sketch.** The case $n=1$ is Theorem 3.1. If the states agree after $n$ updates, applying the deterministic function $f$ to both sides shows agreement after $n+1$ updates. Induction completes the argument. $\square$
 
-*Proof.* The angle $\alpha_n = \pi/2^{\,n+2}$ satisfies $0 < \alpha_n < \pi$ (since $2^{\,n+2} \ge 2$), so $\sin \alpha_n > 0$ and hence $s_n = \sin^2\alpha_n > 0$. $\qquad\blacksquare$
+**Corollary 3.4 (Finite Keystream Collision).** Let $s\ge1$ and $L\ge0$. Then
 
-**Lemma 5.3 (Quadratic collapse to the fixed point).** $s_n \le (\pi/2^{\,n+2})^2$, and therefore $s_n \to 0$ as $n \to \infty$.
+$$
+K_{s,L}(x)=K_{s,L}(1-x).
+$$
 
-*Proof.* With $\alpha_n = \pi/2^{\,n+2} \in [0,\pi]$ we have $0 \le \sin\alpha_n \le \alpha_n$ (the elementary bound $\sin\alpha \le \alpha$ for $\alpha \ge 0$), and squaring the inequality between nonnegative quantities gives $s_n = \sin^2\alpha_n \le \alpha_n^2$. The right side tends to $0$. $\qquad\blacksquare$
+Consequently, for every deterministic extraction function $Q$,
 
-**Lemma 5.4 (Exact landing point).** For every $n$, $\;f^n(s_n) = \tfrac12.$
+$$
+B_{s,L}(x)=B_{s,L}(1-x).
+$$
 
-*Proof.* By Theorem 3.2 with $t = \pi/2^{\,n+2}$,
-$$f^n(s_n) = \sin^2\!\left(2^n \cdot \frac{\pi}{2^{\,n+2}}\right) = \sin^2\!\left(\frac{\pi}{4}\right) = \left(\frac{\sqrt2}{2}\right)^2 = \frac12. \qquad\blacksquare$$
+**Proof sketch.** For each index $j$ with $0\le j<L$, the exponent $s+j$ is positive. Apply Theorem 3.3 componentwise. Applying $Q$ preserves equality. $\square$
 
-**Theorem 5.5 (Quantitative sensitive dependence).** For every $n \in \mathbb{N}$,
-$$0 < s_n \le \left(\frac{\pi}{2^{\,n+2}}\right)^2 \qquad\text{and}\qquad \bigl| f^n(s_n) - f^n(0)\bigr| = \frac12.$$
+This is an equivalent-key phenomenon. If the key is represented directly by the seed, then almost every seed has a reflected partner that generates the same stream after one update. Increasing the discarded prefix or the observed suffix does not remove the ambiguity. The collision occurs before quantization, so no bit extractor can distinguish the two trajectories afterward.
 
-*Proof.* The bounds on $s_n$ are Lemmas 5.2–5.3. For the gap, $f^n(0) = 0$ (the orbit of the fixed point $0$) and $f^n(s_n) = \tfrac12$ by Lemma 5.4, so the absolute difference is exactly $\tfrac12$. $\qquad\blacksquare$
+The result does not by itself recover a seed from an arbitrary stream, but it invalidates unique seed recovery and reduces the effective key space whenever reflected seeds are counted separately. More broadly, it demonstrates why key-space cardinality must be measured after quotienting by output equivalence.
 
-**Interpretation.** The seeds $s_n$ are exponentially close to the fixed point $0$ — their distance is at most $\pi^2/2^{\,2n+4}$, i.e. $O(2^{-2n})$ — yet after only $n$ iterations they are separated from the fixed orbit by a *constant* $\tfrac12$. A perturbation of size $\varepsilon \approx 2^{-2n}$ becomes macroscopic after $n \approx \tfrac12\log_2(1/\varepsilon)$ steps. This is the avalanche in exact form: linearly many steps suffice to amplify an exponentially small difference to $O(1)$.
+## 4. Explicit inversion and the failure of the degree heuristic
 
-## 6. Cryptographic consequences
+The polynomial $f^n(x)$ has degree $2^n$. It is therefore tempting to frame inversion as solving an unstructured polynomial of exponentially large degree. The map’s special form makes that framing inappropriate.
 
-### 6.1 The two pillars are real theorems
+**Theorem 4.1 (Explicit Lower-Branch Preimage).** For every real target $y\le1$, define
 
-Theorem 5.5 confirms sensitivity: any imprecision in the seed is amplified to a full-scale output difference within a number of steps logarithmic in the imprecision. Theorem 4.3 confirms algebraic depth: the $n$-th iterate is a genuine degree-$2^n$ polynomial (Theorem 4.4 certifies it computes the same function as the dynamics). A designer reading only these two results would conclude that the seed is well hidden.
+$$
+g_-(y)=\frac{1-\sqrt{1-y}}{2}.
+$$
 
-### 6.2 The conjugate coordinate breaks the cipher in linear time
+Then
 
-The same identity that produced the two pillars also dismantles the second. Write angles as fractions of a half-turn: $t = \pi\theta$, so that $x = \sin^2(\pi\theta)$ with $\theta \in [0,1)$. Under this coordinate the doubling map $t \mapsto 2t$ becomes
-$$\theta \mapsto 2\theta \pmod 1,$$
-the **binary shift map**. Writing $\theta = 0.b_1 b_2 b_3 \ldots$ in base $2$, each iteration deletes the leading bit and shifts:
-$$0.b_1 b_2 b_3 \ldots \;\mapsto\; 0.b_2 b_3 b_4 \ldots$$
+$$
+f(g_-(y))=y.
+$$
 
-Consequently the keystream, in the conjugate coordinate, simply reads out the successive bits of $\theta$. An attacker who converts each keystream sample $y_k = \sin^2(\pi\,2^k\theta)$ back to the conjugate coordinate recovers, one per step, the bits of $\theta$; after $O(n)$ samples and $O(n)$ arithmetic operations the seed is pinned down to $n$ bits of precision. The degree-$2^n$ polynomial from Theorem 4.3 is therefore *not* a hardness barrier: it is an artifact of insisting on the coordinate $x$. Conjugacy linearizes the apparent nonlinearity and collapses the exponential to a shift. **The break runs in time polynomial (indeed linear) in the security parameter.**
+For $0\le y\le1$, the value $g_-(y)$ belongs to $[0,1/2]$.
 
-The lesson generalizes: a hardness assumption that dissolves under an explicit change of coordinates provides no security. Cryptographic hardness must be invariant under the adversary's freedom to choose representations.
+**Proof sketch.** Put $a=\sqrt{1-y}$. Since $y\le1$, $a^2=1-y$. Then
 
-### 6.3 Sensitivity is double-edged, and it caps the usable period
+$$
+4\left(\frac{1-a}{2}\right)\left(1-\frac{1-a}{2}\right)
+=(1-a)(1+a)=1-a^2=y.
+$$
 
-Sensitivity protects the defender against imprecise guesses, but it equally afflicts any finite-precision *implementation*. In arithmetic with $p$ bits, the stretching factor $2^n$ per $n$ steps means a computed orbit decorrelates from the ideal orbit after roughly $p$ steps; from that point on the emitted keystream is an artifact of rounding rather than of the intended seed. Thus the numerical period and the sensitivity horizon coincide at $\approx p$ steps, bounding the amount of usable keystream and creating implementation-dependent statistical structure. Moreover, transported through the conjugacy the invariant distribution of $f$ is not uniform but the *arcsine law* $d\mu = dx/(\pi\sqrt{x(1-x)})$, so a raw logistic keystream is statistically biased toward the endpoints of $[0,1]$ — an additional exploitable defect.
+The range statement follows from $0\le a\le1$ when $0\le y\le1$. $\square$
 
-## 7. Algorithms and numerical illustration
+**Corollary 4.2 (Two Inverse Branches on the Unit Interval).** For $0\le y\le1$, define
 
-Two computational tasks organize the numerics: (a) generating and using the keystream (the cipher itself), and (b) demonstrating the two theorems empirically — the avalanche and the degree growth — followed by the linear-time break.
+$$
+g_\pm(y)=\frac{1\pm\sqrt{1-y}}{2}.
+$$
 
-**Algorithm A (Keystream generation).** Given seed $x_0$ and length $L$, iterate $x_{k+1} = 4x_k(1-x_k)$ and, for each $x_k$, extract bits from its binary fraction to form the keystream. Complexity $O(L)$ arithmetic operations.
+Both branches satisfy $f(g_\pm(y))=y$, and they obey
 
-**Algorithm B (Conjugate-coordinate attack).** Given keystream values interpreted in the conjugate coordinate, recover $\theta$ bit by bit via the shift structure $\theta \mapsto 2\theta \bmod 1$. From $n$ samples one obtains $n$ bits of $\theta$ in $O(n)$ time — the practical realization of Section 6.2.
+$$
+g_+(y)=1-g_-(y).
+$$
 
-The accompanying programs verify: the semiconjugacy identity to machine precision; the exact landing $f^n(s_n) = \tfrac12$; the degree sequence $1, 2, 4, 8, \dots, 2^n$ by symbolic composition; and the linear-time seed recovery.
+They are distinct except at the critical value $y=1$, where both equal $1/2$.
 
-## 8. Discussion and future directions
+**Proof sketch.** The lower branch is covered by Theorem 4.1. The upper branch is its reflection, so Theorem 3.1 gives the same image. Equality of branches occurs precisely when $\sqrt{1-y}=0$. $\square$
 
-The results form a compact bridge between real dynamics and polynomial algebra: a single trigonometric identity, $f^n(\sin^2 t) = \sin^2(2^n t)$, simultaneously yields a dynamical statement (quantitative sensitive dependence, Theorem 5.5) and an algebraic statement (degree exactly $2^n$, Theorem 4.3). The cryptographic upshot is a clean case study in coordinate-dependent hardness: the naive logistic cipher looks strong in $x$ and is trivial in $\theta$.
+**Algorithm 4.3 (Branch-Guided Ancestor Recovery).** Given a target $y_0\in[0,1]$ and a branch sequence $b_1,\ldots,b_n\in\{-,+\}$, compute
 
-**Future directions.**
+$$
+y_k=g_{b_k}(y_{k-1}), \qquad 1\le k\le n.
+$$
 
-1. *Linear-time cryptanalysis, as a theorem.* Establish rigorously that the conjugate-coordinate attack recovers the seed to $n$ bits from $O(n)$ keystream samples with $O(n)$ arithmetic, converting the folklore break into a precise reduction. The degree-$2^n$ "barrier" is an artifact of coordinates; conjugacy collapses it to a shift.
+Then $f^n(y_n)=y_0$.
 
-2. *The invariant density is the arcsine law and is unique.* Prove that $d\mu = dx/(\pi\sqrt{x(1-x)})$ is $f$-invariant, is the pushforward of the uniform measure on the doubling circle under $t \mapsto \sin^2(\pi t)$, and is the unique absolutely continuous invariant measure. This exposes the statistical bias of raw logistic keystreams.
+**Proof sketch.** Each step satisfies $f(y_k)=y_{k-1}$. Composing these equalities gives the claim. $\square$
 
-3. *A matching decryption-instability lower bound.* Show that the stretching factor $2^n$ controls both the divergence rate from above and the precision-loss rate from below, so that a $p$-bit implementation loses correlation with the true orbit after exactly $p$ steps — avalanche speed and numerical unreliability as two readings of the same Lyapunov exponent.
+In a unit-cost real-arithmetic model, recovering one ancestor selected by a branch sequence takes $n$ square roots and $O(n)$ arithmetic operations. Enumerating all generic depth-$n$ ancestors requires $O(2^n)$ outputs and therefore cannot take less than exponential time merely because the requested output itself is exponentially large. This output-size fact is entirely different from asserting that finding one compatible ancestor is exponentially hard.
 
-## Summary of results
+The branch tree has exceptions. At $y=1$, the two branches merge. Endpoints, critical points, periodic points, and previously merged paths affect the number of distinct ancestors. Thus “exactly $2^n$ real preimages” is not universally valid even though the expanded polynomial has degree $2^n$ over an algebraic closure when multiplicities are counted appropriately.
 
-- **Invariance:** $f$ maps $[0,1]$ into $[0,1]$.
-- **Fixed points:** the only real fixed points of $f$ are $0$ and $3/4$.
-- **Semiconjugacy:** $f(\sin^2 t) = \sin^2(2t)$, hence $f^n(\sin^2 t) = \sin^2(2^n t)$.
-- **Degree:** the $n$-th iterate is a polynomial of degree exactly $2^n$, computing the same function as $f^n$.
-- **Sensitivity:** seeds $s_n = \sin^2(\pi/2^{\,n+2})$ satisfy $0 < s_n \le (\pi/2^{\,n+2})^2$ yet $|f^n(s_n) - f^n(0)| = \tfrac12$.
-- **Cryptanalysis:** in the conjugate coordinate the map is the binary shift, so the seed is recoverable in time linear in the security parameter.
+## 5. Semiconjugacy to angle doubling
+
+The logistic map’s structure becomes clearest under a trigonometric coordinate.
+
+**Definition 5.1 (Angular observation map).** Define
+
+$$
+h(\theta)=\sin^2\theta.
+$$
+
+This map sends every real angle into $[0,1]$. It is many-to-one because it is periodic and invariant under several reflections.
+
+**Theorem 5.2 (Angle-Doubling Semiconjugacy).** For every real $\theta$,
+
+$$
+f(h(\theta))=h(2\theta),
+$$
+
+or equivalently,
+
+$$
+f(\sin^2\theta)=\sin^2(2\theta).
+$$
+
+**Proof sketch.** Use $1-\sin^2\theta=\cos^2\theta$ and the double-angle identity:
+
+$$
+f(\sin^2\theta)
+=4\sin^2\theta\cos^2\theta
+=(2\sin\theta\cos\theta)^2
+=\sin^2(2\theta).
+$$
+
+$\square$
+
+The relation is a semiconjugacy rather than a conjugacy because $h$ is not injective. This non-injectivity is not a technical nuisance: it encodes the folding and collisions of the logistic map.
+
+**Theorem 5.3 (Closed Formula for Every Iterate).** For every real $\theta$ and every integer $n\ge0$,
+
+$$
+f^n(\sin^2\theta)=\sin^2(2^n\theta).
+$$
+
+**Proof sketch.** At $n=0$, both sides equal $\sin^2\theta$. Assume the identity at $n$. Applying $f$ and then Theorem 5.2 gives
+
+$$
+f^{n+1}(\sin^2\theta)
+=f(\sin^2(2^n\theta))
+=\sin^2(2\cdot2^n\theta)
+=\sin^2(2^{n+1}\theta).
+$$
+
+Induction proves the result. $\square$
+
+### 5.1 Computational significance
+
+The closed formula avoids constructing the degree-$2^n$ polynomial. In exact symbolic reasoning, the $n$th state is represented by an exponentiation and a trigonometric evaluation. In numerical work, angular reduction modulo $\pi$ may be used because $\sin^2$ has period $\pi$. Repeated modular doubling gives an $O(n)$ orbit algorithm, while binary exponentiation can form the multiplier $2^n$ in $O(\log n)$ integer multiplications before an appropriate modular-angle calculation. Precision requirements must be analyzed separately: exponential sensitivity means that fixed absolute error in the angle can strongly affect a distant state.
+
+### 5.2 Dynamical significance
+
+The same formula explains sensitivity. A small angular displacement $\delta$ becomes $2^n\delta$ before observation by $\sin^2$. For typical points away from derivative degeneracies, this produces exponential separation. But the angular system is also highly structured. After normalizing an angle to a unit circle, multiplication by $2$ shifts the binary expansion. Thus chaotic appearance in the observed coordinate coexists with exact shift-like dynamics in a hidden coordinate.
+
+This coexistence refutes a common dichotomy. A system can be chaotic and algebraically transparent at the same time. Indeed, here the mechanism that creates sensitivity also provides the simplest exact description of the orbit.
+
+## 6. Exceptional trajectories and invariant-measure claims
+
+An invariant measure is not the same as convergence from every seed. The distinction is decisive for both dynamics and cryptographic claims.
+
+**Theorem 6.1 (Absorbing Zero Orbit).** For every integer $n\ge0$,
+
+$$
+f^n(0)=0.
+$$
+
+**Proof sketch.** Since $f(0)=0$, repeated application leaves the state unchanged. $\square$
+
+**Theorem 6.2 (Collapse of the Half Seed).** The seed $1/2$ follows
+
+$$
+\frac12\mapsto1\mapsto0,
+$$
+
+and therefore, for every $n\ge0$,
+
+$$
+f^{n+2}\left(\frac12\right)=0.
+$$
+
+**Proof sketch.** Direct calculation gives $f(1/2)=1$ and $f(1)=0$. Apply Theorem 6.1 thereafter. $\square$
+
+**Corollary 6.3 (Failure of Seed-Independent Distributional Convergence).** It is false that the empirical orbit measures converge to the arcsine distribution for every seed in $[0,1]$.
+
+**Proof sketch.** The empirical measure of the zero orbit is the point mass at $0$ for every averaging length. It cannot converge to the continuous arcsine distribution. The half seed becomes the same zero orbit after two transients and has the same limiting empirical measure. $\square$
+
+A correct ergodic statement must quantify its seed class, typically using an almost-everywhere condition relative to a specified invariant measure. Periodic and preperiodic seeds form explicit exceptional families. Through the angular coordinate, periodicity is connected to angles whose normalized binary expansions are eventually periodic. The full sharp exceptional-set theorem requires care, but the universal claim is already disproved by the fixed and preperiodic examples above.
+
+For cryptography, exceptional seeds matter even if they have measure zero in an ideal continuum. Keys are sampled from finite representations, not from a metaphysical uniform distribution over all real numbers. A finite encoding can overrepresent special rational or dyadic structures, and implementation rounding can create new basins leading to short cycles.
+
+## 7. Finite-state implementations and period bounds
+
+Every digital implementation has finitely many representable states. The resulting recurrence is a function on a finite set, regardless of whether its arithmetic is fixed-point, floating-point, or custom.
+
+**Theorem 7.1 (Finite-State Repetition Theorem).** Let $S$ be a finite set with $N$ elements, let $F:S\to S$ be any deterministic update, and let $x\in S$. Among the $N+1$ states
+
+$$
+x,F(x),F^2(x),\ldots,F^N(x),
+$$
+
+there exist indices $0\le i<j\le N$ such that
+
+$$
+F^i(x)=F^j(x).
+$$
+
+**Proof sketch.** There are $N+1$ listed states but only $N$ possible values. The pigeonhole principle forces a repeated value. $\square$
+
+**Corollary 7.2 ($p$-Bit State Bound).** If the complete internal state consists of $p$ bits, then some two states among the first $2^p+1$ visited states are equal.
+
+**Proof sketch.** A $p$-bit state space has $2^p$ elements. Apply Theorem 7.1 with $N=2^p$. $\square$
+
+Once a state repeats, determinism makes all subsequent states repeat with the same offset. Every finite orbit therefore consists of a transient tail followed by a cycle. If $i<j$ is the first suitable collision, the cycle length is $j-i$, which is at most $N$. Crucially, this is an upper bound. State-space size supplies no nontrivial universal lower bound on period.
+
+The parameter-four logistic recurrence already suggests short behavior: encodings containing an exact zero have a fixed point, and encodings that evaluate $1/2\mapsto1\mapsto0$ exactly contain a rapidly collapsing trajectory. Other rounding rules may create additional cycles and merge distinct real trajectories. Therefore a claim such as “$p$ bits imply period at least $2^p$” reverses the conclusion justified by finiteness.
+
+**Algorithm 7.3 (Cycle Decomposition by First-Occurrence Table).** Starting from a finite encoded state $x$, store the first index at which each state appears. Repeatedly apply $F$ until the current state has appeared before. If its first index is $\mu$ and the current index is $t$, then the transient length is $\mu$ and the cycle length is $t-\mu$.
+
+The algorithm uses $O(\mu+\lambda)$ update steps and memory, where $\lambda$ is the cycle length. Memory-reduced algorithms such as tortoise-and-hare cycle finding can recover the same two quantities in $O(\mu+\lambda)$ time and $O(1)$ state memory. Neither method can infer a period spectrum without specifying the exact finite update function.
+
+## 8. Statistical testing versus cryptographic security
+
+A statistical battery samples finitely many properties of finitely many outputs. It may test monobit frequency, run lengths, block frequencies, spectral features, or correlations. Passing such tests is compatible with serious structural weaknesses.
+
+First, Theorem 3.3 creates equivalent keys even if the common stream has ideal-looking statistics. A single-stream test does not ask whether another key generates exactly the same output. Second, Theorem 5.3 exposes an angular relation that generic tests may not target. Third, explicit inverse branches exist regardless of observed frequency balance. Finally, finite tests always leave untested distinguishers.
+
+Cryptographic pseudorandomness must be defined through an adversarial experiment. A typical formulation compares access to a generator’s output against access to an ideal random source and measures the advantage of a computationally bounded distinguisher. A next-bit formulation asks whether an adversary, after observing a prefix, can predict the next bit with advantage over one half. The exact result depends on the seed distribution, extraction function, precision model, and attacker’s observations.
+
+Accordingly, passing a standard battery can be a useful necessary diagnostic for some applications, but it is not a sufficient security theorem. Conversely, failure of a test can reveal a defect without identifying its structural cause. Statistical evaluation and mathematical cryptanalysis should be treated as complementary, not interchangeable.
+
+## 9. Algorithms and numerical demonstrations
+
+Three computational procedures illustrate the exact results.
+
+### 9.1 Paired-orbit collision demonstration
+
+Choose $x\in[0,1]$ and form $1-x$. Iterate both in parallel. In ideal real arithmetic, the states agree from the first update onward by Theorem 3.3. In binary floating-point, the initial computation may differ at the last few bits because the expression $1-(1-x)$ need not reproduce $x$ exactly and operation rounding depends on representation. This discrepancy illustrates a modeling issue rather than a failure of the real identity. Using exact rational arithmetic shows exact merging whenever all operations remain represented as rationals.
+
+The algorithm takes $O(L)$ arithmetic operations for a length-$L$ comparison and constant memory if values are streamed.
+
+### 9.2 Inverse-tree construction
+
+For a target $y\in[0,1]$, apply both inverse branches $g_-$ and $g_+$, deduplicate at the critical point, and repeat to a chosen depth. Every reported depth-$n$ value maps forward to $y$ in $n$ updates. A breadth-first implementation takes $O(A_n)$ storage and arithmetic operations proportional to the number $A_n$ of generated ancestors, with $A_n\le2^n$. The exponential cost reflects enumeration of an exponentially large set, not difficulty in producing one selected branch path.
+
+### 9.3 Exact versus angular orbit evaluation
+
+Given $x\in[0,1]$, select the principal angle
+
+$$
+\theta=\arcsin\sqrt{x}.
+$$
+
+Compare repeated logistic updates with
+
+$$
+\sin^2(2^n\theta).
+$$
+
+In exact mathematics the values coincide. In finite floating-point arithmetic, errors eventually grow because both methods round differently and the dynamics amplify phase discrepancies. This is a useful numerical experiment: it simultaneously confirms the structural formula at modest depths and demonstrates why sensitivity creates reproducibility problems rather than automatic security.
+
+## 10. Security implications
+
+The results support the following conclusions for a cipher whose security is claimed solely from the parameter-four logistic recurrence.
+
+**Equivalent keys.** Reflected seeds $x$ and $1-x$ yield identical streams after one update. A key specification that treats them as distinct overstates the effective key space.
+
+**Structured inversion.** One predecessor is obtained with one square root, and a selected depth-$n$ predecessor is obtained through $n$ branch choices. Polynomial degree is therefore an invalid standalone hardness argument.
+
+**Closed-form evolution.** The orbit has an exact angular description. Any extraction rule should be analyzed in that coordinate, especially when bits correspond to interval partitions that may become shift-like under angle doubling.
+
+**Weak exceptional keys.** Zero is fixed and $1/2$ collapses to zero after two steps. A secure key schedule would at least need to exclude weak states and their finite-precision basins, but exclusions do not remove the reflection or inversion structure.
+
+**No period guarantee from width.** A $p$-bit state space guarantees a collision within $2^p+1$ observations. It does not guarantee a cycle near $2^p$. Period claims must be established for the exact rounding-dependent functional graph.
+
+**Tests are not reductions.** Statistical test performance cannot prove next-bit unpredictability, key recovery hardness, or indistinguishability.
+
+These findings do not claim that every construction containing a logistic map is insecure. A larger system might derive security from an independently secure primitive. In that case, however, the security comes from the complete construction and its reduction or analysis, not from chaos as such.
+
+## 11. Discussion
+
+The logistic map is an unusually instructive case because its chaotic and cryptanalytic properties arise from one structure. The angular doubling map expands differences by a factor of two while remaining exactly describable. The observation $\sin^2\theta$ folds angular states together, producing reflection collisions. The invariant arcsine density is naturally related to transporting a uniform angular distribution through this observation, while exceptional angular points generate periodic and preperiodic state orbits.
+
+This unified picture suggests a hierarchy for analyzing deterministic generators:
+
+1. identify exact symmetries and quotient equivalent keys;
+2. search for conjugacies, semiconjugacies, recurrences, and closed forms;
+3. derive explicit forward and inverse algorithms;
+4. classify critical, periodic, and preperiodic states;
+5. specify the finite arithmetic and analyze its functional graph;
+6. define extraction and adversarial experiments precisely; and
+7. use statistical tests only after structural analysis.
+
+The hierarchy prevents several category errors. A positive Lyapunov exponent measures average local expansion, not computational hardness. A degree statement measures an expanded polynomial, not the shortest algorithm. An invariant measure is a stationary distribution, not necessarily the limit from every point. A state-count bound limits maximum preperiod-plus-period, not minimum period. A finite battery assesses selected statistics, not every efficient distinguisher.
+
+## 12. Future work
+
+A first direction is quantified prediction. For fixed bit-extraction rules with finitely many interval boundaries, one can ask whether angle doubling yields a polynomial-time next-bit predictor with non-negligible advantage on a positive-measure seed set. The closed iterate formula identifies the correct coordinate for this analysis.
+
+A second direction is complete inverse-tree classification. The exact number of distinct depth-$n$ real ancestors should be derived while accounting for reflection, the critical value, endpoints, periodic branches, and collisions between branch paths. The apparent degree $2^n$ counts algebraic structure differently from distinct reachable ancestors.
+
+A third direction is the precision-specific period spectrum. For every explicit rounding rule and word size $p$, one should determine or estimate the full functional graph, including maximum, median, and distribution of cycle lengths and basin sizes. This replaces an invalid universal lower bound with a meaningful arithmetic classification.
+
+A fourth direction is a sharp invariant-measure theorem. The strongest seed class for which empirical orbit measures converge to the arcsine law should be identified, together with a precise description of periodic, preperiodic, and other exceptional seeds. Angle doubling connects this question to binary expansions and normality.
+
+A fifth direction separates statistical quality from cryptographic indistinguishability. One can construct logistic-map streams that pass prescribed finite batteries while retaining an explicit distinguisher based on reflection, inverse branches, or angular relations. Such examples would make the logical gap operationally concrete.
+
+## 13. Conclusion
+
+For the parameter-four logistic map, chaos does not imply cryptographic one-wayness. Reflection produces exact seed collisions and permanently merges orbit suffixes. One-step inversion is a quadratic calculation with explicit square-root branches. The substitution $x=\sin^2\theta$ transforms the recurrence into angle doubling and yields the closed formula $f^n(\sin^2\theta)=\sin^2(2^n\theta)$. Fixed and preperiodic seeds disprove universal distribution and period claims. A $p$-bit implementation must repeat within $2^p+1$ visited states, but may repeat far sooner.
+
+These are structural results, independent of how random a selected output sample appears. They show that sensitivity, degree growth, state-space size, and statistical testing are insufficient foundations for a security claim. The logistic map remains a rich dynamical system; its principal cryptographic value may be as a warning that apparent disorder must always be tested against exact mathematical structure.
