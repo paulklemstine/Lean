@@ -172,19 +172,19 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Zeta Function of a Graph: Number Theory on Networks"
   },
   {
-    "consumed_by_exp_id": "7328a55d",
-    "description": "The primes have density 0 in the integers, but what is the Hausdorff dimension of the set of primes viewed as a subset of R? Define the 'prime fractal' P as the set of primes with the metric d(p,q) = |1/log(p) - 1/log(q)|. This metric stretches out the primes so that the twin primes are close together and the large primes are spread out. Conjecture: The Hausdorff dimension dim_H(P, d) = 1. The primes with this metric are essentially a 1-dimensional set \u2014 they fill out a line when viewed through the logarithmic lens. This is because the prime number theorem pi(x) ~ x/log(x) means that in the d-metric, the 'length' of the primes up to x is sum_{p <= x} d(p, p+1) ~ sum_{p <= x} 1/(p*log(p)) ~ log(log(x)), which diverges. So the primes are 'long enough' to be 1-dimensional. But the Hausdorff dimension might be > 1 if the primes have fractal structure at small scales. In fact, dim_H(P, d) > 1 would mean the primes are more than a line \u2014 they have 'wrinkles' that fill more space. The twin prime conjecture predicts that there are infinitely many pairs of primes at d-distance ~ 1/(p*log(p)), creating a fractal dust that increases the dimension. Conjecture: dim_H(P, d) = 1 + epsilon where epsilon depends on the density of twin primes. If the twin prime conjecture is true, epsilon > 0. Test: estimate dim_H(P, d) by box-counting for primes up to 10^12 and verify it is close to 1 (or slightly above). Impact: the primes are a fractal with dimension 1 + epsilon, where epsilon measures the abundance of twin primes. If twin primes are infinite, the primes are more than a line \u2014 they are a fractal curve.",
+    "consumed_by_exp_id": "",
+    "description": "The Riemann zeta function zeta(s) has zeros at the non-trivial points s = 1/2 + i*gamma_n where gamma_n are the imaginary parts of the zeros. The Fourier transform of the zero counting function N(t) = #{gamma_n <= t} is related to the distribution of primes by the explicit formula. But what if we take the Fourier transform of zeta itself? Define Z(t) = zeta(1/2 + it) as a function of the real variable t. The Fourier transform Z_hat(w) = integral_{-inf}^{inf} Z(t) * e^{-2*pi*i*w*t} dt. Conjecture: Z_hat(w) has sharp peaks at w = log(p)/2*pi for each prime p. This is because the explicit formula expresses zeta(1/2+it) as a sum over primes: zeta(1/2+it) ~ sum_{p} p^{-1/2-it} = sum_{p} e^{-it*log(p)} / sqrt(p), which is a sum of complex exponentials with frequencies log(p). The Fourier transform of a sum of exponentials is a sum of delta functions at the frequencies log(p)/2*pi. So Z_hat(w) = sum_{p} delta(w - log(p)/2*pi) / sqrt(p) + (error from zeros and smooth terms). The peaks at w = log(p)/2*pi give a 'spectrogram' of the primes. Test: compute Z_hat(w) numerically for the first 10^6 zeros and verify the peaks at log(2)/2*pi, log(3)/2*pi, log(5)/2*pi, etc. Impact: you can HEAR the primes by playing the Fourier transform of the Riemann zeta function \u2014 each prime is a distinct note.",
     "domains": [
       "Novelty",
       "NumberTheory"
     ],
-    "id": "fd_0311",
-    "priority_score": 0.83,
+    "id": "fd_0326",
+    "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T12:15:26.050868+00:00",
-    "title": "Fractal Number Theory: Hausdorff Dimension of Prime Distributions"
+    "status": "available",
+    "timestamp": "2026-07-18T13:54:31.437496+00:00",
+    "title": "The Fourier Transform of the Riemann Zeta: Hearing the Primes"
   },
   {
     "consumed_by_exp_id": "64b7f63b",
@@ -199,6 +199,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-18T09:21:32.344494+00:00",
     "title": "Close Proofs: Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The sequence of primes 2, 3, 5, 7, 11, 13, ... defines a point cloud in R where the n-th prime p_n is at position p_n on the real line. The gaps between primes create a topological structure. Define the persistent homology of the prime point cloud as the Rips filtration R_epsilon = {p_n : |p_m - p_n| <= epsilon}. As epsilon increases, more primes are connected, and the topology changes. Conjecture: The persistent H_0 (connected components) of the prime point cloud has the same barcode as a Poisson point process with intensity 1/log(x). Specifically, the bar lengths in H_0 follow an exponential distribution with mean equal to the average prime gap (which is approximately log(x) by the prime number theorem). The persistent H_1 (1-dimensional holes) of the prime point cloud appears at scale epsilon ~ log(x)^2, corresponding to prime pairs (p, p+2k) where 2k is a specific even gap. The longest H_1 bar corresponds to the twin prime conjecture: it persists from epsilon = 2 (the twin prime scale) to epsilon = infinity. Test: compute persistent homology of the primes up to 10^6 using Rips filtration and compare with the Poisson point process prediction. Verify that H_0 bar lengths are exponentially distributed with mean log(x). Impact: primes have topology \u2014 their gaps create persistent homology that encodes the twin prime conjecture and other arithmetic properties.",
+    "domains": [
+      "Novelty",
+      "NumberTheory"
+    ],
+    "id": "fd_0327",
+    "priority_score": 0.82,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-18T13:54:31.470741+00:00",
+    "title": "Persistent Homology of Prime Numbers: The Topology of Arithmetic"
   },
   {
     "consumed_by_exp_id": "",
@@ -3871,6 +3886,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-18T13:38:18.493859+00:00",
     "title": "**Conjecture.** Let `N(n)` be the number of successful prefixes of length `n` in"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThe formal results show that the proposed Hausdorff-dimension conjectures are false: the prime set is countable, and every countable set has zero Hausdorff measure in every positive dimension, regardless of its metric. Twin-prime abundance therefore cannot increase its ordinary Hausdorff dimension.\n\nA meaningful replacement should study a different invariant. Promising directions include:\n\n- upper and lower box-counting dimensions of finite truncations under a scale/truncation coupling;\n- dimensions of closures or limit sets obtained after rescaling logarithmic prime coordinates;\n- Assouad-type dimensions, which can detect local scaling patterns in countable spaces;\n- quantitative covering numbers, rather than ordinary Hausdorff dimension;\n- normalized empirical measures of prime coordinates and their weak limits.\n\nAny finite box-counting experiment must specify how the truncation bound changes as the covering radius tends to zero. A fixed finite prime sample always has asymptotic box dimension zero, while a changing family can exhibit pre-asymptotic slopes that are not the Hausdorff dimension of the original countable set.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0328",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "7328a55d",
+    "status": "available",
+    "timestamp": "2026-07-18T13:54:54.447283+00:00",
+    "title": "The formal results show that the proposed Hausdorff-dimension conjectures are fa"
   },
   {
     "consumed_by_exp_id": "",
