@@ -87,7 +87,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Chaos as a Computable Shadow: The Shadowing Lemma for Real Programs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6e1376aa",
     "description": "Building on cycle f86cfe8a (Q=0.760), which proved 12 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Laser beams can carry orbital angular momentum (OAM), creating 'knotted light' \u2014 beams whose wavefronts are linked or knotted. A knotted light beam has a phase singularity (where the amplitude vanishes) that traces out a knot in 3D space. The simplest example is the trefoil beam, whose singularity t",
     "domains": [
       "Novelty"
@@ -96,7 +96,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "f86cfe8a",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-18T12:48:40.078323+00:00",
     "title": "Deepening: The Topology of Knotted Light: How Laser Beams Get Tangled"
   },
@@ -1985,7 +1985,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: The inversion number of a path-reversed tournament: Resolving a conjecture of Belkhechine, Bouaziz, Boudabbous, and Pouzet"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "beeab68d",
     "description": "Investigate the ArXiv paper 'Clique spectral extremal problem on disjoint color-critical graphs' and formalize its key results. Abstract: For a given graph $F$, a graph $G$ is called $F$-free if it does not contain $F$ as a subgraph. A graph is color-critical if deleting one of its edges decreases its chromatic number. Let $F_1, F_2, \\cdots, F_t$ be $t$ disjoint color-critical graphs with chromatic number $r+1$. For $2 \\leq s \\leq r$ and sufficiently large $n$, we determine the unique extremal graph with the maximum $s$-clique spectral radius among all $n$-vertex $\\bigcup_{i=1}^t F_i$-free graphs.",
     "domains": [
       "Algebra",
@@ -1995,7 +1995,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.13861v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T18:36:43.198397+00:00",
     "title": "ArXiv paper: Clique spectral extremal problem on disjoint color-critical graphs"
   },
@@ -3901,6 +3901,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Dark Mathematics: Theorems That Exist But Cannot Be Found"
   },
   {
+    "consumed_by_exp_id": "c83ba873",
+    "description": "In the game Werewolf (Mafia), n players include k werewolves and n-k villagers. Each night, the werewolves eliminate one villager. Each day, the villagers vote to eliminate one player (possibly a werewolf). The villagers win if all werewolves are eliminated; the werewolves win if they equal or outnumber villagers. Conjecture: The optimal Bayesian strategy for villagers is to vote for the player with the highest posterior probability of being a werewolf, where the prior is k/n and the likelihood updates are based on the player's voting pattern and survival. More precisely, define the werewolf posterior P(W_i | evidence) using Bayes' theorem: P(W_i) = k/n (prior), P(evidence | W_i) = product of conditional probabilities of observed events given that player i is a werewolf. The optimal strategy maximizes P(villagers win) = P(correct elimination at each day round). For n=7, k=2: the villagers' win probability with optimal Bayesian play is approximately 0.36 (known from game theory). Conjecture: For general n and k, the villagers' win probability is approximately C * (1 - k/(n-k))^2 where C is a constant depending on the information structure. Test: simulate 10^6 games with n=7 to n=20 players and Bayesian villagers, measure the win probability, and fit to the conjectured formula. Impact: social deduction has an optimal Bayesian strategy, and the werewolves' advantage scales as (k/(n-k))^2.",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_0314",
+    "priority_score": 0.72,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-07-18T12:31:56.934304+00:00",
+    "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
     "domains": [
@@ -3930,7 +3945,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Graph Coloring with Emotions: The Chromatic Polynomial Meets Psychology"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fb82936b",
     "description": "In homotopy type theory (HoTT), equal things can be equal in different ways \u2014 there can be multiple paths between two points. Apply this to cooking: two recipes can produce the same dish, but the paths (methods) may differ. The type of a dish is its flavor profile (a point in taste space R^n where n is the number of flavor dimensions). Two recipes are 'equal' if they produce the same flavor profile, but the path between them (the transformation from one recipe to another) may not be unique. Conjecture: The space of all recipes that produce a given flavor profile has the homotopy type of a CW-complex whose cells correspond to the possible ingredient substitutions. For example, the space of recipes that produce 'chocolate chip cookies' has the homotopy type of S^0 (two points: with nuts and without nuts), because the only binary choice is nuts/no-nuts. More complex dishes have higher homotopy groups: the space of recipes for 'curry' has pi_1 = Z (generated by the loop 'add more spice -> simmer -> add more coconut milk -> simmer -> add more spice'), representing the fundamental cycle of Indian cooking. Test: enumerate 100 recipes for chocolate chip cookies and compute the homotopy groups of the resulting simplicial complex. Impact: cooking is homotopy theory. Every dish is a point, every substitution is a path, and every cuisine is a homotopy type.",
     "domains": [
       "Novelty",
@@ -3940,7 +3955,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.66,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-18T10:21:24.002098+00:00",
     "title": "Homotopy Type Theory of Cooking Recipes: Paths Between Dishes"
   },
