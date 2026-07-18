@@ -1,247 +1,505 @@
-# Quantum Entanglement as Topological Linking: A Rigorous Algebraic-Topological Framework
+# Concurrence, Exterior Algebra, and the Obstruction to Integer-Valued Linking Models of Two-Qubit Entanglement
+
+**Aristotle**  
+**July 18, 2026**
 
 ## Abstract
 
-We establish a rigorous algebraic framework connecting quantum entanglement of two-qubit pure states to the topology of the Hopf fibration. For a two-qubit state |ψ⟩ = α|00⟩ + β|01⟩ + γ|10⟩ + δ|11⟩, we prove that the concurrence C(ψ) = 2|αδ - βγ| admits three equivalent characterizations: (1) twice the absolute determinant of the coefficient matrix, (2) the absolute value of the Wootters spin-flip inner product, and (3) twice the norm of the wedge product of the coefficient matrix's row vectors. We prove that the Hopf map S³ → S² preserves norm, that its fibers are U(1)-orbits, and that the concurrence is invariant under local SL(2,ℂ) transformations — the algebraic counterpart of the topological invariance of linking numbers. We introduce the *EntanglementWedge* structure that unifies the algebraic, quantum-information, and topological perspectives. All results are formally verified in Lean 4 using the Mathlib library.
-
-**Keywords**: quantum entanglement, Hopf fibration, concurrence, linking number, algebraic topology, formal verification
+A tempting geometric proposal identifies the concurrence of a pure two-qubit state with the absolute value of a linking number derived from Hopf geometry. We show that this identification cannot hold when “linking number” has its ordinary integer-valued meaning. For a two-qubit amplitude vector $\psi=(\alpha,\beta,\gamma,\delta)\in\mathbb C^4$, define the squared norm $N(\psi)=|\alpha|^2+|\beta|^2+|\gamma|^2+|\delta|^2$, determinant coordinate $D(\psi)=\alpha\delta-\beta\gamma$, and concurrence $C(\psi)=2|D(\psi)|$. We prove the sharp inequality $0\le C(\psi)\le N(\psi)$, and hence $C(\psi)\in[0,1]$ for normalized states. We establish that $C(\psi)=0$ exactly when the coefficient matrix has rank one, equivalently when the state is separable. Concurrence is invariant under global unit phase, and each of the four Bell states is normalized and has concurrence one. The normalized state $(1/2,1/\sqrt2,0,1/2)$ has concurrence exactly $1/2$, yielding an immediate obstruction: no integer-valued invariant, including ordinary linking number, can agree in absolute value with concurrence on every normalized pure state. We also clarify that the quaternionic Hopf fibration $S^7\to S^4$ has $S^3$ fibres rather than circle fibres. The viable geometric bridge is therefore not literal integer linking but exterior algebra: concurrence is twice the norm of a determinant, or Plücker, coordinate. We conclude with algorithms, numerical demonstrations, and directions for real-valued Hopf-geometric replacements.
 
 ## 1. Introduction
 
-Quantum entanglement, first identified by Einstein, Podolsky, and Rosen (1935) as a purported paradox, has become a central resource in quantum information science. For pure states of two qubits, entanglement is precisely quantified by the *concurrence* C(ψ) = 2|αδ - βγ|, where the state is written in the computational basis as |ψ⟩ = α|00⟩ + β|01⟩ + γ|10⟩ + δ|11⟩.
+Entanglement is a continuous resource in quantum information. A pure state of two qubits may be unentangled, maximally entangled, or anywhere between these extremes. For such states, concurrence gives a particularly simple quantitative measure. If
 
-The Hopf fibration, discovered by Heinz Hopf in 1931, is the canonical nontrivial fiber bundle S³ → S², with fiber S¹. It arises naturally in the description of single-qubit states: the pure state space CP¹ ≅ S² is the base, and the total space S³ accounts for the global phase ambiguity.
+$$
+|\psi\rangle=\alpha|00\rangle+\beta|01\rangle+\gamma|10\rangle+\delta|11\rangle,
+$$
 
-The connection between these two mathematical structures — entanglement and the Hopf fibration — has been explored by Mosseri and Dandoloff (2001), Bernevig and Chen (2003), and others. In this work, we provide a complete algebraic formalization that makes the connection rigorous, introducing the EntanglementWedge as the unifying structure, and formally verifying all results.
+then
 
-## 2. Definitions
+$$
+C(\psi)=2|\alpha\delta-\beta\gamma|.
+$$
 
-### 2.1 Two-Qubit States and the Coefficient Matrix
+The formula resembles an oriented area or determinant. At the same time, the nonlocal character of entanglement suggests topological imagery: two components can remain linked even while spatially separated. This motivates a strong conjectural identification in which concurrence equals the absolute value of an ordinary linking number associated with a Hopf construction.
 
-A pure two-qubit state is a unit vector in ℂ² ⊗ ℂ² ≅ ℂ⁴. In the computational basis {|00⟩, |01⟩, |10⟩, |11⟩}, it is written as
+The purpose of this paper is to distinguish the mathematically valid core of that picture from the part that cannot hold. Three elementary facts settle the issue. First, concurrence varies over the full real interval $[0,1]$ on normalized pure states. Second, ordinary linking number is integer-valued. Third, an explicit normalized state has concurrence $1/2$. Consequently, no construction assigning an integer to every normalized state can reproduce concurrence universally.
 
-|ψ⟩ = α|00⟩ + β|01⟩ + γ|10⟩ + δ|11⟩
+The obstruction is conceptual as well as arithmetic. Normalized two-qubit vectors form $S^7$, and the relevant quaternionic Hopf map is $S^7\to S^4$. Its fibres are $S^3$, unlike the circle fibres of the classical Hopf map $S^3\to S^2$. Thus the familiar picture of two linked circles does not transfer literally.
 
-with |α|² + |β|² + |γ|² + |δ|² = 1.
+What survives is a precise algebraic-geometric account. The amplitudes form a $2\times2$ coefficient matrix. Its determinant is the coordinate of the exterior product of its two rows. It vanishes exactly on rank-one matrices, which represent product states, and its norm measures departure from this rank-one locus. This interpretation retains a genuine geometric content while respecting the continuous nature of entanglement.
 
-**Definition 2.1** (Coefficient Matrix). The *coefficient matrix* of a two-qubit state is
+The paper is organized as follows. Section 2 gives definitions and the separability criterion. Section 3 proves the sharp norm bound. Section 4 treats phase invariance and Bell states. Section 5 gives the half-concurrence witness and the universal integer-valued obstruction. Section 6 discusses Hopf dimensions and exterior algebra. Sections 7 and 8 present computational algorithms and applications. Sections 9 and 10 discuss limitations and future directions.
 
-M(ψ) = [[α, β], [γ, δ]]
+## 2. States, normalization, and the determinant coordinate
 
-This matrix encodes the bipartite structure: the rows correspond to the first qubit's computational basis states, and the columns to the second's.
+### 2.1 Pure two-qubit states
 
-### 2.2 Concurrence
+A pure two-qubit amplitude vector is a quadruple
 
-**Definition 2.2** (Concurrence). The *concurrence* of a two-qubit pure state is
+$$
+\psi=(\alpha,\beta,\gamma,\delta)\in\mathbb C^4,
+$$
 
-C(ψ) = 2|αδ - βγ| = 2|det M(ψ)|
+representing the ket
 
-The concurrence ranges from 0 (separable) to 1 (maximally entangled, for normalized states).
+$$
+|\psi\rangle=\alpha|00\rangle+\beta|01\rangle+\gamma|10\rangle+\delta|11\rangle.
+$$
 
-### 2.3 The Determinant Invariant
+Define its squared norm by
 
-**Definition 2.3** (Determinant Invariant). The *determinant invariant* is the complex number
+$$
+N(\psi)=|\alpha|^2+|\beta|^2+|\gamma|^2+|\delta|^2.
+$$
 
-Δ(ψ) = αδ - βγ = det M(ψ)
+The state is **normalized** when $N(\psi)=1$. A nonzero vector and any nonzero scalar multiple represent the same projective ray after renormalization; in particular, multiplication by a unit complex scalar is a physically irrelevant global phase.
 
-This is the fundamental quantity: it is the unique (up to scale) SL(2) × SL(2) invariant of a two-qubit state.
+Associate to $\psi$ the coefficient matrix
 
-### 2.4 The Spin-Flip Inner Product
+$$
+A_\psi=
+\begin{pmatrix}
+\alpha&\beta\\
+\gamma&\delta
+\end{pmatrix}.
+$$
 
-**Definition 2.4** (Spin-Flip). The *spin-flip inner product* is
+Define the determinant coordinate
 
-⟨ψ̃|ψ⟩ = -δα + γβ + βγ - αδ = -2(αδ - βγ)
+$$
+D(\psi)=\det(A_\psi)=\alpha\delta-\beta\gamma.
+$$
 
-where ψ̃ = (σ_y ⊗ σ_y)|ψ*⟩ is the spin-flipped conjugate, and the inner product is computed as ∑ conj(ψ̃_i)·ψ_i after the double-conjugation cancels.
+Finally, define pure-state concurrence by
 
-### 2.5 The Hopf Map
+$$
+C(\psi)=2|D(\psi)|.
+$$
 
-**Definition 2.5** (Hopf Map). The *Hopf map* H : ℂ² → ℝ³ is defined by
+This definition is meaningful even without normalization, although its standard quantum-information interpretation uses normalized states.
 
-H(z₁, z₂) = (2Re(z₁z̄₂), 2Im(z₁z̄₂), |z₁|² - |z₂|²)
+### 2.2 Product states and rank one
 
-When restricted to the unit sphere S³ = {(z₁, z₂) : |z₁|² + |z₂|² = 1}, the image lies on S².
+A pure state is a **product state** if there exist one-qubit vectors $u=(u_0,u_1)$ and $v=(v_0,v_1)$ such that
 
-### 2.6 The Entanglement Wedge (Novel Definition)
+$$
+|\psi\rangle=(u_0|0\rangle+u_1|1\rangle)
+\otimes(v_0|0\rangle+v_1|1\rangle).
+$$
 
-**Definition 2.6** (Entanglement Wedge). Given two vectors v₁, v₂ ∈ ℂ², the *EntanglementWedge* is the pair (v₁, v₂) together with the wedge product
+Expanding gives
 
-v₁ ∧ v₂ = v₁[0]·v₂[1] - v₁[1]·v₂[0] ∈ ℂ
+$$
+(\alpha,\beta,\gamma,\delta)
+=(u_0v_0,u_0v_1,u_1v_0,u_1v_1),
+$$
 
-For a two-qubit state with coefficient matrix M, the rows v₁ = (α, β) and v₂ = (γ, δ) form an EntanglementWedge, and
+so
 
-C(ψ) = 2|v₁ ∧ v₂|
+$$
+A_\psi=
+\begin{pmatrix}u_0\\u_1\end{pmatrix}
+\begin{pmatrix}v_0&v_1\end{pmatrix}.
+$$
 
-This definition makes explicit the common algebraic root of three perspectives:
-- **Algebraic**: det(M) where M has v₁, v₂ as rows
-- **Topological**: the linking number of Hopf preimages of the projections of v₁, v₂ to S²
-- **Quantum-mechanical**: half the concurrence
+Thus a nonzero product state has a rank-one coefficient matrix. Conversely, every nonzero rank-one $2\times2$ complex matrix factors as a column vector times a row vector and therefore represents a product state.
 
-## 3. Main Results
+### Theorem 2.1 — Determinant criterion for zero concurrence
 
-### 3.1 Concurrence = 2|det(M)|
+For every pure two-qubit amplitude vector $\psi$,
 
-**Theorem 3.1** (Concurrence-Determinant Identity).
-*For any α, β, γ, δ ∈ ℂ,*
+$$
+C(\psi)=0
+\quad\Longleftrightarrow\quad
+\alpha\delta=\beta\gamma.
+$$
 
-C(α, β, γ, δ) = 2‖det M(α, β, γ, δ)‖
+For every nonzero state, these conditions are also equivalent to $A_\psi$ having rank one and to $\psi$ being a product state.
 
-*Proof sketch.* The determinant of the 2×2 matrix [[α, β], [γ, δ]] is αδ - βγ, and the concurrence is defined as 2‖αδ - βγ‖. The equality is immediate from the definitions. □
+**Proof sketch.** Since $C(\psi)=2|\alpha\delta-\beta\gamma|$, concurrence vanishes exactly when the complex number $\alpha\delta-\beta\gamma$ vanishes. This is precisely the zero-determinant condition. A nonzero $2\times2$ matrix has zero determinant exactly when it has rank one, and rank-one coefficient matrices are exactly outer products of two one-qubit coefficient vectors. $\square$
 
-### 3.2 Separability of Product States
+The zero set
 
-**Theorem 3.2** (Product State Separability).
-*If |ψ⟩ = |ψ₁⟩ ⊗ |ψ₂⟩ with |ψ₁⟩ = α₁|0⟩ + β₁|1⟩ and |ψ₂⟩ = α₂|0⟩ + β₂|1⟩, then*
+$$
+\alpha\delta-\beta\gamma=0
+$$
 
-C(α₁α₂, α₁β₂, β₁α₂, β₁β₂) = 0
+is a quadratic algebraic hypersurface in amplitude space. After projectivization it is the Segre variety $\mathbb{CP}^1\times\mathbb{CP}^1$ embedded in $\mathbb{CP}^3$. Thus separable pure states form a distinguished algebraic subvariety rather than an arbitrary subset.
 
-*Proof sketch.* The coefficient matrix M = [[α₁α₂, α₁β₂], [β₁α₂, β₁β₂]] is the outer product (α₁, β₁)ᵀ(α₂, β₂), which has rank ≤ 1. Hence det M = α₁α₂β₁β₂ - α₁β₂β₁α₂ = 0. □
+## 3. The sharp concurrence bound
 
-*Topological interpretation.* For a product state, both rows of M are proportional (they represent the same point on CP¹), so their Hopf preimages are the same circle. A circle linked with itself has linking number zero.
+The upper bound follows from two standard inequalities. For complex numbers $z,w$, the triangle inequality gives $|z-w|\le|z|+|w|$. For nonnegative real numbers $x,y$, Young’s quadratic inequality gives
 
-### 3.3 Spin-Flip Equivalence
+$$
+2xy\le x^2+y^2,
+$$
 
-**Theorem 3.3** (Spin-Flip Identity).
-*The spin-flip inner product equals -2 times the determinant invariant:*
+because $(x-y)^2\ge0$.
 
-⟨ψ̃|ψ⟩ = -2(αδ - βγ)
+### Lemma 3.1 — Four-variable product bound
 
-*Proof.* Direct computation: -δα + γβ + βγ - αδ = -(αδ + αδ) + (βγ + βγ) = -2αδ + 2βγ = -2(αδ - βγ). □
+For nonnegative real numbers $a,b,c,d$,
 
-**Corollary 3.4.** *The concurrence equals the norm of the spin-flip inner product:*
+$$
+2(ad+bc)\le a^2+b^2+c^2+d^2.
+$$
 
-C(ψ) = ‖⟨ψ̃|ψ⟩‖
+**Proof sketch.** Apply $2xy\le x^2+y^2$ first to $(a,d)$ and then to $(b,c)$:
 
-### 3.4 Determinant Multiplicativity
+$$
+2ad\le a^2+d^2,
+\qquad
+2bc\le b^2+c^2.
+$$
 
-**Theorem 3.5** (Determinant under Local Transformations).
-*For matrices U, V, M ∈ M₂(ℂ),*
+Adding proves the claim. $\square$
 
-det(UMVᵀ) = det(U) · det(M) · det(V)
+### Theorem 3.2 — Concurrence is bounded by squared norm
 
-*Proof.* By the multiplicativity of the determinant: det(UMVᵀ) = det(U)det(M)det(Vᵀ) = det(U)det(M)det(V). □
+For every $\psi=(\alpha,\beta,\gamma,\delta)\in\mathbb C^4$,
 
-### 3.5 SL(2) Invariance of Concurrence
+$$
+C(\psi)\le N(\psi).
+$$
 
-**Theorem 3.6** (SL(2) Invariance).
-*If det(U) = det(V) = 1, then*
+**Proof sketch.** By the triangle inequality and multiplicativity of the complex norm,
 
-2‖det(U · M(ψ) · Vᵀ)‖ = C(ψ)
+$$
+|\alpha\delta-\beta\gamma|
+\le |\alpha\delta|+|\beta\gamma|
+=|\alpha||\delta|+|\beta||\gamma|.
+$$
 
-*Proof.* By Theorem 3.5, det(UMVᵀ) = 1 · det(M) · 1 = det(M). □
+Multiply by $2$ and apply Lemma 3.1 with
 
-*Physical interpretation.* Local SU(2) ⊂ SL(2,ℂ) operations on individual qubits cannot create or destroy entanglement. This is the algebraic counterpart of the topological fact that the linking number is invariant under ambient isotopy.
+$$
+(a,b,c,d)=(|\alpha|,|\beta|,|\gamma|,|\delta|).
+$$
 
-### 3.6 Hopf Map: Sphere Preservation
+The result is
 
-**Theorem 3.7** (Hopf Norm Preservation).
-*If |z₁|² + |z₂|² = 1, then*
+$$
+C(\psi)
+\le|\alpha|^2+|\beta|^2+|\gamma|^2+|\delta|^2
+=N(\psi).
+$$
 
-H(z₁,z₂)₀² + H(z₁,z₂)₁² + H(z₁,z₂)₂² = 1
+$\square$
 
-*Proof sketch.* Let a = |z₁|², b = |z₂|², so a + b = 1. The first two components squared sum to 4|z₁z̄₂|² = 4ab. The third component squared is (a-b)². Then 4ab + (a-b)² = 4ab + a² - 2ab + b² = a² + 2ab + b² = (a+b)² = 1. □
+### Corollary 3.3 — Unit-interval theorem
 
-### 3.7 Hopf Fiber Phase Equivalence
+Every normalized pure two-qubit state satisfies
 
-**Theorem 3.8** (U(1) Fiber).
-*For any θ ∈ ℝ,*
+$$
+0\le C(\psi)\le1.
+$$
 
-H(e^{iθ}z₁, e^{iθ}z₂) = H(z₁, z₂)
+**Proof sketch.** Nonnegativity follows from $C(\psi)=2|D(\psi)|$. The upper bound is Theorem 3.2 together with $N(\psi)=1$. $\square$
 
-*Proof sketch.* The key identities are (e^{iθ}z₁)·conj(e^{iθ}z₂) = e^{iθ}·e^{-iθ}·z₁z̄₂ = z₁z̄₂ and |e^{iθ}z|² = |z|². □
+The bound is sharp at both endpoints. Product states realize $C=0$, while Bell states realize $C=1$, as shown below.
 
-*Significance.* This establishes that the fiber of the Hopf map is S¹ ≅ U(1), the group of global phases. Two quantum states differing only by a global phase are physically indistinguishable, and this is precisely the Hopf fiber.
+### Remark 3.4 — Equality structure
 
-### 3.8 Wedge Product Equivalence
+The proof of Theorem 3.2 identifies the inequalities whose equality cases must coincide for maximal concurrence. Equality requires equality in the complex triangle inequality for $\alpha\delta$ and $-\beta\gamma$, together with
 
-**Theorem 3.9** (Wedge-Concurrence Equivalence).
-*The EntanglementWedge concurrence equals the standard concurrence:*
+$$
+|\alpha|=|\delta|,
+\qquad
+|\beta|=|\gamma|.
+$$
 
-C_wedge(α, β, γ, δ) = C(α, β, γ, δ)
+A complete classification can be phrased more invariantly: maximally entangled normalized states have coefficient matrices whose two rows are orthogonal and have equal norm, and they form the local-unitary orbit of a Bell state. The detailed orbit classification is a natural continuation of the present determinant analysis.
 
-*Proof.* Both reduce to 2‖αδ - βγ‖ by definition. □
+## 4. Symmetry and Bell-state maximizers
 
-## 4. The Conjecture: Concurrence = Hopf Linking Number
+### Theorem 4.1 — Global-phase invariance
 
-**Conjecture 4.1.** For any normalized two-qubit state |ψ⟩ with coefficient matrix M, let v₁ and v₂ be the rows of M, normalized to lie on S³. Let p₁ = H(v₁) and p₂ = H(v₂) be their images on S². Let γ₁ = H⁻¹(p₁) and γ₂ = H⁻¹(p₂) be the Hopf preimage circles in S³. Then
+Let $u\in\mathbb C$ satisfy $|u|=1$. If
 
-C(ψ) = |Lk(γ₁, γ₂)|
+$$
+u\psi=(u\alpha,u\beta,u\gamma,u\delta),
+$$
 
-where Lk denotes the linking number.
+then
 
-**Testable prediction.** For 1000 random normalized two-qubit states, the numerically computed Gauss linking integral of the Hopf preimage circles should agree with the concurrence to machine precision.
+$$
+C(u\psi)=C(\psi).
+$$
 
-**Status.** The algebraic equivalences (Theorems 3.1, 3.3, 3.6, 3.9) establish that all known algebraic characterizations of entanglement reduce to |det M|. The Hopf fiber structure (Theorems 3.7, 3.8) establishes the geometric setting. The full topological statement requires linking number theory (specifically, the relationship between det and linking number for the Hopf fibration) which is not yet available in Mathlib.
+**Proof sketch.** The determinant is homogeneous of degree two:
 
-## 5. Algorithms
+$$
+D(u\psi)
+=(u\alpha)(u\delta)-(u\beta)(u\gamma)
+=u^2D(\psi).
+$$
 
-### 5.1 Concurrence Computation
+Hence
 
-```
-Input: State coefficients (α, β, γ, δ) ∈ ℂ⁴
-Output: Concurrence C ∈ [0, 1]
+$$
+C(u\psi)=2|u^2D(\psi)|=2|u|^2|D(\psi)|=C(\psi).
+$$
 
-1. Compute Δ = αδ - βγ
-2. Return C = 2|Δ|
-```
+$\square$
 
-Time complexity: O(1). This is optimal.
+This result ensures that concurrence descends from normalized vectors to physical rays with global phase removed.
 
-### 5.2 Hopf Preimage Circle
+### 4.1 Bell states
 
-```
-Input: Point (x, y, z) on S²
-Output: Circle γ ⊂ S³
+For $s\in\{-1,1\}$, define
 
-1. Compute r₁ = √((1+z)/2), r₂ = √((1-z)/2)
-2. Compute φ = arctan(y/x)
-3. For θ ∈ [0, 2π):
-     Output (r₁e^{iθ}, r₂e^{i(θ-φ)})
-```
+$$
+|\Phi_s\rangle=rac{|00\rangle+s|11\rangle}{\sqrt2},
+\qquad
+|\Psi_s\rangle=rac{|01\rangle+s|10\rangle}{\sqrt2}.
+$$
 
-### 5.3 Gauss Linking Number
+These are the four Bell states.
 
-```
-Input: Two closed curves γ₁, γ₂ in ℝ³ (discretized)
-Output: Linking number Lk ∈ ℤ
+### Theorem 4.2 — Bell normalization
 
-1. Stereographically project from S³ to ℝ³ if needed
-2. For each segment pair (s₁ᵢ, s₂ⱼ):
-     Compute cross product dr₁ × dr₂
-     Accumulate (r₁-r₂) · (dr₁ × dr₂) / |r₁-r₂|³
-3. Divide by 4π and round to nearest integer
-```
+For each $s\in\{-1,1\}$,
 
-## 6. Discussion
+$$
+N(\Phi_s)=N(\Psi_s)=1.
+$$
 
-### 6.1 Relationship to Prior Work
+**Proof sketch.** Each Bell state has exactly two nonzero amplitudes, each of modulus $1/\sqrt2$. Their squared moduli sum to $1/2+1/2=1$. $\square$
 
-The connection between entanglement and the Hopf fibration was first noted by Mosseri and Dandoloff (2001), who observed that the Hopf map naturally arises in the parameterization of two-qubit states. Bernevig and Chen (2003) further developed the connection to Berry phases and topological invariants. Our contribution is to provide:
+### Theorem 4.3 — Bell maximality
 
-1. A complete algebraic formalization proving all equivalences
-2. The novel EntanglementWedge structure unifying three perspectives
-3. Formal machine verification of all results
-4. The SL(2) invariance theorem, connecting topological and physical invariance
+For each $s\in\{-1,1\}$,
 
-### 6.2 Beyond Two Qubits
+$$
+C(\Phi_s)=C(\Psi_s)=1.
+$$
 
-For three or more qubits, the situation is considerably richer. The relevant Hopf-like fibration is the quaternionic Hopf fibration S⁷ → S⁴, and the entanglement structure involves multiple SLOCC invariants. The EntanglementWedge generalizes to higher exterior powers, but the linking number interpretation becomes more complex, involving higher-dimensional linking and the Hopf invariant of maps S²ⁿ⁻¹ → Sⁿ.
+**Proof sketch.** For $\Phi_s$, the amplitudes are $(1/\sqrt2,0,0,s/\sqrt2)$, so
 
-### 6.3 Applications to Quantum Error Correction
+$$
+D(\Phi_s)=\frac{s}{2}.
+$$
 
-The topological nature of entanglement suggests that quantum error correction codes should be understood as topological protection of linking numbers. The surface codes used in topological quantum computing are, from this perspective, implementations of the topological protection inherent in the Hopf fibration structure.
+For $\Psi_s$, the amplitudes are $(0,1/\sqrt2,s/\sqrt2,0)$, so
 
-## 7. Conclusion
+$$
+D(\Psi_s)=-\frac{s}{2}.
+$$
 
-We have established a rigorous algebraic framework proving that quantum entanglement, as measured by the concurrence, is identical to the determinant invariant of the coefficient matrix, the absolute spin-flip inner product, and the wedge product of the EntanglementWedge — all of which are manifestations of the topological linking number of the Hopf fibration. The formal verification in Lean 4 provides the highest level of mathematical certainty for these results.
+Both determinant norms equal $1/2$, and multiplication by $2$ gives concurrence $1$. By Corollary 3.3, this is the maximal possible value. $\square$
 
-The central insight is that entanglement is not a mysterious nonlocal connection, but the local shape of the quantum state space, encoded in the topology of the Hopf fibration.
+The Bell states therefore support the endpoint of the topological analogy: maximal entanglement can be pictured using a maximally linked configuration. The obstruction arises only when this endpoint picture is promoted to an equality for the entire continuum of states.
 
-## References
+## 5. An explicit obstruction to integer-valued models
 
-1. Hopf, H. (1931). "Über die Abbildungen der dreidimensionalen Sphäre auf die Kugelfläche." *Mathematische Annalen*, 104(1), 637–665.
-2. Einstein, A., Podolsky, B., & Rosen, N. (1935). "Can Quantum-Mechanical Description of Physical Reality Be Considered Complete?" *Physical Review*, 47(10), 777–780.
-3. Wootters, W. K. (1998). "Entanglement of Formation of an Arbitrary State of Two Qubits." *Physical Review Letters*, 80(10), 2245–2248.
-4. Mosseri, R., & Dandoloff, R. (2001). "Geometry of entangled states, Bloch spheres and Hopf fibrations." *Journal of Physics A*, 34(47), 10243.
-5. Bernevig, B. A., & Chen, H.-D. (2003). "Geometry of the three-qubit state, entanglement and division algebras." *Journal of Physics A*, 36(30), 8325.
-6. Urbantke, H. K. (2003). "The Hopf fibration—seven times in physics." *Journal of Geometry and Physics*, 46(2), 125–150.
+Consider
+
+$$
+|\chi\rangle
+=rac12|00\rangle+rac1{\sqrt2}|01\rangle+rac12|11\rangle.
+$$
+
+Its amplitude vector is
+
+$$
+\chi=\left(\frac12,\frac1{\sqrt2},0,\frac12\right).
+$$
+
+### Lemma 5.1 — Normalization of the witness
+
+The state $\chi$ is normalized.
+
+**Proof sketch.** Direct calculation gives
+
+$$
+N(\chi)
+=\frac14+rac12+0+rac14=1.
+$$
+
+$\square$
+
+### Lemma 5.2 — Half concurrence
+
+The state $\chi$ has concurrence exactly $1/2$.
+
+**Proof sketch.** Its determinant coordinate is
+
+$$
+D(\chi)
+=\frac12\cdot\frac12-rac1{\sqrt2}\cdot0
+=\frac14.
+$$
+
+Therefore
+
+$$
+C(\chi)=2\left|\frac14\right|=\frac12.
+$$
+
+$\square$
+
+### Theorem 5.3 — Universal integer-valued obstruction
+
+There is no integer-valued function $L$ on normalized pure two-qubit states such that
+
+$$
+C(\psi)=|L(\psi)|
+$$
+
+for every normalized state $\psi$. In particular, concurrence cannot universally equal the absolute value of an ordinary linking number.
+
+**Proof sketch.** Suppose such a function existed. Applying it to the normalized witness $\chi$ would give
+
+$$
+\frac12=C(\chi)=|L(\chi)|.
+$$
+
+But $L(\chi)\in\mathbb Z$, so $|L(\chi)|$ is a nonnegative integer and cannot equal $1/2$. This contradiction proves the theorem. $\square$
+
+This theorem does not depend on continuity, on details of a curve construction, or on a particular Hopf projection. It uses only the codomain $\mathbb Z$ and the universal equality claim. Any ordinary linking-number model therefore fails on the explicit witness.
+
+A complementary continuity argument reinforces the conclusion. The unit sphere $S^7$ is connected, concurrence is continuous, and its image contains both $0$ and $1$. Along suitable continuous paths it assumes intermediate values. By contrast, a continuous integer-valued function on a connected space is constant. Even if a proposed linking assignment changes discontinuously, Theorem 5.3 still rules out pointwise equality because of the half-integer witness.
+
+## 6. Hopf geometry and the correct algebraic bridge
+
+### 6.1 A dimensional distinction
+
+Normalized vectors in $\mathbb C^4$ form the seven-sphere
+
+$$
+S^7=\{\psi\in\mathbb C^4:N(\psi)=1\}.
+$$
+
+Identifying $\mathbb C^4$ with $\mathbb H^2$ leads to the quaternionic Hopf fibration
+
+$$
+S^3\hookrightarrow S^7\longrightarrow S^4.
+$$
+
+The fibre over each point of $S^4$ is $S^3$. This differs from the classical complex Hopf fibration
+
+$$
+S^1\hookrightarrow S^3\longrightarrow S^2,
+$$
+
+whose fibres are circles and whose distinct fibres form the familiar Hopf link in $S^3$.
+
+Consequently, a statement describing fibres of $S^7\to S^4$ as linked circles conflates two different Hopf fibrations. Higher-dimensional linking can be defined in appropriate settings, but it is not automatically an ordinary linking number of two circles, and it remains integer-valued when it is an ordinary homological linking invariant.
+
+### 6.2 Exterior algebra
+
+Let the two rows of $A_\psi$ be
+
+$$
+r_1=(\alpha,\beta),
+\qquad
+r_2=(\gamma,\delta).
+$$
+
+Their exterior product belongs to the one-dimensional complex vector space $\bigwedge^2\mathbb C^2$ and satisfies
+
+$$
+r_1\wedge r_2=(\alpha\delta-\beta\gamma)e_1\wedge e_2.
+$$
+
+Thus
+
+$$
+C(\psi)=2\|r_1\wedge r_2\|.
+$$
+
+This is the precise geometric content of concurrence in the chosen basis: it is twice an area norm. The wedge product vanishes when the row vectors are dependent, exactly the product-state condition. It is largest under unit normalization when the rows are balanced and orthogonal in the appropriate Hermitian sense.
+
+The determinant is also the unique $2\times2$ minor of the coefficient matrix. In larger bipartite systems, coefficient matrices have many minors. Their collective norms are Plücker-coordinate data and naturally generalize the rank-detection role played here by $D(\psi)$. This suggests an exterior-algebra hierarchy for multipartite and higher-dimensional entanglement.
+
+## 7. Algorithms and numerical demonstrations
+
+### 7.1 Stable concurrence evaluation
+
+Given four complex amplitudes, the basic algorithm computes the squared norm and determinant. If the input is to represent a physical state, it can first be normalized by dividing each amplitude by $\sqrt{N(\psi)}$. The concurrence is then $2|D(\psi)|$.
+
+For a fixed-size two-qubit state, the arithmetic cost is constant: four norm squares, two complex products, one subtraction, and one complex modulus. If one treats the number of amplitudes as the input size, normalization is linear in that number, while the two-qubit determinant step remains constant.
+
+Floating-point implementations should allow a small tolerance when checking $0\le C\le1$, because rounding may produce values such as $1+10^{-16}$. Clipping is suitable for display but should not replace reporting raw residuals in scientific calculations.
+
+### 7.2 Demonstration set
+
+A transparent test suite contains:
+
+1. The product state $|00\rangle$, with amplitudes $(1,0,0,0)$ and concurrence $0$.
+2. The four Bell states, each with concurrence $1$.
+3. The witness $(1/2,1/\sqrt2,0,1/2)$, with concurrence $1/2$.
+4. Random complex Gaussian amplitude vectors normalized to unit norm, whose computed concurrences fill the interval between the endpoints.
+
+Random sampling is illustrative rather than a proof of a universal theorem. The exact examples and inequalities above establish the claims; sampling shows their numerical behavior and reveals why a binary “linked or unlinked” model is too coarse.
+
+### 7.3 Integer-distance diagnostic
+
+For a computed concurrence $c\in[0,1]$, define its distance to the nearest nonnegative integer by
+
+$$
+\Delta_{\mathbb Z}(c)=\min_{n\in\mathbb Z_{\ge0}}|c-n|.
+$$
+
+On $[0,1]$, this simplifies to
+
+$$
+\Delta_{\mathbb Z}(c)=\min(c,1-c).
+$$
+
+For the witness, $\Delta_{\mathbb Z}(1/2)=1/2$, the largest possible separation from the integer endpoints within the unit interval. For Bell states and product states the diagnostic vanishes, explaining why tests restricted to those examples cannot distinguish concurrence from a hypothetical integer invariant.
+
+## 8. Applications
+
+### 8.1 Quantum-state diagnostics
+
+The determinant criterion gives a constant-time test for separability of pure two-qubit states. Given amplitudes, compute $\alpha\delta-\beta\gamma$. Exact vanishing means a product state; nonzero magnitude quantifies entanglement through concurrence. In experimental data, amplitudes are estimated with uncertainty, so one should propagate errors rather than interpret tiny nonzero determinants as decisive.
+
+### 8.2 Geometry of the separable locus
+
+The equation $D(\psi)=0$ identifies product states as an algebraic variety. This permits the use of tangent spaces, normal directions, and condition numbers. Near a smooth point of the Segre variety, the determinant gives a transverse quadratic coordinate whose magnitude can be compared with Euclidean or Fubini–Study distance. Establishing sharp global comparison constants would turn concurrence into a quantitative geometric distance proxy.
+
+### 8.3 Design constraints for topological models
+
+The obstruction theorem gives a specification for any replacement of ordinary linking number. A successful Hopf-geometric functional $G$ should be real-valued and continuous, invariant under global phase, vanish exactly on product states, and attain one on maximally entangled states. Ideally it should also be invariant under local unitary transformations. Differential-geometric candidates include normalized integrals, holonomies, calibrated volumes, or averaged linking kernels. Such quantities can vary continuously and therefore avoid the integer-codomain obstruction.
+
+### 8.4 Multipartite generalization
+
+For a multipartite pure state, choose a bipartition and flatten the coefficient tensor into a matrix. Rank one across that bipartition characterizes product structure across the cut. The vanishing of all $2\times2$ minors characterizes rank at most one, and higher minors encode richer rank constraints. Norms of families of minors can therefore provide continuous exterior-algebraic entanglement indicators. The two-qubit determinant is the smallest nontrivial case of this broader construction.
+
+## 9. Discussion and limitations
+
+The results establish a negative theorem about a specific universal identification and a positive theorem about the determinant structure of concurrence. They do not claim that topology is absent from quantum entanglement. Nor do they exclude all quantities informally described as “linking.” They exclude equality with an ordinary integer-valued invariant on every normalized pure two-qubit state.
+
+The distinction between discrete and continuous observables is fundamental. Linking number is stable under deformations that avoid crossings; its strength is precisely that it does not change continuously under small perturbations. Concurrence, by contrast, is designed to quantify continuously varying entanglement. Expecting literal equality asks one quantity to possess incompatible behaviors.
+
+Endpoint agreement is especially misleading. Product states give $0$ and Bell states give $1$, matching the simplest unlink/link narrative. But an invariant is determined by its behavior over the whole state space, not by two strata. The half-concurrence witness is therefore a minimal but decisive stress test.
+
+The present treatment concerns pure states. Mixed-state concurrence involves a convex-roof construction and spectral formulas, introducing additional structure. The integer-valued obstruction remains intuitively relevant because mixed-state concurrence also varies continuously, but a separate development is required for precise mixed-state statements.
+
+The paper proves maximality of Bell states but does not derive a full classification of all maximizers under local unitaries. It also does not construct a replacement Hopf-geometric functional. Those are positive classification and construction problems motivated, rather than solved, by the obstruction.
+
+## 10. Future work
+
+A first direction is to construct a canonically normalized real-valued functional on quaternionic Hopf geometry. Its target properties are continuity, global-phase and local-unitary invariance, zero value exactly on product states, and unit value exactly on maximally entangled states. The determinant coordinate supplies a benchmark against which geometric candidates can be tested.
+
+A second direction is an exterior-algebra hierarchy for multipartite entanglement. For each bipartition, one can study Plücker coordinates of coefficient flattenings and determine which norms yield monotones under physically relevant operations.
+
+A third direction is the classification of equality in $C(\psi)\le N(\psi)$. The elementary proof exposes simultaneous equality conditions in the triangle and Young inequalities. Translating these conditions into unitary-invariant language should recover the local-unitary orbit of Bell states.
+
+A fourth direction is a sharp comparison between concurrence and distance to the Segre variety, under both Euclidean and Fubini–Study metrics. Such estimates would connect an algebraic defining equation to an intrinsic geometric displacement from separability.
+
+Finally, one may study the topology of fixed-concurrence level sets after quotienting by global phase. Values strictly between $0$ and $1$ are expected to form regular strata of a common type, while topology may change at the separable and maximally entangled endpoints. This is a natural setting in which topology and concurrence can interact without forcing a continuous quantity to become an integer.
+
+## 11. Conclusion
+
+For a pure two-qubit state, concurrence is governed by one determinant:
+
+$$
+C(\psi)=2|\alpha\delta-\beta\gamma|.
+$$
+
+This formula yields the exact zero locus of product states, the sharp range $[0,1]$ under normalization, invariance under global phase, and unit concurrence for all four Bell states. It also produces a normalized state with concurrence $1/2$. Because ordinary linking numbers are integers, no integer-valued linking model can equal concurrence for all pure two-qubit states.
+
+The corrected geometric interpretation is exterior-algebraic. Concurrence is the norm of a wedge-product coordinate measuring the failure of the coefficient matrix to have rank one. Hopf geometry may still contribute a valuable interpretation, but any universal quantitative model must be real-valued and continuous. The obstruction does not end the geometric program; it gives that program its necessary mathematical design constraints.
