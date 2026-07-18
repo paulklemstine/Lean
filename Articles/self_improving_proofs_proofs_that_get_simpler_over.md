@@ -1,204 +1,147 @@
-# Living Proofs: When Mathematical Arguments Simplify Themselves
+# When Proofs Learn to Travel Light
 
-## A proof is never finished
+## A mathematical theory of certificates that simplify themselves
 
-Ask a mathematician what a proof *is*, and you will usually hear something
-static: a fixed sequence of logical steps, frozen the moment the last line is
-written. But anyone who has taught a course twice knows better. The proof you
-give in year two is shorter, cleaner, and more transparent than the one you gave
-in year one. A clumsy case split collapses into a single observation. A lemma
-you thought you needed turns out to be unnecessary. A quantifier vanishes.
+A mathematical proof is usually presented as a finished monument. Definitions form the foundation, lemmas rise like scaffolding, and the final theorem crowns the structure. Once the argument is correct, we tend to regard it as fixed.
 
-This everyday experience hides a precise mathematical question. If proofs can be
-*improved* — made simpler while still proving the same thing — then improvement
-is a process, and processes can be studied. Does simplification always
-terminate, or can a proof be polished forever? Is there a single "simplest"
-proof of each theorem, a Platonic ideal toward which all our fumbling drafts
-converge? And if you simplify greedily, always taking the next available
-shortcut, are you guaranteed to arrive at that ideal?
+But proofs are also objects that can be edited. A repeated sentence can be removed. A named fact used only as a trivial assumption can be inlined. Two adjacent steps can sometimes be merged. The conclusion remains unchanged while the route to it becomes shorter and easier to audit.
 
-This article tells the story of a small, self-contained theory that answers all
-three questions. Two of the answers are reassuring. The third is a warning.
+That observation suggests a dynamic picture: instead of asking only whether a certificate is valid, ask how it can improve. The resulting mathematics connects logic, algorithms, order theory, and cryptography. Its central lesson is precise but modest. Under concrete local simplification rules, every genuine improvement lowers a natural-number cost, so an endless chain of strict improvements is impossible. If certificate simplification is coupled to an ascending chain of cryptographic key ideals in a Noetherian ring, both processes eventually become constant—and they do so after one common finite stage.
 
-## What is a "refinement system"?
+This is not a claim that every local simplifier discovers the globally shortest imaginable proof. Termination and optimality are different achievements. What the theory supplies is a rigorous foundation for certificates that become simpler without changing what they certify.
 
-To reason about improvement we first have to say what a proof, and its
-complexity, actually are — abstractly enough that the theory applies to any
-notion of proof one likes.
+## Turning a proof into an auditable tree
 
-Fix a single statement you want to prove; call it the **target**. A
-**refinement system** for that target consists of three ingredients:
+Consider a tree whose nodes record four elementary kinds of proof structure.
 
-- A collection of **proof candidates** — the concrete arguments one might offer.
-- A **validity** test: for each candidate, a yes/no verdict on whether it really
-  does establish the target. A candidate that passes is called *valid*.
-- A **complexity measure** $C$ assigning to each candidate a natural number.
-  Think of $C(P) = \text{length}(P) + \text{depth}(P) + (\text{number of lemmas
-  used})$, but any whole-number cost will do.
+1. A **hypothesis leaf** asserts a formula.
+2. A **named-lemma leaf** records a named fact and the formula it asserts.
+3. A **modus-ponens node** combines two subtrees and records their resulting conclusion.
+4. A **restatement node** wraps a subtree while asserting a formula already established below it.
 
-The crucial move is that complexity is measured in the natural numbers
-$0, 1, 2, \dots$ — a set with no infinite descending staircase. That single fact
-drives everything that follows.
+The tree is the audit trail. Separately, the certificate carries a mathematical witness that the advertised proposition is true. This separation matters: the tree measures the shape of an audit, while the witness secures the certified claim.
 
-Now define what it means for one proof to be *better* than another. A candidate
-$P'$ **refines** $P$ when
+Three statistics measure the tree. Its length $L(P)$ is the number of nodes. Its depth $D(P)$ is the height of the tree, with leaves at depth $0$. Its named-lemma count $M(P)$ is the number of named-lemma leaves. The audited cost is
 
-$$P' \text{ is valid}, \quad P \text{ is valid}, \quad \text{and} \quad C(P') < C(P).$$
+$$
+C(P)=L(P)+D(P)+M(P).
+$$
 
-In words: both are genuine proofs of the same target, and $P'$ is strictly
-simpler. Refinement is the act of replacing a proof by a better one.
+This score is deliberately transparent. It does not pretend to capture every aspect of elegance. It rewards fewer steps, shallower dependency structure, and fewer named references. Most importantly, it is a natural number, which gives the refinement process a well-founded clock.
 
-## First good news: you cannot polish forever
+## Three ways to remove friction
 
-Here is the first temptation to resist. Because you can *always imagine* a
-proof getting simpler, you might fear that simplification could go on without
-end — an infinite regress of ever-tinier proofs, never reaching bottom.
+A **refinement** is one permitted, conclusion-preserving rewrite of the tree. The basic rules are simple.
 
-It cannot. This is the **Well-Foundedness of Refinement**:
+First, remove a redundant restatement when the subtree already has the stated conclusion. Second, replace a named trivial lemma by a hypothesis leaf asserting the same formula. Third, remove a restatement sitting immediately beside a modus-ponens operation, thereby merging adjacent administrative steps. Any of these rewrites may also occur inside a larger tree.
 
-> **Theorem.** In any refinement system there is no infinite chain
-> $$P_0 \succ P_1 \succ P_2 \succ \cdots$$
-> in which each $P_{n+1}$ refines $P_n$.
+These rules support two fundamental results.
 
-The reason is almost embarrassingly simple, and that simplicity is the point.
-Each refinement step strictly decreases the complexity, and complexity is a
-natural number. An infinite chain of refinements would produce an infinite
-strictly-decreasing sequence of natural numbers $C(P_0) > C(P_1) > C(P_2) >
-\cdots$, and no such sequence exists — you would run out of room above zero.
-Formally, refinement is a *sub-relation* of "has strictly smaller complexity,"
-and the latter is well-founded because $<$ on $\mathbb{N}$ is. Any property that
-is inherited by sub-relations of a well-founded relation is therefore true of
-refinement too.
+**Conclusion Preservation Theorem.** If $P'$ is obtained from $P$ by one permitted refinement, then $P'$ and $P$ have exactly the same recorded conclusion.
 
-The moral: **every simplification effort must eventually terminate.** No proof
-is a bottomless well of improvement.
+The reason is local. Each basic rewrite replaces a node or small configuration by another with the same outer formula. Rewriting inside a larger tree cannot alter the conclusion at the root. Thus simplification changes the route but not the destination.
 
-## Second good news: a simplest proof always exists
+**Strict Cost Descent Theorem.** If $P'$ is a one-step refinement of $P$, then
 
-Termination of *each individual chain* is one thing. The existence of a genuine
-champion — a proof no one can beat — is another, stronger claim. It holds too.
+$$
+C(P')<C(P).
+$$
 
-> **Theorem (Existence of a Simplest Proof).** As soon as the target has *any*
-> valid proof at all, it has a valid proof whose complexity is less than or
-> equal to that of *every* valid proof.
+Every basic rewrite lowers the additive quantity $L(P)+M(P)$, while depth never increases. The same remains true when a rewrite occurs inside a subtree. Adding the two inequalities yields strict descent of $L(P)+D(P)+M(P)$.
 
-This is the promised "limit" of the refinement process made rigorous: a
-complexity-minimal valid candidate, the simplest possible argument for the
-theorem. The proof again leans on well-foundedness. Consider the set of all
-valid candidates; it is non-empty by hypothesis. A well-founded relation always
-has a *minimal element* in any non-empty set — an element from which you cannot
-descend further. Such a minimal valid candidate has no valid refinement, which
-means no valid proof is strictly simpler; that is exactly what it means to be a
-global minimum of complexity.
+This is the engine of the entire story. An improvement is not merely declared to be better; its lower cost follows from its concrete structural change.
 
-So the dream is partly real. For every provable theorem there is a simplest
-proof, and it is reachable in the sense that improvement always drives you
-downward toward the minimal complexity.
+## Why improvement must stop
 
-## Third good news, with a catch: the process halts
+Natural numbers do not admit an infinite strictly descending chain. There is no sequence
 
-What about an *automated* simplifier — a fixed rule that, given a proof, hands
-you back a proof that is never more complex? Iterate it and watch the complexity
-evolve. Does it settle down?
+$$
+7>5>3>1>	ext{something smaller forever}.
+$$
 
-> **Theorem (Halting).** Let $\text{step}$ be any deterministic rule that never
-> increases complexity: $C(\text{step}(P)) \le C(P)$ for every candidate $P$.
-> Then starting from any proof $P_0$ and repeatedly applying the rule, the
-> complexity eventually becomes constant. There is a stage $N$ after which
-> $C(P_N) = C(P_{N+1}) = C(P_{N+2}) = \cdots$.
+Combine that elementary fact with strict cost descent and one obtains the **Termination Theorem**: there is no infinite sequence $P_0,P_1,P_2,\ldots$ in which every $P_{n+1}$ is a permitted refinement of $P_n$.
 
-The complexities form a non-increasing sequence of natural numbers. Such a
-sequence is bounded below by $0$, so it attains a minimum value; once it reaches
-that value it can never rise again, and being non-increasing it can never fall
-further either. It is pinned. The process *stabilizes*.
+This theorem does not provide a universal small bound on the number of steps. A starting tree with a huge cost may admit a very long path, and the geometry of local rewrites can make the shortest route to a normal form difficult to find. “Must finish” does not mean “finishes quickly.” That gap is especially important in proof complexity and cryptography, where a compact final certificate may still be separated from its initial form by a forbiddingly long local normalization path.
 
-But here the catch of the whole story announces itself. Stabilizing is not the
-same as *finishing the job*.
+Protocols also contain idle rounds. A certificate may remain unchanged while messages are exchanged or keys are updated. For that reason, strict descent is not the only useful model. Suppose the costs satisfy
 
-## The warning: local minima that are not global
+$$
+C(P_{n+1})\le C(P_n)
+$$
 
-The three theorems above paint an optimistic picture: improvement terminates, a
-best proof exists, and automated polishing settles down. It would be natural to
-conclude that if you simplify diligently, you will land on the simplest proof.
+for every round. Then the **Eventual Cost Stabilization Theorem** says that some stage $N$ exists such that
 
-That conclusion is **false**, and it is false for a reason familiar to anyone who
-has hiked a hilly landscape in fog: you can walk downhill until every direction
-leads up, and still be standing in a shallow dip far above the valley floor.
+$$
+C(P_n)=C(P_N)
+$$
 
-Consider a deterministic simplifier operating on four proofs of one true target,
-with complexities $5, 4, 3,$ and $2$. Call them *start*, *mid*, *local*, and
-*global*. The simplifier's rule is:
+for every $n\ge N$.
 
-$$\text{start} \;(5) \longmapsto \text{mid}\;(4) \longmapsto \text{local}\;(3) \longmapsto \text{local}\;(3) \longmapsto \cdots$$
+To see why, look at all costs that ever occur and choose their least value. It appears at some stage $N$. Later costs can be no larger because the sequence is non-increasing, and they can be no smaller because the chosen value was minimal. Hence every later cost equals it.
 
-From *start* it steps to *mid*, from *mid* to *local*, and from *local* it can
-find no further legal improvement, so it repeats *local* forever. Everything the
-theorems promised holds: the process descends, it never increases complexity,
-and it halts — pinned at complexity $3$.
+Notice the theorem concerns the numerical cost. Different trees may share the same cost unless further assumptions prohibit cost-preserving changes. The distinction keeps the conclusion honest.
 
-And yet a strictly simpler valid proof exists: *global*, of complexity $2$. It is
-a perfectly legitimate refinement of *local* in the abstract sense — valid, and
-strictly simpler. The simplifier simply never produces it, because *global* is
-not among the moves its rule allows. The automated process is trapped in a
-**local minimum**; the **global minimum** sits nearby, out of reach.
+## A four-frame portrait of $\sqrt{2}$
 
-This is the sharp edge of the theory. Well-foundedness guarantees you stop.
-Existence guarantees there is a best answer. Halting guarantees the machine
-settles. None of them guarantees the machine settles on the best answer. The
-gap between *a* minimum and *the* minimum is real and unavoidable for greedy,
-step-by-step improvement.
+The irrationality of $\sqrt{2}$ provides a compact audit trail. Recall that irrationality means there are no integers $a$ and nonzero $b$ with $\sqrt{2}=a/b$. A classical argument assumes such a reduced fraction exists, squares to obtain $a^2=2b^2$, concludes that $a$ is even, and then concludes that $b$ is even as well—a contradiction to lowest terms.
 
-## Not even a unique summit
+For the audit example, take a certificate of this claim whose tree consists of one hypothesis leaf wrapped in three redundant restatement layers. Removing one layer at a time gives four trees. Their measured costs are
 
-One might still hope that at least the simplest proof is *unique* — a single
-canonical argument crowning each theorem. Even this modest hope fails.
+$$
+7,
+\qquad 5,
+\qquad 3,
+\qquad 1.
+$$
 
-Take the humble target $2+2=4$. It has (at least) two genuinely different
-one-line proofs: one by direct computation, one by a normalization routine. Both
-are valid; both have complexity $1$; and no proof can be simpler than complexity
-$1$. So there are **two distinct simplest proofs**, tied for the crown, neither
-refining the other. "The simplest proof" is, in general, "*a* simplest proof."
-Minimality is a property, not an address.
+Why does each layer cost $2$? It contributes one node to length and one level to depth, while adding no named lemma. The final leaf has length $1$, depth $0$, and named-lemma count $0$, so its cost is $1$.
 
-## How long is the road?
+Each transition is an actual permitted rewrite and preserves the label asserting that $\sqrt{2}$ is irrational. The endpoint is normal for this rewrite system: no rule can simplify a bare hypothesis leaf. This example makes the abstract theorems visible. The sequence is not assigned decreasing numbers after the fact; the numbers arise from the changing tree.
 
-If simplification always terminates, one last question remains: *how quickly?*
-Here the answer is a study in contrasts.
+Yet it also exposes an important boundary. The leaf is normal under the specified rules. That does not establish that it is the globally shortest description among all possible languages, encodings, or proofs. A normal form is rule-relative; universal descriptive minimality is a much stronger and generally uncomputable ambition.
 
-Every refinement chain is **finite**, and in fact its length is bounded by the
-complexity of where you started: a chain beginning at a proof of complexity $m$
-can take at most $m$ genuine steps, since each step burns at least one unit of
-complexity and you cannot go below zero.
+## When certificates and keys evolve together
 
-Yet this bound is **tight**, and there is no *universal* limit. For every whole
-number $m$, one can exhibit a target and a chain of refinements exactly $m$ steps
-long. There is no single number of steps that suffices for all theorems. This is
-the rigorous heart of a striking intuition: the simplest proof of a theorem
-might be reached only after an astronomically long march of improvements — a
-googol of refinements, if you like — even though that march is guaranteed to be
-finite. The four-color theorem's simplest proof might lie a hundred-digit number
-of simplifications away from the sprawling argument we currently possess. It is
-down there. The path to it is finite. But finite can be very, very long.
+Cryptographic protocols often manipulate algebraic state as well as logical certificates. One useful abstraction models key information by ideals in a commutative ring. As a protocol learns constraints or accumulates relations, these ideals may form an ascending chain
 
-## Why this matters
+$$
+I_0\subseteq I_1\subseteq I_2\subseteq\cdots.
+$$
 
-There is a quiet philosophical shift buried in these theorems. We are used to
-treating a proof as a finished artifact, correct or incorrect, and leaving it at
-that. This theory invites us to see proofs instead as points in a landscape of
-complexity, connected by the act of refinement — *living objects* that can be
-improved, compared, and optimized.
+A commutative ring is **Noetherian** when every ascending chain of ideals eventually stabilizes. Thus there is a stage $N_k$ such that $I_n=I_{N_k}$ for every $n\ge N_k$.
 
-The picture that emerges is honest about both the promise and the limits of that
-view. Improvement is always well-founded: you will never chase simplicity
-forever. A simplest proof always exists: the search has a genuine target.
-Automated polishing always stabilizes: the machinery is well-behaved. But
-greedy, local improvement can strand you in a shallow valley, the true simplest
-proof may not be unique, and the road to it, though finite, can be
-unfathomably long.
+Now run two processes in parallel. The audited certificate costs are non-increasing, so they stabilize after some stage $N_p$. The key ideals ascend in a Noetherian ring, so they stabilize after some stage $N_k$. Choose
 
-These are not merely observations about mathematics. They are the same shapes
-that govern optimization everywhere — training a learning system, minimizing
-energy in a physical model, compressing a file. Downhill is easy to guarantee.
-*The bottom* is not. In understanding when proofs simplify themselves, we are
-really studying the universal tension between local effort and global truth — and
-learning, precisely, where the one stops short of the other.
+$$
+N=\max\{N_p,N_k\}.
+$$
+
+This yields the **Synchronized Certificate–Key Stabilization Theorem.** For every $n\ge N$,
+
+$$
+C(P_n)=C(P_N)
+\qquad\text{and}\qquad
+I_n=I_N.
+$$
+
+The proof is short because the conceptual work has been separated cleanly. Natural-number well-foundedness governs simplification. The ascending-chain condition governs algebraic key state. Taking the maximum synchronizes their stopping times.
+
+The result is useful as a protocol design principle. If certificate maintenance never increases audited cost and key accumulation lives in a Noetherian state space, then endless structural churn is impossible at the level of these two observables. Eventually the verifier sees neither a new cost nor a new key ideal.
+
+## A one-pass simplifier
+
+The rewrite rules also suggest an algorithm. Traverse the tree from the leaves upward. Replace every named trivial lemma by a hypothesis. Simplify each child of a modus-ponens node, then strip any restatement immediately surrounding those children. At a restatement node, simplify its child and remove the wrapper if the child already has the desired conclusion.
+
+This pass preserves the root conclusion and never increases length, depth, named-lemma count, or total cost. With a standard tree representation, it runs in time linear in the number of visited nodes, apart from the cost of comparing formula labels. Repeating the pass until no change occurs produces a normal form because any changing pass lowers a natural-number measure.
+
+In security engineering, such a routine could reduce transcript size, dependency depth, and named-reference overhead before a certificate is transmitted or checked. But logical preservation alone is not enough for a deployed cryptographic protocol. One must additionally prove that normalization respects transcript semantics, extraction, simulation, completeness, soundness, and privacy properties.
+
+## Living objects, disciplined claims
+
+The attractive slogan is that proofs can improve themselves. The mathematics refines that slogan into something dependable.
+
+A certificate can carry both a true proposition and an explicit audit tree. Local rewrites can preserve the conclusion while strictly lowering $C(P)=L(P)+D(P)+M(P)$. Strict refinement cannot continue forever. Non-increasing cost schedules eventually become constant. And when certificate evolution is coupled with ascending cryptographic ideals over a Noetherian ring, both observables stabilize after one common finite stage.
+
+What remains open is as interesting as what is settled. Do commuting conversions make the rewrite system confluent, so that every starting tree has essentially one normal form? Can polynomial-size certificates require superpolynomially many local improvements? Can degree bounds in polynomial rings turn qualitative stabilization into an explicit numerical deadline? Can cryptographic normalization preserve zero knowledge while reducing verifier work?
+
+These questions point toward a science of proof maintenance. Correctness is the beginning, not the end. A proof may be compressed, reorganized, audited, and synchronized with the algebraic state of a protocol. It can travel lighter over time—provided every discarded piece is shown to be genuinely unnecessary.
