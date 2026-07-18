@@ -3,21 +3,6 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "1992c474",
-    "description": "The AdS/CFT correspondence says that a gravitational theory in the bulk of anti-de Sitter space is equivalent to a conformal field theory on the boundary. What if prime numbers have a holographic dual? Define the prime hologram: for each prime p, define its 'boundary' as the ring Z/pZ and its 'bulk' as the p-adic field Q_p. Conjecture: The Riemann zeta function zeta(s) = prod_p (1 - p^{-s})^{-1} is the holographic partition function: the product over primes (boundary) encodes the same information as the completed zeta function Xi(s) (bulk). The functional equation Xi(s) = Xi(1-s) is the holographic duality: bulk physics at depth s equals boundary physics at depth 1-s. The prime counting function pi(x) ~ x/log(x) is the bulk volume, while the Chebyshev function theta(x) = sum_{p<=x} log(p) is the boundary area. The AdS/CFT dictionary: bulk gravity mode at depth s <-> boundary CFT operator of dimension 1-s. Test: verify that the pair correlation of zeta zeros matches GUE random matrices (bulk = quantum gravity in AdS, boundary = CFT random matrix ensemble). Compute the 'prime partition function' Z(beta) = prod_p (1 - e^{-beta log p})^{-1} and show it equals the bulk partition function. Impact: the Riemann Hypothesis is equivalent to a holographic stability condition \u2014 zeros on the critical line means the bulk geometry is stable against perturbations.",
-    "domains": [
-      "Novelty",
-      "NumberTheory"
-    ],
-    "id": "fd_0227",
-    "priority_score": 0.91,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-17T13:45:25.015677+00:00",
-    "title": "Holographic Primes: The Prime Number AdS/CFT Correspondence"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "There are mathematical objects whose existence we can prove but whose specific properties are unknowable \u2014 theorems that cast shadows without being visible. Define a dark theorem as a statement T such that: (1) PA proves 'there exists x such that T(x)', but (2) for every specific n, PA does NOT prove T(n). The classic example is the Paris-Harrington theorem: the strengthened finite Ramsey theorem is true but not provable in PA. But dark theorems go further: they assert the existence of objects that no specific instance can be verified. Conjecture: The set of dark theorems is dense in the space of all Pi_2 statements \u2014 most true Pi_2 statements are dark. Moreover, there is a hierarchy of darkness: a dark theorem of level k is one where PA proves 'there exist at least k values of x such that T(x)' but cannot identify any specific one. The hierarchy is strict: level k+1 dark theorems are strictly harder to prove than level k. Test: construct explicit dark theorems of levels 1, 2, 3 using the Paris-Harrington principle and the Kirby-Paris hydra theorem. Prove the density conjecture by counting Pi_2 statements. Impact: most true mathematical statements are dark \u2014 they assert existence without the possibility of verification. This is not incompleteness; it is a new form of mathematical unknowability.",
     "domains": [
@@ -31,6 +16,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-17T12:40:02.581378+00:00",
     "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
+  },
+  {
+    "consumed_by_exp_id": "f0aa5907",
+    "description": "The Monster group M is the largest sporadic simple group, with order 2^46 * 3^20 * 5^9 * 7^6 * 11^2 * 13^3 * 17 * 19 * 23 * 29 * 31 * 41 * 47 * 59 * 71 (approximately 8 * 10^{53}). Monstrous moonshine says that the coefficients of the j-function encode the dimensions of representations of M. But the j-function is just the TIP of the iceberg. Conjecture: The full moonshine correspondence associates to each conjugacy class g in M a McKay-Thompson series T_g(q) = sum a_n(g) q^n that is a modular function of a specific level, and the product over all g in M of T_g(q) equals a modular form of weight |M|/24 that encodes the complete character table of M. The secret message: the Monster group IS a modular form, and every property of M (its order, its character table, its maximal subgroups) can be read off from the q-expansion of this product. Test: compute the first 100 coefficients of T_g(q) for each conjugacy class of M and verify they match the known character values. Prove that the product of all T_g(q) converges to a modular form. Impact: the Monster is not just connected to modular forms \u2014 it IS a modular form. The 194 conjugacy classes of M correspond to 194 modular forms, and their product encodes everything.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0252",
+    "priority_score": 0.89,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-07-18T01:16:09.209773+00:00",
+    "title": "The Monster Group's Secret Message: Moonshine Beyond the j-Function"
   },
   {
     "consumed_by_exp_id": "",
@@ -92,7 +92,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ee626e30",
     "description": "The shadowing lemma says that near an approximate orbit of a chaotic system, there exists a true orbit. In other words, every 'almost correct' trajectory of a chaotic map has a 'truly correct' trajectory nearby. This means that numerical errors in chaotic simulations are not bugs \u2014 they are SHADOWS of real trajectories. Conjecture: Every program that computes a chaotic map f: R^n -> R^n has the property that its floating-point output is shadowed by a true orbit of f. More precisely, for every epsilon > 0, there exists delta > 0 such that if x_0, x_1, ..., x_N is a delta-pseudo-orbit (|x_{n+1} - f(x_n)| < delta for all n), then there exists a true orbit y_0, y_1, ..., y_N with |x_n - y_n| < epsilon for all n. The shadowing time N(epsilon, delta) grows at most polynomially in 1/delta for hyperbolic maps. Test: implement the logistic map f(x) = 4x(1-x) in floating-point and compute 10^6 iterations. For each floating-point orbit, use binary search to find the shadowing true orbit. Verify that the shadowing distance is at most 10^{-10} for floating-point precision 10^{-16}. Impact: numerical chaos is not error \u2014 it is a computable shadow of mathematical truth. Your computer's rounding errors are tracing out REAL orbits of the chaotic system.",
     "domains": [
       "Novelty",
@@ -102,7 +102,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-18T00:59:30.928895+00:00",
     "title": "Chaos as a Computable Shadow: The Shadowing Lemma for Real Programs"
   },
@@ -2188,21 +2188,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: The K\u0151vari-S\u00f3s-Tur\u00e1n theorem for $\\operatorname{GF}(q)$-representable matroids"
   },
   {
-    "consumed_by_exp_id": "406a341d",
-    "description": "An Escher staircase is an infinite strictly ascending chain of ideals I_1 strictly contained in I_2 strictly contained in ... that nevertheless has I_1 as an element of the infinite intersection. This seems impossible \u2014 how can an infinite ascending chain loop back to the beginning? But in the ring of integer-valued polynomials Int(Z), the chain I_n = {f in Int(Z) : f(Z) contained in 2^n Z} is strictly ascending (I_n strictly contained in I_{n+1}) yet the intersection of all I_n is {0}, which contains the zero polynomial that is also in I_1. Conjecture: Every non-Noetherian ring contains an Escher staircase, and the 'height' of the Escher effect (measured by the Krull dimension gap) is a new ring invariant. For Int(Z), the Escher height is infinite (the chain never stabilizes). For Z[x_1, x_2, ...], the Escher height equals the number of variables. For the p-adic integers Z_p, there is NO Escher staircase (Z_p is a DVR, hence Noetherian). Test: prove that Int(Z) has an Escher staircase of infinite height. Prove that k[x_1,...,x_n] has Escher height n. Compute the Escher height for the ring of all algebraic integers. Impact: a new invariant for non-Noetherian rings that measures how far a ring is from being Noetherian \u2014 the algebraic equivalent of Escher's impossible architecture.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0173",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-17T03:25:44.344800+00:00",
-    "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'A Bombieri-Vinogradov theorem for exponential sums over products of k primes' and formalize its key results. Abstract: We prove a Bombieri-Vinogradov type theorem for exponential sums over products of $k$ primes. As an application, we show the lower bound $$\\sup_{n\\le x} \\left|\\sum_{m\\le n} 1_{\u03a9(m) = k} e(\u03b1m)\\right| \\gg x^{1/6 - \\varepsilon}$$ for $2\\le k\\le (2-\\varepsilon)\\log\\log x$ and $\u03b1\\in\\mathbb{R},$ where we noted $e(\u03b2) := e^{2i\u03c0\u03b2}.$",
     "domains": [
@@ -3207,6 +3192,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-18T00:59:46.557936+00:00",
     "title": "`Catalog/Applications/HyperbolicNumberTheory/CayleyPythagoreanBridge.lean` gives"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## What the formal development establishes\n\nThe original proposal mixes two different notions. The files now separate them.\n\n1. In `Pythagorean/EscherStaircases.lean`, an ascending chain indexed by `\u2115` has\n   intersection equal to its first term:\n\n   \\[\n   I_0 \\subseteq I_1 \\subseteq I_2 \\subseteq \\cdots\n   \\quad\\Longrightarrow\\quad\n   \\bigcap_n I_n=I_0.\n   \\]\n\n   Moreover, zero belongs to every ideal and hence to every intersection of ideals.\n   Thus merely requiring the intersection to contain zero does not define an\n   additional \u201clooping\u201d phenomenon.\n\n2. The proposed divisibility family has the containment direction reversed.\n   Divisibility by `2^(n+1)` is stronger than divisibility by `2^n`. The ideals\n   `(2^n)` in `\u2124` are proved to form a strictly descending chain with zero\n   intersection. `Catalog/Algebra/EscherDivisibilityDisproof.lean` proves the same\n   strict reversal for the pointwise divisibility ideals in the function ring\n   `\u2124 \u2192 \u2124`.\n\n3. `Catalog/Algebra/EscherStaircase.lean` adopts the coherent replacement\n\n   \\[\n   \\operatorname{EscherStaircase}(R)\n   \\;:\\!\\!\\Longleftrightarrow\\;\n   \\exists I:\\mathbb N\\to\\operatorname{Ideal}(R),\\; I\\text{ is strictly increasing}.\n   \\]\n\n   It proves that this is equivalent to failure of `IsNoetherianRing`. It also\n   constructs an explicit staircase in the product ring `\u2115 \u2192 \u2124`, beginning at the\n   zero ideal, and proves that the p-adic integers admit no such staircase.\n\n4. `Catalog/Algebra/EscherStaircasePolynomial.lean` constructs the strict chain\n\n   \\[\n   (0) \\subsetneq (x_0) \\subsetneq (x_0,x_1) \\subsetneq \\cdots\n   \\]\n\n   in the countably generated polynomial ring. Its strictness is certified by a\n   specialization homomorphism that kills the old variables but not the new one.\n   The file concludes that this polynomial ring is not Noetherian.\n\n5. `Catalog/Algebra/EscherStaircaseHilbert.lean` proves the complementary Hilbert\n   basis results: polynomial rings in finitely many variables over a field, and the\n   ordinary univariate polynomial ring, admit no Escher staircase. It packages this\n   with the countably generated example as a finite/countable-variable dichotomy.\n\nThese results are complete Lean proofs. They do **not** establish a numerical\n\u201cEscher height\u201d: under the coherent existence definition, the invariant is a\nNoetherian/non-Noetherian dichotomy rather than Krull dimension.\n\n## Status of the original examples\n\n### Integer-valued polynomials\n\nFor\n\n\\[\nJ_n=\\{f\\in\\operatorname{Int}(\\mathbb Z):f(\\mathbb Z)\\subseteq 2^n\\mathbb Z\\},\n\\]\n\none has `J_(n+1) \u2286 J_n`, not the reverse. Constant polynomials witness strictness:\nthe constant `2^n` belongs to `J_n` but not to `J_(n+1)`. Consequently this family\ncannot witness failure of the ascending chain condition. A direct Lean construction\nof `Int(\u2124)` remains worthwhile, but it would formalize a descending filtration, not\nthe claimed ascending staircase.\n\n### Finitely many polynomial variables\n\nFor a field `k`, `k[x\u2081,\u2026,x\u2099]` is Noetherian, so it has no infinite strictly\nascending chain of ideals. Its Krull dimension is `n`, but that is a separate\ninvariant defined using chains of prime ideals. Calling this number an Escher height\nwould require a new definition and proofs that the definition agrees with Krull\ndimension.\n\n### All algebraic integers\n\nThe requested numerical height is not currently well-defined. A meaningful future\nproject should first choose one of the established invariants below and only then\nstudy the ring of all algebraic integers.\n\n## Concrete continuation projects\n\n1. **Formalize integer-valued polynomials.** Define `Int(\u2124)` as the subring of\n   `\u211a[X]` whose elements take integral values on integers. Define the value-\n   divisibility ideals, prove they are antitone and strictly decreasing using\n   constants, and prove their intersection is zero by evaluation and polynomial\n   extensionality.\n\n2. **Develop Krull dimension independently.** Use strict chains of prime ideals and\n   connect finite-variable polynomial rings to the standard dimension theorem. This\n   is the mathematically appropriate interpretation of the number of variables.\n\n3. **Study adic separation.** For an ideal `I`, investigate `\u22c2 n, I^n = 0`. The\n   formalized powers-of-two theorem is the elementary model. General continuations\n   include separated filtrations and Krull-intersection hypotheses.\n\n4. **Generalize explicit non-Noetherian witnesses.** Extend the variable-ideal\n   construction from a countable variable set to arbitrary infinite index types,\n   extracting a countable sequence of distinct variables under suitable choice or\n   embedding assumptions.\n\n5. **Analyze algebraic integers with a precise target.** Possible targets include\n   explicit ascending chains witnessing non-Noetherianity, prime-ideal chains for\n   Krull dimension, or descending valuation filtrations. These should not be merged\n   into one invariant without a theorem relating them.\n\nThe formal development therefore resolves the logical inconsistency in the original\nstaircase and supplies rigorous replacements: failure of ACC for ascending chains,\nKrull dimension for prime chains, and adic separation for descending powers.\n",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_0253",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "406a341d",
+    "status": "available",
+    "timestamp": "2026-07-18T01:16:29.364161+00:00",
+    "title": "The original proposal mixes two different notions. The files now separate them."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n- Extend the finite rational identity to real or complex weights and prove convergence of the occupation sums when every local weight has norm less than one.\n- Connect the resulting infinite product rigorously to Mathlib's analytic definition of the Riemann zeta function in its half-plane of absolute convergence.\n- Formalize logarithmic derivatives of finite Euler products and their relation to finite von Mangoldt sums.\n- Develop quantitative truncation bounds in both the occupation cutoff and the finite set of primes.\n- Keep the AdS/CFT language explicitly metaphorical unless independent mathematical structures and equivalences are defined. Pair correlation with GUE and the Riemann hypothesis remain conjectural and are not consequences of the finite algebraic identities proved here.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0254",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "1992c474",
+    "status": "available",
+    "timestamp": "2026-07-18T01:16:39.129567+00:00",
+    "title": "Future directions from cycle 1992c474"
   },
   {
     "consumed_by_exp_id": "",
