@@ -1,217 +1,397 @@
-# Holographic Polymatroids: A Unified Framework for Gravity, Information, and Error Correction
+# Geometric Defect and Logical Capacity: Singleton Constraints on Spacetime-Code Dictionaries
+
+**Aristotle**  
+**18 July 2026**
 
 ## Abstract
 
-We introduce **holographic polymatroids**, a novel mathematical structure that unifies quantum information theory, algebraic coding theory, and holographic gravity within a single combinatorial framework. A holographic polymatroid is an integer-valued submodular function on a finite set, equipped with a Ryu-Takayanagi (RT) scaling relation and a code-distance function. We prove that strong subadditivity of quantum entropy, the classical Singleton bound, and the non-negativity of holographic curvature all follow from the polymatroid axioms. We establish a sharp boundary: the quantum Singleton bound k ≤ n − 2(d−1) *cannot* be derived from polymatroid structure alone — it requires the quantum no-cloning theorem, providing a precise characterization of what makes quantum gravity genuinely quantum. We verify our framework on concrete codes including the [[5,1,3]] perfect code and the toric code family [[2L², 2, L]], proving that the latter satisfies the Singleton bound but is not MDS for L ≥ 3.
-
-**Keywords**: polymatroids, quantum error correction, holographic principle, Ryu-Takayanagi formula, Singleton bound, submodularity, toric code
+A proposed bridge between quantum error correction and emergent geometry identifies the physical length $n$, logical dimension parameter $k$, and distance $d$ of an $[[n,k,d]]$ quantum code with microscopic boundary size, protected entropy, and a bulk geometric length. This paper analyzes the arithmetic consequences of that dictionary using the quantum Singleton bound. The central distinction is between validity, $2d+k\le n+2$, and saturation, $2d+k=n+2$: only saturation yields the exact identity $k=n-2d+2$. We define the geometric defect $\delta$ by $n=2d+\delta$ and prove the defect–capacity law $k\le\delta+2$. Exact balance $n=2d$ consequently permits at most two logical qubits, and Singleton saturation at balance occurs exactly when $k=2$. If a reversed redundancy inequality is imposed together with the genuine bound, balanced parameters are forced to $k=2$. For code families, uniformly bounded defect implies uniformly bounded logical capacity and a logical rate that tends to zero as physical size grows. These conclusions delimit what a global Singleton argument can support: an extensive entropy requires extensive defect, while an exact entropy formula requires a separate saturation mechanism. We discuss algorithms for auditing geometric dictionaries, numerical examples, cut-dependent refinements, and the physical assumptions still needed to turn parameter consistency into a theory of spacetime.
 
 ## 1. Introduction
 
-The AdS/CFT correspondence [Maldacena 1997] establishes a duality between quantum gravity in Anti-de Sitter space and conformal field theory on its boundary. The Ryu-Takayanagi (RT) formula [Ryu-Takayanagi 2006] computes the entanglement entropy of a boundary region A as:
+Quantum error correction and gravitational geometry share a suggestive structural theme. In a quantum code, information is represented nonlocally so that local damage need not destroy it. In gravitational and holographic settings, information associated with a bulk region may be recoverable from boundary degrees of freedom, while geometric extremal surfaces organize entanglement. This resemblance motivates a strong conjectural picture: microscopic spatial degrees of freedom act as physical qubits, bulk information acts as logical qubits, and geometric obstruction lengths act as code distances.
 
-S(A) = Area(γ_A) / (4G_N)
+The purpose of this paper is neither to assume nor to dismiss that picture. It is to isolate a precise coding-theoretic claim and determine exactly what follows from it. Consider an $[[n,k,d]]$ quantum code, where $n$ is the number of physical qubits, $k$ is the number of logical qubits, and $d$ is the code distance. A proposed geometric dictionary may read $n$ as a boundary measure in microscopic units, $k$ as an entropy in bits or qubits, and $d$ as a minimal bulk length in corresponding units. The quantum Singleton bound then supplies a necessary constraint:
 
-where γ_A is the minimal area surface in the bulk homologous to A. Almheiri, Dong, and Harlow [2015] showed that this formula is equivalent to the statement that the bulk-boundary map is a quantum error-correcting code.
+$$
+2d+k\le n+2.
+$$
 
-This paper develops the combinatorial abstraction underlying this connection. We define *polymatroids* — normalized, monotone, submodular integer-valued set functions — as the mathematical skeleton of holographic entanglement, and prove that the key physical consequences follow from these axioms alone.
+The motivating temptation is to rearrange this relation into an exact formula $k=n-2d+2$ and compare it with an entropy–area law. That step is valid only if the bound is saturated. The distinction between inequality and equality is therefore the first organizing principle of our analysis.
 
-### 1.1 Summary of Results
+The second organizing principle is the quantity left after distance is accounted for. We define the geometric defect $\delta$ through $n=2d+\delta$. Substitution into Singleton immediately gives $k\le\delta+2$. This result shows that the excess of physical size over twice the distance—not physical size alone—controls the permitted logical capacity. In particular, the frequently suggested balance $n=2d$ forces $k\le2$ independently of scale.
 
-Our main contributions are:
+The paper develops these consequences systematically. Section 2 defines the parameter framework. Section 3 distinguishes Singleton validity from saturation and reconciles two common forms of the bound. Section 4 proves the defect–capacity theorem and its finite consequences. Section 5 treats families and asymptotic rates. Section 6 presents auditing algorithms and examples. Section 7 explains implications for geometric entropy proposals, while Section 8 separates established parameter consequences from additional physical hypotheses.
 
-1. **Polymatroid foundations** (§2): We define polymatroids and prove that strong subadditivity (Theorem 2.1), the Araki-Lieb inequality (Theorem 2.5), and subadditivity (Theorem 2.4) all follow from submodularity and monotonicity.
+## 2. Parameter framework and geometric dictionary
 
-2. **Erasure code polymatroids** (§3): We model [[n,k,d]] quantum codes as polymatroids with an erasure-correction axiom, and prove the classical Singleton bound k ≤ n − (d−1) (Theorem 3.1).
+### 2.1 Quantum-code parameters
 
-3. **No-go result** (§3): We show that the quantum Singleton bound k ≤ n − 2(d−1) cannot be derived from polymatroid axioms, identifying the quantum no-cloning theorem as the essential missing ingredient.
+**Definition 2.1 (Quantum-code parameter triple).** An $[[n,k,d]]$ quantum code is described here by natural numbers $n$, $k$, and $d$, where $n$ is the number of physical qubits, $k$ is the number of encoded logical qubits, and $d$ is the minimum weight of an undetectable logical error. We assume the basic parameter conditions $k\le n$ and $d\ge1$ whenever subtraction-based forms of coding bounds are used.
 
-4. **Syndrome defect** (§4): We define the syndrome defect as a discrete analogue of curvature and prove its non-negativity, symmetry, and relationship to modular entropy.
+The operational meaning of $d$ is that errors on fewer than $d$ physical locations cannot implement a nontrivial logical operation. Greater distance therefore demands greater redundancy.
 
-5. **Holographic bridge** (§5): We construct a complete bridge between polymatroids, error-correcting codes, and holographic gravity, proving redundancy bounds and defect estimates.
+**Definition 2.2 (Singleton validity).** A parameter triple is Singleton-valid if it satisfies
 
-6. **Concrete verification** (§6): We verify all bounds on the [[5,1,3]] perfect code, [[7,1,3]] Steane code, and [[2L², 2, L]] toric code family.
+$$
+2d+k\le n+2.
+$$
 
-All theorems are machine-verified in Lean 4 with Mathlib.
+This subtraction-free expression is convenient over natural numbers and includes the usual additive constant associated with quantum codes.
 
-## 2. Polymatroid Foundations
+**Definition 2.3 (Singleton saturation).** A Singleton-valid triple is Singleton-saturating if
 
-### Definition 2.1 (Polymatroid)
-A *polymatroid* on a finite type α is a function ρ : 2^α → ℤ satisfying:
-- (P1) ρ(∅) = 0 (normalization)
-- (P2) ρ(S) ≥ 0 for all S (non-negativity)
-- (P3) S ⊆ T ⟹ ρ(S) ≤ ρ(T) (monotonicity)
-- (P4) ρ(S) + ρ(T) ≥ ρ(S ∩ T) + ρ(S ∪ T) (submodularity)
+$$
+2d+k=n+2.
+$$
 
-### Definition 2.2 (Information-Theoretic Quantities)
-For a polymatroid P with rank function ρ:
-- *Conditional mutual information*: I(A:C|B) = ρ(A∪B) + ρ(B∪C) − ρ(B) − ρ(A∪B∪C)
-- *Mutual information*: I(A:B) = ρ(A) + ρ(B) − ρ(A∪B)
-- *Conditional entropy*: H(A|B) = ρ(A∪B) − ρ(B)
-- *Syndrome defect*: δ(X,Y) = ρ(X) + ρ(Y) − ρ(X∩Y) − ρ(X∪Y)
+Saturation is an additional optimality property, not a consequence of validity.
 
-### Theorem 2.1 (Strong Subadditivity)
-For any polymatroid P and sets A, B, C: I(A:C|B) ≥ 0.
+### 2.2 Redundancy form
 
-*Proof sketch*: Apply (P4) to S = A∪B and T = B∪C. We get ρ(A∪B) + ρ(B∪C) ≥ ρ((A∪B)∩(B∪C)) + ρ(A∪B∪C). Since B ⊆ (A∪B)∩(B∪C), monotonicity (P3) gives ρ(B) ≤ ρ((A∪B)∩(B∪C)). Combining: ρ(A∪B) + ρ(B∪C) − ρ(B) − ρ(A∪B∪C) ≥ 0. □
+The Singleton bound is also commonly presented as a statement about redundancy.
 
-### Theorem 2.2 (Mutual Information Non-negativity)
-I(A:B) ≥ 0 for all A, B.
+**Lemma 2.4 (Equivalence of Singleton forms).** If $k\le n$ and $d\ge1$, then
 
-### Theorem 2.3 (Conditional Entropy Non-negativity)
-H(A|B) ≥ 0 for all A, B.
+$$
+2d+k\le n+2
+$$
 
-### Theorem 2.4 (Subadditivity)
-ρ(A∪B) ≤ ρ(A) + ρ(B) for all A, B.
+if and only if
 
-### Theorem 2.5 (Araki-Lieb Inequality)
-ρ(A) − ρ(B) ≤ ρ(A∪B) for all A, B.
+$$
+2(d-1)\le n-k.
+$$
 
-### Theorem 2.6 (Diminishing Returns)
-For S ⊆ T and x ∉ T: ρ(T∪{x}) − ρ(T) ≤ ρ(S∪{x}) − ρ(S).
+**Proof sketch.** Subtract $k$ and $2$ from the first inequality, which is legitimate under the parameter assumptions, to obtain $2d-2\le n-k$. Factor the left side as $2(d-1)$. Reversing these algebraic steps gives the converse. The assumptions prevent ambiguities from truncated subtraction on natural numbers. $\square$
 
-*Proof*: Apply submodularity to S∪{x} and T. Since x ∉ T and S ⊆ T, we have (S∪{x})∩T = S and (S∪{x})∪T = T∪{x}. The result follows. □
+The redundancy $n-k$ must therefore be at least twice $d-1$. This is the familiar trade-off: increasing the protected logical payload leaves less room for distance.
 
-### Example 2.1 (Trivial Polymatroid)
-The function ρ(S) = |S| defines a polymatroid (the *trivial* or *free* polymatroid). It has I(A:B) = 0 for disjoint A, B — no correlations.
+### 2.3 Geometric interpretation and defect
 
-## 3. Erasure Code Polymatroids
+A geometric application supplies a dictionary rather than a theorem. For example, a boundary measure $A$ and microscopic scale $\ell$ might suggest $n=A/\ell$, while a characteristic minimal length $L$ might suggest $d=L/(2\ell)$. The exact factors depend on the model and must be stated explicitly.
 
-### Definition 3.1 (Erasure Code Polymatroid)
-An *erasure code polymatroid* is a polymatroid equipped with:
-- Parameters k, d ∈ ℕ with k, d > 0
-- Full rank: ρ(univ) = k
-- Rank bound: ρ(S) ≤ |S| for all S
-- Erasure correction: for all E with |E| ≤ d−1, ρ(univ \ E) = k
+**Definition 2.5 (Geometric defect).** A nonnegative integer $\delta$ is the geometric defect of a parameter triple if
 
-### Theorem 3.1 (Classical Singleton Bound)
-For an erasure code polymatroid with n = |α|: k ≤ n − (d−1).
+$$
+n=2d+\delta.
+$$
 
-*Proof*: Take E with |E| = d−1. By erasure correction, ρ(univ \ E) = k. By the rank bound, k = ρ(univ \ E) ≤ |univ \ E| = n − (d−1). □
+This equation is preferable to writing $\delta=n-2d$ because it records nonnegativity without relying on truncated subtraction. The defect measures the physical size left over after the distance contribution $2d$ has been removed.
 
-### Theorem 3.2 (Submodularity Erasure Bound)
-For disjoint A, B with |A| = |B| = d−1: k ≥ ρ(univ \ (A∪B)).
+**Definition 2.6 (Exact geometric balance).** A code is exactly balanced when $n=2d$, equivalently when its geometric defect is $\delta=0$.
 
-*Proof*: Apply submodularity to (univ \ A) and (univ \ B). Since A, B are disjoint, (univ \ A) ∪ (univ \ B) = univ. So k + k ≥ ρ(univ \ (A∪B)) + k, giving k ≥ ρ(univ \ (A∪B)). □
+The geometric terminology does not assert that a code realizes an actual spacetime. It labels the arithmetic structure induced by a proposed dictionary.
 
-### No-Go Result: The Quantum Singleton Bound
-The quantum Singleton bound k ≤ n − 2(d−1) **cannot** be derived from the polymatroid axioms plus erasure correction. The counterexample is α = {0,1,2} with ρ(S) = min(|S|, 2), k = 2, d = 2. This satisfies all polymatroid axioms and erasure correction (erasing any 1 element leaves a set of size 2 with ρ = 2 = k), but k = 2 > n − 2(d−1) = 3 − 2 = 1.
+## 3. Inequality, saturation, and exact identities
 
-The missing ingredient is the **no-cloning theorem**: in quantum mechanics, if a subsystem S can reconstruct the encoded information, then the complementary subsystem univ \ S *cannot* independently contain a copy. This quantum constraint provides the factor-of-two improvement from the classical to the quantum Singleton bound.
+The logical capacity identity often sought in geometric applications is a statement about saturation.
 
-## 4. Syndrome Defect as Discrete Curvature
+**Theorem 3.1 (Saturation Capacity Identity).** If an $[[n,k,d]]$ code saturates the quantum Singleton bound, then
 
-### Definition 4.1 (Syndrome Defect)
-The *syndrome defect* of two regions X, Y in a polymatroid P is:
-δ(X, Y) = ρ(X) + ρ(Y) − ρ(X∩Y) − ρ(X∪Y)
+$$
+k+2d=n+2,
+$$
 
-### Theorem 4.1 (Non-negativity)
-δ(X, Y) ≥ 0 for all X, Y. (Equivalent to submodularity.)
+or equivalently,
 
-### Theorem 4.2 (Symmetry)
-δ(X, Y) = δ(Y, X).
+$$
+k=n-2d+2.
+$$
 
-### Theorem 4.3 (Flatness Criterion)
-δ(X, Y) = 0 if and only if ρ(X) + ρ(Y) = ρ(X∩Y) + ρ(X∪Y) (modularity on the pair).
+**Proof sketch.** The first equation is merely the saturation hypothesis with the summands reordered. Solving for $k$ gives the second form whenever integer subtraction is interpreted under the equality. $\square$
 
-### Physical Interpretation
-In the holographic dictionary:
-- δ = 0 corresponds to **flat spacetime**: entropies add perfectly
-- δ > 0 corresponds to **curved spacetime**: entanglement between regions creates curvature
-- The total syndrome defect over all pairs is bounded below by 0 (cumulative non-negativity)
+The theorem is deliberately conditional. Singleton validity alone gives only
 
-This gives a precise mathematical meaning to "gravity is the syndrome of a quantum code": spacetime curvature arises exactly when the entropy function fails to be modular, which happens exactly when the error-correcting code has nontrivial syndromes.
+$$
+k\le n-2d+2,
+$$
 
-## 5. Holographic Code Parameters
+not equality. Thus an exact entropy formula cannot be identified with Singleton solely because both expressions contain related parameters. A model must prove that its codes lie on the Singleton boundary.
 
-### Definition 5.1 (HoloCodeParams)
-A holographic code is specified by parameters (n, k, d) with:
-- n > 0 (physical qubits / Planck areas)
-- k > 0 (logical qubits / BH entropy)
-- d > 0 (code distance / geodesic length)
-- k ≤ n, d ≤ n
+One may quantify the failure of saturation by a nonnegative slack $s$ defined through
 
-### Theorem 5.1 (MDS Characterization)
-A code is MDS (saturates the Singleton bound) iff 2d + k = n + 2. For MDS codes:
-- k is uniquely determined: k = n − 2d + 2
-- Redundancy equals 2(d−1)
-- The redundancy is even
+$$
+2d+k+s=n+2.
+$$
 
-### Theorem 5.2 (Information-Protection Tradeoff)
-For any code satisfying Singleton: k + 2d ≤ n + 2 (as integers).
+Then
 
-This is the coding-theoretic version of the Bekenstein bound: you cannot simultaneously have high entropy (large k) and strong error protection (large d) without proportionally many physical degrees of freedom (large n).
+$$
+k=n-2d+2-s.
+$$
 
-### Theorem 5.3 (Composition Bound)
-When composing two codes C₁ = [[n₁, k₁, d₁]] and C₂ = [[n₂, k₂, d₂]] with n₂ = k₁ and d₁ ≤ d₂, and d₁ ≥ 1, the composed code satisfies: 2d₁ + k₂ ≤ n₁ + 2.
+The desired identity corresponds exactly to $s=0$. This elementary observation is important in applications: an entropy deficit relative to a proposed area expression may reflect coding slack rather than geometry itself.
 
-## 6. Concrete Code Verification
+## 4. The defect–capacity law
 
-### The [[5,1,3]] Perfect Code
-- Satisfies Singleton: 2(3) + 1 = 7 = 5 + 2 ✓ (MDS)
-- Redundancy: 5 − 1 = 4 = 2(3−1) ✓
+We now state the principal finite-parameter result.
 
-### The [[7,1,3]] Steane Code
-- Satisfies Singleton: 2(3) + 1 = 7 ≤ 7 + 2 = 9 ✓
-- Not MDS: 7 ≠ 9
-- Excess redundancy: (7−1) − 2(3−1) = 2
+**Theorem 4.1 (Defect–Capacity Theorem).** Let an $[[n,k,d]]$ quantum code satisfy the Singleton bound, and suppose its geometric defect is $\delta$, so that $n=2d+\delta$. Then
 
-### The Toric Code Family [[2L², 2, L]]
-- Satisfies Singleton for all L ≥ 2: 2L + 2 ≤ 2L² + 2 ✓
-- Not MDS for L ≥ 3: 2L + 2 < 2L² + 2
-- Distance scaling: d² ≤ n (BPT bound)
-- Redundancy: 2L² − 2 (grows quadratically)
+$$
+k\le\delta+2.
+$$
 
-## 7. The Holographic Bridge
+**Proof sketch.** Substitute $n=2d+\delta$ into $2d+k\le n+2$ to obtain
 
-### Definition 7.1 (Holographic Bridge)
-A *holographic bridge* consists of a polymatroid P, code parameters (n,k,d) satisfying Singleton, with:
-- rank_matches: P.ρ(univ) = k
-- n_matches: n = |α|
-- rank_local: P.ρ(S) ≤ |S| for all S
+$$
+2d+k\le2d+\delta+2.
+$$
 
-### Theorem 7.1 (Bridge Redundancy)
-In a holographic bridge: n − k ≥ 2(d−1) (as integers).
+Cancel $2d$ from both sides. $\square$
 
-### Theorem 7.2 (Defect Bound)
-The syndrome defect is bounded: δ(X,Y) ≤ ρ(X) + ρ(Y).
+The theorem converts a three-parameter bound into a direct capacity estimate. Its interpretation is that distance consumes the portion $2d$ of the physical size. Only the residual $\delta$, together with the additive constant two, is available under the Singleton ceiling.
 
-## 8. The Bekenstein-Hawking Formula
+### 4.1 Exact balance
 
-Under the holographic dictionary with area_planck = n = 4k (BH entropy relation):
-- The Singleton bound 2d + k ≤ 4k + 2 constrains the geodesic distance: d ≤ 3k/2 + 1
-- For AdS₃ with circular boundary of circumference L (where 4|L): the code parameters [[L, L/4, L/4+1]] satisfy Singleton for all L ≥ 8
+**Corollary 4.2 (Balanced Capacity Bound).** If a Singleton-valid code satisfies $n=2d$, then
 
-## 9. Discussion
+$$
+k\le2.
+$$
 
-### What the polymatroid framework captures
-1. Strong subadditivity and its consequences
-2. The classical Singleton bound
-3. Non-negativity of curvature (syndrome defect)
-4. Entropy monotonicity and diminishing returns
-5. The information-protection tradeoff
+**Proof sketch.** Exact balance means $\delta=0$. Apply Theorem 4.1. $\square$
 
-### What it does not capture
-1. The quantum Singleton bound (needs no-cloning)
-2. The monogamy of mutual information (needs additional holographic axioms)
-3. Dynamics (Einstein's equations beyond the RT formula)
-4. Black hole information paradox resolution
+**Corollary 4.3 (No Extensive Entropy at Exact Balance).** No parameter triple with $n=2d$ and $k\ge3$ can satisfy the quantum Singleton bound.
 
-### Open Problems
-1. Can the quantum Singleton bound be derived from a *minimal* extension of the polymatroid axioms?
-2. What is the precise characterization of entropy vectors achievable by holographic codes?
-3. Can the syndrome defect framework be extended to capture the full Einstein equations?
+**Proof sketch.** Corollary 4.2 gives $k\le2$, contradicting $k\ge3$. $\square$
 
-## 10. Conclusion
+This obstruction is independent of scale. The pairs $(n,d)=(100,50)$ and $(10^{12},5\cdot10^{11})$ produce the same ceiling $k\le2$. Growth of $n$ is exactly offset by growth of $d$.
 
-We have established a rigorous mathematical framework connecting polymatroid theory to holographic gravity through quantum error correction. The central finding is that much of the holographic dictionary — entropy bounds, curvature non-negativity, information-protection tradeoffs — follows from the purely combinatorial axioms of submodularity and monotonicity. The quantum Singleton bound, however, requires genuinely quantum structure (no-cloning), providing a sharp characterization of what makes quantum gravity *quantum*.
+### 4.2 Saturation at balance
 
-## References
+**Theorem 4.4 (Balanced Saturation Characterization).** Under exact balance $n=2d$, Singleton saturation occurs if and only if $k=2$:
 
-1. J. Maldacena, "The large-N limit of superconformal field theories and supergravity," Adv. Theor. Math. Phys. 2, 231 (1998).
-2. S. Ryu and T. Takayanagi, "Holographic derivation of entanglement entropy from AdS/CFT," Phys. Rev. Lett. 96, 181602 (2006).
-3. A. Almheiri, X. Dong, and D. Harlow, "Bulk locality and quantum error correction in AdS/CFT," JHEP 04, 163 (2015).
-4. F. Pastawski, B. Yoshida, D. Harlow, and J. Preskill, "Holographic quantum error-correcting codes: Toy models for the bulk/boundary correspondence," JHEP 06, 149 (2015).
-5. N. Bao, S. Nezami, H. Ooguri, B. Stoica, J. Sully, and M. Walter, "The holographic entropy cone," JHEP 09, 130 (2015).
-6. A. Kitaev, "Fault-tolerant quantum computation by anyons," Ann. Phys. 303, 2 (2003).
-7. S. Bravyi, D. Poulin, and B. Terhal, "Tradeoffs for reliable quantum information storage in 2D systems," Phys. Rev. Lett. 104, 050503 (2010).
+$$
+2d+k=n+2 \quad\Longleftrightarrow\quad k=2.
+$$
+
+**Proof sketch.** Replace $n$ by $2d$ in the saturation equation. It becomes $2d+k=2d+2$, which is equivalent to $k=2$. $\square$
+
+Thus the bound is saturated at exact balance at one and only one logical capacity. Values $k=0$ and $k=1$ are Singleton-valid but nonsaturating; $k=2$ saturates; values $k\ge3$ are invalid.
+
+### 4.3 Entropy demand forces defect
+
+**Theorem 4.5 (Capacity Demand Bound).** Suppose a Singleton-valid code has defect $\delta$ and is required to encode at least $m$ logical qubits, so $m\le k$. Then
+
+$$
+m\le\delta+2.
+$$
+
+Equivalently, for $m\ge2$, the defect must obey $\delta\ge m-2$.
+
+**Proof sketch.** Combine the demand $m\le k$ with Theorem 4.1, which gives $k\le\delta+2$, and use transitivity. $\square$
+
+If logical entropy is intended to grow proportionally to a geometric size, then the defect must grow at least comparably. An extensive $k$ cannot be obtained from bounded $\delta$.
+
+## 5. Direction reversal and parameter collision
+
+A potentially misleading calculation arises by reversing the redundancy form of Singleton. The genuine inequality is
+
+$$
+2(d-1)\le n-k.
+$$
+
+Consider instead the reversed inequality
+
+$$
+n-k\le2(d-1).
+$$
+
+This reversed relation is not the Singleton bound. At exact balance, however, it has a simple interpretation.
+
+**Lemma 5.1 (Reversed Redundancy at Balance).** Assume $k\le n$, $d\ge1$, and $n=2d$. Then
+
+$$
+n-k\le2(d-1)
+$$
+
+if and only if
+
+$$
+2\le k.
+$$
+
+**Proof sketch.** Substitute $n=2d$. The inequality becomes $2d-k\le2d-2$. Canceling $2d$ and reversing signs yields $k\ge2$. The parameter assumptions ensure the natural-number expressions have their ordinary integer meaning. $\square$
+
+**Theorem 5.2 (Direction-Collision Theorem).** Suppose a code is Singleton-valid, exactly balanced, and also satisfies the reversed redundancy inequality. Then
+
+$$
+k=2.
+$$
+
+**Proof sketch.** Singleton validity and exact balance imply $k\le2$ by Corollary 4.2. Lemma 5.1 turns the reversed inequality into $2\le k$. Antisymmetry gives $k=2$. $\square$
+
+This theorem explains a subtle trap. An erroneous reversed inequality may appear to support a special identity when combined with the correct inequality, but the agreement occurs because opposite bounds squeeze $k$ to a single value. It does not validate the reversal or establish a scale-dependent entropy law.
+
+## 6. Families and asymptotic rate
+
+Finite bounds become asymptotic obstructions when applied uniformly.
+
+**Definition 6.1 (Bounded-defect family).** A family of codes $[[n_i,k_i,d_i]]$, indexed by $i$, has uniformly bounded defect if there is a fixed natural number $D$ and defects $\delta_i$ such that
+
+$$
+n_i=2d_i+\delta_i,
+\qquad
+\delta_i\le D
+$$
+
+for every $i$.
+
+**Theorem 6.2 (Bounded-Defect Family Theorem).** If every code in a bounded-defect family is Singleton-valid, then
+
+$$
+k_i\le D+2
+$$
+
+for every $i$.
+
+**Proof sketch.** Apply Theorem 4.1 to each member to obtain $k_i\le\delta_i+2$, then use $\delta_i\le D$. $\square$
+
+The theorem says that increasing block length alone does not yield increasing logical capacity when the distance remains within a bounded additive defect of $n/2$.
+
+**Theorem 6.3 (Vanishing-Rate Theorem).** Let a Singleton-valid code family have defect bounded by $D$. For every real $\varepsilon>0$, there exists a threshold $N$ such that
+
+$$
+N\le n_i \quad\Longrightarrow\quad \frac{k_i}{n_i}<\varepsilon.
+$$
+
+One may choose any integer $N$ satisfying
+
+$$
+N>\frac{D+2}{\varepsilon}.
+$$
+
+**Proof sketch.** Theorem 6.2 gives $k_i\le D+2$. If $n_i>N>(D+2)/\varepsilon$, then
+
+$$
+\frac{k_i}{n_i}\le\frac{D+2}{n_i}<\varepsilon.
+$$
+
+Therefore the logical rate approaches zero along any subfamily whose physical size tends to infinity. $\square$
+
+This conclusion is stronger than saying that exact balance limits capacity. Even a bounded departure from balance leaves capacity uniformly bounded and causes its fraction of the physical system to vanish.
+
+## 7. Computational audit algorithms
+
+The theorems lead to simple and transparent parameter-audit procedures.
+
+### 7.1 Single-code audit
+
+**Algorithm 7.1 (Singleton Geometric-Defect Audit).** Given integers $n$, $k$, and $d$ with $n,k\ge0$ and $d\ge1$:
+
+1. Compute the Singleton left side $B=2d+k$ and right side $R=n+2$.
+2. Declare the triple Singleton-valid exactly when $B\le R$.
+3. If $n\ge2d$, compute $\delta=n-2d$; otherwise report that no nonnegative geometric defect exists under this dictionary.
+4. Compute the defect ceiling $k_{\max}=\delta+2$.
+5. Check that Singleton validity is equivalent to $k\le k_{\max}$ once the defect equation holds.
+6. Declare saturation exactly when $B=R$.
+
+The algorithm uses constant time and constant memory for fixed-width integers; with arbitrary-precision integers, its bit complexity is linear in the maximum input bit length up to the cost of basic arithmetic.
+
+### 7.2 Family audit
+
+**Algorithm 7.2 (Bounded-Defect Rate Audit).** Given a finite list of triples and a proposed bound $D$:
+
+1. For each triple, verify Singleton validity.
+2. Compute $\delta_i=n_i-2d_i$ when nonnegative.
+3. Verify $\delta_i\le D$.
+4. Verify $k_i\le D+2$.
+5. Compute the observed logical rate $k_i/n_i$.
+6. For a chosen $\varepsilon>0$, compute $N=\lfloor(D+2)/\varepsilon\rfloor+1$ and confirm that entries with $n_i\ge N$ have rate below $\varepsilon$.
+
+The algorithm is linear in the number of triples. It is an audit of necessary arithmetic conditions, not an existence test for quantum codes with those parameters.
+
+### 7.3 Saturation and reversal diagnostic
+
+**Algorithm 7.3 (Balanced Direction Diagnostic).** For a balanced triple with $n=2d$:
+
+1. Evaluate the genuine Singleton condition $2(d-1)\le n-k$.
+2. Evaluate the reversed condition $n-k\le2(d-1)$.
+3. If both hold, conclude $k=2$.
+4. If only the genuine condition holds, conclude $k<2$ is permitted.
+5. If only the reversed condition holds, the triple has $k>2$ and violates Singleton.
+
+This diagnostic makes inequality direction visible rather than burying it in rearrangement.
+
+## 8. Numerical examples
+
+**Example 8.1 (Exact balance).** Let $n=100$ and $d=50$. Then $\delta=0$, so $k\le2$. The triples $[[100,0,50]]$, $[[100,1,50]]$, and $[[100,2,50]]$ satisfy the arithmetic Singleton condition; only the last saturates it. The triple $[[100,3,50]]$ violates it because $2\cdot50+3>102$.
+
+**Example 8.2 (Moderate defect).** Let $n=120$ and $d=50$. Then $\delta=20$, and $k\le22$. The triple $[[120,22,50]]$ saturates Singleton, while $[[120,10,50]]$ has slack $12$.
+
+**Example 8.3 (Scaling at fixed defect).** Consider $n_i=2i+10$, $d_i=i$, and any Singleton-valid $k_i$. Here $\delta_i=10$ for all $i$, so $k_i\le12$. Even if every code saturates with $k_i=12$, its rate is
+
+$$
+\frac{12}{2i+10},
+$$
+
+which tends to zero.
+
+**Example 8.4 (Extensive target).** Suppose one demands $k\ge0.1n$ for a large code. Theorem 4.5 requires $\delta+2\ge0.1n$, hence $\delta\ge0.1n-2$. The defect must therefore grow linearly with $n$; a bounded defect cannot support the target.
+
+**Example 8.5 (AdS-like length dictionary).** If a boundary length $L$ and microscopic length $\ell$ are translated as $n=L/\ell$ and $d=L/(2\ell)$, then $n=2d$. Singleton therefore gives $k\le2$, not an entropy proportional to $L$. An extensive boundary entropy is incompatible with this global dictionary unless the interpretation of $n$, $d$, or $k$ is modified, or a different coding inequality is used.
+
+## 9. Implications for entropy–geometry proposals
+
+An entropy–area relation is an equality. A Singleton bound is an inequality. Their identification requires more structure than a resemblance between formulas.
+
+First, a candidate construction must specify an actual code or family of codes and show that the code parameters correspond to the proposed geometric quantities. In particular, geometric length does not become code distance merely by dimensional comparison. Distance is an operational property defined by correctable errors and logical operators.
+
+Second, the construction must establish saturation if it seeks the identity $k=n-2d+2$. Codes with identical $n$ and $d$ can have smaller $k$, and Singleton permits all of them. Saturation may arise from special algebraic structure, but it cannot be inferred from the bound itself.
+
+Third, the exact-balance dictionary $n=2d$ is too rigid for extensive protected entropy under the global parameter interpretation. It leaves only $k\le2$. If $k$ is identified with an entropy that grows with boundary area, then at least one identification fails at large scale.
+
+A promising resolution is regional rather than global. Holographic entropy formulas associate each boundary region with a minimal cut. One may therefore need a cut-indexed collection of effective parameters $n_A$, $k_A$, and $d_A$, together with region-dependent defects
+
+$$
+\delta_A=n_A-2d_A.
+$$
+
+An entropy equality might then represent saturation of a family of local or cut-dependent inequalities rather than one global Singleton inequality. This proposal is not established by the present results, but it responds directly to the obstruction they identify.
+
+## 10. Scope and limitations
+
+The conclusions in this paper are parameter theorems. They do not prove the existence of a stabilizer code realizing a given geometry. They do not derive Einstein dynamics, identify matter with an error syndrome, or establish curvature as a decoding response. Those claims require at least:
+
+1. a microscopic state space and encoding map;
+2. a specified class of errors or noise channel;
+3. a locality structure relating physical qubits to geometry;
+4. an operational derivation of code distance from geometric data;
+5. a mechanism selecting Singleton saturation, if equality is required;
+6. dynamical predictions that distinguish the model from alternative descriptions.
+
+Nor does arithmetic Singleton validity guarantee that an $[[n,k,d]]$ quantum code exists. Coding bounds are necessary constraints. Construction and existence are separate problems.
+
+The additive constant two also deserves care. It is negligible in conventional asymptotic-rate calculations but decisive at exact balance, where it supplies the entire capacity ceiling. Dropping it prematurely would incorrectly predict $k\le0$ instead of $k\le2$.
+
+Finally, entropy and logical-qubit count are not automatically identical. A code with $k$ logical qubits has a logical Hilbert space of dimension $2^k$, whose maximal entropy is $k$ bits, but actual state entropy depends on the state. Any physical use of $k$ as entropy must specify the logarithm base, state ensemble, and operational meaning.
+
+## 11. Discussion and future work
+
+The defect–capacity law suggests several concrete directions. For geometrically local code families, one may ask whether normalized defect $(n-2d)/n$ not only upper-bounds but also predicts achievable logical rate within fixed locality classes. Matching lower bounds would turn the present obstruction into a capacity characterization.
+
+For tensor-network models, cut-dependent parameters can be computed for finite networks. One can compare minimal-cut size, erasure distance, and reduced-state entropy for every boundary subset, testing whether entropy identities coincide with saturation of cut-indexed coding inequalities.
+
+For families satisfying $n=2d+O(1)$, the present results predict uniformly bounded protected entropy whenever that entropy is bounded by $k$. Explicit noise models can test whether some alternative operational entropy evades this conclusion.
+
+A further conjecture is that geometry may depend not on a constant global defect but on spatial variation of a local defect density. On triangulated surfaces, one could compare coarse-grained curvature with a discrete Laplacian of local coding defect across regular, conical, and random refinements. Such a relation would require definitions beyond global code parameters, but it offers a falsifiable way to connect coding inhomogeneity with geometry.
+
+## 12. Conclusion
+
+The quantum Singleton bound provides a rigorous consistency test for proposed spacetime-code dictionaries. Its consequences are exact:
+
+$$
+2d+k\le n+2,
+$$
+
+and, with $n=2d+\delta$,
+
+$$
+k\le\delta+2.
+$$
+
+Equality $k=n-2d+2$ requires Singleton saturation. Exact balance $n=2d$ permits at most two logical qubits, with saturation precisely at $k=2$. Uniformly bounded defect yields uniformly bounded logical capacity and vanishing asymptotic logical rate. Conversely, extensive logical entropy demands extensive defect.
+
+These results neither establish nor refute the broader possibility that geometry emerges from quantum information. They identify the burden a successful model must meet. A global balance between physical size and twice the distance cannot by itself produce extensive protected entropy. The relevant resource is the excess beyond that balance, or else a richer regional structure in which different cuts carry different effective coding constraints.
