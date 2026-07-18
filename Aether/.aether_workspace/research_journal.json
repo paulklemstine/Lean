@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "cf605784",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions — Toughness as an order-monotone invariant\n\nThe completed development in `Catalog/Shared/ToughnessOrder.lean` proves that component count after a fixed vertex deletion is antitone",
-      "quality_score": 0.8,
-      "sorry_count": 4,
-      "theorem_count": 127,
-      "timestamp": "2026-07-15T08:21:46",
-      "title": "Close Proofs: This cycle promoted the component-count toughness toolkit from a colle"
-    },
-    {
       "cycle_id": "c5a6c2ed",
       "domain": "Applications",
       "key_insight": "# Future Directions: Orderly Friedman Numbers\n\n## 1. Fixed-block closure theorem\n\n**Conjecture.** Every orderly Friedman certificate for a positive `k`-digit block `b` whose expression remains nontriv",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-18T00:42:46",
       "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
+    },
+    {
+      "cycle_id": "d69a2aa8",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions: Tropical Hashing Beyond Coordinate Minima\n\n## 1. Complexity transition under coupled message constraints\n\nConjecture: If messages are restricted by a sparse system of integer diff",
+      "quality_score": 0.79,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-18T03:22:53",
+      "title": "Tropical Cryptocurrency: Mining on the Min-Plus Semiring"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "30ef4e5b",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Sharp Sumset Bounds in L₁ Balls\n\nThis cycle established the additive / geometric / analytic scaffolding around the\nsharp exponent `p = n·log(m+1) / log(nm+1)` for sumsets inside",
-      "quality_score": 0.82,
-      "sorry_count": 4,
-      "theorem_count": 32,
-      "timestamp": "2026-07-14T06:35:35",
-      "title": "Close Proofs: Sharp Lower Bounds for Sumsets in L₁ Balls in ℤᵈ"
-    },
     {
       "cycle_id": "0abd0edb",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 11,
       "timestamp": "2026-07-18T03:22:39",
       "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
+    },
+    {
+      "cycle_id": "d69a2aa8",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions: Tropical Hashing Beyond Coordinate Minima\n\n## 1. Complexity transition under coupled message constraints\n\nConjecture: If messages are restricted by a sparse system of integer diff",
+      "quality_score": 0.79,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-18T03:22:53",
+      "title": "Tropical Cryptocurrency: Mining on the Min-Plus Semiring"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "cca295e6",
-      "domain": "Shared",
-      "name": "fib_dvd_gcd_of_dvd",
-      "quality": 0.71
-    },
-    {
-      "cycle_id": "cca295e6",
-      "domain": "Shared",
-      "name": "fibEntryPt_dvd_of_fib_dvd",
-      "quality": 0.71
-    },
-    {
-      "cycle_id": "7d82c497",
-      "domain": "Novelty",
-      "name": "subset_of_forceStep",
-      "quality": 0.7
-    },
     {
       "cycle_id": "7d82c497",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Shared",
       "name": "two_mul_autocorrelation_eq",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "d69a2aa8",
+      "domain": "Algebra",
+      "name": "was",
+      "quality": 0.79
+    },
+    {
+      "cycle_id": "d69a2aa8",
+      "domain": "Algebra",
+      "name": "tropical_pair_concave",
+      "quality": 0.79
+    },
+    {
+      "cycle_id": "d69a2aa8",
+      "domain": "Algebra",
+      "name": "is",
+      "quality": 0.79
     }
   ],
-  "last_updated": "2026-07-18T03:22:39",
+  "last_updated": "2026-07-18T03:22:53",
   "open_questions": [
     {
       "context": "",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "cf42e929",
-        "quality": 0.79,
-        "theorems": 26,
-        "title": "The Poincare Conjecture for Data: Manifold Detection via Persistent Homology"
-      },
-      {
         "cycle_id": "c37c01fa",
         "quality": 0.83,
         "theorems": 30,
@@ -3079,6 +3073,12 @@
         "quality": 0.59,
         "theorems": 9,
         "title": "Holographic Primes: The Prime Number AdS/CFT Correspondence"
+      },
+      {
+        "cycle_id": "d69a2aa8",
+        "quality": 0.79,
+        "theorems": 11,
+        "title": "Tropical Cryptocurrency: Mining on the Min-Plus Semiring"
       }
     ],
     "Applications": [
