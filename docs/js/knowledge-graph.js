@@ -648,11 +648,13 @@
                 const aDomain = a.clusterDomain || a.primary_domain || 'Bridges';
                 if (dragCluster && aDomain === dragCluster) continue;
 
-                // Central attractor: minimum-image path to galactic core (Möbius-aware)
+                // Central attractor + Dark Energy expansion
                 const coreDelta = minImageDelta(a.x, a.y, 0, 0);
                 const coreR2 = coreDelta.d2;
                 const coreR = Math.sqrt(coreR2) || 1;
-                const coreForce = G_CORE * CORE_MASS * a.mass / (coreR2 + SOFTENING * SOFTENING);
+                const gravity = G_CORE * CORE_MASS * a.mass / (coreR2 + SOFTENING * SOFTENING);
+                const darkEnergy = 0.02 * a.mass; // Constant outward push
+                const coreForce = gravity - darkEnergy;
                 a.vx += (coreDelta.dx / coreR) * coreForce;
                 a.vy += (coreDelta.dy / coreR) * coreForce;
 
