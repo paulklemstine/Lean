@@ -1,201 +1,154 @@
-# Impossible Geometries: The Dream of a Space That Curves Two Ways at Once
+# The Geometry That Refused to Split
 
-## A wish written into a metric
+## A metric built to make space expand one way and contract the other reveals a subtler world
 
-For two thousand years, one sentence sat at the foundation of geometry like a
-keystone: *through a point not on a given line, there is exactly one parallel
-line.* Euclid's parallel postulate feels so obvious that generations of
-mathematicians tried to *prove* it from the others — and failed, again and
-again, until the nineteenth century revealed why. The postulate cannot be
-proved because it is not forced. Deny it one way and you get **hyperbolic
-geometry**, a saddle-shaped world where parallel lines fan apart and triangles
-are thin, their angles summing to less than $180^\circ$. Deny it the other way
-and you get **elliptic geometry**, the geometry of a sphere, where "parallels"
-bend toward one another and meet, and triangles bulge past $180^\circ$.
+Geometry begins with a physical intuition: a ruler should tell us how far apart two nearby points are. Change the ruler from place to place, and the familiar plane can acquire curvature without ever leaving two dimensions. That simple idea powers the geometry of curved surfaces, gravitational fields, and many modern models of anisotropic materials.
 
-Once you have three geometries — flat, saddle, sphere — it is irresistible to
-ask for a fourth. What if a single space could be *both* elliptic and
-hyperbolic at once, depending on which way you look? Imagine walking east and
-watching the world spread apart beneath your feet like a saddle, then turning
-to walk north and watching it curl back on itself like the surface of a globe.
-A universe expanding along one axis and contracting along another. A geometry
-that splits.
+Consider a plane with ordinary coordinates $(x,y)$, but equip it with the squared line element
 
-This article is the story of chasing that dream with complete honesty — of
-writing the wish down as a precise mathematical object, following where the
-equations lead, and discovering something more interesting than the fantasy: a
-crisp theorem about *why* the fantasy is impossible on a surface, and exactly
-what survives of it.
+$$
+ds^2=\frac{dx^2}{\cosh^2 y}+\cosh^2 x\,dy^2.
+$$
 
-## Writing the dream as a metric
+Here $\cosh t=(e^t+e^{-t})/2$ is the hyperbolic cosine. It is always positive, equals $1$ at $t=0$, and grows rapidly as $|t|$ increases. The metric therefore treats the two coordinate directions very differently. At height $y$, a horizontal displacement is discounted by the factor $1/\cosh y$. At horizontal position $x$, a vertical displacement is magnified by the factor $\cosh x$. Far from the axes, the plane resembles a fabric that has been compressed in one family of directions and stretched in the perpendicular family.
 
-To do geometry you need a rule for measuring lengths. On the flat plane, the
-Pythagorean theorem gives the length of a tiny step $(dx, dy)$ as
-$ds^2 = dx^2 + dy^2$. Curved geometries keep the same shape of formula but let
-the coefficients vary from place to place. This local ruler is called a
-**metric**, and it encodes *everything* about the geometry — distances, angles,
-straight lines, curvature — all of it.
+This construction invites a dramatic conjecture. Might the competing effects make some regions positively curved, like a sphere, and others negatively curved, like a saddle? Could the diagonals become boundaries between two geometric phases? The answer is more illuminating than the conjecture: the proposed split never occurs. A complete curvature calculation shows that this metric is flat only at the origin and negatively curved everywhere else.
 
-To build our "split" world we want the ruler to *stretch* in one direction and
-*shrink* in another. Here is the candidate, defined at each point $(x, y)$ of
-the plane:
+The geometry does not divide into elliptic and hyperbolic countries. It is a single saddle-like world with one exceptionally flat point.
 
-$$ ds^2 \;=\; \frac{dx^2}{\cosh^2 y} \;+\; \cosh^2(x)\,dy^2. $$
+## First question: does this really define a geometry?
 
-The functions $\cosh$ and $\operatorname{sech} = 1/\cosh$ are the hyperbolic
-cousins of cosine and secant; $\cosh(0)=1$ and $\cosh$ grows steeply away from
-zero. So the coefficient $\operatorname{sech}^2(y) = 1/\cosh^2(y)$ in front of
-$dx^2$ *shrinks* as you move away from the $x$-axis, while the coefficient
-$\cosh^2(x)$ in front of $dy^2$ *grows* as you move away from the $y$-axis. One
-direction expands, the other contracts. The metric is the wish, made concrete.
+At a point $(x,y)$, let a tangent vector have coordinate components $(u,v)$. Its squared length is
 
-Before asking whether it splits, we should check that it is a legitimate
-geometry at all. It is. At every point the two coefficients
-$\operatorname{sech}^2(y)$ and $\cosh^2(x)$ are strictly positive, so the ruler
-never collapses and every nonzero step has positive length: the metric is
-**positive definite**. It is symmetric, and both coefficients are infinitely
-differentiable everywhere. In short, this is a bona fide smooth Riemannian
-geometry on the whole plane. The stage is solidly built. Now, does the play we
-wrote actually happen on it?
+$$
+\| (u,v)\|_{(x,y)}^2=\frac{u^2}{\cosh^2 y}+\cosh^2 x\,v^2.
+$$
 
-## The single number that governs a surface
+Both coefficients are strictly positive. Consequently, every nonzero vector has strictly positive squared length. This proves the basic consistency theorem: the formula defines a smooth, positive-definite Riemannian metric on the entire plane. There are no singular points, forbidden zones, or directions of zero length.
 
-Here the dream collides with a theorem, and the theorem wins.
+The determinant of the metric matrix is
 
-The local expanding-and-contracting behavior of a metric is *not* the same
-thing as curvature. Curvature is subtler: it measures how the geometry fails to
-be flat in a way that no change of coordinates can hide. On a two-dimensional
-surface, curvature is captured by a single number at each point — the
-**Gaussian curvature** $K$. Positive $K$ means locally spherical (elliptic);
-negative $K$ means locally saddle-shaped (hyperbolic); zero means flat.
+$$
+\det g=\frac{\cosh^2 x}{\cosh^2 y},
+$$
 
-The word "single" is the whole story. A surface has only one tangent plane's
-worth of directions at each point, so there is only *one* curvature there. It
-is a scalar, not a dial you can turn as you rotate. This is the mathematical
-obstruction to the dream: **on a surface, curvature cannot depend on the
-direction you look.** You cannot have $K>0$ "east–west" and $K<0$ "north–south"
-at the same point, because there is only one $K$. The honest reading of the
-original wish, then, is not about directions at a single point but about how the
-single function $K(x,y)$ behaves as you move along the two axes.
+so the area density is its positive square root,
 
-So we compute it. There is a classical recipe — the Brioschi formula — that
-turns the two coefficients of an orthogonal metric into its Gaussian curvature
-through a specific combination of derivatives. Grinding it through for our
-split metric and simplifying yields a clean closed form:
+$$
+dA=\frac{\cosh x}{\cosh y}\,dx\,dy.
+$$
 
-$$ K(x, y) \;=\; -\cosh^2(y) \;+\; \frac{2 - \cosh^2(y)}{\cosh^2(x)\,\cosh^2(y)}. $$
+Thus metric area is not ordinary coordinate area. A tiny coordinate rectangle near $(x,y)$ is weighted by $\cosh x/\cosh y$. Moving far in the $x$ direction increases its geometric area; moving far in the $y$ direction decreases it. This clean formula is already a useful description of the plane’s anisotropy.
 
-This is the exact curvature of the split geometry at every point, and it can be
-independently confirmed by evaluating the Brioschi recipe numerically and
-watching the two answers agree to many decimal places.
+## The hidden steering rules
 
-## What the curvature actually does
+Curvature is not read directly from stretching factors. One must first understand how the local rulers vary. The Levi–Civita connection supplies the steering corrections that make a freely moving path as straight as this changing metric permits. Those corrections are encoded by Christoffel symbols.
 
-With the formula in hand we can finally test the dream against reality. Start at
-the center. Setting $x=y=0$ gives, since $\cosh(0)=1$,
+For this diagonal metric, the independent nonzero symbols reduce to four simple expressions:
 
-$$ K(0,0) = -1 + \frac{2-1}{1\cdot 1} = 0. $$
+$$
+\Gamma^1_{12}=\Gamma^1_{21}=-\tanh y,
+$$
 
-The origin is perfectly flat — a promising, neutral starting point. Now walk
-outward along the two axes.
+$$
+\Gamma^1_{22}=-\cosh^2 y\,\cosh x\,\sinh x,
+$$
 
-**Along the $x$-axis** ($y=0$), the formula collapses beautifully:
+$$
+\Gamma^2_{11}=\frac{\sinh y}{\cosh^3 y\,\cosh^2 x},
+$$
 
-$$ K(x, 0) = -\tanh^2(x). $$
+$$
+\Gamma^2_{12}=\Gamma^2_{21}=\tanh x.
+$$
 
-Since $\tanh^2$ is nonnegative and vanishes only at the origin, this is
-$\le 0$ everywhere and strictly negative once you leave the center. The
-east–west direction is genuinely **hyperbolic**: negative curvature, saddle
-behavior, geodesics that spread apart. This half of the dream comes true.
+The remaining diagonal symbols $\Gamma^1_{11}$ and $\Gamma^2_{22}$ vanish. These six independent entries give the complete local rule for parallel transport and geodesic acceleration.
 
-**Along the $y$-axis** ($x=0$), the formula gives
+A path $t\mapsto(x(t),y(t))$ is a geodesic precisely when it satisfies
 
-$$ K(0, y) = -\cosh^2(y) + 2\operatorname{sech}^2(y) - 1. $$
+$$
+\ddot x-2\tanh y\,\dot x\dot y
+-\cosh^2 y\,\cosh x\,\sinh x\,\dot y^2=0,
+$$
 
-The dream demanded that *this* be positive — elliptic, spherelike, curving
-back on itself. But it is not. A short calculation shows this expression is also
-$\le 0$ everywhere, and strictly *negative* away from the origin. The
-north–south direction is hyperbolic too. There is no elliptic half. The split
-does not happen.
+$$
+\ddot y+\frac{\sinh y}{\cosh^3 y\,\cosh^2 x}\,\dot x^2
++2\tanh x\,\dot x\dot y=0.
+$$
 
-This is not a failure of computation; it is the theorem asserting itself. Because
-a surface carries only one curvature per point, and because that curvature turns
-out nonpositive all along both axes, the metric simply cannot host the promised
-"elliptic versus hyperbolic" division. The intuition that a shrinking coordinate
-must mean positive curvature was the seductive error. Shrinking the ruler in the
-$y$-direction is *not* the same as curving positively; the actual curvature,
-which mixes together derivatives of both coefficients, comes out negative.
+These equations matter because they correct another tempting picture. The coefficients vary smoothly throughout the plane. Nothing in the metric abruptly switches from an exponential law to a trigonometric law at a diagonal. Geodesics are solutions of one coupled smooth system, not pieces from two different geometries pasted together.
 
-Finding this is more valuable than confirming the fantasy would have been. We
-now hold a precise, checkable statement — the split geometry is hyperbolic-
-leaning along both axes, flat only at the origin — that replaces a vague hope
-with a fact.
+## The curvature verdict
 
-## Where the exponentials really live
+For an orthogonal metric $ds^2=E\,dx^2+G\,dy^2$, Gaussian curvature can be computed from the way $E$ and $G$ vary. Substituting
 
-The original vision came with a picture of the "straight lines" of this world:
-curves racing off with an exponential factor $e^{t}$ in one direction and
-$e^{-t}$ in the other, expansion and contraction made visible. It is a
-gorgeous image, and it is *almost* right — it is just attached to the wrong
-object.
+$$
+E(x,y)=\operatorname{sech}^2 y,
+\qquad
+G(x,y)=\cosh^2 x
+$$
 
-The straight lines of a geometry are its **geodesics**, the paths a free
-particle follows, the routes of locally shortest distance. For our split metric
-the true geodesics tangent to the axes are disappointingly plain: they are the
-coordinate lines themselves, traversed at constant speed, $t \mapsto (x_0 + at,
-0)$ along the $x$-axis and $t\mapsto (0, y_0+bt)$ along the $y$-axis. The
-proposed exponential curves, by contrast, fail the geodesic equations outright —
-plug $x(t)=t,\ y(t)=e^{t}$ into the equations of motion and the very first one
-is violated already at $t=0$. Beautiful curves, but not straight lines of this
-world.
+into the orthogonal-coordinate curvature formula yields the exact result
 
-So where do the exponentials belong? In the behavior of geodesics *relative to
-one another*. Fire two nearby geodesics in parallel and watch the gap between
-them. That gap $J(t)$ obeys a single, universal law — the **Jacobi equation** —
-in which the curvature appears as the coefficient:
+$$
+K(x,y)=-\cosh^2 y+
+\frac{1-\sinh^2 y}{\cosh^2 x\,\cosh^2 y}.
+$$
 
-$$ J''(t) + K\,J(t) = 0. $$
+This is the central theorem. It differs decisively from the attractive guess $\operatorname{sech}^2 x-\operatorname{sech}^2 y$. A metric can stretch one direction and contract another without turning the signs of those scale factors into separate signs of intrinsic curvature. Curvature is a nonlinear synthesis of all first and second variations of the metric.
 
-The sign of $K$ decides everything. Where curvature is negative, $K=-k$ with
-$k>0$, the equation becomes $J'' = kJ$, whose solution is
-$J(t) = \sinh(\sqrt{k}\,t)$ — and $\sinh$ is built from exactly the
-exponentials $e^{\pm\sqrt{k}\,t}$. The gap grows without bound; nearby paths
-fly apart. *There* are the exponentials, at last in their rightful home: they
-describe the runaway divergence of neighboring geodesics in a negatively curved
-region — precisely the situation all along the $x$-axis, where
-$K(x,0) = -\tanh^2(x) < 0$.
+The exact formula has a sharp global consequence:
 
-And the elliptic behavior the dream wanted? The mathematics tells us exactly
-what it *would* look like, even though this particular metric never provides it.
-Where curvature is positive, $K=+k$, the Jacobi equation becomes $J'' = -kJ$,
-whose solution is the oscillation $J(t)=\sin(\sqrt{k}\,t)$. The gap stays
-bounded — never exceeding its initial scale — and, remarkably, returns exactly
-to zero at time $t = \pi/\sqrt{k}$. Neighboring geodesics that started apart are
-focused back together, the way all meridians of a globe, setting out separately
-from the equator, are inevitably reunited at the pole. Divergence versus
-refocusing: this is the true, rigorous face of "hyperbolic versus elliptic," and
-it is written entirely in the sign of a single number.
+**Curvature Sign Theorem.** For every $(x,y)\in\mathbb R^2$, the Gaussian curvature satisfies $K(x,y)\le 0$. Moreover,
 
-## The moral of an impossible geometry
+$$
+K(x,y)=0 \quad\Longleftrightarrow\quad (x,y)=(0,0).
+$$
 
-The split geometry did not do what it was asked to do, and that is the point.
-Set out to build a surface that is simultaneously expanding and contracting, and
-the geometry answers with a law older than the question: a surface has one
-curvature, and here that curvature is negative wherever it is not flat. The
-fantasy of a direction-dependent curved *surface* is not merely unrealized by
-this metric — it is impossible for any surface at all.
+Therefore $K(x,y)<0$ at every non-origin point.
 
-But impossibility is a door, not a wall. On a surface curvature is a scalar; in
-three or more dimensions it becomes genuinely richer, attached to each
-two-dimensional plane of directions, so that different planes through the same
-point really can curve with different signs. The honest higher-dimensional
-version of "impossible geometry" — a space that curves one way in the $xy$-plane
-and the opposite way in the $xz$-plane — is not impossible at all. It is waiting.
+One can see the result immediately on the horizontal axis. Setting $y=0$ gives
 
-That is the quiet reward of taking a wild idea completely seriously. We asked for
-a space that curves two ways at once, and instead of a fairy tale we got three
-solid things: a clean formula for the curvature of a striking metric, a proof of
-why the dream cannot come true on a surface, and a precise account of where its
-beautiful exponentials genuinely live. In mathematics, a well-understood
-impossibility is worth more than a vaguely imagined possibility — because it
-tells you exactly where to dig next.
+$$
+K(x,0)=-1+\frac{1}{\cosh^2 x}=-\tanh^2 x.
+$$
+
+It is zero at $x=0$ and negative for every $x\ne0$. So even the region that was expected to have positive curvature already fails the test along its central axis.
+
+The full inequality follows by clearing the positive denominator $\cosh^2 x\cosh^2 y$ and using the identity $\cosh^2 t-\sinh^2 t=1$. Equality forces both hyperbolic sines to vanish, hence $x=y=0$. This proof is global: it does not depend on plotting a finite window or sampling a grid.
+
+## Why anisotropy is not mixed curvature
+
+A sphere and a saddle are distinguished intrinsically. On a sphere, nearby initially parallel geodesics tend to focus; on a negatively curved surface, they tend to separate. But coordinate stretching alone can be deceptive. The coefficients $\operatorname{sech}^2 y$ and $\cosh^2 x$ describe the cost of motion along chosen coordinate lines. Gaussian curvature asks whether the entire metric can locally be flattened while preserving all distances. It combines cross-effects that a direction-by-direction reading misses.
+
+This distinction appears throughout mathematical physics. An anisotropic optical medium may transmit light at different effective speeds in different directions without behaving like two unrelated spaces. A cosmological model may have distinct scale factors along distinct axes, yet its curvature is determined by their coupled evolution. A material may expand longitudinally and contract transversely, while its intrinsic defect structure obeys a single compatibility law. The lesson is broad: directional behavior and curvature sign are related, but they are not interchangeable.
+
+The present plane is an especially clean case study. Horizontally, lengths shrink as $|y|$ grows. Vertically, lengths expand as $|x|$ grows. Meanwhile the area element weights regions asymmetrically, and the connection couples both motions. After all of those effects are assembled, the curvature is nonpositive everywhere.
+
+## What becomes of the “phase boundary”?
+
+The anticipated diagonals $y=x$ and $y=-x$ are not zero-curvature boundaries. Except at their common point, they lie in strictly negative curvature. There are no positive-curvature regions to separate, so a theorem claiming that geodesics cross a sign-changing boundary at most twice cannot apply to this metric.
+
+There is, however, a meaningful replacement question. Since the zero-curvature set consists only of the origin, how often can a geodesic pass through that point? The smooth geodesic equations imply local uniqueness once a position and velocity are fixed. Turning this into a global statement requires a careful study of solutions, but it is the right problem suggested by the actual geometry.
+
+Triangle area must likewise be posed with care. For a specified region $T$ bounded by chosen geodesic segments, its area is
+
+$$
+\operatorname{Area}(T)=\iint_T \frac{\cosh x}{\cosh y}\,dx\,dy.
+$$
+
+Three vague “phases” cannot determine an area because those phases do not exist, and even three vertices require a choice of connecting geodesics when global uniqueness is unknown. Once the boundary is fixed, however, the area formula is exact and ready for numerical integration.
+
+## How to explore the surface numerically
+
+A small numerical experiment makes the correction visible. Choose a rectangular grid, evaluate $\cosh x$, $\sinh y$, and the exact expression for $K$ at every grid point, and color the points by curvature. The resulting map has no red islands of positive curvature and no diagonal white seams. Instead, a single value $K=0$ occurs at the center, surrounded by increasingly negative shades. A second plot of $\cosh x/\cosh y$ reveals a different pattern: area grows toward the left and right and shrinks toward the top and bottom. Comparing the plots is instructive. The area-density image displays the directional stretching clearly, while the curvature image refuses to inherit its sign pattern.
+
+Numerical plots cannot prove a global statement on an infinite plane, but they can expose a faulty conjecture and guide exact analysis. Here the formula supplies the proof, while computation provides intuition and test cases. Together they show why one should visualize both the metric coefficients and the intrinsic invariants rather than treating either picture as the whole geometry.
+
+## A productive failure
+
+The most valuable mathematical models are not those that merely confirm an evocative picture. They tell us precisely where the picture breaks. This metric succeeds as a globally smooth, positive-definite, strongly anisotropic geometry. It has explicit connection coefficients, an explicit area density, and an exact curvature law. What it does not have is a curvature-sign split.
+
+That correction opens better questions. Is the resulting metric geodesically complete? How rapidly do geodesics separate? Can distance be bounded effectively in terms of the coordinates? What is the global behavior of the exponential map? How often can a geodesic return to the origin? The coefficients become extreme far from the axes, so these are not cosmetic extensions; they probe the geometry’s deepest large-scale structure.
+
+A universe may expand in one measured direction and contract in another. But whether it is spherical, flat, or saddle-like is decided by a more subtle accounting. In this plane, the accounting is exact: one flat point sits at the center, surrounded everywhere by negative curvature. The imagined border between two worlds dissolves, revealing a single geometry more coherent—and more interesting—than the split that inspired it.

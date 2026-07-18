@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "ef403dbc",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — White's Quadratic Exchange Conjecture (Part 3)\n\nThis cycle deepened the quadratic-exchange engine (`Basic.lean`) and its uniform\ninstances (`Uniform.lean`) with genuine structura",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-07-14T10:59:51",
-      "title": "Deepening: White's Quadratic Exchange Conjecture (Part 3)"
-    },
-    {
       "cycle_id": "bce13597",
       "domain": "Applications",
       "key_insight": "# Future Directions: from the octahedral count to the general index–coindex gap\n\nThis cycle turned the *existence* dichotomy for antipodal maps of cross-polytope spheres\n(`there is a ℤ₂-map Sᵐ → Sⁿ ⟺",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-18T07:29:17",
       "title": "The L-Function Oracle: What If We Could Compute L-Functions Instantly?"
+    },
+    {
+      "cycle_id": "60e00dda",
+      "domain": "Applications",
+      "key_insight": "# Future directions\n\n## What was established\n\n`Tropical/TropicalFOne/FixedPointEuler.lean` proves a precise finite-orbit theorem supporting one robust numerical part of the proposed tropical–F₁ pictur",
+      "quality_score": 0.66,
+      "sorry_count": 0,
+      "theorem_count": 23,
+      "timestamp": "2026-07-18T07:45:24",
+      "title": "Tropical Dreams: The Field with One Element Meets Tropical Geometry"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.75
     }
   ],
-  "last_updated": "2026-07-18T07:29:17",
+  "last_updated": "2026-07-18T07:45:24",
   "open_questions": [
     {
       "context": "",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "dd61fafb",
-        "quality": 0.73,
-        "theorems": 11,
-        "title": "ArXiv paper: Improving Upper Bounds for the Maximum Clique Problem using Reducti"
-      },
-      {
         "cycle_id": "d1512647",
         "quality": 0.71,
         "theorems": 5,
@@ -3141,6 +3135,12 @@
         "quality": 0.64,
         "theorems": 15,
         "title": "The Mathematics of Memes: Viral Information Topology"
+      },
+      {
+        "cycle_id": "60e00dda",
+        "quality": 0.66,
+        "theorems": 23,
+        "title": "Tropical Dreams: The Field with One Element Meets Tropical Geometry"
       }
     ],
     "Bridges": [
