@@ -60,6 +60,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
   },
   {
+    "consumed_by_exp_id": "5df99ff8",
+    "description": "In 2023, Smith et al. discovered 'the hat' \u2014 a single tile shape that tiles the plane but only aperiodically (no periodic tiling exists). This solved the aperiodic monotile problem. But deeper questions remain: How many distinct aperiodic monotiles exist? Conjecture: The set of aperiodic monotiles forms a 1-parameter family (the 'hat spectrum') parameterized by a continuous parameter t in [0,1] where t=0 gives the hat, t=1 gives the turtle (a known variant), and intermediate values give intermediate shapes. The key property: each shape in the hat spectrum tiles the plane aperiodically, and no two shapes in the spectrum admit a common periodic tiling. The boundary of the hat spectrum is the curve in R^2 that separates the region of aperiodic monotiles from the region of periodic tiles. This boundary is a piecewise-smooth curve determined by the constraint that the tile must enforce a hierarchical substitution rule. Test: parameterize the hat spectrum by interpolating between the hat and turtle, compute the substitution rule for each t, and verify that the substitution rule enforces aperiodicity for all t in [0,1]. Impact: aperiodic monotiles are not isolated curiosities \u2014 they form a continuous family, and the hat is just one point on the spectrum.",
+    "domains": [
+      "Novelty",
+      "Geometry"
+    ],
+    "id": "fd_0307",
+    "priority_score": 0.86,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-07-18T10:38:59.890900+00:00",
+    "title": "The Aperiodic Monotile: One Shape to Tile Them All"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle e9a483ed (Q=0.760), which proved 8 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: L-functions are the DNA of mathematics \u2014 each one encodes deep arithmetic information. But how many L-functions ARE there? The L-function universe is vast: (1) The Riemann zeta function (1 L-function), (2) Dirichlet L-functions (countably many), (3) L-functions of elliptic curves (uncountably many, ",
     "domains": [
@@ -146,6 +161,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The Ihara zeta function of a finite graph G is zeta_G(u) = prod_{[C]} (1 - u^{|C|})^{-1} where the product is over prime cycles (closed walks that are not powers of shorter walks). For a (q+1)-regular graph, zeta_G(u) = (1-u^2)^{-(n-1)(q-1)/2} * det(I - A*u + (q-1)*u^2*I)^{-1} where A is the adjacency matrix. This is the graph analog of the Riemann zeta function. Conjecture: The Riemann hypothesis holds for zeta_G if and only if G is a Ramanujan graph (all non-trivial eigenvalues of the adjacency matrix satisfy |lambda| <= 2*sqrt(q)). This is a theorem of Ihara, but the deeper conjecture is: the zeta function of a Ramanujan graph encodes the same spectral information as the Riemann zeta function restricted to the critical strip. Specifically, if zeta_G satisfies RH, then the 'prime cycles' of G are distributed like the primes in Z, and the 'explicit formula' for zeta_G (analogous to the explicit formula for the Riemann zeta) relates the cycle counts to the eigenvalues of A. Test: compute zeta_G for 10 Ramanujan graphs (paley graphs, lubotzky-phillips-sarnak graphs) and verify the Riemann hypothesis. Compare the 'prime cycle counting function' with the prime counting function pi(x). Impact: graphs have zeta functions, Ramanujan graphs satisfy RH, and the prime cycles in a graph are distributed like the primes in Z.",
+    "domains": [
+      "Novelty",
+      "NumberTheory"
+    ],
+    "id": "fd_0306",
+    "priority_score": 0.84,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-18T10:38:59.865229+00:00",
+    "title": "The Zeta Function of a Graph: Number Theory on Networks"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle 18410e31 (Q=0.770) proved 12 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: When a theorem prover searches for a proof, it explores a tree of possible derivation steps. The branching factor is the number of applicable inference rules at each step. Define the proof-search frac",
     "domains": [
       "Novelty"
@@ -157,21 +187,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-18T09:21:32.344494+00:00",
     "title": "Close Proofs: Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
-  },
-  {
-    "consumed_by_exp_id": "21c08839",
-    "description": "Proofs are static objects, but what if proofs could improve? Define a proof refinement system where each proof P has a complexity C(P) = length(P) + depth(P) + number of lemmas, and a proof P' is a refinement of P if P' proves the same theorem with C(P') < C(P). Conjecture: For every theorem T provable in ZFC, there exists a sequence of refinements P = P_0, P_1, P_2, ... such that C(P_n) is non-increasing and the limit P_infinity is the simplest proof of T (in the sense of Kolmogorov complexity). Moreover, the refinement process halts: there exists N such that C(P_N) = C(P_{N+1}) = ... = C(P_infinity). The key insight: proof simplification is a well-founded process because the complexity is a natural number that decreases at each step. But the process can be arbitrarily long \u2014 the proof of the four-color theorem might require 10^100 refinements to reach its simplest form. Test: formalize the refinement system in Lean 4. Starting from the statement of the irrationality of sqrt(2), generate refinements by eliminating unnecessary lemmas, shortening case splits, and removing redundant quantifiers. Measure C(P) at each step and verify it decreases. Impact: proofs are not static \u2014 they are living objects that can be improved. The simplest proof of a theorem is the LIMIT of the refinement process, and this limit ALWAYS exists.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0261",
-    "priority_score": 0.82,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T03:44:45.986581+00:00",
-    "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
   },
   {
     "consumed_by_exp_id": "",
@@ -1737,7 +1752,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Cyclic Sieving for Staircase Plane Partitions via Crystals and Electrical Networks"
   },
   {
-    "consumed_by_exp_id": "26ad8b0e",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Strongly complete sets and a conjecture of Erd\u0151s' and formalize its key results. Abstract: A set $A\\subseteq\\mathbb{N}$ is called $\\textit{complete}$ if every sufficiently large integer can be written as a sum of distinct elements of $A$. It is $\\textit{strongly complete}$ if it remains complete after one deletes finitely many elements from it. We show that $A\\subseteq\\mathbb{N}$ is strongly complete whenever \\[ \\big|A\\cap(2^k,2^{k+1}]\\big|\\ge6 \\] for every sufficiently large $k\\in\\mathbb{N}$, and \\[ \\sum_{a\\in A}\\|a\u03b8\\|=\\infty, \\quad\\forall\u03b8\\in\\mathbb{R}\\setminus\\mathbb{Z}. \\] In particular, this resolves a 1961 conjecture of Erd\u0151s. The proof builds on previous work of Bergelson and Simmons. Our approach also allows us to establish a more general strong-completeness criterion with suitable ordered blocks in place of dyadic intervals.",
     "domains": [
       "Pythagorean",
@@ -1747,7 +1762,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14071v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-16T15:35:00.343163+00:00",
     "title": "ArXiv paper: Strongly complete sets and a conjecture of Erd\u0151s"
   },
@@ -3649,6 +3664,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-18T10:22:07.462514+00:00",
     "title": "`Core.lean` gives a self-contained ordinal analysis of explicit countably branch"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Self-Improving Cryptographic Certificates\n\n## 1. Confluence of audited certificate refinement\n\n**Conjecture.** For every certificate tree, augmenting redundant-restatement elimination and named-lemma inlining with a finite family of commuting conversions yields a confluent terminating rewrite system. Consequently, every certificate has a unique normal form up to renaming of hypothesis leaves.\n\nThe key insight is that termination has already been separated from uniqueness: natural-valued descent supplies the former, while local diamond properties could supply the latter through a confluence theorem.\n\n**Why now?** Concrete refinement is known to preserve conclusions and strictly decrease audited cost, so the remaining question has a sharply testable form: classify all critical pairs and determine whether they join.\n\n## 2. Superpolynomial refinement distance for propositional certificates\n\n**Conjecture.** There is an explicit family of polynomial-size propositional certificates whose shortest paths to normal form under any fixed finite local, conclusion-preserving refinement basis have superpolynomial length.\n\nThe key insight is that a small final certificate need not imply a short route to it; local simplification can be obstructed by globally distributed redundancies.\n\n**Why now?** The distinction between well-foundedness and quantitative normalization time is exposed by the audited cost model. Candidate families can be built from repeated substitution, shared lemmas, and forced commuting conversions, giving concrete lower-bound instances.\n\n## 3. Noetherian multigraded stabilization bounds\n\n**Conjecture.** For certificate protocols over a multivariate polynomial ring with bounded generator degree, there is an explicit primitive-recursive bound on the first common stabilization stage of the certificate cost, key ideal, and leading-term ideal.\n\nThe key insight is that a single maximum synchronizes independently obtained stabilization stages, while Gr\u00f6bner-theoretic degree control may make the ideal-theoretic stage quantitative.\n\n**Why now?** Qualitative synchronized stabilization is established. Adding degree and generator bounds turns its nonconstructive ideal component into a falsifiable numerical claim with direct families of extremal examples.\n\n## 4. Cryptographic soundness preserved by proof normalization\n\n**Conjecture.** For a commitment-based certificate protocol whose transcript semantics is compositional over proof trees, every permitted refinement preserves completeness, special soundness, and honest-verifier zero knowledge, while weakly reducing verifier work.\n\nThe key insight is that conclusion preservation alone is insufficient for cryptography; refinement must commute with transcript extraction and simulation as well as with logical interpretation.\n\n**Why now?** The syntactic refinement layer and the cryptographic state layer are already cleanly separated. This makes it possible to state preservation obligations as local laws for each rewrite constructor and then lift them to arbitrary refinement sequences.\n\n## 5. Arithmetic normal forms for irrationality certificates\n\n**Conjecture.** Within a proof grammar containing divisibility, parity, coprimality, and contradiction rules, all standard elementary certificates of the irrationality of the square root of two reduce to one of finitely many normal-form skeletons, and these skeletons have equal minimal audited cost.\n\nThe key insight is that the current four-stage audit trail simplifies only structural redundancy; enriching the grammar with arithmetic inference can test whether mathematically distinct arguments share a common irreducible core.\n\n**Why now?** A concrete normal certificate and an exact cost trail are available as a baseline. The conjecture can be attacked incrementally by adding arithmetic rewrites and checking confluence and lower bounds at each extension.\n",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_0308",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "21c08839",
+    "status": "available",
+    "timestamp": "2026-07-18T10:39:14.961320+00:00",
+    "title": "**Conjecture.** For every certificate tree, augmenting redundant-restatement eli"
   },
   {
     "consumed_by_exp_id": "",
