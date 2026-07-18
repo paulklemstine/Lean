@@ -271,6 +271,26 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "The Galois group of a random polynomial over Q is S_n with probability 1. This is the Hilbert irreducibility theorem in probabilistic form. But what about random polynomials over finite fields? For f in F_p[x] of degree n chosen uniformly at random, the Galois group is S_n with probability approaching 1 as p grows. Conjecture: the probability that Gal(f) is NOT S_n is O(p^{-1/2}) for fixed n, and the exceptional cases concentrate at polynomials with discriminant zero or small Galois groups. More precisely, P(Gal(f) != S_n) = c_n / sqrt(p) + O(1/p) where c_n depends only on n. For n=2: P(Gal(f) != S_2) = P(discriminant = 0) = 1/p. For n=3: P(Gal(f) != S_3) = P(f has a rational root) = 3/p + O(1/p^2). Test: enumerate all monic polynomials of degree n over F_p for small p and n, compute Galois groups, verify P(Gal != S_n) ~ c_n / sqrt(p). Impact: random polynomials have maximal Galois groups — algebraic randomness is generic.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0336",
+    "lineage_refs": [],
+    "priority_score": 0.82,
+    "proof_strategy": "For a random monic polynomial f(x) = x^n + a_{n-1}x^{n-1} + ... + a_0 over F_p, the Galois group is a subgroup of S_n. Compute P(Gal(f) = S_n) by counting. For n=2: Gal(f) = S_2 unless discriminant = a_1^2 - 4*a_0 = 0, which happens for p choices of a_1 (each gives one a_0), so P = 1 - p/p^2 = 1 - 1/p. For n=3: Gal(f) != S_3 iff f has a rational root (3 choices of root, each determines f) or Gal = A_3 (discriminant is a square). Count both cases. For general n: use the fact that random permutations have cycle structure converging to the Poisson-Dirichlet distribution. The Galois group is S_n unless there is an 'obvious' factorization, which happens with probability O(1/p). Test: implement in Lean 4 + Python. For p=2..100 and n=2..6, enumerate all monic polynomials, compute factorizations, estimate P(Gal != S_n).",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-18T15:17:36.296388+00:00",
+    "title": "Stochastic Galois Theory: Random Permutations Have Generic Galois Groups"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
     "consumed_by_exp_id": "d757b941",
     "description": "The Heisenberg uncertainty principle states that Delta(x) * Delta(p) >= hbar/2. But this is NOT a physical principle — it is a THEOREM of Fourier analysis. The Fourier transform of a function f(x) satisfies: if f is concentrated in a region of width Delta(x), then its Fourier transform f_hat is concentrated in a region of width Delta(k) >= 1/(2*Delta(x)). This is the Benedicks-Amrein-Berthier theorem: a function and its Fourier transform cannot both be supported on sets of finite measure. Conjecture: The uncertainty principle generalizes to all integral transforms. For the Laplace transform: if f is supported on [a, infinity), then the Laplace transform L[f](s) cannot be supported on a set of finite measure unless f = 0. For the Mellin transform: if f is supported on a geometric progression, then M[f](s) cannot be supported on a set of finite measure. For the Radon transform: if f is supported on a strip, then R[f] cannot be supported on a set of finite measure. The general principle: no invertible integral transform allows both a function and its transform to have compact support. Test: verify the uncertainty principle for the Fourier, Laplace, Mellin, and Radon transforms numerically. Construct functions with Delta(x) = epsilon and measure Delta(k) for each transform. Impact: the uncertainty principle is not about quantum mechanics — it is about the structure of integral transforms. Every transform has its own uncertainty principle.",
     "domain_bridges": [],
@@ -2665,26 +2685,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "beeab68d",
-    "description": "Investigate the ArXiv paper 'Clique spectral extremal problem on disjoint color-critical graphs' and formalize its key results. Abstract: For a given graph $F$, a graph $G$ is called $F$-free if it does not contain $F$ as a subgraph. A graph is color-critical if deleting one of its edges decreases its chromatic number. Let $F_1, F_2, \\cdots, F_t$ be $t$ disjoint color-critical graphs with chromatic number $r+1$. For $2 \\leq s \\leq r$ and sufficiently large $n$, we determine the unique extremal graph with the maximum $s$-clique spectral radius among all $n$-vertex $\\bigcup_{i=1}^t F_i$-free graphs.",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Physics"
-    ],
-    "id": "fd_0149",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.13861v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-16T18:36:43.198397+00:00",
-    "title": "ArXiv paper: Clique spectral extremal problem on disjoint color-critical graphs"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Bernoulli determinants and cuspidal subgroups' and formalize its key results. Abstract: We give an explicit formula for the order of the rational cuspidal class group of the modular curve $X_1(N)$ for an arbitrary integer $N$. The proof relies on results of Streng on the group of modular units on $X_1(N)$, and requires computing a certain determinant involving the second Bernoulli polynomial. We also define a higher weight analogue of the cuspidal class group and speculate that its order is related to a similar determinant defined using a higher degree Bernoulli polynomial.",
     "domain_bridges": [],
@@ -4237,26 +4237,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "9b57ae5c",
-    "description": "In 1952, Turing showed that reaction-diffusion equations produce patterns (spots, stripes, spirals) that explain biological morphogenesis. But Turing patterns are solutions to PDEs, which are hard to analyze. Conjecture: Turing patterns are algebraic varieties. Specifically, the zero set of a Turing pattern (where the concentration equals the background level) is a real algebraic curve in 2D (for spots and stripes) or a real algebraic surface in 3D (for more complex patterns). The degree of the curve is the number of modes in the reaction-diffusion system. For a two-mode system (like the Gray-Scott model), the pattern is a curve of degree 2 (a conic section: circles for spots, parallel lines for stripes, hyperbolas for labyrinthine patterns). For a three-mode system, the pattern is a curve of degree up to 6 (sextic curves that can produce hexagonal patterns). The genus of the curve determines the pattern topology: genus 0 gives spots (topologically a sphere), genus 1 gives stripes (topologically a torus), and genus g > 1 gives labyrinthine patterns with g+1 holes. Test: simulate Turing patterns in the Gray-Scott model, fit the zero-set to an algebraic curve of degree d, and verify that d = 2 for spots and stripes. Compute the genus and verify it matches the pattern topology. Impact: biological patterns are algebraic curves. The mathematics of seashells, leopard spots, and zebra stripes is the mathematics of conic sections.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0322",
-    "lineage_refs": [],
-    "priority_score": 0.77,
-    "proof_strategy": "The Turing pattern u(x,y) satisfies the reaction-diffusion equation: partial_t u = D * nabla^2 u + f(u, v), partial_t v = D' * nabla^2 v + g(u, v). At steady state: D * nabla^2 u + f(u, v) = 0. The zero set {u = u_0} (where u_0 is the background concentration) is the pattern boundary. Linearize around the uniform state: u = u_0 + epsilon * w(x,y) where w satisfies D * nabla^2 w + f_u * w + f_v * z = 0 and similarly for z. The eigenfunctions are e^{i*k*x} with k determined by the Turing conditions. For a two-mode system, w = A*cos(k1*x) + B*cos(k2*y), so the zero set is A*cos(k1*x) + B*cos(k2*y) = u_0, which is approximately a degree-2 algebraic curve (ellipse, hyperbola, or parabola depending on k1, k2). For spots: A = B, k1 = k2 gives circles (degree 2). For stripes: A >> B gives parallel lines (degree 2 degenerate). For hexagonal patterns: three modes with k1, k2, k3 at 60 degrees give a degree-6 curve. Compute: fit the zero set of a simulated Turing pattern to an algebraic curve using least-squares polynomial regression. Verify the degree matches the number of modes. Test: Gray-Scott model with parameters for spots (F=0.035, k=0.065), stripes (F=0.025, k=0.055), labyrinthine (F=0.02, k=0.05).",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T13:37:32.730941+00:00",
-    "title": "Turing's Flowers: Morphogenesis as Algebraic Geometry"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Cycle 0daa61af (Q=0.720) proved 18 theorems in Tropical but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The AdS/CFT correspondence says that a gravitational theory in the bulk of anti-de Sitter space is equivalent to a conformal field theory on the boundary. What if prime numbers have a holographic dual",
     "domain_bridges": [],
@@ -4896,7 +4876,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ac79ade1",
     "description": "# Future directions\n\n1. **Intrinsic curvature identification.** The proved curvature formula\n   \\[\n   K(x,y)=-\\cosh^2 y+\\frac{1-\\sinh^2 y}{\\cosh^2x\\cosh^2y}\n   \\]\n   is nonpositive everywhere, vanishes exactly at the origin, and is strictly negative elsewhere. Connect this coordinate Brioschi calculation to Mathlib's intrinsic Riemann tensor and sectional-curvature APIs.\n\n2. **Geodesic equations.** Derive the coupled smooth ODE from the six computed Christoffel symbols and establish local existence, uniqueness, and conserved speed. The suggestion that geodesics are piecewise exponential/trigonometric is not justified by the smooth coefficients and should be tested against the actual ODE.\n\n3. **Boundary-crossing claim.** Since the actual zero-curvature locus is the single point `(0,0)`, there is no phase boundary separating positive and negative curvature regions for this metric. A meaningful replacement is to investigate how often a geodesic can pass through the origin; this requires analysis of the geodesic ODE and uniqueness.\n\n4. **Triangle area.** Specify three vertices and choose the geodesic segments joining them. The area is then the integral of the proved density `cosh x / cosh y` over the resulting region. “One vertex in each region” alone does not determine a numerical area.\n\n5. **Metric-space consequences.** Package the coordinate coefficients as a smooth positive-definite metric tensor, then study completeness, distance estimates, and the global exponential map. The strong anisotropy of the coefficients makes geodesic completeness a natural next question.\n",
     "domain_bridges": [],
     "domains": [
@@ -4909,7 +4889,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "65eb2137",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-18T07:45:29.087564+00:00",
     "title": "1. **Intrinsic curvature identification.** The proved curvature formula"
   },
@@ -5436,6 +5416,66 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## Completed foundation\n\n`Catalog/Physics/CliqueSpectralExtremal.lean` now gives a complete, independently compiling formal development of the multipartite counting and balancing core. For the elementary-symmetric clique count attached to a list of part sizes, it proves:\n\n- expansion with respect to two distinguished parts;\n- the exact gain from transferring one vertex from a larger part to a smaller one;\n- weak monotonicity for every clique size;\n- strict improvement under the sharp positivity hypotheses;\n- preservation of the total number of vertices;\n- vanishing when fewer than `s` parts are available;\n- exact formulas for bipartite edges, tripartite triangles, and equal-size parts.\n\nAll declarations in that file have full proofs, with no `sorry`, `admit`, added axioms, or truncated proof bodies.\n\n## Extensions toward the paper’s main theorem\n\n1. **Graph realization.** Construct the complete multipartite `SimpleGraph` associated to a finite vertex partition and identify its actual `s`-cliques with `multipartiteCliqueCount`.\n2. **Clique spectral radius.** Define the order-`s` adjacency tensor, its homogeneous clique polynomial, and the maximum over the nonnegative unit `s`-norm sphere. Establish existence of a maximizer by compactness.\n3. **Weighted symmetrization.** Prove that cloning vertices with equal multipartite neighborhoods does not decrease the spectral objective, then derive a weighted analogue of the exact balancing identity.\n4. **Forbidden configurations.** Formalize color-critical graphs, disjoint unions, subgraph containment, and `F`-freeness. Prove the embedding lemmas needed for a disjoint family `F₁, …, Fₜ` of chromatic number `r + 1`.\n5. **Stability and structure.** Establish the sufficiently-large-`n` stability theorem forcing an extremizer into the required join of a bounded exceptional component and an `r`-partite component.\n6. **Uniqueness.** Combine structural stability with strict weighted balancing to show that all part sizes differ by at most one and identify the unique extremal graph up to isomorphism.\n\nThe asymptotic threshold and the full spectral/color-critical structural argument remain outside the present development. The proved exact gain and strictness results isolate the arithmetic step needed once that graph-theoretic and analytic infrastructure is available.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_0337",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "beeab68d",
+    "status": "available",
+    "timestamp": "2026-07-18T15:17:52.389159+00:00",
+    "title": "`Catalog/Physics/CliqueSpectralExtremal.lean` now gives a complete, independentl"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Algebraic Geometry of Morphogenetic Surrogates\n\n## 1. Interaction-hypergraph degree law\n\nFor affine spatial modes coupled by a polynomial interaction law, the degree of the resulting concentration surrogate should equal the maximum cardinality of an active interaction hyperedge whose coefficient does not cancel in the leading homogeneous part. This is falsifiable by constructing mode families with controlled leading coefficients and comparing the predicted and observed degrees.\n\nThe key insight is that interaction order, rather than mode count, controls algebraic degree.\n\nWhy now? The two-mode product has exact degree two, while all pairwise interactions among three affine modes still have degree at most two, isolating the missing structural variable.\n\n## 2. Stability of conic nodal topology under algebraic perturbation\n\nA nonsingular compact conic nodal component should persist, with unchanged isotopy type, under every sufficiently small coefficient perturbation that avoids the discriminant locus. Quantitative bounds should relate coefficient distance from the discriminant to the size of the permitted perturbation.\n\nThe key insight is that topology changes at singularities, not merely when reaction parameters vary.\n\nWhy now? Exact radial bounds and explicit points provide a controlled base case from which coefficient-space stability can be tested.\n\n## 3. Hilbert-sixteenth bounds for finite-mode morphogenetic models\n\nFor a degree-d polynomial surrogate arising from finitely many spatial modes, the number of compact planar nodal components should satisfy the Harnack bound, and biologically realizable interaction laws should occupy a strict subregion of the corresponding Hilbert-sixteenth configuration space. This predicts both an absolute topological ceiling and additional reaction–diffusion restrictions.\n\nThe key insight is that algebraic degree supplies a universal component bound, while kinetics may impose sharper realizability constraints.\n\nWhy now? The conic genus calculation establishes the first degree-genus checkpoint, and the interaction-degree law offers a route to higher-degree tests.\n\n## 4. Singular-limit classification of stripe and spot transitions\n\nWithin polynomial finite-mode surrogates, every generic transition between a compact spot component and an unbounded stripe branch should cross the real discriminant hypersurface through an ordinary node or isolated acnode. Higher singularities should occur only in positive-codimension parameter families.\n\nThe key insight is that morphological transitions can be organized by the singularity theory of parameterized algebraic curves.\n\nWhy now? The radial and hyperbolic models exhibit the two endpoint geometries explicitly, making their intervening discriminant crossings concrete and experimentally accessible.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_0338",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "9b57ae5c",
+    "status": "available",
+    "timestamp": "2026-07-18T15:18:01.647373+00:00",
+    "title": "For affine spatial modes coupled by a polynomial interaction law, the degree of "
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Chromatic Thresholds and Social-Network Palettes\n\n## 1. Clique minors as chromatic vanishing certificates\n\n**Conjecture.** If a finite graph contains a complete graph on `t` vertices as a minor, then its chromatic counting function vanishes at every nonnegative palette size below `t`. Conversely, determine natural minor-closed graph classes on which this vanishing pattern forces a complete `t`-minor.\n\nThe key insight is that Hadwiger-type structure can be phrased as an interval of forced zeros rather than only as a lower bound on a chromatic number.\n\n**Why now?** The exact minimal-positive-value characterization isolates the zero interval that must be controlled, while deletion–contraction offers a natural mechanism for tracking it through graph reductions.\n\n## 2. Complexity of emotional-threshold detection\n\n**Conjecture.** For every fixed `k ≥ 3`, deciding whether the emotional chromatic number of a finite network is at most `k` remains computationally equivalent, under polynomial reductions, to deciding whether its chromatic counting function is positive at `k`; this equivalence persists for succinctly represented networks and preserves natural approximation gaps.\n\nThe key insight is that the semantic threshold and the algebraic positivity test are exactly the same decision boundary above the emotional floor.\n\n**Why now?** The threshold equivalence identifies a precise bridge on which reductions, parameterized algorithms, and counting-versus-decision separations can be compared without changing the underlying instances.\n\n## 3. High-girth networks with unbounded emotional diversity\n\n**Conjecture.** For every pair of integers `g ≥ 3` and `r ≥ 3`, there is a finite network with no cycle shorter than `g` whose emotional chromatic number exceeds `r`; moreover, such examples can be chosen so that the first positive chromatic evaluation occurs sharply after a quantitatively long zero interval.\n\nThe key insight is that local tree-like friendship geometry need not constrain the global positivity threshold of proper emotion assignments.\n\n**Why now?** The minimal-positive-value law turns the classical high-girth/high-chromatic phenomenon into a testable statement about an explicit sequence of vanishing evaluations.\n\n## 4. Stability of friendship-network assignment counts\n\n**Conjecture.** Among graphs formed from `n` triangles by identifying vertices while keeping a connected triangle-intersection pattern, the windmill graph extremizes the ratio between the number of six-emotion assignments and the number of minimum-palette assignments; characterize all equality cases.\n\nThe key insight is that the windmill’s independent outer pairs produce the exact ratio `2 · 10^n`, suggesting that overlap geometry controls a multiplicative entropy loss.\n\n**Why now?** Closed formulas are available at both the minimum palette and the six-emotion palette, providing a calibrated baseline against which more complicated triangle gluing patterns can be tested.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0339",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "44b2da31",
+    "status": "available",
+    "timestamp": "2026-07-18T15:18:10.992927+00:00",
+    "title": "**Conjecture.** If a finite graph contains a complete graph on `t` vertices as a"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Cycle d1663b23 (Q=0.700) proved 0 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'A minimal modularity lifting theorem for Siegel modular forms' and formalize its key results. Abstract: We prove a minimal modularity lifting theorem (in the spirit of Gen",
     "domain_bridges": [],
     "domains": [
@@ -5488,26 +5528,6 @@
     "status": "available",
     "timestamp": "2026-07-15T05:23:22.329230+00:00",
     "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "44b2da31",
-    "description": "The chromatic polynomial chi_G(k) counts the number of proper k-colorings of a graph G. For a friendship graph, chi_G(k) counts the number of ways to assign k emotions to people such that no two friends share the same emotion. Conjecture: The chromatic polynomial evaluated at k=6 (for the 6 basic emotions: happiness, sadness, anger, fear, disgust, surprise) gives the number of 'emotionally consistent' assignments of emotions to a social network. The chromatic polynomial has a root at k=2 for any bipartite graph, meaning a social network that splits cleanly into two groups has exactly 0 ways to assign 2 emotions without friends sharing emotions. The real emotional chromatic number chi_E(G) of a social network G is the smallest k such that chi_G(k) > 0 and k >= 3 (since real emotions need at least 3 categories to avoid trivial assignments). For a complete graph K_n (a clique of n mutual friends), chi_E(K_n) = n (everyone needs a different emotion). For a cycle C_n (a circular friendship chain), chi_E(C_n) = 2 if n is even and 3 if n is odd (alternating emotions work for even cycles, but odd cycles need a third emotion). Test: compute chi_E(G) for 100 real social networks and verify that the emotional chromatic number is between 3 and 6 for most networks. Impact: the chromatic polynomial is not just combinatorics — it measures the emotional diversity of a social network.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0320",
-    "lineage_refs": [],
-    "priority_score": 0.69,
-    "proof_strategy": "Define the emotional chromatic number chi_E(G) = min{k >= 3 : chi_G(k) > 0}. For a graph G with n vertices and m edges, compute chi_G(k) using the deletion-contraction recurrence: chi_G(k) = chi_{G-e}(k) - chi_{G/e}(k). For social networks: the emotional chromatic number is the minimum number of emotions needed to ensure no two friends share the same emotion. For a complete graph K_n: chi_E = n (every person needs a different emotion). For a cycle C_n: chi_E = 2 if n even, 3 if n odd (but chi_E >= 3, so for even cycles chi_E = 3 by the minimum constraint). For a path P_n: chi_E = 3 (alternating two emotions doesn't satisfy k >= 3). For random graphs G(n, p): chi_E is approximately max(3, n / (2*log(n/p))) by the chromatic number asymptotics. Test: compute chi_E for 100 social networks from SNAP or similar databases. Verify: most social networks have chi_E between 3 and 6. The 6 basic emotions (Ekman) provide a natural upper bound.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T13:04:43.611716+00:00",
-    "title": "Graph Coloring with Emotions: The Chromatic Polynomial Meets Psychology"
   },
   {
     "ambition_level": "extension",

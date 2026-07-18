@@ -1,6 +1,6 @@
 --- CarmichaelComposite.lean
 +++ CarmichaelComposite.lean
-@@ -158,25 +159,19 @@
+@@ -157,25 +157,19 @@
      ∀ n, 14 ≤ n → n ≤ 10000 → ¬Nat.Prime n → n > 1 → 1 < fibCoprimePart n := by
    native_decide
  
@@ -10,19 +10,19 @@
 -    ∃ p, Nat.Prime p ∧ p ∣ Nat.fib n ∧ ∀ k, 0 < k → k < n → ¬(p ∣ Nat.fib k) := by
 -  exact fib_carmichael_composite n (by omega) hnp
 +/-
-+The former declarations `fib_carmichael_large` and unbounded `fib_carmichael` were
-+removed from the active development because their large-index branch merely called the
-+same unfinished large-index claim in `Shared.CarmichaelProof`.  That was a circular
-+placeholder rather than a proof.  The honest verified theorem is the bounded statement
-+below; extending it beyond `10000` requires the missing Fibonacci growth argument.
++The former declarations `fib_carmichael_large` and an unbounded two-argument
++`fib_carmichael` were removed from active code because their proofs merely called
++`Shared.fib_carmichael_composite` outside its computationally verified range.
++That did not establish the required growth estimate for indices above `10000`.
++The faithful theorem below records exactly the range proved by this development.
 +-/
  
 -/-- For n ≥ 13 (either prime or composite), F(n) has a primitive prime divisor.
 -    This combines the prime case (from CarmichaelHelper) with the composite case. -/
 -theorem fib_carmichael (n : ℕ) (hn : 13 ≤ n) :
-+/-- For `13 ≤ n ≤ 10000`, `F(n)` has a primitive prime divisor.  The prime branch is
-+unbounded; the upper bound is needed only by the presently verified composite branch. -/
-+theorem fib_carmichael_verified_range (n : ℕ) (hn : 13 ≤ n) (hupper : n ≤ 10000) :
++/-- For `13 ≤ n ≤ 10000`, `F(n)` has a primitive prime divisor.  This combines
++    the prime case with the computationally verified composite case. -/
++theorem fib_carmichael (n : ℕ) (hn : 13 ≤ n) (hupper : n ≤ 10000) :
      ∃ p, Nat.Prime p ∧ p ∣ Nat.fib n ∧
        ∀ k, 0 < k → k < n → ¬(p ∣ Nat.fib k) := by
    by_cases hnp : Nat.Prime n

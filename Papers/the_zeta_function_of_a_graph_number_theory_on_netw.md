@@ -1,47 +1,34 @@
-# Computational Evidence: RH for the Ihara zeta function ⇔ Ramanujan
+# Computational evidence
 
-We study the local factor `p_λ(u) = q u² − λ u + 1` attached to each adjacency
-eigenvalue `λ` of a `(q+1)`-regular graph. The Riemann Hypothesis for the Ihara
-zeta function asks that every non-trivial root lie on the circle `|u| = 1/√q`.
+## Small-case calculation
 
-## Small-case root computations
+For the local Ihara factor with parameters `λ = 2`, `q = 2`, let `S₀ = 2`, `S₁ = λ`, and
 
-For a real eigenvalue `λ` and `q > 0`, the two roots of `q u² − λ u + 1` are
-`u± = (λ ± √(λ² − 4q)) / (2q)`, with product `u₊·u₋ = 1/q`.
+`Sₙ₊₂ = λ Sₙ₊₁ - q Sₙ`.
 
-| graph            | q | non-trivial λ | λ² vs 4q      | roots on |u|=1/√q? |
-|------------------|---|---------------|---------------|--------------------|
-| cycle Cₙ         | 1 | 2 (Perron)    | 4 = 4         | yes (double root 1)|
-| Petersen         | 2 | 1, −2         | 1<8, 4<8      | yes                |
-| complete K₅      | 3 | −1            | 1 < 12        | yes                |
-| Paley(13)        | 3 | (−1±√13)/2    | ≈ 5.3 < 12    | yes                |
-| complete Kₙ      | n−2 | −1          | 1 < 4(n−2)    | yes (n ≥ 3)        |
+The first eight values are:
 
-In every Ramanujan case `λ² ≤ 4q`, the discriminant is `≤ 0`, the two roots are
-complex conjugates, and
+| n | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
+|---:|---:|---:|---:|---:|---:|---:|---:|
+| Sₙ | 2 | 2 | 0 | -4 | -8 | -8 | 0 | 16 |
 
-    |u|² = (λ² + (4q − λ²)) / (4q²) = 4q / (4q²) = 1/q,
+This table is encoded and kernel-checked in `GraphZetaPrimeCycle.example`.
 
-so both roots land exactly on the circle of radius `1/√q`. This is the numerical
-signature of the Riemann Hypothesis.
+The quadratic is `1 - 2u + 2u²`. Its reciprocal roots are `1 ± i`, so each zero is `(1 ± i)/2` and has modulus `1/√2`, matching the critical-circle theorem. The recurrence values also equal `(1+i)ⁿ + (1-i)ⁿ`.
 
-## Counterexample hunt (the non-Ramanujan boundary)
+## OEIS search
 
-When `λ² > 4q` the roots become **real and distinct** with product `1/q > 0`
-(hence equal sign). Their moduli multiply to `1/q` but cannot both equal `1/√q`
-without coinciding — so at least one leaves the circle. Example: `q = 1`,
-`λ = 3` gives roots `(3 ± √5)/2 ≈ 2.618, 0.382`, moduli `≈ 2.618 ≠ 1` and
-`0.382 ≠ 1`. This is exactly a non-Ramanujan eigenvalue breaking RH.
+No OEIS identifier is asserted. This specialized signed Lucas sequence can be derived directly from the standard Lucas power-sum recurrence; an online OEIS query was not available in the formal verification environment, so guessing an identifier would be unreliable.
 
-## The trivial eigenvalue
+## Counterexample hunt
 
-For the Perron eigenvalue `λ = q + 1` the factor splits as `(qu − 1)(u − 1)`
-with roots `u = 1` and `u = 1/q`. For `q > 1` neither lies on `|u| = 1/√q`. This
-is why RH is imposed only on the *non-trivial* spectrum; the trivial pole is
-always off the circle and is excluded by convention.
+The universal theorem was checked symbolically, rather than by floating-point sampling. Its hypotheses are essential:
 
-## Conclusion
+- With `q = 2`, `λ = 2`, the Ramanujan inequality `λ² ≤ 4q` holds and both zeros have modulus `1/√2`.
+- With `q = 2`, `λ = 3`, the inequality fails (`9 > 8`). The zeros of `1 - 3u + 2u²` are `1` and `1/2`, neither of which has modulus `1/√2`.
 
-The finite sample of Ramanujan graphs above shows perfect agreement with the
-criterion `λ² ≤ 4q`. The formal development promotes this evidence to a proof of
-the exact equivalence at the level of a single spectral local factor.
+Thus dropping the Ramanujan bound produces an immediate counterexample, while the formal theorem proves there is no counterexample under its stated assumptions.
+
+## Relevant comparison
+
+The finite explicit formula proved in Lean is an exact polynomial identity for every truncation index `N`; therefore numerical plots would add little evidence. A meaningful plot for primitive cycle counts requires the global non-backtracking matrix and Möbius inversion, which are listed as future work rather than silently approximated here.
