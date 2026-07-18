@@ -203,21 +203,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Persistent Homology of Prime Numbers: The Topology of Arithmetic"
   },
   {
-    "consumed_by_exp_id": "2170ccdf",
-    "description": "The Galois group of a random polynomial over Q is S_n with probability 1. This is the Hilbert irreducibility theorem in probabilistic form. But what about random polynomials over finite fields? For f in F_p[x] of degree n chosen uniformly at random, the Galois group is S_n with probability approaching 1 as p grows. Conjecture: the probability that Gal(f) is NOT S_n is O(p^{-1/2}) for fixed n, and the exceptional cases concentrate at polynomials with discriminant zero or small Galois groups. More precisely, P(Gal(f) != S_n) = c_n / sqrt(p) + O(1/p) where c_n depends only on n. For n=2: P(Gal(f) != S_2) = P(discriminant = 0) = 1/p. For n=3: P(Gal(f) != S_3) = P(f has a rational root) = 3/p + O(1/p^2). Test: enumerate all monic polynomials of degree n over F_p for small p and n, compute Galois groups, verify P(Gal != S_n) ~ c_n / sqrt(p). Impact: random polynomials have maximal Galois groups \u2014 algebraic randomness is generic.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0336",
-    "priority_score": 0.82,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T15:17:36.296388+00:00",
-    "title": "Stochastic Galois Theory: Random Permutations Have Generic Galois Groups"
-  },
-  {
     "consumed_by_exp_id": "d757b941",
     "description": "The Heisenberg uncertainty principle states that Delta(x) * Delta(p) >= hbar/2. But this is NOT a physical principle \u2014 it is a THEOREM of Fourier analysis. The Fourier transform of a function f(x) satisfies: if f is concentrated in a region of width Delta(x), then its Fourier transform f_hat is concentrated in a region of width Delta(k) >= 1/(2*Delta(x)). This is the Benedicks-Amrein-Berthier theorem: a function and its Fourier transform cannot both be supported on sets of finite measure. Conjecture: The uncertainty principle generalizes to all integral transforms. For the Laplace transform: if f is supported on [a, infinity), then the Laplace transform L[f](s) cannot be supported on a set of finite measure unless f = 0. For the Mellin transform: if f is supported on a geometric progression, then M[f](s) cannot be supported on a set of finite measure. For the Radon transform: if f is supported on a strip, then R[f] cannot be supported on a set of finite measure. The general principle: no invertible integral transform allows both a function and its transform to have compact support. Test: verify the uncertainty principle for the Fourier, Laplace, Mellin, and Radon transforms numerically. Construct functions with Delta(x) = epsilon and measure Delta(k) for each transform. Impact: the uncertainty principle is not about quantum mechanics \u2014 it is about the structure of integral transforms. Every transform has its own uncertainty principle.",
     "domains": [
@@ -4052,6 +4037,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-18T15:35:36.058416+00:00",
     "title": "The formal result in `Catalog/Bridges/GraphZetaPrimeCycle.lean` isolates one adj"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n1. **Full Frobenius factorization dictionary.** Formalize that an irreducible factor of\ndegree `d` corresponds to a `d`-cycle of Frobenius on the geometric roots, including\nmultiplicity/separability hypotheses.\n\n2. **Exact cycle-index moments.** Extend the root/fixed-point first-moment theorem to\nfactorial moments: count ordered tuples of distinct roots and compare them with ordered\ntuples of distinct fixed points. This should recover Poisson(1)-type moment identities\nin the stable range.\n\n3. **Squarefree polynomial statistics.** Prove the exact count of squarefree monic\npolynomials over `F_q`, isolating discriminant-zero polynomials as the error term in\nfactorization-type equidistribution.\n\n4. **Factorization type distribution.** For a partition `\u03bb \u22a2 n`, compare the number of\nsquarefree monic polynomials with irreducible-factor degrees `\u03bb` to the number of\npermutations with cycle type `\u03bb`, and derive a quantitative `O_n(1/q)` discrepancy.\n\n5. **Quadratic and cubic audits.** State exact formulas separately for degree two and\nthree. In degree three, distinguish reducibility, separability, and Frobenius cycle type;\nthese are not equivalent to the abstract finite-field Galois group being `S\u2083`.\n\n6. **Finite extensions with explicit Frobenius generator.** Strengthen the cyclicity\nobstruction by identifying the generator and its order, then connect that order to the\nleast common multiple of Frobenius cycle lengths.\n\n7. **Probability layer.** Package the finite counts as uniform finite probability spaces\nand state the expectation equality directly using Mathlib's probability API.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0346",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "2170ccdf",
+    "status": "available",
+    "timestamp": "2026-07-18T17:57:29.188214+00:00",
+    "title": "1. **Full Frobenius factorization dictionary.** Formalize that an irreducible fa"
   },
   {
     "consumed_by_exp_id": "",

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "d1512647",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Rectangle Piercing, Packing, and Relaxation Gaps\n\n## 1. A complete coordinate certificate for the 64-rectangle family\n\n**Conjecture.** There is an integer-coordinate realization o",
-      "quality_score": 0.71,
-      "sorry_count": 0,
-      "theorem_count": 5,
-      "timestamp": "2026-07-16T10:37:17",
-      "title": "ArXiv paper: A 64-Rectangle Counterexample to Wegner's Conjecture and LP Gaps up to $5/2$"
-    },
-    {
       "cycle_id": "dd61fafb",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\n- Formalize edge-deletion peeling and prove preservation for the paper's `(k, ωᵘ)`-truss.\n- Define radius-`d` edge neighborhoods and establish the generalized `(k, d, ωᵘ)`-truss t",
@@ -499,19 +489,19 @@
       "theorem_count": 46,
       "timestamp": "2026-07-18T15:35:58",
       "title": "The Zeta Function of a Graph: Number Theory on Networks"
+    },
+    {
+      "cycle_id": "2170ccdf",
+      "domain": "Algebra",
+      "key_insight": "# Future directions\n\n1. **Full Frobenius factorization dictionary.** Formalize that an irreducible factor of\ndegree `d` corresponds to a `d`-cycle of Frobenius on the geometric roots, including\nmultip",
+      "quality_score": 0.74,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-18T17:57:41",
+      "title": "Stochastic Galois Theory: Random Permutations Have Generic Galois Groups"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "a25c6e48",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Topology of Knotted Light (Cycle 1)\n\n## Summary of this cycle\n\n`KnottedLight.lean` computed the winding number only for the special phase field\n`exp(iℓθ)`. This cycle introduces",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 17,
-      "timestamp": "2026-07-14T23:11:53",
-      "title": "`KnottedLight.lean` formalizes the topological charge of an orbital-angular-mome"
-    },
     {
       "cycle_id": "ccd67871",
       "domain": "Applications",
@@ -2501,6 +2491,16 @@
       "theorem_count": 46,
       "timestamp": "2026-07-18T15:35:58",
       "title": "The Zeta Function of a Graph: Number Theory on Networks"
+    },
+    {
+      "cycle_id": "2170ccdf",
+      "domain": "Algebra",
+      "key_insight": "# Future directions\n\n1. **Full Frobenius factorization dictionary.** Formalize that an irreducible factor of\ndegree `d` corresponds to a `d`-cycle of Frobenius on the geometric roots, including\nmultip",
+      "quality_score": 0.74,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-18T17:57:41",
+      "title": "Stochastic Galois Theory: Random Permutations Have Generic Galois Groups"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.74
     }
   ],
-  "last_updated": "2026-07-18T15:35:58",
+  "last_updated": "2026-07-18T17:57:41",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "a06d4115",
-        "quality": 0.72,
-        "theorems": 30,
-        "title": "This project builds a self-contained, machine-checked theory of negative-dimensi"
-      },
-      {
         "cycle_id": "86efe295",
         "quality": 0.91,
         "theorems": 33,
@@ -3079,6 +3073,12 @@
         "quality": 0.85,
         "theorems": 19,
         "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
+      },
+      {
+        "cycle_id": "2170ccdf",
+        "quality": 0.74,
+        "theorems": 0,
+        "title": "Stochastic Galois Theory: Random Permutations Have Generic Galois Groups"
       }
     ],
     "Applications": [

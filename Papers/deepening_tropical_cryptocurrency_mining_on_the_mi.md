@@ -1,0 +1,3 @@
+# Computational Evidence Justification
+
+A separate numerical experiment was unnecessary for the selected result. The claim is uniform over arbitrary real keys and messages, arbitrary finite dimensions satisfying `r < k`, and every positive ray parameter. Its mechanism is structural rather than statistical: one minimizing coordinate is selected for each output, cardinality forces an unused coordinate, and increasing that coordinate preserves every output. Small-case sampling would test only special choices and would add no evidence about this universal quantification. The finite cardinality obstruction and the complete collision-ray construction are therefore addressed directly in the accompanying theorem development.
