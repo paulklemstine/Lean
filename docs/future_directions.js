@@ -260,7 +260,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: A decomposition of Weyl group multiple Dirichlet series for symmetrizable Kac-Moody root systems"
   },
   {
-    "consumed_by_exp_id": "ae36b246",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'On the maximum size of $B_3$-free families' and formalize its key results. Abstract: A family $\\mathcal{G}$ of sets is a weak copy of the poset $(P,\\leqslant)$ if there exists a bijection $\u03b9:P\\rightarrow \\mathcal{G}$ with $\u03b9(p)\\subset \u03b9(q)$ whenever $p\\leqslant q$. $\\mathcal{G}$ is a strong copy if $\u03b9(p)\\subset \u03b9(q)$ if and only if $p\\leqslant q$ holds. A family is weak (strong) $P$-free if it does not contain any weak (strong) copies of $P$. For a poset $P$, let $e(P)$ ($e^*(P)$) denote the most number of middle layers of $2^{[n]}$ that does not contain a weak (strong) copy of $P$. Ellis, Ivan, and Leader were the first to show the existence of posets $P$ for which there exists a positive real $\\varepsilon_P$ such that $La(n,P)\\ge (e(P)+\\varepsilon_P)\\binom{n}{\\lfloor n/2}$ and $La^*(n,P)\\ge (e^*(P)+\\varepsilon_P)\\binom{n}{\\lfloor n/2}$ holds, where $La(n,P)$ ($La^*(n,P)$) denotes the maximum size of a weak (strong) $P$-free family $\\mathcal{F}\\subseteq 2^{[n]}$. More precisely, they showed that $P=B_d$ are such posets for all $d\\ge 4$, where $B_d$ is the Boolean latt",
     "domains": [
       "Bridges"
@@ -269,7 +269,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11753v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T07:28:27.663774+00:00",
     "title": "ArXiv paper: On the maximum size of $B_3$-free families"
   },
@@ -3036,22 +3036,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem With"
   },
   {
-    "consumed_by_exp_id": "cbc5314c",
-    "description": "Sudoku is a constraint satisfaction problem (CSP). Random Sudoku instances exhibit a phase transition: for n^2 x n^2 grids, the probability of having a solution drops from ~1 to ~0 around a critical density of pre-filled cells. Conjecture: the phase transition occurs at density d_c(n) = (n^2 - 1) / n^2, independent of the specific constraint structure. For standard 9x9 Sudoku (n=3): d_c = 8/9 \u2248 0.889. For 4x4 Sudoku (n=2): d_c = 3/4 = 0.75. For 16x16 (n=4): d_c = 15/16 \u2248 0.9375. The 'hardness' of random Sudoku peaks at the phase transition: instances with density near d_c take exponentially longer to solve than easy (low density) or trivial (high density) instances. Conjecture: the computational hardness of Sudoku at the phase transition is O(exp(n^2)) for backtracking algorithms, matching the theoretical prediction for CSPs at criticality. Test: generate random Sudoku instances at varying densities, measure solver time, and verify the phase transition at d_c. Impact: Sudoku hardness is not about 9x9 grids \u2014 it is about the phase transition structure of constraint satisfaction.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0340",
-    "priority_score": 0.78,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T15:34:30.695533+00:00",
-    "title": "The P vs NP of Sudoku: Phase Transitions in Constraint Satisfaction"
-  },
-  {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f017f3a3",
     "description": "Sperner's lemma states that any proper coloring of a triangulated simplex with n+1 colors has at least one fully colored simplex. This is a combinatorial analog of Brouwer's fixed point theorem. Nash's theorem states that every finite game has a mixed strategy Nash equilibrium, proved using Kakutani's fixed point theorem. Conjecture: Sperner's lemma directly implies Nash's theorem. Specifically, given an n-player game with strategies S_1, ..., S_n, construct the n-simplex Delta = Delta(S_1 x ... x S_n) of mixed strategy profiles. Define a Sperner coloring of Delta by: color vertex v with color i if player i's best response to v is strategy i. By Sperner's lemma, there exists a fully colored simplex. The center of this simplex is an approximate Nash equilibrium (each player is approximately best-responding). Taking the limit as the triangulation gets finer gives an exact Nash equilibrium. Conjecture: this construction gives a constructive proof of Nash's theorem that yields a triangulation-based algorithm for finding Nash equilibria with complexity O(N^{n}) where N is the total number of pure strategies. Test: implement the Sperner-based algorithm for 2-player games and verify it finds all Nash equilibria. Impact: Nash equilibria are combinatorial fixed points. Sperner's lemma is the fundamental theorem of game theory.",
     "domains": [
       "Novelty",
@@ -3061,7 +3046,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.77,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-18T19:29:43.512493+00:00",
     "title": "Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theory"
   },
@@ -4115,6 +4100,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: Sudoku Ensembles, Thresholds, and Complexity\n\n## 1. Proof-complexity peak for independently assigned clues\n\nFix an ensemble in which a uniformly chosen set of cells receives independently uniform symbols, conditioned only on clue consistency within each visible row, column, and block. Conjecture that, as the block size tends to infinity, resolution refutations of unsatisfiable instances have their largest median width in a narrow density window, and that this window is separated from the density maximizing satisfiability variance.\n\nThe key insight is that satisfiability and proof complexity are different observables and need not share a critical point. **Why now?** The structural antitonicity result identifies a natural monotone coupling, while the coloring correspondence supplies standard graph and proof-complexity encodings.\n\n## 2. Ensemble non-universality of the satisfiability threshold\n\nConjecture that two locally permutation-invariant clue ensembles can have asymptotically distinct satisfiability thresholds even when they have the same expected clue density and the same one-cell marginals. A concrete comparison should use independently assigned locally consistent clues versus clues generated by perturbing a random completed grid.\n\nThe key insight is that density forgets correlations, whereas Sudoku constraints are dominated by correlated row, column, and block collisions. **Why now?** Restrictions of completed grids are solvable at every density, providing an exact endpoint against which genuinely random-value models can be compared.\n\n## 3. Exponential lower bounds for a specified backtracking rule\n\nFor a fixed deterministic variable-ordering and value-ordering rule, conjecture the existence of an explicit family of order-`n` Sudoku instances requiring `exp(\u03a9(n\u00b2))` search-tree nodes, while admitting polynomial-size certificates of unsatisfiability in a stronger proof system.\n\nThe key insight is that a meaningful exponential claim must quantify over an explicit algorithm or proof system rather than over \u201cbacktracking\u201d as an undifferentiated class. **Why now?** The CSP\u2013coloring equivalence permits transfer of adversarial constructions and lower-bound methods from graph-coloring search trees.\n\n## 4. Clique-oracle barriers for Sudoku preprocessing\n\nConjecture that any preprocessing method whose certificates consist solely of common-neighborhood clique upper bounds leaves an infinite family of minimally unsatisfiable Sudoku instances unchanged, although bounded-width consistency detects a contradiction.\n\nThe key insight is that every sound clique oracle must already accommodate the canonical `n\u00b2`-cliques formed by rows, so local clique information may be intrinsically too coarse to capture global block interactions. **Why now?** The established lower bound for all sound clique oracles isolates the exact invariant that such preprocessing cannot evade.\n\n## 5. A sharp threshold for uniqueness rather than existence\n\nIn the ensemble obtained by retaining each entry of a uniformly sampled completed grid independently with probability `p`, conjecture a sharp threshold for uniqueness of completion, despite existence having probability one for every `p`. Determine whether the uniqueness threshold is governed by the smallest nontrivial trade (a finite set of entries that can be exchanged between two completions).\n\nThe key insight is that solution-generated clues eliminate the existence transition but preserve a nontrivial transition in the number of completions. **Why now?** The exact solvability-at-every-density theorem redirects the phase-transition question toward a monotone observable that can genuinely change in this ensemble.\n",
+    "domains": [
+      "Computation",
+      "Pythagorean"
+    ],
+    "id": "fd_0358",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "cbc5314c",
+    "status": "available",
+    "timestamp": "2026-07-18T21:00:04.886319+00:00",
+    "title": "Fix an ensemble in which a uniformly chosen set of cells receives independently "
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle d1663b23 (Q=0.700) proved 0 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'A minimal modularity lifting theorem for Siegel modular forms' and formalize its key results. Abstract: We prove a minimal modularity lifting theorem (in the spirit of Gen",
     "domains": [
       "Applications"
@@ -4169,6 +4169,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-15T05:23:22.329230+00:00",
     "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A periodic rhythm in music is a function f: Z -> {0, 1} that is periodic: f(n + p) = f(n) for some period p. The symmetry group of a rhythm with period p is a subgroup of Z/pZ. But music also has 2D patterns: a drum pattern is a function g: Z x Z -> {0, 1} (onset grid in time x pitch). The symmetry group of a drum pattern is a subgroup of Z x Z, which is a wallpaper group in 1D. In 2D, the wallpaper groups classify all possible symmetries of periodic patterns. There are exactly 17 wallpaper groups in 2D. Conjecture: the 17 wallpaper groups correspond to 17 fundamentally different types of rhythmic structure in music. Specifically: (1) p1: no symmetry (free rhythm), (2) p2: 2-fold rotational symmetry (call-and-response), (3) pm: mirror symmetry (palindrome), (4) pg: glide reflection (canon), (5) cm: mirror + glide (round), (6) pmm: double mirror (bilateral palindrome), (7) pmg: mirror + glide (inverted canon), (8) pgg: double glide (double canon), (9) cmm: double mirror + glide (round + palindrome), (10) p4: 4-fold rotation (4-bar cycle), (11) p4m: 4-fold + mirrors (variations on a theme), (12) p4g: 4-fold + glides (inverted variations), (13) p3: 3-fold rotation (3-bar blues), (14) p3m1: 3-fold + mirrors, (15) p31m: 3-fold + glides, (16) p6: 6-fold rotation (whole-tone scale symmetry), (17) p6m: 6-fold + mirrors (maximal symmetry, the 'perfect' rhythm). Test: classify 1000 drum patterns by their wallpaper group and verify the distribution matches musical practice. Impact: there are exactly 17 types of rhythm in music, classified by the wallpaper groups.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0357",
+    "priority_score": 0.68,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-18T20:59:34.983738+00:00",
+    "title": "Crystallographic Groups and Music: The 17 Wallpaper Groups of Rhythm"
   },
   {
     "consumed_by_exp_id": "",

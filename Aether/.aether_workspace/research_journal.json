@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "18617733",
-      "domain": "Physics",
-      "key_insight": "# Future directions\n\n## What is now proved\n\n`VampireBestiary/VampireUnitCurve.lean` isolates the exact digit-multiset core of a fang factorization and proves, in every base `b ≥ 2`,\n\n\\[\n(x-1)(y-1)=1 \\",
-      "quality_score": 0.73,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-17T07:48:46",
-      "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
-    },
-    {
       "cycle_id": "a6705a36",
       "domain": "Bridges",
       "key_insight": "# Future Directions: Universal Libraries and Catalog Capacity\n\n## 1. Succinct semantic catalogs\n\nFor a fixed sound proof calculus, characterize theorem families whose accepted volumes admit catalogs a",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-18T19:30:15",
       "title": "Persistent Homology of Prime Numbers: The Topology of Arithmetic"
+    },
+    {
+      "cycle_id": "cbc5314c",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions: Sudoku Ensembles, Thresholds, and Complexity\n\n## 1. Proof-complexity peak for independently assigned clues\n\nFix an ensemble in which a uniformly chosen set of cells receives indep",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-18T21:00:09",
+      "title": "The P vs NP of Sudoku: Phase Transitions in Constraint Satisfaction"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "cc9e6854",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Sharp Excess of ℤ₂-Coindex under Suspension\n\n## 1. Classification and enumeration of all equivariant simplicial maps\n\n**Conjecture.** The set of equivariant simplicial maps from t",
-      "quality_score": 0.93,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-15T00:43:31",
-      "title": "Close Proofs: The file `Catalog/Novelty/Z2CoindexSuspension.lean` develops a self-co"
-    },
     {
       "cycle_id": "dbf870e8",
       "domain": "Novelty",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-18T19:30:15",
       "title": "Persistent Homology of Prime Numbers: The Topology of Arithmetic"
+    },
+    {
+      "cycle_id": "cbc5314c",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions: Sudoku Ensembles, Thresholds, and Complexity\n\n## 1. Proof-complexity peak for independently assigned clues\n\nFix an ensemble in which a uniformly chosen set of cells receives indep",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-18T21:00:09",
+      "title": "The P vs NP of Sudoku: Phase Transitions in Constraint Satisfaction"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8
     }
   ],
-  "last_updated": "2026-07-18T19:30:15",
+  "last_updated": "2026-07-18T21:00:09",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "86efe295",
-        "quality": 0.91,
-        "theorems": 33,
-        "title": "Deepening: This project formalizes a **cross-domain connector** (v27 \"Connector\""
-      },
-      {
         "cycle_id": "e2c77d51",
         "quality": 0.65,
         "theorems": 6,
@@ -3079,6 +3073,12 @@
         "quality": 0.74,
         "theorems": 0,
         "title": "Stochastic Galois Theory: Random Permutations Have Generic Galois Groups"
+      },
+      {
+        "cycle_id": "cbc5314c",
+        "quality": 0.8,
+        "theorems": 0,
+        "title": "The P vs NP of Sudoku: Phase Transitions in Constraint Satisfaction"
       }
     ],
     "Applications": [
