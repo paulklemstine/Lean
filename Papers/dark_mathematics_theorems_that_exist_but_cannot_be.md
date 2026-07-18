@@ -1,5 +1,3 @@
-# Why computational evidence was skipped
+# Computational evidence was skipped
 
-The main result is a structural theorem about an arbitrary provability predicate and finite syntactic tagging, not a numerical conjecture. Small-case computation cannot test whether PA proves or fails to prove a sentence, and finite searches through proof codes cannot establish non-provability. OEIS searches and plots are therefore inapplicable.
-
-The useful finite cases (levels 1, 2, and 3) are proved symbolically in Lean as instances of the theorem for every positive finite level. This is stronger and more relevant than numerical sampling.
+The central claims are metamathematical claims about formal provability, coding dependence, and logical transformations. Testing small natural numbers cannot provide evidence that PA does or does not prove a sentence. Likewise, the proposed density has no specified Gödel numbering, size function, topology, or measure from which a finite table could be computed. Producing numerical samples would therefore be misleading rather than evidential. The finite logical constructions are proved uniformly in Lean instead.
