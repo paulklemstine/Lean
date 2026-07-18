@@ -7,16 +7,6 @@
       "quality_score": 0.72,
       "sorry_count": 0,
       "theorem_count": 20,
-      "timestamp": "2026-07-16T10:21:20",
-      "title": "ArXiv paper: The chromatic number of 3-stable Kneser graphs"
-    },
-    {
-      "cycle_id": "5759ba2d",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\n## Verified in this development\n\n1. **General packing and upper colouring.** A linearly `s`-stable `k`-set obeys the sharp span bound. This yields the canonical upper colouring wi",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 20,
       "timestamp": "2026-07-16T10:22:17",
       "title": "ArXiv paper: The chromatic number of 3-stable Kneser graphs"
     },
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-18T15:18:15",
       "title": "Graph Coloring with Emotions: The Chromatic Polynomial Meets Psychology"
+    },
+    {
+      "cycle_id": "6e1376aa",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\n1. **Finite multimode superpositions.** Extend `winding_mul_zpow` from two modes to a `Finset`-indexed product, proving that the winding is the integer-weighted sum of all compone",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-18T15:35:26",
+      "title": "Deepening: The Topology of Knotted Light: How Laser Beams Get Tangled"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "10dfa4e0",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: the excess of the ℤ₂-coindex beyond the sphere\n\nThe join of two combinatorial spheres is again a sphere, and the equivariant maps of spheres\nare governed entirely by injections of",
-      "quality_score": 0.82,
-      "sorry_count": 3,
-      "theorem_count": 26,
-      "timestamp": "2026-07-14T22:54:15",
-      "title": "The file `Catalog/Novelty/Z2CoindexSuspension.lean` develops a self-contained co"
-    },
     {
       "cycle_id": "1207283c",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-18T15:18:15",
       "title": "Graph Coloring with Emotions: The Chromatic Polynomial Meets Psychology"
+    },
+    {
+      "cycle_id": "6e1376aa",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\n1. **Finite multimode superpositions.** Extend `winding_mul_zpow` from two modes to a `Finset`-indexed product, proving that the winding is the integer-weighted sum of all compone",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-18T15:35:26",
+      "title": "Deepening: The Topology of Knotted Light: How Laser Beams Get Tangled"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "87b73bf0",
-      "domain": "Shared",
-      "name": "signalEnergy_shift",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "87b73bf0",
-      "domain": "Shared",
-      "name": "two_mul_autocorrelation_eq",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "d69a2aa8",
-      "domain": "Algebra",
-      "name": "was",
-      "quality": 0.79
-    },
     {
       "cycle_id": "d69a2aa8",
       "domain": "Algebra",
@@ -2803,9 +2785,27 @@
       "domain": "Combinatorics",
       "name": "count",
       "quality": 0.73
+    },
+    {
+      "cycle_id": "6e1376aa",
+      "domain": "Novelty",
+      "name": "deriv_eq",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "6e1376aa",
+      "domain": "Novelty",
+      "name": "logDeriv_continuous",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "6e1376aa",
+      "domain": "Novelty",
+      "name": "logDeriv_intervalIntegrable",
+      "quality": 0.8
     }
   ],
-  "last_updated": "2026-07-18T15:18:15",
+  "last_updated": "2026-07-18T15:35:26",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "5759ba2d",
-        "quality": 0.72,
-        "theorems": 20,
-        "title": "ArXiv paper: The chromatic number of 3-stable Kneser graphs"
-      },
-      {
         "cycle_id": "16941ff7",
         "quality": 0.75,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.76,
         "theorems": 12,
         "title": "The Topology of Knotted Light: How Laser Beams Get Tangled"
+      },
+      {
+        "cycle_id": "6e1376aa",
+        "quality": 0.8,
+        "theorems": 14,
+        "title": "Deepening: The Topology of Knotted Light: How Laser Beams Get Tangled"
       }
     ],
     "NumberTheory": [
