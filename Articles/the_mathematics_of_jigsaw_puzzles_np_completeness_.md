@@ -1,166 +1,117 @@
-# The Hidden Hardness of Jigsaw Puzzles
+# When Logic Clicks: Jigsaw Puzzles, Satisfying Assignments, and the Symmetry of Tabs and Blanks
 
-There is a quiet, private satisfaction in pressing the last piece of a jigsaw
-puzzle into place. The picture is whole; the coffee has gone cold; a small
-part of the world is, briefly, solved. What almost no one realizes in that
-moment is that they have just done something a computer scientist would call
-*hard* — hard in a precise, technical, and slightly alarming sense. The feeling
-of completing a jigsaw puzzle is, mathematically speaking, the same feeling a
-machine would have if it could solve one of the central open problems in all of
-computing.
+A jigsaw piece looks innocent in isolation. It has four sides, some flat, some carrying tabs, and some cut into blanks. Yet a box of such pieces presents a global question: can thousands of local pairings be made simultaneously, without contradiction? That tension between local fit and global consistency is the same tension that animates one of computer science’s central problems—Boolean satisfiability.
 
-This article is about why that is true. It is a story about how three seemingly
-unrelated things — the little tabs and blanks on a cardboard puzzle piece, the
-logic of "this OR that OR the other," and the theory of what makes a problem
-genuinely difficult — turn out to be three views of a single, elegant idea.
+The connection is more than a metaphor. In an abstract family of logic puzzles, truth assignments and valid assembly recipes correspond one for one. The correspondence preserves not only whether a solution exists, but the exact number of solutions and whether the solution is unique. It also exposes an elegant symmetry: reverse every truth value, reverse every literal in the logical formula, and swap every tab with a blank. Solvability does not change.
 
-## Puzzles, reduced to their essence
+These conclusions do **not** by themselves prove that ordinary commercial jigsaws, with free placement and realistic geometry, are NP-complete. That broader geometric claim requires additional gadgets and a careful account of positions, rotations, crossings, and boundaries. What the mathematics does establish is the exact logical core that such a reduction would need to preserve.
 
-Strip a jigsaw puzzle of its pretty photograph and you are left with pure
-geometry. Each piece is a small tile with four sides, and each side has one of
-three shapes. It can be *flat*, like the straight edge of a border piece. It can
-carry an outward bump — a **tab**. Or it can have an inward notch — a **blank**.
+## A Boolean formula as a box of pieces
 
-Whether two pieces snap together is decided entirely by these shapes. A tab fits
-into a blank, and a blank receives a tab. A flat edge fits nothing on the inside
-of the picture; it only ever sits against the empty air at the puzzle's border,
-or against another flat edge. Nothing else interlocks. This is the entire physics
-of a jigsaw puzzle, and it can be written as a single operation we will call
-**complementation**: the shape that mates with a given edge.
+A Boolean variable $x_i$ can take one of two values, true or false. A **literal** is either $x_i$ or its negation $\neg x_i$. A **clause** is a list of literals interpreted as an OR: it is satisfied when at least one listed literal is true. A **formula** is a list of clauses interpreted as an AND: it is satisfied only when every clause is satisfied.
 
-$$\text{comp}(\text{flat}) = \text{flat}, \qquad \text{comp}(\text{tab}) = \text{blank}, \qquad \text{comp}(\text{blank}) = \text{tab}.$$
+For example, consider
 
-Two edges interlock exactly when each is the complement of the other. And
-complementation has a beautiful property: applying it twice brings you back where
-you started. The complement of the complement of a tab is a tab again. In the
-language of symmetry, complementation is an **involution** — a motion that
-undoes itself, like flipping a coin twice or reflecting a shape in a mirror and
-then reflecting it back. It generates the smallest interesting symmetry group
-there is, a group with exactly two elements.
+$$
+F=(x_0\lor x_1\lor \neg x_2)\land(\neg x_0\lor x_2).
+$$
 
-## The border is where the symmetry stands still
+The assignment
 
-Here is the first surprise, and it is a genuinely topological one. Ask which
-edges are their *own* complement — which shapes mate with a copy of themselves.
-The tab does not; its partner is the blank. The blank does not either. Only the
-flat edge satisfies $\text{comp}(e) = e$.
+$$
+(x_0,x_1,x_2)=(\mathrm{false},\mathrm{true},\mathrm{false})
+$$
 
-$$\text{comp}(e) = e \quad\Longleftrightarrow\quad e = \text{flat}.$$
+satisfies $F$. The first clause is true because $x_1$ is true, while the second is true because $\neg x_0$ is true.
 
-The self-complementary edges are exactly the flat ones — and the flat edges are
-exactly the ones that live on the boundary of the assembled picture. So the
-outline of the finished puzzle, the ragged rectangle where the image meets the
-table, is nothing other than the set of points left *unmoved* by the
-complementation symmetry. Mathematicians call such points **fixed points**, and
-the fixed-point set of a symmetry is one of the most important objects one can
-attach to it. In our case that fixed-point set is the border of the puzzle. The
-frame of the picture is the skeleton of a symmetry.
+Now imagine encoding the choice for each variable with assignment pieces. A tab can represent one Boolean state and a blank its complement. Clause pieces have interfaces corresponding to their literals. The essential fitting rule is simple: the clause piece fits under an assignment exactly when at least one of its literal interfaces is activated by a true literal. Thus the local physical statement “this clause component can connect” is equivalent to the logical statement “this clause is satisfied.”
 
-This reframes a piece of childhood folk wisdom — "the flat edges go on the
-outside" — as a theorem. The boundary is not a convenience we impose on the
-puzzle; it is forced on us by the algebra of how edges mate.
+A puzzle assembly recipe is then an assignment of truth values to the declared variables for which every clause piece fits. Because the same assignment is retained throughout the translation, no witness is forgotten and no extra witness is invented.
 
-## From tabs and blanks to true and false
+## The central one-to-one correspondence
 
-Now for the second view. Suppose we agree to carry a single bit of information
-along an edge. Let a **tab** stand for TRUE and a **blank** stand for FALSE.
-Because a tab and a blank are physically different shapes, an edge can broadcast
-only one of the two values at a time. This tiny fact is the seed of everything.
+The key result can be stated without any machinery.
 
-Imagine a puzzle designed around a logical formula — the kind of formula that
-appears everywhere from circuit design to scheduling to the rules of a Sudoku.
-A formula in this standard form is a list of *clauses* joined by AND, and each
-clause is a list of *literals* joined by OR. A literal is a variable, possibly
-negated: "$x_1$ is true," or "$x_3$ is false." The whole formula is satisfied
-when we can choose true/false values for the variables so that *every* clause has
-at least one literal that comes out true.
+**Assembly–Assignment Correspondence.** Fix $n$ declared variables and a Boolean formula $F$. Assign false to every variable outside the declared set. Then the set of valid assembly recipes for the puzzle associated with $F$ is in canonical bijection with the set of satisfying assignments of $F$ on those $n$ variables.
 
-We build a puzzle to mirror this. For each variable we manufacture two competing
-pieces — a TRUE piece that exposes a tab, and a FALSE piece that exposes a blank —
-on a special "assignment channel." Only one of them can occupy that channel,
-because the two shapes are different. That is the puzzle's way of forcing a
-variable to be either true or false but not both — mutual exclusion, built out of
-cardboard.
+The proof follows the clause interfaces. Begin with a valid assembly recipe. Every clause piece fits, so for each clause at least one corresponding literal is true. Hence every clause is satisfied, and the retained assignment satisfies $F$. Conversely, begin with a satisfying assignment. Every clause contains a true literal, so the corresponding clause piece has an activated fitting interface. Hence all clause pieces fit, producing an assembly recipe. Both transformations leave the assignment unchanged, so applying one after the other returns exactly the starting object.
 
-$$\text{enc}(\text{true}) = \text{tab} \ne \text{blank} = \text{enc}(\text{false}).$$
+This “leaves the witness unchanged” feature is stronger than the usual statement that one problem has a solution exactly when the other does. It is called a **parsimonious correspondence**: the translation preserves solutions individually.
 
-For each clause we manufacture one more piece. It has an input notch milled for
-each of its literals, shaped to accept precisely the polarity that literal
-demands. And now comes the heart of the matter — a single local fact from which
-the entire correspondence is built. A clause piece's input for a literal
-interlocks with the variable's output edge **exactly when that literal is
-satisfied**:
+Three consequences arrive immediately.
 
-$$\text{the literal's input fits the variable's output} \quad\Longleftrightarrow\quad \text{the literal is true under the assignment}.$$
+First, the puzzle is solvable if and only if the formula is satisfiable. Second, the exact counts agree:
 
-The proof is nothing more than the observation that our encoding is reversible:
-distinct truth values produce distinct edges, and distinct edges demand distinct
-complements, so an edge fits its slot if and only if the underlying bit is
-correct. Lift this atom up through OR and AND — a clause piece drops in when
-*some* literal fits; the whole puzzle assembles when *every* clause piece drops
-in — and you arrive at the punchline.
+$$
+\#\{\text{assembly recipes for }F\}
+=
+\#\{\text{satisfying assignments of }F\}.
+$$
 
-## The dictionary: a solved puzzle is a satisfied formula
+Third, uniqueness is preserved: the constructed puzzle has exactly one assembly recipe if and only if the formula has exactly one satisfying assignment.
 
-**A puzzle assembles into a valid picture if and only if its underlying formula
-can be satisfied.** A satisfying assignment of true/false values is, quite
-literally, the instruction sheet for snapping every piece into place. And
-conversely, if you assemble the puzzle, you can read a satisfying assignment
-straight off the board by looking at which variable pieces you used.
+Counting matters because existence can hide rich structure. Two puzzles may both be solvable while one has a single forced route and the other has a vast family of alternatives. The bijection distinguishes those situations perfectly. It transports the entire finite solution space rather than a single yes-or-no answer.
 
-This is not a loose analogy; it is an exact equivalence, an if-and-only-if with
-no wiggle room. To feel it in miniature, take the formula
+## A ten-piece experiment
 
-$$(x_1 \lor x_2 \lor \lnot x_3) \;\land\; (\lnot x_1 \lor x_3).$$
+For the running formula, there are $n=3$ variables and $m=2$ clauses. The abstract construction uses
 
-It has a solution: set $x_2$ to true and both $x_1$ and $x_3$ to false. The first
-clause is satisfied because $x_2$ is true; the second because $x_1$ is false so
-$\lnot x_1$ holds. The matching puzzle — with $2\cdot 3 + 2 + 2 = 10$ pieces —
-assembles perfectly. Contrast this with the contradictory formula
-$x_1 \land \lnot x_1$, which insists $x_1$ be both true and false at once. No
-assignment can satisfy it, and correspondingly no assembly of its puzzle exists:
-the piece demanding a tab and the piece demanding a blank on the same channel can
-never both be placed. The puzzle is not merely hard; it is *impossible*, and the
-impossibility is a faithful echo of the logical contradiction.
+$$
+N=2n+m+2=2\cdot3+2+2=10
+$$
 
-## Why this makes puzzles genuinely hard
+pieces: two assignment pieces per variable, one piece per clause, and two boundary pieces. The assignment $(\mathrm{false},\mathrm{true},\mathrm{false})$ activates $x_1$ in the first clause and $\neg x_0$ in the second, so it supplies an explicit assembly recipe.
 
-The third and final view is about difficulty itself. The formula-satisfaction
-problem — deciding whether a list of AND-ed, OR-ed clauses can be made all-true —
-is the flagship example of a class of problems known as **NP-complete**. These
-are problems whose solutions are easy to *check* but, as far as anyone knows,
-brutally hard to *find*; the question of whether a genuinely fast method exists
-is the famous "P versus NP" problem, one of the great unsolved questions of
-mathematics and worth a million-dollar prize.
+The formula actually has more than one satisfying assignment. A short exhaustive check over the $2^3=8$ possible assignments finds five solutions. By the exact counting theorem, the associated abstract puzzle therefore has five assembly recipes as well. This is a miniature laboratory for the general theorem: a truth table on one side becomes a catalogue of assemblies on the other, with no discrepancy in cardinality.
 
-Our construction is what complexity theorists call a **reduction**. It takes any
-instance of the satisfaction problem and, cheaply and mechanically, turns it into
-a jigsaw puzzle whose solvability answers the original question. Because the
-translation faithfully preserves yes-and-no answers — solvable puzzle exactly
-when satisfiable formula — every drop of difficulty in the satisfaction problem
-flows straight into puzzle assembly. Reductions compose, so *anything* that can
-be phrased as a satisfaction problem can be repackaged as a puzzle. Puzzle
-assembly inherits the full hardness of the hardest problems we know.
+The construction scales cleanly at the abstract level. For a formula with $n$ variables and $m$ clauses, the stated piece inventory grows linearly as $2n+m+2$. Evaluating one candidate assignment requires checking the literals in every clause, so the work is proportional to the formula’s total number of literal occurrences. Exhaustive counting still takes exponential time in $n$, because there are $2^n$ possible assignments; the correspondence explains exactly where that combinatorial explosion appears in the assembly space.
 
-Counting pieces makes the efficiency of the translation concrete: a formula with
-$n$ variables and $m$ clauses becomes a puzzle with exactly $2n + m + 2$ pieces —
-two per variable, one per clause, and two corner pieces to pin down the border.
-The puzzle grows only in gentle proportion to the formula, which is precisely
-what a reduction must guarantee to transfer hardness honestly.
+## Turning the whole world inside out
 
-## The satisfying snap
+The second central idea is symmetry. Complement an assignment by changing every true value to false and every false value to true. At the same time, complement the formula by reversing every literal polarity: replace $x_i$ by $\neg x_i$ and $\neg x_i$ by $x_i$.
 
-So the next time you complete a jigsaw puzzle, consider what you have actually
-done. You navigated a search space that, for a large enough puzzle, no known
-algorithm can guarantee to conquer quickly. You solved, by hand and by eye, an
-instance of a problem in the same complexity class as protein folding,
-chip layout, and the scheduling nightmares that keep logistics companies awake at
-night. The gentle *click* of the final piece is the sound of an NP-complete
-problem collapsing into a solution.
+A literal keeps its truth under this simultaneous reversal. If $x_i$ was true before, then after reversal the variable is false but the literal has become $\neg x_i$, which is again true. If $\neg x_i$ was true before, then the variable becomes true and the literal becomes $x_i$. Consequently, clause truth is preserved, and therefore formula truth is preserved.
 
-And underneath it all sits a single, small symmetry — the order-two flip that
-swaps tab and blank and leaves the flat border untouched. Its fixed points draw
-the outline of the picture; its reversibility encodes truth and falsehood; and
-its faithful bookkeeping smuggles the deepest hardness in computer science into a
-box of cardboard on your kitchen table. Mathematics has a habit of hiding in
-plain sight. Rarely does it hide somewhere quite so cozy.
+**Complementation Theorem.** For every assignment $a$ and formula $F$, the complemented assignment $\bar a$ satisfies the complemented formula $\bar F$ if and only if $a$ satisfies $F$.
+
+The operation is an involution: performing it twice restores the original assignment and formula. It therefore gives a bijection between the satisfying assignments of $F$ and those of $\bar F$. Through the assembly–assignment correspondence, it also gives the following physical interpretation.
+
+**Tab–Blank Solvability Symmetry.** The puzzle associated with $F$ is solvable if and only if the puzzle associated with $\bar F$ is solvable. Conceptually, global Boolean negation corresponds to swapping tabs and blanks throughout the logical interfaces.
+
+For the running example, complementation turns
+
+$$
+(x_0\lor x_1\lor\neg x_2)\land(\neg x_0\lor x_2)
+$$
+
+into
+
+$$
+(\neg x_0\lor\neg x_1\lor x_2)\land(x_0\lor\neg x_2).
+$$
+
+The satisfying assignment $(\mathrm{false},\mathrm{true},\mathrm{false})$ becomes $(\mathrm{true},\mathrm{false},\mathrm{true})$, which satisfies the complemented formula. Every solution is paired this way.
+
+There is a subtle but important limit. Solvability invariance does not yet imply that complementation acts freely on a single puzzle’s solution set. A formula or framed puzzle may be self-dual under additional relabeling, creating special fixed behavior. Establishing free two-element orbits requires a hypothesis excluding such self-duality.
+
+## Complexity: what is proved, and what remains
+
+Boolean satisfiability is the archetypal NP-complete problem. It is tempting to jump from the correspondence to the slogan “jigsaw puzzles are NP-complete.” For the abstract formula-indexed assembly model, satisfiability and assembly are indeed equivalent at the witness level. But unrestricted geometric jigsaws demand more.
+
+A complete geometric reduction must replace the abstract clause-fitting condition with actual planar components. Wires must carry truth values; fan-out gadgets must copy them; clause gadgets must accept one or more true inputs; and crossover gadgets—or an alternative planar layout—must prevent signals from interfering. A rigid frame must eliminate unwanted translations, rotations, and interchangeable placements. Most critically, these gadgets must introduce neither spurious assemblies nor destroy valid ones.
+
+The exact correspondence proved here sharply identifies that remaining burden. The logical bookkeeping is already parsimonious. Any mismatch in a geometric realization must arise from geometry: a gadget symmetry, an unintended fit, a boundary ambiguity, or a crossing problem.
+
+That distinction is scientifically useful. It replaces a broad claim with a precise research program. One may ask whether four-sided, non-rotatable square pieces with finitely many edge colors suffice; whether assembly counts equal satisfying-assignment counts up to a predictable symmetry factor; or whether the topology of the space of solutions survives geometric realization.
+
+## From edges to topology
+
+Tabs and blanks suggest a conservation law. When two interior edges meet, a positive protrusion and a negative indentation cancel. On a rectangular region, this resembles a discrete divergence principle: unmatched signed edge potential must be accounted for at the boundary.
+
+On surfaces with holes, cancellation may carry more information. A torus has two independent noncontractible directions, so signed edge data could produce two flux obstructions. In algebraic-topological language, those obstructions would live in a first cohomology group and would have to pair trivially with every allowable cycle. This remains a conjectural extension, but it grows naturally from the same local complementarity rule.
+
+There is also topology inside the collection of solutions. Make each satisfying assignment a vertex, and join two vertices when they differ in one variable. The resulting solution graph—and higher-dimensional cubical complex when several independent flips commute—records how solutions connect. A parsimonious geometric construction might preserve not only the number of solutions but the shape of this solution complex up to deformation.
+
+The humble jigsaw thus opens three windows at once. Logic describes which local conditions can coexist. Complexity measures the cost of finding a global witness. Topology studies conserved boundary data and the shape of all witnesses together.
+
+The satisfying snap of two pieces is local. The wonder of a completed puzzle is global. Between those scales lies a precise mathematics: clauses become interfaces, assignments become recipes, solution counts are preserved exactly, and a universal tab–blank reversal mirrors Boolean negation. The broader geometric complexity story is not finished—but its logical heart is now visible, one complementary edge at a time.

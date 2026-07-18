@@ -117,6 +117,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle f86cfe8a (Q=0.760), which proved 12 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Laser beams can carry orbital angular momentum (OAM), creating 'knotted light' \u2014 beams whose wavefronts are linked or knotted. A knotted light beam has a phase singularity (where the amplitude vanishes) that traces out a knot in 3D space. The simplest example is the trefoil beam, whose singularity t",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_f86cfe8a_94a906de",
+    "priority_score": 0.86,
+    "research_mode": "team",
+    "source_exp_id": "f86cfe8a",
+    "status": "available",
+    "timestamp": "2026-07-18T12:48:40.078323+00:00",
+    "title": "Deepening: The Topology of Knotted Light: How Laser Beams Get Tangled"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Domain Shared has declined by 0.164 over recent cycles (recent avg=0.696 vs prior=0.860). Take a completely fresh approach \u2014 different proof techniques, new definitions, or a different subfield within this domain. Avoid repeating approaches that have been producing diminishing returns.",
     "domains": [
       "Shared"
@@ -200,6 +214,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-18T09:21:32.344494+00:00",
     "title": "Close Proofs: Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Heisenberg uncertainty principle states that Delta(x) * Delta(p) >= hbar/2. But this is NOT a physical principle \u2014 it is a THEOREM of Fourier analysis. The Fourier transform of a function f(x) satisfies: if f is concentrated in a region of width Delta(x), then its Fourier transform f_hat is concentrated in a region of width Delta(k) >= 1/(2*Delta(x)). This is the Benedicks-Amrein-Berthier theorem: a function and its Fourier transform cannot both be supported on sets of finite measure. Conjecture: The uncertainty principle generalizes to all integral transforms. For the Laplace transform: if f is supported on [a, infinity), then the Laplace transform L[f](s) cannot be supported on a set of finite measure unless f = 0. For the Mellin transform: if f is supported on a geometric progression, then M[f](s) cannot be supported on a set of finite measure. For the Radon transform: if f is supported on a strip, then R[f] cannot be supported on a set of finite measure. The general principle: no invertible integral transform allows both a function and its transform to have compact support. Test: verify the uncertainty principle for the Fourier, Laplace, Mellin, and Radon transforms numerically. Construct functions with Delta(x) = epsilon and measure Delta(k) for each transform. Impact: the uncertainty principle is not about quantum mechanics \u2014 it is about the structure of integral transforms. Every transform has its own uncertainty principle.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0317",
+    "priority_score": 0.81,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-18T12:48:12.181599+00:00",
+    "title": "The Uncertainty Principle Is a Fourier Thing: Position-Momentum Duality"
   },
   {
     "consumed_by_exp_id": "",
@@ -1765,7 +1794,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Cyclic Sieving for Staircase Plane Partitions via Crystals and Electrical Networks"
   },
   {
-    "consumed_by_exp_id": "26ad8b0e",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Strongly complete sets and a conjecture of Erd\u0151s' and formalize its key results. Abstract: A set $A\\subseteq\\mathbb{N}$ is called $\\textit{complete}$ if every sufficiently large integer can be written as a sum of distinct elements of $A$. It is $\\textit{strongly complete}$ if it remains complete after one deletes finitely many elements from it. We show that $A\\subseteq\\mathbb{N}$ is strongly complete whenever \\[ \\big|A\\cap(2^k,2^{k+1}]\\big|\\ge6 \\] for every sufficiently large $k\\in\\mathbb{N}$, and \\[ \\sum_{a\\in A}\\|a\u03b8\\|=\\infty, \\quad\\forall\u03b8\\in\\mathbb{R}\\setminus\\mathbb{Z}. \\] In particular, this resolves a 1961 conjecture of Erd\u0151s. The proof builds on previous work of Bergelson and Simmons. Our approach also allows us to establish a more general strong-completeness criterion with suitable ordered blocks in place of dyadic intervals.",
     "domains": [
       "Pythagorean",
@@ -1775,7 +1804,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14071v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-16T15:35:00.343163+00:00",
     "title": "ArXiv paper: Strongly complete sets and a conjecture of Erd\u0151s"
   },
@@ -3036,21 +3065,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Quantum Surreal Numbers: Superposition of All Real Numbers"
   },
   {
-    "consumed_by_exp_id": "f86cfe8a",
-    "description": "Laser beams can carry orbital angular momentum (OAM), creating 'knotted light' \u2014 beams whose wavefronts are linked or knotted. A knotted light beam has a phase singularity (where the amplitude vanishes) that traces out a knot in 3D space. The simplest example is the trefoil beam, whose singularity traces a trefoil knot. Conjecture: The OAM spectrum of a knotted light beam encodes the Alexander polynomial of the knot. Specifically, if the singularity of the beam traces a knot K, then the OAM spectrum (the set of allowed angular momentum values) is {l : Delta_K(e^{2*pi*i*l/N}) = 0} where Delta_K is the Alexander polynomial of K and N is the crossing number. For the trefoil (Delta = t^2 - t + 1), the OAM spectrum includes l = 1/6, 5/6 (mod 1), giving OAM values l = 1, 5 (mod 6). For the unknot (Delta = 1), the OAM spectrum is trivial (l = 0 only). For the figure-eight knot (Delta = t^2 - 3t + 1), the OAM values include l = (3 \u00b1 sqrt(5))/2 mod 1. Test: compute the OAM spectrum of trefoil, figure-eight, and cinquefoil beams numerically and verify they match the Alexander polynomial predictions. Impact: knotted light carries knot invariants in its angular momentum \u2014 shining a laser through a knot-shaped hologram encodes the Alexander polynomial in the beam's quantum numbers.",
-    "domains": [
-      "Novelty",
-      "Physics"
-    ],
-    "id": "fd_0292",
-    "priority_score": 0.79,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T08:01:11.295424+00:00",
-    "title": "The Topology of Knotted Light: How Laser Beams Get Tangled"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Cycle 1003d095 (Q=0.740) proved 0 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in ",
     "domains": [
@@ -3782,6 +3796,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-18T12:32:13.852539+00:00",
     "title": "Let each ordered off-diagonal edge be present independently with probability `p`"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Alexander Spectra of Knotted Light\n\n## 1. Composite torus knots split into cyclotomic spectral strata\n\n**Conjecture.** For every odd positive integer `n`, the angular spectrum selected by the `T(2,n)` Alexander polynomial is the disjoint union of primitive `2d`-th root strata over all divisors `d > 1` of `n`. The multiplicity-free channel count is therefore the sum of `\u03c6(2d)` over those divisors.\n\nThe key insight is that the alternating Alexander polynomial satisfies `(X+1)A_n(X)=X^n+1`, whose cyclotomic factors are indexed by the divisors of `n`.\n\n**Why now?** The prime case has been reduced exactly to coprimality modulo `2p`; composite parameters are the next falsifiable test of whether spectral splitting tracks arithmetic factorization.\n\n## 2. Optical products realize convolution in modular unit groups\n\n**Conjecture.** Under multiplication of two prime torus-knot phase filters with moduli `2p` and `2q`, the resulting angular channels are governed by the image of `(\u2124/2p\u2124)\u02e3 \u00d7 (\u2124/2q\u2124)\u02e3` under the Chinese remainder correspondence, with degeneracies determined by `gcd(p,q)`.\n\nThe key insight is that each prime torus spectrum is not merely a set of roots but a torsor for a modular unit group, while optical phase multiplication adds angular indices.\n\n**Why now?** Exact coprimality selection and charge additivity are both available, making their interaction a concrete algebraic prediction rather than a qualitative analogy.\n\n## 3. Off-circle Alexander roots predict evanescent rather than OAM channels\n\n**Conjecture.** For reciprocal Alexander polynomials with no unit-circle roots, each reciprocal pair `r, r\u207b\u00b9` controls a pair of exponentially growing and decaying radial modes, not real angular OAM residues. For the figure-eight knot, the rates are the logarithms of `(3 \u00b1 \u221a5)/2`.\n\nThe key insight is that angular propagation detects root argument, whereas radial growth detects root modulus; reducing a real root modulo one confuses these two observables.\n\n**Why now?** The figure-eight polynomial has been proved to vanish nowhere on every angular grid, sharply isolating the alternative physical interpretation that must be tested.\n\n## 4. Mahler measure bounds spectral radial instability\n\n**Conjecture.** For a knotted optical field whose transfer polynomial is the Alexander polynomial, the total radial Lyapunov growth equals the logarithmic Mahler measure of that polynomial. Cyclotomic torus knots have zero growth, while the figure-eight knot has positive growth `2 log \u03c6`.\n\nThe key insight is that Mahler measure sums the logarithmic moduli of roots outside the unit circle, exactly the data discarded by a root-of-unity-only spectrum.\n\n**Why now?** The established cyclotomic/off-circle dichotomy supplies explicit zero-growth and positive-growth test cases with reciprocal root geometry.\n\n## 5. Spectral measurements recover torus-knot parameters\n\n**Conjecture.** Within the family `T(2,p)` for odd primes, the number of distinct Alexander-selected angular channels and their modular addition table uniquely determine `p`, and hence determine the Alexander polynomial and knot determinant.\n\nThe key insight is that the channel set is the full unit group modulo `2p`, has cardinality `p\u22121`, and is a single cyclotomic Galois orbit.\n\n**Why now?** The exact residue classification turns an inverse optical problem into a finite reconstruction problem with an immediately testable uniqueness criterion.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0318",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "f86cfe8a",
+    "status": "available",
+    "timestamp": "2026-07-18T12:48:35.496334+00:00",
+    "title": "**Conjecture.** For every odd positive integer `n`, the angular spectrum selecte"
   },
   {
     "consumed_by_exp_id": "",

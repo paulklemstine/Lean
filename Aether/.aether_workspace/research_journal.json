@@ -1,26 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "499d98ab",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Graphical Signatures of Finite-Group Symmetry\n\n## 1. Rooted-pattern factorization through group differences\n\n**Conjecture.** For every finite rooted graph pattern with distinguish",
-      "quality_score": 0.76,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-07-16T05:47:43",
-      "title": "ArXiv paper: Learning the Graphical Nature of Symmetries"
-    },
-    {
-      "cycle_id": "58c6edf0",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions for Stable Kneser Graphs\n\n## 1. Full Meunier equality for odd stability\n\n**Conjecture.** For all integers `s ≥ 3`, `k ≥ 1`, and `n ≥ sk`, the Kneser graph on cyclically `s`-stable",
-      "quality_score": 0.73,
-      "sorry_count": 4,
-      "theorem_count": 43,
-      "timestamp": "2026-07-16T05:48:35",
-      "title": "ArXiv paper: The chromatic number of 3-stable Kneser graphs"
-    },
-    {
       "cycle_id": "4e53cd7c",
       "domain": "Pythagorean",
       "key_insight": "# Future Directions: Moment Thresholds for Random Bipartite States\n\n## 1. Exact fixed-level induced-state threshold\n\nFor every fixed hierarchy level `m ≥ 2`, there is a unique constant `λ_m > 0` such",
@@ -499,29 +479,29 @@
       "theorem_count": 46,
       "timestamp": "2026-07-18T12:32:18",
       "title": "Erdos-Renyi on Acid: Random Graphs That Hallucinate"
+    },
+    {
+      "cycle_id": "f86cfe8a",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Alexander Spectra of Knotted Light\n\n## 1. Composite torus knots split into cyclotomic spectral strata\n\n**Conjecture.** For every odd positive integer `n`, the angular spectrum sel",
+      "quality_score": 0.76,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-07-18T12:48:40",
+      "title": "The Topology of Knotted Light: How Laser Beams Get Tangled"
+    },
+    {
+      "cycle_id": "154045db",
+      "domain": "Shared",
+      "key_insight": "# Future Directions: Jigsaw Complexity and Topology\n\n## 1. Geometric NP-completeness with four-sided pieces\n\nConjecture: deciding whether a finite multiset of non-rotatable square pieces with flat, ta",
+      "quality_score": 0.74,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-07-18T12:48:43",
+      "title": "The Mathematics of Jigsaw Puzzles: NP-Completeness and Topology"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "44ee6caf",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Consciousness as an Emergent Fixed Point\n\nThis cycle formalized, with fully machine-checked proofs (no `sorry`, no extra\naxioms — the core Lawvere theorem depends on *no* axioms a",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 36,
-      "timestamp": "2026-07-14T17:47:35",
-      "title": "Deepening: Consciousness as Emergent Fixed Point"
-    },
-    {
-      "cycle_id": "5b1c1bd3",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nThis cycle deepened the \"Sperner ⇒ Nash\" theme along two fully-formalised chains.\n\n## What was proved\n\n### `SignedSperner.lean` — the 1-D Sperner lemma as an exact signed count\nUp",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 40,
-      "timestamp": "2026-07-14T18:22:21",
-      "title": "Deepening: Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theo"
-    },
     {
       "cycle_id": "07d73c91",
       "domain": "Novelty",
@@ -2501,39 +2481,29 @@
       "theorem_count": 46,
       "timestamp": "2026-07-18T12:32:18",
       "title": "Erdos-Renyi on Acid: Random Graphs That Hallucinate"
+    },
+    {
+      "cycle_id": "f86cfe8a",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Alexander Spectra of Knotted Light\n\n## 1. Composite torus knots split into cyclotomic spectral strata\n\n**Conjecture.** For every odd positive integer `n`, the angular spectrum sel",
+      "quality_score": 0.76,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-07-18T12:48:40",
+      "title": "The Topology of Knotted Light: How Laser Beams Get Tangled"
+    },
+    {
+      "cycle_id": "154045db",
+      "domain": "Shared",
+      "key_insight": "# Future Directions: Jigsaw Complexity and Topology\n\n## 1. Geometric NP-completeness with four-sided pieces\n\nConjecture: deciding whether a finite multiset of non-rotatable square pieces with flat, ta",
+      "quality_score": 0.74,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-07-18T12:48:43",
+      "title": "The Mathematics of Jigsaw Puzzles: NP-Completeness and Topology"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "a6705a36",
-      "domain": "Bridges",
-      "name": "library_card",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "a6705a36",
-      "domain": "Bridges",
-      "name": "borges_library_card",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "a6705a36",
-      "domain": "Bridges",
-      "name": "exact_volume_probability",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "3c755fa4",
-      "domain": "Combinatorics",
-      "name": "correctly",
-      "quality": 0.73
-    },
-    {
-      "cycle_id": "3c755fa4",
-      "domain": "Combinatorics",
-      "name": "trace_traceWitness",
-      "quality": 0.73
-    },
     {
       "cycle_id": "3c755fa4",
       "domain": "Combinatorics",
@@ -2803,9 +2773,39 @@
       "domain": "Logic",
       "name": "sigma_pow_injective",
       "quality": 0.8
+    },
+    {
+      "cycle_id": "f86cfe8a",
+      "domain": "Novelty",
+      "name": "eisensteinNormSq_pow",
+      "quality": 0.76
+    },
+    {
+      "cycle_id": "f86cfe8a",
+      "domain": "Novelty",
+      "name": "sigma_pow_injective",
+      "quality": 0.76
+    },
+    {
+      "cycle_id": "154045db",
+      "domain": "Shared",
+      "name": "assemblyRecipe_card_eq",
+      "quality": 0.74
+    },
+    {
+      "cycle_id": "154045db",
+      "domain": "Shared",
+      "name": "unique_assembly_iff_unique_satisfying",
+      "quality": 0.74
+    },
+    {
+      "cycle_id": "154045db",
+      "domain": "Shared",
+      "name": "litSat_complement",
+      "quality": 0.74
     }
   ],
-  "last_updated": "2026-07-18T12:32:18",
+  "last_updated": "2026-07-18T12:48:43",
   "open_questions": [
     {
       "context": "",
@@ -3585,12 +3585,6 @@
         "title": "ArXiv paper: The chromatic number of 3-stable Kneser graphs"
       },
       {
-        "cycle_id": "5759ba2d",
-        "quality": 0.72,
-        "theorems": 20,
-        "title": "ArXiv paper: The chromatic number of 3-stable Kneser graphs"
-      },
-      {
         "cycle_id": "16941ff7",
         "quality": 0.75,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.68,
         "theorems": 16,
         "title": "Ramanujan's Taxicab Number as a Sum of Three Cubes: 1729 Revisited"
+      },
+      {
+        "cycle_id": "f86cfe8a",
+        "quality": 0.76,
+        "theorems": 12,
+        "title": "The Topology of Knotted Light: How Laser Beams Get Tangled"
       }
     ],
     "NumberTheory": [
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "7ea29a05",
-        "quality": 0.9,
-        "theorems": 16,
-        "title": "This cycle promoted the component-count toughness toolkit from a collection of"
-      },
-      {
         "cycle_id": "42e1a665",
         "quality": 0.88,
         "theorems": 0,
@@ -3947,6 +3941,12 @@
         "quality": 0.7,
         "theorems": 11,
         "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
+      },
+      {
+        "cycle_id": "154045db",
+        "quality": 0.74,
+        "theorems": 19,
+        "title": "The Mathematics of Jigsaw Puzzles: NP-Completeness and Topology"
       }
     ],
     "Tropical": [
