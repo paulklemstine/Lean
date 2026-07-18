@@ -1,221 +1,409 @@
-# A Unified Uncertainty Principle for Holomorphic Integral Transforms
+# Analytic Continuation as a General Mechanism for Transform Uncertainty
+
+**Aristotle**  
+**July 18, 2026**
 
 ## Abstract
 
-The Heisenberg uncertainty principle is traditionally presented as a foundational law of quantum mechanics. It is, more accurately, a theorem of harmonic analysis: it expresses the impossibility of simultaneously concentrating a function and its Fourier transform. In its sharpest qualitative form — the Benedicks–Amrein–Berthier phenomenon — a nonzero function and its Fourier transform cannot both be supported on sets of finite Lebesgue measure. We show that this qualitative uncertainty principle is not a peculiarity of the Fourier transform but a structural feature shared by *every invertible integral transform whose image consists of holomorphic functions on a connected open domain*. The common engine is a single, classical fact from complex analysis: a holomorphic function on a connected open set that vanishes on a nonempty open subset (or, over the whole plane, on a set of positive measure) vanishes identically. We isolate this engine as an abstract lemma and derive from it: (i) the compact-support Fourier uncertainty principle for entire functions; (ii) the null-zero-set and infinite-support consequences; (iii) the positive-measure (Benedicks–Amrein–Berthier) form for entire images; and (iv) uncertainty principles for the Laplace transform (half-plane domain) and the Mellin transform (strip domain). We illustrate the theory on worked examples — the sine and cosine (building blocks of the sinc kernel), and the Gaussian (the fixed point of the Fourier transform and the extremal object of the inequality) — and discuss extensions to the Z-transform, the two-sided Laplace transform, the Borel transform, the discrete Donoho–Stark inequality, and the Radon transform.
-
-**Keywords.** Uncertainty principle, Fourier transform, Laplace transform, Mellin transform, identity theorem, entire functions, Benedicks–Amrein–Berthier theorem, Paley–Wiener, analytic continuation.
-
----
+Uncertainty principles are often identified with the variance inequality for quantum position and momentum, but their mathematical source is the duality created by integral transforms. This paper develops a self-contained qualitative theory for transforms whose outputs admit holomorphic continuation. The central result is an identity-principle uncertainty theorem: a holomorphic transform output on a connected complex domain cannot vanish on a nonempty open subset without vanishing identically. For entire outputs, this implies that compact support is impossible for a nonzero function, that the zero set of a nonzero entire function has planar Lebesgue measure zero, and that its support has infinite measure. Positive-measure vanishing and finite-measure support therefore force an entire function to be zero. The framework applies directly to compactly supported Fourier inputs through entire continuation, to Laplace transforms on right half-planes, and to Mellin transforms on vertical strips. Sine, sinc, cosine, and Gaussian examples clarify the sharp distinction between exact support and rapid decay. A Hilbert-space Gram inequality supplies the finite-dimensional quantitative companion. We also identify the precise boundary of the framework: invertibility alone is insufficient, and Radon uncertainty requires geometric range information rather than one-variable holomorphy. Numerical algorithms illustrate concentration tradeoffs without confusing thresholded finite computations with exact support theorems.
 
 ## 1. Introduction
 
-### 1.1 The uncertainty principle as mathematics
+The familiar Heisenberg inequality
 
-The uncertainty principle of quantum mechanics asserts that the product of the standard deviations of a particle's position and momentum is bounded below,
+$$
+\Delta x\,\Delta p\geq \frac{\hbar}{2}
+$$
 
-$$\Delta x \cdot \Delta p \ge \frac{\hbar}{2}.$$
+expresses a physical relation between position and momentum, but its mathematical architecture is Fourier duality. Momentum is proportional to spatial frequency, and localization of a function competes with localization of its Fourier transform. Similar tradeoffs occur in signal processing, spectroscopy, tomography, sparse approximation, and learned representations.
 
-The position and momentum wavefunctions of a quantum system are, however, a Fourier-transform pair. Once this is recognized, the inequality is seen to be a statement purely about a function $f$ and its Fourier transform $\hat f$, with Planck's constant $\hbar$ serving only as a unit conversion. The mathematical content is:
+Uncertainty has several inequivalent meanings. Variance principles compare second moments. Entropic principles compare information measures. Support principles ask whether a function and its transform can both be exactly confined. This paper focuses on a qualitative support mechanism that applies whenever a transformed signal extends holomorphically to a connected complex domain.
 
-$$\left(\int t^2 |f(t)|^2\, dt\right)\left(\int k^2 |\hat f(k)|^2\, dt\right) \ge \frac{1}{16\pi^2}\left(\int |f|^2\right)^2,$$
+The mechanism is the identity principle of complex analysis. A smooth real function may vanish on an interval and be nonzero elsewhere. A holomorphic function cannot: vanishing on any nonempty open part of a connected domain forces global vanishing. Entire functions are even more rigid. Unless identically zero, their zeros are isolated; consequently their zero sets have planar measure zero and their nonzero sets have infinite measure.
 
-the classical variance uncertainty inequality, with the Gaussian as the unique equality case. No physics is involved.
+These observations lead to a transform-independent principle, but only under appropriate hypotheses. If a transform maps a class of inputs to holomorphic functions on a connected domain, then no nonzero output can contain an open spectral gap. If the transform is injective, an identically zero output implies a zero input. For Fourier transforms of compactly supported integrable functions, the output extends to an entire function, giving a compact-support obstruction. Laplace transforms are holomorphic on half-planes, and Mellin transforms on vertical strips, so the same identity-principle engine applies on their natural domains.
 
-### 1.2 Qualitative uncertainty and the goal of this paper
+A universal claim based only on invertibility would be false. The identity transform is invertible and preserves compact support. The correct structural ingredients are analytic continuation and, for transferring output vanishing back to the signal, injectivity. The Radon transform demonstrates another boundary: its support theory depends on projection geometry and the Fourier-slice theorem, not simply on holomorphy in one complex variable.
 
-The variance inequality is the *quantitative* face of uncertainty. There is a sharper *qualitative* face: a function and its transform cannot both be **strongly confined**. The strongest confinement is having support of finite measure. The definitive results here are:
+The contributions are as follows:
 
-- **Benedicks (1985), Amrein–Berthier (1977).** If $f \in L^1(\mathbb R^n)$ and both $\{f \ne 0\}$ and $\{\hat f \ne 0\}$ have finite Lebesgue measure, then $f = 0$.
+1. a general identity-principle uncertainty theorem on connected complex domains;
+2. compact-support, zero-set, positive-measure, and infinite-support consequences for entire functions;
+3. specializations to Fourier, Laplace, and Mellin settings;
+4. worked sine, sinc, cosine, and Gaussian examples;
+5. a Hilbert-space Gram inequality linking qualitative support rigidity to quantitative concentration;
+6. reproducible numerical procedures for observing width tradeoffs and transform-domain leakage.
 
-Our thesis is that the qualitative uncertainty principle, at least for transforms whose image is holomorphic, follows from a *single* mechanism — analytic rigidity — and is therefore a universal feature of integral transforms rather than a Fourier-specific accident. Concretely:
+## 2. Definitions and analytic background
 
-- the Fourier transform of a compactly supported $L^1$ function extends to an **entire** function of the complex frequency variable (Paley–Wiener);
-- the Laplace transform of a function supported on $[a,\infty)$ is **holomorphic on a right half-plane**;
-- the Mellin transform is **holomorphic on a vertical strip**;
+### 2.1 Support and measure
 
-and in each case the transform lives on an open, connected domain $U \subseteq \mathbb C$. On any such domain the identity principle forbids the transform from vanishing on an open set unless it vanishes identically — which is precisely the impossibility of confinement.
+Let $f:X\to\mathbb C$ be a function on a topological space. Its nonzero set is
 
-### 1.3 Contributions
+$$
+\operatorname{nz}(f)=\{x\in X:f(x)\neq 0\}.
+$$
 
-1. We isolate the **abstract uncertainty engine** (Theorem 3.1): a function analytic on a preconnected set $U$ vanishing on a nonempty open $W \subseteq U$ vanishes on all of $U$.
-2. We derive the **Fourier compact-support principle** (Theorem 4.1): an entire function with compact support is zero.
-3. We prove the **measure-theoretic consequences** (Theorems 4.2–4.5): the zero set of a nonzero entire function is null; its support has infinite measure; vanishing on a positive-measure set forces zero (Benedicks–Amrein–Berthier for entire images); finite-measure support forces zero.
-4. We instantiate the engine on the **Laplace** (Theorem 6.1) and **Mellin** (Theorem 6.2) transforms.
-5. We supply **worked examples** — sine/cosine and the Gaussian — with explicit measure computations.
+Its topological support is the closure
 
----
+$$
+\operatorname{supp}_{\mathrm{top}}(f)=\overline{\operatorname{nz}(f)}.
+$$
 
-## 2. Preliminaries and definitions
+The function has compact support when this closed set is compact. In measure-theoretic claims below, it is convenient to discuss the nonzero set itself. Since adjoining or removing a null boundary does not change measure in common regular cases, the distinction is harmless for examples, but the exact statements will specify the set being measured.
 
-Throughout, $\mathbb C$ denotes the complex plane, identified with $\mathbb R^2$ for measure-theoretic purposes, and $\operatorname{vol}$ denotes two-dimensional Lebesgue measure.
+We identify $\mathbb C$ with $\mathbb R^2$ and write $m_2$ for planar Lebesgue measure. A set $E\subseteq\mathbb C$ is null if $m_2(E)=0$, has positive measure if $m_2(E)>0$, and has finite measure if $m_2(E)<\infty$.
 
-**Definition 2.1 (Holomorphic / analytic on a set).** A function $f : \mathbb C \to \mathbb C$ is *analytic on a neighborhood of a set* $U$ if for every $z \in U$ there is an open ball around $z$ on which $f$ is given by a convergent power series. When $U = \mathbb C$ we call $f$ **entire**. For open $U$, analyticity on a neighborhood of $U$ coincides with complex differentiability on $U$.
+### 2.2 Holomorphy and connected domains
 
-**Definition 2.2 (Support and tsupport).** The *support* of $f$ is $\operatorname{supp} f = \{z : f(z) \ne 0\}$. Its *topological support* (or closed support) is $\operatorname{tsupp} f = \overline{\operatorname{supp} f}$. We say $f$ has **compact support** if $\operatorname{tsupp} f$ is compact.
+A function $F:U\to\mathbb C$ on an open set $U\subseteq\mathbb C$ is holomorphic if it is complex differentiable at every point of $U$. It is entire if $U=\mathbb C$. A domain is a nonempty connected open subset of $\mathbb C$.
 
-**Definition 2.3 (Preconnected set).** A set $U$ is *preconnected* if it cannot be split by two open sets each meeting $U$ into disjoint nonempty pieces. Every convex set — in particular $\mathbb C$, any half-plane, any strip, any ball — is preconnected.
+The basic engine is the following classical result.
 
-**Definition 2.4 (Zero set).** The *zero set* of $f$ is $Z(f) = \{z : f(z) = 0\}$.
+**Lemma 2.1 (Identity principle).** Let $U\subseteq\mathbb C$ be a connected open set, and let $F:U\to\mathbb C$ be holomorphic. If there is a nonempty open set $W\subseteq U$ such that $F(z)=0$ for every $z\in W$, then $F(z)=0$ for every $z\in U$.
 
-**Definition 2.5 (Integral transform, informal).** An *integral transform* sends a signal $f$ to a function $T[f](s) = \int f(t)\,K(s,t)\,dt$ for a kernel $K$. Examples: the **Fourier** kernel $e^{-2\pi i s t}$; the **Laplace** kernel $e^{-st}$ on $[a,\infty)$; the **Mellin** kernel $t^{s-1}$ on $(0,\infty)$. In each case, for suitable signals, $s \mapsto T[f](s)$ extends holomorphically to an open connected region of $\mathbb C$ (the plane, a half-plane, a strip respectively).
+**Proof sketch.** Choose $z_0\in W$. Because $F$ is zero in a neighborhood of $z_0$, every derivative of $F$ at $z_0$ is zero, so its local power series is identically zero. More generally, the zeros of a nonzero holomorphic function are isolated. The existence of an open set of zeros is therefore incompatible with nontriviality. Connectedness ensures that the zero germ propagates throughout $U$ by analytic continuation. $\square$
 
----
+Connectedness is essential. A function may be zero on one connected component and nonzero on another. Openness is used to speak of holomorphy in neighborhoods and to initiate continuation.
 
-## 3. The abstract uncertainty engine
+### 2.3 Integral transforms and analytic output
 
-The whole theory rests on the identity principle for analytic functions.
+An integral transform has the schematic form
 
-**Theorem 3.1 (Identity-principle uncertainty).** *Let $f : \mathbb C \to \mathbb C$ be analytic on a neighborhood of a preconnected set $U$. Let $W \subseteq U$ be open and nonempty, and suppose $f \equiv 0$ on $W$. Then $f \equiv 0$ on all of $U$.*
+$$
+(Tf)(s)=\int_X K(s,x)f(x)\,d\mu(x),
+$$
 
-**Proof sketch.** Pick $z_0 \in W$. Since $W$ is open, $W$ is a neighborhood of $z_0$, so $f$ is *eventually zero* near $z_0$ (it is zero on a whole neighborhood). By the identity theorem for analytic functions on a preconnected set — an analytic function that is locally zero at one point of a preconnected domain is zero throughout — $f$ vanishes on all of $U$. $\qquad\blacksquare$
+where $K$ is a kernel. The relevant condition is not merely that $T$ be invertible. We require that, for the chosen input class, $Tf$ extend to a holomorphic function on a connected complex domain $U$. When $T$ is injective on that input class, $Tf\equiv 0$ implies $f=0$.
 
-**Interpretation.** Theorem 3.1 *is* the uncertainty principle in its most general holomorphic form. If a transform $T[f]$ is holomorphic on a connected open domain $U$ and is supported on a set $S \subsetneq U$ whose complement in $U$ contains a nonempty open set $W$ (for example, if $S$ has empty interior, or is compact and $U$ is not), then $T[f] \equiv 0$ on $W$, hence on $U$, hence — by invertibility of $T$ — $f = 0$. The specific transform only determines the shape of $U$:
+This suggests the following terminology.
 
-| Transform | Domain of holomorphy $U$ | Preconnected? |
-|---|---|---|
-| Fourier (compact support) | $\mathbb C$ | yes (convex) |
-| Laplace on $[a,\infty)$ | right half-plane $\{\operatorname{Re} s > 0\}$ | yes (convex) |
-| Mellin | vertical strip $\{a < \operatorname{Re} s < b\}$ | yes (convex) |
-| Two-sided Laplace | horizontal/vertical strip | yes (convex) |
-| Z-transform | annulus | yes (connected) |
+**Definition 2.2 (Analytic transform class).** A pair $(T,\mathcal A)$ is an analytic transform class on a domain $U$ if every $f\in\mathcal A$ has an output $Tf$ admitting a holomorphic representative on $U$. It is faithful if $T$ is injective on $\mathcal A$.
 
----
+This definition separates two roles. Holomorphy prohibits open regions of exact zeros in the output. Faithfulness converts global output vanishing into input vanishing.
 
-## 4. The Fourier uncertainty principle and its measure-theoretic forms
+## 3. Main analytic uncertainty results
 
-We now specialize $U = \mathbb C$, i.e. to entire functions, the setting of the Fourier transform of compactly supported signals via Paley–Wiener.
+### 3.1 The general open-gap theorem
 
-**Theorem 4.1 (Compact-support form).** *An entire function $f$ with compact support is identically zero.*
+**Theorem 3.1 (Identity-principle uncertainty).** Let $U\subseteq\mathbb C$ be a connected open set and let $F:U\to\mathbb C$ be holomorphic. If $F$ vanishes on a nonempty open subset of $U$, then $F$ vanishes throughout $U$. Consequently, for a faithful analytic transform class $(T,\mathcal A)$ on $U$, no nonzero input $f\in\mathcal A$ can have an output $Tf$ that vanishes on a nonempty open subset of $U$.
 
-**Proof sketch.** Since $\operatorname{tsupp} f$ is compact and $\mathbb C$ is not compact, the complement $(\operatorname{tsupp} f)^c$ is a nonempty open set on which $f \equiv 0$. Apply Theorem 3.1 with $U = \mathbb C$ (preconnected) and $W = (\operatorname{tsupp} f)^c$: $f \equiv 0$ on $\mathbb C$. $\qquad\blacksquare$
+**Proof sketch.** The first claim is Lemma 2.1. For the second, open-set vanishing gives $Tf\equiv 0$ on $U$, and injectivity gives $f=0$. $\square$
 
-This is the cleanest statement of Fourier uncertainty: a compactly supported signal (whose transform is entire by Paley–Wiener) cannot also have a compactly supported transform, unless it is zero.
+A common support statement follows immediately. If a subset $K\subset U$ has a complement containing a nonempty open set and $F$ is supported in $K$, then $F$ vanishes on that open complement. Thus a nonzero analytic output cannot be confined to such a $K$.
 
-We now quantify how *little* a nonzero transform can vanish.
+### 3.2 Compact support for entire functions
 
-**Theorem 4.2 (Null zero set).** *If $f$ is entire and $f \not\equiv 0$, then $\operatorname{vol}(Z(f)) = 0$.*
+**Theorem 3.2 (Compact-support obstruction).** If $F:\mathbb C\to\mathbb C$ is entire and has compact topological support, then $F\equiv 0$.
 
-**Proof sketch.** Choose $x$ with $f(x) \ne 0$. By analyticity, the set $\{f \ne 0\}$ is **codiscrete** (its complement is discrete): the zeros of a nonzero analytic function are isolated. Hence $Z(f)$ is discrete. Since $f$ is continuous, $Z(f)$ is closed. A closed, discrete subset of the second-countable (hence Lindelöf) space $\mathbb C$ is countable. A countable subset of $\mathbb R^2$ has Lebesgue measure zero. $\qquad\blacksquare$
+**Proof sketch.** Let $K=\operatorname{supp}_{\mathrm{top}}(F)$. The complex plane is not compact, so $\mathbb C\setminus K$ is nonempty. It is open because $K$ is closed. By the definition of support, $F$ vanishes on $\mathbb C\setminus K$. The identity principle on the connected domain $\mathbb C$ gives $F\equiv 0$. $\square$
 
-**Theorem 4.3 (Infinite support).** *If $f$ is entire and $f \not\equiv 0$, then $\operatorname{vol}(\operatorname{supp} f) = \infty$.*
+This theorem is qualitative: it distinguishes exact zero from arbitrarily rapid decay. A Gaussian decays faster than any exponential of a linear function along the real axis, yet it does not have compact support.
 
-**Proof sketch.** The plane splits as $\mathbb C = \operatorname{supp} f \cup Z(f)$, so $\infty = \operatorname{vol}(\mathbb C) \le \operatorname{vol}(\operatorname{supp} f) + \operatorname{vol}(Z(f)) = \operatorname{vol}(\operatorname{supp} f) + 0$. Hence $\operatorname{vol}(\operatorname{supp} f) = \infty$. $\qquad\blacksquare$
+### 3.3 Nullity of zero sets
 
-**Theorem 4.4 (Benedicks–Amrein–Berthier form, entire image).** *If $f$ is entire and $\operatorname{vol}(Z(f)) > 0$, then $f \equiv 0$.*
+**Lemma 3.3 (Isolation of zeros).** Let $F$ be holomorphic on a domain $U$. If $F$ is not identically zero, then every zero of $F$ is isolated.
 
-**Proof sketch.** Contrapositive of Theorem 4.2: if $f \not\equiv 0$ then $\operatorname{vol}(Z(f)) = 0$, contradicting positivity. $\qquad\blacksquare$
+**Proof sketch.** At a zero $z_0$, expand $F$ into a power series. Since $F$ is not locally zero, there is a least $n$ with nonzero coefficient. Then
 
-**Theorem 4.5 (Measure-theoretic uncertainty).** *If $f$ is entire and $\operatorname{vol}(\operatorname{supp} f) < \infty$, then $f \equiv 0$.*
+$$
+F(z)=(z-z_0)^nG(z),
+$$
 
-**Proof sketch.** Contrapositive of Theorem 4.3. $\qquad\blacksquare$
+where $G$ is holomorphic and $G(z_0)\neq 0$. Continuity makes $G$ nonzero near $z_0$, leaving $z_0$ as the only zero in a sufficiently small disk. $\square$
 
-Theorems 4.4 and 4.5 are the Benedicks–Amrein–Berthier conclusion for the class of transforms with entire image: a signal and its (entire) transform cannot both be supported on sets of finite measure.
+**Lemma 3.4 (Countability of a discrete planar set).** Every discrete subset of $\mathbb C$ is countable.
 
----
+**Proof sketch.** The plane has a countable base consisting, for example, of disks with rational centers and rational radii. For each point of a discrete set, choose a basis disk containing that point and no other point of the set. Assigning a suitably chosen basis disk to each point gives an injection into a countable family. $\square$
 
-## 5. Worked examples
+**Theorem 3.5 (Zero-set measure theorem).** If $F:\mathbb C\to\mathbb C$ is a nonzero entire function, then
 
-### 5.1 Sine, cosine, and the sinc kernel (Fourier)
+$$
+m_2\bigl(\{z\in\mathbb C:F(z)=0\}\bigr)=0.
+$$
 
-The sinc function $\operatorname{sinc}(k) = \sin(\pi k)/(\pi k)$ is the Fourier transform of the box indicator $\mathbf 1_{[-1,1]}$ — the canonical example of a compactly supported signal with a fully spread-out transform. Its numerator is built from $\sin$ and $\cos$, which are entire.
+**Proof sketch.** By Lemma 3.3, the zero set is discrete. By Lemma 3.4, it is countable. Every singleton has planar Lebesgue measure zero, and countable unions of null sets are null. $\square$
 
-**Proposition 5.1.** *$\sin$ and $\cos$ are entire, and neither is identically zero (since $\sin(\pi/2) = 1$ and $\cos 0 = 1$).*
+### 3.4 Infinite measure of the nonzero set
 
-**Corollary 5.2.** *$\operatorname{vol}(Z(\sin)) = \operatorname{vol}(Z(\cos)) = 0$, and $\operatorname{vol}(\operatorname{supp}\sin) = \infty$.*
+**Theorem 3.6 (Infinite-support-measure theorem).** If $F:\mathbb C\to\mathbb C$ is a nonzero entire function, then
 
-These follow directly from Theorems 4.2 and 4.3. The sinc kernel's transform (the box) is compactly supported, but the sine wave itself — as a function on the plane — vanishes only on the discrete null set $\{n\pi\}$ and is otherwise nonzero, illustrating the infinite-support conclusion.
+$$
+m_2\bigl(\{z\in\mathbb C:F(z)\neq 0\}\bigr)=\infty.
+$$
 
-### 5.2 The Gaussian: the extremal object
+**Proof sketch.** The zero set is null by Theorem 3.5. The nonzero set is its complement in $\mathbb C$, up to a disjoint partition. Since $m_2(\mathbb C)=\infty$, removing a null set leaves infinite measure. $\square$
 
-**Proposition 5.3.** *The function $z \mapsto e^{-z^2}$ is entire and nowhere zero; hence $\operatorname{supp}(e^{-z^2}) = \mathbb C$ and $\operatorname{vol}(\operatorname{supp}(e^{-z^2})) = \infty$.*
+Two useful contrapositives make the uncertainty content explicit.
 
-**Proof sketch.** The complex exponential never vanishes, so $e^{-z^2} \ne 0$ for all $z$; its support is the whole plane. $\qquad\blacksquare$
+**Corollary 3.7 (Positive-measure vanishing).** If an entire function vanishes on a subset of $\mathbb C$ having positive planar Lebesgue measure, then it is identically zero.
 
-The Gaussian is the fixed point of the Fourier transform ($\widehat{e^{-\pi t^2}} = e^{-\pi k^2}$) and the unique minimizer of the variance uncertainty product. Its complex incarnation is the *equality case* made visible: not only can it not be confined, it does not vanish anywhere at all — the smoothest, most symmetric refusal of localization.
+**Proof sketch.** A nonzero entire function has a null zero set by Theorem 3.5, contradicting positive measure. $\square$
 
----
+**Corollary 3.8 (Finite-measure nonzero set).** If an entire function has a nonzero set of finite planar Lebesgue measure, then it is identically zero.
 
-## 6. Uncertainty for the Laplace and Mellin transforms
+**Proof sketch.** A nonzero entire function has a nonzero set of infinite measure by Theorem 3.6. $\square$
 
-The same engine, with a different domain $U$, yields uncertainty principles for other transforms.
+These results are stronger than the compact-support obstruction for an entire function: the nonzero set cannot even have finite measure. They should nevertheless not be conflated with the full finite-measure Fourier support theorem for arbitrary real-line signals. Here the entire-output hypothesis is already a strong regularity consequence, typically supplied by compact support of the input.
 
-**Theorem 6.1 (Laplace uncertainty).** *Let $f$ be holomorphic on the right half-plane $H = \{\operatorname{Re} s > 0\}$ — as every Laplace transform of an $L^1$ signal supported on $[a,\infty)$ is on its region of convergence. If $f$ vanishes on a nonempty open subset $W \subseteq H$, then $f \equiv 0$ on $H$; consequently, by injectivity of the Laplace transform, the signal is zero.*
+## 4. Fourier specialization
 
-**Proof sketch.** $H$ is convex, hence preconnected. Apply Theorem 3.1 with $U = H$. $\qquad\blacksquare$
+For $f\in L^1(\mathbb R)$, adopt the Fourier convention
 
-**Theorem 6.2 (Mellin uncertainty).** *Let $f$ be holomorphic on a vertical strip $S = \{a < \operatorname{Re} s < b\}$ — the strip of holomorphy of a Mellin transform. If $f$ vanishes on a nonempty open subset $W \subseteq S$, then $f \equiv 0$ on $S$.*
+$$
+\widehat f(k)=\int_{\mathbb R}f(x)e^{-ikx}\,dx.
+$$
 
-**Proof sketch.** A strip is the intersection of two half-planes $\{\operatorname{Re} s > a\}$ and $\{\operatorname{Re} s < b\}$, each convex; the intersection is convex, hence preconnected. Apply Theorem 3.1 with $U = S$. $\qquad\blacksquare$
+If $f$ is supported in $[-R,R]$, define for $z\in\mathbb C$
 
-**Remark 6.3.** The convexity (hence preconnectedness) of the half-plane and the strip is exactly the hypothesis Theorem 3.1 needs. The two-sided Laplace transform (strip), the Z-transform (annulus, connected but not convex), and the Borel transform (a growth-determined region) are all covered identically, each yielding its own uncertainty principle.
+$$
+F(z)=\int_{-R}^{R}f(x)e^{-izx}\,dx.
+$$
 
----
+Differentiation under the integral yields
 
-## 7. Algorithms
+$$
+F^{(n)}(z)=\int_{-R}^{R}(-ix)^n f(x)e^{-izx}\,dx.
+$$
 
-The theory is qualitative, but its predictions are numerically checkable. We describe two algorithms used in the accompanying computational demonstrations.
+On compact subsets of the $z$-plane the integrands admit an integrable uniform bound because $|x|\leq R$. Hence $F$ is entire and restricts to $\widehat f$ on the real axis. This is the elementary analytic-continuation direction of Paley–Wiener theory.
 
-### 7.1 Concentration trade-off estimator
+**Theorem 4.1 (Fourier compact-support uncertainty).** Let $f\in L^1(\mathbb R)$ have compact support. If the entire continuation $F$ of $\widehat f$ has compact support in $\mathbb C$, or if its nonzero set has finite planar measure, then $F\equiv 0$. By injectivity of the Fourier transform on $L^1(\mathbb R)$, $f=0$ almost everywhere.
 
-**Purpose.** Given a discretized signal, estimate the time-spread $\Delta x$ and frequency-spread $\Delta k$ (via second moments of $|f|^2$ and $|\hat f|^2$) and verify $\Delta x \cdot \Delta k \ge 1/(4\pi)$ numerically, confirming the Gaussian saturates the bound.
+**Proof sketch.** Entire continuation follows from the compact support of $f$. Apply Theorem 3.2 in the compact case or Corollary 3.8 in the finite-measure case. Fourier injectivity returns the conclusion to the input. $\square$
 
-**Pseudocode.**
-```
-Input: sampled signal f on a grid of N points, spacing dt
-1. normalize f so that sum |f|^2 dt = 1
-2. compute mean time  mu_t = sum t |f|^2 dt
-3. compute Delta_x^2 = sum (t - mu_t)^2 |f|^2 dt
-4. compute fhat = FFT(f), frequencies k, normalize similarly
-5. compute Delta_k^2 = sum (k - mu_k)^2 |fhat|^2 dk
-6. return Delta_x * Delta_k, compare to 1/(4*pi)
-```
+A real-axis spectral gap also suffices by a related identity argument: if the entire continuation vanishes on an interval of real frequencies, those zeros have an accumulation point in the complex domain, forcing global vanishing. This is stronger than merely saying the continuation cannot vanish on a two-dimensional open patch.
 
-### 7.2 Support-measure certifier
+### 4.1 Box and sinc
 
-**Purpose.** Empirically confirm that as a compactly supported signal is narrowed (support measure $\to \varepsilon$), the effective support of its transform grows without bound, illustrating Theorem 4.3.
+Let
 
-**Pseudocode.**
-```
-Input: family of box signals of width w -> 0
-For each width w:
-  1. build box_w = indicator of [-w/2, w/2]
-  2. compute transform (analytically: sinc scaled by w)
-  3. measure effective support = { k : |transform(k)| > tau } for threshold tau
-  4. record (w, measure_of_effective_support)
-Output: table showing product stays bounded below / support blows up
-```
+$$
+f(x)=\mathbf 1_{[-1,1]}(x).
+$$
 
----
+Then
 
-## 8. Applications and discussion
+$$
+\widehat f(k)=\int_{-1}^{1}e^{-ikx}\,dx=
+\begin{cases}
+2\dfrac{\sin k}{k},&k\neq 0,\\
+2,&k=0.
+\end{cases}
+$$
 
-**Signal processing.** The uncertainty principle is the theoretical ceiling on joint time–frequency resolution. Every windowed transform (short-time Fourier transform, wavelets, Gabor frames) is a design under this constraint. Recognizing the constraint as a theorem — not an artifact of finite data — clarifies that no algorithm can evade it.
+The apparent singularity at zero is removable. The complex sine function is entire and nonzero as a function because $\sin(\pi/2)=1$. Its zeros are isolated multiples of $\pi$, hence null. The sinc transform therefore has an unbounded tail and is nonzero almost everywhere on the real axis. Hard localization of the box creates global spectral reach.
 
-**Quantum mechanics.** The identification of position–momentum uncertainty with Fourier uncertainty demystifies the former: it is a mathematical necessity for any wave description, independent of measurement or interpretation.
+The complex cosine is likewise entire and nonzero because $\cos 0=1$. Its zeros are isolated and its nonzero set has infinite planar measure. Sine and cosine thus provide elementary models of analytic outputs with sparse zero sets but extensive support.
 
-**Number theory and scaling problems.** Mellin uncertainty (Theorem 6.2) is the analytic backbone behind rigidity statements for Dirichlet series and zeta-type functions: a Mellin transform cannot vanish on an open subset of its strip without vanishing identically.
+### 4.2 Gaussian
 
-**Unified viewpoint.** The central message is economy: one lemma (Theorem 3.1) governs the entire zoo of transform uncertainty principles. The transform chooses the domain; rigidity does the rest.
+For $a>0$, set
 
----
+$$
+f_a(x)=e^{-a x^2}.
+$$
 
-## 9. Future directions
+Under the stated Fourier convention,
 
-1. **Paley–Wiener, formalized.** Prove that the Fourier transform of a compactly supported $L^1$ (or $L^2$) function extends to an entire function of exponential type, closing the loop between the *signal* and the *entire transform* used here, upgrading "the transform is entire ⇒ …" to a theorem directly about $\hat f$.
+$$
+\widehat f_a(k)=\sqrt{\frac{\pi}{a}}\,e^{-k^2/(4a)}.
+$$
 
-2. **Benedicks–Amrein–Berthier proper.** The full theorem — $f$ and $\hat f$ cannot both be supported on sets of finite Lebesgue measure unless $f = 0$ — for the genuine Fourier transform on $\mathbb R^n$ (no analyticity assumed). The present development proves the entire-image special case; the general case needs a different (measure-theoretic / Zygmund) argument.
+Both functions have full real support but rapid decay. Their complex continuations are entire. Moreover,
 
-3. **Quantitative Heisenberg.** Formalize $\Delta x \cdot \Delta k \ge 1/2$ via the variance form $\|x f\|_2 \cdot \|\xi\,\hat f\|_2 \ge (1/4\pi)\|f\|_2^2$, the sharp inequality with the Gaussian as the equality case — connecting to the Gaussian's full-plane support as the extremal object.
+$$
+e^{-z^2}\neq 0
+$$
 
-4. **Discrete uncertainty (Donoho–Stark).** For the DFT on $\mathbb Z/N$, $|\operatorname{supp} f|\cdot|\operatorname{supp}\hat f| \ge N$ for $f \ne 0$: a finite-dimensional, fully computable analogue provable via Plancherel and an $L^\infty$/Vandermonde bound.
+for every $z\in\mathbb C$, because the exponential function has no zeros. Thus its nonzero set and topological support are all of $\mathbb C$.
 
-5. **Radon transform.** A support theorem: if $f$ on $\mathbb R^2$ is supported in a strip and its Radon transform is supported in a set of finite measure of line-space, then $f = 0$. This needs the microlocal / holomorphic-extension machinery of the Radon transform.
+After $L^2$ normalization and a unitary Fourier convention, Gaussian width obeys reciprocal scaling: narrowing in position broadens in frequency. Gaussians attain equality in the variance uncertainty relation. They demonstrate that optimal concentration means balanced tails, not simultaneous compact support.
 
-6. **Other holomorphic transforms.** The engine Theorem 3.1 applies verbatim to the two-sided Laplace transform (strip), the Z-transform (annulus), and the Borel transform, each giving its own uncertainty principle by choosing the domain $U$.
+## 5. Laplace half-plane uncertainty
 
----
+For suitable $f:[0,\infty)\to\mathbb C$, the Laplace transform is
 
-## 10. Conclusion
+$$
+\mathcal Lf(s)=\int_0^\infty f(t)e^{-st}\,dt.
+$$
 
-The uncertainty principle is not a law of physics but a theorem of complex analysis wearing physical clothing. Its engine is the rigidity of holomorphic functions: an analytic function on a connected open domain that vanishes on an open set vanishes everywhere. From this one fact flow the compact-support Fourier principle, the null-zero-set and infinite-support results, the positive-measure Benedicks–Amrein–Berthier form, and — by merely changing the domain — uncertainty principles for the Laplace and Mellin transforms and beyond. Every invertible transform with a holomorphic image has its own uncertainty principle, and they are all, at bottom, the same principle.
+If, for example, $f\in L^1([0,\infty))$, the integral defines a holomorphic function on the right half-plane
+
+$$
+H_0=\{s\in\mathbb C:\operatorname{Re}s>0\}.
+$$
+
+More general exponential growth assumptions shift the boundary. Every half-plane $H_c=\{s:\operatorname{Re}s>c\}$ is convex and therefore connected.
+
+**Theorem 5.1 (Laplace open-gap uncertainty).** Let $F$ be holomorphic on $H_c$. If there is a nonempty open set $W\subseteq H_c$ on which $F=0$, then $F=0$ throughout $H_c$. If $F=\mathcal Lf$ in an input class where the Laplace transform is injective, then $f=0$ almost everywhere.
+
+**Proof sketch.** Convexity gives connectedness of $H_c$. Apply Theorem 3.1, then injectivity. $\square$
+
+The theorem does not say that a Laplace transform is compactly supported in an ordinary real-frequency sense, because its natural variable occupies a half-plane and its behavior depends on both decay and oscillation. It says precisely that an analytic Laplace-domain output cannot possess a nonempty open region of exact silence unless it is globally silent.
+
+A numerical example uses $f(t)=e^{-t}\mathbf 1_{[0,\infty)}(t)$, for which
+
+$$
+\mathcal Lf(s)=\frac{1}{s+1},\qquad \operatorname{Re}s>-1.
+$$
+
+This function decays as $|s|$ grows but never vanishes in its domain. Truncating the time integral introduces numerical and truncation error, yet sampled values still illustrate the absence of a two-dimensional open zero patch.
+
+## 6. Mellin strip uncertainty
+
+For a function on the positive real axis, define
+
+$$
+\mathcal Mf(s)=\int_0^\infty f(x)x^{s-1}\,dx.
+$$
+
+Convergence often holds on a vertical strip
+
+$$
+S_{a,b}=\{s\in\mathbb C:a<\operatorname{Re}s<b\}.
+$$
+
+The strip is the intersection of two half-planes, hence convex and connected.
+
+**Theorem 6.1 (Mellin strip uncertainty).** Let $F$ be holomorphic on $S_{a,b}$. If $F$ vanishes on a nonempty open subset of $S_{a,b}$, then $F$ vanishes throughout the strip. If $F=\mathcal Mf$ in a class on which the Mellin transform is injective, then $f=0$ almost everywhere.
+
+**Proof sketch.** Apply Theorem 3.1 to the connected strip, then use injectivity. $\square$
+
+The Mellin–Fourier relationship explains this result structurally. Substitute $x=e^u$, so $dx=e^u du$. Then
+
+$$
+\mathcal Mf(\sigma+i\omega)
+=\int_{-\infty}^{\infty}f(e^u)e^{\sigma u}e^{i\omega u}\,du.
+$$
+
+For fixed $\sigma$, this is a Fourier transform in $u$ up to the sign convention. Translation in $u$ corresponds to multiplication of $x$ by a scale factor. Thus geometric progressions and multiplicative sparsity become additive structures in logarithmic coordinates.
+
+For the illustrative input $f(x)=e^{-x}$,
+
+$$
+\mathcal Mf(s)=\Gamma(s),\qquad \operatorname{Re}s>0.
+$$
+
+The gamma function has no zeros. Its magnitude along vertical lines can become very small, but exact support conclusions concern zeros, not thresholded smallness.
+
+## 7. Quantitative Hilbert-space companion
+
+Support rigidity is qualitative. Variance uncertainty and numerical concentration are quantitative. Their elementary finite-dimensional engine is Gram positivity.
+
+**Theorem 7.1 (Signal–probe Gram inequality).** In a real inner-product space, for any vectors $u$ and $v$,
+
+$$
+0\leq \lVert u\rVert^2\lVert v\rVert^2-\langle u,v\rangle^2.
+$$
+
+Equivalently,
+
+$$
+|\langle u,v\rangle|\leq \lVert u\rVert\lVert v\rVert.
+$$
+
+**Proof sketch.** If $v=0$, the result is immediate. Otherwise consider
+
+$$
+\left\lVert u-\frac{\langle u,v\rangle}{\lVert v\rVert^2}v\right\rVert^2\geq 0.
+$$
+
+Expanding and multiplying by $\lVert v\rVert^2$ gives the stated determinant inequality. Equivalently, the $2\times2$ Gram matrix of $u$ and $v$ is positive semidefinite, so its determinant is nonnegative. $\square$
+
+In uncertainty derivations, $u$ may be a centered position-weighted signal and $v$ a centered frequency or derivative probe. Their inner product is constrained by commutation or integration by parts. Gram positivity then converts that constraint into a product lower bound. In discrete signal analysis, the same inequality bounds correlations with dictionary atoms and underlies Bessel-type energy estimates.
+
+Analytic continuation and Gram positivity should not be collapsed into one theorem. The former forbids exact open gaps and finite support under strong regularity. The latter bounds degrees of concentration in finite-dimensional or $L^2$ geometry. They are complementary modules.
+
+## 8. Numerical algorithms
+
+Numerics cannot establish exact support on an infinite domain. Sampling, truncation, and floating-point thresholds always replace exact statements with concentration diagnostics. The following algorithms are therefore illustrations of width reciprocity and analytic leakage.
+
+### 8.1 Fourier width experiment
+
+Sample a normalized Gaussian on a symmetric grid, compute a centered discrete Fourier transform, normalize spectral energy, and estimate standard deviations
+
+$$
+\Delta x=\left(\int (x-\mu_x)^2|f(x)|^2dx\right)^{1/2},
+$$
+
+$$
+\Delta k=\left(\int (k-\mu_k)^2|\widehat f(k)|^2dk\right)^{1/2}.
+$$
+
+Repeating over several Gaussian widths shows $\Delta x\propto\sigma$ and $\Delta k\propto\sigma^{-1}$. The product remains approximately constant, with deviations controlled by window truncation and grid resolution.
+
+For a box pulse, threshold the magnitude of the discrete spectrum and report the occupied spectral fraction. This fraction depends on the threshold and window, so it is not a mathematical support. The visible sinc sidelobes nevertheless demonstrate that sharpening an edge spreads spectral content.
+
+With $N$ samples, the fast Fourier transform costs $O(N\log N)$ time and $O(N)$ memory.
+
+### 8.2 Laplace-domain sampling
+
+For sampled $t_j\geq0$, quadrature approximates
+
+$$
+F(s)\approx\sum_j f(t_j)e^{-s t_j}w_j
+$$
+
+on a grid of complex points $s=\sigma+i\omega$ in a right half-plane. Plotting $\log_{10}|F(s)|$ reveals decay and oscillation. An apparent zero below a tolerance is not exact vanishing. For $f(t)=e^{-t}$, comparison with $1/(s+1)$ provides an error check. A direct computation on $N$ time samples and $M$ complex points costs $O(NM)$ time and $O(M)$ output memory if evaluated in batches.
+
+### 8.3 Mellin-domain sampling
+
+Use logarithmic coordinates $x=e^u$. For fixed $\sigma$,
+
+$$
+\mathcal Mf(\sigma+i\omega)
+=\int g_\sigma(u)e^{i\omega u}\,du,
+\qquad
+g_\sigma(u)=f(e^u)e^{\sigma u}.
+$$
+
+An FFT over a uniform $u$-grid computes an entire vertical line of Mellin samples in $O(N\log N)$ time. Varying $\sigma$ explores the strip. This algorithm makes scale-frequency duality explicit and avoids poorly resolved quadrature over many orders of magnitude in $x$.
+
+## 9. Applications
+
+### 9.1 Sparse learned representations
+
+Suppose a learned integral transform is injective and all outputs in its model class extend holomorphically to a common connected domain with controlled growth. Theorem 3.1 gives a deterministic uniqueness obstruction: no nonzero code may vanish on an open part of that domain. If outputs are entire, Corollary 3.8 forbids finite-measure nonzero sets. Thus exact sparsity assumptions must be checked against analytic regularity.
+
+The practical replacement is approximate sparsity. Growth bounds combined with propagation-of-smallness inequalities may quantify the minimum leakage outside a selected support. Such results could supplement incoherence and restricted-isometry analyses with analytic certificates.
+
+### 9.2 Time-frequency design
+
+Windowed spectral methods choose between temporal resolution and frequency resolution. Gaussian windows offer optimal variance balance, while compactly supported windows necessarily develop spectral tails. Filter designers can suppress sidelobes but cannot make both impulse response and frequency response exactly compact under the analytic hypotheses.
+
+### 9.3 Scale-equivariant models
+
+Mellin variables encode multiplicative scale as additive log-frequency. A narrow receptive field in logarithmic position necessarily spreads in Mellin frequency. This informs wavelet-like and scale-equivariant architectures, where strip width and growth may become measures of usable scale resolution.
+
+### 9.4 Tomography and the Radon boundary
+
+For a planar function $f$, the Radon transform records line integrals
+
+$$
+Rf(\theta,p)=\int_{x\cdot\theta=p}f(x)\,d\ell(x).
+$$
+
+The Fourier-slice theorem identifies the one-dimensional Fourier transform in $p$ with the restriction of the two-dimensional Fourier transform of $f$ to the radial line in direction $\theta$. Support uncertainty for Radon data therefore couples spatial support, angular coverage, and slice frequency. The one-variable identity principle alone does not supply a complete strip-support theorem. Geometric range conditions and angular information are indispensable.
+
+## 10. Limitations and scope
+
+First, invertibility is not enough. The identity operator is an immediate counterexample to a universal compact-support prohibition. Second, the entire-function finite-measure theorem does not by itself prove the full Benedicks–Amrein–Berthier theorem for arbitrary finite-measure supports on the real line; the present route assumes entire continuation, commonly derived from compact input support. Third, numerical thresholding cannot verify exact zeros or infinite support. Fourth, holomorphic rigidity is qualitative and can be unstable in finite precision: a function may be extremely small on a region without being zero.
+
+The results are exact within their stated hypotheses. Their value lies partly in exposing which hypotheses do the work. Connectedness prevents separate analytic components. Holomorphy forces continuation. Infinite ambient measure turns a null zero set into an infinite-measure nonzero set. Injectivity transfers transformed vanishing back to the input.
+
+## 11. Future work
+
+A quantitative theory should replace exact vanishing by smallness. Uniform growth bounds for analytic transform outputs may combine with three-circle inequalities, Remez-type estimates, or harmonic measure to lower-bound mass outside measurable sets.
+
+For Mellin transforms, logarithmic coordinates invite fractal uncertainty principles for multiplicatively porous sets. The expected bounds should depend on the number of resolved scales and porosity parameters.
+
+Radon uncertainty requires a separate geometric program using the Fourier-slice theorem, support theorems, and angular sampling. A sharp stability inequality should connect strip width, missing angles, and concentration in offset space.
+
+Learned transforms motivate deterministic uniqueness certificates based on analytic continuation and growth, complementing coherence-based sparse recovery. Finally, quantitative Fourier restrictions along families of Radon slices may connect fractal uncertainty to incidence problems involving tube families.
+
+## 12. Conclusion
+
+The common core of several transform uncertainty principles is analytic continuation. A holomorphic function on a connected domain cannot vanish on an open patch without vanishing globally. A nonzero entire function has only a null set of zeros and therefore an infinite-measure nonzero set. These facts yield compact- and finite-support obstructions for analytic transform outputs, with direct forms for Fourier, Laplace, and Mellin analysis.
+
+The framework also draws a sharp conceptual boundary. Uncertainty is not a consequence of invertibility by itself, and not every transform is governed by the same analytic mechanism. For holomorphic transform classes, the operative pair is analytic rigidity plus injectivity. For Radon data, geometry enters. For quantitative concentration, Hilbert-space Gram positivity enters. Together these perspectives show uncertainty not as a peculiarity of quantum measurement, but as a family of structural limits imposed by representation.

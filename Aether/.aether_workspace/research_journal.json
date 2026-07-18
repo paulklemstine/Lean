@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "0e4c0a6c",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Mixed-Radix Number Systems (Cycle 1, thread th_d1eba7ba)\n\nThis cycle advances the mixed-radix program by settling two of the four standing\nconjectures in fully general form (arbi",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 26,
-      "timestamp": "2026-07-14T23:30:35",
-      "title": "These conjectures are distilled from the current cycle, which closed the bridge"
-    },
-    {
       "cycle_id": "71637775",
       "domain": "Novelty",
       "key_insight": "# Future Directions: The multi-join law for the ℤ₂-coindex\n\nThis cycle extends the constructive, lower-bound half of the ℤ₂-coindex theory established in\n`Catalog/Novelty/Z2CoindexJoin.lean` (the shar",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-18T19:01:52",
       "title": "Deepening: Tropical Cryptocurrency: Mining on the Min-Plus Semiring"
+    },
+    {
+      "cycle_id": "74205c89",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions\n\n## 1. Closed-subgroup exclusion for the Fibonacci four-anyon sector\n\nFix a published unitary normalization and fusion basis for the three-dimensional Fibonacci sector, and prove t",
+      "quality_score": 0.69,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-07-18T19:24:38",
+      "title": "Topological Quantum Compiling: Braid Groups as Universal Gates"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.74
     }
   ],
-  "last_updated": "2026-07-18T19:01:52",
+  "last_updated": "2026-07-18T19:24:38",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "c3fe1d06",
-        "quality": 0.83,
-        "theorems": 9,
-        "title": "Deepening: That the zero-dimensional persistent homology of the prim"
-      },
-      {
         "cycle_id": "6097a507",
         "quality": 0.91,
         "theorems": 3,
@@ -3575,6 +3569,12 @@
         "quality": 0.73,
         "theorems": 0,
         "title": "The Monster Group's Secret Message: Moonshine Beyond the j-Function"
+      },
+      {
+        "cycle_id": "74205c89",
+        "quality": 0.69,
+        "theorems": 10,
+        "title": "Topological Quantum Compiling: Braid Groups as Universal Gates"
       }
     ],
     "Novelty": [
