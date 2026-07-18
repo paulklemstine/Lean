@@ -1,324 +1,392 @@
-# The Fractal Dimension of Proof Search: Similarity Dimension, Relative Entropy, and Subadditive Growth
+# Fractal Dimension of Search Trees: Ambient Bounds, Periodic Realization, and the Separation of Geometry from Cost
 
 ## Abstract
 
-We develop a rigorous model of the difficulty of automated proof search based on the
-geometry of the tree of derivations. A derivation problem is modeled as a complete
-$b$-ary tree of candidate partial proofs, together with a *self-similar* success
-structure in which exactly $s$ of the $b$ available inference steps at each node can
-be extended to a completed proof. The set of infinite successful derivation paths,
-under the natural ultrametric on the boundary of the tree, is a self-similar Cantor
-set whose similarity dimension we call the **proof-search fractal dimension**
-$D(b,s) = \log s / \log b$. We prove that this exponent is not a heuristic but an
-exact analytic invariant: the number of successful depth-$n$ paths equals the total
-candidate count raised to $D$ (the **Bridge Identity** $s^n = (b^n)^D$), the success
-density decays as $(b^n)^{D-1}$ (the **Density Law**), and $D \in [0,1]$ with $D = 1$
-a sharp threshold attained only when no branch can be pruned. We then reinterpret $D$
-as a **relative entropy**: the per-depth growth rate of successful paths, $\log s$,
-divided by the ambient growth rate $\log b$. This reading connects the model to
-Fekete's theory of subadditive sequences, under which the entropy is defined even for
-non-uniform branching, and shows the dimension identity persists in the limit. We
-correct a natural misconception in the informal literature — that hard theorems have
-dimension exceeding $1$ — by showing hardness is governed by the *codimension*
-$\kappa = 1 - D$, the exponential rate at which successful paths thin out. We include
-numerical demonstrations and discuss extensions to variable-branching and
-multifractal search.
-
-**Keywords:** proof search, fractal dimension, similarity dimension, self-similar
-set, relative topological entropy, subadditive sequence, Fekete's lemma, branching
-tree, codimension.
+We study a normalized fractal dimension for the set of successful prefixes in a bounded-branching search tree. In the binary case, a successful prefix is a finite word that can still be extended to a terminal solution. If $N(n)$ denotes the number of successful prefixes at depth $n$, the finite-scale estimate is $d_n=\log_2 N(n)/n$, and the upper entropy dimension is $D=\limsup_{n\to\infty}d_n$. We establish a sharp ambient bound: every binary successful-prefix set satisfies $D\leq1$, so a proposed super-unit regime cannot occur under this normalization. We then analyze periodic pruning. If exactly $r$ positions are free in every period of length $m$, the dimension is $r/m$, and at every positive complete-period depth the finite estimate equals the limit exactly. Consequently, every rational dimension in $[0,1]$ is realized, and codimension is precisely the density of forced levels. Finally, we separate prefix geometry from terminal complexity. For every rational $d\in[0,1]$ and every prescribed natural number $L$, there is an abstract search instance of dimension $d$ with designated shortest terminal length $L$. Thus dimension alone measures exponential abundance of viable prefixes, not proof length or traversal cost. We discuss algorithms for exact counting and estimation, extensions to $b$-ary and stochastic pruning, and the additional assumptions needed for a genuine dimension–cost theory.
 
 ## 1. Introduction
 
-Automated theorem proving is, at its core, a search problem. A prover explores a tree
-of partial derivations: the root is the goal, the children of a node are the results
-of applying each applicable inference rule, and a proof is a finite path (or, in the
-idealized limit, an infinite non-stuck path) descending through the tree. The
-practical and theoretical question that unifies the field is how the *difficulty* of
-a problem is reflected in the structure of this tree.
+Many reasoning procedures can be represented as rooted trees. A node is a partial derivation, a planning state, or a sequence of decisions; its children are the next admissible moves. Some partial routes remain capable of reaching a terminal solution, while others are dead ends. The set of viable routes can be sparse, dense, periodic, random, or highly irregular. Because these structures reproduce branching patterns at many depths, fractal and entropy dimensions offer a natural language for their large-scale geometry.
 
-Coarse answers — worst-case exponential blowup, undecidability of validity in general
-— capture the pessimistic extremes but say nothing quantitative about a particular
-problem. We propose a finer invariant drawn from fractal geometry. The key
-observation is that a search tree with a self-similar success structure has, on its
-boundary, a self-similar Cantor set of successful paths, and self-similar sets carry
-a well-defined dimension. This dimension turns out to control, exactly, the growth of
-successful path counts, the density of success among candidates, and — through a
-change of viewpoint — the entropy of the search.
+A tempting interpretation is that dimension directly quantifies difficulty: perhaps low-dimensional searches are focused and easy, while high-dimensional searches are diffuse and hard. That intuition must be treated carefully. Dimension is relative to an ambient metric and normalization. In a fixed binary path space, the ambient normalized dimension is $1$, and no subset can exceed it. Moreover, counting viable prefixes says nothing about the order in which an algorithm visits nodes, the locations of terminal solutions, or the distribution of unsuccessful work.
 
-Our contributions are:
+This paper develops the basic model completely and isolates its valid conclusions. First, we define successful-prefix profiles and their finite and asymptotic dimensions. Second, we prove the universal upper bound $D\leq1$. Third, we introduce periodically pruned profiles and compute their dimensions exactly. These models realize every rational point in the unit interval and provide exact finite-depth benchmarks. Fourth, we show that dimension and shortest terminal length are independent unless an additional semantic relation is imposed.
 
-1. A precise, self-contained model of self-similar proof search and its
-   **fractal dimension** $D(b,s) = \log s / \log b$ (Section 3).
-2. The **Bridge Identity** $s^n = (b^n)^D$, showing combinatorial growth is exactly a
-   power law with fractal exponent (Section 4).
-3. The **Density Law** $(s/b)^n = (b^n)^{D-1}$ and the identification of the
-   codimension $\kappa = 1 - D$ as the pruning rate that governs difficulty
-   (Section 4).
-4. Sharp structural facts: $D \in [0,1]$, strict monotonicity in $s$, and $D = 1
-   \iff s = b$ (Section 5).
-5. A reinterpretation of $D$ as a **relative entropy** and its connection to Fekete's
-   subadditive theory, including the convergence of the per-depth growth average and
-   the persistence of the dimension identity for non-uniform branching (Section 6).
-6. The exact geometric cost of exhaustive search (Section 7), numerical
-   demonstrations (Section 8), and extensions (Section 9).
+The results reframe the role of dimension. It is a measure of exponential prefix abundance. Its complement, codimension, measures the asymptotic loss of branching freedom. Neither quantity is, in isolation, a measure of elapsed time or terminal depth. A theory of cost must couple geometry to a traversal policy, a failure model, and a law governing terminal solutions.
 
-## 2. The model
+## 2. Binary path space and successful-prefix profiles
 
-Fix a branching factor $b \in \mathbb{N}$ with $b > 1$. The **candidate search space**
-of depth $n$ is the complete $b$-ary tree; its paths of length $n$ number
+### 2.1 Finite words and cylinders
 
-$$\mathrm{total}(b, n) = b^n.$$
+Let $\{0,1\}^n$ denote the set of binary words of length $n$, and let $\{0,1\}^{\mathbb N}$ denote the space of infinite binary sequences. A finite word $u$ is a prefix of a word or sequence $v$ when the first $|u|$ symbols of $v$ equal $u$. The cylinder generated by $u$ is the set of infinite sequences beginning with $u$.
 
-A derivation problem is **self-similar with success factor** $s$, where
-$1 \le s \le b$, if at *every* node exactly $s$ of the $b$ available inference steps
-extend to a completed proof. Then the **successful** paths of length $n$ number
+Equip the infinite path space with the standard ultrametric
 
-$$\mathrm{succ}(s, n) = s^n.$$
+$$
+\rho(x,y)=2^{-\ell(x,y)},
+$$
 
-The condition $s \ge 1$ encodes solvability (at least one proof exists); $b > 1$
-encodes genuine branching (the boundary metric below is nondegenerate, since $\log b
-> 0$).
+where $\ell(x,y)$ is the length of the longest common prefix of distinct sequences $x$ and $y$, with $\rho(x,x)=0$. Thus routes are close precisely when they agree for many initial decisions. A depth-$n$ cylinder has diameter $2^{-n}$.
 
-**Boundary and metric.** The boundary $\partial T_b$ of the $b$-ary tree is the set of
-infinite paths. Given two infinite paths $x, y$, let $|x \wedge y|$ denote the length
-of their longest common prefix. The natural ultrametric is
+### 2.2 Successful prefixes
 
-$$d(x, y) = b^{-|x \wedge y|}.$$
+A **successful-prefix profile** is a family $S=(S_n)_{n\geq0}$ with $S_n\subseteq\{0,1\}^n$, interpreted as the prefixes at depth $n$ that remain extendable to a terminal solution. The natural consistency condition is prefix closure: if $u\in S_{n+1}$, then the length-$n$ prefix of $u$ lies in $S_n$. For the counting results below, the essential fact is simply
 
-Under $d$, the full boundary $\partial T_b$ is a compact self-similar set of
-similarity dimension $1$: it is the attractor of $b$ contractions of ratio $1/b$,
-and $b \cdot (1/b)^1 = 1$. The set $S \subseteq \partial T_b$ of infinite successful
-paths is the attractor of $s$ such contractions and is therefore a self-similar
-Cantor set.
+$$
+0\leq |S_n|\leq2^n.
+$$
 
-**Definition (Proof-search fractal dimension).** For $b > 1$ and $1 \le s \le b$, the
-proof-search fractal dimension is the similarity dimension of $S$, i.e. the unique
-exponent $D$ solving the Moran equation $s \cdot (1/b)^D = 1$:
+Write
 
-$$\boxed{\,D(b, s) = \frac{\log s}{\log b}\,}.$$
+$$
+N_S(n)=|S_n|.
+$$
 
-Because the contractions satisfy the open set condition, this similarity dimension
-coincides with the Hausdorff dimension of $S$; we work with the similarity dimension
-throughout, as it is the computationally explicit quantity.
+When $N_S(n)>0$, define the **finite-depth dimension estimate** by
 
-## 3. Elementary counts
+$$
+d_S(n)=\frac{\log_2 N_S(n)}{n}
+$$
 
-**Proposition 3.1 (Path counts).** For all $n$, $\mathrm{total}(b,n) = b^n$ and
-$\mathrm{succ}(s,n) = s^n$.
+for $n\geq1$. If empty levels are admitted, one may assign logarithmic count $-\infty$ or restrict attention to nonempty profiles. All principal periodic models here are nonempty at every depth.
 
-*Proof.* Immediate from the definitions: a depth-$n$ path is a sequence of $n$
-choices, each from $b$ (respectively $s$) options. $\square$
+The **normalized upper search dimension** is
 
-**Proposition 3.2 (Successful paths never dominate).** If $s \le b$ then
-$\mathrm{succ}(s,n) \le \mathrm{total}(b,n)$ for all $n$.
+$$
+D(S)=\limsup_{n\to\infty}d_S(n).
+$$
 
-*Proof.* $s \le b$ implies $s^n \le b^n$ by monotonicity of the $n$-th power on
-nonnegative integers. $\square$
+For regular tree profiles this agrees with the usual upper box or entropy dimension of the associated path set in the binary ultrametric. The upper limit is used because an aperiodic profile may have no ordinary limiting growth rate.
 
-## 4. The bridge identity and the density law
+The **codimension** is
 
-The central result converts a combinatorial count into an analytic power law.
+$$
+\operatorname{codim}(S)=1-D(S).
+$$
 
-**Theorem 4.1 (Bridge Identity).** Let $b > 1$ and $s \ge 1$. Then for every $n$,
+The normalization is important. Since the complete binary tree has $N(n)=2^n$, it has dimension $1$. A forced single route has $N(n)=1$ and dimension $0$.
 
-$$\mathrm{succ}(s, n) = \bigl(\mathrm{total}(b, n)\bigr)^{D(b,s)},
-\qquad\text{i.e.}\qquad s^n = \bigl(b^n\bigr)^{\log s / \log b}.$$
+## 3. The ambient boundary
 
-*Proof.* Since $b > 1$ we have $\log b > 0$, and since $s \ge 1$ we have $s > 0$.
-Writing the real power via the exponential,
+### Theorem 1 (Ambient Bound Theorem)
 
-$$(b^n)^{\log s / \log b}
-= \exp\!\left(\log(b^n)\cdot \frac{\log s}{\log b}\right)
-= \exp\!\left(n \log b \cdot \frac{\log s}{\log b}\right)
-= \exp(n \log s) = s^n. \qquad \square$$
+For every binary successful-prefix profile $S$,
 
-The identity says the "fractal exponent" is the literal exponent relating the total
-count to the successful count; exponential combinatorial growth *is* a power law whose
-power is the similarity dimension.
+$$
+D(S)\leq1.
+$$
 
-**Theorem 4.2 (Density Law).** Let $b > 1$ and $s \ge 1$. The fraction of candidate
-paths that succeed decays as a power of the total count with exponent $D - 1$:
+#### Proof sketch
 
-$$\left(\frac{s}{b}\right)^n = \bigl(\mathrm{total}(b,n)\bigr)^{D(b,s) - 1}
-= \bigl(b^n\bigr)^{D - 1}.$$
+At every depth $n$, successful prefixes form a subset of all binary words, so $N_S(n)\leq2^n$. For each positive $n$ with $N_S(n)>0$,
 
-*Proof.* As above, $(b^n)^{D-1} = \exp\!\big(n\log b\,(\tfrac{\log s}{\log b} - 1)\big)
-= \exp\!\big(n(\log s - \log b)\big) = \exp\!\big(n\log(s/b)\big) = (s/b)^n$. $\square$
+$$
+d_S(n)=\frac{\log_2N_S(n)}{n}
+\leq\frac{\log_2(2^n)}{n}=1.
+$$
 
-**Definition (Codimension).** The **pruning codimension** of a self-similar search is
-$\kappa(b,s) = 1 - D(b,s)$.
+Taking the upper limit gives $D(S)\leq1$. The estimate is sharp because the full binary tree has dimension $1$.
 
-By Theorem 4.2, the success density is $(b^n)^{-\kappa}$: the codimension is exactly
-the exponential rate at which successful paths become rare among candidates. Small
-$\kappa$ (dimension near $1$) means slow thinning and near-exhaustive search; large
-$\kappa$ (dimension near $0$) means rapid thinning and focused search. This is the
-correct operational reading of difficulty, replacing the naive and impossible "$D > 1$
-for hard problems": a self-similar subset of a dimension-$1$ boundary can never exceed
-dimension $1$.
+### Corollary 2 (Impossibility of a Super-Unit Regime)
 
-## 5. The dimension lives on the balanced edge $[0,1]$
+For every binary successful-prefix profile $S$ and every real number $\varepsilon>0$,
 
-**Theorem 5.1 (Range and endpoints).** Let $b > 1$ and $1 \le s \le b$. Then:
+$$
+D(S)\neq1+\varepsilon.
+$$
 
-1. $D(b,s) \ge 0$;
-2. $D(b,s) \le 1$;
-3. $D(b,s) < 1$ whenever $s < b$;
-4. $D(b,s) = 1$ if and only if $s = b$.
+#### Proof sketch
 
-*Proof.* (1) Both $\log s \ge 0$ (as $s \ge 1$) and $\log b > 0$ (as $b > 1$), so the
-quotient is nonnegative. (2) $s \le b$ gives $\log s \le \log b$ by monotonicity of
-$\log$, and dividing by $\log b > 0$ yields $D \le 1$. (3) $s < b$ gives the strict
-inequality $\log s < \log b$, hence $D < 1$. (4) $D = 1 \iff \log s = \log b \iff s =
-b$ by injectivity of $\log$ on the positive reals. $\square$
+The claimed value is strictly greater than $1$, contradicting the Ambient Bound Theorem.
 
-**Theorem 5.2 (Strict monotonicity).** For fixed $b > 1$, the map $s \mapsto D(b,s)$
-is strictly increasing on $\{s : s \ge 1\}$: if $1 \le s < t$ then $D(b,s) < D(b,t)$.
+This corollary is a definition-level obstruction rather than an empirical tendency. Under the fixed binary metric and base-$2$ normalization, a criterion that labels searches “hard” when $D>1$ has an empty hard class. Values above $1$ require a different ambient space, a nonstandard metric, or a different normalization. Increasing branching without changing the logarithmic base can produce numerical values above $1$, but those values then measure branching relative to a binary scale rather than normalized dimension within the actual ambient tree.
 
-*Proof.* $\log$ is strictly increasing on the positive reals, so $\log s < \log t$;
-dividing by the positive constant $\log b$ preserves the strict inequality. $\square$
+## 4. Periodically pruned search trees
 
-Thus $D = 0$ (i.e. $s = 1$) is the unique-proof, trivial-search endpoint; $D = 1$
-(i.e. $s = b$) is the unprunable, exhaustive-search endpoint attained only in the
-razor-sharp case $s = b$; and every intermediate value corresponds to a genuinely
-focused-but-nontrivial search on the balanced edge.
+### 4.1 Definition
 
-## 6. Dimension as relative entropy and the bridge to Fekete's theory
+Fix a positive integer $m$, called the **period**, and choose a set
 
-Define the **log-count** (the "action" of the search)
+$$
+R\subseteq\{0,1,\ldots,m-1\}.
+$$
 
-$$L(n) = \log\bigl(\mathrm{succ}(s,n)\bigr) = \log(s^n).$$
+A level $j\geq0$ is **free** when $j\bmod m\in R$ and **forced** otherwise. At a free level, both binary symbols may be appended to every successful prefix. At a forced level, exactly one prescribed symbol may be appended. The resulting profile is called a **periodically pruned binary search**.
 
-**Proposition 6.1 (Exact linear growth).** $L(n) = n \log s$.
+Let $r=|R|$. Define the free-level count below depth $n$ by
 
-*Proof.* $\log(s^n) = n \log s$. $\square$
+$$
+F(n)=\bigl|\{j:0\leq j<n,\ j\bmod m\in R\}\bigr|.
+$$
 
-**Proposition 6.2 (Subadditivity).** $L$ is subadditive: $L(n + m) \le L(n) + L(m)$
-for all $n, m$. In fact it is additive, so the inequality holds with equality.
+Each free level doubles the number of successful prefixes, while each forced level leaves the count unchanged. Hence
 
-*Proof.* $L(n+m) = (n+m)\log s = n\log s + m\log s = L(n) + L(m)$. $\square$
+$$
+N(n)=2^{F(n)}
+$$
 
-**Definition (Search entropy).** The search entropy is the per-depth growth rate
-$h(s) = \lim_{n\to\infty} L(n)/n$, when the limit exists. For the uniform model it is
-constant in $n$:
+and
 
-**Proposition 6.3 (Entropy limit).** $\displaystyle \lim_{n\to\infty} \frac{L(n)}{n}
-= \log s$.
+$$
+d(n)=\frac{F(n)}{n}.
+$$
 
-*Proof.* By Proposition 6.1, $L(n)/n = \log s$ for every $n \ge 1$, so the sequence is
-constant and converges to $\log s$. (For a general subadditive $L$, Fekete's lemma
-guarantees the limit exists and equals $\inf_n L(n)/n$.) $\square$
+At a complete number of periods, the count is exact:
 
-**Theorem 6.4 (Dimension as relative entropy).** For $b > 1$ and every depth
-$n \ge 1$,
+$$
+F(mk)=rk.
+$$
 
-$$D(b, s) = \frac{L(n)/n}{\log b} = \frac{h(s)}{\log b}
-= \frac{\text{entropy of successful paths}}{\text{entropy of all paths}}.$$
+For arbitrary $n=mk+s$ with $0\leq s<m$, the incomplete remainder contributes at most $m$ free levels. Consequently,
 
-*Proof.* By Proposition 6.1, $L(n)/n = \log s$ for all $n \ge 1$. Dividing by
-$\log b$ gives $\log s / \log b = D(b,s)$. $\square$
+$$
+F(n)=rk+O(m),
+$$
 
-This is the second face of the invariant: $D$ is a **relative topological entropy**,
-the growth rate of successful paths normalized by the growth rate of all paths. The
-ambient entropy is $\log b$ (the full $b$-ary tree grows at rate $b$ per level), and
-the successful sub-system grows at rate $s$.
+where the error is bounded independently of $k$.
 
-**Fekete's inequality, tight here.** A direct consequence of subadditivity is the
-doubling bound
+### Theorem 3 (Periodic Dimension Theorem)
 
-$$L(2n) \le 2\,L(n),$$
+A periodically pruned binary search with $r$ free levels in each period of length $m\geq1$ has dimension
 
-which holds with equality in the uniform model precisely because $L$ is additive. The
-genuine content of Fekete's theory appears for **non-uniform** searches, treated next.
+$$
+D=\frac{r}{m}.
+$$
 
-## 7. Exhaustive search cost
+#### Proof sketch
 
-**Theorem 7.1 (Geometric cost).** An exhaustive search expanding every node down to
-depth $n$ visits $\sum_{i=0}^{n} b^i$ nodes, and for $b \ge 2$,
+The successful-prefix count is $N(n)=2^{F(n)}$, so $d(n)=F(n)/n$. Write $n=mk+s$, where $0\leq s<m$. The $k$ complete periods contribute $rk$ free levels, and the remainder contributes a bounded number. Therefore
 
-$$\left(\sum_{i=0}^{n} b^i\right)(b - 1) = b^{\,n+1} - 1,
-\qquad\text{i.e.}\qquad \sum_{i=0}^n b^i = \frac{b^{\,n+1}-1}{b-1}.$$
+$$
+\frac{F(n)}{n}=\frac{rk+O(1)}{mk+s}\longrightarrow\frac{r}{m}.
+$$
 
-*Proof.* Induction on $n$. Base case $n = 0$: the left side is $1 \cdot (b-1) = b -
-1 = b^1 - 1$. Inductive step: assuming the identity at $k$, add the term $b^{k+1}$;
-using $b^{k+1}(b-1) = b^{k+2} - b^{k+1}$ and the inductive hypothesis gives $(b^{k+1}
-- 1) + (b^{k+2} - b^{k+1}) = b^{k+2} - 1$. $\square$
+Thus the ordinary limit exists and equals $r/m$, so the upper dimension has the same value.
 
-Against this brute-force baseline of $\Theta(b^n)$ nodes, an ideal pruning searcher
-that follows only successful branches explores $\Theta(s^n) = \Theta(b^{nD})$ paths.
-The exponential saving is governed entirely by the codimension $\kappa = 1 - D$
-through the Density Law: the searcher avoids a $(b^n)^{\kappa}$ factor of dead ends.
+### Theorem 4 (Rational Realization Theorem)
 
-## 8. Numerical demonstrations
+For every pair of natural numbers $p,q$ satisfying $0\leq p\leq q$ and $q\geq1$, there exists a binary successful-prefix profile $S$ such that
 
-The accompanying computational demonstrations verify each identity numerically:
+$$
+D(S)=\frac pq.
+$$
 
-- **Bridge Identity.** For a range of $(b, s, n)$ with $1 \le s \le b$, one checks
-  $s^n = (b^n)^{D}$ to machine precision, with $D = \log s / \log b$. E.g. $b=3,
-  s=2, n=4$: $2^4 = 16$ and $(3^4)^{\log 2/\log 3} = 81^{0.6309\ldots} = 16$.
-- **Density Law and codimension.** The success ratio $(s/b)^n$ matches $(b^n)^{D-1}$;
-  plotting $-\log(\text{density})/\log(\text{total})$ against $n$ yields the constant
-  $\kappa = 1 - D$.
-- **Entropy convergence.** The per-depth average $L(n)/n$ is constant at $\log s$ for
-  the uniform model, and converges to Fekete's limit $\lim (\sum \log s_i)/n$ for
-  randomly generated variable-branching profiles.
-- **Search-cost comparison.** Empirical node counts of a pruning search scale as
-  $b^{nD}$, exponentially below the exhaustive $\tfrac{b^{n+1}-1}{b-1}$.
+#### Proof sketch
 
-## 9. Extensions
+Take a periodic model of period $q$ and choose exactly $p$ free residue classes. By the Periodic Dimension Theorem, its dimension is $p/q$.
 
-**Variable branching.** Drop the assumption of a constant success factor: let $s_i$
-be the number of successful branches at depth $i$ (bounded, with $1 \le s_i \le b_i$).
-The successful-path count becomes $\prod_{i<n} s_i$ and the log-count $L(n) = \sum_{i
-<n} \log s_i$ is genuinely subadditive rather than additive. Fekete's lemma still
-guarantees that the search entropy $h = \lim_n L(n)/n$ exists, and the dimension
-identity persists in the limit,
+The theorem realizes all rational dimensions in the normalized unit interval by explicit deterministic models. It also includes the endpoints: $p=0$ gives a fully forced path of dimension $0$, and $p=q$ gives the full binary tree of dimension $1$.
 
-$$D = \lim_{n\to\infty} \frac{\sum_{i<n}\log s_i}{\sum_{i<n}\log b_i} \in [0,1],$$
+### Theorem 5 (Exact Period-Boundary Estimate)
 
-with the Bridge Identity holding asymptotically (to first order in the exponent). The
-dimension survives the loss of a closed form precisely because it was a ratio of
-Fekete growth rates all along.
+For a periodic model with period $m$, $r$ free levels per period, and every integer $k\geq1$, the estimate at depth $mk$ is exactly
 
-**Multifractal spectrum.** When several inference strategies with distinct success
-ratios are interleaved, the set of successful paths becomes a *multifractal*: its
-coarse Hölder exponents fill a nondegenerate interval and the associated
-Legendre-transform spectrum is strictly concave unless all strategies share one
-ratio. A problem is *strategy-homogeneous* exactly when this spectrum degenerates to a
-single point — an intrinsic test for whether one dominant tactic suffices.
+$$
+d(mk)=\frac rm.
+$$
 
-**Boundary cases.** If $s = 1$ the successful set is a single point of dimension $0$
-(a unique, rigid proof). If $s = b$ the successful set is the whole boundary,
-dimension $1$, the only route to the maximal value. The case $b = 1$ is excluded: it
-makes $\log b = 0$ and the boundary metric degenerate, so a "search space" with no
-genuine branching has no meaningful dimension.
+#### Proof sketch
 
-## 10. Discussion and future work
+There are exactly $rk$ free levels in $k$ complete periods. Hence
 
-The proof-search fractal dimension unifies three viewpoints in a single number:
-fractal-geometric (similarity dimension of the success set), combinatorial (growth
-exponent of the path count), and information-theoretic (relative entropy of good
-paths against all paths). The Bridge Identity $s^n = (b^n)^D$ ties them together
-exactly, and the Density Law relocates "difficulty" from the dimension to the
-codimension $\kappa = 1 - D$.
+$$
+N(mk)=2^{rk},
+$$
 
-Three directions stand out. First, **variable-branching entropy**: proving that the
-Fekete limit is well defined and lies in $[0,1]$ for all bounded branching profiles,
-with the Bridge Identity asymptotic. Second, **codimension as search cost**: showing
-that an ideal pruning search expands $\Theta(b^{nD})$ nodes, so shortest-proof length
-correlates with $1/\kappa$, giving a rigorous version of the informal "length $\approx
-1/\varepsilon$" slogan with $\varepsilon = \kappa$. Third, the **dimension spectrum**
-for mixed strategies, characterizing strategy-homogeneous problems by a degenerate
-multifractal spectrum. Each is a direct, testable next step from the exact results
-established here.
+and direct substitution gives
 
-## 11. Conclusion
+$$
+d(mk)=\frac{\log_2(2^{rk})}{mk}=\frac{rk}{mk}=\frac rm.
+$$
 
-Difficulty of proof search, for self-similar search spaces, is captured exactly by the
-similarity dimension $D = \log s / \log b \in [0,1]$ of the Cantor set of successful
-paths. The dimension is simultaneously a fractal exponent, a combinatorial growth
-rate, and a relative entropy; it obeys the Bridge Identity $s^n = (b^n)^D$ and the
-Density Law $(s/b)^n = (b^n)^{D-1}$; it lives on the balanced edge $[0,1]$ with $D=1$
-a sharp threshold; and the operational hardness of a problem is its codimension
-$1 - D$. A slogan — "difficulty is fractal" — becomes a family of theorems, with the
-direction of the difficulty corrected: hard means low codimension, not high dimension.
+No limiting argument or approximation is involved.
+
+### Theorem 6 (Periodic Codimension Theorem)
+
+For every rational $p/q\in[0,1]$ with $q\geq1$, there is a periodic profile $S$ satisfying
+
+$$
+D(S)=\frac pq
+\qquad\text{and}\qquad
+1-D(S)=\frac{q-p}{q}.
+$$
+
+In this profile, codimension equals the density of forced levels.
+
+#### Proof sketch
+
+Use a period of length $q$ with $p$ free and $q-p$ forced positions. The Periodic Dimension Theorem gives $D=p/q$. Then
+
+$$
+1-D=1-\frac pq=\frac{q-p}{q},
+$$
+
+which is exactly the fraction of forced positions in each period.
+
+## 5. Geometry does not determine terminal length
+
+A successful-prefix profile records which partial routes remain viable at each depth. It need not specify where a complete solution is declared, nor the order in which a procedure inspects routes. To make this separation explicit, define an **abstract search instance** to be a pair
+
+$$
+I=(S,L),
+$$
+
+where $S$ is a successful-prefix profile and $L\in\mathbb N$ is a designated shortest terminal length. Its dimension is defined by $D(I)=D(S)$.
+
+This abstraction deliberately exposes the information absent from prefix geometry. Without a semantic axiom connecting terminal solutions to the profile, the coordinate $L$ is independent of $S$.
+
+### Theorem 7 (Independence of Dimension and Designated Shortest Length)
+
+Let $p,q,L$ be natural numbers with $p\leq q$ and $q\geq1$. There exists an abstract search instance $I=(S,L)$ such that
+
+$$
+D(S)=\frac pq
+$$
+
+and the designated shortest terminal length is exactly $L$.
+
+#### Proof sketch
+
+By the Rational Realization Theorem, choose a periodic profile $S$ with dimension $p/q$. Pair this profile with the prescribed value $L$. The dimension depends only on $S$, so assigning $L$ does not change it.
+
+### Consequence
+
+No function of dimension alone can determine the designated shortest length in this model. In particular, even at fixed dimension $1/2$, the shortest length may be $1$, $1000$, or any chosen natural number. This refutes any unconditional reciprocal law relating proof length to a small excess above $1$: the excess is impossible in the normalized binary model, and terminal length is separately unconstrained.
+
+The theorem should be interpreted with care. It does not say that geometry and length can never correlate in a richer search model. It says that such a correlation cannot be deduced from successful-prefix dimension alone. To obtain one, an enriched model must stipulate how terminal solutions are embedded in the prefix tree.
+
+## 6. Algorithms and numerical benchmarks
+
+### 6.1 Exact periodic counting
+
+For period $m$, free residue set $R$, and depth $n$, compute
+
+$$
+F(n)=\sum_{j=0}^{n-1}\mathbf 1_R(j\bmod m).
+$$
+
+Then return $N(n)=2^{F(n)}$ and, for $n>0$, $d(n)=F(n)/n$. A direct scan takes $O(n)$ time and $O(1)$ auxiliary space aside from storing $R$. A faster quotient–remainder algorithm writes $n=mk+s$ and computes
+
+$$
+F(n)=|R|k+|R\cap\{0,1,\ldots,s-1\}|.
+$$
+
+After sorting or tabulating $R$, this takes $O(m)$ preprocessing and $O(1)$ or $O(\log m)$ time per query, depending on the data structure. The prefix count itself may contain exponentially many bits if materialized, so practical implementations often return its base-$2$ logarithm $F(n)$.
+
+### 6.2 Exact rational realization
+
+Given $p/q\in[0,1]$, select any $p$ residues from a period of length $q$. A canonical choice is
+
+$$
+R=\{0,1,\ldots,p-1\}.
+$$
+
+The resulting profile has dimension $p/q$. Construction costs $O(p)$ space if the residues are listed explicitly, or $O(1)$ space if membership is represented by the inequality $j\bmod q<p$.
+
+### 6.3 Benchmark examples
+
+For $m=3$ and $R=\{0,1\}$, two out of every three levels are free. The limiting dimension is $2/3$. At depth $12$, there are eight free levels and therefore
+
+$$
+N(12)=2^8=256,
+$$
+
+while the ambient tree has $2^{12}=4096$ prefixes. The estimate is
+
+$$
+d(12)=\frac{\log_2 256}{12}=\frac23.
+$$
+
+For $m=5$ and $R=\{0,2,4\}$, the dimension is $3/5$. At depths $5,10,15,\ldots$, the estimate is exactly $3/5$. Between boundaries it oscillates around the limit because the partial period may contain a locally higher or lower fraction of free positions.
+
+For $p/q=1/2$, the alternating pattern “free, forced” realizes dimension $1/2$. The same profile may be paired abstractly with designated shortest length $1000$, illustrating that prefix abundance and terminal depth are separate data.
+
+### 6.4 Monte Carlo estimation
+
+If exact counts are unavailable, one might sample paths and estimate survival probabilities. At depth $n$, the fraction of ambient words that are successful is
+
+$$
+P_n=\frac{N(n)}{2^n}.
+$$
+
+Since $N(n)=2^nP_n$, the finite estimate can be written
+
+$$
+d(n)=1+\frac{\log_2P_n}{n}.
+$$
+
+A sample proportion can estimate $P_n$, but rare-event regimes create severe variance and zero-count problems. Periodic models provide exact calibration targets. A statistically valid method must specify the sampling distribution and provide confidence intervals; exact period-boundary identities alone do not supply those guarantees.
+
+## 7. Interpretation: abundance, codimension, and cost
+
+Dimension measures the exponential growth rate of successful prefixes. If
+
+$$
+N(n)=2^{dn+o(n)},
+$$
+
+then $D=d$. The ambient fraction of successful prefixes is
+
+$$
+\frac{N(n)}{2^n}=2^{-(1-d)n+o(n)}.
+$$
+
+This identity explains why codimension $1-d$ is a natural candidate exponent in random or unbiased search. If a uniformly sampled depth-$n$ word is successful with probability approximately $2^{-(1-d)n}$, then naive independent sampling would require approximately $2^{(1-d)n}$ attempts for one success. However, this heuristic is not a general theorem about tree traversal. Prefix dependencies, shared work, breadth-first reuse, nonuniform policies, and terminal placement all matter.
+
+At least three additional components are needed for a cost model:
+
+1. **Traversal policy.** The same tree can be explored in favorable or unfavorable orders.
+2. **Failure distribution.** Cost depends on where dead branches terminate and how quickly they are recognized.
+3. **Terminal-depth law.** A viable prefix need not specify how far away a complete solution lies.
+
+Uniform extension conditions may connect levelwise counts to actual path accessibility. Mixing or independence assumptions may justify probabilistic estimates. Without such hypotheses, dimension remains geometric rather than algorithmic.
+
+## 8. Extensions and limitations
+
+### 8.1 Branching factor $b$
+
+For a regular $b$-ary tree, define
+
+$$
+d_b(n)=\frac{\log_bN(n)}{n}.
+$$
+
+The ambient count $N(n)\leq b^n$ again yields $D_b\leq1$. If selected levels retain all $b$ choices and the others retain one, periodic free-level density again equals normalized dimension. More general levels retaining $a_j$ branches suggest an average logarithmic branching law.
+
+### 8.2 Stationary and ergodic pruning
+
+Periodic pruning is deterministic and has finite memory. For a stationary ergodic mechanism that selects admissible branches, one expects the logarithm of prefix count to satisfy an entropy-rate law. The normalized dimension should then be an entropy rate divided by $\log b$. Establishing this requires precise measurability, nonextinction, and typicality assumptions.
+
+### 8.3 Oscillatory profiles
+
+Long alternating blocks of distinct periodic patterns can make $d(n)$ oscillate. The lower and upper dimensions may then differ. Constructing a profile with prescribed rational lower and upper values should be possible by choosing increasingly long blocks whose free-level densities approach the two endpoints. Such examples would clarify why the upper limit, rather than an ordinary limit, is appropriate in the general definition.
+
+### 8.4 Empty path sets and unbounded branching
+
+If no successful paths remain, logarithmic counting requires a convention. One may assign dimension $-\infty$, use dimension $0$ for the empty set as in standard Hausdorff theory, or restrict the model to nonempty profiles. Unbounded branching requires a new ambient normalization; otherwise no universal unit upper bound should be expected.
+
+## 9. Applications
+
+The framework applies to any process represented by a bounded decision tree. In automated reasoning, successful prefixes are partial derivations extendable to a proof. In program synthesis, they are partial programs extendable to a specification-satisfying implementation. In planning, they are action sequences that still permit a goal state. In diagnosis, they are partial hypotheses compatible with observations. In game search, they may be lines retaining a winning continuation.
+
+Across these applications, dimension provides a common geometric statistic: the exponential abundance of viable partial states. Periodic pruning offers synthetic data with a known answer for validating estimators. Codimension offers a candidate rarity exponent. But application-specific cost claims require a model of how states are generated, prioritized, tested, and terminated.
+
+## 10. Discussion
+
+The principal conclusions are both restrictive and constructive. The restriction is absolute: normalized dimension in a binary path space cannot exceed $1$. Thus super-unit difficulty is unavailable without modifying the framework. The constructive result is that the entire rational unit interval is realized by simple periodic profiles, with exact estimates at complete periods. These models make dimension observable and testable rather than merely asymptotic.
+
+The separation theorem is equally important. A geometrically rich viable set may coexist with any designated shortest terminal length because terminal data are not encoded by levelwise prefix abundance. This identifies a modeling boundary. Dimension can participate in a theory of difficulty, but it cannot constitute that theory alone.
+
+A productive empirical program should therefore record multiple quantities: finite-scale dimension estimates, codimension, terminal depth, branching and failure statistics, and policy-dependent node counts. Correlations among these variables may be meaningful, but the mathematical model shows which correlations are not identities.
+
+## 11. Future work
+
+Five directions follow naturally. First, establish an entropy-rate theorem for stationary ergodic pruning, generalizing periodic free-level density. Second, derive a dimension–cost law under a precisely specified unbiased traversal and a uniform extension condition. Third, construct two computable policies on the same fixed positive-dimensional profile with polynomial versus exponential discovery time. Fourth, realize prescribed lower and upper dimensions through aperiodic block constructions. Fifth, develop statistically consistent estimators for finite-state Markov pruning, including mixing-time corrections and exponential confidence bounds.
+
+Each direction adds information absent from the basic dimension: temporal dependence, policy, oscillation, or statistical uncertainty. Periodic models remain the natural exact benchmarks against which these extensions should be tested.
+
+## 12. Conclusion
+
+The normalized fractal dimension of a binary successful-prefix set is confined to $[0,1]$. Periodic pruning with $r$ free levels per period $m$ has dimension $r/m$, realizes every rational value in the unit interval, and attains its limiting estimate exactly at complete-period depths. Its codimension is the density of forced decisions. Yet the same dimension can coexist with any designated shortest terminal length.
+
+Accordingly, dimension should be interpreted as an entropy-like growth rate for viable prefixes. It describes the shape of a search space, not the full cost of navigating it. A complete theory of difficulty must join this geometry to traversal policy, failure structure, and terminal-depth semantics.

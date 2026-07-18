@@ -1,179 +1,105 @@
-# The Fractal Dimension of Proof Search
+# The Fractal Geometry of Finding an Argument
 
-*How hard is it to find a proof? Surprisingly, the answer has the geometry of a snowflake.*
+## A landscape made of choices
 
-## A search that branches like a tree
+A difficult argument rarely feels like a straight road. It feels like a maze. At one moment we might expand a definition; at the next we might split into cases, invoke a lemma, introduce an auxiliary construction, or retreat from a dead end. Each decision creates further decisions. Draw those possibilities as a tree and the familiar experience of mathematical difficulty acquires a geometry.
 
-Imagine you are trying to prove a theorem, not by a flash of insight, but the way a
-tireless machine would: step by step, trying every rule of inference that might
-apply, backtracking when a path leads nowhere, pressing on when it looks promising.
-Every time you write down a line of a proof, you face a choice. Maybe five different
-lemmas could be invoked next; maybe fifty. Each choice opens a new set of choices.
-The set of all possible partial proofs fans out into an enormous branching tree.
+At the root sits the problem. One level down are the admissible first moves. Below each move are the possible second moves, and so on. A finite route through this tree is a *derivation prefix*. Call such a prefix successful when it can still be extended to a complete argument. The infinite collection of successful prefixes is not usually a smooth object. It branches, thins out, and repeats patterns across scales. That is precisely the behavior for which fractal dimension was invented.
 
-At the root sits your theorem. At each node sit the possible next steps. A complete
-proof is a path from the root down through the tree, never getting stuck. The
-question that haunts everyone who has ever run an automated prover — or stared at a
-blackboard past midnight — is simply: *how hard is it to find one of those paths?*
+This viewpoint suggests an alluring slogan: perhaps hard problems have a higher-dimensional search space. But making that slogan precise reveals a crucial surprise. For a binary tree, when dimension is normalized by the size of the ambient tree, no set of successful routes can have dimension greater than $1$. The proposed realm of “super-unit difficulty” simply does not exist in this model. The geometry remains useful, but it measures the abundance of viable prefixes—not difficulty by itself.
 
-The usual answers are crude. "It's exponential." "It's undecidable in general."
-"Some theorems are just hard." These are true but unsatisfying. They don't tell you
-*how* hard a specific theorem is, and they don't give you a number you can measure.
-This article is about a sharper answer, one borrowed from an unexpected place: the
-mathematics of fractals.
+That correction is more than a technicality. It tells us what a geometric theory of search can honestly claim, provides a family of exact benchmark examples, and shows which additional ingredients are needed before geometry can predict computational cost.
 
-## The shape of the successful paths
+## Counting viable routes
 
-Let's make the tree concrete. Suppose that at every node there are exactly $b$
-possible next steps — we call $b$ the **branching factor**. If you never pruned
-anything, the number of candidate partial proofs of length $n$ would be $b^n$: the
-complete $b$-ary tree, growing explosively with depth.
+Begin with a binary search tree. At each level there are at most two choices, labeled $0$ and $1$. A word such as $0101$ records four successive decisions. At depth $n$, the full tree contains $2^n$ words. For a given problem, let $N(n)$ be the number of length-$n$ words that are successful prefixes.
 
-But not every step leads to a real proof. Most branches are dead ends — they look
-plausible for a while and then get stuck. Suppose the problem is *self-similar*:
-at every node, exactly $s$ of the $b$ available steps can actually be extended all
-the way to a finished proof, where $1 \le s \le b$. Then the number of genuinely
-**successful** paths of length $n$ is not $b^n$ but
+The finite-scale dimension estimate is
 
-$$s^n.$$
+$$
+d_n=\frac{\log_2 N(n)}{n},
+$$
 
-Now here is the leap. Consider the *infinite* successful paths — the idealized
-limit of proofs that never terminate but never get stuck either. These form a set
-sitting inside the boundary of the tree. If we measure distance between two paths by
-how long they agree before diverging, using the natural metric
+whenever $N(n)>0$. The limiting dimension is obtained from the asymptotic growth of these counts; using an upper limit accommodates models in which the growth oscillates:
 
-$$d(x, y) = b^{-(\text{length of common prefix})},$$
+$$
+D=\limsup_{n\to\infty}\frac{\log_2 N(n)}{n}.
+$$
 
-then this set of successful paths is a genuine fractal — a self-similar Cantor set,
-the same species of object as the Cantor middle-thirds set or the Sierpiński gasket.
-And like every self-similar fractal, it has a **dimension**.
+This is the natural entropy or box-counting dimension of the successful path set in the binary metric, where two routes are close when they share a long initial segment. If $N(n)$ grows like $2^{dn}$, then $D=d$.
 
-## The dimension is a ratio of logarithms
+Several interpretations are immediate. When $D=1$, successful prefixes are exponentially as abundant as the ambient binary tree, though they need not occupy a fixed positive fraction of it. When $D=0$, their number grows subexponentially. Values between $0$ and $1$ quantify intermediate exponential abundance. The *codimension* is $1-D$; it measures how much branching freedom is lost asymptotically.
 
-For a self-similar set built by keeping $s$ out of every $b$ pieces at each scale,
-the similarity dimension is the ratio of logarithms
+The first central result is the Ambient Bound Theorem: **for every binary successful-prefix set, its normalized dimension satisfies $D\leq 1$.** The proof is a one-line counting insight with far-reaching consequences. Since $N(n)\leq 2^n$ at every depth,
 
-$$D(b, s) = \frac{\log s}{\log b}.$$
+$$
+\frac{\log_2 N(n)}{n}\leq 1,
+$$
 
-This single number — call it the **proof-search fractal dimension** — turns out to
-capture everything about how focused or how sprawling the search is. It is not a
-metaphor. It is the literal exponent that converts one count into another, as the
-next result makes precise.
+and taking an upper limit preserves the inequality. In particular, for every $\varepsilon>0$, no such set has dimension $1+\varepsilon$.
 
-**The Bridge Identity.** *For a self-similar search space with branching factor
-$b > 1$ and at least one proof ($s \ge 1$), the number of successful paths of depth
-$n$ is exactly the total number of candidate paths raised to the fractal dimension:*
+So dimension cannot divide binary searches into an “easy” zone below $1$ and a “hard” zone above $1$. The ambient tree itself already has dimension $1$. A subset cannot exceed the dimension of the space containing it under this normalization. Any theory that genuinely needs values above $1$ must change the metric, alter the normalization, or enlarge the ambient search space.
 
-$$s^n \;=\; \bigl(b^n\bigr)^{D(b,s)}.$$
+## A clockwork family of fractals
 
-The proof is a one-line calculation once you notice that
-$(b^n)^{\log s / \log b} = e^{n \log b \cdot (\log s / \log b)} = e^{n \log s} = s^n$,
-but its meaning is anything but trivial. Combinatorial growth — the raw counting of
-branches — is *exactly* a power law, and the power is the fractal dimension. The
-sprawling tree and the smooth analytic exponent are two faces of one coin.
+An upper bound tells us where the scale ends, but not how richly it is populated. To see every value between the extremes, consider periodic pruning.
 
-## Where does difficulty live? In the codimension
+Fix a period $m$. During each block of $m$ levels, choose a set $R$ of “free” positions. At a free level, both binary decisions remain viable. At every other level, only one decision remains viable. Then the pattern repeats forever. If $r=|R|$, each complete period contributes exactly $r$ free binary choices.
 
-It is tempting to say "big dimension means hard theorem." The truth is more elegant.
-The dimension $D$ always lives in the interval $[0, 1]$, and both endpoints have
-crisp meanings.
+After $k$ complete periods, the depth is $mk$, the number of free decisions is $rk$, and the number of successful prefixes is
 
-**The dimension lives on the edge.** *For $b > 1$ and $1 \le s \le b$ we always have
-$0 \le D(b,s) \le 1$. Moreover $D = 1$ if and only if $s = b$, and $D < 1$ the moment
-even a single branch can be pruned ($s < b$). The dimension is also strictly
-increasing in $s$: more ways to succeed genuinely raises the dimension.*
+$$
+N(mk)=2^{rk}.
+$$
 
-So the "hardest" case, $D = 1$, is precisely the one where *nothing* can be pruned —
-every branch succeeds, so no search strategy can beat blind exhaustion. This is a
-razor-sharp threshold, not a generic value: you reach $D = 1$ only when $s = b$
-exactly. At the other extreme, $D = 0$ means $s = 1$: there is a unique proof path,
-the successful set is a single point, and search is trivial.
+The dimension estimate at those depths is therefore
 
-The quantity that really governs difficulty is therefore not the dimension but its
-complement, the **codimension** $\kappa = 1 - D$. It measures how fast the good
-paths thin out among all the paths. This is made exact by a companion law.
+$$
+d_{mk}=\frac{\log_2(2^{rk})}{mk}=\frac{r}{m}.
+$$
 
-**The Density Law.** *Under the same hypotheses, the fraction of candidate paths
-that succeed decays as*
+The Periodic Dimension Theorem states: **a periodically pruned binary search with $r$ free levels in every period of length $m$ has dimension exactly $r/m$.** The incomplete final period contributes only a bounded discrepancy, which vanishes after division by depth.
 
-$$\left(\frac{s}{b}\right)^n = \bigl(b^n\bigr)^{D - 1} = \bigl(b^n\bigr)^{-\kappa}.$$
+This gives the Rational Realization Theorem: **for every rational number $p/q$ with $0\leq p\leq q$ and $q\geq1$, there is a periodically pruned binary search of dimension $p/q$.** Simply take a period of length $q$ and declare exactly $p$ of its positions free.
 
-The codimension $\kappa = 1 - D$ is exactly the exponential rate at which successful
-paths become rare. When $\kappa$ is tiny (dimension near $1$), the good paths barely
-thin out — search is close to exhaustive and painfully expensive. When $\kappa$ is
-large (dimension near $0$), the good paths vanish so fast that a smart searcher
-homes in almost immediately. Difficulty is the *slowness of thinning*, and the
-Density Law puts a number on it.
+The result makes the unit interval concrete. Dimension $0$ comes from a single forced route. Dimension $1$ comes from leaving every level free. Dimension $2/3$ comes from a repeating rhythm of two free decisions followed by one forced decision. Dimension $7/10$ comes from any period of ten levels containing seven free positions.
 
-This also corrects a natural but mistaken intuition. One might guess that "hard"
-theorems have dimension *greater* than $1$. For a self-similar subset of a tree that
-is impossible: a piece can never be more dimensional than the whole, which sits at
-dimension $1$. Hardness is not excess dimension; it is *deficient codimension*.
+Periodic pruning also gives an unusually clean measurement protocol. The Exact Period-Boundary Estimate states: **at every positive depth that is a whole number of periods, the finite estimate already equals the limiting dimension.** There is no approximation error at those depths. In the $2/3$ model, depth $12$ consists of four complete periods, so there are $2^8=256$ successful prefixes among $2^{12}=4096$ possible words, and
 
-## The same number, seen as entropy
+$$
+d_{12}=\frac{\log_2 256}{12}=\frac{8}{12}=\frac23.
+$$
 
-There is a second, equally illuminating way to read $D$. Take logarithms of the
-successful-path count and define $L(n) = \log(s^n) = n \log s$. This is the "action"
-of the search, and its per-step average $L(n)/n$ is a growth rate — an **entropy**.
-For the uniform self-similar model it is exactly $\log s$ at every depth, and in
-general it is the limit
+The Codimension Theorem gives the complementary interpretation: **for a periodic model of dimension $p/q$, the codimension is exactly $(q-p)/q$, the density of forced levels.** Thus $D$ records the density of retained branching freedom, while $1-D$ records the density of decisions removed by pruning.
 
-$$\text{entropy} = \lim_{n \to \infty} \frac{L(n)}{n} = \log s.$$
+## Why geometry is not the same as effort
 
-The ambient tree has its own entropy, $\log b$, the growth rate of *all* paths. And
-the fractal dimension is nothing but the ratio of the two:
+At first glance, a dimension close to $1$ seems as though it should imply a short argument: many prefixes survive, so perhaps completion is nearby. Conversely, a sparse successful set might seem difficult to locate. Neither inference is valid without more structure.
 
-$$D(b, s) = \frac{\text{entropy of successful paths}}{\text{entropy of all paths}}
-= \frac{\log s}{\log b}.$$
+To expose the issue, separate two pieces of data. The first is the successful-prefix tree, which determines $D$. The second is a designated terminal depth $L$, interpreted as the length of the shortest complete argument. Geometry constrains the first object. It does not, by itself, constrain the second.
 
-In other words, the proof-search fractal dimension is a **relative entropy** — the
-information-theoretic growth rate of good paths measured against the growth rate of
-the whole search. This is the classical dictionary of dynamical systems, where such
-ratios are called relative topological entropies, and it means our fractal exponent
-is simultaneously a geometric dimension, a combinatorial growth rate, and an entropy.
+The Independence of Length Theorem states: **for every rational $p/q$ in $[0,1]$ and every natural number $L$, there is a search instance whose successful-prefix dimension is $p/q$ and whose designated shortest completion length is $L$.** Choose any periodic profile realizing $p/q$, then attach the terminal length $L$. Since changing $L$ does not alter any prefix count, it does not alter the dimension.
 
-The bridge to entropy also connects the story to a century-old piece of analysis:
-Fekete's lemma on subadditive sequences. A sequence $L$ with
-$L(n + m) \le L(n) + L(m)$ always has a well-defined average limit $L(n)/n$. Our
-$L(n) = n \log s$ is additive — the extreme, tight case of subadditivity — which is
-exactly why the entropy has a clean closed form. For example, doubling the search
-depth at most doubles the log-count:
+For example, the same dimension $1/2$ can coexist with shortest length $10$, $1000$, or any other prescribed natural number. Therefore no universal law of the form “shortest length is approximately the reciprocal of dimension excess” can follow from this geometry alone. There is no positive dimension excess in the first place, and even codimension does not determine terminal length.
 
-$$L(2n) \le 2\,L(n),$$
+This does not make dimension irrelevant. It identifies what dimension actually measures: exponential abundance of extendable prefixes. Search cost also depends on the order in which routes are visited, the distribution of failed branches, the depth at which success becomes terminal, and the information available to the search policy. Two explorers can enter the same maze and experience radically different costs if one follows reliable signs while the other systematically checks dead ends first.
 
-with equality here. The real power of Fekete's theory appears when the branching is
-*non-uniform* — when the success factor $s_i$ varies with depth. Then the good-path
-count is a product $\prod_i s_i$, no closed form survives, but Fekete's limit still
-exists and still defines the entropy, and the identity $D = \text{entropy}/\log b$
-still holds in the limit. The dimension survives the loss of a formula because it was
-a ratio of growth rates all along.
+## From a correction to a research program
 
-## Counting the cost
+The periodic models serve as calibration instruments. Their dimensions are known exactly, their finite estimates are exact at complete periods, and their geometry can be varied continuously through rational values. Any proposed estimator or cost law should first recover these benchmark cases.
 
-None of this would matter if it didn't connect to real work. Consider the crudest
-strategy: exhaustive search that expands every node down to depth $n$. How many nodes
-does it visit? Summing the geometric series of the full tree gives the exact count
+The next natural extension replaces binary branching by $b$ choices. At depth $n$, the ambient tree has $b^n$ words, so the normalized estimate becomes
 
-$$\sum_{i=0}^{n} b^i = \frac{b^{\,n+1} - 1}{b - 1},$$
+$$
+d_n=\frac{\log_b N(n)}{n}.
+$$
 
-a clean closed form. Against this baseline, the Density Law tells you how much an
-*ideal* pruning searcher could save: it needs to explore only about $b^{nD}$ paths
-rather than $b^n$, an exponential saving governed entirely by the codimension. The
-gap between $b^n$ and $b^{nD}$ — between brute force and inspired search — is
-measured, node for node, by $\kappa = 1 - D$.
+Periodic free levels again contribute a dimension equal to their density. The ambient bound remains $D\leq1$, because normalization by base $b$ absorbs the larger branching factor.
 
-## Why this is beautiful
+More realistic pruning may be stochastic. If the pattern of admissible choices is generated by a stationary process, dimension should behave like an entropy rate divided by the logarithm of the ambient branching factor. Periodic pruning is the deterministic, zero-memory benchmark for that idea. Aperiodic schedules can also produce oscillations: long blocks with different free-level densities should force lower and upper dimensions to differ.
 
-Start with a slogan — "some theorems are harder to prove than others" — and you end
-with a single number that is at once a fractal dimension, a relative entropy, and a
-Fekete growth rate, tied together by the exact identity $s^n = (b^n)^D$. The
-sprawling, combinatorial mess of a proof-search tree turns out to have the clean
-self-similar geometry of a Cantor set, and the difficulty of the theorem is written
-in the geometry of that set.
+Cost requires a second layer. Under a specified traversal rule—say unbiased breadth-first exploration—and a regularity condition ensuring that successful prefixes extend uniformly, codimension $1-D$ becomes a plausible exponential rate for wasted exploration. But that is a theorem to be established under explicit assumptions, not a consequence of dimension alone. Likewise, statistical estimation requires confidence bounds, mixing assumptions, and a clear sampling model.
 
-The dimension lives on a knife's edge in $[0, 1]$. Push it to $0$ and the proof is
-essentially unique; push it to $1$ and no cleverness can save you from checking
-everything. Most interesting theorems live in between, on the balanced edge where
-search is neither trivial nor hopeless — where a good idea about which branch to try
-next is worth exactly $1 - D$ in the exponent. Difficulty, it turns out, is fractal,
-and its dimension is something you can compute.
+The broad lesson reaches beyond mathematical arguments. Planning, symbolic reasoning, program synthesis, diagnosis, and game search all explore trees of partial decisions. In each setting, geometry can describe how viable possibilities proliferate across scales. Yet abundance and accessibility are different notions. A forest may contain many paths while hiding every useful one from a particular traveler.
+
+The fractal perspective survives its own strongest correction. Search difficulty is not simply a dimension, and normalized dimension cannot rise above the space that contains it. What remains is more precise and more useful: dimension measures the exponential richness of viable prefixes; codimension measures lost branching freedom; periodic pruning realizes every rational geometry in the unit interval; and computational difficulty emerges only when that geometry is coupled to time, termination, failure, and policy. The maze has a shape—but the journey depends on how we move through it.
