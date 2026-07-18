@@ -7,16 +7,6 @@
       "quality_score": 0.71,
       "sorry_count": 0,
       "theorem_count": 7,
-      "timestamp": "2026-07-16T04:26:17",
-      "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
-    },
-    {
-      "cycle_id": "4665f966",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions: Anti-Fibonacci Structure\n\n## 1. Pell classification of shifted-square values\n\nClassify all pairs `(m,n)` for which an anti-Fibonacci value is also a consecutive anti-Fibonacci sum",
-      "quality_score": 0.71,
-      "sorry_count": 0,
-      "theorem_count": 7,
       "timestamp": "2026-07-16T04:27:07",
       "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
     },
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-18T08:49:08",
       "title": "Gravity from Information: Spacetime as a Quantum Error-Correcting Code"
+    },
+    {
+      "cycle_id": "71fc60c7",
+      "domain": "Applications",
+      "key_insight": "# Future directions\n\n1. Define periodic left and right shifts explicitly and derive the Rule 110 singleton theorem as a concrete corollary of `rule110_fixedPoints_card_of_right_transitive`.\n2. Replace",
+      "quality_score": 0.75,
+      "sorry_count": 0,
+      "theorem_count": 23,
+      "timestamp": "2026-07-18T09:05:18",
+      "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "0c7f8736",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nBold, falsifiable conjectures growing out of the mixed-radix / factorial bridge\nand the primitive-divisor investigation completed in this cycle.\n\n## 1. Uniqueness holds for every",
-      "quality_score": 0.78,
-      "sorry_count": 3,
-      "theorem_count": 0,
-      "timestamp": "2026-07-14T13:00:03",
-      "title": "Close Proofs: Maximum Determinant Bound for 4×4 Unimodular Matrices with Bounded Ent"
-    },
     {
       "cycle_id": "bd6ccec1",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-18T08:49:08",
       "title": "Gravity from Information: Spacetime as a Quantum Error-Correcting Code"
+    },
+    {
+      "cycle_id": "71fc60c7",
+      "domain": "Applications",
+      "key_insight": "# Future directions\n\n1. Define periodic left and right shifts explicitly and derive the Rule 110 singleton theorem as a concrete corollary of `rule110_fixedPoints_card_of_right_transitive`.\n2. Replace",
+      "quality_score": 0.75,
+      "sorry_count": 0,
+      "theorem_count": 23,
+      "timestamp": "2026-07-18T09:05:18",
+      "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "d1512647",
-      "domain": "Applications",
-      "name": "triangleFree_transversal_count",
-      "quality": 0.71
-    },
-    {
-      "cycle_id": "d1512647",
-      "domain": "Applications",
-      "name": "sixtyFour_requires_thirtyTwo",
-      "quality": 0.71
-    },
-    {
-      "cycle_id": "d1512647",
-      "domain": "Applications",
-      "name": "card_le_slots_times_capacity",
-      "quality": 0.71
-    },
     {
       "cycle_id": "dd61fafb",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Logic",
       "name": "areaDensity_pos",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "71fc60c7",
+      "domain": "Applications",
+      "name": "card_localRule",
+      "quality": 0.75
+    },
+    {
+      "cycle_id": "71fc60c7",
+      "domain": "Applications",
+      "name": "rule0_fixedPoints_card",
+      "quality": 0.75
+    },
+    {
+      "cycle_id": "71fc60c7",
+      "domain": "Applications",
+      "name": "rule204_fixedPoints_eq_univ",
+      "quality": 0.75
     }
   ],
-  "last_updated": "2026-07-18T08:49:08",
+  "last_updated": "2026-07-18T09:05:18",
   "open_questions": [
     {
       "context": "",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "d1512647",
-        "quality": 0.71,
-        "theorems": 5,
-        "title": "ArXiv paper: A 64-Rectangle Counterexample to Wegner's Conjecture and LP Gaps up"
-      },
-      {
         "cycle_id": "fe20b520",
         "quality": 0.6,
         "theorems": 0,
@@ -3141,6 +3135,12 @@
         "quality": 0.66,
         "theorems": 23,
         "title": "Tropical Dreams: The Field with One Element Meets Tropical Geometry"
+      },
+      {
+        "cycle_id": "71fc60c7",
+        "quality": 0.75,
+        "theorems": 23,
+        "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
       }
     ],
     "Bridges": [

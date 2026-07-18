@@ -117,6 +117,20 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Godel's Casino: Incomplete but Winnable Games"
   },
   {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 71fc60c7 (Q=0.750), which proved 23 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Elementary cellular automata (ECAs) are the 256 rules that update a 1D binary array based on its 3-cell neighborhood. Rule 110 is Turing-complete. But ECAs can also be viewed as polynomial maps over GF(2): the state s = (s_0, s_1, ..., s_{n-1}) is a vector over GF(2), and the update rule is s -> f(s",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_71fc60c7_46a0b17a",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "71fc60c7",
+    "status": "available",
+    "timestamp": "2026-07-18T09:05:18.164692+00:00",
+    "title": "Deepening: Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
+  },
+  {
     "consumed_by_exp_id": "21c08839",
     "description": "Proofs are static objects, but what if proofs could improve? Define a proof refinement system where each proof P has a complexity C(P) = length(P) + depth(P) + number of lemmas, and a proof P' is a refinement of P if P' proves the same theorem with C(P') < C(P). Conjecture: For every theorem T provable in ZFC, there exists a sequence of refinements P = P_0, P_1, P_2, ... such that C(P_n) is non-increasing and the limit P_infinity is the simplest proof of T (in the sense of Kolmogorov complexity). Moreover, the refinement process halts: there exists N such that C(P_N) = C(P_{N+1}) = ... = C(P_infinity). The key insight: proof simplification is a well-founded process because the complexity is a natural number that decreases at each step. But the process can be arbitrarily long \u2014 the proof of the four-color theorem might require 10^100 refinements to reach its simplest form. Test: formalize the refinement system in Lean 4. Starting from the statement of the irrationality of sqrt(2), generate refinements by eliminating unnecessary lemmas, shortening case splits, and removing redundant quantifiers. Measure C(P) at each step and verify it decreases. Impact: proofs are not static \u2014 they are living objects that can be improved. The simplest proof of a theorem is the LIMIT of the refinement process, and this limit ALWAYS exists.",
     "domains": [
@@ -3010,19 +3024,19 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem With"
   },
   {
-    "consumed_by_exp_id": "71fc60c7",
-    "description": "Elementary cellular automata (ECAs) are the 256 rules that update a 1D binary array based on its 3-cell neighborhood. Rule 110 is Turing-complete. But ECAs can also be viewed as polynomial maps over GF(2): the state s = (s_0, s_1, ..., s_{n-1}) is a vector over GF(2), and the update rule is s -> f(s) where f is a degree-3 polynomial (since the rule depends on 3 cells). Conjecture: The algebraic variety V(f) = {s : f(s) = s} (fixed points of the ECA) has dimension equal to the 'complexity class' of the rule. For simple rules (e.g., Rule 0, which is all zeros), V(f) has dimension 0 (a single point). For complex rules (e.g., Rule 110), V(f) has maximal dimension. The Grothendieck-style approach: each ECA defines a sheaf on the state space, and the global sections of this sheaf classify the possible stable configurations. Rule 110's sheaf has the richest section structure, corresponding to its Turing-completeness. Test: compute dim(V(f)) for all 256 ECAs and verify that the dimension correlates with Wolfram's complexity classification (Class 1: dim=0, Class 2: dim<=n/2, Class 3: dim>=n/2, Class 4: dim=n). Impact: cellular automata are algebraic varieties, and their complexity is the dimension of their fixed-point variety.",
+    "consumed_by_exp_id": "",
+    "description": "A jigsaw puzzle has N pieces, each with 4 edges. The 'signature' of a piece is the tuple (top, right, bottom, left) of edge types (flat, tab, blank). Two pieces fit together if their adjacent edges are complementary (tab meets blank). Conjecture: Solving a jigsaw puzzle is NP-complete. The reduction: given a 3-SAT formula with n variables and m clauses, construct a jigsaw puzzle with N = 2n + m + 2 pieces where the only valid assembly corresponds to a satisfying assignment. Variable pieces: each variable x_i has two pieces (TRUE and FALSE), one with a tab and one with a blank on the assignment edge. Only one can be placed (mutual exclusion via complementary edges). Clause pieces: each clause C_j is a piece that has three input edges (one per literal) and one output edge. The piece fits only if at least one input edge is connected to a TRUE literal piece. The top-left corner and bottom-right corner enforce the boundary. Test: construct the reduction explicitly for a small 3-SAT instance (e.g., (x1 OR x2 OR NOT x3) AND (NOT x1 OR x3)) and verify the puzzle has a solution iff the formula is satisfiable. Impact: jigsaw puzzles are NP-complete, so the satisfying snap you feel when completing a puzzle is literally the same as solving a hard computational problem.",
     "domains": [
       "Novelty",
-      "Algebra"
+      "Computation"
     ],
-    "id": "fd_0276",
-    "priority_score": 0.78,
+    "id": "fd_0294",
+    "priority_score": 0.77,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T06:18:54.772301+00:00",
-    "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
+    "status": "available",
+    "timestamp": "2026-07-18T09:04:45.744241+00:00",
+    "title": "The Mathematics of Jigsaw Puzzles: NP-Completeness and Topology"
   },
   {
     "consumed_by_exp_id": "",
@@ -3547,6 +3561,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-18T08:49:01.122706+00:00",
     "title": "For any family of local stabilizer codes admitting a geometric realization, conj"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n1. Define periodic left and right shifts explicitly and derive the Rule 110 singleton theorem as a concrete corollary of `rule110_fixedPoints_card_of_right_transitive`.\n2. Replace Boolean algebraic normal forms by polynomials in `MvPolynomial (Fin n) (ZMod 2)` and prove equality of polynomial evaluation with the global update map.\n3. Specify the fixed-point coordinate ring using both update equations and Boolean relations `x_i^2 - x_i`; study its Krull dimension separately from its number of `GF(2)`-rational points.\n4. Formalize all 256 rule tables from rule numbers and prove that rule-number decoding is a bijection with `LocalRule`.\n5. Compute fixed-point counts for every rule and bounded array size inside Lean, then compare those finite invariants with a precisely encoded Wolfram classification. Any correlation claim should state the boundary convention, size range, statistic, and classification data explicitly.\n6. Study periodic orbits of length greater than one. Turing universality concerns unbounded spacetime evolution, so orbit structure and simulation embeddings are more relevant invariants than fixed points alone.\n7. Formulate any sheaf construction explicitly: give the site, topology, restriction maps, and intended theorem relating global sections to configurations before comparing section structure across rules.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0295",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "71fc60c7",
+    "status": "available",
+    "timestamp": "2026-07-18T09:05:12.698273+00:00",
+    "title": "1. Define periodic left and right shifts explicitly and derive the Rule 110 sing"
   },
   {
     "consumed_by_exp_id": "",

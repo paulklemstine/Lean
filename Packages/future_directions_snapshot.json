@@ -117,7 +117,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d3ef6e43",
     "description": "The Langlands program connects Galois groups (shapes) to automorphic forms (colors). Think of it this way: a Galois group is the group of symmetries of a shape (like the rotational symmetries of a polygon). An automorphic form is a coloring that respects the shape's symmetries (like a coloring of the polygon's vertices that is invariant under rotation). The Langlands correspondence says: for every 'shape' (Galois representation), there is a matching 'color' (automorphic form) and vice versa. Conjecture: This correspondence is a bijection between irreducible representations of Gal(Q_bar/Q) and cuspidal automorphic representations of GL_n over Q. For n=1, this is class field theory (every abelian extension of Q corresponds to a Dirichlet character). For n=2, this is the modularity theorem (every elliptic curve over Q corresponds to a weight-2 cusp form). The toddler version: each shape has exactly one matching color, and each color has exactly one matching shape. Test: verify the correspondence for all degree-2 extensions of Q up to discriminant 1000. Verify that each quadratic field Q(sqrt(d)) corresponds to a Dirichlet character chi_d via the correspondence chi_d(p) = (d/p) (Legendre symbol). Impact: Langlands is just shape-color matching. Shapes and colors are two ways of seeing the same mathematical object.",
     "domain_bridges": [],
     "domains": [
@@ -130,7 +130,7 @@
     "proof_strategy": "State the Langlands correspondence for GL_2: there is a bijection between irreducible 2-dimensional Galois representations rho: Gal(Q_bar/Q) -> GL_2(C) and cuspidal automorphic representations of GL_2 over Q. For the toddler version: every quadratic field Q(sqrt(d)) corresponds to a Dirichlet character chi_d: (Z/DZ)* -> {±1} where D is the discriminant. Verify: for d = -1 (Q(i)), D = -4, chi_{-4}(n) = (-1)^{(n-1)/2} for odd n. For d = 2 (Q(sqrt(2))), D = 8, chi_8(n) = (-1)^{(n^2-1)/8}. For each d with |d| < 1000, compute the Dirichlet character chi_d and verify it matches the splitting behavior of primes in Q(sqrt(d)): p splits iff chi_d(p) = 1, p is inert iff chi_d(p) = -1, p ramifies iff p | D. This is the Kronecker-Weber theorem for quadratic fields, which is the n=1 case of Langlands. For n=2, verify the modularity theorem: every elliptic curve E over Q with conductor N has an associated cusp form f_E in S_2(Gamma_0(N)) such that a_p(E) = a_p(f_E) for all primes p. Test: verify for curves in the Cremona database up to conductor 1000.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-18T08:01:11.261092+00:00",
     "title": "Langlands for Toddlers: Galois Groups as Shapes, Automorphic Forms as Colors"
   },
@@ -152,6 +152,25 @@
     "status": "available",
     "timestamp": "2026-07-18T06:56:52.638461+00:00",
     "title": "Deepening: Godel's Casino: Incomplete but Winnable Games"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 71fc60c7 (Q=0.750), which proved 23 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Elementary cellular automata (ECAs) are the 256 rules that update a 1D binary array based on its 3-cell neighborhood. Rule 110 is Turing-complete. But ECAs can also be viewed as polynomial maps over GF(2): the state s = (s_0, s_1, ..., s_{n-1}) is a vector over GF(2), and the update rule is s -> f(s",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_71fc60c7_46a0b17a",
+    "lineage_refs": [],
+    "priority_score": 0.85,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "71fc60c7",
+    "status": "available",
+    "timestamp": "2026-07-18T09:05:18.164692+00:00",
+    "title": "Deepening: Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
   },
   {
     "ambition_level": "extension",
@@ -4162,22 +4181,22 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "71fc60c7",
-    "description": "Elementary cellular automata (ECAs) are the 256 rules that update a 1D binary array based on its 3-cell neighborhood. Rule 110 is Turing-complete. But ECAs can also be viewed as polynomial maps over GF(2): the state s = (s_0, s_1, ..., s_{n-1}) is a vector over GF(2), and the update rule is s -> f(s) where f is a degree-3 polynomial (since the rule depends on 3 cells). Conjecture: The algebraic variety V(f) = {s : f(s) = s} (fixed points of the ECA) has dimension equal to the 'complexity class' of the rule. For simple rules (e.g., Rule 0, which is all zeros), V(f) has dimension 0 (a single point). For complex rules (e.g., Rule 110), V(f) has maximal dimension. The Grothendieck-style approach: each ECA defines a sheaf on the state space, and the global sections of this sheaf classify the possible stable configurations. Rule 110's sheaf has the richest section structure, corresponding to its Turing-completeness. Test: compute dim(V(f)) for all 256 ECAs and verify that the dimension correlates with Wolfram's complexity classification (Class 1: dim=0, Class 2: dim<=n/2, Class 3: dim>=n/2, Class 4: dim=n). Impact: cellular automata are algebraic varieties, and their complexity is the dimension of their fixed-point variety.",
+    "consumed_by_exp_id": "",
+    "description": "A jigsaw puzzle has N pieces, each with 4 edges. The 'signature' of a piece is the tuple (top, right, bottom, left) of edge types (flat, tab, blank). Two pieces fit together if their adjacent edges are complementary (tab meets blank). Conjecture: Solving a jigsaw puzzle is NP-complete. The reduction: given a 3-SAT formula with n variables and m clauses, construct a jigsaw puzzle with N = 2n + m + 2 pieces where the only valid assembly corresponds to a satisfying assignment. Variable pieces: each variable x_i has two pieces (TRUE and FALSE), one with a tab and one with a blank on the assignment edge. Only one can be placed (mutual exclusion via complementary edges). Clause pieces: each clause C_j is a piece that has three input edges (one per literal) and one output edge. The piece fits only if at least one input edge is connected to a TRUE literal piece. The top-left corner and bottom-right corner enforce the boundary. Test: construct the reduction explicitly for a small 3-SAT instance (e.g., (x1 OR x2 OR NOT x3) AND (NOT x1 OR x3)) and verify the puzzle has a solution iff the formula is satisfiable. Impact: jigsaw puzzles are NP-complete, so the satisfying snap you feel when completing a puzzle is literally the same as solving a hard computational problem.",
     "domain_bridges": [],
     "domains": [
       "Novelty",
-      "Algebra"
+      "Computation"
     ],
-    "id": "fd_0276",
+    "id": "fd_0294",
     "lineage_refs": [],
-    "priority_score": 0.78,
-    "proof_strategy": "Encode ECA state as vector s in GF(2)^n. Rule r defines update f_r(s)_i = g(s_{i-1}, s_i, s_{i+1}) where g is the truth table of rule r, viewed as a polynomial over GF(2). For example, Rule 110: g(a,b,c) = a + b + ac + bc (mod 2). Fixed points satisfy f_r(s) = s, a system of n polynomial equations over GF(2). Compute dim(V(f_r)) using Groebner basis methods. For Rule 0: f_0(s) = 0, so V = {0}, dim = 0. For Rule 255: f_255(s) = 1+s, V = {1+s = s} = {1=0} = empty, dim = -1 (no fixed points). For Rule 110: f_110(s) = s + s_{i-1} + s_i + s_{i-1}*s_{i+1} + s_i*s_{i+1}, dim(V) = n - rank(Jacobian of f-s). Conjecture: dim(V(f_r)) correlates with Wolfram class. Test: compute dim(V(f_r)) for all 256 rules with n=20 and compare to Wolfram classification.",
+    "priority_score": 0.77,
+    "proof_strategy": "Define jigsaw puzzle instance: N pieces, each with 4 edges from alphabet {tab, blank, flat}. Two pieces P and Q fit together on edge e if P.e and Q.e are complementary (tab meets blank). Assembly: a placement of all N pieces in a rectangular grid such that all adjacent edges are complementary. Reduction from 3-SAT: given phi = (l_11 OR l_12 OR l_13) AND ... AND (l_m1 OR l_m2 OR l_m3), construct puzzle with 2n + m + 2 pieces. For variable x_i: create piece V_i^T (TRUE, with tab on the assignment edge) and V_i^F (FALSE, with blank on the assignment edge). Only one can be placed because their assignment edges are complementary to the same slot. For clause C_j = (l_j1 OR l_j2 OR l_j3): create piece C_j with three input edges. C_j fits only if at least one input connects to a TRUE literal piece (tab meets blank) or a FALSE literal piece with negation (blank meets tab). Corner pieces enforce the rectangular boundary. The puzzle has a solution iff phi is satisfiable. This is a polynomial reduction, so jigsaw puzzles are NP-hard. NP membership: given a placement, verify all edges are complementary in O(N) time. Test: construct for phi = (x1 OR x2 OR NOT x3) AND (NOT x1 OR x3).",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T06:18:54.772301+00:00",
-    "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
+    "status": "available",
+    "timestamp": "2026-07-18T09:04:45.744241+00:00",
+    "title": "The Mathematics of Jigsaw Puzzles: NP-Completeness and Topology"
   },
   {
     "ambition_level": "extension",
@@ -4877,6 +4896,26 @@
     "status": "available",
     "timestamp": "2026-07-18T08:49:01.122706+00:00",
     "title": "For any family of local stabilizer codes admitting a geometric realization, conj"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n1. Define periodic left and right shifts explicitly and derive the Rule 110 singleton theorem as a concrete corollary of `rule110_fixedPoints_card_of_right_transitive`.\n2. Replace Boolean algebraic normal forms by polynomials in `MvPolynomial (Fin n) (ZMod 2)` and prove equality of polynomial evaluation with the global update map.\n3. Specify the fixed-point coordinate ring using both update equations and Boolean relations `x_i^2 - x_i`; study its Krull dimension separately from its number of `GF(2)`-rational points.\n4. Formalize all 256 rule tables from rule numbers and prove that rule-number decoding is a bijection with `LocalRule`.\n5. Compute fixed-point counts for every rule and bounded array size inside Lean, then compare those finite invariants with a precisely encoded Wolfram classification. Any correlation claim should state the boundary convention, size range, statistic, and classification data explicitly.\n6. Study periodic orbits of length greater than one. Turing universality concerns unbounded spacetime evolution, so orbit structure and simulation embeddings are more relevant invariants than fixed points alone.\n7. Formulate any sheaf construction explicitly: give the site, topology, restriction maps, and intended theorem relating global sections to configurations before comparing section structure across rules.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0295",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "71fc60c7",
+    "status": "available",
+    "timestamp": "2026-07-18T09:05:12.698273+00:00",
+    "title": "1. Define periodic left and right shifts explicitly and derive the Rule 110 sing"
   },
   {
     "ambition_level": "extension",

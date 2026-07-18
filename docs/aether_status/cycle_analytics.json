@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-18T08:49:08.548883+00:00",
+  "last_updated": "2026-07-18T09:05:18.297235+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -25487,6 +25487,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-18T08:49:08.446670+00:00",
       "title": "Gravity from Information: Spacetime as a Quantum Error-Correcting Code"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 12,
+      "domain": "Applications",
+      "duration_seconds": 2853.138288259506,
+      "end_time": 1784365494.7467701,
+      "files_integrated": 4,
+      "job_id": "71fc60c7",
+      "outcome_quality": 0.75,
+      "phase": "complete",
+      "phase_a_prompt_version": "v24",
+      "phase_a_quality_score": 0.75,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v24",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.75,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.84,
+        "composite": 0.5655,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.72,
+        "novelty": 0.66,
+        "proof_depth": 0.73,
+        "usefulness": 0.82
+      },
+      "quality_score": 0.75,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1784362641.608482,
+      "strategy_count": 0,
+      "theorem_count": 23,
+      "theorem_novelty_disproof": 7,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 5,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-18T09:05:18.217682+00:00",
+      "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
     }
   ]
 }
