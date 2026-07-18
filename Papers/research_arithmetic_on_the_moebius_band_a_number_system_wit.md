@@ -1,149 +1,452 @@
-# Arithmetic on the Möbius Band: A Structural Counterexample and the $\mathbb{Z}/2$ Content of the Twist
+# Arithmetic on the Möbius Band: Quotient Obstructions, Collapsed Coordinates, and a Graded Repair
+
+**Aristotle**  
+**July 18, 2026**
 
 ## Abstract
 
-We investigate a proposal to build a "number system with a twist" on the Möbius band. Modeling the band as the quotient $M = (\mathbb{R} \times \mathbb{R})/\!\sim$ under the gluing $(0, y) \sim (1, -y)$, we study the **value map** $\varphi(x, y) = y(2x - 1)$, which descends to a well-defined function $\mathrm{val}\colon M \to \mathbb{R}$. We prove three positive structural facts and one decisive negative fact. Positively: (i) $\mathrm{val}$ is well defined and surjective onto $\mathbb{R}$; (ii) the reflection $x \mapsto 1 - x$ descends to an involution — the **twist** — that acts on values as exact negation, exhibiting a $\mathbb{Z}/2$-grading whose fixed set is the central circle $x = \tfrac12$; and (iii) the zero fibre of $\mathrm{val}$ is precisely the union of the zero section $y = 0$ and the central circle $x = \tfrac12$. Negatively, and centrally, we show that the proposed embedding $n \mapsto \big(\tfrac12 + \tfrac{1}{2n}, |n|\big)$ of the integers collapses: the value of the embedded integer $n \neq 0$ equals $\operatorname{sign}(n)$, so the image of $\mathbb{Z}$ is the two-element set $\{-1, +1\}$ and the assignment is not injective. This refutes, at its foundation, the conjectures that the "Möbius integers" form a faithful copy of $\mathbb{Z}$, a one-point compactification of $\mathbb{Z}$, or a non-integral-domain ring with a "twist prime." We conclude that the honest algebraic content of the twist is not a prime but the generator of an order-two symmetry — a $\mathbb{Z}/2$ action on fibre orientations — and we outline smooth, bundle-theoretic, and group-graded refinements.
+We analyze a proposed arithmetic on the Möbius band obtained from $[0,1]\times\mathbb R$ by the endpoint identification $(0,y)\sim(1,-y)$. The proposal combines coordinatewise addition and multiplication with an integer placement
 
-**Keywords:** Möbius band, nonorientable surface, quotient space, value map, involution, $\mathbb{Z}/2$-grading, sign function, counterexample, real line bundle.
+$$
+n\longmapsto\left(\frac12+\frac{1}{2n},|n|\right)
+$$
+
+and the scalar evaluation $V(x,y)=y(2x-1)$. We establish three elementary but decisive obstructions. First, although the endpoint rule is an equivalence relation, neither coordinatewise addition nor coordinatewise multiplication respects it; consequently neither operation descends to the quotient. Second, the proposed evaluation sends every positive integer to $1$ and every negative integer to $-1$, although the underlying coordinate pairs may remain distinct. Third, the proposed orientation factor $-1$ is a unit rather than a prime, the identity $-6=(-2)(-3)$ is false, and zero admits no finite factorization into nonzero integer factors. We then formulate corrected research directions. The geometry is naturally captured by a ring bundle or a $\mathbb Z/2\mathbb Z$-graded algebra in which the product of two twisted elements is untwisted. Orientation is thereby modeled as a degree or an order-two unit. The analysis illustrates a general principle: operations on quotient spaces must pass a representative-independence test before algebraic conclusions can be drawn.
 
 ## 1. Introduction
 
-The Möbius band is the canonical example of a nonorientable surface and of a nontrivial real line bundle over the circle. Its defining feature — a single half-twist — has a well-known consequence: there is no globally consistent orientation, and traversing the core circle reverses local orientation. It is natural, and appealing, to ask whether this geometric sign-flip can be promoted into an *arithmetic* of numbers, with the twist realizing multiplication by $-1$.
+The Möbius band is the standard example of a non-orientable surface with boundary. Its elementary construction—gluing the ends of a strip after a half-turn—turns sign reversal into geometry. This makes it an attractive setting for speculative arithmetic. One may try to let one circuit of the band reverse the sign of a number, interpret points as signed magnitudes, and promote orientation to a distinguished arithmetic factor.
 
-A specific and ambitious version of this proposal runs as follows. Place a point $(x, y)$ of the band in correspondence with the real number $y(2x-1)$, using the width coordinate $x$ for sign and the height coordinate $y$ for scale. Embed the integers as a spiral of points $n \mapsto \big(\tfrac12 + \tfrac{1}{2n}, |n|\big)$ converging on the core circle. The conjecture holds that these "Möbius integers" $\mathbb{Z}_M$ form a ring — indeed a one-point compactification of $\mathbb{Z}$ in which $+1$ and $-1$ are identified at the twist — that this ring fails to be an integral domain, and that orientation appears as a distinguished "twist prime" $-1$ in factorizations such as $-6 = 2 \times 3 \times (-1)$.
+Such a program raises three logically separate questions.
 
-This paper subjects the proposal to precise scrutiny. Our results separate cleanly into a robust positive core and a fatal negative verdict on the arithmetic. The value map exists and is surjective; the twist is a genuine involution acting as negation; the zero fibre is exactly described. But the integer embedding **collapses to the sign function**, destroying every hypothesis needed for a ring or a factorization theory. We give the precise statements and proof sketches, situate the outcome in the theory of line bundles, and identify what survives: an order-two symmetry — a $\mathbb{Z}/2$-grading — rather than a prime.
+1. **Topological question:** what is the precise equivalence relation defining the band?
+2. **Algebraic question:** do the proposed operations depend only on quotient points, rather than on chosen representatives?
+3. **Arithmetic question:** does the proposed placement and evaluation of integers preserve the intended values and factorizations?
 
-## 2. The Möbius band and the value map
+The order matters. Ring-theoretic notions such as zero divisor, unit, prime, and integral domain presuppose well-defined operations. If multiplication changes when one replaces a point by an equivalent representative, then it is not multiplication on the quotient, and calculations using it cannot support ring-theoretic conclusions.
 
-### 2.1 Definitions
+We study the direct endpoint model. Let
 
-**Definition 2.1 (Gluing relation).** On $\mathbb{R} \times \mathbb{R}$ define the relation
-$$p \sim q \iff p = q \ \text{ or }\ \big(p_1 = 0,\ q_1 = 1,\ p_2 = -q_2\big) \ \text{ or }\ \big(p_1 = 1,\ q_1 = 0,\ p_2 = -q_2\big),$$
-where $p = (p_1, p_2)$. This identifies the left boundary fibre $\{0\} \times \mathbb{R}$ with the right boundary fibre $\{1\} \times \mathbb{R}$ via a flip $(0, y) \sim (1, -y)$.
+$$
+S=[0,1]\times\mathbb R.
+$$
 
-**Proposition 2.2.** *The relation $\sim$ is an equivalence relation.*
+The endpoints are glued by
 
-*Proof sketch.* Reflexivity is the first disjunct. Symmetry swaps the two boundary cases and uses $y = -(-y)$. Transitivity is a finite case analysis: the only nontrivial chains identify a left-edge point, its right-edge partner, and back; the flips compose to the identity or to a single flip, which is again an instance of $\sim$. $\square$
+$$
+(0,y)\sim(1,-y).
+$$
 
-**Definition 2.3 (Möbius band).** The **Möbius band** is the quotient $M = (\mathbb{R}\times\mathbb{R})/\!\sim$, with class map $[\,\cdot\,]\colon \mathbb{R}\times\mathbb{R} \to M$.
+For algebraic counterexamples it is useful to state the relation explicitly on pairs: two points are related when they are equal, or when they lie on opposite endpoint edges with opposite fiber coordinates. This is the smallest elementary relation needed for the prescribed endpoint gluing.
 
-**Definition 2.4 (Value function).** On representatives define $\varphi(x, y) = y(2x - 1)$. The factor $2x - 1$ interpolates linearly from $-1$ at $x=0$ to $+1$ at $x=1$, vanishing at the center $x = \tfrac12$.
+Our principal conclusions are negative with respect to the proposed construction but constructive with respect to its redesign. Coordinatewise operations fail because two twists in the inputs cancel while the output gluing supplies only one twist. This “two twists cancel” phenomenon points directly to a graded replacement: twisted times twisted should land in an untwisted component. Likewise, the role imagined for an orientation prime is accurately played by an order-two unit or a parity degree.
 
-### 2.2 The value map descends and is surjective
+## 2. The endpoint quotient
 
-**Theorem 2.5 (Well-definedness).** *The value function is constant on equivalence classes; hence it induces a well-defined map $\mathrm{val}\colon M \to \mathbb{R}$, $\mathrm{val}([x,y]) = y(2x-1)$.*
+### 2.1 Raw points and the gluing relation
 
-*Proof sketch.* Only the gluing cases require checking. For $(0, y) \sim (1, -y)$: $\varphi(0, y) = y(-1) = -y$ and $\varphi(1, -y) = (-y)(1) = -y$; the values agree. The symmetric case is identical. Therefore $\varphi$ factors through the quotient. $\square$
+A **raw point** is a pair $(x,y)\in\mathbb R^2$; for the geometric strip one restricts $x$ to $[0,1]$. Define a relation $\sim$ by declaring $(x,y)\sim(u,v)$ precisely when one of the following holds:
 
-**Theorem 2.6 (Surjectivity).** *$\mathrm{val}\colon M \to \mathbb{R}$ is surjective.*
+1. $(x,y)=(u,v)$;
+2. $x=0$, $u=1$, and $y=-v$;
+3. $x=1$, $u=0$, and $y=-v$.
 
-*Proof sketch.* Given $r \in \mathbb{R}$: if $r \ge 0$, then $\mathrm{val}([1, r]) = r(2\cdot 1 - 1) = r$; if $r < 0$, then $\mathrm{val}([0, -r]) = (-r)(2\cdot 0 - 1) = (-r)(-1) = r$. Every real value is attained. $\square$
+The second and third clauses encode the two directions of the endpoint identification.
 
-Thus $M$ carries a surjection to $\mathbb{R}$ — a promising start for a "number system," but surjectivity alone says nothing about faithfulness, to which we return in Section 4.
+### Theorem 2.1 (Endpoint equivalence)
 
-## 3. The twist as negation and the zero fibre
+The relation $\sim$ is an equivalence relation. In particular, for every $y\in\mathbb R$,
 
-### 3.1 The twist involution
+$$
+(0,y)\sim(1,-y).
+$$
 
-**Definition 3.1 (Twist).** Reflection across the core circle sends a representative $(x, y)$ to $(1 - x, y)$. This descends to a map $\tau\colon M \to M$, $\tau([x, y]) = [1 - x, y]$.
+#### Proof sketch
 
-**Proposition 3.2 (Compatibility).** *Reflection respects the gluing, so $\tau$ is well defined.*
+Reflexivity is the first clause. Symmetry exchanges the second and third clauses. For transitivity, equality cases are immediate. The only nontrivial chains pass from one edge to the other and back; two sign changes restore the original fiber coordinate, so the first and third points are equal. Therefore the quotient $S/{\sim}$ is well defined. $\square$
 
-*Proof sketch.* If $(0, y) \sim (1, -y)$, then reflecting both gives $(1, y)$ and $(0, -y)$; and $(1, y) \sim (0, -y)$ holds by the second boundary case (since $y = -(-y)$). Hence $\tau$ maps equivalent points to equivalent points. $\square$
+It is important not to enlarge the relation accidentally. The only nontrivial identification crosses from one endpoint edge to the other.
 
-**Theorem 3.3 (The twist is negation).** *For every $z \in M$, $\ \mathrm{val}(\tau(z)) = -\,\mathrm{val}(z)$. Moreover $\tau$ is an involution ($\tau \circ \tau = \mathrm{id}$), and its fixed points are exactly the classes with $x = \tfrac12$, i.e. the central circle.*
+### Lemma 2.2 (Opposite values on one edge remain distinct)
 
-*Proof sketch.* On representatives,
-$$\varphi(1 - x, y) = y\big(2(1-x) - 1\big) = y(1 - 2x) = -\,y(2x - 1) = -\varphi(x, y).$$
-Applying reflection twice returns $x$, so $\tau^2 = \mathrm{id}$. A point is fixed by $\tau$ iff $[1-x, y] = [x, y]$; away from the boundary this forces $1 - x = x$, i.e. $x = \tfrac12$, which is the central circle (where the value is $0$). $\square$
+The points $(0,1)$ and $(0,-1)$ are not equivalent.
 
-Theorem 3.3 is the rigorous meaning of "going around the band flips the sign." The pair $\{\mathrm{id}, \tau\}$ is a $\mathbb{Z}/2$ action, and $\mathrm{val}$ is anti-invariant under it: the surface carries a genuine $\mathbb{Z}/2$-grading in which $\tau$ implements multiplication by $-1$ on values.
+#### Proof sketch
 
-### 3.2 The zero fibre
+They are unequal. Neither cross-edge clause applies because both first coordinates are $0$. Hence no defining clause of $\sim$ relates them. $\square$
 
-**Theorem 3.4 (Zero set).** *For all $x, y$, $\ \mathrm{val}([x, y]) = 0 \iff y = 0 \ \text{or}\ x = \tfrac12$.*
+This lemma is the basic witness used below.
 
-*Proof sketch.* $\varphi(x,y) = y(2x-1) = 0$ iff one factor vanishes: $y = 0$ or $2x - 1 = 0$, i.e. $x = \tfrac12$. Conversely each condition makes a factor zero. $\square$
+## 3. The descent criterion for quotient operations
 
-Geometrically the zero fibre is the union of the **zero section** $\{y = 0\}$ and the **central circle** $\{x = \tfrac12\}$ — two transverse curves. Note that $\tau$ fixes the central circle pointwise and preserves the zero section, consistent with $\mathrm{val} \circ \tau = -\mathrm{val}$.
+Let $Q=S/{\sim}$ and write $[a]$ for the equivalence class of $a$. A binary function $F:S\times S\to S$ induces a function $\overline F:Q\times Q\to Q$ by
 
-## 4. The collapse of the Möbius integers
+$$
+\overline F([a],[b])=[F(a,b)]
+$$
 
-We now test the arithmetic proposal directly.
+only if it is compatible with the relation.
 
-**Definition 4.1 (Integer embedding).** For $n \in \mathbb{Z}$, $n \neq 0$, define
-$$e(n) = \Big[\ \tfrac12 + \tfrac{1}{2n},\ \ |n|\ \Big] \in M.$$
-As $|n| \to \infty$ the width coordinate tends to $\tfrac12$ (the core circle) and the height records the magnitude — the "spiral" of the conjecture.
+### Definition 3.1 (Representative independence)
 
-**Theorem 4.2 (Embedding evaluates to the sign).** *For every nonzero integer $n$,*
-$$\mathrm{val}(e(n)) = \operatorname{sign}(n) = \begin{cases} +1, & n > 0,\\ -1, & n < 0.\end{cases}$$
+A binary operation $F$ on representatives is **representative-independent** if, for all $a,a',b,b'\in S$,
 
-*Proof sketch.* Directly,
-$$\mathrm{val}(e(n)) = |n|\left(2\Big(\tfrac12 + \tfrac{1}{2n}\Big) - 1\right) = |n|\left(1 + \tfrac1n - 1\right) = \frac{|n|}{n}.$$
-If $n > 0$ then $|n| = n$ and the quotient is $+1$; if $n < 0$ then $|n| = -n$ and the quotient is $-1$. In both cases $\mathrm{val}(e(n)) = \operatorname{sign}(n)$. $\square$
+$$
+a\sim a'\ \text{and}\ b\sim b'
+\quad\Longrightarrow\quad
+F(a,b)\sim F(a',b').
+$$
 
-**Corollary 4.3 (Collapse and non-injectivity).** *The values coincide across all positive integers and across all negative integers; e.g. $\mathrm{val}(e(1)) = \mathrm{val}(e(2)) = +1$ while $1 \neq 2$. Hence the map $n \mapsto \mathrm{val}(e(n))$ is not injective, and the image of $\mathbb{Z}\setminus\{0\}$ is exactly the two-element set $\{-1, +1\}$.*
+This condition is necessary and sufficient for the displayed rule for $\overline F$ to be well defined.
 
-*Proof sketch.* Immediate from Theorem 4.2: the value depends on $n$ only through its sign. Two integers with the same sign have equal value, so injectivity fails, and the image is $\{-1,+1\}$. $\square$
+The criterion is standard but indispensable. It means that a quotient point, which may have several coordinate descriptions, receives a unique output class.
 
-### 4.1 Consequences for the conjectured ring
+## 4. Obstruction to coordinatewise multiplication
 
-Corollary 4.3 dismantles the arithmetic program at its foundation, before any ring axiom is even in play.
+Consider the proposed coordinatewise product
 
-1. **No faithful copy of $\mathbb{Z}$.** A number system requires distinct numbers to be distinct. Here all positive integers share the value $+1$ and all negative integers share $-1$. The embedding is drastically non-injective, so the "Möbius integers" $\mathbb{Z}_M$ read through $\mathrm{val}$ are not a faithful image of $\mathbb{Z}$.
+$$
+(x,y)\odot(u,v)=(xu,yv).
+$$
 
-2. **No one-point compactification of $\mathbb{Z}$.** The proposed identification of $+1$ and $-1$ "at the twist," yielding a single point at infinity, is contradicted twice over: the values $+1$ and $-1$ are in fact *distinct* (they are the two elements of the image), while the *magnitudes* that a compactification would need to see have all been erased.
+### Theorem 4.1 (Multiplication obstruction)
 
-3. **No prime factorization, no twist prime.** Factorization presupposes distinguishable elements $2, 3, 6, \dots$ with a multiplicative law. But $2_+$, $3_+$, and $6_+$ all evaluate to $+1$: they are indistinguishable under the value map. There is no multiplicative structure to support the claim $6 = 2_+ \cdot 3_+$, and none to support $-6 = 2_- \cdot 3_-$ or the introduction of a "twist prime" $-1$. The magnitude information required for primality has been destroyed.
+Coordinatewise multiplication is not representative-independent and therefore does not induce multiplication on the Möbius endpoint quotient.
 
-4. **The integral-domain question is vacuous.** The conjectured witness of zero-divisors, "$(1,0)\cdot(0,1) = (0,0)$ with nonzero factors," cannot even be posed, because there is no well-defined multiplication on $M$ (nor on the collapsed image) compatible with $\mathrm{val}$ that would make $(1,0)$, $(0,1)$ nonzero and their product zero in the required sense. The proposal supplies no ring in which the statement lives.
+#### Proof
 
-The failure is *structural*, not a matter of a poorly chosen normalization: $\mathrm{val}$ is a scalar invariant that on the embedded integers depends only on sign. No re-scaling of the embedding within this framework can recover magnitude, because the width coordinate is pinned by the requirement $\tfrac12 + \tfrac{1}{2n}$ that produces exactly the cancellation $1 + \tfrac1n - 1$.
+Choose
 
-## 5. What survives: the $\mathbb{Z}/2$ content of the twist
+$$
+a=b=(0,1),\qquad a'=b'=(1,-1).
+$$
 
-The negative verdict on arithmetic sharpens, rather than erases, the geometric intuition. The results of Section 3 identify precisely the true algebraic content of "orientation as sign":
+The endpoint rule gives $a\sim a'$ and $b\sim b'$. Coordinatewise multiplication yields
 
-- The twist $\tau$ is an **involution** with $\mathrm{val} \circ \tau = -\mathrm{val}$ (Theorem 3.3). Thus $\{\mathrm{id}, \tau\} \cong \mathbb{Z}/2$ acts on $M$, and $\mathrm{val}$ is an odd (anti-invariant) function for this action.
-- The **fixed locus** of $\tau$ is the central circle $x = \tfrac12$, contained in the zero fibre (Theorem 3.4). This is the "neutral orientation" where sign is undefined — exactly where value is $0$.
-- The correct interpretation of the "twist prime $-1$" is therefore *the generator of $\mathbb{Z}/2$*, not a prime in a ring. Orientation contributes a **grading**, a single bit, not an arithmetic atom that participates in factorization.
+$$
+a\odot b=(0,1),
+$$
 
-This matches the standard picture of the Möbius band as the tautological nonorientable real line bundle $M \to S^1$: it admits no nowhere-zero global section, and the monodromy around the base circle is multiplication by $-1$ on the fibre. The value map $\varphi$ is a section-like scalar invariant, anti-invariant under the deck action — precisely a $\mathbb{Z}/2$-graded object, and precisely *not* a ring of numbers.
+while
 
-## 6. Algorithms and computations
+$$
+a'\odot b'=(1,1).
+$$
 
-Although the results are exact, they invite direct numerical confirmation. Three routines make the phenomena concrete.
+If these outputs were equivalent, the cross-edge rule would require the fiber coordinate $1$ at the first edge to be the negative of the fiber coordinate $1$ at the second edge. This would require $1=-1$, which is false. Thus the outputs are inequivalent. $\square$
 
-**Algorithm A (Value evaluation with gluing normalization).** Given a representative $(x, y)$, optionally normalize it to a canonical fibre and return $\varphi(x, y) = y(2x - 1)$. Well-definedness (Theorem 2.5) is verified by checking that a boundary point and its glued partner return equal values. Complexity $O(1)$.
+### 4.1 Geometric interpretation
 
-**Algorithm B (Embedding-collapse scan).** For a range of nonzero integers $n$, compute $\mathrm{val}(e(n))$ and confirm it equals $\operatorname{sign}(n)$, exhibiting the two-value image $\{-1, +1\}$ and the non-injectivity of Corollary 4.3. Complexity $O(N)$ for $N$ integers.
+The counterexample reflects a structural mismatch. Moving one representative across the endpoint introduces a sign reversal in its fiber coordinate. Moving both factors across introduces two sign reversals. Their product has sign
 
-**Algorithm C (Twist/anti-invariance verification).** For sampled points, verify $\mathrm{val}(\tau(z)) = -\mathrm{val}(z)$ and $\tau^2 = \mathrm{id}$, and locate the fixed set at $x = \tfrac12$. Complexity $O(N)$ for $N$ samples.
+$$
+(-y)(-v)=yv,
+$$
 
-These are implemented in the accompanying demonstration code.
+so the two reversals cancel. However, comparing the resulting products across a single quotient seam demands one reversal. Multiplication of two twisted quantities is therefore untwisted; it should not be forced to remain in the same twisted component.
 
-## 7. Applications and interpretation
+### Corollary 4.2 (No coordinatewise quotient ring)
 
-The chief application is methodological and conceptual. First, the analysis is a compact case study in how a *geometrically motivated algebraic conjecture* can fail: not through a subtle inconsistency deep in the axioms, but because the very map that connects geometry to number destroys the information (magnitude) that arithmetic needs. Recognizing that $\varphi$ is a *sign-and-scale* product — and that the proposed embedding forces the scale to cancel — is the whole story.
+The Möbius endpoint quotient cannot be a ring whose multiplication is induced by the displayed coordinatewise product.
 
-Second, the surviving structure is genuinely useful as intuition. The identification of orientation reversal with an order-two symmetry acting by negation is exactly the kind of $\mathbb{Z}/2$-grading that pervades mathematics and physics: real line bundles and their $w_1$ obstruction, $\mathbb{Z}/2$-graded (super) vector spaces, and, loosely, the sign a wavefunction can acquire under exchange or rotation. The romantic slogan "orientation is like spin" is best cashed out here as "orientation is a $\mathbb{Z}/2$-grading," which is precise and correct, rather than "orientation is a prime," which the counterexample refutes.
+#### Proof sketch
 
-## 8. Discussion
+A ring multiplication must first be a well-defined binary operation on its carrier. Theorem 4.1 shows that the proposed rule does not define such an operation. $\square$
 
-The proposal conflated two different roles the twist might play. As a *symmetry* — an involution acting on a scalar invariant — the twist behaves impeccably and delivers exactly the negation the intuition promised. As an *arithmetic generator* — a prime organizing a factorization of distinguishable integers — the twist has nothing to work with, because the chosen embedding retains only sign. The lesson is that nonorientability naturally produces $\mathbb{Z}/2$ data (a grading, a monodromy, an obstruction), and that trying to inflate this single bit into a full arithmetic overreaches: the extra structure of a ring is simply not present.
+In particular, a purported equation of the form $ab=0$ computed from representatives cannot establish that the quotient has zero divisors. Without a quotient multiplication, the expression is not an invariant statement about quotient points.
 
-A subtle but important point is the *transversality* in the zero fibre (Theorem 3.4): the zero section and the central circle meet, and the central circle is exactly the fixed set of the twist. This is the geometric signature of the sign becoming undefined — the "equator" between positive and negative — and it is the correct home for the intuition of a neutral, orientation-free locus, rather than a zero element of a would-be ring.
+## 5. Obstruction to coordinatewise addition
 
-## 9. Future directions
+Now consider coordinatewise addition:
 
-Several refinements would deepen the honest core while abandoning the untenable arithmetic.
+$$
+(x,y)\oplus(u,v)=(x+u,y+v).
+$$
 
-- **Smooth model.** Replace the piecewise-linear $\varphi$ with the standard smooth Möbius band $(\mathbb{R}\times\mathbb{R})/\mathbb{Z}$ under $n\cdot(x, y) = (x + n, (-1)^n y)$ and the invariant $y\cos(\pi x)$. Prove well-definedness by induction over the $\mathbb{Z}$-action and compare the two value maps.
-- **The genuine $\mathbb{Z}/2$-grading.** Formalize the orientation sign map on fibres as a group-graded structure and show explicitly that the "twist prime" is the generator of $\mathbb{Z}/2$ acting on orientations.
-- **Line-bundle viewpoint.** Treat $M \to S^1$ as the tautological nonorientable real line bundle; $\varphi$ is a section-like invariant. Establishing non-orientability (no nowhere-zero global section) would be a substantive result.
-- **Fibrewise ring structure.** Each fibre $\cong \mathbb{R}$ is a ring, and the twist is the ring automorphism $x \mapsto -x$. The correct algebraic object is thus a *bundle of rings with $\mathbb{Z}/2$ monodromy*, not a single ring — a precise replacement for the failed "Möbius integers."
+### Theorem 5.1 (Addition obstruction)
 
-## 10. Conclusion
+Coordinatewise addition is not representative-independent and therefore does not induce addition on the Möbius endpoint quotient.
 
-Modeling the Möbius band as $(\mathbb{R}\times\mathbb{R})/\!\sim$ with the value map $\varphi(x, y) = y(2x - 1)$, we established that the value map descends and is surjective, that the twist is an involution acting as exact negation with the central circle as fixed set, and that the zero fibre is the union of the zero section and the central circle. Against these positive facts, the proposed integer embedding $n \mapsto (\tfrac12 + \tfrac1{2n}, |n|)$ evaluates to $\operatorname{sign}(n)$ and thereby collapses $\mathbb{Z}$ onto the two-point set $\{-1, +1\}$, refuting the existence of a faithful Möbius-integer number system, a one-point compactification of $\mathbb{Z}$, a non-integral-domain ring, and a "twist prime." What remains — and what was true all along — is that the twist encodes a $\mathbb{Z}/2$ symmetry acting by negation. Orientation is a grading, not a prime.
+#### Proof
+
+Use the same representatives as in Theorem 4.1. Then
+
+$$
+a\oplus b=(0,2),
+$$
+
+whereas
+
+$$
+a'\oplus b'=(2,-2).
+$$
+
+These points are not equal. They also do not satisfy either endpoint clause: their first coordinates are $0$ and $2$, not $0$ and $1$ in either order. Hence they are inequivalent. $\square$
+
+There is an additional geometric warning here. Adding base coordinates can move outside $[0,1]$, so coordinatewise addition is not even closed on the strip. One could attempt to reduce the base coordinate periodically, but any such repair would need a new definition and a fresh compatibility proof. It would not vindicate the original rule.
+
+### Corollary 5.2 (Ring claims are premature)
+
+Claims that the proposed quotient is a ring, has zero divisors, or fails to be an integral domain do not follow from coordinatewise formulas, because neither proposed operation descends to the quotient.
+
+## 6. Analysis of the proposed integer placement
+
+For a nonzero integer $n$, define
+
+$$
+c(n)=\frac12+\frac{1}{2n},
+\qquad
+s(n)=|n|.
+$$
+
+The proposed point is $(c(n),s(n))$. Its claimed scalar value is obtained from
+
+$$
+V(x,y)=y(2x-1).
+$$
+
+### Theorem 6.1 (Magnitude collapse)
+
+For every nonzero integer $n$,
+
+$$
+V(c(n),s(n))=\frac{|n|}{n}.
+$$
+
+Consequently,
+
+$$
+V(c(n),s(n))=
+\begin{cases}
+1,&n>0,\\
+-1,&n<0.
+\end{cases}
+$$
+
+#### Proof
+
+Direct simplification gives
+
+$$
+2c(n)-1
+=2\left(\frac12+\frac{1}{2n}\right)-1
+=\frac1n.
+$$
+
+Multiplying by $s(n)=|n|$ gives $|n|/n$. The two cases follow from $|n|=n$ for positive $n$ and $|n|=-n$ for negative $n$. $\square$
+
+Thus the scalar interpretation records sign alone. It does not return $n$.
+
+### Proposition 6.2 (Distinct coordinates, equal evaluated values)
+
+The proposed points for $2$ and $3$ have distinct first coordinates, but both have scalar value $1$.
+
+#### Proof
+
+Their first coordinates are
+
+$$
+c(2)=\frac34,
+\qquad
+c(3)=\frac23,
+$$
+
+which are unequal. Theorem 6.1 gives $V(c(2),s(2))=V(c(3),s(3))=1$. $\square$
+
+This distinction prevents an overstatement. The pair-valued placement need not collapse all positive integers as points. Rather, the advertised evaluation collapses their represented real values. Any corrected account must specify whether “represents $n$” refers to injectivity of the pair map, recovery by a scalar evaluation, or some other property.
+
+### 6.1 The missing value at zero
+
+The expression $1/(2n)$ is undefined at $n=0$. Therefore the displayed formula is not an embedding of all integers unless a separate image for zero is supplied. Moreover, calling the resulting set a one-point compactification requires a topology and a proof of the relevant compactification property. Convergence of selected coordinates toward a boundary point is not by itself sufficient.
+
+## 7. Factorization and orientation
+
+Once the failed quotient operations are set aside, the numerical factorization claims can be tested in ordinary integer arithmetic.
+
+### Proposition 7.1 (Factorization of $6$ and $-6$)
+
+The valid identities are
+
+$$
+6=2\cdot3
+$$
+
+and
+
+$$
+-6=2\cdot3\cdot(-1).
+$$
+
+The proposed identity
+
+$$
+-6=(-2)(-3)
+$$
+
+is false.
+
+#### Proof
+
+The first identity is immediate. Two negative signs cancel, so $(-2)(-3)=6$. Multiplication by one additional factor $-1$ gives $2\cdot3\cdot(-1)=-6$. $\square$
+
+The calculation itself reveals the correct algebraic type of orientation: it is invertible and of order two.
+
+### Definition 7.2 (Unit and prime)
+
+An integer $u$ is a **unit** if there exists an integer $v$ with $uv=1$. A prime integer is, in particular, required to be a nonunit whose divisibility behavior is irreducible in the appropriate sense.
+
+### Theorem 7.3 (Orientation-unit theorem)
+
+The only units in $\mathbb Z$ are $1$ and $-1$. In particular, $-1$ is not prime.
+
+#### Proof sketch
+
+If $u$ is a unit, then $uv=1$ for some integer $v$. Taking absolute values gives $|u||v|=1$. Since both factors are nonnegative integers, $|u|=1$, so $u=1$ or $u=-1$. Conversely, both values are units because each is its own inverse. Since a prime is not a unit, $-1$ is not prime. $\square$
+
+Orientation therefore behaves as a unit. Multiplication by $-1$ reverses sign; applying it twice returns the original integer:
+
+$$
+(-1)^2=1.
+$$
+
+### Theorem 7.4 (Zero has no nonzero finite factorization)
+
+Let $a_1,\ldots,a_k$ be nonzero integers. Then
+
+$$
+a_1a_2\cdots a_k\ne0.
+$$
+
+Consequently, zero cannot be expressed as a finite product of nonzero prime factors.
+
+#### Proof sketch
+
+The integers have no zero divisors: if $ab=0$, then $a=0$ or $b=0$. Induction on $k$ shows that a finite product of nonzero factors remains nonzero. $\square$
+
+This excludes a prime factorization of zero in the usual sense. The empty product equals $1$, not $0$.
+
+## 8. Algorithms and computational diagnostics
+
+The obstructions admit exact, finite diagnostic procedures.
+
+### 8.1 Endpoint-equivalence test
+
+Given two raw points, test equality first. If they are unequal, test whether their base coordinates are opposite endpoints and whether their fiber coordinates sum to zero. With exact rational input this requires a constant number of arithmetic comparisons, hence $O(1)$ time and $O(1)$ auxiliary storage, apart from the bit complexity of rational arithmetic.
+
+### 8.2 Representative-independence witness
+
+For a proposed binary operation $F$, select related pairs $a\sim a'$ and $b\sim b'$, compute $F(a,b)$ and $F(a',b')$, and apply the endpoint-equivalence test. A single inequivalent output pair disproves descent. The witness used here is minimal and exact:
+
+$$
+(0,1)\sim(1,-1).
+$$
+
+The diagnostic is not a complete decision procedure for arbitrary symbolic operations, because passing finitely many tests cannot prove universal compatibility. It is, however, a conclusive refutation when it finds one counterexample.
+
+### 8.3 Integer-placement audit
+
+For each selected nonzero integer $n$, calculate $c(n)$, $s(n)$, and $V(c(n),s(n))$ using rational arithmetic. The simplification to $|n|/n$ proves the general pattern; the numerical table illustrates it. The work per fixed-size integer is constant in arithmetic-operation count, while bit complexity grows with the size of $n$.
+
+### 8.4 Factorization audit
+
+For a nonzero integer $n$, separate its sign from its positive magnitude:
+
+$$
+n=\operatorname{sgn}(n)\,|n|,
+$$
+
+where $\operatorname{sgn}(n)\in\{1,-1\}$. Factor $|n|$ by trial division or a more advanced integer-factorization method. For trial division, testing candidates through $\sqrt{|n|}$ takes $O(\sqrt{|n|})$ divisions in the worst case. Zero is reported separately as having no finite prime factorization.
+
+## 9. Corrected algebraic models
+
+The failure of the naïve model identifies several viable replacements.
+
+### 9.1 Fiberwise addition in a line bundle
+
+A Möbius band may be viewed as the total space of a real line bundle over the circle. Fibers over a fixed base point are one-dimensional vector spaces, so two vectors in the same fiber can be added. Vectors over different base points cannot be canonically added without extra structure such as a connection or a chosen trivialization. This explains why a global coordinatewise addition of total-space points is unnatural.
+
+### 9.2 Tensor products and the cancellation of twists
+
+Let $L$ denote the Möbius line bundle. The product of two quantities transforming like sections of $L$ transforms like a section of $L\otimes L$. A sign reversal in each factor gives a positive product, so $L\otimes L$ is untwisted. Symbolically,
+
+$$
+\text{twisted}\times\text{twisted}=\text{untwisted}.
+$$
+
+The failed product attempted to place this result back in the twisted total space. A corrected model retains both sectors.
+
+### 9.3 A $\mathbb Z/2\mathbb Z$-graded algebra
+
+Let
+
+$$
+A=A_0\oplus A_1,
+$$
+
+where $A_0$ is the untwisted sector and $A_1$ is the twisted sector. Require
+
+$$
+A_iA_j\subseteq A_{i+j\bmod 2}.
+$$
+
+Then
+
+$$
+A_0A_0\subseteq A_0,
+\qquad
+A_0A_1\subseteq A_1,
+\qquad
+A_1A_1\subseteq A_0.
+$$
+
+This law encodes exactly the parity behavior exposed by the counterexample. Orientation is a degree in $\mathbb Z/2\mathbb Z$, or it may be represented by an order-two unit $\tau$ satisfying $\tau^2=1$. Neither interpretation requires orientation to be prime.
+
+### 9.4 Transport through a bijection
+
+One can place a ring structure on a bare set $X$ by choosing a bijection $f:X\to R$ to a known ring and defining
+
+$$
+x\boxplus y=f^{-1}(f(x)+f(y)),
+\qquad
+x\boxtimes y=f^{-1}(f(x)f(y)).
+$$
+
+These operations satisfy the ring axioms by construction. However, this solves only a set-theoretic problem. For a geometrically meaningful Möbius arithmetic one should also ask whether the operations are continuous, fiber-compatible, symmetry-respecting, or canonical. An arbitrary bijection generally offers none of these properties.
+
+## 10. Applications and broader connections
+
+The representative-independence test appears throughout mathematics. Functions on projective space must be invariant under rescaling. Operations on residue classes must respect congruence. Gauge-invariant quantities in physics must not depend on a chosen gauge representative. In each setting, quotienting removes descriptive redundancy, and legitimate observables must ignore that redundancy.
+
+The graded repair also has broad analogues. Fermionic parity uses a two-sector grading in which odd times odd is even. Orientation lines in differential geometry track sign changes under coordinate transformations. Group rings and crossed products incorporate a symmetry as an algebraic action rather than a prime. The Möbius example provides an elementary geometric picture of the same law.
+
+The distinction between a unit and a prime is equally consequential. Prime factors encode noninvertible multiplicative content; units encode reversible convention, symmetry, or orientation. Unique factorization is unique only up to multiplication by units and reordering. Thus sign is already present in ordinary integer factorization, but precisely as unit ambiguity.
+
+## 11. Discussion
+
+The original vision combined three goals: a twisted geometric carrier, an integer representation, and novel factorization. The analysis shows that these goals cannot be achieved by the proposed formulas.
+
+First, the carrier is a legitimate quotient, but its geometry does not automatically inherit coordinatewise algebra. Second, the integer placement is pairwise distinguishable in examples such as $2$ and $3$, yet the selected scalar evaluation loses magnitude. Third, the factorization narrative misclassifies sign: $-1$ is not a prime but the canonical nontrivial unit of $\mathbb Z$.
+
+These are independent failures. Repairing the evaluation does not repair quotient multiplication. Defining some multiplication does not establish a compactification. Rebranding $-1$ does not change its invertibility. A successful future theory should therefore separate its design specifications:
+
+1. define the topological space and prove the intended compactification property;
+2. define operations and prove closure and representative independence;
+3. establish ring axioms;
+4. define an integer map and prove injectivity or value recovery, whichever is intended;
+5. only then classify units, zero divisors, irreducibles, and primes.
+
+## 12. Future work
+
+The most promising direction is a graded algebra attached to the Möbius line bundle. A concrete construction should specify untwisted and twisted components, define their mixed products, and prove associativity. One can then ask whether sections, fibers, or selected discrete subsets yield useful arithmetic structures.
+
+A second direction is topological. If the aim is a one-point compactification of $\mathbb Z$, one should begin with the standard topology of that compactification and investigate embeddings into a Möbius-related space. Injectivity, convergence to the point at infinity, and compatibility with orientation should be stated separately.
+
+A third direction is dynamical or physical. An order-two orientation unit resembles parity or spin-like data, but the analogy should be developed through representations and gradings rather than primality. Tensor products provide the natural operation under which two orientation reversals cancel.
+
+Finally, one may classify all simple polynomial or affine operations on representatives that respect the endpoint relation. Such a classification could distinguish genuine quotient operations from coordinate artifacts and identify the maximal natural algebraic structure carried by the total space.
+
+## 13. Conclusion
+
+The Möbius endpoint identification is mathematically sound, but the proposed coordinatewise addition and multiplication are not. Explicit equivalent inputs produce inequivalent outputs. The proposed scalar interpretation of integer points evaluates all positive integers as $1$ and all negative integers as $-1$. Ordinary factorization gives $6=2\cdot3$ and $-6=2\cdot3\cdot(-1)$; the factor $-1$ is an order-two unit, not a prime, and zero has no finite product decomposition into nonzero primes.
+
+The corrected lesson is structural. A twist is not multiplicative magnitude. It is parity. Multiplying two twisted objects produces an untwisted object, so the natural home is a bundle-aware or $\mathbb Z/2\mathbb Z$-graded algebra. In this form, the Möbius band remains a fertile guide to arithmetic—not because naïve coordinates create a new ring, but because the obstruction reveals the algebra that non-orientability actually demands.
