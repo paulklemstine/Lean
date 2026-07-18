@@ -367,9 +367,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 card.appendChild(header);
                 card.appendChild(editor);
                 card.appendChild(output);
-                container.appendChild(card);
 
-                // Demos are manual-only now; the Run Code button triggers execution.
+                if (item.description) {
+                    const descDiv = document.createElement('div');
+                    descDiv.className = 'viz-description';
+                    descDiv.style.cssText = 'margin-top: 12px; padding: 0 12px; font-size: 0.95em; color: var(--text-muted); text-align: center; max-width: 800px; line-height: 1.5;';
+                    descDiv.innerHTML = window.renderMarkdownWithMath ? window.renderMarkdownWithMath(item.description) : item.description;
+                    card.appendChild(descDiv);
+                }
+
+                container.appendChild(card);
             });
         } else {
             container.innerHTML = '<p style="color:var(--text-muted)">No interactive demos provided.</p>';

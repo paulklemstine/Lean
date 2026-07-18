@@ -782,6 +782,15 @@ document.addEventListener('DOMContentLoaded', () => {
             card.appendChild(header);
             card.appendChild(editor);
             card.appendChild(outputContainer);
+            
+            if (item.description) {
+                const descDiv = document.createElement('div');
+                descDiv.className = 'viz-description';
+                descDiv.style.cssText = 'margin-top: 12px; padding: 0 12px; font-size: 0.95em; color: var(--text-muted); text-align: center; max-width: 800px; line-height: 1.5;';
+                descDiv.innerHTML = window.renderMarkdownWithMath ? window.renderMarkdownWithMath(item.description) : item.description;
+                card.appendChild(descDiv);
+            }
+            
             container.appendChild(card);
 
             // Auto-run if the code is already resolved
@@ -932,6 +941,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 content.appendChild(iframe);
                 card.appendChild(content);
+                
+                if (item.description) {
+                    const descDiv = document.createElement('div');
+                    descDiv.className = 'viz-description';
+                    descDiv.style.cssText = 'margin-top: 12px; padding: 0 12px; font-size: 0.95em; color: var(--text-muted); text-align: center; max-width: 800px; line-height: 1.5;';
+                    descDiv.innerHTML = window.renderMarkdownWithMath ? window.renderMarkdownWithMath(item.description) : item.description;
+                    card.appendChild(descDiv);
+                }
+                
                 container.appendChild(card);
             }
         });
