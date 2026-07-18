@@ -1,376 +1,376 @@
-# Stochastic Galois Theory over Finite Fields: Exact Factorization Statistics and a Cyclic Obstruction
+# Root Incidences, Permutation Fixed Points, and the Finite-Field Correction to Stochastic Galois Theory
 
-**Author:** Aristotle
-**Date:** 2026-07-10
+**Aristotle**  
+**18 July 2026**
 
 ## Abstract
 
-Over the rational numbers, a classical principle (the probabilistic form of
-Hilbert's irreducibility theorem) states that a "random" polynomial of degree $n$
-has Galois group equal to the full symmetric group $S_n$. It is natural to
-conjecture an analogous statement over finite fields: that for a uniformly random
-monic polynomial $f \in \mathbb{F}_q[x]$ of fixed degree $n$, the Galois group is
-$S_n$ with probability tending to $1$ as $q \to \infty$. We show this conjecture
-is **false at the group-theoretic level**. The absolute Galois group of a finite
-field is procyclic, so every Galois group arising over a finite field is cyclic,
-hence abelian; since $S_n$ is non-abelian for $n \ge 3$, no polynomial over a
-finite field has Galois group $S_n$ when $n \ge 3$. The probability is exactly
-$0$, not asymptotically $1$.
+A tempting finite-field analogue of generic Galois-group phenomena over the rational numbers asserts that a random degree-$n$ polynomial over $\mathbb F_q$ should have Galois group $S_n$ with probability tending to one as $q$ grows. In its literal form this assertion is false for $n\ge 3$: Galois groups of finite-field extensions are cyclic, whereas $S_n$ is noncommutative. The appropriate random-permutation correspondence concerns the cycle type of Frobenius acting on geometric roots, equivalently the degrees of irreducible factors.
 
-What survives, and what is the correct analogue, is the statistics of the
-**Frobenius cycle type** — equivalently, the factorization type of the polynomial.
-We establish two exact instances of this corrected picture. First, an
-**expected-roots identity**: summed over all $q^n$ monic degree-$n$ polynomials,
-the total number of roots in $\mathbb{F}_q$ (indeed over any finite commutative
-ring of cardinality $q$) is exactly $q^n$, so the expected number of roots of a
-random monic polynomial is exactly $1$ — mirroring the fact that a uniform
-permutation in $S_n$ has on average exactly one fixed point. Second, a complete
-**degree-two census**: over $\mathbb{F}_q$ with $q$ odd, exactly $q$ monic
-quadratics have a repeated root, exactly $q(q+1)/2$ are reducible, and exactly
-$q(q-1)/2$ are irreducible, so the proportion irreducible tends to $1/2$, matching
-the fraction of transpositions in $S_2$. All results are proved by elementary
-double-counting and completing the square.
+We establish the exact first-moment case of this corrected correspondence in a form valid over every finite commutative ring. For a finite commutative ring $K$ of cardinality $q$ and every $n>0$, the sum of the numbers of roots in $K$ over all $q^n$ monic degree-$n$ polynomials is exactly $q^n$. Independently, the sum of the numbers of fixed points over all permutations in $S_n$ is exactly $n!$. Thus both uniform models have expectation exactly one, and their incidence totals satisfy an exact cross-multiplied identity. We give bijective and double-counting proofs, explain the cyclicity obstruction, present enumeration algorithms and numerical examples, and situate the result as the first-moment shadow of the factorization-type/Frobenius-cycle dictionary.
 
 ## 1. Introduction
 
-### 1.1 The classical picture over $\mathbb{Q}$
-
-Let $f \in \mathbb{Q}[x]$ be a separable polynomial of degree $n$ with splitting
-field $L$. The Galois group $\mathrm{Gal}(L/\mathbb{Q})$ acts faithfully on the
-$n$ roots of $f$, embedding it as a subgroup of the symmetric group $S_n$. A
-guiding theme of arithmetic statistics is that this subgroup is *generically* all
-of $S_n$: in precise density statements (van der Waerden's theorem and its
-refinements, ultimately resting on Hilbert's irreducibility theorem), the
-proportion of degree-$n$ integer polynomials with coefficients bounded by $H$ whose
-Galois group is a proper subgroup of $S_n$ tends to $0$ as $H \to \infty$.
-Informally: **a random polynomial over $\mathbb{Q}$ has maximal Galois group.**
-
-### 1.2 The tempting — but false — finite-field analogue
-
-It is natural to ask for the finite-field version. Fix $n$ and let $f$ range
-uniformly over monic degree-$n$ polynomials in $\mathbb{F}_q[x]$. Does
-$\mathrm{Gal}(f) = S_n$ with probability approaching $1$ as $q \to \infty$? One
-might even conjecture a rate, e.g. $\mathbb{P}(\mathrm{Gal}(f) \ne S_n) =
-c_n/\sqrt{q} + O(1/q)$.
-
-This paper's first contribution is to observe that the conjecture is false, and
-not merely quantitatively: the probability is identically $0$ for all $n \ge 3$
-and all $q$. The obstruction is structural and is the content of Section 3.
-
-### 1.3 The correct analogue: Frobenius cycle statistics
-
-The salvageable content of the "random polynomial $\approx$ random permutation"
-heuristic is *not* about the isomorphism type of the Galois group but about the
-**cycle type of the Frobenius automorphism** acting on the roots. For a squarefree
-$f \in \mathbb{F}_q[x]$, the $q$-power Frobenius permutes the roots of $f$ in its
-splitting field, and its cycle lengths are exactly the degrees of the irreducible
-factors of $f$. The correct theorem — a finite-field manifestation of a general
-equidistribution principle — is that as $q \to \infty$, the factorization type of a
-random monic degree-$n$ polynomial converges in distribution to the cycle type of a
-uniformly random element of $S_n$.
-
-Sections 4 and 5 establish two exact, unconditional instances of this principle:
-the expected number of linear factors (fixed points) in every degree, and the
-complete distribution of factorization types in degree $2$.
-
-## 2. Definitions and setup
-
-Throughout, $K$ denotes a finite commutative ring with $q := |K|$ elements;
-in Sections 3 and 5 we specialize to a finite field, and in Section 5 we further
-assume odd characteristic.
-
-**Definition 2.1 (Monic encoding).** A monic polynomial of degree $n \ge 1$ over
-$K$,
-$$ f(x) = x^n + \sum_{i=0}^{n-1} v_i\, x^i, $$
-is encoded by its coefficient vector $v = (v_0, \dots, v_{n-1}) \in K^n$. There are
-exactly $q^n$ such polynomials. We write its evaluation as
-$$ \mathrm{ev}_n(v, r) := r^n + \sum_{i=0}^{n-1} v_i\, r^i. $$
-
-**Definition 2.2 (Root set and root count).** For a monic $f$ encoded by $v$, its
-set of roots in $K$ is $\{ r \in K : \mathrm{ev}_n(v,r) = 0 \}$, a finite set. In
-degree $2$, writing $f = x^2 + bx + c$ encoded by $(b,c) \in K^2$, we write
-$$ \mathrm{nroots}(b,c) := \#\{ r \in K : r^2 + b r + c = 0 \}. $$
-
-**Definition 2.3 (Frobenius cycle type / factorization type).** For squarefree
-$f \in \mathbb{F}_q[x]$ of degree $n$ with distinct irreducible factors of degrees
-$d_1, \dots, d_k$ (so $\sum d_j = n$), the *factorization type* of $f$ is the
-partition $(d_1, \dots, d_k)$ of $n$. The $q$-power Frobenius acts on the $n$ roots
-of $f$ as a permutation whose cycle type is exactly $(d_1, \dots, d_k)$. Roots in
-$\mathbb{F}_q$ (i.e., linear factors $x - r$) correspond to fixed points ($1$-cycles);
-irreducible quadratic factors correspond to $2$-cycles; and so on.
-
-## 3. The cyclic obstruction: correcting the conjecture
-
-**Theorem 3.1 (Finite-field Galois groups are never $S_n$ for $n \ge 3$).**
-Let $L/K$ be an extension of fields with $L$ finite, and let $n \ge 3$. Then there
-is no group isomorphism between the automorphism group $\mathrm{Aut}(L/K)$ (the
-Galois group when $L/K$ is Galois) and the symmetric group $S_n$. Equivalently, the
-set of isomorphisms $\mathrm{Gal}(L/K) \cong S_n$ is empty.
-
-*Proof.* Two ingredients.
-
-*(i) Finite-field Galois groups are cyclic.* If $L$ is a finite field, then $L/K$
-is a Galois extension of finite fields and $\mathrm{Gal}(L/K)$ is generated by the
-relative Frobenius automorphism $x \mapsto x^{|K|}$. Hence $\mathrm{Gal}(L/K)$ is
-cyclic, therefore abelian.
-
-*(ii) $S_n$ is non-abelian for $n \ge 3$.* The transpositions $(1\ 2)$ and
-$(2\ 3)$ do not commute: applying $(1\ 2)$ then $(2\ 3)$ sends $1 \mapsto 3$,
-whereas applying them in the other order sends $1 \mapsto 2$. Thus $S_n$ contains
-two elements that fail to commute.
-
-Now suppose there were an isomorphism $\varphi : \mathrm{Gal}(L/K) \to S_n$. A
-group isomorphic to a cyclic group is cyclic, so $S_n$ would be cyclic; but a
-cyclic group is abelian, contradicting (ii). Hence no such isomorphism exists. In
-particular the case $n = 3$ shows no finite-field extension has Galois group
-$S_3$. $\qquad\blacksquare$
-
-**Corollary 3.2 (The conjecture fails identically).** For every fixed $n \ge 3$
-and every prime power $q$,
-$$ \mathbb{P}_{f\ \text{monic},\ \deg f = n}\big(\mathrm{Gal}(f) \cong S_n\big) = 0. $$
-This is not an asymptotic statement: the probability is exactly $0$, contradicting
-any conjecture of the form $\mathbb{P}(\mathrm{Gal}(f) \ne S_n) \to 0$.
-
-**Remark 3.3.** The contrast with $\mathbb{Q}$ is stark and instructive. Over
-$\mathbb{Q}$, the absolute Galois group is enormously non-abelian and generic
-polynomials realize the maximal group $S_n$. Over $\mathbb{F}_q$, the absolute
-Galois group $\widehat{\mathbb{Z}}$ is procyclic, so *every* Galois group is a
-finite cyclic quotient. The abundance of symmetry over $\mathbb{Q}$ becomes a
-severe constraint over $\mathbb{F}_q$. Thus the finite-field theory is governed not
-by which group appears (always cyclic) but by the *permutation representation* of
-Frobenius on the roots — its cycle type — which is the subject of the rest of the
-paper.
-
-## 4. The expected-roots identity in every degree
-
-We now establish the cleanest universally-true instance of the random-permutation
-dictionary: the expected number of roots (fixed points of Frobenius) is exactly
-$1$, in every degree, over any finite commutative ring.
-
-**Lemma 4.1 (Fiber count).** Let $K$ be a finite commutative ring with $q = |K|$,
-and fix a base point $r \in K$ and a degree $m + 1 \ge 1$. The number of monic
-polynomials of degree $m+1$ having $r$ as a root equals $q^m$:
-$$ \#\{ v \in K^{m+1} : \mathrm{ev}_{m+1}(v, r) = 0 \} = q^m. $$
-
-*Proof.* The condition $\mathrm{ev}_{m+1}(v,r) = 0$ reads
-$$ v_0 = -\Big( r^{m+1} + \sum_{i=1}^{m} v_i\, r^i \Big). $$
-For any choice of the $m$ coefficients $(v_1, \dots, v_m) \in K^m$, the constant
-coefficient $v_0$ is uniquely determined. Hence the solution set is the graph of a
-function $K^m \to K$, and its cardinality is $|K^m| = q^m$. $\qquad\blacksquare$
-
-**Theorem 4.2 (Expected-roots identity).** Let $K$ be a finite commutative ring
-with $q = |K|$, and let $n \ge 1$. Then
-$$ \sum_{v \in K^n} \#\{ r \in K : \mathrm{ev}_n(v,r) = 0 \} = q^n. $$
-Equivalently, the expected number of roots of a uniformly random monic degree-$n$
-polynomial over $K$ is exactly
-$$ \frac{1}{q^n} \sum_{v \in K^n} \#\{ r : \mathrm{ev}_n(v,r) = 0 \} = 1. $$
-
-*Proof.* Write $n = m + 1$. The left-hand side counts incidences — pairs
-$(v, r)$ with $\mathrm{ev}_n(v,r) = 0$ — by first summing over polynomials $v$ and
-then over roots $r$. Exchange the order of summation, grouping by the base point
-$r$ instead:
-$$ \sum_{v \in K^n} \#\{ r : \mathrm{ev}_n(v,r)=0 \}
-   = \sum_{r \in K} \#\{ v : \mathrm{ev}_n(v,r) = 0 \}. $$
-By Lemma 4.1 each inner term equals $q^m$, and there are $q$ base points, so the
-total is $q \cdot q^m = q^{m+1} = q^n$. Dividing by the number $q^n$ of
-polynomials gives the expected value $1$. $\qquad\blacksquare$
-
-**Corollary 4.3 (Prime-field form).** For a prime $p$ and $n \ge 1$,
-$$ \sum_{v \in \mathbb{F}_p^{\,n}} \#\{ r \in \mathbb{F}_p : \mathrm{ev}_n(v,r) = 0 \} = p^n. $$
-
-**Interpretation.** Linear factors $x - r$ are exactly the fixed points of the
-Frobenius permutation on the roots. Theorem 4.2 says the average number of fixed
-points is exactly $1$ — precisely the average number of fixed points of a uniformly
-random permutation in $S_n$ (the "hat-check" constant, independent of $n$). This is
-the first exact rung of the equidistribution ladder.
-
-## 5. The complete degree-two census
-
-We now compute the *entire* distribution of factorization types in degree $2$,
-not merely the mean. Fix a finite field $K$ of odd characteristic, $q = |K|$.
-There are $q^2$ monic quadratics $x^2 + bx + c$, encoded by $(b,c) \in K^2$.
-
-**Lemma 5.1 (Roots via the discriminant).** For $b, c \in K$ with
-$\mathrm{char}(K) \ne 2$,
-$$ \mathrm{nroots}(b,c) = \#\{ y \in K : y^2 = b^2 - 4c \}. $$
-
-*Proof.* Completing the square, $r^2 + br + c = 0 \iff (2r + b)^2 = b^2 - 4c$.
-Since $2 \ne 0$ in $K$, the map $r \mapsto 2r + b$ is a bijection of $K$, and it
-carries the root set of the quadratic bijectively onto the set of square roots of
-the discriminant $b^2 - 4c$. Hence the two counts agree. $\qquad\blacksquare$
-
-**Lemma 5.2 (Square-root counts).** In a field $K$ with $\mathrm{char}(K) \ne 2$,
-for any $a \in K$:
-(a) $\#\{ y : y^2 = a \} \le 2$; and
-(b) $\#\{ y : y^2 = a \} = 1 \iff a = 0$.
-
-*Proof.* (a) If $y_0^2 = a$ then $y^2 = a \iff y^2 = y_0^2 \iff y \in \{y_0,
--y_0\}$, a set of size at most $2$; if no square root exists the count is $0$.
-(b) If the unique square root is $y$, then $-y$ is also a square root, so $y = -y$,
-i.e. $2y = 0$, i.e. $y = 0$ (as $2 \ne 0$), whence $a = y^2 = 0$. Conversely if
-$a = 0$ then $y^2 = 0 \iff y = 0$, a single solution. $\qquad\blacksquare$
-
-**Corollary 5.3.** A monic quadratic over $K$ ($\mathrm{char} \ne 2$) has at most
-two roots: $\mathrm{nroots}(b,c) \le 2$.
-
-**Lemma 5.4 (Total incidences).** Summed over all $q^2$ monic quadratics,
-$$ \sum_{(b,c) \in K^2} \mathrm{nroots}(b,c) = q^2. $$
-
-*Proof.* This is the degree-$2$ case of Theorem 4.2, but we give the direct
-argument. Exchange the order of summation to count incidences by base point:
-$$ \sum_{(b,c)} \mathrm{nroots}(b,c)
- = \sum_{r \in K} \#\{ (b,c) : r^2 + br + c = 0 \}. $$
-For fixed $r$, the condition determines $c = -(r^2 + br)$ uniquely for each $b$, so
-the inner count is $q$; summing over the $q$ values of $r$ gives $q^2$.
-$\qquad\blacksquare$
-
-**Theorem 5.5 (Degree-two census).** Let $K$ be a finite field with $q = |K|$ odd.
-Among the $q^2$ monic quadratics over $K$:
-
-1. **Repeated root (discriminant zero):** exactly $q$ satisfy
-   $\mathrm{nroots}(b,c) = 1$; these are the perfect squares $(x - r)^2$.
-2. **Reducible (split into two linear factors):**
-   $$ 2 \cdot \#\{ (b,c) : \exists\, r,\ r^2 + br + c = 0 \} = q(q+1), $$
-   i.e. exactly $\tfrac{q(q+1)}{2}$ monic quadratics have a root in $K$.
-3. **Irreducible (no root in $K$):**
-   $$ 2 \cdot \#\{ (b,c) : \nexists\, r,\ r^2 + br + c = 0 \} = q(q-1), $$
-   i.e. exactly $\tfrac{q(q-1)}{2}$ monic quadratics are irreducible.
-
-*Proof.* Let $n_0, n_1, n_2$ be the number of monic quadratics with exactly
-$0, 1, 2$ roots respectively. By Corollary 5.3 every quadratic falls into exactly
-one class, so
-$$ n_0 + n_1 + n_2 = q^2. \tag{I}$$
-Counting incidences by multiplicity, $\sum_{(b,c)} \mathrm{nroots}(b,c) = n_1 +
-2 n_2$, which equals $q^2$ by Lemma 5.4:
-$$ n_1 + 2 n_2 = q^2. \tag{II}$$
-
-For claim 1, by Lemma 5.1 and Lemma 5.2(b), $\mathrm{nroots}(b,c) = 1$ iff the
-discriminant $b^2 - 4c = 0$, i.e. $c = b^2/4$. Since $4 \ne 0$ (as $2 \ne 0$),
-this parametrizes exactly one $c$ for each of the $q$ values of $b$, giving
-$$ n_1 = q. \tag{III}$$
-Subtracting (I) from (II) gives $n_2 - n_0 = 0$... more directly, from (II) and
-(III), $2 n_2 = q^2 - q$, so $n_2 = \tfrac{q(q-1)}{2}$, and from (I), $n_0 = q^2 -
-n_1 - n_2 = q^2 - q - \tfrac{q(q-1)}{2} = \tfrac{q(q-1)}{2}$.
-
-The reducible quadratics are those with at least one root, numbering
-$n_1 + n_2 = q + \tfrac{q(q-1)}{2} = \tfrac{q(q+1)}{2}$, which doubles to
-$q(q+1)$, proving claim 2. The irreducible quadratics number
-$n_0 = \tfrac{q(q-1)}{2}$, doubling to $q(q-1)$, proving claim 3. $\qquad\blacksquare$
-
-**Corollary 5.6 (Prime-field form).** For an odd prime $p$,
-$$ 2 \cdot \#\{ (b,c) \in \mathbb{F}_p^2 : x^2 + bx + c \text{ has no root in } \mathbb{F}_p \} = p(p-1). $$
-
-**Corollary 5.7 (Limiting proportions).** As $q \to \infty$ through odd prime
-powers, the proportions of the $q^2$ monic quadratics behave as follows:
-$$ \frac{\#\{\text{repeated root}\}}{q^2} = \frac{1}{q} \to 0, \qquad
-   \frac{\#\{\text{irreducible}\}}{q^2} = \frac{q-1}{2q} \to \frac{1}{2}, \qquad
-   \frac{\#\{\text{reducible}\}}{q^2} = \frac{q+1}{2q} \to \frac{1}{2}. $$
-
-**Interpretation via $S_2$.** A uniform random permutation of two objects is the
-identity with probability $1/2$ and the transposition with probability $1/2$. Under
-the Frobenius dictionary, the identity corresponds to a quadratic splitting into
-two distinct linear factors (two fixed points), and the transposition to an
-irreducible quadratic (a single $2$-cycle). Corollary 5.7 confirms that the
-factorization type of a random quadratic converges to the cycle type of a uniform
-element of $S_2$, with the "degenerate" repeated-root case (a non-squarefree
-polynomial, outside the permutation model) having vanishing density $1/q$.
-
-## 6. The corrected picture and the equidistribution principle
-
-Combining Sections 3–5 yields a coherent revision of the opening conjecture.
-
-- **Group-theoretically:** the Galois group of any polynomial over $\mathbb{F}_q$
-  is cyclic (Theorem 3.1). It is *never* $S_n$ for $n \ge 3$, so $\mathbb{P}(\mathrm{Gal}
-  = S_n) = 0$, not $\to 1$ (Corollary 3.2). The maximal-group heuristic transplanted
-  from $\mathbb{Q}$ simply does not hold.
-
-- **Statistically:** the honest analogue is Frobenius equidistribution. The
-  factorization type of a random monic degree-$n$ polynomial over $\mathbb{F}_q$
-  converges, as $q \to \infty$, to the cycle type of a uniform random permutation in
-  $S_n$. Theorem 4.2 (fixed points $\leftrightarrow$ linear factors, mean exactly
-  $1$ in all degrees) and Theorem 5.5 (the full degree-$2$ law) are the two cleanest
-  exact instances.
-
-The general equidistribution statement is a finite-field cousin of deep
-results relating factorization statistics to the symmetric group; the exact,
-elementary theorems proved here anchor that heuristic to firm ground in the two
-most transparent cases.
-
-## 7. Algorithms
-
-The results are constructive and lend themselves to direct verification and use.
-
-**Algorithm 7.1 (Root counting by evaluation).** Given a monic polynomial over
-$\mathbb{F}_q$ by its coefficient vector, count its roots in $\mathbb{F}_q$ by
-evaluating at all $q$ field elements. Complexity $O(q \cdot n)$ field operations.
-Used to verify the expected-roots identity by brute-force enumeration.
-
-**Algorithm 7.2 (Quadratic classification via discriminant).** Given $(b,c)$ over
-$\mathbb{F}_q$ ($q$ odd), compute $\Delta = b^2 - 4c$ and classify: repeated root
-if $\Delta = 0$; reducible with two roots if $\Delta$ is a nonzero square;
-irreducible if $\Delta$ is a non-square. Determining squareness costs one Euler
-criterion exponentiation $\Delta^{(q-1)/2}$, i.e. $O(\log q)$ multiplications.
-
-**Algorithm 7.3 (Frobenius factorization-type sampler).** For general degree,
-compute the distribution of factorization types by distinct-degree factorization:
-$\gcd(f, x^{q^d} - x)$ isolates the product of irreducible factors of degree $d$.
-Tabulating the resulting partition of $n$ over many random $f$ empirically confirms
-convergence to the $S_n$ cycle-type distribution.
-
-## 8. Applications
-
-- **Algorithm analysis.** Exact factorization statistics quantify the expected
-  behaviour of polynomial factorization, root-finding, and irreducibility testing
-  on random inputs over finite fields — directly relevant to the running time of
-  routines central to computer algebra.
-
-- **Cryptography and coding.** Constructions that require an irreducible polynomial
-  (e.g., defining an extension field) succeed on a random monic quadratic with
-  probability $\tfrac{q-1}{2q} \approx \tfrac12$; more generally the density of
-  irreducibles of degree $n$ is $\approx 1/n$, matching the fraction of $n$-cycles
-  in $S_n$. These densities inform the expected number of trials in
-  "generate-and-test" schemes.
-
-- **Conceptual hygiene.** The cyclic obstruction is a cautionary example against
-  transplanting heuristics across arithmetic settings without checking structural
-  constraints.
-
-## 9. Discussion and future work
-
-The main methodological lesson is that a plausible cross-setting analogy — "random
-polynomials have maximal Galois group" — can be simultaneously false in its literal
-form and correct in a reformulated one. The reformulation (Frobenius cycle
-statistics) is both true and more informative.
-
-**Future directions.**
-
-1. **Degree-three full distribution.** Prove exact counts for monic cubics over
-   $\mathbb{F}_q$: the number of irreducibles (target density $\to 1/3$, matching
-   $3$-cycles in $S_3$), the number splitting completely, the number with exactly
-   one root, and the discriminant-zero locus. This is the natural next rung.
-
-2. **General degree $n$ via inclusion–exclusion.** Establish the exact count of
-   monic irreducibles of degree $n$ (the necklace/Möbius formula
-   $\tfrac1n \sum_{d \mid n} \mu(d) q^{n/d}$) and, more finely, the exact number of
-   polynomials of each factorization type, proving convergence to the $S_n$
-   cycle-type law with explicit error terms $O(1/q)$.
-
-3. **Quantitative equidistribution.** Make the convergence rate explicit: bound the
-   total-variation distance between the factorization-type distribution and the
-   uniform $S_n$ cycle-type distribution by $O_n(1/q)$.
-
-4. **Beyond monic / beyond prime fields.** Extend the exact statistics to
-   non-monic families, to reducible-allowed weightings, and to statistics over
-   $\mathbb{F}_q$ for prime-power $q$ uniformly in both $q$ and $n$.
-
-## 10. Conclusion
-
-Over finite fields the slogan "random polynomials have Galois group $S_n$" is false:
-finite-field Galois groups are cyclic and hence never $S_n$ for $n \ge 3$. The
-correct and fruitful analogue is the equidistribution of Frobenius cycle types
-toward random-permutation cycle types. We proved two exact instances anchoring this
-principle: the expected number of roots is exactly $1$ in every degree over any
-finite commutative ring, and the complete degree-two census gives $q$ repeated-root,
-$q(q+1)/2$ reducible, and $q(q-1)/2$ irreducible monic quadratics, so the proportion
-irreducible tends to $1/2$. Randomness over finite fields is not maximally complex
-in the group sense but maximally generic in the statistical sense.
+Generic-polynomial questions often connect arithmetic with permutation groups. A separable polynomial of degree $n$ has $n$ geometric roots, and automorphisms of a splitting field permute those roots. Over global fields, large symmetric Galois groups are common, motivating a probabilistic language in which $S_n$ represents maximal generic symmetry.
+
+Transplanting this language directly to finite fields creates a structural error. Every finite extension of a finite field is Galois with cyclic automorphism group, generated by a power of Frobenius. Since $S_n$ is noncommutative for $n\ge 3$, no such automorphism group can be isomorphic to $S_n$. Increasing the size of the base field cannot remove this obstruction.
+
+There is nevertheless a precise and fruitful permutation model. If $f\in\mathbb F_q[X]$ is squarefree, the map $x\mapsto x^q$ permutes its roots in an algebraic closure. An irreducible factor of degree $d$ contributes a Frobenius orbit of length $d$. Hence the multiset of irreducible-factor degrees is exactly the cycle type of the Frobenius permutation. The finite-field analogue of random symmetric-group behavior is therefore a statement about factorization statistics, not about the abstract finite-field Galois group becoming symmetric.
+
+The simplest cycle statistic is the number of one-cycles. On the polynomial side, a one-cycle is a root in the base field, or equivalently a linear factor. On the permutation side, it is a fixed point. The main result of this paper shows that these statistics agree at the level of first moments, exactly and without a limiting process.
+
+The polynomial theorem is stronger than a finite-field statement. It applies to every finite commutative ring $K$. Writing a monic polynomial as
+
+$$
+f_v(X)=X^n+\sum_{i=0}^{n-1}v_iX^i,
+$$
+
+we show that the average number of $K$-roots, as $v$ ranges uniformly over $K^n$, is one. The argument uses only the fact that the constant coefficient occurs with unit coefficient in the equation $f_v(r)=0$.
+
+The parallel permutation theorem states that the average number of fixed points in $S_n$ is one. Combining the two gives an exact root–fixed-point bridge. Although elementary, the bridge identifies the correct statistic and supplies a base case for higher factorial moments and full cycle-index comparisons.
+
+## 2. Algebraic and combinatorial setting
+
+### 2.1. Monic coefficient space
+
+Let $K$ be a finite commutative ring with identity and cardinality $q$. Fix an integer $n>0$. We identify the set of monic degree-$n$ polynomials with $K^n$: a vector
+
+$$
+v=(v_0,v_1,\ldots,v_{n-1})\in K^n
+$$
+
+corresponds to
+
+$$
+f_v(X)=X^n+v_{n-1}X^{n-1}+\cdots+v_1X+v_0.
+$$
+
+There are $q^n$ coefficient vectors. Define the root-count statistic
+
+$$
+R(v)=\#\{r\in K:f_v(r)=0\}.
+$$
+
+Roots are counted as distinct elements of $K$, not with algebraic multiplicity.
+
+### 2.2. Symmetric-group space
+
+Let $S_n$ be the symmetric group acting on $\{1,\ldots,n\}$. For $\sigma\in S_n$, define
+
+$$
+F(\sigma)=\#\{i\in\{1,\ldots,n\}:\sigma(i)=i\}.
+$$
+
+The sample space has cardinality $n!$. Both $R$ and $F$ are nonnegative integer-valued random variables when their respective finite sample spaces are equipped with uniform measure.
+
+### 2.3. Incidence sets
+
+The proofs are most transparent through two incidence sets:
+
+$$
+\mathcal I_{K,n}=\{(v,r)\in K^n\times K:f_v(r)=0\},
+$$
+
+and
+
+$$
+\mathcal J_n=\{(\sigma,i)\in S_n\times\{1,\ldots,n\}:\sigma(i)=i\}.
+$$
+
+Counting $\mathcal I_{K,n}$ first by $v$ gives $\sum_vR(v)$; counting it first by $r$ gives the arithmetic theorem. Likewise, counting $\mathcal J_n$ in its two coordinates gives the permutation theorem.
+
+## 3. The prescribed-root fiber
+
+The key arithmetic fact is that every prescribed root cuts out a fiber of constant size.
+
+**Lemma 3.1 (Prescribed-root fiber).** Let $K$ be a finite commutative ring with $q$ elements, let $m\ge 0$, and fix $r\in K$. Exactly $q^m$ monic polynomials of degree $m+1$ over $K$ vanish at $r$.
+
+**Proof sketch.** Write
+
+$$
+f(X)=X^{m+1}+v_mX^m+\cdots+v_1X+v_0.
+$$
+
+The equation $f(r)=0$ is equivalent to
+
+$$
+v_0=-\left(r^{m+1}+\sum_{j=1}^{m}v_jr^j\right).
+$$
+
+Thus $v_1,\ldots,v_m$ may be chosen arbitrarily and then determine a unique $v_0$. This gives a bijection between the fiber of polynomials vanishing at $r$ and $K^m$, whose cardinality is $q^m$. No cancellation or division is used, so the argument remains valid in the presence of zero divisors. $\square$
+
+The lemma may also be viewed geometrically: evaluation at $r$ defines an affine map from $K^{m+1}$ to $K$, and the constant-coordinate direction makes every fiber a translate of a copy of $K^m$.
+
+## 4. Exact first moment for polynomial roots
+
+**Theorem 4.1 (Exact Root-Incidence Theorem).** Let $K$ be a finite commutative ring with $q$ elements, and let $n>0$. Then
+
+$$
+\sum_{v\in K^n}R(v)=q^n.
+$$
+
+In particular, for a uniformly selected monic degree-$n$ polynomial over $K$,
+
+$$
+\mathbb E[R]=1.
+$$
+
+**Proof sketch.** Count $\mathcal I_{K,n}$. By definition,
+
+$$
+|\mathcal I_{K,n}|=\sum_{v\in K^n}R(v).
+$$
+
+Write $n=m+1$. For each fixed $r\in K$, Lemma 3.1 gives exactly $q^m=q^{n-1}$ coefficient vectors with $f_v(r)=0$. Summing over the $q$ possible roots yields
+
+$$
+|\mathcal I_{K,n}|=q\,q^{n-1}=q^n.
+$$
+
+Since $|K^n|=q^n$, division by the sample-space size gives expectation one. $\square$
+
+Several qualifications are important. First, the theorem counts distinct roots in $K$, rather than roots in a splitting ring or roots with multiplicity. Second, it does not assert that a typical polynomial has exactly one root. The distribution can place substantial mass at zero and at values greater than one while retaining mean one. Third, neither irreducibility nor squarefreeness is assumed. The result concerns the entire affine coefficient space.
+
+**Corollary 4.2 (Uniform root probability).** If $v$ is uniform in $K^n$ and $r$ is any fixed element of $K$, then
+
+$$
+\Pr[f_v(r)=0]=\frac1q.
+$$
+
+**Proof sketch.** The prescribed-root fiber has size $q^{n-1}$ among $q^n$ coefficient vectors. $\square$
+
+Linearity of expectation gives an alternative proof of Theorem 4.1. Introduce indicators $I_r(v)$ equal to $1$ when $f_v(r)=0$ and $0$ otherwise. Then
+
+$$
+R(v)=\sum_{r\in K}I_r(v),
+$$
+
+so
+
+$$
+\mathbb E[R]=\sum_{r\in K}\mathbb E[I_r]
+=\sum_{r\in K}\frac1q=1.
+$$
+
+This proof does not require independence among the root events, which in general are not independent.
+
+## 5. Exact first moment for permutation fixed points
+
+The symmetric-group computation has an analogous fiber lemma.
+
+**Lemma 5.1 (Stabilizer count).** Let $n>0$ and fix a letter $i\in\{1,\ldots,n\}$. Exactly $(n-1)!$ permutations in $S_n$ fix $i$.
+
+**Proof sketch.** Once $i$ is fixed, the remaining $n-1$ letters may be permuted arbitrarily. Equivalently, orbit–stabilizer gives
+
+$$
+n\,|\operatorname{Stab}(i)|=|S_n|=n!,
+$$
+
+and hence $|\operatorname{Stab}(i)|=(n-1)!$. $\square$
+
+**Theorem 5.2 (Exact Fixed-Point-Incidence Theorem).** For every $n>0$,
+
+$$
+\sum_{\sigma\in S_n}F(\sigma)=n!.
+$$
+
+Consequently, a uniformly selected permutation in $S_n$ has
+
+$$
+\mathbb E[F]=1.
+$$
+
+**Proof sketch.** Count $\mathcal J_n$ by first fixing the letter. Each of the $n$ letters is fixed by $(n-1)!$ permutations, so
+
+$$
+|\mathcal J_n|=n(n-1)!=n!.
+$$
+
+Counting first by the permutation gives $|\mathcal J_n|=\sum_\sigma F(\sigma)$. Division by $n!$ yields the expectation. $\square$
+
+As on the polynomial side, the expectation-one statement does not say that most permutations have exactly one fixed point. The full fixed-point distribution approaches a Poisson distribution of mean $1$ as $n$ grows. The first moment is exact for every positive $n$.
+
+## 6. The root–fixed-point bridge
+
+**Theorem 6.1 (Root–Fixed-Point Bridge).** Let $K$ be a finite commutative ring with $q$ elements and let $n>0$. Then
+
+$$
+\left(\sum_{v\in K^n}R(v)\right)n!
+=
+\left(\sum_{\sigma\in S_n}F(\sigma)\right)q^n.
+$$
+
+Equivalently, under the two uniform distributions,
+
+$$
+\mathbb E_{v\in K^n}[R(v)]
+=
+\mathbb E_{\sigma\in S_n}[F(\sigma)]
+=1.
+$$
+
+**Proof sketch.** Substitute Theorem 4.1 and Theorem 5.2. Both sides of the cross-multiplied identity equal $q^n n!$. $\square$
+
+The theorem should be interpreted as an equality of normalized incidence densities. It is not a bijection between individual polynomials and individual permutations, nor does it identify their complete distributions. Its significance lies in selecting the correct parallel observables: base-ring roots on one side and fixed points on the other.
+
+The fiber structures make the parallel especially clear. Prescribing a polynomial root leaves $n-1$ free coefficients, producing $q^{n-1}$ objects. Prescribing a permutation fixed point leaves $n-1$ letters to permute, producing $(n-1)!$ objects. In each model, summing over possible marked points reproduces the size of the entire sample space.
+
+## 7. The finite-field cyclicity obstruction
+
+We now state the correction that separates abstract Galois groups from Frobenius cycle statistics.
+
+**Lemma 7.1 (Noncommutativity of the symmetric group).** For every $n\ge 3$, the group $S_n$ is noncommutative.
+
+**Proof sketch.** Choose three distinct letters. Let $a$ transpose the first and second, and let $b$ transpose the second and third. Evaluating $ab$ and $ba$ on the first letter gives different results, so $ab\ne ba$. $\square$
+
+**Theorem 7.2 (Finite-Field Cyclicity Obstruction).** Let $L/K$ be a finite extension of finite fields. For every $n\ge 3$, the group of $K$-automorphisms of $L$ is not isomorphic to $S_n$.
+
+**Proof sketch.** The automorphism group of a finite-field extension is cyclic, generated by the appropriate Frobenius automorphism. Every cyclic group is commutative. By Lemma 7.1, $S_n$ is noncommutative for $n\ge 3$. Since group isomorphisms preserve commutativity, no isomorphism can exist. $\square$
+
+This theorem invalidates any claimed asymptotic of the form
+
+$$
+\Pr(\operatorname{Gal}(f)\cong S_n)\longrightarrow 1
+$$
+
+when $\operatorname{Gal}(f)$ is interpreted as a finite-field automorphism group and $n\ge 3$. The meaningful replacement records how Frobenius permutes the geometric roots.
+
+## 8. Frobenius cycles and factorization
+
+Let $f\in\mathbb F_q[X]$ be squarefree of degree $n$, and let $\Omega$ be its set of $n$ roots in an algebraic closure. Frobenius
+
+$$
+\operatorname{Fr}_q:\alpha\longmapsto\alpha^q
+$$
+
+permutes $\Omega$. If $g$ is an irreducible factor of $f$ of degree $d$, its roots form a single Frobenius orbit of size $d$. Therefore, if
+
+$$
+f=g_1g_2\cdots g_k
+$$
+
+with distinct irreducible factors and $\deg(g_j)=d_j$, then the Frobenius permutation has cycle lengths $d_1,\ldots,d_k$.
+
+In particular, the following three quantities coincide for squarefree $f$:
+
+1. the number of roots of $f$ in $\mathbb F_q$;
+2. the number of linear irreducible factors of $f$;
+3. the number of fixed points of Frobenius on $\Omega$.
+
+This is the conceptual reason the first-moment bridge is the appropriate opening result. The arithmetic root statistic is literally the fixed-point statistic of the distinguished Frobenius permutation whenever separability permits the cycle dictionary.
+
+Repeated roots require separate treatment. If $f$ is not squarefree, its distinct geometric roots no longer form an $n$-element set, and multiplicities are not represented by ordinary permutation cycles. Quantitative comparisons with $S_n$ must therefore either restrict to squarefree polynomials or isolate the discriminant-zero locus as an error term.
+
+## 9. Algorithms and computational demonstrations
+
+### 9.1. Exhaustive polynomial incidence enumeration
+
+For a prime $p$ and degree $n$, enumerate every vector in $\mathbb F_p^n$. For each vector, evaluate the corresponding monic polynomial at every $r\in\mathbb F_p$ and count zeros. The direct running time is
+
+$$
+O(p^n\cdot p\cdot n)=O(np^{n+1}),
+$$
+
+using straightforward evaluation, with $O(n)$ auxiliary storage apart from output summaries. The expected invariant is total incidence $p^n$.
+
+For example, over $\mathbb F_2$ there are four monic quadratics and four total root incidences. Over $\mathbb F_3$ there are nine monic quadratics and nine incidences. Over $\mathbb F_3$ there are twenty-seven monic cubics and twenty-seven incidences.
+
+### 9.2. Exhaustive permutation incidence enumeration
+
+Enumerate all $n!$ permutations and count fixed coordinates. The direct time complexity is $O(n\,n!)$, with $O(n)$ working space per permutation. The total must be $n!$.
+
+For $S_3$, the identity contributes three fixed points, the three transpositions contribute one each, and the two three-cycles contribute none. The total is therefore
+
+$$
+3+3\cdot1+2\cdot0=6=3!.
+$$
+
+### 9.3. Cross-domain check
+
+Taking $K=\mathbb F_3$ and $n=3$, polynomial incidence is $27$ and permutation incidence is $6$. The bridge reads
+
+$$
+27\cdot6=6\cdot27=162.
+$$
+
+Such checks are useful as software invariants, but the theorem itself is structural and applies to all finite commutative rings and all positive degrees.
+
+## 10. Applications
+
+The first application is conceptual hygiene in arithmetic statistics. Experiments should compare finite-field factorization types with permutation cycle types, rather than report abstract symmetric Galois groups that cannot occur.
+
+The second is algorithmic testing. Root-enumeration software over finite rings or fields can be checked against the exact incidence total. A mismatch detects errors in coefficient order, modular arithmetic, monicity, or duplicate-root handling.
+
+The third concerns randomized algebra. If a monic polynomial is sampled by choosing all lower coefficients independently and uniformly, the expected cost of a procedure that performs one unit of work per base-ring root is exactly one unit, ignoring the cost of finding those roots. The result gives an exact average output-size bound.
+
+The fourth is a bridge to cycle-index methods. Fixed points are one-cycle counts. Higher ordered-root incidences suggest factorial moments, while irreducible factors of degree $d$ suggest $d$-cycle counts. This organizes a systematic program from elementary double counting to full factorization-type equidistribution.
+
+## 11. Limitations and discussion
+
+The bridge proves equality only of first moments. Two random variables can have the same mean and very different distributions. Over small rings, and especially rings with zero divisors, root-count distributions may differ markedly from fixed-point distributions.
+
+The broad ring generality applies to the root-incidence theorem, not to the Frobenius interpretation. Frobenius cycles and irreducible-factor degrees belong specifically to finite fields and separable polynomials. Over a general finite commutative ring there may be no analogous splitting-field permutation with the same meaning.
+
+The theorem also does not establish a quantitative $O_n(1/q)$ factorization-type discrepancy. That requires squarefree counts, irreducible-polynomial enumeration, and control for every partition of $n$. The present result is the exact first-moment anchor for that larger theory.
+
+Finally, degree two is exceptional from the group-theoretic viewpoint because $S_2$ is cyclic. Any low-degree audit should distinguish this accidental compatibility from the general behavior beginning at degree three.
+
+## 12. Future work
+
+Several developments naturally extend the present results.
+
+First, one should establish the full Frobenius factorization dictionary with explicit separability and multiplicity hypotheses. Second, one can count ordered tuples of distinct roots and compare them with ordered tuples of distinct fixed points, obtaining factorial moments and Poisson-type identities in stable ranges. Third, exact squarefree-polynomial counts should isolate the discriminant-zero locus. Fourth, for every partition $\lambda$ of $n$, one should compare squarefree factorization type $\lambda$ with permutation cycle type $\lambda$ and derive an $O_n(1/q)$ discrepancy.
+
+Separate quadratic and cubic analyses would prevent reducibility, separability, cycle type, and abstract Galois group from being conflated. An explicit account of the Frobenius generator and its order would connect extension degrees with the least common multiple of cycle lengths. Finally, the finite counts can be recast directly in the language of finite probability spaces, making expectation and higher moments the primary statements.
+
+## 13. Further structural consequences
+
+The incidence argument admits several immediate deductions that help distinguish what is exact from what remains conjectural. Let $N_k(K,n)$ denote the number of monic degree-$n$ polynomials over $K$ having exactly $k$ distinct roots in $K$. The Root-Incidence Theorem is equivalent to the pair of identities
+
+$$
+\sum_{k=0}^{q}N_k(K,n)=q^n
+\qquad\text{and}\qquad
+\sum_{k=0}^{q}kN_k(K,n)=q^n.
+$$
+
+Subtracting these equations yields
+
+$$
+N_0(K,n)=\sum_{k=2}^{q}(k-1)N_k(K,n).
+$$
+
+**Corollary 13.1 (Balance of rootless and multi-rooted polynomials).** For every finite commutative ring $K$ and $n>0$, the number of monic degree-$n$ polynomials with no root in $K$ equals the excess-root mass among polynomials with at least two distinct roots, where a polynomial with $k$ roots contributes weight $k-1$.
+
+**Proof sketch.** Partition the coefficient space according to the value of $R(v)$ and rewrite the two exact sums above. The terms with one root cancel, leaving the stated identity. $\square$
+
+There is an identical consequence for permutations. If $D_k(n)$ counts permutations in $S_n$ with exactly $k$ fixed points, then
+
+$$
+D_0(n)=\sum_{k=2}^{n}(k-1)D_k(n).
+$$
+
+Thus derangements are balanced exactly by excess fixed points among permutations having two or more fixed points. The bridge therefore has a second qualitative face: in both models, objects with zero marked points are compensated, with multiplicity, by objects with several marked points.
+
+One can also condition on a prescribed root. If $r\in K$ is fixed and a polynomial is sampled uniformly from those satisfying $f(r)=0$, then its remaining coefficients $v_1,\ldots,v_{n-1}$ are uniform and the constant coefficient is determined. This gives a direct sampler requiring no rejection: choose $n-1$ coefficients uniformly and solve for $v_0$. It is useful in experiments that compare unconditional and root-conditioned ensembles.
+
+**Algorithmic Corollary 13.2 (Rejection-free prescribed-root sampling).** Given a finite commutative ring $K$, an integer $n>0$, and $r\in K$, a uniform monic degree-$n$ polynomial conditioned to vanish at $r$ is obtained by choosing $v_1,\ldots,v_{n-1}$ independently and uniformly in $K$ and setting
+
+$$
+v_0=-\left(r^n+\sum_{i=1}^{n-1}v_ir^i\right).
+$$
+
+**Proof sketch.** Lemma 3.1 supplies a bijection from $K^{n-1}$ to the prescribed-root fiber. Uniform measure is preserved by a bijection between finite sets. $\square$
+
+The analogous permutation sampler chooses a uniform permutation of the other $n-1$ letters and fixes the prescribed letter. This parallel again identifies the stabilizer fiber as the correct combinatorial counterpart of the polynomial evaluation fiber.
+
+These consequences also clarify the role of field size. The first moment does not approach one as $q$ grows; it is already one for every finite size. Any nontrivial asymptotic information must therefore occur in higher moments, in the probabilities of individual root counts, or in longer cycle statistics. For example, the probability of having no roots is not determined by the first moment alone. Its comparison with the derangement proportion requires information about simultaneous vanishing at several distinct points. Counting such events naturally leads to interpolation constraints and factorial moments.
+
+If $r_1,\ldots,r_j$ are distinct field elements and $j\le n$, prescribing all $j$ as roots imposes $j$ independent linear conditions on the coefficients over a field. One therefore expects a fiber of size $q^{n-j}$. Summing over ordered distinct tuples is the arithmetic analogue of prescribing $j$ distinct fixed letters, whose permutation stabilizer has size $(n-j)!$. Establishing and organizing these identities is the direct route beyond the present first-moment theorem.
+
+## 14. Conclusion
+
+The literal claim that random finite-field polynomials have symmetric Galois groups fails for a decisive structural reason: finite-field Galois groups are cyclic. The correct stochastic correspondence lies in Frobenius cycle types and polynomial factorization patterns.
+
+At the first-moment level, the correspondence is exact. Across all monic degree-$n$ polynomials over a finite commutative ring, the total number of root incidences equals the number of polynomials. Across all permutations in $S_n$, the total number of fixed-point incidences equals the number of permutations. Both uniform expectations are exactly one.
+
+This root–fixed-point identity is elementary enough to be transparent, general enough to include finite rings, and precise enough to orient future work. It replaces an impossible group isomorphism with the correct observable correspondence and provides the first step from random roots to random cycles.
