@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "4e53cd7c",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions: Moment Thresholds for Random Bipartite States\n\n## 1. Exact fixed-level induced-state threshold\n\nFor every fixed hierarchy level `m ≥ 2`, there is a unique constant `λ_m > 0` such",
-      "quality_score": 0.7,
-      "sorry_count": 3,
-      "theorem_count": 16,
-      "timestamp": "2026-07-16T05:47:36",
-      "title": "ArXiv paper: Moment-based PPT criteria for random bipartite states"
-    },
-    {
       "cycle_id": "499d98ab",
       "domain": "Novelty",
       "key_insight": "# Future Directions: Graphical Signatures of Finite-Group Symmetry\n\n## 1. Rooted-pattern factorization through group differences\n\n**Conjecture.** For every finite rooted graph pattern with distinguish",
@@ -499,19 +489,19 @@
       "theorem_count": 7,
       "timestamp": "2026-07-18T12:16:03",
       "title": "Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
+    },
+    {
+      "cycle_id": "4920904c",
+      "domain": "Logic",
+      "key_insight": "# Future Directions: Complex-Weighted Random Graph Spectra\n\n## 1. Directed fixed-amplitude circular law\nLet each ordered off-diagonal edge be present independently with probability `p`, give every pre",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 46,
+      "timestamp": "2026-07-18T12:32:18",
+      "title": "Erdos-Renyi on Acid: Random Graphs That Hallucinate"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "a3c4f06b",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Exact Exponent for Constrained Coset Guesswork\n\n## What this cycle added\n\nThe prior cycle (`CosetGuesswork.lean`) proved the exact coset-exponent *shift*\n`ρ(1-R)` **abstractly**:",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-07-14T17:13:01",
-      "title": "Deepening: Exact Exponent for Constrained Coset Guesswork"
-    },
     {
       "cycle_id": "44ee6caf",
       "domain": "Applications",
@@ -2501,21 +2491,19 @@
       "theorem_count": 7,
       "timestamp": "2026-07-18T12:16:03",
       "title": "Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
+    },
+    {
+      "cycle_id": "4920904c",
+      "domain": "Logic",
+      "key_insight": "# Future Directions: Complex-Weighted Random Graph Spectra\n\n## 1. Directed fixed-amplitude circular law\nLet each ordered off-diagonal edge be present independently with probability `p`, give every pre",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 46,
+      "timestamp": "2026-07-18T12:32:18",
+      "title": "Erdos-Renyi on Acid: Random Graphs That Hallucinate"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "57f0b740",
-      "domain": "Logic",
-      "name": "observer_le_consensus",
-      "quality": 0.75
-    },
-    {
-      "cycle_id": "57f0b740",
-      "domain": "Logic",
-      "name": "consensus_singleton",
-      "quality": 0.75
-    },
     {
       "cycle_id": "a6705a36",
       "domain": "Bridges",
@@ -2803,9 +2791,21 @@
       "domain": "Pythagorean",
       "name": "exists_eventually_fixed_extension",
       "quality": 0.77
+    },
+    {
+      "cycle_id": "4920904c",
+      "domain": "Logic",
+      "name": "eisensteinNormSq_pow",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "4920904c",
+      "domain": "Logic",
+      "name": "sigma_pow_injective",
+      "quality": 0.8
     }
   ],
-  "last_updated": "2026-07-18T12:16:03",
+  "last_updated": "2026-07-18T12:32:18",
   "open_questions": [
     {
       "context": "",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "cd868ba0",
-        "quality": 0.62,
-        "theorems": 12,
-        "title": "Information-Theoretic Limits of Proof Search: How Hard Is It to Find a Lean Proo"
-      },
-      {
         "cycle_id": "523eb163",
         "quality": 0.72,
         "theorems": 35,
@@ -3513,6 +3507,12 @@
         "quality": 0.72,
         "theorems": 40,
         "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
+      },
+      {
+        "cycle_id": "4920904c",
+        "quality": 0.8,
+        "theorems": 46,
+        "title": "Erdos-Renyi on Acid: Random Graphs That Hallucinate"
       }
     ],
     "MachineLearning": [

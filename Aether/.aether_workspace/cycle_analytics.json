@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-18T12:16:03.179134+00:00",
+  "last_updated": "2026-07-18T12:32:18.930036+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -25931,6 +25931,7 @@
       "outcome_quality": 0.57,
       "phase": "A_only",
       "phase_a_prompt_version": "v25",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v25",
@@ -26002,6 +26003,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-18T12:16:03.138201+00:00",
       "title": "Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Logic",
+      "duration_seconds": 1958.5493333339691,
+      "end_time": 1784377926.689998,
+      "files_integrated": 8,
+      "job_id": "4920904c",
+      "outcome_quality": 0.8,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19",
+      "phase_a_quality_score": 0.8,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.73,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.9,
+        "composite": 0.6,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.82,
+        "novelty": 0.78,
+        "proof_depth": 0.72,
+        "usefulness": 0.84
+      },
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1784375968.1406646,
+      "strategy_count": 0,
+      "theorem_count": 46,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 18,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-18T12:32:18.889475+00:00",
+      "title": "Erdos-Renyi on Acid: Random Graphs That Hallucinate"
     }
   ]
 }

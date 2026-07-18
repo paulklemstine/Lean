@@ -18,6 +18,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 4920904c (Q=0.800), which proved 46 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Erdos-Renyi random graph G(n, p) has n vertices where each edge appears independently with probability p. At p = log(n)/n, G(n,p) becomes connected. But what if p is COMPLEX? Define G(n, z) where z is a complex number: each edge (i,j) appears with 'probability' z, meaning the edge weight is z in",
+    "domains": [
+      "Logic"
+    ],
+    "id": "push_4920904c_fd3cd6e3",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "4920904c",
+    "status": "available",
+    "timestamp": "2026-07-18T12:32:18.786765+00:00",
+    "title": "Deepening: Erdos-Renyi on Acid: Random Graphs That Hallucinate"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle d69a2aa8 (Q=0.790), which proved 11 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Bitcoin mining requires finding a nonce n such that SHA256(block_header || n) < target. What if we replaced SHA256 with a tropical hash? Define tropical SHA as: TSHA(m) = min over all i of (m_i + h_i) where m = (m_1,...,m_k) is the message, h = (h_1,...,h_k) is the tropical hash key, and all operati",
     "domains": [
       "Algebra"
@@ -1751,7 +1765,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Cyclic Sieving for Staircase Plane Partitions via Crystals and Electrical Networks"
   },
   {
-    "consumed_by_exp_id": "26ad8b0e",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Strongly complete sets and a conjecture of Erd\u0151s' and formalize its key results. Abstract: A set $A\\subseteq\\mathbb{N}$ is called $\\textit{complete}$ if every sufficiently large integer can be written as a sum of distinct elements of $A$. It is $\\textit{strongly complete}$ if it remains complete after one deletes finitely many elements from it. We show that $A\\subseteq\\mathbb{N}$ is strongly complete whenever \\[ \\big|A\\cap(2^k,2^{k+1}]\\big|\\ge6 \\] for every sufficiently large $k\\in\\mathbb{N}$, and \\[ \\sum_{a\\in A}\\|a\u03b8\\|=\\infty, \\quad\\forall\u03b8\\in\\mathbb{R}\\setminus\\mathbb{Z}. \\] In particular, this resolves a 1961 conjecture of Erd\u0151s. The proof builds on previous work of Bergelson and Simmons. Our approach also allows us to establish a more general strong-completeness criterion with suitable ordered blocks in place of dyadic intervals.",
     "domains": [
       "Pythagorean",
@@ -1761,7 +1775,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14071v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-16T15:35:00.343163+00:00",
     "title": "ArXiv paper: Strongly complete sets and a conjecture of Erd\u0151s"
   },
@@ -3051,6 +3065,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem With"
   },
   {
+    "consumed_by_exp_id": "",
+    "description": "A dataset with missing values is a sheaf on a poset: the poset is the set of feature subsets (ordered by inclusion), and the sheaf assigns to each feature subset the set of complete observations on those features. The missing data creates 'holes' in the sheaf: H^0 measures the global sections (complete observations) and H^1 measures the obstructions to patching local observations into global ones. Conjecture: For a dataset with missing rate r, the dimension of H^1 is approximately r * n * (r * log(1/r)), where n is the number of features. This means: the 'amount of missing information' grows super-linearly with the missing rate, and imputation is fundamentally harder than interpolation because H^1 > 0 means there is no consistent way to fill in the missing data. The sheaf-theoretic imputation: fill in missing values by finding the section s in H^0 that minimizes the coboundary delta(s) in H^1. This is the maximum likelihood imputation under the assumption that the data is locally consistent. Test: generate synthetic datasets with known ground truth, introduce missing values at rate r, compute H^0 and H^1 of the data sheaf, and verify dim(H^1) ~ r*n*r*log(1/r). Compare sheaf-theoretic imputation with standard methods (mean, KNN, MICE). Impact: missing data is a topological problem, and the sheaf cohomology tells you exactly how much information is lost and whether it can be recovered.",
+    "domains": [
+      "Novelty",
+      "Geometry"
+    ],
+    "id": "fd_0315",
+    "priority_score": 0.78,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-18T12:31:56.960691+00:00",
+    "title": "Sheaf Cohomology of Data: The Topology of Missing Information"
+  },
+  {
     "consumed_by_exp_id": "154045db",
     "description": "A jigsaw puzzle has N pieces, each with 4 edges. The 'signature' of a piece is the tuple (top, right, bottom, left) of edge types (flat, tab, blank). Two pieces fit together if their adjacent edges are complementary (tab meets blank). Conjecture: Solving a jigsaw puzzle is NP-complete. The reduction: given a 3-SAT formula with n variables and m clauses, construct a jigsaw puzzle with N = 2n + m + 2 pieces where the only valid assembly corresponds to a satisfying assignment. Variable pieces: each variable x_i has two pieces (TRUE and FALSE), one with a tab and one with a blank on the assignment edge. Only one can be placed (mutual exclusion via complementary edges). Clause pieces: each clause C_j is a piece that has three input edges (one per literal) and one output edge. The piece fits only if at least one input edge is connected to a TRUE literal piece. The top-left corner and bottom-right corner enforce the boundary. Test: construct the reduction explicitly for a small 3-SAT instance (e.g., (x1 OR x2 OR NOT x3) AND (NOT x1 OR x3)) and verify the puzzle has a solution iff the formula is satisfiable. Impact: jigsaw puzzles are NP-complete, so the satisfying snap you feel when completing a puzzle is literally the same as solving a hard computational problem.",
     "domains": [
@@ -3741,6 +3770,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: Complex-Weighted Random Graph Spectra\n\n## 1. Directed fixed-amplitude circular law\nLet each ordered off-diagonal edge be present independently with probability `p`, give every present edge amplitude `z`, subtract the mean matrix, and normalize by `|z|\u221a(np(1-p))`. Conjecture: for fixed `0 < p < 1` and nonzero `z`, the empirical spectral distribution converges to the uniform measure on the unit disk.\n\nThe key insight is that directing the edges removes the transpose correlation that forces undirected spectra onto a line, while centering removes the rank-one mean outlier.\n\nWhy now? The exact phase-locking obstruction identifies both modifications\u2014direction and centering\u2014that the original model lacked, making this a sharply specified replacement rather than a cosmetic variant.\n\n## 2. Sparse directed threshold for circular behavior\nFor directed edges with `p\u2099 \u2192 0`, conjecture that the centered, variance-normalized empirical spectrum obeys the circular law whenever `np\u2099` grows faster than a logarithmic threshold, while below that scale isolated rows create a nonvanishing atom at zero.\n\nThe key insight is that the same sparsity scale controlling isolated vertices also controls singularity and hence the failure of two-dimensional spectral spreading.\n\nWhy now? The finite product-law infrastructure already separates exact edge independence from asymptotic analysis, and the deterministic obstruction shows that sparsity must be studied only after the symmetry issue is repaired.\n\n## 3. Independently phased undirected edges\nAssign each undirected edge an independent unit-modulus phase and place conjugate weights across the diagonal, producing a Hermitian magnetic adjacency matrix. Conjecture: after centering and variance normalization, the empirical spectrum converges to the semicircle law, independent of the phase distribution provided its first two moments are nondegenerate.\n\nThe key insight is that conjugate transpose symmetry, not the mere presence of complex phases, determines the one-dimensional limiting geometry.\n\nWhy now? Exact adjoint calculations for constant phase expose the invariant that survives randomization and predict semicircular rather than circular behavior for magnetic undirected graphs.\n\n## 4. Rank-one outlier transition\nFor dense directed complex-weighted Bernoulli matrices without centering, conjecture that one eigenvalue lies asymptotically near `zpn`, while all remaining eigenvalues have scale `|z|\u221a(np(1-p))`; after centering, the outlier disappears.\n\nThe key insight is that the entry mean contributes a rank-one deterministic matrix whose eigenvalue is linear in `n`, whereas fluctuations are only of square-root order.\n\nWhy now? The explicit four-vertex complete-graph witness already demonstrates the linear-scale mean direction and gives a finite deterministic prototype of the asymptotic outlier.\n\n## 5. Quantitative pseudospectral separation\nFor the directed centered model, conjecture a high-probability lower bound on the least singular value of `A-wI`, uniform for `w` outside a slightly enlarged circular-law disk, with constants depending explicitly on `p` and `|z|`.\n\nThe key insight is that eigenvalue plots alone cannot distinguish genuine circular behavior from nonnormal pseudospectral instability; least-singular-value control supplies the missing robust criterion.\n\nWhy now? The undirected model is exactly normal, so replacing it by a directed model introduces nonnormality as a new phenomenon that must be quantified rather than inferred visually.\n",
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "fd_0316",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "4920904c",
+    "status": "available",
+    "timestamp": "2026-07-18T12:32:13.852539+00:00",
+    "title": "Let each ordered off-diagonal edge be present independently with probability `p`"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle d1663b23 (Q=0.700) proved 0 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'A minimal modularity lifting theorem for Siegel modular forms' and formalize its key results. Abstract: We prove a minimal modularity lifting theorem (in the spirit of Gen",
     "domains": [
       "Applications"
@@ -3768,19 +3812,19 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Dark Mathematics: Theorems That Exist But Cannot Be Found"
   },
   {
-    "consumed_by_exp_id": "4920904c",
-    "description": "The Erdos-Renyi random graph G(n, p) has n vertices where each edge appears independently with probability p. At p = log(n)/n, G(n,p) becomes connected. But what if p is COMPLEX? Define G(n, z) where z is a complex number: each edge (i,j) appears with 'probability' z, meaning the edge weight is z instead of 0 or 1. The resulting 'complex graph' is a weighted complete graph where edge (i,j) has weight z if the edge exists and 0 otherwise. The adjacency matrix A_z has entries that are either z or 0. Conjecture: The complex eigenvalues of A_z trace out a circle of radius |z|*sqrt(n) in the complex plane, centered at the origin. As n -> infinity, the empirical spectral distribution of A_z converges to the circular law (like the Ginibre ensemble) because A_z is a random matrix with i.i.d. entries of mean z*p and variance |z|^2*p*(1-p). The 'hallucination' is that for Im(z) != 0, the graph has complex-valued connectivity \u2014 information flows with both amplitude and phase, and the phase creates interference patterns that are visible in the spectral density. Test: generate A_z for n = 1000 with z = 0.5 + 0.3i, compute eigenvalues, and verify they lie in a disk of radius sqrt(n)*|z|. Compare with the Ginibre ensemble prediction. Impact: complex-valued random graphs have circular spectra \u2014 the hallucination of complex probabilities creates beautiful circular eigenvalue distributions.",
+    "consumed_by_exp_id": "",
+    "description": "In the game Werewolf (Mafia), n players include k werewolves and n-k villagers. Each night, the werewolves eliminate one villager. Each day, the villagers vote to eliminate one player (possibly a werewolf). The villagers win if all werewolves are eliminated; the werewolves win if they equal or outnumber villagers. Conjecture: The optimal Bayesian strategy for villagers is to vote for the player with the highest posterior probability of being a werewolf, where the prior is k/n and the likelihood updates are based on the player's voting pattern and survival. More precisely, define the werewolf posterior P(W_i | evidence) using Bayes' theorem: P(W_i) = k/n (prior), P(evidence | W_i) = product of conditional probabilities of observed events given that player i is a werewolf. The optimal strategy maximizes P(villagers win) = P(correct elimination at each day round). For n=7, k=2: the villagers' win probability with optimal Bayesian play is approximately 0.36 (known from game theory). Conjecture: For general n and k, the villagers' win probability is approximately C * (1 - k/(n-k))^2 where C is a constant depending on the information structure. Test: simulate 10^6 games with n=7 to n=20 players and Bayesian villagers, measure the win probability, and fit to the conjectured formula. Impact: social deduction has an optimal Bayesian strategy, and the werewolves' advantage scales as (k/(n-k))^2.",
     "domains": [
       "Novelty",
       "Computation"
     ],
-    "id": "fd_0296",
-    "priority_score": 0.73,
+    "id": "fd_0314",
+    "priority_score": 0.72,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T09:20:55.078260+00:00",
-    "title": "Erdos-Renyi on Acid: Random Graphs That Hallucinate"
+    "status": "available",
+    "timestamp": "2026-07-18T12:31:56.934304+00:00",
+    "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
   },
   {
     "consumed_by_exp_id": "",
