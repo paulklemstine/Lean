@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "d68f278c",
-      "domain": "Applications",
-      "key_insight": "# Future directions\n\n- Formalize the paper's exact `(k, ωᵘ)`-core, `(k, ωᵘ)`-truss, and `(k, d, ωᵘ)`-truss definitions as graph operators and identify them with the generic seed rule proved here.\n- Ex",
-      "quality_score": 0.76,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-15T21:54:37",
-      "title": "ArXiv paper: Improving Upper Bounds for the Maximum Clique Problem using Reduction Rules"
-    },
-    {
       "cycle_id": "f4980b02",
       "domain": "MachineLearning",
       "key_insight": "# Future directions\n\nThe formalization proves the invariant spectral splitting that underlies the generalized-join formulas: internal zero-mass modes acquire an external-degree shift, while fiber-cons",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-18T04:11:01",
       "title": "Arithmetic on the Moebius Band: A Number System with a Twist"
+    },
+    {
+      "cycle_id": "f0aa5907",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions: Moonshine Products and Character Reconstruction\n\n## 1. Class-indexed pole order for the Monster\n\nConstruct the 194 normalized McKay–Thompson series in a common analytic setting an",
+      "quality_score": 0.73,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-18T04:11:23",
+      "title": "The Monster Group's Secret Message: Moonshine Beyond the j-Function"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "efa2b99e",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Toughness as an order-monotone invariant\n\nThis cycle promoted the component-count toughness toolkit from a collection of\nisolated lemmas into a small order-theoretic package: `1`",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-14T08:39:48",
-      "title": "Reusable toughness toolkit centered on the *component"
-    },
     {
       "cycle_id": "0a1d0253",
       "domain": "Applications",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-18T04:11:01",
       "title": "Arithmetic on the Moebius Band: A Number System with a Twist"
+    },
+    {
+      "cycle_id": "f0aa5907",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions: Moonshine Products and Character Reconstruction\n\n## 1. Class-indexed pole order for the Monster\n\nConstruct the 194 normalized McKay–Thompson series in a common analytic setting an",
+      "quality_score": 0.73,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-18T04:11:23",
+      "title": "The Monster Group's Secret Message: Moonshine Beyond the j-Function"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.76
     }
   ],
-  "last_updated": "2026-07-18T04:11:01",
+  "last_updated": "2026-07-18T04:11:23",
   "open_questions": [
     {
       "context": "",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "e978b5fe",
-        "quality": 0.78,
-        "theorems": 1210,
-        "title": "White's Quadratic Exchange Conjecture (Part 3)"
-      },
-      {
         "cycle_id": "c3fe1d06",
         "quality": 0.83,
         "theorems": 9,
@@ -3575,6 +3569,12 @@
         "quality": 0.76,
         "theorems": 14,
         "title": "Chaos as a Computable Shadow: The Shadowing Lemma for Real Programs"
+      },
+      {
+        "cycle_id": "f0aa5907",
+        "quality": 0.73,
+        "theorems": 0,
+        "title": "The Monster Group's Secret Message: Moonshine Beyond the j-Function"
       }
     ],
     "Novelty": [

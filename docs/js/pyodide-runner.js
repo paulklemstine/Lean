@@ -367,7 +367,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 card.appendChild(header);
                 card.appendChild(editor);
                 card.appendChild(output);
-                
+
                 if (item.description) {
                     const descDiv = document.createElement('div');
                     descDiv.className = 'viz-description';
@@ -375,7 +375,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     descDiv.innerHTML = window.renderMarkdownWithMath ? window.renderMarkdownWithMath(item.description) : item.description;
                     card.appendChild(descDiv);
                 }
-                
+
                 container.appendChild(card);
             });
         } else {

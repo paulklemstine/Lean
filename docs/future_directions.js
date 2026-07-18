@@ -47,21 +47,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
   },
   {
-    "consumed_by_exp_id": "f0aa5907",
-    "description": "The Monster group M is the largest sporadic simple group, with order 2^46 * 3^20 * 5^9 * 7^6 * 11^2 * 13^3 * 17 * 19 * 23 * 29 * 31 * 41 * 47 * 59 * 71 (approximately 8 * 10^{53}). Monstrous moonshine says that the coefficients of the j-function encode the dimensions of representations of M. But the j-function is just the TIP of the iceberg. Conjecture: The full moonshine correspondence associates to each conjugacy class g in M a McKay-Thompson series T_g(q) = sum a_n(g) q^n that is a modular function of a specific level, and the product over all g in M of T_g(q) equals a modular form of weight |M|/24 that encodes the complete character table of M. The secret message: the Monster group IS a modular form, and every property of M (its order, its character table, its maximal subgroups) can be read off from the q-expansion of this product. Test: compute the first 100 coefficients of T_g(q) for each conjugacy class of M and verify they match the known character values. Prove that the product of all T_g(q) converges to a modular form. Impact: the Monster is not just connected to modular forms \u2014 it IS a modular form. The 194 conjugacy classes of M correspond to 194 modular forms, and their product encodes everything.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0252",
-    "priority_score": 0.89,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T01:16:09.209773+00:00",
-    "title": "The Monster Group's Secret Message: Moonshine Beyond the j-Function"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle d69a2aa8 (Q=0.790), which proved 11 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Bitcoin mining requires finding a nonce n such that SHA256(block_header || n) < target. What if we replaced SHA256 with a tropical hash? Define tropical SHA as: TSHA(m) = min over all i of (m_i + h_i) where m = (m_1,...,m_k) is the message, h = (h_1,...,h_k) is the tropical hash key, and all operati",
     "domains": [
@@ -91,7 +76,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The L-Function Oracle: What If We Could Compute L-Functions Instantly?"
   },
   {
-    "consumed_by_exp_id": "3f360a5c",
+    "consumed_by_exp_id": "",
     "description": "L-functions are the DNA of mathematics \u2014 each one encodes deep arithmetic information. But how many L-functions ARE there? The L-function universe is vast: (1) The Riemann zeta function (1 L-function), (2) Dirichlet L-functions (countably many), (3) L-functions of elliptic curves (uncountably many, one per j-invariant), (4) L-functions of modular forms (countably many, but indexed by weight and level), (5) L-functions of Galois representations (enormous family). Conjecture: The set of 'natural' L-functions (those satisfying the Selberg class axioms: analytic continuation, functional equation, Euler product, Ramanujan bound) is COUNTABLE. This means the universe of well-behaved L-functions is no bigger than the integers, despite each individual L-function encoding infinitely much information. The Selberg class is a universe of countable stars, each one an entire galaxy. Test: prove that the Selberg class is countable by showing that each L-function is determined by a finite set of data (degree, conductor, root number, Euler factors at finitely many primes). Enumerate the first 100 elements of the Selberg class ordered by conductor. Impact: the mathematical universe of L-functions is countable \u2014 there are only as many well-behaved L-functions as integers. Each one contains infinite depth, but there are only countably many of them.",
     "domains": [
       "Novelty",
@@ -101,7 +86,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-18T03:44:46.017475+00:00",
     "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
   },
@@ -3000,6 +2985,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Godel's incompleteness theorem says there are true statements that cannot be proved. But what if we turn incompleteness into a GAME? Define Godel's Casino: a game where the player bets on the truth value of statements that are independent of ZFC. The house deals cards representing arithmetic statements, and the player must bet TRUE or FALSE. The Continuum Hypothesis is the first card \u2014 you can bet either way and you're RIGHT in some model. Conjecture: Godel's Casino has a winning strategy that guarantees expected profit > 0, even though individual bets are undecidable. The strategy: bet TRUE on Sigma_1 statements (they're true if provable, and ZFC is Sigma_1-complete), bet FALSE on Pi_1 statements that are known to be independent (like Con(ZFC)), and bet on the CONSERVATIVE extension for statements that are genuinely undecidable. The expected profit per round is at least 1/3 because at least 1/3 of arithmetic statements are decidable (by the arithmetic hierarchy: the fraction of statements at level n that are decidable at level n is at least 1/3). Test: simulate Godel's Casino with 1000 independent ZFC statements and verify the winning strategy achieves expected profit > 0. Impact: incompleteness is not a barrier \u2014 it's an opportunity. You can WIN at the game of undecidability.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0265",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-18T04:10:30.530614+00:00",
+    "title": "Godel's Casino: Incomplete but Winnable Games"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle dcd7a4b2 (Q=0.750) proved 0 theorems in Tropical but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION \u2014 simulta",
     "domains": [
       "Tropical"
@@ -3054,21 +3054,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-17T18:03:33.034163+00:00",
     "title": "Close Proofs: Holographic Primes: The Prime Number AdS/CFT Correspondence"
-  },
-  {
-    "consumed_by_exp_id": "ad1766b1",
-    "description": "The Moebius band M is obtained from [0,1] x R by identifying (0, y) ~ (1, -y). Define arithmetic on M: a point (x, y) on M represents the number y * (2x - 1) where x in [0,1] gives the sign and magnitude, and y gives the scale. This creates a number system where going around the band flips the sign. Define the Moebius integers Z_M as the image of Z in M under the embedding n -> (1/2 + 1/(2n), |n|). Then 1 and -1 are identified at the twist point (1, 1) = (0, -1), making Z_M a one-point compactification of Z with a single infinity. Conjecture: Z_M is a ring under the induced operations from R x R / ~, but it is NOT an integral domain because (1, 0) * (0, 1) = (0, 0) but neither factor is zero in Z_M. The prime factorization in Z_M has a unique 'twist prime' that encodes orientation, and every non-zero Moebius integer has a factorization of the form \u00b1p_1^{a_1} * ... * p_k^{a_k} where the overall sign is the twist. Test: factor the Moebius integers 6, -6, and 0 in Z_M. Verify that 6 = 2_+ * 3_+ and -6 = 2_- * 3_- = 2_+ * 3_+ * (-1) where -1 is the twist prime. Impact: arithmetic on a non-orientable surface creates a number system where orientation IS a prime \u2014 a number-theoretic analog of spin in physics.",
-    "domains": [
-      "Novelty",
-      "NumberTheory"
-    ],
-    "id": "fd_0240",
-    "priority_score": 0.76,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-17T22:29:08.291028+00:00",
-    "title": "Arithmetic on the Moebius Band: A Number System with a Twist"
   },
   {
     "consumed_by_exp_id": "",
@@ -3339,6 +3324,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-18T03:54:53.550842+00:00",
     "title": "**Conjecture.** A program implementing a differentiable map on a compact invaria"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## Formal conclusions\n\nThe file `Speculative/MoebiusArithmetic.lean` separates the topology from the proposed arithmetic and proves the following.\n\n### Disproved\n\n1. **Coordinatewise operations induce a ring on the M\u00f6bius quotient.** Both coordinatewise multiplication and coordinatewise addition fail the representative-independence test. For multiplication, applying the twist to both representatives reverses the fiber sign twice, while the quotient gluing reverses it only once. Thus there is no induced operation of the stated kind, so the advertised zero-divisor calculation does not establish a ring or a failure of integral-domain structure.\n\n2. **The formula embeds an integer as the real number it claims to represent.** For every positive integer `n`, the represented value\n   `|n| * (2 * (1/2 + 1/(2n)) - 1)` is `1`; for every negative integer it is `-1`. The coordinate pairs for `2` and `3` remain distinct, but the claimed real-number interpretation collapses them.\n\n3. **`-1` is a prime encoding orientation.** In the ordinary integer arithmetic recovered by the factorization formulas, `-1` is a unit and therefore is not prime.\n\n4. **`-6 = (-2)(-3)`.** This is false: the right side is `6`. The corrected equality is `-6 = 2 * 3 * (-1)`.\n\n5. **Zero has a prime factorization.** A finite product of nonzero integer factors is nonzero, so zero has no such factorization.\n\n### Proved\n\n* The endpoint relation used here is an equivalence relation and identifies `(0,y)` with `(1,-y)`.\n* `6 = 2 * 3` and `-6 = 2 * 3 * (-1)`.\n* The only integer units are `1` and `-1`, clarifying that orientation behaves like a unit rather than a prime in standard factorization.\n\n## Promising corrected research programs\n\n1. **Transport a ring structure through an explicit bijection.** One can place a ring structure on a bare set underlying a quotient only after constructing a bijection with a known ring. Such a structure would generally not be coordinatewise and would need a separate geometric naturality criterion.\n\n2. **Use a ring bundle rather than a ring on total-space points.** A M\u00f6bius line bundle supports fiberwise addition, but multiplication of two twisted fibers naturally lands in the tensor square, which is an untwisted line bundle. A graded algebra containing both twisted and untwisted sectors may encode the \u201ctwo twists cancel\u201d law faithfully.\n\n3. **Study orientation as a unit or grading.** The algebraic analog of orientation is naturally an order-two unit or a `Z/2Z` degree. Group rings, crossed products, and graded rings are more suitable than declaring orientation prime.\n\n4. **Repair the integer embedding.** Specify independently whether the goal is an injective discrete subset of the band, a compactification of the integers, or a map whose scalar evaluation equals `n`. The displayed formula cannot simultaneously provide the claimed scalar value and compactification behavior.\n\n5. **Formalize the actual quotient topology.** The present development proves the algebraic obstruction at the setoid level. A later development could use Mathlib quotient-topology APIs to establish topological properties, after first correcting the proposed subset and its accumulation point.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0266",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "ad1766b1",
+    "status": "available",
+    "timestamp": "2026-07-18T04:10:54.907896+00:00",
+    "title": "The file `Speculative/MoebiusArithmetic.lean` separates the topology from the pr"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Moonshine Products and Character Reconstruction\n\n## 1. Class-indexed pole order for the Monster\n\nConstruct the 194 normalized McKay\u2013Thompson series in a common analytic setting and prove that their class-indexed product has a pole of exact order 194 at the infinite cusp, with no cancellation in its leading coefficient. This sharply distinguishes a product over conjugacy classes from a product over group elements.\n\n**The key insight is...** normalized principal parts aggregate additively under finite products, so the indexing convention leaves an observable signature in the pole order.\n\n**Why now?** Exact class tables and replicable formulas provide finite input data, while the algebraic factorization theorem identifies the single analytic condition\u2014control of the regular factors\u2014needed to lift the result to genuine series.\n\n## 2. Minimal compensator for positive weight\n\nDetermine whether there is a canonical meromorphic compensator whose product with all class-indexed McKay\u2013Thompson functions transforms with a prescribed positive weight, and classify the smallest possible divisor of such a compensator on the relevant modular curve.\n\n**The key insight is...** a finite product of weight-zero invariant functions remains weight zero; therefore every nonzero weight must come from an additional factor, multiplier system, or altered operation.\n\n**Why now?** The weight obstruction isolates a precise repair of the proposed positive-weight product and turns an inconsistent transformation claim into a concrete divisor-minimization problem.\n\n## 3. Finite coefficient threshold for character recovery\n\nFind the least integer `N` such that the coefficient functions through degree `N` of the 194 McKay\u2013Thompson series uniquely recover every irreducible Monster character and the multiplicities of all graded pieces determined up to that degree. A falsifying outcome would be two distinct nonnegative multiplicity tables with identical classwise traces through degree `N`.\n\n**The key insight is...** recovery is an injectivity problem for a truncated character-evaluation operator, and positivity plus integrality may force injectivity substantially earlier than unrestricted linear algebra predicts.\n\n**Why now?** The abstract reconstruction theorem identifies injectivity as the exact boundary, making ranks, integral kernels, and positivity cones of finite truncations directly testable.\n\n## 4. Analytic finite-product theorem across levels\n\nFor a finite family of meromorphic modular functions attached to possibly different finite-index subgroups, prove that their product is meromorphic modular of weight zero for the intersection subgroup, and determine its complete cusp divisor from the individual cusp divisors. Apply the theorem to every McKay\u2013Thompson family for which compatible expansions are available.\n\n**The key insight is...** finite products do not create a convergence problem once the factors are meromorphic; the genuine issues are the common symmetry group, cusp compatibility, and divisor bookkeeping.\n\n**Why now?** The algebraic product law already controls principal exponents, so the next extension has a sharply delimited analytic and geometric scope rather than requiring an unspecified global convergence argument.\n\n## 5. Information loss beyond the character table\n\nTest whether the complete family of McKay\u2013Thompson series determines subgroup data such as maximal-subgroup conjugacy classes, or whether nonisomorphic finite groups can share equivalent graded character data while having different subgroup lattices.\n\n**The key insight is...** an injective character table recovers class functions and representation multiplicities, but subgroup incidence is additional structure and need not be encoded by character values alone.\n\n**Why now?** Separating what character evaluation provably reconstructs from stronger group-theoretic claims supplies a falsifiable boundary for the assertion that a q-expansion determines \u201cevery property\u201d of a group.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0267",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "f0aa5907",
+    "status": "available",
+    "timestamp": "2026-07-18T04:11:08.465669+00:00",
+    "title": "Construct the 194 normalized McKay\u2013Thompson series in a common analytic setting "
   },
   {
     "consumed_by_exp_id": "",
