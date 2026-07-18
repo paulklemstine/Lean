@@ -32,21 +32,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
   },
   {
-    "consumed_by_exp_id": "b01a1ab3",
-    "description": "There are mathematical objects whose existence we can prove but whose specific properties are unknowable \u2014 theorems that cast shadows without being visible. Define a dark theorem as a statement T such that: (1) PA proves 'there exists x such that T(x)', but (2) for every specific n, PA does NOT prove T(n). The classic example is the Paris-Harrington theorem: the strengthened finite Ramsey theorem is true but not provable in PA. But dark theorems go further: they assert the existence of objects that no specific instance can be verified. Conjecture: The set of dark theorems is dense in the space of all Pi_2 statements \u2014 most true Pi_2 statements are dark. Moreover, there is a hierarchy of darkness: a dark theorem of level k is one where PA proves 'there exist at least k values of x such that T(x)' but cannot identify any specific one. The hierarchy is strict: level k+1 dark theorems are strictly harder to prove than level k. Test: construct explicit dark theorems of levels 1, 2, 3 using the Paris-Harrington principle and the Kirby-Paris hydra theorem. Prove the density conjecture by counting Pi_2 statements. Impact: most true mathematical statements are dark \u2014 they assert existence without the possibility of verification. This is not incompleteness; it is a new form of mathematical unknowability.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0217",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-17T12:40:02.581378+00:00",
-    "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle d69a2aa8 (Q=0.790), which proved 11 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Bitcoin mining requires finding a nonce n such that SHA256(block_header || n) < target. What if we replaced SHA256 with a tropical hash? Define tropical SHA as: TSHA(m) = min over all i of (m_i + h_i) where m = (m_1,...,m_k) is the message, h = (h_1,...,h_k) is the tropical hash key, and all operati",
     "domains": [
@@ -76,7 +61,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The L-Function Oracle: What If We Could Compute L-Functions Instantly?"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "60e00dda",
     "description": "The field with one element F_1 is a hypothetical object that would explain why the Weil conjectures have the form they do \u2014 as if there were a field with q^0 = 1 element. Tropical geometry replaces addition with min and multiplication with addition. What if these two ideas are the SAME? Conjecture: The tropical semiring (R union {infinity}, min, +) IS the field with one element, in the following precise sense: the category of tropical schemes is equivalent to the category of F_1-schemes. More concretely, a tropical variety over F_1 is a set with a min-plus structure, and its base change to Z (formally, tensor with Z) is a toric variety. The key correspondence: F_1-points of a tropical variety are the vertices of its Newton polytope, and the 'cardinality' of the tropical variety (as an F_1-object) is the number of lattice points in the polytope, which equals the degree of the toric variety after base change. Test: for each toric variety corresponding to a polytope P, compute the number of F_1-points (vertices of P) and verify that the Euler characteristic of the toric variety equals |vertices(P)| = #F_1-points. Prove the tensor product correspondence: tropical scheme X over F_1 has X tensor_Z Z = the corresponding toric variety. Impact: F_1 and tropical geometry are two faces of the same coin. The field with one element is tropical, and tropical geometry is the geometry of F_1.",
     "domains": [
       "Novelty",
@@ -86,7 +71,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-18T04:27:27.986449+00:00",
     "title": "Tropical Dreams: The Field with One Element Meets Tropical Geometry"
   },
@@ -3399,6 +3384,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-18T04:27:59.258574+00:00",
     "title": "Construct a normalized closure invariant whose cube-root modulus is unchanged un"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Dark Mathematics \u2014 results and future directions\n\n## Formal results\n\n`Tropical/DarkMathematics.lean` treats provability as an abstract predicate `Pr : Prop \u2192 Prop` with the minimal rule that provability is preserved by valid implication. It proves:\n\n1. **Level 1 equals ordinary darkness.** The proposed base definition and the one-witness version coincide.\n2. **The proposed strict hierarchy collapses.** From any dark predicate `T`, tagging a hidden witness by `Fin k` constructs a level-`k` dark predicate for every finite `k`. Thus levels 1, 2, and 3 require no successively stronger independence principles. On a fixed predicate, level `l` implies every lower level `k \u2264 l`.\n3. **Dark predicates are exactly an incompleteness phenomenon in the relevant sense.** They cannot occur for semantic truth, in a theory with the numerical existence property, or when the theory is sound and complete for the instances under consideration.\n4. **Canonical construction from an undecided sentence.** If a theory proves `U \u2228 \u00acU` but proves neither `U` nor `\u00acU`, the Boolean predicate selecting those alternatives is dark. Tagging it produces every finite level.\n5. **Provable concrete instances refute darkness.** Any family with even one provable named instance fails the definition.\n\nThese statements are kernel-checked and contain no `sorry` or added axioms.\n\n## Disproved or unsupported mission claims\n\n### The strict level hierarchy is false as stated\n\nCounting distinct witnesses does not measure proof-theoretic strength when the predicate's domain may change. The formal tagging construction sends a witness `x` to the distinct pairs `(i,x)`, one for each `i : Fin k`, while each tagged assertion is definitionally just `T x`. A strict hierarchy would need restrictions preventing such coding, plus a precise reducibility or strength relation.\n\n### Paris\u2013Harrington and hydra do not directly provide the requested dark predicates\n\nTheir standard independence statements concern a universal assertion (or totality) not provable in PA. Each fixed finite Paris\u2013Harrington instance and each fixed finite hydra computation is, in the ordinary setup, finitely checkable and provable in PA. Therefore indexing the usual finite instances gives the opposite of condition (2). The formal theorem `provable_instance_refutes_dark` captures this obstruction.\n\n### \u201cDense\u201d and \u201cmost\u201d are not defined by counting formulas\n\nThe collection of syntactic Pi-2 sentences is countable. Density requires a topology, and \u201cmost\u201d requires a measure or an asymptotic-density convention together with a fixed G\u00f6del numbering and length model. Raw counting is presentation-dependent: harmless recodings and padding can alter syntactic frequencies without changing mathematical content. Consequently the density conjecture has no invariant theorem statement yet and was not silently replaced by a weaker claim.\n\n### This is a form of incompleteness\n\nThe split construction turns any sentence independent of a classical theory into a dark existential over `Bool`. It therefore shows that the definition repackages undecidability/incompleteness rather than separating a new phenomenon from incompleteness.\n\n## Promising corrected questions\n\n1. Fix a recursively axiomatized theory, an explicit arithmetized proof predicate, a formula class, and a computable numbering; then formalize the abstract results for that syntax.\n2. Prohibit witness tagging by fixing the domain and a natural equivalence/reducibility relation. Ask whether levels separate under many-one or interpretability reductions.\n3. Replace \u201cdensity\u201d by a specified model: prefix-free program-size density, bounded G\u00f6del-code density, or Baire-category notions on completions of a theory. Prove invariance results before interpreting any proportion.\n4. Investigate constructive theories with existence properties. The proved `no_dark_of_numericalExistenceProperty` theorem predicts that the original notion disappears there.\n5. For Paris\u2013Harrington or hydra, study dark predicates built from undecidable *global bounds* or consistency statements, not from their concrete finite instances. Any such construction must prove both formalized PA-provability of the existential and PA-unprovability of every named instance.\n",
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "fd_0273",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "b01a1ab3",
+    "status": "available",
+    "timestamp": "2026-07-18T05:46:59.196373+00:00",
+    "title": "`Tropical/DarkMathematics.lean` treats provability as an abstract predicate `Pr "
   },
   {
     "consumed_by_exp_id": "",

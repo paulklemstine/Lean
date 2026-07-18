@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "13e584ca",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nThis program studies **sharp lower bounds for sumsets in L₁-balls / boxes in ℤᵈ**.\n\n## What is proved\n\n### Dimension one — the sharp exponent (`Catalog/Bridges/SumsetL1BallSharpDi",
-      "quality_score": 0.83,
-      "sorry_count": 2,
-      "theorem_count": 25,
-      "timestamp": "2026-07-14T08:40:07",
-      "title": "Deepening: Sharp Lower Bounds for Sumsets in L₁ Balls in ℤᵈ"
-    },
-    {
       "cycle_id": "bcaaf8f2",
       "domain": "Applications",
       "key_insight": "# Future Directions — Seidel higher spectral moments under edge flips\n\n## What this cycle established (all machine-checked in `SeidelHigherMoments.lean`)\n\nThe foundational cycle showed the *second* Se",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-18T04:28:04",
       "title": "Knots That Think: Cognition as Braiding in Category Theory"
+    },
+    {
+      "cycle_id": "b01a1ab3",
+      "domain": "Tropical",
+      "key_insight": "# Dark Mathematics — results and future directions\n\n## Formal results\n\n`Tropical/DarkMathematics.lean` treats provability as an abstract predicate `Pr : Prop → Prop` with the minimal rule that provabi",
+      "quality_score": 0.66,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-18T05:47:04",
+      "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.76
     }
   ],
-  "last_updated": "2026-07-18T04:28:04",
+  "last_updated": "2026-07-18T05:47:04",
   "open_questions": [
     {
       "context": "",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "4b27af05",
-        "quality": 0.88,
-        "theorems": 3,
-        "title": "Deepening: Bruhat Order Preserves Closure Relations for B-Orbits on Flag Variety"
-      },
-      {
         "cycle_id": "f243395d",
         "quality": 0.91,
         "theorems": 33,
@@ -4009,6 +4003,12 @@
         "quality": 0.72,
         "theorems": 18,
         "title": "Holographic Primes: The Prime Number AdS/CFT Correspondence"
+      },
+      {
+        "cycle_id": "b01a1ab3",
+        "quality": 0.66,
+        "theorems": 14,
+        "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
       }
     ]
   }
