@@ -126,30 +126,30 @@
             hoverTrackId = null;
         };
 
-        // ─── Colors by domain ───
-        const DOMAIN_COLORS = {
-            'Algebra':        { h: 0,   s: 80, l: 55 },
-            'Tropical':       { h: 30,  s: 75, l: 55 },
-            'MachineLearning': { h: 60,  s: 80, l: 50 },
-            'Cryptography':   { h: 90,  s: 70, l: 50 },
-            'Geometry':       { h: 120, s: 60, l: 50 },
-            'EML':            { h: 150, s: 70, l: 50 },
-            'Computation':    { h: 180, s: 70, l: 50 },
-            'Physics':        { h: 210, s: 80, l: 55 },
-            'Speculative':    { h: 240, s: 70, l: 60 },
-            'Bridges':        { h: 270, s: 70, l: 60 },
-            'Logic':          { h: 300, s: 70, l: 60 },
-            'Pythagorean':    { h: 330, s: 70, l: 55 }
-        };
+        const dynamicDomainColors = new Map();
+        
+        function getDomainHue(d) {
+            if (dynamicDomainColors.size === 0) {
+                const domains = new Set();
+                graphNodes.forEach(n => domains.add(n.primary_domain || 'Bridges'));
+                const sortedDomains = Array.from(domains).sort();
+                const step = 360 / Math.max(1, sortedDomains.length);
+                sortedDomains.forEach((domain, i) => {
+                    dynamicDomainColors.set(domain, i * step);
+                });
+            }
+            return dynamicDomainColors.get(d) || 0;
+        }
+
         function nodeColor(node) {
             const d = node.primary_domain || 'Bridges';
-            const c = DOMAIN_COLORS[d] || DOMAIN_COLORS['Bridges'];
+            const hue = getDomainHue(d);
             const score = node.priority_score ?? 0.5;
             const scoreBoost = (score - 0.5) * 30;
             return {
-                h: c.h,
-                s: Math.min(100, Math.max(30, c.s + scoreBoost * 0.3)),
-                l: Math.min(85, Math.max(35, c.l + scoreBoost))
+                h: hue,
+                s: Math.min(100, Math.max(30, 75 + scoreBoost * 0.3)),
+                l: Math.min(85, Math.max(35, 55 + scoreBoost))
             };
         }
 
