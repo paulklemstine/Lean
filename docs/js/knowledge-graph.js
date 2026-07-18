@@ -174,10 +174,7 @@
         let time = 0;
         let timeScale = 1;
 
-        const MAX_FIREWORKS = 4;
         const lasers = [];        // {sx, sy, tx, ty, time, duration, color}
-        const fireworks = [];     // {x, y, phase, particles[], color, startTime}
-        let lastAmbientFirework = 0;
 
         // ─── Stars (deep space backdrop) ───
         const stars = [];
@@ -854,48 +851,6 @@
                     });
                 }
             }
-
-            // ─── Update fireworks ───
-            for (let i = fireworks.length - 1; i >= 0; i--) {
-                const fw = fireworks[i];
-                let alive = false;
-                for (const p of fw.particles) {
-                    p.x += p.vx * 0.016;
-                    p.y += p.vy * 0.016;
-                    p.vy += 900 * 0.016; // gravity
-                    p.vx *= 0.98;
-                    p.vy *= 0.98;
-                    p.life -= 0.016;
-                    if (p.life > 0) alive = true;
-                }
-                if (!alive) fireworks.splice(i, 1);
-            }
-
-            // ─── Ambient fireworks ───
-            if (fireworks.length < MAX_FIREWORKS && time - lastAmbientFirework > 25) {
-                lastAmbientFirework = time;
-                spawnFirework(W * 0.2 + Math.random() * W * 0.6, H * 0.2 + Math.random() * H * 0.4, 15);
-            }
-        }
-
-        // ─── Firework spawner ───
-        function spawnFirework(wx, wy, count) {
-            const hue = Math.random() * 360;
-            const particles = [];
-            for (let i = 0; i < count; i++) {
-                const angle = Math.random() * Math.PI * 2;
-                const speed = 2400 + Math.random() * 4500;
-                particles.push({
-                    x: wx, y: wy,
-                    vx: Math.cos(angle) * speed,
-                    vy: Math.sin(angle) * speed - 1200,
-                    life: 0.8 + Math.random() * 0.7,
-                    hue: hue + Math.random() * 40 - 20,
-                    size: 1.5 + Math.random() * 2,
-                    crackle: Math.random() < 0.15
-                });
-            }
-            fireworks.push({ x: wx, y: wy, particles: particles, color: hue, startTime: time });
         }
 
         // ─── Shape renderers ───
@@ -1545,31 +1500,6 @@
                         ctx.shadowBlur = 0;
                     }
                 }
-            });
-
-            // ─── Fireworks ───
-            fireworks.forEach(fw => {
-                fw.particles.forEach(p => {
-                    if (p.life <= 0) return;
-                    const alpha = Math.max(0, p.life / 1.5);
-                    const sp = worldToScreen(p.x, p.y);
-                    const sz = p.size * camera.zoom * alpha;
-                    ctx.beginPath();
-                    ctx.arc(sp.x, sp.y, sz, 0, Math.PI * 2);
-                    ctx.fillStyle = `hsla(${p.hue}, 100%, ${50 + 40 * alpha}%, ${alpha * 0.9})`;
-                    ctx.fill();
-                    // Tiny trail
-                    if (p.life > 0.3) {
-                        const trailX = sp.x - p.vx * 0.02 * camera.zoom;
-                        const trailY = sp.y - p.vy * 0.02 * camera.zoom;
-                        ctx.beginPath();
-                        ctx.moveTo(sp.x, sp.y);
-                        ctx.lineTo(trailX, trailY);
-                        ctx.strokeStyle = `hsla(${p.hue}, 100%, 70%, ${alpha * 0.4})`;
-                        ctx.lineWidth = sz * 0.5;
-                        ctx.stroke();
-                    }
-                });
             });
 
             // Nodes
