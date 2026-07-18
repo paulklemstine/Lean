@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "dbf870e8",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\n## Completed proof chain\n\n`Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean` contains a complete three-step chain:\n\n1. `value_eq` identifies mixed-radix evaluation",
-      "quality_score": 0.88,
-      "sorry_count": 4,
-      "theorem_count": 0,
-      "timestamp": "2026-07-15T00:44:03",
-      "title": "Close Proofs: Speculative: Topological Quantum Error Correction from Mathematical St"
-    },
-    {
       "cycle_id": "c4f680cf",
       "domain": "Novelty",
       "key_insight": "# Future Directions: Recurrence and Symmetry in the Logic of Causal Loops\n\nThis cycle deepened the theory of closed timelike curves beyond the bare\nfixed-point (Novikov self-consistency) picture, esta",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-18T21:00:09",
       "title": "The P vs NP of Sudoku: Phase Transitions in Constraint Satisfaction"
+    },
+    {
+      "cycle_id": "6cb3854b",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions\n\n## Result obtained\n\n`Pythagorean/UniversalHumor.lean` formalizes a finite, non-vacuous bridge between category theory and metric optimization. For a setup with resolutions `Fin (n",
+      "quality_score": 0.65,
+      "sorry_count": 0,
+      "theorem_count": 17,
+      "timestamp": "2026-07-18T22:06:07",
+      "title": "The Category Theory of Jokes: Universal Properties of Humor"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8
     }
   ],
-  "last_updated": "2026-07-18T21:00:09",
+  "last_updated": "2026-07-18T22:06:07",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "7385ba7c",
-        "quality": 0.91,
-        "theorems": 1,
-        "title": "Deepening: For every natural number `k`, the factorial-code space of length `k` "
-      },
-      {
         "cycle_id": "58c6edf0",
         "quality": 0.73,
         "theorems": 43,
@@ -3885,6 +3879,12 @@
         "quality": 0.75,
         "theorems": 21,
         "title": "Quantum Entanglement as Algebraic Topology: The Linking Number Is Entanglement"
+      },
+      {
+        "cycle_id": "6cb3854b",
+        "quality": 0.65,
+        "theorems": 17,
+        "title": "The Category Theory of Jokes: Universal Properties of Humor"
       }
     ],
     "Shared": [
