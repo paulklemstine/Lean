@@ -1,231 +1,224 @@
-"""
-Numerical demonstrations for:
+#!/usr/bin/env python3
+"""Exact numerical demonstrations for generalized Sudoku.
 
-    The Chromatic Number of the Sudoku Constraint Graph,
-    and the Phase Transition of Random Sudoku.
-
-This self-contained script demonstrates the paper's main results:
-
-  1. The shift construction produces a valid completed n-Sudoku grid,
-     proving that every empty n^2 x n^2 grid is solvable (upper bound
-     chi(G_n) <= n^2).
-  2. The first row is a clique of size n^2 in the Sudoku constraint graph
-     (lower bound chi(G_n) >= n^2), so chi(G_n) = n^2.
-  3. Valid Sudoku solutions are exactly proper colorings of the constraint
-     graph (the bridge theorem), checked on explicit grids.
-  4. The random-instance solvability phase transition, whose conjectured
-     critical clue density is d_c(n) = (n^2 - 1) / n^2.
-
-Run:  python demo.py
+The program constructs the arithmetic completion, validates every unit, builds
+small constraint graphs, demonstrates the canonical row clique, and checks that
+restrictions of a completed grid remain solvable at every clue count.
+It uses only the Python standard library.
 """
 
 from __future__ import annotations
 
+import argparse
 import random
-from itertools import combinations, product
-from typing import Dict, Iterable, List, Optional, Tuple
+from dataclasses import dataclass
+from itertools import combinations
+from typing import Iterable, Optional, Sequence
 
-Cell = Tuple[int, int]
-
-
-# ---------------------------------------------------------------------------
-# 1. The shift construction: an explicit solution of the empty grid
-# ---------------------------------------------------------------------------
-def sudoku_val(n: int, r: int, c: int) -> int:
-    """Value at cell (r, c) of the closed-form completed grid:
-        (n * (r mod n) + r // n + c) mod n^2.
-    """
-    return (n * (r % n) + r // n + c) % (n * n)
+Cell = tuple[int, int]
+Grid = list[list[int]]
+ClueGrid = list[list[Optional[int]]]
 
 
-def shift_grid(n: int) -> List[List[int]]:
-    """Return the full n^2 x n^2 completed grid from the shift construction."""
-    m = n * n
-    return [[sudoku_val(n, r, c) for c in range(m)] for r in range(m)]
+def sudoku_value(n: int, row: int, col: int) -> int:
+    """Return (n*(row mod n) + floor(row/n) + col) mod n^2."""
+    if n <= 0:
+        raise ValueError("block size n must be positive")
+    size = n * n
+    if not (0 <= row < size and 0 <= col < size):
+        raise IndexError("cell coordinates are outside the grid")
+    return (n * (row % n) + row // n + col) % size
 
 
-# ---------------------------------------------------------------------------
-# 2. Constraint relations and the constraint graph
-# ---------------------------------------------------------------------------
-def same_row(p: Cell, q: Cell) -> bool:
-    return p[0] == q[0]
+def arithmetic_completion(n: int) -> Grid:
+    """Construct the explicit order-n Sudoku completion in O(n^4) time."""
+    if n <= 0:
+        raise ValueError("block size n must be positive")
+    size = n * n
+    return [[sudoku_value(n, r, c) for c in range(size)] for r in range(size)]
 
 
-def same_col(p: Cell, q: Cell) -> bool:
-    return p[1] == q[1]
+def units(n: int, grid: Sequence[Sequence[int]]) -> Iterable[list[int]]:
+    """Yield all rows, columns, and blocks of a square grid."""
+    size = n * n
+    if len(grid) != size or any(len(row) != size for row in grid):
+        raise ValueError(f"expected a {size} by {size} grid")
+    for r in range(size):
+        yield list(grid[r])
+    for c in range(size):
+        yield [grid[r][c] for r in range(size)]
+    for br in range(n):
+        for bc in range(n):
+            yield [
+                grid[br * n + dr][bc * n + dc]
+                for dr in range(n)
+                for dc in range(n)
+            ]
 
 
-def same_box(n: int, p: Cell, q: Cell) -> bool:
-    return (p[0] // n == q[0] // n) and (p[1] // n == q[1] // n)
+def is_valid_solution(n: int, grid: Sequence[Sequence[int]]) -> bool:
+    """Check that each row, column, and block contains every symbol once."""
+    target = set(range(n * n))
+    try:
+        return all(set(unit) == target and len(unit) == len(target) for unit in units(n, grid))
+    except ValueError:
+        return False
 
 
-def adjacent(n: int, p: Cell, q: Cell) -> bool:
-    """Edge of the Sudoku constraint graph G_n."""
+def are_peers(n: int, p: Cell, q: Cell) -> bool:
+    """Decide adjacency in the Sudoku constraint graph."""
     if p == q:
         return False
-    return same_row(p, q) or same_col(p, q) or same_box(n, p, q)
+    return (
+        p[0] == q[0]
+        or p[1] == q[1]
+        or (p[0] // n == q[0] // n and p[1] // n == q[1] // n)
+    )
 
 
-def cells(n: int) -> List[Cell]:
-    m = n * n
-    return [(r, c) for r in range(m) for c in range(m)]
+def constraint_graph(n: int) -> dict[Cell, set[Cell]]:
+    """Build the constraint graph directly; intended for modest n."""
+    if n <= 0:
+        raise ValueError("block size n must be positive")
+    size = n * n
+    cells = [(r, c) for r in range(size) for c in range(size)]
+    graph = {cell: set() for cell in cells}
+    for p, q in combinations(cells, 2):
+        if are_peers(n, p, q):
+            graph[p].add(q)
+            graph[q].add(p)
+    return graph
 
 
-# ---------------------------------------------------------------------------
-# 3. Validity / proper-coloring checks (the bridge)
-# ---------------------------------------------------------------------------
-def is_valid_solution(n: int, g: Dict[Cell, int]) -> bool:
-    """True iff no two distinct cells sharing a row, column, or block agree."""
-    cs = cells(n)
-    for p, q in combinations(cs, 2):
-        if adjacent(n, p, q) and g[p] == g[q]:
+def is_proper_coloring(graph: dict[Cell, set[Cell]], grid: Sequence[Sequence[int]]) -> bool:
+    """Check that every graph edge has differently colored endpoints."""
+    return all(grid[p[0]][p[1]] != grid[q[0]][q[1]] for p in graph for q in graph[p])
+
+
+def clues_from_solution(grid: Sequence[Sequence[int]], chosen: set[Cell]) -> ClueGrid:
+    """Reveal exactly the chosen cells of a completed grid."""
+    return [
+        [value if (r, c) in chosen else None for c, value in enumerate(row)]
+        for r, row in enumerate(grid)
+    ]
+
+
+def extends(clues: Sequence[Sequence[Optional[int]]], grid: Sequence[Sequence[int]]) -> bool:
+    """Return whether the completed grid agrees with every displayed clue."""
+    return all(
+        clue is None or clue == grid[r][c]
+        for r, row in enumerate(clues)
+        for c, clue in enumerate(row)
+    )
+
+
+def clue_count(clues: Sequence[Sequence[Optional[int]]]) -> int:
+    """Count displayed entries."""
+    return sum(value is not None for row in clues for value in row)
+
+
+def sample_restriction(n: int, k: int, seed: int = 0) -> tuple[ClueGrid, Grid]:
+    """Sample k cells and reveal their values from the arithmetic completion."""
+    size = n * n
+    total = size * size
+    if not (0 <= k <= total):
+        raise ValueError(f"clue count must lie between 0 and {total}")
+    rng = random.Random(seed)
+    cells = [(r, c) for r in range(size) for c in range(size)]
+    selected = set(rng.sample(cells, k))
+    solution = arithmetic_completion(n)
+    return clues_from_solution(solution, selected), solution
+
+
+def format_grid(grid: Sequence[Sequence[Optional[int]]], n: int) -> str:
+    """Format a completed or partial grid with block separators."""
+    width = len(str(n * n - 1))
+    horizontal = "+".join("-" * ((width + 1) * n - 1) for _ in range(n))
+    lines: list[str] = []
+    for r, row in enumerate(grid):
+        if r and r % n == 0:
+            lines.append(horizontal)
+        groups = []
+        for start in range(0, n * n, n):
+            groups.append(" ".join(
+                ("." if value is None else str(value)).rjust(width)
+                for value in row[start:start + n]
+            ))
+        lines.append(" | ".join(groups))
+    return "\n".join(lines)
+
+
+@dataclass(frozen=True)
+class Demonstration:
+    n: int
+    vertices: int
+    edges: int
+    row_clique_size: int
+    all_units_valid: bool
+    coloring_proper: bool
+
+
+def demonstrate_structure(n: int) -> Demonstration:
+    """Compute graph and coloring statistics for an order-n instance."""
+    grid = arithmetic_completion(n)
+    graph = constraint_graph(n)
+    first_row = [(0, c) for c in range(n * n)]
+    row_is_clique = all(q in graph[p] for p, q in combinations(first_row, 2))
+    if not row_is_clique:
+        raise AssertionError("the first row should be a clique")
+    return Demonstration(
+        n=n,
+        vertices=len(graph),
+        edges=sum(map(len, graph.values())) // 2,
+        row_clique_size=len(first_row),
+        all_units_valid=is_valid_solution(n, grid),
+        coloring_proper=is_proper_coloring(graph, grid),
+    )
+
+
+def verify_every_clue_count(n: int) -> bool:
+    """For every k, exhibit a k-clue restriction with the known completion."""
+    solution = arithmetic_completion(n)
+    size = n * n
+    cells = [(r, c) for r in range(size) for c in range(size)]
+    for k in range(size * size + 1):
+        clues = clues_from_solution(solution, set(cells[:k]))
+        if clue_count(clues) != k or not extends(clues, solution):
             return False
     return True
 
 
-def is_proper_coloring(n: int, g: Dict[Cell, int]) -> bool:
-    """Identical predicate, phrased via graph adjacency (bridge theorem)."""
-    cs = cells(n)
-    for p, q in combinations(cs, 2):
-        if adjacent(n, p, q) and g[p] == g[q]:
-            return False
-    return True
-
-
-def grid_to_map(grid: List[List[int]]) -> Dict[Cell, int]:
-    return {(r, c): grid[r][c] for r in range(len(grid)) for c in range(len(grid[0]))}
-
-
-# ---------------------------------------------------------------------------
-# 4. Clique certifying the chromatic lower bound
-# ---------------------------------------------------------------------------
-def first_row_is_clique(n: int) -> bool:
-    """The first row is a clique of size n^2 in G_n."""
-    m = n * n
-    row = [(0, c) for c in range(m)]
-    return all(adjacent(n, p, q) for p, q in combinations(row, 2)) and len(row) == m
-
-
-# ---------------------------------------------------------------------------
-# 5. Backtracking solver for puzzles (precoloring extension)
-# ---------------------------------------------------------------------------
-def solve(n: int, clues: Dict[Cell, int]) -> Optional[Dict[Cell, int]]:
-    """Backtracking search with the minimum-remaining-values heuristic.
-    Returns a completion extending `clues`, or None if unsolvable.
-    """
-    m = n * n
-    g: Dict[Cell, int] = dict(clues)
-    all_cells = cells(n)
-
-    def candidates(cell: Cell) -> List[int]:
-        used = set()
-        for other in all_cells:
-            if other in g and adjacent(n, cell, other):
-                used.add(g[other])
-        return [v for v in range(m) if v not in used]
-
-    # consistency of the clues themselves
-    for p, q in combinations(list(g.keys()), 2):
-        if adjacent(n, p, q) and g[p] == g[q]:
-            return None
-
-    def backtrack() -> bool:
-        empty = [cell for cell in all_cells if cell not in g]
-        if not empty:
-            return True
-        # MRV: pick the most constrained empty cell
-        cell = min(empty, key=lambda c: len(candidates(c)))
-        opts = candidates(cell)
-        if not opts:
-            return False
-        for v in opts:
-            g[cell] = v
-            if backtrack():
-                return True
-            del g[cell]
-        return False
-
-    return dict(g) if backtrack() else None
-
-
-# ---------------------------------------------------------------------------
-# 6. Random-instance phase transition
-# ---------------------------------------------------------------------------
-def random_puzzle(n: int, density: float, rng: random.Random) -> Dict[Cell, int]:
-    """Random clue set at the given density, sampled from a valid solution
-    (so puzzles at any density remain solvable in this benign model; for a
-    harder model one would sample clue symbols independently)."""
-    full = grid_to_map(shift_grid(n))
-    all_cells = cells(n)
-    k = round(density * len(all_cells))
-    chosen = rng.sample(all_cells, k)
-    return {cell: full[cell] for cell in chosen}
-
-
-def critical_density(n: int) -> float:
-    return (n * n - 1) / (n * n)
-
-
-def estimate_solvability(n: int, density: float, trials: int,
-                         rng: random.Random) -> float:
-    """Fraction of random puzzles (with independently sampled clue symbols)
-    that admit a completion -- a solvability probability estimate."""
-    m = n * n
-    all_cells = cells(n)
-    k = round(density * len(all_cells))
-    solved = 0
-    for _ in range(trials):
-        chosen = rng.sample(all_cells, k)
-        clues = {cell: rng.randrange(m) for cell in chosen}
-        if solve(n, clues) is not None:
-            solved += 1
-    return solved / trials
-
-
-# ---------------------------------------------------------------------------
-# Driver
-# ---------------------------------------------------------------------------
 def main() -> None:
-    rng = random.Random(12345)
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("-n", type=int, default=3, help="positive block size (default: 3)")
+    parser.add_argument("-k", type=int, default=None, help="number of clues to reveal")
+    parser.add_argument("--seed", type=int, default=2026, help="sampling seed")
+    parser.add_argument("--skip-graph", action="store_true", help="skip graph construction")
+    args = parser.parse_args()
 
-    print("=" * 68)
-    print(" Sudoku constraint graph: chromatic number and phase transition")
-    print("=" * 68)
+    n = args.n
+    grid = arithmetic_completion(n)
+    total = n ** 4
+    k = total // 2 if args.k is None else args.k
+    clues, witness = sample_restriction(n, k, args.seed)
 
-    for n in (2, 3):
-        m = n * n
-        print(f"\n--- n = {n}  ({m}x{m} grid, {m} symbols) ---")
+    print(f"Order-{n} arithmetic completion ({n*n} x {n*n}):")
+    print(format_grid(grid, n))
+    print(f"\nValid solution: {is_valid_solution(n, grid)}")
+    print(f"\nRestriction with {clue_count(clues)} of {total} cells revealed:")
+    print(format_grid(clues, n))
+    print(f"Known completion extends all clues: {extends(clues, witness)}")
+    print(f"All clue counts 0..{total} have a witnessed solvable restriction: "
+          f"{verify_every_clue_count(n)}")
 
-        grid = shift_grid(n)
-        gmap = grid_to_map(grid)
-
-        print("Shift-construction grid:")
-        for row in grid:
-            print("  " + " ".join(f"{v:2d}" for v in row))
-
-        valid = is_valid_solution(n, gmap)
-        proper = is_proper_coloring(n, gmap)
-        print(f"Valid Sudoku solution?           {valid}")
-        print(f"Proper coloring of G_n?          {proper}  (bridge: agree = {valid == proper})")
-        print(f"First row is a clique of size {m}? {first_row_is_clique(n)}")
-        print(f"=> chromatic number chi(G_{n}) = {m} = n^2")
-        print(f"Conjectured critical clue density d_c({n}) = "
-              f"(n^2-1)/n^2 = {critical_density(n):.4f}")
-
-    # Phase-transition sweep for n = 2 (4x4), small enough to solve exhaustively.
-    print("\n" + "=" * 68)
-    print(" Phase transition sweep (n = 2, random clue symbols)")
-    print("=" * 68)
-    n = 2
-    dc = critical_density(n)
-    print(f" critical density d_c = {dc:.3f}")
-    print(f"{'density':>9} | {'P(solvable)':>12}")
-    print("-" * 26)
-    for pct in range(0, 101, 10):
-        d = pct / 100.0
-        p = estimate_solvability(n, d, trials=60, rng=rng)
-        marker = "  <-- near d_c" if abs(d - dc) <= 0.05 else ""
-        print(f"{d:9.2f} | {p:12.3f}{marker}")
+    if not args.skip_graph:
+        stats = demonstrate_structure(n)
+        print("\nConstraint-graph statistics:")
+        print(f"  vertices: {stats.vertices}")
+        print(f"  edges: {stats.edges}")
+        print(f"  canonical row clique: {stats.row_clique_size}")
+        print(f"  arithmetic coloring proper: {stats.coloring_proper}")
+        print(f"  chromatic number certificate: lower bound {n*n}, upper bound {n*n}")
 
 
 if __name__ == "__main__":

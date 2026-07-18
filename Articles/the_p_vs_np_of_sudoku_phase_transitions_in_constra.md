@@ -1,205 +1,120 @@
-# The Hidden Graph Inside Every Sudoku
+# Sudoku’s Hidden Graph: Why Density Alone Cannot Explain a Phase Transition
 
-## A puzzle that is secretly a coloring problem
+*By Aristotle — July 18, 2026*
 
-Every day, millions of people pick up a pencil and start filling in a Sudoku
-grid. The rules feel almost trivially simple: place the digits $1$ through $9$
-so that every row, every column, and every $3\times 3$ block contains each digit
-exactly once. And yet the puzzles range from a pleasant coffee-break diversion to
-a maddening hour-long standoff. Where does that difficulty come from? Why are
-some grids easy and others agonizing?
+A Sudoku grid looks like a quiet square of paper. Underneath, however, it is a network of prohibitions. Every cell is connected to all the other cells that it can “see”: those in the same row, the same column, or the same block. Give two connected cells the same symbol and the puzzle breaks.
 
-The surprising answer is that Sudoku is not really a puzzle about digits at all.
-It is a puzzle about **graphs** — the mathematical objects made of dots (called
-*vertices*) and lines connecting them (called *edges*). And once you see the
-graph hiding inside a Sudoku grid, a whole landscape of deep mathematics opens
-up: the theory of *constraint satisfaction*, the notion of *graph coloring*, and
-even the shadow of the most famous open question in all of computer science,
-$\mathrm{P}$ versus $\mathrm{NP}$.
+That change of viewpoint—from boxes to a network—reveals the durable mathematics behind generalized Sudoku. It also exposes a trap in appealing stories about phase transitions. A density such as “the fraction of pre-filled cells” does not by itself specify a random puzzle. Two processes can produce exactly the same number of clues and utterly different chances of solvability. Before asking where Sudoku suddenly becomes impossible or computationally hard, one must say how the clues and their values are generated.
 
-This article tells the story of that hidden graph. Along the way we will make one
-piece of folklore completely precise — that solving a Sudoku is *exactly* the
-same as coloring a certain graph — and we will pin down a hard numerical
-invariant of that graph, its *chromatic number*, showing it is exactly the number
-of symbols the puzzle uses.
+The central results are clean. For every positive integer $n$, an order-$n$ Sudoku has an $n^2\times n^2$ grid, divided into $n\times n$ blocks, and uses $n^2$ symbols. Its constraint network needs exactly $n^2$ colors. An explicit arithmetic formula completes the empty grid. Adding consistent clues can only remove solutions, never create them. Yet there are solvable instances with every possible clue count from $0$ through $n^4$. Consequently, no deterministic critical clue density separates all solvable instances from all unsolvable ones.
 
-## Generalizing beyond $9\times 9$
+## From a puzzle to a graph
 
-To see the real structure, it helps to zoom out from the familiar $9\times 9$
-board. Fix a whole number $n\ge 1$. An **$n$-Sudoku** is played on an
-$n^2 \times n^2$ grid, divided into $n^2$ blocks each of size $n\times n$, using
-$n^2$ different symbols. The classic game is the case $n=3$: a $9\times 9$ grid,
-nine $3\times 3$ blocks, nine symbols. Taking $n=2$ gives the friendly $4\times 4$
-"Shidoku" with four symbols; taking $n=4$ gives the sprawling $16\times 16$ grid
-with sixteen symbols that hardcore enthusiasts enjoy.
-
-A **cell** is just a coordinate pair $(r,c)$ with $0 \le r, c < n^2$: a row index
-and a column index. Two cells can *interact* in three ways:
-
-- they lie in the **same row** if $r = r'$;
-- they lie in the **same column** if $c = c'$;
-- they lie in the **same block** if $\lfloor r/n\rfloor = \lfloor r'/n\rfloor$ and
-  $\lfloor c/n\rfloor = \lfloor c'/n\rfloor$ — that is, integer-dividing the
-  coordinates by $n$ lands them in the same $n\times n$ box.
-
-A completed grid is an assignment $g$ of a symbol to every cell. It is a **valid
-solution** precisely when no two distinct cells that share a row, a column, or a
-block ever receive the same symbol.
-
-## Building the constraint graph
-
-Here is the key move. Forget the symbols for a moment and look only at the
-*constraints*. Make one vertex for every cell of the grid — that is $n^2 \times
-n^2 = n^4$ vertices in all. Then draw an edge between two distinct cells whenever
-they are forced to differ: whenever they share a row, a column, or a block. Call
-the resulting network the **Sudoku constraint graph**, written $G_n$.
+Let the rows and columns be numbered $0,1,\ldots,n^2-1$. A cell is a pair $(r,c)$. Two distinct cells are called peers if they have the same row, the same column, or the same block. In coordinates, the block condition is
 
 $$
-G_n:\quad \text{vertices} = \text{cells}, \qquad
-p \sim q \iff p \ne q \text{ and } p,q \text{ share a row, column, or block.}
+\left\lfloor\frac{r}{n}\right\rfloor=
+\left\lfloor\frac{r'}{n}\right\rfloor
+\quad\text{and}\quad
+\left\lfloor\frac{c}{n}\right\rfloor=
+\left\lfloor\frac{c'}{n}\right\rfloor.
 $$
 
-Now comes the payoff. A *proper coloring* of a graph is an assignment of colors
-to vertices so that no edge ever connects two vertices of the same color — the
-central object of study in a large branch of combinatorics, with applications
-from scheduling exams to allocating radio frequencies. Compare that definition
-with the Sudoku rule: symbols are colors, and the rule says adjacent cells (those
-joined by an edge in $G_n$) must get different symbols. The two ideas coincide
-exactly.
+Now construct the **Sudoku constraint graph**. Its vertices are the $n^4$ cells, and an edge joins every pair of peers. A graph coloring assigns a color to every vertex so that adjacent vertices receive different colors. If the colors are the Sudoku symbols, the translation is exact:
 
-> **The Bridge Theorem.** *A filling $g$ of an $n$-Sudoku grid is a valid Sudoku
-> solution if and only if $g$ is a proper coloring of the Sudoku constraint graph
-> $G_n$.*
+**Sudoku–coloring equivalence.** A completed filling is a valid order-$n$ Sudoku if and only if it is a proper coloring of the Sudoku constraint graph with $n^2$ colors.
 
-The proof is a matter of unwinding definitions, but its consequence is profound:
-Sudoku, a *constraint satisfaction problem*, is *literally the same problem* as
-graph coloring. Everything mathematicians know about coloring graphs suddenly
-applies to Sudoku, and vice versa. This is what mathematicians call a *bridge*: a
-dictionary that translates every statement on one side into a statement on the
-other.
+The proof is almost a change of language. The Sudoku rules say that peer cells differ. The graph has an edge precisely when two distinct cells are peers. Thus every Sudoku violation is a monochromatic edge, and every monochromatic edge is a Sudoku violation.
 
-## How many colors do you need?
+This equivalence matters because it connects a familiar puzzle to graph invariants. It lets us ask not merely whether one filling works, but how many symbols the network intrinsically requires.
 
-The single most important number attached to a graph is its **chromatic number**,
-denoted $\chi(G)$: the smallest number of colors needed to properly color it. For
-the Sudoku graph the answer is beautiful and clean.
+## Exactly the right number of colors
 
-> **Chromatic Number Theorem.** *The chromatic number of the Sudoku constraint
-> graph is exactly the number of symbols:*
-> $$\chi(G_n) = n^2.$$
+The **chromatic number** of a graph is the smallest number of colors in any proper coloring. For the Sudoku constraint graph, it is exactly $n^2$.
 
-The proof has two halves, one from each side of the bridge, and together they
-squeeze the answer to exactly $n^2$.
+The lower bound is visible in one row. Its $n^2$ cells are pairwise adjacent, forming a **clique**—a set in which every two distinct vertices share an edge. Every vertex in a clique needs a different color, so at least $n^2$ colors are unavoidable.
 
-**You need at least $n^2$ colors (the lower bound).** Look at a single row of the
-grid: its $n^2$ cells all share that row, so in the graph they are pairwise
-adjacent. A set of vertices that are all mutually connected is called a *clique*,
-and it is a basic fact of graph theory that a clique of size $k$ forces you to use
-at least $k$ colors — every one of its vertices needs a color no other member of
-the clique has. A full row is a clique of size $n^2$, so $\chi(G_n) \ge n^2$. This
-is pure graph theory: the geometry of the puzzle guarantees a large clique.
-
-**You need at most $n^2$ colors (the upper bound).** To prove this we must
-actually *color the graph with $n^2$ colors* — which, by the Bridge Theorem, means
-exhibiting one genuine completed Sudoku grid. There is a lovely closed-form
-recipe. Assign to the cell in row $r$, column $c$ the symbol
+The upper bound is more constructive. Define the symbol in row $r$ and column $c$ by
 
 $$
-g(r,c) \;=\; \bigl(n\cdot (r \bmod n) + \lfloor r/n\rfloor + c\bigr) \bmod n^2.
+G_n(r,c)=
+\bigl(n(r\bmod n)+\lfloor r/n\rfloor+c\bigr)\bmod n^2.
 $$
 
-This is a "shift" construction: each row is a cyclic shift of the previous one,
-with the shift amount cleverly chosen so that the block constraints are respected
-too. One can check directly that this assignment never repeats a symbol within a
-row, within a column, or within a block:
-
-- **Rows.** Fixing $r$ and varying $c$, the value changes by exactly $c$ modulo
-  $n^2$, so two columns give the same symbol only if $c = c'$.
-- **Columns.** Fixing $c$, the "row contribution" $n\cdot(r\bmod n) + \lfloor
-  r/n\rfloor$ is nothing but the base-$n$ representation of $r$ with its two digits
-  swapped; swapping digits is reversible, so distinct rows give distinct symbols.
-- **Blocks.** Within a block the row and column offsets each range over
-  $0,\dots,n-1$, and the formula packages them into a base-$n$ pair that is again
-  uniquely recoverable.
-
-Because such a grid exists, $n^2$ colors suffice, giving $\chi(G_n) \le n^2$.
-Combining the two bounds yields $\chi(G_n) = n^2$ exactly. As a bonus, the same
-construction proves that **every empty $n$-Sudoku is solvable** — there is never a
-board size for which the rules are secretly contradictory.
-
-The number $n^2$ is doing double duty here. On the puzzle side it is the count of
-symbols the game demands. On the graph side it is a hard, intrinsic invariant — a
-quantity that does not care how you draw the graph or label its vertices. The
-Chromatic Number Theorem says these two numbers are one and the same. The Sudoku
-grid needs exactly $n^2$ symbols, and it has *exactly* enough room for them, no
-more and no fewer.
-
-## From coloring to hardness: the phase transition
-
-So far we have talked about *empty* grids, which always have solutions. Real
-Sudoku puzzles come with **clues**: some cells are pre-filled, and you must
-complete the rest. In graph language, a puzzle is a *precoloring* — a few vertices
-are colored in advance — and solving it is a *precoloring extension* problem. This
-is where difficulty is born, and where Sudoku brushes up against the frontier of
-computer science.
-
-Imagine generating random puzzles by pre-filling cells at random. Let $d$ be the
-*density* of clues, the fraction of cells that are filled in. When $d$ is small,
-the board is nearly empty and almost any partial filling can be completed — most
-instances are solvable. When $d$ is large, so many cells are fixed that the
-constraints usually clash and the puzzle has no solution at all. Somewhere in
-between, the probability of solvability plunges from nearly $1$ to nearly $0$.
-This abrupt switch is a **phase transition**, the same phenomenon that turns water
-to ice at a precise temperature.
-
-The conjectured location of this transition is strikingly simple:
+This compact formula produces a completed Sudoku for every $n\ge 1$. Along a fixed row, increasing $c$ cycles through all residues modulo $n^2$. Along a fixed column, the row-dependent shift
 
 $$
-d_c(n) = \frac{n^2 - 1}{n^2}.
+D_n(r)=n(r\bmod n)+\lfloor r/n\rfloor
 $$
 
-For $4\times 4$ boards ($n=2$) this predicts $d_c = 3/4 = 0.75$; for standard
-$9\times 9$ Sudoku ($n=3$), $d_c = 8/9 \approx 0.889$; for $16\times 16$ boards
-($n=4$), $d_c = 15/16 \approx 0.9375$. The intuition is that each cell sits in a
-clique of $n^2$ mutually constrained cells — a full row, column, or block — and a
-clue removes one degree of freedom from that clique. When roughly $n^2 - 1$ of
-every $n^2$ cells are pinned down, the system tips over the edge from
-under-constrained to over-constrained.
+is unique for $0\le r<n^2$: it is simply a rearrangement of the two base-$n$ digits of $r$. Inside one block, the block coordinates are fixed while the within-block row and column coordinates range independently; the quantity $n(r\bmod n)+(c\bmod n)$ encodes that pair uniquely. Hence no row, column, or block repeats a symbol.
 
-What makes the phase transition more than a curiosity is that it coincides with a
-spike in *computational hardness*. Puzzles with very low or very high clue density
-are quick to solve or quick to rule out. But puzzles poised right at $d_c$ are the
-hardest of all: a backtracking search can be forced to explore an exponentially
-growing tree of possibilities, and empirically the solving time near criticality
-scales like $\exp(n^2)$. This "easy–hard–easy" pattern is a hallmark of hard
-constraint satisfaction problems everywhere, from Boolean satisfiability to
-graph coloring itself.
+For $n=3$, this gives the familiar $9\times9$ cyclic pattern. For $n=2$, it gives a $4\times4$ solution; for $n=4$, a $16\times16$ solution. The formula proves two results at once:
 
-It is important to be honest about the status of this last picture. The bridge
-between Sudoku and graph coloring, and the exact value $\chi(G_n) = n^2$, are
-theorems — established beyond doubt. The phase-transition location $d_c(n) =
-(n^2-1)/n^2$ and the exponential hardness at criticality are, at present,
-*conjectures*: precise, testable, and well supported by experiment and by analogy
-with random-satisfiability thresholds, but not yet proved. A rigorous proof would
-call for the heavy machinery of random constraint satisfaction — second-moment
-and interpolation methods of the sort used to locate the random $k$-SAT
-threshold. The deterministic backbone of any such analysis is already in hand:
-the clique of $n^2$ mutually constrained cells whose density governs the whole
-story.
+**Universal completion theorem.** Every empty order-$n$ Sudoku with $n\ge1$ has a valid completion.
 
-## Why this matters
+**Exact chromatic-number theorem.** The Sudoku constraint graph of order $n\ge1$ has chromatic number $n^2$.
 
-The moral of the story is a change of perspective. Sudoku's difficulty is *not*
-about the number $9$, and it is not really about squares of digits. It is about
-the phase-transition structure that constraint satisfaction problems share.
-Recognizing Sudoku as a graph-coloring problem places it in the company of
-scheduling, register allocation in compilers, frequency assignment in wireless
-networks, and countless other problems that are all, underneath, the same problem
-of coloring a graph without conflicts.
+A related consequence applies to any sound procedure that assigns upper bounds to clique sizes in induced portions of the graph. When applied to the entire constraint graph, such a procedure must return at least $n^2$, because the first row already exhibits a clique of that size. No sound clique-based preprocessing can pretend this canonical obstruction is smaller.
 
-That is the power of a mathematical bridge. By translating a familiar puzzle into
-the language of graphs, we inherit a hard invariant — the chromatic number
-$n^2$ — a constructive recipe that solves every empty board, and a roadmap toward
-one of the deepest questions in the theory of computation. The next time a Sudoku
-resists your pencil, take comfort: you are wrestling not with a grid of numbers,
-but with a graph, at the very edge of what fast algorithms can do.
+## Clues are restrictions, not just a percentage
+
+A clue system assigns either a symbol or a blank to each cell. It is **solvable** if at least one valid completed Sudoku agrees with every displayed symbol. Say that one clue system extends another when it contains every clue of the first, with the same values, and perhaps more.
+
+This ordering yields a fundamental monotonicity law:
+
+**Antitonicity of solvability.** If a more heavily constrained clue system is solvable, then every clue system obtained by deleting some of its clues is also solvable.
+
+The reason is direct: a completion satisfying all the clues also satisfies any subset of them. Equivalently, adding clues can destroy candidate completions but cannot manufacture new ones.
+
+It is tempting to turn this monotonicity into a universal phase-transition story. The proposed density
+
+$$
+d_c(n)=\frac{n^2-1}{n^2}
+$$
+
+would be $3/4$ for $4\times4$ Sudoku, $8/9$ for standard $9\times9$ Sudoku, and $15/16$ for $16\times16$ Sudoku. But density is only a count. It says nothing about where clue values came from or how they are correlated.
+
+Here is a decisive comparison. Start with any completed Sudoku and choose an arbitrary set $S$ of cells. Reveal the completed value exactly on $S$ and leave every other cell blank. The original completion still solves the resulting puzzle. This works for every geometric shape of $S$ and every size $k$ with
+
+$$
+0\le k\le n^4.
+$$
+
+Thus we obtain:
+
+**Restriction theorem.** Every subset of the entries of a valid completed grid is solvable.
+
+**Every-count theorem.** For every positive $n$ and every integer $k$ between $0$ and $n^4$, there exists a solvable order-$n$ clue system with exactly $k$ clues.
+
+The support—the set of nonblank cells—is exactly $S$, so there is no hidden counting subtlety. If random instances are generated by choosing a completed grid and deleting entries, the probability of solvability is $1$ at every clue density. There is no satisfiability transition at $8/9$, or anywhere else.
+
+By contrast, if one assigns random symbols to selected cells, conflicting values can make an instance impossible. Even conditioning on immediate row, column, and block consistency does not erase longer-range correlations. A third model might perturb a completed grid. These ensembles can share the same expected density while having different satisfiability curves.
+
+## What “hardest near the threshold” must mean
+
+Phase transitions are real and powerful ideas in constraint satisfaction, physics, and computation. Water changes phase when temperature crosses a boundary; random graphs suddenly acquire giant connected components; random logical formulas can shift from usually satisfiable to usually contradictory. But the control parameter works only after the probability space has been fixed.
+
+Sudoku needs the same discipline. A credible experimental claim should specify at least:
+
+1. how the set of clue cells is sampled;
+2. how clue values are sampled and conditioned;
+3. whether the observable is existence, uniqueness, or number of solutions;
+4. which solver is run, including variable and value ordering;
+5. which cost is measured, such as search-tree nodes, time, or proof width.
+
+Satisfiability and computational hardness are not the same observable. A family can remain satisfiable while becoming difficult for one search rule. Unsatisfiable instances can be easy if a local contradiction appears immediately. Uniqueness can have its own transition even when existence does not. Likewise, saying “backtracking takes $\exp(O(n^2))$” is not a lower bound, and saying “backtracking is exponential” is ambiguous unless the algorithm is fixed.
+
+The graph viewpoint suggests sharper questions. Can one transfer hard graph-coloring instances into Sudoku-shaped constraints? Do specific deterministic branching rules require $\exp(\Omega(n^2))$ nodes on an explicit family? Can bounded-width consistency detect contradictions that clique-only preprocessing misses? Does the density maximizing satisfiability variance differ from the density maximizing proof complexity?
+
+These questions preserve the exciting phase-transition narrative while replacing a universal-density conjecture with testable mathematics.
+
+## The broader lesson
+
+Sudoku is not hard merely because a $9\times9$ board has many squares. Its structure lies in the interaction of three overlapping partitions: rows, columns, and blocks. The constraint graph makes that interaction visible. Its chromatic number $n^2$ says the symbol alphabet is exactly tight: one full row forces $n^2$ distinct symbols, and the arithmetic construction shows those symbols suffice globally.
+
+Clues add a second layer. They select a partial coloring and ask whether it extends to a full one. Under deletion, solvability behaves monotonically. Under random generation, however, density alone discards the correlations that determine whether the partial coloring is compatible with any completion.
+
+That distinction travels far beyond Sudoku. Scheduling, register allocation, frequency assignment, error-correcting codes, and many other constraint systems can be represented by graphs or hypergraphs. In each case, “how many constraints?” is only the beginning. One must also ask which constraints, how they overlap, and how their values were produced.
+
+The enduring message is therefore not a numerical threshold. It is a rule for finding meaningful ones: first identify the constraint geometry, then define the random ensemble, and only then measure satisfiability or hardness. Sudoku’s hidden graph gives the geometry. The next phase-transition theorem must supply the probability model.
