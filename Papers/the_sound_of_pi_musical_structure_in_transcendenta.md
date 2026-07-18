@@ -1,33 +1,36 @@
-# Computational Evidence: Cyclic Digit-Melody Statistics
+# Computational evidence
 
 ## Small-case calculations
 
-The finite signal `s = [3,1,4,1,5]` has square energy
+The proposal maps digit `d` to pitch offset `d` semitones, for `d ∈ {0,…,9}`. The complete possible pitch-offset range is therefore:
 
-| statistic | value |
-|---|---:|
-| `∑ sᵢ²` | 52 |
-| cyclic autocorrelation at lag 1 | 35 |
-| squared interval energy at lag 1 | 34 |
+| digit | offset (semitones) |
+|---:|---:|
+| 0 | 0 |
+| 1 | 1 |
+| 2 | 2 |
+| 3 | 3 |
+| 4 | 4 |
+| 5 | 5 |
+| 6 | 6 |
+| 7 | 7 |
+| 8 | 8 |
+| 9 | 9 |
 
-These values satisfy `2·35 = 2·52 − 34`. The example illustrates the exact identity proved for every finite signal: high autocorrelation and low squared interval cost are equivalent descriptions of the same observation.
+The largest possible pairwise distance is `|9 - 0| = 9`, below an octave's 12 semitones. Exhausting all 100 ordered digit pairs therefore yields zero octave-separated pairs. This finite structural calculation is proved generally in the accompanying Lean file rather than accepted as an unchecked computation.
 
-For the constant signal `[4,4,4,4]`, every lag has autocorrelation 64 and interval energy 0. For the alternating signal `[0,9,0,9]`, lag 2 also has autocorrelation 162 and interval energy 0. Thus maximal lag correlation detects cyclic repetition, not a privileged harmonic interval.
+For the displayed start of π, `3,1,4,1,5,9,2,6,5,…`, adjacent absolute pitch intervals begin `2,3,3,4,4,7,4,1,…`. These illustrate pitch intervals; they are distinct from temporal autocorrelation lags.
 
-## Representative counterexample hunt
+## OEIS search results
 
-The proposed inference “irrationality implies positive autocorrelation at lag 12” fails at the level of logic: irrationality excludes eventual periodicity but imposes no known sign constraint on a finite-prefix statistic. Finite prefixes can be prescribed arbitrarily while retaining irrationality in the tail. Therefore no theorem about the sign or statistical significance of a fixed finite autocorrelation follows from irrationality alone.
+No OEIS search is pertinent to the proved theorem: it concerns the fixed finite image `{0,…,9}` of the digit-to-pitch map, not a newly identified integer sequence. No OEIS identification is claimed.
 
-The musical interpretation also mixes two different variables. A temporal lag of 12 compares digits twelve positions apart. An octave compares pitch values differing by twelve semitones. Since decimal digits range only from 0 through 9 under the stated map, no pair of mapped digits is separated by a full octave. Consequently, “autocorrelation at lag 12” does not count octave-separated notes.
+## Counterexample hunt
 
-## Sequence-database search
+The interpretation “a digit match at temporal lag 12 is an octave relation” has immediate counterexamples. The constant-zero stream matches at every temporal lag, including 12, but both compared notes have pitch offset 0 and hence form a unison. This counterexample is formalized as `temporal_lag_twelve_does_not_mean_octave`.
 
-No sequence identification is needed for the deterministic polarization identity: it applies to every finite real signal rather than to one integer sequence. Claims specific to decimal digits of π, e, and √2 require an explicitly fixed prefix length, centering convention, null model, multiple-testing correction, and independently reproducible digit source before a sequence-database comparison is informative.
+More strongly, no decimal-digit stream can ever produce an exact octave-separated pair under the stated mapping, because all pitch distances are at most 9. Thus the issue is not special to π or to a chosen sample size.
 
-## Conclusions from the evidence
+## Tables and statistical scope
 
-1. Cyclic autocorrelation is exactly total energy minus one half of squared interval energy.
-2. Its maximum occurs precisely when the finite melody is invariant under the selected cyclic shift.
-3. Irrationality alone does not predict finite autocorrelation signs.
-4. Temporal displacement and musical pitch interval must be represented by separate statistics.
-5. Any significance claim must specify sample size and test design; without them, the original numerical conjectures are not falsifiable.
+A chi-squared or autocorrelation table for π, e, and √2 cannot be reproduced from the mission statement alone: it does not specify the number of digits, the exact autocorrelation estimator, centering/normalization, or a multiple-testing protocol. Supplying arbitrary choices would test a new hypothesis rather than the stated one. The formal work therefore first resolves the model-level mismatch that is independent of data.

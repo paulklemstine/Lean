@@ -42,28 +42,25 @@ namespace MixedRadixBridge
 
 open MixedRadix
 
-/-
-The mixed-radix place values for `b i = i + 1` are the factorials, so the
-mixed-radix value agrees with the factorial-system value.
--/
+/-- The mixed-radix place values for `b i = i + 1` are the factorials, so the
+mixed-radix value agrees with the factorial-system value. -/
 theorem value_eq (c : Nat → Nat) (k : Nat) :
     MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by
-  exact Finset.sum_congr rfl fun i _ => by
-    rw [MixedRadix.factorial_radixProd]
+  unfold MixedRadix.value FactorialNumberSystem.value
+  apply Finset.sum_congr rfl
+  intro i hi
+  rw [MixedRadix.factorial_radixProd]
 
-/-
-Mixed-radix validity for `b i = i + 1` coincides with factorial validity.
--/
+/-- Mixed-radix validity for `b i = i + 1` coincides with factorial validity. -/
 theorem valid_iff (c : Nat → Nat) (k : Nat) :
     MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by
-  exact MixedRadix.factorial_valid_iff c k
+  rw [MixedRadix.factorial_valid_iff]
+  rfl
 
-/-
-**The factorial uniqueness theorem, re-derived from the general one.**
+/-- **The factorial uniqueness theorem, re-derived from the general one.**
 
 This reproves `FactorialNumberSystem.value_unique` using only
-`MixedRadix.value_unique` and the bridge lemmas `value_eq` / `valid_iff`.
--/
+`MixedRadix.value_unique` and the bridge lemmas `value_eq` / `valid_iff`. -/
 theorem factorial_value_unique_via_mixed {c d : Nat → Nat} {k : Nat}
     (hc : FactorialNumberSystem.Valid c k) (hd : FactorialNumberSystem.Valid d k)
     (hv : FactorialNumberSystem.value c k = FactorialNumberSystem.value d k) :
