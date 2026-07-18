@@ -1,176 +1,435 @@
-# Gödel's Casino: A Game-Theoretic Analysis of Betting on Undecidable Statements
+# Gödel’s Casino: No-Free-Lunch Symmetry and Sharp Expected-Profit Bounds for Finite Logical Betting Games
+
+**Aristotle**  
+**July 18, 2026**
 
 ## Abstract
 
-We introduce and rigorously analyze *Gödel's Casino*, a betting game in which a player wagers on the truth value of statements — including statements that are independent of a background theory in the sense of holding in some models and failing in others. Motivated by the provocative conjecture that undecidability can be monetized (that each undecidable statement is individually winnable with strictly positive expected value, subject to a universal per-round lower bound of $1/3$), we build a fully self-contained finite model and settle the conjecture in the negative. We prove that the game is zero-sum with no house edge; that decidable statements (valid or unsatisfiable) are winnable with maximal expected profit $1$; that any *independent* statement suffers a worst-case payoff of $-1$ regardless of the bet; and, decisively, that a *balanced* statement (true in exactly half the worlds) yields expected profit exactly $0$ for every bet. We exhibit an explicit independent statement on which no bet has positive expected value, refuting the individual-winnability claim, and a deck of balanced cards whose average optimal profit is $0$, refuting the $1/3$ bound. The honest positive theory is that optimal profit is nonnegative, that a deck of decidable cards is won every round, and that a mixed deck with a fraction $f$ of decidable cards has average optimal profit exactly $f$. The player's entire edge derives from the decidable fragment; genuine incompleteness contributes exactly zero in expectation and $-1$ in the worst case. In this precise game-theoretic sense, incompleteness is a barrier, not a free lunch.
+We study a finite betting game motivated by logical incompleteness. On each of $n$ rounds, a player predicts the Boolean truth value of a statement; a correct unit bet returns $+1$ and an incorrect bet returns $-1$. The model separates two questions that are often conflated: whether statements are decidable in a formal theory, and whether a player has probabilistic information about their truth values. We prove a deterministic no-free-lunch theorem: complementing every truth value negates the total payoff, so no fixed deterministic strategy wins strictly in every possible world. Every strategy has a nonpositive world, an adversarial world forces payoff $-n$, an agreeing world gives $n$, and every world–complement pair has average payoff zero. We then derive the exact expectation formula
 
-**Keywords:** undecidability, independence, incompleteness, zero-sum game, expected value, model theory, decision theory.
+$$
+\mathbb{E}[T]=2\sum_{i=1}^{n}p_i-n,
+$$
+
+where $p_i$ is the probability that prediction $i$ is correct. Consequently, expected profit is positive if and only if aggregate accuracy exceeds $n/2$. A uniform accuracy lower bound $q$ gives expected payoff at least $n(2q-1)$; in particular, accuracy at least $2/3$ yields at least $n/3$. For $1{,}000$ cards at exact accuracy $2/3$, expected profit is exactly $1000/3$. We also show that $d$ certain predictions mixed with $u$ fair guesses have expected payoff exactly $d$. In finite possible-world semantics, valid and unsatisfiable statements support unit expected profit, while balanced statements support none, refuting any unconditional positive-profit claim based solely on logical independence. We conclude with algorithms, applications, and the additional assumptions needed for a genuine probabilistic theory of betting on undecidable statements.
 
 ## 1. Introduction
 
-Gödel's incompleteness theorems and the subsequent independence results of Cohen and others established that formal mathematics is permanently haunted by statements it can neither prove nor refute. The Continuum Hypothesis is the canonical example: it is *independent* of the standard axioms, holding in some models of set theory and failing in others. A recurring popular intuition holds that this multiplicity of models is not merely a limitation but a resource — that if a statement is "right in some model," then a gambler betting on its truth ought to be able to profit.
+Gödelian incompleteness and set-theoretic independence reveal limits on what fixed axiom systems can decide. These results invite a game-theoretic question: can a player exploit undecidability by betting on the truth values of independent statements? The metaphor is attractive. A casino presents arithmetic or set-theoretic claims as cards; the player selects true or false; and a correct selection wins a unit.
 
-This paper takes that intuition seriously and tests it inside a precise decision-theoretic model. We formalize a betting game — *Gödel's Casino* — and evaluate a specific optimistic conjecture drawn from the informal literature:
+The metaphor also carries a danger. Logical independence is not probabilistic randomness. A statement independent of a theory is neither automatically a fair coin nor automatically biased toward one truth value. To speak of expected profit, one must specify a probability model: how statements or worlds are sampled, how truth is settled, and what information the player possesses.
 
-> **Conjecture (Monetizable Undecidability).** There is a betting strategy on statements independent of a theory that guarantees strictly positive expected profit, with each undecidable bet individually winnable and a universal lower bound of $1/3$ expected profit per round.
+This paper isolates the finite probabilistic core of such a casino. The resulting theory has two complementary halves. The first is adversarial and distribution-free. It proves that deterministic strategies cannot obtain strictly positive payoff in all possible worlds because every world has a complement that reverses every outcome. The second is probabilistic and exact. Once success probabilities are supplied, expected payoff is an affine function of aggregate accuracy, with a sharp break-even threshold at one half.
 
-Our contribution is to show that this conjecture is *false*, to prove exactly which parts of the intuition survive, and to isolate the source of any genuine edge. The analysis is elementary and self-contained: it requires only finite sums of rational numbers and does not depend on any formalization of the arithmetic hierarchy or of set theory. Its purpose is to capture the *game-theoretic content* of the conjecture faithfully, and in that arena the verdict is unambiguous.
+These conclusions correct an unconditional conjecture that incompleteness itself yields a positive expected return. A return of $1/3$ per round does follow from $2/3$ predictive accuracy, but logical decidability or independence does not, by itself, imply such accuracy. Any density claim about “a fraction of arithmetic statements” additionally requires an encoding, size measure, sampling law, and density theorem.
 
-## 2. The Model
+The finite model is deliberately minimal. This allows the key principles to be stated without distractions and makes them applicable beyond logic—to binary forecasting, classification, ensemble decisions, and adversarial prediction.
 
-### 2.1 Worlds, statements, and bets
+## 2. The finite casino model
 
-Fix a finite, nonempty set $\Omega$ of *worlds* (intuitively, the models of the background theory). A **statement** is a function
+### 2.1 Cards, worlds, and strategies
 
-$$s : \Omega \to \{\text{true}, \text{false}\},$$
+Fix a positive or zero integer $n$. The casino offers cards indexed by $i\in\{1,\ldots,n\}$. Each card has a Boolean truth value. We write a world as a function
 
-recording the truth value of $s$ in each world. A **bet** is an element $b \in \{\text{true}, \text{false}\}$. This identification is deliberate: for betting purposes a statement is exactly its pattern of truth values across worlds, and nothing more.
+$$
+w:\{1,\ldots,n\}\longrightarrow\{0,1\},
+$$
 
-### 2.2 Payoffs
+where $1$ denotes true and $0$ denotes false.
 
-The per-world **payoff** of betting $b$ on statement $s$ in world $\omega$ is
+A deterministic strategy is another Boolean function
 
-$$\mathrm{payoff}(s, b, \omega) = \begin{cases} +1 & \text{if } b = s(\omega), \\ -1 & \text{if } b \neq s(\omega). \end{cases}$$
+$$
+s:\{1,\ldots,n\}\longrightarrow\{0,1\},
+$$
 
-This is a scrupulously symmetric, fair-odds rule: a correct call earns one unit, an incorrect call loses one.
+where $s(i)$ is the player’s prediction on card $i$. The strategy may have been designed using syntax, theorem-proving strength, heuristics, or any other information; after it is fixed, only its predictions enter the payoff calculation.
 
-### 2.3 Two evaluations of a bet
+### 2.2 Unit and total payoff
 
-Under the uniform prior over $\Omega$, the **expected profit** of a bet is
+**Definition 2.1 (Unit payoff).** For a prediction $a\in\{0,1\}$ and truth value $b\in\{0,1\}$, define
 
-$$\mathrm{expProfit}(s, b) = \frac{1}{|\Omega|} \sum_{\omega \in \Omega} \mathrm{payoff}(s, b, \omega).$$
+$$
+ u(a,b)=
+\begin{cases}
+1,&a=b,\\
+-1,&a\ne b.
+\end{cases}
+$$
 
-Against an adversarial house that reveals the least favorable world, the **worst-case profit** is $\min_{\omega} \mathrm{payoff}(s, b, \omega)$. A genuinely winning strategy should perform well under both.
+**Definition 2.2 (Total payoff).** The total payoff of strategy $s$ in world $w$ is
 
-### 2.4 Classes of statements
+$$
+T(s,w)=\sum_{i=1}^{n}u(s(i),w(i)).
+$$
 
-Let $\mathrm{trueCount}(s) = |\{\omega \in \Omega : s(\omega) = \text{true}\}|$ be the number of worlds in which $s$ holds. We distinguish:
+Thus $T(s,w)$ is the number of correct predictions minus the number of incorrect predictions. If $c$ predictions are correct, then $n-c$ are incorrect and
 
-- $s$ is **valid** if $s(\omega) = \text{true}$ for all $\omega$ (a decidable truth);
-- $s$ is **unsatisfiable** if $s(\omega) = \text{false}$ for all $\omega$ (a decidable falsehood);
-- $s$ is **independent** if $s(\omega) = \text{true}$ for some $\omega$ and $s(\omega') = \text{false}$ for some $\omega'$;
-- $s$ is **balanced** if $2\,\mathrm{trueCount}(s) = |\Omega|$ (true in exactly half the worlds).
+$$
+T(s,w)=c-(n-c)=2c-n.
+$$
 
-Every balanced statement (in a nonempty world set) is independent; the converse fails.
+The payoff therefore lies between $-n$ and $n$ and has the same parity as $n$.
 
-### 2.5 The optimal bet and decks
+### 2.3 Complementary worlds
 
-The **optimal expected profit** of a statement is the better of the two available bets:
+**Definition 2.3 (World complement).** The complement $\overline{w}$ of a world $w$ reverses every truth value:
 
-$$\mathrm{optProfit}(s) = \max\bigl(\mathrm{expProfit}(s, \text{true}),\ \mathrm{expProfit}(s, \text{false})\bigr).$$
+$$
+\overline{w}(i)=1-w(i).
+$$
 
-A **deck** is a finite list of statements $D = [s_1, \dots, s_n]$; one round is played per card, and the deck's average optimal profit is
+For Boolean values, exactly one of $w(i)$ and $\overline{w}(i)$ agrees with a fixed prediction $s(i)$. This elementary observation drives the deterministic theory.
 
-$$\mathrm{deckOptProfit}(D) = \frac{1}{n} \sum_{i=1}^{n} \mathrm{optProfit}(s_i).$$
+## 3. Deterministic no-free-lunch results
 
-## 3. Structural Results
+### 3.1 Payoff antisymmetry
 
-### 3.1 The game is zero-sum
+**Lemma 3.1 (Single-card complement identity).** For every Boolean prediction $a$ and truth value $b$,
 
-**Lemma 1 (Pointwise zero-sum).** For every statement $s$ and world $\omega$,
-$$\mathrm{payoff}(s, \text{true}, \omega) + \mathrm{payoff}(s, \text{false}, \omega) = 0.$$
+$$
+ u(a,1-b)=-u(a,b).
+$$
 
-*Proof sketch.* In each world exactly one of the two bets matches $s(\omega)$, paying $+1$, while the other pays $-1$. The two cases $s(\omega) = \text{true}$ and $s(\omega) = \text{false}$ both give $(+1) + (-1) = 0$. $\square$
+**Proof sketch.** If $a=b$, then the original payoff is $1$, while $a\ne1-b$ and the complemented payoff is $-1$. If $a\ne b$, Booleanity forces $a=1-b$, so the original payoff is $-1$ and the complemented payoff is $1$. In both cases the sign is reversed. $\square$
 
-**Theorem 2 (Zero-sum game).** For every statement $s$,
-$$\mathrm{expProfit}(s, \text{true}) + \mathrm{expProfit}(s, \text{false}) = 0.$$
+**Theorem 3.2 (Complementary-World Theorem).** For every deterministic strategy $s$ and every world $w$,
 
-*Proof sketch.* Summing Lemma 1 over all worlds gives a total of $0$; dividing by $|\Omega|$ preserves it. Linearity of the finite sum is all that is needed. $\square$
+$$
+T(s,\overline{w})=-T(s,w).
+$$
 
-The interpretation is central to everything that follows: the casino has *no built-in edge* in either direction. Any positive expected profit a player achieves must arise entirely from *information* about the card — specifically, from the card being decided one way or the other.
+**Proof sketch.** Apply Lemma 3.1 on each card and sum:
 
-### 3.2 A closed form for expected profit
+$$
+T(s,\overline{w})
+=\sum_{i=1}^{n}u(s(i),\overline{w}(i))
+=\sum_{i=1}^{n}-u(s(i),w(i))
+=-T(s,w).
+$$
 
-**Lemma 3 (Total TRUE-payoff).** For every statement $s$,
-$$\sum_{\omega \in \Omega} \mathrm{payoff}(s, \text{true}, \omega) = 2\,\mathrm{trueCount}(s) - |\Omega|.$$
+$\square$
 
-*Proof sketch.* Partition $\Omega$ into the worlds where $s$ is true (each contributing $+1$) and where $s$ is false (each contributing $-1$). The true worlds number $\mathrm{trueCount}(s)$ and the false worlds number $|\Omega| - \mathrm{trueCount}(s)$, so the sum is $\mathrm{trueCount}(s) - (|\Omega| - \mathrm{trueCount}(s)) = 2\,\mathrm{trueCount}(s) - |\Omega|$. $\square$
+This is an exact identity, not an asymptotic statement. It holds for every finite $n$, including $n=0$.
 
-**Theorem 4 (Expected-profit formula).** For every statement $s$,
-$$\mathrm{expProfit}(s, \text{true}) = \frac{2\,\mathrm{trueCount}(s) - |\Omega|}{|\Omega|}.$$
+### 3.2 Impossibility of a uniform strict win
 
-This single formula drives the entire analysis. Expected profit on the TRUE bet is a strictly increasing affine function of the fraction of worlds in which the statement holds: it ranges from $-1$ (never true) through $0$ (true in exactly half the worlds) to $+1$ (always true).
+**Corollary 3.3 (No uniform strict win).** No deterministic strategy has strictly positive total payoff in both a world and its complement.
 
-## 4. Decidable Statements Are Winnable
+**Proof sketch.** If $T(s,w)>0$, Theorem 3.2 gives $T(s,\overline{w})=-T(s,w)<0$. If $T(s,w)\le0$, the original world is already nonwinning. $\square$
 
-**Theorem 5 (Valid statements pay the maximum).** If $s$ is valid, then $\mathrm{expProfit}(s, \text{true}) = 1$.
+**Corollary 3.4 (Existence of a nonpositive world).** For every deterministic strategy $s$, there exists a world $w$ such that
 
-*Proof sketch.* Validity means $s(\omega) = \text{true}$ in every world, so every payoff for the TRUE bet is $+1$; the average of a constant $1$ is $1$. (Equivalently, $\mathrm{trueCount}(s) = |\Omega|$ in Theorem 4.) $\square$
+$$
+T(s,w)\le0.
+$$
 
-**Theorem 6 (Unsatisfiable statements pay the maximum).** If $s$ is unsatisfiable, then $\mathrm{expProfit}(s, \text{false}) = 1$.
+**Proof sketch.** Choose any world. If its payoff is nonpositive, it is the required witness. Otherwise its complementary world has negative payoff by Theorem 3.2. $\square$
 
-*Proof sketch.* Symmetric to Theorem 5: every FALSE bet matches, so every payoff is $+1$. $\square$
+The quantifiers matter. The statement does not assert that every world is unfavorable; it states that no deterministic strategy is favorable in all worlds.
 
-**Corollary 7.** A valid statement has $\mathrm{optProfit}(s) = 1$ (and, by the zero-sum law, the TRUE bet beats the FALSE bet, which returns $-1$).
+### 3.3 Exact extreme worlds
 
-These theorems locate the source of all winnings. Decidable statements — those settled in every world — are perfectly winnable, and they are precisely the statements that are *not* undecidable.
+**Theorem 3.5 (Adversarial world).** Given any deterministic strategy $s$, define the adversarial world by
 
-## 5. Independence Cannot Be Beaten
+$$
+w_{-}(i)=1-s(i).
+$$
 
-We now turn to the cards the conjecture actually cares about.
+Then
 
-**Theorem 8 (Guaranteed worst-case loss on independent cards).** If $s$ is independent, then for every bet $b$ there exists a world $\omega$ with $\mathrm{payoff}(s, b, \omega) = -1$.
+$$
+T(s,w_{-})=-n.
+$$
 
-*Proof sketch.* Independence supplies a world $\omega_T$ with $s(\omega_T) = \text{true}$ and a world $\omega_F$ with $s(\omega_F) = \text{false}$. If $b = \text{true}$, then in $\omega_F$ the bet mismatches and pays $-1$; if $b = \text{false}$, then in $\omega_T$ the bet mismatches and pays $-1$. $\square$
+**Proof sketch.** Every truth value is opposite to its prediction, so each of the $n$ cards pays $-1$. Summing gives $-n$. $\square$
 
-Consequently the worst-case (adversarial) profit on any independent statement is $\leq -1 < 0$: against a house that reveals the cruelest world, independence is a strict loss no matter how you bet. Dually, one shows that every independent card also has *some* winning world — independence cuts both ways — but this offers no protection against an adversary.
+**Theorem 3.6 (Agreeing world).** In the world $w_{+}=s$, every prediction is correct and
 
-**Theorem 9 (Balanced statements have no edge).** If $s$ is balanced, then $\mathrm{expProfit}(s, b) = 0$ for every bet $b$.
+$$
+T(s,w_{+})=n.
+$$
 
-*Proof sketch.* Balancedness means $2\,\mathrm{trueCount}(s) = |\Omega|$, so the numerator $2\,\mathrm{trueCount}(s) - |\Omega|$ in Theorem 4 vanishes and $\mathrm{expProfit}(s, \text{true}) = 0$. By the zero-sum law (Theorem 2), $\mathrm{expProfit}(s, \text{false}) = 0$ as well. $\square$
+**Proof sketch.** Each card pays $1$, and there are $n$ cards. $\square$
 
-**Corollary 10.** A balanced statement has $\mathrm{optProfit}(s) = 0$: it is not winnable even in the optimistic, expected-value sense. A balanced independent card is, in every measurable respect, a fair coin.
+Together, Theorems 3.5 and 3.6 show that the full payoff range is attained for every strategy.
 
-## 6. Refuting the Conjecture
+### 3.4 Pairwise zero average
 
-**Theorem 11 (An explicit unwinnable independent card).** There exists a statement that is independent yet on which every bet has expected profit exactly $0$.
+**Theorem 3.7 (Complementary-pair average).** For every strategy $s$ and world $w$,
 
-*Proof sketch.* Take $\Omega = \{\text{true}, \text{false}\}$ (a two-world universe) and let $s$ be the identity, i.e. $s$ reads TRUE in the world "true" and FALSE in the world "false." Then $s$ is independent (it takes both values) and balanced ($\mathrm{trueCount}(s) = 1 = |\Omega|/2$), so by Theorem 9 every bet returns $0$. $\square$
+$$
+\frac{T(s,w)+T(s,\overline{w})}{2}=0.
+$$
 
-This is the miniature Continuum-Hypothesis card: "right in some model, wrong in another." It is genuinely undecidable in the model-theoretic sense that matters, and it is worth *nothing*. This directly refutes the claim that each undecidable statement is individually winnable with strictly positive expected value.
+**Proof sketch.** Substitute Theorem 3.2 into the numerator to obtain $T(s,w)-T(s,w)=0$. $\square$
 
-**Theorem 12 (The $1/3$ bound fails).** There exists a nonempty deck $D$ with $\mathrm{deckOptProfit}(D) = 0$, hence $\mathrm{deckOptProfit}(D) < 1/3$.
+If a probability distribution assigns equal mass to every world and its complement, this pairwise cancellation implies zero expected payoff for every deterministic strategy. Thus positive expectation cannot arise under complement symmetry without additional information or asymmetric weighting.
 
-*Proof sketch.* Let $D$ consist of a single balanced card (e.g. the identity card of Theorem 11). By Corollary 10 its optimal profit is $0$, so the deck average is $0 < 1/3$. $\square$
+## 4. Expected payoff and the sharp accuracy threshold
 
-The claimed universal lower bound of $1/3$ expected profit per round is therefore not merely loose but false.
+### 4.1 Success probabilities
 
-## 7. The Honest Positive Theory
+Now place the casino in a probabilistic setting. The strategy may still be deterministic, while the world is sampled from a distribution; alternatively, strategy randomization may be absorbed into the probability that each prediction is correct. Let
 
-The refutation does not leave the player destitute; it relocates the profit to its true source.
+$$
+p_i=\Pr[s(i)=w(i)]
+$$
 
-**Theorem 13 (Optimal profit is nonnegative).** For every statement $s$, $\mathrm{optProfit}(s) \geq 0$.
+be the success probability on card $i$. No assumption of independence among cards is needed.
 
-*Proof sketch.* By the zero-sum law the two bets sum to $0$, so at least one of them is $\geq 0$; the maximum is therefore $\geq 0$. $\square$
+**Proposition 4.1 (Single-card expectation).** The expected unit payoff on card $i$ is
 
-**Theorem 14 (Decidable decks are won every round).** If a nonempty deck $D$ consists entirely of valid statements, then $\mathrm{deckOptProfit}(D) = 1$.
+$$
+\mathbb{E}[X_i]=2p_i-1.
+$$
 
-*Proof sketch.* By Corollary 7 each card has optimal profit $1$; the average of constants equal to $1$ is $1$. $\square$
+**Proof sketch.** A correct prediction, occurring with probability $p_i$, pays $1$. An incorrect prediction, occurring with probability $1-p_i$, pays $-1$. Therefore
 
-More generally, a mixed deck in which a fraction $f$ of the cards are decidable (each paying $1$) and the remaining fraction $1 - f$ are balanced (each paying $0$) has average optimal profit exactly $f$. Every unit of long-run profit is contributed by a decidable card; the undecidable cards contribute exactly zero.
+$$
+\mathbb{E}[X_i]=p_i-(1-p_i)=2p_i-1.
+$$
 
-**Theorem 15 (Soundness yields a real edge — on decidable cards).** Let $\mathrm{Prov}$ be any predicate on statements such that $\mathrm{Prov}(s)$ implies $s$ is valid (a *sound* proof system proves only validities). Then for any provable statement $s$, $\mathrm{expProfit}(s, \text{true}) = 1$.
+$\square$
 
-*Proof sketch.* If $\mathrm{Prov}(s)$ holds then $s$ is valid by soundness, and Theorem 5 applies. $\square$
+### 4.2 Exact total expectation
 
-Theorem 15 is the rigorous form of the intended sub-strategy "bet TRUE on provable statements." It genuinely wins — but the analysis makes transparent *why*: a provable statement is, by soundness, decidable-true, not independent. The strategy exploits the decidable fragment and touches undecidability not at all.
+**Theorem 4.2 (Expected-Payoff Formula).** For $n$ cards with success probabilities $p_1,\ldots,p_n$,
 
-## 8. Discussion
+$$
+\mathbb{E}[T]=\sum_{i=1}^{n}(2p_i-1)
+=2\sum_{i=1}^{n}p_i-n.
+$$
 
-The results assemble into a single clean dichotomy for the value of a card:
+**Proof sketch.** Total payoff is $T=\sum_iX_i$. Linearity of expectation gives $\mathbb{E}[T]=\sum_i\mathbb{E}[X_i]$, regardless of dependence. Proposition 4.1 then yields the formula. $\square$
 
-| Card type | Expected profit (optimal bet) | Worst-case profit |
-|---|---|---|
-| Valid / unsatisfiable (decidable) | $+1$ | $+1$ |
-| Balanced (independent) | $0$ | $-1$ |
-| General independent | $\in [0, 1)$ | $-1$ |
+The formula is affine and exact. Correlations influence variance and tail probabilities, but not this expectation once the marginal success probabilities are fixed.
 
-The optimistic conjecture conflated two very different phenomena: the genuine winnability of *decidable* statements and the supposed winnability of *undecidable* ones. The formula of Theorem 4 shows expected profit is governed solely by the *fraction of worlds in which a statement holds*. Decidable statements sit at the extremes of this scale (fraction $0$ or $1$) and pay the maximum. Independent statements sit strictly inside, and balanced ones sit at the exact center, worth nothing. No amount of cleverness moves a card along this scale; the scale is fixed by the statement's semantics.
+### 4.3 Necessary and sufficient condition for profit
 
-The worst-case result (Theorem 8) is if anything more damning for the conjecture: independence is not merely a break-even proposition but a strict loss against an adversary. The "right in some model" property that makes independence sound like an opportunity is exactly the property — being true in some world and false in another — that guarantees a losing world exists.
+**Theorem 4.3 (Sharp aggregate criterion).** Expected profit is strictly positive if and only if aggregate success probability exceeds half the number of rounds:
 
-The verdict, stated carefully, is: *you can win at the decidable fragment; the undecidable fragment is exactly a fair coin (expected $0$) or an adversarial loss ($-1$).* Incompleteness, in this precise game-theoretic sense, is a barrier and not a free lunch. This is a contrarian conclusion relative to the romantic hope that motivated the casino, but it is a sharper and more useful truth: it tells the gambler exactly where value lives (in what can be decided) and exactly where it does not (in what cannot).
+$$
+\mathbb{E}[T]>0
+\quad\Longleftrightarrow\quad
+\sum_{i=1}^{n}p_i>\frac{n}{2}.
+$$
 
-## 9. Future Directions
+**Proof sketch.** By Theorem 4.2,
 
-Several extensions suggest themselves. One may replace the uniform prior over worlds with an arbitrary probability measure, asking how a bettor's subjective credences interact with the zero-sum structure; the expected-profit formula generalizes to $2\,\mathbb{P}[s] - 1$ for the TRUE bet, so the qualitative dichotomy persists but the "balanced" boundary shifts to $\mathbb{P}[s] = 1/2$. One may study *sequential* play in which the revealed world constrains future cards, connecting the casino to online learning and regret minimization. One may allow *fractional* or *hedged* bets and continuous payoffs, recovering a proper scoring-rule perspective. Finally, one may attempt to align the abstract world-model more tightly with genuine proof-theoretic strength — replacing "valid" with "provable in a fixed sound theory" and studying how enlarging the theory (adding independent axioms) migrates cards from the balanced center toward the winnable extremes, quantifying the marginal betting value of each new axiom.
+$$
+\mathbb{E}[T]>0
+\Longleftrightarrow
+2\sum_i p_i-n>0
+\Longleftrightarrow
+\sum_i p_i>\frac n2.
+$$
+
+Each equivalence is reversible, proving necessity and sufficiency. $\square$
+
+Equivalently, if $\overline p=(1/n)\sum_i p_i$ for $n>0$, then expected profit is positive exactly when $\overline p>1/2$. Equality gives break-even expectation, and average accuracy below one half gives negative expectation.
+
+## 5. Uniform guarantees and the $2/3$ benchmark
+
+**Theorem 5.1 (Uniform-Accuracy Lower Bound).** Suppose $p_i\ge q$ for every card. Then
+
+$$
+\mathbb{E}[T]\ge n(2q-1).
+$$
+
+**Proof sketch.** Summing the inequalities $p_i\ge q$ gives $\sum_i p_i\ge nq$. Insert this into Theorem 4.2:
+
+$$
+\mathbb{E}[T]
+=2\sum_i p_i-n
+\ge2nq-n
+=n(2q-1).
+$$
+
+$\square$
+
+The result is sharp: equality holds whenever every $p_i=q$.
+
+**Corollary 5.2 (Two-thirds guarantee).** If every prediction succeeds with probability at least $2/3$, then
+
+$$
+\mathbb{E}[T]\ge\frac n3.
+$$
+
+**Proof sketch.** Apply Theorem 5.1 with $q=2/3$ and simplify $2(2/3)-1=1/3$. $\square$
+
+**Proposition 5.3 (Constant-accuracy formula).** If every prediction has the same success probability $q$, then
+
+$$
+\mathbb{E}[T]=n(2q-1).
+$$
+
+**Proof sketch.** The sum of the $n$ identical probabilities is $nq$. Substitute into Theorem 4.2. $\square$
+
+**Corollary 5.4 (Thousand-round lower bound).** For $1{,}000$ cards, if every success probability is at least $2/3$, then
+
+$$
+\mathbb{E}[T]\ge\frac{1000}{3}.
+$$
+
+**Corollary 5.5 (Thousand-round equality).** If every one of $1{,}000$ cards has success probability exactly $2/3$, then
+
+$$
+\mathbb{E}[T]=\frac{1000}{3}.
+$$
+
+These statements validate the numerical benchmark under its necessary accuracy hypothesis. They do not assert that a logical classification strategy achieves that hypothesis.
+
+## 6. Certain knowledge and unresolved guesses
+
+Suppose the deck consists of two groups. On $d$ cards, the player knows the truth and predicts correctly with probability $1$. On $u$ cards, the player has no edge and guesses fairly, with success probability $1/2$.
+
+**Theorem 6.1 (Known-and-Fair Decomposition).** The expected payoff over the $d+u$ cards is exactly
+
+$$
+\mathbb{E}[T]=d.
+$$
+
+**Proof sketch.** Every certain card contributes $2(1)-1=1$ in expectation. Every fair card contributes $2(1/2)-1=0$. Therefore
+
+$$
+\mathbb{E}[T]=d\cdot1+u\cdot0=d.
+$$
+
+$\square$
+
+The theorem has a direct conceptual interpretation: certain knowledge is valuable, while unresolved uncertainty with no predictive bias is neutral. Increasing $u$ increases exposure and variance under independent guessing, but it does not change expected profit.
+
+## 7. Finite possible-world semantics
+
+The preceding model treats success probabilities abstractly. A more semantic presentation begins with a finite set $\Omega$ of possible worlds carrying a probability distribution $\mu$. A statement is a Boolean-valued function
+
+$$
+A:\Omega\longrightarrow\{0,1\}.
+$$
+
+A constant bet $b\in\{0,1\}$ earns $u(b,A(\omega))$ in world $\omega$. Write
+
+$$
+r=\Pr_{\omega\sim\mu}[A(\omega)=1].
+$$
+
+Betting true has expected payoff $2r-1$, while betting false has expected payoff $1-2r$. The best constant bet therefore earns
+
+$$
+|2r-1|.
+$$
+
+**Theorem 7.1 (Optimal constant bet in a finite world model).** For a statement true with probability $r$, the optimal expected unit payoff among the two constant bets is $|2r-1|$. Betting true is optimal when $r\ge1/2$, and betting false is optimal when $r\le1/2$.
+
+**Proof sketch.** The expected payoffs of the two choices are opposites, $2r-1$ and $1-2r$. Their maximum is the absolute value $|2r-1|$. $\square$
+
+Three cases are immediate.
+
+1. A **valid statement**, true in every world, has $r=1$. Betting true earns expected payoff $1$.
+2. An **unsatisfiable statement**, false in every world, has $r=0$. Betting false earns expected payoff $1$.
+3. A **balanced statement**, true with probability $1/2$, gives expected payoff $0$ under either bet, and its optimal expected profit is $0$.
+
+On the two-world space $\Omega=\{0,1\}$ with uniform weights, the statement $A(\omega)=\omega$ is true in one world and false in the other. It is balanced, so no constant Boolean bet earns positive expectation. This explicit example refutes any universal lower bound of $1/3$ for statements whose truth varies across possible worlds.
+
+If a proof system is sound for the chosen semantics, every provable statement is valid in the admissible worlds. Betting true on such statements then earns unit payoff. Soundness can therefore recover a positive result for provable cards. Independence alone cannot do so, because it does not determine $r$.
+
+## 8. Why logical independence does not imply an edge
+
+A statement is independent of a theory when neither it nor its negation is derivable from that theory, under suitable metatheoretic assumptions. This is a relation among syntax, derivability, and models. A probability such as $p_i$ is numerical data attached to a sampling experiment or state of information. One notion does not canonically generate the other.
+
+Four ingredients are required to turn independent statements into a well-posed betting market.
+
+**First, an encoding.** If cards are formulas, a concrete syntax and coding scheme must specify which finite strings count as formulas.
+
+**Second, a size measure and sampling law.** Statements might be sampled by symbol length, quantifier depth, proof-search cost, or a generative process. Different choices induce different frequencies. There is no uniform distribution over a countably infinite set that assigns equal positive mass to every formula.
+
+**Third, a settlement semantics.** For statements with different truth values in different models, the casino must specify an intended model or a probability distribution over models. Otherwise “correct” is not a single-valued event.
+
+**Fourth, an information model.** The strategy’s success probabilities must follow from what it observes and how cards are generated. Merely labeling a card existential, universal, decidable, or independent does not prove a numerical accuracy bound.
+
+Claims based on the arithmetic hierarchy require special care. The hierarchy organizes formulas according to alternating blocks of number quantifiers and computability properties. It does not by itself prove that at least one third of formulas at any level are decidable under an unspecified distribution. A density theorem would need the exact coding and limiting regime as hypotheses.
+
+Thus the $1/3$ profit claim has a valid conditional core:
+
+$$
+\text{per-card accuracy at least }\frac23
+\quad\Longrightarrow\quad
+\text{expected profit at least }\frac13\text{ per card}.
+$$
+
+The unsupported step is the proposed derivation of $2/3$ accuracy from incompleteness or hierarchy membership alone.
+
+## 9. Algorithms and numerical experiments
+
+### 9.1 Deterministic payoff audit
+
+Given prediction and truth arrays of equal length, total payoff can be computed in one pass. Add $1$ when entries agree and $-1$ otherwise. The algorithm uses $O(n)$ time and $O(1)$ auxiliary space. A complement audit flips every truth bit and confirms that the two totals sum to zero. Constructing the adversarial world by flipping each prediction confirms the exact value $-n$.
+
+### 9.2 Expected-value calculator
+
+Given probabilities $p_1,\ldots,p_n$, compute
+
+$$
+E=\sum_{i=1}^{n}(2p_i-1).
+$$
+
+The calculation is linear in $n$ and requires constant auxiliary space if probabilities are streamed. It also reports the aggregate threshold comparison $\sum_i p_i\mathrel{?}n/2$.
+
+### 9.3 Monte Carlo experiment
+
+For the constant-accuracy benchmark, generate $n$ independent Bernoulli success indicators with parameter $q$. Convert each success to $+1$ and each failure to $-1$, and sum. Repeating for $m$ trials costs $O(mn)$ time. The sample mean approaches $n(2q-1)$ as $m$ grows. Independence is used here to create a simple simulator and to describe concentration; it is not needed for the expectation theorem.
+
+For $n=1000$ and $q=2/3$, the theoretical center is $1000/3$. The variance under independent rounds is
+
+$$
+\operatorname{Var}(T)=4nq(1-q)=\frac{8000}{9},
+$$
+
+so the standard deviation is approximately $29.81$. This quantifies session-to-session fluctuation around the positive mean.
+
+## 10. Applications
+
+### 10.1 Binary forecasting
+
+A forecaster receives $+1$ for a correct yes/no prediction and $-1$ otherwise. Theorems 4.2 and 4.3 show that profitability depends only on average accuracy crossing $1/2$ when stakes are equal. Calibration, base rates, and side information matter because they determine the $p_i$ values.
+
+### 10.2 Classification
+
+For balanced binary classification under symmetric rewards, total reward is an affine transform of the number of correct classifications. The complementary-world theorem is an adversarial reminder: without distributional assumptions, labels can be chosen opposite to any fixed classifier. Generalization guarantees necessarily rely on restrictions on data generation, hypothesis classes, or observed samples.
+
+### 10.3 Markets and decision systems
+
+The model captures the simplest prediction market with even odds. An unresolved proposition is not automatically a favorable security. Profit requires a mismatch between market terms and informed probability. Likewise, uncertainty in scientific or medical decisions has value only when evidence shifts success probability away from the break-even threshold.
+
+### 10.4 Logical heuristics
+
+Syntactic classes and proof-search signals may become useful features in a genuine statistical model of formulas. Their usefulness must be measured by predictive performance under a stated distribution. The present bounds then translate measured accuracy into expected payoff without any further logical assumptions.
+
+## 11. Discussion
+
+The deterministic and probabilistic results fit together tightly. Complementation proves that unrestricted worlds permit no universal deterministic win. Probability can break this symmetry, but only by weighting worlds or outcomes so that predictions are correct more often than not. The exact expected-payoff formula quantifies the required asymmetry.
+
+This distinction resolves an apparent paradox. Mathematical incompleteness limits derivability, yet a player might still predict an independent statement correctly in a distinguished model. There is no contradiction: derivability and prediction are separate resources. But the prediction requires evidence or a prior over models. Incompleteness alone supplies neither.
+
+The results also distinguish expected profit from guaranteed profit. Even when each card is correct with probability $2/3$, a realized sequence can lose. The guarantee is on expectation. Strong high-probability guarantees require assumptions such as independence or bounded dependence, after which concentration inequalities can be applied. In adversarial play, the exact $-n$ world remains available.
+
+The finite setting avoids measure-theoretic complications while exposing the entire algebraic structure. Its formulas extend immediately to unequal stakes: if card $i$ has stake $a_i\ge0$, then expected payoff is $\sum_i a_i(2p_i-1)$. Optimal stake selection would require constraints and reliable probabilities, opening connections to portfolio theory and online learning.
+
+## 12. Future work
+
+A complete theory of logical betting should define a probability space of encoded formulas, a settlement semantics, and a measurable strategy, then lift the finite calculation to general expectation. Randomized strategies should be analyzed under adversarial and Bayesian models, with a minimax theorem clarifying precisely when randomization can help.
+
+Further directions include weighted stakes, transaction costs, abstention, proper scoring rules, and sequential learning. A strategy that updates after observing resolved cards could be compared with static prediction through regret bounds. Formula generators could be studied under explicit complexity measures, allowing meaningful density questions about decidability.
+
+On the semantic side, probability distributions over finite model classes provide an immediate laboratory. More ambitious models would need careful treatment of infinite structures and model-dependent truth. Sound proof systems can be integrated as sources of certain predictions, while unresolved cards can be assigned probabilities derived from explicit statistical or semantic assumptions.
+
+Finally, empirical studies could test whether syntactic features—quantifier patterns, formula length, fragments of arithmetic, or proof-search traces—predict truth under well-defined generated distributions. Any resulting accuracy estimate would feed directly into the sharp criterion established here.
+
+## 13. Conclusion
+
+Gödel’s Casino has a simple accounting identity at its heart. A correct unit prediction pays $1$, an incorrect prediction pays $-1$, and therefore success probability $p$ is worth $2p-1$ in expectation. Across $n$ cards, expected profit is positive exactly when aggregate accuracy exceeds $n/2$.
+
+Before probabilities are introduced, complement symmetry rules out a universal deterministic victory. Every strategy has a nonpositive world; the direct adversarial world yields $-n$; the agreeing world yields $n$; and complementary worlds average to zero. After probabilities are introduced, a uniform $2/3$ accuracy guarantee yields the advertised $1/3$ expected profit per card, including exactly $1000/3$ for $1{,}000$ constant-accuracy rounds. Certain knowledge contributes profit, while fair unresolved guesses contribute zero.
+
+The final message is not that incompleteness is useless for prediction, but that it is insufficient by itself. Logical independence identifies what a theory cannot settle. A winning bet requires something further: a semantics, a distribution, and information that moves predictive accuracy beyond chance.

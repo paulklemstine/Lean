@@ -1,247 +1,146 @@
-"""
-Gödel's Casino: Incomplete but Winnable Games — Numerical Demonstrations
-========================================================================
+#!/usr/bin/env python3
+"""Numerical demonstrations for Gödel's Casino.
 
-A self-contained numerical companion to the paper "Gödel's Casino: A Game-Theoretic
-Analysis of Betting on Undecidable Statements".
-
-The casino model
-----------------
-Fix a finite set of *worlds* Omega (the models of a background theory). A *statement*
-is its truth-value pattern across worlds, s : Omega -> {True, False}, represented here
-as a tuple of booleans indexed by the worlds. A *bet* is a single boolean.
-
-Per-world payoff of betting `b` on statement `s` in world `w`:
-    +1 if b == s[w]   (correct call)
-    -1 if b != s[w]   (incorrect call)
-
-We evaluate every bet two ways:
-    * expected profit under the uniform prior over worlds, and
-    * worst-case (adversarial) profit.
-
-All arithmetic is done exactly with fractions.Fraction, so the printed numbers are exact.
-
-Running this file prints a guided tour that reproduces every theorem of the paper on
-concrete cards and decks.
+The script uses only the Python standard library. It audits deterministic
+complement symmetry, evaluates exact expected-payoff formulas, and performs a
+reproducible Monte Carlo study of the 1,000-card two-thirds benchmark.
 """
 
 from __future__ import annotations
 
-from fractions import Fraction
-from typing import Callable, List, Sequence, Tuple
 import random
-
-# A statement is a tuple of truth values, one per world.
-Statement = Tuple[bool, ...]
-
-
-# --------------------------------------------------------------------------------------
-# Core casino primitives
-# --------------------------------------------------------------------------------------
-
-def payoff(s: Statement, b: bool, w: int) -> int:
-    """Per-world payoff of betting `b` on statement `s` in world index `w`."""
-    return 1 if b == s[w] else -1
+from dataclasses import dataclass
+from fractions import Fraction
+from math import sqrt
+from statistics import fmean, pstdev
+from typing import Iterable, Sequence
 
 
-def expected_profit(s: Statement, b: bool) -> Fraction:
-    """Expected profit of bet `b` on `s` under the uniform prior over worlds."""
-    n = len(s)
-    total = sum(payoff(s, b, w) for w in range(n))
-    return Fraction(total, n)
+@dataclass(frozen=True)
+class SimulationSummary:
+    rounds_per_trial: int
+    trials: int
+    accuracy: float
+    theoretical_mean: float
+    theoretical_standard_deviation: float
+    sample_mean: float
+    sample_standard_deviation: float
+    minimum: int
+    maximum: int
+    losing_trials: int
 
 
-def worst_case_profit(s: Statement, b: bool) -> int:
-    """Adversarial profit: the house reveals the least favorable world."""
-    return min(payoff(s, b, w) for w in range(len(s)))
+def unit_payoff(prediction: bool, truth: bool) -> int:
+    """Return +1 for a correct Boolean prediction and -1 otherwise."""
+    return 1 if prediction == truth else -1
 
 
-def true_count(s: Statement) -> int:
-    """Number of worlds in which `s` is true."""
-    return sum(1 for v in s if v)
+def total_payoff(predictions: Sequence[bool], truths: Sequence[bool]) -> int:
+    """Compute total unit-stake payoff, rejecting arrays of unequal length."""
+    if len(predictions) != len(truths):
+        raise ValueError("predictions and truths must have equal length")
+    return sum(unit_payoff(prediction, truth)
+               for prediction, truth in zip(predictions, truths))
 
 
-def opt_profit(s: Statement) -> Fraction:
-    """Optimal expected profit: the better of betting TRUE or betting FALSE."""
-    return max(expected_profit(s, True), expected_profit(s, False))
+def complement_world(truths: Iterable[bool]) -> list[bool]:
+    """Reverse every truth value in a possible world."""
+    return [not truth for truth in truths]
 
 
-def deck_opt_profit(deck: Sequence[Statement]) -> Fraction:
-    """Average optimal profit across a deck (one round per card)."""
-    return sum((opt_profit(s) for s in deck), Fraction(0)) / len(deck)
+def expected_payoff(probabilities: Iterable[Fraction]) -> Fraction:
+    """Return the exact expectation sum_i (2 p_i - 1)."""
+    return sum((2 * probability - 1 for probability in probabilities),
+               start=Fraction(0))
 
 
-# --------------------------------------------------------------------------------------
-# Statement classifiers (matching the paper's definitions)
-# --------------------------------------------------------------------------------------
-
-def is_valid(s: Statement) -> bool:
-    """True in every world (a decidable truth)."""
-    return all(s)
-
-
-def is_unsat(s: Statement) -> bool:
-    """False in every world (a decidable falsehood)."""
-    return not any(s)
+def known_and_fair_expectation(known: int, unresolved: int) -> Fraction:
+    """Evaluate a deck with certain known cards and unresolved fair guesses."""
+    if known < 0 or unresolved < 0:
+        raise ValueError("card counts must be nonnegative")
+    probabilities = [Fraction(1)] * known + [Fraction(1, 2)] * unresolved
+    return expected_payoff(probabilities)
 
 
-def is_independent(s: Statement) -> bool:
-    """True in some world and false in another (genuinely undecidable)."""
-    return any(s) and not all(s)
+def simulate_constant_accuracy(
+    rounds_per_trial: int = 1000,
+    trials: int = 20_000,
+    accuracy: float = 2.0 / 3.0,
+    seed: int = 20260718,
+) -> SimulationSummary:
+    """Simulate independent rounds and compare observations with exact theory."""
+    if rounds_per_trial < 0 or trials <= 0:
+        raise ValueError("rounds must be nonnegative and trials must be positive")
+    if not 0.0 <= accuracy <= 1.0:
+        raise ValueError("accuracy must lie in [0, 1]")
+
+    generator = random.Random(seed)
+    payoffs = [
+        sum(1 if generator.random() < accuracy else -1
+            for _ in range(rounds_per_trial))
+        for _ in range(trials)
+    ]
+    theoretical_mean = rounds_per_trial * (2.0 * accuracy - 1.0)
+    theoretical_sd = 2.0 * sqrt(rounds_per_trial * accuracy * (1.0 - accuracy))
+    return SimulationSummary(
+        rounds_per_trial=rounds_per_trial,
+        trials=trials,
+        accuracy=accuracy,
+        theoretical_mean=theoretical_mean,
+        theoretical_standard_deviation=theoretical_sd,
+        sample_mean=fmean(payoffs),
+        sample_standard_deviation=pstdev(payoffs),
+        minimum=min(payoffs),
+        maximum=max(payoffs),
+        losing_trials=sum(payoff < 0 for payoff in payoffs),
+    )
 
 
-def is_balanced(s: Statement) -> bool:
-    """True in exactly half the worlds."""
-    return 2 * true_count(s) == len(s)
+def demonstrate_complement_symmetry(seed: int = 314159, n: int = 1000) -> None:
+    """Print exact complementary, adversarial, and agreeing-world identities."""
+    generator = random.Random(seed)
+    strategy = [bool(generator.getrandbits(1)) for _ in range(n)]
+    world = [bool(generator.getrandbits(1)) for _ in range(n)]
+    complement = complement_world(world)
+    payoff = total_payoff(strategy, world)
+    complement_payoff = total_payoff(strategy, complement)
+    adversarial_payoff = total_payoff(strategy, complement_world(strategy))
+    agreeing_payoff = total_payoff(strategy, strategy)
 
-
-# --------------------------------------------------------------------------------------
-# Closed-form check (Theorem 4)
-# --------------------------------------------------------------------------------------
-
-def expected_profit_formula(s: Statement) -> Fraction:
-    """Closed form for the TRUE bet: (2 * #true - #worlds) / #worlds."""
-    n = len(s)
-    return Fraction(2 * true_count(s) - n, n)
-
-
-# --------------------------------------------------------------------------------------
-# Guided demonstrations
-# --------------------------------------------------------------------------------------
-
-def demo_zero_sum() -> None:
-    print("=" * 78)
-    print("1. THE GAME IS ZERO-SUM (Theorem 2)")
-    print("=" * 78)
-    print("For any statement, betting TRUE and betting FALSE have opposite expected")
-    print("profits, so they always sum to 0. The house has no built-in edge.\n")
-    cards = {
-        "valid card  (T,T,T,T)": (True, True, True, True),
-        "balanced    (T,T,F,F)": (True, True, False, False),
-        "biased      (T,T,T,F)": (True, True, True, False),
-        "unsat       (F,F,F,F)": (False, False, False, False),
-    }
-    for name, s in cards.items():
-        et, ef = expected_profit(s, True), expected_profit(s, False)
-        print(f"  {name}:  E[TRUE]={et!s:>5}  E[FALSE]={ef!s:>5}  sum={et + ef}")
-    print()
-
-
-def demo_decidable_wins() -> None:
-    print("=" * 78)
-    print("2. DECIDABLE STATEMENTS ARE FULLY WINNABLE (Theorems 5-6)")
-    print("=" * 78)
-    valid = (True, True, True, True, True)
-    unsat = (False, False, False, False, False)
-    print(f"  valid card {valid}:")
-    print(f"      bet TRUE  -> expected profit {expected_profit(valid, True)} "
-          f"(worst case {worst_case_profit(valid, True)})")
-    print(f"  unsatisfiable card {unsat}:")
-    print(f"      bet FALSE -> expected profit {expected_profit(unsat, False)} "
-          f"(worst case {worst_case_profit(unsat, False)})")
-    print("  Decidable cards pay the maximum both in expectation and in the worst case.\n")
-
-
-def demo_independence_cannot_be_beaten() -> None:
-    print("=" * 78)
-    print("3. INDEPENDENCE CANNOT BE BEATEN (Theorems 8-9)")
-    print("=" * 78)
-    print("The Continuum-Hypothesis card in miniature: TRUE in one world, FALSE in the")
-    print("other. It is independent and balanced.\n")
-    ch = (True, False)  # the identity card on two worlds
-    print(f"  card {ch}: independent={is_independent(ch)}, balanced={is_balanced(ch)}")
-    for b in (True, False):
-        print(f"      bet {str(b):>5}: expected profit {expected_profit(ch, b)}, "
-              f"worst-case profit {worst_case_profit(ch, b)}")
-    print("  Expected profit is exactly 0 for EVERY bet, and the worst case is a")
-    print("  guaranteed loss of -1. Undecidability buys nothing.\n")
-
-
-def demo_refute_one_third() -> None:
-    print("=" * 78)
-    print("4. THE '>= 1/3 PER ROUND' BOUND FAILS (Theorem 12)")
-    print("=" * 78)
-    deck = [(True, False)]  # a deck of one balanced card
-    avg = deck_opt_profit(deck)
-    print(f"  Deck of balanced cards: average optimal profit = {avg}")
-    print(f"  Claimed universal bound: >= 1/3 = {Fraction(1, 3)}")
-    print(f"  {avg} < {Fraction(1, 3)}  ->  the bound is FALSE.\n")
-
-
-def demo_edge_is_decidable_fraction() -> None:
-    print("=" * 78)
-    print("5. THE EDGE EQUALS THE DECIDABLE FRACTION (Theorems 13-15)")
-    print("=" * 78)
-    print("A mixed deck: a fraction f of decidable (valid) cards, the rest balanced.")
-    print("Average optimal profit equals exactly f.\n")
-    valid = (True, True)
-    balanced = (True, False)
-    for n_valid, n_bal in [(0, 6), (2, 4), (3, 3), (4, 2), (6, 0)]:
-        deck = [valid] * n_valid + [balanced] * n_bal
-        f = Fraction(n_valid, n_valid + n_bal)
-        avg = deck_opt_profit(deck)
-        flag = "OK" if avg == f else "MISMATCH"
-        print(f"  {n_valid} valid + {n_bal} balanced: f = {f!s:>4},  "
-              f"average optimal profit = {avg!s:>4}  [{flag}]")
-    print()
-
-
-def demo_large_simulation(n_cards: int = 1000, seed: int = 12345) -> None:
-    print("=" * 78)
-    print(f"6. LARGE SIMULATION: {n_cards} INDEPENDENT ZFC-STYLE CARDS")
-    print("=" * 78)
-    print("Each card is a genuinely independent (balanced) two-world statement — the")
-    print("'right in some model' situation. We play optimally on every card.\n")
-    rng = random.Random(seed)
-    deck: List[Statement] = []
-    for _ in range(n_cards):
-        # A balanced two-world card in a random orientation.
-        deck.append((True, False) if rng.random() < 0.5 else (False, True))
-    avg = deck_opt_profit(deck)
-    total_worst = sum(max(worst_case_profit(s, True), worst_case_profit(s, False))
-                      for s in deck)
-    print(f"  average optimal EXPECTED profit per round : {avg}  (= 0, a fair coin)")
-    print(f"  total best WORST-CASE profit over the deck: {total_worst}  "
-          f"(= -{n_cards}, an adversarial loss)")
-    print("  Verdict: on purely undecidable cards the player breaks even at best and")
-    print("  loses everything against an adversary. The conjecture is refuted.\n")
-
-
-def demo_closed_form_check() -> None:
-    print("=" * 78)
-    print("7. CLOSED-FORM FORMULA CHECK (Theorem 4)")
-    print("=" * 78)
-    print("Verifying  E[TRUE] = (2*#true - #worlds)/#worlds  on random cards.\n")
-    rng = random.Random(7)
-    all_ok = True
-    for _ in range(10):
-        n = rng.randint(1, 8)
-        s: Statement = tuple(rng.random() < 0.5 for _ in range(n))
-        direct = expected_profit(s, True)
-        formula = expected_profit_formula(s)
-        ok = direct == formula
-        all_ok = all_ok and ok
-        print(f"  n={n}, #true={true_count(s)}: direct={direct!s:>6} "
-              f"formula={formula!s:>6}  {'OK' if ok else 'FAIL'}")
-    print(f"\n  All formula checks passed: {all_ok}\n")
+    assert complement_payoff == -payoff
+    assert adversarial_payoff == -n
+    assert agreeing_payoff == n
+    print("Deterministic complement audit")
+    print(f"  cards: {n}")
+    print(f"  world payoff: {payoff:+d}")
+    print(f"  complementary-world payoff: {complement_payoff:+d}")
+    print(f"  pair sum: {payoff + complement_payoff}")
+    print(f"  adversarial payoff: {adversarial_payoff:+d}")
+    print(f"  agreeing payoff: {agreeing_payoff:+d}\n")
 
 
 def main() -> None:
-    print("\n" + "#" * 78)
-    print("#  GÖDEL'S CASINO — NUMERICAL DEMONSTRATIONS".ljust(77) + "#")
-    print("#" * 78 + "\n")
-    demo_zero_sum()
-    demo_decidable_wins()
-    demo_independence_cannot_be_beaten()
-    demo_refute_one_third()
-    demo_edge_is_decidable_fraction()
-    demo_large_simulation()
-    demo_closed_form_check()
-    print("=" * 78)
-    print("CONCLUSION: The player's entire edge comes from the DECIDABLE cards.")
-    print("Genuine incompleteness contributes exactly 0 in expectation and -1 in the")
-    print("worst case. Incompleteness is a barrier, not a free lunch.")
-    print("=" * 78)
+    demonstrate_complement_symmetry()
+
+    exact = expected_payoff([Fraction(2, 3)] * 1000)
+    mixed = known_and_fair_expectation(137, 863)
+    assert exact == Fraction(1000, 3)
+    assert mixed == 137
+    print("Exact expectation audit")
+    print(f"  1,000 cards at accuracy 2/3: {exact} = {float(exact):.6f}")
+    print(f"  137 known and 863 fair cards: {mixed}\n")
+
+    summary = simulate_constant_accuracy()
+    print("Monte Carlo benchmark")
+    print(f"  trials: {summary.trials:,}")
+    print(f"  cards per trial: {summary.rounds_per_trial:,}")
+    print(f"  theoretical mean: {summary.theoretical_mean:.6f}")
+    print(f"  sample mean: {summary.sample_mean:.6f}")
+    print(f"  theoretical standard deviation: "
+          f"{summary.theoretical_standard_deviation:.6f}")
+    print(f"  sample standard deviation: {summary.sample_standard_deviation:.6f}")
+    print(f"  observed range: [{summary.minimum}, {summary.maximum}]")
+    print(f"  losing trials: {summary.losing_trials:,}")
 
 
 if __name__ == "__main__":
