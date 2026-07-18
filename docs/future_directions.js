@@ -260,7 +260,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: A decomposition of Weyl group multiple Dirichlet series for symmetrizable Kac-Moody root systems"
   },
   {
-    "consumed_by_exp_id": "ae36b246",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'On the maximum size of $B_3$-free families' and formalize its key results. Abstract: A family $\\mathcal{G}$ of sets is a weak copy of the poset $(P,\\leqslant)$ if there exists a bijection $\u03b9:P\\rightarrow \\mathcal{G}$ with $\u03b9(p)\\subset \u03b9(q)$ whenever $p\\leqslant q$. $\\mathcal{G}$ is a strong copy if $\u03b9(p)\\subset \u03b9(q)$ if and only if $p\\leqslant q$ holds. A family is weak (strong) $P$-free if it does not contain any weak (strong) copies of $P$. For a poset $P$, let $e(P)$ ($e^*(P)$) denote the most number of middle layers of $2^{[n]}$ that does not contain a weak (strong) copy of $P$. Ellis, Ivan, and Leader were the first to show the existence of posets $P$ for which there exists a positive real $\\varepsilon_P$ such that $La(n,P)\\ge (e(P)+\\varepsilon_P)\\binom{n}{\\lfloor n/2}$ and $La^*(n,P)\\ge (e^*(P)+\\varepsilon_P)\\binom{n}{\\lfloor n/2}$ holds, where $La(n,P)$ ($La^*(n,P)$) denotes the maximum size of a weak (strong) $P$-free family $\\mathcal{F}\\subseteq 2^{[n]}$. More precisely, they showed that $P=B_d$ are such posets for all $d\\ge 4$, where $B_d$ is the Boolean latt",
     "domains": [
       "Bridges"
@@ -269,7 +269,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11753v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T07:28:27.663774+00:00",
     "title": "ArXiv paper: On the maximum size of $B_3$-free families"
   },
@@ -3096,6 +3096,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Arrow's impossibility theorem states that no ranked voting system can be fair (Pareto efficient, non-dictatorial, and independent of irrelevant alternatives). The Borsuk-Ulam theorem states that every continuous function f: S^n -> R^n maps some pair of antipodal points to the same value: f(x) = f(-x). Conjecture: Arrow's theorem is a corollary of Borsuk-Ulam. Specifically, define the 'preference sphere' S^{n-1} as the set of all preference profiles over n alternatives, where antipodal points represent opposite preferences (x prefers A > B > C, -x prefers C > B > A). Define f: S^{n-1} -> R^{n-1} by f(x) = (social_preference(x)_1, ..., social_preference(x)_{n-1}). By Borsuk-Ulam, there exists x such that f(x) = f(-x), meaning the social preference for profile x equals the social preference for profile -x. This contradicts Pareto efficiency (if all voters prefer A to B, the social preference should prefer A to B). Therefore, no continuous voting function satisfies all of Arrow's axioms. Conjecture: this proof generalizes: any social choice function on n alternatives is either discontinuous or dictatorial. Test: formalize the Borsuk-Ulam proof of Arrow's theorem in Lean 4. Impact: social choice theory is topology. Arrow's impossibility is a topological theorem about spheres.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0361",
+    "priority_score": 0.76,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-18T22:22:14.403617+00:00",
+    "title": "The Borsuk-Ulam Theorem Implies Arrow's Impossibility: Social Choice Is Topology"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "# Future directions\n\nThis development formalizes the finite coordinate core of Curtin's *Generalizations of nets and Latin squares* (arXiv:2607.10890v1): column- and row-Latin matrices, orthogonality, cooperative pairs and systems, coordinate reticulations, svelte arrays, unique cross-line intersections, the grid-coordinate characterizations of Lemma 7.5, and the `m*n` cardinality consequence of Theorem 3.1.\n\nNatural next steps are:\n\n1. **Partition-level incidence structures.** Connect the coordinate-fibre representation here to a literal structure whose lines are finite sets and whose families are `Set.PairwiseDisjoint` covers. Prove both representations equivalent, including all seven clauses of Theorem 3.1.\n2. **Full inverse correspondence.** Package the maps between ordered reticulations, svelte semi-orthogonal arrays, and normalized cooperative systems as equivalences, proving Theorems 6.2, 6.3, 7.7, and 7.8 at structure level rather than only the forward encodings established here.\n3. **Multiplicity and foundations.** Model multisets of line families, then formalize repetition-free reticulations and Proposition 4.1.\n4. **Parastrophy and isotopy.** Define the permutation actions from Sections 9 and 10 and prove that they preserve the cooperative and reticulation axioms.\n5. **Constructions.** Formalize prolongation, splicing, and direct products from Sections 12\u201314, with formulas for their parameters.\n6. **Classical specializations.** Build translations from nets, mixed orthogonal arrays, mutually orthogonal Latin squares, and bireversible Mealy automata, recovering Propositions 3.6 and 6.6 and Theorem 7.3.\n7. **Finite search.** Add executable enumeration of small repetition-free systems up to isotopy, together with kernel-checked certificates for any reported counts.\n",
     "domains": [
       "Algebra",
@@ -3543,21 +3558,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-18T07:45:19.838388+00:00",
     "title": "`Tropical/TropicalFOne/FixedPointEuler.lean` proves a precise finite-orbit theor"
-  },
-  {
-    "consumed_by_exp_id": "ac79ade1",
-    "description": "# Future directions\n\n1. **Intrinsic curvature identification.** The proved curvature formula\n   \\[\n   K(x,y)=-\\cosh^2 y+\\frac{1-\\sinh^2 y}{\\cosh^2x\\cosh^2y}\n   \\]\n   is nonpositive everywhere, vanishes exactly at the origin, and is strictly negative elsewhere. Connect this coordinate Brioschi calculation to Mathlib's intrinsic Riemann tensor and sectional-curvature APIs.\n\n2. **Geodesic equations.** Derive the coupled smooth ODE from the six computed Christoffel symbols and establish local existence, uniqueness, and conserved speed. The suggestion that geodesics are piecewise exponential/trigonometric is not justified by the smooth coefficients and should be tested against the actual ODE.\n\n3. **Boundary-crossing claim.** Since the actual zero-curvature locus is the single point `(0,0)`, there is no phase boundary separating positive and negative curvature regions for this metric. A meaningful replacement is to investigate how often a geodesic can pass through the origin; this requires analysis of the geodesic ODE and uniqueness.\n\n4. **Triangle area.** Specify three vertices and choose the geodesic segments joining them. The area is then the integral of the proved density `cosh x / cosh y` over the resulting region. \u201cOne vertex in each region\u201d alone does not determine a numerical area.\n\n5. **Metric-space consequences.** Package the coordinate coefficients as a smooth positive-definite metric tensor, then study completeness, distance estimates, and the global exponential map. The strong anisotropy of the coefficients makes geodesic completeness a natural next question.\n",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0290",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "65eb2137",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T07:45:29.087564+00:00",
-    "title": "1. **Intrinsic curvature identification.** The proved curvature formula"
   },
   {
     "consumed_by_exp_id": "",
@@ -4142,6 +4142,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-18T22:06:02.927014+00:00",
     "title": "`Pythagorean/UniversalHumor.lean` formalizes a finite, non-vacuous bridge betwee"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## 1. Global completeness of the anisotropic plane\n\n**Conjecture.** Every maximal geodesic of the metric\n\\(\\cosh(y)^{-2}dx^2+\\cosh(x)^2dy^2\\) is defined for all real time.\n\nThe key insight is that degeneration of the horizontal coefficient at large\n\\(|y|\\) is coupled to rapid growth of the vertical coefficient at large \\(|x|\\),\nso conserved energy may prevent finite-time escape even though neither coordinate\ncoefficient is uniformly comparable to the Euclidean metric. **Why now?** The\nmetric is known to be smooth and positive definite everywhere, and its exact\ncoefficient structure is explicit enough to turn completeness into quantitative\nODE estimates.\n\n## 2. A unique passage through the flat point\n\n**Conjecture.** A nonconstant geodesic can pass through the origin at most once.\n\nThe key insight is that the zero-curvature locus is a single point rather than a\nphase boundary; a second visit would create a geodesic loop whose interaction with\nstrictly negative curvature away from the origin should be rigid. **Why now?** The\nisolated zero and strict negativity of every sectional quotient off the origin\nhave been identified, reducing the question to existence, uniqueness, and global\ncontrol of the geodesic flow.\n\n## 3. Global injectivity of the exponential map\n\n**Conjecture.** The exponential map based at the origin is a global\ndiffeomorphism from its tangent plane onto the split-metric plane.\n\nThe key insight is that a complete simply connected surface with nonpositive\nsectional curvature should have no conjugate points and no competing geodesic\nsegments. **Why now?** The frame-independent sectional curvature is globally\nnonpositive and vanishes only at the base point; completeness is the principal\nremaining geometric hypothesis to test.\n\n## 4. Quantitative divergence controlled by integrated curvature\n\n**Conjecture.** For every geodesic avoiding a fixed Euclidean neighborhood of the\norigin, every normal Jacobi field with zero initial value grows at least\nexponentially after reparametrization by a curvature-dependent affine scale.\n\nThe key insight is that strict negativity alone is not uniform near the origin,\nbut exclusion of a neighborhood may provide a usable negative upper bound along\ncontrolled geodesic regions. **Why now?** The exact curvature formula permits\nexplicit bounds, while the intrinsic identification makes those bounds applicable\nto Jacobi fields independently of coordinates.\n\n## 5. Rigidity of the algebraic curvature reconstruction\n\n**Conjecture.** Among smooth algebraic curvature tensors compatible with the split\nmetric and its Levi-Civita connection, the tensor reconstructed from the Gaussian\nscalar is the unique tensor whose sectional quotient agrees with the Brioschi\nexpression on one nondegenerate frame at each point.\n\nThe key insight is that in dimension two the metric wedge square is one-dimensional,\nso one sectional value should determine the entire curvature tensor. **Why now?**\nThe determinant-square identity and all algebraic Riemann symmetries are available\nin explicit global coordinates, isolating compatibility with the connection as\nthe remaining intrinsic step.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0362",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "ac79ade1",
+    "status": "available",
+    "timestamp": "2026-07-18T22:22:37.537718+00:00",
+    "title": "**Conjecture.** Every maximal geodesic of the metric"
   },
   {
     "consumed_by_exp_id": "",

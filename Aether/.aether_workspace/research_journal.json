@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "a6705a36",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions: Universal Libraries and Catalog Capacity\n\n## 1. Succinct semantic catalogs\n\nFor a fixed sound proof calculus, characterize theorem families whose accepted volumes admit catalogs a",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-07-17T08:04:36",
-      "title": "The Library of Babel: Combinatorics of the Universal Library"
-    },
-    {
       "cycle_id": "3c755fa4",
       "domain": "Combinatorics",
       "key_insight": "# Future Directions: Arithmetic of Modular Hyperbolic Orbits\n\n## 1. Universal trace multiplication polynomials\n\nFor every positive integer $m$, there should be a unique monic integral polynomial $C_m$",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-18T21:00:09",
       "title": "The P vs NP of Sudoku: Phase Transitions in Constraint Satisfaction"
+    },
+    {
+      "cycle_id": "ac79ade1",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions\n\n## 1. Global completeness of the anisotropic plane\n\n**Conjecture.** Every maximal geodesic of the metric\n\\(\\cosh(y)^{-2}dx^2+\\cosh(x)^2dy^2\\) is defined for all real time.\n\nThe ke",
+      "quality_score": 0.75,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-18T22:22:43",
+      "title": "1. **Intrinsic curvature identification.** The proved curvature formula"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "c4f680cf",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Recurrence and Symmetry in the Logic of Causal Loops\n\nThis cycle deepened the theory of closed timelike curves beyond the bare\nfixed-point (Novikov self-consistency) picture, esta",
-      "quality_score": 0.83,
-      "sorry_count": 4,
-      "theorem_count": 43,
-      "timestamp": "2026-07-15T00:44:22",
-      "title": "Deepening: The file `Catalog/Logic/TimeTravelCausalConsistency.lean` formalizes causal loop"
-    },
     {
       "cycle_id": "99a1b43f",
       "domain": "Novelty",
@@ -2501,6 +2491,16 @@
       "theorem_count": 17,
       "timestamp": "2026-07-18T22:06:07",
       "title": "The Category Theory of Jokes: Universal Properties of Humor"
+    },
+    {
+      "cycle_id": "ac79ade1",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions\n\n## 1. Global completeness of the anisotropic plane\n\n**Conjecture.** Every maximal geodesic of the metric\n\\(\\cosh(y)^{-2}dx^2+\\cosh(x)^2dy^2\\) is defined for all real time.\n\nThe ke",
+      "quality_score": 0.75,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-18T22:22:43",
+      "title": "1. **Intrinsic curvature identification.** The proved curvature formula"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8
     }
   ],
-  "last_updated": "2026-07-18T22:06:07",
+  "last_updated": "2026-07-18T22:22:43",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3027,12 +3027,6 @@
         "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
       },
       {
-        "cycle_id": "e2c77d51",
-        "quality": 0.65,
-        "theorems": 6,
-        "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
-      },
-      {
         "cycle_id": "573ee086",
         "quality": 0.73,
         "theorems": 13,
@@ -3079,6 +3073,12 @@
         "quality": 0.8,
         "theorems": 0,
         "title": "The P vs NP of Sudoku: Phase Transitions in Constraint Satisfaction"
+      },
+      {
+        "cycle_id": "ac79ade1",
+        "quality": 0.75,
+        "theorems": 0,
+        "title": "1. **Intrinsic curvature identification.** The proved curvature formula"
       }
     ],
     "Applications": [

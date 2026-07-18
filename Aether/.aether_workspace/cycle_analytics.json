@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-18T22:06:07.635582+00:00",
+  "last_updated": "2026-07-18T22:22:43.878677+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -26963,6 +26963,7 @@
       "outcome_quality": 0.65,
       "phase": "A_only",
       "phase_a_prompt_version": "v27",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v27",
@@ -26991,6 +26992,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-18T22:06:07.596161+00:00",
       "title": "The Category Theory of Jokes: Universal Properties of Humor"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 20,
+      "domain": "Algebra",
+      "duration_seconds": 4949.859507322311,
+      "end_time": 1784413350.8173628,
+      "files_integrated": 9,
+      "job_id": "ac79ade1",
+      "outcome_quality": 0.75,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19b",
+      "phase_a_quality_score": 0.75,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19b",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.65,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.88,
+        "composite": 0.562,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.72,
+        "novelty": 0.68,
+        "proof_depth": 0.74,
+        "usefulness": 0.82
+      },
+      "quality_score": 0.75,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1784408400.9578555,
+      "strategy_count": 0,
+      "theorem_count": 0,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-18T22:22:43.835550+00:00",
+      "title": "1. **Intrinsic curvature identification.** The proved curvature formula"
     }
   ]
 }

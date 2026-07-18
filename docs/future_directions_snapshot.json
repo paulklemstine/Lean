@@ -232,7 +232,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "eb62b00a",
     "description": "The Robertson-Seymour theorem states that the set of finite graphs is well-quasi-ordered by the minor relation: any infinite sequence of graphs contains two where one is a minor of the other. This implies that any minor-closed graph property is characterized by a finite set of forbidden minors. Conjecture: the same theorem holds for representable matroids over any finite field. Specifically, for any finite field F_q, the set of F_q-representable matroids is well-quasi-ordered by the matroid minor relation. This would generalize the Robertson-Seymour theorem from graphs (F_2-representable matroids) to all finite fields. The conjecture is known to fail for general matroids (by the existence of infinite antichains of non-representable matroids), but for F_q-representable matroids with q <= 3, it is open. Conjecture: for F_3 (ternary matroids), the set of excluded minors for representability is finite. The current known excluded minors for F_3 are: the Fano matroid F_7, its dual F_7*, and the non-Pappus matroid. Test: enumerate ternary matroids of rank 3 on 9 elements, verify that all but the known excluded minors are F_3-representable. Impact: Robertson-Seymour for matroids would unify graph minor theory and matroid theory under a single well-quasi-ordering theorem.",
     "domain_bridges": [],
     "domains": [
@@ -245,7 +245,7 @@
     "proof_strategy": "Define matroid minor: M' is a minor of M if M' can be obtained from M by a sequence of deletions and contractions. The Robertson-Seymour theorem for graphs: for any infinite sequence G_1, G_2, ..., there exist i < j such that G_i is a minor of G_j. Conjecture: the same holds for F_q-representable matroids. For q=2 (graphs): this is Robertson-Seymour. For q=3: this is open. Known result: the set of excluded minors for F_3-representability is {F_7, F_7*, non-Pappus}. The conjecture would follow from: (1) F_3-representable matroids are well-quasi-ordered under the minor relation, and (2) any minor-closed class of F_3-representable matroids has finitely many excluded minors. Step (1) requires showing that F_3-representable matroids contain no infinite antichain. The known antichains (uniform matroids U_{2,n} for n >= 4) are NOT F_3-representable for large n. Step (2) follows from (1) by the same argument as Robertson-Seymour. Test: enumerate all rank-3 matroids on 9 elements (there are ~100), check F_3-representability, verify that excluded minors are exactly F_7, F_7*, non-Pappus.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-18T19:23:33.381666+00:00",
     "title": "Matroid Minors and the Graph Theorem: Robertson-Seymour for Matroids"
   },
@@ -349,7 +349,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "ae36b246",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'On the maximum size of $B_3$-free families' and formalize its key results. Abstract: A family $\\mathcal{G}$ of sets is a weak copy of the poset $(P,\\leqslant)$ if there exists a bijection $ι:P\\rightarrow \\mathcal{G}$ with $ι(p)\\subset ι(q)$ whenever $p\\leqslant q$. $\\mathcal{G}$ is a strong copy if $ι(p)\\subset ι(q)$ if and only if $p\\leqslant q$ holds. A family is weak (strong) $P$-free if it does not contain any weak (strong) copies of $P$. For a poset $P$, let $e(P)$ ($e^*(P)$) denote the most number of middle layers of $2^{[n]}$ that does not contain a weak (strong) copy of $P$. Ellis, Ivan, and Leader were the first to show the existence of posets $P$ for which there exists a positive real $\\varepsilon_P$ such that $La(n,P)\\ge (e(P)+\\varepsilon_P)\\binom{n}{\\lfloor n/2}$ and $La^*(n,P)\\ge (e^*(P)+\\varepsilon_P)\\binom{n}{\\lfloor n/2}$ holds, where $La(n,P)$ ($La^*(n,P)$) denotes the maximum size of a weak (strong) $P$-free family $\\mathcal{F}\\subseteq 2^{[n]}$. More precisely, they showed that $P=B_d$ are such posets for all $d\\ge 4$, where $B_d$ is the Boolean latt",
     "domain_bridges": [],
     "domains": [
@@ -361,7 +361,7 @@
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
     "source_exp_id": "2607.11753v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T07:28:27.663774+00:00",
     "title": "ArXiv paper: On the maximum size of $B_3$-free families"
   },
@@ -4278,6 +4278,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Arrow's impossibility theorem states that no ranked voting system can be fair (Pareto efficient, non-dictatorial, and independent of irrelevant alternatives). The Borsuk-Ulam theorem states that every continuous function f: S^n -> R^n maps some pair of antipodal points to the same value: f(x) = f(-x). Conjecture: Arrow's theorem is a corollary of Borsuk-Ulam. Specifically, define the 'preference sphere' S^{n-1} as the set of all preference profiles over n alternatives, where antipodal points represent opposite preferences (x prefers A > B > C, -x prefers C > B > A). Define f: S^{n-1} -> R^{n-1} by f(x) = (social_preference(x)_1, ..., social_preference(x)_{n-1}). By Borsuk-Ulam, there exists x such that f(x) = f(-x), meaning the social preference for profile x equals the social preference for profile -x. This contradicts Pareto efficiency (if all voters prefer A to B, the social preference should prefer A to B). Therefore, no continuous voting function satisfies all of Arrow's axioms. Conjecture: this proof generalizes: any social choice function on n alternatives is either discontinuous or dictatorial. Test: formalize the Borsuk-Ulam proof of Arrow's theorem in Lean 4. Impact: social choice theory is topology. Arrow's impossibility is a topological theorem about spheres.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0361",
+    "lineage_refs": [],
+    "priority_score": 0.76,
+    "proof_strategy": "Define the preference sphere: for m voters and n alternatives, a preference profile is (R_1, ..., R_m) where R_i is a strict ranking of n alternatives. The space of all profiles is L(S_n)^m (m copies of the set of linear orders on n elements). Define S^{n-2} as the sphere of 'mood vectors': each point (x_1, ..., x_{n-1}) on S^{n-2} represents a preference intensity, with x_i > 0 meaning alternative i is preferred to alternative n. Antipodal point -x means the reverse preference. Define the social welfare function F: S^{n-2} -> S^{n-2} by F(x) = (w(x)_1, ..., w(x}_{n-1}) where w(x)_i is the social preference for alternative i over n. Arrow's conditions: (1) Pareto: if all voters prefer i to n, then w(x)_i > 0. (2) Non-dictatorship: no single voter determines the outcome. (3) IIA: social preference for i over n depends only on individual preferences for i over n. Borsuk-Ulam: F is continuous (by IIA) and F(-x) = -F(x) (by Pareto). Wait, we need F(x) = F(-x) for some x. Actually: define g(x) = F(x) - F(-x). By Pareto, g is odd: g(-x) = -g(x). By Borsuk-Ulam, g(x) = 0 for some x, giving F(x) = F(-x). But if x represents the preference 'i > n' and -x represents 'n > i', then F(x) = F(-x) means the social preference is indifferent between i and n, contradicting Pareto. Test: formalize in Lean 4.",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-18T22:22:14.403617+00:00",
+    "title": "The Borsuk-Ulam Theorem Implies Arrow's Impossibility: Social Choice Is Topology"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "# Future directions\n\nThis development formalizes the finite coordinate core of Curtin's *Generalizations of nets and Latin squares* (arXiv:2607.10890v1): column- and row-Latin matrices, orthogonality, cooperative pairs and systems, coordinate reticulations, svelte arrays, unique cross-line intersections, the grid-coordinate characterizations of Lemma 7.5, and the `m*n` cardinality consequence of Theorem 3.1.\n\nNatural next steps are:\n\n1. **Partition-level incidence structures.** Connect the coordinate-fibre representation here to a literal structure whose lines are finite sets and whose families are `Set.PairwiseDisjoint` covers. Prove both representations equivalent, including all seven clauses of Theorem 3.1.\n2. **Full inverse correspondence.** Package the maps between ordered reticulations, svelte semi-orthogonal arrays, and normalized cooperative systems as equivalences, proving Theorems 6.2, 6.3, 7.7, and 7.8 at structure level rather than only the forward encodings established here.\n3. **Multiplicity and foundations.** Model multisets of line families, then formalize repetition-free reticulations and Proposition 4.1.\n4. **Parastrophy and isotopy.** Define the permutation actions from Sections 9 and 10 and prove that they preserve the cooperative and reticulation axioms.\n5. **Constructions.** Formalize prolongation, splicing, and direct products from Sections 12–14, with formulas for their parameters.\n6. **Classical specializations.** Build translations from nets, mixed orthogonal arrays, mutually orthogonal Latin squares, and bireversible Mealy automata, recovering Propositions 3.6 and 6.6 and Theorem 7.3.\n7. **Finite search.** Add executable enumeration of small repetition-free systems up to isotopy, together with kernel-checked certificates for any reported counts.\n",
     "domain_bridges": [],
     "domains": [
@@ -4873,26 +4893,6 @@
     "status": "available",
     "timestamp": "2026-07-18T07:45:19.838388+00:00",
     "title": "`Tropical/TropicalFOne/FixedPointEuler.lean` proves a precise finite-orbit theor"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "ac79ade1",
-    "description": "# Future directions\n\n1. **Intrinsic curvature identification.** The proved curvature formula\n   \\[\n   K(x,y)=-\\cosh^2 y+\\frac{1-\\sinh^2 y}{\\cosh^2x\\cosh^2y}\n   \\]\n   is nonpositive everywhere, vanishes exactly at the origin, and is strictly negative elsewhere. Connect this coordinate Brioschi calculation to Mathlib's intrinsic Riemann tensor and sectional-curvature APIs.\n\n2. **Geodesic equations.** Derive the coupled smooth ODE from the six computed Christoffel symbols and establish local existence, uniqueness, and conserved speed. The suggestion that geodesics are piecewise exponential/trigonometric is not justified by the smooth coefficients and should be tested against the actual ODE.\n\n3. **Boundary-crossing claim.** Since the actual zero-curvature locus is the single point `(0,0)`, there is no phase boundary separating positive and negative curvature regions for this metric. A meaningful replacement is to investigate how often a geodesic can pass through the origin; this requires analysis of the geodesic ODE and uniqueness.\n\n4. **Triangle area.** Specify three vertices and choose the geodesic segments joining them. The area is then the integral of the proved density `cosh x / cosh y` over the resulting region. “One vertex in each region” alone does not determine a numerical area.\n\n5. **Metric-space consequences.** Package the coordinate coefficients as a smooth positive-definite metric tensor, then study completeness, distance estimates, and the global exponential map. The strong anisotropy of the coefficients makes geodesic completeness a natural next question.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0290",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "65eb2137",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T07:45:29.087564+00:00",
-    "title": "1. **Intrinsic curvature identification.** The proved curvature formula"
   },
   {
     "ambition_level": "extension",
@@ -5672,6 +5672,26 @@
     "status": "available",
     "timestamp": "2026-07-18T22:06:02.927014+00:00",
     "title": "`Pythagorean/UniversalHumor.lean` formalizes a finite, non-vacuous bridge betwee"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## 1. Global completeness of the anisotropic plane\n\n**Conjecture.** Every maximal geodesic of the metric\n\\(\\cosh(y)^{-2}dx^2+\\cosh(x)^2dy^2\\) is defined for all real time.\n\nThe key insight is that degeneration of the horizontal coefficient at large\n\\(|y|\\) is coupled to rapid growth of the vertical coefficient at large \\(|x|\\),\nso conserved energy may prevent finite-time escape even though neither coordinate\ncoefficient is uniformly comparable to the Euclidean metric. **Why now?** The\nmetric is known to be smooth and positive definite everywhere, and its exact\ncoefficient structure is explicit enough to turn completeness into quantitative\nODE estimates.\n\n## 2. A unique passage through the flat point\n\n**Conjecture.** A nonconstant geodesic can pass through the origin at most once.\n\nThe key insight is that the zero-curvature locus is a single point rather than a\nphase boundary; a second visit would create a geodesic loop whose interaction with\nstrictly negative curvature away from the origin should be rigid. **Why now?** The\nisolated zero and strict negativity of every sectional quotient off the origin\nhave been identified, reducing the question to existence, uniqueness, and global\ncontrol of the geodesic flow.\n\n## 3. Global injectivity of the exponential map\n\n**Conjecture.** The exponential map based at the origin is a global\ndiffeomorphism from its tangent plane onto the split-metric plane.\n\nThe key insight is that a complete simply connected surface with nonpositive\nsectional curvature should have no conjugate points and no competing geodesic\nsegments. **Why now?** The frame-independent sectional curvature is globally\nnonpositive and vanishes only at the base point; completeness is the principal\nremaining geometric hypothesis to test.\n\n## 4. Quantitative divergence controlled by integrated curvature\n\n**Conjecture.** For every geodesic avoiding a fixed Euclidean neighborhood of the\norigin, every normal Jacobi field with zero initial value grows at least\nexponentially after reparametrization by a curvature-dependent affine scale.\n\nThe key insight is that strict negativity alone is not uniform near the origin,\nbut exclusion of a neighborhood may provide a usable negative upper bound along\ncontrolled geodesic regions. **Why now?** The exact curvature formula permits\nexplicit bounds, while the intrinsic identification makes those bounds applicable\nto Jacobi fields independently of coordinates.\n\n## 5. Rigidity of the algebraic curvature reconstruction\n\n**Conjecture.** Among smooth algebraic curvature tensors compatible with the split\nmetric and its Levi-Civita connection, the tensor reconstructed from the Gaussian\nscalar is the unique tensor whose sectional quotient agrees with the Brioschi\nexpression on one nondegenerate frame at each point.\n\nThe key insight is that in dimension two the metric wedge square is one-dimensional,\nso one sectional value should determine the entire curvature tensor. **Why now?**\nThe determinant-square identity and all algebraic Riemann symmetries are available\nin explicit global coordinates, isolating compatibility with the connection as\nthe remaining intrinsic step.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0362",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "ac79ade1",
+    "status": "available",
+    "timestamp": "2026-07-18T22:22:37.537718+00:00",
+    "title": "**Conjecture.** Every maximal geodesic of the metric"
   },
   {
     "ambition_level": "extension",
