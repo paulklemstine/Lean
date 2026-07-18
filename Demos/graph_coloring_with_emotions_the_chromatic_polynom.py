@@ -1,197 +1,147 @@
-"""
-Emotional Chromatic Number of Social Networks — numerical demonstrations.
+#!/usr/bin/env python3
+"""Numerical demonstrations of chromatic positivity thresholds.
 
-A social network is a finite simple graph whose vertices are people and whose
-edges are friendships. A proper k-coloring assigns one of k emotions to each
-person so that no two friends share an emotion. The chromatic polynomial
-chi_G(k) counts proper k-colorings. The emotional chromatic number is
-
-    emoChrom(G) = min { k >= 3 : chi_G(k) > 0 } = max(chromatic_number(G), 3),
-
-with a floor of three because emotional life needs at least three categories.
-
-This script is fully self-contained (standard library only) and demonstrates:
-  * the clique law     emoChrom(K_n) = max(n, 3)
-  * the cycle law      emoChrom(C_n) = 3 for n >= 3
-  * the six-emotion window   3 <= emoChrom(G) <= 6 when chi_G(6) > 0
-  * the bipartite folklore correction: two emotions succeed iff G is bipartite,
-    and the universal root is at k = 1, not k = 2.
+The script uses no third-party packages. It evaluates friendship-graph formulas,
+checks them by exhaustive enumeration for small cases, and computes emotional
+chromatic thresholds (the first colorable palette of size at least three).
 """
 
 from __future__ import annotations
 
 from itertools import product
-from typing import Dict, List, Set, Tuple
+from typing import Iterable, Sequence
 
-Graph = Dict[int, Set[int]]  # adjacency: vertex -> set of neighbors
-
-
-# --------------------------------------------------------------------------- #
-# Graph constructors
-# --------------------------------------------------------------------------- #
-def complete_graph(n: int) -> Graph:
-    """K_n: every pair of the n vertices is adjacent."""
-    return {v: {u for u in range(n) if u != v} for v in range(n)}
+Edge = tuple[int, int]
 
 
-def cycle_graph(n: int) -> Graph:
-    """C_n: vertices 0..n-1 arranged in a ring (n >= 3)."""
-    if n < 3:
-        raise ValueError("cycle needs n >= 3")
-    return {v: {(v - 1) % n, (v + 1) % n} for v in range(n)}
+def normalize_edges(edges: Iterable[Edge]) -> tuple[Edge, ...]:
+    """Return undirected, deduplicated edges with smaller endpoint first."""
+    normalized = {tuple(sorted(edge)) for edge in edges}
+    if any(u == v for u, v in normalized):
+        raise ValueError("Simple graphs cannot contain loops")
+    return tuple(sorted(normalized))
 
 
-def path_graph(n: int) -> Graph:
-    """P_n: a path on n vertices (bipartite)."""
-    g: Graph = {v: set() for v in range(n)}
-    for v in range(n - 1):
-        g[v].add(v + 1)
-        g[v + 1].add(v)
-    return g
+def friendship_graph(n: int) -> tuple[int, tuple[Edge, ...]]:
+    """Construct F_n with hub 0 and outer pairs (2i+1, 2i+2)."""
+    if n < 0:
+        raise ValueError("n must be nonnegative")
+    edges: list[Edge] = []
+    for i in range(n):
+        a, b = 2 * i + 1, 2 * i + 2
+        edges.extend(((0, a), (0, b), (a, b)))
+    return 2 * n + 1, normalize_edges(edges)
 
 
-def edges_of(g: Graph) -> List[Tuple[int, int]]:
-    """Unordered edges of g, each listed once."""
-    return [(u, v) for u in g for v in g[u] if u < v]
+def is_proper(assignment: Sequence[int], edges: Sequence[Edge]) -> bool:
+    """Test whether adjacent vertices have distinct labels."""
+    return all(assignment[u] != assignment[v] for u, v in edges)
 
 
-# --------------------------------------------------------------------------- #
-# Core invariants
-# --------------------------------------------------------------------------- #
-def count_proper_colorings(g: Graph, k: int) -> int:
-    """chi_G(k): brute-force count of proper k-colorings (small graphs)."""
-    if k <= 0:
-        return 0
-    verts = sorted(g)
-    edges = edges_of(g)
-    total = 0
-    for coloring in product(range(k), repeat=len(verts)):
-        assign = dict(zip(verts, coloring))
-        if all(assign[u] != assign[v] for u, v in edges):
-            total += 1
-    return total
+def chromatic_count(vertex_count: int, edges: Sequence[Edge], k: int) -> int:
+    """Count proper k-assignments by exhaustive enumeration."""
+    if vertex_count < 0 or k < 0:
+        raise ValueError("vertex_count and k must be nonnegative")
+    return sum(
+        is_proper(assignment, edges)
+        for assignment in product(range(k), repeat=vertex_count)
+    )
 
 
-def is_k_colorable(g: Graph, k: int) -> bool:
-    """Whether a proper k-coloring exists (backtracking search)."""
-    verts = sorted(g)
-    color: Dict[int, int] = {}
+def is_k_colorable(vertex_count: int, edges: Sequence[Edge], k: int) -> bool:
+    """Decide k-colorability with recursive backtracking and pruning."""
+    adjacency = [set() for _ in range(vertex_count)]
+    for u, v in edges:
+        adjacency[u].add(v)
+        adjacency[v].add(u)
+    order = sorted(range(vertex_count), key=lambda v: len(adjacency[v]), reverse=True)
+    colors = [-1] * vertex_count
 
-    def backtrack(i: int) -> bool:
-        if i == len(verts):
+    def search(position: int) -> bool:
+        if position == vertex_count:
             return True
-        v = verts[i]
-        used = {color[u] for u in g[v] if u in color}
-        for c in range(k):
-            if c not in used:
-                color[v] = c
-                if backtrack(i + 1):
+        vertex = order[position]
+        forbidden = {colors[w] for w in adjacency[vertex] if colors[w] >= 0}
+        for color in range(k):
+            if color not in forbidden:
+                colors[vertex] = color
+                if search(position + 1):
                     return True
-                del color[v]
+        colors[vertex] = -1
         return False
 
-    return backtrack(0)
+    return search(0)
 
 
-def chromatic_number(g: Graph) -> int:
-    """Least k >= 0 admitting a proper k-coloring."""
-    n = len(g)
-    for k in range(n + 1):
-        if is_k_colorable(g, k):
+def emotional_chromatic_number(vertex_count: int, edges: Sequence[Edge]) -> int:
+    """Return the least colorable palette size k >= 3."""
+    upper = max(3, vertex_count)
+    for k in range(3, upper + 1):
+        if is_k_colorable(vertex_count, edges, k):
             return k
-    return n
+    raise RuntimeError("The distinct-label upper bound should always succeed")
 
 
-def emotional_chromatic_number(g: Graph) -> int:
-    """emoChrom(G) = max(chromatic_number(G), 3)."""
-    return max(chromatic_number(g), 3)
+def friendship_formula(n: int, k: int) -> int:
+    """Evaluate P_{F_n}(k) = k(k-1)^n(k-2)^n."""
+    if n < 0 or k < 0:
+        raise ValueError("n and k must be nonnegative")
+    return k * (k - 1) ** n * (k - 2) ** n
 
 
-def is_bipartite(g: Graph) -> bool:
-    """Two-color the graph via BFS; bipartite iff it succeeds."""
-    color: Dict[int, int] = {}
-    for start in g:
-        if start in color:
-            continue
-        color[start] = 0
-        stack = [start]
-        while stack:
-            v = stack.pop()
-            for u in g[v]:
-                if u not in color:
-                    color[u] = 1 - color[v]
-                    stack.append(u)
-                elif color[u] == color[v]:
-                    return False
-    return True
+def demonstrate_friendship_profiles(max_n: int = 6) -> None:
+    """Print exact minimum- and six-palette profiles for F_0,...,F_max_n."""
+    print("Friendship-network threshold profile")
+    print(" n | tau_E | P_Fn(3) | P_Fn(6) | ratio")
+    print("---+-------+---------+---------+----------------")
+    for n in range(max_n + 1):
+        minimum_count = friendship_formula(n, 3)
+        six_count = friendship_formula(n, 6)
+        ratio = six_count // minimum_count
+        print(f"{n:2d} | {3:5d} | {minimum_count:7d} | {six_count:7d} | {ratio:16d}")
+        assert minimum_count == 3 * 2**n
+        assert six_count == 6 * 20**n
+        assert ratio == 2 * 10**n
 
 
-# --------------------------------------------------------------------------- #
-# Demonstrations
-# --------------------------------------------------------------------------- #
-def demo_clique_law() -> None:
-    print("== Clique law:  emoChrom(K_n) = max(n, 3) ==")
-    for n in range(1, 8):
-        g = complete_graph(n)
-        e = emotional_chromatic_number(g)
-        assert e == max(n, 3), (n, e)
-        print(f"  K_{n}: chi(6)={count_proper_colorings(g, 6):>5}  "
-              f"emoChrom={e}  (expected {max(n, 3)})")
-    print()
+def verify_small_friendship_cases() -> None:
+    """Compare the closed formula with brute-force counts in tractable cases."""
+    print("\nBrute-force checks of P_Fn(k) = k(k-1)^n(k-2)^n")
+    for n in range(4):
+        vertex_count, edges = friendship_graph(n)
+        for k in range(3, 6):
+            enumerated = chromatic_count(vertex_count, edges, k)
+            closed = friendship_formula(n, k)
+            assert enumerated == closed
+            print(f"F_{n}, k={k}: enumerated={enumerated}, formula={closed}")
+        assert emotional_chromatic_number(vertex_count, edges) == 3
 
 
-def demo_cycle_law() -> None:
-    print("== Cycle law:  emoChrom(C_n) = 3 for n >= 3 ==")
-    for n in range(3, 10):
-        g = cycle_graph(n)
-        e = emotional_chromatic_number(g)
-        chi2 = count_proper_colorings(g, 2)
-        assert e == 3, (n, e)
-        parity = "even" if n % 2 == 0 else "odd"
-        print(f"  C_{n} ({parity}): chi(2)={chi2:>3}  chi_number={chromatic_number(g)}  "
-              f"emoChrom={e}")
-    print()
+def demonstrate_six_emotion_boundary() -> None:
+    """Show a graph accepted and a graph rejected by the six-label test."""
+    f_vertices, f_edges = friendship_graph(3)
+    clique_vertices = 7
+    clique_edges = normalize_edges(
+        (u, v) for u in range(clique_vertices) for v in range(u + 1, clique_vertices)
+    )
+    examples = (
+        ("Friendship graph F_3", f_vertices, f_edges),
+        ("Seven-vertex clique K_7", clique_vertices, clique_edges),
+    )
+    print("\nSix-emotion positivity boundary")
+    for name, vertices, edges in examples:
+        threshold = emotional_chromatic_number(vertices, edges)
+        six_positive = is_k_colorable(vertices, edges, 6)
+        print(f"{name}: tau_E={threshold}, P_G(6)>0 is {six_positive}")
+        assert six_positive == (3 <= threshold <= 6)
 
 
-def demo_six_emotion_window() -> None:
-    print("== Six-emotion window:  chi_G(6) > 0  =>  3 <= emoChrom(G) <= 6 ==")
-    samples = {
-        "K_4 (clique of 4)": complete_graph(4),
-        "C_5 (odd ring)": cycle_graph(5),
-        "C_6 (even ring)": cycle_graph(6),
-        "P_5 (path)": path_graph(5),
-    }
-    for name, g in samples.items():
-        if count_proper_colorings(g, 6) > 0:
-            e = emotional_chromatic_number(g)
-            assert 3 <= e <= 6, (name, e)
-            print(f"  {name:<20}: emoChrom={e}  in [3, 6]  OK")
-    print()
-
-
-def demo_bipartite_correction() -> None:
-    print("== Bipartite folklore correction ==")
-    print("  Two emotions succeed iff bipartite; universal root is at k = 1.")
-    samples = {
-        "C_4 (even, bipartite)": cycle_graph(4),
-        "C_5 (odd, not bipartite)": cycle_graph(5),
-        "P_4 (path, bipartite)": path_graph(4),
-        "K_3 (triangle)": complete_graph(3),
-    }
-    for name, g in samples.items():
-        chi1 = count_proper_colorings(g, 1)
-        chi2 = count_proper_colorings(g, 2)
-        bip = is_bipartite(g)
-        assert (chi2 > 0) == bip
-        assert chi1 == 0  # any edge kills one-coloring
-        print(f"  {name:<26}: chi(1)={chi1}  chi(2)={chi2:>3}  "
-              f"bipartite={bip}  emoChrom={emotional_chromatic_number(g)}")
-    print()
+def main() -> None:
+    demonstrate_friendship_profiles()
+    verify_small_friendship_cases()
+    demonstrate_six_emotion_boundary()
+    print("\nAll numerical demonstrations passed.")
 
 
 if __name__ == "__main__":
-    demo_clique_law()
-    demo_cycle_law()
-    demo_six_emotion_window()
-    demo_bipartite_correction()
-    print("All demonstrations agree with the theory.")
+    main()
