@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "14656387",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — The Möbius discriminant, quantitatively\n\nThis cycle (thread `th_c09a34af`, cycle 3) builds on the *sign* trichotomy of the\nprevious cycle (`HoggattTrichotomy.lean`) by upgrading",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-14T19:16:11",
-      "title": "This cycle isolated a single scalar invariant — the **Möbius discriminant**"
-    },
-    {
       "cycle_id": "45e15555",
       "domain": "Applications",
       "key_insight": "# Future Directions — Colorful Carathéodory with polynomial-size witnesses\n\nThis cycle established a two-parameter picture of *witness complexity* for the\ncolorful Carathéodory phenomenon: a face capt",
@@ -2501,6 +2491,16 @@
       "theorem_count": 21,
       "timestamp": "2026-07-18T13:21:34",
       "title": "Quantum Entanglement as Algebraic Topology: The Linking Number Is Entanglement"
+    },
+    {
+      "cycle_id": "26ad8b0e",
+      "domain": "Logic",
+      "key_insight": "# Future directions\n\nThe formalization establishes the foundational deletion-stability theory for complete sets:\nstrong completeness is equivalent to completeness of every tail (and even of all suffic",
+      "quality_score": 0.64,
+      "sorry_count": 0,
+      "theorem_count": 61,
+      "timestamp": "2026-07-18T13:38:04",
+      "title": "ArXiv paper: Strongly complete sets and a conjecture of Erdős"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.75
     }
   ],
-  "last_updated": "2026-07-18T13:21:34",
+  "last_updated": "2026-07-18T13:38:04",
   "open_questions": [
     {
       "context": "",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "523eb163",
-        "quality": 0.72,
-        "theorems": 35,
-        "title": "Hypergraph Ramsey Theory: Beyond Graphs"
-      },
-      {
         "cycle_id": "f6622907",
         "quality": 0.82,
         "theorems": 20,
@@ -3513,6 +3507,12 @@
         "quality": 0.8,
         "theorems": 46,
         "title": "Erdos-Renyi on Acid: Random Graphs That Hallucinate"
+      },
+      {
+        "cycle_id": "26ad8b0e",
+        "quality": 0.64,
+        "theorems": 61,
+        "title": "ArXiv paper: Strongly complete sets and a conjecture of Erdős"
       }
     ],
     "MachineLearning": [
