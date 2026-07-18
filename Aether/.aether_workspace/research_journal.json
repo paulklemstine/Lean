@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "7d82c497",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\n## 1. Additive-energy amplification beyond the cardinality threshold\n\n**Conjecture.** Let two subsets of the depth-$n$ residue tree over $\\mathbb{F}_p$ omit a fixed positive propo",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-16T08:27:42",
-      "title": "ArXiv paper: Fractal uncertainty principle over $\\mathbb{Q}_p$"
-    },
-    {
       "cycle_id": "e2f5c991",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\n## 1. Weighted maximum-nullity equality on triangle-unit networks\n\n**Conjecture.** For every connected, diamond-free, claw-free cubic graph whose contraction\nmultigraph is a simpl",
@@ -499,19 +489,19 @@
       "theorem_count": 8,
       "timestamp": "2026-07-18T13:54:59",
       "title": "Fractal Number Theory: Hausdorff Dimension of Prime Distributions"
+    },
+    {
+      "cycle_id": "64b7f63b",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions\n\n1. **Variable branching alphabets.** Generalize binary profiles to a fixed `b`-ary alphabet and prove that normalization by `log b` again bounds dimension by `1` and realizes rati",
+      "quality_score": 0.73,
+      "sorry_count": 0,
+      "theorem_count": 65,
+      "timestamp": "2026-07-18T14:44:12",
+      "title": "Close Proofs: Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "0725f80e",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — The Möbius discriminant, deepened\n\nThis cycle isolated the scalar **Möbius discriminant** `Δ = γβ − αδ` of a\nfirst-order multiplicative recurrence `(α n + β)·a(n+1) = (γ n + δ)·a",
-      "quality_score": 0.86,
-      "sorry_count": 3,
-      "theorem_count": 14,
-      "timestamp": "2026-07-14T21:05:18",
-      "title": "Deepening: This cycle isolated a single scalar invariant — the **Möbius discriminant**"
-    },
     {
       "cycle_id": "daf8e94d",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 10,
       "timestamp": "2026-07-18T14:44:03",
       "title": "Homotopy Type Theory of Cooking Recipes: Paths Between Dishes"
+    },
+    {
+      "cycle_id": "64b7f63b",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions\n\n1. **Variable branching alphabets.** Generalize binary profiles to a fixed `b`-ary alphabet and prove that normalization by `log b` again bounds dimension by `1` and realizes rati",
+      "quality_score": 0.73,
+      "sorry_count": 0,
+      "theorem_count": 65,
+      "timestamp": "2026-07-18T14:44:12",
+      "title": "Close Proofs: Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "408bb225",
-      "domain": "Tropical",
-      "name": "periodicState_of_semiconj",
-      "quality": 0.76
-    },
-    {
-      "cycle_id": "408bb225",
-      "domain": "Tropical",
-      "name": "exact_period_three_distinct",
-      "quality": 0.76
-    },
-    {
-      "cycle_id": "87b73bf0",
-      "domain": "Shared",
-      "name": "connects",
-      "quality": 0.72
-    },
     {
       "cycle_id": "87b73bf0",
       "domain": "Shared",
@@ -2803,9 +2785,27 @@
       "domain": "Bridges",
       "name": "hausdorffMeasure_primeLogImage_eq_zero",
       "quality": 0.7
+    },
+    {
+      "cycle_id": "64b7f63b",
+      "domain": "Combinatorics",
+      "name": "periodic_search_benchmark",
+      "quality": 0.73
+    },
+    {
+      "cycle_id": "64b7f63b",
+      "domain": "Combinatorics",
+      "name": "benchmark_does_not_determine_length",
+      "quality": 0.73
+    },
+    {
+      "cycle_id": "64b7f63b",
+      "domain": "Combinatorics",
+      "name": "count",
+      "quality": 0.73
     }
   ],
-  "last_updated": "2026-07-18T14:44:03",
+  "last_updated": "2026-07-18T14:44:12",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "acce14cf",
-        "quality": 0.82,
-        "theorems": 43,
-        "title": "Rucker: Saucer Wisdom — Non-Human Mathematical Intuition"
-      },
-      {
         "cycle_id": "bd321901",
         "quality": 0.93,
         "theorems": 46,
@@ -3265,6 +3259,12 @@
         "quality": 0.59,
         "theorems": 0,
         "title": "Knots That Think: Cognition as Braiding in Category Theory"
+      },
+      {
+        "cycle_id": "64b7f63b",
+        "quality": 0.73,
+        "theorems": 65,
+        "title": "Close Proofs: Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
       }
     ],
     "Computation": [

@@ -1,201 +1,163 @@
-# The Hidden Symmetry of Suspicion: The Mathematics of Werewolf
+# Bayesian Werewolf: When the Most Suspicious Player Is—and Is Not—the Right Choice
 
-Around campfires, in dormitories, and on late-night video calls, millions of
-people play a deceptively simple game. It goes by many names — *Werewolf*,
-*Mafia*, *The Resistance* — but the skeleton is always the same. A group of
-players secretly contains a few hidden traitors. Each night the traitors quietly
-remove one loyal member of the town. Each day the survivors gather, argue, accuse,
-and vote to banish someone they suspect. The town wins if it roots out every
-traitor; the traitors win the moment they are numerous enough to overpower whoever
-is left.
+A village wakes to bad news. During the night, a hidden werewolf has removed another villager from the game. Now the survivors must vote. One player contradicted herself yesterday. Another joined a suspicious coalition. A third has survived several nights despite appearing dangerous to the wolves. Whom should the village eliminate?
 
-The game feels like it is all about *reading people* — the nervous laugh, the
-too-quick defense, the suspiciously quiet player in the corner. And at the highest
-levels, it is. But underneath the psychology runs a current of cold probability,
-and that current has a shape. This article is about that shape: what the numbers
-say when the bluffing is stripped away, why the town's task is so much harder than
-it feels, and why the single most important quantity in the entire game is not how
-many traitors there are, but how many traitors there are *compared to everyone
-else*.
+The natural answer is: eliminate the player most likely to be a werewolf. That principle sounds obvious, but it hides a crucial ambiguity. Does “right” mean most likely to make the correct decision *today*, or most likely to win the entire game? Those are different optimization problems. The first has a clean Bayesian solution. The second agrees with it only under a precise symmetry condition.
 
-## The town's impossible first move
+This distinction reaches far beyond Werewolf or Mafia. Medical triage, fraud investigation, cybersecurity, search, and active learning all face the same tension. The item most likely to be positive is not always the item whose inspection has the greatest long-term value. Probability ranks beliefs; utility ranks actions. They coincide only when the reward structure permits it.
 
-Imagine sitting down to your very first day of a game with $n = 7$ players, two of
-whom are secretly werewolves. Nobody has said a word yet. There is no behavioral
-tell to read, no voting record to scrutinize, no history at all. You must vote.
-Whom do you accuse?
+## Turning suspicion into probability
 
-Intuitively it feels as though *someone* must be more suspicious than the others.
-Surely, with a little cleverness, you can do better than a coin flip. Here the
-mathematics delivers its first surprise, and it is a humbling one.
+Suppose there is a finite set $I$ of suspects. For each player $i\in I$, assign a prior probability $\pi_i$ that the player has the hidden role and a likelihood $L_i$ measuring how compatible the observed evidence is with that hypothesis. The unnormalized Bayesian weight is
 
-Let us make the reasoning precise. Before any evidence arrives, the only thing you
-know is the bare census: there are $k$ werewolves hidden among $n$ players. Fix
-your attention on one particular player. What is the probability that *this*
-player is a werewolf? There are $\binom{n}{k}$ equally likely ways to choose which
-$k$ of the $n$ players are the wolves. Of those, the ones that incriminate your
-chosen player are exactly the ways to fill the *remaining* $k-1$ wolf slots from
-the *other* $n-1$ players, of which there are $\binom{n-1}{k-1}$. So the honest,
-evidence-free **posterior probability** that your target is a wolf is
+$$
+w_i=\pi_iL_i.
+$$
 
-$$P(\text{wolf}) = \frac{\binom{n-1}{k-1}}{\binom{n}{k}}.$$
+The total evidence mass is
 
-At first glance this looks like it might depend on all sorts of combinatorial
-subtleties. But there is a classical counting identity hiding inside it:
+$$
+Z=\sum_{j\in I}w_j,
+$$
 
-$$k \cdot \binom{n}{k} = n \cdot \binom{n-1}{k-1}.$$
+and, provided $Z\neq 0$, the posterior probability is
 
-The identity has a one-line story. Count the pairs consisting of a $k$-member wolf
-pack together with a distinguished "leader" chosen from within it. Choose the pack
-first, then the leader: $\binom{n}{k}\cdot k$ ways. Or choose the leader first from
-all $n$ players, then fill out the rest of the pack: $n \cdot \binom{n-1}{k-1}$
-ways. Both count the same thing, so the two products are equal.
+$$
+p_i=\frac{w_i}{Z}.
+$$
 
-Substituting this identity into the posterior makes almost everything cancel, and
-we are left with something startlingly clean:
+These posteriors sum to one. If $Z>0$, dividing every weight by the same positive number cannot change their order, so
 
-$$P(\text{wolf}) = \frac{k}{n}.$$
+$$
+p_i\le p_j\quad\text{if and only if}\quad w_i\le w_j.
+$$
 
-This is the **Symmetry Principle**. With nothing to go on but the census, the
-probability that any given player is a werewolf is exactly $k/n$ — the same for
-everyone. The elaborate combinatorics collapses back to the naïve prior. Every
-seat at the table is equally suspicious, and no amount of pure reasoning can break
-the tie. The town's celebrated deductive powers are, on move one, worth precisely
-nothing.
+This gives a useful computational shortcut: to find the most probable suspect, one may compare prior-times-likelihood scores without explicitly normalizing them.
 
-## What one honest vote can accomplish
+A maximum-a-posteriori, or MAP, suspect is any player $a$ satisfying $p_i\le p_a$ for every $i\in I$. Because the suspect set is finite and nonempty, at least one MAP suspect always exists. Ties do not undermine the principle: every tied maximizer is locally optimal.
 
-If all players are equally suspect, then whoever the town banishes is effectively
-chosen uniformly at random, and the probability that this first banishment
-actually catches a wolf is exactly $k/n$. For our seven-player, two-wolf game that
-is $2/7 \approx 0.29$. More often than not, the town's opening move exiles one of
-its own.
+## The theorem behind the obvious vote
 
-This is the mathematical root of a feeling every Werewolf player knows: the town
-is playing uphill. Its very first action, taken in good faith and with perfect
-logic, is more likely to help the enemy than to hurt it. Information — the tells,
-the contradictions, the voting patterns — is not a luxury in this game. It is the
-*only* thing that lifts the town above the dismal baseline of $k/n$.
+Imagine that exactly one of the listed hypotheses is true, and define the utility of eliminating player $a$ when the hidden werewolf is $w$ to be $1$ if $a=w$ and $0$ otherwise. The expected utility of choosing $a$ is
 
-## Suspicion has a direction
+$$
+\sum_{w\in I}p_w\mathbf 1_{\{a=w\}}=p_a.
+$$
 
-Although every player is equally suspicious *within* a single game, the level of
-that shared suspicion responds in intuitive ways to the size of the threat. Two
-simple monotonicity facts capture this.
+This identity yields the **Local MAP Optimality Theorem**: *among all possible eliminations, a MAP choice maximizes the probability that the current elimination is correct.*
 
-First, **more wolves means more suspicion**. Holding the population fixed, adding
-one more werewolf strictly raises each player's prior from $k/n$ to $(k+1)/n$. A
-den with more predators makes every neighbor more likely to be one.
+The proof is only one line of mathematics once the model is stated. The expected correctness of choosing $a$ is exactly $p_a$, and a MAP player has the largest posterior coordinate. Yet this small theorem is the firm core inside a much larger strategic claim that is often made too casually.
 
-Second, **a bigger crowd dilutes suspicion**. Holding the number of wolves fixed,
-enlarging the town from $n$ to $n+1$ players strictly lowers each individual's
-prior from $k/n$ to $k/(n+1)$. In a larger crowd, any one person is less likely to
-be among the fixed handful of villains.
+The theorem does not say that MAP voting always maximizes the chance of eventually winning. A correct elimination can have different consequences depending on whom it removes. One hidden adversary may be more influential than another. Eliminating a particular player may reveal voting blocs, alter later information, or change the survival prospects of key villagers. The future can attach identity-dependent value to today’s action.
 
-Neither statement is deep, but together they tell you the two levers that control
-the emotional temperature of a game, and they do so with exact inequalities rather
-than hand-waving.
+## When the local rule becomes globally valid
 
-## The number that decides everything: the werewolf advantage
+There is, however, an important setting in which the local and global objectives align. Suppose a correct elimination leads to continuation value $G$, an incorrect elimination leads to continuation value $B$, and these values do not depend on the identity selected. Assume also that $B\le G$: hitting a werewolf is at least as good as missing.
 
-So far we have measured suspicion. But suspicion is not what wins games — *parity*
-is. The werewolves win the instant they are no longer outnumbered, because from
-that point on they can simply vote as a bloc and never be banished again. This
-shifts our attention from the raw count $k$ to a ratio that turns out to govern the
-entire contest, the **werewolf advantage**:
+For a suspect with posterior $p_a$, the expected continuation value is
 
-$$A = \frac{k}{n-k},$$
+$$
+p_aG+(1-p_a)B=B+(G-B)p_a.
+$$
 
-the number of wolves divided by the number of villagers. This single number
-compresses the whole balance of power into one dial. And it comes with a razor-sharp
-threshold.
+This affine formula is the center of the analysis. Since $G-B\ge 0$, expected continuation value increases with $p_a$. It follows that every MAP action maximizes eventual value in this identity-symmetric model.
 
-**The Parity Threshold.** As long as at least one villager remains, the wolves are
-at least as numerous as the villagers — the advantage $A$ reaches $1$ — *exactly
-when* $n \le 2k$.
+This is the **Symmetric Continuation Theorem**: *if future value depends only on whether the present elimination is correct, not on which identity is selected, and correctness is no worse than error, then maximum-posterior voting is globally optimal for that decision stage.*
 
-In words: the wolves have effectively already won once they make up half the room.
-The condition is not approximate or statistical; it is an exact algebraic
-equivalence. Everything the town does — every accusation, every night it survives —
-is ultimately a race against this line. The advantage $A$ is moreover strictly
-increasing in the number of wolves: each additional predator (in a town with
-villagers to spare) pushes the ratio strictly upward and the town strictly closer
-to defeat.
+The symmetry assumption is not decorative. It does the real work. It says that identities are strategically exchangeable after conditioning on hit versus miss. In a simplified game with indistinguishable hidden adversaries and no identity-specific information effects, that can be a sensible approximation. In a rich social game, it must be tested rather than presumed.
 
-This is why experienced moderators obsess over the wolf-to-town ratio when they set
-up a game. Add one wolf too many to a small town and the game is decided before the
-first word is spoken.
+## How costly is an approximate decision?
 
-## Who survives the night: an exchangeability law
+Real players rarely compute exact posteriors. They estimate. Fortunately, the affine formula gives a sharp robustness guarantee.
 
-Removals in Werewolf are not always the town's choice. At night the wolves strike,
-and in the absence of protective information any of the townsfolk is as likely to
-be the victim as any other. This raises a natural question: if $t$ players are
-removed from a town of $n$, essentially at random, what is the chance that *you*,
-one particular player, are still standing?
+Suppose action $a$ is the benchmark and action $b$ has posterior no more than $\varepsilon$ below it:
 
-Again symmetry does the heavy lifting. Your survival corresponds to the $t$ removed
-players all coming from the *other* $n-1$ people, and a short counting argument of
-exactly the same flavor as before collapses to a beautifully simple **Survival
-Law**:
+$$
+p_a\le p_b+\varepsilon.
+$$
 
-$$P(\text{you survive } t \text{ removals}) = \frac{n - t}{n}.$$
+Under symmetric continuation with $B\le G$, the loss from choosing $b$ instead of $a$ is at most
 
-There is no dependence on complicated binomial ratios in the final answer; the
-probability is just the fraction of the town that has *not* been removed. It is the
-kind of formula that feels obvious in hindsight and is genuinely reassuring to have
-proven, because it turns the messy stochastic process of night after night into a
-single clean fraction. It also gives us a handle on how quickly a town is ground
-down, which is the raw material for asking deeper questions about how big a wolf
-pack a town of a given size can withstand.
+$$
+(G-B)\varepsilon.
+$$
 
-## The game as a whole
+This is the **Posterior Approximation Regret Bound**. It cleanly separates two sources of sensitivity. The term $\varepsilon$ measures inferential error: how far the chosen posterior is from the benchmark. The term $G-B$ measures strategic stakes: how much better a hit is than a miss. A rough probability estimate may be harmless when the two outcomes have similar continuation values, but costly when today’s decision is pivotal.
 
-Individual rounds are one thing; the entire game, round after round, is another. We
-can model the full contest as a recursion. With $w$ wolves and $v$ villagers alive,
-one player is removed each round. If it is the last wolf, the town wins. If the
-wolves reach parity ($w \ge v$), they win. Otherwise the game continues, branching
-according to whether the removed player was a wolf (probability $w/(w+v)$) or a
-villager (probability $v/(w+v)$). This defines the town's win probability $W(w,v)$
-as a clean, self-referential expression.
+The bound also explains why near-ties deserve calm rather than false precision. If two suspects differ by only $0.01$ in posterior probability, no identity-symmetric continuation model can assign more than $0.01(G-B)$ additional expected value to the higher one.
 
-It would be embarrassing to build an elaborate theory on a quantity that turned out
-to be nonsense, so the first thing to establish about $W$ is that it is a *genuine
-probability*: for every configuration, $0 \le W(w,v) \le 1$. This is proved by
-induction on the number of rounds remaining, confirming that the model is not
-vacuous and that every downstream statement about "the town's chances" refers to an
-honest number between zero and one.
+## A two-player warning
 
-With that foundation in place, the parity threshold reappears as the organizing
-center of the whole win-probability landscape. The right way to think about a
-game's difficulty is not the raw counts $n$ and $k$ but the *distance to parity*,
-$n - 2k$. When that surplus is large the town has room to breathe; as it shrinks to
-zero the town's chances collapse. The exact threshold we proved is precisely the
-cliff edge of that collapse.
+To see exactly why symmetry matters, consider two suspects. Their posterior probabilities are
 
-## Why any of this matters beyond game night
+$$
+p_0=\frac35,\qquad p_1=\frac25.
+$$
 
-It is tempting to file all this under "clever recreational mathematics," but the
-lessons travel. Werewolf is a toy model of something ubiquitous and serious:
-decision-making by a group that must identify hidden bad actors from noisy,
-strategic, partial information. Fraud detection in a marketplace, spotting
-compromised nodes in a network, screening for insider threats, moderating an online
-community against coordinated manipulation — all share Werewolf's essential
-structure. A population, a hidden malicious minority, costly and imperfect rounds of
-investigation, and a ticking clock.
+Suspect $0$ is the MAP choice. Now suppose a correct elimination of suspect $0$ is worth only $1/10$, while a correct elimination of suspect $1$ is worth $1$; an incorrect elimination is worth $0$ in either case. The expected values are
 
-The mathematics carries three transferable morals. First, **without evidence,
-symmetry rules**: pure logic cannot manufacture suspicion out of nothing, so the
-baseline detection rate is fixed at the raw prevalence $k/n$, and the entire value
-of any detection system lies in how far its evidence lifts it above that line.
-Second, **ratios beat counts**: the health of the system is governed not by the
-absolute number of bad actors but by their ratio to the good, with a sharp phase
-transition once they approach parity. Third, **the clock is an adversary**: because
-each imperfect round can remove the wrong party, time itself works against the
-defenders, and a system that cannot detect faster than it loses ground is doomed no
-matter how clever each individual decision is.
+$$
+\frac35\cdot\frac1{10}=0.06
+$$
 
-Werewolf, in other words, is a laboratory. Behind the theatrics of accusation and
-denial sits a compact, exact theory — a collapsing posterior, a decisive ratio, a
-clean survival law, and a well-defined game value — and that theory has something to
-teach anyone whose real-world job is to find the wolves before the wolves win.
+for suspect $0$, and
+
+$$
+\frac25\cdot 1=0.4
+$$
+
+for suspect $1$. The less likely suspect is overwhelmingly the better action.
+
+Nothing Bayesian has failed. The posteriors correctly describe which identity is more likely to be the target. What failed is the substitution of probability for utility. The example establishes a sharp negative result: *without identity symmetry, MAP need not maximize global value.*
+
+That lesson appears whenever actions have heterogeneous payoffs. A doctor may test a less likely disease because delay would be catastrophic. A security team may inspect a moderately suspicious server because it controls critical infrastructure. A detective may pursue a weaker lead because resolving it unlocks many other cases. The correct decision maximizes expected utility, not probability in isolation.
+
+## Suspicion as a spin
+
+There is a surprising geometric way to represent a posterior probability. Transform $p\in[0,1]$ into the centered score
+
+$$
+s(p)=2p-1.
+$$
+
+The endpoints $p=0$ and $p=1$ become spins $-1$ and $+1$, while complete uncertainty $p=1/2$ becomes $0$. Because this transformation is increasing,
+
+$$
+s(p)\le s(q)\quad\text{if and only if}\quad p\le q.
+$$
+
+Thus MAP voting is exactly the same as maximum-spin voting.
+
+Even more suggestively, complementing the role label flips the sign:
+
+$$
+s(1-p)=-s(p).
+$$
+
+Calling “werewolf” what was formerly called “villager” acts like a global spin flip in statistical mechanics. If a rectangular lattice has $(m+1)(n+1)$ sites and every site carries the same score $s(p)$, its magnetization—the sum of all spins—is
+
+$$
+M=(m+1)(n+1)s(p).
+$$
+
+Complementing the posterior changes $M$ to $-M$. This bridge is elementary but useful: individual suspicion becomes a spin variable, and role-label symmetry becomes the familiar symmetry of a magnetic system.
+
+The one-site correspondence suggests a richer future model. If voting relationships create correlated suspicion, pairwise interactions might be represented as couplings between spins. Coalitions could resemble aligned domains; polarized voting could resemble competing phases. Such extensions require new assumptions and new analysis, but the basic symmetry is exact.
+
+## What the results do—and do not—settle
+
+The analysis proves a decision principle, not a universal numerical win rate for the full game. A complete Werewolf model must specify the number of hidden roles, night eliminations, voting behavior, information revealed after eliminations, tie rules, and how evidence changes over time. Claims such as a particular win probability for seven players, or a universal quadratic scaling law in the wolf-to-villager ratio, cannot be inferred from the local MAP theorem alone.
+
+What can be stated exactly is more foundational:
+
+1. Bayesian posteriors normalize to one, and positive normalization preserves the ranking of prior-times-likelihood weights.
+2. A MAP suspect always exists in a finite nonempty set.
+3. MAP maximizes immediate correctness.
+4. MAP also maximizes continuation value under identity symmetry and the condition $B\le G$.
+5. Posterior approximation incurs at most $(G-B)\varepsilon$ regret in that model.
+6. Without identity symmetry, MAP can fail dramatically.
+7. Centered posterior scores obey the order and complement symmetries of spins.
+
+These statements draw a boundary around a popular intuition. “Vote for the most suspicious player” is not wrong. It is exactly right for the immediate classification problem, and exactly right for a broad symmetric continuation model. But strategy begins where symmetry ends.
+
+The deepest practical message is therefore not a voting slogan but a modeling discipline. First infer what is likely. Then ask what each action changes. Bayesian probability supplies the beliefs; the continuation utility supplies the stakes. Only after both are visible can a village—or a hospital, a network defender, or a scientific search team—choose rationally.
