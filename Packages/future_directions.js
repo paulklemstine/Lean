@@ -76,19 +76,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Dreams: The Field with One Element Meets Tropical Geometry"
   },
   {
-    "consumed_by_exp_id": "e9a483ed",
-    "description": "L-functions are the DNA of mathematics \u2014 each one encodes deep arithmetic information. But how many L-functions ARE there? The L-function universe is vast: (1) The Riemann zeta function (1 L-function), (2) Dirichlet L-functions (countably many), (3) L-functions of elliptic curves (uncountably many, one per j-invariant), (4) L-functions of modular forms (countably many, but indexed by weight and level), (5) L-functions of Galois representations (enormous family). Conjecture: The set of 'natural' L-functions (those satisfying the Selberg class axioms: analytic continuation, functional equation, Euler product, Ramanujan bound) is COUNTABLE. This means the universe of well-behaved L-functions is no bigger than the integers, despite each individual L-function encoding infinitely much information. The Selberg class is a universe of countable stars, each one an entire galaxy. Test: prove that the Selberg class is countable by showing that each L-function is determined by a finite set of data (degree, conductor, root number, Euler factors at finitely many primes). Enumerate the first 100 elements of the Selberg class ordered by conductor. Impact: the mathematical universe of L-functions is countable \u2014 there are only as many well-behaved L-functions as integers. Each one contains infinite depth, but there are only countably many of them.",
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle e9a483ed (Q=0.760), which proved 8 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: L-functions are the DNA of mathematics \u2014 each one encodes deep arithmetic information. But how many L-functions ARE there? The L-function universe is vast: (1) The Riemann zeta function (1 L-function), (2) Dirichlet L-functions (countably many), (3) L-functions of elliptic curves (uncountably many, ",
     "domains": [
-      "Novelty",
-      "NumberTheory"
+      "Computation"
     ],
-    "id": "fd_0262",
+    "id": "push_e9a483ed_ee30e1cf",
     "priority_score": 0.86,
     "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T03:44:46.017475+00:00",
-    "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
+    "source_exp_id": "e9a483ed",
+    "status": "available",
+    "timestamp": "2026-07-18T06:23:02.846306+00:00",
+    "title": "Deepening: The L-Function Universe: A Cosmic Census of All L-Functions"
   },
   {
     "consumed_by_exp_id": "",
@@ -3043,6 +3042,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Elementary cellular automata (ECAs) are the 256 rules that update a 1D binary array based on its 3-cell neighborhood. Rule 110 is Turing-complete. But ECAs can also be viewed as polynomial maps over GF(2): the state s = (s_0, s_1, ..., s_{n-1}) is a vector over GF(2), and the update rule is s -> f(s) where f is a degree-3 polynomial (since the rule depends on 3 cells). Conjecture: The algebraic variety V(f) = {s : f(s) = s} (fixed points of the ECA) has dimension equal to the 'complexity class' of the rule. For simple rules (e.g., Rule 0, which is all zeros), V(f) has dimension 0 (a single point). For complex rules (e.g., Rule 110), V(f) has maximal dimension. The Grothendieck-style approach: each ECA defines a sheaf on the state space, and the global sections of this sheaf classify the possible stable configurations. Rule 110's sheaf has the richest section structure, corresponding to its Turing-completeness. Test: compute dim(V(f)) for all 256 ECAs and verify that the dimension correlates with Wolfram's complexity classification (Class 1: dim=0, Class 2: dim<=n/2, Class 3: dim>=n/2, Class 4: dim=n). Impact: cellular automata are algebraic varieties, and their complexity is the dimension of their fixed-point variety.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0276",
+    "priority_score": 0.78,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-18T06:18:54.772301+00:00",
+    "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle 0daa61af (Q=0.720) proved 18 theorems in Tropical but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The AdS/CFT correspondence says that a gravitational theory in the bulk of anti-de Sitter space is equivalent to a conformal field theory on the boundary. What if prime numbers have a holographic dual",
     "domains": [
       "Tropical"
@@ -3414,6 +3428,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-18T06:03:04.792630+00:00",
     "title": "The formal development treats a finite graph cellular sheaf through its two-term"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: The L-Function Census\n\n## 1. Faithful arithmetic coding of the Selberg class\n\n**Conjecture.** Every element of the Selberg class is uniquely determined by a finite arithmetic packet drawn from a countable alphabet, provided the packet is allowed to encode an effective global rule for all unrecorded Euler factors rather than merely their omission.\n\nThe key insight is that countability follows immediately from faithful countable coding, while finite samples alone fail even for bounded convergent Dirichlet series.\n\n**Why now?** The precise obstruction has been isolated: the missing theorem is not analytic uniqueness from the full coefficient sequence, but a rigidity principle recovering that sequence from finite arithmetic instructions.\n\n## 2. Finite fibres at bounded degree and conductor\n\n**Conjecture.** For fixed positive integers `d` and `Q`, only finitely many primitive Selberg-class functions have degree `d` and conductor at most `Q`.\n\nThe key insight is that a countable universe need not have finite conductor slices; finiteness requires an additional arithmetic rigidity or compactness principle.\n\n**Why now?** Fixed-modulus Dirichlet characters provide a complete degree-one model in which the corresponding analytic family is both faithful and finite, giving a concrete base case for testing higher-degree analogues.\n\n## 3. Polynomial conductor growth in fixed degree\n\n**Conjecture.** For each fixed degree `d`, the number of primitive Selberg-class functions of conductor at most `Q` is bounded by a polynomial in `Q`, after specifying an equivalence relation that removes duplicate presentations.\n\nThe key insight is that Chinese-remainder factorization makes the degree-one census multiplicative across coprime conductors, suggesting that local-to-global structure should constrain global growth.\n\n**Why now?** A rigorous multiplicative count is available for Dirichlet characters, while the finite-prefix obstruction shows exactly why an unrestricted analytic counting argument cannot establish such a bound.\n\n## 4. Effective rigidity from sparse prime data\n\n**Conjecture.** Within a fixed automorphic degree and bounded conductor, equality of Euler factors on a density-one set of primes forces equality of the associated L-functions, with an effective finite verification bound under an explicit height constraint.\n\nThe key insight is that arbitrary finite prefixes are insufficient, but arithmetic families may obey strong multiplicity-one principles unavailable to general Dirichlet series.\n\n**Why now?** The contrast between analytic finite-prefix ambiguity and fixed-modulus character faithfulness identifies sparse arithmetic rigidity as the natural bridge between local observations and a global census.\n\n## 5. Canonical conductor-ordered enumeration\n\n**Conjecture.** Once finite conductor fibres and an effective equality test are established for a specified natural subclass, there exists a canonical enumeration ordered first by conductor, then degree, then a normalized lexicographic arithmetic code.\n\nThe key insight is that \u201cthe first hundred\u201d is meaningful only after proving finite fibres, eliminating duplicate codes, and fixing a canonical tie-breaker.\n\n**Why now?** The logical prerequisites for a defensible enumeration are now explicit, turning an informal listing problem into a sequence of falsifiable classification and effectiveness questions.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0277",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "e9a483ed",
+    "status": "available",
+    "timestamp": "2026-07-18T06:21:49.839014+00:00",
+    "title": "**Conjecture.** Every element of the Selberg class is uniquely determined by a f"
   },
   {
     "consumed_by_exp_id": "",

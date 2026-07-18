@@ -218,7 +218,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Improving Upper Bounds for the Maximum Clique Problem using Reduction Rules' and formalize its key results. Abstract: We study the interaction between reduction rules and upper-bound functions for the Maximum Clique Problem (MCP). We show how MCP upper-bound functions can strengthen classical core and truss reductions by replacing local size conditions with upper-bound tests. This leads to the \\((k,ω^u)\\)-core, the \\((k,ω^u)\\)-truss, and the more general \\((k,d,ω^u)\\)-truss, where the parameter \\(d\\) controls the trade-off between stronger reductions and additional computational cost. For each of these notions, we prove clique-preservation properties, correctness of the corresponding peeling algorithm, and running-time bounds. Based on these reductions, we introduce a general framework for improving upper-bound values for MCP. We give two concrete instantiations of the framework: one that uses only the combined truss and core reductions, and one that combines the truss and core reductions with repeated applications of structions. Computational experiments on 73 benchmark graphs show that the proposed ",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Computation"
       ],
@@ -2407,7 +2407,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Study on Morgan-Voyce type polynomials with Euler-Seidel algorithm' and formalize its key results. Abstract: This paper bridges the domains of degenerate special polynomials, the Euler-Seidel matrix method, and Morgan-Voyce polynomials. We introduce two new families of Morgan-Voyce type polynomials and establish their structural properties, including explicit formulas and recurrence relations. Additionally, we define three polynomial variants and prove that three distinct binomial-type sums for Bell polynomials can be expressed as finite sums involving these new families, and derive their exponential generating functions. We then construct Euler-Seidel matrices using the initial sequences associated with Morgan-type polynomials. Our results yield novel algebraic identities and expand the application of matrix methods in combinatorial analysis.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Algebra",
         "Computation"
@@ -2570,7 +2570,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Reproducing the k-copwin Algorithm: Theory vs. Implementation' and formalize its key results. Abstract: Cops and Robbers is a well-studied pursuit-evasion game that provides insights into graph theory and theoretical computing. A central question is determining the minimum number of cops required to capture the robber, known as the cop number. We focus on reproducing an algorithm proposed by Petr, Portier, and Versteegen in 2022, which efficiently determines whether a graph is $k$-copwin. This paper presents a Python implementation of the $k$-copwin algorithm. In this work, we present our implementation in detail, clarify key aspects of the algorithm, and discuss its implications for future practical deployments.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Computation"
       ],
@@ -2852,7 +2852,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Computing Tools for Translation-Invariant Total Orders' and formalize its key results. Abstract: We introduce TITO_Explore, a software package for representing and computing with Translation-Invariant Total Orders (TITOs). We define a canonical window notation for TITOs and design and implement algorithms for several computational tasks involving them. The package normalizes the window notation of a given TITO into its canonical form, computes its inversion set, compares the weak order between two TITOs, and computes the join of two specified TITOs. Our weak order comparison algorithm operates by partitioning the inversion sets into disjoint subsets, thereby breaking down the comparison problem into evaluations of paired subsets. The join algorithm uses an edge-weighted directed graph to represent inversions and converts the problem of finding the join into a weighted path problem in the graph.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Algebra",
         "Computation"
@@ -2893,7 +2893,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Intrinsic ergodicity for $\\mathfrak{B}$-free integers in number fields' and formalize its key results. Abstract: Let $K$ be a number field with ring of integers $\\mathscr{O}_K$, and let $\\mathfrak{B}$ be an Erdős family of ideals in $\\mathscr{O}_K$. We prove that the associated $\\mathfrak{B}$-free subshift $(X_{\\mathfrak{B}},(S_a)_{a\\in\\mathscr{O}_K})$ is intrinsically ergodic: it carries a unique measure of maximal entropy, which we identify explicitly as a relatively independent extension of the Haar rotation on $\\prod_{\\mathfrak{b}\\in\\mathfrak{B}}\\mathscr{O}_K/\\mathfrak{b}$. This is the first proof of intrinsic ergodicity for $\\mathfrak{B}$-free systems beyond dimension one, and relies on the work of Araújo--Dymek--Kułaga-Przymus. Via their reductions, we also settle the $k$-free and $\\mathfrak{B}$-free lattice-point cases and the $k$-free number-field case. We give \\emph{two independent proofs} of the underlying rigidity statement: one through a single-site relative-entropy argument, and one through an exact-tiling realisation of Peckner's induce-and-split scheme.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Algebra",
         "Computation"
@@ -3178,7 +3178,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Optimal chain density, entropy, and space-time tradeoffs for the TSP' and formalize its key results. Abstract: We nearly settle a natural extremal question about set systems over $[n]$: the tradeoff between the {size} (number of sets) and the number of {full chains}. This question was initially raised by Johnson, Leader, and Russell [Combin.~Probab.~Comp., 2015] as a counterpart to Sperner-type results in combinatorics. Recently, a framework introduced by Ameli, Nederlof, and Wang, and independently by Dallant and Kozma [FOCS 2026] linked this question to the space- and time-complexity of Bellman-Held-Karp-style dynamic programming algorithms for permutation problems such as the traveling salesman (TSP). Precisely, they showed that a space-time product $γ^{n+o(n)}$ is feasible for the TSP, whenever a set system of (normalized) size $S$ and chain density $D$ exists, with $ γ= S^2/D$. In this paper we show an essentially {optimal} bound of $γ\\approx 3.1819$ for this quantity, closing the gap between the previous best lower and upper bounds of $γ\\geq 3.015$ and $ γ\\leq 3.572$ respectively. This im",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Computation",
         "Algebra"
@@ -3219,7 +3219,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Bounded-Support Additive Latin Transversals via Color-Counted Matching' and formalize its key results. Abstract: We consider the following additive Latin transversal problem. Given a multiset $A=(a_1,\\dots,a_k)$ of elements of $\\mathbb Z_m$ and a set $B\\subseteq\\mathbb Z_m$ of cardinality $k$, the task is to order $B$ as $b_1,\\dots,b_k$ so that the sums $a_i+b_i$ are pairwise distinct. When $k=m$, Hall proved that a solution exists if and only if $\\sum_{i=1}^m a_i\\equiv 0 \\pmod m$; moreover, his theorem yields a polynomial-time construction. Alon proved that a solution always exists when $m$ is prime and $k<m$, but no polynomial-time construction is known in general. Our main algorithmic contribution is a direct randomized algorithm for Color-Counted Matching: given an edge-colored graph and prescribed target counts for the colors, find a matching using exactly the prescribed number of edges of each color. If $q$ is the sum of the target counts and $h$ is the number of colors, our base-$(q+1)$ reduction to Exact Red Matching, combined with the algorithm of Mulmuley-Vazirani-Vazirani, gives a rand",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Computation",
         "Pythagorean"
@@ -4273,7 +4273,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Moment-based PPT criteria for random bipartite states' and formalize its key results. Abstract: Moment-based relaxations of the positive partial transpose (PPT) criterion have been recently introduced, as a hierarchy of entanglement criteria involving only experimentally accessible quantities of a given bipartite state. The goal of this work is to study their typical detection performance on high-dimensional bipartite systems. Concretely, we investigate whether random bipartite mixed states on $\\mathbb C^d\\otimes\\mathbb C^d$, obtained as the marginal over an environment $\\mathbb C^s$ of a uniformly distributed pure state, generically satisfy or violate them. For each fixed level $m\\in\\mathbb N$ in this hierarchy of moment-based PPT criteria, we are able to identify a threshold environment dimension $s=λ_md^2$ at which the behavior of the associated random state switches from violating to satisfying it, with probability going to $1$ as $d$ grows. The proof combines combinatorics of permutations techniques to estimate the average value of moments of partially transposed random stat",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Computation",
         "Logic"
@@ -4314,7 +4314,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Polynomial-Time Evaluation of Aardal-Lenstra Denumerants via Constant Term Method' and formalize its key results. Abstract: Aardal and Lenstra systematically studied hard knapsack problems of the form $a_1x_1+\\cdots+a_nx_n=b$, where $a_i=p_iM+r_iN$, $(M,N)$ is a coprime pair of positive integers, and the integers $|p_i|, |r_i|$ are small relative to $M$ and $N$. We investigate the corresponding challenging denumerant problem (i.e., counting the number of nonnegative integer solutions) and present a polynomial-time algorithm. This eliminates the computational bottlenecks caused by large values of $M$, $N$ and $b$. The proposed algorithm achieves a time complexity of $O(n^4Δ^2\\log n\\logΔ)$, which depends solely on the parameters $n$ and $Δ=\\max_{i,j}|r_i p_j - r_j p_i|$. Moreover, we consider the problem of expressing a general vector $(a_1,\\dots,a_n)$ in the above form using the LLL algorithm.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Computation",
         "Pythagorean"
@@ -4355,7 +4355,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Finding Nearly-Periodic Components in Digraphs and Markov Chains from the Spectrum of Rotated Laplacian Matrices' and formalize its key results. Abstract: Inspired by recent advances in notions of spectral approximation of digraphs [Ahm+20], we study spectral algorithms for finding periodic structures in digraphs via the spectrum of a class of rotated Laplacian matrices. This class of Laplacian matrices was previously studied by Lange, Liu, Peyerimhoff, and Post [Lan+15]. We consider a notion of periodicity ratio that generalizes the bipartiteness ratio of Trevisan [Tre09], and show that it is closely related to the spectrum of rotated Laplacian matrices. In particular, if the digraph is strongly connected and represents a Markov chain, this periodicity ratio for a given $p \\in \\mathbb{N}$ is a quantitative measure of how close this Markov chain is to having periodicity $p$. We propose and analyze a periodicity-ratio variant of the spectral algorithm by Louis, Raghavendra, Tetali and Vempala [Lou+12]. We show that the algorithm runs in randomized polynomial time and can find many nearly periodic components (i.e, components with small per",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Computation",
         "Algebra"
@@ -5291,7 +5291,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'The Lean Number of a Hypergraph' and formalize its key results. Abstract: Inspired by the notion of tricolorability of knots, we introduce the concept of lean coloring for hypergraphs and the associated lean number of a hypergraph. Lean coloring often involves very few colors, yet still requires the methods of usual graph coloring, forcing the overall complexity to be NP-Hard. We provide two alternative formulations of the lean coloring problem that involve a type of coloring on abstract simplicial complexes and a partial coloring on bipartite graphs. We then provide bounds for the lean numbers of hypergraphs that are $k$-uniform, $k$-partite, wide-path connected, or $r$-complete. Python-like script is included to allow the implementation and study of a lean coloring algorithm. We conclude with some directions for future work and present the lean numbers of $130$ knots and links.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Computation",
         "Algebra"
@@ -5332,7 +5332,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Gilbert's disc model conditioned on the square lattice' and formalize its key results. Abstract: We present a new percolation model on the two-dimensional lattice, which can be seen as a conditioned version of continuous percolation on the plane. Let us place a point uniformly at random in each cell of the grid $\\mathbb{Z}^2$. These points correspond to the vertices of our graph, and we connect two points by an edge if their distance is less than a fixed radius $R$. We are interested in the radius from which there exists almost surely an infinite connected component. We also study two other critical radii specific to the geometry of our model: the smallest radius such that there exists a positioning of the points for which there is an infinite connected component, and the radius from which all points are connected to each other.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Computation",
         "Algebra"
@@ -5455,7 +5455,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Edge-decomposition into Two Triangular Forests is NP-complete' and formalize its key results. Abstract: Let $\\mathcal F$ be a graph class that is closed under topological minors and 1-sums, has decidable membership, contains a triangle, and is not the class of all graphs. Recently, Lee, Liu, and Tsai [ICALP 2026] showed that the edge-decomposition problem into $k \\geq 3$ elements of $\\mathcal F$ is NP-hard. In particular, their general hardness reduction covers a long-standing problem on outerthickness (when $\\mathcal F$ is the class of outerplanar graphs). On the other hand, it is well known that decomposing a graph into forests is polynomial-time solvable, as implied by work of Edmonds [J. Res. Natl. Bur. Stand. B. 1965]. In this paper, we take a first step toward determining the complexity of edge-decomposition problems into just two graphs (the case $k=2$). We consider the simplest possible graph class $\\mathcal F$ satisfying the criteria above: the triangular forests, that is, graphs in which every 2-connected component is a triangle. We prove that determining whether a graph can be",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Computation",
         "Logic"
@@ -6475,7 +6475,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Beyond the Riemann Hypothesis bounds: A pair-correlation approach to the least prime in arithmetic progression and the smallest quadratic non-residue' and formalize its key results. Abstract: The Generalized Riemann Hypothesis (GRH) has long defined the expected bounds for the smallest prime in an arithmetic progression and the least quadratic non-residue. However, this hypothesis primarily addresses the horizontal location of non-trivial zeros. In this paper, we show that incorporating the vertical spacing--or pair-correlation--of these zeros allows us to surpass these classical bounds. By combining these two zero-distribution perspectives, we establish sharper estimates for both problems under GRH and specific pair-correlation hypotheses, thereby providing a new link between pair-correlation phenomena for Dirichlet L-functions and these two classical problems.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Computation"
@@ -6516,7 +6516,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Semitotal domination in unit disk graphs' and formalize its key results. Abstract: A set $S \\subseteq V$ is called a {\\em semitotal dominating set} of $G=(V,E)$ if every vertex in $V \\setminus S$ is adjacent to at least one vertex in $S$, and every vertex in $S$ is within distance 2 of another vertex in $S$. The corresponding decision problem is NP-complete even for unit disk graphs. In this paper, we present a 5-factor approximation algorithm for the Minimum Semitotal Domination problem on unit disk graphs in the graph-based input model. The algorithm processes the layers of a Breadth-First-Search tree and constructs a maximal independent set whose vertices satisfy the semitotal condition. For a graph with $n$ vertices and $m$ edges, the algorithm runs in $O(n + m)$ time, and hence in $O(n^2)$ time in the worst case. This improves the previously known 5.75-approximation algorithm with $O(n^3)$ running time.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Computation",
         "MachineLearning"
@@ -6720,7 +6720,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Towards a characterization of idempotent Schur multipliers' and formalize its key results. Abstract: It is conjectured that every idempotent Schur multiplier can be written as a finite sum of contractive idempotents. This conjecture is equivalent to the statement that any boolean matrix $A$ with factorization norm $\\lVert A\\rVert_{γ_2}$ at most $γ$ can be expressed as a signed sum $$A = \\sum_{i=1}^L \\pm B_i,$$ where, up to permutation of rows and columns, each $B_i$ is a blow-up of an identity matrix, and $L$ depends only on $γ$. In this note we show that if $A$ is an $n\\times n$ boolean matrix with $\\lVert A\\rVert_{γ_2} \\le γ$, then it admits such an expression with $L = 2^{O(γ^9) + \\log^*\\! n}$, where $\\log^*$ is the iterated logarithm function. As an application, any sequence of matrices with bounded factorization norm belongs to the complexity class $\\mathrm{P}^\\mathrm{EQ}$ of communication problems with polylogarithmic equality-oracle complexity.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Computation"
@@ -6965,7 +6965,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Dense sets without large sumsets' and formalize its key results. Abstract: We prove, for all fixed $0 < δ< 1$, and all sufficiently large $n$, that there exists $S \\subset [n]$ with $|S| \\ge δn$ such that $A + B \\not \\subset S$ for all ${A, B \\subset \\mathbb{N}}$ satisfying $$\\min\\big\\{|A|, |B|\\big\\} \\ge \\big(3 + o(1)\\big) \\frac{\\log n }{ \\log (1 / δ)}.$$ A very recent result of Hernández and Hetzel shows that our bound is sharp up to a factor of 3, and together our results settle a conjecture of Kra, Moreira, Richter, and Robertson. In fact, we prove that a $δ$-dense random subset of $[n]$ is a valid choice for $S$ with high probability, and that one can take $n^{-α} \\le δ\\le 1 - c$ where $c > 0$ is fixed and $α> 0$ depends only on the $o(1)$ error, answering another question of the same authors in a strong form.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Computation",
         "Pythagorean"
@@ -7409,7 +7409,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Towards realistic large random models of labeled transition systems and their 0-1 laws' and formalize its key results. Abstract: Model checking is the automated verification of properties (specified in some modal logic) in labeled transition systems (LTSs); it is an essential tool in ensuring software systems function as intended. State spaces of software grow exponentially, and heuristics are needed to ensure model checking remains feasible in real-world applications. Heuristics, in turn, require a good understanding on the typical behaviour of LTSs. In this paper, we use random graph theory to create a probabilistic model of large LTSs. From a theoretical analysis of the creation of large LTSs, backed by empirical data from the Model Checking Contest, we endow these models with realistic parameter values. Then, we analyze the asymptotic behaviour of this model under LTL and CTL, two modal logics popular in model checking. We show that, depending on the precise model, as the size grows to infinity we either have a convergence law (for every formula, the probability that it holds converges to a limit) or a 0-1 l",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Algebra",
         "Computation"
@@ -7491,7 +7491,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Efficient Hamilton covers and linear arboricity of random graphs' and formalize its key results. Abstract: A Hamilton cover of a graph is a collection of Hamilton cycles whose union contains all edges. Since each Hamilton cycle covers two edges at every vertex, every Hamilton cover has size at least $\\lceil Δ(G)/2\\rceil$. We prove that this lower bound is tight for binomial random graphs $G(n,p)$ throughout the widest possible range of edge probabilities: if $ω(n)\\to\\infty$ and \\[ \\frac{\\log n+\\log\\log n+ω(n)}{n} \\le p=p(n) \\le 1-\\frac{ω(n)}{n^{2}}, \\] then $G\\sim G(n,p)$ with high probability has a Hamilton cover of size $\\left\\lceil \\frac{Δ(G)}{2}\\right\\rceil. $ The main new contribution is the sparse regime near the Hamiltonicity threshold, where we prove a conjecture of Draganić, Glock, Munhá Correia and Sudakov. Our proof develops constructive tools for decomposing such graphs into controlled forest systems and extending them, using reserved pseudorandom structure, into Hamilton cycles. We also prove the corresponding hitting-time result for the random graph process, answering a questi",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Computation",
         "Logic"
@@ -7980,7 +7980,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Online Beck--Fiala Down to Logarithmic Sparsity' and formalize its key results. Abstract: The Beck--Fiala conjecture asserts that every matrix $A\\in\\{0,1\\}^{n\\times T}$ with at most $d$ nonzero entries in each column has discrepancy $O(\\sqrt d)$. A major breakthrough result of Bansal and Jiang recently established the validity of the conjecture for $d \\ge \\log(T)^2$. The present article extends the validity of the classical \\textit{offline} Beck--Fiala conjecture to $d \\ge \\log(T)^{1+o(1)}$; moreover, the main thrust of the result is that it is actually obtained by an efficient \\textit{online} algorithm that minimizes prefix discrepancy. The result is also essentially optimal, since online prefix discrepancy is known to scale as $ω(\\sqrt{d})$ for $d =o(\\log T)$. As an immediate corollary, the open question of online vector balancing in the Spencer setting is also resolved. The algorithm is based on a compactly supported Metropolis fixed-point walk, constructed by combining ideas from several recent works on the online Komlós problem. The proof was generated in conversation ",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Computation"
@@ -8344,7 +8344,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Aperiodic tile sets from Sturmian lattices' and formalize its key results. Abstract: We give an explicit algorithm to construct aperiodic tile sets based on Sturmian words of quadratic slopes. The method works for any quadratic irrational slope, and we can produce an aperiodic tile set whose underlying scaling constant is a unit of any real quadratic field. There are two key ingredients in our construction. The first one is the ``Sturmian lattices'', an interesting grid structure generated by Sturmian words that emerged in an aperiodic monotile called Smith Turtle. The second is the bounded displacement equivalence of Delone sets, which plays a central role in this construction. A classification of Sturmian lattices and complete proofs are given in the full version.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Algebra",
         "Computation"
@@ -8467,7 +8467,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Aperiodicity and subword complexity in the binary expansion of powers of three' and formalize its key results. Abstract: We prove two results on the fine structure of the binary digits of $3^{m}$. First, for every fixed period $p$, the number of positions at which the binary expansion of $3^{m}$ breaks $p$-periodicity grows in order like $\\log m/\\log\\log m$; equivalently, no window of the expansion deeper than a fixed power of $\\log m$ is $p$-periodic. Second, the finite binary word formed by the low-order digits of $3^{m}$ has full low-order subword complexity: its complexity function satisfies $\\pcx_{3^{m}}(n)\\ge n+1$ for every length $n$, once $m$ is large enough.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Computation"
       ],
@@ -9153,7 +9153,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\nThis development formalizes the finite coordinate core of Curtin's *Generalizations of nets and Latin squares* (arXiv:2607.10890v1): column- and row-Latin matrices, orthogonality, cooperative pairs and systems, coordinate reticulations, svelte arrays, unique cross-line intersections, the grid-coordinate characterizations of Lemma 7.5, and the `m*n` cardinality consequence of Theorem 3.1.\n\nNatural next steps are:\n\n1. **Partition-level incidence structures.** Connect the coordinate-fibre representation here to a literal structure whose lines are finite sets and whose families are `Set.PairwiseDisjoint` covers. Prove both representations equivalent, including all seven clauses of Theorem 3.1.\n2. **Full inverse correspondence.** Package the maps between ordered reticulations, svelte semi-orthogonal arrays, and normalized cooperative systems as equivalences, proving Theorems 6.2, 6.3, 7.7, and 7.8 at structure level rather than only the forward encodings established here.\n3. **Multiplicity and foundations.** Model multisets of line families, then formalize repetition-free reticulations and Proposition 4.1.\n4. **Parastrophy and isotopy.** Define the permutation actions from Sections 9 and 10 and prove that they preserve the cooperative and reticulation axioms.\n5. **Constructions.** Formalize prolongation, splicing, and direct products from Sections 12–14, with formulas for their parameters.\n6. **Classical specializations.** Build translations from nets, mixed orthogonal arrays, mutually orthogonal Latin squares, and bireversible Mealy automata, recovering Propositions 3.6 and 6.6 and Theorem 7.3.\n7. **Finite search.** Add executable enumeration of small repetition-free systems up to isotopy, together with kernel-checked certificates for any reported counts.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Algebra",
         "Computation"
@@ -9531,7 +9531,7 @@
         "Probabilistic methods in enumerative combinatorics",
         "Discrete differential geometry and energy forms"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Computation"
@@ -9700,7 +9700,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\nThe formal result in `AffineDuality.lean` isolates a precise bridge between finite-group symmetry and cryptographic proof systems: translation gives exact witness-independent transcript distributions, while subtraction extracts a witness from two accepting answers sharing a commitment.\n\n## 1. Move from transcript multisets to probability distributions\n\nThe current theorem represents uniform finite sampling by the multiset obtained from `Finset.univ`. A natural next step is to restate perfect zero knowledge as equality of `PMF` values. This would make composition with randomized verifiers and repeated protocols more direct.\n\n## 2. Sequential and parallel repetition\n\nFormalize `k` independent Boolean challenges. The expected goals are:\n\n- simulated and real transcript vectors have identical distributions;\n- witness independence is preserved by product distributions;\n- if a cheating prover can answer both challenges at any repeated coordinate, subtraction extracts a witness;\n- under a suitable binding or fixed-commitment hypothesis, the soundness error decreases exponentially.\n\nThe last point cannot follow from the present algebraic model alone: it needs an explicit probabilistic adversary model and assumptions preventing challenge-dependent commitments.\n\n## 3. Connect to propositional proof verification\n\nEncode a propositional derivation as a finite list of locally checkable steps. A commitment layer can then hide the list while a verifier asks for selected local consistency checks. The important formal distinction is between:\n\n- local consistency of sampled steps;\n- global soundness of the encoded proof;\n- zero knowledge of the resulting transcript.\n\nA one-step opening protocol by itself does not establish the latter two properties. A rigorous development should use a sound locally testable encoding and a hiding, binding commitment scheme.\n\n## 4. Replace the abstract additive relation by concrete protocols\n\nInstantiate the construction with finite cyclic groups and linear maps, then connect it to Schnorr-style identification. This requires carefully separating additive notation in the exponent from multiplicative notation in the public group.\n\n## 5. Computational and communication complexity\n\nThe present development is information-theoretic and extensional; it does not claim polynomial communication in the statement length. A future complexity-aware formalization should represent algorithms, encodings, security parameters, and bit lengths explicitly. Any PA-wide succinctness claim must account for proof length and use a genuinely succinct argument system rather than infer statement-length communication directly from arithmetization or the PCP theorem.\n\n## 6. Malicious-verifier zero knowledge\n\nThe simulator currently captures the fixed-challenge, honest-verifier view. General zero knowledge requires quantification over verifier strategies and simulation of their complete views. Formalizing rewinding, expected running time, or straight-line simulation would clarify exactly which privacy guarantee survives beyond honest verifiers.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Algebra",
         "Computation"
@@ -10049,7 +10049,7 @@
         "probabilistic combinatorics",
         "tropical geometry"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Computation",
         "Pythagorean"
@@ -10231,7 +10231,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\n## What the formal result establishes\n\n`Catalog/Computation/SoundOfPi.lean` audits the proposed digit-to-note model before undertaking statistical tests.  With pitch offset equal to the decimal digit, every generated note lies between 0 and 9 semitones above the base frequency.  Thus any two generated notes are at most 9 semitones apart, and no generated pair can be an octave (12 semitones) apart.  A repeated digit at temporal lag 12 is instead a unison.  This distinction is independent of which real number supplies the digits.\n\n## Necessary corrections to the research hypothesis\n\n1. **Separate temporal and pitch lags.** Autocorrelation at sequence lag 12 compares digit positions twelve time steps apart; it does not measure a twelve-semitone interval. To study musical intervals, use the distribution of `|dᵢ - dⱼ|` (or pitch classes modulo 12) for a clearly specified pair of positions.\n2. **Choose a map capable of octaves.** The proposed map has only offsets 0–9. An octave statistic requires either a larger alphabet, octave registers, or another mapping whose image contains pitches 12 semitones apart.\n3. **Specify autocorrelation.** State whether digits are centered, which finite prefix is used, and whether the statistic is Pearson autocorrelation, equality frequency, or another quantity. These are not equivalent.\n4. **Pre-register significance tests.** Testing 13 lags for three constants creates multiple-comparison issues. Give the null model, sample size, test statistic, correction, and significance threshold in advance.\n5. **Do not infer infinite-digit laws from finite prefixes.** A significant finite-prefix statistic would be empirical evidence about that prefix, not a theorem about π, e, or √2. Irrationality only rules out eventually periodic decimal expansions; it does not imply normality or a particular autocorrelation law.\n6. **Clarify the continued-fraction claim.** π and e do not have bounded partial quotients established by the proposal, while √2 does. A theorem connecting decimal digit consonance to continued-fraction coefficients would require a precise statistic and substantial new number theory.\n\n## Next formal developments\n\n* Define finite digit words and exact equality counts at lag `ℓ`.\n* Prove general bounds `0 ≤ count ≤ N - ℓ` and identify lag-zero behavior.\n* Define interval histograms separately from temporal autocorrelation.\n* Encode supplied finite decimal prefixes as certified data and prove their exact count tables by kernel-checked computation.\n* Formalize the elementary theorem that an eventually periodic base-10 expansion represents a rational number, then use known irrationality results to obtain non-eventual-periodicity for π, e, and √2 where library support permits.\n* Only after the statistic and data are fixed, formalize rational-valued chi-squared calculations and their assumptions.\n\nNo claim of a statistically significant preference is made here because the request provides neither a prefix length nor digit data nor a precise statistic and null test.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -10272,7 +10272,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions: Quantum States with Non-Archimedean Probabilities\n\n## 1. Standard-part Born measures on arbitrary finite supports\n\n**Conjecture.** Let a finitely supported state have finite hyperreal amplitudes and appreciable nonzero squared norm. Then taking the standard part of every normalized Born weight produces a nonnegative real probability distribution of total mass one. Its support is exactly the set of branches whose normalized weights are appreciable and have positive standard part.\n\nThe key insight is that standard part should commute with finite sums once all summands are finite, while appreciability of the norm prevents normalization from magnifying an infinitesimal numerator into a visible weight.\n\n**Why now?** Normalization and the disappearance of one infinitesimal branch have been established separately; the finite-support theorem would unify them into a complete measurement law.\n\n## 2. Observational equivalence as a quotient of non-Archimedean state space\n\n**Conjecture.** For appreciably normalized finite states, equality of all standard-part Born probabilities defines an equivalence relation compatible with relabelling and with tensoring by an appreciably normalized ancillary state. The quotient admits a canonical map to the simplex of real probability distributions.\n\nThe key insight is that infinitesimal perturbations of amplitudes can change exact hyperreal weights without changing any observed probability, suggesting that observation is naturally a quotient rather than an injective representation.\n\n**Why now?** The equal-amplitude and infinitesimal-amplitude results isolate both sides of this equivalence: ket labels alone do not alter probabilities, whereas infinitesimal changes can disappear under observation.\n\n## 3. A finite-dimensional spectral theorem over a real-closed non-Archimedean field\n\n**Conjecture.** Every symmetric matrix over a real-closed non-Archimedean ordered field is orthogonally diagonalizable after passing to the field's algebraic real closure, and every finite eigenvalue has a standard-part eigenvalue satisfying the characteristic polynomial of the entrywise standard-part matrix, under a uniform finiteness hypothesis.\n\nThe key insight is that the algebraic spectral theorem and the standard-part map address different layers: diagonalization is controlled by real closedness, while observational eigenvalues require finiteness and compatibility of standard part with polynomial evaluation.\n\n**Why now?** The present measurement model is diagonal in a fixed surreal-indexed basis. A matrix theorem is the next testable step toward genuine observables without prematurely asserting an infinite-dimensional spectral theorem.\n\n## 4. Dirac collapse for finite lexicographic probability towers\n\n**Conjecture.** Replace pairs of rationals by finite lexicographic towers `ℚ^(k+1)`. Successively projecting away the last coordinate yields a filtration of observations, and an event first becomes visible precisely at the earliest coordinate where its mass is nonzero. Every normalized nonnegative finite measure therefore determines a hierarchy of real-valued shadow measures.\n\nThe key insight is that the first-coordinate standard part proved here is the first stage of a general valuation-like filtration, not an isolated construction.\n\n**Why now?** The two-coordinate model already exhibits exact normalization, finite additivity, and collapse to a Dirac measure; finite towers provide a concrete setting in which higher-order infinitesimal visibility can be tested.\n\n## 5. Tensor-product stability of infinitesimal invisibility\n\n**Conjecture.** If a branch in one appreciably normalized finite state has infinitesimal amplitude, then every product branch containing it has zero observed probability after tensoring with any finite state whose squared norm is finite and appreciable. Conversely, tensoring two appreciable branches preserves positive observed weight whenever both standard-part weights are positive.\n\nThe key insight is that product amplitudes multiply and standard part is multiplicative on finite hyperreals, so invisibility should form a tensor ideal among branches.\n\n**Why now?** Single-state invisibility is known, but compositional stability is essential before the model can represent composite systems or independent experiments.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Algebra",
         "Computation"
@@ -10764,7 +10764,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions: Tropical Hashing Beyond Coordinate Minima\n\n## 1. Complexity transition under coupled message constraints\n\nConjecture: If messages are restricted by a sparse system of integer difference constraints and the output must equal a prescribed value, tropical preimage existence exhibits a dichotomy governed by the constraint graph: it is polynomial-time decidable on bounded-treewidth graphs and NP-complete on unrestricted graphs.\n\nThe key insight is that the unconstrained fiber has a complete coordinatewise certificate, so any genuine hardness must arise from coupling the coordinates rather than from the tropical minimum itself.\n\nWhy now? The exact fiber characterization isolates the inequalities and active equality that a constraint system must interact with, making both dynamic programming and hardness reductions sharply testable.\n\n## 2. Universal collisions for finitely many tropical keys\n\nConjecture: For an `r`-component hash formed from `r` independent min-plus linear forms on `k` real coordinates, every message has an unbounded collision ray whenever `k > r`.\n\nThe key insight is that each component needs only one unchanged minimizing coordinate; after choosing at most `r` such witnesses, any remaining coordinate can be increased without changing any output component.\n\nWhy now? The two-key theorem proves the first nontrivial case and supplies the exact update lemma needed for an induction over an arbitrary finite key family.\n\n## 3. Geometry and dimension of generic fibers\n\nConjecture: For generic `r`-key data with `k > r`, every nonempty fiber is a finite polyhedral complex whose maximal cells have dimension at least `k-r`, with equality on a dense set of attainable outputs.\n\nThe key insight is that a tropical fiber is cut out by ordinary linear inequalities together with a disjunction of active-coordinate equalities, while simultaneous keys intersect these unions in a controlled polyhedral arrangement.\n\nWhy now? Exact single-key fiber certificates and deterministic collision directions identify both the cells and their recession directions, reducing the conjecture to a finite active-set analysis.\n\n## 4. Collision resistance from nonlinear tropical circuits\n\nConjecture: There exist bounded-depth tropical circuits with coordinate mixing and a discrete message alphabet for which finding collisions is average-case hard under a standard combinatorial assumption, whereas every fixed number of uncoupled min-plus linear forms remains collision-rich.\n\nThe key insight is that adding independent linear keys does not create diffusion: security requires nonlinear reuse and coupling of coordinates, not merely more coordinatewise minima.\n\nWhy now? The universal two-key collision theorem gives a rigorous obstruction that candidate constructions must escape and suggests a precise design test: every input coordinate must influence active witnesses through multiple coupled layers.\n\n## 5. Mining thresholds and recession cones\n\nConjecture: For tropical circuits whose acceptance region is defined by output thresholds, mining difficulty is controlled by the recession cone of the corresponding polyhedral complex; finite expected search requires the nonce trajectory to avoid every nontrivial recession direction.\n\nThe key insight is that the proven coordinate update is a recession direction of a hash fiber, so unrestricted nonce motion can produce entire rays of equivalent candidates rather than pseudorandom trials.\n\nWhy now? The collision construction supplies an explicit recession direction, while the concavity bridge links tropical evaluation to the geometry needed to classify threshold regions.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Computation",
         "Tropical"
@@ -11410,11 +11410,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "71fc60c7",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -11427,7 +11427,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0276",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-18T06:23:14.492190+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -11442,7 +11442,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-18T06:18:54.772301+00:00",
       "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
@@ -11567,6 +11567,46 @@
       "thread_id": "",
       "timestamp": "2026-07-18T03:22:53.109799+00:00",
       "title": "Deepening: Tropical Cryptocurrency: Mining on the Min-Plus Semiring"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Building on cycle e9a483ed (Q=0.760), which proved 8 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: L-functions are the DNA of mathematics — each one encodes deep arithmetic information. But how many L-functions ARE there? The L-function universe is vast: (1) The Riemann zeta function (1 L-function), (2) Dirichlet L-functions (countably many), (3) L-functions of elliptic curves (uncountably many, ",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Computation"
+      ],
+      "github_issue": 0,
+      "id": "push_e9a483ed_ee30e1cf",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.86,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "e9a483ed",
+      "source_path": "The L-Function Universe: A Cosmic Census of All L-Functions",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-18T06:23:02.846306+00:00",
+      "title": "Deepening: The L-Function Universe: A Cosmic Census of All L-Functions"
     },
     {
       "ambition_level": "extension",
@@ -11961,6 +12001,7 @@
     "±p_1^{a_1}": 1
   },
   "selection_log": [
+    "famous_subtask",
     "famous_subtask",
     "famous_subtask",
     "famous_subtask",
