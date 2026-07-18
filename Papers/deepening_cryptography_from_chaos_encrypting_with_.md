@@ -1,48 +1,26 @@
-# Computational Evidence: Logistic–Tent Conjugacy
+# Computational evidence
 
-We test the intertwining identity `f(h(t)) = h(T(t))` with
-`f(x)=4x(1-x)`, `T(t)=1-|2t-1|`, `h(t)=sin²(πt/2)`.
+For `f(x)=4x(1-x)`, the two inverse branches are
 
-## 1. Pointwise check of the conjugacy
+`L(y)=(1-√(1-y))/2`, `U(y)=(1+√(1-y))/2`.
 
-For sample seeds `t` we compare `f(h(t))` and `h(T(t))`:
+Using the representative target `y = 3/4`:
 
-| t     | h(t)      | f(h(t))   | T(t)   | h(T(t))   | match |
-|-------|-----------|-----------|--------|-----------|-------|
-| 0.10  | 0.024472  | 0.095492  | 0.20   | 0.095492  | ✓     |
-| 0.25  | 0.146447  | 0.500000  | 0.50   | 0.500000  | ✓     |
-| 0.40  | 0.345492  | 0.904508  | 0.80   | 0.904508  | ✓     |
-| 0.50  | 0.500000  | 1.000000  | 1.00   | 1.000000  | ✓     |
-| 0.60  | 0.654508  | 0.904508  | 0.80   | 0.904508  | ✓     |
-| 0.75  | 0.853553  | 0.500000  | 0.50   | 0.500000  | ✓     |
-| 0.90  | 0.975528  | 0.095492  | 0.20   | 0.095492  | ✓     |
+| depth | branch word | seed | check |
+|---:|:---:|---:|:---|
+| 1 | L | 1/4 | `f(1/4)=3/4` |
+| 1 | U | 3/4 | `f(3/4)=3/4` |
+| 2 | LL | `(2-√3)/4` | `f²(seed)=3/4` |
+| 2 | UL | `(2+√3)/4` | `f²(seed)=3/4` |
+| 2 | LU | 1/4 | `f²(seed)=3/4` |
+| 2 | UU | 3/4 | `f²(seed)=3/4` |
 
-The identity holds to machine precision across the whole interval, including the
-fold at `t = 1/2` where the tent branch switches.
+The four depth-two values are distinct and lie in `(0,1)`. The same recursive calculation predicts `2^n` distinct depth-`n` preimages for every target in `(0,1)`.
 
-## 2. Fixed-point correspondence
+## Counterexample hunt and boundary cases
 
-- Tent fixed points solve `T(t)=t`: `t=0` (left ramp `2t=t`) and `t=2/3`
-  (right ramp `2-2t=t`).
-- Their images: `h(0)=0`, `h(2/3)=sin²(π/3)=3/4`.
-- These are exactly the logistic fixed points (`f(0)=0`, `f(3/4)=3/4`), confirming
-  the transport of fixed points.
+The open-interval restriction is essential. At `y=1`, both branches coincide at `1/2`, so binary words need not decode injectively. At `y=0`, the lower branch reaches the endpoint `0`. No collision between distinct branch words occurs for targets strictly between `0` and `1`, because at every level `L(y)<1/2<U(y)` and each branch is injective.
 
-## 3. Period-two orbit
+## Sequence search
 
-- Tent 2-cycle: `T(2/5)=4/5`, `T(4/5)=2/5`, so `T²(2/5)=2/5` and `2/5 ≠ 4/5`.
-- Images under `h`: `h(2/5)=sin²(π/5)≈0.345492`, `h(4/5)=sin²(2π/5)≈0.904508`.
-- Check: `f(0.345492)=0.904508`, `f(0.904508)=0.345492`, so `f²(0.345492)=0.345492`
-  with `f(0.345492)≠0.345492` — a genuine logistic 2-cycle.
-
-## 4. Monotonicity / bijectivity of h
-
-Sampling `h` on a grid of `[0,1]` gives a strictly increasing sequence from
-`h(0)=0` to `h(1)=1`; combined with continuity this is consistent with `h` being a
-homeomorphism of the unit interval, as proved.
-
-## Conclusion
-
-All computational checks are consistent with the formal theorems: the conjugacy is
-exact (not approximate), fixed and periodic points transfer, and `h` is a strictly
-increasing bijection of `[0,1]`.
+The number of indexed preimages by depth is `1, 2, 4, 8, 16, ...`, the powers of two (OEIS A000079). This is supporting context only; the Lean development proves the general formula and does not rely on OEIS data.

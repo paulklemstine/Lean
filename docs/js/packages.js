@@ -7,7 +7,13 @@ window.renderMarkdownWithMath = function(markdown) {
     
     let text = markdown;
 
-    // Display math: $$ ... $$
+    // Fix LLM JSON string mangling for common LaTeX commands
+    text = text.replace(/\x0crac/g, '\\frac');
+    text = text.replace(/\x08eta/g, '\\beta');
+    text = text.replace(/\x09heta/g, '\\theta');
+    text = text.replace(/\x09au/g, '\\tau');
+    text = text.replace(/\x0dho/g, '\\rho');
+
     text = text.replace(/\$\$([\s\S]+?)\$\$/g, (match) => {
         const cleanMatch = match.replace(/^([ \t]*>[ \t]?)+/gm, '');
         const id = `MATHBLOCKDISPLAY${counter++}MATHBLOCK`;
