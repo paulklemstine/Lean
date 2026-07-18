@@ -202,7 +202,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Fractal Number Theory: Hausdorff Dimension of Prime Distributions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "64b7f63b",
     "description": "Cycle 18410e31 (Q=0.770) proved 12 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: When a theorem prover searches for a proof, it explores a tree of possible derivation steps. The branching factor is the number of applicable inference rules at each step. Define the proof-search frac",
     "domains": [
       "Novelty"
@@ -211,7 +211,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8200000000000001,
     "research_mode": "team",
     "source_exp_id": "18410e31",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-18T09:21:32.344494+00:00",
     "title": "Close Proofs: Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
   },
@@ -3094,21 +3094,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sheaf Cohomology of Data: The Topology of Missing Information"
   },
   {
-    "consumed_by_exp_id": "154045db",
-    "description": "A jigsaw puzzle has N pieces, each with 4 edges. The 'signature' of a piece is the tuple (top, right, bottom, left) of edge types (flat, tab, blank). Two pieces fit together if their adjacent edges are complementary (tab meets blank). Conjecture: Solving a jigsaw puzzle is NP-complete. The reduction: given a 3-SAT formula with n variables and m clauses, construct a jigsaw puzzle with N = 2n + m + 2 pieces where the only valid assembly corresponds to a satisfying assignment. Variable pieces: each variable x_i has two pieces (TRUE and FALSE), one with a tab and one with a blank on the assignment edge. Only one can be placed (mutual exclusion via complementary edges). Clause pieces: each clause C_j is a piece that has three input edges (one per literal) and one output edge. The piece fits only if at least one input edge is connected to a TRUE literal piece. The top-left corner and bottom-right corner enforce the boundary. Test: construct the reduction explicitly for a small 3-SAT instance (e.g., (x1 OR x2 OR NOT x3) AND (NOT x1 OR x3)) and verify the puzzle has a solution iff the formula is satisfiable. Impact: jigsaw puzzles are NP-complete, so the satisfying snap you feel when completing a puzzle is literally the same as solving a hard computational problem.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0294",
-    "priority_score": 0.77,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T09:04:45.744241+00:00",
-    "title": "The Mathematics of Jigsaw Puzzles: NP-Completeness and Topology"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Cycle 0daa61af (Q=0.720) proved 18 theorems in Tropical but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The AdS/CFT correspondence says that a gravitational theory in the bulk of anti-de Sitter space is equivalent to a conformal field theory on the boundary. What if prime numbers have a holographic dual",
     "domains": [
@@ -3811,6 +3796,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-18T12:48:35.496334+00:00",
     "title": "**Conjecture.** For every odd positive integer `n`, the angular spectrum selecte"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Jigsaw Complexity and Topology\n\n## 1. Geometric NP-completeness with four-sided pieces\n\nConjecture: deciding whether a finite multiset of non-rotatable square pieces with flat, tab, and blank edges tiles a prescribed rectangle is NP-complete, even when each non-flat edge carries one of only finitely many colors and every valid tiling has a fixed outer frame.\n\nThe key insight is that the assignment-level bijection should survive replacement of the abstract clause predicate by planar wire, crossover, fan-out, and clause gadgets whose unused interfaces are forced by the frame.\n\nWhy now? The exact witness correspondence isolates the sole missing burden: a polynomial-size geometric realization that introduces neither spurious assemblies nor lost satisfying assignments.\n\n## 2. Parsimonious counting hardness\n\nConjecture: there is a geometric gadget family for which the number of rectangular assemblies equals the number of satisfying assignments, up to a formula-independent symmetry factor computable in polynomial time.\n\nThe key insight is that witness preservation is stronger than equisatisfiability and naturally targets counting reductions; rigid framing should quotient out translations, rotations, and interchangeable copies.\n\nWhy now? The abstract construction already gives a canonical bijection of witness spaces, so every discrepancy in a geometric implementation can be localized to gadget automorphisms.\n\n## 3. Complementation as a free involution\n\nConjecture: for every framed puzzle not isomorphic to its global tab\u2013blank complement, complementation acts freely on the disjoint union of the two assembly spaces, forcing their combined cardinality to be even.\n\nThe key insight is that simultaneous Boolean negation and literal-polarity reversal is an order-two transport of complete solution spaces, not merely a preservation of solvability.\n\nWhy now? Solvability invariance has been established, while the exact boundary between free orbits and self-dual fixed configurations is now explicit and testable.\n\n## 4. Homology-valued boundary obstruction\n\nConjecture: for puzzles assembled on an orientable surface, signed edge potentials define a cohomology class whose pairing with every noncontractible cycle must vanish; on a rectangle this reduces to tab\u2013blank conservation, while on a torus it gives two independent flux obstructions.\n\nThe key insight is that local complementary cancellation is a discrete divergence law, and nontrivial first homology records flux that cannot be removed by pairing interior edges.\n\nWhy now? Existing strip and grid conservation laws provide the contractible base cases from which cycle decompositions and surface gluings can be developed.\n\n## 5. Topology of the solution complex\n\nConjecture: there are parsimonious jigsaw gadgets for which the cubical complex generated by single-variable flips deformation-retracts onto the corresponding SAT solution complex.\n\nThe key insight is that preserving witnesses alone captures vertices, whereas controlled local reconfiguration can preserve adjacency, connected components, and ultimately homotopy type.\n\nWhy now? A canonical vertex bijection is available; the next falsifiable step is to characterize exactly when one-variable changes correspond to bounded local rearrangements of pieces.\n",
+    "domains": [
+      "Geometry",
+      "Pythagorean"
+    ],
+    "id": "fd_0319",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "154045db",
+    "status": "available",
+    "timestamp": "2026-07-18T12:48:42.770410+00:00",
+    "title": "Conjecture: deciding whether a finite multiset of non-rotatable square pieces wi"
   },
   {
     "consumed_by_exp_id": "",
