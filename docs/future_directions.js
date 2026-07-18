@@ -77,6 +77,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "The L-Function Oracle: What If We Could Compute L-Functions Instantly?"
   },
   {
+    "consumed_by_exp_id": "e9a483ed",
+    "description": "L-functions are the DNA of mathematics \u2014 each one encodes deep arithmetic information. But how many L-functions ARE there? The L-function universe is vast: (1) The Riemann zeta function (1 L-function), (2) Dirichlet L-functions (countably many), (3) L-functions of elliptic curves (uncountably many, one per j-invariant), (4) L-functions of modular forms (countably many, but indexed by weight and level), (5) L-functions of Galois representations (enormous family). Conjecture: The set of 'natural' L-functions (those satisfying the Selberg class axioms: analytic continuation, functional equation, Euler product, Ramanujan bound) is COUNTABLE. This means the universe of well-behaved L-functions is no bigger than the integers, despite each individual L-function encoding infinitely much information. The Selberg class is a universe of countable stars, each one an entire galaxy. Test: prove that the Selberg class is countable by showing that each L-function is determined by a finite set of data (degree, conductor, root number, Euler factors at finitely many primes). Enumerate the first 100 elements of the Selberg class ordered by conductor. Impact: the mathematical universe of L-functions is countable \u2014 there are only as many well-behaved L-functions as integers. Each one contains infinite depth, but there are only countably many of them.",
+    "domains": [
+      "Novelty",
+      "NumberTheory"
+    ],
+    "id": "fd_0262",
+    "priority_score": 0.86,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-07-18T03:38:36.284707+00:00",
+    "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "Domain Shared has declined by 0.164 over recent cycles (recent avg=0.696 vs prior=0.860). Take a completely fresh approach \u2014 different proof techniques, new definitions, or a different subfield within this domain. Avoid repeating approaches that have been producing diminishing returns.",
     "domains": [
@@ -134,6 +149,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-18T00:59:30.928895+00:00",
     "title": "Chaos as a Computable Shadow: The Shadowing Lemma for Real Programs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proofs are static objects, but what if proofs could improve? Define a proof refinement system where each proof P has a complexity C(P) = length(P) + depth(P) + number of lemmas, and a proof P' is a refinement of P if P' proves the same theorem with C(P') < C(P). Conjecture: For every theorem T provable in ZFC, there exists a sequence of refinements P = P_0, P_1, P_2, ... such that C(P_n) is non-increasing and the limit P_infinity is the simplest proof of T (in the sense of Kolmogorov complexity). Moreover, the refinement process halts: there exists N such that C(P_N) = C(P_{N+1}) = ... = C(P_infinity). The key insight: proof simplification is a well-founded process because the complexity is a natural number that decreases at each step. But the process can be arbitrarily long \u2014 the proof of the four-color theorem might require 10^100 refinements to reach its simplest form. Test: formalize the refinement system in Lean 4. Starting from the statement of the irrationality of sqrt(2), generate refinements by eliminating unnecessary lemmas, shortening case splits, and removing redundant quantifiers. Measure C(P) at each step and verify it decreases. Impact: proofs are not static \u2014 they are living objects that can be improved. The simplest proof of a theorem is the LIMIT of the refinement process, and this limit ALWAYS exists.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0261",
+    "priority_score": 0.82,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-18T03:38:36.235877+00:00",
+    "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
   },
   {
     "consumed_by_exp_id": "f8479bcf",
@@ -3311,7 +3341,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Dark Mathematics: Theorems That Exist But Cannot Be Found"
   },
   {
-    "consumed_by_exp_id": "d764048a",
+    "consumed_by_exp_id": "",
     "description": "The Fibonacci sequence is defined by F(n+1) = F(n) + F(n-1) and converges to the golden ratio. Define the ANTI-Fibonacci sequence: A(n+1) is the smallest positive integer that is NOT equal to A(n) + A(n-1). The sequence begins 1, 1, 2, 4, 7, 11, 16, ... (each term avoids being the sum of the two previous terms). Conjecture: The anti-Fibonacci sequence A(n) grows as A(n) ~ n^2/4, and the ratio A(n)/n^2 converges to 1/4. More precisely, A(n) = floor(n^2/4) + O(1). The sequence avoids the golden ratio entirely \u2014 the ratio A(n+1)/A(n) does NOT converge, instead oscillating between 1 and 2. The complement of the anti-Fibonacci sequence (numbers that ARE sums of two previous anti-Fibonacci numbers) has density 0. Test: compute A(n) for n up to 10^6 and verify A(n)/n^2 approaches 1/4. Prove A(n) = floor(n^2/4) + O(1) by induction. Impact: a beautiful counterpoint to the Fibonacci sequence \u2014 instead of converging to a constant, it grows quadratically while systematically avoiding addition.",
     "domains": [
       "Novelty",
@@ -3321,7 +3351,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.73,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-17T03:25:44.329567+00:00",
     "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
   },

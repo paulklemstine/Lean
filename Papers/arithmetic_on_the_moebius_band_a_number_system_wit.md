@@ -1,60 +1,48 @@
-# Computational Evidence: Arithmetic on the Möbius Band
+# Computational Evidence
 
-We study the value map `φ(x, y) = y·(2x − 1)` on the Möbius band
-`M = (ℝ × ℝ) / ~`, where `(0, y) ~ (1, -y)`.
+## Small-case calculations
 
-## 1. The value map descends to the quotient
+For nonzero integer `n`, the proposal evaluates to
 
-The gluing identifies `(0, y)` with `(1, −y)`. Evaluate `φ` on both:
+`|n| * (2 * (1/2 + 1/(2n)) - 1) = |n| / n`.
 
-| point   | φ = y·(2x−1)        |
-|---------|---------------------|
-| (0, y)  | y·(2·0 − 1) = −y    |
-| (1, −y) | (−y)·(2·1 − 1) = −y |
+| `n` | proposed coordinate `x` | scale `|n|` | represented value |
+|---:|---:|---:|---:|
+| -3 | 1/3 | 3 | -1 |
+| -2 | 1/4 | 2 | -1 |
+| -1 | 0 | 1 | -1 |
+| 1 | 1 | 1 | 1 |
+| 2 | 3/4 | 2 | 1 |
+| 3 | 2/3 | 3 | 1 |
+| 6 | 7/12 | 6 | 1 |
 
-The two agree for every `y`, so `φ` is constant on each glued pair and therefore
-descends to a well-defined function `M → ℝ`. (Formalized: `value_respects_moebRel`,
-`MoebiusValue`.)
+The expression is undefined at `n = 0` as written because it contains `1/(2n)`. Lean's totalized rational division assigns a value, but that convention is not the proposed geometric embedding and is not used to validate the zero case.
 
-## 2. The ℤ-embedding collapses to the sign
+Factor checks:
 
-The prompt's embedding is `n ↦ (1/2 + 1/(2n), |n|)`. Its value is
+| claim | result |
+|---|---|
+| `6 = 2 * 3` | true |
+| `-6 = (-2) * (-3)` | false; RHS is `6` |
+| `-6 = 2 * 3 * (-1)` | true |
 
-```
-φ = |n| · (2·(1/2 + 1/(2n)) − 1) = |n| · (1/n) = |n|/n = sign(n).
-```
+Representative-independence checks use `(0,1) ~ (1,-1)`:
 
-Small cases (value of `embed n`):
+* Multiplying both representatives coordinatewise gives `(0,1)` and `(1,1)`, which are not equivalent (the endpoint rule would require the second fiber coordinate to be `-1`).
+* Adding both representatives coordinatewise gives `(0,2)` and `(2,-2)`, which are not equivalent because `2` is not an endpoint coordinate.
 
-| n     | -3 | -2 | -1 |  1 |  2 |  3 |
-|-------|----|----|----|----|----|----|
-| value | -1 | -1 | -1 | +1 | +1 | +1 |
+## OEIS search
 
-So the "Möbius integers" do **not** form a faithful copy of `ℤ`: all positive
-integers share the value `+1` and all negative integers share `−1`. The image of the
-value map on the embedded integers is just `{−1, +1}`. This refutes the conjecture
-that `Z_M` is a one-point compactification of `ℤ` (which would need the embedding to be
-injective away from a single point). (Formalized: `value_embed_pos`, `value_embed_neg`,
-`value_embed_sign`, `embed_not_injective`.)
+No OEIS search is applicable: no new integer sequence is asserted. The observed represented-value pattern is simply the sign function on nonzero integers.
 
-## 3. Counterexample hunt for injectivity of `φ` on `M`
+## Counterexample hunt
 
-`φ` is surjective (the point `(1, r)` has value `r`), but far from injective: e.g.
-`(1, 1)` and `(3/4, 2)` are distinct, non-glued points with `φ = 1` in both cases:
+The smallest useful counterexamples already invalidate the universal structural claims:
 
-```
-φ(1, 1)   = 1·(2·1 − 1)     = 1
-φ(3/4, 2) = 2·(2·(3/4) − 1) = 2·(1/2) = 1
-```
+* Two equivalent pairs of representatives show multiplication is not well-defined.
+* The same pairs show addition is not well-defined.
+* `n = 2` shows the represented scalar is `1`, not `2`.
+* `(-2)(-3) = 6` refutes the proposed negative factorization.
+* `-1` is a unit, refuting its proposed primality.
 
-They are not identified by `~` (neither has first coordinate `0`, and the boundary
-rule `x=1 ↦ x'=0` fails since `3/4 ≠ 0`), so they are genuinely different points of
-`M` with equal value. (Formalized: `MoebiusValue_surjective`,
-`MoebiusValue_not_injective`.)
-
-## Summary
-
-The only robust structural fact is the well-definedness of `φ` on the twist quotient.
-The proposed ring / integral-domain / prime-factorization story does not survive
-contact with the actual value map, which collapses the integers onto their signs.
-No OEIS sequence arises (the image is the finite set `{−1, +1}`).
+All mathematical claims retained in this report are mirrored by kernel-checked theorems in `Speculative/MoebiusArithmetic.lean`; the tables are explanatory rather than the source of verification.
