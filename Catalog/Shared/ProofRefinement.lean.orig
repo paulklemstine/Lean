@@ -30,7 +30,7 @@
   modus-ponens chain.
 -/
 import Logic.Propositional
-import Shared.TreeComplexity
+import Learning.TreeComplexity
 
 namespace Learning.ProofRefinement
 

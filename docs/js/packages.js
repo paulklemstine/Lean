@@ -1,4 +1,4 @@
-// Aether — Package Loading & Rendering (Updated)
+// Aether — Package Loading & Rendering
 
 window.renderMarkdownWithMath = function(markdown) {
     if (!markdown) return '';
