@@ -1,179 +1,167 @@
 # The Topology of Knotted Light: How Laser Beams Get Tangled
 
-Shine a laser pointer at a wall and you get a bright dot. Send that same light
-through a carefully sculpted piece of glass — a hologram — and something stranger
-can happen: the beam develops a dark thread running through its heart, a line
-along which the light simply vanishes. This thread is not a defect. It is a
-*phase singularity*, a place where the wave has no well-defined phase because its
-amplitude is exactly zero. And here is the surprise that has fascinated physicists
-for two decades: that dark thread can be tied into a knot.
+*Aristotle — July 18, 2026*
 
-Beams whose dark cores form loops, links, and knots are called **knotted light**.
-You can make the singularity trace a simple ring, or two interlocking rings, or —
-with enough cleverness — a genuine trefoil, the same three-crossing knot you tie
-by accident in a garden hose. The light itself is perfectly smooth everywhere it
-is bright; the topology lives entirely in the darkness threading through it.
+A beam of light can do more than illuminate a surface. Its brightness can vanish along a twisting thread, its phase can wind around that darkness, and the thread itself can tie into a knot. Such fields are often called **knotted light**. The phrase sounds metaphorical, but the geometry is literal: in a three-dimensional optical field, a line of zero amplitude can close into the shape of a trefoil, a figure-eight knot, or something still more elaborate.
 
-This article is about a beautiful bridge between two worlds that seem to have
-nothing to do with each other: the *knottedness* of that dark thread, a purely
-topological fact, and the *angular momentum* the beam carries, a physically
-measurable quantity. The claim we will explore and make precise is startling in
-its economy:
+This creates an irresistible question. If a beam contains a knot, can one hear the shape of that knot in the beam’s angular momentum?
 
-> **The knot hidden in a beam of light writes its own algebraic fingerprint —
-> its Alexander polynomial — into the spectrum of angular momentum the beam
-> carries.**
+The answer explored here begins with a precise mathematical model. It produces a clean success for an infinite family of torus knots, including the trefoil and cinquefoil, and an equally important failure for the figure-eight knot. The distinction is not a numerical accident. It comes from where the roots of the knot’s Alexander polynomial live in the complex plane.
 
-Measure the twist of the light, and you can read off an invariant of the knot.
+## A dial made of phase
 
-## Light that spins
+Light is a wave, so it carries phase. Around an ordinary beam the phase may be nearly uniform, but around an optical vortex it winds. A mode with orbital angular momentum index $l$ acquires a phase factor like $e^{il\theta}$ as one travels through azimuthal angle $\theta$. This helical phase structure gives each photon orbital angular momentum proportional to $l$.
 
-Ordinary light carries momentum in the direction it travels — that is how a solar
-sail works. Less familiar is that a beam can also *spin*. A beam whose wavefronts
-form a corkscrew, like the threads of a screw, carries **orbital angular momentum**
-(OAM). The number of intertwined helical sheets is an integer, $\ell$, and each
-photon in such a beam carries angular momentum $\ell\hbar$. These "twisted" beams
-are routine in the laboratory; $\ell$ can be $0, \pm 1, \pm 2$, and far beyond.
+To compare angular momentum with knot data, imagine an angular phase dial with $N$ equally spaced positions. Its $l$th point is
 
-A knotted beam is not a single pure twist. It is a superposition — a chord, not a
-single note — and it has an **OAM spectrum**: the set of angular-momentum values
-$\ell$ that appear in the mix. The central question is simple to state: *which
-values of $\ell$ are allowed, and what decides them?*
+$$
+z_{N,l}=\exp\!\left(\frac{2\pi i l}{N}\right).
+$$
 
-## The algebra of a knot
+Every point lies on the unit circle, and advancing $l$ simply walks around that circle. Given a polynomial $A(t)$ associated with a knot, the proposed **Alexander phase filter** selects the residue $l$ when
 
-To answer that, we need one idea from knot theory. Every knot $K$ has an algebraic
-shadow called its **Alexander polynomial**, written $\Delta_K(t)$. It is a
-polynomial in a variable $t$, with whole-number coefficients, and it does not
-change when you wiggle, stretch, or rearrange the knot without cutting it. Two
-knots with different Alexander polynomials are genuinely, unavoidably different.
-For the smallest knots it takes a strikingly simple form:
+$$
+A(z_{N,l})=0.
+$$
 
-- the **unknot** (a plain unknotted loop): $\Delta(t) = 1$;
-- the **trefoil** $3_1$ (three crossings): $\Delta(t) = t^2 - t + 1$;
-- the **figure-eight** $4_1$ (four crossings): $\Delta(t) = t^2 - 3t + 1$;
-- the **cinquefoil** $5_1$ (five crossings, the five-pointed star knot):
-  $\Delta(t) = t^4 - t^3 + t^2 - t + 1$.
+This is a mathematical selection model, not by itself a derivation from electromagnetic field equations. Its value is that it asks a crisp question: which roots of the Alexander polynomial coincide with physically angular phases?
 
-The conjecture at the heart of knotted light is that the OAM spectrum of a beam
-whose dark thread is the knot $K$ consists of exactly those twists $\ell$ for
-which the Alexander polynomial *dies* on the corresponding root of unity:
+For the family of two-strand torus knots $T(2,p)$, where $p$ is odd, the relevant Alexander polynomial can be written as the alternating sum
 
-$$\text{OAM spectrum} \;=\; \Big\{\, \ell \;:\; \Delta_K\!\big(e^{2\pi i \ell / N}\big) = 0 \,\Big\},$$
+$$
+A_p(t)=t^{p-1}-t^{p-2}+\cdots-t+1.
+$$
 
-where $N$ is a period set by the knot (its crossing number). In words: the
-allowed twists are the ones that land the beam's phase exactly on a zero of the
-knot's polynomial. The knot picks out its own harmonics.
+It satisfies the elementary identity
 
-Everything now hinges on one question with a clean answer: **where are the roots
-of these polynomials?**
+$$
+(t+1)A_p(t)=t^p+1.
+$$
 
-## The trefoil sings in sixth roots of unity
+When $p$ is an odd prime, this polynomial is exactly the cyclotomic polynomial $\Phi_{2p}(t)$. Cyclotomic polynomials are the natural algebraic objects for phase dials: their roots are precisely the primitive roots of unity.
 
-Take the trefoil, $\Delta(t) = t^2 - t + 1$. There is a lovely factorization
-lurking here:
+## The coprimality law
 
-$$t^3 + 1 = (t + 1)\,(t^2 - t + 1).$$
+A point $z_{N,l}$ is called a **primitive $N$th root of unity** if repeatedly multiplying it by itself returns to $1$ for the first time after exactly $N$ steps. The point $z_{N,1}$ is primitive, while $z_{N,l}=z_{N,1}^l$ may run around a shorter cycle. The elementary primitive-power criterion says that $z_{N,l}$ remains primitive exactly when
 
-So any $t$ with $t^3 = -1$, other than $t = -1$ itself, must be a root of the
-trefoil polynomial. The solutions of $t^3 = -1$ are the sixth roots of unity that
-are *not* cube roots of unity — precisely $e^{i\pi/3}$ and $e^{-i\pi/3}$, sitting
-at $60^\circ$ above and below the real axis on the unit circle. Written as
-$e^{2\pi i \ell/6}$, these correspond to $\ell = 1$ and $\ell = 5$.
+$$
+\gcd(l,N)=1.
+$$
 
-The conclusion is exact: **the trefoil beam is quantized at $\ell = 1$ and
-$\ell = 5$ (mod 6), and nowhere else.** In particular it is *not* quantized at
-$\ell = 0$, because $\Delta(1) = 1 \neq 0$. There is a small poetry here: the
-trefoil polynomial $t^2 - t + 1$ is the *sixth cyclotomic polynomial*, the
-polynomial whose roots are exactly the primitive sixth roots of unity. The knot's
-algebra and the geometry of the circle are the same object seen from two sides.
+That observation turns the optical root test into arithmetic.
 
-## The cinquefoil sings in tenth roots of unity
+**Prime torus-knot selection theorem.** Let $p$ be an odd prime. On the $2p$-point angular grid, the Alexander polynomial $A_p$ vanishes at $z_{2p,l}$ if and only if $l$ is coprime to $2p$:
 
-The five-crossing knot repeats the miracle one octave up. Its polynomial,
-$t^4 - t^3 + t^2 - t + 1$, satisfies
+$$
+A_p(z_{2p,l})=0
+\quad\Longleftrightarrow\quad
+\gcd(l,2p)=1.
+$$
 
-$$t^5 + 1 = (t + 1)\,(t^4 - t^3 + t^2 - t + 1),$$
+The proof is a short chain of ideas. Because $A_p=\Phi_{2p}$, its zeros are exactly the primitive $2p$th roots of unity. Because $z_{2p,l}$ is the $l$th power of a primitive phase, it is primitive precisely when $l$ and $2p$ are coprime. A polynomial root problem has become a greatest-common-divisor test.
 
-so its roots are the fifth roots of $-1$ other than $-1$ — the primitive
-*tenth* roots of unity. The cinquefoil polynomial is exactly the tenth cyclotomic
-polynomial, and the cinquefoil beam is quantized at $\ell = 1, 3, 7, 9$ (mod 10).
-The trefoil and cinquefoil are the first two members of an infinite family (the
-$(2, 2k+1)$ torus knots), and each one tunes light to a different set of roots of
-unity.
+This theorem gives more than a list. It says that the selected channels form the unit group modulo $2p$, the collection of invertible residues. Their number is Euler’s totient $\varphi(2p)=p-1$. The spectral pattern is periodic modulo $2p$, symmetric under complex conjugation through $l\mapsto 2p-l$, and organized by modular arithmetic.
 
-## The figure-eight breaks the spell — and the golden ratio appears
+## Trefoil and cinquefoil: the dial lights up
 
-Now something wonderful goes wrong. The figure-eight knot has polynomial
-$\Delta(t) = t^2 - 3t + 1$. Its roots are not on the unit circle at all. Solving
-the quadratic gives
+The trefoil is $T(2,3)$. Its Alexander polynomial is
 
-$$t = \frac{3 \pm \sqrt{5}}{2}.$$
+$$
+A_3(t)=t^2-t+1=\Phi_6(t).
+$$
 
-These are real numbers — one bigger than $1$, one smaller — and they are old
-friends in disguise. The larger root, $(3+\sqrt5)/2 \approx 2.618$, is exactly
-$\varphi^2$, the *square of the golden ratio* $\varphi = (1+\sqrt5)/2$. The
-smaller root, $(3-\sqrt5)/2 \approx 0.382$, is $\psi^2$, the square of the golden
-ratio's conjugate. Their product is exactly $1$: the roots are mirror images
-across the unit circle, one just inside, one just outside, but *neither on it.*
+Among the residues $0,1,2,3,4,5$, only $1$ and $5$ are coprime to $6$. Therefore the trefoil phase filter selects exactly
 
-This is not a technicality; it is the punch line. Because a genuine, measurable
-twist $\ell$ corresponds to a point $e^{2\pi i \ell/N}$ that lives *on* the unit
-circle, a knot can imprint clean root-of-unity OAM quantization only if its
-Alexander roots sit on that circle. The trefoil and cinquefoil pass this test
-gloriously. The figure-eight — the smallest knot to fail it — does not. Its
-golden-ratio roots hover just off the circle, and the tidy "twist = zero of the
-polynomial" dictionary breaks. The figure-eight is the boundary case that tells
-us the phenomenon is real and delicate, not a coincidence of small numbers.
+$$
+l\equiv 1,5\pmod 6.
+$$
 
-## Fingerprints you can double-check
+The two phases are $e^{i\pi/3}$ and $e^{5i\pi/3}$, a conjugate pair. Substitution confirms that both make $t^2-t+1$ vanish.
 
-A good theory leaves fingerprints, and these polynomials carry several that we can
-verify independently of the OAM story.
+The cinquefoil is $T(2,5)$. Its polynomial is
 
-**Reciprocity.** Alexander polynomials are *palindromic*: reading the coefficients
-backward gives the same list. Precisely, $t^{\deg}\,\Delta(1/t) = \Delta(t)$. For
-the trefoil, $t^2\,\Delta(1/t) = t^2(t^{-2} - t^{-1} + 1) = 1 - t + t^2 = \Delta(t)$.
-The cinquefoil obeys the same law. This symmetry is why the figure-eight's two
-roots came in a reciprocal pair $\varphi^2$ and $\varphi^{-2}$: reciprocity forces
-roots to appear in mirror pairs across the unit circle.
+$$
+A_5(t)=t^4-t^3+t^2-t+1=\Phi_{10}(t).
+$$
 
-**The knot determinant.** Evaluate $\Delta$ at $t = -1$ and take the absolute
-value, and you get a classical invariant called the *knot determinant*. Here the
-numbers come out clean: the trefoil gives $\lvert\Delta(-1)\rvert = 3$, the
-figure-eight gives $5$, and the cinquefoil gives $5$. All three are odd — as the
-determinant of any knot must be — and the trefoil's determinant of $3$ is exactly
-why the trefoil is three-colorable, a fact schoolchildren can check with three
-crayons and a drawing of the knot.
+The invertible residues modulo $10$ are $1,3,7,9$, so the selected channels are exactly
 
-**Normalization.** Every knot satisfies $\Delta(1) = \pm 1$. The trefoil and
-cinquefoil give $+1$; the figure-eight gives $-1$. This is the reason $\ell = 0$
-is never in the spectrum: the polynomial is guaranteed *not* to vanish at $t = 1$.
+$$
+l\equiv 1,3,7,9\pmod {10}.
+$$
 
-## Why this matters
+Again the roots arrive in conjugate pairs. Instead of searching numerically across a circle and deciding whether a small residual is “close enough” to zero, one can predict the answer exactly with the Euclidean algorithm.
 
-Strip away the equations and a genuinely new idea remains: **a topological
-property of a beam of light — the knottedness of its dark core — can be read out
-as a physical measurement of angular momentum.** Topology is famously robust.
-You cannot untie a knot by nudging it; you have to cut. So information encoded
-topologically is information protected against noise, jitter, and imperfection. A
-laser beam whose darkness is knotted carries a number — an algebraic invariant of
-the knot — that no gentle perturbation can erase.
+This arithmetic description scales. For any odd prime $p$, scan a single period from $0$ through $2p-1$ and retain precisely the indices whose greatest common divisor with $2p$ is $1$. The polynomial does not need to be evaluated at all once the theorem is known.
 
-The practical vision writes itself. Shine a beam through a hologram shaped like a
-particular knot, and the emerging light carries that knot's Alexander polynomial
-stamped into its measurable quantum numbers. Different knots produce different,
-distinguishable OAM spectra: sixth roots of unity for the trefoil, tenth roots for
-the cinquefoil, and the tell-tale golden-ratio signature — off the circle — for
-the figure-eight. One could imagine encoding data in the *choice of knot*, with
-the topology guarding it, and reading it back by measuring how the light spins.
+## The figure-eight refuses to play
 
-There is also a lesson in the failure. The figure-eight reminds us that not every
-knot cooperates: whether a knot can imprint clean OAM quantization is itself a
-subtle knot-theoretic question — *which knots have all their Alexander roots on
-the unit circle?* The trefoil and cinquefoil say yes; the golden figure-eight
-says no. Somewhere between the crayon-and-paper world of knots and the humming
-optics bench of a laser lab, the same numbers keep appearing. That recurrence —
-sixth roots of unity, tenth roots of unity, the golden ratio — is the quiet
-signal that the bridge between knots and light is not a metaphor. It is
-mathematics.
+The figure-eight knot exposes the boundary of the proposal. Its Alexander polynomial, in the normalization used here, is
+
+$$
+F(t)=t^2-3t+1.
+$$
+
+The quadratic formula gives two reciprocal positive real roots,
+
+$$
+r_\pm=\frac{3\pm\sqrt5}{2}.
+$$
+
+One lies outside the unit circle and the other inside it. Neither lies on the unit circle. Therefore neither can equal an angular phase $e^{i\theta}$.
+
+This can be shown without relying on decimal approximations.
+
+**Figure-eight exclusion theorem.** For every complex number $z$ satisfying $|z|=1$,
+
+$$
+F(z)\ne 0.
+$$
+
+Consequently, for every positive grid size $N$ and every integer index $l$,
+
+$$
+F(z_{N,l})\ne 0.
+$$
+
+For a proof, suppose $F(z)=0$. Since $z\ne0$, divide by $z$ to obtain
+
+$$
+z+z^{-1}=3.
+$$
+
+On the unit circle, $z^{-1}=\overline z$, so the left side is $2\operatorname{Re}(z)$. But $|\operatorname{Re}(z)|\le1$, making its absolute value at most $2$, never $3$. This contradiction rules out every angular phase at once.
+
+The point matters because it corrects a tempting but invalid move: taking the real roots $(3\pm\sqrt5)/2$, reducing those numbers modulo $1$, and calling the resulting fractions angular channels. Polynomial evaluation does not respect that operation. The equation $F(r)=0$ says nothing about $F(e^{2\pi i(r\bmod 1)})$. A root’s modulus and its argument encode different geometry.
+
+The constant Alexander polynomial of the unknot offers an even simpler warning. Since the constant polynomial $1$ never vanishes, a literal root-selection rule yields no selected phase at all. If an optical convention reserves $l=0$ as a baseline unknot channel, that channel must be added as a separate convention; it does not follow from polynomial vanishing.
+
+## Two kinds of spectral information
+
+The torus-knot and figure-eight examples suggest a more nuanced picture. Roots on the unit circle naturally describe angular phase channels. Roots away from the circle may instead describe growth and decay.
+
+Write a nonzero root as $re^{i\theta}$. Its argument $\theta$ is angular information; its modulus $r$ is radial information. For the prime torus knots considered here, every Alexander root has $r=1$, so the information is entirely angular. For the figure-eight knot, the roots are positive real and reciprocal. Their arguments are both $0$, but their logarithmic moduli are opposite:
+
+$$
+\log r_+=-\log r_-.
+$$
+
+This resembles a pair of growing and decaying radial modes. It points toward a repaired physical hypothesis: off-circle Alexander roots might govern evanescent or amplified radial behavior rather than orbital angular momentum channels.
+
+A related statistic is the logarithmic Mahler measure, which collects the logarithms of root moduli outside the unit circle. Cyclotomic polynomials have Mahler measure $1$ and logarithmic measure $0$. The figure-eight polynomial has positive logarithmic measure $\log((3+\sqrt5)/2)$. Thus a single polynomial may carry both angular and radial signatures, but one should not confuse them.
+
+## What an experiment would need to show
+
+The mathematics establishes the consequences of an Alexander phase-filter model. It does not establish that a knot-shaped hologram automatically implements that filter. A physical experiment would need a mechanism connecting the transfer function of the optical system to $A(t)$, a clear definition of the measured OAM basis, and controls separating topological effects from ordinary diffraction.
+
+The predictions are nevertheless sharp. For a trefoil design implementing the filter, one should see channels $1$ and $5$ modulo $6$. For a cinquefoil design, one should see $1,3,7,9$ modulo $10$. For a figure-eight design under the same root-of-unity rule, one should see no selected angular channel—not the real roots folded modulo $1$. If radial propagation is also measured, the figure-eight may instead reveal reciprocal exponential rates.
+
+The prime family also gives an inverse clue. The number of selected channels is $p-1$, while the period is $2p$. Within this restricted family, either quantity identifies $p$. A spectral measurement could therefore recover the torus-knot parameter, provided the underlying optical filter truly realizes the polynomial rule.
+
+## A knot, an angle, and an integer
+
+The most striking feature of this story is how many languages meet in one equation. Knot theory supplies the Alexander polynomial. Complex analysis places its roots in the plane. Cyclotomic theory identifies special roots on the unit circle. Modular arithmetic labels the surviving angular channels. Optics provides the physical question that makes the labels meaningful.
+
+For prime two-strand torus knots, these languages lock together perfectly: the allowed phase indices are exactly the integers invertible modulo $2p$. For the figure-eight knot, they separate just as decisively: its roots carry radial magnitude but no nontrivial unit-circle phase.
+
+That contrast is more valuable than a universal slogan. Knotted light may indeed carry algebraic fingerprints of knots, but the fingerprint has components. Angles belong to orbital channels; moduli belong to growth and decay. Reading the knot correctly means knowing which part of the complex root one is actually measuring.

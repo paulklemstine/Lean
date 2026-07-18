@@ -1,183 +1,151 @@
-"""
-The Topology of Knotted Light: Alexander Polynomials in the OAM Spectrum
-========================================================================
+#!/usr/bin/env python3
+"""Numerical demonstrations of Alexander-polynomial angular selection.
 
-Numerical demonstrations of the correspondence between the vortex knot of a
-"knotted light" beam and its orbital-angular-momentum (OAM) spectrum, mediated
-by the Alexander polynomial of the knot.
-
-For a knot K with Alexander polynomial Delta_K and modular period N, the OAM
-spectrum is
-        OAM(Delta_K, N) = { l : Delta_K(exp(2*pi*i*l/N)) = 0 }.
-
-We verify:
-  * trefoil    Delta = t^2 - t + 1        -> sixth roots of unity, l = 1, 5 (mod 6)
-  * cinquefoil Delta = t^4 - t^3 + t^2 - t + 1 -> tenth roots, l = 1,3,7,9 (mod 10)
-  * unknot     Delta = 1                  -> empty spectrum
-  * figure-8   Delta = t^2 - 3t + 1       -> golden-ratio roots OFF the unit circle
-
-Self-contained; requires only the Python standard library (cmath, math).
+The script compares exact coprimality predictions with complex polynomial
+residuals for the trefoil and cinquefoil, then demonstrates that the
+figure-eight roots lie off the unit circle and produce radial rates instead.
+Only Python's standard library is required.
 """
 
 from __future__ import annotations
 
 import cmath
 import math
-from typing import Callable, Dict, List, Tuple
-
-# --------------------------------------------------------------------------- #
-# Alexander polynomials as complex evaluation functions                       #
-# --------------------------------------------------------------------------- #
-
-def alex_unknot(z: complex) -> complex:
-    """Alexander polynomial of the unknot: Delta(t) = 1."""
-    return 1.0 + 0j
+from dataclasses import dataclass
+from typing import Iterable, Sequence
 
 
-def alex_trefoil(z: complex) -> complex:
-    """Trefoil 3_1: Delta(t) = t^2 - t + 1  (= 6th cyclotomic polynomial)."""
-    return z ** 2 - z + 1
+@dataclass(frozen=True)
+class ChannelResidual:
+    """A phase-grid index together with its phase and polynomial residual."""
+
+    index: int
+    phase: complex
+    residual: float
 
 
-def alex_figure_eight(z: complex) -> complex:
-    """Figure-eight 4_1: Delta(t) = t^2 - 3t + 1."""
-    return z ** 2 - 3 * z + 1
+def angular_phase(grid_size: int, index: int) -> complex:
+    """Return exp(2*pi*i*index/grid_size)."""
+    if grid_size <= 0:
+        raise ValueError("grid_size must be positive")
+    return cmath.exp(2j * math.pi * index / grid_size)
 
 
-def alex_cinquefoil(z: complex) -> complex:
-    """Cinquefoil 5_1: Delta(t) = t^4 - t^3 + t^2 - t + 1  (= 10th cyclotomic)."""
-    return z ** 4 - z ** 3 + z ** 2 - z + 1
+def evaluate_polynomial(coefficients: Sequence[complex], z: complex) -> complex:
+    """Evaluate coefficients in ascending degree order using Horner's rule."""
+    value = 0j
+    for coefficient in reversed(coefficients):
+        value = value * z + coefficient
+    return value
 
 
-# --------------------------------------------------------------------------- #
-# OAM spectrum by root testing on roots of unity                             #
-# --------------------------------------------------------------------------- #
-
-def root_of_unity(l: float, N: int) -> complex:
-    """Return exp(2*pi*i*l/N), the phase point associated with OAM value l."""
-    return cmath.exp(2j * math.pi * l / N)
+def alternating_torus_coefficients(p: int) -> list[complex]:
+    """Return coefficients of 1-t+t^2-...+t^(p-1), for odd p."""
+    if p < 3 or p % 2 == 0:
+        raise ValueError("p must be an odd integer at least 3")
+    return [complex((-1) ** k) for k in range(p)]
 
 
-def oam_spectrum(delta: Callable[[complex], complex], N: int,
-                 tol: float = 1e-9) -> List[int]:
-    """Enumerate l in {0,...,N-1} that lie in the OAM spectrum of `delta`.
-
-    l is quantized iff |Delta(exp(2*pi*i*l/N))| < tol.
-    """
-    spectrum: List[int] = []
-    for l in range(N):
-        if abs(delta(root_of_unity(l, N))) < tol:
-            spectrum.append(l)
-    return spectrum
+def modular_unit_spectrum(p: int) -> list[int]:
+    """Generate the exact T(2,p) spectrum predicted for odd prime p."""
+    if p < 3 or p % 2 == 0:
+        raise ValueError("p must be an odd integer at least 3")
+    modulus = 2 * p
+    return [index for index in range(modulus) if math.gcd(index, modulus) == 1]
 
 
-# --------------------------------------------------------------------------- #
-# Root localization / unit-circle test                                        #
-# --------------------------------------------------------------------------- #
-
-def quadratic_roots(a: float, b: float, c: float) -> Tuple[complex, complex]:
-    """Roots of a*t^2 + b*t + c via the quadratic formula (complex-safe)."""
-    disc = cmath.sqrt(b * b - 4 * a * c)
-    return ((-b + disc) / (2 * a), (-b - disc) / (2 * a))
-
-
-def on_unit_circle(z: complex, tol: float = 1e-9) -> bool:
-    """True iff |z| = 1 to within tolerance."""
-    return abs(abs(z) - 1.0) < tol
-
-
-# --------------------------------------------------------------------------- #
-# Structural invariants                                                        #
-# --------------------------------------------------------------------------- #
-
-def knot_determinant(delta: Callable[[complex], complex]) -> int:
-    """Knot determinant det(K) = |Delta(-1)|."""
-    return round(abs(delta(-1.0 + 0j)))
-
-
-def normalization(delta: Callable[[complex], complex]) -> int:
-    """Delta(1); should be +/- 1 for a knot."""
-    return round(delta(1.0 + 0j).real)
-
-
-def reciprocity_residual(delta: Callable[[complex], complex], deg: int,
-                         z: complex) -> float:
-    """|z^deg * Delta(1/z) - Delta(z)|; should be ~0 for a palindromic Delta."""
-    return abs(z ** deg * delta(1.0 / z) - delta(z))
-
-
-# --------------------------------------------------------------------------- #
-# Demonstrations                                                               #
-# --------------------------------------------------------------------------- #
-
-def demo_spectra() -> None:
-    print("=" * 68)
-    print("OAM SPECTRA (quantized angular-momentum values)")
-    print("=" * 68)
-    cases: Dict[str, Tuple[Callable[[complex], complex], int]] = {
-        "unknot     0_1": (alex_unknot, 6),
-        "trefoil    3_1": (alex_trefoil, 6),
-        "figure-8   4_1": (alex_figure_eight, 8),
-        "cinquefoil 5_1": (alex_cinquefoil, 10),
-    }
-    for name, (delta, N) in cases.items():
-        spec = oam_spectrum(delta, N)
-        print(f"  {name}:  N = {N:2d}   OAM spectrum (mod N) = {spec}")
-    print()
-    print("  Expected: unknot []  |  trefoil [1,5]  |  fig-8 []  |  cinquefoil [1,3,7,9]")
-    print()
-
-
-def demo_roots() -> None:
-    print("=" * 68)
-    print("ROOT LOCALIZATION: on vs. off the unit circle")
-    print("=" * 68)
-
-    r1, r2 = quadratic_roots(1, -1, 1)  # trefoil
-    print(f"  trefoil   roots: {r1:.4f}, {r2:.4f}")
-    print(f"            |roots| = {abs(r1):.6f}, {abs(r2):.6f}  "
-          f"on unit circle: {on_unit_circle(r1) and on_unit_circle(r2)}")
-
-    g1, g2 = quadratic_roots(1, -3, 1)  # figure-eight
-    phi2 = (3 + math.sqrt(5)) / 2
-    psi2 = (3 - math.sqrt(5)) / 2
-    print(f"  figure-8  roots: {g1.real:.6f}, {g2.real:.6f}")
-    print(f"            golden phi^2 = {phi2:.6f}, psi^2 = {psi2:.6f}")
-    print(f"            |roots| = {abs(g1):.6f}, {abs(g2):.6f}  "
-          f"on unit circle: {on_unit_circle(g1) and on_unit_circle(g2)}")
-    print(f"            product of roots phi^2 * psi^2 = {phi2 * psi2:.6f}  (=1)")
-    print()
-
-
-def demo_invariants() -> None:
-    print("=" * 68)
-    print("STRUCTURAL INVARIANTS")
-    print("=" * 68)
-    data = [
-        ("trefoil    3_1", alex_trefoil, 2),
-        ("figure-8   4_1", alex_figure_eight, 2),
-        ("cinquefoil 5_1", alex_cinquefoil, 4),
+def phase_grid_scan(
+    coefficients: Sequence[complex], grid_size: int
+) -> list[ChannelResidual]:
+    """Evaluate a polynomial at every phase on a finite angular grid."""
+    return [
+        ChannelResidual(
+            index=index,
+            phase=(phase := angular_phase(grid_size, index)),
+            residual=abs(evaluate_polynomial(coefficients, phase)),
+        )
+        for index in range(grid_size)
     ]
-    for name, delta, deg in data:
-        det = knot_determinant(delta)
-        norm = normalization(delta)
-        recip = reciprocity_residual(delta, deg, 1.3 + 0.7j)
-        print(f"  {name}:  Delta(1) = {norm:+d}   det = |Delta(-1)| = {det}"
-              f"   reciprocity residual = {recip:.2e}")
-    print()
-    print("  Expected determinants: trefoil 3, figure-8 5, cinquefoil 5 (all odd).")
-    print()
+
+
+def numerical_channels(
+    coefficients: Sequence[complex], grid_size: int, tolerance: float = 1e-9
+) -> list[int]:
+    """Return grid indices whose polynomial residual is below tolerance."""
+    if tolerance <= 0:
+        raise ValueError("tolerance must be positive")
+    return [
+        item.index
+        for item in phase_grid_scan(coefficients, grid_size)
+        if item.residual < tolerance
+    ]
+
+
+def figure_eight_roots() -> tuple[float, float]:
+    """Return the exact-form numerical roots of t^2 - 3t + 1."""
+    root_plus = (3.0 + math.sqrt(5.0)) / 2.0
+    root_minus = (3.0 - math.sqrt(5.0)) / 2.0
+    return root_plus, root_minus
+
+
+def radial_rates(roots: Iterable[complex]) -> list[float]:
+    """Return logarithmic moduli, the natural radial growth/decay rates."""
+    rates: list[float] = []
+    for root in roots:
+        modulus = abs(root)
+        if modulus == 0:
+            raise ValueError("zero has no finite logarithmic radial rate")
+        rates.append(math.log(modulus))
+    return rates
+
+
+def print_torus_demo(name: str, p: int) -> None:
+    """Print exact and numerical spectra for one T(2,p) example."""
+    coefficients = alternating_torus_coefficients(p)
+    modulus = 2 * p
+    exact = modular_unit_spectrum(p)
+    numerical = numerical_channels(coefficients, modulus)
+    print(f"\n{name}: T(2,{p})")
+    print(f"  grid modulus: {modulus}")
+    print(f"  exact coprime residues: {exact}")
+    print(f"  numerical zero residues: {numerical}")
+    print(f"  predicted channel count p-1: {p - 1}")
+    assert exact == numerical
+    residuals = phase_grid_scan(coefficients, modulus)
+    for item in residuals:
+        marker = "SELECTED" if item.index in exact else ""
+        print(f"    l={item.index:2d}  |A(z)|={item.residual:.3e} {marker}")
+
+
+def print_figure_eight_demo(grid_sizes: Sequence[int] = (6, 10, 64)) -> None:
+    """Show absence of angular roots and the reciprocal radial rates."""
+    coefficients = [1 + 0j, -3 + 0j, 1 + 0j]
+    print("\nFigure-eight knot")
+    for grid_size in grid_sizes:
+        scan = phase_grid_scan(coefficients, grid_size)
+        smallest = min(scan, key=lambda item: item.residual)
+        selected = numerical_channels(coefficients, grid_size)
+        print(
+            f"  N={grid_size:2d}: selected={selected}, "
+            f"minimum residual={smallest.residual:.6f} at l={smallest.index}"
+        )
+        assert not selected
+    roots = figure_eight_roots()
+    rates = radial_rates(roots)
+    print(f"  real reciprocal roots: {roots[0]:.12f}, {roots[1]:.12f}")
+    print(f"  product of roots: {roots[0] * roots[1]:.12f}")
+    print(f"  logarithmic radial rates: {rates[0]:.12f}, {rates[1]:.12f}")
+    assert math.isclose(roots[0] * roots[1], 1.0, abs_tol=1e-12)
+    assert math.isclose(rates[0] + rates[1], 0.0, abs_tol=1e-12)
 
 
 def main() -> None:
-    print()
-    print("THE TOPOLOGY OF KNOTTED LIGHT")
-    print("Alexander polynomials in the orbital-angular-momentum spectrum")
-    print()
-    demo_spectra()
-    demo_roots()
-    demo_invariants()
-    print("Done.")
+    """Run all demonstrations."""
+    print("Alexander-polynomial angular spectra")
+    print_torus_demo("Trefoil", 3)
+    print_torus_demo("Cinquefoil", 5)
+    print_figure_eight_demo()
+    print("\nAll exact predictions agree with the numerical demonstrations.")
 
 
 if __name__ == "__main__":
