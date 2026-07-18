@@ -187,7 +187,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Fourier Transform of the Riemann Zeta: Hearing the Primes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d13e4521",
     "description": "The sequence of primes 2, 3, 5, 7, 11, 13, ... defines a point cloud in R where the n-th prime p_n is at position p_n on the real line. The gaps between primes create a topological structure. Define the persistent homology of the prime point cloud as the Rips filtration R_epsilon = {p_n : |p_m - p_n| <= epsilon}. As epsilon increases, more primes are connected, and the topology changes. Conjecture: The persistent H_0 (connected components) of the prime point cloud has the same barcode as a Poisson point process with intensity 1/log(x). Specifically, the bar lengths in H_0 follow an exponential distribution with mean equal to the average prime gap (which is approximately log(x) by the prime number theorem). The persistent H_1 (1-dimensional holes) of the prime point cloud appears at scale epsilon ~ log(x)^2, corresponding to prime pairs (p, p+2k) where 2k is a specific even gap. The longest H_1 bar corresponds to the twin prime conjecture: it persists from epsilon = 2 (the twin prime scale) to epsilon = infinity. Test: compute persistent homology of the primes up to 10^6 using Rips filtration and compare with the Poisson point process prediction. Verify that H_0 bar lengths are exponentially distributed with mean log(x). Impact: primes have topology \u2014 their gaps create persistent homology that encodes the twin prime conjecture and other arithmetic properties.",
     "domains": [
       "Novelty",
@@ -197,12 +197,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-18T13:54:31.470741+00:00",
     "title": "Persistent Homology of Prime Numbers: The Topology of Arithmetic"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2170ccdf",
     "description": "The Galois group of a random polynomial over Q is S_n with probability 1. This is the Hilbert irreducibility theorem in probabilistic form. But what about random polynomials over finite fields? For f in F_p[x] of degree n chosen uniformly at random, the Galois group is S_n with probability approaching 1 as p grows. Conjecture: the probability that Gal(f) is NOT S_n is O(p^{-1/2}) for fixed n, and the exceptional cases concentrate at polynomials with discriminant zero or small Galois groups. More precisely, P(Gal(f) != S_n) = c_n / sqrt(p) + O(1/p) where c_n depends only on n. For n=2: P(Gal(f) != S_2) = P(discriminant = 0) = 1/p. For n=3: P(Gal(f) != S_3) = P(f has a rational root) = 3/p + O(1/p^2). Test: enumerate all monic polynomials of degree n over F_p for small p and n, compute Galois groups, verify P(Gal != S_n) ~ c_n / sqrt(p). Impact: random polynomials have maximal Galois groups \u2014 algebraic randomness is generic.",
     "domains": [
       "Novelty",
@@ -212,7 +212,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-18T15:17:36.296388+00:00",
     "title": "Stochastic Galois Theory: Random Permutations Have Generic Galois Groups"
   },
@@ -3544,7 +3544,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "`Tropical/TropicalFOne/FixedPointEuler.lean` proves a precise finite-orbit theor"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ac79ade1",
     "description": "# Future directions\n\n1. **Intrinsic curvature identification.** The proved curvature formula\n   \\[\n   K(x,y)=-\\cosh^2 y+\\frac{1-\\sinh^2 y}{\\cosh^2x\\cosh^2y}\n   \\]\n   is nonpositive everywhere, vanishes exactly at the origin, and is strictly negative elsewhere. Connect this coordinate Brioschi calculation to Mathlib's intrinsic Riemann tensor and sectional-curvature APIs.\n\n2. **Geodesic equations.** Derive the coupled smooth ODE from the six computed Christoffel symbols and establish local existence, uniqueness, and conserved speed. The suggestion that geodesics are piecewise exponential/trigonometric is not justified by the smooth coefficients and should be tested against the actual ODE.\n\n3. **Boundary-crossing claim.** Since the actual zero-curvature locus is the single point `(0,0)`, there is no phase boundary separating positive and negative curvature regions for this metric. A meaningful replacement is to investigate how often a geodesic can pass through the origin; this requires analysis of the geodesic ODE and uniqueness.\n\n4. **Triangle area.** Specify three vertices and choose the geodesic segments joining them. The area is then the integral of the proved density `cosh x / cosh y` over the resulting region. \u201cOne vertex in each region\u201d alone does not determine a numerical area.\n\n5. **Metric-space consequences.** Package the coordinate coefficients as a smooth positive-definite metric tensor, then study completeness, distance estimates, and the global exponential map. The strong anisotropy of the coefficients makes geodesic completeness a natural next question.\n",
     "domains": [
       "Pythagorean",
@@ -3554,7 +3554,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "65eb2137",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-18T07:45:29.087564+00:00",
     "title": "1. **Intrinsic curvature identification.** The proved curvature formula"
   },
