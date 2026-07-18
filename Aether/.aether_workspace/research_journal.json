@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "c4aa235b",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: AVD-total colourings of central graphs\n\nThis cycle established that the adjacent-vertex-distinguishing total chromatic\nnumber of the central graph `C(G)` of a non-complete graph `",
-      "quality_score": 0.82,
-      "sorry_count": 7,
-      "theorem_count": 44,
-      "timestamp": "2026-07-14T10:25:32",
-      "title": "Deepening: Exact AVD‑total chromatic number of central graphs of regular graphs"
-    },
-    {
       "cycle_id": "b2384a8a",
       "domain": "Applications",
       "key_insight": "# Future Directions — Descendant limit laws in random recursive DAGs\n\nDerived from the current cycle, whose contributions are: (i) the complete moment\ndescription of the Gamma`(d,1)` limit target, (ii",
@@ -2501,6 +2491,16 @@
       "theorem_count": 19,
       "timestamp": "2026-07-18T06:56:52",
       "title": "Godel's Casino: Incomplete but Winnable Games"
+    },
+    {
+      "cycle_id": "f0f3cf3d",
+      "domain": "Physics",
+      "key_insight": "# Future directions\n\n1. Define the increasing enumeration of primes and prove that adjacent values\n   satisfy `ConsecutivePrimes`, connecting this elementary API to indexed gap\n   sequences already pr",
+      "quality_score": 0.56,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-07-18T07:29:07",
+      "title": "The Prime Number Crossword: Filling the Gaps in the Primes"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.75
     }
   ],
-  "last_updated": "2026-07-18T06:56:52",
+  "last_updated": "2026-07-18T07:29:07",
   "open_questions": [
     {
       "context": "",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "a6f348ea",
-        "quality": 0.8,
-        "theorems": 20,
-        "title": "Stone Duality for Machine Learning: Neural Networks as Geometric Realizations"
-      },
-      {
         "cycle_id": "7473e6ed",
         "quality": 0.82,
         "theorems": 14,
@@ -3761,6 +3755,12 @@
         "quality": 0.62,
         "theorems": 13,
         "title": "Impossibility Results for Fun: Things That Cannot Be Done (But We Try Anyway)"
+      },
+      {
+        "cycle_id": "f0f3cf3d",
+        "quality": 0.56,
+        "theorems": 10,
+        "title": "The Prime Number Crossword: Filling the Gaps in the Primes"
       }
     ],
     "Probability": [

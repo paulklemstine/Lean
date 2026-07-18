@@ -1,245 +1,309 @@
-# Oracle Spectral Algebra: A Formal Theory of L-Function Oracle Power
+# Exact Evaluation Oracles and Global Arithmetic Claims
+
+**Aristotle**  
+**18 July 2026**
 
 ## Abstract
 
-We introduce the **Oracle Spectral Algebra** (OSA), a novel mathematical framework that formalizes the computational power of L-function oracles through algebraic operations on arithmetic spectra. An arithmetic spectrum captures the Dirichlet series coefficients and Euler product structure of an L-function as a single algebraic object. We establish a strict three-level oracle hierarchy — point evaluation, derivative access, and zero certification — and prove sharp separation results between these levels. Our main results include: (1) a **Point Oracle Barrier Theorem** showing that finitely many point evaluations cannot determine vanishing order; (2) a **Derivative Query Gap** establishing that vanishing order r requires exactly r+1 derivative queries; (3) a **Spectral Reconstruction Theorem** proving that multiplicative functions are uniquely determined by their prime power values; (4) a **Spectral Factoring Theorem** reducing integer factoring to Euler factor oracle queries; and (5) a **BSD Reduction** showing that derivative oracles make analytic rank computation decidable. All results are formalized and machine-verified in Lean 4 with Mathlib, with zero unproved assumptions. We also propose the **Spectral Rank Boundedness Conjecture**, a falsifiable prediction with computational tests.
-
-**Keywords:** L-functions, oracle complexity, Dirichlet convolution, arithmetic spectra, vanishing order, formal verification
+We analyze the mathematical power of an ideal exact evaluator $E$ that returns a requested value of a complex function in constant oracle time. Motivated by proposals that instantaneous evaluation of $L$-functions should settle zero conjectures, analytic-rank questions, functorial identities, distribution laws, and integer factorization, we separate pointwise evaluation from the additional information required for global conclusions. The central negative result is a finite-observation interpolation theorem: for any function $f:\mathbb C\to\mathbb C$, any finite sample $S$, any fresh point $z\notin S$, and any prescribed value $T$, a polynomial perturbation produces a function agreeing with $f$ on $S$ and taking value $T$ at $z$. Hence a finite exact transcript alone cannot exclude an unseen zero or determine unrestricted global behavior. We then give positive transfer principles. Problems represented as output fibers admit one-query reductions; these reductions compose with many-one preprocessing; and a class reducing to one oracle-decidable hard target inherits one-query oracle decision procedures. For vanishing orders, we prove uniqueness of the first nonzero jet coefficient and show that a finite nonvanishing bound makes the order discoverable by bounded search. For factorization, we identify an explicit divisibility certificate as the condition that turns an oracle-derived decoder into a valid factor-search procedure. The resulting framework replaces informal claims of omnipotence by precise hypotheses: global certificates, effective bounds, restricted-family rigidity, and certified arithmetic decoders.
 
 ## 1. Introduction
 
-### 1.1 Motivation
+An $L$-function packages arithmetic information into a complex analytic object. The zeros of the Riemann zeta function are linked to the distribution of primes; the central behavior of an elliptic-curve $L$-function is conjecturally linked to the rank of the curve; Euler factors encode local arithmetic data; and equalities of automorphic $L$-functions express instances of functorial transfer. This concentration of information invites an oracle thought experiment: suppose any value $L(s)$ could be returned exactly in $O(1)$ oracle time. What would follow?
 
-L-functions are central objects in modern number theory, encoding deep arithmetic information about number fields, elliptic curves, and automorphic forms. The major open problems of the field — the Riemann Hypothesis (RH), the Birch and Swinnerton-Dyer conjecture (BSD), the Langlands program — can all be formulated as questions about L-functions.
+Several attractive but logically distinct conclusions are often conflated. Point evaluation at a specified argument can decide whether that argument is a zero. The Riemann Hypothesis, however, classifies every nontrivial zero in an unbounded region. Exact access to Taylor coefficients can identify the first nonzero coefficient after it is encountered, but an algorithm requires a stopping guarantee. Exact local factors can contribute to a factoring algorithm, but only if a proved decoder converts them into a proper divisor. Equality of finitely many sampled values may suggest equality of two structured functions, but the inference requires a converse or rigidity theorem. Finally, an oracle can collapse classes relative to itself without proving an unconditional separation such as $P\ne NP$.
 
-A natural question arises: *what computational problems could be solved if we had perfect access to L-function values?* This question has both theoretical and practical significance:
+This paper develops a minimal framework for stating these distinctions precisely. The theory has two sides. The negative side is information-theoretic: finite values of an unrestricted complex function leave arbitrary freedom at every unsampled point. The positive side is reduction-theoretic and certificate-based: once a decision predicate, nonvanishing bound, or arithmetic decoder has been supplied, oracle evaluation can be composed with it in a mathematically transparent way.
 
-- **Theoretically**, it characterizes the information content of L-functions. If a problem reduces to L-function evaluation, then the problem's difficulty is bounded by the difficulty of computing L-functions.
-- **Practically**, as computational methods for L-functions improve (LMFDB, numerical evaluation algorithms), understanding what these computations can achieve becomes increasingly important.
+The conclusions are deliberately conditional and exact. We do not claim that standard $L$-functions form an unrestricted family; they certainly do not. Instead, the interpolation obstruction shows that any valid local-to-global inference must use the structure distinguishing $L$-functions from arbitrary functions. It thereby locates the substantive work in prospective oracle arguments.
 
-### 1.2 Contributions
+## 2. Evaluation oracles and decision problems
 
-We make the following contributions:
+Let $Q$ be a query space, $A$ an answer space, and
 
-1. **Novel Structure (ArithmeticSpectrum):** We define the Oracle Spectral Algebra, a framework where arithmetic objects are represented by their Dirichlet series coefficients with multiplicativity axioms. This structure supports Dirichlet convolution as a natural algebraic operation.
+$$
+E:Q\to A
+$$
 
-2. **Oracle Hierarchy (§3):** We define four levels of oracle access — no oracle, point evaluation, derivative access, and zero certification — and prove this hierarchy is strict.
+an exact evaluator. The notation abstracts away from a particular representation of $L$-functions and complex arguments. An element of $Q$ may contain a description of a function together with an evaluation point; $A$ may be a field of exact symbolic values. Complexity claims concerning such an oracle depend on the representation and cost model, but the extensional reduction principles below do not.
 
-3. **Barrier Theorems (§4):** We prove that finitely many point evaluations cannot determine vanishing order (generalized to arbitrary target points), and construct explicit polynomial witnesses.
+Let $X$ be an input space and $D\subseteq X$ a decision problem.
 
-4. **Query Complexity (§5):** We establish sharp bounds: vanishing order r requires exactly r+1 derivative queries, and we prove a matching lower bound via explicit witness construction.
+**Definition 2.1 (One-query reducibility).** The problem $D$ is *one-query reducible* to $E$ if there exist a query map $q:X\to Q$ and an acceptance predicate $R:A\to\{\mathrm{true},\mathrm{false}\}$ such that for every $x\in X$,
 
-5. **Spectral Reconstruction (§6):** We prove that multiplicative arithmetic functions are uniquely determined by their values at prime powers, formalizing the Euler product as a structure theorem.
+$$
+x\in D\quad\Longleftrightarrow\quad R(E(q(x)))=\mathrm{true}.
+$$
 
-6. **Applications (§7):** We derive consequences for integer factoring (Spectral Factoring Theorem) and the BSD conjecture (BSD Reduction).
+The definition separates three ingredients: encoding the input as a query, evaluating the query, and interpreting the output. It does not silently assign a complexity bound to the first or third ingredient.
 
-7. **Conjecture (§8):** We state the Spectral Rank Boundedness Conjecture with computational tests.
+**Theorem 2.2 (Fiber reduction).** For every acceptance predicate $R$ on $A$, the selected output fiber
 
-All results are formalized in Lean 4 with Mathlib and verified by machine. The proofs use only standard axioms (propext, Classical.choice, Quot.sound).
+$$
+D_R=\{q\in Q:R(E(q))=\mathrm{true}\}
+$$
 
-## 2. The Oracle Spectral Algebra
+is one-query reducible to $E$.
 
-### 2.1 Arithmetic Spectra
+**Proof sketch.** Use the identity map as the query map and $R$ as the acceptance predicate. Then membership in $D_R$ is, by definition, equivalent to acceptance of $E(q)$. $\square$
 
-**Definition 2.1 (ArithmeticSpectrum).** An *arithmetic spectrum* is a tuple (a, 0, 1, ×) where:
-- a : ℕ → ℂ is the coefficient function
-- a(0) = 0 (Dirichlet series convention)
-- a(1) = 1 (normalization)
-- a(mn) = a(m)a(n) whenever gcd(m,n) = 1 (multiplicativity)
+This elementary observation is important because it distinguishes a problem literally defined by an evaluator’s output from a problem merely believed to be encoded in that output.
 
-**Example 2.2.** The *trivial spectrum* has a(n) = 1 for all n ≥ 1, corresponding to the Riemann zeta function ζ(s) = Σ n⁻ˢ.
+We next recall the extensional notion of many-one preprocessing. Given problems $D\subseteq X$ and $T\subseteq Y$, a map $e:X\to Y$ is a many-one reduction when
 
-**Example 2.3.** The *principal character spectrum* with modulus q has a(n) = 1 if gcd(n,q) = 1 and a(n) = 0 otherwise, corresponding to the L-function of the principal Dirichlet character mod q.
+$$
+x\in D\quad\Longleftrightarrow\quad e(x)\in T
+$$
 
-### 2.2 Dirichlet Convolution
+for every $x\in X$.
 
-**Definition 2.4.** The *Dirichlet convolution* of f, g : ℕ → ℂ is:
+**Theorem 2.3 (Composition with many-one preprocessing).** Suppose $D\subseteq X$ many-one reduces to $T\subseteq Y$, and $T$ is one-query reducible to $E$. Then $D$ is one-query reducible to $E$.
 
-(f * g)(n) = Σ_{d|n} f(d) · g(n/d)
+**Proof sketch.** Let $e:X\to Y$ be the many-one encoding. Let $q:Y\to Q$ and $R$ witness the one-query reduction of $T$. Define the query for $x$ to be $q(e(x))$. Then
 
-**Theorem 2.5 (Identity Element).** The function ε(n) = [n = 1] is the identity for Dirichlet convolution: (ε * f)(n) = f(n) for all n ≥ 1 and all f with f(0) = 0.
+$$
+x\in D\Longleftrightarrow e(x)\in T
+\Longleftrightarrow R(E(q(e(x))))=\mathrm{true}.
+$$
 
-*Proof.* The only divisor d of n with ε(d) ≠ 0 is d = 1, giving ε(1) · f(n/1) = f(n). □
+Thus $q\circ e$ and $R$ provide the desired reduction. $\square$
 
-**Theorem 2.6 (Commutativity).** Dirichlet convolution is commutative: (f * g)(n) = (g * f)(n) for all n.
+**Corollary 2.4 (Oracle-class collapse through a hard target).** Let $\mathcal C$ be a class of decision problems on $X$, and let $T\subseteq X$ be a target to which every $D\in\mathcal C$ many-one reduces. If $T$ is one-query reducible to $E$, then every $D\in\mathcal C$ is one-query reducible to $E$.
 
-*Proof.* The bijection d ↦ n/d on divisors of n transforms Σ_{d|n} f(d)g(n/d) into Σ_{d|n} f(n/d)g(d) = Σ_{d|n} g(d)f(n/d). □
+**Proof sketch.** Apply Theorem 2.3 separately to each $D\in\mathcal C$. $\square$
 
-## 3. The Oracle Hierarchy
+This corollary is the precise abstract content of an oracle-relative collapse. It does not imply an unconditional equality or inequality between ordinary complexity classes. To derive an ordinary polynomial-time algorithm one must additionally show that query construction and output interpretation take polynomial time, that the query has polynomial representation length, and that the oracle is available in the chosen computational model. Nor does the presence of a strong oracle contradict a time-hierarchy theorem: relativized access changes the computational model.
 
-### 3.1 Oracle Power Levels
+## 3. The finite-observation interpolation obstruction
 
-We define four levels of oracle access to L-functions:
+The principal obstacle to turning evaluation into global knowledge is already visible for arbitrary complex functions.
 
-| Level | Name | Access | Power |
-|-------|------|--------|-------|
-| 0 | No Oracle | None | Cannot access L-function data |
-| 1 | Point Evaluation | L(s) for any s ∈ ℂ | Can evaluate but not differentiate |
-| 2 | Derivative | L^(k)(s) for any k ∈ ℕ, s ∈ ℂ | Can detect vanishing order |
-| 3 | Zero Certificate | Certified zero lists in regions | Can verify RH up to finite height |
+Let $S\subset\mathbb C$ be finite. Define its vanishing perturbation by
 
-**Theorem 3.1 (Strict Hierarchy).** The oracle power levels form a strict total order: Level 0 < Level 1 < Level 2 < Level 3. Each level is strictly more powerful than the previous.
+$$
+P_S(w)=\prod_{a\in S}(w-a).
+$$
 
-*Proof.* The strict ordering follows from the separation results in §4 and §5. □
+For the empty set, the product is $1$. For nonempty $S$, it is the monic polynomial whose simple roots are exactly the elements of $S$.
 
-## 4. Barrier Theorems
+**Lemma 3.1 (Vanishing on the sample).** If $w\in S$, then $P_S(w)=0$.
 
-### 4.1 Point Oracle Barrier
+**Proof sketch.** The product contains the factor $w-w=0$. $\square$
 
-**Theorem 4.1 (Point Oracle Barrier).** For any finite set Q ⊂ ℂ and any z₀ ∉ Q, there exist functions F, G : ℂ → ℂ such that:
-- F(z) = G(z) for all z ∈ Q (oracle indistinguishable)
-- F(z₀) ≠ 0 (nonvanishing at target)
-- G(z₀) = 0 (vanishing at target)
+**Lemma 3.2 (Nonvanishing off the sample).** If $z\notin S$, then $P_S(z)\ne0$.
 
-*Proof.* Take F(z) = [z ∉ Q] and G(z) = 0. These agree on Q (both zero there), but F(z₀) = 1 since z₀ ∉ Q while G(z₀) = 0. □
+**Proof sketch.** For every $a\in S$, the factor $z-a$ is nonzero. A finite product of nonzero complex numbers is nonzero. $\square$
 
-**Corollary 4.2 (Vanishing Order Indistinguishability).** For any finite Q with 1 ∉ Q, there exist F, G agreeing on Q such that F has vanishing order 0 at z = 1 but G does not.
+These two facts yield the central theorem.
 
-### 4.2 Explicit Polynomial Witnesses
+**Theorem 3.3 (Finite-observation interpolation obstruction).** Let $f:\mathbb C\to\mathbb C$, let $S\subset\mathbb C$ be finite, let $z\notin S$, and let $T\in\mathbb C$. There exists a function $g:\mathbb C\to\mathbb C$ such that
 
-The barrier theorem can be strengthened to analytic functions using the vanishing polynomial construction:
+$$
+g(w)=f(w)\quad\text{for every }w\in S,
+$$
 
-**Definition 4.3.** The *vanishing polynomial* on Q is Π_{q ∈ Q} (z - q).
+and
 
-This polynomial vanishes exactly on Q and is nonzero at any z₀ ∉ Q, providing an explicit polynomial witness for the barrier theorem.
+$$
+g(z)=T.
+$$
 
-## 5. Query Complexity
+**Proof sketch.** By Lemma 3.2, $P_S(z)\ne0$. Set
 
-### 5.1 Vanishing Order and the Derivative Oracle
+$$
+\lambda=\frac{T-f(z)}{P_S(z)}
+$$
 
-**Definition 5.1 (Vanishing Order).** The *vanishing order* of f at s is the least n ∈ ℕ such that f^(n)(s) ≠ 0, where f^(n) denotes the n-th derivative.
+and define
 
-**Theorem 5.2 (Vanishing Order Uniqueness).** If the vanishing order exists, it is unique.
+$$
+g(w)=f(w)+\lambda P_S(w).
+$$
 
-*Proof.* If both m and n are vanishing orders, then m < n would imply f^(m)(s) = 0 (by the vanishing condition for order n), contradicting f^(m)(s) ≠ 0 (by the nonvanishing condition for order m). Similarly for n < m. □
+For $w\in S$, Lemma 3.1 gives $P_S(w)=0$, hence $g(w)=f(w)$. At $z$,
 
-### 5.2 Sharp Query Bounds
+$$
+g(z)=f(z)+\frac{T-f(z)}{P_S(z)}P_S(z)=T.
+$$
 
-**Theorem 5.3 (Derivative Query Gap).** If f has vanishing order r at s₀, then:
-1. Queries 0, 1, ..., r-1 all return 0
-2. Query r returns a nonzero value
-3. Therefore, exactly r+1 queries are necessary and sufficient
+$\square$
 
-*Proof.* Part (1) follows directly from the definition of vanishing order. Part (2) is the nonvanishing condition. Part (3) combines these: fewer than r+1 queries see only zeros and cannot distinguish order r from order r+1. □
+**Corollary 3.4 (A finite transcript cannot exclude a fresh zero).** Under the hypotheses of Theorem 3.3, there exists $g$ agreeing with $f$ throughout $S$ and satisfying $g(z)=0$.
 
-**Theorem 5.4 (Query Lower Bound).** For any r ∈ ℕ, there exist functions f, g with:
-- f^(k)(0) = g^(k)(0) for all k < r (first r derivatives agree)
-- f has vanishing order r at 0
-- g has vanishing order r+1 at 0
+**Proof sketch.** Take $T=0$ in Theorem 3.3. $\square$
 
-*Proof.* Take f(z) = z^r and g(z) = z^(r+1). The first r derivatives of both vanish at 0. The r-th derivative of f is r! ≠ 0, while the r-th derivative of g is 0. □
+The theorem concerns unrestricted functions, although its perturbation is polynomial and therefore entire whenever $f$ is entire. It should not be misread as asserting that the perturbation preserves functional equations, Euler products, growth conditions, prescribed Dirichlet coefficients, or membership in a standard $L$-function family. Its role is diagnostic: any successful finite-query theorem for a restricted arithmetic family must invoke restrictions that rule out these perturbations.
 
-## 6. Spectral Reconstruction
+### 3.1. Consequences for zero classification
 
-### 6.1 The Main Theorem
+A point evaluator can decide the predicate $f(z)=0$ for a specified $z$ if equality in the answer space is decidable. It cannot, from finitely many values alone, prove that no unqueried point is a zero within an unrestricted domain. Global zero statements require a compactness argument, an analytic continuation principle combined with richer data, a contour certificate, or an effective zero-counting theorem.
 
-**Theorem 6.1 (Spectral Reconstruction).** Let f, g : ℕ → ℂ be multiplicative functions with f(0) = g(0) = 0 and f(1) = g(1) = 1. If f(p^k) = g(p^k) for all primes p and all k ≥ 0, then f = g.
+For the Riemann zeta function, the Riemann Hypothesis states that every nontrivial zero $\rho$ satisfies
 
-*Proof.* By strong induction on n. For n = 0 and n = 1, the result follows from the boundary conditions. For n ≥ 2, write n = p^k · m where p is the smallest prime factor, k = v_p(n) ≥ 1, and gcd(p^k, m) = 1. By multiplicativity, f(n) = f(p^k) · f(m) and g(n) = g(p^k) · g(m). Since f(p^k) = g(p^k) by hypothesis and f(m) = g(m) by induction (as m = n/p^k < n), we conclude f(n) = g(n). □
+$$
+\operatorname{Re}(\rho)=\frac12.
+$$
 
-**Corollary 6.2.** An Euler factor oracle that provides the local Euler factors P_p(T) at each prime p determines the L-function uniquely.
+Directly evaluating finitely many candidate points cannot quantify over all $\rho$. A certified argument-principle computation could count zeros in a bounded rectangle, but it additionally needs control of the function along an entire contour, certified approximation error, and a proof that the contour does not pass through a zero. Covering unbounded height then requires a further theorem or an unending sequence of certificates. Exact evaluation may assist this program, but does not itself supply its global steps.
 
-## 7. Applications
+### 3.2. Consequences for equality and functoriality
 
-### 7.1 Spectral Factoring
+Suppose two functions agree at every point in a finite set. Their difference vanishes on that set, but this does not imply that the difference vanishes identically. The identity theorem for holomorphic functions requires agreement on a set with an accumulation point in the domain, not merely on a finite sample. Therefore a proposed proof of functoriality by comparing finitely many values needs a quantitative converse theorem: within a bounded arithmetic family, agreement of sufficiently many local factors or coefficients must force equality of the global objects. The force comes from family rigidity, not from evaluation alone.
 
-**Theorem 7.1 (Spectral Factoring).** For n = p · q with p, q distinct primes, gcd(p, n) = p. Thus, an oracle revealing any prime factor immediately yields a factoring.
+### 3.3. Consequences for distribution laws
 
-*Proof.* Since p | n = pq, we have p | gcd(p, n). Conversely, gcd(p, n) | p. Since p is prime, gcd(p, n) ∈ {1, p}. But p | n, so gcd(p, n) ≠ 1, hence gcd(p, n) = p. □
+Distribution statements such as Sato–Tate concern limiting frequencies. If normalized local quantities $x_p$ are attached to primes, a typical conclusion has the form
 
-### 7.2 BSD Reduction
+$$
+\lim_{X\to\infty}
+\frac{\#\{p\le X:x_p\in I\}}
+{\#\{p\le X\}}
+=\mu(I)
+$$
 
-**Theorem 7.2 (BSD Analytic Rank from Derivative Oracle).** If L is the L-function of an elliptic curve and a derivative oracle provides {L^(k)(1)}, then the analytic rank (vanishing order at s = 1) is computable.
+for suitable intervals $I$ and a probability measure $\mu$. Any finite prefix of $(x_p)$ is compatible with many different tails and therefore many limiting behaviors. Exact coefficient access becomes decisive only when paired with effective discrepancy bounds or tail estimates that control the unseen terms.
 
-*Proof.* By Theorem 5.2, the vanishing order is unique if it exists. The derivative oracle detects it by the query gap theorem: query derivatives until one is nonzero. □
+## 4. Orders of vanishing and bounded jets
 
-### 7.3 RH Equivalence
+Let $c:\mathbb N\to\mathbb C$ be a sequence, interpreted as a derivative or Taylor jet at a distinguished point. For an analytic function $F$ near $s_0$, one may take
 
-**Theorem 7.3.** The Riemann Hypothesis is equivalent to RH_T holding for all T > 0.
+$$
+c_k=\frac{F^{(k)}(s_0)}{k!}.
+$$
 
-*Proof.* Forward: RH implies all zeros have Re(z) = 1/2, hence RH_T holds for any T. Backward: given any zero z with F(z) = 0, apply RH_T with T = |Im(z)| + 1 to conclude Re(z) = 1/2. □
+**Definition 4.1 (First nonzero jet index).** A natural number $k$ is a first nonzero index of $c$ when
 
-## 8. Conjectures
+$$
+c_k\ne0
+$$
 
-### 8.1 Spectral Rank Boundedness
+and
 
-**Conjecture 8.1.** There exists a universal constant C > 0 such that for any L-function of conductor N ≥ 2, the vanishing order at the central point satisfies r ≤ C · log(N).
+$$
+c_j=0\quad\text{for all }j<k.
+$$
 
-**Computational Test:** Verify that all elliptic curves of conductor ≤ 10^6 in the LMFDB satisfy this bound with C = 1. Current data: the highest known rank is 4 for conductor ~200,000, and log(200,000) ≈ 12.2.
+When $F$ is not identically zero near $s_0$, this index is the finite order of vanishing of $F$ at $s_0$.
 
-**Impact:** If true, this bounds the query complexity of analytic rank detection as O(log N), making derivative oracle computations efficient. If false, it reveals exotic high-rank phenomena.
+**Theorem 4.2 (Uniqueness of the first nonzero index).** A jet has at most one first nonzero index.
 
-### 8.2 Query Complexity Lower Bound Conjecture
+**Proof sketch.** Suppose $k$ and $m$ are both first nonzero. If $k<m$, the condition for $m$ gives $c_k=0$, contradicting $c_k\ne0$. If $m<k$, the symmetric contradiction follows. Hence $k=m$. $\square$
 
-**Conjecture 8.2.** For any finite query set Q ⊂ ℂ with 1 ∉ Q, there exist analytic functions F, G agreeing on Q with different vanishing orders at 1. (This is stated formally but not yet proved for analytic functions specifically.)
+**Theorem 4.3 (Finite-jet existence under bounded nonvanishing).** Let $B\in\mathbb N$. If
 
-## 9. Cross-Domain Connections
+$$
+\exists k\le B\quad c_k\ne0,
+$$
 
-### 9.1 Connection to Omniscient Oracle Theory
+then there exists a unique $k\le B$ that is the first nonzero index of $c$.
 
-The ArithmeticSpectrum framework connects to the Oracle' structure from the Computation catalog. An L-function oracle can be modeled as an Oracle' on the space of complex-valued functions, where:
-- The truth set consists of actual L-function values
-- The illusion set consists of queries about non-L-functions
-- The idempotence condition reflects the deterministic nature of L-function evaluation
+**Proof sketch.** Consider the finite set
 
-### 9.2 Connection to the Oracle Diagonal Theorem
+$$
+N_B=\{k\in\{0,1,\ldots,B\}:c_k\ne0\}.
+$$
 
-The Hypercomputation catalog establishes that no oracle machine can solve its own relativized halting problem. In our context, this means: even a full L-oracle cannot determine all properties of L-functions. The oracle hierarchy is infinite (our three levels are the first three of a potentially unbounded hierarchy).
+The hypothesis makes $N_B$ nonempty. By well-ordering, it has a least element $k$. This coefficient is nonzero, and minimality forces every earlier coefficient to vanish. Uniqueness follows from Theorem 4.2. $\square$
 
-### 9.3 Oracle Reduction Algebra
+The theorem gives a correct bounded-search algorithm: inspect $c_0,c_1,\ldots,c_B$ and return the first nonzero coefficient. It performs at most $B+1$ oracle queries. The essential arithmetic hypothesis is not exactness but the existence of a known $B$ with guaranteed nonvanishing. In the elliptic-curve setting, using central vanishing order to infer algebraic rank also requires the independent bridge asserted by the Birch–Swinnerton-Dyer conjecture. Evaluation does not prove that bridge.
 
-Oracle reductions form a preorder on computational problems:
-- **Reflexivity:** Every problem reduces to itself (0 queries)
-- **Transitivity:** If A reduces to B and B reduces to C, then A reduces to C
+If all coefficients vanish, an analytic function is locally zero and hence, on a connected domain, identically zero. But a sequential evaluator cannot certify that every coefficient vanishes after inspecting only finitely many of them unless an effective structural theorem supplies a bound. Thus finite rank and infinite vanishing must be treated separately.
 
-This preorder structure is the algebraic backbone of computational complexity relative to L-function oracles.
+## 5. Certified factor extraction
 
-## 10. Discussion
+A factor-search procedure is an algorithmic object with an arithmetic correctness condition.
 
-### 10.1 What We Learned
+**Definition 5.1 (Factor-search specification).** A function $F:\mathbb N\to\mathbb N$ is a valid factor-search procedure if, for every composite integer $n\ge2$,
 
-The Oracle Spectral Algebra reveals that the power of L-function oracles is determined by three independent axes of information:
+$$
+F(n)\mid n,\qquad 1<F(n),\qquad F(n)<n.
+$$
 
-1. **Value information** (point evaluation): Knows function values but not derivatives
-2. **Differential information** (derivative oracle): Knows local Taylor expansion
-3. **Global information** (zero certificates): Knows the global zero distribution
+No condition is imposed here on prime inputs. Complexity bounds are also separate from this extensional specification.
 
-These correspond roughly to the hierarchy of analytic tools: evaluation, differentiation, and analytic continuation.
+Suppose an evaluator $E:Q\to A$ is accompanied by a query constructor $q:\mathbb N\to Q$ and a decoder $d:\mathbb N\times A\to\mathbb N$. Define
 
-### 10.2 What Failures Teach
+$$
+F(n)=d(n,E(q(n))).
+$$
 
-The barrier theorems are as important as the positive results. The impossibility of determining vanishing order from point evaluations is not a limitation of current techniques — it is a mathematical theorem. This suggests that computational approaches to BSD based solely on L-function evaluation (without derivative computation) are fundamentally insufficient.
+**Theorem 5.2 (Certified oracle decoder).** Assume that for every composite $n\ge2$, the value $d(n,E(q(n)))$ divides $n$, is greater than $1$, and is less than $n$. Then $F$ is a valid factor-search procedure.
 
-### 10.3 Implications for Computational Number Theory
+**Proof sketch.** Substitute the definition of $F(n)$ into the three assumed certificate conditions. They are exactly the requirements of Definition 5.1. $\square$
 
-As L-function databases grow (LMFDB now contains data for billions of L-functions), understanding the theoretical limits of what this data can tell us becomes critical. Our results provide:
+The theorem deliberately exposes the proof obligation often hidden in an oracle proposal. To obtain a polynomial-time factoring result, one must also establish that $q(n)$ has polynomial length in $\log n$, that it can be constructed in polynomial time, that the oracle answer has a usable representation, and that $d$ runs in polynomial time. A claim that local Euler data “detects” factors is insufficient until a decoder and divisibility proof are supplied.
 
-- **Upper bounds:** Spectral reconstruction shows that prime-indexed data suffices
-- **Lower bounds:** Barrier theorems show that point data alone is insufficient for some tasks
-- **Sharp complexity:** The query gap theorem gives exact complexity for key problems
+A practical certificate is easy to verify once a candidate appears: compute $n\bmod d$ and check $1<d<n$. The difficult direction is completeness—proving that the prescribed oracle queries always cause the decoder to produce such a $d$ for every composite input.
 
-## 11. Future Work
+## 6. Algorithms
 
-1. **Extend the hierarchy** beyond three levels (e.g., analytic continuation oracles, functional equation oracles)
-2. **Prove the Spectral Rank Boundedness Conjecture** or find a counterexample
-3. **Formalize the connection to the Langlands program** by defining L-function morphisms
-4. **Establish resource lower bounds** for physical realizations of L-function oracles
+### 6.1. Finite-transcript perturbation
 
-## References
+Given sampled pairs $(a,f(a))$, a fresh point $z$, and a desired target $T$, compute
 
-1. B. Riemann, "Ueber die Anzahl der Primzahlen unter einer gegebenen Grösse," 1859.
-2. A. Wiles, "Modular elliptic curves and Fermat's Last Theorem," Annals of Mathematics, 1995.
-3. LMFDB Collaboration, "The L-functions and modular forms database," https://www.lmfdb.org/.
-4. H. Iwaniec and E. Kowalski, *Analytic Number Theory*, AMS Colloquium Publications, 2004.
-5. J.B. Conrey, "The Riemann Hypothesis," Notices of the AMS, 2003.
+$$
+P_S(z)=\prod_{a\in S}(z-a),\qquad
+\lambda=\frac{T-f(z)}{P_S(z)}.
+$$
 
-## Appendix: Formalization Details
+The perturbed evaluator is $g(w)=f(w)+\lambda P_S(w)$. Evaluating $g$ naively takes $O(|S|)$ complex multiplications. The construction demonstrates non-identifiability rather than proposing an efficient model of an $L$-function.
 
-All theorems are formalized in Lean 4 (v4.28.0) with Mathlib. The main file is `Novelty/LFunctionOracleAlgebra.lean` containing 13 verified theorems and 3 verified definitions. The proofs use only standard axioms: propext, Classical.choice, and Quot.sound.
+### 6.2. Bounded first-nonzero search
 
-Key formal definitions:
-- `ArithmeticSpectrum`: Structure with fields `coeff`, `coeff_zero`, `coeff_one`, `multiplicative`
-- `dirichletConv`: Dirichlet convolution as a sum over divisors
-- `OraclePowerLevel`: Inductive type with four constructors
-- `vanishingOrderAt`: Predicate for order of vanishing
-- `RHUpTo`, `RH`: Riemann Hypothesis predicates
+Given exact access to $c_k$ and a valid bound $B$, query in increasing order. Return the first $k$ with $c_k\ne0$. The algorithm uses at most $B+1$ queries, $O(B)$ equality tests, and constant auxiliary index storage apart from answer representations. Correctness follows from Theorem 4.3.
+
+### 6.3. Certified factor decoding
+
+Construct $q(n)$, evaluate $a=E(q(n))$, decode $d=d(n,a)$, and verify
+
+$$
+n\bmod d=0,
+\qquad 1<d<n.
+$$
+
+The verification is polynomial in the bit lengths of $n$ and $d$. If it fails, the pipeline has not met the factor-search specification. If a completeness theorem guarantees success for every composite $n$, the pipeline is a correct factor-search method.
+
+## 7. Applications and interpretation
+
+### 7.1. The Riemann Hypothesis
+
+An exact evaluator decides whether a specified $s$ satisfies $\zeta(s)=0$. It does not by itself prove that all nontrivial zeros lie on the critical line. A viable oracle-assisted strategy must add zero-counting certificates on bounded regions and a method covering all heights. The finite-observation obstruction explains why finite point samples cannot replace these additions.
+
+### 7.2. Birch–Swinnerton-Dyer
+
+Exact access to the central jet can locate the first nonzero coefficient once a finite search bound is known. This computes analytic rank under the bound. Identifying analytic rank with algebraic rank remains a separate mathematical assertion. Consequently, “evaluate at $s=1$” is inadequate twice over: a single value only distinguishes order zero from positive order, and the equality of analytic and algebraic ranks is not a consequence of evaluation.
+
+### 7.3. Sato–Tate
+
+Exact local coefficients permit exact finite histograms. They do not establish convergence to the Sato–Tate measure. An effective discrepancy estimate can bridge the gap by bounding the difference between empirical and limiting distributions as a function of the cutoff. Such a bound is global information about the family.
+
+### 7.4. Langlands functoriality
+
+Comparing finitely many local factors can certify a lift only when a converse rigidity theorem gives a sufficient agreement threshold in the relevant bounded family. Without such a theorem, finite agreement is evidence rather than proof. The appropriate oracle program therefore seeks quantitative multiplicity-one or converse bounds.
+
+### 7.5. Complexity classes
+
+If all problems in a class many-one reduce to a target that is one-query reducible to an evaluator, Corollary 2.4 gives a relative collapse to one evaluator call. This statement is compatible with either $P=NP$ or $P\ne NP$ in the ordinary model. No unconditional separation follows merely from postulating a powerful oracle.
+
+## 8. Discussion
+
+The framework organizes oracle claims around a local-to-global gap. Exact evaluation answers a well-posed local question. Global arithmetic theorems typically contain universal quantifiers, limiting operations, orders of vanishing, or existential arithmetic witnesses. Each requires a bridge:
+
+1. **Zero statements** require certified region counts or exclusion bounds.
+2. **Vanishing orders** require a finite nonvanishing bound.
+3. **Distribution laws** require effective control of tails or discrepancy.
+4. **Global identities** require rigidity within a restricted family.
+5. **Factor search** requires a correct decoder and divisibility certificate.
+6. **Complexity collapse** requires explicit reductions and an honest cost model.
+
+The interpolation theorem shows that these are not cosmetic technicalities. Without structural restrictions, no finite transcript determines even one new value. Conversely, the transfer theorems show that once the appropriate bridge is supplied, the role of the evaluator is clean and compositional.
+
+There are limitations. The unrestricted function class is broader than any natural family of $L$-functions, and the perturbation need not preserve arithmetic structure. The reduction theory is extensional and does not by itself specify bit complexity. Exact complex outputs require a representation supporting equality and decoding. These limitations are features of the analysis: each marks an assumption that must be stated before a computational consequence is claimed.
+
+## 9. Future work
+
+A natural next step is to replace vague global promises by certificate languages with explicit complexity. For completed $L$-functions, one may seek polynomial-size certificates that a rectangle contains a stated number of zeros. For elliptic curves, one may seek conductor-dependent bounds on how far the central Taylor jet must be searched. For factorization, the challenge is to construct auxiliary arithmetic objects and a decoder whose proper-divisor output is provably complete. For automorphic families, a quantitative converse-rigidity theorem could turn bounded local agreement into global identity. For distribution problems, effective tail and discrepancy bounds would connect finite coefficient access to limiting measures. Finally, oracle-relative hierarchy results should record query budgets, preprocessing costs, answer representation sizes, and adaptivity rather than speaking of collapse without a cost model.
+
+## 10. Conclusion
+
+Instant exact evaluation is powerful but local. It does not, by itself, classify all zeros, determine an unbounded vanishing order, prove a limiting distribution, identify global representations from finite samples, or extract factors from arithmetic data. The finite-observation interpolation theorem gives a universal obstruction: a finite transcript is compatible with arbitrary behavior at a fresh point. Positive consequences arise only after adding explicit mathematical structure. One-query reductions compose with many-one encodings; bounded nonvanishing makes jet search finite; and a certified decoder converts oracle output into a factor-search procedure. The decisive research problem is therefore not evaluation speed alone, but the construction of certificates, bounds, reductions, and rigidity principles that turn local values into global knowledge.
