@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "189556db",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nThese conjectures grow out of two threads consolidated in this cycle: the\nidentification of the factorial numeral system as one point in a single\nparameterized family of mixed-rad",
-      "quality_score": 0.72,
-      "sorry_count": 6,
-      "theorem_count": 574,
-      "timestamp": "2026-07-14T06:35:05",
-      "title": "Close Proofs: `MatsunoIwasawaBridge.lean` builds a self-contained algebraic model of"
-    },
-    {
       "cycle_id": "30ef4e5b",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Sharp Sumset Bounds in L₁ Balls\n\nThis cycle established the additive / geometric / analytic scaffolding around the\nsharp exponent `p = n·log(m+1) / log(nm+1)` for sumsets inside",
@@ -2501,6 +2491,16 @@
       "theorem_count": 18,
       "timestamp": "2026-07-18T02:47:23",
       "title": "The Unreasonable Effectiveness of the Number 163"
+    },
+    {
+      "cycle_id": "fe36a9a3",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions: A Periodic Table of Finite Groups\n\n## 1. Extension fingerprints refine composition columns\n\n**Conjecture.** Among groups of order at most 2000, the multiset of composition factors",
+      "quality_score": 0.66,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-18T03:22:39",
+      "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-18T02:47:23",
+  "last_updated": "2026-07-18T03:22:39",
   "open_questions": [
     {
       "context": "",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "7e60f6c2",
-        "quality": 0.83,
-        "theorems": 23,
-        "title": "Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
-      },
-      {
         "cycle_id": "c2b68f4a",
         "quality": 0.78,
         "theorems": 20,
@@ -3203,6 +3197,12 @@
         "quality": 0.68,
         "theorems": 20,
         "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
+      },
+      {
+        "cycle_id": "fe36a9a3",
+        "quality": 0.66,
+        "theorems": 11,
+        "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
       }
     ],
     "Combinatorics": [

@@ -1,209 +1,220 @@
-"""
-Numerical demonstrations for the tropical (min-plus) hash.
+#!/usr/bin/env python3
+"""Numerical demonstrations for min-plus tropical hashing.
 
-The tropical hash of a message m against a key h is
-
-    TSHA(h, m) = min_i (m_i + h_i).
-
-This module empirically confirms two theorems and one conjecture:
-
-  * Stability (1-Lipschitz):  |TSHA(h,m) - TSHA(h,m')| <= max_i |m_i - m'_i|.
-  * Generic collisions:       for k >= 2 a distinct message with the same
-                              digest can be built deterministically.
-  * Two-key refinement:       a second independent key breaks single-key
-                              collisions with frequency growing toward 1 as k
-                              grows (conjectured residual collision rate ~ 1/k).
-
-Everything is self-contained and uses only the standard library.
+The examples use integer-valued data so that all displayed equalities are exact.
+No third-party packages are required.
 """
 
 from __future__ import annotations
 
-import random
-from typing import List, Sequence, Tuple
+from dataclasses import dataclass
+from hashlib import sha256
+from random import Random
+from time import perf_counter
+from typing import Iterable, Sequence
+
+Number = int | float
 
 
-# --------------------------------------------------------------------------- #
-# Core tropical hash
-# --------------------------------------------------------------------------- #
-def tsha(h: Sequence[float], m: Sequence[float]) -> float:
-    """Single-key tropical hash: min_i (m_i + h_i). O(k)."""
-    return min(mi + hi for mi, hi in zip(m, h))
+@dataclass(frozen=True)
+class MinimumCertificate:
+    """A minimum together with every coordinate that attains it."""
+
+    value: Number
+    witnesses: tuple[int, ...]
 
 
-def tsha2(
-    h: Sequence[float], hp: Sequence[float], m: Sequence[float]
-) -> Tuple[float, float]:
-    """Two-key tropical hash: (min_i(m_i+h_i), min_i(m_i+h'_i)). O(k)."""
-    return tsha(h, m), tsha(hp, m)
+def _same_length(*vectors: Sequence[Number]) -> int:
+    """Validate nonempty equal-length vectors and return their length."""
+    if not vectors or not vectors[0]:
+        raise ValueError("vectors must be nonempty")
+    k = len(vectors[0])
+    if any(len(vector) != k for vector in vectors):
+        raise ValueError("all vectors must have the same length")
+    return k
 
 
-def argmin_index(h: Sequence[float], m: Sequence[float]) -> int:
-    """Index of a minimizing (winning) coordinate of m under key h."""
-    best_i, best_v = 0, m[0] + h[0]
-    for i in range(1, len(m)):
-        v = m[i] + h[i]
-        if v < best_v:
-            best_i, best_v = i, v
-    return best_i
+def tropical_hash(message: Sequence[Number], key: Sequence[Number]) -> Number:
+    """Return min_i(message[i] + key[i]) in O(k) time."""
+    _same_length(message, key)
+    return min(x + a for x, a in zip(message, key))
 
 
-def collide(
-    h: Sequence[float], m: Sequence[float], delta: float = 1.0
-) -> List[float]:
+def tropical_hash_certificate(
+    message: Sequence[Number], key: Sequence[Number]
+) -> MinimumCertificate:
+    """Evaluate the scalar hash and return all minimizing coordinates."""
+    _same_length(message, key)
+    sums = [x + a for x, a in zip(message, key)]
+    value = min(sums)
+    return MinimumCertificate(value, tuple(i for i, total in enumerate(sums) if total == value))
+
+
+def tropical_hash_two(
+    message: Sequence[Number],
+    first_key: Sequence[Number],
+    second_key: Sequence[Number],
+) -> tuple[Number, Number]:
+    """Return the ordered pair of independently keyed min-plus hashes."""
+    _same_length(message, first_key, second_key)
+    return tropical_hash(message, first_key), tropical_hash(message, second_key)
+
+
+def canonical_preimage(key: Sequence[Number], target: Number) -> list[Number]:
+    """Construct message[i] = target - key[i], an exact preimage of target."""
+    if not key:
+        raise ValueError("key must be nonempty")
+    return [target - a for a in key]
+
+
+def fiber_certificate(
+    message: Sequence[Number], key: Sequence[Number], target: Number
+) -> bool:
+    """Check all sums >= target and at least one sum == target."""
+    _same_length(message, key)
+    sums = [x + a for x, a in zip(message, key)]
+    return all(target <= total for total in sums) and any(
+        total == target for total in sums
+    )
+
+
+def construct_two_key_collision(
+    message: Sequence[Number],
+    first_key: Sequence[Number],
+    second_key: Sequence[Number],
+    increment: Number = 1,
+) -> tuple[list[Number], int]:
+    """Construct a deterministic collision when k >= 3.
+
+    One minimizing witness is retained for each key. A coordinate outside the
+    two-witness set is increased by a positive amount. The result lies on an
+    unbounded collision ray.
     """
-    Deterministically produce m' != m with TSHA(h, m') = TSHA(h, m).
-
-    Inflate a single non-minimizing (losing) coordinate by delta > 0.
-    Requires len(m) >= 2.
-    """
-    if len(m) < 2:
-        raise ValueError("collisions are guaranteed only for k >= 2")
-    i_star = argmin_index(h, m)
-    k_star = 1 if i_star == 0 else 0  # any index different from the minimizer
-    mp = list(m)
-    mp[k_star] += delta
-    return mp
-
-
-def sup_norm(m: Sequence[float], mp: Sequence[float]) -> float:
-    """Supremum (max coordinate-wise) distance between two messages."""
-    return max(abs(a - b) for a, b in zip(m, mp))
+    k = _same_length(message, first_key, second_key)
+    if k < 3:
+        raise ValueError("the universal construction requires at least 3 coordinates")
+    if increment <= 0:
+        raise ValueError("increment must be positive")
+    first_witness = tropical_hash_certificate(message, first_key).witnesses[0]
+    second_witness = tropical_hash_certificate(message, second_key).witnesses[0]
+    free_coordinate = next(
+        i for i in range(k) if i not in {first_witness, second_witness}
+    )
+    collision = list(message)
+    collision[free_coordinate] += increment
+    return collision, free_coordinate
 
 
-# --------------------------------------------------------------------------- #
-# Demonstration 1: stability (1-Lipschitz) and its sharpness
-# --------------------------------------------------------------------------- #
-def demo_stability(k: int = 32, trials: int = 20000, seed: int = 0) -> None:
-    rng = random.Random(seed)
-    worst_ratio = 0.0
-    for _ in range(trials):
-        h = [rng.uniform(-10, 10) for _ in range(k)]
-        m = [rng.uniform(-10, 10) for _ in range(k)]
-        mp = [rng.uniform(-10, 10) for _ in range(k)]
-        d = sup_norm(m, mp)
-        if d == 0:
-            continue
-        ratio = abs(tsha(h, m) - tsha(h, mp)) / d
-        worst_ratio = max(worst_ratio, ratio)
-
-    # Sharpness: move ONLY the winning coordinate -> ratio should equal 1.
-    h = [rng.uniform(-10, 10) for _ in range(k)]
-    m = [rng.uniform(-10, 10) for _ in range(k)]
-    w = argmin_index(h, m)
-    m_shift = list(m)
-    eps = 0.5  # small enough to keep w the winner
-    m_shift[w] += eps
-    sharp_ratio = abs(tsha(h, m) - tsha(h, m_shift)) / sup_norm(m, m_shift)
-
-    print("=" * 64)
-    print("Demonstration 1: Stability (1-Lipschitz)")
-    print("=" * 64)
-    print(f"  k = {k}, trials = {trials}")
-    print(f"  worst observed |dTSHA| / ||dm||_inf = {worst_ratio:.6f}  (<= 1)")
-    print(f"  ratio when only the winner moves     = {sharp_ratio:.6f}  (= 1)")
-    print(f"  bound respected: {worst_ratio <= 1.0 + 1e-12}")
-    print()
+def concavity_gap(
+    v: Sequence[Number], w: Sequence[Number], t: float
+) -> float:
+    """Return the nonnegative gap in concavity of min(x_0, x_1)."""
+    if len(v) != 2 or len(w) != 2:
+        raise ValueError("v and w must each have two coordinates")
+    if not 0.0 <= t <= 1.0:
+        raise ValueError("t must lie in [0, 1]")
+    left = min((1.0 - t) * v[0] + t * w[0], (1.0 - t) * v[1] + t * w[1])
+    right = (1.0 - t) * min(v) + t * min(w)
+    return left - right
 
 
-# --------------------------------------------------------------------------- #
-# Demonstration 2: guaranteed collisions
-# --------------------------------------------------------------------------- #
-def demo_collisions(k: int = 32, trials: int = 10000, seed: int = 1) -> None:
-    rng = random.Random(seed)
+def demonstrate_exact_fiber() -> None:
+    """Print a canonical inverse and verify the exact fiber certificate."""
+    key = [7, -2, 11, 4]
+    target = 23
+    message = canonical_preimage(key, target)
+    print("\n1. Exact fiber and canonical preimage")
+    print(f"   key:                 {key}")
+    print(f"   requested target:    {target}")
+    print(f"   canonical preimage:  {message}")
+    print(f"   coordinate sums:     {[x + a for x, a in zip(message, key)]}")
+    print(f"   hash output:         {tropical_hash(message, key)}")
+    print(f"   fiber certificate:   {fiber_certificate(message, key, target)}")
+    assert tropical_hash(message, key) == target
+    assert fiber_certificate(message, key, target)
+
+
+def demonstrate_collision_ray() -> None:
+    """Print several points on a deterministic two-key collision ray."""
+    message = [8, 1, 6, 3, 10]
+    first_key = [0, 7, 2, 9, 4]
+    second_key = [6, 3, 8, 0, 5]
+    original = tropical_hash_two(message, first_key, second_key)
+    collision, coordinate = construct_two_key_collision(
+        message, first_key, second_key
+    )
+    print("\n2. Universal two-key collision ray")
+    print(f"   message:              {message}")
+    print(f"   two-key output:       {original}")
+    print(f"   free coordinate:      {coordinate}")
+    print(f"   first collision:      {collision}")
+    for increment in (1, 10, 100, 10_000):
+        candidate = list(message)
+        candidate[coordinate] += increment
+        output = tropical_hash_two(candidate, first_key, second_key)
+        print(f"   increment {increment:>5}: output {output}")
+        assert candidate != message and output == original
+
+
+def demonstrate_concavity() -> None:
+    """Sample line segments and print their nonnegative concavity gaps."""
+    pairs = [([0, 5], [7, 1]), ([-3, 4], [2, 9]), ([8, 2], [-1, 6])]
+    print("\n3. Concavity of the two-coordinate minimum")
+    for v, w in pairs:
+        gaps = [concavity_gap(v, w, step / 10.0) for step in range(11)]
+        print(f"   v={v}, w={w}, minimum sampled gap={min(gaps):.6g}")
+        assert min(gaps) >= -1e-12
+
+
+def sampled_collision_experiment(k: int, trials: int, seed: int = 20260718) -> int:
+    """Count successful theorem-guided collisions in random integer examples."""
+    if k < 3 or trials < 0:
+        raise ValueError("require k >= 3 and trials >= 0")
+    rng = Random(seed)
     successes = 0
     for _ in range(trials):
-        h = [rng.uniform(-10, 10) for _ in range(k)]
-        m = [rng.uniform(-10, 10) for _ in range(k)]
-        mp = collide(h, m, delta=rng.uniform(0.1, 5.0))
-        if mp != list(m) and tsha(h, mp) == tsha(h, m):
+        message = [rng.randint(-100, 100) for _ in range(k)]
+        first_key = [rng.randint(-100, 100) for _ in range(k)]
+        second_key = [rng.randint(-100, 100) for _ in range(k)]
+        collision, _ = construct_two_key_collision(message, first_key, second_key)
+        if collision != message and tropical_hash_two(
+            collision, first_key, second_key
+        ) == tropical_hash_two(message, first_key, second_key):
             successes += 1
-    print("=" * 64)
-    print("Demonstration 2: Guaranteed collisions (k >= 2)")
-    print("=" * 64)
-    print(f"  k = {k}, trials = {trials}")
-    print(f"  distinct message with identical digest: {successes}/{trials}")
-    print(f"  success rate = {successes / trials:.4f}  (expected 1.0000)")
-    print()
+    return successes
 
 
-# --------------------------------------------------------------------------- #
-# Demonstration 3: two-key refinement of the collision relation
-# --------------------------------------------------------------------------- #
-def demo_two_key(seed: int = 2, trials: int = 20000) -> None:
-    rng = random.Random(seed)
-    print("=" * 64)
-    print("Demonstration 3: Two-key refinement (separation rate ~ 1/k)")
-    print("=" * 64)
-    print("  A single-key collision inflates one losing coordinate j. An")
-    print("  independent second key SEPARATES the pair only if j happens to be")
-    print("  its active minimizer -- probability ~ 1/k. So the improvement is")
-    print("  inverse-linear (weak), not exponential.")
-    print()
-    print(f"  {'k':>6} | {'separation rate':>16} | {'k * sep rate':>13}")
-    print("  " + "-" * 42)
-    for k in (8, 16, 32, 64, 128):
-        separated = 0
-        for _ in range(trials):
-            h = [rng.uniform(-10, 10) for _ in range(k)]
-            m = [rng.uniform(-10, 10) for _ in range(k)]
-            # single-key collision by inflating a random losing coordinate
-            i_star = argmin_index(h, m)
-            losers = [i for i in range(k) if i != i_star]
-            j = rng.choice(losers)
-            mp = list(m)
-            mp[j] += rng.uniform(0.1, 5.0)
-            # independent second key: is the collision broken (separated)?
-            hp = [rng.uniform(-10, 10) for _ in range(k)]
-            if tsha(hp, mp) != tsha(hp, m):
-                separated += 1
-        rate = separated / trials
-        print(f"  {k:>6} | {rate:>16.5f} | {k * rate:>13.3f}")
-    print()
-    print("  (k * separation_rate ~ constant is consistent with a Theta(1/k) law.)")
-    print()
-
-
-# --------------------------------------------------------------------------- #
-# Demonstration 4: mining-difficulty comparison
-# --------------------------------------------------------------------------- #
-def demo_difficulty(k: int = 64, seed: int = 3) -> None:
-    """
-    Compare the effort to hit a digest target.
-
-    A SHA-style hash below a probability-p target needs ~1/p random trials.
-    The tropical single-key digest is invertible in ONE linear scan, because
-    given a key h and a target y we can pick an active coordinate and clamp
-    the rest above y.
-    """
-    rng = random.Random(seed)
-    h = [rng.uniform(-10, 10) for _ in range(k)]
-    y = rng.uniform(-5, 5)  # desired digest value
-
-    # O(k) tropical inversion: make coordinate 0 active at y, others >= y.
-    a = 0
-    m = [y - h[a]]  # active coordinate: m_a + h_a = y
-    for i in range(1, k):
-        m.append(y - h[i] + rng.uniform(0.0, 5.0))  # ensure m_i + h_i >= y
-
-    achieved = tsha(h, m)
-    print("=" * 64)
-    print("Demonstration 4: Mining-difficulty comparison")
-    print("=" * 64)
-    print(f"  k = {k}")
-    print(f"  SHA-style: ~1/p expected trials for a probability-p target.")
-    print(f"  tropical:  O(k) = {k} operations, one pass, no search.")
-    print(f"  target digest y      = {y:.6f}")
-    print(f"  achieved TSHA(h, m)  = {achieved:.6f}")
-    print(f"  inversion exact: {abs(achieved - y) < 1e-9}")
-    print()
+def benchmark(block_sizes: Iterable[int] = (32, 64, 128), repeats: int = 2_000) -> None:
+    """Illustrate evaluation costs; timings are not a security comparison."""
+    rng = Random(7)
+    print("\n4. Illustrative evaluation timings")
+    print("   (Platform-dependent timings; security properties are not comparable.)")
+    for k in block_sizes:
+        message = [rng.randrange(256) for _ in range(k)]
+        key = [rng.randrange(256) for _ in range(k)]
+        payload = bytes(message)
+        start = perf_counter()
+        for _ in range(repeats):
+            tropical_hash(message, key)
+        tropical_seconds = perf_counter() - start
+        start = perf_counter()
+        for _ in range(repeats):
+            sha256(payload).digest()
+        sha_seconds = perf_counter() - start
+        print(
+            f"   k={k:3d}: min-plus={tropical_seconds:.6f}s, "
+            f"SHA-256 library call={sha_seconds:.6f}s"
+        )
 
 
 def main() -> None:
-    demo_stability()
-    demo_collisions()
-    demo_two_key()
-    demo_difficulty()
+    demonstrate_exact_fiber()
+    demonstrate_collision_ray()
+    demonstrate_concavity()
+    successes = sampled_collision_experiment(k=32, trials=500)
+    print(f"\nRandom illustrations: {successes}/500 constructed collisions succeeded exactly.")
+    assert successes == 500
+    benchmark()
 
 
 if __name__ == "__main__":

@@ -1,186 +1,152 @@
-# Mining on the Min-Plus World: A Cryptocurrency Where the Hash Is a Shortest Path
+# Tropical Cryptocurrency: Mining on the Min-Plus Semiring
 
-## A puzzle at the heart of every coin
+## When “addition” means choosing the smaller number
 
-Every cryptocurrency you have ever heard of is, underneath the branding, a
-gigantic guessing game. To add a block to the ledger, a miner must find a
-special number — a *nonce* — so that when the block and the nonce are fed through
-a cryptographic hash function, the output lands below a target threshold. The
-hash function is deliberately chaotic: change one bit of the input and the output
-scrambles completely. There is no shortcut, no cleverness, no insight that helps.
-You just try nonces, billions upon billions of them, until one works. That brute
-search is what consumes small nations' worth of electricity.
+Cryptographic hashing is usually presented as a digital blender. Feed it a message, and a thicket of bitwise operations turns that message into an apparently patternless fingerprint. Change one bit, and the fingerprint should change unpredictably. Running the blender forward is easy; reversing it or finding two inputs with the same output should be forbiddingly hard.
 
-It is hard not to ask: what if the puzzle were *mathematics* instead of noise?
-What if, to mine a coin, you had to solve a genuine optimization problem — the
-kind that engineers actually care about — so that the energy poured into mining
-produced something more than a lottery ticket?
+Tropical mathematics begins from a different instinct. Instead of making arithmetic more complicated, it changes two of its most familiar operations. In the **min-plus semiring**, tropical addition is the minimum,
 
-This article explores exactly that fantasy through a strange and beautiful
-arithmetic called the **min-plus semiring**, better known as *tropical*
-mathematics. We will build a hash function out of it, prove two clean theorems
-about how it behaves, and discover both why the idea is seductive and why the
-naive version is spectacularly insecure — a failure that is itself a theorem.
+$$
+a\oplus b=\min(a,b),
+$$
 
-## Arithmetic from another planet
+while tropical multiplication is ordinary addition,
 
-In ordinary arithmetic, you add and multiply. Tropical arithmetic keeps two
-operations too, but redefines them:
+$$
+a\otimes b=a+b.
+$$
 
-$$a \oplus b = \min(a, b), \qquad a \otimes b = a + b.$$
+This arithmetic appears naturally in shortest paths, scheduling, logistics, dynamic programming, and discrete-event systems. If route lengths are combined in series, they add; if several routes compete, the shortest wins. Tropical algebra packages that optimization logic into an algebraic language.
 
-"Addition" becomes *taking the smaller of two numbers*, and "multiplication"
-becomes *ordinary addition*. It sounds like a typo, but this system obeys almost
-all the familiar laws — it is associative, commutative, and distributive — which
-is why mathematicians call it a *semiring*. The one thing it lacks is
-subtraction: you cannot un-take a minimum.
+That makes a provocative cryptocurrency thought experiment possible: could mining be based on tropical optimization rather than conventional bit mixing? Consider a message with $k$ real coordinates,
 
-Why would anyone care? Because tropical arithmetic is the native language of
-optimization. The shortest path through a network, the cheapest schedule for a
-factory, the critical delay in a computer chip — all of these are computed by
-chains of "add the costs, then keep the minimum," which is precisely tropical
-multiplication followed by tropical addition. In the tropical world, a shortest
-path *is* a product, and finding the best route *is* evaluating a polynomial.
+$$
+m=(m_1,\ldots,m_k),
+$$
 
-## Building a tropical hash
+and a key
 
-Let a message be a list of $k$ numbers, $m = (m_1, \dots, m_k)$. Fix a secret
-*key*, another list $h = (h_1, \dots, h_k)$. Define the **tropical hash** of the
-message to be the tropical dot product of the two:
+$$
+h=(h_1,\ldots,h_k).
+$$
 
-$$\mathrm{TSHA}(h, m) = \min_{1 \le i \le k} \left( m_i + h_i \right).$$
+Define the single-key tropical hash by
 
-In plain words: add the key to the message coordinate by coordinate, then report
-the smallest sum. That is the whole function.
+$$
+T_h(m)=\min_{1\le i\le k}(m_i+h_i).
+$$
 
-The forward direction is trivially fast. Computing $\mathrm{TSHA}$ requires $k$
-additions and $k-1$ comparisons — it is linear in the length of the message, the
-cheapest thing imaginable. The dream is that the *reverse* direction is hard:
-given only the output value $y$ and the key $h$, reconstruct a message $m$ whose
-minimum sum equals $y$. This inversion is a constrained shortest-path selection
-problem, exactly the sort of thing that is easy to check but conjectured to be
-hard to solve at scale. If that asymmetry held, then mining a "tropical coin"
-would amount to solving optimization problems, and the ledger's security would
-rest on the difficulty of tropical inversion rather than on brute force.
+It can be evaluated in one scan through the coordinates, so its running time is $O(k)$. At first glance, inversion might seem to require discovering which coordinate supplied the hidden minimum. Perhaps that search could resemble a shortest-path problem. Perhaps adding a second independent key could suppress collisions.
 
-That is the vision. Now for the mathematics that tells us how much of it survives
-contact with reality.
+The mathematics gives a sharp answer: neither hope survives for unrestricted real messages. The failure is not a subtle statistical weakness. It is written directly into the geometry of the minimum.
 
-## First theorem: the hash is gentle, not chaotic
+## The exact anatomy of an output
 
-A cryptographic hash function is supposed to be an avalanche: nudge the input and
-the output explodes. Our tropical hash is the opposite. It is *stable*, and we
-can say exactly how stable.
+Suppose the hash output is $y$. What must the message satisfy? Since $y$ is the minimum of the $k$ values $m_i+h_i$, every one of those values must lie at or above $y$, and at least one must equal $y$. Conversely, those two conditions clearly force the minimum to be $y$.
 
-Measure the distance between two messages by their largest coordinate-wise gap,
-the *supremum norm* $\lVert m - m' \rVert_\infty = \max_i |m_i - m'_i|$. Then:
+This is the **Exact Fiber Theorem**:
 
-> **Stability Theorem (1-Lipschitz property).** For any key $h$ and any two
-> messages $m, m'$,
-> $$\bigl|\,\mathrm{TSHA}(h, m) - \mathrm{TSHA}(h, m')\,\bigr| \;\le\; \max_{1 \le i \le k} |m_i - m'_i|.$$
+> For any nonempty finite message and any real key, $T_h(m)=y$ if and only if $y\le m_i+h_i$ for every coordinate $i$, and $m_p+h_p=y$ for at least one coordinate $p$.
 
-In words: the hash value can never move further than the largest change you made
-to the message. If you tweak every coordinate by at most $\varepsilon$, the
-digest moves by at most $\varepsilon$. There is no avalanche at all.
+The set of all messages producing $y$ is called the **fiber** over $y$. Solving the inequalities gives an especially transparent description:
 
-The proof is a short, satisfying argument about minima. If you shift every term
-$m_i + h_i$ by an amount no larger than $\varepsilon$, then the smallest term
-also cannot move by more than $\varepsilon$ — the minimum of a family of numbers
-is a $1$-Lipschitz function of that family. Applying this to the two shifted
-families $m_i + h_i$ and $m'_i + h_i$, whose gaps are exactly $|m_i - m'_i|$,
-gives the bound immediately.
+$$
+m_i\ge y-h_i\quad\text{for every }i,
+$$
 
-This is lovely mathematics and terrible cryptography. A stable hash leaks
-information: outputs that are close correspond to inputs that are close, so an
-attacker can hill-climb toward a preimage instead of searching blindly. The
-avalanche that protects real hash functions is exactly what this theorem
-forbids.
+with equality in at least one coordinate. Thus the fiber is the boundary formed by selected faces of the translated orthant
 
-## Second theorem: collisions are guaranteed, not rare
+$$
+\prod_{i=1}^k [y-h_i,\infty).
+$$
 
-A good hash should make *collisions* — two different inputs with the same output
-— astronomically unlikely to find. The tropical hash hands them to you for free.
+This picture changes the computational story completely. Inversion is not an exponential hunt through tropical paths. A preimage can be written down immediately:
 
-> **Generic Collision Theorem (preimages are never unique).** Suppose the message
-> has at least two coordinates. Then for *every* key $h$ and *every* message $m$,
-> there exists a different message $m' \ne m$ with the identical digest,
-> $$\mathrm{TSHA}(h, m') = \mathrm{TSHA}(h, m).$$
+$$
+m_i=y-h_i\qquad(1\le i\le k).
+$$
 
-The reason cuts to the essence of the min operation. The digest of $m$ is
-determined by a single *winning* coordinate — the index $i$ where $m_i + h_i$ is
-smallest. Every other coordinate is a bystander; it does not touch the answer as
-long as it stays above the winner. So take any losing coordinate and *increase*
-it. The winner is unchanged, the minimum is unchanged, and yet the message is
-genuinely different. You have manufactured a collision by hand, with no search at
-all.
+Then every coordinate sum is exactly $y$, so their minimum is $y$. This yields the **Canonical Preimage Theorem**: every real target has an explicit preimage. Consequently, the map $T_h:\mathbb{R}^k\to\mathbb{R}$ is surjective for every key $h$.
 
-The construction in the proof is exactly this: locate a minimizing coordinate,
-pick any other coordinate (which exists precisely because there are at least two),
-and add $1$ to it. The new message differs from the old one, but every sum that
-mattered is untouched, so the digest is identical. Collisions are not a
-probabilistic hazard here — they are a structural certainty.
+The construction takes $O(k)$ arithmetic operations, the same asymptotic cost as evaluating the hash. For this model, forward computation is easy and inversion is equally easy. The proposed one-way property therefore fails at the most basic level.
 
-## The twist, and why it is only half a rescue
+## Why collisions are everywhere
 
-The concept behind a tropical coin anticipated this weakness and proposed a fix:
-use *two* independent keys instead of one. Define
+A collision consists of two different messages with the same output. Tropical minima create such messages in abundance.
 
-$$\mathrm{TSHA2}(m) = \Bigl( \min_i (m_i + h_i),\ \min_i (m_i + h'_i) \Bigr).$$
+Choose a coordinate $p$ that attains the minimum. Now select another coordinate $q\ne p$ and increase $m_q$ by any amount $d\ge0$. The winning value at $p$ is untouched. The altered value at $q$ can only rise, so it cannot create a new value below the old minimum. Every other coordinate is unchanged. Therefore the hash remains exactly the same.
 
-Now a collision must fool both keys at once. The single-key trick — inflating a
-loser of the first key — will generally disturb the second key's minimum, because
-a coordinate that loses under $h$ may be the winner under $h'$. Two independent
-keys therefore *separate* many pairs that one key confuses, which is the germ of a
-real security improvement.
+This is the **Inactive-Coordinate Update Principle**:
 
-But "many" is not "all," and honesty compels the caveat: adding a second key
-raises the bar without slamming the door. The single-key collision changes just one
-losing coordinate, and a fresh independent second key notices that change only when
-that very coordinate happens to be *its* winner — an event of probability about
-$1/k$. So a random second key *breaks* a given collision only about one time in
-$k$; the improvement is inverse-linear, not the exponential cliff that industrial
-hash functions enjoy. The stability theorem still applies coordinate by
-coordinate, so approximate inversion remains easy. The tropical hash, even
-doubled, is a fascinating object but not a drop-in replacement for the
-cryptographic workhorses.
+> If $m_p+h_p=T_h(m)$ and $q\ne p$, then replacing $m_q$ by $m_q+d$ for any $d\ge0$ leaves $T_h(m)$ unchanged.
 
-## So is "mining as mathematics" dead?
+The word “inactive” is revealing. A minimum records a winner but forgets almost everything about the losing coordinates. Once one coordinate certifies the output, many others may move through whole rays without leaving the fiber. Information is not scrambled; it is discarded.
 
-Not at all — it is *redirected*. The two theorems together deliver a precise
-verdict on the naive dream and a precise map of where the real difficulty lives.
+## Two keys do not create diffusion
 
-Stability and guaranteed collisions kill the single-key hash as a *pre*-image
-puzzle: it is too smooth and too leaky. But the same structure points to where
-genuine hardness hides. Inverting the *two-key* digest under natural range
-constraints on the message is no longer a smooth hill to climb; it becomes a
-simultaneous shortest-path selection on a layered min-plus network, where the two
-minima must be witnessed jointly. That is the flavor of problem that is easy to
-verify and believed to be hard to solve — the correct home for any "proof of
-optimization" scheme.
+A natural repair is to use two independent keys $h$ and $h'$ and return the ordered pair
 
-The moral is a familiar one in mathematics, delivered here with unusual clarity.
-The features that make an object *analytically beautiful* — smoothness,
-predictability, a minimum that depends on a single clean coordinate — are exactly
-the features that make it *cryptographically useless*. Security lives in
-roughness, in avalanche, in the refusal of an answer to reveal anything about its
-question. Tropical arithmetic is almost the platonic ideal of a smooth,
-well-behaved world. And that is precisely why, if you want to hide a secret in
-it, you must build the hiding place out of the one hard problem it does
-contain: the shortest path.
+$$
+T_{h,h'}^{(2)}(m)=\left(\min_i(m_i+h_i),\ \min_i(m_i+h'_i)\right).
+$$
 
-## The bigger picture
+One might hope that a coordinate invisible to the first component would be exposed by the second. In dimension at least three, however, two minima can protect at most two chosen witnesses.
 
-There is something poetic in watching a would-be cryptocurrency dissolve into two
-short theorems. The min-plus semiring was invented to *solve* optimization
-problems efficiently; asking it to *hide* the solution runs against its entire
-grain. The stability theorem says the digest is a faithful shadow of the message;
-the collision theorem says the shadow can always be cast by more than one object.
-Neither is a bug in our construction — both are unavoidable consequences of what
-"minimum" means.
+Pick $p$ attaining the first minimum and $r$ attaining the second. When $k\ge3$, there is a coordinate $q$ different from both $p$ and $r$; if $p=r$, there are even more choices. Increase $m_q$ by $1$. The witness $p$ still fixes the first output, and the witness $r$ still fixes the second. The message changed, but neither output did.
 
-And yet the failed dream is more instructive than a bland success would have
-been. It sharpens the real question for anyone who still wants mining to be
-mathematics: not "can we hash tropically?" but "can we make tropical *inversion*
-— a real, honest shortest-path problem — the thing miners must solve?" That is a
-harder and far more interesting road, and the two theorems here are the signposts
-that tell you where it begins.
+Hence the **Universal Two-Key Collision Theorem** states:
+
+> For every dimension $k\ge3$, every pair of real keys $h,h'$, and every message $m\in\mathbb{R}^k$, there exists a distinct message $m'$ with $T_{h,h'}^{(2)}(m')=T_{h,h'}^{(2)}(m)$.
+
+The theorem is deterministic. It does not say collisions occur with high probability, or after many trials, or for unlucky keys. It says every starting message has a collision for every pair of keys. Moreover, the proof gives an algorithm: scan each key to locate one minimizing coordinate, choose a third coordinate, and raise it. The work is $O(k)$.
+
+This refutes the proposed estimate that two-key collision resistance might approach $1-O(1/k)$. In the unrestricted real-vector model, no probabilistic qualification is needed: universal collisions occur whenever $k\ge3$.
+
+## A smooth shape made from sharp corners
+
+Tropical hashing still possesses elegant optimization geometry. For two coordinates, define
+
+$$
+f(x_0,x_1)=\min(x_0,x_1).
+$$
+
+For vectors $v,w\in\mathbb{R}^2$ and $t\in[0,1]$, the **Pairwise Concavity Theorem** states
+
+$$
+\min\big((1-t)v_0+tw_0,(1-t)v_1+tw_1\big)
+\ge (1-t)\min(v_0,v_1)+t\min(w_0,w_1).
+$$
+
+In words, the minimum of two affine coordinate functions is concave along every line segment. A direct proof chooses whichever coordinate is smaller at each endpoint: both interpolated coordinates lie above the corresponding interpolation of the endpoint minima, so their minimum does too.
+
+Concavity is valuable in optimization, but it is not cryptographic diffusion. Here it coexists with broad flat directions and collision rays. That distinction matters. A function may be geometrically structured, computationally convenient, and useful for shortest-path reasoning while being entirely unsuitable as a hash.
+
+## A small example with a large warning
+
+Take the message $m=(8,1,6,3,10)$ and two keys $h=(0,7,2,9,4)$ and $h'=(6,3,8,0,5)$. For the first key, the shifted values are
+
+$$
+(8,8,8,12,14),
+$$
+
+so the first output is $8$. For the second key they are
+
+$$
+(14,4,14,3,15),
+$$
+
+so the second output is $3$. The fourth coordinate witnesses the second minimum, while the first or third can witness the first. Choose the second coordinate as a free direction and increase it from $1$ to $101$. The first list changes only from $8$ to $108$ at that location; the value $8$ still survives elsewhere. The second list changes from $4$ to $104$ there; the value $3$ still survives at the fourth coordinate. The output pair remains $(8,3)$.
+
+This example is not a lucky collision found by sampling. It is one visible instance of the general construction. The increment could be $1$, $100$, or a million, giving infinitely many distinct messages on the same collision ray. Random testing might report a striking empirical collision rate, but the theorem explains more: a collision can be manufactured from every input by preserving witnesses and moving an unused coordinate.
+
+## Mining as mathematics—after redesign
+
+The negative result does not make tropical cryptocurrency a dead idea. It identifies the precise obstacle a serious design must overcome. Independent coordinatewise minima do not couple the message coordinates. Each output component remembers only an active witness, and untouched coordinates remain free to move.
+
+A better construction would need constraints or circuit layers that make coordinates interact. Messages might be restricted to a discrete alphabet; nonce changes might be tied together by linear or graph constraints; or nonlinear tropical circuits might repeatedly reuse coordinates so that changing one entry propagates to several active comparisons. In those settings, hardness—if it appears—would come from coupling, not from taking a minimum.
+
+This is a useful lesson beyond cryptography. Optimization primitives often compress information by reporting an optimum while forgetting the alternatives. That is exactly what makes them efficient summaries, but it can be fatal when unpredictability and collision resistance are required. The minimum is an excellent answer to “which route is shortest?” It is a poor answer to “what was the entire network?”
+
+Tropical mining therefore offers a compelling design principle in reverse. Before asking whether a new arithmetic can power a cryptocurrency, first map its fibers: characterize every input with the same output, find their unbounded directions, and test whether extra outputs truly create diffusion. Here that analysis is complete. Every scalar target has an immediate preimage, and every two-key message in dimension at least three lies on a collision path.
+
+Mining can still be mathematics. But secure mining cannot merely rename an optimization minimum as a hash. It must build a mechanism in which the mathematics preserves difficulty rather than erasing information.
