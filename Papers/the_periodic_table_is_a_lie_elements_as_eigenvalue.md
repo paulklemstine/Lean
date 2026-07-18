@@ -1,54 +1,40 @@
-# Computational Evidence — Elements as Eigenvalues of a Shell Hamiltonian
+# Computational Evidence
 
-## 1. Small-case calculations
+## Small-case calculations
 
-### Coulomb (hydrogenic) shells, degeneracy `2n²`
-Shell degeneracies `shellDeg n = 2n²`:
+Two exact shell models were evaluated.
 
-| n | 1 | 2 | 3 | 4 | 5 | 6 |
-|---|---|---|----|----|----|----|
-| 2n² | 2 | 8 | 18 | 32 | 50 | 72 |
+| shell index | Coulomb degeneracy `2n²` | Coulomb cumulative filling |
+|---:|---:|---:|
+| 1 | 2 | 2 |
+| 2 | 8 | 10 |
+| 3 | 18 | 28 |
+| 4 | 32 | 60 |
+| 5 | 50 | 110 |
 
-Cumulative fillings `nobleGas n = ∑_{k=1}^n 2k²`:
+| oscillator level `N` | degeneracy `(N+1)(N+2)` | cumulative filling |
+|---:|---:|---:|
+| 0 | 2 | 2 |
+| 1 | 6 | 8 |
+| 2 | 12 | 20 |
+| 3 | 20 | 40 |
+| 4 | 30 | 70 |
+| 5 | 42 | 112 |
 
-| n | 1 | 2 | 3 | 4 | 5 |
-|---|---|----|----|----|-----|
-| filling | 2 | 10 | 28 | 60 | 110 |
+These values are also instantiated directly in the accompanying theorem file.
 
-Verified against the closed form `3·nobleGas n = n(n+1)(2n+1)`:
-`3·110 = 330 = 5·6·11`. ✓
+## Sequence comparison
 
-### Isotropic 3D harmonic-oscillator shells, degeneracy `(N+1)(N+2)`
-Cumulative fillings `magicHO n = ∑_{N=0}^n (N+1)(N+2)`:
+The Coulomb cumulative sequence begins `2, 10, 28, 60, 110`; the oscillator sequence begins `2, 8, 20, 40, 70, 112`. The relevant empirical comparison sequences are noble-gas atomic numbers `2, 10, 18, 36, 54, 86, 118` and standard nuclear magic numbers `2, 8, 20, 28, 50, 82, 126`.
 
-| n | 0 | 1 | 2 | 3 | 4 | 5 |
-|---|---|---|----|----|----|-----|
-| filling | 2 | 8 | 20 | 40 | 70 | 112 |
+No OEIS identifier is asserted here: the polynomial sequences are derived directly from their displayed formulas, and an unverified database match would add no evidential value.
 
-Closed form `3·magicHO n = (n+1)(n+2)(n+3)`: `3·112 = 336 = 6·7·8`. ✓
+## Counterexample hunt
 
-The first three, **2, 8, 20**, are exactly the first three nuclear *magic numbers*.
+The naive Coulomb-shell interpretation agrees with noble gases at `2` and `10` but fails at the third closure, predicting `28` instead of `18`. The bare oscillator agrees with nuclear magic numbers at `2`, `8`, and `20` but fails at the fourth closure, predicting `40` instead of `28`. Thus both universal identification claims have immediate counterexamples.
 
-## 2. OEIS search results
-- Coulomb fillings `2, 10, 28, 60, 110, 182, …` = `2·(1²+…+n²)` — OEIS **A002378-scaled**;
-  the base sums `1,5,14,30,55` are the square pyramidal numbers **A000330**.
-- Oscillator fillings `2, 8, 20, 40, 70, 112, …` are **A007290** (`2·C(n+2,3)`),
-  the cumulative counts of the 3D isotropic oscillator (a.k.a. tetrahedral-shell counts).
-- The angular sum rule `∑_{l<n}(2l+1) = n²` recovers the squares **A000290**.
+The stronger proposal `Z = round(E/E₀)` was not numerically fitted because no isotope selection rule, energy convention, or value of `E₀` was specified. Without those choices the claim is not a determinate computation.
 
-## 3. Counterexample hunt (limits of the physical model)
-- **Coulomb vs. real noble gases.** Predicted `2,10,28,60,110`; observed noble-gas
-  atomic numbers `2,10,18,36,54,86`. Agreement holds only through `Z=10`; the model
-  is exact as spectral bookkeeping for an `n²`-degenerate spectrum but fails as
-  chemistry because real filling follows the Madelung `(n+l)` rule.
-- **Oscillator vs. real magic numbers.** Predicted `2,8,20,40,70,112`; empirical
-  magic numbers `2,8,20,28,50,82,126`. Agreement holds through `20`; divergence at
-  `40≠28`, `70≠50` is the signature of spin–orbit coupling, absent from the bare
-  diagonal Hamiltonian. These are recorded as genuine model boundaries, not defects
-  of the theorems (which concern the exact degeneracy sums).
+## Interpretation boundary
 
-## 4. Diagonal-spectrum check
-For `shellHamiltonian d = diag(E₀,…,E_{d-1})` with `E_n = -1/(n+1)²`, each standard
-basis vector `eᵢ` satisfies `H eᵢ = Eᵢ eᵢ`, so the spectrum is exactly
-`{E₀,…,E_{d-1}}` and `trace H = ∑ Eᵢ`. Verified symbolically (see
-`basisVec_isEigen`, `shellHamiltonian_trace`).
+The calculations support a restricted statement: shell closures are cumulative spectral multiplicities. They do not support the claim that every element is an energy eigenvalue, that the Hilbert-space dimension equals the number of stable isotopes, or that one fixed energy scale recovers atomic number.

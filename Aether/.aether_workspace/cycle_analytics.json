@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-18T07:45:34.319057+00:00",
+  "last_updated": "2026-07-18T08:49:08.548883+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -25372,6 +25372,7 @@
       "outcome_quality": 0.66,
       "phase": "A_only",
       "phase_a_prompt_version": "v28",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v28",
@@ -25443,6 +25444,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-18T07:45:34.280115+00:00",
       "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 9,
+      "domain": "Cryptography",
+      "duration_seconds": 3811.87930893898,
+      "end_time": 1784364528.1294544,
+      "files_integrated": 6,
+      "job_id": "f25f9735",
+      "outcome_quality": 0.75,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.75,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.64,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.92,
+        "composite": 0.568,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.78,
+        "novelty": 0.72,
+        "proof_depth": 0.68,
+        "usefulness": 0.81
+      },
+      "quality_score": 0.75,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1784360716.2501454,
+      "strategy_count": 0,
+      "theorem_count": 0,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-18T08:49:08.446670+00:00",
+      "title": "Gravity from Information: Spacetime as a Quantum Error-Correcting Code"
     }
   ]
 }

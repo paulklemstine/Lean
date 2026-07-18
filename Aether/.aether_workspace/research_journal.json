@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "8d2137d3",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions\n\n## Completion status\n\nAll Lean declarations delivered for this mission now have complete proof terms: the\nremaining mixed-radix bridge lemmas were proved, and an inherited Fibonac",
-      "quality_score": 0.7,
-      "sorry_count": 4,
-      "theorem_count": 0,
-      "timestamp": "2026-07-16T03:53:58",
-      "title": "The Library of Babel: Combinatorics of the Universal Library"
-    },
-    {
       "cycle_id": "4665f966",
       "domain": "Combinatorics",
       "key_insight": "# Future Directions: Anti-Fibonacci Structure\n\n## 1. Pell classification of shifted-square values\n\nClassify all pairs `(m,n)` for which an anti-Fibonacci value is also a consecutive anti-Fibonacci sum",
@@ -499,19 +489,19 @@
       "theorem_count": 40,
       "timestamp": "2026-07-18T07:45:34",
       "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
+    },
+    {
+      "cycle_id": "f25f9735",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions: Geometric Constraints on Quantum-Code Parameters\n\n## 1. Geometric Defect as a Capacity Density\n\nFor any family of local stabilizer codes admitting a geometric realization, conject",
+      "quality_score": 0.75,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-18T08:49:08",
+      "title": "Gravity from Information: Spacetime as a Quantum Error-Correcting Code"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "482ba253",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: enumerative rigidity of equivariant maps of free ℤ₂-complexes\n\nThis cycle sharpened the existence theory of the ℤ₂-coindex of combinatorial spheres\ninto an **exact enumeration**:",
-      "quality_score": 0.82,
-      "sorry_count": 4,
-      "theorem_count": 28,
-      "timestamp": "2026-07-14T12:59:51",
-      "title": "Deepening: **suspension tower** `Sᵏ(K)` of a free ℤ₂-complex as"
-    },
     {
       "cycle_id": "0c7f8736",
       "domain": "Applications",
@@ -2501,6 +2491,16 @@
       "theorem_count": 40,
       "timestamp": "2026-07-18T07:45:34",
       "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
+    },
+    {
+      "cycle_id": "f25f9735",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions: Geometric Constraints on Quantum-Code Parameters\n\n## 1. Geometric Defect as a Capacity Density\n\nFor any family of local stabilizer codes admitting a geometric realization, conject",
+      "quality_score": 0.75,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-18T08:49:08",
+      "title": "Gravity from Information: Spacetime as a Quantum Error-Correcting Code"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-18T07:45:34",
+  "last_updated": "2026-07-18T08:49:08",
   "open_questions": [
     {
       "context": "",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "583299ca",
-        "quality": 0.7779935103225806,
-        "theorems": 11,
-        "title": "Torsion local-global compatibility at p = ℓ for GL_n over CM fields"
-      },
-      {
         "cycle_id": "a793b4d3",
         "quality": 0.5242404210526316,
         "theorems": 4,
@@ -3389,6 +3383,12 @@
         "quality": 0.72,
         "theorems": 8,
         "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
+      },
+      {
+        "cycle_id": "f25f9735",
+        "quality": 0.75,
+        "theorems": 0,
+        "title": "Gravity from Information: Spacetime as a Quantum Error-Correcting Code"
       }
     ],
     "Geometry": [

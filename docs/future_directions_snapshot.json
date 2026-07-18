@@ -2,26 +2,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "f25f9735",
-    "description": "Einstein showed that gravity is the curvature of spacetime. But WHY does spacetime curve? Conjecture: Spacetime IS a quantum error-correcting code, and gravity IS the syndrome of that code. The code is a [[n,k,d]] stabilizer code where n = number of Planck areas on a spatial slice, k = number of logical qubits (which equals the Bekenstein-Hawking entropy S = A/4G in natural units), and d = code distance (which equals the minimal geodesic length through the bulk). The key identity: S(A) = Area(gamma_A) / (4G) is EXACTLY the quantum Singleton bound n - k <= 2(d-1) rearranged as k = n - 2d + 2 = A/(4G) when n = A/l_P^2 and d = L/(2l_P). This means the Bekenstein-Hawking entropy formula is a quantum coding theorem, and the holographic principle is a coding constraint. Test: for AdS_3 with boundary CFT_2, the code is a [[n, k, d]] = [[L/l_P, S, L/(2l_P)]] code. Verify that the Singleton bound n - k <= 2(d-1) becomes L/l_P - S <= L/l_P - 1, which simplifies to S >= 1 (trivially true). The NON-TRIVIAL content is that the Ryu-Takayanagi formula S = A/(4G) is the exact quantum information identity. Impact: spacetime is not curved by matter — spacetime IS a code, and matter IS a syndrome. Gravity is not a force; it's error correction.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Physics"
-    ],
-    "id": "fd_0255",
-    "lineage_refs": [],
-    "priority_score": 0.95,
-    "proof_strategy": "Define the spacetime code: qubits = Planck areas on a spatial slice, stabilizers = boundary terms of the Einstein-Hilbert action, logical operators = bulk geodesics. Prove the Bekenstein-Hawking identity: S = A/(4G) equals the quantum coding bound k = n - 2d + 2. Derive: n = A/l_P^2 (number of Planck areas), k = S = A/(4G) (logical qubits from Bekenstein-Hawking), d = L/(2l_P) (distance from minimal geodesic). Check: k = n - 2d + 2 = A/l_P^2 - L/l_P + 2. For AdS_3, A = 2*pi*R and L = 2*pi*R, so k = 2*pi*R/l_P^2 - 2*pi*R/l_P + 2 = 2*pi*R/(l_P^2) * (1 - l_P/R) + 2. For R >> l_P, this gives k ≈ 2*pi*R/l_P^2 = A/l_P^2 which matches S = A/(4G). The correction terms are quantum corrections of order l_P/R. Test: verify for AdS_3 with BTZ black holes.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T01:33:11.177881+00:00",
-    "title": "Gravity from Information: Spacetime as a Quantum Error-Correcting Code"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle 5ae7f8c1 (Q=0.850), which proved 19 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Conway's surreal numbers No form the largest totally ordered field, containing all real numbers, all ordinals, and all infinitesimals. But No is a proper class, not a set. What topology does it have? Conjecture: No has a unique topology making it a connected, locally connected, locally compact, comp",
     "domain_bridges": [],
@@ -4877,6 +4857,26 @@
     "status": "available",
     "timestamp": "2026-07-18T07:45:29.087564+00:00",
     "title": "1. **Intrinsic curvature identification.** The proved curvature formula"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Geometric Constraints on Quantum-Code Parameters\n\n## 1. Geometric Defect as a Capacity Density\n\nFor any family of local stabilizer codes admitting a geometric realization, conjecture that the normalized defect `(n - 2d)/n` controls the asymptotic logical rate from both sides, up to constants determined only by locality and spatial dimension. This is falsifiable by constructing a local family with vanishing normalized defect and positive asymptotic rate, or by proving a matching lower bound for a specified geometric class. **The key insight is that the excess of physical size over twice the distance, rather than physical size alone, is the quantity left available for logical information by the Singleton constraint.** **Why now?** The exact upper defect-capacity law and its vanishing-rate consequence isolate the parameter that a geometric construction must enlarge to support extensive entropy.\n\n## 2. Cut-Dependent Singleton Defects and Entanglement\n\nFor tensor-network codes associated with discretized negatively curved spaces, conjecture that every boundary region has a cut-dependent defect whose minimum equals twice the gap between the Singleton upper bound and the region's encoded entropy. The claim can be tested on explicit finite tensor networks by comparing erasure distance, minimal-cut size, and reduced-state entropy for every boundary subset. **The key insight is that an entropy-area identity should correspond to saturation of a cut-indexed family of coding inequalities, not to a single global Singleton inequality.** **Why now?** The distinction between validity and saturation shows exactly which additional equality must be checked before a coding bound can become an entropy formula.\n\n## 3. No Extensive Entropy at Exact Length Balance\n\nFor any sequence of quantum codes satisfying `n = 2d + O(1)`, conjecture that every operationally meaningful encoded entropy is uniformly bounded whenever it is bounded above by the number of logical qubits. A counterexample would be a code family with bounded defect but unbounded protected entropy under an explicit noise model. **The key insight is that bounded geometric defect forces bounded logical dimension at the parameter level and hence obstructs extensive protected entropy.** **Why now?** The proven family theorem converts this qualitative tension into a sharp uniform bound and a zero-rate asymptotic prediction.\n\n## 4. Curvature from Spatial Variation of Coding Defect\n\nFor geometrically local subsystem codes on triangulated surfaces, conjecture that discrete curvature is proportional, after coarse-graining, to the Laplacian of a local Singleton-defect density. This is falsifiable by computing both quantities on families of refined regular, conical, and random triangulations and checking whether the proportionality survives refinement. **The key insight is that a constant defect constrains capacity but cannot encode geometry; spatial variation of defect is the minimal additional datum capable of carrying curvature information.** **Why now?** The global arithmetic analysis identifies what remains after distance consumes physical degrees of freedom, suggesting a concrete local field to compare with curvature.\n\n## 5. Syndrome Geometry Requires More Than Parameter Saturation\n\nConjecture that two stabilizer codes with identical saturated `[[n,k,d]]` parameters can have inequivalent syndrome adjacency geometries, with only one admitting a prescribed bulk metric under local decoding moves. The test is to enumerate or construct parameter-matched codes and compare the quasi-isometry classes of their syndrome graphs. **The key insight is that parameter equalities constrain information capacity but do not determine the incidence structure needed to interpret syndromes as matter or geometry.** **Why now?** The surviving results establish the strongest conclusions available from parameter arithmetic alone, making the missing structural invariant precise and experimentally accessible.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Pythagorean"
+    ],
+    "id": "fd_0293",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "f25f9735",
+    "status": "available",
+    "timestamp": "2026-07-18T08:49:01.122706+00:00",
+    "title": "For any family of local stabilizer codes admitting a geometric realization, conj"
   },
   {
     "ambition_level": "extension",
