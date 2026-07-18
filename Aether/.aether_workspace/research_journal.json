@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "3361b315",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — The Topology of Knotted Light\n\nThis cycle established the topological charge of an orbital-angular-momentum beam\nas an additive invariant governed by a contour-integral **product",
-      "quality_score": 0.83,
-      "sorry_count": 4,
-      "theorem_count": 16,
-      "timestamp": "2026-07-14T16:16:35",
-      "title": "Deepening: The Topology of Knotted Light: How Laser Beams Get Tangled"
-    },
-    {
       "cycle_id": "2360ad91",
       "domain": "Novelty",
       "key_insight": "# Future directions\n\n`BoundedError.lean` establishes, for surveillance on a finite dynamic network:\n\n1. a combinatorial Fano lower bound on the surveillance rate needed to\n   reconstruct all but `k` c",
@@ -2501,6 +2491,16 @@
       "theorem_count": 13,
       "timestamp": "2026-07-18T11:59:36",
       "title": "Langlands for Toddlers: Galois Groups as Shapes, Automorphic Forms as Colors"
+    },
+    {
+      "cycle_id": "5df99ff8",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions\n\n## What is proved\n\n`Catalog/Tropical/AperiodicMonotile/HierarchicalSpectrum.lean` develops a self-contained abstract hierarchy criterion. A translation period of a configuration d",
+      "quality_score": 0.57,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-07-18T12:15:53",
+      "title": "The Aperiodic Monotile: One Shape to Tile Them All"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-18T11:59:36",
+  "last_updated": "2026-07-18T12:15:53",
   "open_questions": [
     {
       "context": "",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "f243395d",
-        "quality": 0.91,
-        "theorems": 33,
-        "title": "This cycle recast analogy-making between two ordered structures as the taking of"
-      },
-      {
         "cycle_id": "4368e5ed",
         "quality": 0.65,
         "theorems": 104,
@@ -4009,6 +4003,12 @@
         "quality": 0.66,
         "theorems": 14,
         "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
+      },
+      {
+        "cycle_id": "5df99ff8",
+        "quality": 0.57,
+        "theorems": 19,
+        "title": "The Aperiodic Monotile: One Shape to Tile Them All"
       }
     ]
   }

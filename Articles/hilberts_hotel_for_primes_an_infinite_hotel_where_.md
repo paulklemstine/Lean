@@ -1,79 +1,191 @@
-# Hilbert's Hotel for Primes: The Guests Who Barely Move
+# Hilbert’s Hotel for Primes
 
-## An infinite hotel with an unusual clientele
+## How an infinite hotel can absorb any finite shuffle without disturbing its horizon
 
-Imagine a hotel with infinitely many rooms, numbered $1, 2, 3, \dots$, and a curious rule for who stays where: room $n$ is reserved for the $n$-th prime number. Room $1$ houses the number $2$, room $2$ houses $3$, room $3$ houses $5$, then $7$, $11$, $13$, and so on forever. Because there are infinitely many primes — a fact known since Euclid — every room is occupied, and the manager never runs out of guests.
+Imagine a hotel with rooms numbered $0,1,2,\ldots$. There is no last room. In the familiar Hilbert’s Hotel paradox, infinity allows a manager to make space even when every room is occupied: move the guest in room $n$ to room $n+1$, and room $0$ becomes free.
 
-This is a twist on the famous thought experiment of David Hilbert, who used an infinite hotel to illustrate the strange arithmetic of infinity. In Hilbert's original story, the manager can always make room for newcomers by shuffling guests down the corridor. Our version asks a different and, it turns out, deeper question. Suppose the prime guests decide they want to *rearrange themselves*. Each prime picks a new room, and no two primes end up in the same room — a perfect reshuffle. After the dust settles, room $n$ now holds some prime $q_n$, generally not the one it started with.
+Now impose a stricter rule. Every guest is a prime number. Choose any enumeration $p_0,p_1,p_2,\ldots$ of primes, with room $n$ occupied by $p_n$. A rearrangement is a permutation $\sigma$ of the nonnegative integers: after the move, room $n$ receives the guest formerly indexed by $\sigma(n)$, namely $p_{\sigma(n)}$.
 
-The question is simple to state: **after the reshuffle, how far did the guests really move?**
+How visible is the rearrangement far down the corridor? A natural measuring device is the ratio
 
-## Measuring the disruption
-
-To make "how far did they move" precise, we compare the prime now in room $n$ with the prime that was there originally. Let $p_n$ denote the $n$-th prime, so $p_1 = 2$, $p_2 = 3$, $p_3 = 5$, and so on. A rearrangement is a permutation $\sigma$ of the room numbers: the guest that started in room $\sigma(n)$ moves into room $n$. So room $n$, which used to hold $p_n$, now holds $p_{\sigma(n)}$.
-
-The natural yardstick is the **displacement ratio**
 $$
-R_\sigma(n) = \frac{p_{\sigma(n)}}{p_n}.
+\frac{p_{\sigma(n)}}{p_n}.
 $$
-If this ratio is close to $1$, then the prime now in room $n$ is *numerically* about the same size as the prime that used to be there — even if it is a completely different number. We call a rearrangement **well behaved** if the displacement ratios settle down to $1$ as we walk further and further down the corridor:
+
+If this ratio approaches $1$ as $n$ tends to infinity, then the rearrangement becomes asymptotically invisible. The occupants may differ, but their numerical sizes become indistinguishable on a relative scale.
+
+One might expect a theorem about prime numbers to drive the story. After all, the $n$th prime is governed by the prime number theorem, roughly growing like $n\log n$. Surprisingly, the central result needs none of that. Its engine is a much simpler fact about infinity: any finite glimpse of an arbitrary rearrangement can be completed so that, sufficiently far along the corridor, no guest moves at all.
+
+## What “dense” means in an infinite hotel
+
+To make that claim precise, we need a topology—a notion of when two infinite rearrangements are close. In the pointwise topology, an observer can inspect only finitely many rooms. A neighborhood of a permutation $\sigma$ is specified by choosing a cutoff $k$ and demanding agreement in rooms $0,1,\ldots,k-1$.
+
+A collection of permutations is called **prefix-dense** if, for every permutation $\sigma$ and every finite cutoff $k$, there is a member $\tau$ of the collection satisfying
+
 $$
-R_\sigma(n) \longrightarrow 1 \quad \text{as } n \to \infty.
+\tau(n)=\sigma(n)\qquad\text{for every }n<k.
 $$
-Intuitively, a well-behaved rearrangement may cause chaos among the first few rooms, but far out along the hallway the guests barely change size. The room labels get scrambled, yet the *magnitudes* stay almost fixed.
 
-Which reshuffles are well behaved? The answer reveals a beautiful tension between flexibility and rigidity.
+Thus density does not mean that “most” rearrangements are good, nor does it assign a probability. It means that no finite observation can rule out a good rearrangement. However bizarre the first million assignments may look, they can be continued into one whose distant behavior is perfectly tame.
 
-## The easy reshuffles: move only finitely many guests
+Call a rearrangement **well behaved for a nonzero sequence** $a_0,a_1,a_2,\ldots$ if
 
-Start with the mildest kind of rearrangement: one that disturbs only finitely many guests and leaves everyone else exactly where they were. Perhaps you swap the occupants of rooms $4$ and $9$, and shift a handful of others, but from some room $N$ onward nobody moves at all.
-
-For such a rearrangement, the displacement ratio is not just *close* to $1$ far down the hall — it is *exactly* $1$. Once you pass the last disturbed room, $\sigma(n) = n$, so $R_\sigma(n) = p_n / p_n = 1$. A sequence that is eventually constant at $1$ certainly converges to $1$. So:
-
-> **Every rearrangement that moves only finitely many guests is well behaved.**
-
-This is reassuring but not surprising. The interesting question is what happens when *infinitely* many guests move.
-
-## The main event: almost any reshuffle can be well behaved
-
-Here is the first genuinely striking result. Fix *any* rearrangement you like — no matter how wild, no matter how many guests it displaces, no matter how far it flings them. Now fix any finite stretch of the hotel, say the first million rooms. Then there is a **well-behaved** rearrangement that agrees with your wild one on all of those first million rooms.
-
-In other words, no finite amount of observation can distinguish a well-behaved rearrangement from an arbitrary one. Whatever pattern of shuffling you can specify on a finite front desk ledger, a well-behaved reshuffle can reproduce it exactly, and then quietly settle down to near-identity out of sight.
-
-> **Density Theorem.** For every permutation $\sigma$ of the rooms and every $N$, there exists a well-behaved permutation $\tau$ with $\tau(i) = \sigma(i)$ for all $i < N$.
-
-The proof is a small marvel of bookkeeping. Given a target rearrangement $\sigma$ and a horizon $N$, we build a finite-support permutation $\tau$ that copies $\sigma$ on the first $N$ rooms. We do it one room at a time. To make $\tau$ agree with $\sigma$ at room $N$ while preserving everything already arranged, we compose with a single swap — a transposition that exchanges two rooms and fixes all others — chosen so it doesn't disturb any of the rooms $0, 1, \dots, N-1$ we already handled. After $N$ such swaps we have a permutation that moves only finitely many guests and matches $\sigma$ exactly on the target segment. Since finite-support permutations are well behaved, we are done.
-
-In the language of topology, this says the well-behaved rearrangements are **dense** in the space of all rearrangements, under the notion of closeness where two reshuffles are "near" when they agree on a long initial segment. The primes, it seems, are extraordinarily forgiving: you can approximate any shuffling scheme whatsoever with one that barely changes the room magnitudes in the long run.
-
-## The catch: not every reshuffle is well behaved
-
-Density might tempt you to guess that *every* rearrangement is well behaved. It is not. And the counterexample is the whole point — it shows the phenomenon has teeth.
-
-Consider a reshuffle that reverses the order of the guests. If, near room $n$, we send the prime from a room far *ahead* back to room $n$, then $p_{\sigma(n)}$ is enormous compared to $p_n$, and the ratio blows up. Reversal is the extreme case, but we can build a cleaner, surgical counterexample that pins down exactly why things go wrong.
-
-Because the primes grow without bound, for any index $m$ we can always find a later index $b > m$ whose prime is at least twice as large: $p_b \ge 2\, p_m$. Chaining this, we produce a rapidly growing sequence of "landmark" rooms
 $$
-j_0 < j_1 < j_2 < \cdots, \qquad p_{j_{k+1}} \ge 2\, p_{j_k}.
+\lim_{n\to\infty}\frac{a_{\sigma(n)}}{a_n}=1.
 $$
-Each landmark's prime is at least double the previous landmark's. Now define a rearrangement that leaves every non-landmark room untouched, and among the landmarks performs long-range swaps: it exchanges the guests of landmarks $j_0 \leftrightarrow j_1$, then $j_2 \leftrightarrow j_3$, then $j_4 \leftrightarrow j_5$, and so on in consecutive pairs. This is an **involution** — doing it twice returns everyone home — so it is a genuine, invertible rearrangement.
 
-At the smaller landmark of each swapped pair, the guest arriving is the prime from the *larger* landmark, at least twice as big. So the displacement ratio there is at least $2$. This happens at infinitely many rooms. A sequence that keeps jumping up to $2$ or beyond cannot possibly converge to $1$.
+The prime hotel is one example, but the underlying result applies to every real sequence whose terms are nonzero from some point onward.
 
-> **Not universal.** There exists a rearrangement whose displacement ratio is $\ge 2$ for infinitely many rooms; it is not well behaved.
+## The finite-extension trick
 
-So the well-behaved rearrangements are dense — arbitrarily close to anything — yet they are a genuine, proper part of all rearrangements. Robustness and fragility coexist.
+Here is the main combinatorial construction. Suppose the observer prescribes the first $k$ values
 
-## Why this is more than a curiosity
+$$
+\sigma(0),\sigma(1),\ldots,\sigma(k-1).
+$$
 
-What makes the story satisfying is that all of these facts about the primes — the easy positive result, the surprising density, and the explicit failure — required almost nothing arithmetic-specific. The only property of the primes we used is that they form a strictly increasing sequence marching off to infinity. Everything else is pure combinatorics of infinite permutations.
+Because this list is finite, choose an integer $N$ larger than $k$ and larger than every prescribed image. All sources and targets seen by the observer now lie in the finite set
 
-That has a moral. The "well-behaved" phenomenon is not really about primes at all; it is about any sequence of room labels that grows steadily without bound. Replace the primes by the squares, the factorials, or any strictly increasing unbounded sequence, and the same three theorems hold verbatim. In this sense the asymptotic size of the guests is a **structural invariant of the shuffling** — robust to any finite meddling, approximable to any precision, and yet not immune to cleverly engineered long-range chaos.
+$$
+\{0,1,\ldots,N-1\}.
+$$
 
-The primes do enter when we push further. A famous consequence of the Prime Number Theorem is that consecutive primes are asymptotically equal — $p_{n+1}/p_n \to 1$ — which means even the reshuffle that swaps each even room with its neighboring odd room is well behaved, despite moving *every* guest. And the theorem $p_n \sim n \log n$ suggests a clean conjecture: a rearrangement is well behaved precisely when it distorts room indices by an asymptotically negligible factor, $\sigma(n)/n \to 1$. That would make "well-behaved" a sharp asymptotic signature, converting a statement about primes into a statement about the geometry of the infinite symmetric group.
+The prescribed assignments form an injective partial matching: distinct source rooms have distinct target rooms because $\sigma$ is a permutation. In a finite set, any such partial matching with equally many unmatched sources and unmatched targets can be completed to a bijection. Match the remaining sources to the remaining targets in any order. This produces a permutation of the first $N$ rooms agreeing with every observed assignment.
 
-## The picture that remains
+Now extend it to the infinite hotel by fixing every room numbered at least $N$. The resulting infinite permutation $\tau$ satisfies two properties:
 
-Picture the infinite corridor one last time. A reshuffle sweeps through, tossing prime guests from room to room. If it disturbs only a finite front section, the far corridor is untouched and calm. If it is engineered with escalating long-range swaps, pockets of disruption recur forever, with newcomers twice the size of the departed. And in between lies the remarkable middle ground: for any conceivable pattern of disturbance on any finite stretch, there is a reshuffle that mimics it perfectly up front and then, out past the horizon, lets the magnitudes glide gently back toward where they began.
+1. $\tau(n)=\sigma(n)$ for every $n<k$;
+2. $\tau(n)=n$ for every $n\ge N$.
 
-The primes, robust and generous, absorb almost any rearrangement without changing their asymptotic character — but only *almost* any. That "almost" is where the mathematics lives.
+This is the **Finite-Prefix Extension Theorem**: every finite prefix of every infinite permutation extends to a permutation that is eventually the identity.
+
+The theorem turns an arbitrary finite tangle into a finite collection of cycles. Outside one sufficiently large finite lobby, the entire hotel remains untouched.
+
+## Why every eventually fixed shuffle disappears
+
+Suppose a real sequence $a_n$ is eventually nonzero and $\tau(n)=n$ for all sufficiently large $n$. Then eventually
+
+$$
+\frac{a_{\tau(n)}}{a_n}
+=
+\frac{a_n}{a_n}
+=1.
+$$
+
+The quotient is not merely close to $1$; it is exactly $1$ from some point onward. Therefore it converges to $1$.
+
+Combining this observation with the finite-extension trick yields the central result.
+
+**Dense Asymptotic-Invisibility Theorem.** Let $a_0,a_1,a_2,\ldots$ be a real sequence with $a_n\ne 0$ for all sufficiently large $n$. For every permutation $\sigma$ and every cutoff $k$, there is a permutation $\tau$ such that
+
+$$
+\tau(n)=\sigma(n)\quad(n<k)
+$$
+
+and
+
+$$
+\lim_{n\to\infty}\frac{a_{\tau(n)}}{a_n}=1.
+$$
+
+In other words, ratio-one rearrangements are prefix-dense.
+
+For primes, nonvanishing is automatic. If every $p_n$ is prime, then $p_n\ge 2$, so every denominator is nonzero. We immediately obtain the **Prime-Hotel Density Theorem**: for any prime-valued enumeration $p_n$, any finite initial behavior of any permutation can be matched by another permutation $\tau$ for which
+
+$$
+\lim_{n\to\infty}\frac{p_{\tau(n)}}{p_n}=1.
+$$
+
+Notice the strength and the restraint of this statement. It proves that good rearrangements lie arbitrarily close to every rearrangement in the pointwise topology. It does **not** prove that every rearrangement is good, or that a random permutation is likely to be good. Topological density is possibility in every finite window, not prevalence.
+
+## Why random finite shuffles tell a different story
+
+A tempting experiment is to randomly permute the first million primes and inspect the ratios. But a uniformly random permutation of a finite block usually moves an index by a macroscopic fraction of the block. Since the $n$th prime behaves approximately like $n\log n$, sending $n$ near a very different index can create ratios far from $1$.
+
+Worse, a finite experiment has no literal limit as $n\to\infty$ unless one specifies how finite samples are embedded into an infinite model. If the finite permutation is extended by the identity beyond one million, then all later ratios are exactly $1$, making convergence automatic. If instead one studies a growing sequence of random blocks, the answer depends on the probability model and the coupling between blocks.
+
+The theorem therefore corrects an intuitive but misleading slogan. The primes are not robust under arbitrary rearrangement. Rather, asymptotically invisible rearrangements form a topologically dense core because every finite rearrangement can be sealed inside a finite region.
+
+## Counting the finite lobby: factorial codes
+
+How many different rearrangements can occur inside the first $k$ rooms while the rest of the hotel remains fixed? Exactly $k!$.
+
+One elegant encoding uses a Lehmer code. For a permutation of $k$ objects, record at each stage how many unused smaller objects lie before the selected one. The digits satisfy bounds of the form
+
+$$
+0\le c_i<k-i,
+$$
+
+so the total number of codes is
+
+$$
+k(k-1)\cdots 2\cdot 1=k!.
+$$
+
+Different codes produce different finite permutations. Extending each finite permutation by the identity preserves distinctness, because two different arrangements already disagree in the finite lobby. This gives the **Factorial Family Theorem**: the $k!$ Lehmer codes yield $k!$ distinct infinite permutations supported in the first $k$ rooms, and each is asymptotically invisible to every eventually nonzero sequence.
+
+This result gives the dense core a concrete combinatorial skeleton. For each lobby size $k$, there are exactly $k!$ canonical finite shuffles, all harmless at infinity.
+
+## A small example
+
+Take the first few primes
+
+$$
+2,3,5,7,11,13,17,19,\ldots
+$$
+
+and prescribe
+
+$$
+0\mapsto 3,\qquad 1\mapsto 0,\qquad 2\mapsto 4.
+$$
+
+The targets are distinct. Choose $N=5$. The used targets are $0,3,4$, leaving $1,2$ for sources $3,4$. One completion is
+
+$$
+3\mapsto 1,
+\qquad
+4\mapsto 2.
+$$
+
+Fix every index $n\ge 5$. The resulting rearranged prime list begins
+
+$$
+7,2,11,3,5,13,17,19,\ldots
+$$
+
+The early ratios jump around:
+
+$$
+\frac72,\quad \frac23,\quad \frac{11}{5},\quad \frac37,\quad \frac5{11}.
+$$
+
+But from room $5$ onward, each ratio equals $1$. An arbitrarily dramatic finite disturbance leaves no asymptotic trace.
+
+## Beyond primes
+
+The proof barely uses arithmetic. Replace primes by stock prices, frequencies, masses, matrix norms, or any real measurements that are eventually nonzero. If only finitely many coordinates are moved, then termwise ratios eventually equal $1$. The phenomenon belongs to the geometry of infinite permutation space, not to the distribution of primes.
+
+That distinction opens more difficult questions. Which infinitely supported permutations still produce ratio $1$ for primes? The prime number theorem suggests that a displacement condition such as
+
+$$
+\frac{\sigma(n)}n\longrightarrow 1
+$$
+
+should be closely related to
+
+$$
+\frac{p_{\sigma(n)}}{p_n}\longrightarrow 1.
+$$
+
+Can every positive constant occur as a limiting ratio? Are ratio-one permutations dense but small in the sense of Baire category? What happens in random infinite permutation models built from blocks of varying length?
+
+The finite-extension theorem does not answer these questions, but it isolates the exact baseline from which they should be asked. Finite observations impose no asymptotic obstruction. Any genuine obstruction must arise from infinitely many coordinated moves.
+
+## The exact shape of the achievement
+
+There are three nested ideas. First, finite assignments can be completed to a finite permutation. Second, that finite permutation can be installed in the infinite hotel by leaving every later room alone. Third, any relative comparison then stabilizes because unchanged nonzero entries satisfy $a_n/a_n=1$. The prime theorem is therefore a specialization of a universal sequence theorem, while the factorial count describes how richly the finite core can vary.
+
+This hierarchy also supplies a practical test for proposed generalizations. Ask whether the observed assignment is injective, whether all prescribed sources and targets fit inside a finite region, and whether the relevant quotient is defined on the tail. If all three answers are yes, the same construction works. If one fails, genuinely new mathematics is required.
+
+Hilbert’s Hotel remains strange for a precise reason: its finite lobby and infinite horizon obey different laws. In the lobby, guests may dance through any prescribed pattern. At the horizon, the manager can restore perfect stillness. For primes—and, in fact, for every eventually nonzero sequence—that is enough to make asymptotic invisibility unavoidable in every finite neighborhood.
