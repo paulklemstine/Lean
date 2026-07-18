@@ -627,13 +627,13 @@
                         const pushForce = 2000 * overlap / (A.r + B.r);
                         A.nodes.forEach(n => {
                             if (n === dragNode) return;
-                            n.vx -= pushDir.x * pushForce / A.nodes.length;
-                            n.vy -= pushDir.y * pushForce / A.nodes.length;
+                            n.vx -= pushDir.x * pushForce;
+                            n.vy -= pushDir.y * pushForce;
                         });
                         B.nodes.forEach(n => {
                             if (n === dragNode) return;
-                            n.vx += pushDir.x * pushForce / B.nodes.length;
-                            n.vy += pushDir.y * pushForce / B.nodes.length;
+                            n.vx += pushDir.x * pushForce;
+                            n.vy += pushDir.y * pushForce;
                         });
                     }
                 }
