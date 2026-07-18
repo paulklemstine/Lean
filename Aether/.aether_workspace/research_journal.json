@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "d1512647",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Rectangle Piercing, Packing, and Relaxation Gaps\n\n## 1. A complete coordinate certificate for the 64-rectangle family\n\n**Conjecture.** There is an integer-coordinate realization o",
-      "quality_score": 0.71,
-      "sorry_count": 0,
-      "theorem_count": 5,
-      "timestamp": "2026-07-16T10:38:08",
-      "title": "ArXiv paper: A 64-Rectangle Counterexample to Wegner's Conjecture and LP Gaps up to $5/2$"
-    },
-    {
       "cycle_id": "57f0b740",
       "domain": "Logic",
       "key_insight": "# Future Directions\n\n## What the formalization establishes\n\nThe literal observer definition does not produce a nontrivial numerical invariant. For every topology `τ`, the `Unit`-indexed family whose o",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-18T19:01:52",
       "title": "Deepening: Tropical Cryptocurrency: Mining on the Min-Plus Semiring"
+    },
+    {
+      "cycle_id": "d757b941",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions: Transform Uncertainty Beyond Fourier Duality\n\n## 1. Quantitative analytic-continuation uncertainty\n\n**Conjecture.** Let a normalized integral transform send compactly supported in",
+      "quality_score": 0.73,
+      "sorry_count": 0,
+      "theorem_count": 21,
+      "timestamp": "2026-07-18T19:24:50",
+      "title": "The Uncertainty Principle Is a Fourier Thing: Position-Momentum Duality"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "71637775",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: The multi-join law for the ℤ₂-coindex\n\nThis cycle extends the constructive, lower-bound half of the ℤ₂-coindex theory established in\n`Catalog/Novelty/Z2CoindexJoin.lean` (the shar",
-      "quality_score": 0.83,
-      "sorry_count": 4,
-      "theorem_count": 41,
-      "timestamp": "2026-07-15T00:42:35",
-      "title": "Close Proofs: Constructive, lower-bound half of the co-index theory"
-    },
     {
       "cycle_id": "50098ece",
       "domain": "Novelty",
@@ -2501,21 +2491,19 @@
       "theorem_count": 10,
       "timestamp": "2026-07-18T19:24:38",
       "title": "Topological Quantum Compiling: Braid Groups as Universal Gates"
+    },
+    {
+      "cycle_id": "d757b941",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions: Transform Uncertainty Beyond Fourier Duality\n\n## 1. Quantitative analytic-continuation uncertainty\n\n**Conjecture.** Let a normalized integral transform send compactly supported in",
+      "quality_score": 0.73,
+      "sorry_count": 0,
+      "theorem_count": 21,
+      "timestamp": "2026-07-18T19:24:50",
+      "title": "The Uncertainty Principle Is a Fourier Thing: Position-Momentum Duality"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "5ae7f8c1",
-      "domain": "Algebra",
-      "name": "exists_positive_below_powHalf",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "5ae7f8c1",
-      "domain": "Algebra",
-      "name": "exists_positive_below_scaled_powHalf",
-      "quality": 0.85
-    },
     {
       "cycle_id": "ee626e30",
       "domain": "MachineLearning",
@@ -2803,9 +2791,21 @@
       "domain": "Applications",
       "name": "spectralPowerSum_zero",
       "quality": 0.74
+    },
+    {
+      "cycle_id": "d757b941",
+      "domain": "MachineLearning",
+      "name": "of",
+      "quality": 0.73
+    },
+    {
+      "cycle_id": "d757b941",
+      "domain": "MachineLearning",
+      "name": "for",
+      "quality": 0.73
     }
   ],
-  "last_updated": "2026-07-18T19:24:38",
+  "last_updated": "2026-07-18T19:24:50",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "6097a507",
-        "quality": 0.91,
-        "theorems": 3,
-        "title": "Deepening: The prior cycle (`CosetGuesswork.lean`) proved the exact coset-expone"
-      },
-      {
         "cycle_id": "dc502c2d",
         "quality": 0.91,
         "theorems": 42,
@@ -3575,6 +3569,12 @@
         "quality": 0.69,
         "theorems": 10,
         "title": "Topological Quantum Compiling: Braid Groups as Universal Gates"
+      },
+      {
+        "cycle_id": "d757b941",
+        "quality": 0.73,
+        "theorems": 21,
+        "title": "The Uncertainty Principle Is a Fourier Thing: Position-Momentum Duality"
       }
     ],
     "Novelty": [
