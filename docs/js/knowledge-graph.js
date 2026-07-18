@@ -653,8 +653,7 @@
                 const coreDy = coreDelta.dy;
                 const coreR = Math.sqrt(coreR2) || 1;
                 const gravity = G_CORE * CORE_MASS * a.mass / (coreR2 + SOFTENING * SOFTENING);
-                const darkEnergy = 0.05 * a.mass; // Constant outward push (increased to prevent clumping)
-                const coreForce = gravity - darkEnergy;
+                const coreForce = gravity;
                 a.vx += (coreDx / coreR) * coreForce;
                 a.vy += (coreDy / coreR) * coreForce;
 
