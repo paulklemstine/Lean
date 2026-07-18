@@ -46,7 +46,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Entanglement as Algebraic Topology: The Linking Number Is Entanglement"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "115a4ee3",
     "description": "Building on cycle 18410e31 (Q=0.770), which proved 12 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: When a theorem prover searches for a proof, it explores a tree of possible derivation steps. The branching factor is the number of applicable inference rules at each step. Define the proof-search fractal dimension D(T) of a theorem T as the Hausdorff dimension of the set of all successful proof path",
     "domains": [
       "Novelty"
@@ -55,7 +55,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "team",
     "source_exp_id": "18410e31",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-18T09:21:32.306900+00:00",
     "title": "Deepening: Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
   },
@@ -3620,7 +3620,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: ArXiv paper: A minimal modularity lifting theorem for Siegel modular f"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fff627f3",
     "description": "Hilbert's Hotel has infinitely many rooms, each containing a prime number. Room n contains the n-th prime p_n. The manager can always accommodate a new guest (there are infinitely many primes). But what if the guests want to REARRANGE? Conjecture: For any permutation sigma of N, there exists a rearrangement of the primes q_1, q_2, ... such that the sequence of ratios q_n / p_n converges to 1. In other words, you can shuffle the primes almost arbitrarily and the room numbers barely change. More precisely, the set of permutations sigma for which p_{sigma(n)} / p_n has a limit is dense in the symmetric group (with the topology of pointwise convergence). But NOT every permutation works: the permutation that swaps all even-indexed primes with odd-indexed ones gives q_{2n}/p_{2n} = p_{2n-1}/p_{2n} which converges to 1 by the prime number theorem, but the permutation that reverses order gives q_n/p_n = p_{N-n}/p_n which diverges. Test: compute q_n/p_n for 10 random permutations of the first 10^6 primes and verify that most ratios converge to 1. Find the exact density of 'well-behaved' permutations. Impact: the primes are robust under rearrangement \u2014 their asymptotic density is a topological invariant of the permutation group.",
     "domains": [
       "Novelty",
@@ -3630,7 +3630,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.74,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-18T04:27:28.042243+00:00",
     "title": "Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
   },
