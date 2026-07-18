@@ -1,44 +1,47 @@
-# Computational Evidence — Bayesian Werewolf
+# Computational Evidence: Bayesian Werewolf
 
-## 1. Posterior collapses to the prior
+## Model used for the small-case calculation
 
-For the symmetric-information posterior
-`posterior n k = C(n-1,k-1) / C(n,k)` we verified numerically that it agrees
-exactly with the prior `k/n`:
+A deliberately information-free baseline was fixed before calculation. At each day vote, a uniformly random surviving player is eliminated. If that player is a wolf, the following night removes one villager unless the eliminated wolf was the last wolf. If the day eliminates a villager, the night removes one further villager. Villagers win at zero wolves; wolves win once wolves equal or outnumber villagers.
 
-| n  | k | posterior           | prior k/n |
-|----|---|---------------------|-----------|
-| 7  | 2 | 2/7                 | 2/7       |
-| 20 | 5 | 1/4                 | 1/4       |
+Writing `D(v,w)` for the village win probability with `v` villagers and `w` wolves,
 
-This is the small-case shadow of the exact theorem `posterior_eq_prior`.
+`D(v,w) = w/(v+w) D(v-1,w-1) + v/(v+w) D(v-2,w)`,
 
-## 2. Consensus-elimination game values
+with `D(v,0)=1` and `D(v,w)=0` for `w≥v`. The last-wolf branch is interpreted as an immediate village win.
 
-`winProb (w+v) w v` is the exact villager win-probability of the
-consensus-elimination model (each round one uniformly random living player is
-removed; villagers win when no werewolf remains, werewolves win at parity
-`w ≥ v`).  Exact rational values:
+## Small-case calculations (`k=2`)
 
-| population n | werewolves k | villagers v | villager win prob |
-|--------------|--------------|-------------|-------------------|
-| 7            | 2            | 5           | 3/7  ≈ 0.4286     |
-| 10           | 3            | 7           | 2/5  = 0.40       |
-| 8            | 1            | 7           | 3/4  = 0.75       |
-| 6            | 2            | 4           | 1/3  ≈ 0.3333     |
+| total players `n` | exact `D(n-2,2)` | decimal | ratio to `(1-2/(n-2))²` |
+|---:|---:|---:|---:|
+| 7 | `8/35` | 0.228571 | 0.634921 |
+| 8 | `5/32` | 0.156250 | 0.351562 |
+| 9 | `94/315` | 0.298413 | 0.584889 |
+| 10 | `69/320` | 0.215625 | 0.383333 |
+| 11 | `244/693` | 0.352092 | 0.582030 |
+| 12 | `203/768` | 0.264323 | 0.413005 |
+| 13 | `1186/3003` | 0.394938 | 0.589970 |
+| 14 | `1093/3584` | 0.304967 | 0.439152 |
+| 15 | `2768/6435` | 0.430148 | 0.600785 |
+| 16 | `2781/8192` | 0.339478 | 0.462067 |
+| 17 | `50294/109395` | 0.459747 | 0.612089 |
+| 18 | `54445/147456` | 0.369229 | 0.482258 |
+| 19 | `112028/230945` | 0.485085 | 0.623065 |
+| 20 | `129503/327680` | 0.395212 | 0.500190 |
 
-All values lie in `[0,1]`, matching the proved bounds `winProb_nonneg`,
-`winProb_le_one`.
+The pronounced even/odd oscillation means that a single constant multiplying the proposed quadratic does not describe even this baseline over `7≤n≤20`. The ratio ranges from approximately `0.3516` to `0.6349`.
 
-**Note on the informal 0.36 figure.**  The mission's quoted `≈ 0.36` for
-`n = 7, k = 2` assumes a full day/night ruleset with nightly werewolf kills; our
-rigorously specified consensus-only variant yields the exact value `3/7`.  We
-therefore prove *exact* structural facts (symmetry, monotonicity, the parity
-threshold, and the probability bounds) rather than fitting the heuristic
-`C·(1 - k/(n-k))²` envelope, which is model-dependent and not exact.
+## Counterexample hunt
 
-## 3. Survival law spot check
+Two conjectures fail without extra assumptions.
 
-The exchangeability law `survivalProb n t = (n - t)/n` was verified as an exact
-identity via the double-counting lemma; e.g. a player survives `t` of `n`
-removals with probability `(n-t)/n`, independent of the removal order.
+1. **Universal seven-player value.** The exact baseline value is `8/35≈0.2286`, not `0.36`. The exact identity and strict comparison with `9/25` are proved in `Catalog/Applications/BayesianWerewolf/Evidence.lean`.
+2. **Global MAP optimality.** With posterior `(3/5,2/5)`, immediate MAP selects suspect `0`. If a correct elimination of suspect `0` pays `1/10` while a correct elimination of suspect `1` pays `1`, expected values are `3/50` and `2/5`; therefore suspect `1` is globally preferable. This finite counterexample is proved in `Core.lean`.
+
+## Sequence search
+
+No OEIS identifier is claimed. The recurrence depends on game-specific absorbing boundaries and move order, and the first terms exhibit parity effects; no reliable identification was established.
+
+## Conclusion
+
+The computational landscape supports a guarded theorem: MAP voting maximizes immediate correctness and also maximizes continuation value when continuation rewards are identity-symmetric and a correct elimination is weakly preferable. It contradicts an unconditional global-optimality claim and any model-independent numerical scaling law.
