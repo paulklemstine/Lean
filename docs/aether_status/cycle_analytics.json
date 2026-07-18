@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-18T01:16:43.766346+00:00",
+  "last_updated": "2026-07-18T02:47:23.901923+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -24567,6 +24567,7 @@
       "outcome_quality": 0.63,
       "phase": "A_only",
       "phase_a_prompt_version": "v25",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v25",
@@ -24609,6 +24610,7 @@
       "outcome_quality": 0.59,
       "phase": "A_only",
       "phase_a_prompt_version": "v24",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v24",
@@ -24637,6 +24639,48 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-18T01:16:43.732519+00:00",
       "title": "Holographic Primes: The Prime Number AdS/CFT Correspondence"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 3,
+      "domain": "Novelty",
+      "duration_seconds": 4386.038948774338,
+      "end_time": 1784342813.6101487,
+      "files_integrated": 2,
+      "job_id": "e1956901",
+      "outcome_quality": 0.61,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v25",
+      "phase_b_skip_reason": "low_quality_near_miss",
+      "phase_b_skipped": true,
+      "prompt_version": "v25",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.52,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.84,
+        "composite": 0.469,
+        "cross_domain": 0.5,
+        "grade": "partial",
+        "importance": 0.58,
+        "novelty": 0.5,
+        "proof_depth": 0.62,
+        "usefulness": 0.7
+      },
+      "quality_score": 0.61,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1784338427.5712,
+      "strategy_count": 0,
+      "theorem_count": 18,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 14,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-18T02:47:23.846119+00:00",
+      "title": "The Unreasonable Effectiveness of the Number 163"
     }
   ]
 }
