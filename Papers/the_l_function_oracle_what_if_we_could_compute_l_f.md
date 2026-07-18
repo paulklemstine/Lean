@@ -1,0 +1,3 @@
+# Computational Evidence Justification
+
+Numerical experimentation is not informative for the principal claims in this cycle. The main negative result is a general interpolation theorem valid for every finite sample of complex points, not an asymptotic pattern inferred from cases. The positive results are exact reduction and certification principles whose hypotheses explicitly contain the required decoder or finite nonvanishing witness. Small numerical tables would therefore test neither the scope nor the boundary of these statements. The relevant adversarial experiment—the construction of a perturbation preserving all sampled values while changing a fresh value—is carried out symbolically in the interpolation theorem.

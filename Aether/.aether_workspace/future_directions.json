@@ -10395,7 +10395,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\n## Result established\n\n`Catalog/Applications/HyperbolicNumberTheory/CayleyPythagoreanBridge.lean` gives a precise replacement for the underspecified “hyperbolic integers” proposal. For the integer-translation subgroup of the modular group, it studies the Cayley image\n\n\\[\nz_n=\\frac{n}{n+2i}.\n\\]\n\nIt proves simultaneously that:\n\n1. every `z_n` lies strictly inside the Poincaré disk;\n2. the orbit lies on the horocycle `|2z_n-1|²=1`, tangent to the ideal boundary at `1`;\n3. clearing the horocycle equation produces the integral right-triangle identity\n   \\[(n^2-4)^2+(4n)^2=(n^2+4)^2.\\]\n\nThis is the connector: a modular cusp orbit in hyperbolic geometry and Euclid-style Pythagorean triples are two realizations of one circle equation.\n\n## Natural formal extensions\n\n1. **Primitivity classification.** Prove an exact formula for\n   `gcd (n² - 4) (4n)` and classify when the resulting Pythagorean triple is primitive after normalization.\n2. **Rational parametrization equivalence.** Show that every rational point on the horocycle except its tangency point comes from a unique rational parameter, then identify integral modular parameters as a distinguished discrete subset.\n3. **Hyperbolic metric formulation.** Add the Poincaré distance and prove the exact distance of `z_n` from the origin, relating cusp escape to logarithmic growth in `|n|`.\n4. **General cusp width.** Replace `2i` by a positive integral width and derive the corresponding family\n   `(n²-w², 2wn, n²+w²)`.\n5. **Matrix-level modular action.** Represent translations by determinant-one matrices, prove compatibility of the Cayley transform with their Möbius action, and connect the horocycle equation directly to the parabolic trace condition.\n6. **Counting theorem.** Count orbit points below a Euclidean or hyperbolic radial cutoff and compare the resulting one-dimensional cusp law with ambient hyperbolic area growth.\n7. **Primitive geodesics and Selberg zeta.** A meaningful prime theory should use primitive hyperbolic conjugacy classes (closed geodesics), not arbitrary tessellation vertices. Formalizing this requires definitions of primitive classes, lengths, and the Selberg zeta product before any prime-geodesic or zero statement can be posed.\n\n## Scope boundaries\n\nThe original proposed `Z_H`, multiplication, prime vertices, norm, and zeta series are not specified well enough to support unique factorization, a prime number theorem, or a zero computation. In particular, tessellation vertices do not automatically inherit a canonical multiplicative monoid, and a claim about “the first 100 zeros” requires a precise analytic function, continuation, zero ordering, and certified numerical enclosures. None of those conjectural claims is asserted here. The proved connector instead uses canonical data from the modular translation orbit and makes no unverified spectral claim.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -11174,7 +11174,7 @@
       "depth_estimate": 3,
       "description": "Hilbert's Hotel has infinitely many rooms, each containing a prime number. Room n contains the n-th prime p_n. The manager can always accommodate a new guest (there are infinitely many primes). But what if the guests want to REARRANGE? Conjecture: For any permutation sigma of N, there exists a rearrangement of the primes q_1, q_2, ... such that the sequence of ratios q_n / p_n converges to 1. In other words, you can shuffle the primes almost arbitrarily and the room numbers barely change. More precisely, the set of permutations sigma for which p_{sigma(n)} / p_n has a limit is dense in the symmetric group (with the topology of pointwise convergence). But NOT every permutation works: the permutation that swaps all even-indexed primes with odd-indexed ones gives q_{2n}/p_{2n} = p_{2n-1}/p_{2n} which converges to 1 by the prime number theorem, but the permutation that reverses order gives q_n/p_n = p_{N-n}/p_n which diverges. Test: compute q_n/p_n for 10 random permutations of the first 10^6 primes and verify that most ratios converge to 1. Find the exact density of 'well-behaved' permutations. Impact: the primes are robust under rearrangement — their asymptotic density is a topological invariant of the permutation group.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Novelty",
         "NumberTheory"
@@ -11773,6 +11773,46 @@
       "thread_id": "",
       "timestamp": "2026-07-18T03:54:50.138087+00:00",
       "title": "Deepening: Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Building on cycle 717f7483 (Q=0.750), which proved 19 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Godel's incompleteness theorem says there are true statements that cannot be proved. But what if we turn incompleteness into a GAME? Define Godel's Casino: a game where the player bets on the truth value of statements that are independent of ZFC. The house deals cards representing arithmetic stateme",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "NumberTheory"
+      ],
+      "github_issue": 0,
+      "id": "push_717f7483_9c5c3f5d",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.85,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "717f7483",
+      "source_path": "Godel's Casino: Incomplete but Winnable Games",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-18T06:56:52.638461+00:00",
+      "title": "Deepening: Godel's Casino: Incomplete but Winnable Games"
     },
     {
       "ambition_level": "extension",

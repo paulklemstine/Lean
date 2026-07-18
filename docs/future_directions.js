@@ -61,6 +61,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "The L-Function Oracle: What If We Could Compute L-Functions Instantly?"
   },
   {
+    "consumed_by_exp_id": "",
+    "description": "Two quantum particles are entangled if measuring one instantly affects the other. But entanglement is also a topological property: if you represent the state of two qubits as a curve in R^3, entanglement IS the linking number. Conjecture: For any pure state of two qubits |psi> in C^2 tensor C^2, the concurrence C(psi) = 2|alpha*delta - beta*gamma| (where psi = alpha|00> + beta|01> + gamma|10> + delta|11>) equals the absolute value of the linking number of two curves derived from the Hopf fibration applied to psi. Specifically, map psi to S^7 via normalization, then project to S^4 via the Hopf map, and the preimages of two points in S^4 are linked circles in S^7 whose linking number equals the concurrence. This means: entanglement is MEASURED by topology, and maximally entangled states correspond to the Hopf link (linking number 1). Test: for 1000 random two-qubit states, compute the concurrence and the linking number of the Hopf preimages, and verify they are equal. Prove the equality for the Bell states. Impact: quantum entanglement is not mysterious \u2014 it is the linking number of the Hopf fibration. Two particles are entangled if and only if their Hopf preimages are linked.",
+    "domains": [
+      "Novelty",
+      "Physics"
+    ],
+    "id": "fd_0281",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-18T06:56:07.225808+00:00",
+    "title": "Quantum Entanglement as Algebraic Topology: The Linking Number Is Entanglement"
+  },
+  {
     "consumed_by_exp_id": "60e00dda",
     "description": "The field with one element F_1 is a hypothetical object that would explain why the Weil conjectures have the form they do \u2014 as if there were a field with q^0 = 1 element. Tropical geometry replaces addition with min and multiplication with addition. What if these two ideas are the SAME? Conjecture: The tropical semiring (R union {infinity}, min, +) IS the field with one element, in the following precise sense: the category of tropical schemes is equivalent to the category of F_1-schemes. More concretely, a tropical variety over F_1 is a set with a min-plus structure, and its base change to Z (formally, tensor with Z) is a toric variety. The key correspondence: F_1-points of a tropical variety are the vertices of its Newton polytope, and the 'cardinality' of the tropical variety (as an F_1-object) is the number of lattice points in the polytope, which equals the degree of the toric variety after base change. Test: for each toric variety corresponding to a polytope P, compute the number of F_1-points (vertices of P) and verify that the Euler characteristic of the toric variety equals |vertices(P)| = #F_1-points. Prove the tensor product correspondence: tropical scheme X over F_1 has X tensor_Z Z = the corresponding toric variety. Impact: F_1 and tropical geometry are two faces of the same coin. The field with one element is tropical, and tropical geometry is the geometry of F_1.",
     "domains": [
@@ -119,6 +134,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 717f7483 (Q=0.750), which proved 19 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Godel's incompleteness theorem says there are true statements that cannot be proved. But what if we turn incompleteness into a GAME? Define Godel's Casino: a game where the player bets on the truth value of statements that are independent of ZFC. The house deals cards representing arithmetic stateme",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "push_717f7483_9c5c3f5d",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "717f7483",
+    "status": "available",
+    "timestamp": "2026-07-18T06:56:52.638461+00:00",
+    "title": "Deepening: Godel's Casino: Incomplete but Winnable Games"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Proofs are static objects, but what if proofs could improve? Define a proof refinement system where each proof P has a complexity C(P) = length(P) + depth(P) + number of lemmas, and a proof P' is a refinement of P if P' proves the same theorem with C(P') < C(P). Conjecture: For every theorem T provable in ZFC, there exists a sequence of refinements P = P_0, P_1, P_2, ... such that C(P_n) is non-increasing and the limit P_infinity is the simplest proof of T (in the sense of Kolmogorov complexity). Moreover, the refinement process halts: there exists N such that C(P_N) = C(P_{N+1}) = ... = C(P_infinity). The key insight: proof simplification is a well-founded process because the complexity is a natural number that decreases at each step. But the process can be arbitrarily long \u2014 the proof of the four-color theorem might require 10^100 refinements to reach its simplest form. Test: formalize the refinement system in Lean 4. Starting from the statement of the irrationality of sqrt(2), generate refinements by eliminating unnecessary lemmas, shortening case splits, and removing redundant quantifiers. Measure C(P) at each step and verify it decreases. Impact: proofs are not static \u2014 they are living objects that can be improved. The simplest proof of a theorem is the LIMIT of the refinement process, and this limit ALWAYS exists.",
     "domains": [
       "Novelty",
@@ -131,6 +160,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-18T03:44:45.986581+00:00",
     "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Mendeleev's periodic table arranges elements by atomic number Z, but Z is just the charge of the nucleus. Conjecture: the periodic table is the spectrum of an operator on a Hilbert space of dimension equal to the number of stable isotopes. Define the 'nuclear Hamiltonian' H on L^2(R^3) by H = -hbar^2/(2m) * nabla^2 + V(r) where V(r) encodes the strong and electromagnetic forces. The eigenvalues E_n of H give the binding energies of nuclei, and Z_n = round(E_n / E_0) gives the atomic numbers. The 'periodicity' of the table arises because the eigenvalues of H have shell structure (like the hydrogen atom): the n-th shell has degeneracy 2n^2 (from the angular momentum quantum number), giving shell sizes 2, 8, 18, 32, 50, 72 \u2014 the noble gas atomic numbers 2, 10, 28, 60, 110 are the cumulative sums. The 'stability islands' (magic numbers 2, 8, 20, 28, 50, 82, 126) correspond to extra degeneracies in the nuclear potential. Test: solve the Schrodinger equation for a Woods-Saxon potential (model nuclear potential) and show that the eigenvalue degeneracies match the periodic table structure. Compute the 'predicted' periodic table from the eigenvalues and compare with reality. Impact: chemistry IS applied spectral theory. The periodic table is the spectrum of a Hamiltonian, and every chemical property is an eigenvalue.",
+    "domains": [
+      "Novelty",
+      "Physics"
+    ],
+    "id": "fd_0282",
+    "priority_score": 0.82,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-18T06:56:07.277476+00:00",
+    "title": "The Periodic Table Is a Lie: Elements as Eigenvalues of Spacetime"
   },
   {
     "consumed_by_exp_id": "65eb2137",
@@ -2953,21 +2997,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Improved constant in Erd\u0151s sumset avoidance for dense subsets"
   },
   {
-    "consumed_by_exp_id": "717f7483",
-    "description": "Godel's incompleteness theorem says there are true statements that cannot be proved. But what if we turn incompleteness into a GAME? Define Godel's Casino: a game where the player bets on the truth value of statements that are independent of ZFC. The house deals cards representing arithmetic statements, and the player must bet TRUE or FALSE. The Continuum Hypothesis is the first card \u2014 you can bet either way and you're RIGHT in some model. Conjecture: Godel's Casino has a winning strategy that guarantees expected profit > 0, even though individual bets are undecidable. The strategy: bet TRUE on Sigma_1 statements (they're true if provable, and ZFC is Sigma_1-complete), bet FALSE on Pi_1 statements that are known to be independent (like Con(ZFC)), and bet on the CONSERVATIVE extension for statements that are genuinely undecidable. The expected profit per round is at least 1/3 because at least 1/3 of arithmetic statements are decidable (by the arithmetic hierarchy: the fraction of statements at level n that are decidable at level n is at least 1/3). Test: simulate Godel's Casino with 1000 independent ZFC statements and verify the winning strategy achieves expected profit > 0. Impact: incompleteness is not a barrier \u2014 it's an opportunity. You can WIN at the game of undecidability.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0265",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T04:10:30.530614+00:00",
-    "title": "Godel's Casino: Incomplete but Winnable Games"
-  },
-  {
     "consumed_by_exp_id": "0ebc2749",
     "description": "The Mandelbrot set M is defined by z_{n+1} = z_n^2 + c, and the boundary of M is the locus of c values where the orbit of 0 is bounded but barely so. Each bulb of M corresponds to a rational number p/q (the period-q bulb at angle p/q). The size of the p/q bulb decreases with q, and the Fibonacci sequence governs the spiral arrangement of bulbs. Conjecture: The period of the bulb at angle p/q (in lowest terms) is exactly q. Moreover, the Lyapunov exponent lambda(c) at the center of the p/q bulb equals log(2) * cos(pi*p/q). The 'prime bulbs' \u2014 bulbs at angles 1/q where q is prime \u2014 have special symmetry: they are the only bulbs with dihedral symmetry D_q. The composite bulbs have more complex symmetry groups. The prime factorization of the period determines the bulb's topology: a bulb of period n = p1^a1 * ... * pk^ak is topologically a product of k bulbs of periods p1^a1, ..., pk^ak. Test: for each rational p/q with q <= 20, locate the corresponding bulb in M, compute its Lyapunov exponent, and verify lambda = log(2) * cos(pi*p/q). Classify bulbs by the prime factorization of their period and verify the product structure. Impact: the Mandelbrot set is a visual calculator for prime factorization \u2014 every bulb encodes number-theoretic information about its period.",
     "domains": [
@@ -3458,6 +3487,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-18T06:39:49.078146+00:00",
     "title": "1. **Repair the definition before studying asymptotics.** The literal rule exclu"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## What was established\n\nThe completed development has two complementary formalizations. `Catalog/NumberTheory/GodelCasino.lean` studies finite sequences of unit bets and their accuracy probabilities. `Catalog/output-final_aristotle/Logic/GodelCasino.lean` studies statements as Boolean-valued functions on a finite space of possible worlds, with uniform expected profit and optimal betting.\n\nTogether they establish the following conclusions.\n\n1. **No unconditional winning strategy.** For every deterministic Boolean strategy and every world, complementing all truth values negates the total payoff. Hence no strategy wins strictly in both worlds, every strategy has a world with nonpositive payoff, and the direct adversarial world forces the exact payoff `-n`.\n2. **Sharp conditional expected-profit criterion.** If `p i` is the probability that prediction `i` is correct, expected payoff is\n   `2 * (\u2211 i, p i) - n`. It is positive exactly when aggregate accuracy exceeds `n/2`. A per-card lower bound `q` yields payoff at least `n(2q-1)`. Thus accuracy at least `2/3` yields at least `n/3`, and the 1000-card constant-accuracy instance has expected payoff exactly `1000/3`.\n3. **Known versus unresolved cards.** If `d` cards are predicted with certainty and `u` cards are fair guesses, expected payoff is exactly `d`; uncertainty itself supplies no positive edge.\n4. **Finite possible-world semantics.** Valid and unsatisfiable statements can be bet on with expected profit `1`, while balanced statements have expected and optimal profit `0`. An explicit balanced independent statement on the two-world space `Bool` therefore refutes a universal `1/3` lower bound. Abstract proof-system soundness suffices to recover the positive result for provable statements.\n\n## Interpretation of the original conjecture\n\nThe unconditional conjecture does not follow merely from logical independence. Independence from a formal theory does not assign a probability distribution or give the player predictive information. Moreover, statements whose truth values vary between models do not have a single model-independent Boolean settlement rule unless a semantics or distinguished model is specified. The claimed \u201cone third of arithmetic statements\u201d also requires a precise encoding, size measure, sampling distribution, and proved density theorem; the arithmetic hierarchy alone does not provide that fraction.\n\nThe formal results identify the missing assumption exactly: positive expected profit requires aggregate prediction accuracy strictly greater than one half. The proposed `1/3` profit per round follows from `2/3` accuracy, but logical decidability or independence by itself does not establish that accuracy.\n\n## Further formalization\n\n- Define a probability space of encoded formulas, a settlement semantics, and a measurable strategy, then lift the finite rational calculation to Mathlib expectation.\n- Formalize randomized strategies and prove a minimax/no-free-lunch theorem against complement-symmetric distributions.\n- Introduce abstention, asymmetric odds, transaction costs, and calibration; derive the corresponding sharp profitability threshold.\n- Choose a concrete G\u00f6del coding and bounded formula language. Enumerate formulas by code length and replace the unsupported density assertion with experimentally measured finite proportions and, if possible, asymptotic theorems.\n- Distinguish syntactic provability, standard-model arithmetic truth, and truth in a selected set-theoretic model. Any casino settlement rule must choose one explicitly.\n- Model conservative extensions only after defining what payoff they generate; conservativity is a relation between theories, not a Boolean prediction of an undecided sentence.\n",
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "fd_0283",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "717f7483",
+    "status": "available",
+    "timestamp": "2026-07-18T06:56:46.945502+00:00",
+    "title": "The completed development has two complementary formalizations. `Catalog/NumberT"
   },
   {
     "consumed_by_exp_id": "",

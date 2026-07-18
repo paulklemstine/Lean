@@ -7,16 +7,6 @@
       "quality_score": 0.75,
       "sorry_count": 0,
       "theorem_count": 19,
-      "timestamp": "2026-07-16T03:35:50",
-      "title": "ArXiv paper: Quantum Latin Squares of Order Six with Cardinalities Nineteen, Twenty-One, and Twenty-"
-    },
-    {
-      "cycle_id": "57481379",
-      "domain": "Physics",
-      "key_insight": "# Future Directions\n\n## 1. A complete phase-invariant certificate for the order-six cardinality-19 matrix\n\nConjecture: the eighth-root Butson matrix underlying the cardinality-19 construction has exac",
-      "quality_score": 0.75,
-      "sorry_count": 0,
-      "theorem_count": 19,
       "timestamp": "2026-07-16T03:36:30",
       "title": "ArXiv paper: Quantum Latin Squares of Order Six with Cardinalities Nineteen, Twenty-One, and Twenty-"
     },
@@ -499,19 +489,19 @@
       "theorem_count": 11,
       "timestamp": "2026-07-18T06:39:55",
       "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
+    },
+    {
+      "cycle_id": "717f7483",
+      "domain": "NumberTheory",
+      "key_insight": "# Future directions\n\n## What was established\n\nThe completed development has two complementary formalizations. `Catalog/NumberTheory/GodelCasino.lean` studies finite sequences of unit bets and their ac",
+      "quality_score": 0.75,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-07-18T06:56:52",
+      "title": "Godel's Casino: Incomplete but Winnable Games"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "385fff12",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Constrained Coset Guesswork\n\nDerived from the exact coset-exponent cycle. Each conjecture is falsifiable.\n\n## 1. Universality of the additive redundancy term\n\n**Conjecture.** For",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-07-14T10:08:42",
-      "title": "Exact Exponent for Constrained Coset Guesswork"
-    },
     {
       "cycle_id": "c4aa235b",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 11,
       "timestamp": "2026-07-18T06:39:55",
       "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
+    },
+    {
+      "cycle_id": "717f7483",
+      "domain": "NumberTheory",
+      "key_insight": "# Future directions\n\n## What was established\n\nThe completed development has two complementary formalizations. `Catalog/NumberTheory/GodelCasino.lean` studies finite sequences of unit bets and their ac",
+      "quality_score": 0.75,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-07-18T06:56:52",
+      "title": "Godel's Casino: Incomplete but Winnable Games"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "5759ba2d",
-      "domain": "Novelty",
-      "name": "canonicalColor_lt",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "5759ba2d",
-      "domain": "Novelty",
-      "name": "canonicalColor_fiber_intersect",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "5759ba2d",
-      "domain": "Novelty",
-      "name": "canonicalColor_ne_of_disjoint",
-      "quality": 0.72
-    },
     {
       "cycle_id": "5759ba2d",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Shared",
       "name": "antiFib_eq_one",
       "quality": 0.7
+    },
+    {
+      "cycle_id": "717f7483",
+      "domain": "NumberTheory",
+      "name": "unitPayoff_not_right",
+      "quality": 0.75
+    },
+    {
+      "cycle_id": "717f7483",
+      "domain": "NumberTheory",
+      "name": "totalPayoff_complement",
+      "quality": 0.75
+    },
+    {
+      "cycle_id": "717f7483",
+      "domain": "NumberTheory",
+      "name": "no_uniform_strict_win",
+      "quality": 0.75
     }
   ],
-  "last_updated": "2026-07-18T06:39:55",
+  "last_updated": "2026-07-18T06:56:52",
   "open_questions": [
     {
       "context": "",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "bb33d4fa",
-        "quality": 0.78,
-        "theorems": 13,
-        "title": "Minimalobstructions to total rainbow forests fail the Rainbow Forest Inequality "
-      },
-      {
         "cycle_id": "f9bf2df0",
         "quality": 0.82,
         "theorems": 16,
@@ -3699,6 +3693,12 @@
         "quality": 0.66,
         "theorems": 0,
         "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
+      },
+      {
+        "cycle_id": "717f7483",
+        "quality": 0.75,
+        "theorems": 19,
+        "title": "Godel's Casino: Incomplete but Winnable Games"
       }
     ],
     "Physics": [
