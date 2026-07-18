@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "f4980b02",
-      "domain": "MachineLearning",
-      "key_insight": "# Future directions\n\nThe formalization proves the invariant spectral splitting that underlies the generalized-join formulas: internal zero-mass modes acquire an external-degree shift, while fiber-cons",
-      "quality_score": 0.74,
-      "sorry_count": 0,
-      "theorem_count": 18,
-      "timestamp": "2026-07-16T01:47:06",
-      "title": "ArXiv paper: Counting oriented spanning trees in generalized join digraphs"
-    },
-    {
       "cycle_id": "57481379",
       "domain": "Physics",
       "key_insight": "# Future Directions\n\n## 1. A complete phase-invariant certificate for the order-six cardinality-19 matrix\n\nConjecture: the eighth-root Butson matrix underlying the cardinality-19 construction has exac",
@@ -499,19 +489,19 @@
       "theorem_count": 8,
       "timestamp": "2026-07-18T06:23:02",
       "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
+    },
+    {
+      "cycle_id": "e456357e",
+      "domain": "Shared",
+      "key_insight": "# Future directions\n\n1. **Repair the definition before studying asymptotics.** The literal rule excludes one integer and collapses to the constant-one sequence. A revised rule must specify the candida",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-18T06:39:55",
+      "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "6e60d0a1",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: the suspension tower `Sᵏ(K)` and the excess spectrum of free ℤ₂-complexes\n\nThis cycle takes the combinatorial model of free `ℤ₂`-complexes from\n`Catalog/Novelty/Z2CoindexSuspensio",
-      "quality_score": 0.8,
-      "sorry_count": 1,
-      "theorem_count": 18,
-      "timestamp": "2026-07-14T10:08:36",
-      "title": "Close Proofs: **suspension tower** `Sᵏ(K)` of a free ℤ₂-complex as"
-    },
     {
       "cycle_id": "385fff12",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 13,
       "timestamp": "2026-07-18T06:39:42",
       "title": "Impossibility Results for Fun: Things That Cannot Be Done (But We Try Anyway)"
+    },
+    {
+      "cycle_id": "e456357e",
+      "domain": "Shared",
+      "key_insight": "# Future directions\n\n1. **Repair the definition before studying asymptotics.** The literal rule excludes one integer and collapses to the constant-one sequence. A revised rule must specify the candida",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-18T06:39:55",
+      "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "e2f5c991",
-      "domain": "Novelty",
-      "name": "card_forceStep",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "e2f5c991",
-      "domain": "Novelty",
-      "name": "subset_of_forceSequence",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "e2f5c991",
-      "domain": "Novelty",
-      "name": "forceSequence_antisymm",
-      "quality": 0.72
-    },
     {
       "cycle_id": "5759ba2d",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Computation",
       "name": "sigma_pow_injective",
       "quality": 0.76
+    },
+    {
+      "cycle_id": "e456357e",
+      "domain": "Shared",
+      "name": "shows",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "e456357e",
+      "domain": "Shared",
+      "name": "leastPositiveAvoidingSum_spec",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "e456357e",
+      "domain": "Shared",
+      "name": "antiFib_eq_one",
+      "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-18T06:39:42",
+  "last_updated": "2026-07-18T06:39:55",
   "open_questions": [
     {
       "context": "",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "9243b8b5",
-        "quality": 0.92,
-        "theorems": 3,
-        "title": "Close Proofs: The mission asked to interrogate the claim:"
-      },
-      {
         "cycle_id": "7ea29a05",
         "quality": 0.9,
         "theorems": 16,
@@ -3947,6 +3941,12 @@
         "quality": 0.68,
         "theorems": 0,
         "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
+      },
+      {
+        "cycle_id": "e456357e",
+        "quality": 0.7,
+        "theorems": 11,
+        "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
       }
     ],
     "Tropical": [

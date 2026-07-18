@@ -118,21 +118,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "[Reset] Fresh approach in Shared"
   },
   {
-    "consumed_by_exp_id": "3aa7c983",
-    "description": "Mathematics is full of impossibility theorems \u2014 things that CANNOT be done. But impossibility theorems are themselves beautiful mathematical objects. Catalog and interconnect the great impossibilities: (1) Squaring the circle (pi is transcendental, Lindemann 1882). (2) Trisecting the angle (cos 20 degrees has degree 3 over Q, Wantzel 1837). (3) Doubling the cube (cube root of 2 has degree 3, Wantzel 1837). (4) Solving the quintic by radicals (A_5 is not solvable, Abel-Ruffini 1824). (5) The Borsuk-Ulam impossibility (every continuous map S^n -> R^n has a point where f(x) = f(-x)). (6) Arrow's impossibility (no voting system is simultaneously fair, complete, and non-dictatorial). (7) Heisenberg's uncertainty (Delta x * Delta p >= hbar/2). Conjecture: These impossibility theorems are connected by a deep structural principle \u2014 each one arises because a certain group action is not free. Squaring the circle fails because Gal(Q(pi)/Q) acts freely. Solving the quintic fails because A_5 acts freely on the roots. Arrow's theorem fails because the symmetric group acts freely on preferences. Heisenberg fails because the Heisenberg group acts freely on phase space. The unified principle: a task is impossible iff the relevant group action is free. Test: verify that each impossibility theorem corresponds to a free group action. Prove the converse: if a group G acts freely on a set X, then there exists a G-equivariant task that is impossible on X. Impact: all impossibility is the same impossibility \u2014 every CAN'T is a reflection of a free group action.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0233",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-17T14:13:42.052368+00:00",
-    "title": "Impossibility Results for Fun: Things That Cannot Be Done (But We Try Anyway)"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Proofs are static objects, but what if proofs could improve? Define a proof refinement system where each proof P has a complexity C(P) = length(P) + depth(P) + number of lemmas, and a proof P' is a refinement of P if P' proves the same theorem with C(P') < C(P). Conjecture: For every theorem T provable in ZFC, there exists a sequence of refinements P = P_0, P_1, P_2, ... such that C(P_n) is non-increasing and the limit P_infinity is the simplest proof of T (in the sense of Kolmogorov complexity). Moreover, the refinement process halts: there exists N such that C(P_N) = C(P_{N+1}) = ... = C(P_infinity). The key insight: proof simplification is a well-founded process because the complexity is a natural number that decreases at each step. But the process can be arbitrarily long \u2014 the proof of the four-color theorem might require 10^100 refinements to reach its simplest form. Test: formalize the refinement system in Lean 4. Starting from the statement of the irrationality of sqrt(2), generate refinements by eliminating unnecessary lemmas, shortening case splits, and removing redundant quantifiers. Measure C(P) at each step and verify it decreases. Impact: proofs are not static \u2014 they are living objects that can be improved. The simplest proof of a theorem is the LIMIT of the refinement process, and this limit ALWAYS exists.",
     "domains": [
@@ -2983,7 +2968,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Godel's Casino: Incomplete but Winnable Games"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0ebc2749",
     "description": "The Mandelbrot set M is defined by z_{n+1} = z_n^2 + c, and the boundary of M is the locus of c values where the orbit of 0 is bounded but barely so. Each bulb of M corresponds to a rational number p/q (the period-q bulb at angle p/q). The size of the p/q bulb decreases with q, and the Fibonacci sequence governs the spiral arrangement of bulbs. Conjecture: The period of the bulb at angle p/q (in lowest terms) is exactly q. Moreover, the Lyapunov exponent lambda(c) at the center of the p/q bulb equals log(2) * cos(pi*p/q). The 'prime bulbs' \u2014 bulbs at angles 1/q where q is prime \u2014 have special symmetry: they are the only bulbs with dihedral symmetry D_q. The composite bulbs have more complex symmetry groups. The prime factorization of the period determines the bulb's topology: a bulb of period n = p1^a1 * ... * pk^ak is topologically a product of k bulbs of periods p1^a1, ..., pk^ak. Test: for each rational p/q with q <= 20, locate the corresponding bulb in M, compute its Lyapunov exponent, and verify lambda = log(2) * cos(pi*p/q). Classify bulbs by the prime factorization of their period and verify the product structure. Impact: the Mandelbrot set is a visual calculator for prime factorization \u2014 every bulb encodes number-theoretic information about its period.",
     "domains": [
       "Novelty",
@@ -2993,7 +2978,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-18T04:43:40.146143+00:00",
     "title": "The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
   },
@@ -3446,6 +3431,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## What the formal chain establishes\n\n`Catalog/Physics/ImpossibilityResults/FreeActionPrinciple.lean` gives a precise task model: an invariant observable is required to distinguish every point. It proves that this task is solvable exactly when the action is trivial, and therefore that every free action of a nontrivial group makes the task impossible. It also gives a concrete counterexample to the converse: the natural action of `Equiv.Perm (Fin 3)` on `Fin 3` is not free, yet its invariant point-distinguishing task is impossible.\n\n## Correction to the proposed universal principle\n\nThe slogan \u201ca task is impossible iff the relevant action is free\u201d is false without a carefully specified task. For the distinguishing task formalized here, freeness is sufficient but not necessary. Any nontrivial action\u2014meaning merely that some element moves some point\u2014already obstructs an invariant injection. The formal counterexample is the natural permutation action on three letters: the transposition swapping zero and one moves zero but fixes two. Thus the action is nonfree while the moved point obstructs every invariant injection. A meaningful classification must therefore specify both the action and the task/output action.\n\nSeveral catalog claims also should not be identified literally with freeness without substantial additional structure:\n\n- Squaring the circle is an obstruction from constructible field extensions and the transcendence of \u03c0; writing `Gal(\u211a(\u03c0)/\u211a)` is not the usual finite Galois obstruction, and freeness of such an action is not itself Lindemann\u2019s theorem.\n- Trisection and cube doubling are degree/constructibility obstructions.\n- Abel\u2013Ruffini concerns solvability of a Galois group, not merely a free permutation action on roots.\n- Borsuk\u2013Ulam does naturally feature the free antipodal `\u2124/2`-action on a sphere, but its conclusion needs topology, dimension, and continuity.\n- Arrow\u2019s theorem needs explicit axioms on social welfare functions; a symmetric-group action alone is insufficient.\n- Heisenberg uncertainty follows from noncommuting operators and analytic inequalities; a free action on classical phase space does not by itself imply the uncertainty bound.\n\n## Natural next formal developments\n\n1. Generalize tasks to equivariant maps `X \u2192 Y` and characterize existence using stabilizer containment: an orbit map from `G/H` to `G/K` exists precisely under an appropriate conjugate containment relation.\n2. Develop the universal-property version: maps from a free transitive `G`-set correspond to arbitrary choices of one output, clarifying that freeness often enables equivariant maps rather than obstructing them.\n3. Connect the antipodal action to existing formal topology and state a genuine Borsuk\u2013Ulam consequence when sufficient sphere/cohomology infrastructure is available.\n4. Separately formalize straightedge-and-compass constructibility via towers of quadratic field extensions, then derive the degree obstructions for cube doubling and angle trisection.\n5. Treat Abel\u2013Ruffini through solvable groups and radical extensions rather than through freeness alone.\n6. Model Heisenberg uncertainty through inner-product-space operators and the Cauchy\u2013Schwarz/commutator argument.\n7. Formalize social-welfare functions and Arrow\u2019s axioms before investigating which symmetry statements follow from neutral treatment of alternatives.\n\nThese developments would test which impossibility results share an equivariance obstruction and which require fundamentally different algebraic, topological, social-choice, or analytic hypotheses.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0279",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "3aa7c983",
+    "status": "available",
+    "timestamp": "2026-07-18T06:39:37.660983+00:00",
+    "title": "`Catalog/Physics/ImpossibilityResults/FreeActionPrinciple.lean` gives a precise "
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n1. **Repair the definition before studying asymptotics.** The literal rule excludes one integer and collapses to the constant-one sequence. A revised rule must specify the candidate set and all exclusions\u2014for example, whether terms must be new, increasing, or avoid sums of any pair of earlier terms.\n\n2. **Reconcile the displayed prefix.** The listed values are `1 + n(n-1)/2` for the displayed indices and hence suggest quadratic coefficient `1/2`, not `1/4`. Any intended recurrence should be checked against both this prefix and the proposed coefficient.\n\n3. **Study global additive avoidance.** A mathematically richer replacement could greedily choose the least unused positive integer outside the restricted sumset of earlier terms. Its existence, monotonicity, sum-free structure, and counting function would connect additive combinatorics with greedy algorithms.\n\n4. **Generalize the graph bridge.** For a repaired sequence, define a graph on time indices by an additive relation among values. Edge density, clique number, and forbidden subgraphs may translate additive structure into extremal graph invariants.\n\n5. **Formalize density only after fixing the universe.** \u201cThe complement\u201d should specify whether it means the complement of the value set in the positive integers or the complement of an earlier-term sumset. These are different sets and can have different densities.\n\n6. **Retain the present file as a specification regression test.** Any revised definition intended to produce `1,1,2,4,7,...` should be given a new name; the current theorem records exactly why the original wording does not do so.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0280",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "e456357e",
+    "status": "available",
+    "timestamp": "2026-07-18T06:39:49.078146+00:00",
+    "title": "1. **Repair the definition before studying asymptotics.** The literal rule exclu"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle d1663b23 (Q=0.700) proved 0 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'A minimal modularity lifting theorem for Siegel modular forms' and formalize its key results. Abstract: We prove a minimal modularity lifting theorem (in the spirit of Gen",
     "domains": [
       "Applications"
@@ -3488,19 +3503,19 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Dark Mathematics: Theorems That Exist But Cannot Be Found"
   },
   {
-    "consumed_by_exp_id": "e456357e",
-    "description": "The Fibonacci sequence is defined by F(n+1) = F(n) + F(n-1) and converges to the golden ratio. Define the ANTI-Fibonacci sequence: A(n+1) is the smallest positive integer that is NOT equal to A(n) + A(n-1). The sequence begins 1, 1, 2, 4, 7, 11, 16, ... (each term avoids being the sum of the two previous terms). Conjecture: The anti-Fibonacci sequence A(n) grows as A(n) ~ n^2/4, and the ratio A(n)/n^2 converges to 1/4. More precisely, A(n) = floor(n^2/4) + O(1). The sequence avoids the golden ratio entirely \u2014 the ratio A(n+1)/A(n) does NOT converge, instead oscillating between 1 and 2. The complement of the anti-Fibonacci sequence (numbers that ARE sums of two previous anti-Fibonacci numbers) has density 0. Test: compute A(n) for n up to 10^6 and verify A(n)/n^2 approaches 1/4. Prove A(n) = floor(n^2/4) + O(1) by induction. Impact: a beautiful counterpoint to the Fibonacci sequence \u2014 instead of converging to a constant, it grows quadratically while systematically avoiding addition.",
+    "consumed_by_exp_id": "",
+    "description": "Every recipe is an algorithm: it takes ingredients (inputs) and produces a dish (output). The question is: can you verify a good dish faster than you can cook it? This is exactly P vs NP, but in the kitchen. Define the verification time V(R) of a recipe R as the time it takes to taste the dish and determine if it's good. Define the cooking time C(R) as the time it takes to prepare the dish. Conjecture: For most traditional recipes, C(R) > V(R) \u2014 cooking takes longer than tasting (P != NP in the kitchen). But there exist 'quick recipes' where C(R) = V(R) \u2014 assemble-and-serve dishes like salads (P = NP in the kitchen). The interesting class is 'NP-hard recipes' \u2014 dishes where even VERifying the result is hard. Example: is the souffle risen? You can only verify by cutting it open, which destroys it. Theorem: souffle verification is co-NP-hard because determining if a souffle will rise requires simulating the thermodynamic process, which is PSPACE-hard. More formally: the souffle function S(ingredients, temperature, time) -> {risen, collapsed} requires computing the Navier-Stokes equations for the batter, which is PSPACE-hard. Test: classify 100 recipes by their C(R)/V(R) ratio. Verify that P = NP recipes have C = V, while P != NP recipes have C >> V. Impact: computational complexity is not abstract \u2014 it shows up in your kitchen. Some dishes are inherently harder to make than to verify.",
     "domains": [
       "Novelty",
-      "NumberTheory"
+      "Computation"
     ],
-    "id": "fd_0172",
-    "priority_score": 0.73,
+    "id": "fd_0278",
+    "priority_score": 0.71,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-17T03:25:44.329567+00:00",
-    "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
+    "status": "available",
+    "timestamp": "2026-07-18T06:39:19.687053+00:00",
+    "title": "The P vs NP of Cooking: Computational Complexity of Recipes"
   },
   {
     "consumed_by_exp_id": "",
