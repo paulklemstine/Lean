@@ -1,4 +1,4 @@
-// Aether — Package Loading & Rendering
+// Aether — Package Loading & Rendering (Updated)
 
 window.renderMarkdownWithMath = function(markdown) {
     if (!markdown) return '';
@@ -9,30 +9,34 @@ window.renderMarkdownWithMath = function(markdown) {
 
     // Display math: $$ ... $$
     text = text.replace(/\$\$([\s\S]+?)\$\$/g, (match) => {
+        const cleanMatch = match.replace(/^([ \t]*>[ \t]?)+/gm, '');
         const id = `MATHBLOCKDISPLAY${counter++}MATHBLOCK`;
-        mathBlocks.push({ id, content: match });
+        mathBlocks.push({ id, content: cleanMatch });
         return id;
     });
 
     // Display math: \[ ... \]
     text = text.replace(/\\\[([\s\S]+?)\\\]/g, (match) => {
+        const cleanMatch = match.replace(/^([ \t]*>[ \t]?)+/gm, '');
         const id = `MATHBLOCKDISPLAY${counter++}MATHBLOCK`;
-        mathBlocks.push({ id, content: match });
+        mathBlocks.push({ id, content: cleanMatch });
         return id;
     });
 
     // Inline math: \( ... \)
     text = text.replace(/\\\(([\s\S]+?)\\\)/g, (match) => {
+        const cleanMatch = match.replace(/^([ \t]*>[ \t]?)+/gm, '');
         const id = `MATHBLOCKINLINE${counter++}MATHBLOCK`;
-        mathBlocks.push({ id, content: match });
+        mathBlocks.push({ id, content: cleanMatch });
         return id;
     });
 
     // Inline math: $ ... $
     text = text.replace(/\$([^$]+?)\$/g, (match, inner) => {
         if (inner.includes('\n\n')) return match;
+        const cleanMatch = match.replace(/^([ \t]*>[ \t]?)+/gm, '');
         const id = `MATHBLOCKINLINE${counter++}MATHBLOCK`;
-        mathBlocks.push({ id, content: match });
+        mathBlocks.push({ id, content: cleanMatch });
         return id;
     });
 

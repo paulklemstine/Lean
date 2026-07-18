@@ -173,6 +173,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Fourier Transform of the Riemann Zeta: Hearing the Primes"
   },
   {
+    "consumed_by_exp_id": "",
+    "description": "The Calderbank-Shor-Steane (CSS) quantum error-correcting codes are constructed from classical linear codes C_1, C_2 with C_2 perp subset C_1. The CSS code encodes dim(C_1) - dim(C_2) logical qubits. This is exactly the definition of a cohomology group: H^1(C_1, C_2) = C_1 / C_2. Conjecture: every CSS code is equivalent to a cohomology computation on a simplicial complex, and vice versa. Specifically, given a simplicial complex K, the CSS code with C_1 = Z_1(K, F_2) (1-cycles) and C_2 = B_1(K, F_2) (1-boundaries) encodes dim(H_1(K, F_2)) logical qubits with distance d = min(length of shortest non-trivial cycle, length of shortest non-trivial cocycle). This is the homological quantum error-correcting code HQECC(K). The distance d equals the systole of K (the length of the shortest non-contractible cycle). Conjecture: for the hypercube Q_n (n-dimensional cube graph), the HQECC encodes 1 qubit with distance d = 2^{n/2} (achieving the quantum Singleton bound). Test: construct HQECC for Q_4, Q_6, Q_8 and verify the parameters. Impact: quantum error correction is cohomology. Every simplicial complex gives a quantum code, and the code parameters are topological invariants.",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_0345",
+    "priority_score": 0.83,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-18T15:52:15.059123+00:00",
+    "title": "Quantum Error Correction from Homological Algebra: CSS Codes as Cohomology"
+  },
+  {
     "consumed_by_exp_id": "d13e4521",
     "description": "The sequence of primes 2, 3, 5, 7, 11, 13, ... defines a point cloud in R where the n-th prime p_n is at position p_n on the real line. The gaps between primes create a topological structure. Define the persistent homology of the prime point cloud as the Rips filtration R_epsilon = {p_n : |p_m - p_n| <= epsilon}. As epsilon increases, more primes are connected, and the topology changes. Conjecture: The persistent H_0 (connected components) of the prime point cloud has the same barcode as a Poisson point process with intensity 1/log(x). Specifically, the bar lengths in H_0 follow an exponential distribution with mean equal to the average prime gap (which is approximately log(x) by the prime number theorem). The persistent H_1 (1-dimensional holes) of the prime point cloud appears at scale epsilon ~ log(x)^2, corresponding to prime pairs (p, p+2k) where 2k is a specific even gap. The longest H_1 bar corresponds to the twin prime conjecture: it persists from epsilon = 2 (the twin prime scale) to epsilon = infinity. Test: compute persistent homology of the primes up to 10^6 using Rips filtration and compare with the Poisson point process prediction. Verify that H_0 bar lengths are exponentially distributed with mean log(x). Impact: primes have topology \u2014 their gaps create persistent homology that encodes the twin prime conjecture and other arithmetic properties.",
     "domains": [
@@ -3006,6 +3021,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-17T23:51:28.009064+00:00",
     "title": "Improved constant in Erd\u0151s sumset avoidance for dense subsets"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conway's surreal numbers No form a proper class containing all real numbers, all ordinal numbers, and all infinitesimals. Every real number r has a surreal representation r = {r - 1 | r + 1}. Every ordinal alpha has a surreal representation alpha = {alpha |}. Every infinitesimal epsilon = {0 | 1, 1/2, 1/4, ...}. The surreal numbers form a field (in fact, a real-closed field). Conjecture: the subfield of surreals born by day omega (the set of surreals with finite birthdays) is isomorphic to the field of real algebraic numbers extended with all dyadic rationals. More precisely: No_{omega} = Q[2^{-n} : n in N] (the rationals extended with all dyadic rationals). The subfield born by day omega^2 contains all real numbers that are algebraic over the dyadic rationals, plus all infinitesimals that are algebraic over the reals. Conjecture: No_{omega^2} = R(x) where x is the smallest positive infinitesimal. Test: compute the field structure of surreals born by day omega and verify the isomorphism with the dyadic rationals. Impact: the surreal number hierarchy encodes the constructive hierarchy of real number fields \u2014 each birthday level adds exactly the algebraic closures needed.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0344",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-18T15:52:15.001366+00:00",
+    "title": "The Arithmetic of Games: Surreal Numbers as Number Fields"
   },
   {
     "consumed_by_exp_id": "",
