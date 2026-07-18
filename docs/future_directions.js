@@ -147,7 +147,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f48abc37",
     "description": "Mendeleev's periodic table arranges elements by atomic number Z, but Z is just the charge of the nucleus. Conjecture: the periodic table is the spectrum of an operator on a Hilbert space of dimension equal to the number of stable isotopes. Define the 'nuclear Hamiltonian' H on L^2(R^3) by H = -hbar^2/(2m) * nabla^2 + V(r) where V(r) encodes the strong and electromagnetic forces. The eigenvalues E_n of H give the binding energies of nuclei, and Z_n = round(E_n / E_0) gives the atomic numbers. The 'periodicity' of the table arises because the eigenvalues of H have shell structure (like the hydrogen atom): the n-th shell has degeneracy 2n^2 (from the angular momentum quantum number), giving shell sizes 2, 8, 18, 32, 50, 72 \u2014 the noble gas atomic numbers 2, 10, 28, 60, 110 are the cumulative sums. The 'stability islands' (magic numbers 2, 8, 20, 28, 50, 82, 126) correspond to extra degeneracies in the nuclear potential. Test: solve the Schrodinger equation for a Woods-Saxon potential (model nuclear potential) and show that the eigenvalue degeneracies match the periodic table structure. Compute the 'predicted' periodic table from the eigenvalues and compare with reality. Impact: chemistry IS applied spectral theory. The periodic table is the spectrum of a Hamiltonian, and every chemical property is an eigenvalue.",
     "domains": [
       "Novelty",
@@ -157,7 +157,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-18T06:56:07.277476+00:00",
     "title": "The Periodic Table Is a Lie: Elements as Eigenvalues of Spacetime"
   },
@@ -3054,7 +3054,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Holographic Primes: The Prime Number AdS/CFT Correspondence"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a7676cc9",
     "description": "Infinite chess is chess on an infinite board. It is known that there are positions where White can force checkmate but only in omega (the first infinite ordinal) moves. Conjecture: There exists a position on the infinite chess board where White can force checkmate in exactly omega^omega moves, but not in fewer. More precisely, define the game value v(P) of a position P as the smallest ordinal alpha such that White can force checkmate in at most alpha moves. The known results give positions with v(P) = omega. The conjecture is that v(P) can be arbitrarily large below omega^omega. The key construction: create a position where White must first solve a 'puzzle' that takes omega moves, and then another puzzle that takes omega moves for each of omega starting positions, giving omega^2 total moves. Iterating, one can reach omega^n for any n, and omega^omega by a diagonal argument. Test: construct explicit positions with game values omega, omega^2, omega^3, and omega^omega on the infinite board. Verify by computation that no strategy achieves checkmate in fewer moves. Impact: chess on an infinite board has transfinite game values \u2014 the complexity of checkmate goes beyond the finite ordinals into the transfinite.",
     "domains": [
       "Novelty",
@@ -3064,7 +3064,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.76,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-18T07:28:26.518814+00:00",
     "title": "Infinite Chess: Checkmate in Omega Moves"
   },
