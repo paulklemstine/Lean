@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "8ceb2563",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — The `q`-ary Exact Coset-Guesswork Exponent\n\nThe present cycle removed the binary restriction from the exact coset-guesswork exponent:\nfor every alphabet size `q ≥ 2`, the maximal",
-      "quality_score": 0.82,
-      "sorry_count": 4,
-      "theorem_count": 13,
-      "timestamp": "2026-07-14T22:36:24",
-      "title": "The prior cycle (`CosetGuesswork.lean`) proved the exact coset-exponent *shift*"
-    },
-    {
       "cycle_id": "12ea9340",
       "domain": "Novelty",
       "key_insight": "# Future Directions: the join bifunctor and the sharp join law for the ℤ₂-coindex\n\nThis cycle (thread `th_0a5fcbcc`, cycle 1) advances the constructive, lower-bound half of the\nco-index theory by buil",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-18T15:01:35",
       "title": "Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
+    },
+    {
+      "cycle_id": "beeab68d",
+      "domain": "Physics",
+      "key_insight": "# Future directions\n\n## Completed foundation\n\n`Catalog/Physics/CliqueSpectralExtremal.lean` now gives a complete, independently compiling formal development of the multipartite counting and balancing",
+      "quality_score": 0.65,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-07-18T15:17:57",
+      "title": "ArXiv paper: Clique spectral extremal problem on disjoint color-critical graphs"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.73
     }
   ],
-  "last_updated": "2026-07-18T15:01:35",
+  "last_updated": "2026-07-18T15:17:57",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "22a6ce83",
-        "quality": 0.91,
-        "theorems": 17,
-        "title": "This cycle closed the two-sided estimate for the one-dimensional swap model: the"
-      },
-      {
         "cycle_id": "3c80004e",
         "quality": 0.9,
         "theorems": 46,
@@ -3761,6 +3755,12 @@
         "quality": 0.63,
         "theorems": 10,
         "title": "Homotopy Type Theory of Cooking Recipes: Paths Between Dishes"
+      },
+      {
+        "cycle_id": "beeab68d",
+        "quality": 0.65,
+        "theorems": 13,
+        "title": "ArXiv paper: Clique spectral extremal problem on disjoint color-critical graphs"
       }
     ],
     "Probability": [
