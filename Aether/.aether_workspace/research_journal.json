@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "58c6edf0",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions for Stable Kneser Graphs\n\n## 1. Full Meunier equality for odd stability\n\n**Conjecture.** For all integers `s ≥ 3`, `k ≥ 1`, and `n ≥ sk`, the Kneser graph on cyclically `s`-stable",
-      "quality_score": 0.73,
-      "sorry_count": 4,
-      "theorem_count": 43,
-      "timestamp": "2026-07-16T05:47:17",
-      "title": "ArXiv paper: The chromatic number of 3-stable Kneser graphs"
-    },
-    {
       "cycle_id": "4e53cd7c",
       "domain": "Pythagorean",
       "key_insight": "# Future Directions: Moment Thresholds for Random Bipartite States\n\n## 1. Exact fixed-level induced-state threshold\n\nFor every fixed hierarchy level `m ≥ 2`, there is a unique constant `λ_m > 0` such",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-18T10:39:19",
       "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
+    },
+    {
+      "cycle_id": "fff627f3",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions\n\n## 1. Baire-category classification of convergent prime rearrangements\n\n**Conjecture.** In the pointwise topology on the infinite symmetric group, the set of permutations for whic",
+      "quality_score": 0.77,
+      "sorry_count": 0,
+      "theorem_count": 7,
+      "timestamp": "2026-07-18T12:16:03",
+      "title": "Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "2360ad91",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\n`BoundedError.lean` establishes, for surveillance on a finite dynamic network:\n\n1. a combinatorial Fano lower bound on the surveillance rate needed to\n   reconstruct all but `k` c",
-      "quality_score": 0.82,
-      "sorry_count": 5,
-      "theorem_count": 20,
-      "timestamp": "2026-07-14T16:54:56",
-      "title": "Deepening: Surveillance Networks: Information-Theoretic Undetectability"
-    },
     {
       "cycle_id": "a3c4f06b",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 19,
       "timestamp": "2026-07-18T12:15:53",
       "title": "The Aperiodic Monotile: One Shape to Tile Them All"
+    },
+    {
+      "cycle_id": "fff627f3",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions\n\n## 1. Baire-category classification of convergent prime rearrangements\n\n**Conjecture.** In the pointwise topology on the infinite symmetric group, the set of permutations for whic",
+      "quality_score": 0.77,
+      "sorry_count": 0,
+      "theorem_count": 7,
+      "timestamp": "2026-07-18T12:16:03",
+      "title": "Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "d1512647",
-      "domain": "Applications",
-      "name": "sixtyFour_requires_thirtyTwo",
-      "quality": 0.71
-    },
-    {
-      "cycle_id": "d1512647",
-      "domain": "Applications",
-      "name": "card_le_slots_times_capacity",
-      "quality": 0.71
-    },
-    {
-      "cycle_id": "57f0b740",
-      "domain": "Logic",
-      "name": "isOpen_consensus_iff",
-      "quality": 0.75
-    },
     {
       "cycle_id": "57f0b740",
       "domain": "Logic",
@@ -2803,9 +2785,27 @@
       "domain": "Cryptography",
       "name": "uses",
       "quality": 0.7
+    },
+    {
+      "cycle_id": "fff627f3",
+      "domain": "Pythagorean",
+      "name": "about",
+      "quality": 0.77
+    },
+    {
+      "cycle_id": "fff627f3",
+      "domain": "Pythagorean",
+      "name": "wellBehaved_of_eventually_fixed",
+      "quality": 0.77
+    },
+    {
+      "cycle_id": "fff627f3",
+      "domain": "Pythagorean",
+      "name": "exists_eventually_fixed_extension",
+      "quality": 0.77
     }
   ],
-  "last_updated": "2026-07-18T12:15:53",
+  "last_updated": "2026-07-18T12:16:03",
   "open_questions": [
     {
       "context": "",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "b4ccc3c5",
-        "quality": 0.7,
-        "theorems": 47,
-        "title": "Atkin-Lehner Genus Zero Criterion for Giampietro-Darmon Factorization"
-      },
-      {
         "cycle_id": "ef5b75b5",
         "quality": 0.91,
         "theorems": 3,
@@ -3885,6 +3879,12 @@
         "quality": 0.63,
         "theorems": 10,
         "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
+      },
+      {
+        "cycle_id": "fff627f3",
+        "quality": 0.77,
+        "theorems": 7,
+        "title": "Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
       }
     ],
     "Shared": [

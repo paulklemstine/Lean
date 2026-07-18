@@ -1,66 +1,43 @@
-# Computational Evidence: Alexander Polynomials in the OAM Spectrum
+# Computational Evidence: Small-Knot Alexander Spectra
 
-All numbers below are reproduced inside the Lean file
-`Catalog/MachineLearning/KnottedLightAlexander.lean` as machine-checked theorems;
-this note only records the exploratory arithmetic that motivated them.
+## Small-case calculations
 
-## 1. Alexander polynomials of small knots
+For the torus-knot polynomial
 
-| Knot            | Δ_K(t)                    | deg | Δ(1) | Δ(−1) (= determinant) |
-|-----------------|---------------------------|-----|------|------------------------|
-| unknot 0₁       | 1                         | 0   | 1    | 1                      |
-| trefoil 3₁      | t² − t + 1                | 2   | 1    | 3                      |
-| figure-eight 4₁ | t² − 3t + 1               | 2   | −1   | 5                      |
-| cinquefoil 5₁   | t⁴ − t³ + t² − t + 1      | 4   | 1    | 5                      |
+`A_n(X) = 1 - X + X² - ··· + X^(n-1)`, with odd `n`,
 
-The determinants 3, 5, 5 are all odd — a general feature of `Δ(−1)` for knots.
+its angular-grid roots in one period are indexed by residues coprime to `2n` when `n` is prime.
 
-## 2. Roots and the OAM (root-of-unity) test
+| Knot | Grid modulus | Allowed residues in one period | Channel count |
+|---|---:|---|---:|
+| Trefoil `T(2,3)` | 6 | `1, 5` | 2 |
+| Cinquefoil `T(2,5)` | 10 | `1, 3, 7, 9` | 4 |
 
-The claim under study: the "OAM spectrum" is `{l : Δ_K(exp(2πi·l/N)) = 0}`.
+These are respectively the primitive sixth and primitive tenth roots of unity. The zero residue is excluded in both cases because a normalized Alexander polynomial evaluates to a nonzero value at `1`.
 
-* **Trefoil.**  `t² − t + 1` is the 6th cyclotomic polynomial `Φ₆`.
-  Its roots are the primitive 6th roots of unity `exp(±iπ/3) = exp(2πi·{1,5}/6)`.
-  Check via the factorization `t³ + 1 = (t+1)(t²−t+1)`: at `z = exp(2πi/6)` we have
-  `z³ = exp(πi) = −1` and `z ≠ −1`, so `z² − z + 1 = 0`.
-  Hence the trefoil beam is quantized at `l = 1, 5 (mod 6)` and *not* at `l = 0`
-  (there `Δ(1) = 1 ≠ 0`).
+For the figure-eight knot, `Δ(X)=X²-3X+1` has roots
 
-* **Cinquefoil.**  `t⁴ − t³ + t² − t + 1` is `Φ₁₀`.
-  Its roots are the primitive 10th roots of unity.  Via
-  `t⁵ + 1 = (t+1)(t⁴−t³+t²−t+1)`: at `z = exp(2πi/10)`, `z⁵ = −1`, `z ≠ −1`,
-  so `Δ(z) = 0`.  Quantized at `l = 1 (mod 10)`.
+`(3+√5)/2 ≈ 2.6180339887` and `(3-√5)/2 ≈ 0.3819660113`.
 
-* **Unknot.**  `Δ = 1` never vanishes ⇒ empty spectrum (no quantized OAM).
+Their product is `1`, but neither has modulus `1`. Consequently no root lies on an angular root-of-unity grid.
 
-* **Figure-eight.**  `t² − 3t + 1` has roots `(3 ± √5)/2`.  Numerically
-  `(3+√5)/2 ≈ 2.618` and `(3−√5)/2 ≈ 0.382`; their product is `1`.
-  Crucially these equal `φ²` and `ψ²` where `φ = (1+√5)/2` is the golden ratio
-  and `ψ = (1−√5)/2` its conjugate (both satisfy `x² = x + 1`):
-  `x² − 3x + 1 = (x²)... ` reduces, at `x = φ²`, to `φ² − φ − 1 = 0` = `gold_sq`.
-  Since `|φ²| ≈ 2.618 ≠ 1`, the figure-eight roots lie **off** the unit circle,
-  so the figure-eight beam has **no** root-of-unity OAM quantization.
+## Sequence search
 
-## 3. Counterexample hunt / caveat
+The prime-family channel counts are `p-1`, giving `2, 4, 6, 10, 12, ...` for odd primes `3,5,7,11,13,...`. This is the Euler totient value `φ(2p)=φ(p)=p-1`; no separate sequence identification is needed beyond the standard totient function.
 
-The physics description states "N is the crossing number," but the trefoil (crossing
-number 3) yields the *sixth* roots of unity, not the third — consistent with `N = 6`,
-i.e. twice the number of Alexander roots on the circle, or with using the cyclotomic
-index rather than the crossing number.  We therefore state the OAM membership results
-with an explicit modular period `N` (6 for the trefoil, 10 for the cinquefoil) rather
-than committing to "N = crossing number," which does not hold literally.
+## Counterexample hunt
 
-The genuinely robust mathematical content — proved in Lean — is:
+The proposed figure-eight values `(3±√5)/2 mod 1` do not satisfy the stated spectral equation. The equation evaluates the polynomial at `exp(2πil/N)`, which always has modulus one, whereas both polynomial roots are positive real numbers off the unit circle. Reducing their numerical values modulo one changes the input and does not preserve polynomial vanishing.
 
-* trefoil `Δ = Φ₆`, cinquefoil `Δ = Φ₁₀`: roots are roots of unity (on the circle);
-* figure-eight roots are golden-ratio squares (off the circle);
-* determinants 3, 5, 5 (all odd);
-* reciprocity `t^deg Δ(1/t) = Δ(t)` for the trefoil and cinquefoil.
+The unknot polynomial `Δ=1` has no roots at all, so the spectrum defined by `Δ(exp(2πil/N))=0` is empty, not `{0}`. A zero-charge optical mode may exist under a different convention, but it is not selected by this root-set definition.
 
-No counterexample to these was found; the figure-eight "off the circle" fact is itself
-the natural boundary of the naive conjecture.
+## Numerical geometry
 
-## 4. OEIS
+| Knot | Alexander-root geometry | Root-of-unity OAM prediction |
+|---|---|---|
+| Unknot | no roots | empty |
+| Trefoil | primitive sixth roots | residues `1,5 mod 6` |
+| Figure-eight | positive reciprocal real pair | no angular channels |
+| Cinquefoil | primitive tenth roots | residues `1,3,7,9 mod 10` |
 
-The sixth/tenth roots-of-unity and cyclotomic connection are standard; no new integer
-sequence arises. Knot determinants 3, 5, 5 are individual invariants, not a sequence.
+The exact classifications and the figure-eight exclusion are established in the accompanying mathematical development; the decimal values here are explanatory approximations only.

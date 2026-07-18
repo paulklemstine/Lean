@@ -60,19 +60,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
   },
   {
-    "consumed_by_exp_id": "5df99ff8",
-    "description": "In 2023, Smith et al. discovered 'the hat' \u2014 a single tile shape that tiles the plane but only aperiodically (no periodic tiling exists). This solved the aperiodic monotile problem. But deeper questions remain: How many distinct aperiodic monotiles exist? Conjecture: The set of aperiodic monotiles forms a 1-parameter family (the 'hat spectrum') parameterized by a continuous parameter t in [0,1] where t=0 gives the hat, t=1 gives the turtle (a known variant), and intermediate values give intermediate shapes. The key property: each shape in the hat spectrum tiles the plane aperiodically, and no two shapes in the spectrum admit a common periodic tiling. The boundary of the hat spectrum is the curve in R^2 that separates the region of aperiodic monotiles from the region of periodic tiles. This boundary is a piecewise-smooth curve determined by the constraint that the tile must enforce a hierarchical substitution rule. Test: parameterize the hat spectrum by interpolating between the hat and turtle, compute the substitution rule for each t, and verify that the substitution rule enforces aperiodicity for all t in [0,1]. Impact: aperiodic monotiles are not isolated curiosities \u2014 they form a continuous family, and the hat is just one point on the spectrum.",
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle fff627f3 (Q=0.770), which proved 7 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Hilbert's Hotel has infinitely many rooms, each containing a prime number. Room n contains the n-th prime p_n. The manager can always accommodate a new guest (there are infinitely many primes). But what if the guests want to REARRANGE? Conjecture: For any permutation sigma of N, there exists a rearr",
     "domains": [
-      "Novelty",
-      "Geometry"
+      "Pythagorean"
     ],
-    "id": "fd_0307",
-    "priority_score": 0.86,
+    "id": "push_fff627f3_7756fddb",
+    "priority_score": 0.87,
     "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T10:38:59.890900+00:00",
-    "title": "The Aperiodic Monotile: One Shape to Tile Them All"
+    "source_exp_id": "fff627f3",
+    "status": "available",
+    "timestamp": "2026-07-18T12:16:03.050816+00:00",
+    "title": "Deepening: Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
   },
   {
     "consumed_by_exp_id": "",
@@ -158,6 +157,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-18T10:38:59.865229+00:00",
     "title": "The Zeta Function of a Graph: Number Theory on Networks"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The primes have density 0 in the integers, but what is the Hausdorff dimension of the set of primes viewed as a subset of R? Define the 'prime fractal' P as the set of primes with the metric d(p,q) = |1/log(p) - 1/log(q)|. This metric stretches out the primes so that the twin primes are close together and the large primes are spread out. Conjecture: The Hausdorff dimension dim_H(P, d) = 1. The primes with this metric are essentially a 1-dimensional set \u2014 they fill out a line when viewed through the logarithmic lens. This is because the prime number theorem pi(x) ~ x/log(x) means that in the d-metric, the 'length' of the primes up to x is sum_{p <= x} d(p, p+1) ~ sum_{p <= x} 1/(p*log(p)) ~ log(log(x)), which diverges. So the primes are 'long enough' to be 1-dimensional. But the Hausdorff dimension might be > 1 if the primes have fractal structure at small scales. In fact, dim_H(P, d) > 1 would mean the primes are more than a line \u2014 they have 'wrinkles' that fill more space. The twin prime conjecture predicts that there are infinitely many pairs of primes at d-distance ~ 1/(p*log(p)), creating a fractal dust that increases the dimension. Conjecture: dim_H(P, d) = 1 + epsilon where epsilon depends on the density of twin primes. If the twin prime conjecture is true, epsilon > 0. Test: estimate dim_H(P, d) by box-counting for primes up to 10^12 and verify it is close to 1 (or slightly above). Impact: the primes are a fractal with dimension 1 + epsilon, where epsilon measures the abundance of twin primes. If twin primes are infinite, the primes are more than a line \u2014 they are a fractal curve.",
+    "domains": [
+      "Novelty",
+      "NumberTheory"
+    ],
+    "id": "fd_0311",
+    "priority_score": 0.83,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-18T12:15:26.050868+00:00",
+    "title": "Fractal Number Theory: Hausdorff Dimension of Prime Distributions"
   },
   {
     "consumed_by_exp_id": "",
@@ -1737,7 +1751,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Cyclic Sieving for Staircase Plane Partitions via Crystals and Electrical Networks"
   },
   {
-    "consumed_by_exp_id": "26ad8b0e",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Strongly complete sets and a conjecture of Erd\u0151s' and formalize its key results. Abstract: A set $A\\subseteq\\mathbb{N}$ is called $\\textit{complete}$ if every sufficiently large integer can be written as a sum of distinct elements of $A$. It is $\\textit{strongly complete}$ if it remains complete after one deletes finitely many elements from it. We show that $A\\subseteq\\mathbb{N}$ is strongly complete whenever \\[ \\big|A\\cap(2^k,2^{k+1}]\\big|\\ge6 \\] for every sufficiently large $k\\in\\mathbb{N}$, and \\[ \\sum_{a\\in A}\\|a\u03b8\\|=\\infty, \\quad\\forall\u03b8\\in\\mathbb{R}\\setminus\\mathbb{Z}. \\] In particular, this resolves a 1961 conjecture of Erd\u0151s. The proof builds on previous work of Bergelson and Simmons. Our approach also allows us to establish a more general strong-completeness criterion with suitable ordered blocks in place of dyadic intervals.",
     "domains": [
       "Pythagorean",
@@ -1747,7 +1761,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14071v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-16T15:35:00.343163+00:00",
     "title": "ArXiv paper: Strongly complete sets and a conjecture of Erd\u0151s"
   },
@@ -3697,6 +3711,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## What is proved\n\n`Catalog/Tropical/AperiodicMonotile/HierarchicalSpectrum.lean` develops a self-contained abstract hierarchy criterion. A translation period of a configuration descends through every local decoding. Decoding the level-`n` address forces the period to be divisible by `2^n`; divisibility at every level forces the period to vanish. Consequently, every member of a `SpectrumSystem` is aperiodic, and two members cannot share a nonzero period. The file also proves that the affine path `t \u21a6 (1-t,t)` is continuous, injective, and has the requested endpoints.\n\n## Scope limitation\n\nThis is an abstract algebraic core, not a formalization of the actual hat and turtle polygons. In particular, it does not prove that geometric tilings by any interpolated polygon exist, that their local patches uniquely decode the binary hierarchy used here, or that a boundary in a geometric tile-parameter space is piecewise smooth. Those are the essential open formalization obligations before the proposed geometric spectrum claim can be certified.\n\n## Natural next results\n\n1. Define planar polygons, congruent copies, interiors, and locally finite edge-to-edge tilings in `\u211d\u00b2`.\n2. Encode the hat and turtle by exact coordinates in a common kite grid, then define the genuine one-parameter tile family used in the literature rather than an abstract coordinate segment.\n3. Formalize metatiles and substitution patches, including coverage, disjoint interiors, and exact boundary matching.\n4. Prove recognizability: every legal tiling has a unique decomposition into level-1 supertiles.\n5. Iterate recognizability to produce locally decoded addresses at every scale. Generalize the present one-dimensional divisibility argument to a rank-two lattice or expanding integer matrix.\n6. Connect recognizability to the present `EnforcesHierarchy` interface and obtain geometric aperiodicity as a corollary.\n7. Separately prove existence of a tiling for each parameter via nested supertiles and an appropriate compactness theorem.\n8. Only after a precise finite-dimensional shape space and periodic region are defined, investigate whether their boundary is a piecewise-smooth curve. The current formalization provides no evidence for that boundary claim.\n\n## Useful generalizations\n\nThe binary scale `2^n` can be replaced by powers of any integer `q > 1`. For planar substitutions, a matrix criterion should show that a period vector lying in every image `M^n \u2124\u00b2` is zero when `M` is expanding. A finite-radius sliding-block decoding would also model local recognizability more faithfully than the unrestricted state decoder in `FactorsThrough`.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0312",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "5df99ff8",
+    "status": "available",
+    "timestamp": "2026-07-18T12:15:49.477107+00:00",
+    "title": "`Catalog/Tropical/AperiodicMonotile/HierarchicalSpectrum.lean` develops a self-c"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## 1. Baire-category classification of convergent prime rearrangements\n\n**Conjecture.** In the pointwise topology on the infinite symmetric group, the set of permutations for which `p_{\u03c3(n)}/p_n` converges is dense but meagre, while the subset with limit one is also dense and meagre.\n\nThe key insight is that finite-support permutations give density, whereas infinitely many independently prescribed index expansions and contractions should force oscillation on a residual set.\n\n**Why now?** The finite-extension theorem settles the dense half and identifies the exact cylinder structure needed for a diagonal category argument.\n\n## 2. Realization of every positive limiting ratio\n\n**Conjecture.** For every real `c > 0`, there exists a permutation `\u03c3` of the natural numbers such that `p_{\u03c3(n)}/p_n \u2192 c`.\n\nThe key insight is that the prime number theorem turns this into an asymptotic matching problem with target index scale `\u03c3(n) \u223c cn`; global bijectivity may be achieved by sparse corrections whose relative displacement tends to zero.\n\n**Why now?** The dense limit-one core shows that finite constraints are harmless, allowing a construction to be assembled in long blocks while preserving any prescribed finite prefix.\n\n## 3. Universal sequence criterion for dense ratio-one rearrangements\n\n**Conjecture.** For a sequence in a topological group, finite-support permutations are dense among ratio-one rearrangements if and only if the sequence is eventually contained in the group of units.\n\nThe key insight is that the present argument uses only eventual invertibility and eventual fixation, not order, arithmetic growth, or primality.\n\n**Why now?** The prime theorem has already separated the topological mechanism from number-theoretic input, suggesting a sharp abstract characterization across multiplicative groups and normed division algebras.\n\n## 4. Local-displacement characterization under prime asymptotics\n\n**Conjecture.** If a permutation satisfies `\u03c3(n)/n \u2192 1`, then `p_{\u03c3(n)}/p_n \u2192 1`; conversely, prime-ratio convergence to one forces `\u03c3(n)/n \u2192 1`.\n\nThe key insight is that the asymptotic equivalence `p_n \u223c n log n` should transport relative index displacement exactly to relative prime displacement, including along nonmonotone permutations.\n\n**Why now?** This would identify the full well-behaved class by a purely combinatorial condition and clarify why adjacent swaps work while random macroscopic rearrangements do not.\n\n## 5. Probability laws for explicit random infinite permutations\n\n**Conjecture.** Under any regenerative random-permutation model with finite mean cycle-block length, the prime ratio converges almost surely to one; under heavy-tailed block laws of infinite mean, convergence exhibits a sharp tail-index transition.\n\nThe key insight is that finite cycles cause only local index displacement, while heavy-tailed blocks can create infinitely many macroscopic jumps.\n\n**Why now?** The million-prime experiment disproves naive finite-uniform typicality and shows that a meaningful density question must begin by specifying a coherent infinite probability model.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0313",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "fff627f3",
+    "status": "available",
+    "timestamp": "2026-07-18T12:15:58.240013+00:00",
+    "title": "**Conjecture.** In the pointwise topology on the infinite symmetric group, the s"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle d1663b23 (Q=0.700) proved 0 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'A minimal modularity lifting theorem for Siegel modular forms' and formalize its key results. Abstract: We prove a minimal modularity lifting theorem (in the spirit of Gen",
     "domains": [
       "Applications"
@@ -3708,21 +3752,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-17T13:29:16.297936+00:00",
     "title": "Close Proofs: ArXiv paper: A minimal modularity lifting theorem for Siegel modular f"
-  },
-  {
-    "consumed_by_exp_id": "fff627f3",
-    "description": "Hilbert's Hotel has infinitely many rooms, each containing a prime number. Room n contains the n-th prime p_n. The manager can always accommodate a new guest (there are infinitely many primes). But what if the guests want to REARRANGE? Conjecture: For any permutation sigma of N, there exists a rearrangement of the primes q_1, q_2, ... such that the sequence of ratios q_n / p_n converges to 1. In other words, you can shuffle the primes almost arbitrarily and the room numbers barely change. More precisely, the set of permutations sigma for which p_{sigma(n)} / p_n has a limit is dense in the symmetric group (with the topology of pointwise convergence). But NOT every permutation works: the permutation that swaps all even-indexed primes with odd-indexed ones gives q_{2n}/p_{2n} = p_{2n-1}/p_{2n} which converges to 1 by the prime number theorem, but the permutation that reverses order gives q_n/p_n = p_{N-n}/p_n which diverges. Test: compute q_n/p_n for 10 random permutations of the first 10^6 primes and verify that most ratios converge to 1. Find the exact density of 'well-behaved' permutations. Impact: the primes are robust under rearrangement \u2014 their asymptotic density is a topological invariant of the permutation group.",
-    "domains": [
-      "Novelty",
-      "NumberTheory"
-    ],
-    "id": "fd_0270",
-    "priority_score": 0.74,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T04:27:28.042243+00:00",
-    "title": "Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
   },
   {
     "consumed_by_exp_id": "",

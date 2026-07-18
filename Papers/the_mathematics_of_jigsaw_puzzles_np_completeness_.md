@@ -1,80 +1,38 @@
-# Computational Evidence: Jigsaw Assembly ⇔ Satisfiability
+# Computational Evidence
 
-Concise numerical support for the claims formalized in `JigsawNPComplete.lean`.
+## Small-case calculation
 
-## 1. Edge complementation table
+The test formula is
 
-Complementation `comp` on `{flat, tab, blank}`:
+\[(x_0 \lor x_1 \lor \neg x_2) \land (\neg x_0 \lor x_2).\]
 
-| e     | comp e | comp (comp e) | self-complementary? |
-|-------|--------|---------------|---------------------|
-| flat  | flat   | flat          | yes                 |
-| tab   | blank  | tab           | no                  |
-| blank | tab    | blank         | no                  |
+A concrete satisfying assignment is `x₀ = false`, `x₁ = true`, `x₂ = false`. The first clause is witnessed by `x₁`; the second is witnessed by `¬x₀`. The corresponding assembly recipe uses the same assignment. With three variables and two clauses, the construction has
 
-Observations (all verified in the formal file):
-- `comp (comp e) = e` for every `e` — complementation is an involution.
-- The only self-complementary edge is `flat`, matching
-  `comp_fixed_iff_flat`: the border is the fixed-point set of the symmetry.
+\[2\cdot 3 + 2 + 2 = 10\]
 
-## 2. The literal dictionary on all cases
+pieces. These concrete facts are included as checked examples and an evaluated piece count in `JigsawSolutionSpace.lean`.
 
-For a literal `(i, pol)` under assignment value `v = a i`, the input edge
-`(enc pol).comp` interlocks with the output edge `enc v` iff `v = pol`:
+## OEIS search
 
-| v (a i) | pol | enc v | (enc pol).comp | interlock? | literal satisfied? |
-|---------|-----|-------|----------------|------------|--------------------|
-| true    | true  | tab   | blank | yes | yes |
-| true    | false | tab   | tab   | no  | no  |
-| false   | true  | blank | blank | no  | no  |
-| false   | false | blank | tab   | yes | yes |
+No integer sequence is central to the claims. The results concern a general bijection between two finite witness sets rather than an experimentally inferred sequence, so no OEIS identifier is asserted.
 
-The "interlock?" and "literal satisfied?" columns coincide — this is the content
-of `litFits_iff`.
+## Counterexample hunt
 
-## 3. Piece count of the construction
+Three boundary cases guided the statements:
 
-For `n` variables and `m` clauses the construction emits `2n + m + 2` pieces
-(two corners, two per variable, one per clause):
+| Case | Outcome | Consequence |
+|---|---|---|
+| Variables occurring outside the declared finite set | Their values would otherwise be uncontrolled | `extendAssignment` explicitly fixes them to `false` |
+| A self-dual formula under global polarity reversal | Complementation need not give a free action within one solution space | Only transport between a formula and its complement is claimed |
+| Abstract formula-indexed assembly versus physical rectangular placement | Abstract solvability omits rotations, locations, and collision constraints | No unrestricted geometric NP-completeness claim is made |
 
-| n | m | 2n + m + 2 |
-|---|---|------------|
-| 0 | 0 | 2  |
-| 1 | 1 | 5  |
-| 3 | 2 | 10 |
-| 5 | 7 | 19 |
+No counterexample exists to exact witness preservation in the stated model: the two directions use the same finite assignment and the established clause-level equivalence.
 
-The row `n = 3, m = 2` is the running example; `exampleF_pieceCount` confirms the
-value `10`.
+## Table of transported properties
 
-## 4. Running example `(x₁ ∨ x₂ ∨ ¬x₃) ∧ (¬x₁ ∨ x₃)`
-
-Enumerating all eight assignments of `(x₁, x₂, x₃)`:
-
-| x₁ | x₂ | x₃ | clause 1 | clause 2 | formula |
-|----|----|----|----------|----------|---------|
-| F  | F  | F  | T (¬x₃)  | T (¬x₁)  | **SAT** |
-| F  | F  | T  | F        | T (¬x₁)  | unsat   |
-| F  | T  | F  | T        | T        | **SAT** |
-| F  | T  | T  | T (x₂)   | T        | **SAT** |
-| T  | F  | F  | T        | F        | unsat   |
-| T  | F  | T  | F        | T (x₃)   | unsat   |
-| T  | T  | F  | T        | F        | unsat   |
-| T  | T  | T  | T        | T        | **SAT** |
-
-Four satisfying assignments exist; the witness `x₁ = F, x₂ = T, x₃ = F` is the one
-used in `exampleF_solvable`. Since a satisfying assignment exists, the puzzle is
-solvable — consistent with the equivalence theorem.
-
-## 5. Counterexample hunt (unsolvable instances)
-
-The universal claim under test is `PuzzleSolvable F ↔ F.Satisfiable`. We looked
-for an unsatisfiable formula whose puzzle is nonetheless solvable:
-
-- `x₁ ∧ ¬x₁`: both assignments of `x₁` leave one clause piece unplaceable →
-  unsolvable, as proved in `unsatF_not_solvable`. No counterexample.
-- `(x₁ ∨ x₂) ∧ (¬x₁ ∨ x₂) ∧ (x₁ ∨ ¬x₂) ∧ (¬x₁ ∨ ¬x₂)`: unsatisfiable; every
-  assignment leaves some clause piece unplaceable. No counterexample.
-
-No counterexample to the equivalence was found, in agreement with the formal
-proof that none can exist.
+| Property of the formula witness space | Property of the assembly-recipe space |
+|---|---|
+| Nonempty | Nonempty |
+| Exact finite cardinality `k` | Exact finite cardinality `k` |
+| Unique witness | Unique recipe |
+| Solvable after global polarity reversal | Solvable after global tab–blank reversal |
