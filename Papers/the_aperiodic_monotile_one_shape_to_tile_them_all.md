@@ -1,0 +1,3 @@
+# Computational Evidence Justification
+
+Computational evidence was not used because the proved result is a symbolic implication from an explicit hierarchy-decoding hypothesis, not a finite conjecture about actual hat polygons. Small-case checks would only show the elementary constraints `2^n ∣ p` at finitely many levels and could never establish aperiodicity, which depends on all levels. No OEIS sequence is naturally involved. The geometric coordinates and substitution data needed for an honest computational test of the hat-to-turtle family were not supplied, and inventing them would risk testing a different family. The Lean proof instead establishes the universal divisibility argument exactly.
