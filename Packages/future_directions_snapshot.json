@@ -40,25 +40,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "57f5aa5e",
-    "description": "Building on cycle d69a2aa8 (Q=0.790), which proved 11 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Bitcoin mining requires finding a nonce n such that SHA256(block_header || n) < target. What if we replaced SHA256 with a tropical hash? Define tropical SHA as: TSHA(m) = min over all i of (m_i + h_i) where m = (m_1,...,m_k) is the message, h = (h_1,...,h_k) is the tropical hash key, and all operati",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra"
-    ],
-    "id": "push_d69a2aa8_39dcd1d1",
-    "lineage_refs": [],
-    "priority_score": 0.89,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "d69a2aa8",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T03:22:53.109799+00:00",
-    "title": "Deepening: Tropical Cryptocurrency: Mining on the Min-Plus Semiring"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle fff627f3 (Q=0.770), which proved 7 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Hilbert's Hotel has infinitely many rooms, each containing a prime number. Room n contains the n-th prime p_n. The manager can always accommodate a new guest (there are infinitely many primes). But what if the guests want to REARRANGE? Conjecture: For any permutation sigma of N, there exists a rearr",
     "domain_bridges": [],
@@ -212,7 +193,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f2f32f44",
     "description": "The Riemann zeta function zeta(s) has zeros at the non-trivial points s = 1/2 + i*gamma_n where gamma_n are the imaginary parts of the zeros. The Fourier transform of the zero counting function N(t) = #{gamma_n <= t} is related to the distribution of primes by the explicit formula. But what if we take the Fourier transform of zeta itself? Define Z(t) = zeta(1/2 + it) as a function of the real variable t. The Fourier transform Z_hat(w) = integral_{-inf}^{inf} Z(t) * e^{-2*pi*i*w*t} dt. Conjecture: Z_hat(w) has sharp peaks at w = log(p)/2*pi for each prime p. This is because the explicit formula expresses zeta(1/2+it) as a sum over primes: zeta(1/2+it) ~ sum_{p} p^{-1/2-it} = sum_{p} e^{-it*log(p)} / sqrt(p), which is a sum of complex exponentials with frequencies log(p). The Fourier transform of a sum of exponentials is a sum of delta functions at the frequencies log(p)/2*pi. So Z_hat(w) = sum_{p} delta(w - log(p)/2*pi) / sqrt(p) + (error from zeros and smooth terms). The peaks at w = log(p)/2*pi give a 'spectrogram' of the primes. Test: compute Z_hat(w) numerically for the first 10^6 zeros and verify the peaks at log(2)/2*pi, log(3)/2*pi, log(5)/2*pi, etc. Impact: you can HEAR the primes by playing the Fourier transform of the Riemann zeta function — each prime is a distinct note.",
     "domain_bridges": [],
     "domains": [
@@ -225,7 +206,7 @@
     "proof_strategy": "Define Z(t) = zeta(1/2 + it) for real t. The Fourier transform Z_hat(w) = integral Z(t) e^{-2*pi*i*w*t} dt. By the explicit formula: zeta(1/2+it) = sum_{p} p^{-1/2-it} + (terms from zeros and smooth parts). The prime sum = sum_p e^{-it*log(p)} / sqrt(p). Fourier transform of e^{-it*log(p)} is delta(w - log(p)/2*pi). So Z_hat(w) = sum_p delta(w - log(p)/2*pi) / sqrt(p) + (smooth error). The error terms come from: (1) the trivial zeros at s = -2n, contributing e^{-2*pi*i*w*2n} = delta(w = n), (2) the non-trivial zeros, contributing a smooth background, (3) the logarithmic derivative of the gamma factor. The key insight: the peaks at w = log(p)/2*pi are SHARP (delta-function-like) because there are infinitely many zeros that reinforce these frequencies. Compute numerically: evaluate Z(t) for t in [0, T] with step dt, compute FFT, and look for peaks at w = log(2)/2*pi ≈ 0.110, log(3)/2*pi ≈ 0.174, log(5)/2*pi ≈ 0.256, etc. Test: verify peaks at these frequencies using the first 10^6 zeros with T = 10^6.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-18T13:54:31.437496+00:00",
     "title": "The Fourier Transform of the Riemann Zeta: Hearing the Primes"
   },
@@ -5552,6 +5533,26 @@
     "status": "available",
     "timestamp": "2026-07-18T17:57:29.188214+00:00",
     "title": "1. **Full Frobenius factorization dictionary.** Formalize that an irreducible fa"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Tropical Cryptocurrency\n\n## 1. Exact recession dimension of generic fibers\n\n**Conjecture.** For a generic family of `r` min-plus keys on `k` coordinates with `r < k`, every nonempty digest fiber has a polyhedral cell whose recession cone has dimension exactly `k-r`, and this lower bound is sharp on a dense open set of keys and messages.\n\nThe key insight is that each output component can constrain one independently active coordinate, while all remaining coordinate directions can escape without changing any minimum. **Why now?** The universal collision-ray theorem establishes the first nonzero recession direction for every fiber; the next test is whether the entire expected `k-r`-dimensional cone can be constructed and whether genericity makes the bound exact.\n\n## 2. Hall-type criterion for multidirectional collision cones\n\n**Conjecture.** Let each tropical hash component have a set of active minimizing coordinates at a message. The fiber contains a coordinate cone of dimension at least `d` if and only if the union of these active sets admits a transversal whose complement has cardinality at least `d`.\n\nThe key insight is that collision directions are governed not merely by the number of outputs, but by the combinatorics of which coordinates can certify their minima. **Why now?** Selecting one minimizer per component proved one escaping direction; replacing this selection by a system-of-distinct-representatives analysis should expose the full local fiber geometry.\n\n## 3. Sharp bounded-alphabet collision threshold\n\n**Conjecture.** For messages in `{0,1,…,B}^k` and integer keys, every `r`-component min-plus digest with `r < k` has a collision whenever `B` exceeds an explicit key-spread parameter, and this dependence on the spread is asymptotically optimal.\n\nThe key insight is that the real collision ray survives in a bounded alphabet exactly until it reaches the boundary, so security is controlled by slack at unused coordinates rather than by tropical nonlinearity. **Why now?** The unrestricted theorem identifies the unique obstruction introduced by bounded messages: an unused coordinate may have no legal positive increment.\n\n## 4. Complexity transition for nonce-restricted tropical mining\n\n**Conjecture.** Tropical preimage search is polynomial-time for nonce families described by difference constraints, but becomes NP-complete when the nonce language permits arbitrary binary linear constraints, even for a fixed number of digest components.\n\nThe key insight is that each tropical output condition is a union of linear regions indexed by active coordinates; tractability depends on whether the nonce language preserves shortest-path structure or can encode disjunctive choices. **Why now?** Unrestricted inversion and collision construction are explicit, so any computational hardness must arise from the geometry of the admissible nonce family rather than from the min-plus hash itself.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Tropical",
+      "Pythagorean"
+    ],
+    "id": "fd_0348",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "57f5aa5e",
+    "status": "available",
+    "timestamp": "2026-07-18T19:01:40.919962+00:00",
+    "title": "**Conjecture.** For a generic family of `r` min-plus keys on `k` coordinates wit"
   },
   {
     "ambition_level": "extension",

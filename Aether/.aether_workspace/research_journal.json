@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "dd61fafb",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\n- Formalize edge-deletion peeling and prove preservation for the paper's `(k, ωᵘ)`-truss.\n- Define radius-`d` edge neighborhoods and establish the generalized `(k, d, ωᵘ)`-truss t",
-      "quality_score": 0.73,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-16T10:37:21",
-      "title": "ArXiv paper: Improving Upper Bounds for the Maximum Clique Problem using Reduction Rules"
-    },
-    {
       "cycle_id": "d1512647",
       "domain": "Applications",
       "key_insight": "# Future Directions: Rectangle Piercing, Packing, and Relaxation Gaps\n\n## 1. A complete coordinate certificate for the 64-rectangle family\n\n**Conjecture.** There is an integer-coordinate realization o",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-18T17:57:41",
       "title": "Stochastic Galois Theory: Random Permutations Have Generic Galois Groups"
+    },
+    {
+      "cycle_id": "57f5aa5e",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Tropical Cryptocurrency\n\n## 1. Exact recession dimension of generic fibers\n\n**Conjecture.** For a generic family of `r` min-plus keys on `k` coordinates with `r < k`, every nonemp",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-18T19:01:52",
+      "title": "Deepening: Tropical Cryptocurrency: Mining on the Min-Plus Semiring"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "ccd67871",
-      "domain": "Applications",
-      "key_insight": "# Future directions: AVD‑total colourings of central graphs\n\nThis cycle isolated the mechanism behind the lower bound for adjacent‑vertex‑\ndistinguishing (AVD) total colourings of the central graph `C",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 52,
-      "timestamp": "2026-07-14T23:12:12",
-      "title": "Deepening: Working with a self‑contained model of total colourings (proper vertex colouring"
-    },
     {
       "cycle_id": "0e4c0a6c",
       "domain": "Applications",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-18T17:57:41",
       "title": "Stochastic Galois Theory: Random Permutations Have Generic Galois Groups"
+    },
+    {
+      "cycle_id": "57f5aa5e",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Tropical Cryptocurrency\n\n## 1. Exact recession dimension of generic fibers\n\n**Conjecture.** For a generic family of `r` min-plus keys on `k` coordinates with `r < k`, every nonemp",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-18T19:01:52",
+      "title": "Deepening: Tropical Cryptocurrency: Mining on the Min-Plus Semiring"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.74
     }
   ],
-  "last_updated": "2026-07-18T17:57:41",
+  "last_updated": "2026-07-18T19:01:52",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "1003d095",
-        "quality": 0.74,
-        "theorems": 0,
-        "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showin"
-      },
-      {
         "cycle_id": "5102d77c",
         "quality": 0.67,
         "theorems": 7,
@@ -3141,6 +3135,12 @@
         "quality": 0.74,
         "theorems": 46,
         "title": "The Zeta Function of a Graph: Number Theory on Networks"
+      },
+      {
+        "cycle_id": "57f5aa5e",
+        "quality": 0.82,
+        "theorems": 0,
+        "title": "Deepening: Tropical Cryptocurrency: Mining on the Min-Plus Semiring"
       }
     ],
     "Bridges": [

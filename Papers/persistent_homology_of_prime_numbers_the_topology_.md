@@ -1,61 +1,39 @@
-# Computational Evidence — Persistent Homology of the Prime Point Cloud
+# Computational evidence: primes up to 1,000,000
 
-## Setup
+## Method
 
-Place the `n`-th prime `p_n` at position `p_n` on the real line and run the
-Vietoris–Rips filtration: join `p_m, p_n` whenever `|p_m − p_n| ≤ ε`.  On a line
-the zero-dimensional barcode is governed entirely by the consecutive gaps
-`g_n = p_{n+1} − p_n`.
+A sieve of Eratosthenes was used to enumerate the primes and their consecutive gaps. This section is exploratory evidence; the exact structural claims used in the formal result are proved in `Catalog/MachineLearning/PrimeRipsTopology.lean`.
 
-## Small-case calculation of the gap sequence
+## Small cases
 
-Primes: `2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47`.
+The first six prime positions are
 
-Consecutive gaps `g_n = p_{n+1} − p_n`:
+| prime | 2 | 3 | 5 | 7 | 11 | 13 |
+|---:|---:|---:|---:|---:|---:|---:|
+| following gap | 1 | 2 | 2 | 4 | 2 | — |
 
-```
-n :   0  1  2  3  4  5  6  7  8  9 10 11 12 13
-p_n:  2  3  5  7 11 13 17 19 23 29 31 37 41 43
-g_n:  1  2  2  4  2  4  2  4  6  2  6  4  2  4
-```
+Thus the endpoints 2 and 13 first lie in one Rips-graph component at scale 4. This exact case is also machine-checked by `firstSixPrimes_endpoint_threshold`.
 
-The finite `H_0` barcode of the first 15 primes therefore has death scales equal
-to the multiset `{1, 2, 2, 4, 2, 4, 2, 4, 6, 2, 6, 4, 2, 4}` (plus one infinite
-bar for the ever-present global component).  This confirms the central claim
-`adjacent_component_iff`: the `n`-th finite bar dies exactly at `g_n`.
+## Computation through 10^6
 
-## Number of components as a function of scale
+* Number of primes: 78,498.
+* Number of consecutive gaps: 78,497.
+* Mean gap: 12.7391.
+* `log(10^6)`: 13.8155.
+* Largest gap: 114, following 492,113.
+* Gap quantiles (10%, 25%, 50%, 75%, 90%, 95%, 99%): 2, 6, 10, 18, 26, 32, 48.
+* Most frequent gaps `(gap: count)`: 6: 13,549; 2: 8,169; 4: 8,143; 12: 8,005; 10: 7,079; 8: 5,569.
 
-At scale `ε` the number of connected components of the first `m+1` primes equals
-`1 + #{ n < m : g_n > ε }`.  For the 15 primes above:
+For the local window `[900000, 1000000]`, there are 7,224 primes and the mean gap is 13.8422, close to `log(950000) = 13.7642`.
 
-```
-ε = 0 : 15 components   (nothing merged)
-ε = 1 : 14 components   (only the 2–3 gap of length 1 has merged)
-ε = 2 :  8 components   (all gaps of length ≤ 2 merged; 7 gaps exceed 2)
-ε = 4 :  3 components   (only the two gaps of length 6 survive)
-ε = 6 :  1 component    (everything merged)
-```
+## Exponential comparison and counterexample hunt
 
-The step-points are exactly the distinct gap values `{1, 2, 4, 6}`, matching
-`line_component_iff`.
+Comparing all gaps below `10^6` with an exponential CDF whose mean is the fitted mean gap gives a Kolmogorov--Smirnov distance of approximately 0.1678. The discrepancies are structural: except for the first gap, prime gaps are even, while a continuous exponential random variable is not lattice-supported; small gaps also show strong arithmetic modulation (gap 6 is much more frequent than gaps 2 or 4).
 
-## The twin prime bar
+Consequently, the literal assertion that the finite `H₀` barcode *has the same distribution* as an inhomogeneous Poisson process is not supported. A suitably normalized asymptotic statistical conjecture would need a precise limiting regime and a discrete/arithmetic correction.
 
-Gap `g_n = 2` occurs at `n = 1, 2, 4, 6, 9, 12, …`, giving the twin pairs
-`(3,5), (5,7), (11,13), (17,19), (29,31), (41,43), …`.  Each such `n` is an
-`H_0` bar of death scale exactly `2`.  The twin prime conjecture is precisely the
-statement that this length-`2` bar recurs infinitely often
-(`twinPrime_iff_infinitely_many_gap_two`).
+For ordinary Vietoris--Rips complexes, the proposed long-lived `H₁` twin-prime bar also fails at the deterministic geometric level: points lie on a line, and whenever an edge crosses an intermediate point, both shorter edges are present and the corresponding flag triangle is filled. The Lean theorem `ordered_edge_forces_triangle` certifies this obstruction.
 
-## OEIS
+## OEIS search
 
-- Prime gaps `g_n = p_{n+1} − p_n`: **A001223** (`1, 2, 2, 4, 2, 4, 2, 4, 6, 2, …`).
-- Twin primes: **A001359** (lesser of twin prime pairs `3, 5, 11, 17, 29, 41, …`).
-
-## Counterexample hunt
-
-The claims are equivalences over honest sets, so no counterexample is expected.
-The single-linkage characterisation was stress-tested on scrambled index orders
-(the `min/max` covering argument), and the gap/twin identifications were checked
-against the tables above; no discrepancy was found.
+The prime-gap sequence begins `1, 2, 2, 4, 2, 4, 2, 4, 6, ...` and is OEIS A001223 (differences between consecutive primes). No OEIS identification is needed for the formal proofs.
