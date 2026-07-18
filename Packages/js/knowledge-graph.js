@@ -229,7 +229,7 @@
     // ─── Layout constants (space battle / nuclear dynamics) ───
     const CLUSTER_RADIUS = 15000;     // Distance of cluster centroids from center
     const NODE_SPACING = 3000;         // Spacing between nodes within a cluster
-    const WORLD_SIZE = 180000;         // Universe extent — Möbius-Klein bottle
+    const WORLD_SIZE = 18000000;         // Universe extent — Möbius-Klein bottle
     const WORLD_HALF = WORLD_SIZE / 2;
     const K_SPRING = 0;              // No continuous spring — edges are lazy
     const REST_LENGTH = 9000;          // Rest length for provenance springs
