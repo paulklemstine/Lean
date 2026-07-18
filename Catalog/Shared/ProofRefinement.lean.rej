@@ -1,0 +1,11 @@
+--- ProofRefinement.lean
++++ ProofRefinement.lean
+@@ -30,7 +30,7 @@
+   modus-ponens chain.
+ -/
+ import Logic.Propositional
+-import Learning.TreeComplexity
++import Shared.TreeComplexity
+ 
+ 
+ 

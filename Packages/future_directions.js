@@ -45,20 +45,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Tropical Cryptocurrency: Mining on the Min-Plus Semiring"
   },
   {
-    "consumed_by_exp_id": "115a4ee3",
-    "description": "Building on cycle 18410e31 (Q=0.770), which proved 12 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: When a theorem prover searches for a proof, it explores a tree of possible derivation steps. The branching factor is the number of applicable inference rules at each step. Define the proof-search fractal dimension D(T) of a theorem T as the Hausdorff dimension of the set of all successful proof path",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_18410e31_ecb9fdf8",
-    "priority_score": 0.87,
-    "research_mode": "team",
-    "source_exp_id": "18410e31",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T09:21:32.306900+00:00",
-    "title": "Deepening: Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle fff627f3 (Q=0.770), which proved 7 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Hilbert's Hotel has infinitely many rooms, each containing a prime number. Room n contains the n-th prime p_n. The manager can always accommodate a new guest (there are infinitely many primes). But what if the guests want to REARRANGE? Conjecture: For any permutation sigma of N, there exists a rearr",
     "domains": [
@@ -1793,7 +1779,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Cyclic Sieving for Staircase Plane Partitions via Crystals and Electrical Networks"
   },
   {
-    "consumed_by_exp_id": "26ad8b0e",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Strongly complete sets and a conjecture of Erd\u0151s' and formalize its key results. Abstract: A set $A\\subseteq\\mathbb{N}$ is called $\\textit{complete}$ if every sufficiently large integer can be written as a sum of distinct elements of $A$. It is $\\textit{strongly complete}$ if it remains complete after one deletes finitely many elements from it. We show that $A\\subseteq\\mathbb{N}$ is strongly complete whenever \\[ \\big|A\\cap(2^k,2^{k+1}]\\big|\\ge6 \\] for every sufficiently large $k\\in\\mathbb{N}$, and \\[ \\sum_{a\\in A}\\|a\u03b8\\|=\\infty, \\quad\\forall\u03b8\\in\\mathbb{R}\\setminus\\mathbb{Z}. \\] In particular, this resolves a 1961 conjecture of Erd\u0151s. The proof builds on previous work of Bergelson and Simmons. Our approach also allows us to establish a more general strong-completeness criterion with suitable ordered blocks in place of dyadic intervals.",
     "domains": [
       "Pythagorean",
@@ -1803,7 +1789,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14071v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-16T15:35:00.343163+00:00",
     "title": "ArXiv paper: Strongly complete sets and a conjecture of Erd\u0151s"
   },
@@ -3094,6 +3080,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "In 1952, Turing showed that reaction-diffusion equations produce patterns (spots, stripes, spirals) that explain biological morphogenesis. But Turing patterns are solutions to PDEs, which are hard to analyze. Conjecture: Turing patterns are algebraic varieties. Specifically, the zero set of a Turing pattern (where the concentration equals the background level) is a real algebraic curve in 2D (for spots and stripes) or a real algebraic surface in 3D (for more complex patterns). The degree of the curve is the number of modes in the reaction-diffusion system. For a two-mode system (like the Gray-Scott model), the pattern is a curve of degree 2 (a conic section: circles for spots, parallel lines for stripes, hyperbolas for labyrinthine patterns). For a three-mode system, the pattern is a curve of degree up to 6 (sextic curves that can produce hexagonal patterns). The genus of the curve determines the pattern topology: genus 0 gives spots (topologically a sphere), genus 1 gives stripes (topologically a torus), and genus g > 1 gives labyrinthine patterns with g+1 holes. Test: simulate Turing patterns in the Gray-Scott model, fit the zero-set to an algebraic curve of degree d, and verify that d = 2 for spots and stripes. Compute the genus and verify it matches the pattern topology. Impact: biological patterns are algebraic curves. The mathematics of seashells, leopard spots, and zebra stripes is the mathematics of conic sections.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0322",
+    "priority_score": 0.77,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-18T13:37:32.730941+00:00",
+    "title": "Turing's Flowers: Morphogenesis as Algebraic Geometry"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle 0daa61af (Q=0.720) proved 18 theorems in Tropical but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The AdS/CFT correspondence says that a gravitational theory in the bulk of anti-de Sitter space is equivalent to a conformal field theory on the boundary. What if prime numbers have a holographic dual",
     "domains": [
       "Tropical"
@@ -3828,6 +3829,51 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe formalization establishes the foundational deletion-stability theory for complete sets:\nstrong completeness is equivalent to completeness of every tail (and even of all sufficiently\nlate tails), is invariant under finite symmetric difference, and admits an equivalent\ncofinite-subset formulation.\n\nThe next major target is the paper's analytic criterion. A faithful route would require:\n\n1. Formalize the distance to the nearest integer `\u2016x\u2016` and the divergence condition\n   `\u2211 a \u2208 A, \u2016a * \u03b8\u2016 = \u221e` as a statement about filters or infinite sums of nonnegative terms.\n2. Define ordered blocks and prove the general block criterion from which the dyadic theorem\n   follows. This should separate the combinatorial subset-sum argument from the Fourier or\n   equidistribution input.\n3. Develop the finite block lemmas controlling subset sums when each sufficiently late dyadic\n   block contains at least six elements.\n4. Connect the analytic divergence hypothesis to the combinatorial hypotheses needed for\n   completeness of every tail. The theorem `stronglyComplete_iff_eventually_complete_tails`\n   then turns this into strong completeness directly.\n5. Instantiate the block criterion with `(2^k, 2^(k+1)]` and formalize the stated resolution of\n   Erd\u0151s's conjecture.\n\nA smaller next step is to prove concrete complete-set examples (binary powers and suitable\nfinite unions of lacunary sequences), then test which remain complete after deletions. This\nwould exercise the definitions before undertaking the paper's analytic core.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0323",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "26ad8b0e",
+    "status": "available",
+    "timestamp": "2026-07-18T13:37:59.710247+00:00",
+    "title": "The formalization establishes the foundational deletion-stability theory for com"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n1. **Heterogeneous planets.** Generalize the equal-rate formula `(1-p)^N` to `\u220f i, (1-p\u1d62)` and prove `1 - \u220f i, (1-p\u1d62) \u2264 \u2211 i, p\u1d62` over finite populations.\n2. **Dependence without independence.** Formalize a finite probability space and prove the union bound directly for arbitrary civilization events. The present product formula specifically encodes independence, while Markov\u2019s inequality only needs a nonnegative count.\n3. **Random counts.** Prove `Pr[X \u2265 1] \u2264 E[X]` for natural-valued random variables and derive the emptiness lower bound as a complement. This would make precise which conclusion follows solely from expectation.\n4. **Uncertain Drake factors.** Treat each filter as an interval or random variable, deriving robust upper bounds for expected count rather than fixing disputed numerical estimates.\n5. **Time windows and observability.** Add birth times, lifetime intervals, signal travel, and detection events. Distinguish \u201cno civilization exists,\u201d \u201cnone overlaps our era,\u201d and \u201cno detectable contact occurs.\u201d\n6. **Sharper independent bounds.** Compare the exact value `(1-p)^N` with exponential estimates such as `(1-p)^N \u2264 exp(-Np)` and quantify when the first-order union bound is informative.\n7. **Sparse occupancy structure.** Strengthen `many_planets_empty` to exact identities for occupied and empty planets and characterize equality in terms of injectivity of the home-planet map.\n8. **Empirical separation.** Keep astronomical assumptions outside the mathematical theorem: observational estimates of candidate counts and biological filter probabilities require data and cannot be established by pigeonhole arguments alone.\n\nThe formal results do not establish that humanity is alone. They establish conditional probability bounds for an explicit model and formally refute the stronger inference from expectation below one to certainty of emptiness.\n",
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "fd_0324",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "7a438864",
+    "status": "available",
+    "timestamp": "2026-07-18T13:38:08.403841+00:00",
+    "title": "1. **Heterogeneous planets.** Generalize the equal-rate formula `(1-p)^N` to `\u220f "
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## 1. Entropy dimension for genuinely submultiplicative search languages\n\n**Conjecture.** Let `N(n)` be the number of successful prefixes of length `n` in a finitely branching search language, and suppose `N(n+m) \u2264 N(n)N(m)` with `N(n) \u2265 1`. Then the normalized logarithmic growth rate exists and equals the infimum of the finite-scale rates. Under a compatible ultrametric and a finite-type extension condition, this rate also equals the Hausdorff dimension of the infinite successful-path boundary.\n\nThe key insight is that the exact additivity proved for finite profiles should be replaced by subadditivity, while the relative-entropy normalization remains unchanged. **Why now?** The finite multiscale composition law identifies precisely which quantity must survive when exact self-similarity is weakened.\n\n## 2. Ergodic branching and almost-sure dimension\n\n**Conjecture.** For a stationary ergodic sequence of ambient and successful branching pairs `(B\u2099,S\u2099)` satisfying `1 \u2264 S\u2099 \u2264 B\u2099` and suitable logarithmic integrability, the almost-sure proof-search dimension is\n\n`E[log S\u2080] / E[log B\u2080]`.\n\nThe key insight is that logarithmic path volumes are additive cocycles, so their ratio should converge by ergodic averaging. **Why now?** The deterministic profile theorem supplies the exact finite-block identity whose random-block limit this conjecture predicts.\n\n## 3. Dimension spectrum under finite-state pruning\n\n**Conjecture.** For successful paths accepted by a strongly connected finite-state pruning automaton over a fixed `b`-ary tree, the dimension equals `log \u03c1(A) / log b`, where `\u03c1(A)` is the spectral radius of the automaton's nonnegative transition matrix. Moreover, every algebraic number arising as such a normalized Perron root is realizable by a finite-state proof-search geometry.\n\nThe key insight is that scalar products of branching numbers generalize to matrix products, with Perron growth replacing ordinary multiplication. **Why now?** The nonstationary scalar theory clarifies the exact point at which linear algebra should enter and provides the expected normalization.\n\n## 4. Policy-sensitive search cost at fixed dimension\n\n**Conjecture.** For every rational `d` strictly between zero and one and every computable unbounded function `f`, there are two finitely branching search instances with the same successful-prefix dimension `d` but deterministic depth-first discovery costs whose ratio exceeds `f(n)` at infinitely many depths.\n\nThe key insight is that dimension measures abundance, whereas a search policy measures ordering; adversarial rearrangement can preserve all prefix counts while moving successful terminals arbitrarily late. **Why now?** The current entropy laws sharply characterize geometry, making it possible to isolate and test the independent contribution of traversal policy.\n\n## 5. Stability under sparse adversarial perturbations\n\n**Conjecture.** If two nonstationary branching profiles differ on a set of levels of asymptotic density zero and their branching numbers are uniformly bounded above and below away from the unary degeneration, then their limiting relative entropy dimensions agree whenever either limit exists.\n\nThe key insight is that sparse changes contribute sublinear error to both logarithmic volumes. **Why now?** Repetition invariance and weighted composition already establish the finite-block algebra needed to quantify the effect of exceptional blocks.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0325",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "115a4ee3",
+    "status": "available",
+    "timestamp": "2026-07-18T13:38:18.493859+00:00",
+    "title": "**Conjecture.** Let `N(n)` be the number of successful prefixes of length `n` in"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle d1663b23 (Q=0.700) proved 0 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'A minimal modularity lifting theorem for Siegel modular forms' and formalize its key results. Abstract: We prove a minimal modularity lifting theorem (in the spirit of Gen",
     "domains": [
       "Applications"
@@ -3853,21 +3899,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-17T14:03:03.735341+00:00",
     "title": "Close Proofs: Dark Mathematics: Theorems That Exist But Cannot Be Found"
-  },
-  {
-    "consumed_by_exp_id": "c83ba873",
-    "description": "In the game Werewolf (Mafia), n players include k werewolves and n-k villagers. Each night, the werewolves eliminate one villager. Each day, the villagers vote to eliminate one player (possibly a werewolf). The villagers win if all werewolves are eliminated; the werewolves win if they equal or outnumber villagers. Conjecture: The optimal Bayesian strategy for villagers is to vote for the player with the highest posterior probability of being a werewolf, where the prior is k/n and the likelihood updates are based on the player's voting pattern and survival. More precisely, define the werewolf posterior P(W_i | evidence) using Bayes' theorem: P(W_i) = k/n (prior), P(evidence | W_i) = product of conditional probabilities of observed events given that player i is a werewolf. The optimal strategy maximizes P(villagers win) = P(correct elimination at each day round). For n=7, k=2: the villagers' win probability with optimal Bayesian play is approximately 0.36 (known from game theory). Conjecture: For general n and k, the villagers' win probability is approximately C * (1 - k/(n-k))^2 where C is a constant depending on the information structure. Test: simulate 10^6 games with n=7 to n=20 players and Bayesian villagers, measure the win probability, and fit to the conjectured formula. Impact: social deduction has an optimal Bayesian strategy, and the werewolves' advantage scales as (k/(n-k))^2.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0314",
-    "priority_score": 0.72,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T12:31:56.934304+00:00",
-    "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
   },
   {
     "consumed_by_exp_id": "",
@@ -3912,21 +3943,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-18T10:21:24.002098+00:00",
     "title": "Homotopy Type Theory of Cooking Recipes: Paths Between Dishes"
-  },
-  {
-    "consumed_by_exp_id": "7a438864",
-    "description": "The Fermi paradox asks: if intelligent life is common, where is everyone? The pigeonhole principle answers: if there are more pigeons than holes, at least one hole contains more than one pigeon. Apply this to the cosmos: there are approximately 10^22 stars in the observable universe (pigeons) and approximately 10^10 habitable-zone planets (holes). By the pigeonhole principle, at least one habitable planet contains at least 10^12 stars' worth of interest... wait, that's the wrong way around. Correct: there are ~10^10 habitable planets (pigeons) and ~4.5 billion years of time (holes). By the pigeonhole principle, at least one time period of one year contains at least 2 habitable planets developing intelligence. But we observe zero contacts. Conjecture: The resolution is that intelligent life is NOT common \u2014 the expected number of technological civilizations in the observable universe is less than 1. More precisely: if we model the Drake equation with honest probability estimates, P(technological civilization per habitable planet) < 10^{-10}, making the expected number of civilizations < 10^0 = 1. The Fermi paradox is not a paradox at all \u2014 it is the pigeonhole principle correctly predicting that with very few pigeons (civilizations) and very many holes (planets + time), most holes are empty. Test: compute the Drake equation with conservative estimates and verify that E[civilizations] < 1. Impact: we are alone because probability says so. The universe is mostly empty because that's what the math predicts.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0300",
-    "priority_score": 0.65,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T09:54:04.511190+00:00",
-    "title": "The Fermi Paradox as a Pigeonhole Principle: Why We Are Alone"
   },
   {
     "consumed_by_exp_id": "",

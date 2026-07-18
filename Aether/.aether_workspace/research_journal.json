@@ -7,16 +7,6 @@
       "quality_score": 0.71,
       "sorry_count": 0,
       "theorem_count": 13,
-      "timestamp": "2026-07-16T07:07:10",
-      "title": "ArXiv paper: Hypergraph Turan with bounded matching number"
-    },
-    {
-      "cycle_id": "cca295e6",
-      "domain": "Shared",
-      "key_insight": "# Future directions\n\n## Completed formalization\n\n`Construction.lean` is a self-contained finite-set formalization of the\npair-star 3-uniform hypergraph from the paper. All declarations have complete\np",
-      "quality_score": 0.71,
-      "sorry_count": 0,
-      "theorem_count": 13,
       "timestamp": "2026-07-16T07:08:28",
       "title": "ArXiv paper: Hypergraph Turan with bounded matching number"
     },
@@ -499,19 +489,19 @@
       "theorem_count": 21,
       "timestamp": "2026-07-18T13:21:34",
       "title": "Quantum Entanglement as Algebraic Topology: The Linking Number Is Entanglement"
+    },
+    {
+      "cycle_id": "115a4ee3",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n## 1. Entropy dimension for genuinely submultiplicative search languages\n\n**Conjecture.** Let `N(n)` be the number of successful prefixes of length `n` in a finitely branching sea",
+      "quality_score": 0.78,
+      "sorry_count": 1,
+      "theorem_count": 11,
+      "timestamp": "2026-07-18T13:38:23",
+      "title": "Deepening: Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "19e0135d",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Universality and genus-dependence of the cubic swap-chain gap\n\nThis cycle turned two of the standing conjectures about fixed-genus chord-swap\nchains into unconditional theorems a",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 33,
-      "timestamp": "2026-07-14T20:09:48",
-      "title": "This cycle established, unconditionally, that the variational (Rayleigh-quotient"
-    },
     {
       "cycle_id": "1e9bf31c",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 14,
       "timestamp": "2026-07-18T13:38:14",
       "title": "The Fermi Paradox as a Pigeonhole Principle: Why We Are Alone"
+    },
+    {
+      "cycle_id": "115a4ee3",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n## 1. Entropy dimension for genuinely submultiplicative search languages\n\n**Conjecture.** Let `N(n)` be the number of successful prefixes of length `n` in a finitely branching sea",
+      "quality_score": 0.78,
+      "sorry_count": 1,
+      "theorem_count": 11,
+      "timestamp": "2026-07-18T13:38:23",
+      "title": "Deepening: Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "322b88bd",
-      "domain": "Geometry",
-      "name": "simulator_accepts",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "322b88bd",
-      "domain": "Geometry",
-      "name": "real_eq_simulated_reindexed",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "bcfc30de",
-      "domain": "Cryptography",
-      "name": "prime_eq_three_of_three_dvd",
-      "quality": 0.72
-    },
     {
       "cycle_id": "bcfc30de",
       "domain": "Cryptography",
@@ -2803,17 +2785,28 @@
       "domain": "Pythagorean",
       "name": "sigma_pow_injective",
       "quality": 0.75
+    },
+    {
+      "cycle_id": "115a4ee3",
+      "domain": "Applications",
+      "name": "is",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "115a4ee3",
+      "domain": "Applications",
+      "name": "logVolume_append",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "115a4ee3",
+      "domain": "Applications",
+      "name": "logVolume_replicate_append",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-07-18T13:38:14",
+  "last_updated": "2026-07-18T13:38:23",
   "open_questions": [
-    {
-      "context": "",
-      "cycle_id": "6097a507",
-      "domain": "MachineLearning",
-      "sorry_count": 3,
-      "timestamp": "2026-07-15T02:32:57"
-    },
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "f243395d",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 1,
       "timestamp": "2026-07-18T09:21:32"
+    },
+    {
+      "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hupper⟩)",
+      "cycle_id": "115a4ee3",
+      "domain": "Applications",
+      "sorry_count": 1,
+      "timestamp": "2026-07-18T13:38:23"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "5f139cd0",
-        "quality": 0.71,
-        "theorems": 0,
-        "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showin"
-      },
-      {
         "cycle_id": "535698fb",
         "quality": 0.66,
         "theorems": 14,
@@ -3141,6 +3135,12 @@
         "quality": 0.7,
         "theorems": 0,
         "title": "Infinite Chess: Checkmate in Omega Moves"
+      },
+      {
+        "cycle_id": "115a4ee3",
+        "quality": 0.78,
+        "theorems": 11,
+        "title": "Deepening: Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
       }
     ],
     "Bridges": [
