@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-18T09:21:37.078320+00:00",
+  "last_updated": "2026-07-18T09:37:50.361874+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -25616,6 +25616,48 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-18T09:21:37.031538+00:00",
       "title": "The Periodic Table Is a Lie: Elements as Eigenvalues of Spacetime"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 18,
+      "domain": "Novelty",
+      "duration_seconds": 1944.3999123573303,
+      "end_time": 1784367437.4953444,
+      "files_integrated": 5,
+      "job_id": "12b45ad4",
+      "outcome_quality": 0.69,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v27",
+      "phase_b_skip_reason": "low_quality_near_miss",
+      "phase_b_skipped": true,
+      "prompt_version": "v27",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.62,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.81,
+        "composite": 0.5235,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.58,
+        "novelty": 0.68,
+        "proof_depth": 0.72,
+        "usefulness": 0.74
+      },
+      "quality_score": 0.69,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1784365493.095432,
+      "strategy_count": 0,
+      "theorem_count": 57,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 27,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-18T09:37:50.285495+00:00",
+      "title": "The P vs NP of Cooking: Computational Complexity of Recipes"
     }
   ]
 }

@@ -3008,7 +3008,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Quantum Surreal Numbers: Superposition of All Real Numbers"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f86cfe8a",
     "description": "Laser beams can carry orbital angular momentum (OAM), creating 'knotted light' \u2014 beams whose wavefronts are linked or knotted. A knotted light beam has a phase singularity (where the amplitude vanishes) that traces out a knot in 3D space. The simplest example is the trefoil beam, whose singularity traces a trefoil knot. Conjecture: The OAM spectrum of a knotted light beam encodes the Alexander polynomial of the knot. Specifically, if the singularity of the beam traces a knot K, then the OAM spectrum (the set of allowed angular momentum values) is {l : Delta_K(e^{2*pi*i*l/N}) = 0} where Delta_K is the Alexander polynomial of K and N is the crossing number. For the trefoil (Delta = t^2 - t + 1), the OAM spectrum includes l = 1/6, 5/6 (mod 1), giving OAM values l = 1, 5 (mod 6). For the unknot (Delta = 1), the OAM spectrum is trivial (l = 0 only). For the figure-eight knot (Delta = t^2 - 3t + 1), the OAM values include l = (3 \u00b1 sqrt(5))/2 mod 1. Test: compute the OAM spectrum of trefoil, figure-eight, and cinquefoil beams numerically and verify they match the Alexander polynomial predictions. Impact: knotted light carries knot invariants in its angular momentum \u2014 shining a laser through a knot-shaped hologram encodes the Alexander polynomial in the beam's quantum numbers.",
     "domains": [
       "Novelty",
@@ -3018,7 +3018,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.79,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-18T08:01:11.295424+00:00",
     "title": "The Topology of Knotted Light: How Laser Beams Get Tangled"
   },
@@ -3607,6 +3607,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe completed baseline is `Novelty/RecipeBarycenterBridge.lean`: for every nonempty finite menu with positive verification times, the aggregate cooking-to-verification ratio is the verification-weighted barycenter of the individual ratios. The file also proves interval bounds and the rigid equality case at ratio one. The following directions extend that theorem without treating scalar timing data as evidence about classical complexity classes.\n\n1. **Asymptotic cost families.** Replace each natural-number cost by a function of encoded input size. Define eventual domination and polynomial bounds, then determine which parts of the barycenter theorem survive pointwise and asymptotically. This is the minimum framework needed before making a genuine P-versus-NP analogy.\n\n2. **Parallel and dependency-aware composition.** Represent a recipe by a finite dependency DAG and define cooking cost by its critical path while verification remains sequential or partially parallel. Ordinary addition would then coexist with max-plus composition, creating a precise bridge to tropical geometry.\n\n3. **Uncertain timings.** Model cooking and verification costs as nonnegative random variables. Prove expectation and concentration analogues under an almost-sure positive lower bound on total verification cost; explicitly distinguish the expectation of a ratio from the ratio of expectations.\n\n4. **Destructive verification.** Represent verification as a state transition that returns both a verdict and a residual dish. This would formally separate nondestructive certificates, destructive tests, and repeatable verification without assigning any of them an unsupported hardness label.\n\n5. **Mechanized reductions.** For any actual hardness statement, first define finite encodings, a machine model, a decision predicate, a cost measure, and polynomial-time many-one reductions. A physically motivated simulation claim\u2014whether involving a souffl\u00e9 or a PDE\u2014requires such a reduction and does not follow from the scalar timing model.\n\n6. **Ordered-cone generalization.** Replace pairs of scalar resources by vectors in an ordered cone. A positive linear functional should yield a generalized barycenter theorem, while equality under an exposed supporting functional should force every positively weighted component into the same exposed face.\n\n7. **Dataset-backed instantiation.** A recipe dataset could instantiate the abstract finite-family theorem. Measurements should record serving size, labor parallelism, uncertainty, and an operational definition of verification. Such data would test a timing model only, not P versus NP.\n\n8. **Hypothesis sharpness and counterexamples.** Formalize explicit counterexamples showing why positive verification times are required for normalized weights and why boundary rigidity fails when `verify \u2264 cook` is dropped. These would complement the positive theorem with a machine-checked characterization of its scope.\n",
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "fd_0299",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "12b45ad4",
+    "status": "available",
+    "timestamp": "2026-07-18T09:37:44.529436+00:00",
+    "title": "The completed baseline is `Novelty/RecipeBarycenterBridge.lean`: for every nonem"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle d1663b23 (Q=0.700) proved 0 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'A minimal modularity lifting theorem for Siegel modular forms' and formalize its key results. Abstract: We prove a minimal modularity lifting theorem (in the spirit of Gen",
     "domains": [
       "Applications"
@@ -3662,21 +3677,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-18T09:20:55.078260+00:00",
     "title": "Erdos-Renyi on Acid: Random Graphs That Hallucinate"
-  },
-  {
-    "consumed_by_exp_id": "12b45ad4",
-    "description": "Every recipe is an algorithm: it takes ingredients (inputs) and produces a dish (output). The question is: can you verify a good dish faster than you can cook it? This is exactly P vs NP, but in the kitchen. Define the verification time V(R) of a recipe R as the time it takes to taste the dish and determine if it's good. Define the cooking time C(R) as the time it takes to prepare the dish. Conjecture: For most traditional recipes, C(R) > V(R) \u2014 cooking takes longer than tasting (P != NP in the kitchen). But there exist 'quick recipes' where C(R) = V(R) \u2014 assemble-and-serve dishes like salads (P = NP in the kitchen). The interesting class is 'NP-hard recipes' \u2014 dishes where even VERifying the result is hard. Example: is the souffle risen? You can only verify by cutting it open, which destroys it. Theorem: souffle verification is co-NP-hard because determining if a souffle will rise requires simulating the thermodynamic process, which is PSPACE-hard. More formally: the souffle function S(ingredients, temperature, time) -> {risen, collapsed} requires computing the Navier-Stokes equations for the batter, which is PSPACE-hard. Test: classify 100 recipes by their C(R)/V(R) ratio. Verify that P = NP recipes have C = V, while P != NP recipes have C >> V. Impact: computational complexity is not abstract \u2014 it shows up in your kitchen. Some dishes are inherently harder to make than to verify.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0278",
-    "priority_score": 0.71,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T06:39:19.687053+00:00",
-    "title": "The P vs NP of Cooking: Computational Complexity of Recipes"
   },
   {
     "consumed_by_exp_id": "",

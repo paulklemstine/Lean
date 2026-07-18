@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "c5cfd9ce",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Negative-Dimensional Topology\n\nThe results of this cycle establish that the Euler characteristic extends to\nnegative formal dimensions as a single multiplicative invariant govern",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-14T14:13:21",
-      "title": "Deepening: Negative-Dimensional Topology: What Lives in Dimension -1?"
-    },
-    {
       "cycle_id": "656eecef",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Cone Colorful Carathéodory (general dimension)\n\nThis cycle proves the **cone colorful Carathéodory theorem in arbitrary finite\ndimension** (`Catalog/Novelty/ConeColorfulCaratheod",
@@ -2501,6 +2491,16 @@
       "theorem_count": 23,
       "timestamp": "2026-07-18T09:21:36",
       "title": "The Periodic Table Is a Lie: Elements as Eigenvalues of Spacetime"
+    },
+    {
+      "cycle_id": "12b45ad4",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\nThe completed baseline is `Novelty/RecipeBarycenterBridge.lean`: for every nonempty finite menu with positive verification times, the aggregate cooking-to-verification ratio is th",
+      "quality_score": 0.69,
+      "sorry_count": 0,
+      "theorem_count": 57,
+      "timestamp": "2026-07-18T09:37:50",
+      "title": "The P vs NP of Cooking: Computational Complexity of Recipes"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-18T09:21:36",
+  "last_updated": "2026-07-18T09:37:50",
   "open_questions": [
     {
       "context": "",
@@ -3585,12 +3585,6 @@
         "title": "ArXiv paper: A few remarks on the Baez-Duarte Criterion"
       },
       {
-        "cycle_id": "851ec568",
-        "quality": 0.68,
-        "theorems": 4,
-        "title": "ArXiv paper: A few remarks on the Baez-Duarte Criterion"
-      },
-      {
         "cycle_id": "5759ba2d",
         "quality": 0.72,
         "theorems": 20,
@@ -3637,6 +3631,12 @@
         "quality": 0.77,
         "theorems": 12,
         "title": "Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
+      },
+      {
+        "cycle_id": "12b45ad4",
+        "quality": 0.69,
+        "theorems": 57,
+        "title": "The P vs NP of Cooking: Computational Complexity of Recipes"
       }
     ],
     "NumberTheory": [
