@@ -261,7 +261,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: A decomposition of Weyl group multiple Dirichlet series for symmetrizable Kac-Moody root systems"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ae36b246",
     "description": "Investigate the ArXiv paper 'On the maximum size of $B_3$-free families' and formalize its key results. Abstract: A family $\\mathcal{G}$ of sets is a weak copy of the poset $(P,\\leqslant)$ if there exists a bijection $\u03b9:P\\rightarrow \\mathcal{G}$ with $\u03b9(p)\\subset \u03b9(q)$ whenever $p\\leqslant q$. $\\mathcal{G}$ is a strong copy if $\u03b9(p)\\subset \u03b9(q)$ if and only if $p\\leqslant q$ holds. A family is weak (strong) $P$-free if it does not contain any weak (strong) copies of $P$. For a poset $P$, let $e(P)$ ($e^*(P)$) denote the most number of middle layers of $2^{[n]}$ that does not contain a weak (strong) copy of $P$. Ellis, Ivan, and Leader were the first to show the existence of posets $P$ for which there exists a positive real $\\varepsilon_P$ such that $La(n,P)\\ge (e(P)+\\varepsilon_P)\\binom{n}{\\lfloor n/2}$ and $La^*(n,P)\\ge (e^*(P)+\\varepsilon_P)\\binom{n}{\\lfloor n/2}$ holds, where $La(n,P)$ ($La^*(n,P)$) denotes the maximum size of a weak (strong) $P$-free family $\\mathcal{F}\\subseteq 2^{[n]}$. More precisely, they showed that $P=B_d$ are such posets for all $d\\ge 4$, where $B_d$ is the Boolean latt",
     "domains": [
       "Bridges"
@@ -270,7 +270,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11753v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T07:28:27.663774+00:00",
     "title": "ArXiv paper: On the maximum size of $B_3$-free families"
   },
@@ -3022,21 +3022,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem With"
   },
   {
-    "consumed_by_exp_id": "950806e8",
-    "description": "A dataset with missing values is a sheaf on a poset: the poset is the set of feature subsets (ordered by inclusion), and the sheaf assigns to each feature subset the set of complete observations on those features. The missing data creates 'holes' in the sheaf: H^0 measures the global sections (complete observations) and H^1 measures the obstructions to patching local observations into global ones. Conjecture: For a dataset with missing rate r, the dimension of H^1 is approximately r * n * (r * log(1/r)), where n is the number of features. This means: the 'amount of missing information' grows super-linearly with the missing rate, and imputation is fundamentally harder than interpolation because H^1 > 0 means there is no consistent way to fill in the missing data. The sheaf-theoretic imputation: fill in missing values by finding the section s in H^0 that minimizes the coboundary delta(s) in H^1. This is the maximum likelihood imputation under the assumption that the data is locally consistent. Test: generate synthetic datasets with known ground truth, introduce missing values at rate r, compute H^0 and H^1 of the data sheaf, and verify dim(H^1) ~ r*n*r*log(1/r). Compare sheaf-theoretic imputation with standard methods (mean, KNN, MICE). Impact: missing data is a topological problem, and the sheaf cohomology tells you exactly how much information is lost and whether it can be recovered.",
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0315",
-    "priority_score": 0.78,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T12:31:56.960691+00:00",
-    "title": "Sheaf Cohomology of Data: The Topology of Missing Information"
-  },
-  {
     "consumed_by_exp_id": "cbc5314c",
     "description": "Sudoku is a constraint satisfaction problem (CSP). Random Sudoku instances exhibit a phase transition: for n^2 x n^2 grids, the probability of having a solution drops from ~1 to ~0 around a critical density of pre-filled cells. Conjecture: the phase transition occurs at density d_c(n) = (n^2 - 1) / n^2, independent of the specific constraint structure. For standard 9x9 Sudoku (n=3): d_c = 8/9 \u2248 0.889. For 4x4 Sudoku (n=2): d_c = 3/4 = 0.75. For 16x16 (n=4): d_c = 15/16 \u2248 0.9375. The 'hardness' of random Sudoku peaks at the phase transition: instances with density near d_c take exponentially longer to solve than easy (low density) or trivial (high density) instances. Conjecture: the computational hardness of Sudoku at the phase transition is O(exp(n^2)) for backtracking algorithms, matching the theoretical prediction for CSPs at criticality. Test: generate random Sudoku instances at varying densities, measure solver time, and verify the phase transition at d_c. Impact: Sudoku hardness is not about 9x9 grids \u2014 it is about the phase transition structure of constraint satisfaction.",
     "domains": [
@@ -4068,6 +4053,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-18T19:24:44.313361+00:00",
     "title": "**Conjecture.** Let a normalized integral transform send compactly supported inp"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## 1. Random-nerve obstruction threshold\n\nFor an explicit Bernoulli missingness model on records and features, determine whether the normalized first cohomology dimension has a sharp threshold governed by the emergence of cycles in the overlap nerve rather than by the missing rate alone. The conjecture is that, after conditioning on restriction-map ranks, the threshold lies in the same universality class as the first-homology threshold of a random flag complex.\n\n**The key insight is...** the exact rank formula separates combinatorial cycle creation from algebraic cancellation, so a threshold theorem should track both random incidence and random map rank.\n\n**Why now?** The deterministic decomposition identifies the precise random variables that a probabilistic model must control and rules out fitting a one-parameter law without them.\n\n## 2. Two-parameter replacement for the scalar missing-rate law\n\nFor exchangeable missingness with `n` features, test whether the expected obstruction dimension admits an asymptotic expansion in two observables: the cycle rank of the overlap nerve and the expected rank defect of restriction maps. Conjecturally these two observables determine the leading term uniformly away from the nerve's connectivity threshold.\n\n**The key insight is...** equal ambient overlap dimension can coexist with maximal or vanishing obstruction, so incidence and map rank must enter separately.\n\n**Why now?** The extreme boundary cases give sharp calibration points against which candidate asymptotic formulas can be falsified.\n\n## 3. Stability under perturbation of restriction maps\n\nOver the real or complex numbers, equip each coboundary with singular values and define an approximate obstruction dimension by counting singular values below a tolerance. Conjecture a stability theorem bounding changes in this quantity by spectral gaps and operator-norm perturbations, yielding a robust analogue of first cohomology for noisy local consistency.\n\n**The key insight is...** exact cohomology detects zero singular values, while practical data require a controlled replacement that distinguishes structural obstruction from measurement noise.\n\n**Why now?** The finite-dimensional complex and its rank decomposition provide a direct route from exact patchability to quantitative perturbation theory.\n\n## 4. Statistical optimality under an explicit Gaussian sheaf model\n\nFor linear restriction maps with Gaussian local noise and a Gaussian prior on global sections, test whether least-squares minimization of the coboundary norm equals the posterior mean, and characterize when its excess risk is controlled by the nonzero spectrum of the first sheaf Laplacian. The conjecture is that cohomology accounts for the irreducible component of risk while small positive eigenvalues account for instability.\n\n**The key insight is...** maximum-likelihood claims become valid only after specifying a probability model, and the cochain complex naturally supplies the relevant quadratic form.\n\n**Why now?** The exact patchability criterion cleanly identifies the nullspace that any statistical risk decomposition must isolate.\n\n## 5. Higher-order compatibility beyond pairwise overlaps\n\nConstruct datasets whose overlap nerve is not flag and quantify the failure of pairwise consistency to detect incompatible triple overlaps. Conjecture that the minimal order of compatibility checks needed for exact recovery equals one plus the largest dimension of a minimal nonface of the nerve.\n\n**The key insight is...** pairwise overlap information reconstructs every higher face precisely in the flag case, making minimal nonfaces the natural certificates of undetected incompatibility.\n\n**Why now?** The flag-nerve bridge supplies an exact boundary between graph-based consistency methods and genuinely higher-order methods.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0352",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "950806e8",
+    "status": "available",
+    "timestamp": "2026-07-18T19:25:00.615512+00:00",
+    "title": "For an explicit Bernoulli missingness model on records and features, determine w"
   },
   {
     "consumed_by_exp_id": "",
