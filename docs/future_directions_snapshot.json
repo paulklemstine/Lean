@@ -196,7 +196,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "21c08839",
     "description": "Proofs are static objects, but what if proofs could improve? Define a proof refinement system where each proof P has a complexity C(P) = length(P) + depth(P) + number of lemmas, and a proof P' is a refinement of P if P' proves the same theorem with C(P') < C(P). Conjecture: For every theorem T provable in ZFC, there exists a sequence of refinements P = P_0, P_1, P_2, ... such that C(P_n) is non-increasing and the limit P_infinity is the simplest proof of T (in the sense of Kolmogorov complexity). Moreover, the refinement process halts: there exists N such that C(P_N) = C(P_{N+1}) = ... = C(P_infinity). The key insight: proof simplification is a well-founded process because the complexity is a natural number that decreases at each step. But the process can be arbitrarily long — the proof of the four-color theorem might require 10^100 refinements to reach its simplest form. Test: formalize the refinement system in Lean 4. Starting from the statement of the irrationality of sqrt(2), generate refinements by eliminating unnecessary lemmas, shortening case splits, and removing redundant quantifiers. Measure C(P) at each step and verify it decreases. Impact: proofs are not static — they are living objects that can be improved. The simplest proof of a theorem is the LIMIT of the refinement process, and this limit ALWAYS exists.",
     "domain_bridges": [],
     "domains": [
@@ -209,7 +209,7 @@
     "proof_strategy": "Define proof complexity C(P) = length(P) + depth(P) + number_of_lemmas(P) for a proof P in a formal system. Define refinement: P' refines P if P' proves the same theorem as P and C(P') < C(P). Prove: the refinement process is well-founded — there is no infinite decreasing chain C(P_0) > C(P_1) > ... because C takes values in the natural numbers. Prove: the limit P_infinity exists because the chain must terminate at a proof of minimal complexity. Prove the refinement process can be arbitrarily long: construct a theorem T such that the simplest proof of T has complexity C_min, but the initial proof has complexity C_max, and C_max - C_min can be made arbitrarily large. Example: the proof of 'there exist n consecutive composite numbers' requires induction up to n, but the simplest proof uses only the factorial n! + 2, n! + 3, ..., n! + n. Test: implement refinement for sqrt(2) irrationality in Lean 4.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-18T03:44:45.986581+00:00",
     "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
   },
