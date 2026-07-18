@@ -589,6 +589,8 @@
                         if (dist < circle.r) {
                             n.thrustTime = time;
                             n.thrustAngle = Math.atan2(dy, dx);
+                            n.thrustStrength = 1.0;
+                            n.thrustSpin = Math.random() > 0.5 ? 1 : -1;
                         }
                         if (dist < circle.r && explosions.length < MAX_EXPLOSIONS) {
                             const hitX = circle.cx + (dx / dist) * circle.r;
@@ -653,7 +655,7 @@
                 const coreR2 = coreDelta.d2;
                 const coreR = Math.sqrt(coreR2) || 1;
                 const gravity = G_CORE * CORE_MASS * a.mass / (coreR2 + SOFTENING * SOFTENING);
-                const darkEnergy = 0.02 * a.mass; // Constant outward push
+                const darkEnergy = 0.05 * a.mass; // Constant outward push (increased to prevent clumping)
                 const coreForce = gravity - darkEnergy;
                 a.vx += (coreDelta.dx / coreR) * coreForce;
                 a.vy += (coreDelta.dy / coreR) * coreForce;
@@ -705,9 +707,11 @@
                             a.thrustTime = time;
                             a.thrustAngle = Math.atan2(-ny, -nx) + (Math.random() - 0.5) * Math.PI * 0.6;
                             a.thrustStrength = isConnected ? 0.05 : Math.min(1, Math.abs(relVn) * 0.5);
+                            a.thrustSpin = Math.random() > 0.5 ? 1 : -1;
                             b.thrustTime = time;
                             b.thrustAngle = Math.atan2(ny, nx) + (Math.random() - 0.5) * Math.PI * 0.6;
                             b.thrustStrength = isConnected ? 0.05 : Math.min(1, Math.abs(relVn) * 0.5);
+                            b.thrustSpin = Math.random() > 0.5 ? 1 : -1;
 
                             // Spawn explosion at contact point (skip for connected — gentle contact)
                             if (!isConnected && explosions.length < MAX_EXPLOSIONS) {
@@ -795,6 +799,14 @@
                                 size: 1 + Math.random() * 2.5
                             });
                         }
+                        
+                        // Apply spiral thrust to velocity
+                        const thrustForce = 800.0 * n.thrustStrength * (1 - thrustAge / THRUST_DURATION);
+                        n.vx += Math.cos(n.thrustAngle) * thrustForce * 0.016;
+                        n.vy += Math.sin(n.thrustAngle) * thrustForce * 0.016;
+                        const spinDir = n.thrustSpin || 1;
+                        n.vx += Math.cos(n.thrustAngle + Math.PI/2) * thrustForce * spinDir * 0.6 * 0.016;
+                        n.vy += Math.sin(n.thrustAngle + Math.PI/2) * thrustForce * spinDir * 0.6 * 0.016;
                     } else {
                         n.thrustTime = 0;
                         n.thrustSpin = 0;
@@ -1618,28 +1630,36 @@
                 const r = node.radius * camera.zoom;
                 // Flame cone opposite to thrust direction
                 const flameLen = r * 2.5 * decay * node.thrustStrength;
-                const flameW = r * 0.6 * decay;
+                const flameW = r * 0.4 * decay;
                 const flameAngle = node.thrustAngle + Math.PI; // flame points opposite to thrust
-                const tipX = sp.x + Math.cos(flameAngle) * flameLen;
-                const tipY = sp.y + Math.sin(flameAngle) * flameLen;
-                const perpX = Math.cos(flameAngle + Math.PI / 2) * flameW;
-                const perpY = Math.sin(flameAngle + Math.PI / 2) * flameW;
-                // Draw tapered flame
-                ctx.beginPath();
-                ctx.moveTo(sp.x + perpX, sp.y + perpY);
-                ctx.lineTo(tipX, tipY);
-                ctx.lineTo(sp.x - perpX, sp.y - perpY);
-                ctx.closePath();
-                if (isFinite(sp.x) && isFinite(sp.y) && isFinite(tipX) && isFinite(tipY)) {
-                    const flameGrad = ctx.createLinearGradient(sp.x, sp.y, tipX, tipY);
-                    flameGrad.addColorStop(0, `hsla(40, 100%, 90%, ${0.7 * decay})`);
-                    flameGrad.addColorStop(0.3, `hsla(25, 100%, 70%, ${0.5 * decay})`);
-                    flameGrad.addColorStop(1, `hsla(0, 100%, 50%, 0)`);
-                    ctx.fillStyle = flameGrad;
-                    ctx.shadowBlur = 20 * camera.zoom;
-                    ctx.shadowColor = `hsla(30, 100%, 60%, ${decay})`;
-                    ctx.fill();
-                    ctx.shadowBlur = 0;
+                
+                // Draw TWO rockets offset by 90 degrees
+                for (const offset of [-r * 0.7, r * 0.7]) {
+                    const rX = sp.x + Math.cos(node.thrustAngle + Math.PI/2) * offset;
+                    const rY = sp.y + Math.sin(node.thrustAngle + Math.PI/2) * offset;
+                    
+                    const tipX = rX + Math.cos(flameAngle) * flameLen;
+                    const tipY = rY + Math.sin(flameAngle) * flameLen;
+                    const perpX = Math.cos(flameAngle + Math.PI / 2) * flameW;
+                    const perpY = Math.sin(flameAngle + Math.PI / 2) * flameW;
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(rX + perpX, rY + perpY);
+                    ctx.lineTo(tipX, tipY);
+                    ctx.lineTo(rX - perpX, rY - perpY);
+                    ctx.closePath();
+                    
+                    if (isFinite(rX) && isFinite(rY) && isFinite(tipX) && isFinite(tipY)) {
+                        const flameGrad = ctx.createLinearGradient(rX, rY, tipX, tipY);
+                        flameGrad.addColorStop(0, `hsla(40, 100%, 90%, ${0.7 * decay})`);
+                        flameGrad.addColorStop(0.3, `hsla(25, 100%, 70%, ${0.5 * decay})`);
+                        flameGrad.addColorStop(1, `hsla(0, 100%, 50%, 0)`);
+                        ctx.fillStyle = flameGrad;
+                        ctx.shadowBlur = 20 * camera.zoom;
+                        ctx.shadowColor = `hsla(30, 100%, 60%, ${decay})`;
+                        ctx.fill();
+                        ctx.shadowBlur = 0;
+                    }
                 }
             });
 
