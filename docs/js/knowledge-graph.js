@@ -687,11 +687,13 @@
                             const isChain = (a.thrustTime > 0 || b.thrustTime > 0);
                             // Connected nodes get inelastic collisions (absorb energy, no bouncing)
                             const isConnected = areConnected(a.id, b.id);
-                            const bounce = isConnected ? 0.1 : BOUNCE;  // connected: nearly inelastic
+                            const bounce = isConnected ? 0.1 : 1.5;  // super-elastic for unconnected
                             const totalMass = a.mass + b.mass;
-                            // Impulse: (1+e) * relVn * m_other / totalMass
-                            const impulseA = (1 + bounce) * relVn * b.mass / totalMass;
-                            const impulseB = (1 + bounce) * relVn * a.mass / totalMass;
+                            // Pinball bumper flat force
+                            const bumperForce = isConnected ? 0 : 350.0;
+                            // Impulse: (1+e) * relVn * m_other / totalMass + bumperForce
+                            const impulseA = ((1 + bounce) * relVn + bumperForce) * b.mass / totalMass;
+                            const impulseB = ((1 + bounce) * relVn + bumperForce) * a.mass / totalMass;
                             a.vx -= impulseA * nx;
                             a.vy -= impulseA * ny;
                             b.vx += impulseB * nx;
