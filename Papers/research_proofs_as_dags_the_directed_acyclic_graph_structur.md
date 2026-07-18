@@ -1,178 +1,339 @@
-# Proofs as Directed Acyclic Graphs: Conservation, Hubs, and Foundations in Dependency Networks
+# Ranked Dependency Networks: Canonical Hierarchy, Width–Depth Tradeoffs, and Robustness
+
+**Aristotle**  
+**July 18, 2026**
 
 ## Abstract
 
-We develop the elementary structural theory of *dependency networks* — directed graphs in which vertices are mathematical statements and a directed edge $u \to v$ records that statement $u$ is used in the derivation of statement $v$. We isolate three foundational invariants. First, a **conservation law**: in any finite network the aggregate in-degree, the aggregate out-degree, and the total number of edges all coincide, the directed analogue of the handshaking lemma. Second, a **hub-existence principle**: as an immediate pigeonhole consequence of conservation, every nonempty network contains a statement whose in-degree is at least the network-wide average, equivalently a single node whose in-degree bounds the entire edge budget from below. Third, an **order-and-foundation theorem**: acyclicity — the logical requirement that no statement transitively depends on itself — makes the transitive "eventually depends on" relation a strict partial order, and on a finite network this forces the existence of *sources* (dependency-free foundations) and *sinks* (frontier statements). We give complete proof sketches, dual formulations for in- and out-degrees, and discuss how these invariants underpin the empirical observation that comprehensive mathematical corpora are scale-free, with in-degree distribution $P(k)\sim k^{-\gamma}$, $\gamma \approx 2.5$. We close with algorithmic recipes, numerical demonstrations on synthetic and structured networks, and a program of conjectures on rank stratification, super-average hub concentration, and network fragility under hub deletion.
-
-**Keywords:** dependency network, directed acyclic graph, degree distribution, scale-free network, handshaking lemma, well-founded order, pigeonhole principle, network fragility.
+Mathematical arguments can be represented by directed dependency networks whose vertices are statements and whose edges point from premises to statements using them. When circular justification is excluded, these networks are directed acyclic graphs. This paper isolates the consequences of acyclicity from additional empirical claims about theorem reuse. For a finite acyclic relation, we define the strict ancestors of a vertex as all vertices reaching it by a nonempty directed path and define its canonical rank as the number of those ancestors. We prove that rank strictly increases along reachability. We then establish a width–depth theorem: if a rank map into $L$ ordered levels strictly increases along reachability and the network has more than $L$ vertices, two distinct vertices on one level are mutually incomparable. Finally, we construct, for every size $n\ge 3$, an acyclic network that remains weakly connected after deletion of any single vertex. The construction is the strict total order, in which every pair of distinct vertices is joined by an edge in one orientation. These results show that hierarchy and a pigeonhole-based width principle follow from finite acyclicity, whereas power-law degree distributions, universal hub rankings, and single-hub fragility do not. We give algorithms for computing ranks, finding forced incomparable pairs, and testing deletion robustness, and formulate an empirical program that separates graph-theoretic invariants from corpus-dependent measurements.
 
 ## 1. Introduction
 
-Mathematical knowledge is cumulative in a strong and literal sense: essentially every theorem is proved by invoking earlier theorems, which invoke earlier ones still, terminating at axioms and definitions. This *dependency* relation defines a directed graph on the set of all statements. The graph is not an informal metaphor; it is a combinatorial object with quantifiable structure, and the aim of this paper is to establish its most basic invariants rigorously and to explain how those invariants shape the large-scale statistics observed in comprehensive mathematical libraries.
+A proof rarely depends on only one earlier statement. Definitions, lemmas, and theorems form a many-to-many system of support that is naturally represented as a directed graph. A vertex denotes a mathematical statement, and a directed edge points from a premise to a statement that directly uses it. A directed path then records indirect dependence.
 
-Two forces govern the object. One is **arithmetic**: edges must be conserved, and a fixed edge budget shared among a fixed number of nodes forces concentration. The other is **logical**: a proof cannot be circular, so the graph is acyclic, which endows it with an order and, on finite data, with a bottom layer of foundations. From these two forces we derive a small collection of theorems that are simple to state, exact, and — we argue — the correct starting point for a quantitative science of mathematical structure.
+This representation motivates two kinds of question that should not be conflated. The first kind is structural: what must hold in every finite acyclic dependency network? The second is empirical: what patterns occur in a particular mathematical corpus under a particular rule for extracting dependencies? Acyclicity is structural. A proposed power law for theorem reuse, a list of historically dominant hubs, or a quantitative claim about damage caused by deleting a theorem is empirical.
 
-Our contributions are:
+The distinction is important because the phrase “proofs form a directed acyclic graph” can tempt one to import conclusions from familiar network models without proving that their hypotheses apply. Directed acyclic graphs encompass sparse trees, disjoint unions, layered networks, and dense total orders. Their degree distributions and robustness profiles can differ radically.
 
-1. A precise model of dependency networks as decidable binary relations on a finite vertex type, with in-degree, out-degree, edge set, and edge count as derived quantities (Section 3).
-2. The **conservation law** in target and source forms, and their equality (Section 4).
-3. The **hub-existence** theorem and its out-degree dual (Section 5).
-4. The **acyclicity** theory: irreflexivity of the transitive closure, the induced strict partial order, and the existence of sources and sinks on nonempty finite acyclic networks (Section 6).
-5. A discussion connecting these invariants to scale-free statistics, together with algorithms, numerical demonstrations, and a conjecture program (Sections 7–9).
+This paper proves three results that precisely mark the structural boundary.
 
-## 2. Related structural background
+1. Every finite acyclic dependency network has a canonical topological rank: the number of strict ancestors. Reachability strictly raises this rank.
+2. If a strictly increasing rank uses only $L$ levels and there are more than $L$ vertices, two vertices are forced to be incomparable.
+3. For every $n\ge 3$, there is an acyclic network on $n$ vertices that remains weakly connected after deletion of any single vertex.
 
-The undirected handshaking lemma — that the sum of vertex degrees is twice the number of edges — is a staple of graph theory. Our conservation law is its directed refinement, splitting each incidence into a source-count and a target-count. The existence of sources and sinks in finite directed acyclic graphs is classical and underlies topological sorting; we reconstruct it from the well-foundedness of an irreflexive transitive relation on a finite set, which we regard as the cleanest logical packaging. The empirical claim that citation- and dependency-style graphs are scale-free follows a long line of work on complex networks, in which power-law degree distributions and hub-dominated topologies recur across technological, biological, and social domains. Our contribution is to ground the *necessary preconditions* for such topologies — conservation and forced concentration — in exact, general theorems.
+The first theorem gives an intrinsic hierarchy rather than an arbitrarily chosen topological ordering. The second converts bounded depth into guaranteed width by the finite pigeonhole principle. The third supplies a robust null model showing that acyclicity alone cannot imply articulation-hub fragility.
 
-## 3. The model
+The orientation convention throughout is from prerequisite to dependent statement. Connectivity after deletion is explicitly weak connectivity: edge orientation is ignored while traversing the surviving network. This avoids the ambiguity of asking whether a directed dependency network “disconnects.”
 
-Fix a finite type $V$ of **statements**. A **dependency network** on $V$ is a binary relation $R$ on $V$ with $R\,u\,v$ interpreted as "statement $u$ is used directly in the derivation of statement $v$." We assume $R$ is decidable so that degrees and edge sets are genuine finite cardinalities.
+## 2. Definitions and setting
 
-**Definition 3.1 (Degrees).** For $v \in V$,
-$$\deg^-(v) := \#\{\, u \in V : R\,u\,v \,\}, \qquad \deg^+(v) := \#\{\, u \in V : R\,v\,u \,\}.$$
-We call $\deg^-(v)$ the **in-degree** (the number of statements used directly to prove $v$) and $\deg^+(v)$ the **out-degree** (the number of statements that directly use $v$).
+### 2.1 Dependency relations and reachability
 
-**Definition 3.2 (Edges).** The **edge set** is
-$$E(R) := \{\, (u,v) \in V \times V : R\,u\,v \,\}, \qquad m := \#\,E(R),$$
-and $m$ is the **edge count**. The **order** of the network is $n := \#V$.
+Let $V$ be a finite nonempty set of vertices, and let $R\subseteq V\times V$ be a directed relation. We write $R(u,v)$ when there is a direct edge from $u$ to $v$. In the intended interpretation, $v$ directly uses $u$.
 
-**Definition 3.3 (Transitive dependence).** Write $u \Rightarrow v$ if there is a finite chain $u = x_0,\, x_1,\,\dots,\,x_k = v$ with $k \ge 1$ and $R\,x_{i}\,x_{i+1}$ for each $i$. This is the *transitive closure* of $R$: "$u$ is used, directly or indirectly, in the derivation of $v$."
+A **nonempty directed path** from $u$ to $v$ is a finite sequence
 
-**Definition 3.4 (Acyclicity).** The network $R$ is **acyclic** if no statement transitively depends on itself: for all $v$, it is not the case that $v \Rightarrow v$.
+$$
+u=v_0,v_1,\ldots,v_m=v.
+$$
 
-Acyclicity is the exact combinatorial content of the ban on circular reasoning: a purported proof in which $v \Rightarrow v$ would derive $v$ using $v$, which is no proof at all.
+with $m\ge 1$ and $R(v_{i-1},v_i)$ for every $1\le i\le m$. We write $u\leadsto v$ when such a path exists. Thus $\leadsto$ is the nonreflexive transitive closure of $R$.
 
-## 4. The conservation law
+**Definition 2.1 (Acyclicity).** The relation $R$ is **acyclic** if no $v\in V$ satisfies $v\leadsto v$.
 
-**Theorem 4.1 (Conservation, target form).** For any finite dependency network,
-$$\sum_{v \in V} \deg^-(v) = m.$$
+This definition excludes nonempty directed cycles. It allows isolated vertices and does not assume that the relation is transitively closed.
 
-*Proof sketch.* Partition the edge set $E(R)$ according to the target coordinate. The fiber over $v$ is $\{(u,v) : R\,u\,v\}$, whose size is exactly $\deg^-(v)$ because $u \mapsto (u,v)$ is a bijection from the in-neighbours of $v$ to that fiber. Summing fiber sizes recovers $\#E(R) = m$. $\qquad\blacksquare$
+**Definition 2.2 (Strict ancestors).** The strict ancestor set of $v\in V$ is
 
-**Theorem 4.2 (Conservation, source form).** For any finite dependency network,
-$$\sum_{v \in V} \deg^+(v) = m.$$
+$$
+A(v)=\{u\in V:u\leadsto v\}.
+$$
 
-*Proof sketch.* Identical, partitioning $E(R)$ by the source coordinate; the fiber over $v$ has size $\deg^+(v)$. $\qquad\blacksquare$
+The word “strict” emphasizes that $v$ itself is excluded in an acyclic network.
 
-**Corollary 4.3 (Incidence conservation).** $\displaystyle \sum_{v} \deg^-(v) = \sum_{v} \deg^+(v)$.
+**Definition 2.3 (Canonical ancestor rank).** For finite $V$, the canonical ancestor rank of $v$ is
 
-*Proof.* Both sides equal $m$ by Theorems 4.1 and 4.2. $\qquad\blacksquare$
+$$
+\rho(v)=|A(v)|.
+$$
 
-Corollary 4.3 is the directed handshaking identity: every dependency contributes exactly one incoming incidence and exactly one outgoing incidence, so the two global tallies must agree.
+This differs from longest-path depth. It counts all distinct upstream vertices, not merely the number of edges in a longest chain.
 
-## 5. Hubs are inevitable
+### 2.2 Comparability and rank levels
 
-The conservation law converts, via the pigeonhole principle, into an unconditional existence statement about highly connected nodes.
+Two vertices $a,b\in V$ are **comparable by reachability** if $a\leadsto b$ or $b\leadsto a$. They are **mutually incomparable** if neither relation holds.
 
-**Theorem 5.1 (Hub existence).** In any nonempty dependency network ($n \ge 1$) there exists a statement $v^\*$ with
-$$m \le n \cdot \deg^-(v^\*).$$
-Equivalently, $\deg^-(v^\*) \ge m/n$: some statement has in-degree at least the network-wide average.
+For a positive integer $L$, an **$L$-level strict rank map** is a function
 
-*Proof sketch.* Choose $v^\*$ to maximize $\deg^-$ over the (nonempty) vertex set. For every $v$ we then have $\deg^-(v) \le \deg^-(v^\*)$, so
-$$m = \sum_{v} \deg^-(v) \le \sum_{v} \deg^-(v^\*) = n \cdot \deg^-(v^\*),$$
-using Theorem 4.1 for the first equality. $\qquad\blacksquare$
+$$
+r:V\longrightarrow\{0,1,\ldots,L-1\}
+$$
 
-**Theorem 5.2 (Dual hub existence).** In any nonempty dependency network there exists a statement $w^\*$ with $m \le n \cdot \deg^+(w^\*)$.
+such that
 
-*Proof sketch.* Apply Theorem 5.1 to the reversed relation $R^{\mathrm{op}}\,u\,v := R\,v\,u$, under which in-degrees become out-degrees and the edge count is unchanged (the edge-reversal map $(u,v)\mapsto(v,u)$ is a bijection of edge sets). $\qquad\blacksquare$
+$$
+a\leadsto b\quad\Longrightarrow\quad r(a)<r(b).
+$$
 
-**Remark 5.3 (Sharpness).** The bound in Theorem 5.1 is tight: if every in-degree equals a common value $d$, then $m = nd$ and $\deg^-(v^\*) = d$, so $m = n\cdot\deg^-(v^\*)$. The inequality is therefore the exact statement that the maximum in-degree dominates the average, with equality precisely for in-degree-regular networks.
+The definition can be adapted to $L=0$, but then no map exists from a nonempty vertex set. Our substantive applications use positive $L$.
 
-**Remark 5.4 (The scale-free regime).** Theorem 5.1 has bite exactly when $m$ is large relative to $n$. In a mature corpus, results accumulate far faster than the foundational lemmas they cite, so $m$ grows super-linearly in $n$; then $\deg^-(v^\*) \ge m/n$ grows without bound, and equal sharing of the edge budget becomes impossible. Concentration into hubs is not an empirical accident but a forced consequence of a heavy edge budget.
+### 2.3 Weak connectivity after deletion
 
-## 6. Acyclicity, order, and foundations
+Directed connectivity has several inequivalent meanings. Dependency graphs often lack directed paths from late results back to foundations, even when their underlying undirected structure is cohesive. We therefore use weak connectivity.
 
-We now use the logical constraint. Throughout this section $R$ is acyclic in the sense of Definition 3.4.
+Fix a vertex $d\in V$ to be deleted. An **avoiding weak walk** from $a$ to $b$ is a sequence
 
-**Lemma 6.1 (Direct irreflexivity).** If $R$ is acyclic then $R\,v\,v$ fails for every $v$: no statement is an immediate premise of itself.
+$$
+a=w_0,w_1,\ldots,w_t=b
+$$
 
-*Proof.* A single edge $R\,v\,v$ is a length-one chain witnessing $v \Rightarrow v$, contradicting acyclicity. $\qquad\blacksquare$
+such that every $w_i\ne d$ and, for each step, either $R(w_i,w_{i+1})$ or $R(w_{i+1},w_i)$ holds. The case $t=0$ is allowed when $a=b\ne d$.
 
-**Theorem 6.2 (Proof order).** If $R$ is acyclic, the transitive dependence relation $\Rightarrow$ is a strict partial order on $V$: it is irreflexive (by acyclicity) and transitive (concatenation of dependence chains).
+The network is **weakly connected after deletion of $d$** if every pair $a,b\ne d$ has an avoiding weak walk. It is **robust under single-vertex deletion** if this holds for every $d\in V$.
 
-*Proof sketch.* Irreflexivity is exactly Definition 3.4. Transitivity holds because a chain from $u$ to $v$ followed by a chain from $v$ to $w$ is a chain from $u$ to $w$. $\qquad\blacksquare$
+## 3. Ancestor growth and canonical hierarchy
 
-Thus "is used, directly or indirectly, to prove" ranks statements by logical priority. On finite data this ranking has extremal elements.
+The central set-theoretic fact is monotonicity of ancestor sets along reachability.
 
-**Theorem 6.3 (Existence of foundations / sources).** Let $V$ be finite and nonempty and $R$ acyclic. Then there exists $v \in V$ with no incoming dependency: for all $u$, $R\,u\,v$ fails.
+**Lemma 3.1 (Ancestor monotonicity).** If $a\leadsto b$, then $A(a)\subseteq A(b)$.
 
-*Proof sketch.* By Theorem 6.2, $\Rightarrow$ is transitive and irreflexive. A transitive, irreflexive relation on a *finite* set is well-founded — there are no infinite descending chains. Hence $\Rightarrow$ has a minimal element $v$ over the whole (nonempty) set: no $u$ satisfies $u \Rightarrow v$. In particular no $u$ satisfies the stronger $R\,u\,v$, since a direct edge is a dependence chain. So $v$ is a source. $\qquad\blacksquare$
+**Proof sketch.** Take $u\in A(a)$. By definition, $u\leadsto a$. Concatenating this path with a path from $a$ to $b$ gives $u\leadsto b$. Hence $u\in A(b)$. $\square$
 
-**Theorem 6.4 (Existence of frontiers / sinks).** Under the hypotheses of Theorem 6.3 there exists $v \in V$ with no outgoing dependency: for all $u$, $R\,v\,u$ fails.
+Acyclicity strengthens containment to proper containment.
 
-*Proof sketch.* Apply Theorem 6.3 to the reversed relation $R^{\mathrm{op}}$. Its transitive closure is the reverse of $\Rightarrow$, hence still irreflexive, so $R^{\mathrm{op}}$ is acyclic; a source of $R^{\mathrm{op}}$ is a sink of $R$. $\qquad\blacksquare$
+**Lemma 3.2 (Strict ancestor growth).** If $R$ is acyclic and $a\leadsto b$, then
 
-**Interpretation.** Theorem 6.3 is the exact sense in which mathematics rests on axioms. Follow dependency arrows backward from any theorem. Each backward step lands on a result used in its proof; finiteness bars an infinite regress and acyclicity bars a loop, so the walk must halt at a statement with nothing behind it — an axiom or definition. Symmetrically (Theorem 6.4) the sinks are the *frontier*: the newest, most specialized results that nothing yet builds upon. Both theorems are non-vacuous — the acyclicity hypothesis is load-bearing, since a network with a two-cycle $a \to b \to a$ has neither a source nor a sink.
+$$
+A(a)\subsetneq A(b).
+$$
 
-## 6.5. A worked example
+**Proof sketch.** Lemma 3.1 gives inclusion. Moreover, $a\in A(b)$ because $a\leadsto b$. If $a\in A(a)$, there would be a nonempty path from $a$ to itself, contradicting acyclicity. Thus $a$ belongs to the right-hand set but not the left-hand set. $\square$
 
-To make the invariants concrete, consider a network of six statements $\{0,1,2,3,4,5\}$ with dependency edges
-$$0\to2,\quad 1\to2,\quad 0\to3,\quad 1\to3,\quad 2\to4,\quad 3\to4,\quad 4\to5.$$
-Here statements $0$ and $1$ are unproved primitives (axioms or definitions), $2$ and $3$ are lemmas each drawing on both primitives, $4$ is a theorem combining the two lemmas, and $5$ is a corollary. The edge count is $m = 7$.
+We now obtain the canonical ranking result.
 
-The in-degrees are $\deg^-(0)=\deg^-(1)=0$, $\deg^-(2)=\deg^-(3)=2$, $\deg^-(4)=2$, $\deg^-(5)=1$, summing to $0+0+2+2+2+1 = 7 = m$, in agreement with Theorem 4.1. The out-degrees are $\deg^+(0)=\deg^+(1)=2$, $\deg^+(2)=\deg^+(3)=1$, $\deg^+(4)=1$, $\deg^+(5)=0$, also summing to $7 = m$, confirming Theorem 4.2 and Corollary 4.3.
+**Theorem 3.3 (Canonical Topological Rank Theorem).** Let $R$ be an acyclic relation on a finite set $V$. For all $a,b\in V$,
 
-Hub existence (Theorem 5.1) is witnessed by any maximum-in-degree vertex, say $v^\* = 2$ with $\deg^-(2) = 2$; the certificate reads $m = 7 \le n\cdot\deg^-(v^\*) = 6\cdot 2 = 12$. The dual hub (Theorem 5.2) is $w^\* = 0$ with $\deg^+(0)=2$, the most-used primitive.
+$$
+a\leadsto b\quad\Longrightarrow\quad \rho(a)<\rho(b),
+$$
 
-The network is acyclic: no statement can be reached from itself by following arrows. Topological layering peels the sources first and yields the strata
-$$\{0,1\} \;\prec\; \{2,3\} \;\prec\; \{4\} \;\prec\; \{5\},$$
-so the sources (Theorem 6.3) are $\{0,1\}$ — the foundations — and the unique sink (Theorem 6.4) is $\{5\}$ — the frontier. Adding a back-edge $5\to0$ would create the cycle $0\to2\to4\to5\to0$; the layering would then stall with every vertex retaining a positive in-degree, and the network would possess neither a source nor a sink, exactly as the acyclicity hypothesis predicts.
+where $\rho(v)=|A(v)|$.
 
-## 7. From invariants to scale-free statistics
+**Proof sketch.** By Lemma 3.2, $A(a)$ is a proper subset of $A(b)$. Proper containment between finite sets implies strict inequality of cardinalities. $\square$
 
-The three invariants combine into a coherent structural picture:
+### 3.1 Consequences
 
-- **Conservation** (Section 4) fixes the global edge budget and ties it to both degree sequences.
-- **Hub existence** (Section 5) shows a fixed budget cannot be shared equally once it is heavy; maximum degree must exceed the mean, and does so by an unbounded margin in the super-linear regime.
-- **Acyclicity** (Section 6) stratifies the network from foundations to frontier, so a hub's influence propagates upward through the order into everything built above it.
+The theorem gives an intrinsic topological numbering. In particular, every direct edge raises rank, because a direct edge is a nonempty path. Every longer path raises rank as well.
 
-Empirically, dependency networks extracted from large mathematical corpora exhibit an in-degree distribution well approximated by a power law,
-$$P(k) \sim k^{-\gamma}, \qquad \gamma \approx 2.5,$$
-the hallmark of a **scale-free network**. The overwhelming majority of statements depend on a handful of results, while a rare few — the *hubs* — are depended upon by an exponentially larger population. Canonical hub candidates are precisely the reflexively cited results of mathematics: Zorn's Lemma, the Intermediate Value Theorem, the Fundamental Theorem of Calculus, the Sylow Theorems, the Baire Category Theorem, the Hahn–Banach Theorem, Urysohn's Lemma, the Pigeonhole Principle, induction, and the law of excluded middle. Theorems 5.1–5.2 guarantee such hubs must exist; the empirical power law describes *how heavy* their tail is.
+**Corollary 3.4 (No equal-rank reachability).** If $\rho(a)=\rho(b)$ and $a\ne b$, then neither $a\leadsto b$ nor $b\leadsto a$.
 
-The scale-free picture also predicts **fragility**. Scale-free graphs are robust to random node loss but vulnerable to targeted removal of hubs. In our setting, deleting a hub does not merely remove one vertex: by conservation its out-arrows are numerous, and by acyclicity those arrows fan upward through the layered order into every result built on it, so its removal threatens to disconnect large portions of the network. This is the structural mechanism behind the conjecture that removing any single top hub fractures the network into large components.
+**Proof sketch.** Either reachability relation would force a strict inequality between equal integers by Theorem 3.3. $\square$
 
-## 8. Algorithms
+**Corollary 3.5 (Path-length bound).** If
 
-We record the computational recipes underlying the invariants; all run in time linear or near-linear in $n + m$.
+$$
+v_0\to v_1\to\cdots\to v_m
+$$
 
-**Algorithm A (Degree and conservation audit).** Given the relation $R$ on $n$ vertices, compute $\deg^-$ and $\deg^+$ by a single pass over ordered pairs, accumulate $m$, and verify $\sum_v \deg^-(v) = m = \sum_v \deg^+(v)$. Complexity $O(n^2)$ for a dense relation, $O(n+m)$ for a sparse adjacency representation.
+is a directed path in a finite acyclic network, then
 
-**Algorithm B (Hub extraction).** Scan the in-degree array for its maximum to obtain $v^\*$; return $(v^\*, \deg^-(v^\*))$ and certify $m \le n\cdot\deg^-(v^\*)$. Complexity $O(n)$ after degrees are known.
+$$
+0\le \rho(v_0)<\rho(v_1)<\cdots<\rho(v_m)\le |V|-1.
+$$
 
-**Algorithm C (Foundation / frontier detection via topological layering).** Repeatedly extract vertices of current in-degree $0$ (sources), peel them, and decrement their successors' in-degrees; the peeling order is a topological sort. Sources are the first layer; sinks are the vertices of out-degree $0$. If peeling stalls with vertices remaining, the residual subgraph contains a cycle, certifying non-acyclicity. Complexity $O(n+m)$ (Kahn's algorithm).
+Consequently, $m\le |V|-1$.
 
-**Algorithm D (Power-law fit).** From the in-degree multiset, estimate the exponent $\gamma$ by maximum likelihood on the tail $k \ge k_{\min}$:
-$$\hat\gamma = 1 + N_{\ge k_{\min}} \Big/ \sum_{k \ge k_{\min}} \ln\!\frac{k}{k_{\min} - \tfrac12},$$
-where $N_{\ge k_{\min}}$ is the number of nodes with in-degree at least $k_{\min}$.
+**Proof sketch.** Apply Theorem 3.3 at each step. An acyclic vertex cannot be its own ancestor, so every ancestor set has at most $|V|-1$ elements. A strictly increasing sequence of integers in this interval has at most $|V|$ terms. $\square$
 
-## 9. Numerical demonstrations
+The canonical rank need not use consecutive values, and equal rank does not mean that vertices have identical ancestor sets. Its merit is invariance: it is fixed by the reachability relation itself.
 
-The accompanying computational examples exhibit the theory on concrete networks:
+## 4. A width–depth theorem
 
-1. **Conservation audit** on random and structured relations, confirming $\sum \deg^- = m = \sum \deg^+$ exactly.
-2. **Hub certification** on a synthetic preferential-attachment network, verifying $m \le n\cdot\deg^-(v^\*)$ and reporting the ratio $\deg^-(v^\*)/(m/n)$ as a concentration index.
-3. **Topological layering** on an acyclic network, extracting sources (foundations) and sinks (frontier) and detecting cycles when acyclicity is violated.
-4. **Power-law estimation** on a grown scale-free network, recovering an exponent near $\gamma \approx 2.5$.
+The next result applies to any bounded strict rank, not only ancestor rank.
 
-## 10. Discussion and future directions
+**Theorem 4.1 (Width–Depth Incomparability Theorem).** Let $V$ be a finite set, let $R$ be a directed relation on $V$, and let
 
-The framework recasts qualitative intuitions as measurable quantities: "foundational" becomes high out-degree and low rank; "deep" becomes large distance from the sources; "load-bearing" becomes high fragility cost under deletion. The same three laws apply to any justificatory network — legal precedent, software dependencies, scientific citation — wherever claims support one another and (where applicable) do so without circularity.
+$$
+r:V\longrightarrow\{0,1,\ldots,L-1\}
+$$
 
-We highlight the following program.
+be a rank map that strictly increases along every nonempty directed path. If
 
-**Conjecture 10.1 (Rank stratification).** Every finite acyclic network admits a rank function $\rho : V \to \mathbb{N}$ with $\rho(u) < \rho(v)$ whenever $u \to v$, and the number of distinct ranks equals the length of the longest derivation chain. The height function of the well-founded order of Theorem 6.2 is the canonical candidate, turning "foundations exist" into a full depth spectrum.
+$$
+L<|V|,
+$$
 
-**Conjecture 10.2 (Super-average hub concentration).** If $m \ge c\,n^{1+\delta}$ for constants $c,\delta > 0$, then the maximum in-degree is at least $c\,n^{\delta}$, and iterating the hub bound on residual networks yields a descending ladder of hubs whose degree sequence is what a power law measures.
+then there exist distinct vertices $a,b\in V$ such that
 
-**Conjecture 10.3 (Hub-deletion fragility).** There is a constant $\alpha > 0$ such that deleting any statement of in-degree exceeding $\alpha\,m/n$ leaves a residual network whose largest weakly-connected component omits a constant fraction of all statements — the tree cut-vertex phenomenon transferred to the spanning forest of a directed acyclic graph.
+$$
+\neg(a\leadsto b)\qquad\text{and}\qquad\neg(b\leadsto a).
+$$
 
-Together these would carry the theory from existence statements (hubs and foundations exist) to the quantitative shape of the degree distribution and the robustness profile of mathematics itself.
+**Proof sketch.** Since more than $L$ vertices are assigned to only $L$ levels, the pigeonhole principle gives distinct $a,b$ with $r(a)=r(b)$. If $a\leadsto b$, strict rank increase would imply $r(a)<r(b)$, contradicting equality. The reverse path is ruled out identically. $\square$
 
-## 10.5. Limitations and modelling assumptions
+The theorem can be read as a minimal width statement. If “depth” is encoded by the number of available ordered levels, then excess population forces at least one pair of parallel, mutually unreachable vertices.
 
-Three modelling choices deserve comment. First, we treat the dependency relation as *given* and *decidable*; in practice the same mathematical result may be recorded under several statements, and the granularity of what counts as a single "statement" affects degree counts. Our theorems are invariant under any fixed choice of granularity, but cross-corpus comparisons require a consistent one. Second, acyclicity is a property of *proofs*, not of *statements*: two theorems may be logically equivalent (each derivable from the other) even though no single proof is circular, and a faithful dependency network records the derivation actually used rather than the space of all possible derivations. Third, the empirical exponent $\gamma \approx 2.5$ is a measured quantity whose precise value depends on the corpus and on the tail cutoff $k_{\min}$; our theorems guarantee the *existence* of hubs and foundations unconditionally, but the *heaviness* of the tail is an empirical input, not a theorem. These caveats delimit the scope of the results without weakening them: conservation, hub existence, and the foundation theorems hold for every finite network satisfying the stated hypotheses.
+**Corollary 4.2 (Canonical-rank collision).** In a finite acyclic network, if the canonical ancestor rank assumes fewer distinct values than there are vertices, then the network contains a mutually incomparable pair.
 
-## 11. Conclusion
+**Proof sketch.** Relabel the distinct rank values in increasing order to obtain a bounded strict rank map, then apply Theorem 4.1. Equivalently, two vertices share a canonical rank and Corollary 3.4 applies. $\square$
 
-Viewing proofs as a directed acyclic graph exposes three exact laws: dependencies are conserved, hubs are forced, and finiteness with acyclicity guarantees foundations and a frontier. These are the minimal structural facts any dependency network must obey, and they supply the scaffolding on which the empirical scale-free geometry of mathematics — power-law in-degrees and hub-dominated fragility — rests. Mathematics is not a heap of facts but a network with a blueprint, and the blueprint is a graph whose most connected nodes hold the entire structure together.
+### 4.1 A quantitative extension by counting
+
+Although the principal theorem guarantees only a pair, the same counting argument yields a larger level set. If $N=|V|$ vertices occupy $L$ levels, some level contains at least
+
+$$
+\left\lceil\frac{N}{L}\right\rceil
+$$
+
+vertices. Since vertices on one strict rank level cannot reach one another, that entire level is an antichain under reachability.
+
+**Proposition 4.3 (Rank-level antichain bound).** Under the hypotheses of Theorem 4.1, there is a set of at least $\lceil |V|/L\rceil$ pairwise mutually incomparable vertices.
+
+**Proof sketch.** Choose a largest fiber of $r$. The pigeonhole principle bounds its size below by $\lceil |V|/L\rceil$. Any two distinct members have equal rank and hence cannot be related in either direction. $\square$
+
+This proposition clarifies the width–depth tradeoff: compressing many vertices into few legal levels creates a broad antichain, not merely an isolated incomparable pair.
+
+## 5. A robust acyclic family
+
+We now show that acyclicity does not imply vulnerability to single-vertex deletion.
+
+For $n\ge 1$, let
+
+$$
+V_n=\{0,1,\ldots,n-1\}
+$$
+
+and define the strict total-order network $T_n$ by
+
+$$
+R_n(i,j)\quad\Longleftrightarrow\quad i<j.
+$$
+
+Thus every pair of distinct vertices has exactly one edge between them, oriented from the smaller index to the larger.
+
+**Theorem 5.1 (Acyclicity of the Strict Total-Order Network).** For every $n$, the network $T_n$ is acyclic.
+
+**Proof sketch.** Every directed edge strictly increases the integer label. By transitivity, every nonempty directed path from $i$ to $j$ satisfies $i<j$. A path from $i$ back to $i$ would imply $i<i$, which is impossible. $\square$
+
+**Theorem 5.2 (Robustness After Arbitrary Single-Vertex Deletion).** Let $d,a,b\in V_n$ with $a\ne d$ and $b\ne d$. Then there is an avoiding weak walk from $a$ to $b$ in $T_n$. Therefore deleting any one vertex leaves all surviving vertices weakly connected.
+
+**Proof sketch.** If $a=b$, use the zero-step walk at $a$. If $a\ne b$, then either $a<b$ or $b<a$. In the first case there is a direct edge $a\to b$; in the second there is a direct edge $b\to a$, which can be traversed in the reverse direction by a weak walk. Both endpoints survive, so the one-step walk avoids $d$. $\square$
+
+**Corollary 5.3 (Infinite Robust Acyclic Family).** For every $n\ge 3$, there exists an acyclic dependency network on $n$ vertices, containing at least three distinct vertices, that remains weakly connected after deletion of any single vertex.
+
+**Proof sketch.** Use $T_n$. The vertices $0$, $1$, and $2$ are distinct because $n\ge 3$. Apply Theorems 5.1 and 5.2. $\square$
+
+### 5.1 Interpretation
+
+The family $T_n$ is deliberately extreme: it is the densest possible acyclic orientation of a complete graph. That extremity is useful. A universal implication from acyclicity to deletion fragility would have to hold for every acyclic network, including $T_n$. Since $T_n$ is robust, no such implication exists.
+
+This does not show that observed proof networks are robust. It shows that robustness must be measured or derived from additional hypotheses. In particular, degree alone is insufficient. Internal vertex-disjoint paths, articulation structure in the underlying undirected graph, and redundancy of support are more directly connected to deletion damage.
+
+## 6. Algorithms
+
+### 6.1 Canonical ancestor ranks
+
+Given an acyclic graph with $N$ vertices and $M$ edges, canonical ranks can be computed by topological dynamic programming with bit sets.
+
+1. Compute a topological ordering.
+2. Initialize an empty ancestor bit set $B(v)$ for each vertex.
+3. Process vertices in topological order.
+4. For every edge $u\to v$, update
+
+$$
+B(v)\leftarrow B(v)\cup B(u)\cup\{u\}.
+$$
+
+5. Return $\rho(v)=|B(v)|$.
+
+With arbitrary sets, the worst-case running time is $O(NM)$ and storage is $O(N^2)$. With machine-word bit sets of word size $w$, unions give a typical bound of $O(MN/w)$ word operations after topological sorting, whose cost is $O(N+M)$.
+
+Correctness follows by induction over the topological ordering. Every ancestor of $v$ reaches some immediate predecessor $u$ and is therefore contributed by $B(u)\cup\{u\}$. Conversely, every inserted vertex reaches $v$.
+
+### 6.2 Finding an incomparable pair from a rank bound
+
+Given ranks in $L$ levels, store the first vertex seen at each level. On encountering a second vertex with the same rank, return the pair. If the rank is known to increase along reachability, the pair is automatically mutually incomparable.
+
+The running time is $O(N+L)$ with an array, or expected $O(N)$ with a hash map; storage is $O(L)$. Under $L<N$, success is guaranteed.
+
+### 6.3 Testing deletion robustness
+
+For each candidate deleted vertex $d$, run breadth-first search in the underlying undirected graph induced by $V\setminus\{d\}$. If all survivors are reached, deletion preserves weak connectivity. Repeating this for all $d$ costs $O(N(N+M))$ time and $O(N+M)$ working storage.
+
+For the total-order family, the general test is unnecessary: every surviving pair has a direct edge in one orientation, so robustness follows immediately. For empirical corpora, standard articulation-point algorithms can identify all vulnerable vertices in $O(N+M)$ time on the underlying undirected graph.
+
+## 7. Numerical examples
+
+Consider the chain $0\to1\to2\to3$. Its ancestor sets have sizes $0,1,2,3$, so canonical rank strictly increases at every step. There are four levels for four vertices and no forced rank collision.
+
+Now consider the diamond with edges
+
+$$
+0\to1,\quad 0\to2,\quad 1\to3,\quad 2\to3.
+$$
+
+The ancestor sets are
+
+$$
+A(0)=\varnothing,\quad A(1)=A(2)=\{0\},\quad A(3)=\{0,1,2\}.
+$$
+
+Thus the ranks are $0,1,1,3$. Vertices $1$ and $2$ collide in rank and are mutually incomparable, illustrating the width–depth mechanism.
+
+For $T_5$, the canonical ranks are $0,1,2,3,4$, because vertex $j$ has exactly the ancestors $0,\ldots,j-1$. Delete vertex $2$. The survivors $0,1,3,4$ remain pairwise adjacent in the underlying undirected graph. The same is true no matter which vertex is deleted.
+
+These examples also show that canonical rank and fragility are different attributes. Both the chain and $T_5$ have ranks $0$ through $4$, but deleting an interior vertex disconnects the underlying chain while no single deletion disconnects $T_5$.
+
+## 8. What acyclicity does not imply
+
+### 8.1 No universal power law
+
+A scale-free hypothesis commonly takes the form
+
+$$
+P(K=k)\sim Ck^{-\gamma}
+$$
+
+for large degree $k$, where $K$ might denote direct reuse count, transitive reuse count, or another centrality measure. Acyclicity imposes no such distribution. A directed chain, a balanced tree, and a strict total order are all acyclic and have incompatible degree profiles.
+
+A valid empirical study must specify the sampled units, edge extraction, direction of degree, treatment of definitions, lower-tail cutoff, estimation method, uncertainty, and competing distributions. An exponent near a particular value cannot be inferred from graph type.
+
+### 8.2 No universal hub list
+
+The identity of the most reused theorem depends on the corpus and its conventions. A theorem may appear as an explicit dependency in one domain but be hidden inside a library abstraction in another. Domain size, theorem age, naming practices, and foundational choices all affect counts. Historical prominence and graph centrality are related questions, not interchangeable definitions.
+
+### 8.3 No universal deletion fragility
+
+The robust family in Section 5 directly refutes any claim that every nontrivial acyclic network has a critical vertex whose deletion destroys weak connectivity. More generally, high degree does not imply articulation. A high-degree vertex surrounded by alternate paths may be harmless to remove, while a low-degree bridge may be structurally essential.
+
+## 9. Applications and empirical protocol
+
+The structural results support a disciplined workflow for studying proof dependencies.
+
+First, create a versioned corpus and publish the extraction policy. At least three graphs are useful: direct explicit references, transitive references, and references after collapsing definitional expansions. Second, verify acyclicity or document and resolve cycles introduced by mutually recursive packaging or coarse aggregation. Third, compute canonical ancestor ranks and rank-level widths. Fourth, estimate degree tails separately by rank and domain rather than fitting only a global mixture. Fifth, evaluate deletion damage and compare predictors including degree, articulation status, and internally vertex-disjoint path counts.
+
+The width–depth theorem offers a corpus statistic that does not presuppose a generative network model. Rank histograms reveal how many statements occupy each structural layer. Large fibers are certified antichains under reachability and can indicate parallel development.
+
+Robustness tests have practical applications to knowledge organization. If a theorem serves as a pedagogical bottleneck, alternate derivations may improve resilience even when the logical corpus remains unchanged. In automated theorem retrieval, canonical rank can constrain search direction: prerequisites must lie at lower rank than their dependents. In modular exposition, broad antichain layers suggest topics that can be taught or processed in parallel.
+
+## 10. Discussion
+
+The canonical rank $\rho(v)=|A(v)|$ is global: adding a remote upstream dependency can alter ranks throughout a downstream region. This sensitivity is not a defect when the goal is to measure accumulated support, but it means ranks should be compared only within a fixed, versioned graph.
+
+The width–depth theorem is elementary in proof but substantial in interpretation. It states exactly what bounded hierarchy forces and no more. It does not claim semantic independence: incomparable statements may concern the same objects or even be logically equivalent. It claims only absence of a recorded directed dependency path in either direction.
+
+Similarly, weak connectivity is intentionally modest. A surviving network can be weakly connected while losing all directed derivations from some foundations to some conclusions. Other robustness notions—including preservation of reachability pairs, strongly connected structure, or derivability under alternate premise sets—may be appropriate for different questions. The present choice addresses the common but ambiguous claim that deleting a hub “disconnects” the network.
+
+The main methodological conclusion is that universal structure and empirical regularity should be reported separately. Hierarchy follows from acyclicity and finiteness. Width follows when the hierarchy is bounded relative to population. Fragility and heavy tails require data and additional assumptions.
+
+## 11. Future work
+
+Several directions follow naturally. Tail exponents should be tested for stability under direct, transitive, and definition-collapsed dependency policies. Width growth can be studied across domains by comparing rank histograms as corpora expand. Deletion damage should be modeled using redundant path counts rather than degree alone. Hub rankings should be stratified by field and normalized for age and corpus size. Finally, heavy-tail estimation should be conditioned on canonical rank to determine whether a global tail is genuine or merely a mixture of heterogeneous layers.
+
+A further theoretical question is to characterize the strongest robustness conclusions obtainable from combinations of acyclicity, minimum underlying degree, bounded width, and path redundancy. Another is to compare ancestor-count rank with longest-path depth and determine which statistic is more stable under corpus extension.
+
+## 12. Conclusion
+
+Finite acyclic dependency networks possess a canonical hierarchy: the number of strict ancestors rises along every dependency path. Any legal hierarchy with fewer levels than vertices forces mutually incomparable statements, and indeed a rank level of size at least $\lceil |V|/L\rceil$. Yet acyclicity does not imply fragility. Strict total-order networks form an infinite family that remains weakly connected after every single-vertex deletion.
+
+These theorems establish a clean boundary. Hierarchy and a width–depth tradeoff are universal order-theoretic consequences. Power laws, historical hubs, and deletion damage are corpus-dependent hypotheses. Treating that boundary explicitly turns the network metaphor into a rigorous and testable research program.
