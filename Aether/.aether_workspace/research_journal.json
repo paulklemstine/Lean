@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "e2f5c991",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\n## 1. Weighted maximum-nullity equality on triangle-unit networks\n\n**Conjecture.** For every connected, diamond-free, claw-free cubic graph whose contraction\nmultigraph is a simpl",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-16T08:27:46",
-      "title": "ArXiv paper: Claw-free cubic graphs and zero forcing"
-    },
-    {
       "cycle_id": "7d82c497",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\n## 1. Additive-energy amplification beyond the cardinality threshold\n\n**Conjecture.** Let two subsets of the depth-$n$ residue tree over $\\mathbb{F}_p$ omit a fixed positive propo",
@@ -499,19 +489,19 @@
       "theorem_count": 65,
       "timestamp": "2026-07-18T14:44:12",
       "title": "Close Proofs: Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
+    },
+    {
+      "cycle_id": "c83ba873",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n## 1. Adaptive-submodularity criterion for greedy posterior voting\n\n**Conjecture.** In a finite social-deduction game whose information states form a belief-state Markov process,",
+      "quality_score": 0.75,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-18T14:44:29",
+      "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "daf8e94d",
-      "domain": "Novelty",
-      "key_insight": "# Future directions: the extremal regime of AVD-total colourings of central graphs\n\nThis cycle characterised the *extremal regime* `|V(G)| = d + 2` for a `d`-regular\nnon-complete graph `G`, showing it",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 38,
-      "timestamp": "2026-07-14T21:57:46",
-      "title": "Working with a self‑contained model of total colourings (proper vertex colouring"
-    },
     {
       "cycle_id": "9a38651d",
       "domain": "Novelty",
@@ -2501,6 +2491,16 @@
       "theorem_count": 65,
       "timestamp": "2026-07-18T14:44:12",
       "title": "Close Proofs: Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
+    },
+    {
+      "cycle_id": "c83ba873",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n## 1. Adaptive-submodularity criterion for greedy posterior voting\n\n**Conjecture.** In a finite social-deduction game whose information states form a belief-state Markov process,",
+      "quality_score": 0.75,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-18T14:44:29",
+      "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.73
     }
   ],
-  "last_updated": "2026-07-18T14:44:12",
+  "last_updated": "2026-07-18T14:44:29",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "535698fb",
-        "quality": 0.66,
-        "theorems": 14,
-        "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk"
-      },
-      {
         "cycle_id": "d1663b23",
         "quality": 0.7,
         "theorems": 0,
@@ -3141,6 +3135,12 @@
         "quality": 0.78,
         "theorems": 11,
         "title": "Deepening: Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
+      },
+      {
+        "cycle_id": "c83ba873",
+        "quality": 0.75,
+        "theorems": 0,
+        "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
       }
     ],
     "Bridges": [

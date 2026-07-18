@@ -187,20 +187,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Fourier Transform of the Riemann Zeta: Hearing the Primes"
   },
   {
-    "consumed_by_exp_id": "64b7f63b",
-    "description": "Cycle 18410e31 (Q=0.770) proved 12 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: When a theorem prover searches for a proof, it explores a tree of possible derivation steps. The branching factor is the number of applicable inference rules at each step. Define the proof-search frac",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "sorry_fill_18410e31_fcdd9dd6",
-    "priority_score": 0.8200000000000001,
-    "research_mode": "team",
-    "source_exp_id": "18410e31",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T09:21:32.344494+00:00",
-    "title": "Close Proofs: Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The sequence of primes 2, 3, 5, 7, 11, 13, ... defines a point cloud in R where the n-th prime p_n is at position p_n on the real line. The gaps between primes create a topological structure. Define the persistent homology of the prime point cloud as the Rips filtration R_epsilon = {p_n : |p_m - p_n| <= epsilon}. As epsilon increases, more primes are connected, and the topology changes. Conjecture: The persistent H_0 (connected components) of the prime point cloud has the same barcode as a Poisson point process with intensity 1/log(x). Specifically, the bar lengths in H_0 follow an exponential distribution with mean equal to the average prime gap (which is approximately log(x) by the prime number theorem). The persistent H_1 (1-dimensional holes) of the prime point cloud appears at scale epsilon ~ log(x)^2, corresponding to prime pairs (p, p+2k) where 2k is a specific even gap. The longest H_1 bar corresponds to the twin prime conjecture: it persists from epsilon = 2 (the twin prime scale) to epsilon = infinity. Test: compute persistent homology of the primes up to 10^6 using Rips filtration and compare with the Poisson point process prediction. Verify that H_0 bar lengths are exponentially distributed with mean log(x). Impact: primes have topology \u2014 their gaps create persistent homology that encodes the twin prime conjecture and other arithmetic properties.",
     "domains": [
@@ -3919,6 +3905,50 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n- Replace the parity-normalized action model by an explicit cubical set whose vertices are recipes, edges are elementary substitutions, and higher cubes encode commuting independent substitutions.\n- Prove geometric realization results for that cubical set, including contractibility of the full Boolean cube and the homotopy type of selected subcomplexes.\n- Distinguish a recipe fiber (all recipes producing one flavor profile) from its substitution graph. The two-point `S\u2070` claim requires the fiber to contain exactly two isolated vertices; merely having one binary ingredient coordinate produces an edge if that substitution is allowed.\n- Model ordered cooking operations before quotienting by commuting and cancellation relations. This is necessary for meaningful nontrivial loops; the present parity-normalized model proves that all normalized loops are trivial.\n- Formalize empirical recipe data as a finite simplicial complex, specify a reproducible rule for simplices, and compute certified homology. A list of 100 recipes alone does not determine a simplicial complex or homotopy groups.\n- Introduce a flavor map from a quantitative ingredient/process space to a taste space, then study fibers under explicit continuity and regularity assumptions. No general CW-complex conclusion follows without such assumptions.\n",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_0330",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "fb82936b",
+    "status": "available",
+    "timestamp": "2026-07-18T14:43:59.014026+00:00",
+    "title": "Future directions from cycle fb82936b"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n1. **Variable branching alphabets.** Generalize binary profiles to a fixed `b`-ary alphabet and prove that normalization by `log b` again bounds dimension by `1` and realizes rational free-level densities.\n\n2. **Aperiodic pruning.** Replace periodic residue sets by arbitrary sets of free levels. Relate upper box dimension to the limsup of free-level densities and lower box dimension to the corresponding liminf.\n\n3. **Search policy and cost.** Enrich `SearchInstance` with an exploration order, failed-branch costs, and terminal nodes. The present non-determination theorem shows that these semantic data are necessary before dimension can imply proof-search time or shortest-proof length.\n\n4. **Finite-sample bounds.** Extend the exact complete-period result to explicit error bounds at arbitrary depths. The existing free-count sandwich suggests an error of order `R.card / n`.\n\n5. **Entropy formulation.** Express dimension as normalized entropy growth for nonuniform profiles and investigate subadditive hypotheses under which the limiting entropy exists.\n\n6. **Monotonicity under pruning.** Develop operations on search profiles (intersection, union, and levelwise restriction) and prove corresponding dimension inequalities, allowing modular comparison of proof-search strategies.\n",
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_0331",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "64b7f63b",
+    "status": "available",
+    "timestamp": "2026-07-18T14:44:07.401295+00:00",
+    "title": "1. **Variable branching alphabets.** Generalize binary profiles to a fixed `b`-a"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## 1. Adaptive-submodularity criterion for greedy posterior voting\n\n**Conjecture.** In a finite social-deduction game whose information states form a belief-state Markov process, maximum-posterior elimination is globally optimal whenever the village continuation value is adaptively submodular in the set of eliminated wolves and exchangeable under permutations of surviving identities.\n\nThe key insight is that the proved affine continuation theorem is the one-step, modular boundary case of a broader diminishing-returns principle. **Why now?** The exact boundary between local classification optimality and sequential optimality has been isolated, making exchangeability and diminishing returns separately testable.\n\n## 2. Value-of-information phase transition\n\n**Conjecture.** For fixed wolf density below one half, there is a critical signal-to-noise ratio in an exchangeable voting-channel model above which Bayesian villagers have win probability bounded away from zero uniformly in population size, while below it their win probability converges to the information-free baseline.\n\nThe key insight is that posterior concentration, rather than posterior ranking alone, should control whether information overcomes the wolves' elimination rate. **Why now?** The exact information-free recurrence supplies a null model, and likelihood channels can be compared against it through posterior concentration inequalities.\n\n## 3. Parity-corrected asymptotics for the information-free game\n\n**Conjecture.** For every fixed wolf count `k`, the information-free village win probabilities have two distinct asymptotic expansions according to the parity of the initial population, with a common leading limit but different first-order corrections.\n\nThe key insight is that daytime and nighttime villager losses occur in pairs after a miss, preserving a parity trace until absorption. **Why now?** Exact values from seven through twenty players show a stable even/odd oscillation that the proposed single quadratic scaling cannot capture.\n\n## 4. Spin-system representation of correlated suspicion\n\n**Conjecture.** Under a pairwise log-linear likelihood model for voting histories, the posterior over role assignments is an Ising model conditioned on fixed total wolf number; Bayesian role complementation acts as spin flip, while vote correlations become couplings whose sign predicts coalition polarization.\n\nThe key insight is that the centered one-player posterior already transforms exactly as an Ising spin, and pairwise log likelihoods naturally become quadratic spin interactions. **Why now?** The one-site symmetry bridge is established, so the next falsifiable step is to derive and test the full constrained Gibbs representation.\n\n## 5. Sequential regret for approximate posterior voting\n\n**Conjecture.** In identity-symmetric continuation models under calibrated Bayesian updates, the cumulative regret of approximate posterior voting admits a horizon-sensitive martingale bound in terms of the successive posterior approximation errors.\n\nThe key insight is that the exact one-step theorem bounds regret by `(good-bad)\u03b5`, turning posterior approximation error directly into utility regret. **Why now?** The one-step coefficient and its sharp linear dependence are established, leaving the concrete problem of controlling how these errors propagate through sequential belief updates.\n",
+    "domains": [
+      "Computation",
+      "Pythagorean"
+    ],
+    "id": "fd_0332",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "c83ba873",
+    "status": "available",
+    "timestamp": "2026-07-18T14:44:15.194426+00:00",
+    "title": "**Conjecture.** In a finite social-deduction game whose information states form "
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle d1663b23 (Q=0.700) proved 0 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'A minimal modularity lifting theorem for Siegel modular forms' and formalize its key results. Abstract: We prove a minimal modularity lifting theorem (in the spirit of Gen",
     "domains": [
       "Applications"
@@ -3944,21 +3974,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-17T14:03:03.735341+00:00",
     "title": "Close Proofs: Dark Mathematics: Theorems That Exist But Cannot Be Found"
-  },
-  {
-    "consumed_by_exp_id": "c83ba873",
-    "description": "In the game Werewolf (Mafia), n players include k werewolves and n-k villagers. Each night, the werewolves eliminate one villager. Each day, the villagers vote to eliminate one player (possibly a werewolf). The villagers win if all werewolves are eliminated; the werewolves win if they equal or outnumber villagers. Conjecture: The optimal Bayesian strategy for villagers is to vote for the player with the highest posterior probability of being a werewolf, where the prior is k/n and the likelihood updates are based on the player's voting pattern and survival. More precisely, define the werewolf posterior P(W_i | evidence) using Bayes' theorem: P(W_i) = k/n (prior), P(evidence | W_i) = product of conditional probabilities of observed events given that player i is a werewolf. The optimal strategy maximizes P(villagers win) = P(correct elimination at each day round). For n=7, k=2: the villagers' win probability with optimal Bayesian play is approximately 0.36 (known from game theory). Conjecture: For general n and k, the villagers' win probability is approximately C * (1 - k/(n-k))^2 where C is a constant depending on the information structure. Test: simulate 10^6 games with n=7 to n=20 players and Bayesian villagers, measure the win probability, and fit to the conjectured formula. Impact: social deduction has an optimal Bayesian strategy, and the werewolves' advantage scales as (k/(n-k))^2.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0314",
-    "priority_score": 0.72,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T12:31:56.934304+00:00",
-    "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
   },
   {
     "consumed_by_exp_id": "",
@@ -3988,21 +4003,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-18T13:04:43.611716+00:00",
     "title": "Graph Coloring with Emotions: The Chromatic Polynomial Meets Psychology"
-  },
-  {
-    "consumed_by_exp_id": "fb82936b",
-    "description": "In homotopy type theory (HoTT), equal things can be equal in different ways \u2014 there can be multiple paths between two points. Apply this to cooking: two recipes can produce the same dish, but the paths (methods) may differ. The type of a dish is its flavor profile (a point in taste space R^n where n is the number of flavor dimensions). Two recipes are 'equal' if they produce the same flavor profile, but the path between them (the transformation from one recipe to another) may not be unique. Conjecture: The space of all recipes that produce a given flavor profile has the homotopy type of a CW-complex whose cells correspond to the possible ingredient substitutions. For example, the space of recipes that produce 'chocolate chip cookies' has the homotopy type of S^0 (two points: with nuts and without nuts), because the only binary choice is nuts/no-nuts. More complex dishes have higher homotopy groups: the space of recipes for 'curry' has pi_1 = Z (generated by the loop 'add more spice -> simmer -> add more coconut milk -> simmer -> add more spice'), representing the fundamental cycle of Indian cooking. Test: enumerate 100 recipes for chocolate chip cookies and compute the homotopy groups of the resulting simplicial complex. Impact: cooking is homotopy theory. Every dish is a point, every substitution is a path, and every cuisine is a homotopy type.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0302",
-    "priority_score": 0.66,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T10:21:24.002098+00:00",
-    "title": "Homotopy Type Theory of Cooking Recipes: Paths Between Dishes"
   },
   {
     "consumed_by_exp_id": "",

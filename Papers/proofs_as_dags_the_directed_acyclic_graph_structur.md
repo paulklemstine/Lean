@@ -1,45 +1,32 @@
-# Computational Evidence — Dependency Networks as DAGs
+# Computational Evidence
 
-We model a dependency network by a decidable relation `R` on a finite vertex type,
-where `R u v` means "statement `u` is directly used to derive statement `v`".
+## Small-case calculations
 
-## 1. Conservation law (directed handshaking)
+The formal counterexample family uses the strict total order on `n` vertices: there is an edge `i → j` exactly when `i < j`. Direct enumeration gives:
 
-Toy network: the strict order `R i j := i < j` on `Fin 5` (a maximal transitive
-acyclic network — every earlier statement feeds every later one).
+| `n` | edges | in-degrees | out-degrees | weakly connected after every one-vertex deletion? |
+|---:|---:|---|---|---|
+| 1 | 0 | 0 | 0 | yes |
+| 2 | 1 | 0, 1 | 1, 0 | yes |
+| 3 | 3 | 0, 1, 2 | 2, 1, 0 | yes |
+| 4 | 6 | 0, 1, 2, 3 | 3, 2, 1, 0 | yes |
+| 5 | 10 | 0, 1, 2, 3, 4 | 4, 3, 2, 1, 0 | yes |
+| 6 | 15 | 0, 1, 2, 3, 4, 5 | 5, 4, 3, 2, 1, 0 | yes |
+| 7 | 21 | 0, 1, 2, 3, 4, 5, 6 | 6, 5, 4, 3, 2, 1, 0 | yes |
+| 8 | 28 | 0, 1, 2, 3, 4, 5, 6, 7 | 7, 6, 5, 4, 3, 2, 1, 0 | yes |
 
-| statement `v` | 0 | 1 | 2 | 3 | 4 |
-|---------------|---|---|---|---|---|
-| in-degree     | 0 | 1 | 2 | 3 | 4 |
+The edge counts follow `n(n-1)/2`. More importantly, after deleting any vertex, each two surviving vertices still have a direct edge in one orientation. This survives as the theorem `totalOrderDAG_robust_after_deletion`.
 
-* `∑ v, inDeg v = 0+1+2+3+4 = 10`.
-* `edgeCount = #{(i,j) : i < j} = C(5,2) = 10`.
+## Counterexample hunt
 
-These agree, confirming `sum_inDeg_eq_edgeCount`. The same total is obtained by summing
-out-degrees `[4,3,2,1,0]`, confirming `sum_inDeg_eq_sum_outDeg`.
+The claim that acyclicity itself makes a dependency network fragile fails throughout the tested family. Every tested order network is acyclic, yet no vertex deletion weakly disconnects its survivors. The proof establishes this for every finite `n`, not merely the table above.
 
-## 2. Hub existence
+A second warning concerns degree laws. These examples have a uniform one-per-degree profile rather than a power law. Consequently, no power-law exponent follows from the DAG axioms alone; such a claim must be tested against a precisely extracted corpus.
 
-Maximum in-degree `m = 4`. The pigeonhole bound of `exists_inDeg_hub` predicts
-`n · m = 5·4 = 20 ≥ 10 = edgeCount`, which holds. The bound is tight up to a factor of 2
-here; for a network with a single universal hub (a "star") it becomes an equality.
+## Sequence lookup
 
-## 3. Acyclicity and foundations
+The edge-count sequence `0, 1, 3, 6, 10, 15, 21, 28, …` is the triangular-number sequence, OEIS A000217. No external sequence identification is needed for the structural proofs.
 
-The strict order on `Fin 5` is acyclic: its transitive closure is again `<`, which is
-irreflexive. The unique source (in-degree `0`) is statement `0` — the sole "axiom" of the
-network — matching `exists_source`; the unique sink is statement `4`, matching `exists_sink`.
-Adding any back-edge `j → i` with `i < j` creates a 2-cycle, destroying both the source and
-the sink — the boundary case that shows the acyclicity hypothesis is load-bearing.
+## Scope of the evidence
 
-## 4. Counterexample hunt
-
-* *Claim tested:* "every finite network has a source." **False** without acyclicity: the
-  2-cycle `{0→1, 1→0}` on `Fin 2` has in-degree `1` at every vertex. This is why
-  `exists_source`/`exists_sink` require `Acyclic R`.
-* *Claim tested:* "the hub bound needs nonemptiness." On the empty type both sides are `0`,
-  so the inequality is not informative; `exists_inDeg_hub` is therefore guarded by
-  `0 < Fintype.card V`, under which it always locates a genuine maximiser.
-
-No counterexample was found to any stated theorem; the failing universal claims above are
-exactly the ones excluded by the hypotheses.
+No corpus-wide Mathlib dependency graph was extracted in this cycle, so the proposed numerical exponent and historical top-ten ranking remain untested empirical hypotheses. The calculations instead guided a rigorous boundary result: hierarchy is forced by acyclicity, while scale-free statistics and deletion fragility are not.
