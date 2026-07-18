@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "45e15555",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Colorful Carathéodory with polynomial-size witnesses\n\nThis cycle established a two-parameter picture of *witness complexity* for the\ncolorful Carathéodory phenomenon: a face capt",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-14T19:51:30",
-      "title": "Colorful Carathéodory theorem for spanning k-trees admits a polynomial-size witness"
-    },
-    {
       "cycle_id": "19e0135d",
       "domain": "Applications",
       "key_insight": "# Future Directions — Universality and genus-dependence of the cubic swap-chain gap\n\nThis cycle turned two of the standing conjectures about fixed-genus chord-swap\nchains into unconditional theorems a",
@@ -2501,6 +2491,16 @@
       "theorem_count": 61,
       "timestamp": "2026-07-18T13:38:04",
       "title": "ArXiv paper: Strongly complete sets and a conjecture of Erdős"
+    },
+    {
+      "cycle_id": "7a438864",
+      "domain": "Computation",
+      "key_insight": "# Future directions\n\n1. **Heterogeneous planets.** Generalize the equal-rate formula `(1-p)^N` to `∏ i, (1-pᵢ)` and prove `1 - ∏ i, (1-pᵢ) ≤ ∑ i, pᵢ` over finite populations.\n2. **Dependence without i",
+      "quality_score": 0.66,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-18T13:38:14",
+      "title": "The Fermi Paradox as a Pigeonhole Principle: Why We Are Alone"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.75
     }
   ],
-  "last_updated": "2026-07-18T13:38:04",
+  "last_updated": "2026-07-18T13:38:14",
   "open_questions": [
     {
       "context": "",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "f5358691",
-        "quality": 0.72,
-        "theorems": 16,
-        "title": "Persistent Cycles in Randomized Graphs via Hyperstable Structural Constraints"
-      },
-      {
         "cycle_id": "a1a5801c",
         "quality": 0.83,
         "theorems": 13,
@@ -3327,6 +3321,12 @@
         "quality": 0.76,
         "theorems": 8,
         "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
+      },
+      {
+        "cycle_id": "7a438864",
+        "quality": 0.66,
+        "theorems": 14,
+        "title": "The Fermi Paradox as a Pigeonhole Principle: Why We Are Alone"
       }
     ],
     "Cryptography": [
