@@ -1,91 +1,133 @@
-# How Many Points Does It Take to See a Shape?
+# Reading Shape from a Cloud of Points
 
-## A famous theorem, reborn as a question about data
+## A Poincaré-inspired guide to what proximity complexes can—and cannot—tell us
 
-At the turn of the twentieth century, Henri Poincaré asked one of the most consequential questions in the history of geometry: if a three-dimensional space has no holes — if every loop drawn inside it can be shrunk to a point — must it secretly be a sphere? A century later, Grigori Perelman proved that the answer is *yes*. Every simply connected closed three-dimensional space is, topologically, the three-dimensional sphere. It was one of the great intellectual achievements of our era, and it settled a problem so hard that it carried a million-dollar prize.
+A medical scanner does not see an organ as a smooth surface. A robot does not receive a perfect map of the room. A climate sensor network does not hand us a continuous atmospheric field. In each case, the raw object is a finite cloud of points: locations in a large coordinate space, perhaps noisy, perhaps incomplete, and certainly missing the continuous geometry we would like to understand.
 
-But there is a modern echo of Poincaré's question that has nothing to do with abstract spaces and everything to do with the messy world of data. Suppose you are handed not a smooth manifold but a **cloud of points** — the output of a sensor, the coordinates of galaxies, the activations of neurons, the pixels of ten thousand photographs. Somewhere hidden in that cloud might be a shape: a circle, a sphere, a torus, a curved surface bending through high-dimensional space. The **Poincaré conjecture for data** asks the natural analogue of Poincaré's question:
+The seductive question is whether topology can recover the hidden shape. If the points seem to arrange themselves like a sphere, can we certify that a sphere is really there?
 
-> *If a point cloud has the "shape signature" of a sphere, does it actually lie on a sphere — and at what scale can we tell?*
+The inspiration is the Poincaré theorem: every closed, simply connected three-dimensional manifold is topologically a three-sphere. But translating that statement to data requires care. A finite point cloud is not a manifold. Its homology may imitate that of a sphere without its geometry being close to one. Even a combinatorial complex with sphere-like global holes can hide singular local structure. The right first step is therefore not a grand sphere-recognition claim. It is to establish the dependable metric machinery beneath such a claim, to identify exact thresholds, and to state clearly where geometry ends and topology must begin.
 
-This article is about a precise, provable version of that question, and about a surprising twist: the clean formula everyone expected turns out to be *almost* right, and the story of *why* it is only almost right is more interesting than the formula itself.
+That machinery starts with a ruler.
 
-## The shape you see depends on how far you squint
+## Turning distance into a changing network
 
-Handed a scatter of dots, how do you decide what shape they form? The central idea of *topological data analysis* is disarmingly simple. Pick a scale — call it $\varepsilon$ — and connect any two points that are closer than $\varepsilon$ apart. As $\varepsilon$ grows from zero, the cloud passes through a life cycle of shapes. When $\varepsilon$ is tiny, every point is an island: you see only dust. When $\varepsilon$ is enormous, everything blurs into one solid blob. But in between, at just the right scale, the true shape snaps into focus. A ring of points reveals a loop; points sprinkled on a sphere reveal a hollow surface with a cavity inside.
+Let $X=\{x_1,\ldots,x_n\}$ be a finite collection in a metric space, and choose a scale $\varepsilon$. The **Rips graph at scale $\varepsilon$** joins two distinct observations $x_i$ and $x_j$ exactly when
 
-Mathematicians make this rigorous by building, at each scale $\varepsilon$, a combinatorial object called the Vietoris–Rips complex, and reading off its *homology* — an algebraic fingerprint that counts connected pieces, loops, voids, and their higher-dimensional cousins. A genuine $d$-dimensional sphere has an unmistakable fingerprint: one connected component, no loops or voids of intermediate dimension, and exactly one $d$-dimensional cavity. When a point cloud's fingerprint matches, we say the data "looks like a sphere."
+$$
+d(x_i,x_j)\leq \varepsilon.
+$$
 
-The crucial catch is that this only works in a *window* of scales. Too small and the cloud is dust; too large and it is mush. The **Poincaré threshold** is the smallest scale $\varepsilon_\star$ at which the sphere finally comes into view. The whole game of manifold detection turns on understanding this one number.
+At a tiny scale, the graph may contain almost no edges. As the scale increases, nearby points connect, connected components merge, loops emerge, and eventually every pair may be joined. Filling every clique—every set of mutually adjacent vertices—with a simplex produces the **Rips flag complex**. An edge becomes a one-simplex, a triangle of three pairwise adjacent points becomes a filled two-simplex, and so on.
 
-## The conjectured law
+The first result is simple but fundamental: **Rips filtration monotonicity** says that if $\varepsilon\leq\eta$, then every edge present at scale $\varepsilon$ is present at scale $\eta$, and every simplex present at scale $\varepsilon$ is present at scale $\eta$. The proof is the one-line observation that $d(x_i,x_j)\leq\varepsilon\leq\eta$. Thus scale acts like time in a film whose geometry can only accumulate edges and simplices.
 
-Intuition, backed by heuristic sampling arguments, suggested a beautiful formula. If you scatter $n$ points on a $d$-dimensional sphere, the detection threshold should be
+There are useful boundary checks. At every negative scale, the Rips graph is empty because distances are nonnegative. At scale zero it is also empty in a genuine metric space, where distinct points have positive distance. In a pseudometric space, however, distinct points may have distance zero, so that second statement can fail. This small distinction matters in data sets with duplicated or metrically indistinguishable observations.
 
-$$\varepsilon_\star \;=\; C \cdot d^{1/2} \cdot n^{-1/d}$$
+For integer scales $r=0,1,2,\ldots$, define the **edge-count profile** $E(r)$ to be the number of edges in the Rips graph at scale $r$. Then $E$ is nondecreasing, $E(0)=0$ for a finite metric space, and it never exceeds the number of unordered vertex pairs. These facts offer a basic diagnostic curve: abrupt rises reveal scales at which many interpoint distances are crossed. But edge counts alone do not measure holes, and a graph with many edges need not resemble a sphere.
 
-for some universal constant $C$. Three ingredients live in this formula, and each tells a story:
+## Noise costs twice
 
-- The factor $n^{-1/d}$ says that **more points let you resolve finer detail**, but with diminishing returns that get worse in higher dimensions. To halve the resolution of a curve ($d=1$) you double the points; to halve the resolution of a solid three-dimensional shape ($d=3$) you need *eight times* as many. This is the curse of dimensionality wearing a geometer's hat.
-- The factor $d^{1/2}$ is a mysterious dimensional prefactor — where does a square root of the dimension come from?
-- The constant $C$ is supposed to be universal, the same for every sphere in every dimension.
+Real measurements move. Suppose $X=(x_i)$ and $Y=(y_i)$ are two point clouds with matched labels, and every point moves by at most $\delta$:
 
-The formula is elegant. The question is whether it is *true*. And here the answer splits into three verdicts: two "yes"es and one instructive "no."
+$$
+d(x_i,y_i)\leq\delta \qquad\text{for every }i.
+$$
 
-## Verdict one: the exponent is real, and it is exactly $-1/d$
+How much must the Rips scale change to preserve all relationships? The answer is exactly the natural triangle-inequality allowance: $2\delta$.
 
-To reason about thresholds without drowning in the analytic subtleties of curved spheres, we work in a clean model that captures the essential combinatorics: a **discrete grid cube**. Picture the integer lattice points $\{0, 1, \dots, m-1\}^d$ — an $m \times m \times \cdots \times m$ grid in $d$ dimensions. This grid stands in for a sampled shape, and covering it well with a small set of "landmark" points is exactly the problem of resolving a shape at a given scale. We measure distance in the *Chebyshev* (or $\ell^\infty$) metric, where the distance between two grid points is the largest coordinate-wise gap.
+The **matched perturbation theorem** states that every Rips edge of $X$ at scale $\varepsilon$ is an edge of $Y$ at scale $\varepsilon+2\delta$. Indeed,
 
-A set $S$ of landmarks is an **$r$-cover** if every point of the cube lies within Chebyshev distance $r$ of some landmark. This is precisely the condition — via the classical Nerve Lemma — under which the Rips complex built on $S$ faithfully reproduces the shape of the cube. So "detecting the shape at scale $r$" becomes "covering the cube with radius $r$," and the threshold becomes the smallest achievable covering radius for a given number of landmarks.
+$$
+d(y_i,y_j)\leq d(y_i,x_i)+d(x_i,x_j)+d(x_j,y_j)
+\leq\delta+\varepsilon+\delta.
+$$
 
-Now the counting is clean. A single Chebyshev ball of radius $r$ contains at most $(2r+1)^d$ grid points — a little cube of side $2r+1$. To blanket all $m^d$ points of the big cube you therefore need enough balls that
+Because a clique is defined entirely by its edges, every simplex of the Rips complex of $X$ at scale $\varepsilon$ also belongs to the Rips complex of $Y$ at scale $\varepsilon+2\delta$. Distance is symmetric, so the reverse inclusion holds after the same shift. The two filtrations therefore interleave under a scale translation of $2\delta$.
 
-$$m^d \;\le\; |S| \cdot (2r+1)^d.$$
+This theorem has an immediate numerical shadow: the number of simplices in the first complex at scale $\varepsilon$ is no greater than the number in the perturbed complex at scale $\varepsilon+2\delta$. More importantly, it gives a clean accounting rule for noise. Each endpoint of an edge may move by $\delta$, so an edge threshold may move by twice that amount.
 
-This is a genuine, rigorously proved **packing lower bound**. Rearranged, with $n = |S|$ the number of landmarks, it reads
+The factor $2$ cannot be uniformly improved. Imagine two points initially $\varepsilon$ apart and move them directly away from each other by $\delta$ each. Their new distance is $\varepsilon+2\delta$.
 
-$$m \;\le\; n^{1/d} \,(2r+1), \qquad\text{equivalently}\qquad 2r+1 \;\ge\; m\cdot n^{-1/d}.$$
+## The exact moment everything fills in
 
-There it is: the covering radius — the discrete Poincaré threshold — is forced to be at least a constant times $n^{-1/d}$. The exponent in the conjectured law is not a guess; it is a theorem.
+As scale grows, every finite Rips complex eventually becomes the full simplex: every subset of the $n$ vertices is a face. A full simplex has exactly $2^n$ faces when the empty face is included. What controls this transition?
 
-## Verdict two: the exponent is sharp — you can't do better
+The answer is not homology and not sphericality. It is simply diameter.
 
-A lower bound alone might be pessimistic. Perhaps the true threshold decays even faster, and $n^{-1/d}$ is merely a loose estimate. It is not. The bound is *achieved*, exactly, by the most natural construction imaginable: a **regular grid of landmarks**.
+The **full-simplex threshold theorem** states that, for $\varepsilon\geq0$, the Rips flag complex contains all $2^n$ vertex subsets if and only if every pair of sample points has distance at most $\varepsilon$:
 
-Suppose the side length factors as $m = (2r+1)\,t$. Chop each coordinate axis into $t$ equal blocks of width $2r+1$, and place one landmark at the center of each block in every dimension. This produces exactly $t^d$ landmarks, and every point of the cube sits within radius $r$ of its block center — a perfect $r$-cover. So a cover of size exactly $t^d = (m/(2r+1))^d$ exists.
+$$
+\#\operatorname{Rips}(X,\varepsilon)=2^n
+\quad\Longleftrightarrow\quad
+\max_{i,j}d(x_i,x_j)\leq\varepsilon.
+$$
 
-And nothing smaller works: combining the construction with the packing bound above shows that **every** $r$-cover must use at least $t^d$ landmarks. The minimum cover size is *exactly* $t^d$. There is no slack, no hidden improvement, no cleverer arrangement. The exponent $-1/d$ is not just valid — it is optimal. Manifold detection genuinely obeys the curse of dimensionality, and the grid cover proves the curse cannot be dodged.
+Consequently, the first full-simplex scale is the sample diameter. If even one pair lies farther apart than $\varepsilon$, the complex has strictly fewer than $2^n$ faces.
 
-## Verdict three: where the $\sqrt{d}$ comes from — and why it isn't topology
+A two-point example makes the boundary vivid. Put the observations at $0$ and $2$ on the real line. At scale $1$, the edge is missing and the complex is not full. At scale $2$, the edge appears and all four faces—the empty face, two vertices, and their edge—are present.
 
-What about the mysterious $d^{1/2}$? The answer is quietly deflationary, and all the more satisfying for it. The clean packing story lives in the Chebyshev metric, where balls are little cubes. But real spheres, and the scale parameter $\varepsilon$ of the Rips complex, are measured with the ordinary Euclidean ruler, where balls are round. To translate a covering radius from one metric to the other, you must convert between the two ways of measuring length — and that conversion is governed by a sharp, elementary inequality:
+This exact result prevents a common conceptual mistake. The diameter threshold is not a “Poincaré threshold.” Once a complex becomes a full simplex, it is contractible: all higher-dimensional holes have been filled. The transition says that all pairwise distances fit beneath one cutoff. It says nothing by itself about whether the original cloud sampled a sphere.
 
-$$\|x\|_\infty \;\le\; \|x\|_2 \;\le\; \sqrt{d}\,\|x\|_\infty.$$
+## What spherical geometry does guarantee
 
-In words: the Euclidean length of a vector is never smaller than its largest coordinate, and never larger than $\sqrt{d}$ times its largest coordinate. Both bounds are tight. The right-hand inequality becomes an *equality* for the vector $(1,1,\dots,1)$, whose largest coordinate is $1$ but whose Euclidean length is exactly $\sqrt{d}$. So $\sqrt{d}$ is the exact, unbeatable worst-case cost of switching rulers.
+Suppose every point lies exactly on a sphere of radius $r$ centered at $c$, meaning
 
-That is the whole origin of the $d^{1/2}$ prefactor. It is a **metric artifact** — an accounting entry for the change from cube-balls to round-balls — not a feature of the underlying topology. The shape does not care which ruler you use; only your bookkeeping does. Recognizing this dissolves the mystery: the square root of the dimension was never geometry, it was units.
+$$
+d(x_i,c)=r \qquad\text{for every }i.
+$$
 
-## Verdict four: the clean equality is false
+The triangle inequality gives
 
-Now the twist. The conjecture did not merely claim a scaling *proportional* to $n^{-1/d}$; it claimed an exact *equality*, $\varepsilon_\star = C\,d^{1/2}\,n^{-1/d}$, with a single positive constant $C$. And that stronger claim is simply false.
+$$
+d(x_i,x_j)\leq d(x_i,c)+d(c,x_j)=2r.
+$$
 
-The reason is a matter of arithmetic honesty. The number of landmarks $n$ is a whole number, and so is the covering radius $r$. As you slowly add landmarks, the minimal achievable radius does not glide smoothly downward — it drops in **steps**, staying flat across whole ranges of $n$ before ticking down. It is a staircase, not a slope.
+Thus the **spherical diameter bound** says that every pair is at distance at most $2r$, with equality possible for antipodal points. Combining this with the full-simplex theorem yields the **spherical completion theorem**: at scale $2r$, the Rips complex of any finite sample on that sphere is the full simplex and has $2^n$ faces.
 
-The smallest concrete witness lives in one dimension. Take the line grid of $m = 7$ points. Covering it with radius $0$ would require a separate landmark on every single point — all seven of them. But with radius $1$, just three landmarks (say at positions $1$, $3$, and $5$) suffice, since each covers itself and its two neighbors. So the minimal radius for $3$ landmarks is exactly $1$. Add a fourth landmark, and the minimal radius is *still* $1$ — you cannot reach radius $0$ without four more points. In fact the minimal radius stays pinned at $1$ for every landmark count from $3$ through $6$.
+There is also a robust version. Call a cloud **$\delta$-approximately spherical** about center $c$ and radius $r$ if
 
-Now confront this with the proposed law. In one dimension it reads $\varepsilon_\star = C/n$. If it held exactly, then the threshold for $3$ landmarks and for $4$ landmarks would be $C/3$ and $C/4$ — necessarily *different* numbers, since $C > 0$. But the true thresholds are equal: both are $1$. A strictly decreasing function cannot be constant on a stretch. The only escape is $C = 0$, which contradicts $C$ being a positive constant. **No positive constant reproduces the threshold exactly.**
+$$
+\left|d(x_i,c)-r\right|\leq\delta
+\qquad\text{for every }i.
+$$
 
-This is not a defect to be patched; it is a lesson. The conjectured equality confuses a smooth continuous law with a discrete, integer-valued reality. The honest statement replaces the equals sign with an "$\asymp$": the threshold *scales like* $n^{-1/d}$, matching it up to bounded constant factors, but it is not literally proportional to it.
+Then every point is at most $r+\delta$ from $c$, so every pair is at most $2(r+\delta)$ apart. The **approximate spherical completion theorem** follows: for $r\geq0$ and $\delta\geq0$, the Rips complex is full by scale $2(r+\delta)$.
 
-## What survives, and why it matters
+Approximate sphericality itself is stable. If an exact spherical sample is perturbed pointwise by at most $\delta$, then the perturbed sample is $\delta$-approximately spherical around the same center and radius. This is the reverse triangle inequality in action: moving a point by $\delta$ changes its distance to the center by at most $\delta$.
 
-Strip away the false precision and a robust, fully rigorous picture remains:
+These are strong geometric guarantees, but they are deliberately one-way. Points on a sphere must obey a diameter bound. A cloud obeying the same bound need not lie near any sphere. A ball, a cluster, or an irregular configuration can also have small diameter.
 
-- **The scaling exponent is exactly $-1/d$**, proved as a matched pair of upper and lower bounds. Detecting a $d$-dimensional shape requires resolution that improves only as the $-1/d$ power of the sample size — a hard, unavoidable curse of dimensionality.
-- **The $\sqrt{d}$ prefactor is a change-of-ruler constant**, the sharp price of converting between the Chebyshev and Euclidean metrics, with nothing topological about it.
-- **The clean equality is false**, because the true threshold is a staircase; the correct statement is a scaling relation, not an identity.
+## Coverage: the missing half of sampling
 
-The upshot is a genuinely useful principle for anyone who works with high-dimensional data. Manifold detection is fundamentally a **topological** problem, and its difficulty is governed by a single exponent tied to the intrinsic dimension of the hidden shape — not the dimension of the space it floats in. If your data secretly lives on a two-dimensional surface, you pay the $d=2$ price to see it, no matter how many ambient coordinates you recorded. That is liberating: it means the sample complexity of "seeing the shape" depends on the shape, not on the sensor.
+Sphere detection needs more than an upper bound on pairwise distances. It needs evidence that the sample covers the candidate surface rather than merely occupying a small patch.
 
-Poincaré asked whether a space with no holes must be a sphere. Its data-world descendant asks how many points it takes to *notice*. The answer, made precise, is a clean power law with a subtle staircase hiding inside it — a reminder that in the passage from continuous mathematics to finite data, the most beautiful formulas are usually true only up to a constant, and the constant has a story of its own.
+For a finite set $S$, an **$\varepsilon$-cover** is a finite collection $C$ such that every point of $S$ lies within $\varepsilon$ of some member of $C$. The **covering number** $N(S,\varepsilon)$ is the smallest possible size of such a cover. Increasing the radius makes covering easier, so if $0\leq\varepsilon_1\leq\varepsilon_2$, then
+
+$$
+N(S,\varepsilon_2)\leq N(S,\varepsilon_1).
+$$
+
+The empty set has covering number zero, and any finite set covers itself at every nonnegative radius, giving $N(S,\varepsilon)\leq\#S$.
+
+A complementary notion is an **$\varepsilon$-packing**: a subset whose distinct points are all farther than $\varepsilon$ apart. If such a packing is maximal in the explicit sense that every omitted point lies within $\varepsilon$ of some packed point, then it is automatically an $\varepsilon$-cover. This packing-covering principle supplies a practical algorithm: repeatedly select a point not yet covered and discard everything within radius $\varepsilon$. The selected points are separated, and when the process stops they cover the data.
+
+Coverage also clarifies the proposed sampling law. Typical point spacing on a $d$-dimensional object often has order $n^{-1/d}$, but uniform coverage is controlled by the largest empty region, an extreme event. For independent uniform samples, the more plausible coverage scale is often of order
+
+$$
+\left(\frac{\log n}{n}\right)^{1/d},
+$$
+
+rather than the bare power $n^{-1/d}$. Which scale is relevant depends on whether one asks about a typical neighbor, an average criterion, or the worst uncovered gap.
+
+## Toward honest sphere detection
+
+The emerging picture is a pipeline, not a single magical threshold.
+
+First, use distances to build a monotone Rips filtration. Second, use the $2\delta$ interleaving law to account for measurement noise. Third, distinguish the sample diameter—the exact full-simplex threshold—from spacing and coverage scales. Fourth, inspect topology only in a range where the sample is dense enough and the underlying object is geometrically regular. Finally, supplement global homology with local tests, such as whether vertex links resemble spheres of one lower dimension, and with simple connectivity in the three-dimensional setting.
+
+A sphere-like homology signature can be compelling evidence, but it is not a standalone recognition theorem. Global Betti numbers can be shared by singular spaces and by objects with very different local geometry. Likewise, reaching the full simplex is not evidence of a sphere; it merely means the scale has exceeded the diameter.
+
+The durable insight is therefore both more modest and more useful than the original slogan. Manifold detection from data is indeed topological—but topology becomes reliable only when metric stability, sampling density, and local regularity are made explicit. The Rips filtration supplies the film, the $2\delta$ theorem tells us how noise shifts its frames, covering theory tells us whether the camera missed part of the scene, and local topology tells us whether the apparent surface is truly manifold-like.
+
+That is how one begins to read a continuous shape from a finite cloud: not by declaring that a sphere has appeared, but by measuring exactly which conclusions the data can support.

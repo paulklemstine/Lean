@@ -3168,21 +3168,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem With"
   },
   {
-    "consumed_by_exp_id": "8b838f97",
-    "description": "Ramsey's theorem for graphs states that R(k,l) = the minimum n such that any 2-coloring of the edges of K_n contains a red K_k or a blue K_l. For hypergraphs: R_r(k,l) = the minimum n such that any 2-coloring of the r-tuples of an n-set contains a red K_k^{(r)} or a blue K_l^{(r)}. The growth rate is an open problem: R_3(4,4) = 13 (known), R_3(5,5) is between 34 and 55, and R_3(k,k) is believed to grow like a double exponential 2^{c*k^2}. Conjecture: R_3(k,k) ~ 2^{2^{ck}} for some constant c > 0. This is a tower function (height 2 exponential). More precisely: the lower bound R_3(k,k) >= 2^{ck^2} (from the probabilistic method) and the upper bound R_3(k,k) <= 2^{2^{ck}} (from the stepping-up lemma). The gap is between a single exponential and a double exponential. Conjecture: the true growth rate is double exponential, and the upper bound is tight. This would mean that 3-uniform Ramsey numbers grow much faster than graph Ramsey numbers. Test: compute R_3(k,k) for k = 3, 4, 5, 6 by exhaustive search and verify the growth rate. Impact: 3-uniform Ramsey numbers are double exponential. Combinatorics at the hypergraph level is fundamentally harder than at the graph level.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0407",
-    "priority_score": 0.77,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T06:12:50.696649+00:00",
-    "title": "Hypergraph Ramsey Theory: Beyond Graphs"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Cycle 0daa61af (Q=0.720) proved 18 theorems in Tropical but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The AdS/CFT correspondence says that a gravitational theory in the bulk of anti-de Sitter space is equivalent to a conformal field theory on the boundary. What if prime numbers have a holographic dual",
     "domains": [
@@ -4784,6 +4769,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-19T09:14:53.537200+00:00",
     "title": "For a depth-dependent derivation tree with branching sequence `b\u2081, b\u2082, \u2026`, the m"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Hypergraph Ramsey Theory Beyond Graphs\n\n## 1. Exact Property-B incidence threshold\n\n**Conjecture.** For every fixed uniformity `r \u2265 3`, there are infinitely many pairs `(n,k)` for which the clique-incidence hypergraph has exactly `C(n,k)` distinct edges and its chromatic obstruction is asymptotically sharp at the first-moment threshold `2^(C(k,r)-1)`.\n\nThe key insight is that diagonal Ramsey avoidance is exactly Property B for a highly structured incidence hypergraph, so improvements should exploit collisions and codegrees among incidence edges rather than treating bad cliques independently. **Why now?** The exact bridge isolates the only place where the general sparse-hypergraph estimate loses information: the geometry of overlaps between families of `r`-subsets.\n\n## 2. Local-lemma improvement from clique codegrees\n\n**Conjecture.** For fixed `r \u2265 3`, a dependency-sensitive colouring argument applied to the clique-incidence hypergraph yields diagonal Ramsey lower bounds exponentially stronger than the raw Property-B edge-count criterion for an infinite range of `k`.\n\nThe key insight is that two bad-clique events are independent unless their candidate vertex sets overlap in at least `r` vertices, giving an explicit and unusually rigid dependency graph. **Why now?** The incidence formulation makes both edge sizes and pairwise intersections binomial quantities, providing the data needed for a quantitative local-lemma analysis.\n\n## 3. Spectral obstruction for Ramsey incidence hypergraphs\n\n**Conjecture.** The inclusion matrix between `r`-sets and `k`-sets has a spectral certificate that distinguishes Ramsey-forcing incidence hypergraphs from arbitrary non-two-colourable uniform hypergraphs and improves the known counting obstruction by a factor exponential in `k`.\n\nThe key insight is that the auxiliary hypergraph is governed by the Johnson association scheme, whose eigenspaces encode intersection statistics invisible to first-moment counting. **Why now?** The Property-B equivalence provides a direct target for importing algebraic information from inclusion matrices into two-colourability.\n\n## 4. Entropy-compressed stepping-up\n\n**Conjecture.** A stepping-up construction can be expressed as an entropy-preserving transformation between avoidance colourings whose loss is controlled by the incidence codegree profile, yielding a double-exponential lower bound for diagonal 3-uniform Ramsey numbers.\n\nThe key insight is that stepping-up and Property B both transform colourings into constraints on families of subsets, suggesting that the binary-string construction can be measured by entropy rather than only by cardinality. **Why now?** The exact incidence bridge supplies a common language in which lower-bound colourings and stepping-up transformations can be compared without conflating the graph and hypergraph levels.\n\n## 5. Small-case structural classification\n\n**Conjecture.** Every extremal colouring witnessing failure of the diagonal 3-uniform Ramsey property near the known `k=5` lower range has a bounded collection of recurring link-graph types, up to complementation and relabelling.\n\nThe key insight is that fixing a vertex converts a 3-uniform colouring into a graph colouring, so compatibility among link graphs may be substantially more rigid than arbitrary triple colourings. **Why now?** The incidence viewpoint predicts which clique constraints must be simultaneously split, while link graphs offer a tractable representation for a symmetry-reduced exhaustive classification.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0434",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "8b838f97",
+    "status": "available",
+    "timestamp": "2026-07-19T09:49:23.776895+00:00",
+    "title": "**Conjecture.** For every fixed uniformity `r \u2265 3`, there are infinitely many pa"
   },
   {
     "consumed_by_exp_id": "",

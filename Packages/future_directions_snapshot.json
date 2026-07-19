@@ -4327,26 +4327,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "19a1a7a8",
-    "description": "The Poincare conjecture (proved by Perelman) states that every simply connected closed 3-manifold is homeomorphic to the 3-sphere. For data: a point cloud X = {x_1, ..., x_n} in R^d may or may not lie on a manifold. Conjecture: the Poincare conjecture for data states that if the persistent homology of X satisfies H_0(X) = Z, H_1(X) = 0, H_2(X) = 0, ..., H_{d-1}(X) = 0, then X lies on (or near) a d-sphere. More precisely, if the Vietoris-Rips complex of X at scale epsilon has the homology of S^d (trivial homology except H_0 = Z and H_d = Z), then X is epsilon-close to a subset of S^d. Conjecture: the smallest epsilon such that VR_epsilon(X) has the homology of S^d is the 'Poincare threshold' of X, and it satisfies epsilon_star = C * d^{1/2} * n^{-1/d} for some constant C, where n is the number of points. This is the manifold detection threshold: below epsilon_star, X looks like a d-sphere; above epsilon_star, X looks like something else. Test: generate point clouds on S^d for d = 1, 2, 3 and compute the Poincare threshold. Impact: the Poincare conjecture for data says that manifold detection is a topological problem, and the detection threshold scales as n^{-1/d}.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0411",
-    "lineage_refs": [],
-    "priority_score": 0.79,
-    "proof_strategy": "Define the Poincare threshold: epsilon_star(X) = inf{epsilon > 0 : H_*(VR_epsilon(X)) has the same Betti numbers as S^d}. For X sampled uniformly from S^d: H_0(VR_epsilon) = Z for all epsilon > 0 (X is connected). H_d(VR_epsilon) = Z for epsilon >= epsilon_d (the d-th Betti number appears when epsilon is large enough to connect all d-simplices). The intermediate Betti numbers: H_k(VR_epsilon) = 0 for 0 < k < d and epsilon < epsilon_d. So epsilon_star = the smallest epsilon such that H_d(VR_epsilon) = Z. For n points uniformly sampled from S^d with radius 1: the pairwise distances are approximately 2*sin(theta/2) where theta ~ Uniform(0, pi) (for d=1, S^1). The minimum spanning tree has length ~ n^{1-1/d}. The Rips complex at scale epsilon connects points within distance epsilon. The threshold for H_d to appear is epsilon ~ n^{-1/d} (the covering radius of S^d by n points). Conjecture: epsilon_star(X) = C * n^{-1/d} for some constant C depending only on d. For d=1: epsilon_star ~ n^{-1} (S^1 needs n points with spacing 2*pi/n). For d=2: epsilon_star ~ n^{-1/2} (S^2 needs n points with spacing ~n^{-1/2}). Proof: the covering radius of S^d by n uniformly random points is approximately r_n = C_d * (log(n)/n)^{1/d} with high probability. The Vietoris-Rips complex at scale epsilon captures H_d when epsilon ~ 2 * r_n. So epsilon_star ~ (log(n)/n)^{1/d}. Test: sample n points from S^d for d=1,2,3 and n=100..10000, compute VR_epsilon for varying epsilon, find epsilon_star, fit epsilon_star ~ C * (log(n)/n)^{1/d}.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T06:30:24.219469+00:00",
-    "title": "The Poincare Conjecture for Data: Manifold Detection via Persistent Homology"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Cycle 1003d095 (Q=0.740) proved 0 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in ",
     "domain_bridges": [],
@@ -4362,26 +4342,6 @@
     "status": "available",
     "timestamp": "2026-07-17T18:04:18.998094+00:00",
     "title": "Close Proofs: Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem With"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "8b838f97",
-    "description": "Ramsey's theorem for graphs states that R(k,l) = the minimum n such that any 2-coloring of the edges of K_n contains a red K_k or a blue K_l. For hypergraphs: R_r(k,l) = the minimum n such that any 2-coloring of the r-tuples of an n-set contains a red K_k^{(r)} or a blue K_l^{(r)}. The growth rate is an open problem: R_3(4,4) = 13 (known), R_3(5,5) is between 34 and 55, and R_3(k,k) is believed to grow like a double exponential 2^{c*k^2}. Conjecture: R_3(k,k) ~ 2^{2^{ck}} for some constant c > 0. This is a tower function (height 2 exponential). More precisely: the lower bound R_3(k,k) >= 2^{ck^2} (from the probabilistic method) and the upper bound R_3(k,k) <= 2^{2^{ck}} (from the stepping-up lemma). The gap is between a single exponential and a double exponential. Conjecture: the true growth rate is double exponential, and the upper bound is tight. This would mean that 3-uniform Ramsey numbers grow much faster than graph Ramsey numbers. Test: compute R_3(k,k) for k = 3, 4, 5, 6 by exhaustive search and verify the growth rate. Impact: 3-uniform Ramsey numbers are double exponential. Combinatorics at the hypergraph level is fundamentally harder than at the graph level.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0407",
-    "lineage_refs": [],
-    "priority_score": 0.77,
-    "proof_strategy": "3-uniform Ramsey number R_3(k,k): minimum n such that any red/blue coloring of the 3-element subsets of [n] contains a monochromatic set of size k. Known values: R_3(3,3) = 13 (proved), R_3(4,4) is between 34 and 55 (current bounds). Lower bound (probabilistic method): R_3(k,k) >= 2^{ck^2} for some constant c. Proof: color each 3-set randomly. P(monochromatic K_k^{(3)}) < 2 * C(n,k) * 2^{-C(k,3)}. This is < 1 when n < 2^{k^2/6}. So R_3(k,k) > 2^{k^2/6}. Upper bound (stepping-up lemma): if R_3(k,k) = n, then R_3(2k, 2k) <= 2^{2n}. This gives R_3(k,k) <= 2^{2^{ck}}. Conjecture: R_3(k,k) ~ 2^{2^{ck}} (double exponential). The stepping-up lemma shows that if R_3(k,k) is at least n, then R_3(2k,2k) is at most 2^{2n}. Starting from R_3(3,3) = 13: R_3(6,6) <= 2^{26} = 2^{2^{4.7}}. Starting from R_3(4,4) >= 34: R_3(8,8) <= 2^{68} = 2^{2^{6.1}}. The pattern: R_3(2^j, 2^j) <= 2^{2^{cj}} for some constant c. Taking k = 2^j: R_3(k,k) <= 2^{2^{c*log(k)}} = 2^{k^{c'}} which is single exponential, not double exponential. Wait, the correct analysis: the stepping-up lemma gives R_3(k+1, k+1) >= 2^{R_3(k,k) - 1}. So R_3(4,4) >= 2^{R_3(3,3) - 1} = 2^{12} = 4096. But R_3(4,4) is known to be between 34 and 55, so the stepping-up lemma gives a very weak lower bound. The correct conjecture: R_3(k,k) is at least 2^{2^{ck}} for large k. Test: enumerate all 2-colorings of the 3-sets of [n] for n = 4, 5, 6, ..., find the maximum k such that there exists a coloring with no monochromatic K_k^{(3)}.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T06:12:50.696649+00:00",
-    "title": "Hypergraph Ramsey Theory: Beyond Graphs"
   },
   {
     "ambition_level": "extension",
@@ -6520,6 +6480,46 @@
     "status": "available",
     "timestamp": "2026-07-19T09:14:53.537200+00:00",
     "title": "For a depth-dependent derivation tree with branching sequence `b₁, b₂, …`, the m"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Hypergraph Ramsey Theory Beyond Graphs\n\n## 1. Exact Property-B incidence threshold\n\n**Conjecture.** For every fixed uniformity `r ≥ 3`, there are infinitely many pairs `(n,k)` for which the clique-incidence hypergraph has exactly `C(n,k)` distinct edges and its chromatic obstruction is asymptotically sharp at the first-moment threshold `2^(C(k,r)-1)`.\n\nThe key insight is that diagonal Ramsey avoidance is exactly Property B for a highly structured incidence hypergraph, so improvements should exploit collisions and codegrees among incidence edges rather than treating bad cliques independently. **Why now?** The exact bridge isolates the only place where the general sparse-hypergraph estimate loses information: the geometry of overlaps between families of `r`-subsets.\n\n## 2. Local-lemma improvement from clique codegrees\n\n**Conjecture.** For fixed `r ≥ 3`, a dependency-sensitive colouring argument applied to the clique-incidence hypergraph yields diagonal Ramsey lower bounds exponentially stronger than the raw Property-B edge-count criterion for an infinite range of `k`.\n\nThe key insight is that two bad-clique events are independent unless their candidate vertex sets overlap in at least `r` vertices, giving an explicit and unusually rigid dependency graph. **Why now?** The incidence formulation makes both edge sizes and pairwise intersections binomial quantities, providing the data needed for a quantitative local-lemma analysis.\n\n## 3. Spectral obstruction for Ramsey incidence hypergraphs\n\n**Conjecture.** The inclusion matrix between `r`-sets and `k`-sets has a spectral certificate that distinguishes Ramsey-forcing incidence hypergraphs from arbitrary non-two-colourable uniform hypergraphs and improves the known counting obstruction by a factor exponential in `k`.\n\nThe key insight is that the auxiliary hypergraph is governed by the Johnson association scheme, whose eigenspaces encode intersection statistics invisible to first-moment counting. **Why now?** The Property-B equivalence provides a direct target for importing algebraic information from inclusion matrices into two-colourability.\n\n## 4. Entropy-compressed stepping-up\n\n**Conjecture.** A stepping-up construction can be expressed as an entropy-preserving transformation between avoidance colourings whose loss is controlled by the incidence codegree profile, yielding a double-exponential lower bound for diagonal 3-uniform Ramsey numbers.\n\nThe key insight is that stepping-up and Property B both transform colourings into constraints on families of subsets, suggesting that the binary-string construction can be measured by entropy rather than only by cardinality. **Why now?** The exact incidence bridge supplies a common language in which lower-bound colourings and stepping-up transformations can be compared without conflating the graph and hypergraph levels.\n\n## 5. Small-case structural classification\n\n**Conjecture.** Every extremal colouring witnessing failure of the diagonal 3-uniform Ramsey property near the known `k=5` lower range has a bounded collection of recurring link-graph types, up to complementation and relabelling.\n\nThe key insight is that fixing a vertex converts a 3-uniform colouring into a graph colouring, so compatibility among link graphs may be substantially more rigid than arbitrary triple colourings. **Why now?** The incidence viewpoint predicts which clique constraints must be simultaneously split, while link graphs offer a tractable representation for a symmetry-reduced exhaustive classification.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0434",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "8b838f97",
+    "status": "available",
+    "timestamp": "2026-07-19T09:49:23.776895+00:00",
+    "title": "**Conjecture.** For every fixed uniformity `r ≥ 3`, there are infinitely many pa"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Quantitative Sphere Detection from Finite Data\n\n## 1. Quantitative homotopy recovery under reach and density\n\nLet a compact smooth submanifold have reach at least `τ`, and let a finite sample have Hausdorff distance at most `δ` from it. Conjecture that there is an explicit nonempty interval of Rips scales, with endpoints depending only on `δ` and `τ`, on which the Rips complex is homotopy equivalent to the manifold. For a simply connected closed three-manifold whose recovered homology is that of the three-sphere, determine additional computable local conditions sufficient for sphere recognition. **The key insight is...** perturbation stability must be combined with geometric regularity; homology alone cannot supply the missing local manifold structure. **Why now?** The exact `2δ` scale translation isolates the noise contribution, making a sharp reach-dependent interval a concrete target.\n\n## 2. Probabilistic `n^{-1/d}` coverage law with explicit tails\n\nFor `n` independent uniform samples on the unit `d`-sphere, conjecture matching upper and lower tail bounds for the covering radius of order `(log n / n)^(1/d)`, with constants uniform over a controlled range of dimensions. Determine precisely which alternative sampling or averaged criterion removes the logarithmic factor and yields `n^{-1/d}`. **The key insight is...** the proposed bare power law likely describes typical spacing, whereas full coverage and reliable topology are governed by extreme gaps. **Why now?** Separating diameter, spacing, and coverage thresholds prevents distinct phase transitions from being conflated and gives a falsifiable correction to the original scaling claim.\n\n## 3. Correspondence-based Rips interleaving\n\nGiven finite metric spaces related by a correspondence of distortion at most `2δ`, conjecture that their Rips filtrations admit a natural `2δ` simplicial interleaving that descends functorially to persistent homology in every degree. Establish sharpness by constructing finite spaces for which no smaller uniform translation works. **The key insight is...** indexwise matching is only a special case; correspondences are the correct bridge from perturbation geometry to Gromov–Hausdorff stability. **Why now?** The matched-sample theorem already identifies the sharp triangle-inequality mechanism, so the remaining issue is compatibility with nonfunctional correspondences.\n\n## 4. Local-link certification of spherical manifold structure\n\nConjecture that a finite flag complex with sphere homology, quantitatively controlled vertex links, and a suitable discrete curvature or expansion condition admits a certified manifold core whose geometric realization is a homology sphere; in dimension three, add a verifiable simple-connectivity certificate to obtain a topological three-sphere. **The key insight is...** global Betti numbers must be supplemented by local link data to distinguish manifolds from singular homology mimics. **Why now?** The full-simplex boundary demonstrates that global simplex counts rapidly lose topology, while links remain sensitive to local dimension and singularities.\n\n## 5. Stability of a guarded Poincare interval\n\nDefine the guarded Poincare interval as the set of scales at which the Rips complex simultaneously has sphere homology, manifold-like links, and a prescribed connectivity certificate. Conjecture that its endpoints are Lipschitz-stable, away from critical-value collisions, under matched perturbations of the sample. **The key insight is...** a robust detector should be an interval-valued invariant rather than the smallest scale satisfying a nonmonotone homological predicate. **Why now?** Rips inclusion is monotone, but sphere homology need not be; endpoint stability must therefore exploit persistence gaps rather than monotonicity of the predicate itself.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Bridges"
+    ],
+    "id": "fd_0435",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "19a1a7a8",
+    "status": "available",
+    "timestamp": "2026-07-19T09:49:31.671083+00:00",
+    "title": "Let a compact smooth submanifold have reach at least `τ`, and let a finite sampl"
   },
   {
     "ambition_level": "extension",

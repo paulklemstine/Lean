@@ -1,169 +1,403 @@
-# The Poincaré Conjecture for Data: Sharp Scaling of the Manifold-Detection Threshold
+# Metric Stability and Exact Completion Thresholds for Rips Complexes of Finite Point Clouds
 
 ## Abstract
 
-The *Poincaré conjecture for data* proposes a topological criterion for manifold detection: a point cloud whose multiscale homology matches that of a $d$-sphere should lie near a $d$-sphere, and the smallest scale $\varepsilon_\star$ at which the Vietoris–Rips complex acquires the homology of $S^d$ — the *Poincaré threshold* — was conjectured to obey the exact law $\varepsilon_\star = C\,d^{1/2}\,n^{-1/d}$, where $n$ is the number of sample points and $C > 0$ a universal constant. We isolate three separable assertions inside this formula and settle each rigorously in a clean, Nerve-Lemma-faithful discrete model — the Chebyshev ($\ell^\infty$) grid cube $\{0,\dots,m-1\}^d$, in which covering the cube to radius $r$ plays the role of resolving the shape at scale $\varepsilon$. We prove: (1) a **packing lower bound** $m^d \le |S|\,(2r+1)^d$ for every $r$-cover $S$, yielding the scaling $2r+1 \ge m\,n^{-1/d}$; (2) **sharpness** of the exponent $-1/d$, via an explicit grid cover attaining minimal size exactly $t^d = (m/(2r+1))^d$ when $m=(2r+1)t$, together with a matching minimality bound; and (3) the sharp norm comparison $\|x\|_\infty \le \|x\|_2 \le \sqrt d\,\|x\|_\infty$ with the constant $\sqrt d$ attained, showing the $d^{1/2}$ prefactor is a metric-conversion artifact rather than topology. Finally we **disprove** the exact equality: the minimal covering radius is a step function of $n$ (for $m=7$, $d=1$ it equals $1$ throughout $n\in\{3,4,5,6\}$), so no positive constant $C$ can reproduce the threshold exactly. The conjectured identity must be downgraded to a scaling relation $\varepsilon_\star \asymp d^{1/2} n^{-1/d}$.
-
-**Keywords:** persistent homology, manifold detection, Vietoris–Rips complex, covering number, packing bound, Chebyshev metric, curse of dimensionality, topological data analysis.
+We develop a self-contained metric and combinatorial foundation for Poincaré-inspired manifold detection from finite data. For an indexed point cloud in a metric or pseudometric space, we define its scale-dependent Rips graph and flag complex. We prove monotonicity in scale, exact boundary behavior at nonpositive scales, and monotonicity of the edge-count profile. For two pointwise matched clouds whose corresponding observations differ by at most $\delta$, we establish a two-sided $2\delta$ interleaving of their Rips flag complexes; the same inclusion yields monotonicity of simplex counts under the translated scale. We then characterize the full-simplex transition exactly: at a nonnegative scale $\varepsilon$, the complex has all $2^n$ faces if and only if every pairwise distance is at most $\varepsilon$. Thus the first full-simplex scale is the sample diameter, not a homological sphere-recognition threshold. Exact samples on a sphere of radius $r$ become full by scale $2r$, while samples within radial error $\delta$ become full by scale $2(r+\delta)$. We also develop antitonic covering numbers and the maximal-packing-implies-cover principle. These results rigorously separate noise stability, diameter, packing, coverage, and topology. In particular, sphere homology alone does not imply geometric nearness to a sphere, and the commonly proposed $n^{-1/d}$ law describes a spacing scale more naturally than a uniform coverage scale, for which logarithmic corrections are expected under independent sampling.
 
 ## 1. Introduction
 
-### 1.1 From Poincaré's theorem to a question about data
+Topological data analysis seeks qualitative structure in finite metric data. A standard construction begins with a point cloud and joins pairs whose distance is below a scale parameter. As the scale grows, the resulting graphs and simplicial complexes form a filtration. Persistent homology then records the scales over which connected components, loops, voids, and higher-dimensional features survive.
 
-The Poincaré conjecture, proved by Perelman, asserts that every simply connected closed $3$-manifold is homeomorphic to the $3$-sphere. Reformulated for finite data, one asks whether a point cloud whose topological signature matches that of a sphere must in fact be sampled from (or near) a sphere. The tool that makes "topological signature" precise for finite data is *persistent homology*: at each scale $\varepsilon$, one builds the Vietoris–Rips complex $\mathrm{VR}_\varepsilon(X)$ on the point cloud $X=\{x_1,\dots,x_n\}\subset\mathbb R^D$ by declaring a finite subset to span a simplex when its diameter is below $\varepsilon$, and records how the homology evolves with $\varepsilon$.
+A particularly appealing aspiration is a “Poincaré principle for data”: if a finite sample has the homological signature of a sphere over a suitable range of scales, perhaps it lies on or near a sphere. The classical three-dimensional Poincaré theorem, however, concerns closed simply connected manifolds, not arbitrary finite complexes or point clouds. Homology is weaker than homeomorphism, global invariants do not enforce local manifold structure, and a single Rips scale can be dominated by sampling artifacts. Any credible data-analytic analogue must therefore combine topology with quantitative geometry.
 
-For a $d$-sphere, the target signature is unmistakable: $H_0 = \mathbb Z$, $H_d = \mathbb Z$, and $H_k = 0$ for $0 < k < d$. There is a window of scales $\varepsilon$ in which a well-sampled sphere exhibits exactly this signature; below the window the cloud is disconnected dust, above it the complex is contractible. The **Poincaré threshold** $\varepsilon_\star$ is the infimum of scales at which the sphere signature first appears — the fundamental quantity of manifold detection.
+This paper establishes the metric part of that program and identifies an exact threshold that can otherwise be misinterpreted. The main conclusions are:
 
-### 1.2 The conjectured law and our contributions
+1. Rips graphs and their flag complexes grow monotonically with scale.
+2. Pointwise perturbation by at most $\delta$ induces a two-sided interleaving after a scale translation of $2\delta$.
+3. The full-simplex threshold is exactly the cloud diameter.
+4. A sample on a sphere of radius $r$ is necessarily full by scale $2r$, and radial error $\delta$ changes this bound to $2(r+\delta)$.
+5. Covering numbers decrease with radius, and an explicitly maximal separated subset is a cover.
 
-The conjecture posits an exact law
-$$\varepsilon_\star \;=\; C\, d^{1/2}\, n^{-1/d}, \qquad C>0 \text{ universal.}$$
-We decompose this into three independent claims and resolve each:
+The third point is a crucial negative clarification. A full simplex is contractible and contains no nontrivial reduced homology. Its appearance certifies only an all-pairs distance condition. It is not a sphere-recognition event. Similarly, sphere-like homology without density, reach, local link conditions, or simple connectivity cannot identify a sphere.
 
-1. **The exponent claim** ($\varepsilon_\star \propto n^{-1/d}$): *proved and sharp.*
-2. **The dimensional-prefactor claim** ($d^{1/2}$): *proved to be a metric artifact* — the exact $\ell^\infty\!\to\!\ell^2$ conversion constant.
-3. **The exact-equality claim** (a single constant $C$ makes it an identity): *disproved*; the threshold is a step function of $n$.
+The presentation permits repeated observations by working initially in a pseudometric setting. When zero-scale emptiness is needed, we require a genuine metric. All finite-complex counts include the empty face.
 
-Net verdict: $\varepsilon_\star \asymp d^{1/2} n^{-1/d}$ holds as a scaling relation, but the clean equality is false.
+## 2. Metric and combinatorial definitions
 
-### 1.3 A discrete model faithful to the topology
+### 2.1. Indexed point clouds
 
-To reason about thresholds without the analytic overhead of curved manifolds, we use a discrete surrogate that preserves the essential covering combinatorics and connects to topology through the Nerve Lemma. All results below are stated and proved in this model.
+Let $I$ be a finite index set of cardinality $n$, let $(M,d)$ be a pseudometric space, and let
 
-## 2. The discrete model and definitions
+$$
+X:I\to M,
+$$
 
-Throughout, $d,m,r,t,n$ denote natural numbers.
+be an indexed point cloud. Indexing permits repeated observations: distinct indices may represent the same location or have zero pseudodistance. When separation of distinct points is required, $M$ will be assumed to be a metric space.
 
-**Definition 2.1 (Grid cube).** The *discrete $d$-cube of side $m$* is the set $Q_{m,d} = \{0,1,\dots,m-1\}^d$, which we represent as functions $\mathrm{Fin}\,d \to \mathrm{Fin}\,m$. It has $|Q_{m,d}| = m^d$ points and plays the role of a densely sampled cube-like object.
+### 2.2. Rips graphs and flag complexes
 
-**Definition 2.2 (Chebyshev closeness).** For a radius $r$ and centers/points $s,x \in Q_{m,d}$, we say $x$ is *$r$-close* to $s$, written $\mathrm{ChebClose}(r,s,x)$, if in every coordinate $i$,
-$$\bigl|\,x_i - s_i\,\bigr| \le r,$$
-i.e. the Chebyshev ($\ell^\infty$) distance satisfies $\|x-s\|_\infty \le r$.
+**Definition 2.1 (Rips graph).** For a real scale $\varepsilon$, the Rips graph $G_X(\varepsilon)$ has vertex set $I$. Distinct vertices $i$ and $j$ are adjacent exactly when
 
-**Definition 2.3 (Chebyshev ball).** The *ball* $B_r(s) = \{\, x \in Q_{m,d} : \mathrm{ChebClose}(r,s,x)\,\}$.
+$$
+d(X(i),X(j))\leq\varepsilon.
+$$
 
-**Definition 2.4 ($r$-cover).** A finite set $S \subseteq Q_{m,d}$ is an *$r$-cover* if every $x \in Q_{m,d}$ is $r$-close to some $s \in S$, i.e. $Q_{m,d} = \bigcup_{s\in S} B_r(s)$.
+**Definition 2.2 (Rips flag complex).** The Rips flag complex $K_X(\varepsilon)$ consists of all subsets $\sigma\subseteq I$ whose distinct vertices are pairwise adjacent in $G_X(\varepsilon)$. Equivalently,
 
-**Definition 2.5 (Minimal covering radius / discrete Poincaré threshold).** For a fixed sample budget $n$,
-$$\mathrm{minRad}(m,n) \;=\; \inf\{\, r : \text{some } S \text{ with } |S|\le n \text{ is an } r\text{-cover of } Q_{m,d}\,\}.$$
+$$
+\sigma\in K_X(\varepsilon)
+\quad\Longleftrightarrow\quad
+\forall i,j\in\sigma,\ d(X(i),X(j))\leq\varepsilon.
+$$
 
-**Dictionary to persistent homology.** The ambient object is $Q_{m,d}$; a point cloud / landmark set is a finite $S$; the scale $\varepsilon$ is the $\ell^\infty$ radius $r$. The statement "$\mathrm{VR}_\varepsilon(X)$ recovers the homology of the object" is modelled by "$S$ is an $r$-cover." This is exactly the Nerve-Lemma hypothesis under which the Čech/Rips complex of $S$ (with balls of radius $r$) is homotopy equivalent to the union of balls, hence to the cube. Thus $\mathrm{minRad}(m,n)$ is the discrete Poincaré threshold at sample budget $n$.
+The empty set and every singleton are faces. If the graph is complete, every subset of $I$ is a face, so $K_X(\varepsilon)$ is the full simplex and has $2^n$ faces.
 
-## 3. The scaling law: a sharp packing bound
+### 2.3. Filtrations
 
-### 3.1 Ball size
+**Definition 2.3 (Metric graph filtration).** A metric graph filtration on a vertex set is a family $F(\varepsilon)$ of graphs indexed by $\varepsilon\in\mathbb R$ such that $F(\varepsilon)\subseteq F(\eta)$ whenever $\varepsilon\leq\eta$, and $F(\varepsilon)$ is empty for every $\varepsilon<0$.
 
-**Lemma 3.1 (Coordinate count).** For any center value $c$, the number of grid coordinates within distance $r$ is at most $2r+1$:
-$$\bigl|\{\, a \in \mathrm{Fin}\,m : |a - c| \le r \,\}\bigr| \le 2r+1.$$
-*Proof sketch.* The admissible values inject, via $a \mapsto a$ as an integer, into the interval $[c-r,\,c+r] \cap \mathbb Z$, which has at most $2r+1$ elements. $\square$
+The Rips graph family is the canonical example. More generally, the scale parameter can belong to any preordered set; only monotonicity is essential to the abstract notion of filtration.
 
-**Lemma 3.2 (Ball cardinality).** Every Chebyshev ball satisfies $|B_r(s)| \le (2r+1)^d$.
-*Proof sketch.* The ball factors as a product over coordinates, $B_r(s) = \prod_{i} \{a : |a - s_i| \le r\}$, so its size is the product of the coordinate counts, each $\le 2r+1$ by Lemma 3.1; hence $|B_r(s)| \le (2r+1)^d$. $\square$
+### 2.4. Edge and simplex profiles
 
-### 3.2 The lower bound and its scaling form
+For a finite metric space and integer $r\geq0$, define the **edge-count profile**
 
-**Theorem 3.3 (Packing lower bound).** If $S$ is an $r$-cover of $Q_{m,d}$, then
-$$m^d \;\le\; |S|\cdot (2r+1)^d.$$
-*Proof sketch.* Since the balls $\{B_r(s)\}_{s\in S}$ cover the cube, $m^d = |Q_{m,d}| \le \bigl|\bigcup_{s\in S} B_r(s)\bigr| \le \sum_{s \in S} |B_r(s)| \le |S|\,(2r+1)^d$, using subadditivity of cardinality under union and Lemma 3.2. $\square$
+$$
+E_X(r)=\#\{\{i,j\}:i\neq j,\ d(X(i),X(j))\leq r\}.
+$$
 
-**Theorem 3.4 (The $n^{-1/d}$ scaling law).** Let $d\ge 1$, $m\ge 1$, and let $S$ be an $r$-cover with $n = |S|$. Then
-$$m \;\le\; n^{1/d}\,(2r+1), \qquad\text{equivalently}\qquad 2r+1 \;\ge\; m\, n^{-1/d}.$$
-*Proof sketch.* Raise the inequality of Theorem 3.3 to the power $1/d$: since $x\mapsto x^{1/d}$ is monotone on $[0,\infty)$, $(m^d)^{1/d} \le (n\,(2r+1)^d)^{1/d}$, and $(m^d)^{1/d}=m$, $(n(2r+1)^d)^{1/d}=n^{1/d}(2r+1)$ by the laws of real exponents. $\square$
+Also define the **simplex-count profile**
 
-Interpreting $2r+1$ as the (discrete) detection scale and $n$ as the sample budget, Theorem 3.4 is exactly the conjectured $\varepsilon_\star \gtrsim n^{-1/d}$: the covering radius cannot decay faster than $n^{-1/d}$.
+$$
+S_X(\varepsilon)=\#K_X(\varepsilon).
+$$
 
-## 4. Sharpness of the exponent
+The latter counts faces of every dimension, including the empty face.
 
-The lower bound is attained by a regular grid, so the exponent $-1/d$ cannot be improved.
+### 2.5. Covers and packings
 
-**Construction 4.1 (Grid cover).** Assume $m = (2r+1)\,t$. Partition each coordinate axis $\{0,\dots,m-1\}$ into $t$ consecutive blocks of length $2r+1$. The *block center* of block $k \in \{0,\dots,t-1\}$ is
-$$c_k \;=\; k\,(2r+1) + r,$$
-the midpoint of block $k$. The grid cover is the product set
-$$S_{\mathrm{grid}} = \{\, s : \mathrm{Fin}\,d \to \mathrm{Fin}\,m \ \mid\ \forall i,\ s_i = c_{k_i} \text{ for some } k_i \,\} = \prod_{i=1}^{d}\{c_0,\dots,c_{t-1}\}.$$
+Let $S$ be a finite subset of a pseudometric space.
 
-**Lemma 4.2 (Blocks are covered).** For every coordinate value $v \in \{0,\dots,m-1\}$, writing $v = (2r+1)q + \rho$ with $0 \le \rho < 2r+1$, the block center $c_q = q(2r+1)+r$ satisfies $|v - c_q| = |\rho - r| \le r$.
-*Proof sketch.* Since $0\le \rho \le 2r$, we have $-r \le \rho - r \le r$. $\square$
+**Definition 2.4 ($\varepsilon$-cover).** A finite set $C$ is an $\varepsilon$-cover of $S$ if every $x\in S$ lies within distance $\varepsilon$ of some $c\in C$:
 
-**Theorem 4.3 (Existence of an optimal cover).** When $m=(2r+1)t$, the set $S_{\mathrm{grid}}$ is an $r$-cover of $Q_{m,d}$ with exactly $|S_{\mathrm{grid}}| = t^d$ points.
-*Proof sketch.* Cover: given any $x$, choose in each coordinate the block center of $x_i$'s block; by Lemma 4.2 this center is within radius $r$ in every coordinate, so $x$ is $r$-close to the resulting product point. Count: the block-center map $k \mapsto c_k$ is injective (distinct blocks have distinct centers because $c_k = k(2r+1)+r$ is strictly increasing in $k$), so the $d$-fold product of the $t$ centers has exactly $t^d$ elements. $\square$
+$$
+\forall x\in S,\ \exists c\in C,\ d(x,c)\leq\varepsilon.
+$$
 
-**Theorem 4.4 (Minimality).** When $m=(2r+1)t$, every $r$-cover of $Q_{m,d}$ has at least $t^d$ points.
-*Proof sketch.* By Theorem 3.3, $m^d \le |S|\,(2r+1)^d$; substitute $m^d = (2r+1)^d t^d$ and cancel the positive factor $(2r+1)^d$ to get $t^d \le |S|$. $\square$
+The centers need not be required to lie in $S$ for this definition, although many algorithms choose them from $S$.
 
-**Corollary 4.5 (Exact minimal cover size).** When $m = (2r+1)t$, the minimal $r$-cover size is *exactly* $t^d = (m/(2r+1))^d$. Consequently the minimal radius scales as $2r+1 = m\,n^{-1/d}$ along this family, and no exponent other than $-1/d$ is consistent with both the lower bound (Theorem 3.3) and the achievability (Theorem 4.3). $\square$
+**Definition 2.5 (Covering number).** The covering number $N(S,\varepsilon)$ is the minimum cardinality of a finite $\varepsilon$-cover of $S$.
 
-## 5. The $\sqrt{d}$ prefactor is a metric artifact
+**Definition 2.6 ($\varepsilon$-packing).** A subset $P\subseteq S$ is an $\varepsilon$-packing if distinct $p,q\in P$ satisfy
 
-The packing analysis is cleanest in the Chebyshev metric, but spheres and the Rips parameter live in the Euclidean metric. Converting between them introduces exactly the factor $\sqrt d$.
+$$
+d(p,q)>\varepsilon.
+$$
 
-**Lemma 5.1 (Lower comparison).** For $x \in \mathbb R^d$ and any coordinate $i$,
-$$|x_i| \;\le\; \Bigl(\textstyle\sum_{j} x_j^2\Bigr)^{1/2} = \|x\|_2.$$
-*Proof sketch.* $x_i^2 \le \sum_j x_j^2$ since the omitted terms are nonnegative; take square roots. $\square$
+We will use an explicit maximality condition: every $x\in S\setminus P$ lies within $\varepsilon$ of some $p\in P$. This is exactly the condition produced when a greedy packing procedure terminates.
 
-**Lemma 5.2 (Upper comparison).** If $|x_i| \le M$ for all $i$ (with $M \ge 0$), then
-$$\|x\|_2 = \Bigl(\textstyle\sum_j x_j^2\Bigr)^{1/2} \;\le\; \sqrt d\, M.$$
-*Proof sketch.* Each $x_j^2 \le M^2$, so $\sum_j x_j^2 \le d\,M^2$; take square roots and use $\sqrt{d M^2} = \sqrt d\, M$. $\square$
+### 2.6. Exact and approximate spheres
 
-Together, Lemmas 5.1–5.2 give the two-sided comparison
-$$\|x\|_\infty \;\le\; \|x\|_2 \;\le\; \sqrt d\,\|x\|_\infty.$$
+Let $M$ be a normed real vector space, $c\in M$, and $r\geq0$.
 
-**Theorem 5.3 (Sharpness of $\sqrt d$).** The constant $\sqrt d$ in Lemma 5.2 is optimal: for the all-ones vector $\mathbf 1 = (1,\dots,1)$, $\|\mathbf 1\|_\infty = 1$ while
-$$\|\mathbf 1\|_2 = \Bigl(\textstyle\sum_{j=1}^d 1^2\Bigr)^{1/2} = \sqrt d = \sqrt d \cdot \|\mathbf 1\|_\infty.$$
-*Proof sketch.* Direct evaluation of the sum of $d$ ones. $\square$
+**Definition 2.7 (Spherical sample).** The cloud $X$ lies on the sphere of center $c$ and radius $r$ if
 
-**Interpretation.** An $\ell^\infty$ covering radius $r$ corresponds to a Euclidean radius somewhere in $[r,\ \sqrt d\, r]$, and the worst case is exactly $\sqrt d\, r$. Hence when the Chebyshev threshold $2r+1 \asymp m\,n^{-1/d}$ is re-expressed in the Euclidean scale in which $S^d$ and the Rips parameter are measured, it picks up precisely the factor $\sqrt d$. The $d^{1/2}$ prefactor is therefore a **metric-conversion constant**, not intrinsic topology.
+$$
+d(X(i),c)=r
+$$
 
-## 6. Disproof of the exact power law
+for every $i\in I$.
 
-The exponent and prefactor claims survive; the claim of an *exact* identity does not.
+**Definition 2.8 (Approximately spherical sample).** For $\delta\geq0$, the cloud is $\delta$-approximately spherical about $c$ with radius $r$ if
 
-**Definitions (1-D covering).** For the line grid $\{0,\dots,m-1\}$, say it is *$r$-coverable with $n$ samples* if some $S$ with $|S|\le n$ satisfies: every point is within Chebyshev distance $r$ of some $s\in S$. Let $\mathrm{minRad}(m,n)$ be the least such $r$.
+$$
+\left|d(X(i),c)-r\right|\leq\delta
+$$
 
-**Lemma 6.1.** For $m=7$: $\{1,3,5\}$ is a $1$-cover, so $7$ is $1$-coverable with $3$ samples. Hence also with $4$ samples.
-*Proof sketch.* Each of $0,1,2$ is within $1$ of $1$; each of $2,3,4$ within $1$ of $3$; each of $4,5,6$ within $1$ of $5$. $\square$
+for every $i\in I$.
 
-**Lemma 6.2.** For $m=7$, radius $0$ is impossible with fewer than $7$ samples: a $0$-cover forces $S$ to contain every point (each point is $0$-close only to itself), so $|S|\ge 7$. In particular $7$ is not $0$-coverable with $3$ or with $4$ samples.
-*Proof sketch.* $|x-s|=0 \iff x=s$, so $r=0$ requires $S \supseteq \{0,\dots,6\}$, i.e. $|S|\ge 7 > 4$. $\square$
+## 3. Filtration and counting results
 
-**Proposition 6.3 (Two equal thresholds).** $\mathrm{minRad}(7,3) = 1$ and $\mathrm{minRad}(7,4) = 1$.
-*Proof sketch.* By Lemma 6.1 radius $1$ is achievable with $3$ (hence $4$) samples, so $\mathrm{minRad}\le 1$; by Lemma 6.2 radius $0$ is not achievable with $3$ or $4$ samples, so $\mathrm{minRad}\ge 1$. $\square$
+**Theorem 3.1 (Rips filtration monotonicity).** Let $X:I\to M$ be an indexed cloud in a pseudometric space. If $\varepsilon\leq\eta$, then
 
-**Corollary 6.4 (Step function).** $\mathrm{minRad}(7,3) = \mathrm{minRad}(7,4)$ although $3 \ne 4$. Indeed the minimal radius stays pinned at $1$ for all $n \in \{3,4,5,6\}$: it is constant on a range and drops only at the endpoints ($n=7$ reaches $0$; $n=1$ needs radius $3$). The threshold is a *staircase* in $n$, not a smooth curve. $\square$
+$$
+G_X(\varepsilon)\subseteq G_X(\eta)
+\quad\text{and}\quad
+K_X(\varepsilon)\subseteq K_X(\eta).
+$$
 
-**Theorem 6.5 (No exact inverse power law).** There is no constant $C>0$ with
-$$\mathrm{minRad}(7,3) = C/3 \quad\text{and}\quad \mathrm{minRad}(7,4) = C/4.$$
-*Proof sketch.* Substituting Proposition 6.3 gives $1 = C/3$ and $1 = C/4$, forcing $C=3$ and $C=4$ simultaneously — impossible. Equivalently, $C/3 = C/4$ would force $C=0$, contradicting $C>0$. $\square$
+**Proof sketch.** An edge at scale $\varepsilon$ satisfies $d(X(i),X(j))\leq\varepsilon\leq\eta$, so it remains an edge at scale $\eta$. A face is a clique, and preservation of all its edges preserves the face. $\square$
 
-**Discussion.** The one-dimensional case is the law $\varepsilon_\star = C/n$. A strictly decreasing, injective function of $n$ cannot equal a step function that is constant on a range. Hence the *equality* in the conjecture is false; only the *scaling* $\varepsilon_\star \asymp d^{1/2} n^{-1/d}$ (up to bounded multiplicative constants) is tenable. The failure is generic: any integer-valued covering radius is piecewise constant in $n$, so no continuous strictly-monotone law can match it exactly.
+**Proposition 3.2 (Boundary behavior).** In a pseudometric space, $G_X(\varepsilon)$ is empty for every $\varepsilon<0$. In a metric space, $G_X(0)$ is empty as well.
 
-## 7. Algorithms
+**Proof sketch.** Distances are nonnegative, so no distance can be at most a negative number. At scale zero, adjacency of distinct points would require distance zero. This is impossible in a metric space but may occur in a pseudometric space. $\square$
 
-We record the constructive procedures underlying the theorems.
+**Corollary 3.3 (Monotone edge-count profile).** For a finite metric cloud, $E_X(r)$ is nondecreasing in the integer scale $r$, satisfies $E_X(0)=0$, and is bounded above by the number of unordered pairs of indices.
 
-**Algorithm A (Minimal covering radius, exact).** Given $m,n$, compute $\mathrm{minRad}(m,n)$ by searching $r=0,1,2,\dots$ and testing coverability. In one dimension, radius $r$ is coverable with $n$ samples iff $\lceil m/(2r+1)\rceil \le n$ (greedy left-to-right placement of centers at $r, 3r+1, \dots$ is optimal). This gives the closed form $\mathrm{minRad}(m,n) = \min\{ r : \lceil m/(2r+1)\rceil \le n\}$.
+**Proof sketch.** Graph inclusion induces inclusion of edge sets. The zero statement follows from Proposition 3.2, and every edge is an unordered pair. $\square$
 
-**Algorithm B (Grid cover generator).** Given $m=(2r+1)t$ and $d$, output the $t^d$ product points whose coordinates are the block centers $c_k = k(2r+1)+r$, $k=0,\dots,t-1$. This realizes the optimal cover of Theorem 4.3.
+The same argument proves that $S_X(\varepsilon)$ is nondecreasing. Unlike homology ranks, which can rise and fall as cycles are born and filled, raw edge and simplex counts only increase.
 
-**Algorithm C (Packing certificate).** Given an alleged $r$-cover $S$, verify the lower bound is respected by checking $m^d \le |S|(2r+1)^d$; and verify $S$ is genuinely a cover by testing each cube point against the balls of $S$.
+## 4. Stability under matched perturbations
 
-## 8. Applications
+Assume that two clouds $X,Y:I\to M$ use the same finite index set and satisfy
 
-- **Sample-complexity budgeting.** Theorem 3.4 quantifies how many landmarks are needed to resolve a $d$-dimensional shape to scale $\varepsilon$: $n \gtrsim (m/\varepsilon)^d$. The intrinsic dimension $d$, not the ambient dimension $D$, controls the budget.
-- **Metric selection.** Theorem 5.3 shows that quoting a detection threshold without naming the metric is ambiguous up to a factor $\sqrt d$; the $\ell^\infty$ radius is the natural quantity for packing, the $\ell^2$ radius for Euclidean geometry.
-- **Landmark subsampling.** Construction 4.1 is an explicit, provably optimal landmark set for cube-like regions, useful for witness-complex and landmark-based persistence pipelines.
-- **Threshold estimation caveat.** Corollary 6.4 warns practitioners that empirical threshold-vs-$n$ curves are staircases; fitting a smooth $C n^{-1/d}$ recovers the exponent but should not be expected to fit an exact constant.
+$$
+d(X(i),Y(i))\leq\delta
+$$
 
-## 9. Discussion and future work
+for every $i\in I$. This pointwise matching is stronger than a Hausdorff-distance hypothesis because it identifies which observation corresponds to which.
 
-We have shown that the Poincaré-for-data threshold obeys a sharp $n^{-1/d}$ scaling, that the $\sqrt d$ prefactor is an $\ell^\infty\!\to\!\ell^2$ conversion constant, and that the conjectured clean equality is false — the threshold is an integer-valued staircase, matched only up to constants.
+**Theorem 4.1 (Graph stability under pointwise perturbation).** For every real $\varepsilon$,
 
-**Future directions.**
-- **From cubes to spheres.** Replace the Chebyshev cube by a discretization of $S^d$ carrying an Ahlfors-regular measure, for which $\mu(\text{ball}) \asymp \varepsilon^d$; the same volume-packing argument should transfer, yielding the threshold scaling for genuine spheres.
-- **General manifolds and reach.** Extend to manifolds of positive reach, relating the constant to curvature and injectivity radius.
-- **Persistence-window width.** Study not only where the sphere signature appears but the full interval of scales over which it persists, and its scaling in $n$.
-- **Noise and near-manifolds.** Quantify the "$\varepsilon$-close to $S^d$" tolerance and the stability of detection under sub-Gaussian noise.
-- **Constants and phase transitions.** Characterize the exact staircase (jump locations) and the sharp constants in the scaling relation across dimensions.
+$$
+G_X(\varepsilon)\subseteq G_Y(\varepsilon+2\delta).
+$$
 
-## 10. Conclusion
+**Proof sketch.** If $i$ and $j$ are adjacent in $G_X(\varepsilon)$, the triangle inequality along the chain $Y(i),X(i),X(j),Y(j)$ gives
 
-The manifold-detection threshold of the Poincaré conjecture for data scales like $n^{-1/d}$ (proved and sharp), carries a $\sqrt d$ prefactor that is purely a change-of-metric constant (proved), but does *not* satisfy the conjectured exact equality (disproved). The correct statement is the scaling relation $\varepsilon_\star \asymp d^{1/2}\,n^{-1/d}$. Manifold detection is a topological problem governed by the intrinsic dimension, and its difficulty is captured by a single, unavoidable exponent.
+$$
+\begin{aligned}
+d(Y(i),Y(j))
+&\leq d(Y(i),X(i))+d(X(i),X(j))+d(X(j),Y(j))\\
+&\leq\delta+\varepsilon+\delta.
+\end{aligned}
+$$
+
+Distinctness is a property of the indices, so the corresponding edge belongs to $G_Y(\varepsilon+2\delta)$. $\square$
+
+**Theorem 4.2 (Rips-complex perturbation interleaving).** Under the same hypothesis, for every $\varepsilon$,
+
+$$
+K_X(\varepsilon)\subseteq K_Y(\varepsilon+2\delta)
+$$
+
+and
+
+$$
+K_Y(\varepsilon)\subseteq K_X(\varepsilon+2\delta).
+$$
+
+**Proof sketch.** The first inclusion follows from Theorem 4.1 because every edge of every clique is preserved after translation. For the second, symmetry of distance gives $d(Y(i),X(i))\leq\delta$, so the same argument applies with $X$ and $Y$ exchanged. $\square$
+
+**Corollary 4.3 (Simplex-count stability).** For every $\varepsilon$,
+
+$$
+S_X(\varepsilon)\leq S_Y(\varepsilon+2\delta)
+$$
+
+and, symmetrically,
+
+$$
+S_Y(\varepsilon)\leq S_X(\varepsilon+2\delta).
+$$
+
+**Proof sketch.** Inclusion between finite sets of faces implies the corresponding cardinality inequality. $\square$
+
+**Remark 4.4 (Sharpness of the translation).** The factor $2$ is optimal for a uniform theorem of this kind. Take two points at distance $\varepsilon$ on a line and move each outward by $\delta$. Their distance becomes $\varepsilon+2\delta$. Any smaller universal translation would fail to preserve this edge.
+
+Theorem 4.2 is a filtration-level statement. Applying homology functorially is expected to produce an analogous interleaving of persistent homology modules, provided the connecting maps and coefficient choices are fixed. For unmatched clouds, correspondences of controlled distortion are the natural generalization.
+
+## 5. Exact characterization of the full-simplex threshold
+
+Define the diameter of the indexed cloud by
+
+$$
+\operatorname{diam}(X)=\max_{i,j\in I}d(X(i),X(j)),
+$$
+
+with the usual harmless convention for an empty cloud. For nonempty finite clouds the maximum exists.
+
+**Theorem 5.1 (Full-simplex criterion).** Let $\varepsilon\geq0$. For a cloud with $n$ indexed observations, the following are equivalent:
+
+1. $K_X(\varepsilon)$ has exactly $2^n$ faces.
+2. $K_X(\varepsilon)$ is the full simplex on $I$.
+3. Every pair satisfies $d(X(i),X(j))\leq\varepsilon$.
+
+**Proof sketch.** There are exactly $2^n$ subsets of an $n$-element index set, and the faces of a flag complex form a subset of this power set. Hence cardinality $2^n$ means every subset is a face. In particular, every two-element subset is an edge, yielding the all-pairs inequality. Conversely, if all pairs satisfy the inequality, every subset is a clique and hence a face. The nonnegative-scale condition ensures diagonal distances are also beneath the threshold when the all-pairs statement includes $i=j$. $\square$
+
+**Corollary 5.2 (Strict deficit below a witnessed distance).** If $\varepsilon\geq0$ and there exist indices $i,j$ with
+
+$$
+\varepsilon<d(X(i),X(j)),
+$$
+
+then
+
+$$
+S_X(\varepsilon)<2^n.
+$$
+
+**Proof sketch.** The pair $\{i,j\}$ is not a face, so the complex omits at least one subset of $I$. $\square$
+
+**Corollary 5.3 (Diameter threshold).** For a nonempty finite cloud, the smallest nonnegative scale at which its Rips flag complex is the full simplex is exactly $\operatorname{diam}(X)$.
+
+**Proof sketch.** Theorem 5.1 says fullness is equivalent to $\varepsilon$ dominating every pairwise distance, which is equivalent to $\varepsilon\geq\operatorname{diam}(X)$. $\square$
+
+**Example 5.4 (A sharp two-point transition).** Consider points at $0$ and $2$ in $\mathbb R$. At scale $1$, the two-point subset is absent, so the complex has strictly fewer than $4$ faces. At scale $2$, all subsets are faces and the count is $2^2=4$.
+
+**Interpretive consequence.** The diameter threshold is not a sphere-detection threshold. The full simplex is contractible, regardless of whether the original cloud sampled a sphere, a ball, a curve, or an arbitrary bounded set. It is the terminal combinatorial phase of every finite Rips filtration.
+
+## 6. Spherical and approximately spherical clouds
+
+**Theorem 6.1 (Spherical diameter bound).** Suppose $X$ lies on a sphere of center $c$ and radius $r\geq0$. Then, for every $i,j$,
+
+$$
+d(X(i),X(j))\leq2r.
+$$
+
+**Proof sketch.** By the triangle inequality through the center,
+
+$$
+d(X(i),X(j))\leq d(X(i),c)+d(c,X(j))=r+r.
+$$
+
+Antipodal points show that the constant $2$ is sharp. $\square$
+
+**Corollary 6.2 (Spherical completion bound).** A finite sample of $n$ points on a sphere of radius $r$ has
+
+$$
+S_X(2r)=2^n.
+$$
+
+**Proof sketch.** Theorem 6.1 supplies the all-pairs condition at scale $2r$, and Theorem 5.1 supplies fullness. $\square$
+
+The conclusion is an upper bound: a particular sample may have diameter strictly below $2r$ if it contains no nearly antipodal pair, and then it becomes full earlier.
+
+**Theorem 6.3 (Radial stability under perturbation).** Let $X$ lie exactly on the sphere of center $c$ and radius $r$. If $d(X(i),Y(i))\leq\delta$ for every $i$, then $Y$ is $\delta$-approximately spherical about the same $c$ and $r$:
+
+$$
+\left|d(Y(i),c)-r\right|\leq\delta.
+$$
+
+**Proof sketch.** Substitute $r=d(X(i),c)$ and apply the reverse triangle inequality
+
+$$
+\left|d(Y(i),c)-d(X(i),c)\right|\leq d(Y(i),X(i)).
+$$
+
+$\square$
+
+**Theorem 6.4 (Approximate spherical completion bound).** Suppose $r,\delta\geq0$ and
+
+$$
+\left|d(X(i),c)-r\right|\leq\delta
+$$
+
+for every $i$. Then
+
+$$
+S_X\bigl(2(r+\delta)\bigr)=2^n.
+$$
+
+**Proof sketch.** The radial condition gives $d(X(i),c)\leq r+\delta$. Hence
+
+$$
+d(X(i),X(j))\leq d(X(i),c)+d(c,X(j))\leq2(r+\delta).
+$$
+
+The full-simplex criterion completes the argument. $\square$
+
+These theorems are geometric rather than homological. Their converses are false: a diameter bound does not force points to occupy a thin spherical shell, and approximate radial fit does not ensure uniform angular coverage.
+
+## 7. Covering complexity and packing-covering duality
+
+**Proposition 7.1 (Self-cover bound).** If $\varepsilon\geq0$, then $S$ covers itself at radius $\varepsilon$, and therefore
+
+$$
+N(S,\varepsilon)\leq\#S.
+$$
+
+For the empty set, $N(\varnothing,\varepsilon)=0$ at every scale. For a singleton, $N(S,\varepsilon)\leq1$ at every nonnegative scale.
+
+**Proof sketch.** Every point is distance zero from itself, and $0\leq\varepsilon$. The boundary statements follow directly. $\square$
+
+**Theorem 7.2 (Antitonicity of covering numbers).** If $0\leq\varepsilon_1\leq\varepsilon_2$, then
+
+$$
+N(S,\varepsilon_2)\leq N(S,\varepsilon_1).
+$$
+
+**Proof sketch.** Every $\varepsilon_1$-cover is also an $\varepsilon_2$-cover because each distance bound $d(x,c)\leq\varepsilon_1$ implies $d(x,c)\leq\varepsilon_2$. Minimizing over the larger class of admissible covers cannot increase cardinality. $\square$
+
+**Theorem 7.3 (Maximal packing is a cover).** Let $P\subseteq S$ be an $\varepsilon$-packing with $\varepsilon\geq0$. Assume explicitly that every $x\in S\setminus P$ has some $p\in P$ with $d(x,p)\leq\varepsilon$. Then $P$ is an $\varepsilon$-cover of $S$.
+
+**Proof sketch.** If $x\in P$, choose $p=x$ and use $d(x,x)=0\leq\varepsilon$. If $x\notin P$, use the stated maximality condition. $\square$
+
+The theorem motivates a greedy procedure. Start with $P=\varnothing$. While some data point lies farther than $\varepsilon$ from every selected point, add it to $P$. Each new point is more than $\varepsilon$ from previous selections, so $P$ remains a packing. On termination, every point lies within $\varepsilon$ of $P$, so it is a cover. With a precomputed $n\times n$ distance matrix, a direct implementation costs $O(n^2)$ time and $O(n^2)$ memory; distances can instead be computed on demand using $O(n)$ auxiliary memory.
+
+## 8. Computational algorithms
+
+### 8.1. Rips profile sweep
+
+Given an $n\times n$ distance matrix and sorted scales $\varepsilon_1\leq\cdots\leq\varepsilon_m$, one may compute edge counts by sorting the $n(n-1)/2$ pairwise distances and advancing a pointer through them. Sorting costs $O(n^2\log n)$ time, and the scale sweep costs $O(m+n^2)$. Materializing all faces is exponential in $n$ in the full-simplex regime, so practical systems enumerate only low-dimensional simplices or compute homology with dedicated reductions.
+
+The exact terminal threshold requires no simplex enumeration: it is simply the largest pairwise distance, computable in $O(n^2)$ time and $O(1)$ extra memory when distances are streamed.
+
+### 8.2. Perturbation audit
+
+For matched clouds, calculate
+
+$$
+\widehat\delta=\max_i d(X(i),Y(i)).
+$$
+
+For each tested scale $\varepsilon$, compare the edge set of $X$ at $\varepsilon$ with that of $Y$ at $\varepsilon+2\widehat\delta$, and reverse the roles. Theorem 4.2 guarantees both inclusions up to floating-point tolerance. A failed audit therefore indicates a mismatch of indices, inconsistent metrics, or numerical error rather than a geometric counterexample.
+
+### 8.3. Greedy packing cover
+
+The greedy maximal-packing algorithm selects a representative, marks every point within $\varepsilon$ as covered, and repeats. The resulting centers provide both separated landmarks and a certificate of coverage of the observed sample. They do not, without additional assumptions, certify coverage of an unknown continuum from which the sample was drawn.
+
+## 9. Applications and interpretation
+
+### 9.1. Sensor and imaging robustness
+
+The $2\delta$ law translates localization error into scale uncertainty. If each sensor location is known within $\delta$, features seen at scale $\varepsilon$ in one matched realization must be represented simplicially by scale $\varepsilon+2\delta$ in another. This offers a principled margin for comparing scans, trajectories, or embedded feature vectors.
+
+### 9.2. Spherical model diagnostics
+
+A proposed spherical model can be assessed in three distinct ways:
+
+1. **Radial residual:** estimate a center $c$ and radius $r$, then evaluate $\max_i|d(X(i),c)-r|$.
+2. **Coverage:** evaluate angular or intrinsic coverage, possibly through a net or covering-radius estimate.
+3. **Topology:** search for a scale interval with the desired homological signature, avoiding both the disconnected small-scale phase and the contractible full-simplex phase.
+
+The bound $2(r+\delta)$ predicts only when completion must have occurred. It is a useful consistency check, not a positive detector.
+
+### 9.3. Distinguishing three scales
+
+Three scales should not be conflated:
+
+- the **spacing scale**, describing typical nearest-neighbor distances;
+- the **coverage scale**, describing the largest unsampled region;
+- the **diameter scale**, at which the Rips complex becomes full.
+
+For $n$ reasonably uniform points on a $d$-dimensional object, a typical spacing scale is often proportional to $n^{-1/d}$. Uniform random coverage is governed by extreme gaps and is therefore commonly expected at order
+
+$$
+\left(\frac{\log n}{n}\right)^{1/d}.
+$$
+
+The diameter of a unit sphere sample remains of constant order and approaches $2$ when nearly antipodal observations occur. These are different phase transitions with different statistical meanings.
+
+## 10. Limitations of homological sphere recognition
+
+Suppose a Rips complex has the same homology as a $d$-sphere: one connected component, one top-dimensional class, and no intermediate homology. This statement alone does not imply that the cloud lies near a geometric sphere. Several obstructions remain.
+
+First, homology does not determine homotopy type or homeomorphism type. Second, an arbitrary flag complex may have singular vertex links and fail to be a manifold. Third, the ambient Euclidean dimension and the intrinsic sphere dimension are different quantities. Fourth, a sparse or nonuniform sample can create accidental cycles at one scale. Fifth, the full-simplex phase erases all reduced homology and must not be mistaken for successful recognition.
+
+A credible sphere-recognition theorem should impose quantitative sampling hypotheses, such as small Hausdorff distance from a compact manifold with positive reach; identify a nonempty scale interval on which the complex recovers the manifold’s homotopy type; verify local manifold structure through vertex links or related conditions; and, in dimension three, supplement homology with a computable simple-connectivity certificate. The classical Poincaré conclusion becomes relevant only after the object has genuinely been certified as a closed three-manifold.
+
+## 11. Discussion
+
+The results establish a compact metric-combinatorial core. Monotonicity expresses the order structure of scale. Perturbation stability follows from a four-point triangle inequality and propagates from edges to cliques. Fullness reduces exactly to an all-pairs condition. Spherical completion follows from passing through the center. Covering antitonicity and packing-covering duality capture the complementary geometry of sampling density.
+
+The framework deliberately avoids an unsupported implication from homology to geometric nearness. Its value lies partly in this separation. If an empirical “Poincaré threshold” is reported, one should ask which event defines it. Is it the first scale with sphere-like Betti numbers, the beginning of a persistent interval, the coverage radius, or the diameter? Only the last of these is characterized by the full-simplex theorem, and only the matched-noise shift has the universal $2\delta$ guarantee proved here.
+
+## 12. Future work
+
+The next theoretical step is a quantitative homotopy-recovery theorem under reach and density assumptions, with explicit endpoints separating sampling error from geometric regularity. A probabilistic analysis should determine tail bounds for coverage on spheres and clarify when $n^{-1/d}$ rather than $(\log n/n)^{1/d}$ is the appropriate rate. Matched perturbations should be generalized to metric correspondences of bounded distortion, leading naturally to Gromov–Hausdorff stability. Finally, global homology should be combined with local-link tests, discrete curvature or expansion conditions, and simple connectivity to formulate a genuine finite certificate of spherical manifold structure.
+
+## 13. Conclusion
+
+Finite Rips complexes provide a powerful bridge from distance data to topology, but their thresholds must be interpreted precisely. The filtration is monotone; pointwise noise of size $\delta$ shifts it by at most $2\delta$; and the full-simplex threshold is exactly the sample diameter. Exact and approximate spherical samples satisfy corresponding completion bounds of $2r$ and $2(r+\delta)$. Covering and packing results quantify another essential ingredient: whether the data are sufficiently distributed to represent an underlying space. Together these statements define the reliable foundation on which a future Poincaré-style theorem for data would have to stand.
