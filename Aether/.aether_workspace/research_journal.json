@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "1a2ab56f",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\n1. **Faithful binary-tree layer.** Define finite connected acyclic simple graphs whose\n   leaves are labelled by `Fin N`, internal vertices have degree three, and prove that\n   su",
-      "quality_score": 0.65,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-07-15T21:19:47",
-      "title": "ArXiv paper: On Agreement Subtrees in Multiple Pylogenetic Trees"
-    },
-    {
       "cycle_id": "7a91e930",
       "domain": "Geometry",
       "key_insight": "# Future directions\n\nThe formal development proves the classical affine construction inside the quantum definition: over every finite field, the nonzero slopes index `|K| - 1` pairwise orthogonal quan",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-19T12:11:44",
       "title": "Infinite-Dimensional Chess: Winning on the Hilbert Board"
+    },
+    {
+      "cycle_id": "f0066f11",
+      "domain": "Novelty",
+      "key_insight": "# Future directions: two-dimensional Newtonian gravity\n\n## What is now formalized\n\n`Basic.lean` gives a complete, sorry-free chain for the standard attractive planar force law\n\n\\[\nV(r)=k\\log r,\\qquad",
+      "quality_score": 0.67,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-07-19T15:15:51",
+      "title": "Flatland Catastrophe: When 2D Physics Breaks"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-19T12:11:44",
+  "last_updated": "2026-07-19T15:15:51",
   "open_questions": [
     {
       "context": "",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "091f8315",
-        "quality": 0.8,
-        "theorems": 46,
-        "title": "Cryptography from Chaos: Encrypting with the Logistic Map"
-      },
-      {
         "cycle_id": "ac5fc431",
         "quality": 0.69,
         "theorems": 15,
@@ -3637,6 +3631,12 @@
         "quality": 0.78,
         "theorems": 0,
         "title": "Surveillance Networks: Information-Theoretic Undetectability"
+      },
+      {
+        "cycle_id": "f0066f11",
+        "quality": 0.67,
+        "theorems": 10,
+        "title": "Flatland Catastrophe: When 2D Physics Breaks"
       }
     ],
     "NumberTheory": [

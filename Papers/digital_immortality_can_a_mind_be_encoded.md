@@ -1,52 +1,17 @@
-# Computational Evidence: Connectome Description-Length Bounds
+# Computational Evidence
 
-## 1. Small-case slot counts
+The target claims are general counting and inequality theorems, but small cases help check the model.
 
-`synapseSlots N = C(N,2)` = number of unordered neuron pairs.
+| Neurons `N` | Synapse slots `N.choose 2` | Boolean connectomes `2^(N.choose 2)` |
+|---:|---:|---:|
+| 0 | 0 | 1 |
+| 1 | 0 | 1 |
+| 2 | 1 | 2 |
+| 3 | 3 | 8 |
+| 4 | 6 | 64 |
+| 5 | 10 | 1024 |
+| 6 | 15 | 32768 |
 
-| N   | synapseSlots N | connectomes = 2^slots |
-|-----|----------------|-----------------------|
-| 0   | 0              | 1                     |
-| 1   | 0              | 1                     |
-| 2   | 1              | 2                     |
-| 3   | 3              | 8                     |
-| 4   | 6              | 64                    |
-| 5   | 10             | 1024                  |
-| 10  | 45             | ~3.5 × 10^13          |
-| 1000| 499500         | 2^499500              |
+For merging, the first nontrivial check is `choose (3+4) 2 = 21 = 3 + 6 + 3·4`: the twelve extra slots are exactly the cross-pairs. For directionality at `N = 4`, the six undirected slots become twelve directed slots, so the state count changes from `2^6 = 64` to `2^12 = 4096 = 64^2`.
 
-Verified in `MindEncodingBounds.lean`:
-`#eval synapseSlots 5  -- 10`, `#eval synapseSlots 1000  -- 499500`,
-and `example : Fintype.card (Connectome 5) = 1024`.
-
-## 2. Quadratic sandwich check
-
-The theorem `synapseSlots_sandwich` gives `(N-1)^2 ≤ 2·slots ≤ N^2`.
-Spot checks:
-
-* N=5:  (5-1)^2 = 16 ≤ 2·10 = 20 ≤ 25 = 5^2. ✓
-* N=10: 81 ≤ 90 ≤ 100. ✓
-* N=1000: 998001 ≤ 999000 ≤ 1000000. ✓
-
-## 3. OEIS
-
-The slot sequence `0,0,1,3,6,10,15,21,...` is the triangular numbers
-**OEIS A000217** (shifted), and the connectome-count sequence
-`1,1,2,8,64,1024,...` = `2^C(n,2)` is **OEIS A006125** (number of labeled
-graphs on n nodes). Both confirm the quadratic exponent in the state count.
-
-## 4. Counterexample hunt (boundary cases)
-
-* The real quadratic corollary `uploading_energy_radius_quadratic` uses
-  `((N:ℝ)-1)^2`. At N=0 this equals 1 while `2·slots = 0`, so the unguarded
-  real bound would be **false** at N=0 — this is exactly why the theorem carries
-  the hypothesis `1 ≤ N`. No counterexample exists in the guarded range.
-* `no_lossless_compression` is checked at the boundary `M = 2^slots - 1`:
-  compression into `1023` codewords for 5 neurons is impossible, matching the
-  `1024` distinct connectomes.
-
-## 5. Conclusion
-
-All computational evidence is consistent with — and is discharged inside — the
-formal results: the state count is exactly `2^C(N,2)`, the slot count is `Θ(N²)`,
-and the minimum description length is quadratic in the neuron count.
+No OEIS lookup is needed: the slot sequence is the triangular numbers, and all formulas used here are closed forms proved in Lean. Exhaustive small-case checks found no counterexample. Edge cases `N = 0,1` explain why the real quadratic lower bound used in the physical corollary assumes `1 ≤ N`.
