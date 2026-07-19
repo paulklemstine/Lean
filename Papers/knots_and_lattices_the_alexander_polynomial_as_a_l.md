@@ -1,88 +1,51 @@
-# Computational Evidence: Alexander polynomials vs. lattice-path generating functions
+# Computational Evidence
 
-## 1. The claim under test
+## Small-case calculations
 
-The mission conjecture states that the Alexander polynomial of a knot is a
-*generating function of lattice paths*:
-`Δ_K(t) = Σ_p t^{area(p)}`, one non-negative term per path.
+For the normalized `T(2,2k+1)` Alexander family
 
-A generating function of this form has **non-negative integer coefficients**.
-So a single decisive test is: *do reduced Alexander polynomials have negative
-coefficients?*
+`Δ_k(t) = Σ_{i=-k}^{k} (-1)^{i+k} t^i`,
 
-## 2. Small-case calculations
+the first cases are:
 
-Reduced (symmetric, Conway-normalized) Alexander polynomials of the smallest
-knots, written in the symmetric variable so that `Δ_K(t) = Δ_K(t^{-1})`:
+| `k` | Knot | Normalized Alexander polynomial |
+|---:|---|---|
+| 0 | unknot | `1` |
+| 1 | trefoil `T(2,3)` | `t - 1 + t⁻¹` |
+| 2 | `T(2,5)` | `t² - t + 1 - t⁻¹ + t⁻²` |
+| 3 | `T(2,7)` | `t³ - t² + t - 1 + t⁻¹ - t⁻² + t⁻³` |
+| 4 | `T(2,9)` | `t⁴ - t³ + t² - t + 1 - t⁻¹ + t⁻² - t⁻³ + t⁻⁴` |
 
-| Knot | Crossings | Δ_K(t) | Has a negative coefficient? |
-|------|-----------|--------|------------------------------|
-| unknot | 0 | `1` | no |
-| trefoil `3_1` | 3 | `t − 1 + t^{-1}` | **yes** (constant term −1) |
-| figure-eight `4_1` | 4 | `−t + 3 − t^{-1}` | **yes** |
-| `5_1` | 5 | `t^2 − t + 1 − t^{-1} + t^{-2}` | **yes** |
-| `5_2` | 5 | `2t − 3 + 2t^{-1}` | **yes** |
-| `6_1` | 6 | `2t − 5 + 2t^{-1}` | **yes** |
-| `6_2` | 6 | `−t^2 + 3t − 3 + 3t^{-1} − t^{-2}` | **yes** |
+For every `k ≥ 1`, the coefficient in degree `k-1` is `-1`.
 
-Every non-trivial knot in this list has at least one strictly negative
-coefficient. This is not accidental: `Δ_K(1) = ±1` for every knot, while the sum
-of the (non-negative) coefficients of a genuine generating function equals the
-number of paths, which is `≥ 1` and typically large; forcing the alternating
-cancellation down to `±1` requires negative coefficients.
+## Counterexample hunt
 
-**Conclusion of the counterexample hunt:** the literal conjecture is *false*.
-The trefoil already refutes it. This is captured formally by
-`trefoil_not_areaGF`, which shows the trefoil polynomial is not an unsigned
-lattice-path generating function for **any** state set and **any** area
-statistic.
+An unsigned lattice-path generating function has coefficient at degree `a`
+equal to the cardinality of the set of allowed paths of area `a`; hence every
+coefficient is nonnegative. The trefoil already contradicts the universal
+claim because its degree-zero coefficient is `-1`. The same test gives an
+infinite counterexample family `T(2,2k+1)` for all `k ≥ 1`.
 
-## 3. What survives — the signed state sum
+The test is stronger than a search over geometric forbidden regions: even if an
+arbitrary predicate is allowed to delete any subset of balanced paths, the
+remaining area-fibre cardinalities cannot be negative.
 
-The genuine state-sum formula carries a sign `(-1)^{w(s)}`:
-`Δ_K(t) = Σ_s (-1)^{w(s)} t^{a(s)}`.
-With signs, the trefoil polynomial is reproduced exactly by three states of
-areas `1, 0, -1` and signs `+, -, +`:
+## OEIS search
 
-```
-(+1)·t^1 + (-1)·t^0 + (+1)·t^{-1} = t - 1 + t^{-1}.
-```
+The obstruction uses the constant sequence of witness coefficients
+`-1, -1, -1, ...`, rather than a nonnegative counting sequence, so an OEIS
+identification is not relevant to the decisive test. The corresponding
+absolute coefficient rows are strings of `2k+1` ones.
 
-This is `trefoil_is_signedGF`. The sign is precisely what the naive conjecture
-drops.
+## Table of diagnostic invariants
 
-## 4. The symmetry, explained combinatorially
+| `k` | Sum of coefficients `Δ_k(1)` | Absolute alternating evaluation `|Δ_k(-1)|` | Unsigned path model? |
+|---:|---:|---:|---|
+| 0 | 1 | 1 | not obstructed |
+| 1 | 1 | 3 | no |
+| 2 | 1 | 5 | no |
+| 3 | 1 | 7 | no |
+| 4 | 1 | 9 | no |
 
-Every reduced Alexander polynomial above is palindromic: `Δ_K(t) = Δ_K(t^{-1})`.
-Computationally, the coefficient sequence reads the same forwards and backwards.
-The structural cause is an **area-negating, sign-preserving involution** of the
-state set: pairing each state `s` of area `k` with a partner of area `-k` and
-equal sign makes the signed sum symmetric. This mechanism is proved in general
-as `signedGF_palindromic`, and the trefoil's involution (`swap` the area `±1`
-states, fix the area `0` state) is an instance.
-
-## 5. Lattice-path combinatorics (the substrate)
-
-Monotone paths from `(0,0)` to `(n,n)` are the `n`-subsets of the `2n` step
-slots; hence there are `C(2n,n)` of them (`card_latticePaths`). The family is
-`n`-uniform, so Kruskal–Katona applies: any dense sub-family of paths forces a
-dense shadow of `(n-1)`-step sub-paths (`latticePaths_shadow_lower_bound`).
-
-| n | C(2n, n) |
-|---|----------|
-| 0 | 1 |
-| 1 | 2 |
-| 2 | 6 |
-| 3 | 20 |
-| 4 | 70 |
-| 5 | 252 |
-
-(Central binomial coefficients, OEIS A000984.)
-
-## 6. Summary
-
-- The **positive** lattice-path enumeration conjecture is refuted (negative
-  coefficients are ubiquitous, already at the trefoil).
-- The **signed** state sum survives and reproduces the polynomial.
-- The signature symmetry of Alexander polynomials is explained by a combinatorial
-  involution, not by positivity.
+The symbolic proofs establish these patterns for every natural `k`; the table
+only illustrates the first cases.

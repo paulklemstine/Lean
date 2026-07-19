@@ -172,21 +172,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
   },
   {
-    "consumed_by_exp_id": "c2f98a25",
-    "description": "The Riemann zeta function zeta(s) has non-trivial zeros at s = 1/2 + i*gamma_n on the critical line (assuming RH). These zeros encode deep arithmetic information. Conjecture: the zeros gamma_n are the spectrum of a self-adjoint operator on a Hilbert space, and this operator is the Casimir element of a quantum group G_q. Specifically, define the 'zeta quantum group' G_q as the q-deformation of SU(2) where q = e^{2*pi*i*gamma_1} (using the first zero gamma_1 ~ 14.13). The Casimir element C_q of G_q has eigenvalues that are quadratic functions of the representation labels, and the spectrum of C_q is {n(n+1) : n in N}. Conjecture: the Riemann zeros gamma_n are related to the spectrum of C_q by gamma_n = f(spectrum(C_q)) for some function f. If f is linear, this would mean the zeros are evenly spaced, which is false (the zeros have Poisson-like spacings). If f is logarithmic, gamma_n ~ pi*n/log(n) which matches the average spacing. Conjecture: the spectral statistics of C_q match the GUE random matrix statistics of the Riemann zeros (Montgomery's pair correlation conjecture). Test: compute the spectrum of C_q for G_q with q = e^{2*pi*i*gamma_1} and compare the spectral statistics with the Riemann zeros. Impact: the Riemann hypothesis is a representation-theoretic statement about quantum groups.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0369",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T00:43:47.756962+00:00",
-    "title": "Quantum Groups from Number Theory: The Riemann Hypothesis as a Representation Problem"
-  },
-  {
     "consumed_by_exp_id": "76d5023e",
     "description": "The Alexander polynomial Delta_K(t) of a knot K is a Laurent polynomial that encodes topological information about the knot. Conjecture: for any knot K with n crossings, the Alexander polynomial Delta_K(t) can be expressed as the generating function of lattice paths in Z^2 that avoid a region determined by the knot diagram. Specifically, define the 'knot lattice' L_K as the set of lattice paths from (0,0) to (n,n) that avoid the 'forbidden region' R_K determined by the crossing structure of K. Then Delta_K(t) = sum_{p in L_K} t^{area(p)} where area(p) is the area under the path p. This conjecture follows from the state sum formula for the Alexander polynomial: Delta_K(t) = sum_{states s} (-1)^{w(s)} t^{a(s)} where w(s) is the writhe and a(s) is the area of the state. The area a(s) is exactly the area under a lattice path determined by the state. Conjecture: every Alexander polynomial arises as a lattice path generating function, and vice versa. This means the Alexander polynomial is not just a knot invariant \u2014 it is a combinatorial object that counts lattice paths. Test: compute the Alexander polynomials for the first 50 knots and verify that each can be expressed as a lattice path generating function. Impact: knot invariants are combinatorial. The Alexander polynomial counts lattice paths, connecting topology to combinatorics.",
     "domains": [
@@ -4339,6 +4324,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n1. Specify an actual operator and Hilbert space, then prove dense definition,\n   symmetry, and self-adjointness before discussing its spectrum.\n2. Replace the unrestricted interpolation function by a mathematically rigid\n   class (affine, analytic, monotone with quantitative derivative bounds, or a\n   fixed functional-calculus expression). The interpolation theorem shows this\n   restriction is essential.\n3. Clarify which quantum group is intended at the unit-modulus parameter\n   `q = exp(2\u03c0i\u03b3\u2081)`. Establish its star structure, unitary representations, and\n   the precise Casimir eigenvalue formula; the undeformed labels `n(n+1)` cannot\n   simply be assumed for a generic deformation.\n4. Formalize normalized gap and pair-correlation statistics for finite spectra.\n   Compare the deterministic quadratic spectrum only after unfolding/rescaling,\n   and distinguish Poisson statistics from GUE statistics.\n5. If a logarithmic spectral map is intended, give its exact formula. The\n   ordinary map `x \u21a6 log x` applied to `n(n+1)` grows like `2 log n`, whereas the\n   zero ordinates have a different proposed scale.\n6. Connect any spectral statement to the analytic continuation and functional\n   equation of the zeta function. Without a theorem linking the operator's\n   characteristic or spectral determinant to zeta, self-adjointness alone does\n   not imply the Riemann hypothesis.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0388",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "c2f98a25",
+    "status": "available",
+    "timestamp": "2026-07-19T03:20:21.651781+00:00",
+    "title": "1. Specify an actual operator and Hilbert space, then prove dense definition,"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n1. **Group actions and orbit relations.** Instantiate `InvariantPattern` with the setoid generated by an explicit finite group action, then restate the cardinality theorem using the number of group orbits.\n2. **Burnside counting.** Derive the orbit count from fixed-point counts via Burnside's lemma. This would connect geometric generators (translations, rotations, reflections, and glides) to computable pattern capacities.\n3. **Faithful wallpaper-group models.** Define planar Euclidean isometries, lattices, discreteness, and compact quotient conditions. Only after these definitions should an exact 17-group classification theorem be attempted.\n4. **Finite toroidal drum grids.** Model sampled time\u2013pitch patterns on `ZMod p \u00d7 ZMod q`. Determine which planar symmetries descend to each torus and distinguish the symmetry group of one pattern from the ambient crystallographic group.\n5. **Entropy beyond support size.** Equip invariant patterns with probability distributions and prove Shannon-entropy bounds. The current exact cardinality theorem gives the uniform-capacity value but does not formalize probabilistic musical entropy.\n6. **Corpus methodology.** Specify a reproducible encoding of MIDI onset grids, tolerance rules, symmetry detection, and a statistical null model before testing distributional claims. The claim about 1000 patterns cannot be verified without a supplied corpus and classification protocol.\n7. **Musical interpretation validation.** Treat names such as \u201ccanon,\u201d \u201cround,\u201d and \u201c3-bar blues\u201d as hypotheses to be evaluated, not consequences of crystallographic classification. Formal predicates for these musical structures would make the proposed correspondence falsifiable.",
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "fd_0389",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "ef699512",
+    "status": "available",
+    "timestamp": "2026-07-19T03:20:30.713701+00:00",
+    "title": "1. **Group actions and orbit relations.** Instantiate `InvariantPattern` with th"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle d1663b23 (Q=0.700) proved 0 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'A minimal modularity lifting theorem for Siegel modular forms' and formalize its key results. Abstract: We prove a minimal modularity lifting theorem (in the spirit of Gen",
     "domains": [
       "Applications"
@@ -4423,21 +4438,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-15T05:23:22.329230+00:00",
     "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
-  },
-  {
-    "consumed_by_exp_id": "ef699512",
-    "description": "A periodic rhythm in music is a function f: Z -> {0, 1} that is periodic: f(n + p) = f(n) for some period p. The symmetry group of a rhythm with period p is a subgroup of Z/pZ. But music also has 2D patterns: a drum pattern is a function g: Z x Z -> {0, 1} (onset grid in time x pitch). The symmetry group of a drum pattern is a subgroup of Z x Z, which is a wallpaper group in 1D. In 2D, the wallpaper groups classify all possible symmetries of periodic patterns. There are exactly 17 wallpaper groups in 2D. Conjecture: the 17 wallpaper groups correspond to 17 fundamentally different types of rhythmic structure in music. Specifically: (1) p1: no symmetry (free rhythm), (2) p2: 2-fold rotational symmetry (call-and-response), (3) pm: mirror symmetry (palindrome), (4) pg: glide reflection (canon), (5) cm: mirror + glide (round), (6) pmm: double mirror (bilateral palindrome), (7) pmg: mirror + glide (inverted canon), (8) pgg: double glide (double canon), (9) cmm: double mirror + glide (round + palindrome), (10) p4: 4-fold rotation (4-bar cycle), (11) p4m: 4-fold + mirrors (variations on a theme), (12) p4g: 4-fold + glides (inverted variations), (13) p3: 3-fold rotation (3-bar blues), (14) p3m1: 3-fold + mirrors, (15) p31m: 3-fold + glides, (16) p6: 6-fold rotation (whole-tone scale symmetry), (17) p6m: 6-fold + mirrors (maximal symmetry, the 'perfect' rhythm). Test: classify 1000 drum patterns by their wallpaper group and verify the distribution matches musical practice. Impact: there are exactly 17 types of rhythm in music, classified by the wallpaper groups.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0357",
-    "priority_score": 0.68,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T20:59:34.983738+00:00",
-    "title": "Crystallographic Groups and Music: The 17 Wallpaper Groups of Rhythm"
   },
   {
     "consumed_by_exp_id": "6fa68166",

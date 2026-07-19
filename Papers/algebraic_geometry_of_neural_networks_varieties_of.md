@@ -1,65 +1,34 @@
-# Computational Evidence: Tropical Structure of Decision Boundaries
+# Computational Evidence
 
-Concise numerical support for the two growth laws proved in
-`DecisionBoundaryVarieties.lean`.
+## Small-case calculations
 
-## 1. Monomial counts: addition under activation
+For a single gate `r(x) = max(0,x)`, the values at `x = -2,-1,0,1,2` are `0,0,0,1,2`. Thus the zero set contains the negative half-line, while the change of slope remains concentrated at zero. This separates “zero set is a hypersurface” from “nondifferentiability set is a hypersurface.”
 
-A tropical polynomial with `k` monomials, passed through a rectified-linear
-activation of a rational `p ⊖ q` (with `|p| = k`, `|q| = m`), yields a numerator
-`max(p,q)` with `k + m` monomials. Small cases:
+For the balanced expression `max(max(a,b),max(c,d))`, the tropical depth is `2`. Applying the two-input log-sum-exp estimate at each level predicts a uniform smoothing error at most `2 log(2)/β`. For an unbalanced expression `max(a,max(b,max(c,d)))`, the corresponding depth bound is `3 log(2)/β`, showing that tree shape, not only leaf count, controls the compositional estimate.
 
-| `|p|` | `|q|` | numerator `|max(p,q)|` (= `k+m`) |
-|------:|------:|--------------------------------:|
-|   1   |   1   |               2                 |
-|   2   |   1   |               3                 |
-|   2   |   2   |               4                 |
-|   3   |   2   |               5                 |
+The layerwise recurrence `R([])=1` and `R(w::ws)=2wR(ws)` gives:
 
-This matches `Fintype.card (ι ⊕ κ) = card ι + card κ` (`relu_numerator_card`).
+| widths | recurrence value | `2^L ∏w_i` |
+|---|---:|---:|
+| `[]` | 1 | 1 |
+| `[1]` | 2 | 2 |
+| `[2]` | 4 | 4 |
+| `[2,3]` | 24 | 24 |
+| `[2,3,4]` | 192 | 192 |
 
-## 2. Depth doubling: the `2^L` envelope
+## OEIS search results
 
-Iterating "at most double per layer" from a single input piece:
-
-| depth `L` | max monomials `2^L` |
-|----------:|--------------------:|
-|     0     |          1          |
-|     1     |          2          |
-|     2     |          4          |
-|     3     |          8          |
-|     4     |         16          |
-
-This is the content of `layer_count_le_pow_two`.
-
-## 3. Width product: the `∏ w_i` region count
-
-Combining independent tropical factors of widths `w_i` via the tropical product
-gives exactly `∏ w_i` monomials:
-
-| widths `(w_1,…)` | `∏ w_i` |
-|------------------|--------:|
-| (2, 3)           |    6    |
-| (2, 2, 2)        |    8    |
-| (3, 3)           |    9    |
-| (2, 3, 4)        |   24    |
-
-This is `tropProduct_card_eq_prod` (via `Fintype.card_pi`).
-
-## 4. Boundary sanity check (1-D ReLU unit)
-
-For `f(x) = ReLU(x) = max(x, 0)`, realized as a two-monomial tropical polynomial:
-- monomials: `0` (slope 0) and `x` (slope 1);
-- decision boundary `{x : max(x,0) = 0} = (-∞, 0]` has its non-smooth vertex at
-  `x = 0`, where both monomials tie — exactly the argmax-multiplicity condition
-  predicted for singular points.
-
-This concrete unit is verified in the file's `example`.
+No canonical one-variable sequence is intrinsic to the multivariate width recurrence. Specializing all widths to one yields powers of two, but this specialization discards the architectural information of interest, so no OEIS identification is used.
 
 ## Counterexample hunt
 
-The two growth laws are stated as *exact equalities* of piecewise linear
-functions (`tropVal_max`, `tropVal_add`), so no counterexample is possible; the
-`2^L` and `∏ w_i` statements are upper bounds and lower-bound tightness is left
-as Conjecture 1 in `FUTURE_DIRECTIONS.md`. No violating instance was found in the
-finite sweeps above.
+Two minimal boundary cases were checked:
+
+1. The scalar ReLU zero set contains every `x<0`, contradicting an unconditional claim that every ReLU decision zero set is codimension one.
+2. At width one, `choose(1,2)=0`, yet scalar ReLU has different one-sided linear behavior around zero. Therefore a universal singularity bound based only on a product of pair counts cannot count ordinary ReLU kinks without additional conventions or hypotheses.
+
+These cases are incorporated as general symbolic theorems rather than left as numerical observations.
+
+## Tables and plots
+
+No plot is needed for the one-dimensional obstruction: the exact formulas `r(-ε)=0` and `r(ε)=ε` for every `ε>0` completely describe the relevant local geometry.
