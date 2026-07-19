@@ -1,4 +1,5 @@
 import Mathlib
+import Applications.InfiniteChessOmega.Core
 
 /-!
 # Winning on the Hilbert Board: King Escape in Every Dimension
@@ -43,11 +44,17 @@ always has at least two coordinate axes.
   higher-dimensional effect.
 
 -- !-- Lab Notes -- !--
-Hypothesis (Hypothesizer): The planar escape results should be *dimension-robust*:
-adding axes cannot help the pursuer.  Boldly, we conjectured the entire
-lone-rook fortress — geometric escape, infinite run, and transfinite
-inaccessibility — survives verbatim on `ℤ^{d+2}` for every `d`, while collapsing
-in dimension one.
+Hypothesis (Hypothesizer): The conjectures, ranked by expected impact, were:
+(1) finite-piece winning positions on the Hilbert board admit exactly the
+countable ordinal values; (2) every countable ordinal occurs as a finite-piece
+position value; (3) geometric pursuit ranks and abstract game-tree values agree
+under a strategy-tree translation; (4) the lone-rook fortress survives in every
+dimension at least two and has no ordinal pursuit rank; (5) every finite rook
+army leaves infinitely many globally safe squares; (6) dimension one is the
+sharp boundary for the lone-rook escape mechanism.  The first three are bold
+classification and bridge conjectures.  The present cycle attacks the structural
+core of (3)--(6): adding axes cannot help a lone pursuer, while abstract winning
+trees still support a strict transfinite hierarchy.
 
 Experiment (Experimenter): We generalised the coordinatewise escape map `escC`
 to `gStep r p := fun i => escC (p i) (r i)`, which moves *every* coordinate away
@@ -70,9 +77,11 @@ lone checker.  The one-dimensional boundary theorems confirm the hypotheses are
 sharp: with a single axis two mutually defending rooks deliver mate.
 
 Synthesis (PI): "The king always escapes" is a phenomenon of dimension `≥ 2`,
-robust to *unboundedly many* extra dimensions, and its honest invariant remains
-the accessibility rank of the pursuit relation — an ordinal that, for the
-lone-rook fortress, does not exist.
+robust to *unboundedly many* extra dimensions.  Its honest invariant is the
+accessibility rank of the pursuit relation — an ordinal that, for the lone-rook
+fortress, does not exist.  In contrast, the imported abstract winning-tree
+hierarchy realizes strictly increasing values `ω^n` and a diagonal value `ω^ω`;
+the final separation theorem records both sides of this bridge.
 -/
 
 namespace HilbertBoardChess
@@ -232,6 +241,23 @@ theorem single_rook_never_traps {d : ℕ} (r k : Sq d) : ¬ AttackerWins r k := 
   obtain ⟨f, hf0, hstep⟩ := king_escapes_forever r k
   have h := not_acc_of_chain (rel := fun q p => KingStep r p q) f (fun n => hstep n)
   rw [hf0] at h; exact h
+
+/-! ## Bridge to transfinite winning-game values -/
+
+/-- **Escape/value separation.**  The geometric lone-rook pursuit has an
+infinite safe play and therefore no accessibility rank, while the abstract
+winning-tree model simultaneously contains a strict hierarchy of positions of
+values `ω^n`, all lying below the explicit diagonal position of value `ω^ω`.
+This separates non-well-founded escape from transfinite-but-well-founded wins. -/
+theorem escape_and_transfinite_value_hierarchy {d : ℕ} (r k : Sq d) :
+    ¬ AttackerWins r k ∧
+      StrictMono (fun n : ℕ => InfiniteChessOmega.value (InfiniteChessOmega.opowGame n)) ∧
+      ∀ n : ℕ, InfiniteChessOmega.value (InfiniteChessOmega.opowGame n) <
+        InfiniteChessOmega.value InfiniteChessOmega.omegaOmegaGame := by
+  refine ⟨single_rook_never_traps r k,
+    InfiniteChessOmega.value_opowGame_strictMono, ?_⟩
+  intro n
+  exact InfiniteChessOmega.value_opowGame_lt_omegaOmega n
 
 /-! ## Boundary case: the one-dimensional line
 
