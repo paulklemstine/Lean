@@ -244,18 +244,23 @@ def _print_quality_metrics(extractor: "KnowledgeExtractor") -> None:
         if not records:
             return
 
-        # Last 30 records for rolling metrics
+        # Last 100 records for rolling metrics
         recent = [r for r in records if not r.get("failed")]
         if not recent:
             return
-        recent = recent[-30:]
+        recent = recent[-100:]
         by_ver = {}
         for r in recent:
             v = r.get("prompt_version", "unknown")
             by_ver.setdefault(v, []).append(r)
 
-        lines = ["[Quality] Rolling metrics (last 30 cycles):"]
-        for v in ("v6", "v7", "v8", "v9", "v10", "v11", "v12", "v13", "v14", "v15", "v16", "v16a", "v16b", "v17", "v18", "v19", "v19a", "v19b", "v19c", "v19d"):
+        lines = ["[Quality] Rolling metrics (last 100 cycles):"]
+        all_vers = list(PHASE_A_VERSIONS)
+        for v in by_ver:
+            if v not in all_vers:
+                all_vers.append(v)
+                
+        for v in all_vers:
             rs = by_ver.get(v, [])
             if not rs:
                 continue
@@ -279,7 +284,7 @@ def _print_quality_metrics(extractor: "KnowledgeExtractor") -> None:
                          f"avg_sorry={avg_sorry:.1f} avg_theorems={avg_theorems:.0f} "
                          f"novelty=[new={total_new} +{total_strength} dup={total_dup} ¬={total_disproof}]")
 
-        # Trend: compare last 15 vs first 15 of recent
+        # Trend: compare halves of recent
         if len(recent) >= 20:
             first_half = recent[:len(recent)//2]
             second_half = recent[len(recent)//2:]
