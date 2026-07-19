@@ -232,7 +232,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "76d5023e",
     "description": "The Alexander polynomial Delta_K(t) of a knot K is a Laurent polynomial that encodes topological information about the knot. Conjecture: for any knot K with n crossings, the Alexander polynomial Delta_K(t) can be expressed as the generating function of lattice paths in Z^2 that avoid a region determined by the knot diagram. Specifically, define the 'knot lattice' L_K as the set of lattice paths from (0,0) to (n,n) that avoid the 'forbidden region' R_K determined by the crossing structure of K. Then Delta_K(t) = sum_{p in L_K} t^{area(p)} where area(p) is the area under the path p. This conjecture follows from the state sum formula for the Alexander polynomial: Delta_K(t) = sum_{states s} (-1)^{w(s)} t^{a(s)} where w(s) is the writhe and a(s) is the area of the state. The area a(s) is exactly the area under a lattice path determined by the state. Conjecture: every Alexander polynomial arises as a lattice path generating function, and vice versa. This means the Alexander polynomial is not just a knot invariant — it is a combinatorial object that counts lattice paths. Test: compute the Alexander polynomials for the first 50 knots and verify that each can be expressed as a lattice path generating function. Impact: knot invariants are combinatorial. The Alexander polynomial counts lattice paths, connecting topology to combinatorics.",
     "domain_bridges": [],
     "domains": [
@@ -245,7 +245,7 @@
     "proof_strategy": "The Alexander polynomial Delta_K(t) is computed from the Alexander module H_1(X_K, Z[t, t^{-1}]) where X_K is the infinite cyclic cover of the knot complement. The presentation matrix (Alexander matrix) has entries that are Laurent polynomials. Delta_K(t) = det(M) where M is the (n-1) x (n-1) Alexander matrix after deleting one row and one column. Lattice path connection: the state sum for Delta_K(t) can be written as Delta_K(t) = sum_{s in states} t^{area(s)} * (-1)^{writhe(s)}. Each state s corresponds to a lattice path from (0,0) to (n,n) in Z^2, and area(s) is the area under this path. The forbidden region R_K is determined by the over/under crossings: at each crossing, the path must go either above or below the crossing, and the forbidden region is the set of paths that violate the knot's crossing constraints. More precisely: for a knot diagram with n crossings, each crossing is resolved as either A-type (horizontal pass) or B-type (vertical pass). The lattice path goes from (0,0) to (2,n) stepping right (A-type) or up (B-type) at each crossing. The area under the path is the sum of the vertical positions. Delta_K(t) = sum_{paths avoiding R_K} t^{area(path)}. Test: for the trefoil (3_1), compute the 8 lattice paths from (0,0) to (2,3), identify the 2 paths that avoid the forbidden region, and verify that the sum of t^{area} matches the Alexander polynomial Delta_{3_1}(t) = t - 1 + t^{-1}.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T00:43:47.706838+00:00",
     "title": "Knots and Lattices: The Alexander Polynomial as a Lattice Path Count"
   },
