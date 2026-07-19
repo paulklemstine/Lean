@@ -1,75 +1,177 @@
-# Every Translation Loses Something: The Hidden Entropy of Functors
+# What a Functor Forgets
 
-Imagine handing a friend a beautifully wrapped gift and asking them to describe it — but only by its shape. A cube of chocolates, a cube of soap, a cube of cufflinks: all three come back described as "a box." Something true has been said, and yet something has been lost. The description *forgets*. And once you have forgotten which of three cubes you were holding, no amount of staring at the word "box" will bring it back.
+## An entropy ledger for maps, classifications, and compressed descriptions
 
-This everyday act — describing, simplifying, forgetting — is exactly what mathematicians call applying a **functor**, and this article is about how to measure, in precise numerical terms, *how much a functor forgets*.
+Imagine six sealed envelopes on a table. Each contains one of six distinct source states. A clerk passes every envelope through a machine and stamps it with one of three labels: $0$, $1$, or $2$. The rule is perfectly regular—two source states receive each label. When you see the label, you learn something, but not everything. The label narrows six possibilities to two.
 
-## Structures, and maps between them
+How should we account for that change in knowledge?
 
-Mathematics is full of objects that come with structure. A *group* is a set together with a way to combine its elements. A *topological space* is a set together with a notion of which points are "near" which others. A *vector space* is a set with addition and scaling. In each case there is a plain set underneath, dressed up with extra rules.
+The natural language is entropy. Yet there are two different quantities hiding in the story. One measures the diversity of labels that remain visible. The other measures the ambiguity concealed behind the label. Confusing them leads to attractive but incorrect formulas. Separating them yields a clean conservation law for every deterministic map between finite collections, and it clarifies what “information loss” can mean when the map is induced by a functor between categories.
 
-A **functor** is a structure-preserving translation from one such world to another. The most humble and most revealing example is the **forgetful functor**: take a group and simply throw away the multiplication, remembering only its underlying set. Take a topological space and forget which sets are open, remembering only the bare collection of points. The functor is honest — it never lies about what remains — but it is forgetful. Wildly different groups can sit on top of the very same set. A single three-element set underlies exactly one group up to relabeling, but a set of countably many points underlies an entire universe of distinct topologies, almost all of which collapse to the identical naked set once you forget.
+The central message is simple: a deterministic map does not destroy the entire information budget. It divides that budget into what the output reveals and what its fibers hide.
 
-Category theorists have long had a qualitative vocabulary for this. A functor that never confuses two genuinely different things is called **faithful**; one that blurs distinctions loses information. But "loses information" was always a metaphor. The question this work answers is: *can we attach an actual number to it?* And the answer turns out to be a familiar one, borrowed from a completely different corner of science.
+## From objects to a deterministic channel
 
-## Entropy: the physics of not knowing
+Let $A$ be a nonempty finite set of source objects, let $B$ be a finite set of possible output objects, and let
 
-In 1948 Claude Shannon gave the world a formula for uncertainty. If a random signal takes value $x$ with probability $p(x)$, its **entropy** is
-$$H = -\sum_x p(x)\,\log p(x).$$
-Entropy is largest when every outcome is equally likely (maximum ignorance) and zero when one outcome is certain (perfect knowledge). It is measured in bits when the logarithm is base two, and it quietly governs everything from data compression to the thermodynamics of black holes.
+$$
+f:A\to B
+$$
 
-Shannon's genius was to realize that *information is the resolution of uncertainty*. If I tell you the outcome of a fair coin flip, I have given you exactly one bit, because I have erased exactly one bit of your uncertainty. The bridge this article builds is simple to state: **a functor's forgetfulness is just uncertainty in disguise, and so it too can be measured in bits.**
+be any map. In categorical applications, $f$ is the map on objects induced by a functor. Choose an element of $A$ uniformly at random and observe only its image in $B$.
 
-## The right way to count forgetting
+For an output $b\in B$, the **fiber** above $b$ is
 
-Here is where care is needed, because the obvious guess is wrong.
+$$
+f^{-1}(b)=\{a\in A:f(a)=b\}.
+$$
 
-Suppose our functor $F$ sends objects of a world $C$ to objects of a world $D$. For each target object $d$, let $c_d$ be the number of objects of $C$ that $F$ maps to $d$ — the size of the **fiber** over $d$, the crowd of things that all get described the same way. If $C$ has $n$ objects in total, then a randomly chosen object lands in fiber $d$ with probability $c_d/n$.
+Its output probability is therefore
 
-One's first instinct is to compute the Shannon entropy of *where things land*. But this measures the wrong thing. Even a perfectly faithful functor — one that forgets nothing — will produce a spread-out landing distribution and hence a large entropy, simply because it has many possible outputs. That number measures the richness of the target, not the loss along the way.
+$$
+p_b=\frac{|f^{-1}(b)|}{|A|}.
+$$
 
-The correct measure is the **conditional entropy**: given that I tell you the output $d$, how much uncertainty remains about which input you started with? If the fiber over $d$ contains $c_d$ equally plausible inputs, the leftover uncertainty is exactly $\log c_d$. Averaging this over all the fibers, weighted by how often each occurs, gives the definition at the heart of this work:
+Empty fibers have probability zero. The nonempty fibers partition $A$, so the probabilities are nonnegative and satisfy
 
-$$H(F) \;=\; \sum_{d}\frac{c_d}{n}\,\log c_d.$$
+$$
+\sum_{b\in B}p_b=1.
+$$
 
-This is the **functorial entropy** — the average number of bits still hidden about an object after you have been told its image. It is the honest, information-theoretic shadow of functoriality. Read it aloud: *for each possible description, weigh how likely that description is by how many things it fails to distinguish, and add it all up.*
+This elementary partition is the engine behind everything that follows.
 
-## What the number knows
+## Two numbers, not one
 
-The beauty of a good definition is that theorems fall out of it, and each theorem confirms that the number is measuring what we hoped. Six of them anchor the theory.
+The first quantity is the Shannon entropy of the observed output:
 
-**Forgetting is never negative.** $H(F) \ge 0$ always. You cannot un-forget; a translation can only lose information or break even, never conjure it. This is the reassuring baseline.
+$$
+H_{\mathrm{out}}(f)=-\sum_{b\in B}p_b\log p_b.
+$$
 
-**Zero forgetting means faithfulness.** $H(F) = 0$ *if and only if* $F$ is injective on objects — it never sends two distinct things to the same place. Every fiber holds at most one object, so $\log c_d$ is $\log 1 = 0$ across the board. This is the precise, quantitative version of the old qualitative slogan "faithful functors lose no information." The metaphor has become a theorem.
+Here and throughout, $\log$ denotes the natural logarithm, so information is measured in nats. Terms with $p_b=0$ contribute zero. This entropy answers: **How diverse and unpredictable is the visible output?**
 
-**Uniform blurring has a clean formula.** If every fiber has the same size $k$ — the functor spreads its forgetting evenly, gathering $k$ inputs under every output — then
-$$H(F) = \log k = \log\frac{|\text{objects of } C|}{|\text{objects of } D|}.$$
-The loss is simply the logarithm of how many-to-one the map is. A two-to-one functor loses exactly one bit; a functor that squashes a thousand into one loses about ten bits.
+The second quantity is the expected logarithmic size of the observed fiber:
 
-**Total collapse is maximal.** A **constant functor**, which crushes everything in $C$ down to a single object, loses $\log n$ — the entire information content of the domain. It is the description "it's a thing," true of everything and therefore useless.
+$$
+L_{\mathrm{fib}}(f)=\sum_{b\in B}p_b\log |f^{-1}(b)|.
+$$
 
-**Nothing forgets more than there is to know.** For *any* functor, $H(F) \le \log n$. You cannot lose more information than the domain contained in the first place. The constant functor sits exactly at this ceiling.
+This answers a different question: **After seeing the output, how much source ambiguity remains?** If the output is $b$, there are $|f^{-1}(b)|$ equally likely source objects compatible with the observation, so $\log|f^{-1}(b)|$ is the residual information needed to distinguish them.
 
-**Forgetting compounds — the data-processing inequality.** This is the deepest of the six. Suppose you translate twice: first through $f$, then through a further functor $g$, obtaining the composite $g\circ f$. Then
-$$H(f) \;\le\; H(g\circ f).$$
-Each additional stage of translation can only *increase* the total loss, never repair it. Once information has fallen through the cracks of $f$, no downstream $g$ can recover it, and $g$ may well throw away more. This mirrors exactly the famous data-processing inequality of information theory: post-processing a signal cannot create information about its source. Here it becomes a statement about *composing functors* — a categorical law, proved from the categorical definition.
+These quantities can move in opposite directions. A constant map has no output diversity at all, but it hides every distinction among source objects. An injective map displays every distinction and hides none.
 
-## The examples that started it all
+## The information ledger balances exactly
 
-Return to the forgetful functors that motivated the whole enterprise.
+The key result is the **Entropy–Loss Chain Rule**.
 
-The functor **Ab** that turns any group into its "abelianization" — the closest commutative approximation of it — is genuinely many-to-one. Different noncommutative groups can share the same commutative shadow. On the finite models where the counting is exact, such an averaging functor forgets on the order of $\log 2$ — about one bit — matching the intuition that each abelian target typically hides a small nontrivial family of noncommutative preimages.
+**Theorem.** For every map $f:A\to B$ from a nonempty finite set $A$ to a finite set $B$,
 
-The **inclusion** of finite groups into all groups forgets nothing: each finite group is included as itself, no two are ever confused, the functor is injective on objects, and so $H = 0$, on the nose.
+$$
+H_{\mathrm{out}}(f)+L_{\mathrm{fib}}(f)=\log |A|.
+$$
 
-And the great forgetter — the functor from **topological spaces to sets** that discards the topology entirely — sits at the opposite extreme. Over an infinite set lie uncountably many distinct topologies, all collapsing to the same underlying points. Its fibers are infinite, and its entropy runs off to infinity. It is the ultimate act of mathematical forgetting.
+The proof is a one-line idea expanded across the fibers. Whenever $p_b>0$,
 
-## Why this matters
+$$
+p_b=\frac{|f^{-1}(b)|}{|A|},
+$$
 
-The moral is larger than any single formula. Entropy is usually introduced as a fact about *randomness* — coins, gases, noisy channels. What this work shows is that entropy is also a fact about *structure-preserving maps*, about the very act of translation between mathematical worlds. Every functor casts an information-theoretic shadow, and the length of that shadow is a number you can compute.
+and hence
 
-This reframes a philosophical intuition as arithmetic. We say that abstraction "throws away detail," that a model "simplifies reality," that a summary "loses nuance." Those are all functors, and all of them have an entropy. The data-processing inequality then says something almost moral: *layers of abstraction accumulate loss.* Each time you summarize a summary, you can only slip further from the source.
+$$
+-\log p_b+\log |f^{-1}(b)|=\log |A|.
+$$
 
-There is much still to explore. One can weight the objects unevenly, replacing the democratic uniform distribution with a prior that says some objects matter more — recovering the full Shannon conditional entropy. One can look not just at how a functor treats *objects* but at how it collapses the *maps between them*, a finer and richer accounting. One can chase the infinite examples rigorously, or seek a chain rule that decomposes the loss of a composite translation into a sum of stages, exactly as Shannon's $H(X,Y) = H(X) + H(Y\mid X)$ does for random variables.
+Multiplying by $p_b$, summing over $b$, and using $\sum_b p_b=1$ gives the theorem. Empty fibers contribute nothing.
 
-But the core idea is already luminous, and it is this: to translate is to forget, and forgetting can be counted. Every functor loses information — and now we know precisely how much.
+This identity is a conservation law for deterministic classification. The original uniform source contains $\log|A|$ nats. Observation converts part of that budget into visible output entropy; the remainder survives as hidden fiber ambiguity.
+
+The theorem also explains why output entropy alone should not be called information loss. If all source objects collapse to one output, then $H_{\mathrm{out}}(f)=0$, even though the map has forgotten as much as possible. In that case $L_{\mathrm{fib}}(f)=\log|A|$. Conversely, an injective map can have large output entropy but zero loss.
+
+## When does a map forget nothing?
+
+The **Zero-Loss Characterization** gives a complete answer at object level.
+
+**Theorem.** For a map $f:A\to B$ with $A$ nonempty and finite,
+
+$$
+L_{\mathrm{fib}}(f)=0
+$$
+
+if and only if $f$ is injective.
+
+If $f$ is injective, every attained fiber has size one, and $\log 1=0$. Thus every term in the expected loss vanishes. Conversely, if $f$ is not injective, some fiber contains at least two elements. That fiber occurs with positive probability, its logarithmic size is positive, and all other contributions are nonnegative. The total loss must therefore be positive.
+
+This result needs careful interpretation for categories. A functor is called **faithful** when it is injective on each map between morphism sets. Object injectivity is a different property. A functor may preserve all morphisms faithfully while identifying objects, or it may be injective on objects while identifying distinct morphisms. Therefore the scalar $L_{\mathrm{fib}}$ detects object identification, not categorical faithfulness. A genuinely morphism-sensitive entropy will need an additional component.
+
+## Uniform fibers: the logarithmic quotient formula
+
+The cleanest case occurs when every attained output has the same number $k$ of preimages. Suppose the image of $f$ contains $m$ outputs and every nonempty fiber has cardinality $k$. Then $|A|=mk$, and every attained output has probability $1/m$.
+
+The **Uniform-Fiber Theorem** states:
+
+$$
+L_{\mathrm{fib}}(f)=\log k
+$$
+
+and
+
+$$
+H_{\mathrm{out}}(f)=\log m.
+$$
+
+Equivalently,
+
+$$
+L_{\mathrm{fib}}(f)=\log\frac{|A|}{m}.
+$$
+
+The distinction matters. The logarithm of the fiber size is the information loss; the logarithm of the number of attained outputs is the visible entropy. Together they give
+
+$$
+\log m+\log k=\log(mk)=\log|A|.
+$$
+
+Return to the six envelopes labeled by residues modulo three. The map sends each $i\in\{0,1,2,3,4,5\}$ to its remainder modulo $3$. There are $m=3$ labels and $k=2$ states per label. Consequently,
+
+$$
+H_{\mathrm{out}}=\log 3,
+\qquad
+L_{\mathrm{fib}}=\log 2,
+$$
+
+and their sum is $\log 6$.
+
+At the two extremes, a constant map has $m=1$ and $k=|A|$, so its output entropy is zero and its loss is $\log|A|$. An injective map has $k=1$ and $m=|A|$, so its loss is zero and its output entropy is $\log|A|$.
+
+## Why this belongs to category theory
+
+A functor translates one mathematical world into another. A forgetful functor may discard structure; a quotient-like construction may identify objects; an inclusion may preserve distinctions. Looking only at the induced object map on finite collections turns the functor into a deterministic information channel.
+
+This perspective is useful, but its scope must be respected. Raw object counts depend on how a category is presented. Equivalent categories can contain different numbers of displayed objects. Moreover, familiar large categories generally have too many objects for a uniform distribution to exist. One cannot simply count all topological spaces or all groups and divide by a total number of objects. Infinite entropy is a statement about a probability measure and a divergent expectation, not merely about the existence of one infinite fiber.
+
+The finite theory therefore serves as a precise foundation rather than a license for unweighted infinite counting. It tells us exactly what survives any extension: probabilities belong on outputs, losses belong in conditional fibers, and the total must obey a chain rule.
+
+## Where the idea appears in practice
+
+Consider database anonymization. A record may be mapped to a coarser label such as an age band and region. Output entropy measures how varied those released labels are. Fiber loss measures how many original records remain compatible with a released label, averaged according to how often that label occurs. The same release can have high visible diversity and still conceal substantial identity information.
+
+In clustering, a data point is sent to a cluster label. The entropy of cluster labels reports how balanced the clustering is. The expected log cluster size reports the ambiguity of recovering the original point from its label. Uniform clusters make the formulas especially transparent, but the chain rule remains exact for unequal clusters.
+
+In lossy data processing, a many-to-one function compresses a state into a code. The output entropy describes the code stream under a uniform source; the fiber loss quantifies irreversible ambiguity. In reversible computation, this is the information that must be retained elsewhere if the overall process is to remain invertible.
+
+And in mathematics itself, classification maps routinely replace an object by an invariant: dimension, rank, cardinality, homology, or isomorphism class. The fibers gather objects sharing the same invariant. The entropy ledger measures both the richness of the invariant’s values and the distinctions it leaves unresolved.
+
+## The next layer
+
+The finite object theory suggests several extensions. For composable maps, a relative chain rule should track the actual pushforward distribution at the intermediate stage; naive addition can fail when conditional fibers are not uniform. For finite groupoids, raw counts should be replaced by homotopy cardinalities that weight an isomorphism class by the reciprocal of its automorphism-group size. That correction aims to make entropy invariant under equivalence.
+
+A fuller categorical theory should also split loss into object and morphism components. The object term developed here vanishes exactly under object injectivity. A morphism term could vanish exactly when the functor is faithful on the supported hom-sets. Finally, infinite categories require genuine probability measures on isomorphism classes and measurable conditional entropy. Divergence should occur when conditional fiber entropy is infinite on a set of positive output measure—not merely because an isolated fiber happens to be infinite.
+
+The deepest lesson is not that every functor has one magical entropy. It is that translation has an information anatomy. A map creates a visible distribution and a hidden conditional ambiguity. Once those are named separately, the bookkeeping becomes exact:
+
+$$
+\text{visible information}+\text{hidden information}=\text{source information}.
+$$
+
+That balance turns the vague phrase “a functor forgets structure” into a quantitative question—and, in the finite setting, gives it a complete answer.

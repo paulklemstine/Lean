@@ -1,173 +1,127 @@
-"""
-Categorification of Entropy: The Information Loss of a Functor
-=============================================================
+#!/usr/bin/env python3
+"""Numerical demonstrations of entropy and fiber information loss.
 
-Numerical demonstrations of the functorial-entropy theory.
-
-For a functor between finite categories, modelled by the map F : Ob(C) -> Ob(D)
-it induces on objects, the *functorial entropy* (information loss) is the
-conditional entropy of a uniformly random domain object given its image:
-
-    H(F) = sum_d (c_d / n) * log(c_d)
-
-where c_d = |F^{-1}(d)| is the fiber cardinality over d and n = |Ob(C)|.
-
-This script verifies, on concrete finite examples, every theorem of the paper:
-  * nonnegativity
-  * H(F) = 0  iff  F injective
-  * uniform-fiber formula  H(F) = log k = log(n/m)
-  * constant functor value  log n
-  * upper bound  H(F) <= log n
-  * data-processing inequality  H(f) <= H(g o f)
-
-All functions are self-contained and type-hinted. Base-2 logarithms report the
-loss in bits.
+For a finite deterministic map represented by one output label per source state,
+this program computes output entropy, expected logarithmic fiber size, and the
+chain-rule residual. Natural logarithms are used, so values are in nats.
 """
 
 from __future__ import annotations
 
-import math
-import random
 from collections import Counter
-from typing import Callable, Hashable, Sequence
+from dataclasses import dataclass
+from math import isclose, log
+from typing import Hashable, Iterable, Sequence, TypeVar
+
+Label = TypeVar("Label", bound=Hashable)
 
 
-# ---------------------------------------------------------------------------
-# Core invariant
-# ---------------------------------------------------------------------------
+@dataclass(frozen=True)
+class EntropyReport:
+    """Information decomposition for a nonempty finite deterministic map."""
 
-def fiber_cardinalities(images: Sequence[Hashable]) -> dict[Hashable, int]:
-    """Tally |F^{-1}(d)| for each target object d, given the list of images
-    F(a) as `a` ranges over the (finite) domain."""
-    return dict(Counter(images))
+    source_size: int
+    fiber_sizes: dict[Hashable, int]
+    output_entropy: float
+    fiber_loss: float
+    source_entropy: float
+
+    @property
+    def residual(self) -> float:
+        """Numerical error in H(output) + loss = log(source size)."""
+        return self.output_entropy + self.fiber_loss - self.source_entropy
 
 
-def functorial_entropy(images: Sequence[Hashable], base: float = 2.0) -> float:
-    """Functorial entropy H(F) = sum_d (c_d/n) log(c_d), in units set by `base`.
+def entropy_report(outputs: Iterable[Label]) -> EntropyReport:
+    """Compute the entropy--loss decomposition from output labels.
 
-    `images[i]` is the image of the i-th domain object under F.
+    Each position in ``outputs`` represents one equally likely source object;
+    equal labels belong to the same fiber.
     """
-    n = len(images)
-    if n == 0:
-        return 0.0
-    total = 0.0
-    for c_d in fiber_cardinalities(images).values():
-        if c_d > 0:
-            total += (c_d / n) * math.log(c_d, base)
-    return total
+    labels = list(outputs)
+    if not labels:
+        raise ValueError("the source must be nonempty")
+
+    counts: Counter[Label] = Counter(labels)
+    n = len(labels)
+    output_entropy = 0.0
+    fiber_loss = 0.0
+    for count in counts.values():
+        probability = count / n
+        output_entropy -= probability * log(probability)
+        fiber_loss += probability * log(count)
+
+    return EntropyReport(
+        source_size=n,
+        fiber_sizes=dict(counts),
+        output_entropy=output_entropy,
+        fiber_loss=fiber_loss,
+        source_entropy=log(n),
+    )
 
 
-def apply_map(domain: Sequence[Hashable], F: Callable[[Hashable], Hashable]) -> list[Hashable]:
-    """Compute the list of images F(a) for a in the domain."""
-    return [F(a) for a in domain]
+def is_uniform_on_image(outputs: Sequence[Label]) -> tuple[bool, int | None]:
+    """Return whether all attained fibers have one size, and that size if so."""
+    if not outputs:
+        raise ValueError("the source must be nonempty")
+    sizes = set(Counter(outputs).values())
+    return (len(sizes) == 1, next(iter(sizes)) if len(sizes) == 1 else None)
 
 
-# ---------------------------------------------------------------------------
-# Demonstrations
-# ---------------------------------------------------------------------------
-
-def demo_vanishing_criterion() -> None:
-    """H(F) = 0 exactly for injective functors."""
-    print("=" * 68)
-    print("Vanishing criterion:  H(F) = 0  iff  F is injective")
-    print("=" * 68)
-
-    injective = ["a", "b", "c", "d"]          # 4 distinct images: injective
-    non_injective = ["x", "x", "y", "z"]      # two objects collapse to 'x'
-
-    print(f"  injective map images     {injective}")
-    print(f"    H = {functorial_entropy(injective):.4f} bits   (expected 0)")
-    print(f"  non-injective map images {non_injective}")
-    print(f"    H = {functorial_entropy(non_injective):.4f} bits   (> 0)")
-    print()
+def first_collision(outputs: Sequence[Label]) -> tuple[int, int] | None:
+    """Return source indices identified by the map, or ``None`` if injective."""
+    first_seen: dict[Label, int] = {}
+    for index, label in enumerate(outputs):
+        if label in first_seen:
+            return first_seen[label], index
+        first_seen[label] = index
+    return None
 
 
-def demo_uniform_fiber_formula() -> None:
-    """H(F) = log k = log(n/m) when every fiber has size k."""
-    print("=" * 68)
-    print("Uniform-fiber formula:  H(F) = log k = log(n/m)")
-    print("=" * 68)
-    for k, m in [(2, 3), (4, 2), (5, 5)]:
-        # m targets, each receiving exactly k domain objects.
-        images = [d for d in range(m) for _ in range(k)]
-        n = k * m
-        H = functorial_entropy(images)
-        print(f"  n={n:2d}, m={m}, k={k}:  H = {H:.4f} bits, "
-              f"log2(k) = {math.log2(k):.4f}, log2(n/m) = {math.log2(n / m):.4f}")
-    print()
+def print_report(name: str, outputs: Sequence[Hashable]) -> None:
+    """Print a readable report and assert the numerical chain rule."""
+    report = entropy_report(outputs)
+    uniform, fiber_size = is_uniform_on_image(outputs)
+    collision = first_collision(outputs)
 
+    print(f"\n{name}")
+    print("-" * len(name))
+    print(f"source size:        {report.source_size}")
+    print(f"fiber sizes:        {list(report.fiber_sizes.values())}")
+    print(f"output entropy:     {report.output_entropy:.12f} nats")
+    print(f"fiber loss:         {report.fiber_loss:.12f} nats")
+    print(f"log(source size):   {report.source_entropy:.12f} nats")
+    print(f"chain residual:     {report.residual:.3e}")
+    print(f"uniform fibers:     {uniform}" + (f" (k={fiber_size})" if uniform else ""))
+    print(f"collision witness:  {collision}")
 
-def demo_constant_and_bound() -> None:
-    """Constant functor attains the maximum log n; general F is bounded by it."""
-    print("=" * 68)
-    print("Constant functor attains the maximum;  H(F) <= log n in general")
-    print("=" * 68)
-    n = 8
-    constant = ["*"] * n
-    print(f"  constant functor, n={n}:  H = {functorial_entropy(constant):.4f} bits, "
-          f"log2(n) = {math.log2(n):.4f}")
-
-    random.seed(0)
-    for trial in range(3):
-        images = [random.randrange(4) for _ in range(n)]
-        H = functorial_entropy(images)
-        print(f"  random functor #{trial+1}: images={images}  H={H:.4f} <= {math.log2(n):.4f}  "
-              f"{'OK' if H <= math.log2(n) + 1e-9 else 'FAIL'}")
-    print()
-
-
-def demo_data_processing() -> None:
-    """Data-processing inequality:  H(f) <= H(g o f)."""
-    print("=" * 68)
-    print("Data-processing inequality:  H(f) <= H(g o f)")
-    print("=" * 68)
-    random.seed(1)
-    n, size_b, size_c = 12, 5, 3
-    domain = list(range(n))
-    violations = 0
-    for trial in range(5):
-        f_table = {a: random.randrange(size_b) for a in domain}
-        g_table = {b: random.randrange(size_c) for b in range(size_b)}
-        f = lambda a: f_table[a]
-        gof = lambda a: g_table[f_table[a]]
-        Hf = functorial_entropy(apply_map(domain, f))
-        Hgf = functorial_entropy(apply_map(domain, gof))
-        ok = Hf <= Hgf + 1e-9
-        violations += (not ok)
-        print(f"  trial {trial+1}:  H(f) = {Hf:.4f}  <=  H(g o f) = {Hgf:.4f}   "
-              f"{'OK' if ok else 'VIOLATION'}")
-    print(f"  violations: {violations} / 5")
-    print()
-
-
-def demo_motivating_functors() -> None:
-    """Reproduce the conjectured values on finite models of the motivating
-    functors: inclusion (H=0), abelianization (H ~ log 2)."""
-    print("=" * 68)
-    print("Motivating functors on finite models")
-    print("=" * 68)
-
-    # Inclusion of finite groups: each object maps to itself -> injective.
-    inclusion_images = ["Z/2", "Z/3", "S_3", "Z/4", "V_4"]
-    print(f"  Inclusion FinGrp -> Grp: H = "
-          f"{functorial_entropy(inclusion_images):.4f} bits (expected 0)")
-
-    # Abelianization on a finite model: each abelian target receives exactly
-    # two non-isomorphic preimages (a 2-to-1 uniform functor) -> H = log 2.
-    #   G_i and (G_i x noncomm-companion) both abelianize to A_i.
-    abel_images = [d for d in range(4) for _ in range(2)]
-    print(f"  Abelianization (2-to-1 model): H = "
-          f"{functorial_entropy(abel_images):.4f} bits (expected log2(2) = 1)")
-    print()
+    assert isclose(
+        report.output_entropy + report.fiber_loss,
+        report.source_entropy,
+        rel_tol=1e-12,
+        abs_tol=1e-12,
+    )
+    if collision is None:
+        assert isclose(report.fiber_loss, 0.0, abs_tol=1e-12)
+    else:
+        assert report.fiber_loss > 0.0
 
 
 def main() -> None:
-    demo_vanishing_criterion()
-    demo_uniform_fiber_formula()
-    demo_constant_and_bound()
-    demo_data_processing()
-    demo_motivating_functors()
-    print("All demonstrations complete.")
+    """Run injective, constant, uniform, and nonuniform examples."""
+    examples: list[tuple[str, Sequence[Hashable]]] = [
+        ("Injective six-state channel", list(range(6))),
+        ("Constant six-state channel", ["only"] * 6),
+        ("Residues modulo three", [i % 3 for i in range(6)]),
+        ("Nonuniform fibers of sizes 1, 2, and 3", ["A", "B", "B", "C", "C", "C"]),
+    ]
+    for name, outputs in examples:
+        print_report(name, outputs)
+
+    modulo_three = entropy_report([i % 3 for i in range(6)])
+    assert isclose(modulo_three.output_entropy, log(3), rel_tol=1e-12)
+    assert isclose(modulo_three.fiber_loss, log(2), rel_tol=1e-12)
+    print("\nAll entropy identities passed.")
 
 
 if __name__ == "__main__":
