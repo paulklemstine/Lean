@@ -669,7 +669,7 @@
                 // Quick bounding box check to save math on distant nodes
                 const rawDx = b.x - a.x;
                 const rawDy = b.y - a.y;
-                if (Math.abs(rawDx) > 2000 || Math.abs(rawDy) > 2000) continue;
+                if (Math.abs(rawDx) > 5000 || Math.abs(rawDy) > 5000) continue;
 
                 const mi = minImageDelta(a.x, a.y, b.x, b.y); // uses _miResult
                 const dx = mi.dx, dy = mi.dy;
