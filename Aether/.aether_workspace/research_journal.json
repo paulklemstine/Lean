@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "d2c19f81",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions: Quantum Latin Squares of Order Six\n\n## 1. Rigidity at the symmetric ceiling\n\n**Conjecture.** Every order-six quantum Latin square of cardinality twenty-one obtained from normalize",
-      "quality_score": 0.67,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-15T14:18:16",
-      "title": "ArXiv paper: Quantum Latin Squares of Order Six with Cardinalities Nineteen, Twenty-One, and Twenty-"
-    },
-    {
       "cycle_id": "772aa8b4",
       "domain": "Novelty",
       "key_insight": "# Future Directions: The Three-Halves Steering Word\n\n## 1. Superlinear factor complexity\n\nLet `T` be the nearest-integer steering word of the orbit `(3/2)^n`. Its factor complexity should satisfy\n\\[\n\\",
@@ -2501,6 +2491,16 @@
       "theorem_count": 10,
       "timestamp": "2026-07-19T10:06:57",
       "title": "Consciousness as Emergent Fixed Point"
+    },
+    {
+      "cycle_id": "1c1d1205",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n- Instantiate `SemanticSystem` with an arithmetized recursively enumerable proof system and derive `IsGodelCode` from a diagonal lemma.\n- Separate semantic soundness from syntacti",
+      "quality_score": 0.67,
+      "sorry_count": 0,
+      "theorem_count": 58,
+      "timestamp": "2026-07-19T10:24:14",
+      "title": "Mind vs Gödel: Can Minds Outperform Algorithms?"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-19T10:06:57",
+  "last_updated": "2026-07-19T10:24:14",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "a7676cc9",
-        "quality": 0.7,
-        "theorems": 0,
-        "title": "Infinite Chess: Checkmate in Omega Moves"
-      },
-      {
         "cycle_id": "115a4ee3",
         "quality": 0.78,
         "theorems": 11,
@@ -3141,6 +3135,12 @@
         "quality": 0.69,
         "theorems": 10,
         "title": "Consciousness as Emergent Fixed Point"
+      },
+      {
+        "cycle_id": "1c1d1205",
+        "quality": 0.67,
+        "theorems": 58,
+        "title": "Mind vs Gödel: Can Minds Outperform Algorithms?"
       }
     ],
     "Bridges": [
