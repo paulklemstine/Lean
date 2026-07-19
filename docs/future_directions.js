@@ -88,7 +88,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Thermodynamics of Mathematical Proof"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "671e7568",
     "description": "Prove that adding an oracle for the halting problem to PA yields a theory that proves its own consistency but cannot decide its own soundness. Formalize the hierarchy: PA < PA^H < PA^{H^H} < ... and prove that each jump genuinely increases theorem-proving power. Show that the oracle hierarchy is isomorphic to the Turing jump hierarchy.",
     "domains": [
       "Novelty",
@@ -98,7 +98,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T21:02:27.020806+00:00",
     "title": "The Oracle's Burden: How Much Knowledge Is Too Much?"
   },
@@ -332,7 +332,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Mega-Sphere: All Dimensions at Once"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c930e14b",
     "description": "Formalize a game where one player (Mortal) has finite computation and the other (Eternity) has transfinite computation. Prove that Mortal can always force at least omega rounds before losing, and that with bounded nondeterminism, Mortal can force omega-squared rounds. Connect to Infinite Time Turing Machines.",
     "domains": [
       "Novelty",
@@ -342,7 +342,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T20:43:51.867187+00:00",
     "title": "Infinite Games Against Death: Immortality Strategies"
   },
@@ -2951,7 +2951,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact Constant in Dense Set Without Large Sumsets"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "00cf3210",
     "description": "The exact asymptotic growth of T_k = \u0398(k\u00b2 log k) with computable constants. Specifically, there exist positive constants c\u2081, c\u2082 such that lim inf (T_k / (k\u00b2 log k)) \u2265 c\u2081 and lim sup (T_k / (k\u00b2 log k)) \u2264 c\u2082, and the optimal values satisfy 0.1 \u2264 c\u2081 \u2264 c\u2082 \u2264 10.",
     "domains": [
       "Pythagorean"
@@ -2960,7 +2960,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.15116v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-17T12:55:09.512961+00:00",
     "title": "Rainbow Arithmetic Progression Threshold Conjecture"
   },
