@@ -79,7 +79,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5961ca02",
     "description": "Construct a formal proof system where the soundness predicate appears inside the system it validates. Prove that such tangled hierarchies are unavoidable in any system that can reason about its own consistency. Formalize using modal fixed-point logics and Kripke frames.",
     "domain_bridges": [],
     "domains": [
@@ -92,7 +92,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T07:38:39.259918+00:00",
     "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
   },
@@ -4188,7 +4188,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "19a1a7a8",
     "description": "The Poincare conjecture (proved by Perelman) states that every simply connected closed 3-manifold is homeomorphic to the 3-sphere. For data: a point cloud X = {x_1, ..., x_n} in R^d may or may not lie on a manifold. Conjecture: the Poincare conjecture for data states that if the persistent homology of X satisfies H_0(X) = Z, H_1(X) = 0, H_2(X) = 0, ..., H_{d-1}(X) = 0, then X lies on (or near) a d-sphere. More precisely, if the Vietoris-Rips complex of X at scale epsilon has the homology of S^d (trivial homology except H_0 = Z and H_d = Z), then X is epsilon-close to a subset of S^d. Conjecture: the smallest epsilon such that VR_epsilon(X) has the homology of S^d is the 'Poincare threshold' of X, and it satisfies epsilon_star = C * d^{1/2} * n^{-1/d} for some constant C, where n is the number of points. This is the manifold detection threshold: below epsilon_star, X looks like a d-sphere; above epsilon_star, X looks like something else. Test: generate point clouds on S^d for d = 1, 2, 3 and compute the Poincare threshold. Impact: the Poincare conjecture for data says that manifold detection is a topological problem, and the detection threshold scales as n^{-1/d}.",
     "domain_bridges": [],
     "domains": [
@@ -4201,7 +4201,7 @@
     "proof_strategy": "Define the Poincare threshold: epsilon_star(X) = inf{epsilon > 0 : H_*(VR_epsilon(X)) has the same Betti numbers as S^d}. For X sampled uniformly from S^d: H_0(VR_epsilon) = Z for all epsilon > 0 (X is connected). H_d(VR_epsilon) = Z for epsilon >= epsilon_d (the d-th Betti number appears when epsilon is large enough to connect all d-simplices). The intermediate Betti numbers: H_k(VR_epsilon) = 0 for 0 < k < d and epsilon < epsilon_d. So epsilon_star = the smallest epsilon such that H_d(VR_epsilon) = Z. For n points uniformly sampled from S^d with radius 1: the pairwise distances are approximately 2*sin(theta/2) where theta ~ Uniform(0, pi) (for d=1, S^1). The minimum spanning tree has length ~ n^{1-1/d}. The Rips complex at scale epsilon connects points within distance epsilon. The threshold for H_d to appear is epsilon ~ n^{-1/d} (the covering radius of S^d by n points). Conjecture: epsilon_star(X) = C * n^{-1/d} for some constant C depending only on d. For d=1: epsilon_star ~ n^{-1} (S^1 needs n points with spacing 2*pi/n). For d=2: epsilon_star ~ n^{-1/2} (S^2 needs n points with spacing ~n^{-1/2}). Proof: the covering radius of S^d by n uniformly random points is approximately r_n = C_d * (log(n)/n)^{1/d} with high probability. The Vietoris-Rips complex at scale epsilon captures H_d when epsilon ~ 2 * r_n. So epsilon_star ~ (log(n)/n)^{1/d}. Test: sample n points from S^d for d=1,2,3 and n=100..10000, compute VR_epsilon for varying epsilon, find epsilon_star, fit epsilon_star ~ C * (log(n)/n)^{1/d}.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T06:30:24.219469+00:00",
     "title": "The Poincare Conjecture for Data: Manifold Detection via Persistent Homology"
   },

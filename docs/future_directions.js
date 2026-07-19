@@ -60,7 +60,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The Fourier Analysis of Collatz: Spectral Gaps in the 3n+1 Map"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5961ca02",
     "description": "Construct a formal proof system where the soundness predicate appears inside the system it validates. Prove that such tangled hierarchies are unavoidable in any system that can reason about its own consistency. Formalize using modal fixed-point logics and Kripke frames.",
     "domains": [
       "Novelty",
@@ -70,7 +70,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T07:38:39.259918+00:00",
     "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
   },
@@ -3035,7 +3035,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Quantum Surreal Numbers: Superposition of All Real Numbers"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "19a1a7a8",
     "description": "The Poincare conjecture (proved by Perelman) states that every simply connected closed 3-manifold is homeomorphic to the 3-sphere. For data: a point cloud X = {x_1, ..., x_n} in R^d may or may not lie on a manifold. Conjecture: the Poincare conjecture for data states that if the persistent homology of X satisfies H_0(X) = Z, H_1(X) = 0, H_2(X) = 0, ..., H_{d-1}(X) = 0, then X lies on (or near) a d-sphere. More precisely, if the Vietoris-Rips complex of X at scale epsilon has the homology of S^d (trivial homology except H_0 = Z and H_d = Z), then X is epsilon-close to a subset of S^d. Conjecture: the smallest epsilon such that VR_epsilon(X) has the homology of S^d is the 'Poincare threshold' of X, and it satisfies epsilon_star = C * d^{1/2} * n^{-1/d} for some constant C, where n is the number of points. This is the manifold detection threshold: below epsilon_star, X looks like a d-sphere; above epsilon_star, X looks like something else. Test: generate point clouds on S^d for d = 1, 2, 3 and compute the Poincare threshold. Impact: the Poincare conjecture for data says that manifold detection is a topological problem, and the detection threshold scales as n^{-1/d}.",
     "domains": [
       "Novelty",
@@ -3045,7 +3045,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.79,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T06:30:24.219469+00:00",
     "title": "The Poincare Conjecture for Data: Manifold Detection via Persistent Homology"
   },
