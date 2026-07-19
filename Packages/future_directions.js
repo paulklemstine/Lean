@@ -74,6 +74,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 8280a2b4 (Q=0.760), which proved 14 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Riemann-Roch theorem for graphs (Baker-Norine, 2007) states that for a divisor D on a graph G, l(D) - l(K_G - D) = deg(D) + 1 - g(G) where l(D) is the rank of D, K_G is the canonical divisor, and g(G) is the genus (cyclomatic number). The chip-firing game is a combinatorial model: vertices hold ",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "push_8280a2b4_941745de",
+    "priority_score": 0.86,
+    "research_mode": "team",
+    "source_exp_id": "8280a2b4",
+    "status": "available",
+    "timestamp": "2026-07-19T06:30:57.793286+00:00",
+    "title": "Deepening: The Riemann-Roch Theorem for Graphs: Chip-Firing and the Canonical Divisor"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle e9a483ed (Q=0.760), which proved 8 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: L-functions are the DNA of mathematics \u2014 each one encodes deep arithmetic information. But how many L-functions ARE there? The L-function universe is vast: (1) The Riemann zeta function (1 L-function), (2) Dirichlet L-functions (countably many), (3) L-functions of elliptic curves (uncountably many, ",
     "domains": [
       "Computation"
@@ -186,19 +200,19 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
   },
   {
-    "consumed_by_exp_id": "8280a2b4",
-    "description": "The Riemann-Roch theorem for graphs (Baker-Norine, 2007) states that for a divisor D on a graph G, l(D) - l(K_G - D) = deg(D) + 1 - g(G) where l(D) is the rank of D, K_G is the canonical divisor, and g(G) is the genus (cyclomatic number). The chip-firing game is a combinatorial model: vertices hold chips, and 'firing' a vertex sends one chip along each incident edge. Conjecture: for the complete graph K_n, the canonical divisor K_{K_n} has rank (n-1)(n-2)/2 - 1, and the Riemann-Roch formula gives l(D) = deg(D) + 1 - (n-1)(n-2)/2 + l(K_{K_n} - D). For D = K_{K_n} (the canonical divisor itself): l(K_{K_n}) = (n-1)(n-2)/2 - 1 + 1 - (n-1)(n-2)/2 + l(0) = 0 + l(0). But l(0) = 0 (the empty divisor has rank 0). So l(K_{K_n}) = 0. Wait, this gives l(K_{K_n}) = 0, but the canonical divisor of K_n should have positive rank. Conjecture: the canonical divisor of K_n is K_{K_n} = sum_v (deg(v) - 1) * v = (n-2) * sum_v v, and l(K_{K_n}) = (n-1)(n-2)/2 - 1 (it achieves the genus minus 1). Test: compute the canonical divisor and verify the Riemann-Roch formula for K_n with n = 3, 4, 5, 6. Impact: chip-firing on complete graphs encodes the same information as the Riemann-Roch theorem on projective curves.",
+    "consumed_by_exp_id": "77a52651",
+    "description": "A quantum random walk on a group G is defined by a unitary operator U = sum_{g in S} |g><0| (where S is a generating set) acting on the Hilbert space l^2(G). The walk is periodic if U^k = I for some k, and mixing if the probability distribution P_n(g) = |<g|U^n|0>|^2 converges to the uniform distribution on G. Conjecture: for the Cayley graph Cay(G, S) where G is a finite group and S is a symmetric generating set, the quantum walk mixes in O(sqrt(|G|) * log(|G|)) steps, which is quadratically faster than the classical random walk (which takes O(|G|^2) steps for the spectral gap to kick in). The mixing time is determined by the spectral gap of U: tau_mix ~ 1/gap where gap = 1 - |lambda_2| and lambda_2 is the second-largest eigenvalue of U. Conjecture: for Cay(G, S) with S = the set of transpositions in S_n, the spectral gap of U is Omega(1/n), giving a mixing time of O(n * log(n)). This matches the known classical mixing time of O(n * log(n)) for the random transposition walk on S_n. The quantum advantage comes from the quadratically faster convergence of the probability distribution, not from the spectral gap. Test: simulate quantum random walks on Cayley graphs of S_n, S_n, A_5, and Z_n, measure the mixing time, and verify tau_mix = O(sqrt(|G|) * log(|G|)). Impact: quantum random walks mix quadratically faster than classical random walks on Cayley graphs. The quadratic speedup is universal.",
     "domains": [
       "Novelty",
       "Algebra"
     ],
-    "id": "fd_0390",
-    "priority_score": 0.81,
+    "id": "fd_0410",
+    "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "in_progress",
-    "timestamp": "2026-07-19T03:37:04.439365+00:00",
-    "title": "The Riemann-Roch Theorem for Graphs: Chip-Firing and the Canonical Divisor"
+    "timestamp": "2026-07-19T06:30:24.182356+00:00",
+    "title": "Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
   },
   {
     "consumed_by_exp_id": "",
@@ -2992,6 +3006,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The Poincare conjecture (proved by Perelman) states that every simply connected closed 3-manifold is homeomorphic to the 3-sphere. For data: a point cloud X = {x_1, ..., x_n} in R^d may or may not lie on a manifold. Conjecture: the Poincare conjecture for data states that if the persistent homology of X satisfies H_0(X) = Z, H_1(X) = 0, H_2(X) = 0, ..., H_{d-1}(X) = 0, then X lies on (or near) a d-sphere. More precisely, if the Vietoris-Rips complex of X at scale epsilon has the homology of S^d (trivial homology except H_0 = Z and H_d = Z), then X is epsilon-close to a subset of S^d. Conjecture: the smallest epsilon such that VR_epsilon(X) has the homology of S^d is the 'Poincare threshold' of X, and it satisfies epsilon_star = C * d^{1/2} * n^{-1/d} for some constant C, where n is the number of points. This is the manifold detection threshold: below epsilon_star, X looks like a d-sphere; above epsilon_star, X looks like something else. Test: generate point clouds on S^d for d = 1, 2, 3 and compute the Poincare threshold. Impact: the Poincare conjecture for data says that manifold detection is a topological problem, and the detection threshold scales as n^{-1/d}.",
+    "domains": [
+      "Novelty",
+      "Geometry"
+    ],
+    "id": "fd_0411",
+    "priority_score": 0.79,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-19T06:30:24.219469+00:00",
+    "title": "The Poincare Conjecture for Data: Manifold Detection via Persistent Homology"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle 1003d095 (Q=0.740) proved 0 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in ",
     "domains": [
       "Applications"
@@ -4486,6 +4515,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-19T06:13:30.249564+00:00",
     "title": "`Logic/ReLUPiDiophantine.lean` gives an exact bridge between two descriptions of"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Complete-Graph Divisors and Chip-Firing\n\n## 1. Parking-function proof of complete-graph Riemann\u2013Roch\n\n**Conjecture.** Every divisor class on the complete graph `K_n` has a unique reduced representative relative to a chosen sink, and the rank of a divisor can be read from the minimum defect of its associated parking function. Complementation by the canonical divisor reverses this defect and proves the full Riemann\u2013Roch identity.\n\nThe key insight is that Dhar reduction turns an infinite chip-firing equivalence problem into a finite inequality system on sorted integer vectors.\n\n**Why now?** The canonical coefficient, canonical degree, genus, zero rank, and canonical-rank consequence have been isolated, so the missing step is precisely the reduced-divisor rank duality rather than any numerical graph calculation.\n\n## 2. Critical group as an integral type-A lattice quotient\n\n**Conjecture.** The degree-zero divisor lattice of `K_n` modulo principal divisors is isomorphic to `(Z/nZ)^(n-2)`, and this isomorphism intertwines chip-firing with translation on the type-A root lattice modulo its Laplacian sublattice.\n\nThe key insight is that the complete-graph Laplacian acts as multiplication by `n` on the hyperplane whose coordinates sum to zero, with one global relation accounting for the missing factor.\n\n**Why now?** The explicit firing and degree infrastructure already identifies the relevant integral lattices; computing the quotient would connect divisor theory, Smith normal form, and the critical group without changing the graph model.\n\n## 3. Spanning trees, parking functions, and divisor classes\n\n**Conjecture.** For every `n \u2265 2`, rooted spanning trees of `K_n`, recurrent chip configurations, and sink-reduced divisor classes admit mutually inverse bijections, all counted by `n^(n-2)`.\n\nThe key insight is that the burning algorithm should simultaneously certify reducedness and orient each nonsink vertex toward its first burning predecessor, producing a tree rather than merely a counting identity.\n\n**Why now?** Reduced representatives are the proposed engine for Riemann\u2013Roch, while the same representatives are classically enumerated by trees; a direct bijection would unify the rank theory with Cayley enumeration.\n\n## 4. Canonical duality on the permutohedral fan\n\n**Conjecture.** After quotienting real divisors by constants, chambers of the complete-graph chip-firing arrangement form the permutohedral fan, and the transformation `D \u21a6 K-D` induces an order-reversing duality whose integer-point defect is the Baker\u2013Norine rank correction.\n\nThe key insight is that sorting divisor coordinates selects a Weyl chamber, while firing vectors lie in the type-A root lattice and canonical complementation reflects the relevant chamber inequalities.\n\n**Why now?** The corrected formula `K(v)=n-3` places the canonical divisor at a symmetric lattice point, making a geometric explanation of rank duality concrete and falsifiable on small chambers.\n\n## 5. Rank-generating reciprocity for complete graphs\n\n**Conjecture.** For each divisor degree `d`, the generating polynomial of ranks across divisor classes of `K_n` satisfies a reciprocity under `d \u21a6 2g-2-d`, induced by canonical complementation, and admits a coefficient formula in terms of parking-function statistics.\n\nThe key insight is that Riemann\u2013Roch pairs each class with its canonical complement while shifting rank by the linear term `d+1-g`, so classwise duality should lift to a reciprocal identity for rank distributions.\n\n**Why now?** The pointwise canonical-rank calculation supplies the extremal fixed test, and the critical-group and parking-function conjectures provide two independent finite models in which the distribution can be computed and challenged.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0412",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "8280a2b4",
+    "status": "available",
+    "timestamp": "2026-07-19T06:30:52.446847+00:00",
+    "title": "**Conjecture.** Every divisor class on the complete graph `K_n` has a unique red"
   },
   {
     "consumed_by_exp_id": "",

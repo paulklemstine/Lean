@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "ad1766b1",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\n## Formal conclusions\n\nThe file `Speculative/MoebiusArithmetic.lean` separates the topology from the proposed arithmetic and proves the following.\n\n### Disproved\n\n1. **Coordinatew",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-18T04:11:01",
-      "title": "Arithmetic on the Moebius Band: A Number System with a Twist"
-    },
-    {
       "cycle_id": "f0aa5907",
       "domain": "MachineLearning",
       "key_insight": "# Future Directions: Moonshine Products and Character Reconstruction\n\n## 1. Class-indexed pole order for the Monster\n\nConstruct the 194 normalized McKay–Thompson series in a common analytic setting an",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-19T06:13:17",
       "title": "Information Geometry of Optimization: Natural Gradient Follows Geodesics"
+    },
+    {
+      "cycle_id": "8280a2b4",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions: Complete-Graph Divisors and Chip-Firing\n\n## 1. Parking-function proof of complete-graph Riemann–Roch\n\n**Conjecture.** Every divisor class on the complete graph `K_n` has a unique",
+      "quality_score": 0.76,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-19T06:30:57",
+      "title": "The Riemann-Roch Theorem for Graphs: Chip-Firing and the Canonical Divisor"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "80f7c124",
-      "domain": "Shared",
-      "key_insight": "# Future Directions: triangle holonomy beyond the second moment\n\n## Result of this cycle\n\n`Shared/SeidelTriangleHolonomy.lean` establishes a cross-domain bridge among\nthree viewpoints:\n\n1. **spectral",
-      "quality_score": 0.73,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-07-15T06:52:13",
-      "title": "Elementary spectral-moment foundations of Seidel"
-    },
     {
       "cycle_id": "2ed994b6",
       "domain": "Novelty",
@@ -2501,15 +2491,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-19T06:13:17",
       "title": "Information Geometry of Optimization: Natural Gradient Follows Geodesics"
+    },
+    {
+      "cycle_id": "8280a2b4",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions: Complete-Graph Divisors and Chip-Firing\n\n## 1. Parking-function proof of complete-graph Riemann–Roch\n\n**Conjecture.** Every divisor class on the complete graph `K_n` has a unique",
+      "quality_score": 0.76,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-19T06:30:57",
+      "title": "The Riemann-Roch Theorem for Graphs: Chip-Firing and the Canonical Divisor"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "71fc60c7",
-      "domain": "Applications",
-      "name": "rule204_fixedPoints_eq_univ",
-      "quality": 0.75
-    },
     {
       "cycle_id": "18410e31",
       "domain": "Novelty",
@@ -2803,9 +2797,15 @@
       "domain": "Tropical",
       "name": "periodic_search_benchmark",
       "quality": 0.74
+    },
+    {
+      "cycle_id": "8280a2b4",
+      "domain": "Algebra",
+      "name": "explicitly",
+      "quality": 0.76
     }
   ],
-  "last_updated": "2026-07-19T06:13:17",
+  "last_updated": "2026-07-19T06:30:57",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3027,12 +3027,6 @@
         "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showin"
       },
       {
-        "cycle_id": "573ee086",
-        "quality": 0.73,
-        "theorems": 13,
-        "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showin"
-      },
-      {
         "cycle_id": "dfbea393",
         "quality": 0.71,
         "theorems": 0,
@@ -3079,6 +3073,12 @@
         "quality": 0.76,
         "theorems": 11,
         "title": "**Conjecture.** There is a natural joint scaling of the prime cutoff `x`, occupa"
+      },
+      {
+        "cycle_id": "8280a2b4",
+        "quality": 0.76,
+        "theorems": 14,
+        "title": "The Riemann-Roch Theorem for Graphs: Chip-Firing and the Canonical Divisor"
       }
     ],
     "Applications": [
