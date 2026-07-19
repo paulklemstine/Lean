@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "b596d3d1",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions: Geometry Beyond Integer Linking\n\n## 1. A real-valued Hopf-geometric concurrence functional\n\nThere exists a canonically normalized real-valued functional on the quaternionic Hopf g",
-      "quality_score": 0.75,
-      "sorry_count": 0,
-      "theorem_count": 21,
-      "timestamp": "2026-07-18T13:21:34",
-      "title": "Quantum Entanglement as Algebraic Topology: The Linking Number Is Entanglement"
-    },
-    {
       "cycle_id": "115a4ee3",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\n## 1. Entropy dimension for genuinely submultiplicative search languages\n\n**Conjecture.** Let `N(n)` be the number of successful prefixes of length `n` in a finitely branching sea",
@@ -499,19 +489,19 @@
       "theorem_count": 10,
       "timestamp": "2026-07-19T16:58:31",
       "title": "The Topology of Impossible Objects: Escher Stairs and Klein Bottles"
+    },
+    {
+      "cycle_id": "7881a56b",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions for Practical `k`-Copwin Recognition\n\n## 1. Symmetry-reduced backward search\n\n**Conjecture.** For every finite graph and every positive `k`, quotienting cop configurations by permu",
+      "quality_score": 0.79,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-07-19T17:15:41",
+      "title": "ArXiv paper: Reproducing the k-copwin Algorithm: Theory vs. Implementation"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "dae162a9",
-      "domain": "Computation",
-      "key_insight": "# Future directions\n\nThe formalization now establishes both the general arithmetic-to-symbolic interface and its connection to the concrete nearest-integer orbit. In particular, it proves that the exp",
-      "quality_score": 0.63,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-07-15T21:54:30",
-      "title": "ArXiv paper: Superlinear complexity of the $(3/2)^n$ steering word"
-    },
     {
       "cycle_id": "d68f278c",
       "domain": "Applications",
@@ -2501,21 +2491,19 @@
       "theorem_count": 10,
       "timestamp": "2026-07-19T16:58:31",
       "title": "The Topology of Impossible Objects: Escher Stairs and Klein Bottles"
+    },
+    {
+      "cycle_id": "7881a56b",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions for Practical `k`-Copwin Recognition\n\n## 1. Symmetry-reduced backward search\n\n**Conjecture.** For every finite graph and every positive `k`, quotienting cop configurations by permu",
+      "quality_score": 0.79,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-07-19T17:15:41",
+      "title": "ArXiv paper: Reproducing the k-copwin Algorithm: Theory vs. Implementation"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "115a4ee3",
-      "domain": "Applications",
-      "name": "logVolume_replicate_append",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "7328a55d",
-      "domain": "Bridges",
-      "name": "primeLogImage_countable",
-      "quality": 0.7
-    },
     {
       "cycle_id": "7328a55d",
       "domain": "Bridges",
@@ -2803,9 +2791,21 @@
       "domain": "Applications",
       "name": "periodY_shift",
       "quality": 0.73
+    },
+    {
+      "cycle_id": "7881a56b",
+      "domain": "Novelty",
+      "name": "winStep_mono",
+      "quality": 0.79
+    },
+    {
+      "cycle_id": "7881a56b",
+      "domain": "Novelty",
+      "name": "winningRegion_subset_succ",
+      "quality": 0.79
     }
   ],
-  "last_updated": "2026-07-19T16:58:31",
+  "last_updated": "2026-07-19T17:15:41",
   "open_questions": [
     {
       "context": "",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "ae36b246",
-        "quality": 0.7,
-        "theorems": 0,
-        "title": "ArXiv paper: On the maximum size of $B_3$-free families"
-      },
-      {
         "cycle_id": "8201cdaf",
         "quality": 0.79,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.69,
         "theorems": 8,
         "title": "The Unreasonable Effectiveness of Wrong Theories"
+      },
+      {
+        "cycle_id": "7881a56b",
+        "quality": 0.79,
+        "theorems": 16,
+        "title": "ArXiv paper: Reproducing the k-copwin Algorithm: Theory vs. Implementation"
       }
     ],
     "NumberTheory": [

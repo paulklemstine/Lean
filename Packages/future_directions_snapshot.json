@@ -98,6 +98,25 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 7881a56b (Q=0.790), which proved 16 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'Reproducing the k-copwin Algorithm: Theory vs. Implementation' and formalize its key results. Abstract: Cops and Robbers is a well-studied pursuit-evasion game that provides insights into graph theory and theoretical computing. A central question is determining the minim",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_7881a56b_1df8c3bf",
+    "lineage_refs": [],
+    "priority_score": 0.89,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "7881a56b",
+    "status": "available",
+    "timestamp": "2026-07-19T17:15:41.451394+00:00",
+    "title": "Deepening: ArXiv paper: Reproducing the k-copwin Algorithm: Theory vs. Implementation"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
     "consumed_by_exp_id": "cb3d5d14",
     "description": "Prove that any Turing-complete system with self-modification capabilities has no general algorithm for predicting its own termination. Formalize the halting problem for programs that can rewrite their own code mid-execution and show this is strictly harder than the classical halting problem. Connect to the virus paradox and AI alignment.",
     "domain_bridges": [],
@@ -138,7 +157,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3dea732a",
     "description": "Prove that Novikov's self-consistency principle follows from the Banach fixed-point theorem applied to the causal structure of spacetime. Formalize time-travel paradoxes as boundary value problems and prove existence of self-consistent solutions for polynomial causal maps.",
     "domain_bridges": [],
     "domains": [
@@ -151,7 +170,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T11:33:05.369080+00:00",
     "title": "Time Travel Consistency: Novikov's Principle as a Fixed-Point Theorem"
   },
@@ -367,6 +386,26 @@
     "status": "in_progress",
     "timestamp": "2026-07-19T12:28:35.623432+00:00",
     "title": "Anti-Mathematics: What If All Axioms Were Negated?"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Construct an alternate number theory where primes are replaced by a random subset of N with density n/log n. Prove which theorems survive (Dirichlet, PNT) and which collapse (unique factorization). Determine whether RH holds almost surely in this counterfactual universe.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "NumberTheory"
+    ],
+    "id": "fd_0470",
+    "lineage_refs": [],
+    "priority_score": 0.85,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-19T17:15:15.217270+00:00",
+    "title": "Counterfactual Number Theory: What If Primes Were Random?"
   },
   {
     "ambition_level": "extension",
@@ -1425,25 +1464,6 @@
     "status": "available",
     "timestamp": "2026-07-16T04:43:19.470707+00:00",
     "title": "ArXiv paper: The Action of the Lie Algebra $\\mathfrak{sl}_n$ on Colored Graphs and Multicolored Johnson Graphs"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "7881a56b",
-    "description": "Investigate the ArXiv paper 'Reproducing the k-copwin Algorithm: Theory vs. Implementation' and formalize its key results. Abstract: Cops and Robbers is a well-studied pursuit-evasion game that provides insights into graph theory and theoretical computing. A central question is determining the minimum number of cops required to capture the robber, known as the cop number. We focus on reproducing an algorithm proposed by Petr, Portier, and Versteegen in 2022, which efficiently determines whether a graph is $k$-copwin. This paper presents a Python implementation of the $k$-copwin algorithm. In this work, we present our implementation in detail, clarify key aspects of the algorithm, and discuss its implications for future practical deployments.",
-    "domain_bridges": [],
-    "domains": [
-      "Computation"
-    ],
-    "id": "fd_0062",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.13271v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-16T04:59:07.834459+00:00",
-    "title": "ArXiv paper: Reproducing the k-copwin Algorithm: Theory vs. Implementation"
   },
   {
     "ambition_level": "extension",
@@ -6860,6 +6880,26 @@
     "status": "available",
     "timestamp": "2026-07-19T16:58:16.382490+00:00",
     "title": "**Conjecture.** For every finite connected two-dimensional cell complex and ever"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions for Practical `k`-Copwin Recognition\n\n## 1. Symmetry-reduced backward search\n\n**Conjecture.** For every finite graph and every positive `k`, quotienting cop configurations by permutations of the `k` cops preserves every bounded-horizon winning region and the stabilized winning region, while reducing the configuration factor from `|V|^k` to the number of multisets of size `k` drawn from `V`.\n\nThe key insight is that capture, simultaneous cop movement, and the cops-first forcing condition are invariant under relabeling indistinguishable cops. **Why now?** The iteration invariant isolates exactly the semantic facts that a quotient implementation must preserve, making a correctness proof and an empirical complexity comparison sharply testable.\n\n## 2. Certified finite stabilization bound\n\n**Conjecture.** On a graph with `n` vertices and `k` cops, backward search stabilizes after at most `n^(k+1)` strict updates; moreover, there are families for which the necessary number of updates grows polynomially in the number of game states.\n\nThe key insight is that the winning tables form an increasing chain in a finite state space, so every non-stable update must add a state. **Why now?** The established monotonicity and fixed-point characterization reduce termination to a quantitative chain-length problem, and implementations can record the exact stabilization depth across graph families.\n\n## 3. Rank functions as capture-time certificates\n\n**Conjecture.** Every state in the stabilized winning region has a least iteration rank, and this rank equals the minimum worst-case capture time among all cops' strategies from that state.\n\nThe key insight is that the first table containing a state records the outer existential choice of a cops' move followed by the worst robber response, which is precisely a minimax recurrence. **Why now?** Bounded-horizon correctness already gives one direction; extracting least ranks would turn a yes/no recognizer into a strategy and optimal-capture-time certificate generator.\n\n## 4. Kernel and attractor duality for finite pursuit games\n\n**Conjecture.** After enriching positions with whose turn it is, the complement of the stabilized cops' attractor is the unique kernel of the well-founded game obtained by ranking all winning positions and restricting moves to strictly decreasing rank.\n\nThe key insight is that backward attractors describe winning positions while kernels describe losing positions, and a capture-rank orientation removes cyclic play from the winning subgame. **Why now?** The two theories now coexist with compatible relational formulations, so the proposed bridge can be tested first on paths, cycles, trees, and complete graphs before seeking a general proof.\n\n## 5. Structural compression on bounded-width graphs\n\n**Conjecture.** For each fixed `k` and treewidth bound `t`, the stabilized `k`-copwin computation admits a representation whose size is linear in the number of vertices, with constants depending only on `k` and `t`.\n\nThe key insight is that the one-round forcing operator only observes local adjacency and membership information, suggesting a finite interface state over each tree-decomposition bag. **Why now?** The semantic operator is independent of any concrete table layout, enabling alternative compressed implementations to be compared against the same correctness specification.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0471",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "7881a56b",
+    "status": "available",
+    "timestamp": "2026-07-19T17:15:36.318557+00:00",
+    "title": "**Conjecture.** For every finite graph and every positive `k`, quotienting cop c"
   },
   {
     "ambition_level": "extension",

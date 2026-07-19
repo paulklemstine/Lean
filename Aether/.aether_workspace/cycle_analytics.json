@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-19T16:58:32.335120+00:00",
+  "last_updated": "2026-07-19T17:15:41.615388+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -29438,6 +29438,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-19T16:58:32.278548+00:00",
       "title": "The Topology of Impossible Objects: Escher Stairs and Klein Bottles"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 40,
+      "domain": "Novelty",
+      "duration_seconds": 5128.244839191437,
+      "end_time": 1784481323.844019,
+      "files_integrated": 5,
+      "job_id": "7881a56b",
+      "outcome_quality": 0.79,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19d",
+      "phase_a_quality_score": 0.79,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19d",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.8,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.8,
+        "composite": 0.586,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.72,
+        "novelty": 0.7,
+        "proof_depth": 0.78,
+        "usefulness": 0.86
+      },
+      "quality_score": 0.79,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1784476195.5991797,
+      "strategy_count": 0,
+      "theorem_count": 16,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 8,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-19T17:15:41.574119+00:00",
+      "title": "ArXiv paper: Reproducing the k-copwin Algorithm: Theory vs. Implementation"
     }
   ]
 }
