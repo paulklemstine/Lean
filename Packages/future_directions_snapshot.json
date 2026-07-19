@@ -231,26 +231,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "9867adb2",
-    "description": "A neural network with ReLU activation defines a piecewise linear function f: R^n -> R^m. The decision boundary of a binary classifier f: R^n -> R is the set {x : f(x) = 0}, which is a piecewise linear hypersurface. The algebraic variety of the decision boundary is the zero set of the polynomial that best approximates f. Conjecture: for a ReLU network with L layers of widths (n, w_1, ..., w_L, 1), the decision boundary is a piecewise linear hypersurface with at most 2^L * prod w_i regions, and the degree of the best polynomial approximation is at most 2^L. More precisely, the decision boundary V(f) = {x : f(x) = 0} is a tropical hypersurface (a piecewise linear object that is the 'skeleton' of an algebraic variety). The tropical variety of the decision boundary has degree at most 2^L and at most prod_{i=1}^{L} (w_i choose 2) singularities. Conjecture: the VC dimension of a ReLU network with L layers and total width W is at most L * W * log(W), matching the known bound up to log factors. Test: train ReLU networks on synthetic data, extract decision boundaries, and verify they are tropical hypersurfaces with the predicted degree and singularity count. Impact: neural network decision boundaries are tropical varieties. The complexity of the network (L, W) determines the algebraic complexity of the boundary.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0363",
-    "lineage_refs": [],
-    "priority_score": 0.84,
-    "proof_strategy": "A ReLU network f: R^n -> R with L layers computes a piecewise linear function. The number of linear regions is at most prod_{i=1}^{L} sum_{j=0}^{min(n,w_i)} (w_i choose j) (Montufar et al., 2014). For wide networks (w_i >= n): this is at most prod_{i=1}^{L} 2^{w_i-1} = 2^{sum w_i - L}. The decision boundary B = {x : f(x) = 0} is a piecewise linear hypersurface. Each linear piece of f defines a halfspace, and B is the union of boundaries of these halfspaces. The algebraic approximation: by the Weierstrass approximation theorem, there exists a polynomial p of degree d such that ||f - p|| < epsilon. The variety V(p) = {x : p(x) = 0} approximates B. For piecewise linear f with K regions, the degree of p needed is d ~ K^{1/n} (by approximation theory). The tropical variety: V(f) is a tropical hypersurface defined by the tropical polynomial max_j(alpha_j + x . beta_j) where the max is over the linear pieces. The degree of this tropical polynomial is the number of different linear pieces, which is at most 2^L. The singularities of V(f) are points where 3+ linear pieces meet, and there are at most prod (w_i choose 2) such points. Test: train 2-layer and 3-layer ReLU networks on 2D synthetic data, extract the decision boundary, count linear regions and singularities, verify against the bounds.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T22:39:05.424405+00:00",
-    "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "76d5023e",
     "description": "The Alexander polynomial Delta_K(t) of a knot K is a Laurent polynomial that encodes topological information about the knot. Conjecture: for any knot K with n crossings, the Alexander polynomial Delta_K(t) can be expressed as the generating function of lattice paths in Z^2 that avoid a region determined by the knot diagram. Specifically, define the 'knot lattice' L_K as the set of lattice paths from (0,0) to (n,n) that avoid the 'forbidden region' R_K determined by the crossing structure of K. Then Delta_K(t) = sum_{p in L_K} t^{area(p)} where area(p) is the area under the path p. This conjecture follows from the state sum formula for the Alexander polynomial: Delta_K(t) = sum_{states s} (-1)^{w(s)} t^{a(s)} where w(s) is the writhe and a(s) is the area of the state. The area a(s) is exactly the area under a lattice path determined by the state. Conjecture: every Alexander polynomial arises as a lattice path generating function, and vice versa. This means the Alexander polynomial is not just a knot invariant — it is a combinatorial object that counts lattice paths. Test: compute the Alexander polynomials for the first 50 knots and verify that each can be expressed as a lattice path generating function. Impact: knot invariants are combinatorial. The Alexander polynomial counts lattice paths, connecting topology to combinatorics.",
     "domain_bridges": [],
@@ -5991,6 +5971,26 @@
     "status": "available",
     "timestamp": "2026-07-19T03:20:30.713701+00:00",
     "title": "1. **Group actions and orbit relations.** Instantiate `InvariantPattern` with th"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Algebraic Geometry of Neural Decision Boundaries\n\n## 1. Signed tropical-rational normal form\n\n**Conjecture.** Every scalar feed-forward ReLU network admits a depth-preserving representation as a difference of two max-affine expressions, with the number of leaves bounded singly exponentially in depth and polynomially in the product of layer widths. Its decision boundary is therefore an equality locus of two tropical polynomials rather than, in general, a single tropical hypersurface.\n\nThe key insight is that negative output weights destroy convex max-affine structure but suggest a tropical-rational replacement closed under subtraction. **Why now?** The depth-controlled max-affine analysis isolates exactly which step fails for signed networks and supplies the analytic estimate needed on each side of the proposed normal form.\n\n## 2. Margin-stable dequantized decision topology\n\n**Conjecture.** On every compact domain where a max-affine classifier has no critical value in a band of width `d log(2)/β` around zero, its tropical decision set and log-sum-exp decision set are ambient isotopic.\n\nThe key insight is that uniform value control preserves labels outside a narrow band, while a critical-value exclusion should upgrade label stability to topological stability. **Why now?** A sharp depth-dependent error bound is available; the remaining test is geometric transversality within the explicit uncertainty band.\n\n## 3. Arrangement-sensitive singularity bound\n\n**Conjecture.** For max-affine expressions with affine leaves in general position in dimension `n`, the codimension-two singular strata of the decision complex are bounded by the number of intersecting `(n+1)`-subsets of active leaves, rather than by a product of pair counts across network layers.\n\nThe key insight is that singularities arise from simultaneous affine ties in the realized upper envelope, not merely from pairs of neurons in an architecture. **Why now?** The width-one obstruction rules out the unguarded layerwise pair-product formula and points to active-set incidence as the correct combinatorial invariant.\n\n## 4. Realized-region recurrence with activation rank\n\n**Conjecture.** A layerwise region recurrence becomes valid after replacing raw width `w_i` by the rank of the affine hyperplane arrangement induced on each incoming region; the resulting bound is the product of arrangement growth functions and is strictly sharper than `2^L ∏ w_i` whenever bottlenecks occur.\n\nThe key insight is that width counts available gates, whereas arrangement rank counts gates capable of cutting a specific inherited region. **Why now?** The exponential-product expression has been separated from its unproved geometric recurrence, making the missing local cutting hypothesis explicit and experimentally testable.\n\n## 5. Tropical VC bound through active-set compression\n\n**Conjecture.** For fixed input dimension, binary classifiers represented as differences of two depth-`L` max-affine expressions with `N` total leaves have VC dimension `O(n L log N)`, with matching lower bounds for generic leaf arrangements.\n\nThe key insight is that label patterns should be encoded by active-leaf certificates along a depth hierarchy, linking tropical cell combinatorics to statistical shattering. **Why now?** The max-affine syntax supplies a canonical certificate tree, and the catalogued VC compactness framework supplies a natural target for turning certificate counts into dimension bounds.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_0392",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "9867adb2",
+    "status": "available",
+    "timestamp": "2026-07-19T03:54:36.771701+00:00",
+    "title": "**Conjecture.** Every scalar feed-forward ReLU network admits a depth-preserving"
   },
   {
     "ambition_level": "extension",
