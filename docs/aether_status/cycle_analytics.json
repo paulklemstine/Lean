@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-19T04:29:38.420252+00:00",
+  "last_updated": "2026-07-19T04:49:05.987913+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -27852,6 +27852,48 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-19T04:29:38.359554+00:00",
       "title": "Automatic Sequences and the Halting Problem: When Is a Sequence Computable?"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Probability",
+      "duration_seconds": 1170.860594511032,
+      "end_time": 1784436500.830488,
+      "files_integrated": 5,
+      "job_id": "2eae5d0f",
+      "outcome_quality": 0.64,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v19",
+      "phase_b_skip_reason": "low_quality_near_miss",
+      "phase_b_skipped": true,
+      "prompt_version": "v19",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.6,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.88,
+        "composite": 0.49,
+        "cross_domain": 0.5,
+        "grade": "partial",
+        "importance": 0.68,
+        "novelty": 0.52,
+        "proof_depth": 0.56,
+        "usefulness": 0.72
+      },
+      "quality_score": 0.64,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1784435329.9698935,
+      "strategy_count": 0,
+      "theorem_count": 12,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 9,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-19T04:49:05.933018+00:00",
+      "title": "Half\u2011canonical Brill\u2011Noether existence for k\u2011regular graphs"
     }
   ]
 }
