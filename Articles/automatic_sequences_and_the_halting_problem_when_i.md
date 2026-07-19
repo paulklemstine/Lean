@@ -1,98 +1,177 @@
-# When Can a Machine Know a Sequence Never Hits Zero?
+# Finite Memory, Infinite Sequences: How Automata Make “Does Zero Ever Appear?” Decidable
 
-## A tiny machine with a big question
+A sequence can be infinitely long and still have very little memory.
 
-Imagine a sequence of numbers stretching off to infinity:
+Consider the Thue–Morse sequence,
 
-$$0,\,1,\,1,\,0,\,1,\,0,\,0,\,1,\,1,\,0,\,0,\,1,\,0,\,1,\,1,\,0,\,\dots$$
+$$
+0,1,1,0,1,0,0,1,\ldots
+$$
 
-This is the **Thue–Morse sequence**, and there is a delightfully simple rule behind it. Write a whole number $n$ in binary, count how many $1$s appear, and record whether that count is even ($0$) or odd ($1$). So $n = 3$ is $11$ in binary, which has two $1$s (even), giving $0$; while $n = 4$ is $100$, one $1$ (odd), giving $1$. Run this over $n = 0, 1, 2, 3, \dots$ and out tumbles the sequence above.
+Its terms never settle into an ordinary repeating cycle. Yet the rule behind it is astonishingly small: write an index in binary and count the $1$ digits. The term is $0$ when that count is even and $1$ when it is odd. A machine with only two states—“even so far” and “odd so far”—can generate every term.
 
-What makes Thue–Morse special is not the arithmetic but the *machinery*. You do not need a powerful computer to produce it. A pocket-sized gadget with just **two internal states** suffices. Feed it the binary digits of $n$ one at a time; it flips between "even so far" and "odd so far" with each $1$ it reads, ignores every $0$, and reports its final state. Sequences that can be produced by such a finite, memoryless-except-for-a-handful-of-states gadget are called **automatic sequences**, and they sit at a fascinating crossroads of number theory, computer science, and logic.
+This is the world of **automatic sequences**. Their apparent complexity unfolds from a deterministic finite automaton, a machine with a finite set of states that reads one symbol at a time. Such machines appear throughout computer science: lexical analysis, pattern matching, protocol design, digital circuits, and model checking. In sequence theory they offer something especially valuable: global questions about infinitely many terms can sometimes be reduced to a finite search.
 
-This article is about a deceptively simple question you can ask of any such sequence:
+The central question here sounds like a miniature halting problem:
 
-> **Does the value $0$ ever appear?**
+> Given a finite-state generator, does its output ever equal zero?
 
-And a subtler cousin:
+For unrestricted programs, questions of this flavor can be undecidable. For finite automata, the answer is different. Not only is the question decidable; any positive answer has a short certificate. If an automaton has $N$ states and ever outputs zero, then some input word of length less than $N$ already produces zero.
 
-> **Does the value $0$ appear infinitely often?**
+That one bound turns an infinite search into a finite one.
 
-For general computational processes, questions like these are the stuff of the famous **halting problem** — provably impossible for a machine to answer in all cases. The surprise, and the heart of this story, is that for automatic sequences these questions are *completely decidable*. There is a finite recipe that always terminates with the correct yes-or-no answer. We will see exactly why — and we will also fix a piece of folklore that, though widely repeated, is simply false.
+## From sequences to paths through a finite machine
 
-## Finite automata: computing with almost no memory
+A deterministic finite automaton with output consists of four ingredients:
 
-The gadget behind Thue–Morse is a **deterministic finite automaton**, or **DFA**. Strip it to essentials and a DFA is four things:
+1. a finite input alphabet $\Sigma$;
+2. a finite state set $Q$;
+3. a transition rule $\delta:Q\times\Sigma\to Q$;
+4. an output map $\tau:Q\to B$, where $B$ is the set of possible sequence values.
 
-- a finite set of **states** $\sigma$ (Thue–Morse uses two: "even" and "odd");
-- an **alphabet** of input symbols (for Thue–Morse, the binary digits $0$ and $1$);
-- a **transition rule** that, given the current state and the next input symbol, dictates the next state;
-- a designated **start state** and a set of **accepting states**.
+There is also a designated starting state $q_0$. For an input word $w=a_1a_2\cdots a_m$, the machine follows the transitions dictated by the letters and ends in a state denoted $\delta^*(q_0,w)$. Its output is
 
-You run a DFA on a finite word — a string of symbols — by starting in the start state and following the transition rule symbol by symbol. If you finish in an accepting state, the machine **accepts** the word; otherwise it **rejects**. The collection of all accepted words is the machine's **language**.
+$$
+A(w)=\tau\bigl(\delta^*(q_0,w)\bigr).
+$$
 
-For the Thue–Morse machine, the input word is the binary expansion of $n$, the transition rule is "flip on $1$, stay on $0$," the start state is "even," and the single accepting state is "odd." The word for $n$ is accepted exactly when the digit sum is odd — exactly when the $n$-th term of the sequence is $1$. So asking "**is any term equal to $1$?**" is the same as asking "**does the machine accept any word at all?**", and asking "**is any term equal to $0$?**" is the same question for the complementary machine (swap accepting and non-accepting states). In every case, the value-hunting question about a sequence becomes a **nonemptiness question about a language**: *does this automaton accept at least one word?*
+This is a word-indexed sequence. Ordinary $k$-automatic sequences arise by feeding a machine the base-$k$ digits of an integer. There is a small but important modeling choice here: integer representations must be made canonical, or leading zeros must be handled consistently. The clean theorem below concerns all words. Passing to ordinary integer indices requires incorporating the chosen numeral convention; canonical base-$k$ words themselves form a regular language, so the same finite-state reachability philosophy still applies.
 
-That translation is the whole game. If we can decide language nonemptiness, we can decide whether a value ever occurs.
+To detect a zero output, color every state $q$ for which $\tau(q)=0$ as accepting. The original question is now exactly this:
 
-## The pigeonhole heart of the matter
+> Is any accepting state reachable from the start?
 
-Here is the key intuition. A DFA has only finitely many states — say $s$ of them. Suppose it accepts some word. Watch the machine trace its path through the states as it reads that word. If the word is long — specifically, if it has length $s$ or more — then the machine visits **more states-along-the-way than it has states**. By the pigeonhole principle, it must return to a state it has already been in. It has gone in a **loop**.
+This translation is the conceptual heart of the result. The values may form an infinite sequence, and the set of input words is infinite, but the machine’s memory is finite.
 
-That single observation drives everything.
+## The short-witness theorem
 
-**Loops can be cut out.** If the path revisits a state, the chunk of the word between the two visits drove the machine in a circle, landing it right back where it started. Snip that chunk out, and the shortened word steers the machine along the very same overall route to the very same final state. So it is *still accepted*. This is the "pump down" move: any accepted word of length $\ge s$ can be trimmed to a strictly shorter accepted word.
+The key fact is a reachability bound.
 
-Repeat the trimming, and you cannot go forever — lengths are whole numbers and keep decreasing — so you eventually reach an accepted word of length **less than $s$**. This yields our first landmark result.
+**Short-Witness Theorem.** Let a deterministic finite automaton have $N$ states. Its accepted language is nonempty if and only if it accepts some word $w$ with
 
-> **Reachability Bound.** *A finite automaton's language is nonempty if and only if it accepts some word shorter than its number of states.*
+$$
+|w|<N.
+$$
 
-The payoff is immediate. There are only finitely many words shorter than $s$ (over a finite alphabet). To decide whether the machine accepts anything, **check them all**. The search is finite and always terminates. Hence:
+Why? Suppose the automaton accepts at least one word, and choose a shortest accepted word. If that word had length at least $N$, then while reading it the machine would visit at least $N+1$ state occurrences, counting the starting point. Since only $N$ states exist, two occurrences would be the same. The segment of input between those repeated states forms a loop. Removing the loop would leave the machine in exactly the same state before it reads the remaining suffix, producing a shorter accepted word. That contradicts minimality.
 
-> **Decidability of "Zero in the Sequence."** *For any automatic sequence, it is decidable whether a given value ever occurs: translate the value-search into a language-nonemptiness question and test all words shorter than the number of states.*
+The theorem gives an immediate algorithm: enumerate all words of lengths $0,1,\ldots,N-1$, run the automaton on each, and stop if one reaches a zero-output state. If none does, zero never appears in the word-indexed sequence.
 
-No halting problem, no undecidability — just an honest finite search with a guaranteed answer.
+A direct enumeration over an alphabet of size $k$ examines
 
-## The same loop, run the other way
+$$
+1+k+k^2+\cdots+k^{N-1}
+$$
 
-The pigeonhole loop also runs *forward*. Take the chunk of word that drove the machine in a circle. Instead of deleting it, **repeat it**. Two laps around the loop, three, a hundred — each returns the machine to the same state, so each produces a new, longer accepted word. One loop therefore begets infinitely many accepted words.
+words. This is finite, but breadth-first search on the state graph is more efficient: it visits at most $N$ states and at most $kN$ labeled transitions. Either way, finiteness is what matters for decidability, while graph search gives the practical implementation.
 
-> **Pump Up.** *If a finite automaton accepts even a single word of length $\ge s$, its language is infinite.*
+The theorem also provides a certificate. A “yes” answer can be accompanied by a word shorter than $N$. A “no” answer can be justified by listing all states reachable from $q_0$ and observing that none has output zero.
 
-Combine pumping up with pumping down and you get a clean characterization of when infinitely many terms take a value:
+## Nonempty does not mean infinite
 
-> **Infinitude Criterion.** *A finite automaton's language is infinite if and only if it accepts some word of length at least $s$ (the number of states).*
+A tempting slogan says that if a finite automaton accepts one word, then it must accept infinitely many. That slogan is false.
 
-And there is a sharpened version that makes the test practical. If any long word is accepted, you can pump it *down* until its length lands in the tidy window $[s,\,2s)$ — big enough to guarantee a loop, small enough to bound the search.
+Imagine a two-state machine that accepts the empty word but moves permanently to a rejecting state as soon as it reads any symbol. Its language is the singleton set
 
-> **Bounded Infinitude Criterion.** *The language is infinite if and only if it accepts a word whose length lies between $s$ and $2s - 1$.*
+$$
+\{\varepsilon\},
+$$
 
-Once again the criterion is a finite search, so:
+where $\varepsilon$ denotes the empty word. The language is nonempty and finite.
 
-> **Decidability of "Zero Infinitely Often."** *For any automatic sequence, it is decidable whether a given value occurs infinitely often: search the finitely many words of length below $2s$.*
+The correct statement needs a long accepted word.
 
-## A myth, politely corrected
+**Long-Witness Pumping Theorem.** If an automaton with $N$ states accepts a word $w$ satisfying
 
-Textbooks and lecture notes sometimes offer a tempting shortcut: *"If a finite automaton accepts any word at all, it accepts infinitely many."* It sounds plausible — automata feel loopy and generative. **It is false.**
+$$
+|w|\ge N,
+$$
 
-The counterexample is as small as they come. Take the two-state parity machine and ask it to accept only the single word $1$. It reads one symbol, lands in "odd," accepts, and that is the *only* word it ever accepts. Its language has exactly one element. Accepting *something* does not force accepting *infinitely many things*.
+then it accepts infinitely many words.
 
-The correct statement is the dichotomy above: acceptance of *any* word gives you nonemptiness, but infinitude requires acceptance of a *long* word — one of length at least the number of states. The distinction is not pedantry. Nonemptiness and infinitude are genuinely different questions, each with its own witness length ($< s$ for existence, $\ge s$ for infinitude), and conflating them papers over the very pumping argument that makes the theory work.
+The reason is again repeated state visitation. A sufficiently long accepting computation contains a nonempty loop. This time, instead of deleting the loop, repeat it $0,1,2,\ldots$ times. The resulting words all reach the same state after the loop and therefore follow the same accepting suffix. Their lengths grow strictly, so they are distinct.
 
-## Back to Thue–Morse
+This theorem has a converse over a finite alphabet. There are only finitely many words shorter than $N$. Therefore, if the accepted language is infinite, at least one accepted word must have length at least $N$.
 
-Our two-state parity machine makes an excellent test case. It accepts the single word $1$, so its language is nonempty — the Thue–Morse sequence *does* contain the value $1$. It also accepts the length-$2$ word $10$, and since $2$ meets the "at least the number of states" threshold, the Infinitude Criterion certifies that its language is infinite: the value $1$ appears **infinitely often**. Both facts fall straight out of the general theory, with no need to inspect the sequence term by term.
+So we obtain an exact criterion:
 
-The Thue–Morse sequence also wears its "automatic" nature on its sleeve through two elegant recurrences. Writing $t(n)$ for its $n$-th term (as a parity, so arithmetic is modulo $2$):
+**Infinitude Criterion.** For a deterministic finite automaton with $N$ states over a finite alphabet, the accepted language is infinite if and only if it contains an accepted word of length at least $N$.
 
-$$t(2n) = t(n), \qquad t(2n+1) = t(n) + 1.$$
+At first glance, that still asks us to search through arbitrarily long words. A second shortening argument removes the infinity.
 
-The first says that appending a binary digit $0$ (which is what doubling does) leaves the digit-sum parity unchanged. The second says appending a $1$ (doubling and adding one) flips it. Together they imply that consecutive pairs always disagree — $t(2n) \ne t(2n+1)$ for every $n$ — the signature restlessness that makes Thue–Morse never settle into a repeating pattern.
+**Bounded Infinitude Criterion.** The language is infinite if and only if it accepts some word $w$ whose length lies in the finite window
 
-## Where the ground gives way
+$$
+N\le |w|<2N.
+$$
 
-The clean decidability we have described marks a genuine frontier in the theory of sequences. Automatic sequences are the ones a finite automaton can generate, and for them the value-occurrence questions are decidable, full stop. Push just past this class — to **morphic sequences**, produced by iterating a symbol-substitution rule and then relabeling — and the picture clouds over. Morphic sequences are strictly more expressive; many natural sequences are morphic but not automatic. For them, whether the "does zero ever appear?" question is decidable in general is a genuine **open problem**.
+Starting from any accepted word of length at least $2N$, one can delete a loop among the first $N$ transitions. The deleted block has positive length and length at most $N$, so the new word remains at least $N$ symbols long. Repeating this operation eventually lands inside the window from $N$ through $2N-1$.
 
-That is the deeper lesson. The boundary between *decidable* and *undecidable* in the world of sequences runs right along the boundary between *automatic* and *morphic*. On the automatic side, a finite pigeonhole argument tames every value-occurrence question. On the morphic side, the loops grow subtle enough that no one yet knows whether a universal recipe exists. Cryptographers and coding theorists care because automatic sequences — Thue–Morse, Rudin–Shapiro, the paperfolding sequence — supply low-correlation, easily generated pseudorandom strings whose structural questions we can actually *answer*. Knowing exactly which questions a small machine can settle, and where that power runs out, is knowing the shape of computation itself.
+Thus two distinct infinite questions become finite:
 
-The machine is tiny. The question it can answer — *will this ever be zero?* — is enormous. That such a small device can put such a large question to rest, while its slightly bigger cousin cannot, is one of the quiet marvels at the edge of the computable.
+- **Does zero ever occur?** Search below length $N$.
+- **Does zero occur on infinitely many input words?** Search from length $N$ up to length $2N-1$.
+
+These are different questions, and the singleton-language example shows why they must not be conflated.
+
+## Thue–Morse as a two-state universe
+
+The Thue–Morse sequence is the ideal example because its automaton has only two states. Let $t(n)$ be the parity of the sum of the binary digits of $n$, regarded as a value in $\mathbb{Z}/2\mathbb{Z}$. Then
+
+$$
+t(0)=0.
+$$
+
+Appending a binary $0$ does not change digit-sum parity, while appending a binary $1$ flips it. Numerically, these operations replace $n$ by $2n$ and $2n+1$. Hence
+
+$$
+t(2n)=t(n)
+$$
+
+and
+
+$$
+t(2n+1)=t(n)+1 \pmod 2.
+$$
+
+It follows immediately that neighboring members of each binary pair differ:
+
+$$
+t(2n)\ne t(2n+1).
+$$
+
+This pair of recurrences explains the self-similar blocks in
+
+$$
+0110100110010110\cdots.
+$$
+
+Every block is generated from an earlier block by copying and complementing. The sequence is not periodic, but it is governed by finite memory.
+
+For the parity automaton, a one-symbol word containing $1$ reaches the odd state, so output $1$ occurs. A two-symbol accepted word is already long enough to meet the two-state pumping threshold, proving that the odd-parity language is infinite. Symmetrically, even parity—and therefore output $0$—also occurs infinitely often.
+
+## A family of one hundred checks
+
+The decision principle scales beyond a single celebrated sequence. Consider $100$ machines, each with state set
+
+$$
+Q=\{0,1,\ldots,99\}.
+$$
+
+For each chosen index $i\in Q$, build a machine in which reading the symbol $1$ jumps to state $i$, and only state $i$ has output zero. The one-letter word $1$ is therefore a zero witness for the $i$th machine. Different choices of $i$ produce different output maps, so the family contains $100$ distinct generators.
+
+Every machine in this test family returns a positive answer to the zero-occurrence question, and each answer comes with the same concise form of certificate: a one-letter word. The example is deliberately transparent. Its purpose is not to simulate difficult data but to illustrate uniformity: one theorem and one algorithm cover every finite alphabet, every finite state set, and every decidable output comparison.
+
+## Where the boundary really lies
+
+The deepest lesson is not that “all sequence halting problems are easy.” It is that representation matters.
+
+Finite automata cannot store an unbounded counter or stack. Once two input prefixes reach the same state, the machine has forgotten how those prefixes differed. That loss of memory creates loops, and loops create bounded witnesses. This is why reachability, emptiness, and infinitude admit finite certificates.
+
+More general sequence generators may carry richer structure. Morphic sequences, for example, are produced by repeatedly substituting words for symbols and then applying a coding. Their occurrence questions should be phrased carefully: for ordinary morphic words over a finite alphabet, whether a symbol occurs may reduce to reachability in a finite dependency graph of letters, while subtler index-sensitive or zero-set questions can be substantially harder. The useful boundary is therefore not captured by a slogan alone; it depends on exactly what is generated and exactly what is being asked.
+
+There are also important algebraic boundaries. Christol’s theorem connects automatic sequences and algebraic power series over finite fields. It does not directly turn integer-valued automatic sequences into a bounded-degree polynomial-recurrence class. Changing the coefficient domain changes the mathematics.
+
+Still, the finite-state result is crisp and complete. An output automaton with $N$ states cannot hide its first zero beyond every finite horizon. If zero appears at all, it appears before length $N$. If it appears on infinitely many words, that fact is witnessed between lengths $N$ and $2N-1$.
+
+An infinite sequence may stretch forever. But when its generator has finite memory, infinity leaves fingerprints in a finite place.

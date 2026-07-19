@@ -1,295 +1,182 @@
-"""
-Decidability of Value-Occurrence Problems for Automatic Sequences
-=================================================================
+#!/usr/bin/env python3
+"""Numerical demonstrations of bounded witnesses for finite output automata.
 
-Self-contained numerical demonstration of the results:
-
-  * Reachability bound        : L(M) != empty  <=>  exists x in L(M), |x| < s
-  * Decidability of emptiness : the "zero-in-sequence" (halting) problem
-  * Pumping dichotomy         : L(M) infinite   <=>  exists x in L(M), |x| >= s
-  * Bounded infinitude window : witnessed by |x| in [s, 2s)
-  * Thue-Morse automaton      : nonempty & infinite; recurrences t(2n), t(2n+1)
-  * Folklore correction       : a nonempty DFA language can be finite (a single word)
-
-Run:  python demo.py
+The program uses only the Python standard library. It demonstrates:
+1. shortest zero-witness search by breadth-first traversal;
+2. finite versus infinite accepted languages;
+3. Thue--Morse recurrences and the first terms;
+4. one hundred distinct output automata with explicit zero witnesses.
 """
 
 from __future__ import annotations
 
+from collections import deque
 from dataclasses import dataclass
-from itertools import product
-from typing import Callable, Dict, Hashable, Iterable, Iterator, List, Optional, Tuple
+from typing import Callable, Generic, Hashable, Iterable, Optional, Sequence, TypeVar
 
-State = Hashable
-Symbol = Hashable
+State = TypeVar("State", bound=Hashable)
+Symbol = TypeVar("Symbol", bound=Hashable)
+Output = TypeVar("Output")
 
 
-# --------------------------------------------------------------------------- #
-#  Deterministic finite automaton                                             #
-# --------------------------------------------------------------------------- #
 @dataclass(frozen=True)
-class DFA:
-    """A deterministic finite automaton over a finite alphabet."""
-
-    states: Tuple[State, ...]
-    alphabet: Tuple[Symbol, ...]
-    step: Callable[[State, Symbol], State]
+class OutputAutomaton(Generic[State, Symbol, Output]):
+    states: tuple[State, ...]
+    alphabet: tuple[Symbol, ...]
     start: State
-    accept: frozenset
+    step: Callable[[State, Symbol], State]
+    output: Callable[[State], Output]
 
-    @property
-    def num_states(self) -> int:
-        return len(self.states)
-
-    def eval(self, word: Iterable[Symbol]) -> State:
-        """State reached from `start` after reading `word`."""
-        s = self.start
-        for a in word:
-            s = self.step(s, a)
-        return s
-
-    def accepts(self, word: Iterable[Symbol]) -> bool:
-        return self.eval(word) in self.accept
+    def evaluate(self, word: Iterable[Symbol]) -> Output:
+        state = self.start
+        for symbol in word:
+            state = self.step(state, symbol)
+        return self.output(state)
 
 
-def words_of_length(alphabet: Tuple[Symbol, ...], length: int) -> Iterator[Tuple[Symbol, ...]]:
-    """All words of the given exact length over the alphabet."""
-    yield from product(alphabet, repeat=length)
+def shortest_output_witness(
+    automaton: OutputAutomaton[State, Symbol, Output], target: Output
+) -> Optional[tuple[Symbol, ...]]:
+    """Return a shortest word producing target, or None if none exists.
 
-
-def words_up_to_length(alphabet: Tuple[Symbol, ...], length: int) -> Iterator[Tuple[Symbol, ...]]:
-    """All words of length 0, 1, ..., length-1."""
-    for ell in range(length):
-        yield from words_of_length(alphabet, ell)
-
-
-# --------------------------------------------------------------------------- #
-#  Algorithm A: decide nonemptiness (zero-in-sequence / halting)              #
-# --------------------------------------------------------------------------- #
-def decide_nonempty(dfa: DFA) -> Tuple[bool, Optional[Tuple[Symbol, ...]]]:
+    At most one path to each state is retained, so a returned witness has
+    length strictly below the number of states.
     """
-    Decide whether L(M) is nonempty by the Reachability Bound: search all
-    words of length < number of states.  Returns (answer, witness).
+    queue: deque[tuple[State, tuple[Symbol, ...]]] = deque([(automaton.start, ())])
+    seen: set[State] = {automaton.start}
+    while queue:
+        state, word = queue.popleft()
+        if automaton.output(state) == target:
+            return word
+        for symbol in automaton.alphabet:
+            nxt = automaton.step(state, symbol)
+            if nxt not in seen:
+                seen.add(nxt)
+                queue.append((nxt, word + (symbol,)))
+    return None
+
+
+def productive_cycle_exists(
+    automaton: OutputAutomaton[State, Symbol, Output], target: Output
+) -> bool:
+    """Decide whether infinitely many words produce target.
+
+    The language is infinite exactly when a reachable directed cycle can reach
+    a target-output state. The implementation computes reachability, reverse
+    reachability, and then detects a cycle in their intersection.
     """
-    s = dfa.num_states
-    for word in words_up_to_length(dfa.alphabet, s):
-        if dfa.accepts(word):
-            return True, word
-    return False, None
+    adjacency: dict[State, set[State]] = {q: set() for q in automaton.states}
+    reverse: dict[State, set[State]] = {q: set() for q in automaton.states}
+    for q in automaton.states:
+        for symbol in automaton.alphabet:
+            nxt = automaton.step(q, symbol)
+            adjacency[q].add(nxt)
+            reverse[nxt].add(q)
 
+    reachable: set[State] = set()
+    stack = [automaton.start]
+    while stack:
+        q = stack.pop()
+        if q not in reachable:
+            reachable.add(q)
+            stack.extend(adjacency[q] - reachable)
 
-# --------------------------------------------------------------------------- #
-#  Algorithm B: decide infinitude (zero-infinitely-often)                     #
-# --------------------------------------------------------------------------- #
-def decide_infinite(dfa: DFA) -> Tuple[bool, Optional[Tuple[Symbol, ...]]]:
-    """
-    Decide whether L(M) is infinite by the Bounded Infinitude Criterion:
-    search words with length in the window [s, 2s).  Returns (answer, witness).
-    """
-    s = dfa.num_states
-    for length in range(s, 2 * s):
-        for word in words_of_length(dfa.alphabet, length):
-            if dfa.accepts(word):
-                return True, word
-    return False, None
+    can_reach_target: set[State] = set()
+    stack = [q for q in automaton.states if automaton.output(q) == target]
+    while stack:
+        q = stack.pop()
+        if q not in can_reach_target:
+            can_reach_target.add(q)
+            stack.extend(reverse[q] - can_reach_target)
 
+    useful = reachable & can_reach_target
+    color: dict[State, int] = {q: 0 for q in useful}
 
-# --------------------------------------------------------------------------- #
-#  Cross-check by explicit graph reachability (independent of pumping search) #
-# --------------------------------------------------------------------------- #
-def reachable_states(dfa: DFA) -> frozenset:
-    seen = {dfa.start}
-    frontier = [dfa.start]
-    while frontier:
-        s = frontier.pop()
-        for a in dfa.alphabet:
-            t = dfa.step(s, a)
-            if t not in seen:
-                seen.add(t)
-                frontier.append(t)
-    return frozenset(seen)
-
-
-def nonempty_by_reachability(dfa: DFA) -> bool:
-    return bool(reachable_states(dfa) & dfa.accept)
-
-
-def infinite_by_cycle(dfa: DFA) -> bool:
-    """
-    L(M) is infinite iff there is a cycle that is reachable from the start
-    and from which an accepting state can be reached.  Detected by DFS on the
-    subgraph induced by reachable & co-reachable-to-accept states.
-    """
-    reach = reachable_states(dfa)
-    # co-reachable: states from which some accept state is reachable
-    rev: Dict[State, List[State]] = {s: [] for s in dfa.states}
-    for s in dfa.states:
-        for a in dfa.alphabet:
-            rev[dfa.step(s, a)].append(s)
-    co = set(t for t in dfa.accept)
-    frontier = list(co)
-    while frontier:
-        s = frontier.pop()
-        for p in rev[s]:
-            if p not in co:
-                co.add(p)
-                frontier.append(p)
-    live = reach & frozenset(co)
-    # cycle detection within `live`
-    WHITE, GRAY, BLACK = 0, 1, 2
-    color = {s: WHITE for s in live}
-
-    def dfs(u: State) -> bool:
-        color[u] = GRAY
-        for a in dfa.alphabet:
-            v = dfa.step(u, a)
-            if v in live:
-                if color[v] == GRAY:
-                    return True
-                if color[v] == WHITE and dfs(v):
-                    return True
-        color[u] = BLACK
+    def has_cycle(q: State) -> bool:
+        color[q] = 1
+        for nxt in adjacency[q] & useful:
+            if color[nxt] == 1:
+                return True
+            if color[nxt] == 0 and has_cycle(nxt):
+                return True
+        color[q] = 2
         return False
 
-    return any(color[u] == WHITE and dfs(u) for u in live)
+    return any(color[q] == 0 and has_cycle(q) for q in useful)
 
 
-# --------------------------------------------------------------------------- #
-#  Concrete automata                                                          #
-# --------------------------------------------------------------------------- #
-def parity_dfa() -> DFA:
-    """Two-state Thue-Morse parity automaton over the binary alphabet."""
-    return DFA(
-        states=(0, 1),                       # 0 = even, 1 = odd
-        alphabet=(0, 1),
-        step=lambda s, a: s ^ a,             # XOR
-        start=0,
-        accept=frozenset({1}),               # accept odd digit-sum
+def bits(n: int) -> tuple[int, ...]:
+    if n < 0:
+        raise ValueError("n must be nonnegative")
+    return (0,) if n == 0 else tuple(int(c) for c in bin(n)[2:])
+
+
+def thue_morse(n: int) -> int:
+    return sum(bits(n)) % 2
+
+
+def parity_automaton() -> OutputAutomaton[int, int, int]:
+    return OutputAutomaton(
+        states=(0, 1), alphabet=(0, 1), start=0,
+        step=lambda parity, digit: parity ^ digit,
+        output=lambda parity: parity,
     )
 
 
-def single_word_dfa(word: Tuple[int, ...]) -> DFA:
-    """
-    A DFA over {0,1} accepting exactly the one word `word` (plus a dead state).
-    Demonstrates: nonempty language that is FINITE (folklore correction).
-    """
-    n = len(word)
-    dead = n + 1
-    states = tuple(range(n + 2))             # 0..n are prefix positions, dead
-
-    def step(s: State, a: Symbol) -> State:
-        if s == dead:
-            return dead
-        if s < n and a == word[s]:
-            return s + 1
-        return dead
-
-    return DFA(states=states, alphabet=(0, 1), step=step, start=0, accept=frozenset({n}))
+def singleton_empty_word_automaton() -> OutputAutomaton[int, int, int]:
+    """Output zero only on the empty word; all nonempty words output one."""
+    return OutputAutomaton(
+        states=(0, 1), alphabet=(0, 1), start=0,
+        step=lambda _state, _digit: 1,
+        output=lambda state: 0 if state == 0 else 1,
+    )
 
 
-def empty_dfa() -> DFA:
-    """A DFA whose language is empty (no accepting state reachable)."""
-    return DFA(states=(0,), alphabet=(0, 1), step=lambda s, a: 0, start=0, accept=frozenset())
+def hundred_test_automaton(index: int) -> OutputAutomaton[int, int, int]:
+    if not 0 <= index < 100:
+        raise ValueError("index must lie in 0,...,99")
+    return OutputAutomaton(
+        states=tuple(range(100)), alphabet=(0, 1), start=0,
+        step=lambda _state, digit: index if digit == 1 else 0,
+        output=lambda state: 0 if state == index else 1,
+    )
 
 
-# --------------------------------------------------------------------------- #
-#  Thue-Morse sequence and its automatic recurrences                          #
-# --------------------------------------------------------------------------- #
-def thue_morse(n: int) -> int:
-    """t(n) = parity of the number of 1s in the binary expansion of n."""
-    return bin(n).count("1") % 2
+def run_demo() -> None:
+    parity = parity_automaton()
+    first = [thue_morse(n) for n in range(32)]
+    print("First 32 Thue--Morse terms:")
+    print("".join(map(str, first)))
+    assert all(thue_morse(2 * n) == thue_morse(n) for n in range(1000))
+    assert all(thue_morse(2 * n + 1) == 1 - thue_morse(n) for n in range(1000))
+    print("Binary recurrences checked numerically for n = 0,...,999.")
 
+    zero_word = shortest_output_witness(parity, 0)
+    one_word = shortest_output_witness(parity, 1)
+    print(f"Shortest parity-0 word: {zero_word}; shortest parity-1 word: {one_word}")
+    assert zero_word is not None and len(zero_word) < len(parity.states)
+    assert one_word is not None and len(one_word) < len(parity.states)
+    assert productive_cycle_exists(parity, 0)
+    assert productive_cycle_exists(parity, 1)
 
-def verify_tm_recurrences(bound: int = 2000) -> bool:
-    """Check t(2n) = t(n) and t(2n+1) = t(n) + 1 (mod 2) for n < bound."""
-    for n in range(bound):
-        if thue_morse(2 * n) != thue_morse(n):
-            return False
-        if thue_morse(2 * n + 1) != (thue_morse(n) + 1) % 2:
-            return False
-        if thue_morse(2 * n) == thue_morse(2 * n + 1):
-            return False
-    return True
+    singleton = singleton_empty_word_automaton()
+    assert shortest_output_witness(singleton, 0) == ()
+    assert not productive_cycle_exists(singleton, 0)
+    print("Singleton example: zero occurs, but only on the empty word.")
 
-
-# --------------------------------------------------------------------------- #
-#  Random-ish battery: 100 test automata, cross-validate the two methods      #
-# --------------------------------------------------------------------------- #
-def random_dfa(seed: int, max_states: int = 5) -> DFA:
-    """Deterministic pseudo-random DFA generator (no external deps)."""
-    rng = seed
-    def nxt(mod: int) -> int:
-        nonlocal rng
-        rng = (1103515245 * rng + 12345) & 0x7FFFFFFF
-        return rng % mod
-
-    n = 1 + nxt(max_states)
-    states = tuple(range(n))
-    table = {(s, a): nxt(n) for s in states for a in (0, 1)}
-    accept = frozenset(s for s in states if nxt(2) == 0)
-    return DFA(states=states, alphabet=(0, 1),
-               step=lambda s, a: table[(s, a)], start=0, accept=accept)
-
-
-def battery(trials: int = 100) -> Tuple[int, int]:
-    """
-    Cross-validate pumping-search decisions against graph-reachability
-    decisions on `trials` pseudo-random automata.  Returns (agreements_ne,
-    agreements_inf); both should equal `trials`.
-    """
-    agree_ne = agree_inf = 0
-    for seed in range(1, trials + 1):
-        dfa = random_dfa(seed)
-        ne_search, _ = decide_nonempty(dfa)
-        ne_graph = nonempty_by_reachability(dfa)
-        inf_search, _ = decide_infinite(dfa)
-        inf_graph = infinite_by_cycle(dfa)
-        agree_ne += (ne_search == ne_graph)
-        agree_inf += (inf_search == inf_graph)
-    return agree_ne, agree_inf
-
-
-# --------------------------------------------------------------------------- #
-#  Main                                                                       #
-# --------------------------------------------------------------------------- #
-def main() -> None:
-    print("=" * 70)
-    print(" Automatic Sequences: Decidability of Value-Occurrence Problems")
-    print("=" * 70)
-
-    P = parity_dfa()
-    print("\n[1] Thue-Morse parity automaton (2 states)")
-    ne, w = decide_nonempty(P)
-    print(f"    nonempty (zero/one-in-sequence)?  {ne}   witness = {w}")
-    inf, w2 = decide_infinite(P)
-    print(f"    infinite (one infinitely often)?  {inf}   witness = {w2}")
-    print(f"    cross-check nonempty via reachability: {nonempty_by_reachability(P)}")
-    print(f"    cross-check infinite via cycle:        {infinite_by_cycle(P)}")
-
-    print("\n[2] First 16 Thue-Morse terms:")
-    print("   ", [thue_morse(n) for n in range(16)])
-    print(f"    recurrences t(2n)=t(n), t(2n+1)=t(n)+1 hold (n<2000)? "
-          f"{verify_tm_recurrences()}")
-
-    print("\n[3] Folklore correction: a nonempty language can be FINITE")
-    S = single_word_dfa((1, 0, 1))
-    ne, w = decide_nonempty(S)
-    inf, _ = decide_infinite(S)
-    print(f"    automaton accepting exactly [1,0,1]:")
-    print(f"    nonempty? {ne}  (witness {w})   infinite? {inf}")
-    print("    => 'accepts something' does NOT imply 'accepts infinitely many'")
-
-    print("\n[4] Empty language automaton")
-    E = empty_dfa()
-    print(f"    nonempty? {decide_nonempty(E)[0]}   infinite? {decide_infinite(E)[0]}")
-
-    print("\n[5] Battery of 100 pseudo-random automata")
-    a_ne, a_inf = battery(100)
-    print(f"    pumping-search vs graph-reachability agreement (nonempty): {a_ne}/100")
-    print(f"    pumping-search vs graph-cycle       agreement (infinite):  {a_inf}/100")
-
-    print("\nAll demonstrations complete.")
+    witnesses: list[tuple[int, ...]] = []
+    signatures: set[tuple[int, ...]] = set()
+    for i in range(100):
+        machine = hundred_test_automaton(i)
+        assert machine.evaluate((1,)) == 0
+        witness = shortest_output_witness(machine, 0)
+        assert witness is not None and len(witness) < 100
+        witnesses.append(witness)
+        signatures.add(tuple(machine.output(q) for q in machine.states))
+    assert len(signatures) == 100
+    print("All 100 distinct test automata have a zero witness of length below 100.")
+    print(f"Observed shortest-witness lengths: {sorted(set(map(len, witnesses)))}")
 
 
 if __name__ == "__main__":
-    main()
+    run_demo()

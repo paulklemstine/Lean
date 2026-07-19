@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "0daa61af",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions\n\n## 1. Renormalized removal of both cutoffs\n\n**Conjecture.** There is a natural joint scaling of the prime cutoff `x`, occupation cutoff `N`, and inverse temperature `β > 1` under",
-      "quality_score": 0.72,
-      "sorry_count": 3,
-      "theorem_count": 18,
-      "timestamp": "2026-07-17T18:03:33",
-      "title": "Holographic Primes: The Prime Number AdS/CFT Correspondence"
-    },
-    {
       "cycle_id": "1003d095",
       "domain": "Applications",
       "key_insight": "# Future directions\n\nThe formal result in `AffineDuality.lean` isolates a precise bridge between finite-group symmetry and cryptographic proof systems: translation gives exact witness-independent tran",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-19T03:55:17",
       "title": "Knots and Lattices: The Alexander Polynomial as a Lattice Path Count"
+    },
+    {
+      "cycle_id": "fa73eeee",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions\n\n## 1. Locally uniform joint removal of prime and occupation cutoffs\n\n**Conjecture.** On every compact subset of the half-plane `Re(s) > 1`, finite\nprime occupation products conver",
+      "quality_score": 0.76,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-19T04:29:12",
+      "title": "**Conjecture.** There is a natural joint scaling of the prime cutoff `x`, occupa"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "98ba1a43",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions — Reflection Towers Beyond the Finite Case\n\n## 1. Transfinite strictness at every successor stage\n\nFor an ordinal-indexed family of theories, define successor stages by adjoining t",
-      "quality_score": 0.92,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-15T05:13:04",
-      "title": "The file `TangledSoundness.lean` develops the semantic core of self-referential"
-    },
     {
       "cycle_id": "bd321901",
       "domain": "Combinatorics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-19T03:55:17",
       "title": "Knots and Lattices: The Alexander Polynomial as a Lattice Path Count"
+    },
+    {
+      "cycle_id": "fa73eeee",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions\n\n## 1. Locally uniform joint removal of prime and occupation cutoffs\n\n**Conjecture.** On every compact subset of the half-plane `Re(s) > 1`, finite\nprime occupation products conver",
+      "quality_score": 0.76,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-19T04:29:12",
+      "title": "**Conjecture.** There is a natural joint scaling of the prime cutoff `x`, occupa"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "717f7483",
-      "domain": "NumberTheory",
-      "name": "no_uniform_strict_win",
-      "quality": 0.75
-    },
-    {
-      "cycle_id": "65eb2137",
-      "domain": "Logic",
-      "name": "metric_positive_definite",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "65eb2137",
-      "domain": "Logic",
-      "name": "areaDensity_sq",
-      "quality": 0.72
-    },
     {
       "cycle_id": "65eb2137",
       "domain": "Logic",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "card_eq_two_pow_quotient_card",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "fa73eeee",
+      "domain": "Algebra",
+      "name": "one_sub_prod_one_sub_le_sum",
+      "quality": 0.76
+    },
+    {
+      "cycle_id": "fa73eeee",
+      "domain": "Algebra",
+      "name": "truncatedProduct_eq_completed_mul_defect",
+      "quality": 0.76
+    },
+    {
+      "cycle_id": "fa73eeee",
+      "domain": "Algebra",
+      "name": "completedProduct_nonneg",
+      "quality": 0.76
     }
   ],
-  "last_updated": "2026-07-19T03:55:17",
+  "last_updated": "2026-07-19T04:29:12",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "e2c77d51",
-        "quality": 0.65,
-        "theorems": 6,
-        "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
-      },
-      {
         "cycle_id": "573ee086",
         "quality": 0.73,
         "theorems": 13,
@@ -3079,6 +3073,12 @@
         "quality": 0.75,
         "theorems": 0,
         "title": "1. **Intrinsic curvature identification.** The proved curvature formula"
+      },
+      {
+        "cycle_id": "fa73eeee",
+        "quality": 0.76,
+        "theorems": 11,
+        "title": "**Conjecture.** There is a natural joint scaling of the prime cutoff `x`, occupa"
       }
     ],
     "Applications": [
