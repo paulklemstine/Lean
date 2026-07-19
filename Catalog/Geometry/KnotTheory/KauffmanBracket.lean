@@ -18,6 +18,29 @@
 import Mathlib
 import Geometry.KnotTheory.Defs
 
+/-!
+-- !-- Lab Notes -- !--
+Hypothesis (Hypothesizer): The Kauffman bracket state sum is controlled entirely
+by finite smoothing-state reindexing and the local loop-count identities of the
+Reidemeister moves.
+Experiment (Experimenter): the unknot was evaluated directly; positive and
+negative Reidemeister I sums were partitioned by the final smoothing; and
+Reidemeister III was tested by transport along a state bijection.
+Analysis (Analyst): Reidemeister I contributes the expected Laurent monomial,
+while a loop- and smoothing-count preserving bijection gives exact invariance
+under Reidemeister III.
+Critique (Critic): the raw bracket is not Reidemeister I invariant; the proved
+monomial factors are essential and must not be suppressed. Reidemeister II is
+not asserted because no corresponding structural move is present in `Defs`.
+Synthesis (Principal Investigator): the resulting identities establish the
+finite-state algebra that a diagram-local lattice model would have to preserve.
+-- !-- End Lab Notes -- !--
+-/
+
+-- The finite-state reindexing arguments for Reidemeister I normalize several
+-- nested sums and therefore require more than the default elaboration budget.
+set_option maxHeartbeats 1000000
+
 namespace Knot
 
 open LaurentPolynomial Finset
