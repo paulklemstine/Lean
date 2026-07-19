@@ -1,29 +1,29 @@
 --- CarmichaelPrimitiveDivisor.lean
 +++ CarmichaelPrimitiveDivisor.lean
-@@ -1,11 +1,10 @@
+@@ -1,10 +1,11 @@
  import Mathlib
--import Shared.CarmichaelComposite
-+import Catalog.Shared.CarmichaelComposite
+-import Catalog.Shared.CarmichaelComposite
++import Shared.CarmichaelComposite
  
  /-! # Carmichael's Primitive Divisor Theorem for Fibonacci Numbers
  
--For `13 ≤ n ≤ 10000`, `F(n)` has a primitive prime divisor: a prime `p` such that
--`p ∣ F(n)` but `p ∤ F(k)` for all `0 < k < n`.  The upper bound is the scope of
--the available finite certificate.
-+For n ≥ 13, F(n) has a primitive prime divisor: a prime p such that
-+p | F(n) but p ∤ F(k) for all 0 < k < n.
+-For n ≥ 13, F(n) has a primitive prime divisor: a prime p such that
+-p | F(n) but p ∤ F(k) for all 0 < k < n.
++For `13 ≤ n ≤ 10000`, `F(n)` has a primitive prime divisor: a prime `p` such that
++`p ∣ F(n)` but `p ∤ F(k)` for all `0 < k < n`.  The upper bound is the scope of
++the available finite certificate.
  -/
  
  set_option maxHeartbeats 800000
-@@ -42,9 +41,8 @@
+@@ -41,8 +42,9 @@
    · calc Nat.gcd n k ≤ k := Nat.gcd_le_right n hk_pos
      _ < n := hk_lt
  
--/-- Carmichael's theorem on the certified range: for `13 ≤ n ≤ 10000`,
--`F(n)` has a primitive prime divisor. -/
--theorem fib_primitive_divisor (n : ℕ) (hn : 13 ≤ n) (hupper : n ≤ 10000) :
-+/-- Carmichael's theorem: For n ≥ 13, F(n) has a primitive prime divisor. -/
-+theorem fib_primitive_divisor (n : ℕ) (hn : 13 ≤ n) :
+-/-- Carmichael's theorem: For n ≥ 13, F(n) has a primitive prime divisor. -/
+-theorem fib_primitive_divisor (n : ℕ) (hn : 13 ≤ n) :
++/-- Carmichael's theorem on the certified range: for `13 ≤ n ≤ 10000`,
++`F(n)` has a primitive prime divisor. -/
++theorem fib_primitive_divisor (n : ℕ) (hn : 13 ≤ n) (hupper : n ≤ 10000) :
      ∃ p, Nat.Prime p ∧ p ∣ Nat.fib n ∧
        ∀ k, 0 < k → k < n → ¬(p ∣ Nat.fib k) := by
  
