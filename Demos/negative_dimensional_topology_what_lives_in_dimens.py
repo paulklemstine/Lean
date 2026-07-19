@@ -1,153 +1,129 @@
-"""
-Negative-Dimensional Topology: Numerical Demonstrations
-=======================================================
+#!/usr/bin/env python3
+"""Numerical demonstrations of negative-dimensional Euler parity.
 
-A self-contained model of virtual graded spaces as Laurent polynomials
-Z[t, t^{-1}], where the monomial t^d means "one cell in dimension d" and
-negative powers are negative-dimensional cells. The Euler characteristic
-is the ring homomorphism chi: t -> -1, i.e. chi(sum b_d t^d) = sum (-1)^d b_d.
-
-This script demonstrates:
-  * chi as an additive and multiplicative (Kunneth) invariant,
-  * the main formula chi(X) = (-1)^n |pi_0(X)| for dim X = -n,
-  * "what lives in dimension -1": chi = -k for k components,
-  * suspension/desuspension flipping the sign of chi and being inverse,
-  * stabilization returning a (-n)-space to dimension 0,
-  * two contrarian facts: chi can be positive in negative dimension, and
-    chi is not injective (it only sees parity of the dimension).
-
-Only integer arithmetic is used; there are no external dependencies.
+The model represents a pure cellular object by an integer degree and a
+nonnegative component count.  It also supports finite mixed virtual cellular
+ledgers and component-preserving negative pro-towers.
 """
 
 from __future__ import annotations
 
-from collections import defaultdict
-from typing import Dict
+from dataclasses import dataclass
+from typing import Dict, Iterable, List, Sequence, Tuple
 
 
-# A virtual graded space is a finitely supported map dimension -> cell count.
-VSpace = Dict[int, int]
+@dataclass(frozen=True)
+class PureCellularObject:
+    """A finite component multiplicity concentrated in one integer degree."""
+
+    dimension: int
+    components: int
+
+    def __post_init__(self) -> None:
+        if self.components < 0:
+            raise ValueError("component count must be nonnegative")
+
+    @property
+    def euler(self) -> int:
+        """Return (-1)^dimension times the component count."""
+        return self.components if self.dimension % 2 == 0 else -self.components
+
+    def suspend(self, steps: int = 1) -> "PureCellularObject":
+        """Shift degree upward while retaining the component count."""
+        if steps < 0:
+            raise ValueError("suspension steps must be nonnegative")
+        return PureCellularObject(self.dimension + steps, self.components)
 
 
-def cell(d: int, c: int) -> VSpace:
-    """`c` cells placed in dimension `d`: the monomial c * t^d."""
-    return {d: c} if c != 0 else {}
+def extended_euler(multiplicities: Dict[int, int]) -> int:
+    """Evaluate a finite integer-graded virtual ledger by the parity character."""
+    return sum(value if degree % 2 == 0 else -value
+               for degree, value in multiplicities.items())
 
 
-def normalize(x: VSpace) -> VSpace:
-    """Drop zero coefficients for a canonical representation."""
-    return {d: c for d, c in x.items() if c != 0}
+def stabilize_negative(depth: int, components: int) -> PureCellularObject:
+    """Reflect degree -depth to +depth using 2*depth suspensions."""
+    if depth < 0:
+        raise ValueError("depth must be nonnegative")
+    return PureCellularObject(-depth, components).suspend(2 * depth)
 
 
-def add(x: VSpace, y: VSpace) -> VSpace:
-    """Disjoint union / wedge: coefficients accumulate degreewise."""
-    out: Dict[int, int] = defaultdict(int)
-    for d, c in x.items():
-        out[d] += c
-    for d, c in y.items():
-        out[d] += c
-    return normalize(dict(out))
+def negative_tower(base: int, components: int, stages: int) -> List[PureCellularObject]:
+    """Generate a finite window of a component-preserving negative pro-tower."""
+    if base < 0 or stages < 0:
+        raise ValueError("base and number of stages must be nonnegative")
+    return [PureCellularObject(-(base + k), components) for k in range(stages)]
 
 
-def mul(x: VSpace, y: VSpace) -> VSpace:
-    """Product of spaces: t^a * t^b = t^{a+b} (Kunneth-style convolution)."""
-    out: Dict[int, int] = defaultdict(int)
-    for da, ca in x.items():
-        for db, cb in y.items():
-            out[da + db] += ca * cb
-    return normalize(dict(out))
+def parity_corrected_euler(tower: Sequence[PureCellularObject]) -> List[int]:
+    """Return (-1)^k chi(X_k), constant for a valid pure tower."""
+    return [obj.euler if k % 2 == 0 else -obj.euler
+            for k, obj in enumerate(tower)]
 
 
-def chi(x: VSpace) -> int:
-    """Euler characteristic: substitute t = -1, i.e. sum (-1)^d b_d."""
-    return sum((1 if d % 2 == 0 else -1) * c for d, c in x.items())
+def print_negative_dimension_table(component_counts: Iterable[int], max_depth: int) -> None:
+    """Display the signed Euler law over several depths and component counts."""
+    print("DEMO 1 — Negative-dimensional Euler law")
+    header = "components | " + " | ".join(f"dim {-n:>2}" for n in range(max_depth + 1))
+    print(header)
+    print("-" * len(header))
+    for count in component_counts:
+        values = [PureCellularObject(-n, count).euler for n in range(max_depth + 1)]
+        print(f"{count:>10} | " + " | ".join(f"{value:>6}" for value in values))
 
 
-def susp(x: VSpace) -> VSpace:
-    """Suspension: multiply by t (raise every dimension by one)."""
-    return mul(cell(1, 1), x)
+def demonstrate_stabilization(examples: Iterable[Tuple[int, int]]) -> None:
+    """Show that reflection stabilization preserves components and Euler value."""
+    print("\nDEMO 2 — Euler-neutral reflection stabilization")
+    for depth, count in examples:
+        source = PureCellularObject(-depth, count)
+        target = stabilize_negative(depth, count)
+        assert target.dimension == depth
+        assert target.components == source.components
+        assert target.euler == source.euler
+        print(
+            f"depth {depth:>2}, components {count:>2}: "
+            f"({source.dimension:>3}, chi={source.euler:>3}) "
+            f"--{2 * depth} suspensions--> "
+            f"({target.dimension:>3}, chi={target.euler:>3})"
+        )
 
 
-def desusp(x: VSpace) -> VSpace:
-    """Desuspension: multiply by t^{-1} (lower every dimension by one)."""
-    return mul(cell(-1, 1), x)
+def demonstrate_pro_tower(base: int, components: int, stages: int) -> None:
+    """Display exact alternation and its constant parity correction."""
+    print("\nDEMO 3 — Component-preserving pro-Euler alternation")
+    tower = negative_tower(base, components, stages)
+    corrected = parity_corrected_euler(tower)
+    initial = tower[0].euler if tower else 0
+    for k, (obj, invariant) in enumerate(zip(tower, corrected)):
+        predicted = (initial if k % 2 == 0 else -initial)
+        assert obj.euler == predicted
+        assert invariant == initial
+        stable = stabilize_negative(base + k, components)
+        assert stable.euler == obj.euler and stable.components == obj.components
+        print(
+            f"stage {k:>2}: dim={obj.dimension:>3}, chi={obj.euler:>3}, "
+            f"(-1)^k chi={invariant:>3}, reflected_dim={stable.dimension:>3}"
+        )
 
 
-def susp_iter(n: int, x: VSpace) -> VSpace:
-    """Iterated suspension Sigma^n."""
-    out = dict(x)
-    for _ in range(n):
-        out = susp(out)
-    return out
+def demonstrate_purity_boundary() -> None:
+    """Contrast a pure formula with cancellation in a mixed-degree ledger."""
+    print("\nDEMO 4 — Why purity is necessary")
+    ledger = {-1: 1, -2: 1}
+    chi = extended_euler(ledger)
+    total = sum(ledger.values())
+    assert total == 2 and chi == 0
+    print(f"mixed ledger {ledger} has total multiplicity {total} but Euler value {chi}")
+    print("Adjacent odd and even degrees cancel, so no one-degree sign formula applies.")
 
 
 def main() -> None:
-    print("=" * 68)
-    print("Negative-Dimensional Topology  --  numerical demonstrations")
-    print("=" * 68)
-
-    # 1. Main theorem: chi(X) = (-1)^n |pi_0(X)| for dim X = -n.
-    print("\n[1] Main theorem  chi(cell(-n, k)) = (-1)^n * k")
-    for n in range(0, 6):
-        for k in (1, 3):
-            X = cell(-n, k)
-            expected = ((-1) ** n) * k
-            got = chi(X)
-            flag = "OK" if got == expected else "MISMATCH"
-            print(f"    dim=-{n:<2} k={k}:  chi = {got:+d}   "
-                  f"(expected {expected:+d})  [{flag}]")
-
-    # 2. What lives in dimension -1.
-    print("\n[2] What lives in dimension -1:  chi = -k")
-    for k in range(1, 5):
-        print(f"    {k}-component (-1)-space:  chi = {chi(cell(-1, k)):+d}")
-    print("    The (-1)-sphere (one point in dim -1) has chi =",
-          f"{chi(cell(-1, 1)):+d}")
-
-    # 3. chi is a ring homomorphism: additive and multiplicative.
-    print("\n[3] chi is a ring homomorphism")
-    X = add(cell(0, 1), cell(-1, 2))     # 1 point in dim 0, 2 in dim -1
-    Y = add(cell(-2, 1), cell(1, 1))     # 1 in dim -2, 1 in dim 1
-    print(f"    chi(X)         = {chi(X):+d}")
-    print(f"    chi(Y)         = {chi(Y):+d}")
-    print(f"    chi(X + Y)     = {chi(add(X, Y)):+d}"
-          f"   vs chi(X)+chi(Y) = {chi(X) + chi(Y):+d}")
-    print(f"    chi(X * Y)     = {chi(mul(X, Y)):+d}"
-          f"   vs chi(X)*chi(Y) = {chi(X) * chi(Y):+d}")
-    print(f"    chi(point=1)   = {chi(cell(0, 1)):+d}")
-
-    # 4. Suspension / desuspension flip the sign; are mutually inverse.
-    print("\n[4] Suspension and desuspension")
-    print(f"    chi(X)          = {chi(X):+d}")
-    print(f"    chi(Sigma X)    = {chi(susp(X)):+d}  (= -chi(X))")
-    print(f"    chi(Sigma^-1 X) = {chi(desusp(X)):+d}  (= -chi(X))")
-    print(f"    Sigma(Sigma^-1 X) == X ?  {normalize(susp(desusp(X))) == normalize(X)}")
-    print(f"    Sigma^-1(Sigma X) == X ?  {normalize(desusp(susp(X))) == normalize(X)}")
-
-    # 5. Stabilization: suspend a (-n)-space n times -> dimension 0.
-    print("\n[5] Stabilization  Sigma^n(cell(-n,k)) = cell(0,k)")
-    for n in range(1, 5):
-        k = 3
-        stabilized = susp_iter(n, cell(-n, k))
-        print(f"    n={n}: Sigma^{n}(cell(-{n},{k})) = {stabilized}  "
-              f"chi = {chi(stabilized):+d}  (= k = {k})")
-
-    # 6. Contrarian result A: negative dimension, positive chi.
-    print("\n[6] Contrarian: negative dimension can have chi > 0")
-    print(f"    cell(-2, 1):  dim = -2 < 0  but  chi = {chi(cell(-2, 1)):+d}")
-
-    # 7. Contrarian result B: chi is not injective.
-    print("\n[7] Contrarian: chi is not injective (only sees parity of dim)")
-    a, b = cell(0, 1), cell(2, 1)
-    print(f"    cell(0,1) != cell(2,1) as spaces, yet "
-          f"chi = {chi(a):+d} = {chi(b):+d}")
-    c, d = cell(-1, 1), cell(1, 1)
-    print(f"    cell(-1,1) != cell(1,1) as spaces, yet "
-          f"chi = {chi(c):+d} = {chi(d):+d}")
-
-    print("\n" + "=" * 68)
-    print("All demonstrations complete.")
-    print("=" * 68)
+    """Run all demonstrations."""
+    print_negative_dimension_table(component_counts=range(1, 5), max_depth=4)
+    demonstrate_stabilization([(0, 3), (1, 3), (2, 5), (5, 2)])
+    demonstrate_pro_tower(base=2, components=4, stages=8)
+    demonstrate_purity_boundary()
 
 
 if __name__ == "__main__":
