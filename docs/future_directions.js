@@ -59,7 +59,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
   },
   {
-    "consumed_by_exp_id": "68a33b2b",
+    "consumed_by_exp_id": "",
     "description": "Prove that any Turing-complete system with self-modification capabilities has no general algorithm for predicting its own termination. Formalize the halting problem for programs that can rewrite their own code mid-execution and show this is strictly harder than the classical halting problem. Connect to the virus paradox and AI alignment.",
     "domains": [
       "Novelty",
@@ -69,7 +69,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-19T10:23:55.997040+00:00",
     "title": "Self-Modifying Code That Cannot Be Stopped"
   },
@@ -319,7 +319,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Negative-Dimensional Topology: What Lives in Dimension -1?"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "25709a4b",
     "description": "Formalize retrocausal mathematical structures where implications can flow backward in time. Prove that in a retrocausal Heyting algebra, the law of excluded middle fails but a temporal excluded middle holds. Connect to the CPT theorem in QFT and prove that any retrocausal logic must be intuitionistic.",
     "domains": [
       "Novelty",
@@ -329,7 +329,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T15:32:52.396850+00:00",
     "title": "Retrocausal Mathematics: Where Effects Precede Causes"
   },

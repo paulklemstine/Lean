@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-19T15:16:03.527620+00:00",
+  "last_updated": "2026-07-19T15:50:07.402875+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -29161,6 +29161,7 @@
       "outcome_quality": 0.67,
       "phase": "A_only",
       "phase_a_prompt_version": "v25",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v25",
@@ -29203,6 +29204,7 @@
       "outcome_quality": 0.69,
       "phase": "A_only",
       "phase_a_prompt_version": "v24",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v24",
@@ -29231,6 +29233,36 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-19T15:16:03.484280+00:00",
       "title": "Digital Immortality: Can a Mind Be Encoded?"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 41,
+      "domain": "Novelty",
+      "duration_seconds": 2038.3183281421661,
+      "end_time": 1784476178.8914862,
+      "failed": true,
+      "files_integrated": 0,
+      "job_id": "68a33b2b",
+      "outcome_quality": 0.0,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v24",
+      "phase_b_skip_reason": "low_quality",
+      "phase_b_skipped": true,
+      "prompt_version": "v24",
+      "quality_score": 0.0,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1784474140.573158,
+      "strategy_count": 0,
+      "theorem_count": 0,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-19T15:50:07.352873+00:00",
+      "title": "Self-Modifying Code That Cannot Be Stopped"
     }
   ]
 }
