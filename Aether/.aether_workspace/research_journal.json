@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "70b6aa60",
-      "domain": "Logic",
-      "key_insight": "# Future Directions: From Evaluation to Certification\n\n## 1. Effective zero-exclusion certificates for completed L-functions\n\n**Conjecture.** There is a uniform certificate language for standard compl",
-      "quality_score": 0.76,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-18T07:29:17",
-      "title": "The L-Function Oracle: What If We Could Compute L-Functions Instantly?"
-    },
-    {
       "cycle_id": "65eb2137",
       "domain": "Logic",
       "key_insight": "# Future directions\n\n1. **Intrinsic curvature identification.** The proved curvature formula\n   \\[\n   K(x,y)=-\\cosh^2 y+\\frac{1-\\sinh^2 y}{\\cosh^2x\\cosh^2y}\n   \\]\n   is nonpositive everywhere, vanishe",
@@ -499,19 +489,19 @@
       "theorem_count": 6,
       "timestamp": "2026-07-19T08:00:50",
       "title": "Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
+    },
+    {
+      "cycle_id": "91c16818",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n## What was proved\n\n1. **Missingness is not itself a sheaf obstruction.** A partial database modeled as a partial function into a nonempty value type always has a total completion",
+      "quality_score": 0.71,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-19T08:21:38",
+      "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "192aef6c",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions\n\n1. **Recover the geometric definitions.** The prompt gives no formal definition of “good manifold,” “n-nice polytope,” or the indexing convention. A substantive combinatorial-geom",
-      "quality_score": 0.55,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-15T08:21:38",
-      "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
-    },
     {
       "cycle_id": "cf605784",
       "domain": "NumberTheory",
@@ -2501,6 +2491,16 @@
       "theorem_count": 6,
       "timestamp": "2026-07-19T08:00:50",
       "title": "Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
+    },
+    {
+      "cycle_id": "91c16818",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n## What was proved\n\n1. **Missingness is not itself a sheaf obstruction.** A partial database modeled as a partial function into a nonempty value type always has a total completion",
+      "quality_score": 0.71,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-19T08:21:38",
+      "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8
     }
   ],
-  "last_updated": "2026-07-19T08:00:50",
+  "last_updated": "2026-07-19T08:21:38",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "12b45ad4",
-        "quality": 0.69,
-        "theorems": 57,
-        "title": "The P vs NP of Cooking: Computational Complexity of Recipes"
-      },
-      {
         "cycle_id": "c3aba433",
         "quality": 0.68,
         "theorems": 16,
@@ -3637,6 +3631,12 @@
         "quality": 0.58,
         "theorems": 46,
         "title": "The Spectral Gap of Sudoku: When Puzzles Become Phase Transitions"
+      },
+      {
+        "cycle_id": "91c16818",
+        "quality": 0.71,
+        "theorems": 0,
+        "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
       }
     ],
     "NumberTheory": [

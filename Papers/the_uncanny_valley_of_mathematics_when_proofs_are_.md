@@ -1,41 +1,40 @@
-# Computational Evidence — The Lazy Caterer Hierarchy
+# Computational Evidence
 
-## 1. Small-case calculations
+## Small-case calculations
 
-Lazy caterer numbers `p n = n(n+1)/2 + 1` (regions of the plane cut by `n` lines):
+Rigor levels are indexed by `0,1,2,3,4`. Two hypothetical confidence profiles are
 
-| n   | 0 | 1 | 2 | 3 | 4  | 5  | 6  | 7  | 8  |
-|-----|---|---|---|---|----|----|----|----|----|
-| p n | 1 | 2 | 4 | 7 | 11 | 16 | 22 | 29 | 37 |
+| level | 0 | 1 | 2 | 3 | 4 |
+|---:|---:|---:|---:|---:|---:|
+| respondent A | 8 | 5 | 1 | 4 | 7 |
+| respondent B | 9 | 6 | 2 | 3 | 8 |
+| aggregate | 17 | 11 | 3 | 7 | 15 |
 
-Cake numbers `c n = (n³ + 5n + 6)/6` (regions of space cut by `n` planes):
+Each individual profile strictly decreases to level `2` and strictly increases thereafter. The aggregate has the same shape. Relative to level `2`, the smallest gaps are respectively `3`, `1`, and `4`; the aggregate gap is the sum of the certified individual gaps.
 
-| n   | 0 | 1 | 2 | 3 | 4  | 5  | 6  | 7  | 8  |
-|-----|---|---|---|---|----|----|----|----|----|
-| c n | 1 | 2 | 4 | 8 | 15 | 26 | 42 | 64 | 93 |
+The total variation of the aggregate is
 
-## 2. OEIS matches
+`|11-17| + |3-11| + |7-3| + |15-7| = 6 + 8 + 4 + 8 = 26`.
 
-* `p n` = **A000124** (central polygonal numbers / lazy caterer): 1, 2, 4, 7, 11, 16, 22, 29, 37, …
-* `c n` = **A000125** (cake numbers): 1, 2, 4, 8, 15, 26, 42, 64, 93, …
+The descent-and-recovery formula gives the same value:
 
-Both are consecutive partial sums of a single Pascal row:
-`p n = C(n,0)+C(n,1)+C(n,2)`, `c n = C(n,0)+C(n,1)+C(n,2)+C(n,3)`.
+`(17-3) + (15-3) = 14 + 12 = 26`.
 
-## 3. Identity checks (all confirmed on n ≤ 8)
+## Counterexample hunt
 
-* First difference: `p(n+1) − p n = n+1`. E.g. p5−p4 = 16−11 = 5. ✓
-* Constant second difference: `p(n+2)+p n = 2·p(n+1)+1`. E.g. n=3: 16+7 = 23 = 2·11+1. ✓
-* Layer recurrence: `c(n+1) = c n + p n`. E.g. c5 = c4 + p4 = 15 + 11 = 26. ✓
-* Partial sum: `∑_{k≤n} p k = (n+1) + C(n+2,3)`. E.g. n=3: 1+2+4+7 = 14 = 4 + C(5,3) = 4+10. ✓
+A common valley location is necessary for unconditional aggregation. The profiles
 
-## 4. Parity hunt
+- `A = (0,2,4)`, with minimum at level `0`, and
+- `B = (4,2,0)`, with minimum at level `2`,
 
-`p n` is odd for n = 0, 3, 4, 7, 8, 11, 12, … i.e. exactly when `n mod 4 ∈ {0, 3}`.
-Checked for n ≤ 40; no counterexample. This is the content of `caterer_odd_iff`.
+have aggregate `(4,4,4)`, which has no unique minimum. Thus averaging arbitrary individual valleys does not preserve a valley.
 
-## 5. Counterexample search
+The strict perturbation threshold is also necessary. For the two-level profile `U = (0,2)`, the minimum margin is `δ = 2`. Perturbations of size `ε = 1 = δ/2` can produce `V = (1,1)`, destroying uniqueness. This motivates the strict hypothesis `2ε < δ`.
 
-The layer recurrence `c(n+1) = c n + p n` was tested against the independent closed forms
-for all n ≤ 200 with no discrepancy, supporting the "one dimension up = one binomial layer"
-hypothesis that is proved in general in `LazyCatererHierarchy.lean`.
+## Sequence-database search
+
+No OEIS or LMFDB search is applicable: confidence profiles are survey observables rather than canonical arithmetic sequences.
+
+## Plot-ready table
+
+The first table supplies the points for a discrete line plot. Its aggregate visibly falls from `17` to `3` and recovers to `15`, with the unique minimum at level `2`.
