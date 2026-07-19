@@ -3005,7 +3005,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem With"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d1a99009",
     "description": "The information content of a Lean 4 proof is the number of bits needed to specify the proof among all possible proofs of the same theorem. For a theorem T with proof P, the information content is I(P) = -log_2(P(proof of T has length |P|)). Conjecture: the expected information content of a proof of a theorem with statement length n is I(n) = Theta(n * log(n)). This means that proofs are typically longer than their statements by a factor of log(n), matching the known results on proof complexity. Moreover, the search problem (finding a proof given the theorem) has time complexity 2^{I(n)} = 2^{Theta(n * log(n))}, which matches the complexity of brute-force search over all proofs of length n * log(n). Conjecture: proof search in Lean 4 is EXPTIME-hard, and the average-case complexity of finding a proof of a random theorem of length n is 2^{Theta(n)} (exponential in n, not n*log(n), because most random theorems are unprovable). Test: measure the length of Lean 4 proofs vs theorem statement length for 1000 theorems in Mathlib and verify I(n) ~ n * log(n). Impact: proof search has fundamental information-theoretic limits. Finding a proof is exponentially harder than verifying one.",
     "domains": [
       "Novelty",
@@ -3015,7 +3015,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.78,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T05:05:34.178575+00:00",
     "title": "Information-Theoretic Limits of Proof Search: How Hard Is It to Find a Lean Proof?"
   },
@@ -4474,6 +4474,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## What the formal result establishes\n\n`Logic/ReLUPiDiophantine.lean` gives an exact bridge between two descriptions of the same approximation process:\n\n- **Diophantine side:** the dyadic lower approximation `\u230a2^n \u03c0\u230b / 2^n`;\n- **neural side:** a width-one scalar ReLU recurrence whose weight is always `2` and whose layer biases are binary.\n\nThe hidden state is proved to equal `\u230a2^n \u03c0\u230b`, every bias is proved to be either `0` or `1`, and the output error is proved to lie strictly between `0` and `2\u207b\u207f`. Thus every positive tolerance is eventually attained.\n\n## Important limitation of the interpretation\n\nThe binary biases are defined from the binary expansion of \u03c0. The theorem therefore compiles already-known arithmetic information about \u03c0 into a network; it does **not** show that those bits can themselves be generated cheaply. This distinction is essential in complexity claims. If arbitrary real parameters are allowed at unit cost, a one-neuron affine network can store \u03c0 directly and output it exactly, making approximation-rate comparisons between rational and irrational constants ill-posed.\n\nA meaningful complexity theory should specify at least:\n\n1. the permitted parameter set (for example integers, dyadic rationals, or bounded-bit rationals),\n2. whether the bit length of parameters is charged,\n3. whether network parameters may depend nonuniformly on the target constant and tolerance,\n4. whether approximation is required at one input or uniformly on a domain.\n\n## Next formal targets\n\n1. **Finite network syntax.** Replace the scalar recurrence by an explicit layered-network structure and prove that its evaluator agrees with `hiddenState`.\n2. **Parameter accounting.** Define parameter count and bit complexity, then prove the construction uses width one, depth `n`, hidden weights `2`, and one binary bias per layer.\n3. **Explicit depth selection.** Derive a ceiling/logarithm bound such as a suitable `n > log\u2082(1/\u03b5)` rather than only existential convergence.\n4. **Uniform generation problem.** Formalize a circuit or Turing-machine model that computes `piBit n`, separating storage complexity from computation complexity.\n5. **Lower bounds under quantization.** Prove information-theoretic lower bounds for networks whose parameters have bounded bit length. Piece count alone cannot lower-bound approximation of a value at one point.\n6. **Other constants.** Generalize the compiler from \u03c0 to any positive irrational real, and instantiate it for `sqrt 2` and `e` where the necessary irrationality results are available.\n7. **Alternative arithmetic expansions.** Compare binary truncation with continued-fraction convergents. Continued fractions can give much better error per stored denominator, but require a different neural arithmetic implementation.\n\nNo separate computational-evidence artifact is included: the selected theorem is uniform in `n`, and its exact floor inequalities directly prove all finite cases. Numerical decimal experiments would be weaker than the formal bound and would not address the central parameter-encoding limitation.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0409",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "7b55a6e4",
+    "status": "available",
+    "timestamp": "2026-07-19T06:13:30.249564+00:00",
+    "title": "`Logic/ReLUPiDiophantine.lean` gives an exact bridge between two descriptions of"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle d1663b23 (Q=0.700) proved 0 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'A minimal modularity lifting theorem for Siegel modular forms' and formalize its key results. Abstract: We prove a minimal modularity lifting theorem (in the spirit of Gen",
     "domains": [
       "Applications"
@@ -4485,21 +4500,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-17T13:29:16.297936+00:00",
     "title": "Close Proofs: ArXiv paper: A minimal modularity lifting theorem for Siegel modular f"
-  },
-  {
-    "consumed_by_exp_id": "7b55a6e4",
-    "description": "A ReLU network f: R -> R with L layers of width w is a piecewise linear function with at most w^L pieces. By the universal approximation theorem, such networks can approximate any continuous function. But HOW WELL can they approximate specific constants? Conjecture: a ReLU network with L layers of width w can approximate pi to within epsilon using O(w * L * log(1/epsilon)) parameters. More precisely, there exists a ReLU network f with L = O(log(log(1/epsilon))) layers and w = O(log(1/epsilon)) width such that |f(1) - pi| < epsilon. This is because pi can be computed by the Leibniz formula pi/4 = 1 - 1/3 + 1/5 - ..., and a ReLU network can implement the partial sums. The number of terms needed is O(1/epsilon), and each term can be computed by a constant-depth ReLU subnetwork. The depth needed is O(log(1/epsilon)) for the sum and O(log(log(1/epsilon))) for the individual terms. Conjecture: the approximation rate for rational numbers by ReLU networks is O(1/(w^L)), matching the piecewise linear structure. For irrational numbers like pi, the rate is O(1/(w * L * 2^L)), which is slower but still exponential in depth. Test: construct ReLU networks that approximate pi, e, and sqrt(2) and measure the approximation error as a function of network size. Impact: ReLU networks approximate constants at a rate determined by their depth and width. Pi requires O(log(log(1/epsilon))) depth.",
-    "domains": [
-      "Novelty",
-      "NumberTheory"
-    ],
-    "id": "fd_0387",
-    "priority_score": 0.74,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T03:03:23.762246+00:00",
-    "title": "Diophantine Approximation on Neural Networks: How Well Can ReLU Approximate Pi?"
   },
   {
     "consumed_by_exp_id": "",
