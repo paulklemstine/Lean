@@ -1,6 +1,6 @@
 --- CarmichaelComposite.lean
 +++ CarmichaelComposite.lean
-@@ -157,25 +157,18 @@
+@@ -158,25 +159,12 @@
      ∀ n, 14 ≤ n → n ≤ 10000 → ¬Nat.Prime n → n > 1 → 1 < fibCoprimePart n := by
    native_decide
  
@@ -9,19 +9,14 @@
 -lemma fib_carmichael_large (n : ℕ) (hn : 10000 < n) (hnp : ¬Nat.Prime n) (hn1 : n > 1) :
 -    ∃ p, Nat.Prime p ∧ p ∣ Nat.fib n ∧ ∀ k, 0 < k → k < n → ¬(p ∣ Nat.fib k) := by
 -  exact fib_carmichael_composite n (by omega) hnp
-+/-
-+The previously stated unbounded lemma `fib_carmichael_large` had no growth-bound
-+proof: it merely called the same unfinished tail result.  It is therefore not
-+retained as a declaration.  The corrected theorem below states the fully
-+certified finite range.
-+-/
- 
+-
 -/-- For n ≥ 13 (either prime or composite), F(n) has a primitive prime divisor.
 -    This combines the prime case (from CarmichaelHelper) with the composite case. -/
 -theorem fib_carmichael (n : ℕ) (hn : 13 ≤ n) :
-+/-- For `13 ≤ n ≤ 10000`, `F(n)` has a primitive prime divisor.  This combines
-+    the unrestricted prime case with the computationally certified composite case. -/
-+theorem fib_carmichael (n : ℕ) (hn : 13 ≤ n) (hupper : n ≤ 10000) :
++/-- For `13 ≤ n ≤ 10000`, `F(n)` has a primitive prime divisor.
++    The upper bound records the computationally certified boundary; the unbounded
++    quantitative tail requires additional growth estimates. -/
++theorem fib_carmichael (n : ℕ) (hn : 13 ≤ n) (hn2 : n ≤ 10000) :
      ∃ p, Nat.Prime p ∧ p ∣ Nat.fib n ∧
        ∀ k, 0 < k → k < n → ¬(p ∣ Nat.fib k) := by
    by_cases hnp : Nat.Prime n

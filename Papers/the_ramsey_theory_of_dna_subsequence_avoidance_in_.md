@@ -1,41 +1,36 @@
 # Computational Evidence
 
-## 1. Block-repetition threshold (`exists_repeated_mer`)
+## Small-case calculations
 
-The number of distinct length-`m` blocks over a `q`-letter alphabet is `q ^ m`.
+For an alphabet of size `q` and aligned words of length `m`, the exact word-space size is `q^m`. Consequently the first universal aligned collision threshold is `q^m + 1` sampled blocks.
 
-| alphabet `q` | block `m` | `q ^ m` | first window count forcing a repeat |
-|---|---|---|---|
-| 4 (DNA) | 1 | 4 | 5 |
-| 4 (DNA) | 4 | 256 | 257 |
-| 4 (DNA) | 6 | 4096 | 4097 |
-| 2 | 3 | 8 | 9 |
+| Alphabet size `q` | Word length `m` | Possible words `q^m` | Samples forcing collision | Bases covered by aligned samples |
+|---:|---:|---:|---:|---:|
+| 2 | 2 | 4 | 5 | 10 |
+| 2 | 3 | 8 | 9 | 27 |
+| 4 | 1 | 4 | 5 | 5 |
+| 4 | 2 | 16 | 17 | 34 |
+| 4 | 3 | 64 | 65 | 195 |
+| 4 | 4 | 256 | 257 | 1028 |
+| 4 | 6 | 4096 | 4097 | 24582 |
 
-A length-`L` string exposes `L - m + 1` window positions. For DNA hexamers a
-repeat is forced once `L - 5 > 4096`, i.e. `L ≥ 4102` bases — correcting the naive
-"4097 nucleotides" slogan (that counts bases, not windows). This correction is
-recorded in `dna_repeated_hexamer`.
+For multiplicity `r+1`, more than `r q^m` aligned samples suffice. For DNA four-mers this yields 513 samples for three copies and 769 samples for four copies.
 
-## 2. Sharpness (de Bruijn)
+## Sequence identification
 
-For `q = 2, m = 3` the cyclic de Bruijn sequence `00010111` has all eight `3`-mers
-distinct, meeting `N = q ^ m = 8` exactly. This confirms the extremal bound
-`merInjective_length_le` is tight and cannot be lowered.
+The values `q^m` for fixed `q` are elementary geometric progressions. No OEIS lookup is needed for the proof or interpretation; sequence identification would not add information beyond the exact formula.
 
-## 3. Ramsey `R(3,3)`
+## Counterexample hunt and definition audit
 
-- A 2-colouring of `K₅` with **no** monochromatic triangle exists (the 5-cycle vs.
-  its complement), so five vertices do **not** suffice: the threshold is exactly 6.
-- Exhaustive reasoning over the `2^15` symmetric colourings of `K₆` finds a
-  monochromatic triangle in every case; the formal proof replaces this brute count
-  by a two-level pigeonhole (`three_same_color_among_five` + fixed-vertex case
-  split), so no `native_decide` is used in the main theorem.
+Several informal numerical claims fail dimensional or definitional checks:
 
-## OEIS
+1. `256 log 256` is approximately 1419 with the natural logarithm and 2048 with logarithm base 2, not approximately 5000.
+2. A collision among 4097 six-mers refers to 4097 sampled six-mers. If they are disjoint aligned blocks, they occupy 24582 bases; if they are consecutive sliding windows, 4102 bases are needed. A sequence of 4097 bases alone does not contain 4097 contiguous six-mers.
+3. “Every subsequence of length 4 contains a repeated 4-mer” is not meaningful without specifying whether a 4-mer is contiguous in the original sequence, contiguous inside the chosen subsequence, or itself a scattered word, and without specifying how two occurrences are represented.
+4. The assertion about every 1000-base human-genome window requires chromosome data, treatment of ambiguous bases, and a precise window statistic. It is therefore an empirical hypothesis, not a consequence of the finite-alphabet argument.
 
-- Distinct-`m`-mer capacities `q ^ m` for `q = 4`: `4, 16, 64, 256, 1024, 4096, …`
-  (powers of four, OEIS A000302).
-- Diagonal Ramsey numbers `R(n,n)`: `2, 6, 18, …` (OEIS A212954 / classical),
-  with `R(3,3) = 6` the case proved here.
+No counterexample exists to the aligned collision bound: it follows from the exact finite word-space cardinality, and sequences listing every possible word show that `q^m + 1` samples is sharp when samples are treated as independently chosen aligned blocks.
 
-No counterexamples were found to any stated theorem.
+## Evidence boundary
+
+The finite table supports only universal combinatorial thresholds. It does not verify a factor-of-five human-versus-random compression. Testing that claim requires an explicit genome assembly, a random-source model, and a reproducible definition of the repetition statistic.

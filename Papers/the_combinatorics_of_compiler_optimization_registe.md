@@ -1,44 +1,38 @@
-# Computational Evidence — Register Allocation as Interval Colouring
+# Computational Evidence
 
-We study interference graphs built from *live ranges*: each variable `i` occupies a closed
-integer interval `[lo i, hi i]`, and two distinct variables interfere iff their intervals
-overlap. The quantity `maxDepth` is the maximum number of intervals covering a common point.
+## Small-case calculations
 
-## 1. Small-case calculations
+The smallest useful diagnostic is the path on three vertices, with edges `0–1` and `1–2`.
 
-| Live ranges (`[lo,hi]`)                      | max overlap (`maxDepth`) | clique # `ω` | chromatic # `χ` |
-|----------------------------------------------|:------------------------:|:------------:|:---------------:|
-| `[0,1] [2,3] [4,5]` (disjoint)               | 1                        | 1            | 1               |
-| `[0,2] [1,3] [2,4]`                          | 2                        | 2            | 2               |
-| `[0,3] [1,4] [2,5] [3,6]`                    | 2                        | 2            | 2               |
-| `[0,5] [1,2] [1,2] [1,2]` (nested burst)     | 4                        | 4            | 4               |
-| `[0,10] [0,10] [0,10]` (all live at once)    | 3                        | 3            | 3               |
+| Quantity | Value |
+|---|---:|
+| Number of vertices | 3 |
+| Maximum degree | 2 |
+| Clique number | 2 |
+| Chromatic number | 2 |
+| Proposed value `Delta + 1` | 3 |
 
-In every instance `χ = ω = maxDepth`, exactly as proved (`chromaticNumber_eq_maxDepth`,
-`cliqueNum_eq_maxDepth`). The deepest program point always carries a maximum clique, and a
-single left-to-right scan colours the graph with that many registers.
+Thus the proposed equality with `Delta + 1` fails even for a chordal graph: the path is two-colorable although its maximum degree plus one is three. The accompanying theorem `path_three_refutes_degree_formula` establishes this finite case from an explicit coloring and degree calculation.
 
-## 2. Counterexample hunt for the *general* formula `χ = max(Δ+1, ω)`
+Additional boundary instances are consistent with the corrected picture:
 
-The mission's conjecture `χ(G) = max(Δ+1, ω(G))` is **false for general graphs**, which is
-why the interval (SSA) hypothesis is essential:
+| Graph | Chromatic number | Maximum degree + 1 | Clique number |
+|---|---:|---:|---:|
+| One isolated vertex | 1 | 1 | 1 |
+| One edge | 2 | 2 | 2 |
+| Three-vertex path | 2 | 3 | 2 |
+| Triangle | 3 | 3 | 3 |
 
-* **Cycle `C₅`**: `Δ+1 = 3`, `ω = 2`, so `max = 3`; and indeed `χ(C₅) = 3`. (Consistent, but
-  only because `C₅` happens to need `Δ+1` colours.)
-* **Petersen graph**: `Δ+1 = 4`, `ω = 2`, so the formula predicts `χ = 4`; but the true
-  value is `χ = 3`. **This refutes the formula.**
-* **Any triangle-free graph with `χ ≥ 3`** (Grötzsch graph, Mycielskians): `ω = 2` while
-  `Δ` is large, so `max(Δ+1, ω)` grossly overestimates `χ`.
+## OEIS search results
 
-The pattern: `max(Δ+1, ω)` is only an *upper* envelope (Brooks + the clique bound), never an
-identity for arbitrary graphs. It becomes an identity precisely on **perfect** graphs, and
-interval graphs (contiguous live ranges) are perfect. There the sharp law is `χ = ω`, which
-we further identify with the geometric maximum overlap.
+No sequence-valued invariant is central to the corrected theorem, so an OEIS identification would not add relevant evidence. The tested quantities are graph invariants on a single minimal obstruction rather than initial terms of a canonical integer sequence.
 
-## 3. Structural observation
+## Counterexample hunt
 
-For interval graphs the eliminating order "latest start first" is a perfect elimination
-ordering: when the latest-starting variable is removed, all of its remaining interfering
-neighbours are simultaneously live at its start point, hence pairwise overlapping. This is the
-computational engine behind linear-scan register allocation and the reason its register count
-is optimal.
+The universal degree formula was tested first against sparse trees because trees maximize the gap between local degree and global coloring demand. The three-vertex path immediately supplies a counterexample. This also refutes the associated claim that spilling is necessary whenever the register budget is below `Delta + 1`: two registers color this graph without spilling, despite `2 < 3`.
+
+The claim that maximum-degree spilling always minimizes spill cost is not supported when costs are weighted. A high-degree, high-cost vertex can be more expensive to spill than several low-cost alternatives, so degree alone cannot determine a universal weighted optimum.
+
+## Structural conclusion
+
+The experiments support replacing the degree equality by two distinct statements: `Delta + 1` is a universal sufficient budget, while clique number is the exact budget for graphs carrying a perfect elimination ordering. The path example shows why these statements must not be conflated.
