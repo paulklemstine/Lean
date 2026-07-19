@@ -12363,7 +12363,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\nThe completed baseline is `Novelty/RecipeBarycenterBridge.lean`: for every nonempty finite menu with positive verification times, the aggregate cooking-to-verification ratio is the verification-weighted barycenter of the individual ratios. The file also proves interval bounds and the rigid equality case at ratio one. The following directions extend that theorem without treating scalar timing data as evidence about classical complexity classes.\n\n1. **Asymptotic cost families.** Replace each natural-number cost by a function of encoded input size. Define eventual domination and polynomial bounds, then determine which parts of the barycenter theorem survive pointwise and asymptotically. This is the minimum framework needed before making a genuine P-versus-NP analogy.\n\n2. **Parallel and dependency-aware composition.** Represent a recipe by a finite dependency DAG and define cooking cost by its critical path while verification remains sequential or partially parallel. Ordinary addition would then coexist with max-plus composition, creating a precise bridge to tropical geometry.\n\n3. **Uncertain timings.** Model cooking and verification costs as nonnegative random variables. Prove expectation and concentration analogues under an almost-sure positive lower bound on total verification cost; explicitly distinguish the expectation of a ratio from the ratio of expectations.\n\n4. **Destructive verification.** Represent verification as a state transition that returns both a verdict and a residual dish. This would formally separate nondestructive certificates, destructive tests, and repeatable verification without assigning any of them an unsupported hardness label.\n\n5. **Mechanized reductions.** For any actual hardness statement, first define finite encodings, a machine model, a decision predicate, a cost measure, and polynomial-time many-one reductions. A physically motivated simulation claim—whether involving a soufflé or a PDE—requires such a reduction and does not follow from the scalar timing model.\n\n6. **Ordered-cone generalization.** Replace pairs of scalar resources by vectors in an ordered cone. A positive linear functional should yield a generalized barycenter theorem, while equality under an exposed supporting functional should force every positively weighted component into the same exposed face.\n\n7. **Dataset-backed instantiation.** A recipe dataset could instantiate the abstract finite-family theorem. Measurements should record serving size, labor parallelism, uncertainty, and an operational definition of verification. Such data would test a timing model only, not P versus NP.\n\n8. **Hypothesis sharpness and counterexamples.** Formalize explicit counterexamples showing why positive verification times are required for normalized weights and why boundary rigidity fails when `verify ≤ cook` is dropped. These would complement the positive theorem with a machine-checked characterization of its scope.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Computation",
         "Algebra"
@@ -15386,24 +15386,24 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "d00870b3",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
       "description": "Ramsey's theorem states that any 2-coloring of the edges of K_6 contains a monochromatic K_3 (a triangle of one color). Applied to DNA: any sequence of 4^6 + 1 = 4097 nucleotides must contain a repeated 6-mer (by pigeonhole). But Ramsey theory for subsequences is more subtle: what is the minimum length L(k) of a DNA sequence over {A, C, G, T} such that every subsequence of length k contains a repeated 4-mer? Conjecture: L(k) = Theta(k * 4^4 * log(4^4)) = Theta(k * 256 * 8) = Theta(k * 2048). More precisely, by the Lovasz local lemma, L(k) >= 4^{4k/5} for sequences that avoid repeated k-mers in all subsequences. Conjecture: for real genomes, the actual L(k) is much smaller because real DNA has low complexity regions (microsatellites, Alu repeats) that create forced repeats. Specifically, the human genome has L(4) ~ 1000 (any 1000 consecutive bases contain a repeated 4-mer in some subsequence), while the random genome has L(4) ~ 4^4 * log(4^4) ~ 5000. Test: compute L(k) for real genomes vs random genomes and verify the factor-of-5 compression. Impact: DNA avoids subsequential repeats in a way that Ramsey theory predicts, but real genomes are 5x more 'forced' than random sequences.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Novelty",
         "Computation"
       ],
       "github_issue": 0,
       "id": "fd_0373",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-19T04:31:55.472328+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -15418,7 +15418,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-19T01:02:08.067227+00:00",
       "title": "The Ramsey Theory of DNA: Subsequence Avoidance in Genetic Codes"
@@ -15929,7 +15929,7 @@
       "depth_estimate": 3,
       "description": "A Sudoku puzzle is a constraint satisfaction problem on a 9x9 grid. The 'spectral gap' of a Sudoku puzzle is the gap between the two largest eigenvalues of the transition matrix of the Markov chain that randomly swaps two compatible entries. The spectral gap determines the mixing time: the number of swaps needed to generate a uniformly random solution. Conjecture: the spectral gap of a Sudoku puzzle undergoes a phase transition at the critical density d_c = 17/81 (the density of the minimal number of clues, 17, divided by 81). For puzzles with fewer than 17 clues, the spectral gap is large (the Markov chain mixes quickly, meaning there are many solutions). For puzzles with exactly 17 clues, the spectral gap is minimal (the chain mixes slowly, meaning solutions are hard to find). For puzzles with more than 30 clues, the spectral gap is zero (the chain is reducible, meaning the puzzle has a unique solution and no swaps are possible). Conjecture: the spectral gap lambda_1 - lambda_2 of the Sudoku Markov chain satisfies: lambda_1 - lambda_2 > epsilon for d < 17/81 (many solutions, fast mixing), lambda_1 - lambda_2 ~ 0 for d ~ 17/81 (critical point, slow mixing), and the chain is absorbing for d > 30/81 (unique solution, no mixing). Test: compute the spectral gap for Sudoku puzzles with varying numbers of clues and verify the phase transition. Impact: Sudoku has a spectral gap phase transition. The hardness of the puzzle is determined by the gap, not by the number of clues.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Novelty",
         "Computation"
@@ -15970,7 +15970,7 @@
       "depth_estimate": 3,
       "description": "A ReLU network f: R -> R with L layers of width w is a piecewise linear function with at most w^L pieces. By the universal approximation theorem, such networks can approximate any continuous function. But HOW WELL can they approximate specific constants? Conjecture: a ReLU network with L layers of width w can approximate pi to within epsilon using O(w * L * log(1/epsilon)) parameters. More precisely, there exists a ReLU network f with L = O(log(log(1/epsilon))) layers and w = O(log(1/epsilon)) width such that |f(1) - pi| < epsilon. This is because pi can be computed by the Leibniz formula pi/4 = 1 - 1/3 + 1/5 - ..., and a ReLU network can implement the partial sums. The number of terms needed is O(1/epsilon), and each term can be computed by a constant-depth ReLU subnetwork. The depth needed is O(log(1/epsilon)) for the sum and O(log(log(1/epsilon))) for the individual terms. Conjecture: the approximation rate for rational numbers by ReLU networks is O(1/(w^L)), matching the piecewise linear structure. For irrational numbers like pi, the rate is O(1/(w * L * 2^L)), which is slower but still exponential in depth. Test: construct ReLU networks that approximate pi, e, and sqrt(2) and measure the approximation error as a function of network size. Impact: ReLU networks approximate constants at a rate determined by their depth and width. Pi requires O(log(log(1/epsilon))) depth.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Novelty",
         "NumberTheory"
@@ -16257,7 +16257,7 @@
       "depth_estimate": 3,
       "description": "Register allocation in a compiler assigns variables to CPU registers. The interference graph G has variables as vertices and edges between variables that are 'live' at the same time. Register allocation is equivalent to coloring G with k colors (k = number of registers). Conjecture: for SSA-form programs with n variables and maximum interference degree delta, the chromatic number chi(G) satisfies chi(G) = max(delta + 1, omega(G)) where omega(G) is the clique number. This is stronger than Brooks' theorem (which gives chi(G) <= delta + 1) because it predicts that chi(G) = delta + 1 ONLY when G contains a (delta+1)-clique. For typical programs: delta <= 5 and omega(G) <= 4, so chi(G) = delta + 1 <= 6. Conjecture: the optimal number of registers for SSA programs is at most delta + 1, and spill code (storing variables in memory instead of registers) is needed only when k < delta + 1. Moreover, the spill cost is minimized by spilling the vertex with maximum degree in the interference graph (a heuristic known as 'degree-based spilling'). Test: extract interference graphs from 100 real programs, compute chi(G) and delta, and verify chi(G) = max(delta + 1, omega(G)). Impact: register allocation is graph coloring with a precise formula for the chromatic number.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Novelty",
         "Computation"
@@ -16298,7 +16298,7 @@
       "depth_estimate": 3,
       "description": "Tropical arithmetic (min-plus algebra) replaces + with min and * with +. A tropical matrix A over Z union {infinity} acts on vectors by tropical matrix multiplication: (A tropimes v)_i = min_j (A_{ij} + v_j). Tropical matrices have eigenvalues in the max-plus sense: lambda is a tropical eigenvalue if A tropimes v = lambda + v for some v. Conjecture: tropical matrix multiplication is a one-way function suitable for cryptography. Specifically, the 'tropical discrete logarithm problem' (TDLP) is: given a tropical matrix A and B = A^{otimes k} (tropical matrix power), find k. The tropical matrix power A^{otimes k} is computed in O(n^3 * log(k)) time (by repeated squaring), but recovering k from (A, A^{otimes k}) is hard because the tropical eigenvalues satisfy lambda(A^{otimes k}) = k * lambda(A) (tropical eigenvalues are additive under power), so k = lambda(A^{otimes k}) / lambda(A). But this only works if lambda(A) != 0 (in the tropical sense, lambda(A) != infinity). Conjecture: the tropical Diffie-Hellman key exchange is secure: Alice sends A^{otimes a}, Bob sends A^{otimes b}, and the shared key is A^{otimes ab}. Breaking this requires solving the TDLP, which is believed to be hard for random tropical matrices of size n >= 10. Test: implement the tropical DH key exchange and measure the key generation time vs matrix size. Attempt to break it with known attacks (tropical eigenvalue computation, shortest path algorithms). Impact: tropical arithmetic provides a new foundation for post-quantum cryptography.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Novelty",
         "Cryptography"
@@ -17404,7 +17404,6 @@
     "zero-in-sequence": 1
   },
   "selection_log": [
-    "cross_domain_bridge",
     "famous_subtask",
     "abduction_followup",
     "famous_subtask",
@@ -17420,6 +17419,7 @@
     "cross_domain_bridge",
     "famous_subtask",
     "abduction_followup",
+    "famous_subtask",
     "famous_subtask",
     "famous_subtask",
     "famous_subtask",

@@ -1,9 +1,6 @@
 --- CarmichaelPrimitiveDivisor.lean
 +++ CarmichaelPrimitiveDivisor.lean
-@@ -1,11 +1,10 @@
- import Mathlib
--import Catalog.Shared.CarmichaelComposite
-+import Shared.CarmichaelComposite
+@@ -3,9 +3,8 @@
  
  /-! # Carmichael's Primitive Divisor Theorem for Fibonacci Numbers
  

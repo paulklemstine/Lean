@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "1003d095",
-      "domain": "Applications",
-      "key_insight": "# Future directions\n\nThe formal result in `AffineDuality.lean` isolates a precise bridge between finite-group symmetry and cryptographic proof systems: translation gives exact witness-independent tran",
-      "quality_score": 0.74,
-      "sorry_count": 3,
-      "theorem_count": 0,
-      "timestamp": "2026-07-17T18:04:18",
-      "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
-    },
-    {
       "cycle_id": "dfbea393",
       "domain": "Algebra",
       "key_insight": "# Future Directions: Quantum States with Non-Archimedean Probabilities\n\n## 1. Standard-part Born measures on arbitrary finite supports\n\n**Conjecture.** Let a finitely supported state have finite hyper",
@@ -499,19 +489,19 @@
       "theorem_count": 11,
       "timestamp": "2026-07-19T04:29:12",
       "title": "**Conjecture.** There is a natural joint scaling of the prime cutoff `x`, occupa"
+    },
+    {
+      "cycle_id": "8201cdaf",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n- Formalize canonical base-`k` numeral encodings and quotient away leading zeros, connecting the word-indexed DFAO model to sequences indexed by `ℕ`.\n- Extract a fully executable",
+      "quality_score": 0.79,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-19T04:29:37",
+      "title": "Automatic Sequences and the Halting Problem: When Is a Sequence Computable?"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "bd321901",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions — Intrinsic witness complexity\n\n## Results established\n\nThe development in `Catalog/Computation/WitnessComplexityDeepening.lean` replaces an ambient-vertex polynomial estimate by a",
-      "quality_score": 0.93,
-      "sorry_count": 4,
-      "theorem_count": 46,
-      "timestamp": "2026-07-15T05:22:58",
-      "title": "Deepening: Two-parameter picture of *witness complexity* for the"
-    },
     {
       "cycle_id": "3c80004e",
       "domain": "Physics",
@@ -2501,6 +2491,16 @@
       "theorem_count": 11,
       "timestamp": "2026-07-19T04:29:12",
       "title": "**Conjecture.** There is a natural joint scaling of the prime cutoff `x`, occupa"
+    },
+    {
+      "cycle_id": "8201cdaf",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n- Formalize canonical base-`k` numeral encodings and quotient away leading zeros, connecting the word-indexed DFAO model to sequences indexed by `ℕ`.\n- Extract a fully executable",
+      "quality_score": 0.79,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-19T04:29:37",
+      "title": "Automatic Sequences and the Halting Problem: When Is a Sequence Computable?"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.76
     }
   ],
-  "last_updated": "2026-07-19T04:29:12",
+  "last_updated": "2026-07-19T04:29:37",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "e1956901",
-        "quality": 0.61,
-        "theorems": 18,
-        "title": "The Unreasonable Effectiveness of the Number 163"
-      },
-      {
         "cycle_id": "ad1766b1",
         "quality": 0.7,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.7,
         "theorems": 0,
         "title": "ArXiv paper: On the maximum size of $B_3$-free families"
+      },
+      {
+        "cycle_id": "8201cdaf",
+        "quality": 0.79,
+        "theorems": 0,
+        "title": "Automatic Sequences and the Halting Problem: When Is a Sequence Computable?"
       }
     ],
     "NumberTheory": [
