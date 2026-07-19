@@ -4351,7 +4351,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Dark Mathematics: Theorems That Exist But Cannot Be Found"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cc0903e0",
     "description": "Entropy H(X) = -sum p(x) log p(x) measures the information content of a random variable. In category theory, a functor F: C -> D 'loses information' when it maps non-isomorphic objects to isomorphic ones. Define the 'functorial entropy' H(F) as the expected information lost by F: H(F) = -sum_{d in Ob(D)} p(d) * log(p(d)) where p(d) = |F^{-1}(d)| / |Ob(C)|. Conjecture: For the forgetful functor U: Top -> Set that forgets the topology, H(U) = log(2^{aleph_0}) = aleph_0 (infinite entropy, because uncountably many topologies map to the same set). For the abelianization functor Ab: Grp -> AbGrp, H(Ab) = log(2) (each abelian group has 2 non-abelian preimages on average: G and G x Z/2Z). For the inclusion functor Inc: FinGrp -> Grp, H(Inc) = 0 (no information loss, since finite groups embed as themselves). Conjecture: H(F) = 0 iff F is faithful, and H(F) = infinity iff F identifies infinitely many non-isomorphic objects. For finite categories: H(F) = log(|Ob(C)| / |Ob(D)|) when F is 'uniform' (each fiber has the same size). Test: compute H(F) for various functors between finite categories and verify the formula. Impact: entropy is not just a measure-theoretic concept \u2014 it is the information-theoretic shadow of functoriality. Every functor loses information, and the entropy measures how much.",
     "domains": [
       "Novelty",
@@ -4361,7 +4361,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.73,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T01:02:08.127668+00:00",
     "title": "Categorification of Entropy: The Information Loss of Functors"
   },

@@ -5953,7 +5953,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cc0903e0",
     "description": "Entropy H(X) = -sum p(x) log p(x) measures the information content of a random variable. In category theory, a functor F: C -> D 'loses information' when it maps non-isomorphic objects to isomorphic ones. Define the 'functorial entropy' H(F) as the expected information lost by F: H(F) = -sum_{d in Ob(D)} p(d) * log(p(d)) where p(d) = |F^{-1}(d)| / |Ob(C)|. Conjecture: For the forgetful functor U: Top -> Set that forgets the topology, H(U) = log(2^{aleph_0}) = aleph_0 (infinite entropy, because uncountably many topologies map to the same set). For the abelianization functor Ab: Grp -> AbGrp, H(Ab) = log(2) (each abelian group has 2 non-abelian preimages on average: G and G x Z/2Z). For the inclusion functor Inc: FinGrp -> Grp, H(Inc) = 0 (no information loss, since finite groups embed as themselves). Conjecture: H(F) = 0 iff F is faithful, and H(F) = infinity iff F identifies infinitely many non-isomorphic objects. For finite categories: H(F) = log(|Ob(C)| / |Ob(D)|) when F is 'uniform' (each fiber has the same size). Test: compute H(F) for various functors between finite categories and verify the formula. Impact: entropy is not just a measure-theoretic concept — it is the information-theoretic shadow of functoriality. Every functor loses information, and the entropy measures how much.",
     "domain_bridges": [],
     "domains": [
@@ -5966,7 +5966,7 @@
     "proof_strategy": "Define functorial entropy: for a functor F: C -> D between finite categories, H(F) = -sum_{d in Ob(D)} (|F^{-1}(d)| / |Ob(C)|) * log(|F^{-1}(d)| / |Ob(C)|). This measures the information lost when F identifies non-isomorphic objects. Properties: (1) H(F) >= 0, with equality iff F is injective on objects up to isomorphism (i.e., F maps non-isomorphic objects to non-isomorphic objects). (2) H(F) is maximized when all fibers have the same size: H(F) = log(|Ob(C)| / |Ob(D)|). (3) H(G circ F) >= H(F) + H(G) for composable functors (subadditivity). (4) For the forgetful functor U: Top -> Set: H(U) = infinity because |F^{-1}(S)| = infinity for every set S with |S| >= 2 (there are uncountably many topologies on S). (5) For abelianization Ab: Grp -> AbGrp: each abelian group A has |F^{-1}(A)| = infinity (there are infinitely many non-abelian groups with abelianization A), so H(Ab) = infinity. Wait, this contradicts the conjecture. Correction: for finite groups, Ab: FinGrp -> FinAbGrp. Each finite abelian group A has finitely many preimages. H(Ab) = log(sum |F^{-1}(A)| / |FinAbGrp|). For small groups: Z/2Z has preimages Z/2Z (abelian) and S_3 (non-abelian with abelianization Z/2Z). Z/3Z has preimages Z/3Z and... (need to enumerate). Test: enumerate all groups of order <= 32, compute their abelianizations, and calculate H(Ab).",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T01:02:08.127668+00:00",
     "title": "Categorification of Entropy: The Information Loss of Functors"
   },
