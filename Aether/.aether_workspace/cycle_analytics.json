@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-19T17:50:02.927743+00:00",
+  "last_updated": "2026-07-19T18:41:14.037317+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -29581,6 +29581,7 @@
       "outcome_quality": 0.58,
       "phase": "A_only",
       "phase_a_prompt_version": "v25",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v25",
@@ -29609,6 +29610,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-19T17:50:02.879744+00:00",
       "title": "Retrocausal Mathematics: Where Effects Precede Causes"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 43,
+      "domain": "Novelty",
+      "duration_seconds": 3072.093731403351,
+      "end_time": 1784486464.531152,
+      "files_integrated": 4,
+      "job_id": "d0217292",
+      "outcome_quality": 0.73,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.73,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.63,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.9,
+        "composite": 0.555,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.66,
+        "novelty": 0.74,
+        "proof_depth": 0.76,
+        "usefulness": 0.73
+      },
+      "quality_score": 0.73,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1784483392.4374206,
+      "strategy_count": 0,
+      "theorem_count": 21,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 11,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-19T18:41:13.965072+00:00",
+      "title": "Negative-Dimensional Topology: What Lives in Dimension -1?"
     }
   ]
 }

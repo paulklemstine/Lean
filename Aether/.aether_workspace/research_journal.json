@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "7328a55d",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions\n\nThe formal results show that the proposed Hausdorff-dimension conjectures are false: the prime set is countable, and every countable set has zero Hausdorff measure in every positi",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-07-18T13:54:59",
-      "title": "Fractal Number Theory: Hausdorff Dimension of Prime Distributions"
-    },
-    {
       "cycle_id": "64b7f63b",
       "domain": "Combinatorics",
       "key_insight": "# Future Directions\n\n1. **Variable branching alphabets.** Generalize binary profiles to a fixed `b`-ary alphabet and prove that normalization by `log b` again bounds dimension by `1` and realizes rati",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-19T17:32:50",
       "title": "Surreal Topology: Open Sets at Infinity"
+    },
+    {
+      "cycle_id": "d0217292",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n## 1. Derived pro-spectra with nonconstant bonding homology\n\n**Conjecture.** Let an inverse tower of finite spectra have eventually perfect bonding maps on integral homology and f",
+      "quality_score": 0.73,
+      "sorry_count": 0,
+      "theorem_count": 21,
+      "timestamp": "2026-07-19T18:41:13",
+      "title": "Negative-Dimensional Topology: What Lives in Dimension -1?"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "a373adc5",
-      "domain": "Physics",
-      "key_insight": "# Future directions\n\nThe formal result in `Physics/HyperbolicArithmetic.lean` establishes a precise\nbridge that is available before addressing the broader conjectures in the\nresearch prompt: iteration",
-      "quality_score": 0.68,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-16T02:42:45",
-      "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk"
-    },
     {
       "cycle_id": "a373adc5",
       "domain": "Physics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 23,
       "timestamp": "2026-07-19T17:50:00",
       "title": "Retrocausal Mathematics: Where Effects Precede Causes"
+    },
+    {
+      "cycle_id": "d0217292",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n## 1. Derived pro-spectra with nonconstant bonding homology\n\n**Conjecture.** Let an inverse tower of finite spectra have eventually perfect bonding maps on integral homology and f",
+      "quality_score": 0.73,
+      "sorry_count": 0,
+      "theorem_count": 21,
+      "timestamp": "2026-07-19T18:41:13",
+      "title": "Negative-Dimensional Topology: What Lives in Dimension -1?"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "7328a55d",
-      "domain": "Bridges",
-      "name": "hausdorffMeasure_countable_eq_zero",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "7328a55d",
-      "domain": "Bridges",
-      "name": "hausdorffMeasure_primeLogImage_eq_zero",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "64b7f63b",
-      "domain": "Combinatorics",
-      "name": "periodic_search_benchmark",
-      "quality": 0.73
-    },
     {
       "cycle_id": "64b7f63b",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "winningRegion_subset_succ",
       "quality": 0.79
+    },
+    {
+      "cycle_id": "d0217292",
+      "domain": "Novelty",
+      "name": "are",
+      "quality": 0.73
+    },
+    {
+      "cycle_id": "d0217292",
+      "domain": "Novelty",
+      "name": "euler_pure_formula",
+      "quality": 0.73
+    },
+    {
+      "cycle_id": "d0217292",
+      "domain": "Novelty",
+      "name": "euler_negative_dimension",
+      "quality": 0.73
     }
   ],
-  "last_updated": "2026-07-19T17:50:00",
+  "last_updated": "2026-07-19T18:41:13",
   "open_questions": [
     {
       "context": "",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "8201cdaf",
-        "quality": 0.79,
-        "theorems": 0,
-        "title": "Automatic Sequences and the Halting Problem: When Is a Sequence Computable?"
-      },
-      {
         "cycle_id": "08d3e2eb",
         "quality": 0.75,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.79,
         "theorems": 16,
         "title": "ArXiv paper: Reproducing the k-copwin Algorithm: Theory vs. Implementation"
+      },
+      {
+        "cycle_id": "d0217292",
+        "quality": 0.73,
+        "theorems": 21,
+        "title": "Negative-Dimensional Topology: What Lives in Dimension -1?"
       }
     ],
     "NumberTheory": [

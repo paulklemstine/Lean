@@ -236,7 +236,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "53d02dfc",
     "description": "Formalize a type theory where types can refer to their own provability. Prove that such a system can express 'this proposition is provable but not provably provable' as a well-typed term. Show that reflective type theory properly extends Martin-Lof type theory and that its proof term language is exactly the modal mu-calculus.",
     "domain_bridges": [],
     "domains": [
@@ -249,7 +249,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T18:06:44.969236+00:00",
     "title": "Reflective Type Theory: Proving Things About Proving Things"
   },
@@ -483,26 +483,6 @@
     "status": "available",
     "timestamp": "2026-07-19T16:23:59.781707+00:00",
     "title": "Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "d0217292",
-    "description": "Develop a rigorous theory of negative-dimensional spaces using pro-spectra and formal dimension theory. Prove that Euler characteristic extends to negative dimensions and that chi(X) for dim X = -n satisfies chi = (-1)^n · |pi_0(X)|. Formalize the stabilization map from negative to positive dimensions.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0444",
-    "lineage_refs": [],
-    "priority_score": 0.83,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T10:41:15.077942+00:00",
-    "title": "Negative-Dimensional Topology: What Lives in Dimension -1?"
   },
   {
     "ambition_level": "extension",
@@ -6960,6 +6940,26 @@
     "status": "available",
     "timestamp": "2026-07-19T17:49:55.647931+00:00",
     "title": "The formal development deliberately separates three claims that are often confla"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## 1. Derived pro-spectra with nonconstant bonding homology\n\n**Conjecture.** Let an inverse tower of finite spectra have eventually perfect bonding maps on integral homology and finite total homology at every stage. Its extended Euler characteristic is eventually periodic with period two precisely when the induced virtual homology class is eventually a pure translate of a fixed class.\n\nThe key insight is that the parity character detects translation but not internal cancellation, so eventual two-periodicity should characterize purity only after perfectness excludes hidden Euler-neutral summands.\n\n**Why now?** The component-preserving pure tower establishes the forward implication in the rank-one case and isolates the exact point where mixed degrees can obstruct the converse.\n\n## 2. Universal characterization of the negative Euler extension\n\n**Conjecture.** Any additive invariant from finite integer-graded cellular spectra to the integers that agrees with cardinality in degree zero and changes sign under suspension equals the parity-character Euler characteristic in every positive and negative degree.\n\nThe key insight is that additivity reduces the invariant to pure cells, while suspension forces its value on every integer translate from its degree-zero normalization.\n\n**Why now?** The character classification and the pure-cell formula provide complementary algebraic and topological rigidity mechanisms that can be combined into a uniqueness theorem for mixed finite spectra.\n\n## 3. Pro-Euler convergence beyond exact component preservation\n\n**Conjecture.** If the component counts of a negative-dimensional pro-spectrum stabilize only modulo a fixed integer `q`, then its Euler characteristics stabilize, after parity correction, modulo `q`; conversely, corrected Euler stabilization modulo every prime power forces eventual component stabilization.\n\nThe key insight is that multiplication by the parity sign is invertible modulo every modulus, turning Euler alternation into a faithful probe of component congruences.\n\n**Why now?** Exact preservation has been reduced to a transparent induction, making congruence-valued bonding laws the next testable generalization.\n\n## 4. Equivariant stabilization and Euler parity for finite group actions\n\n**Conjecture.** For every finite group `G`, there is a representation-ring-valued negative Euler characteristic whose stabilization by a real `G`-representation `V` is multiplication by the determinant character of `V`; the antipodal suspension law is the `G = ℤ/2` sign-representation case.\n\nThe key insight is that ordinary parity is the determinant character of a one-dimensional sign representation, suggesting that integer dimension should be replaced by the real representation ring.\n\n**Why now?** The established bridge between parity-character pro-towers and exact antipodal suspension identifies both sides of the proposed equivariant generalization in the first nontrivial group.\n\n## 5. Completion invariance under two-sided stabilization\n\n**Conjecture.** For finite-type pure pro-spectra, reflection from degree `-n` to degree `n` induces an equivalence after stabilization completion, and this equivalence preserves Euler characteristic, finite component cardinality, and equivariant coindex excess simultaneously.\n\nThe key insight is that reflection is an even suspension, while coindex excess is invariant under equal source-target suspension; completion should promote these matching numerical laws to an equivalence of stabilized objects.\n\n**Why now?** Stagewise reflection and exact coindex translation are both available, so the remaining question is whether their agreement is merely numerical or arises from a universal completed object.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0478",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "d0217292",
+    "status": "available",
+    "timestamp": "2026-07-19T18:41:09.759734+00:00",
+    "title": "**Conjecture.** Let an inverse tower of finite spectra have eventually perfect b"
   },
   {
     "ambition_level": "extension",
