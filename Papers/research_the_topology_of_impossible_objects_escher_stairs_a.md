@@ -1,182 +1,466 @@
-# The Cohomology of Impossible Figures: Holonomy Obstructions for Penrose Triangles, Escher Staircases, and Non-Orientable Surfaces
+# Gauge-Invariant Obstructions to Periodic Impossible Figures
+
+**Aristotle**  
+**19 July 2026**
 
 ## Abstract
 
-Impossible figures such as the Penrose triangle and the Escher staircase are locally consistent yet globally unrealizable pictures. We give a complete and elementary mathematical account of this phenomenon by modeling a figure as a cyclic arrangement of overlapping patches carrying local reconciliation data valued in an abelian group. We define the **holonomy** of a figure as the total increment accumulated once around the cycle, and prove the master equivalence: *a figure is realizable — admits a global gauge inducing its local data — if and only if its holonomy vanishes.* This single theorem yields, as corollaries, rigorous impossibility proofs for the Penrose triangle and for any closed everywhere-ascending staircase; the non-orientability of the Möbius band and the Klein bottle (as an odd-holonomy phenomenon over $\mathbb{Z}/2$); and the statement that the impossibility class is a **complete invariant** whose values fill the entire group, so that $H^1 \cong A$. We show that impossibility is a genuinely *global* invariant by exhibiting a contrarian pair: uniform local data (the Penrose triangle) that is impossible, and maximally non-uniform data that is perfectly realizable. Finally we develop the **multiplicative** model over a commutative group — Penrose's original scaling-ambiguity formulation — in which realizability corresponds to buildability as a developable (flat) surface, package the total monodromy as a surjective group homomorphism whose kernel is exactly the developable figures, and refute the plausible conjecture that every overlap-nontrivial figure is impossible.
+Periodic impossible figures can be modeled by assigning horizontal and vertical increments to the edges of a finite grid with opposite sides identified. Such a field is developable when the increments are differences of a single-valued height function. This paper gives a self-contained classification over an arbitrary additive commutative coefficient group. The complete obstruction consists of local discrete curvature and two global periods around the fundamental cycles of the torus. A field is developable exactly when all three components vanish. Changing the local reference height adds a discrete gradient; we prove that curvature, both periods, and hence developability are invariant under every such gauge transformation. We give a constructive integration algorithm, linear-time decision procedures, explicit local and global counterexamples, and a uniformly descending periodic “waterfall” that remains impossible after a nonconstant checkerboard gauge change. We also distinguish periodic geometric staircases from the strictly descending filtration $2^k\mathbb Z$, whose intersection is zero but whose index set does not close into a cycle. The results identify the cohomological structure behind Escher-type staircases while clarifying why claims about Penrose figures in smooth manifolds require additional projection and depth-order semantics.
 
 ## 1. Introduction
 
-An *impossible figure* is a two-dimensional drawing that the visual system interprets as a three-dimensional object, but for which no consistent three-dimensional object exists. The two most celebrated examples are the **Penrose triangle** (three beams forming a loop, each apparently receding) and the **Escher staircase** (a closed flight of stairs on which every step rises). Their paradoxical quality has a precise mathematical explanation, first articulated by Roger Penrose (*On the cohomology of impossible figures*, 1992): the impossibility is not a *local* defect. Every sufficiently small region of the drawing depicts a perfectly realizable fragment of a solid object. The contradiction is a *global* obstruction that only manifests when one traverses the entire loop.
+Impossible staircases exploit a discrepancy between local and global perception. Every neighboring pair of steps can suggest a legitimate increase in height, while a complete circuit returns to the same visible location. A mathematical model should therefore answer three questions. What constitutes local consistency? Which global loops must be checked? Which features survive a change in the arbitrary reference used to label heights?
 
-This paper formalizes that insight completely and elementarily. The mathematical content is the first cohomology of a cyclic (circle-like) space with coefficients in an abelian group, but we require no prior cohomology: the entire theory reduces to the statement that a sum around a cycle telescopes to zero precisely when the summands are consecutive differences of a function on the cycle. We take this reduction as the definition and build everything on it, obtaining self-contained proofs of every classical impossibility result together with several sharpenings.
+A periodic rectangular grid provides the simplest setting in which all three questions are nontrivial. Identifying opposite edges turns the grid into a discrete torus. Horizontal and vertical edge labels prescribe proposed increments in a coefficient group $A$. If they arise from a vertex potential, or height function, then the picture is developable. Otherwise it is impossible in the precise sense that no single-valued height assignment realizes all prescribed changes.
 
-The contributions are:
+On a simply connected rectangular patch, vanishing circulation around every elementary tile is enough for integrability. On a torus it is not. Two noncontractible cycles remain: one winds horizontally and one vertically. Their accumulated increments are holonomies, or periods. Thus periodic impossibility has a local part, measured by curvature, and a global part, measured by two periods.
 
-1. A **master equivalence** (Theorem 3.4): realizability $\iff$ vanishing holonomy, over an arbitrary abelian coefficient group.
-2. **Well-definedness on cohomology** (Proposition 4.1): the holonomy is invariant under gauge changes (coboundaries), so it is genuinely a class in $H^1$.
-3. Concrete **impossibility theorems**: the Penrose triangle (Theorem 5.1), the closed ascending staircase (Theorem 5.2), and the Möbius/Klein non-orientability over $\mathbb{Z}/2$ (Theorems 6.1–6.2).
-4. **Completeness and surjectivity** (Theorems 7.1–7.2): the impossibility class detects realizability exactly and attains every value, so $H^1 \cong A$.
-5. A **contrarian analysis** (Section 8) proving impossibility is global not local: uniform data can be impossible; non-uniform data can be realizable.
-6. A **multiplicative model** for developable surfaces (Section 9): developability $\iff$ trivial monodromy; the monodromy is a surjective homomorphism whose kernel is the developable figures; and a refutation of the conjecture that overlap-nontrivial figures are impossible.
+The principal theorem states that these are the only obstructions. The second principal theorem establishes gauge invariance: adding the gradient of any locally chosen reference function changes individual increments but changes neither curvature nor either period. The obstruction triple is therefore intrinsic to a gauge class rather than an artifact of labeling.
 
-## 2. The model
+The development is entirely additive. Accordingly, the coefficients may lie in any additive commutative group, including $\mathbb Z$, $\mathbb R$, vector spaces, finite cyclic groups, and products of such groups. No order, metric, multiplication, or division is required.
 
-Fix an integer $n \geq 1$ and index the patches of a cyclic figure by the cyclic group $\mathbb{Z}/n$ of residues modulo $n$. Fix an abelian group $(A, +, 0)$ of coefficients.
+## 2. Periodic grids and increment fields
 
-**Definition 2.1 (Local increment data).** A *figure* (with $n$ patches and coefficients in $A$) is a function
-$$t : \mathbb{Z}/n \to A.$$
-The value $t_i := t(i)$ is the *increment* prescribed on the overlap from patch $i$ to patch $i+1$ (indices taken modulo $n$, so patch $n$ is patch $0$).
+Fix positive integers $m$ and $n$. Write
 
-Two interpretations drive the applications:
+$$
+T_{m,n}=\mathbb Z/m\mathbb Z\times\mathbb Z/n\mathbb Z
+$$
 
-- $A = \mathbb{R}$: $t_i$ is a **depth / height** increment. The Penrose triangle and the Escher staircase live here.
-- $A = \mathbb{Z}/2$: $t_i$ is an **orientation** bit ($0$ = preserve, $1$ = reverse). The Möbius band and Klein bottle live here.
+for the vertices of the periodic grid. Let $A$ be an additive commutative group with identity $0$. All indices below are interpreted modulo $m$ or $n$.
 
-**Definition 2.2 (Holonomy).** The *holonomy* of a figure $t$ is the total increment accumulated once around the cycle,
-$$\mathrm{hol}(t) \;:=\; \sum_{i \in \mathbb{Z}/n} t_i \;\in\; A.$$
+### Definition 2.1 (Increment field)
 
-**Definition 2.3 (Realizability).** A figure $t$ is *realizable* if its local increments arise from a global field ("gauge") $h : \mathbb{Z}/n \to A$ as consecutive differences:
-$$\exists\, h : \mathbb{Z}/n \to A \quad \text{such that} \quad h(i+1) - h(i) = t_i \quad \text{for all } i \in \mathbb{Z}/n.$$
-The field $h$ is the honest global quantity (depth, height, or orientation) that the figure purports to depict; a figure is realizable exactly when such an honest quantity exists.
+An **increment field** is a pair of functions
 
-In the language of simplicial/cellular cohomology of the circle $S^1$ triangulated with $n$ vertices, a figure $t$ is a $1$-cochain, realizability says $t$ is a coboundary, and the holonomy is the pairing of $t$ with the fundamental class of the loop. We do not need this language, but it explains the name "cohomology of impossible figures."
+$$
+a,b:T_{m,n}\longrightarrow A.
+$$
 
-## 3. The master equivalence
+The value $a(i,j)$ labels the oriented edge from $(i,j)$ to $(i+1,j)$, and $b(i,j)$ labels the oriented edge from $(i,j)$ to $(i,j+1)$.
 
-**Lemma 3.1 (Holonomy of a coboundary vanishes).** For any $h : \mathbb{Z}/n \to A$,
-$$\mathrm{hol}\big(i \mapsto h(i+1) - h(i)\big) = 0.$$
+### Definition 2.2 (Discrete derivatives)
 
-*Proof.* The map $i \mapsto i+1$ is a bijection of $\mathbb{Z}/n$, so $\sum_i h(i+1) = \sum_i h(i)$. Hence
-$$\sum_i \big(h(i+1) - h(i)\big) = \sum_i h(i+1) - \sum_i h(i) = 0.$$
-This is the discrete Fundamental Theorem of Calculus on the cycle: consecutive differences telescope. $\qquad\blacksquare$
+For a function $g:T_{m,n}\to A$, define its horizontal and vertical discrete derivatives by
 
-**Proposition 3.2 (Forward direction).** If $t$ is realizable then $\mathrm{hol}(t) = 0$.
+$$
+(\Delta_x g)(i,j)=g(i+1,j)-g(i,j),
+$$
 
-*Proof.* Let $h$ witness realizability, so $t_i = h(i+1) - h(i)$ for all $i$. Then $\mathrm{hol}(t) = \mathrm{hol}(i \mapsto h(i+1)-h(i)) = 0$ by Lemma 3.1. $\qquad\blacksquare$
+$$
+(\Delta_y g)(i,j)=g(i,j+1)-g(i,j).
+$$
 
-**Proposition 3.3 (Reverse direction).** If $\mathrm{hol}(t) = 0$ then $t$ is realizable.
+The pair $(\Delta_x g,\Delta_y g)$ is the discrete gradient of $g$.
 
-*Proof.* Define the *partial-sum gauge* by
-$$h(i) \;:=\; \sum_{j=0}^{\,\mathrm{val}(i)-1} t(j),$$
-where $\mathrm{val}(i) \in \{0, 1, \dots, n-1\}$ is the canonical representative of $i$. For any $i$ whose representative satisfies $\mathrm{val}(i)+1 < n$, the representative of $i+1$ is $\mathrm{val}(i)+1$, and
-$$h(i+1) - h(i) = \sum_{j=0}^{\mathrm{val}(i)} t(j) - \sum_{j=0}^{\mathrm{val}(i)-1} t(j) = t(\mathrm{val}(i)) = t_i.$$
-For the wrap-around step, where $\mathrm{val}(i) = n-1$ and $i+1 = 0$, we have $h(i+1) = h(0) = 0$ (empty sum) while $h(i) = \sum_{j=0}^{n-2} t(j)$. The hypothesis $\mathrm{hol}(t) = \sum_{j=0}^{n-1} t(j) = 0$ gives $\sum_{j=0}^{n-2} t(j) = -t(n-1)$, hence
-$$h(i+1) - h(i) = 0 - \big(-t(n-1)\big) = t(n-1) = t_i.$$
-Thus $h$ witnesses realizability. $\qquad\blacksquare$
+### Definition 2.3 (Developability)
 
-**Theorem 3.4 (Master equivalence).** *A figure $t : \mathbb{Z}/n \to A$ is realizable if and only if $\mathrm{hol}(t) = 0$.*
+The increment field $(a,b)$ is **developable** if there exists a height function $h:T_{m,n}\to A$ satisfying
 
-*Proof.* Combine Propositions 3.2 and 3.3. $\qquad\blacksquare$
+$$
+a=\Delta_x h,\qquad b=\Delta_y h.
+$$
 
-Theorem 3.4 is the entire theory in one line: **impossibility is exactly nonzero holonomy.**
+Thus every edge increment is the difference between the heights at its endpoint and start point.
 
-## 4. The holonomy is a cohomology class
+Developability means more than the existence of a plausible local drawing. It demands one globally single-valued height on the periodic quotient.
 
-Realizability is unaffected by, and holonomy is invariant under, changing the gauge by a coboundary. This is what makes $\mathrm{hol}$ a well-defined function on $H^1 = (\text{cochains})/(\text{coboundaries})$.
+## 3. Local curvature and global periods
 
-**Proposition 4.1 (Gauge invariance).** For any figure $t$ and any $c : \mathbb{Z}/n \to A$,
-$$\mathrm{hol}\big(i \mapsto t_i + (c(i+1) - c(i))\big) = \mathrm{hol}(t).$$
+### Definition 3.1 (Discrete curvature)
 
-*Proof.* By additivity of the sum and Lemma 3.1,
-$$\sum_i \big(t_i + (c(i+1)-c(i))\big) = \sum_i t_i + \sum_i (c(i+1)-c(i)) = \mathrm{hol}(t) + 0. \qquad\blacksquare$$
+The curvature of $(a,b)$ at the elementary tile based at $(i,j)$ is
 
-**Proposition 4.2 (Additivity).** $\mathrm{hol}(t + s) = \mathrm{hol}(t) + \mathrm{hol}(s)$ for all figures $t, s$.
+$$
+C_{a,b}(i,j)
+=a(i,j)+b(i+1,j)-a(i,j+1)-b(i,j).
+$$
 
-*Proof.* $\sum_i (t_i + s_i) = \sum_i t_i + \sum_i s_i$. $\qquad\blacksquare$
+This is the oriented sum around the boundary of the tile: right, up, left, down. Equivalently,
 
-Thus $\mathrm{hol} : (\mathbb{Z}/n \to A) \to A$ is a group homomorphism (the *Penrose class map*) whose kernel is exactly the realizable figures. We identify its image below.
+$$
+C_{a,b}=\Delta_x b-\Delta_y a.
+$$
 
-## 5. Impossibility of the classical figures (depth model, $A = \mathbb{R}$)
+The sign convention is immaterial for vanishing, but fixing it clarifies calculations.
 
-**Theorem 5.1 (The Penrose triangle is impossible).** *The figure with $n = 3$ and $t_0 = t_1 = t_2 = 1$ is not realizable.*
+### Definition 3.2 (Fundamental periods)
 
-*Proof.* Its holonomy is $1 + 1 + 1 = 3 \neq 0$; apply Theorem 3.4. Concretely, a gauge $h$ would satisfy $h_1 - h_0 = h_2 - h_1 = h_0 - h_2 = 1$; summing yields $0 = 3$, a contradiction. $\qquad\blacksquare$
+Choose the row $j=0$ and column $i=0$. The horizontal and vertical periods are
 
-**Theorem 5.2 (The Escher staircase is impossible).** *If every step ascends, i.e. $t_i > 0$ for all $i$, then $t$ is not realizable.*
+$$
+P_x(a)=\sum_{i=0}^{m-1}a(i,0),
+$$
 
-*Proof.* A sum of strictly positive reals over the nonempty index set $\mathbb{Z}/n$ is strictly positive, so $\mathrm{hol}(t) = \sum_i t_i > 0 \neq 0$. Apply Theorem 3.4. $\qquad\blacksquare$
+$$
+P_y(b)=\sum_{j=0}^{n-1}b(0,j).
+$$
 
-## 6. Non-orientable surfaces (orientation model, $A = \mathbb{Z}/2$)
+These are the accumulated increments along representatives of the two fundamental cycles of the torus.
 
-Now let the coefficients be $\mathbb{Z}/2 = \{0, 1\}$ with $1 + 1 = 0$: two orientation reversals cancel. The holonomy counts orientation flips modulo two. A "gauge" $h : \mathbb{Z}/n \to \mathbb{Z}/2$ is a global choice of local orientation; realizability means a globally consistent orientation exists.
+### Lemma 3.3 (Row and column independence under flatness)
 
-**Theorem 6.1 (Odd holonomy forbids orientation).** *If $\mathrm{hol}(s) = 1$ in $\mathbb{Z}/2$ then $s$ is not realizable; i.e. a closed band whose orientation reverses an odd number of times around the loop admits no global orientation.*
+If $C_{a,b}(i,j)=0$ for every $(i,j)$, then the sum of $a$ along a complete horizontal row is independent of the row, and the sum of $b$ along a complete vertical column is independent of the column.
 
-*Proof.* If $s$ were realizable then $\mathrm{hol}(s) = 0$ by Theorem 3.4, contradicting $\mathrm{hol}(s) = 1$. $\qquad\blacksquare$
+**Proof sketch.** Sum the identity $C_{a,b}(i,j)=0$ over all $i$ in one row. The horizontal sum of $b(i+1,j)$ is a cyclic reindexing of the sum of $b(i,j)$, so those terms cancel. What remains says that the horizontal sum of $a$ in row $j$ equals that in row $j+1$. Repeating around the vertical direction proves row independence. Summing over $j$ instead proves column independence. $\square$
 
-**Theorem 6.2 (The Möbius band is non-orientable).** *The single-patch figure $n = 1$, $t_0 = 1 \in \mathbb{Z}/2$ (one self-gluing with a flip) is not realizable.*
+### Lemma 3.4 (Gradients are flat)
 
-*Proof.* Its holonomy is $1$; apply Theorem 6.1. $\qquad\blacksquare$
+For every $h:T_{m,n}\to A$,
 
-The Klein bottle is the closed surface obtained by such a one-sided gluing; Theorem 6.1 is exactly the statement that it carries no global orientation, and hence (by a standard argument) no embedding in $\mathbb{R}^3$ without self-intersection. The Penrose triangle (real depth) and the Klein bottle (mod-two orientation) are thus two instances of a single theorem, differing only in the coefficient group.
+$$
+C_{\Delta_x h,\Delta_y h}(i,j)=0
+$$
 
-## 7. The impossibility class is a complete invariant
+at every tile.
 
-**Theorem 7.1 (Completeness).** *For $A = \mathbb{R}$, a figure $t$ is impossible (not realizable) if and only if $\mathrm{hol}(t) \neq 0$. The holonomy class alone decides realizability.*
+**Proof sketch.** Expand the four edge differences. Each of the four vertex values appears once with positive sign and once with negative sign. This is the discrete equality of mixed derivatives. $\square$
 
-*Proof.* Negate Theorem 3.4. $\qquad\blacksquare$
+### Lemma 3.5 (Gradient periods vanish)
 
-**Theorem 7.2 (Surjectivity, $H^1 \cong \mathbb{R}$).** *For every $r \in \mathbb{R}$ there is a figure with $\mathrm{hol}(t) = r$.*
+For every $h:T_{m,n}\to A$,
 
-*Proof.* Take $t_0 = r$ and $t_i = 0$ for $i \neq 0$; then $\mathrm{hol}(t) = r$. $\qquad\blacksquare$
+$$
+P_x(\Delta_x h)=0,\qquad P_y(\Delta_y h)=0.
+$$
 
-Combining Propositions 4.1–4.2 with Theorems 7.1–7.2: the Penrose class map $\mathrm{hol}$ is a surjective homomorphism with kernel the realizable figures, so it descends to an isomorphism $H^1 \cong \mathbb{R}$. Impossibility is not a mere flag but a continuous real-valued measurement: its sign and magnitude record the direction and degree of the paradox.
+**Proof sketch.** The horizontal sum is
 
-## 8. Impossibility is global, not local (contrarian results)
+$$
+\sum_{i=0}^{m-1}\bigl(h(i+1,0)-h(i,0)\bigr),
+$$
 
-A natural but false intuition is that one can diagnose impossibility from the local data. We refute both directions of this intuition.
+which telescopes cyclically. The vertical sum is identical in form. Because opposite boundaries are identified, the terminal value is the initial value. $\square$
 
-**Theorem 8.1 (Uniform yet impossible).** *The Penrose triangle has perfectly uniform local data — every overlap prescribes the identical increment $t_i = 1$ — yet it is impossible.*
+## 4. Complete classification of developability
 
-*Proof.* Uniformity is immediate; impossibility is Theorem 5.1. $\qquad\blacksquare$
+### Theorem 4.1 (Periodic Developability Theorem)
 
-**Theorem 8.2 (Non-uniform yet realizable).** *The figure with $n = 3$ and pairwise distinct increments $t_0 = 1,\ t_1 = 2,\ t_2 = -3$ is realizable.*
+Let $(a,b)$ be an increment field on $T_{m,n}$ with values in an additive commutative group $A$. The following are equivalent:
 
-*Proof.* $\mathrm{hol}(t) = 1 + 2 + (-3) = 0$, so $t$ is realizable by Theorem 3.4; the three values are pairwise distinct. $\qquad\blacksquare$
+1. There exists $h:T_{m,n}\to A$ such that $a=\Delta_x h$ and $b=\Delta_y h$.
+2. The curvature vanishes at every tile and both fundamental periods vanish:
 
-Theorems 8.1 and 8.2 together show that no function of the *multiset* of local increments can determine realizability: uniform data can be impossible and maximally varied data can be realizable. Only the *ordered sum* — the holonomy — is decisive. This is the precise sense in which the impossibility of an impossible figure is a global, cohomological phenomenon.
+$$
+C_{a,b}=0,\qquad P_x(a)=0,\qquad P_y(b)=0.
+$$
 
-## 9. The multiplicative model: developable surfaces
+**Proof sketch.** If $(a,b)$ is a gradient, Lemmas 3.4 and 3.5 give all three vanishing conditions.
 
-Penrose's original formulation records at each overlap a *scaling ambiguity* rather than an additive increment: the freedom to rescale the apparent depth of a patch. We reproduce the entire theory multiplicatively. Fix a commutative group $(G, \cdot, 1)$ (Penrose used the positive reals $\mathbb{R}_{>0}$ under multiplication).
+Conversely, fix the base vertex $(0,0)$ and set $h(0,0)=0$. For any vertex $v$, select an edge path from $(0,0)$ to $v$ and define $h(v)$ to be the signed sum of increments along that path. Reversing an edge contributes the negative of its forward label.
 
-**Definition 9.1.** A *multiplicative figure* is a function $t : \mathbb{Z}/n \to G$, with $t_i$ the scaling across the overlap $i \to i+1$. Its *monodromy* is
-$$\mathrm{mon}(t) := \prod_{i \in \mathbb{Z}/n} t_i \in G.$$
-It is *realizable* — buildable as a genuine developable (flat) surface — if there is a gauge $h : \mathbb{Z}/n \to G$ with $h(i+1)\, h(i)^{-1} = t_i$ for all $i$.
+It remains to prove path independence. Given two paths to $v$, follow the first and then the reverse of the second; this produces a closed walk. Elementary insertion or deletion of a tile boundary changes its sum by a curvature value, hence by zero. After removing contractible tile boundaries, any closed walk on the toroidal grid reduces to an integer combination of a horizontal fundamental cycle and a vertical fundamental cycle. Its sum is therefore an integer combination of $P_x(a)$ and $P_y(b)$, both zero. The two path sums agree.
 
-**Theorem 9.2 (Multiplicative master equivalence / classification of developable figures).** *A multiplicative figure is realizable (equivalently, developable) if and only if its monodromy is trivial, $\mathrm{mon}(t) = 1$.*
+The resulting $h$ is well defined. Appending one horizontal edge to a path shows $h(i+1,j)-h(i,j)=a(i,j)$, and appending one vertical edge shows $h(i,j+1)-h(i,j)=b(i,j)$. Thus $(a,b)$ is developable. $\square$
 
-*Proof.* Identical to Theorem 3.4 with $+$ replaced by $\cdot$ and $0$ by $1$. Forward: a coboundary $t_i = h(i+1)h(i)^{-1}$ telescopes to $\prod_i t_i = \big(\prod_i h(i+1)\big)\big(\prod_i h(i)\big)^{-1} = 1$ since $i \mapsto i+1$ permutes $\mathbb{Z}/n$. Reverse: the partial-product gauge $h(i) = \prod_{j<\mathrm{val}(i)} t(j)$ realizes $t$, the wrap-around step closing up precisely because $\mathrm{mon}(t) = 1$. $\qquad\blacksquare$
+### Corollary 4.2 (Complete obstruction triple)
 
-**Proposition 9.3 (Monodromy homomorphism).** The map $\mathrm{mon} : (\mathbb{Z}/n \to G) \to G$ from the group of figures under pointwise multiplication is a group homomorphism ($\mathrm{mon}(1) = 1$ and $\mathrm{mon}(t \cdot s) = \mathrm{mon}(t)\,\mathrm{mon}(s)$), it is surjective (take $t_0 = g$, $t_i = 1$ otherwise), and the realizable/developable figures are exactly its kernel. Hence $H^1 \cong G$ and the monodromy is a complete invariant.
+Define
 
-**Theorem 9.4 (The Penrose scaling triangle is not developable).** *If every beam of a three-overlap figure rescales by the same $g \in G$ with $g^3 \neq 1$, the figure has monodromy $g^3 \neq 1$ and is not developable.*
+$$
+\mathcal O(a,b)=\bigl(C_{a,b},P_x(a),P_y(b)\bigr).
+$$
 
-*Proof.* $\mathrm{mon} = g \cdot g \cdot g = g^3 \neq 1$; apply Theorem 9.2. $\qquad\blacksquare$
+Then $(a,b)$ is developable if and only if
 
-**Theorem 9.5 (Contrarian disproof).** *The conjecture "if every overlap genuinely rescales the figure ($t_i \neq 1$ for all $i$) then it is impossible" is FALSE.* For any $g \neq 1$, the two-overlap figure $t_0 = g$, $t_1 = g^{-1}$ has both factors nontrivial ($g \neq 1$ and $g^{-1} \neq 1$) yet is developable, since $\mathrm{mon}(t) = g \cdot g^{-1} = 1$.
+$$
+\mathcal O(a,b)=(0,0,0).
+$$
 
-*Proof.* Both nontriviality claims are immediate; developability follows from $\mathrm{mon}(t) = 1$ via Theorem 9.2. $\qquad\blacksquare$
+The curvature component is a function on all tiles, while the final two components lie in $A$.
 
-## 10. Algorithms
+### Corollary 4.3 (Two modes of impossibility)
 
-All results are effective. Given a figure as a finite list of increments, one computes its holonomy (or monodromy) by a single pass, decides realizability by comparison with the identity, and, when realizable, reconstructs an explicit global gauge by accumulating partial sums (or products). These procedures are detailed in the accompanying computational material; each runs in $O(n)$ group operations for a figure with $n$ patches.
+Every nondevelopable periodic increment field has at least one of the following witnesses:
 
-## 11. Applications and discussion
+- a tile with nonzero curvature;
+- a nonzero horizontal period;
+- a nonzero vertical period.
 
-The pattern established here — locally trivial, globally obstructed, with the obstruction a quantity accumulated around loops — is the elementary heart of a vast body of mathematics and physics:
+The first witness is local. The latter two are global and may occur even when every elementary tile is consistent.
 
-- **Curvature holonomy.** Parallel transport of a vector around a closed loop on a curved surface returns it rotated by an angle equal to the enclosed curvature; the drawing of a Penrose triangle is a $1$-cochain whose holonomy is the analogue of that rotation.
-- **The Aharonov–Bohm effect.** A charged particle transported around a solenoid acquires a phase determined by the enclosed magnetic flux, even where the field vanishes locally — a physical holonomy over $U(1)$, structurally identical to our multiplicative model.
-- **Obstruction theory and de Rham cohomology.** A closed differential form that is locally exact but not globally exact represents a nonzero class in $H^1$; "locally consistent, globally impossible" is the defining feature of nontrivial cohomology.
-- **Non-orientable manifolds.** The first Stiefel–Whitney class $w_1 \in H^1(X; \mathbb{Z}/2)$ obstructs orientability; our $\mathbb{Z}/2$ holonomy is precisely $w_1$ evaluated on a loop, giving the Möbius/Klein results.
+## 5. Gauge transformations
 
-The unifying message is that impossibility, correctly understood, is a *measurement*: a homomorphism from local data to a coefficient group whose vanishing is realizability and whose value quantifies the obstruction.
+Height is relative. Replacing a local reference value by another should not alter whether a field is intrinsically consistent.
 
-## 12. Future directions
+### Definition 5.1 (Gauge shift)
 
-Several extensions suggest themselves. **True manifold statements.** The full geometric framing — for instance, that every non-orientable $3$-manifold contains a suitable "Penrose" surface, or the relation between our $\mathbb{Z}/2$ holonomy and non-orientability — is naturally phrased by realizing $\mathrm{hol}$ as the pairing of a cellular $1$-cocycle with the fundamental class of a loop, i.e. as an element of $H^1(S^1; A)$, and relating the orientation case to $w_1 \neq 0$. **Higher figures and branched covers.** Replacing the single loop by a general finite CW-complex $X$ turns impossibility into non-vanishing of a class in $H^1(X; A)$, with richer figures corresponding to higher-genus or branched configurations. **Continuous and smooth models.** Passing from the discrete cycle $\mathbb{Z}/n$ to the circle $S^1$ recovers the de Rham picture, where the holonomy is the integral of a $1$-form and realizability is exactness. Each direction connects the elementary combinatorics developed here to the standard machinery of algebraic and differential topology.
+Given $g:T_{m,n}\to A$, the gauge shift of $(a,b)$ by $g$ is the field $(a^g,b^g)$ defined by
+
+$$
+a^g=a+\Delta_x g,
+$$
+
+$$
+b^g=b+\Delta_y g.
+$$
+
+The added gradient changes each edge label according to the difference between local reference values at its endpoints.
+
+### Theorem 5.2 (Curvature invariance)
+
+For every increment field $(a,b)$ and every gauge function $g$,
+
+$$
+C_{a^g,b^g}=C_{a,b}.
+$$
+
+**Proof sketch.** Curvature is additive in the edge field, so
+
+$$
+C_{a^g,b^g}=C_{a,b}+C_{\Delta_x g,\Delta_y g}.
+$$
+
+The second term vanishes by Lemma 3.4. Direct expansion yields the same conclusion by pairwise cancellation of mixed differences. $\square$
+
+### Theorem 5.3 (Period invariance)
+
+For every increment field $(a,b)$ and every gauge function $g$,
+
+$$
+P_x(a^g)=P_x(a),\qquad P_y(b^g)=P_y(b).
+$$
+
+**Proof sketch.** Additivity of finite sums gives
+
+$$
+P_x(a^g)=P_x(a)+P_x(\Delta_x g).
+$$
+
+The gradient period is zero by Lemma 3.5. The vertical argument is identical. $\square$
+
+### Theorem 5.4 (Gauge-Invariant Classification)
+
+For every gauge function $g$, the shifted field $(a^g,b^g)$ is developable if and only if $(a,b)$ is developable. More explicitly,
+
+$$
+(a^g,b^g)\text{ is developable}
+\quad\Longleftrightarrow\quad
+C_{a,b}=0\ \text{and}\ P_x(a)=0\ \text{and}\ P_y(b)=0.
+$$
+
+**Proof sketch.** Theorems 5.2 and 5.3 show
+
+$$
+\mathcal O(a^g,b^g)=\mathcal O(a,b).
+$$
+
+Apply Theorem 4.1 to either field. $\square$
+
+This result admits a second direct interpretation. If $(a,b)=(\Delta_x h,\Delta_y h)$, then
+
+$$
+(a^g,b^g)=(\Delta_x(h+g),\Delta_y(h+g)).
+$$
+
+Conversely, subtracting $g$ from a potential for the shifted field gives a potential for the original one. The obstruction proof is stronger conceptually because it identifies the gauge-invariant data that determine the answer.
+
+## 6. Examples and boundary cases
+
+### 6.1 A local defect
+
+Let $A=\mathbb Z$ and consider any periodic grid with at least one tile. Set all increments to zero except one horizontal edge, whose value is $1$. At a tile incident to that edge, curvature is nonzero. The field is therefore nondevelopable, regardless of its periods. The contradiction is visible within a small neighborhood.
+
+### 6.2 A flat but globally impossible waterfall
+
+On a $3\times3$ torus over $\mathbb R$, define
+
+$$
+a(i,j)=-1,
+\qquad
+b(i,j)=0
+$$
+
+for all vertices. Every tile has curvature
+
+$$
+-1+0-(-1)-0=0.
+$$
+
+The vertical period is $0$, but the horizontal period is
+
+$$
+P_x(a)=(-1)+(-1)+(-1)=-3.
+$$
+
+Thus the field is locally consistent and globally impossible. A traveler moving right returns to the same vertex after three steps while accumulating a drop of three units.
+
+Now apply the nonconstant checker gauge
+
+$$
+g(i,j)=i-j,
+$$
+
+where $i,j\in\{0,1,2\}$ denote the standard representatives and subtraction is taken in $\mathbb R$. The transformed edge values are no longer uniform because the representative jumps at the periodic boundary. Nevertheless, Theorems 5.2 and 5.3 give
+
+$$
+C_{a^g,b^g}=0,
+\qquad
+P_x(a^g)=-3,
+\qquad
+P_y(b^g)=0.
+$$
+
+No choice of this local reference makes the waterfall developable. In fact, Theorem 5.4 says that no gauge choice whatsoever can do so.
+
+### 6.3 A developable nonconstant field
+
+Choose any nonconstant periodic height $h:T_{m,n}\to A$ and set
+
+$$
+a=\Delta_x h,
+\qquad
+b=\Delta_y h.
+$$
+
+The resulting field may contain many nonzero increments, yet it has zero curvature and zero periods. For a concrete real-valued example on a $4\times3$ grid, let
+
+$$
+h(i,j)=i^2-2j
+$$
+
+using standard representatives. Its boundary increments include compensating jumps caused by periodic identification. Integrating the field reconstructs $h$ up to an additive constant.
+
+### 6.4 Degenerate dimensions
+
+The theorem remains valid when $m=1$ or $n=1$. A one-column or one-row torus contains loop edges, and the corresponding period remains essential. Positivity of $m$ and $n$ is required only so that the cyclic index sets are nonempty and the fundamental cycles are defined.
+
+### 6.5 Arbitrary additive coefficients
+
+Nothing in the proofs uses an order or norm. With $A=\mathbb Z/q\mathbb Z$, developability means consistency modulo $q$. With $A=\mathbb R^d$, each edge can encode a vector displacement, and the theorem applies componentwise. With a product group, several independent measurements can be checked simultaneously.
+
+## 7. Algorithms
+
+### Algorithm 7.1 (Obstruction computation)
+
+Given arrays $a$ and $b$ of shape $m\times n$:
+
+1. For every $(i,j)$, compute
+
+$$
+C(i,j)=a(i,j)+b(i+1,j)-a(i,j+1)-b(i,j).
+$$
+
+2. Compute
+
+$$
+P_x=\sum_{i=0}^{m-1}a(i,0),
+\qquad
+P_y=\sum_{j=0}^{n-1}b(0,j).
+$$
+
+3. Return $(C,P_x,P_y)$.
+
+The algorithm uses $O(mn)$ group operations and stores $O(mn)$ values if the full curvature array is retained. If only the decision is needed, it can stop at the first nonzero curvature and use $O(1)$ auxiliary storage.
+
+### Algorithm 7.2 (Developability decision)
+
+Compute the obstruction triple. Return “developable” exactly when every curvature entry and both periods are zero. Correctness is precisely Theorem 4.1. The running time is $O(mn)$, which is optimal up to constants when all input labels may need inspection.
+
+### Algorithm 7.3 (Potential reconstruction)
+
+When the obstruction vanishes, fix $h(0,0)=0$. First integrate horizontally along row $0$:
+
+$$
+h(i+1,0)=h(i,0)+a(i,0).
+$$
+
+Then integrate vertically in each column:
+
+$$
+h(i,j+1)=h(i,j)+b(i,j).
+$$
+
+Finally verify all horizontal edges and periodic closing edges. Theorem 4.1 guarantees success; explicit verification is useful for finite-precision or noisy data. Reconstruction takes $O(mn)$ operations and $O(mn)$ output storage. Any two reconstructed potentials differ by an additive constant when the grid is connected.
+
+### Algorithm 7.4 (Gauge-invariance audit)
+
+Given $(a,b)$ and $g$, form $(a^g,b^g)$ and compute both obstruction triples. Equality is guaranteed mathematically and serves as a diagnostic in numerical software. Exact integer or rational arithmetic gives exact equality. Floating-point implementations should compare with a scale-aware tolerance because cancellation may introduce roundoff.
+
+## 8. A distinct notion of infinite staircase
+
+The phrase “endless staircase” also appears in algebra, but not every infinite descent is a periodic contradiction.
+
+### Theorem 8.1 (Power-of-two filtration)
+
+For each nonnegative integer $k$, let
+
+$$
+I_k=2^k\mathbb Z.
+$$
+
+Then the sequence is strictly descending,
+
+$$
+I_0\supsetneq I_1\supsetneq I_2\supsetneq\cdots,
+$$
+
+and its intersection is
+
+$$
+\bigcap_{k=0}^{\infty}I_k=\{0\}.
+$$
+
+**Proof sketch.** Inclusion $I_{k+1}\subseteq I_k$ follows from $2^{k+1}\mathbb Z\subseteq2^k\mathbb Z$. It is strict because $2^k\in I_k$ but $2^k\notin I_{k+1}$. If an integer $z$ lies in every $I_k$, then every power of two divides $z$. A nonzero integer has finite absolute value; choosing $k$ with $2^k>|z|$ makes such divisibility impossible. Hence $z=0$. $\square$
+
+This theorem describes a filtration indexed by the nonnegative integers. It has a beginning and continues indefinitely; it does not identify a later level with an earlier one. A periodic geometric staircase, by contrast, is indexed around a closed cycle. Its impossibility is caused by nonzero additive holonomy on that cycle. The power-of-two filtration is therefore a boundary example that sharpens, rather than realizes, the Escher analogy.
+
+## 9. Cohomological interpretation
+
+The model is a discrete instance of cochain theory. Vertex functions are $0$-cochains, edge increments are $1$-cochains, and tile curvatures are $2$-cochains. The discrete gradient is the coboundary map from degree $0$ to degree $1$, while curvature is the next coboundary. The identity that gradients have zero curvature is the relation
+
+$$
+d^2=0.
+$$
+
+A zero-curvature field is closed. A developable field is exact. On a torus, closed need not imply exact because the first cohomology is nontrivial. The horizontal and vertical periods evaluate a closed field on generators of the two independent cycle directions. Their vanishing characterizes exactness.
+
+Gauge transformations add exact $1$-cochains. Closed-loop periods do not change under such additions. Thus the obstruction triple packages the local coboundary and the global cohomology class. This viewpoint predicts the extension to more general finite cell complexes: test curvature on $2$-cells and periods on generators of the first homology.
+
+## 10. Applications
+
+### 10.1 Phase unwrapping
+
+Sensors often observe phase modulo a fixed period. Neighboring phase differences can be represented as edge increments. Nonzero tile curvature signals a local residue, while nonzero global periods signal inconsistency caused by periodic boundary conditions. Gauge shifts correspond to changing local phase representatives.
+
+### 10.2 Depth integration in computer vision
+
+Estimated depth gradients must be integrated to recover a surface. Local curl tests detect incompatible neighboring estimates. On periodic textures or panoramas, global cycles add period constraints that ordinary local tests miss. The obstruction theorem separates these failure modes.
+
+### 10.3 Loop closure in robotics
+
+Relative displacement measurements along edges of a pose graph should sum to zero around closed loops. A gauge transformation changes the chosen origin at vertices but not loop error. The toroidal grid is a structured special case in which a small generating family of cycles gives a complete global test.
+
+### 10.4 Periodic material and texture design
+
+A repeated relief pattern may prescribe edge-to-edge height differences. Seamless fabrication requires zero local curvature and zero accumulated rise across each periodic direction. The same test applies before geometric embedding or metric constraints are considered.
+
+## 11. Scope and geometric semantics
+
+The additive theory does not by itself prove that every non-orientable three-manifold contains a Penrose triangle. Such a statement requires a definition of the purported object. A Penrose triangle depends not only on the topology of a loop but also on a projection, a depth-order relation, beam widths, intersections, and visibility. Moreover, an embedding and an immersion are distinct notions: an embedded surface cannot simultaneously be described merely as immersed without clarifying which structure is intended.
+
+Non-orientability concerns reversal of orientation under transport. The periodic increment obstruction concerns additive holonomy. A future theory may connect them using coefficients twisted by the orientation local system, but non-orientability alone does not supply the optical or order-theoretic data of a Penrose figure. Withholding an underspecified universal claim is mathematically necessary; the present classification applies exactly to the explicitly defined periodic increment model.
+
+Developability here also means integrability of prescribed increments, not automatically realization as a bendable sheet in three-dimensional Euclidean space. Metric developability imposes edge lengths, face shapes, and embedding conditions beyond additive height consistency. The obstruction theorem is a necessary foundational layer for such models, not a substitute for them.
+
+## 12. Discussion and future work
+
+The classification reveals a robust principle: local consistency and global consistency are independent. Curvature can vanish while holonomy remains nonzero, as the waterfall example demonstrates. Gauge transformations can alter every displayed edge while preserving both forms of inconsistency. This explains mathematically how an impossible staircase can look locally flawless and why relabeling cannot repair it.
+
+Several extensions are natural. On an arbitrary finite connected two-dimensional cell complex, one expects developability exactly when cellular curvature vanishes and periods vanish on a generating family of one-cycles. This would replace the two torus periods by a basis adapted to the complex.
+
+A certificate-extraction problem asks for the smallest witness of impossibility. On an $m\times n$ torus, local failure is witnessed by one tile. Global failure should admit a simple noncontractible cycle of controlled length, plausibly at most $m+n$.
+
+For Penrose-type beam configurations, a rigorous piecewise-linear semantics should specify projection and depth order. The relevant obstruction may be a cyclic depth-order cocycle rather than an ordinary height increment. Subdivision could then reduce realizability to acyclicity of that data.
+
+Non-orientable spaces suggest twisted increments valued in the orientation local system. One expects periods on the orientation double cover, together with anti-invariance under the deck transformation, to replace ordinary periods.
+
+Finally, metric realization asks when a flat, period-free increment field can be represented by a piecewise-linear developable surface with prescribed edge lengths. Additive integrability is only the first condition; each tile must also satisfy its geometric compatibility constraints.
 
 ## 13. Conclusion
 
-We have reduced the mystery of impossible figures to a single, elementary, and complete invariant. A cyclic figure carrying local reconciliation data in an abelian group is realizable if and only if its holonomy — the total increment around the loop — is trivial. This one equivalence proves the impossibility of the Penrose triangle and the Escher staircase, explains the non-orientability of the Möbius band and Klein bottle as an odd-holonomy phenomenon, identifies the impossibility class with all of $H^1 \cong A$, and, through a contrarian pair of examples, demonstrates that impossibility is irreducibly global. The multiplicative refinement classifies developable figures by their monodromy and refutes the naive local heuristic. Escher's staircases and Penrose's triangle are, at bottom, pictures of holonomy — the mathematics of what changes when you go around and come back.
+A periodic impossible figure is governed by a simple but complete obstruction. The tile curvature records local failure. Two periods record global failure around the fundamental directions of the torus. Their simultaneous vanishing is equivalent to the existence of a single-valued height function.
+
+Changing local height references adds a gradient. Mixed differences cancel around tiles, and gradient sums telescope around periodic cycles. Therefore curvature, periods, the obstruction triple, and developability are all gauge invariant.
+
+The theory distinguishes a truly periodic Escher staircase from an infinite but nonperiodic algebraic descent such as $2^k\mathbb Z$. It also marks the boundary between a precise additive model and broader geometric claims that require projection, orientation, or metric data. The central lesson is general: local increments become globally meaningful only after every contractible and noncontractible loop has been accounted for.

@@ -1,213 +1,204 @@
-"""
-The Topology of Impossible Objects: Escher Stairs and Klein Bottles
-===================================================================
+#!/usr/bin/env python3
+"""Numerical demonstrations of gauge-invariant periodic-grid obstructions.
 
-Numerical demonstrations of the holonomy theory of impossible figures.
-
-A cyclic figure with ``n`` overlapping patches carries local reconciliation
-data ``t[0], ..., t[n-1]`` valued in an abelian group.  The figure is
-*realizable* (buildable as an honest object) if and only if its **holonomy**
--- the total increment accumulated once around the loop -- is the identity.
-
-    * Additive model  (group = the reals):     holonomy = sum(t),   identity = 0
-    * Orientation     (group = Z/2):            holonomy = sum(t) % 2, identity = 0
-    * Multiplicative  (group = positive reals): monodromy = prod(t), identity = 1
-
-This script verifies:
-    - the Penrose triangle is impossible (holonomy = 3);
-    - a closed everywhere-ascending staircase is impossible;
-    - a Moebius / Klein gluing (odd number of flips) has no global orientation;
-    - impossibility is GLOBAL, not local (uniform-impossible vs distinct-realizable);
-    - the reconstructed gauge really induces the local data when holonomy vanishes;
-    - the multiplicative (developable-surface) model and its contrarian example.
-
-Self-contained: standard library only.
+The script uses exact integer arithmetic and no third-party dependencies. It
+computes curvature and torus periods, applies gauge shifts, reconstructs a
+height when possible, and contrasts periodic holonomy with the filtration
+2^k Z.
 """
 
 from __future__ import annotations
 
-from typing import List, Optional, Callable, TypeVar
+from dataclasses import dataclass
+from typing import Callable, Sequence
 
-T = TypeVar("T")
-
-
-# ---------------------------------------------------------------------------
-# Additive model (coefficients in the reals)
-# ---------------------------------------------------------------------------
-
-def holonomy(t: List[float]) -> float:
-    """Total additive increment accumulated once around the cyclic figure."""
-    return sum(t)
+Grid = list[list[int]]
 
 
-def is_realizable(t: List[float], tol: float = 1e-12) -> bool:
-    """A figure is realizable iff its holonomy vanishes."""
-    return abs(holonomy(t)) <= tol
+@dataclass(frozen=True)
+class Obstruction:
+    """Curvature table and the two fundamental periods."""
+
+    curvature: Grid
+    period_x: int
+    period_y: int
+
+    @property
+    def vanishes(self) -> bool:
+        return (
+            self.period_x == 0
+            and self.period_y == 0
+            and all(value == 0 for row in self.curvature for value in row)
+        )
 
 
-def reconstruct_gauge(t: List[float]) -> Optional[List[float]]:
+def validate_pair(a: Sequence[Sequence[int]], b: Sequence[Sequence[int]]) -> tuple[int, int]:
+    """Validate two nonempty rectangular grids and return (m, n).
+
+    Storage is row-major: grid[j][i] is the value at vertex (i, j).
     """
-    Return an explicit global height field h with h[i+1] - h[i] = t[i]
-    (indices modulo n), or None if the figure is impossible.
+    if not a or not a[0]:
+        raise ValueError("grids must be nonempty")
+    n, m = len(a), len(a[0])
+    if len(b) != n or any(len(row) != m for row in a) or any(len(row) != m for row in b):
+        raise ValueError("a and b must have the same nonempty rectangular shape")
+    return m, n
 
-    The gauge is the vector of partial sums: h[i] = t[0] + ... + t[i-1].
+
+def obstruction(a: Sequence[Sequence[int]], b: Sequence[Sequence[int]]) -> Obstruction:
+    """Compute tile curvature and horizontal/vertical torus periods exactly."""
+    m, n = validate_pair(a, b)
+    curvature = [
+        [
+            a[j][i]
+            + b[j][(i + 1) % m]
+            - a[(j + 1) % n][i]
+            - b[j][i]
+            for i in range(m)
+        ]
+        for j in range(n)
+    ]
+    return Obstruction(
+        curvature=curvature,
+        period_x=sum(a[0][i] for i in range(m)),
+        period_y=sum(b[j][0] for j in range(n)),
+    )
+
+
+def gradient(g: Sequence[Sequence[int]]) -> tuple[Grid, Grid]:
+    """Return the periodic horizontal and vertical discrete derivatives of g."""
+    if not g or not g[0] or any(len(row) != len(g[0]) for row in g):
+        raise ValueError("g must be a nonempty rectangular grid")
+    n, m = len(g), len(g[0])
+    dx = [[g[j][(i + 1) % m] - g[j][i] for i in range(m)] for j in range(n)]
+    dy = [[g[(j + 1) % n][i] - g[j][i] for i in range(m)] for j in range(n)]
+    return dx, dy
+
+
+def gauge_shift(a: Sequence[Sequence[int]], b: Sequence[Sequence[int]], g: Sequence[Sequence[int]]) -> tuple[Grid, Grid]:
+    """Add the discrete gradient of g to the increment field (a, b)."""
+    m, n = validate_pair(a, b)
+    if len(g) != n or any(len(row) != m for row in g):
+        raise ValueError("g must have the same shape as a and b")
+    dx, dy = gradient(g)
+    return (
+        [[a[j][i] + dx[j][i] for i in range(m)] for j in range(n)],
+        [[b[j][i] + dy[j][i] for i in range(m)] for j in range(n)],
+    )
+
+
+def increments_from_height(h: Sequence[Sequence[int]]) -> tuple[Grid, Grid]:
+    """Construct a developable increment field as the gradient of h."""
+    return gradient(h)
+
+
+def reconstruct_height(a: Sequence[Sequence[int]], b: Sequence[Sequence[int]]) -> Grid:
+    """Reconstruct a potential with value zero at (0, 0), or raise ValueError.
+
+    The obstruction test is complete: reconstruction is attempted exactly when
+    every tile curvature and both periods vanish.
     """
-    if not is_realizable(t):
-        return None
-    n = len(t)
-    h = [0.0] * n
-    running = 0.0
-    for i in range(n):
-        h[i] = running
-        running += t[i]
+    m, n = validate_pair(a, b)
+    obs = obstruction(a, b)
+    if not obs.vanishes:
+        raise ValueError(f"field is not developable: {obs}")
+
+    h = [[0 for _ in range(m)] for _ in range(n)]
+    for i in range(1, m):
+        h[0][i] = h[0][i - 1] + a[0][i - 1]
+    for i in range(m):
+        for j in range(1, n):
+            h[j][i] = h[j - 1][i] + b[j - 1][i]
+
+    aa, bb = increments_from_height(h)
+    if aa != [list(row) for row in a] or bb != [list(row) for row in b]:
+        raise ArithmeticError("internal reconstruction check failed")
     return h
 
 
-def verify_gauge(t: List[float], h: List[float], tol: float = 1e-9) -> bool:
-    """Check that h[i+1] - h[i] = t[i] cyclically."""
-    n = len(t)
-    return all(abs((h[(i + 1) % n] - h[i]) - t[i]) <= tol for i in range(n))
+def format_grid(grid: Sequence[Sequence[int]]) -> str:
+    """Format a rectangular integer grid for terminal output."""
+    return "\n".join("  " + " ".join(f"{value:4d}" for value in row) for row in grid)
 
 
-# ---------------------------------------------------------------------------
-# Orientation model (coefficients in Z/2)
-# ---------------------------------------------------------------------------
+def demo_global_waterfall() -> None:
+    """Show a flat 3x3 waterfall with nonzero horizontal holonomy."""
+    a = [[-1] * 3 for _ in range(3)]
+    b = [[0] * 3 for _ in range(3)]
+    before = obstruction(a, b)
+    g = [[i - j for i in range(3)] for j in range(3)]
+    shifted_a, shifted_b = gauge_shift(a, b, g)
+    after = obstruction(shifted_a, shifted_b)
 
-def holonomy_z2(flips: List[int]) -> int:
-    """Total orientation flip around the loop, modulo 2."""
-    return sum(f % 2 for f in flips) % 2
-
-
-def is_orientable(flips: List[int]) -> bool:
-    """A closed band is orientable iff its Z/2 holonomy is 0 (even flips)."""
-    return holonomy_z2(flips) == 0
-
-
-# ---------------------------------------------------------------------------
-# Multiplicative model (coefficients in the positive reals -> developable)
-# ---------------------------------------------------------------------------
-
-def monodromy(t: List[float]) -> float:
-    """Total multiplicative scaling accumulated once around the figure."""
-    prod = 1.0
-    for x in t:
-        prod *= x
-    return prod
+    print("1. Flat but globally impossible waterfall")
+    print("   curvature:")
+    print(format_grid(before.curvature))
+    print(f"   periods: ({before.period_x}, {before.period_y})")
+    print("   checker gauge:")
+    print(format_grid(g))
+    print("   shifted horizontal increments:")
+    print(format_grid(shifted_a))
+    print(f"   obstruction unchanged: {before == after}\n")
+    assert before == after and not before.vanishes
 
 
-def is_developable(t: List[float], tol: float = 1e-12) -> bool:
-    """A scaling figure is developable iff its monodromy equals 1."""
-    return abs(monodromy(t) - 1.0) <= tol
+def demo_developable_surface() -> None:
+    """Construct, gauge-shift, and reconstruct a nonconstant height field."""
+    original_h = [[i * i - 2 * j for i in range(4)] for j in range(3)]
+    a, b = increments_from_height(original_h)
+    g = [[(i + 2 * j) % 5 for i in range(4)] for j in range(3)]
+    shifted_a, shifted_b = gauge_shift(a, b, g)
+    recovered = reconstruct_height(shifted_a, shifted_b)
+    expected = [
+        [original_h[j][i] + g[j][i] - original_h[0][0] - g[0][0] for i in range(4)]
+        for j in range(3)
+    ]
+
+    print("2. Developable field and potential reconstruction")
+    print(f"   original obstruction vanishes: {obstruction(a, b).vanishes}")
+    print(f"   shifted obstruction vanishes:  {obstruction(shifted_a, shifted_b).vanishes}")
+    print("   reconstructed shifted height:")
+    print(format_grid(recovered))
+    print(f"   equals h + g up to a constant: {recovered == expected}\n")
+    assert recovered == expected
 
 
-def reconstruct_scale_gauge(t: List[float]) -> Optional[List[float]]:
-    """Partial-product gauge h with h[i+1] / h[i] = t[i], or None if impossible."""
-    if not is_developable(t):
-        return None
-    n = len(t)
-    h = [1.0] * n
-    running = 1.0
-    for i in range(n):
-        h[i] = running
-        running *= t[i]
-    return h
+def demo_local_defect() -> None:
+    """Show a single altered edge producing nonzero tile curvature."""
+    a = [[0] * 4 for _ in range(3)]
+    b = [[0] * 4 for _ in range(3)]
+    a[1][2] = 1
+    obs = obstruction(a, b)
+    nonzero = [(i, j, obs.curvature[j][i]) for j in range(3) for i in range(4) if obs.curvature[j][i] != 0]
+
+    print("3. Local impossibility certificate")
+    print(f"   nonzero curvature tiles (i, j, value): {nonzero}")
+    print(f"   developable: {obs.vanishes}\n")
+    assert nonzero and not obs.vanishes
 
 
-# ---------------------------------------------------------------------------
-# Demonstrations
-# ---------------------------------------------------------------------------
+def demo_power_of_two_filtration() -> None:
+    """Illustrate strict descent and finite approximations to zero intersection."""
+    levels = 7
+    witnesses = [(k, 2**k, 2**k % (2 ** (k + 1)) != 0) for k in range(levels)]
+    bound = 64
+    common = [z for z in range(-bound, bound + 1) if all(z % (2**k) == 0 for k in range(levels))]
 
-def demo_penrose_triangle() -> None:
-    print("=" * 68)
-    print("Penrose triangle: three beams, each receding by one unit")
-    print("=" * 68)
-    t = [1.0, 1.0, 1.0]
-    print(f"  local increments t = {t}")
-    print(f"  holonomy          = {holonomy(t)}")
-    print(f"  realizable?       = {is_realizable(t)}   (impossible: holonomy = 3)")
-    print()
-
-
-def demo_escher_staircase() -> None:
-    print("=" * 68)
-    print("Escher staircase: a closed flight where every step ascends")
-    print("=" * 68)
-    for t in ([1.0, 2.0, 1.5, 0.5], [0.3] * 6):
-        print(f"  ascending steps t = {t}")
-        print(f"  holonomy          = {holonomy(t):.4f} > 0  ->  impossible")
-    print()
-
-
-def demo_global_not_local() -> None:
-    print("=" * 68)
-    print("Impossibility is GLOBAL, not local")
-    print("=" * 68)
-    uniform = [1.0, 1.0, 1.0]
-    distinct = [1.0, 2.0, -3.0]
-    print(f"  uniform data  t = {uniform}  (all equal) ->",
-          "IMPOSSIBLE" if not is_realizable(uniform) else "realizable",
-          f"(holonomy {holonomy(uniform)})")
-    print(f"  distinct data t = {distinct} (all differ) ->",
-          "impossible" if not is_realizable(distinct) else "REALIZABLE",
-          f"(holonomy {holonomy(distinct)})")
-    h = reconstruct_gauge(distinct)
-    assert h is not None and verify_gauge(distinct, h)
-    print(f"  reconstructed height field h = {h}  (verified: h[i+1]-h[i] = t[i])")
-    print()
-
-
-def demo_klein_mobius() -> None:
-    print("=" * 68)
-    print("Moebius band / Klein bottle: orientation flips modulo 2")
-    print("=" * 68)
-    mobius = [1]                # one self-gluing with a flip
-    cylinder = [1, 1]           # two flips cancel
-    klein = [1, 0, 1, 1]        # odd number of flips
-    for name, flips in [("Moebius band", mobius),
-                        ("plain cylinder", cylinder),
-                        ("Klein loop", klein)]:
-        ok = is_orientable(flips)
-        print(f"  {name:16s} flips={flips!s:14s} holonomy={holonomy_z2(flips)} "
-              f"-> {'orientable' if ok else 'NON-orientable'}")
-    print()
-
-
-def demo_developable() -> None:
-    print("=" * 68)
-    print("Multiplicative model: developable (flat) surfaces")
-    print("=" * 68)
-    g = 1.5
-    scaling_triangle = [g, g, g]           # monodromy g^3 != 1
-    cancelling = [g, 1.0 / g]              # both nontrivial, monodromy 1
-    print(f"  scaling triangle t = {scaling_triangle}  monodromy = {monodromy(scaling_triangle):.4f}"
-          f"  -> {'developable' if is_developable(scaling_triangle) else 'NOT developable'}")
-    print(f"  cancelling pair  t = {cancelling}  monodromy = {monodromy(cancelling):.4f}"
-          f"  -> {'DEVELOPABLE' if is_developable(cancelling) else 'not developable'}")
-    print("    (contrarian: both factors != 1, yet the figure is developable)")
-    h = reconstruct_scale_gauge(cancelling)
-    print(f"    reconstructed scale gauge h = {h}")
-    print()
-
-
-def demo_surjectivity() -> None:
-    print("=" * 68)
-    print("Impossibility is a complete, real-valued invariant (H^1 = R)")
-    print("=" * 68)
-    for r in (-2.0, 0.0, 3.14, 100.0):
-        t = [r, 0.0, 0.0]  # holonomy = r for any target r
-        print(f"  target class r = {r:8.4f}  ->  figure with holonomy {holonomy(t):8.4f}"
-              f"  ({'realizable' if is_realizable(t) else 'impossible'})")
-    print()
+    print("4. Nonperiodic power-of-two filtration")
+    print("   strictness witnesses (k, 2^k, excluded from next level):")
+    print(f"   {witnesses}")
+    print(f"   integers in [-{bound}, {bound}] divisible by 2^k for k < {levels}: {common}")
+    print("   This is infinite descent, not a closed periodic ascent.\n")
+    assert all(flag for _, _, flag in witnesses)
 
 
 def main() -> None:
-    demo_penrose_triangle()
-    demo_escher_staircase()
-    demo_global_not_local()
-    demo_klein_mobius()
-    demo_developable()
-    demo_surjectivity()
-    print("All demonstrations completed.")
+    """Run all exact demonstrations."""
+    print("Gauge-Invariant Obstructions to Periodic Impossible Figures\n")
+    demo_global_waterfall()
+    demo_developable_surface()
+    demo_local_defect()
+    demo_power_of_two_filtration()
 
 
 if __name__ == "__main__":
