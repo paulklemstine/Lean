@@ -1,53 +1,35 @@
-# Computational Evidence — Information-Theoretic Undetectability of Surveillance
+# Computational Evidence
 
-We record the small-case computations that motivated the theorems in
-`RateDistortion.lean`.
+## Small-case calculations
 
-## 1. Counting the configuration space
+For binary strings of length two, the Hamming-ball volume formula
+\[
+|B_D|=\sum_{i=0}^{D}\binom{2}{i}(2-1)^i
+\]
+gives the following table.
 
-A directed social network on `n` nodes is an adjacency relation
-`Fin n → Fin n → Bool`, so the number of instantaneous configurations is
+| Distortion radius \(D\) | Ball volume | Covering inequality |
+|---:|---:|---:|
+| 0 | 1 | \(4 \le R\) |
+| 1 | 3 | \(4 \le 3R\) |
+| 2 | 4 | \(4 \le 4R\) |
 
-| n | # configurations = 2^(n·n) | bits = n·n |
-|---|-----------------------------|------------|
-| 1 | 2                           | 1          |
-| 2 | 16                          | 4          |
-| 3 | 512                         | 9          |
-| 4 | 65536                       | 16         |
-| 5 | 33 554 432                  | 25         |
+Thus a radius-one decoder needs at least two distinct records, while radius two permits a single record. The radius-one inequality is included as the proved concrete theorem `binary_pair_radius_one_rate_bound`.
 
-The bit count `n²` is exactly `log₂` of the configuration count, confirming the
-prediction of the reconstruction bound `directed_network_bits`.
+For a directed network with two nodes observed at three times, there are
+\(2^{3\cdot 2^2}=2^{12}=4096\) possible histories. Exact reconstruction therefore requires an observation alphabet of at least 4096 records, or at least 12 binary digits.
 
-## 2. Perfect reconstruction forces an injective channel
+## Sequence identification
 
-For `n = 1` there are two configurations (the self-loop present or absent). An
-observation channel `obs` into an alphabet of size `1` cannot separate them, so
-no decoder recovers the network — matching `privacy_no_recon`. With an alphabet
-of size `2`, the identity channel reconstructs perfectly, matching the tightness
-statement `exists_surveillance_iff` (`|S| ≤ |M|`).
+For binary length \(N\), the radius-\(D\) volume is the partial binomial sum
+\(\sum_{i=0}^{D}\binom Ni\). No external sequence identification is needed: the closed formula is already the relevant invariant and is established by the imported Hamming-ball theorem.
 
-## 3. Rate–distortion covering, sampled
+## Counterexample hunt
 
-Take the Hamming dissimilarity `d(x,y) = #{edges where x, y differ}` on the
-`n = 2` network space (`|S| = 16`).
+The unguarded claim that perfect privacy always forbids bounded-error reconstruction is false. At distortion radius equal to the diameter, a constant observation and constant decoder reconstruct every state within budget. The surviving theorem therefore states the precise necessary condition: under perfect privacy, one distortion ball must cover the entire source space.
 
-* Distortion budget `D = 0`: every ball is a single point (`B = 1`), so the
-  covering bound gives `rate ≥ 16` — perfect surveillance.
-* Distortion budget `D = 1`: each ball (a configuration together with its
-  single-edge neighbours) has `B = 1 + 4 = 5`, so `rate ≥ ⌈16/5⌉ = 4`.
-* Distortion budget `D = 4`: one ball already covers all `16` configurations
-  (`B = 16`), so `rate ≥ 1` — perfect privacy becomes feasible.
+The claim that dynamic exact-reconstruction cost is always positive also fails at horizon zero or for a network with zero nodes. The exclusivity theorem consequently assumes at least one time and at least one node.
 
-This is precisely the `rate = 1` corner isolated by `privacy_forces_ball_cover`:
-a private observer can meet a distortion budget only once a single ball swallows
-the whole network.
+## Interpretation
 
-## 4. Counterexample hunt
-
-We searched for a channel on a two-configuration network that is simultaneously
-constant (perfectly private) and injective (perfectly surveilling). None exists:
-a constant map identifies the two configurations while an injective map separates
-them, a direct contradiction. This is the finite-network mutual-exclusivity
-theorem `privacy_surv_exclusive`, and no counterexample was found for any tested
-`n ≥ 1`.
+These cases distinguish three regimes: exact reconstruction forces one record per source state; intermediate distortion produces a genuine covering constraint; and distortion at least the diameter makes perfect privacy compatible with reconstruction. The calculations are instances of the proved general volume and covering formulas rather than standalone numerical experiments.

@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "2152d45c",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions: Compressed Universal Posets\n\n## 1. Regularity-guided half-coordinate labeling\n\n**Conjecture.** For every positive real number η, all sufficiently large finite posets on n points a",
-      "quality_score": 0.61,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-15T20:45:21",
-      "title": "ArXiv paper: Even smaller universal posets"
-    },
-    {
       "cycle_id": "9b262bd9",
       "domain": "Tropical",
       "key_insight": "# Future Directions\n\n## 1. Closed predecessor-free membership criterion\n\n**Conjecture.** For every irrational `α > (3 + √5)/2` and positive iteration\ndepth `n`, membership of `x` in the `n`th iterated",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-19T11:16:18",
       "title": "Isomorphisms of Meaning: When Structures Collide"
+    },
+    {
+      "cycle_id": "e170790e",
+      "domain": "Applications",
+      "key_insight": "# Future directions\n\n1. **Interval self-maps.** Add a theorem that a continuous self-map of a nonempty compact\n   real interval has a fixed point, then distinguish existence from attraction by\n   form",
+      "quality_score": 0.67,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-19T11:34:25",
+      "title": "Social Credit Scores as Topological Invariants"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-19T11:16:18",
+  "last_updated": "2026-07-19T11:34:25",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "c83ba873",
-        "quality": 0.75,
-        "theorems": 0,
-        "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
-      },
-      {
         "cycle_id": "6e1b10f7",
         "quality": 0.74,
         "theorems": 46,
@@ -3141,6 +3135,12 @@
         "quality": 0.72,
         "theorems": 0,
         "title": "Isomorphisms of Meaning: When Structures Collide"
+      },
+      {
+        "cycle_id": "e170790e",
+        "quality": 0.67,
+        "theorems": 9,
+        "title": "Social Credit Scores as Topological Invariants"
       }
     ],
     "Bridges": [

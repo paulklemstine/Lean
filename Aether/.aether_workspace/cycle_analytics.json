@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-19T11:16:18.638961+00:00",
+  "last_updated": "2026-07-19T11:34:25.623953+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -28841,6 +28841,48 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-19T11:16:18.599436+00:00",
       "title": "Isomorphisms of Meaning: When Structures Collide"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 33,
+      "domain": "Applications",
+      "duration_seconds": 1078.447375535965,
+      "end_time": 1784460812.5260856,
+      "files_integrated": 5,
+      "job_id": "e170790e",
+      "outcome_quality": 0.67,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v26",
+      "phase_b_skip_reason": "low_quality_near_miss",
+      "phase_b_skipped": true,
+      "prompt_version": "v26",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.62,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.72,
+        "composite": 0.514,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.66,
+        "novelty": 0.58,
+        "proof_depth": 0.68,
+        "usefulness": 0.78
+      },
+      "quality_score": 0.67,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1784459734.07871,
+      "strategy_count": 0,
+      "theorem_count": 9,
+      "theorem_novelty_disproof": 2,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 6,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-19T11:34:25.442333+00:00",
+      "title": "Social Credit Scores as Topological Invariants"
     }
   ]
 }

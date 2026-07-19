@@ -30,7 +30,7 @@ Concretely, encoding a colouring by its set of *red* edges
 -/
 
 import Mathlib
-import Applications.Combinatorics.Ramsey
+import Applications.Ramsey
 
 open scoped Classical
 open SimpleGraph Finset
