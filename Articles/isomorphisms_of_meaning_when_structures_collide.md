@@ -1,225 +1,107 @@
 # Isomorphisms of Meaning: When Structures Collide
 
-Imagine two identical twins raised in different countries. Genetically, they are
-indistinguishable; every biological test returns the same answer for both. And
-yet each has a name, a history, a set of friends who would never confuse one for
-the other. The twins are *structurally* the same but *semantically* different.
-Mathematics has its own version of identical twins — objects that are the same in
-every structural respect yet carry different meanings — and the gap between
-"same structure" and "same meaning" turns out to be measurable with a piece of
-classical number theory.
+Two subway maps can look utterly different and still describe the same network. One bends a river into a neat horizontal line; another preserves geography. Stations move across the page, colors change, and names may be translated, yet the pattern of connections survives. If every station and every link in one map has exactly one counterpart in the other, then the maps share a structure.
 
-This article is about that gap. It tells the story of how the collection of ways
-to identify one structure with another forms a beautifully symmetric object, how
-every structural truth flows freely across such an identification while the
-individual *meaning* of elements slips away, and how the exact amount of that
-slippage is counted by one of the oldest functions in number theory: Euler's
-totient.
+Mathematics has a precise word for this: **isomorphism**. An isomorphism is a reversible relabeling that preserves all the relationships under discussion. It is one of the discipline’s most powerful ideas because it tells us which differences are merely cosmetic. But it also raises a difficult question. If two systems are structurally identical, must they mean the same thing?
 
-## The clock that lies about which way it turns
+The answer developed here is both strong and carefully limited. For a fixed language of observations, structural isomorphism preserves every truth expressible in that language. Chains of analogies preserve truth as well, and an analogy can be rewritten in new coordinates without changing what it carries. Yet an interpretation attached outside the observational structure need not be preserved. Structure determines structural truth; it does not, by itself, determine every possible meaning.
 
-Start with the clearest example: a clock. A clock face with $n$ hours is, to a
-mathematician, the cyclic group $\mathbb{Z}/n\mathbb{Z}$ — the numbers
-$0, 1, 2, \dots, n-1$ where addition wraps around. On a $12$-hour clock,
-$9 + 5 = 2$, because five hours after nine o'clock is two o'clock.
+## A small language for navigating possible worlds
 
-Now ask a deceptively simple question: which element is "$1$"? You would say the
-one-hour mark. But suppose an alien picked up your clock and decided to read it
-*backwards* — treating what you call $11$ as *its* "$1$", what you call $10$ as
-its "$2$", and so on. Every arithmetic fact the alien writes down is true.
-Nine plus five is still two in its labeling. The addition table is identical.
-There is no experiment, no equation, no structural property whatsoever that could
-prove the alien wrong. The clock read forwards and the clock read backwards are
-the same structure — but they disagree about the *meaning* of "$1$".
+Imagine a collection of worlds. From each world, some other worlds are accessible: they may be possible next states of a program, alternative scenarios in a plan, rooms reachable in a game, or hypotheses compatible with current evidence. At each world, certain atomic observations are true.
 
-This backwards reading is the map $x \mapsto -x$, negation. It is a genuine
-*automorphism*: a symmetry of the structure onto itself that preserves all the
-arithmetic. And whenever $n \geq 3$, negation is *not* the identity — the mark
-$1$ genuinely differs from the mark $-1 = n-1$, yet the two are perfectly
-interchangeable as far as the additive structure is concerned. This is the first
-and simplest instance of our theme:
+A **relational model** consists of three ingredients:
 
-> **Nontriviality of negation.** For any $n \geq 3$, the negation map on
-> $\mathbb{Z}/n\mathbb{Z}$ is a symmetry of the group that is different from doing
-> nothing. Consequently $+1$ and $-1$ play structurally identical roles, and no
-> property expressible in the language of the group can tell them apart.
+1. a set $W$ of worlds;
+2. a transition relation $R\subseteq W\times W$, where $R(w,x)$ means that $x$ is accessible from $w$;
+3. a valuation $V(w,a)$ saying whether atomic observation $a$ holds at world $w$.
 
-## The space of all identifications
+From atoms we build formulas using falsity $\bot$, implication $\varphi\to\psi$, and necessity $\Box\varphi$. Their meanings are recursive. An atom $a$ is true at $w$ exactly when $V(w,a)$ holds. Falsity is never true. The implication $\varphi\to\psi$ is true when truth of $\varphi$ entails truth of $\psi$. Finally,
 
-The alien and you are engaged in the same activity: choosing a *dictionary* that
-translates one copy of the clock into another. In mathematics, such a dictionary
-is called an *isomorphism* — a perfect, reversible correspondence that respects
-all structure. Two structures are called isomorphic when at least one such
-dictionary exists, and the grand principle of modern mathematics is that
-isomorphic structures are "the same for all practical purposes."
+$$
+w\models\Box\varphi
+\quad\text{exactly when}\quad
+\text{every }x\text{ with }R(w,x)\text{ satisfies }\varphi.
+$$
 
-But here is the subtlety that drives everything: *there is usually more than one
-dictionary*. The forwards reading and the backwards reading are two different
-isomorphisms between the same pair of structures. How are all the possible
-dictionaries organized?
+This compact language already describes safety, inevitability, and constraints across branching possibilities. Other connectives can be defined from the primitives. For example, negation is $\neg\varphi:=\varphi\to\bot$.
 
-The answer is elegant. Fix any *one* dictionary $e$ translating a structure $G$
-into a structure $H$. Then every *other* dictionary can be obtained from $e$ by
-first applying a symmetry of $G$ and then applying $e$. In symbols, the recipe
-$u \mapsto u \circ e$ turns each symmetry $u$ of $G$ into a fresh dictionary, and
-*every* dictionary arises this way, exactly once.
+## The structural invariance theorem
 
-> **The isomorphism of isomorphisms.** Once a single identification of $G$ with
-> $H$ is chosen, the collection of *all* identifications of $G$ with $H$ is in
-> perfect one-to-one correspondence with the group of symmetries of $G$ — and
-> equally with the group of symmetries of $H$.
+Suppose we compare two models. A **model isomorphism** consists of a bijection $f$ between their worlds and a bijection $g$ between their atomic vocabularies. These bijections must preserve both kinds of observable structure:
 
-This is the "isomorphism of isomorphisms" — a symmetry not among the elements of
-a structure, but among the very *dictionaries* that relate two structures.
-Mathematicians call the resulting object a *torsor*: a space that looks exactly
-like a group but has no distinguished "origin." A torsor is like a sheet of paper
-with a grid drawn on it but no marked center; every point looks like every other,
-and you can only measure *differences*. Any two dictionaries differ by a unique
-symmetry, and that difference is the only thing that is canonically defined.
+$$
+R'(f(w),f(x))\Longleftrightarrow R(w,x)
+$$
 
-There is no "correct" dictionary, just as there is no correct way to say which
-end of the clock is the "beginning." Choosing one is an act of meaning-making
-that the mathematics itself refuses to perform for you.
+and
 
-## Truth travels; meaning stays home
+$$
+V'(f(w),g(a))\Longleftrightarrow V(w,a).
+$$
 
-Once you accept that a dictionary is just a choice, a natural worry appears: does
-it *matter* which dictionary we pick? For the vast majority of what mathematics
-cares about, the answer is a resounding **no** — and this is exactly why
-isomorphism is so powerful.
+A formula is transported by replacing every atom $a$ with $g(a)$ while leaving falsity, implication, and the box operator unchanged.
 
-Every *structural* fact crosses a dictionary unchanged. If an element has order
-$7$ — meaning you must add it to itself seven times to return to zero — then its
-translate under any dictionary also has order $7$. If a structure is cyclic —
-generated by repeatedly adding a single element — then so is any structure
-isomorphic to it. If one has $60$ elements, so does the other. More sweepingly:
+The central result is the **Structural Invariance Theorem**: for every formula $\varphi$ and every world $w$,
 
-> **Transport of truth.** Let $P$ be *any* property of structures that is
-> respected by isomorphism. Then $P$ holds for $G$ if and only if it holds for
-> any structure $H$ isomorphic to $G$. No formal system whose statements respect
-> isomorphism can distinguish two isomorphic structures.
+$$
+f(w)\models' g(\varphi)
+\Longleftrightarrow
+w\models\varphi.
+$$
 
-This is a liberating theorem and, read the other way, a humbling one. It says
-that the entire edifice of structural mathematics — every theorem you could state
-in the language of groups — is *blind* to the difference between the forwards
-clock and the backwards clock. Truth is transported perfectly. But the very
-completeness of that transport is what dooms any attempt to recover *meaning*:
-if every structural statement holds equally for $+1$ and $-1$, then no structural
-statement can ever pick out which one you "meant."
+In words, simultaneously rename the worlds and the observable vocabulary, preserving transitions and atomic facts, and every modal statement keeps its truth value.
 
-Meaning, unlike truth, stays home. And we can now say precisely how much of it
-gets lost.
+Why does this hold? The proof follows the construction of formulas. It is immediate for atoms because the valuation is preserved, and immediate for falsity. For implication, apply the result to its two parts. The interesting case is necessity. Suppose $\Box\varphi$ is true at $w$. Any successor of $f(w)$ in the second model comes from a unique successor of $w$, because $f$ is reversible and preserves transitions. The inner formula is true at that source successor, so its renamed version is true at the target successor. The reverse direction uses the inverse bijection in exactly the same way.
 
-## Counting the ambiguity: Euler enters
+A direct consequence is the **Theory Invariance Corollary**: a formula is true at every world of one model exactly when its transported formula is true at every world of an isomorphic model. Isomorphic models therefore validate the same theory, once vocabulary is translated.
 
-If the different dictionaries are counted by the symmetries of the structure,
-then the *amount of ambiguity* in identifying a clock is simply the *number of
-symmetries* of the clock. So: how many symmetries does the $n$-hour clock have?
+## Analogies that compose
 
-A symmetry of $\mathbb{Z}/n\mathbb{Z}$ is completely determined by where it sends
-the generator $1$; and to be a valid symmetry, $1$ must be sent to another
-generator — an element $k$ that, by repeated addition, still reaches every hour.
-The generators of the $n$-hour clock are exactly the numbers $k$ between $1$ and
-$n$ that share no common factor with $n$. The count of those numbers is, by
-definition, **Euler's totient function** $\varphi(n)$.
+An analogy is rarely isolated. We may compare a melody to a geometric pattern, that pattern to a sequence of moves, and those moves to a story. A useful mathematics of analogy must allow correspondences to compose.
 
-> **The measure of meaning is Euler's totient.** The number of symmetries of the
-> $n$-hour clock — equivalently, the number of distinct ways to identify any
-> cyclic structure of size $n$ with the standard clock $\mathbb{Z}/n\mathbb{Z}$ —
-> is exactly $\varphi(n)$.
+Model isomorphisms do. There is an identity analogy from a model to itself, every analogy has a reverse, and two consecutive analogies compose into a third. These operations obey the familiar laws of a **groupoid**: arrows can be composed whenever endpoints match, composition is associative, identities do nothing, and reversal undoes an arrow.
 
-So the ambiguity of meaning is not vague hand-waving; it is a specific integer.
-The $12$-hour clock admits $\varphi(12) = 4$ genuinely different labelings.
-A clock with a prime number $p$ of hours admits $\varphi(p) = p - 1$ labelings —
-maximally ambiguous, every non-zero hour is an equally legitimate "one o'clock."
-And the $2$-hour clock (a light switch: on and off) has $\varphi(2) = 1$: here,
-and only in trivially small cases, meaning is unambiguous, because there is
-nothing to swap.
+This gives the **Compositional Truth-Transport Theorem**. If one isomorphism carries a model $M$ to $N$ and a second carries $N$ to $P$, then their composite carries every truth at every world of $M$ to the corresponding truth in $P$. No semantic drift occurs merely because the translation was performed in stages.
 
-This is the quantitative heart of the story. A concept from an ancient corner of
-number theory — devised to count fractions in lowest terms — turns out to measure
-the semantic freedom hiding inside a structure.
+There is a subtler freedom too: we can change the representation of the source and target while retaining the analogy between them. Suppose $L$ identifies an old source with a new source, $E$ is the original analogy, and $R$ identifies the old target with a new target. The transported analogy is
 
-## When structures collide, and when they refuse
+$$
+L^{-1}\circ E\circ R,
+$$
 
-The flip side of "same structure, different meaning" is "different faces, same
-structure." The most famous instance is the **Chinese Remainder Theorem**. It
-says that keeping track of a single hour on a $6$-hour clock is *exactly the same*
-as keeping track of a pair: one hour on a $2$-clock and one on a $3$-clock,
-simultaneously. Knowing that it is $5$ o'clock on the $6$-clock is the same
-information as knowing it is $1$ on the $2$-clock and $2$ on the $3$-clock.
+with composition read along the matching systems. This is an “isomorphism of isomorphisms”: not merely a relabeling of objects, but a coherent re-expression of the correspondence itself. The **Conjugated-Analogy Invariance Theorem** states that this re-expressed analogy preserves every transported modal truth.
 
-> **A collision (Chinese Remainder Theorem).** The $6$-hour clock
-> $\mathbb{Z}/6\mathbb{Z}$ and the paired clock
-> $\mathbb{Z}/2\mathbb{Z} \times \mathbb{Z}/3\mathbb{Z}$ are one and the same
-> additive structure, wearing two semantically different faces — a single residue
-> versus a pair of residues.
+This matters for analogical reasoning in the spirit of Copycat. A correspondence may be discovered under one description and then reframed under another. “Successor” in a letter sequence might become “one step clockwise” in a diagram. The groupoid laws identify the structural core that remains stable through such reframing. They do not explain all human analogy, but they isolate a rigorous backbone: reversible correspondence, composition, and invariance under changes of coordinates.
 
-Two utterly different-looking descriptions, one underlying structure. This is a
-collision: the twins meeting and discovering they are twins.
+## Where meaning escapes structure
 
-But not every pair of same-sized structures collides — and it is crucial that
-they don't, or "isomorphism" would be an empty notion. Consider two clocks of
-size $4$. One is the ordinary $4$-hour clock $\mathbb{Z}/4\mathbb{Z}$. The other
-is a pair of light switches, $\mathbb{Z}/2\mathbb{Z} \times \mathbb{Z}/2\mathbb{Z}$,
-the *Klein four-group*, where flipping either switch twice returns it to start.
-Both have four elements. Both are perfectly good structures. But they are **not**
-isomorphic:
+Now comes the collision. Enrich a relational model with an **external interpretation**, a label $I(w)$ attached to each world but deliberately omitted from the observational vocabulary. An isomorphism is **meaning-compatible** when it also preserves those labels:
 
-> **A refusal to collide.** The $4$-hour clock and the two-switch panel both have
-> four elements, yet no dictionary can identify them. The single-clock has an
-> element of order $4$ (the hour $1$, which takes four steps to return to zero);
-> the two-switch panel has none — every non-zero element returns to zero in just
-> two steps. Order is a structural invariant, so it certifies the two are
-> genuinely different.
+$$
+I'(f(w))=I(w)
+$$
 
-Here the *transport of truth* does its second job. Because "possesses an element
-of order $4$" is respected by isomorphism, and one structure has such an element
-while the other does not, the two can *never* be identified. The same principle
-that hides the difference between $+1$ and $-1$ inside a single clock is exactly
-what reveals the difference between two distinct clocks. Structural invariants
-are simultaneously the reason isomorphic twins are indistinguishable and the
-reason non-isomorphic strangers can be told apart.
+for every world $w$.
 
-## The analogy engine
+Consider the smallest possible model: one world, one atom, a self-transition, and the atom true. Make two copies with exactly the same structure. In the first copy, attach the external label $\mathrm{false}$; in the second, attach $\mathrm{true}$.
 
-Step back and this mathematics starts to look like a theory of *analogy*. When we
-say "the heart is to the body as a pump is to a machine," we are proposing a
-dictionary between two structures — mapping roles in one onto roles in the other.
-Douglas Hofstadter built an entire model of human analogical thought, the
-*Copycat* architecture, around the idea that making an analogy means mapping the
-*role* an object plays in one situation onto the corresponding role in another.
-His model famously exhibited "slippage": more than one analogy is often equally
-valid, and creative thought lives in the tension between them.
+The identity correspondence is a model isomorphism. By structural invariance, every formula in the modal language has the same truth value in both copies. This includes formulas of arbitrary size and arbitrary modal depth. Nevertheless, the external interpretations disagree, and the isomorphism is not meaning-compatible.
 
-Our torsor is the mathematical skeleton of that idea. An analogy is a dictionary
-— an isomorphism. The competing, equally valid analogies form a torsor over the
-symmetry group of the target. The "slippage" Hofstadter observed — the fact that
-there is no single forced answer, only a space of equally good ones — is
-precisely the absence of a basepoint in a torsor. And the *number* of competing
-analogies between two clocks is, once more, $\varphi(n)$.
+This is the **Meaning-Collision Theorem**: there exist structurally isomorphic interpreted models such that every formula in the chosen observational language agrees under the isomorphism, while their external interpretations are unequal.
 
-> **The slippage principle.** The space of equally valid analogies between two
-> isomorphic structures is a torsor under the symmetry group of either one. There
-> is no canonical "best" analogy; there is only a symmetric space of alternatives,
-> and its size measures the conceptual freedom the analogy allows.
+The theorem does not say that no language could distinguish the labels. Add an atom explicitly naming the interpretation and the collision disappears. The point is sharper: information absent from an observational signature cannot be recovered merely by inspecting all truths expressible in that signature. The boundary is not between mathematics and meaning in general. It is between what a language observes and what has been left outside it.
 
-## What the twins teach us
+## Why the boundary matters
 
-The lesson of the identical twins, made rigorous, is this. Structure and meaning
-are different things. Structure is what survives translation — the arithmetic, the
-orders, the cardinalities, everything a formal statement can grasp. Meaning is the
-labeling we impose on top, the choice of which element is "one," and it is
-precisely the part that *no* structural statement can ever recover. The two are
-related by the strictest possible accounting: the space of meanings compatible
-with a given structure is a torsor over its symmetry group, and its size, in the
-cyclic case, is $\varphi(n)$.
+In software, two state machines may have identical transition graphs while one state represents “payment authorized” and the other “emergency shutdown.” Structural analysis can certify matching behavior relative to chosen observations, but domain interpretation still depends on how states connect to the world.
 
-There is something quietly profound in that. It means the ambiguity of meaning is
-not a failure of rigor to be cleaned up, but a genuine, quantifiable feature of
-the mathematical landscape — an invariant as real as the number of elements. When
-structures collide, we discover hidden sameness. When they refuse to collide, we
-discover genuine difference. And in the space between an object and its mirror
-image, in the interchangeable roles of $+1$ and $-1$, we find that mathematics,
-for all its precision, leaves room for the irreducibly semantic act of choosing
-what things mean.
+In data science, two databases may be identical up to renaming rows and columns. An algorithm sensitive only to relational structure cannot know whether a node represents a patient, a city, or a protein. Privacy techniques sometimes exploit this gap, while re-identification attacks show how quickly it closes when external information is added.
+
+In scientific modeling, equations can recur across fluid flow, electrical circuits, and population dynamics. The shared form licenses powerful analogies, but voltage is not literally pressure and population is not charge. The isomorphism carries inferential structure; the interpretation tells us what the variables concern.
+
+The same distinction appears whenever information passes through an interface. A navigation service might expose roads, junctions, and travel times while hiding whether a route is scenic, politically sensitive, or emotionally important to a traveler. Any process restricted to the exposed fields can make reliable, representation-independent deductions about connectivity. It cannot manufacture the hidden attributes from structural agreement alone. Better inference requires a richer interface, not merely a longer calculation. This is why the theorem concerns every formula: it rules out the hope that enough clever nesting of the existing observations will somehow reconstruct a feature that was never represented.
+
+And in artificial intelligence, analogy engines must balance two tasks. They must recognize invariant patterns beneath superficial changes, yet avoid mistaking structural fit for complete semantic identity. The results here separate those tasks cleanly. Structural correspondence guarantees preservation of truths formulated in the shared language. Choosing, extending, or grounding that language is an additional act.
+
+The lesson is not that structure is weak. On the contrary, structure is strong enough to preserve an unlimited family of formulas, stable under chains of analogies and changes in representation. The lesson is that every claim of sameness has a scope. An isomorphism says: with respect to these objects, these relations, and these observations, nothing distinguishable has changed. Meaning can coincide with that structure—but when meaning lives outside it, mathematics tells us exactly why the collision cannot be seen.

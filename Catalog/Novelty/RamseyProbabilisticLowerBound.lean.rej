@@ -4,8 +4,8 @@
  -/
  
  import Mathlib
--import Applications.Combinatorics.Ramsey
-+import Applications.Ramsey
+-import Applications.Ramsey
++import Applications.Combinatorics.Ramsey
  
  open scoped Classical
  

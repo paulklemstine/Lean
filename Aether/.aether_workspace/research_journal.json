@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "0ebc2749",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions\n\nThe present development settles the algebraic core: exact period classifies all return times, a primitive orbit has the expected number of distinct points, and every positive crit",
-      "quality_score": 0.77,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-18T10:22:04",
-      "title": "The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
-    },
-    {
       "cycle_id": "a7676cc9",
       "domain": "Applications",
       "key_insight": "# Future directions\n\n## What is formalized\n\n`Core.lean` gives a self-contained ordinal analysis of explicit countably branching winning game trees. It constructs:\n\n- `omegaGame`, with value exactly `ω",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-19T09:49:32",
       "title": "The Poincare Conjecture for Data: Manifold Detection via Persistent Homology"
+    },
+    {
+      "cycle_id": "86896469",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\n## What is now established\n\nFor an arbitrary activation map `a : X → (Fin k → Bool)`, the correct finite semantic space is its range `Feasible a`. The formal development proves:",
+      "quality_score": 0.76,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-19T11:15:50",
+      "title": "Stone Duality for Machine Learning: Neural Networks as Geometric Realizations"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "2152d45c",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions: Compressed Universal Posets\n\n## 1. Regularity-guided half-coordinate labeling\n\n**Conjecture.** For every positive real number η, all sufficiently large finite posets on n points a",
-      "quality_score": 0.61,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-15T20:42:25",
-      "title": "ArXiv paper: Even smaller universal posets"
-    },
     {
       "cycle_id": "9b262bd9",
       "domain": "Tropical",
@@ -2501,6 +2491,16 @@
       "theorem_count": 8,
       "timestamp": "2026-07-19T10:24:24",
       "title": "The Geometry of Consensus: Arrow's Theorem as Curvature"
+    },
+    {
+      "cycle_id": "86896469",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\n## What is now established\n\nFor an arbitrary activation map `a : X → (Fin k → Bool)`, the correct finite semantic space is its range `Feasible a`. The formal development proves:",
+      "quality_score": 0.76,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-19T11:15:50",
+      "title": "Stone Duality for Machine Learning: Neural Networks as Geometric Realizations"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-19T10:24:24",
+  "last_updated": "2026-07-19T11:15:50",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "f86cfe8a",
-        "quality": 0.76,
-        "theorems": 12,
-        "title": "The Topology of Knotted Light: How Laser Beams Get Tangled"
-      },
-      {
         "cycle_id": "6e1376aa",
         "quality": 0.8,
         "theorems": 14,
@@ -3637,6 +3631,12 @@
         "quality": 0.79,
         "theorems": 0,
         "title": "Hypergraph Ramsey Theory: Beyond Graphs"
+      },
+      {
+        "cycle_id": "86896469",
+        "quality": 0.76,
+        "theorems": 0,
+        "title": "Stone Duality for Machine Learning: Neural Networks as Geometric Realizations"
       }
     ],
     "NumberTheory": [

@@ -1,409 +1,379 @@
-# Isomorphisms of Meaning: When Structures Collide
+# Isomorphisms of Meaning: Structural Invariance, Analogical Transport, and Semantic Underdetermination
+
+**Aristotle**  
+**19 July 2026**
 
 ## Abstract
 
-Isomorphic mathematical structures are indistinguishable by any predicate that
-respects isomorphism: all structural truth is transported across an
-identification. Yet the identification itself is not unique, and the residual
-freedom — the failure of the structure to pin down the individual *meaning* of
-its elements — is a genuine, measurable quantity. We formalize this phenomenon in
-the concrete setting of additive groups, and cyclic groups
-$\mathbb{Z}/n\mathbb{Z}$ in particular. Our central structural observation is that
-the set of isomorphisms between two isomorphic objects is a **torsor** over the
-automorphism group of either endpoint: fixing any one identification puts all
-identifications in canonical bijection with the symmetries of the domain, and
-equally with those of the codomain. We prove that every isomorphism-invariant
-predicate has the same truth value on isomorphic groups (transport of truth), and
-that whenever the automorphism group is nontrivial the identification is genuinely
-ambiguous (non-preservation of meaning). We then quantify the ambiguity: the
-number of ways to identify a cyclic group of order $n$ with $\mathbb{Z}/n\mathbb{Z}$
-is exactly Euler's totient $\varphi(n)$. Complementary number-theoretic
-incarnations include the Chinese Remainder collision
-$\mathbb{Z}/6\mathbb{Z} \cong \mathbb{Z}/2\mathbb{Z} \times \mathbb{Z}/3\mathbb{Z}$
-and the non-collision of $\mathbb{Z}/4\mathbb{Z}$ with the Klein four-group. We
-close by interpreting the torsor of isomorphisms as the mathematical skeleton of
-analogical reasoning in the spirit of Hofstadter's Copycat architecture, with the
-automorphism group measuring "conceptual slippage."
+This paper separates two claims that are often conflated in discussions of structuralism and analogy: invariance of truth under structural equivalence, and invariance of meaning. We study relational modal models whose data consist of worlds, a transition relation, and a valuation of atomic observations. An isomorphism simultaneously renames worlds and atoms while preserving transitions and valuations. We prove that satisfaction of every formula generated from atoms, falsity, implication, and necessity is invariant under such an isomorphism. Consequently, global validity is invariant, and truth transport remains stable under composition. Identity, reversal, and composition organize model isomorphisms into a groupoid. Conjugation by changes of coordinates gives a precise “isomorphism of isomorphisms,” and preserves transported truth.
 
-**Keywords:** cyclic groups, automorphism group, torsor, Euler's totient,
-structural invariance, Chinese Remainder Theorem, Klein four-group, analogy.
-
----
+We then add an interpretation layer external to the model signature. Two one-world, one-atom models are structurally identical and agree on every modal formula, yet receive opposite Boolean interpretations. Thus structural equivalence preserves every truth expressible in the fixed observational language but need not preserve unconstrained extra-structural meaning. The result is intentionally language-relative: extending the vocabulary to name the external interpretation removes the indistinguishability. We discuss consequences for analogical reasoning, representation independence, state-transition systems, scientific models, and Copycat-style architectures, and give finite algorithms for checking isomorphisms, evaluating formulas, and transporting analogies.
 
 ## 1. Introduction
 
-A guiding slogan of modern mathematics is that isomorphic objects are
-interchangeable: anything provable about one is provable about the other. This is
-both true and, on reflection, incomplete. It is true at the level of *structure* —
-of properties preserved by isomorphism. It is silent at the level of *meaning* —
-of the concrete labels we attach to individual elements. The purpose of this paper
-is to make that distinction precise and, remarkably, to *measure* it.
-
-Consider the cyclic group $\mathbb{Z}/n\mathbb{Z}$, the standard model of a clock
-with $n$ hours. The map $x \mapsto -x$ is an automorphism: it preserves every
-equation. For $n \geq 3$ it is not the identity, so the elements $1$ and $-1$ are
-structurally interchangeable — no property expressible in the language of additive
-groups can distinguish them. This is a microcosm of a general phenomenon. Whenever
-two isomorphic structures are compared, the identification between them is
-determined only up to a symmetry, and the ambiguity is governed by the
-automorphism group.
-
-Our contributions are:
-
-1. **The isomorphism of isomorphisms (§3).** We show that the set of isomorphisms
-   between two isomorphic additive groups is a torsor: after fixing one
-   identification, all identifications correspond bijectively to automorphisms of
-   the domain, and to automorphisms of the codomain. Any two identifications
-   differ by a unique automorphism.
-2. **Transport of truth (§4).** Every isomorphism-invariant predicate — including
-   element order, cyclicity, and cardinality as special cases — has the same truth
-   value on isomorphic groups.
-3. **Non-preservation of meaning (§5).** A nontrivial automorphism yields a
-   genuinely different identification; the correspondence of individual elements
-   is not determined by the abstract structure.
-4. **The totient measures ambiguity (§6).** The number of self-identifications of
-   $\mathbb{Z}/n\mathbb{Z}$ — hence the number of identifications of any cyclic
-   group of order $n$ with it — is exactly $\varphi(n)$.
-5. **Collisions and non-collisions (§7).** The Chinese Remainder Theorem is a
-   collision of two faces of one structure; the distinction between
-   $\mathbb{Z}/4\mathbb{Z}$ and the Klein four-group is a certified
-   non-collision.
-6. **An analogy-theoretic reading (§8).** The torsor of isomorphisms models the
-   space of equally valid analogies between two structures, formalizing the notion
-   of "slippage."
-
----
-
-## 2. Preliminaries and notation
-
-We work with additive groups. For additive groups $G$ and $H$, an *isomorphism*
-is a bijection $e : G \to H$ satisfying $e(x + y) = e(x) + e(y)$; we write
-$G \cong H$ and denote the set of all such isomorphisms by $\mathrm{Iso}(G, H)$.
-Every isomorphism has an inverse isomorphism $e^{-1}$, and isomorphisms compose;
-we write $g \circ f$ for "first $f$, then $g$." An *automorphism* of $G$ is an
-isomorphism $G \to G$; the automorphisms form a group $\mathrm{Aut}(G)$ under
-composition, with identity $\mathrm{id}_G$.
-
-For a natural number $n \geq 1$, $\mathbb{Z}/n\mathbb{Z}$ is the additive group of
-integers modulo $n$. The *additive order* $\operatorname{ord}(a)$ of an element
-$a$ is the least positive integer $m$ with $m \cdot a = 0$ (and $0$ if no such $m$
-exists). A group is *cyclic* if it is generated by a single element. We write
-$|G|$ for the cardinality (number of elements) of $G$. **Euler's totient**
-$\varphi(n)$ is the number of integers $k$ with $1 \le k \le n$ and
-$\gcd(k, n) = 1$.
-
-A **torsor** (principal homogeneous space) under a group $\Gamma$ is a nonempty
-set $T$ equipped with a free and transitive action of $\Gamma$. Equivalently,
-after choosing any basepoint $t_0 \in T$, the map $\gamma \mapsto \gamma \cdot t_0$
-is a bijection $\Gamma \to T$; the choice of $t_0$ is not canonical, so $T$ "looks
-like" $\Gamma$ but has no distinguished origin.
-
----
-
-## 3. The isomorphism of isomorphisms
-
-Fix isomorphic additive groups $G$ and $H$ and a single identification
-$e \in \mathrm{Iso}(G, H)$. The following two results say that $\mathrm{Iso}(G, H)$
-is simultaneously a torsor under $\mathrm{Aut}(G)$ (acting on the domain side) and
-under $\mathrm{Aut}(H)$ (acting on the codomain side).
-
-> **Theorem 3.1 (Isomorphism of isomorphisms, domain version).** For any fixed
-> $e \in \mathrm{Iso}(G, H)$, the map
-> $$ \Phi_e : \mathrm{Aut}(G) \longrightarrow \mathrm{Iso}(G, H), \qquad \Phi_e(u) = e \circ u, $$
-> is a bijection, with inverse $f \mapsto e^{-1} \circ f$.
-
-*Proof sketch.* Both composites are the identity: $e^{-1} \circ (e \circ u) = u$
-and $e \circ (e^{-1} \circ f) = f$, because $e^{-1} \circ e = \mathrm{id}_G$ and
-$e \circ e^{-1} = \mathrm{id}_H$. Composition of isomorphisms is again an
-isomorphism, so $\Phi_e$ is well defined and its stated inverse is well defined.
-$\square$
-
-> **Theorem 3.2 (Isomorphism of isomorphisms, codomain version).** For any fixed
-> $e \in \mathrm{Iso}(G, H)$, the map
-> $$ \Psi_e : \mathrm{Iso}(G, H) \longrightarrow \mathrm{Aut}(H), \qquad \Psi_e(f) = f \circ e^{-1}, $$
-> is a bijection, with inverse $u \mapsto u \circ e$.
-
-*Proof sketch.* Symmetric to Theorem 3.1, composing on the codomain side.
-$\square$
-
-Combining the two bijections yields $\mathrm{Aut}(G) \cong \mathrm{Iso}(G, H)
-\cong \mathrm{Aut}(H)$ as sets, so in the finite case $|\mathrm{Aut}(G)| =
-|\mathrm{Iso}(G, H)| = |\mathrm{Aut}(H)|$ whenever $\mathrm{Iso}(G, H)$ is
-nonempty. The absence of a canonical basepoint is the content of the next two
-results.
-
-> **Proposition 3.3 (Difference of identifications).** Any two identifications
-> $f, g \in \mathrm{Iso}(G, H)$ differ by an automorphism of the domain:
-> $$ g = f \circ (f^{-1} \circ g), \qquad f^{-1} \circ g \in \mathrm{Aut}(G). $$
+Structural reasoning identifies systems by their pattern of relations rather than by the names of their elements. A graph remains the same graph after its vertices are permuted; a transition system retains its behavior after states are consistently renamed; a scientific model may recur in several domains under different interpretations of its variables. Isomorphism captures this invariance by specifying a reversible correspondence that preserves the selected structure.
 
-*Proof sketch.* Immediate from associativity and $f \circ f^{-1} = \mathrm{id}_H$;
-the factor $f^{-1} \circ g$ is a composite of isomorphisms $G \to H \to G$, hence
-an automorphism of $G$. $\square$
+A stronger and more controversial inference sometimes follows: if two systems are structurally indistinguishable, then they have the same meaning. That conclusion is not licensed without specifying what counts as observable and where interpretation resides. The distinction can be made mathematically exact.
 
-> **Proposition 3.4 (Uniqueness of the connecting automorphism).** Right
-> composition by a fixed isomorphism is injective: if $f \in \mathrm{Iso}(G, H)$
-> and $u, v \in \mathrm{Aut}(G)$ satisfy $f \circ u = f \circ v$, then $u = v$.
+Our setting is propositional modal semantics. Its models are simple enough to admit a complete analysis and rich enough to represent branching processes, accessibility, necessity, safety, and repeated observation. We allow an isomorphism to rename both the state space and the atomic vocabulary. This two-sorted treatment matters: analogies often translate predicates as well as objects.
 
-*Proof sketch.* Compose on the left with $f^{-1}$; since $f^{-1} \circ f =
-\mathrm{id}_G$, we get $u = v$. Equivalently, apply the injectivity of $f$
-pointwise: $f(u(x)) = f(v(x))$ forces $u(x) = v(x)$ for all $x$. $\square$
+The main positive result is a structural invariance theorem. If worlds, atoms, transitions, and valuations are transported coherently, then every formula has the same truth value before and after transport. The proof is an induction on formula construction. Its decisive step is the modal operator: the inverse world correspondence converts an arbitrary successor in the target into a successor in the source.
 
-Propositions 3.3 and 3.4 together say the action of $\mathrm{Aut}(G)$ on
-$\mathrm{Iso}(G, H)$ is transitive and free — precisely the torsor property.
+The algebra of correspondences supplies a second layer. Isomorphisms admit identities, inverses, and composition. They therefore form a groupoid, and truth transport is functorial along its arrows. Moreover, changing coordinates at both endpoints conjugates an analogy into a new one. This produces a precise structural interpretation of an “isomorphism of isomorphisms”: a correspondence itself may be re-represented without loss of invariant content.
 
----
+The negative result concerns external meaning. We attach an arbitrary interpretation to worlds but exclude it from the observational signature. Two structurally identical singleton models receive opposite Boolean labels. Every modal formula agrees between them, while the interpretations disagree. The example establishes semantic underdetermination relative to the specified language, not an unrestricted impossibility theorem. If the language is enlarged by a symbol that names the label, it can distinguish the models immediately.
 
-## 4. Transport of truth
+This boundary is useful in applications. Representation-independent computation depends on positive invariance. Semantic grounding, schema alignment, and analogy assessment must heed the negative result. An analogy can preserve all facts expressible in a chosen interface while failing to preserve facts that the interface omits.
 
-We now record that structure is transported perfectly across an identification.
-Throughout, $e \in \mathrm{Iso}(G, H)$.
+## 2. Modal relational models
 
-> **Theorem 4.1 (Order preservation).** For every $a \in G$,
-> $\operatorname{ord}(e(a)) = \operatorname{ord}(a)$.
+### 2.1 Syntax
 
-*Proof sketch.* Because $e$ is an additive bijection, $m \cdot e(a) = e(m \cdot a)$
-and $e(m \cdot a) = 0 \iff m \cdot a = 0$. The two elements therefore satisfy the
-same "vanishing after $m$ steps" conditions, so their least such $m$ coincide.
-$\square$
+Let $A$ be a set of atomic observations. The set $\mathcal F(A)$ of formulas is generated by the grammar
 
-> **Theorem 4.2 (Cyclicity preservation).** If $G$ is cyclic and $G \cong H$,
-> then $H$ is cyclic.
+$$
+\varphi ::= a \mid \bot \mid (\varphi\to\psi) \mid \Box\varphi,
+\qquad a\in A.
+$$
 
-*Proof sketch.* A surjective homomorphic image of a cyclic group is cyclic: if $g$
-generates $G$, then $e(g)$ generates the image $e(G) = H$. $\square$
+Thus formulas are finite trees. The connectives falsity, implication, and necessity are primitive. Familiar operations may be defined in the usual way; for example,
 
-> **Theorem 4.3 (Cardinality preservation).** $|G| = |H|$.
+$$
+\neg\varphi := \varphi\to\bot,
+\qquad
+\Diamond\varphi := \neg\Box\neg\varphi.
+$$
 
-*Proof sketch.* An isomorphism is in particular a bijection of underlying sets.
-$\square$
+Only the primitive grammar is needed for the results below.
 
-The three theorems above are instances of a single schema.
+A bijection $g:A\to B$ induces a **renaming map** $g_*:\mathcal F(A)\to\mathcal F(B)$ recursively:
 
-> **Theorem 4.4 (Structural invariance).** Let $P$ be a predicate on additive
-> groups that is *transported by isomorphism*: whenever $A \cong B$, $P(A)$ implies
-> $P(B)$. Then for isomorphic groups $G \cong H$ we have $P(G) \iff P(H)$.
+$$
+\begin{aligned}
+g_*(a)&=g(a),\\
+g_*(\bot)&=\bot,\\
+g_*(\varphi\to\psi)&=g_*(\varphi)\to g_*(\psi),\\
+g_*(\Box\varphi)&=\Box g_*(\varphi).
+\end{aligned}
+$$
 
-*Proof sketch.* The forward direction is the hypothesis applied to $e : G \cong H$;
-the backward direction applies it to $e^{-1} : H \cong G$. $\square$
+This operation changes only the atomic vocabulary; it preserves the logical shape and modal depth of a formula.
 
-Theorem 4.4 is the precise sense in which *no formal system distinguishes
-isomorphic structures*: any predicate whose truth respects isomorphism — which
-includes every property definable in the language of the structure — takes the
-same value on both. Truth is transported; nothing structural is lost.
+### 2.2 Models and satisfaction
 
----
+A **relational modal model** over $A$ is a triple
 
-## 5. Non-preservation of meaning
+$$
+M=(W,R,V),
+$$
 
-The completeness of transport in §4 is exactly what makes *meaning* — the identity
-of individual elements — irrecoverable when there is symmetry.
+where $W$ is a set of worlds, $R\subseteq W\times W$ is a transition or accessibility relation, and $V:W\times A\to\{\mathrm{false},\mathrm{true}\}$ is a valuation. We write $R(w,x)$ when $x$ is accessible from $w$, and write $V(w,a)$ for the assertion that atom $a$ holds at $w$.
 
-> **Theorem 5.1 (Ambiguity of identification).** Let $f \in \mathrm{Iso}(G, H)$
-> and let $u \in \mathrm{Aut}(G)$ with $u \neq \mathrm{id}_G$. Then
-> $f \circ u \neq f$. Consequently, distinct nontrivial automorphisms of the
-> domain produce genuinely distinct identifications with the same codomain.
+Satisfaction $M,w\models\varphi$ is defined recursively:
 
-*Proof sketch.* If $f \circ u = f = f \circ \mathrm{id}_G$, then Proposition 3.4
-(uniqueness of the connecting automorphism) forces $u = \mathrm{id}_G$, contrary
-to hypothesis. $\square$
+$$
+\begin{aligned}
+M,w\models a &\quad\Longleftrightarrow\quad V(w,a),\\
+M,w\models\bot &\quad\Longleftrightarrow\quad \mathrm{false},\\
+M,w\models\varphi\to\psi
+&\quad\Longleftrightarrow\quad
+(M,w\models\varphi)\Rightarrow(M,w\models\psi),\\
+M,w\models\Box\varphi
+&\quad\Longleftrightarrow\quad
+\forall x\in W,\ R(w,x)\Rightarrow M,x\models\varphi.
+\end{aligned}
+$$
 
-Thus whenever $\mathrm{Aut}(G)$ is nontrivial, there are at least two distinct
-identifications of $G$ with $H$ that agree on nothing structural (by §4) yet
-disagree on the concrete correspondence of elements. No structural predicate can
-select the "intended" one; the choice is semantic, not mathematical.
+A formula is **valid in $M$** when $M,w\models\varphi$ for every $w\in W$.
 
----
+### 2.3 Structural isomorphism
 
-## 6. Number-theoretic incarnations and the totient
+Let $M=(W,R,V)$ be a model over atoms $A$, and let $N=(X,S,U)$ be a model over atoms $B$. A **model isomorphism** $e:M\cong N$ is a pair of bijections
 
-We specialize to cyclic groups, where every quantity becomes explicit.
+$$
+f:W\to X,
+\qquad
+g:A\to B,
+$$
 
-> **Theorem 6.1 (Negation is a nontrivial automorphism).** For $n \geq 3$, the map
-> $\nu : \mathbb{Z}/n\mathbb{Z} \to \mathbb{Z}/n\mathbb{Z}$, $\nu(x) = -x$, is an
-> automorphism with $\nu \neq \mathrm{id}$.
+such that, for every $w,x\in W$ and $a\in A$,
 
-*Proof sketch.* Negation is always an additive automorphism. If $\nu =
-\mathrm{id}$ then $\nu(1) = 1$, i.e. $-1 = 1$, i.e. $2 \equiv 0 \pmod n$, so
-$n \mid 2$ and $n \le 2$, contradicting $n \ge 3$. $\square$
+$$
+S(f(w),f(x))\Longleftrightarrow R(w,x)
+$$
 
-> **Corollary 6.2 (Two distinct self-identifications).** For $n \geq 3$ the
-> identity and negation are two distinct automorphisms of $\mathbb{Z}/n\mathbb{Z}$;
-> in particular $1$ and $-1$ play interchangeable structural roles, and no
-> predicate of the additive group distinguishes them.
+and
 
-*Proof sketch.* Combine Theorem 5.1 with Theorem 6.1. $\square$
+$$
+U(f(w),g(a))\Longleftrightarrow V(w,a).
+$$
 
-The full count of self-identifications is the totient.
+Both directions are essential. An embedding may preserve existing arrows without reflecting all target arrows; that weaker notion does not support the unrestricted invariance theorem below.
 
-> **Theorem 6.3 (Totient count of automorphisms).** For $n \geq 1$,
-> $$ |\mathrm{Aut}(\mathbb{Z}/n\mathbb{Z})| = \varphi(n). $$
+## 3. Structural invariance of truth
 
-*Proof sketch.* An additive automorphism of $\mathbb{Z}/n\mathbb{Z}$ is determined
-by the image of the generator $1$, which must again be a generator; the generators
-are exactly the residues $k$ with $\gcd(k, n) = 1$. Equivalently, additive
-automorphisms correspond to multiplication by a unit of the ring $\mathbb{Z}/n\mathbb{Z}$,
-so $\mathrm{Aut}(\mathbb{Z}/n\mathbb{Z}) \cong (\mathbb{Z}/n\mathbb{Z})^\times$,
-whose order is $\varphi(n)$ by definition. $\square$
+### Theorem 1 (Pointed structural invariance)
 
-> **Corollary 6.4 (The measure of meaning).** For any cyclic group $G$ of order
-> $n$, the number of identifications of $G$ with $\mathbb{Z}/n\mathbb{Z}$ is
-> exactly $\varphi(n)$. The "meaning" of the elements of $G$ is $\varphi(n)$-fold
-> ambiguous.
+Let $e:M\cong N$ be a model isomorphism with world bijection $f$ and atom bijection $g$. For every $w\in W$ and every $\varphi\in\mathcal F(A)$,
 
-*Proof sketch.* Since $G \cong \mathbb{Z}/n\mathbb{Z}$, the torsor bijections of
-§3 give $|\mathrm{Iso}(G, \mathbb{Z}/n\mathbb{Z})| =
-|\mathrm{Aut}(\mathbb{Z}/n\mathbb{Z})| = \varphi(n)$ by Theorem 6.3. $\square$
+$$
+N,f(w)\models g_*(\varphi)
+\quad\Longleftrightarrow\quad
+M,w\models\varphi.
+$$
 
-**Illustrations.** $\varphi(2) = 1$ (a two-element group has a unique
-identification — no ambiguity); $\varphi(p) = p - 1$ for prime $p$ (maximal
-ambiguity: every nonzero element is an equally legitimate generator);
-$\varphi(12) = 4$ (the $12$-hour clock admits four genuinely different labelings).
+#### Proof sketch
 
----
+Proceed by structural induction on $\varphi$.
 
-## 7. Collisions and non-collisions
+If $\varphi=a$ is atomic, the conclusion is exactly preservation and reflection of the valuation:
 
-Two further number-theoretic phenomena round out the picture: structures that
-*should* be identified, and structures that must not be.
+$$
+U(f(w),g(a))\Longleftrightarrow V(w,a).
+$$
 
-> **Theorem 7.1 (Chinese Remainder collision).** There is an isomorphism of
-> additive groups
-> $$ \mathbb{Z}/6\mathbb{Z} \;\cong\; \mathbb{Z}/2\mathbb{Z} \times \mathbb{Z}/3\mathbb{Z}. $$
-> Hence a single residue modulo $6$ and a pair of residues modulo $2$ and $3$ are
-> two semantically different faces of one and the same additive structure. In
-> particular, cardinalities agree: $|\mathbb{Z}/6\mathbb{Z}| =
-> |\mathbb{Z}/2\mathbb{Z} \times \mathbb{Z}/3\mathbb{Z}| = 6$.
+If $\varphi=\bot$, both sides are false. If $\varphi=\alpha\to\beta$, the induction hypotheses identify the truth values of $\alpha$ and $g_*(\alpha)$, and of $\beta$ and $g_*(\beta)$. The two implications therefore agree.
 
-*Proof sketch.* Since $\gcd(2,3) = 1$, the map $x \mapsto (x \bmod 2, x \bmod 3)$
-is an additive homomorphism $\mathbb{Z}/6\mathbb{Z} \to \mathbb{Z}/2\mathbb{Z}
-\times \mathbb{Z}/3\mathbb{Z}$; it is injective because $2 \mid x$ and $3 \mid x$
-force $6 \mid x$, and both sides have $6$ elements, so it is a bijection. The
-cardinality claim then follows from Theorem 4.3. $\square$
+Let $\varphi=\Box\alpha$. Assume first that $M,w\models\Box\alpha$, and take any $y\in X$ satisfying $S(f(w),y)$. Since $f$ is surjective, $y=f(x)$ for $x=f^{-1}(y)$. Reflection of transitions gives $R(w,x)$. Hence $M,x\models\alpha$, and the induction hypothesis gives $N,y\models g_*(\alpha)$. Since $y$ was arbitrary, $N,f(w)\models\Box g_*(\alpha)$.
 
-> **Theorem 7.2 (Non-collision of $\mathbb{Z}/4\mathbb{Z}$ with the Klein
-> four-group).** The groups $\mathbb{Z}/4\mathbb{Z}$ and $\mathbb{Z}/2\mathbb{Z}
-> \times \mathbb{Z}/2\mathbb{Z}$ each have four elements but are **not**
-> isomorphic.
+Conversely, suppose $N,f(w)\models\Box g_*(\alpha)$ and take $x\in W$ with $R(w,x)$. Transition preservation gives $S(f(w),f(x))$. The target box formula yields $N,f(x)\models g_*(\alpha)$, and the induction hypothesis yields $M,x\models\alpha$. Thus $M,w\models\Box\alpha$. This completes the induction. $\square$
 
-*Proof sketch.* The element $1 \in \mathbb{Z}/4\mathbb{Z}$ has order $4$. In
-$\mathbb{Z}/2\mathbb{Z} \times \mathbb{Z}/2\mathbb{Z}$ every element $a$ satisfies
-$2a = 0$, so no element has order $4$. "Possesses an element of order $4$" is
-transported by isomorphism (Theorem 4.1 applied to a generator), so it is an
-isomorphism-invariant predicate that holds for one group and fails for the other.
-By Theorem 4.4 the two cannot be isomorphic. $\square$
-
-Theorems 7.1 and 7.2 illustrate the two edges of the same blade. The order
-spectrum — the multiset of element orders — is an isomorphism invariant strong
-enough to hide the difference between $+1$ and $-1$ inside a single group (§5–6)
-and simultaneously to *separate* non-isomorphic groups of equal size.
-
----
-
-## 8. Isomorphisms as analogies: a Copycat reading
-
-The torsor of §3 admits a striking interpretation as a theory of analogy. In
-Hofstadter's *Copycat* architecture for analogical reasoning, making an analogy
-means mapping the *role* an object plays in one situation onto the corresponding
-role in another. A completed analogy is thus a structure-preserving
-correspondence — an isomorphism, in our terms — and the celebrated phenomenon of
-"slippage," in which several analogies are simultaneously defensible, is the
-observation that such correspondences are not unique.
-
-Our results formalize this. An analogy from $G$ to $H$ is an element of
-$\mathrm{Iso}(G, H)$. By Theorems 3.1–3.2 the space of equally valid analogies is a
-torsor under $\mathrm{Aut}(G)$ (equivalently $\mathrm{Aut}(H)$): there is no
-canonical "best" analogy, only a symmetric space of alternatives, and by
-Propositions 3.3–3.4 any two analogies differ by a unique symmetry, the exact
-"amount of slippage" between them. In the cyclic case (Corollary 6.4) the number
-of competing analogies is $\varphi(n)$.
-
-> **Principle (Slippage as a torsor).** The space of equally valid analogies
-> between two isomorphic structures is a torsor under the automorphism group of
-> either. Conceptual slippage is the difference of two analogies, an element of
-> that automorphism group; the freedom of the analogy is measured by the group's
-> size.
-
-This recasts a qualitative observation about human cognition as a precise
-statement about symmetry: creativity in analogy-making lives exactly in the
-absence of a basepoint.
-
----
-
-## 9. Algorithms
-
-The results above are effective for finite cyclic groups. We record the core
-computations.
-
-**Automorphism enumeration.** To enumerate $\mathrm{Aut}(\mathbb{Z}/n\mathbb{Z})$,
-list the units $U = \{k : 1 \le k \le n,\ \gcd(k, n) = 1\}$; each unit $k$ is the
-automorphism $x \mapsto kx \bmod n$. This produces exactly $\varphi(n)$
-automorphisms (Theorem 6.3).
-
-**Ambiguity count.** Given a cyclic group of order $n$, its meaning-ambiguity is
-$\varphi(n) = n \prod_{p \mid n} (1 - 1/p)$, computable by factoring $n$
-(Corollary 6.4).
-
-**Order spectrum test for isomorphism.** For finite abelian groups, compute the
-multiset of element orders of each; equal spectra are necessary for isomorphism
-and, for the small examples here, sufficient to separate non-isomorphic groups
-(Theorem 7.2). The Chinese Remainder collision (Theorem 7.1) is verified by
-checking that the coordinatewise map is a bijection.
-
----
-
-## 10. Discussion
-
-The picture that emerges is a clean separation between two layers of a
-mathematical object. The *structural* layer — orders, cyclicity, cardinality, and
-in general every isomorphism-invariant predicate — is transported perfectly across
-any identification (§4). The *semantic* layer — which concrete element deserves the
-name "$1$" — is precisely the part on which identifications may disagree, and it is
-irrecoverable exactly to the extent that the automorphism group is nontrivial
-(§5). The two layers are joined by the torsor structure of §3, and in the cyclic
-case the semantic ambiguity is measured by Euler's totient (§6).
-
-Two consequences deserve emphasis. First, the ambiguity of meaning is not a defect
-to be repaired but a genuine invariant, as objective as cardinality. Second, the
-very invariants that render isomorphic twins indistinguishable are what allow
-non-isomorphic strangers to be told apart (§7): structural invariance is a
-double-edged tool.
-
----
-
-## 11. Future directions
-
-- **From automorphism groups to full torsors.** Upgrade the set bijections of §3
-  to an equivariant statement: $\mathrm{Iso}(G, H)$ is a right torsor under
-  $\mathrm{Aut}(G)$ and a left torsor under $\mathrm{Aut}(H)$, with commuting
-  actions, giving $|\mathrm{Iso}(G,H)| = |\mathrm{Aut}(G)| = |\mathrm{Aut}(H)|$
-  whenever nonempty, for arbitrary (not merely cyclic) groups.
-- **The totient bridge for general finite abelian groups.** By the structure
-  theorem, $\mathrm{Aut}(\bigoplus \mathbb{Z}/n_i)$ is a product of general linear
-  groups over residue rings; a general count of $|\mathrm{Aut}(A)|$ would quantify
-  meaning-ambiguity for every finite abelian $A$.
-- **Multiplicative and ring-theoretic collisions.** Mirror the additive
-  development for multiplicative and ring isomorphisms; a striking target is
-  $(\mathbb{Z}/p\mathbb{Z})^\times \cong \mathbb{Z}/(p-1)\mathbb{Z}$ for prime
-  $p$, a multiplicative structure that is secretly additive.
-- **Categorical formulation.** Rephrase structural invariance as: any functor to
-  truth values inverts isomorphisms; the "isomorphism of isomorphisms" becomes a
-  statement about the core groupoid, with $\mathrm{Aut}$ the categorical
-  automorphism group and $\mathrm{Iso}$ an $\mathrm{Aut}$-principal homogeneous
-  set.
-- **Logical / definability sharpening.** Strengthen structural invariance to a
-  definability statement: elements related by an automorphism satisfy the same
-  first-order formulas with parameters fixed by that automorphism.
-- **Copycat / analogy quantification.** Equip the analogy torsor with a metric
-  (e.g. via a Cayley graph of $\mathrm{Aut}$) to formalize "conceptual slippage"
-  between competing analogies as graph distance.
-
----
-
-## 12. Conclusion
-
-Structure and meaning are distinct. Structure is what survives every
-identification; meaning is the labeling no identification can force. The space of
-meanings compatible with a fixed structure is a torsor over its automorphism
-group, and for a cyclic group of order $n$ its size is Euler's totient
-$\varphi(n)$. Isomorphic structures preserve all truth but not all meaning — and
-the gap between the two is, at last, a number.
+The box case explains why reversibility is not cosmetic. To transfer truth from source to target, every target successor must have a source preimage whose accessibility is reflected. A merely forward-preserving map can leave additional target successors uncontrolled.
+
+### Corollary 2 (Invariance of valid theories)
+
+Under the hypotheses of Theorem 1, for every $\varphi\in\mathcal F(A)$,
+
+$$
+\bigl(\forall y\in X,\ N,y\models g_*(\varphi)\bigr)
+\quad\Longleftrightarrow\quad
+\bigl(\forall w\in W,\ M,w\models\varphi\bigr).
+$$
+
+#### Proof sketch
+
+For the forward implication, evaluate target validity at $f(w)$ and apply Theorem 1. For the reverse implication, write an arbitrary $y\in X$ as $f(f^{-1}(y))$, apply source validity at $f^{-1}(y)$, and then apply Theorem 1 in the opposite direction. $\square$
+
+The corollary says that an isomorphism preserves not merely selected facts but the entire transported modal theory. It is therefore impossible for a formula in this language to distinguish isomorphic pointed models once atoms are translated by $g$.
+
+## 4. The groupoid of analogies
+
+Structural analogies have an elementary but important algebra.
+
+**Identity.** Every model $M$ has an identity isomorphism $1_M:M\cong M$, using identity bijections on worlds and atoms.
+
+**Reversal.** Every $e:M\cong N$ has an inverse $e^{-1}:N\cong M$, using inverse bijections. Preservation equivalences reverse directly.
+
+**Composition.** If $e:M\cong N$ has bijections $(f,g)$ and $h:N\cong P$ has bijections $(k,\ell)$, their composite $h\circ e:M\cong P$ has world map $k\circ f$ and atom map $\ell\circ g$. Transition and valuation preservation follow by chaining the two biconditionals.
+
+These operations satisfy associativity, identity, and inverse laws because bijections do. Models and their isomorphisms consequently form a groupoid.
+
+### Theorem 3 (Compositional truth transport)
+
+Let $e:M\cong N$ and $h:N\cong P$. For every world $w$ of $M$ and every formula $\varphi$ over its atomic vocabulary,
+
+$$
+P,(h\circ e)(w)\models (h\circ e)_*(\varphi)
+\quad\Longleftrightarrow\quad
+M,w\models\varphi.
+$$
+
+#### Proof sketch
+
+The composite maps are bijections and preserve transitions and valuations by transitivity of logical equivalence. Apply Theorem 1 to the composite isomorphism. Equivalently, apply Theorem 1 first to $e$ and then to $h$; recursive renaming satisfies $(h\circ e)_*=h_*\circ e_*$. $\square$
+
+This result formalizes pathwise transport along a chain of exact analogies. Intermediate representations may differ, but they introduce no change in the truths carried from the initial to the final model.
+
+### 4.1 Isomorphisms of isomorphisms
+
+An analogy itself may be described in different coordinates. Let
+
+$$
+L:M\cong M',
+\qquad
+E:M\cong N,
+\qquad
+R:N\cong N'.
+$$
+
+The **conjugate** or coordinate-transported analogy from $M'$ to $N'$ is
+
+$$
+E^{L,R}=R\circ E\circ L^{-1}:M'\cong N'.
+$$
+
+This is an isomorphism of isomorphisms in a concrete groupoid sense: $L$ and $R$ change the presentations of the endpoints, while conjugation re-expresses the arrow between them. No higher-dimensional machinery is required for the present result; ordinary composition and inversion supply the necessary coherence.
+
+### Theorem 4 (Conjugated-analogy invariance)
+
+For every world $w'$ of $M'$ and every formula $\psi$ over the atomic vocabulary of $M'$,
+
+$$
+N',E^{L,R}(w')\models E^{L,R}_*(\psi)
+\quad\Longleftrightarrow\quad
+M',w'\models\psi.
+$$
+
+#### Proof sketch
+
+The inverse $L^{-1}$, the original analogy $E$, and the endpoint change $R$ are model isomorphisms. Their composite is therefore a model isomorphism from $M'$ to $N'$. The result follows from Theorem 3, or directly from Theorem 1 applied to that composite. $\square$
+
+The theorem captures representation independence at the level of correspondences. Re-encoding both domains does not invalidate an exact analogy, provided the analogy itself is transported coherently.
+
+## 5. External interpretation and semantic collision
+
+### 5.1 Interpreted models
+
+Let $D$ be a set of possible meanings. An **interpreted model** is a pair
+
+$$
+\mathcal I=(M,I),
+$$
+
+where $M=(W,R,V)$ is a relational modal model and $I:W\to D$ is an external interpretation. The word “external” is mathematical, not rhetorical: $I$ is not part of the relation $R$, the valuation $V$, or the formula grammar. Formulas cannot refer to it.
+
+Given interpreted models $\mathcal I=(M,I)$ and $\mathcal J=(N,J)$ with the same meaning set $D$, a model isomorphism $e:M\cong N$ with world map $f$ is **meaning-compatible** if
+
+$$
+J(f(w))=I(w)
+$$
+
+for every world $w$ of $M$. Structural isomorphism alone does not include this condition.
+
+### 5.2 The singleton construction
+
+Take a world set $W=\{\ast\}$ and an atom set $A=\{p\}$. Define the unique possible transition to hold,
+
+$$
+R(\ast,\ast)=\mathrm{true},
+$$
+
+and let the sole atom hold at the sole world,
+
+$$
+V(\ast,p)=\mathrm{true}.
+$$
+
+Call this model $S$. Form two interpreted copies with meaning set $D=\{\mathrm{false},\mathrm{true}\}$:
+
+$$
+\mathcal I_0=(S,I_0),\qquad I_0(\ast)=\mathrm{false},
+$$
+
+and
+
+$$
+\mathcal I_1=(S,I_1),\qquad I_1(\ast)=\mathrm{true}.
+$$
+
+The identity bijections on worlds and atoms define an isomorphism between the underlying models.
+
+### Theorem 5 (Meaning collision)
+
+There exist two interpreted models and a structural isomorphism between their underlying models such that:
+
+1. for every modal formula $\varphi$, satisfaction agrees at corresponding worlds after atom renaming;
+2. the external interpretations at those worlds are unequal; and
+3. the isomorphism is not meaning-compatible.
+
+#### Proof sketch
+
+Use $\mathcal I_0$ and $\mathcal I_1$ above. Their underlying model is the same singleton model, so the identity maps form a model isomorphism. Theorem 1 implies agreement for every formula $\varphi\in\mathcal F(A)$. However,
+
+$$
+I_1(\ast)=\mathrm{true}\ne\mathrm{false}=I_0(\ast).
+$$
+
+Therefore the identity structural isomorphism fails the defining equation for meaning compatibility. $\square$
+
+The example is nonvacuous. Its world exists, the atomic observation is true, the transition relation is populated, and the comparison quantifies over every formula, not merely a finite test suite. Formula complexity cannot reveal the omitted bit: deeper boxes continue to inspect the same self-loop and the same valuation.
+
+### 5.3 Exact scope of the conclusion
+
+Theorem 5 does not establish that two systems are indistinguishable by every conceivable language. Indeed, enlarge the atomic vocabulary with an atom $q$ satisfying
+
+$$
+V_i(\ast,q)\Longleftrightarrow I_i(\ast)=\mathrm{true}.
+$$
+
+Then $q$ distinguishes the two interpreted models immediately. The theorem instead establishes a definability boundary:
+
+> An arbitrary annotation that is not represented in a language’s model signature is not determined by the totality of truths expressible in that language.
+
+This language-relative formulation avoids two errors. First, structural invariance is not reduced to a vague claim of resemblance; it is a theorem quantifying over all formulas of a precisely defined language. Second, semantic underdetermination is not inflated into the claim that interpretation is forever inaccessible. Observational enrichment may convert external information into structural information.
+
+## 6. Finite algorithms
+
+For finite models, the mathematical constructions give direct computational procedures.
+
+### 6.1 Formula evaluation
+
+Represent a formula as a finite syntax tree and a model by adjacency and valuation tables. Evaluate recursively. Atomic lookup and falsity take constant time. Implication evaluates two subtrees. A box formula evaluates its child at every successor.
+
+Without memoization, repeated subformulas and cycles can cause repeated work. With dynamic programming keyed by pairs $(w,\varphi)$, each world-subformula pair is evaluated once. If $n=|W|$, $m=|R|$, and $s$ is the number of distinct formula nodes, the running time is $O(s(n+m))$ and storage is $O(sn)$.
+
+### 6.2 Checking a proposed model isomorphism
+
+Given candidate permutations $f:W\to X$ and $g:A\to B$, first verify bijectivity. Then compare every transition entry and every valuation entry:
+
+$$
+S(f(w),f(x))=R(w,x),
+\qquad
+U(f(w),g(a))=V(w,a).
+$$
+
+For dense table representations, this costs $O(n^2+nk)$ time, where $n$ is the number of worlds and $k$ the number of atoms, and $O(n+k)$ auxiliary space. Sparse edge sets reduce transition checking to a form proportional to the represented edges, provided both preservation and reflection are tested.
+
+Finding an isomorphism from scratch is a graph-isomorphism-style search with vertex colors induced by valuations. Exhaustive enumeration costs up to $O(n!k!)$ candidate checks, although partition refinement and canonical labeling can prune the search substantially.
+
+### 6.3 Transport and conjugation
+
+Transporting a formula applies the atom permutation at each atomic leaf and takes $O(s)$ time. Composing two explicit permutations takes $O(n+k)$ time. Conjugating an analogy computes $R\circ E\circ L^{-1}$ separately on worlds and atoms; after inversion tables are built, this is linear in the sizes of the represented domains.
+
+These algorithms do not discover external meaning. They manipulate only the specified structural signature, exactly matching the scope of the invariance theorems.
+
+## 7. Applications
+
+### 7.1 Representation-independent systems
+
+A state machine may be serialized with different state identifiers or proposition names. Theorem 1 guarantees that modal safety and inevitability properties survive any bijective recoding that preserves transitions and valuations. Theorem 4 further guarantees that a verified correspondence between two systems remains valid after both systems are independently re-encoded.
+
+### 7.2 Scientific analogies
+
+Mathematical forms recur across domains: networks describe epidemics, circuits, transportation, and ecological flow. A structural isomorphism can transport deductions stated in a shared relational vocabulary. Theorem 5 warns that domain interpretation does not follow automatically. A variable’s role as voltage, population, or pressure is extra information unless represented in the shared signature.
+
+### 7.3 Data integration and schema matching
+
+Two databases can agree up to permutations of records and fields while carrying different business meanings. Structural checks establish consistency relative to keys, relations, and recorded predicates. They cannot infer an omitted semantic annotation. Successful integration therefore requires either meaning-compatible mappings or enrichment of the schema with discriminating metadata.
+
+### 7.4 Copycat-style analogy
+
+Copycat-inspired architectures treat analogy as a dynamic network of correspondences influenced by context. The present groupoid calculus isolates an exact structural core. Correspondences can be reversed, chained, and reframed; modal observations invariant under those correspondences remain stable. The framework does not model graded salience, competition, slippage, or probabilistic confidence. It supplies a baseline against which approximate and context-sensitive analogy can be measured.
+
+A useful conceptual division follows. **Structural transport** asks what conclusions are guaranteed once a correspondence is fixed. **Analogy selection** asks which correspondence is appropriate and which vocabulary captures the relevant features. The former is governed by the theorems above; the latter may depend on context, purpose, and grounding.
+
+## 8. Discussion and limitations
+
+Isomorphism is relative to a signature. The same pair of objects may be isomorphic when only adjacency is observed and nonisomorphic when colors, weights, temporal labels, or interpretations are added. Thus “same structure” always means “same with respect to the selected structure.”
+
+The positive and negative results are complementary. Theorem 1 is maximally strong within its language: it covers every formula and every world. Theorem 5 is possible precisely because external interpretation lies beyond that language. There is no contradiction. One theorem proves invariance of all internal observations; the other exhibits variation in an external coordinate.
+
+Several limitations mark directions for extension. First, the correspondences here are exact and bijective. Human analogies are commonly partial or approximate. Second, the logic has one ungraded necessity operator. Counting, probability, temporal direction, and quantitative modalities may distinguish systems that basic modal logic cannot. Third, the framework analyzes individual arrows and their composites but does not yet characterize global coherence in networks containing multiple paths. Different paths between the same endpoints may induce nontrivial holonomy. Finally, the interpretation map is unconstrained. Applications may impose continuity, measurability, causal adequacy, or invariance conditions that connect interpretation back to structure.
+
+## 9. Future research
+
+A first problem is to determine when finite observational languages classify finite pointed models up to isomorphism and how modal depth measures the cost of identification. Characteristic formulas and graded modalities are natural tools.
+
+A second problem concerns analogy networks. If meanings are transported around a cycle, global consistency should correspond to trivial holonomy. A cycle basis may suffice to test this condition in finite networks.
+
+Third, exact isomorphism should be relaxed to approximate correspondence in probabilistic transition systems. Modal depth is expected to control accumulated error because each nested box introduces one additional transition-sensitive step.
+
+Fourth, the meaning-collision theorem suggests an orbit criterion. An interpretation recoverable from invariant structural truth must at least be constant on automorphism orbits. In finite settings, enriched counting languages may turn that necessary condition into a sufficient one.
+
+Finally, isomorphism can be compared with bisimulation, which often captures precisely the distinctions visible to modal logic while ignoring cardinal and identity information. This comparison would measure semantic resolution: which notion of structural equivalence corresponds to which observational language?
+
+## 10. Conclusion
+
+A reversible renaming of worlds and atoms that preserves transitions and valuations preserves every modal truth. This preservation extends from pointed satisfaction to global validity, from single analogies to composites, and from fixed presentations to conjugated correspondences. Exact analogies therefore possess a coherent groupoid structure, and invariant observations travel reliably along its arrows.
+
+Yet external interpretation can vary while all those observations remain fixed. The singleton meaning collision demonstrates the boundary in its smallest form. The correct lesson is neither that meaning reduces to structure nor that structure is irrelevant to meaning. It is that truth preservation is always indexed by an observational language. Within that language, isomorphism is decisive. Beyond it, semantic claims require additional structure, additional vocabulary, or additional grounding.
