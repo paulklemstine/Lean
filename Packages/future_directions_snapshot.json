@@ -173,7 +173,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9867adb2",
     "description": "A neural network with ReLU activation defines a piecewise linear function f: R^n -> R^m. The decision boundary of a binary classifier f: R^n -> R is the set {x : f(x) = 0}, which is a piecewise linear hypersurface. The algebraic variety of the decision boundary is the zero set of the polynomial that best approximates f. Conjecture: for a ReLU network with L layers of widths (n, w_1, ..., w_L, 1), the decision boundary is a piecewise linear hypersurface with at most 2^L * prod w_i regions, and the degree of the best polynomial approximation is at most 2^L. More precisely, the decision boundary V(f) = {x : f(x) = 0} is a tropical hypersurface (a piecewise linear object that is the 'skeleton' of an algebraic variety). The tropical variety of the decision boundary has degree at most 2^L and at most prod_{i=1}^{L} (w_i choose 2) singularities. Conjecture: the VC dimension of a ReLU network with L layers and total width W is at most L * W * log(W), matching the known bound up to log factors. Test: train ReLU networks on synthetic data, extract decision boundaries, and verify they are tropical hypersurfaces with the predicted degree and singularity count. Impact: neural network decision boundaries are tropical varieties. The complexity of the network (L, W) determines the algebraic complexity of the boundary.",
     "domain_bridges": [],
     "domains": [
@@ -186,7 +186,7 @@
     "proof_strategy": "A ReLU network f: R^n -> R with L layers computes a piecewise linear function. The number of linear regions is at most prod_{i=1}^{L} sum_{j=0}^{min(n,w_i)} (w_i choose j) (Montufar et al., 2014). For wide networks (w_i >= n): this is at most prod_{i=1}^{L} 2^{w_i-1} = 2^{sum w_i - L}. The decision boundary B = {x : f(x) = 0} is a piecewise linear hypersurface. Each linear piece of f defines a halfspace, and B is the union of boundaries of these halfspaces. The algebraic approximation: by the Weierstrass approximation theorem, there exists a polynomial p of degree d such that ||f - p|| < epsilon. The variety V(p) = {x : p(x) = 0} approximates B. For piecewise linear f with K regions, the degree of p needed is d ~ K^{1/n} (by approximation theory). The tropical variety: V(f) is a tropical hypersurface defined by the tropical polynomial max_j(alpha_j + x . beta_j) where the max is over the linear pieces. The degree of this tropical polynomial is the number of different linear pieces, which is at most 2^L. The singularities of V(f) are points where 3+ linear pieces meet, and there are at most prod (w_i choose 2) such points. Test: train 2-layer and 3-layer ReLU networks on 2D synthetic data, extract the decision boundary, count linear regions and singularities, verify against the bounds.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-18T22:39:05.424405+00:00",
     "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
   },
@@ -4218,7 +4218,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f59cf451",
     "description": "Bach's chorales are the gold standard of Western harmony. But what if we could MEASURE the harmonic complexity using topology? Encode each chord as a point in a 12-dimensional space (one dimension per pitch class). A sequence of chords traces a path in this space. Compute the persistent homology of the point cloud of all chords in a Bach chorale. Conjecture: Bach's chorales have persistent H_1 (1-dimensional cycles) that survive across a wide range of scales, indicating circular harmonic motion (the circle of fifths). In contrast, random chord sequences have H_1 bars that die quickly. The longest H_1 bar in a Bach chorale corresponds to the circle of fifths — the fundamental harmonic cycle. Pop music has shorter H_1 bars (less complex harmonic cycles). Atonal music has no persistent H_1 (no harmonic cycles). Test: compute persistent homology barcodes for 100 Bach chorales, 100 pop songs, and 100 atonal pieces. Verify: Bach has H_1 bars of length > 0.5 (in normalized pitch-class space), pop has bars of length 0.2-0.5, atonal has no persistent H_1. Impact: the topology of music IS its harmonic structure. Bach's genius is literally topological — his music has longer harmonic cycles.",
     "domain_bridges": [],
     "domains": [
@@ -4231,7 +4231,7 @@
     "proof_strategy": "Encode each chord as a binary vector in {0,1}^12 (pitch class set). Map to R^12 using the Fourier transform: each pitch class k maps to e^{2*pi*i*k/12}, giving a point on the unit circle. A chord maps to the sum of its pitch class vectors, normalized. Compute persistent homology of the point cloud of all chords in a piece using Vietoris-Rips complexes. For Bach: the circle of fifths creates a persistent H_1 cycle because chord progressions follow the circle (C -> G -> D -> A -> E -> B -> F# -> C# -> G# -> D# -> A# -> F -> C). This cycle survives across multiple scales. For pop: the cycle is shorter (typically I -> V -> vi -> IV -> I, a 4-chord loop). For atonal: no persistent cycle. Compute: Rips filtration for epsilon = 0.1, 0.2, ..., 1.0. Measure H_1 bar lengths. Test: verify Bach H_1 bars > 0.5, pop H_1 bars 0.2-0.5, atonal H_1 bars < 0.2.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-18T15:00:46.000861+00:00",
     "title": "Persistent Homology of Musical Harmony: The Topology of Bach"
   },

@@ -129,7 +129,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Quantum Entanglement as Algebraic Topology: The Linking Number Is Entanglement"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9867adb2",
     "description": "A neural network with ReLU activation defines a piecewise linear function f: R^n -> R^m. The decision boundary of a binary classifier f: R^n -> R is the set {x : f(x) = 0}, which is a piecewise linear hypersurface. The algebraic variety of the decision boundary is the zero set of the polynomial that best approximates f. Conjecture: for a ReLU network with L layers of widths (n, w_1, ..., w_L, 1), the decision boundary is a piecewise linear hypersurface with at most 2^L * prod w_i regions, and the degree of the best polynomial approximation is at most 2^L. More precisely, the decision boundary V(f) = {x : f(x) = 0} is a tropical hypersurface (a piecewise linear object that is the 'skeleton' of an algebraic variety). The tropical variety of the decision boundary has degree at most 2^L and at most prod_{i=1}^{L} (w_i choose 2) singularities. Conjecture: the VC dimension of a ReLU network with L layers and total width W is at most L * W * log(W), matching the known bound up to log factors. Test: train ReLU networks on synthetic data, extract decision boundaries, and verify they are tropical hypersurfaces with the predicted degree and singularity count. Impact: neural network decision boundaries are tropical varieties. The complexity of the network (L, W) determines the algebraic complexity of the boundary.",
     "domains": [
       "Novelty",
@@ -139,7 +139,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-18T22:39:05.424405+00:00",
     "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
   },
@@ -2748,7 +2748,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: The Spine: A Supersingular Highway"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2eae5d0f",
     "description": "For every fixed integer k \u2265 5 there exists N\u2080(k) such that for all n \u2265 N\u2080(k) and for every simple connected k\u2011regular graph G on n vertices, there is a divisor D on G of degree (k\u20112)n/2 (the half\u2011canonical degree) with rank at least k\u20111. Equivalently, for all sufficiently large n the Brill\u2011Noether number \u03c1(G, k\u20111, (k\u20112)n/2) is non\u2011negative and the existence part of Baker\u2019s Brill\u2011Noether conjecture holds for the pair (r, d) = (k\u20111, (k\u20112)n/2).",
     "domains": [
       "Pythagorean"
@@ -2757,7 +2757,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.15213v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-17T12:28:45.661463+00:00",
     "title": "Half\u2011canonical Brill\u2011Noether existence for k\u2011regular graphs"
   },
@@ -3051,7 +3051,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Holographic Primes: The Prime Number AdS/CFT Correspondence"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f59cf451",
     "description": "Bach's chorales are the gold standard of Western harmony. But what if we could MEASURE the harmonic complexity using topology? Encode each chord as a point in a 12-dimensional space (one dimension per pitch class). A sequence of chords traces a path in this space. Compute the persistent homology of the point cloud of all chords in a Bach chorale. Conjecture: Bach's chorales have persistent H_1 (1-dimensional cycles) that survive across a wide range of scales, indicating circular harmonic motion (the circle of fifths). In contrast, random chord sequences have H_1 bars that die quickly. The longest H_1 bar in a Bach chorale corresponds to the circle of fifths \u2014 the fundamental harmonic cycle. Pop music has shorter H_1 bars (less complex harmonic cycles). Atonal music has no persistent H_1 (no harmonic cycles). Test: compute persistent homology barcodes for 100 Bach chorales, 100 pop songs, and 100 atonal pieces. Verify: Bach has H_1 bars of length > 0.5 (in normalized pitch-class space), pop has bars of length 0.2-0.5, atonal has no persistent H_1. Impact: the topology of music IS its harmonic structure. Bach's genius is literally topological \u2014 his music has longer harmonic cycles.",
     "domains": [
       "Novelty",
@@ -3061,7 +3061,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.76,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-18T15:00:46.000861+00:00",
     "title": "Persistent Homology of Musical Harmony: The Topology of Bach"
   },
