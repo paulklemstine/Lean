@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "f25f9735",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions: Geometric Constraints on Quantum-Code Parameters\n\n## 1. Geometric Defect as a Capacity Density\n\nFor any family of local stabilizer codes admitting a geometric realization, conject",
-      "quality_score": 0.75,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-18T08:49:08",
-      "title": "Gravity from Information: Spacetime as a Quantum Error-Correcting Code"
-    },
-    {
       "cycle_id": "71fc60c7",
       "domain": "Applications",
       "key_insight": "# Future directions\n\n1. Define periodic left and right shifts explicitly and derive the Rule 110 singleton theorem as a concrete corollary of `rule110_fixedPoints_card_of_right_transitive`.\n2. Replace",
@@ -499,19 +489,19 @@
       "theorem_count": 14,
       "timestamp": "2026-07-19T08:23:22",
       "title": "The Topology of Argumentation: Why Debates Have Holes"
+    },
+    {
+      "cycle_id": "735120d5",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions\n\n## 1. Localization under heterogeneous valley positions\n\n**Conjecture.** Let each respondent's confidence profile be strictly convex on a common ordered grid, with minimum positio",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 46,
+      "timestamp": "2026-07-19T08:44:19",
+      "title": "The Uncanny Valley of Mathematics: When Proofs Are Almost Right"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "5dadc373",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions\n\nThe completed foundation formalizes exact decimal digit-multiset witnesses, the\nmodulo-nine digit-sum bridge, its affine `ZMod 9` curve, the exhaustive six-pair\nresidue sieve, and",
-      "quality_score": 0.68,
-      "sorry_count": 4,
-      "theorem_count": 101,
-      "timestamp": "2026-07-15T08:57:47",
-      "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
-    },
     {
       "cycle_id": "0f633d08",
       "domain": "Logic",
@@ -2501,27 +2491,19 @@
       "theorem_count": 14,
       "timestamp": "2026-07-19T08:23:22",
       "title": "The Topology of Argumentation: Why Debates Have Holes"
+    },
+    {
+      "cycle_id": "735120d5",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions\n\n## 1. Localization under heterogeneous valley positions\n\n**Conjecture.** Let each respondent's confidence profile be strictly convex on a common ordered grid, with minimum positio",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 46,
+      "timestamp": "2026-07-19T08:44:19",
+      "title": "The Uncanny Valley of Mathematics: When Proofs Are Almost Right"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "f86cfe8a",
-      "domain": "Novelty",
-      "name": "eisensteinNormSq_pow",
-      "quality": 0.76
-    },
-    {
-      "cycle_id": "f86cfe8a",
-      "domain": "Novelty",
-      "name": "sigma_pow_injective",
-      "quality": 0.76
-    },
-    {
-      "cycle_id": "154045db",
-      "domain": "Shared",
-      "name": "assemblyRecipe_card_eq",
-      "quality": 0.74
-    },
     {
       "cycle_id": "154045db",
       "domain": "Shared",
@@ -2803,9 +2785,27 @@
       "domain": "Algebra",
       "name": "preferred_mem_generated",
       "quality": 0.7
+    },
+    {
+      "cycle_id": "735120d5",
+      "domain": "Combinatorics",
+      "name": "holds",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "735120d5",
+      "domain": "Combinatorics",
+      "name": "strictValley_unique_min",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "735120d5",
+      "domain": "Combinatorics",
+      "name": "strictValley_location_unique",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-19T08:23:22",
+  "last_updated": "2026-07-19T08:44:19",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "4665f966",
-        "quality": 0.71,
-        "theorems": 7,
-        "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
-      },
-      {
         "cycle_id": "5543d24b",
         "quality": 0.64,
         "theorems": 24,
@@ -3265,6 +3259,12 @@
         "quality": 0.8,
         "theorems": 6,
         "title": "Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
+      },
+      {
+        "cycle_id": "735120d5",
+        "quality": 0.72,
+        "theorems": 46,
+        "title": "The Uncanny Valley of Mathematics: When Proofs Are Almost Right"
       }
     ],
     "Computation": [

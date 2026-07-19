@@ -1,158 +1,156 @@
-"""Numerical demonstrations for the Lazy Caterer Hierarchy.
+#!/usr/bin/env python3
+"""Numerical demonstrations for discrete confidence-valley theorems.
 
-This self-contained script illustrates the main results relating the lazy caterer
-numbers p(n) (maximal planar regions from n lines) and the cake numbers c(n)
-(maximal spatial regions from n planes), both realised as truncated rows of
-Pascal's triangle, and linked by the layer recurrence  c(n+1) = c(n) + p(n).
-
-All functions are inlined and use only the Python standard library.
+The script uses only Python's standard library. It certifies strict valleys,
+computes margins and total variation, aggregates respondent profiles, and checks
+the sharp half-margin robustness condition.
 """
 
 from __future__ import annotations
 
-from math import comb
-from typing import List, Tuple
+from dataclasses import dataclass
+from typing import Iterable, Sequence
 
 
-# ---------------------------------------------------------------------------
-# Closed forms
-# ---------------------------------------------------------------------------
+@dataclass(frozen=True)
+class ValleyCertificate:
+    """Summary of the strict-valley and margin tests for one profile."""
 
-def caterer(n: int) -> int:
-    """Lazy caterer number p(n) = n(n+1)/2 + 1 (maximal planar regions, n lines)."""
-    return n * (n + 1) // 2 + 1
-
-
-def cake(n: int) -> int:
-    """Cake number c(n) = (n^3 + 5n + 6)/6 (maximal spatial regions, n planes)."""
-    return (n * n * n + 5 * n + 6) // 6
+    location: int
+    is_strict_valley: bool
+    is_unique_minimum: bool
+    margin: float
+    variation: float
+    drop_plus_recovery: float
 
 
-# ---------------------------------------------------------------------------
-# Binomial (truncated Pascal row) forms
-# ---------------------------------------------------------------------------
-
-def caterer_pascal(n: int) -> int:
-    """p(n) as the sum of the first three entries of Pascal's row n."""
-    return comb(n, 0) + comb(n, 1) + comb(n, 2)
-
-
-def cake_pascal(n: int) -> int:
-    """c(n) as the sum of the first four entries of Pascal's row n."""
-    return comb(n, 0) + comb(n, 1) + comb(n, 2) + comb(n, 3)
+def strict_valley_at(profile: Sequence[float], valley: int) -> bool:
+    """Return whether a finite profile strictly descends then strictly rises."""
+    if not profile:
+        raise ValueError("profile must be nonempty")
+    if not 0 <= valley < len(profile):
+        raise IndexError("valley index is outside the profile")
+    descends = all(profile[k + 1] < profile[k] for k in range(valley))
+    rises = all(profile[k] < profile[k + 1] for k in range(valley, len(profile) - 1))
+    return descends and rises
 
 
-def region_count(d: int, n: int) -> int:
-    """H_d(n) = sum of the first d+1 entries of Pascal's row n.
-
-    General dimensional tower: H_1(n)=n+1, H_2=p (lazy caterer), H_3=c (cake).
-    """
-    return sum(comb(n, k) for k in range(d + 1))
-
-
-# ---------------------------------------------------------------------------
-# Recurrence-based computation (additions only)
-# ---------------------------------------------------------------------------
-
-def caterer_and_cake_by_recurrence(N: int) -> Tuple[List[int], List[int]]:
-    """Compute p(0..N) and c(0..N) using only additions.
-
-    p(0)=1, p(n+1)=p(n)+(n+1);  c(0)=1, c(n+1)=c(n)+p(n).
-    """
-    p: List[int] = [1]
-    c: List[int] = [1]
-    for n in range(N):
-        p.append(p[n] + (n + 1))
-        c.append(c[n] + p[n])  # layer recurrence
-    return p, c
+def unique_minimum_at(profile: Sequence[float], valley: int) -> bool:
+    """Return whether the candidate is strictly below every competing level."""
+    if not profile:
+        raise ValueError("profile must be nonempty")
+    if not 0 <= valley < len(profile):
+        raise IndexError("valley index is outside the profile")
+    return all(profile[valley] < value for i, value in enumerate(profile) if i != valley)
 
 
-# ---------------------------------------------------------------------------
-# Demonstrations
-# ---------------------------------------------------------------------------
-
-def demo_sequences(N: int = 8) -> None:
-    print("n :   p(n) (plane)   c(n) (space)")
-    for n in range(N + 1):
-        print(f"{n:2d}:   {caterer(n):8d}     {cake(n):8d}")
-
-
-def demo_binomial_forms(N: int = 10) -> None:
-    print("\nClosed form matches truncated Pascal row:")
-    for n in range(N + 1):
-        assert caterer(n) == caterer_pascal(n)
-        assert cake(n) == cake_pascal(n)
-    print(f"  verified p(n)=C(n,0)+C(n,1)+C(n,2) and "
-          f"c(n)=C(n,0)+..+C(n,3) for n=0..{N}")
+def minimum_margin(profile: Sequence[float], valley: int) -> float:
+    """Compute min_{i != valley}(profile[i] - profile[valley])."""
+    if len(profile) < 2:
+        raise ValueError("a margin requires at least two tested levels")
+    if not 0 <= valley < len(profile):
+        raise IndexError("valley index is outside the profile")
+    return min(value - profile[valley] for i, value in enumerate(profile) if i != valley)
 
 
-def demo_layer_recurrence(N: int = 12) -> None:
-    print("\nLayer recurrence c(n+1) = c(n) + p(n):")
-    for n in range(N + 1):
-        assert cake(n + 1) == cake(n) + caterer(n)
-    print(f"  verified for n=0..{N}")
-    p, c = caterer_and_cake_by_recurrence(N)
-    assert p == [caterer(n) for n in range(N + 1)]
-    assert c == [cake(n) for n in range(N + 1)]
-    print("  recurrence-only computation agrees with closed forms")
+def path_variation(profile: Sequence[float]) -> float:
+    """Compute the sum of absolute adjacent differences."""
+    return sum(abs(right - left) for left, right in zip(profile, profile[1:]))
 
 
-def demo_first_and_second_differences(N: int = 10) -> None:
-    print("\nFirst differences p(n+1)-p(n) = n+1  (constant 2nd difference = 1):")
-    diffs = [caterer(n + 1) - caterer(n) for n in range(N)]
-    print("  first differences:", diffs)
-    for n in range(N):
-        assert diffs[n] == n + 1
-    for n in range(N - 1):
-        assert caterer(n + 2) + caterer(n) == 2 * caterer(n + 1) + 1
+def valley_drop_plus_recovery(profile: Sequence[float], valley: int) -> float:
+    """Compute the variation predicted for monotone descent and recovery."""
+    if not profile:
+        raise ValueError("profile must be nonempty")
+    if not 0 <= valley < len(profile):
+        raise IndexError("valley index is outside the profile")
+    return (profile[0] - profile[valley]) + (profile[-1] - profile[valley])
 
 
-def demo_triangular_bridge(N: int = 10) -> None:
-    print("\nBridge to triangular numbers p(n) = 1 + (0+1+...+n):")
-    for n in range(N + 1):
-        assert caterer(n) == 1 + sum(range(n + 1))
-    print(f"  verified for n=0..{N}")
+def aggregate_profiles(profiles: Sequence[Sequence[float]]) -> list[float]:
+    """Sum equally long respondent profiles level by level."""
+    if not profiles:
+        raise ValueError("at least one respondent is required")
+    width = len(profiles[0])
+    if width == 0 or any(len(profile) != width for profile in profiles):
+        raise ValueError("all profiles must have the same positive length")
+    return [sum(profile[i] for profile in profiles) for i in range(width)]
 
 
-def demo_partial_sums(N: int = 10) -> None:
-    print("\nTetrahedral partial sums  sum_{k<=n} p(k) = (n+1) + C(n+2,3):")
-    for n in range(N + 1):
-        lhs = sum(caterer(k) for k in range(n + 1))
-        rhs = (n + 1) + comb(n + 2, 3)
-        assert lhs == rhs
-    print(f"  verified for n=0..{N}")
+def max_uniform_error(reference: Sequence[float], observed: Sequence[float]) -> float:
+    """Compute the maximum coordinatewise absolute error."""
+    if len(reference) != len(observed) or not reference:
+        raise ValueError("profiles must have the same positive length")
+    return max(abs(x - y) for x, y in zip(reference, observed))
 
 
-def demo_parity_law(N: int = 16) -> None:
-    print("\nParity law: p(n) odd  <=>  n % 4 in {0, 3}:")
-    pattern = []
-    for n in range(N + 1):
-        is_odd = caterer(n) % 2 == 1
-        predicted = n % 4 == 0 or n % 4 == 3
-        assert is_odd == predicted
-        pattern.append("odd " if is_odd else "even")
-    print("  parities:", " ".join(pattern[:12]), "...")
+def half_margin_certifies(margin: float, epsilon: float) -> bool:
+    """Test the sharp sufficient condition 2 epsilon < margin."""
+    if epsilon < 0:
+        raise ValueError("epsilon must be nonnegative")
+    return 2.0 * epsilon < margin
 
 
-def demo_dimensional_tower(N: int = 6) -> None:
-    print("\nGeneral tower H_d(n) = sum_{k<=d} C(n,k)  (H_2=p, H_3=c):")
-    for d in range(1, 5):
-        row = [region_count(d, n) for n in range(N + 1)]
-        print(f"  d={d}: {row}")
-    # cross-check the dimensional layer recurrence H_d(n+1)=H_d(n)+H_{d-1}(n)
-    for d in range(1, 5):
-        for n in range(N):
-            assert region_count(d, n + 1) == region_count(d, n) + region_count(d - 1, n)
-    print("  layer recurrence H_d(n+1)=H_d(n)+H_{d-1}(n) verified")
+def certify(profile: Sequence[float], valley: int) -> ValleyCertificate:
+    """Build a complete numerical certificate for one candidate valley."""
+    return ValleyCertificate(
+        location=valley,
+        is_strict_valley=strict_valley_at(profile, valley),
+        is_unique_minimum=unique_minimum_at(profile, valley),
+        margin=minimum_margin(profile, valley),
+        variation=path_variation(profile),
+        drop_plus_recovery=valley_drop_plus_recovery(profile, valley),
+    )
+
+
+def format_profile(profile: Iterable[float]) -> str:
+    """Format a profile compactly for terminal output."""
+    return "(" + ", ".join(f"{x:g}" for x in profile) + ")"
+
+
+def main() -> None:
+    """Run aggregation, robustness, variation, and sharpness demonstrations."""
+    first = [8.0, 5.0, 1.0, 4.0, 7.0]
+    second = [9.0, 6.0, 2.0, 3.0, 8.0]
+    valley = 2
+    aggregate = aggregate_profiles([first, second])
+
+    print("COMMON-VALLEY AGGREGATION")
+    for name, profile in (("Respondent A", first), ("Respondent B", second), ("Aggregate", aggregate)):
+        certificate = certify(profile, valley)
+        print(f"{name:12}: {format_profile(profile)}")
+        print(f"  strict valley={certificate.is_strict_valley}, "
+              f"unique minimum={certificate.is_unique_minimum}, "
+              f"margin={certificate.margin:g}")
+    margin_sum = minimum_margin(first, valley) + minimum_margin(second, valley)
+    print(f"Individual margins add to {margin_sum:g}; aggregate margin is "
+          f"{minimum_margin(aggregate, valley):g}.\n")
+
+    print("EXACT VARIATION IDENTITY")
+    certificate = certify(first, valley)
+    print(f"Profile: {format_profile(first)}")
+    print(f"Adjacent total variation: {certificate.variation:g}")
+    print(f"Drop plus recovery:       {certificate.drop_plus_recovery:g}")
+    print(f"Identity holds: {abs(certificate.variation - certificate.drop_plus_recovery) < 1e-12}\n")
+
+    print("HALF-MARGIN ROBUSTNESS")
+    observed = [7.6, 4.8, 1.4, 3.7, 6.8]
+    margin = minimum_margin(first, valley)
+    epsilon = max_uniform_error(first, observed)
+    print(f"Reference: {format_profile(first)}")
+    print(f"Observed:  {format_profile(observed)}")
+    print(f"margin={margin:g}, epsilon={epsilon:g}, 2*epsilon={2 * epsilon:g}")
+    print(f"Certified unchanged minimum: {half_margin_certifies(margin, epsilon)}")
+    print(f"Observed minimum remains at index {valley}: {unique_minimum_at(observed, valley)}\n")
+
+    print("SHARPNESS AT EQUALITY")
+    two_level = [0.0, 3.0]
+    equality_perturbation = [1.5, 1.5]
+    equality_error = max_uniform_error(two_level, equality_perturbation)
+    print(f"Reference: {format_profile(two_level)}, margin=3")
+    print(f"Perturbed: {format_profile(equality_perturbation)}, epsilon={equality_error:g}")
+    print("Here 2*epsilon equals the margin, and the two observed values tie.")
 
 
 if __name__ == "__main__":
-    demo_sequences()
-    demo_binomial_forms()
-    demo_layer_recurrence()
-    demo_first_and_second_differences()
-    demo_triangular_bridge()
-    demo_partial_sums()
-    demo_parity_law()
-    demo_dimensional_tower()
-    print("\nAll demonstrations passed.")
+    main()

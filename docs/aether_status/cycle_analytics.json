@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-19T08:23:22.791177+00:00",
+  "last_updated": "2026-07-19T08:44:20.049938+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -28368,6 +28368,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-19T08:23:22.751649+00:00",
       "title": "The Topology of Argumentation: Why Debates Have Holes"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 15,
+      "domain": "Combinatorics",
+      "duration_seconds": 1362.4399445056915,
+      "end_time": 1784450650.1553273,
+      "files_integrated": 7,
+      "job_id": "735120d5",
+      "outcome_quality": 0.72,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19b",
+      "phase_a_quality_score": 0.72,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19b",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.69,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.82,
+        "composite": 0.5365,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.57,
+        "novelty": 0.68,
+        "proof_depth": 0.74,
+        "usefulness": 0.78
+      },
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1784449287.7153828,
+      "strategy_count": 0,
+      "theorem_count": 46,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 18,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-19T08:44:19.977589+00:00",
+      "title": "The Uncanny Valley of Mathematics: When Proofs Are Almost Right"
     }
   ]
 }
