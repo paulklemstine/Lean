@@ -484,9 +484,9 @@
         }
 
         // ─── Edge springiness: nearby connected nodes attract each other ───
-        const EDGE_SPRING_K = 0.08;       // Spring constant — gentle attraction
+        const EDGE_SPRING_K = 0.35;       // Spring constant — stronger attraction
         const EDGE_SPRING_REST = REST_LENGTH * 0.6;  // Rest length where force is zero
-        const EDGE_DAMPING = 0.03;        // Relative-velocity damping to smooth jitter between connected nodes
+        const EDGE_DAMPING = 0.10;        // Relative-velocity damping to smooth jitter between connected nodes
         graphEdges.forEach(e => {
             const a = nodeMap[e.source], b = nodeMap[e.target];
             if (!a || !b) return;
