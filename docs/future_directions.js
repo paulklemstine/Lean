@@ -162,7 +162,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9fc00121",
     "description": "Prove that any technological civilization must discover computational complexity independently of its biological substrate. Formalize a universal complexity hierarchy and prove that P vs NP is a theorem about the structure of computation itself, not about any particular model. Show that even hypercomputational civilizations face analogous barriers.",
     "domains": [
       "Novelty",
@@ -172,7 +172,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T16:23:59.732994+00:00",
     "title": "Computational Complexity of Alien Civilizations"
   },
@@ -261,7 +261,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "[Reset] Fresh approach in Shared"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4c40ce69",
     "description": "Construct an alternate number theory where primes are replaced by a random subset of N with density n/log n. Prove which theorems survive (Dirichlet, PNT) and which collapse (unique factorization). Determine whether RH holds almost surely in this counterfactual universe.",
     "domains": [
       "Novelty",
@@ -271,7 +271,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T17:15:15.217270+00:00",
     "title": "Counterfactual Number Theory: What If Primes Were Random?"
   },
