@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "f4980b02",
-      "domain": "MachineLearning",
-      "key_insight": "# Future directions\n\nThe formalization proves the invariant spectral splitting that underlies the generalized-join formulas: internal zero-mass modes acquire an external-degree shift, while fiber-cons",
-      "quality_score": 0.74,
-      "sorry_count": 0,
-      "theorem_count": 18,
-      "timestamp": "2026-07-16T01:47:06",
-      "title": "ArXiv paper: Counting oriented spanning trees in generalized join digraphs"
-    },
-    {
       "cycle_id": "a373adc5",
       "domain": "Physics",
       "key_insight": "# Future directions\n\nThe formal result in `Physics/HyperbolicArithmetic.lean` establishes a precise\nbridge that is available before addressing the broader conjectures in the\nresearch prompt: iteration",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-19T17:32:50",
       "title": "Surreal Topology: Open Sets at Infinity"
+    },
+    {
+      "cycle_id": "25709a4b",
+      "domain": "Applications",
+      "key_insight": "# Future directions\n\nThe formal development deliberately separates three claims that are often conflated:\n\n1. **Intuitionistic semantics.** `ThreeWorld.lean` proves residuation for an explicit three-e",
+      "quality_score": 0.58,
+      "sorry_count": 0,
+      "theorem_count": 23,
+      "timestamp": "2026-07-19T17:50:00",
+      "title": "Retrocausal Mathematics: Where Effects Precede Causes"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.79
     }
   ],
-  "last_updated": "2026-07-19T17:32:50",
+  "last_updated": "2026-07-19T17:50:00",
   "open_questions": [
     {
       "context": "",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "a9bce66e",
-        "quality": 0.63,
-        "theorems": 28,
-        "title": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
-      },
-      {
         "cycle_id": "b14c422f",
         "quality": 0.6181967213114754,
         "theorems": 61,
@@ -3141,6 +3135,12 @@
         "quality": 0.79,
         "theorems": 0,
         "title": "Surreal Topology: Open Sets at Infinity"
+      },
+      {
+        "cycle_id": "25709a4b",
+        "quality": 0.58,
+        "theorems": 23,
+        "title": "Retrocausal Mathematics: Where Effects Precede Causes"
       }
     ],
     "Bridges": [

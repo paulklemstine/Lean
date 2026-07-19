@@ -363,19 +363,34 @@ window.FUTURE_DIRECTIONS = [
     "title": "Negative-Dimensional Topology: What Lives in Dimension -1?"
   },
   {
-    "consumed_by_exp_id": "25709a4b",
-    "description": "Formalize retrocausal mathematical structures where implications can flow backward in time. Prove that in a retrocausal Heyting algebra, the law of excluded middle fails but a temporal excluded middle holds. Connect to the CPT theorem in QFT and prove that any retrocausal logic must be intuitionistic.",
+    "consumed_by_exp_id": "238d5b60",
+    "description": "Construct a surface whose Hausdorff dimension is exactly aleph-1 (assuming CH). Prove that such a surface cannot be embedded in any finite-dimensional Euclidean space but can be embedded in the Hilbert cube. Formalize transfinite-dimensional manifolds and prove they have no finite triangulation.",
     "domains": [
       "Novelty",
-      "Logic"
+      "Geometry"
     ],
-    "id": "fd_0462",
-    "priority_score": 0.83,
+    "id": "fd_0475",
+    "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "in_progress",
-    "timestamp": "2026-07-19T15:32:52.396850+00:00",
-    "title": "Retrocausal Mathematics: Where Effects Precede Causes"
+    "timestamp": "2026-07-19T17:49:41.623934+00:00",
+    "title": "Aleph-1 Surface: Geometry Between Dimensions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Compute the topological type of the Library of Babel: a space of all possible 410-page books. Prove that it is connected, totally disconnected under the Hamming metric, and has covering dimension 0. Determine the Kolmogorov complexity of a random book and prove that almost all books are incompressible.",
+    "domains": [
+      "Novelty",
+      "Combinatorics"
+    ],
+    "id": "fd_0474",
+    "priority_score": 0.81,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-19T17:49:41.587633+00:00",
+    "title": "Borges' Library of Babel: Combinatorics of Everything"
   },
   {
     "consumed_by_exp_id": "",
@@ -5069,6 +5084,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-19T17:32:45.923773+00:00",
     "title": "`OpenSetsAtInfinity.lean` equips `Surreal.{0}` with its order topology and prove"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe formal development deliberately separates three claims that are often conflated:\n\n1. **Intuitionistic semantics.** `ThreeWorld.lean` proves residuation for an explicit three-element Heyting chain and exhibits failure of ordinary excluded middle.\n2. **Temporal excluded middle.** A distinct temporal alternative operation is defined and proved exhaustive. It is not Heyting negation, which is exactly why its excluded-middle law is compatible with failure of the ordinary law.\n3. **Time reversal.** The involution `reverse` reverses the Kripke order and transports a backwards implication to ordinary Heyting implication.\n\nNatural extensions are:\n\n- Generalize from the three-world chain to arbitrary finite bounded linear orders, defining Heyting implication by order comparison and proving residuation abstractly.\n- Replace the ad hoc temporal alternative with a modality on a bi-Heyting algebra or a tense-logic frame, and identify exact frame conditions implying temporal excluded middle.\n- Define syntax, Kripke forcing, and derivability for a retrocausal tense calculus; then prove soundness and completeness rather than only algebraic validity.\n- Formalize a no-go statement with explicit assumptions: determine which retrocausal frame axioms are compatible with Boolean algebras and which force genuinely intuitionistic semantics. Retrocausality alone cannot imply intuitionism without a precise definition and additional hypotheses.\n- Connect the abstract involution to a genuine mathematical model of CPT only after formalizing the relevant QFT structures (Lorentz covariance, locality, unitarity, fields, and antiunitary symmetry). The current `reverse` operation is merely an algebraic analogy and does not constitute a proof of the physical CPT theorem.\n",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_0476",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "25709a4b",
+    "status": "available",
+    "timestamp": "2026-07-19T17:49:55.647931+00:00",
+    "title": "The formal development deliberately separates three claims that are often confla"
   },
   {
     "consumed_by_exp_id": "",
