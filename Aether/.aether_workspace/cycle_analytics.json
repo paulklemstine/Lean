@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-19T07:40:03.194090+00:00",
+  "last_updated": "2026-07-19T08:00:51.090443+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -28167,6 +28167,7 @@
       "outcome_quality": 0.58,
       "phase": "A_only",
       "phase_a_prompt_version": "v25",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v25",
@@ -28238,6 +28239,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-19T07:40:03.152597+00:00",
       "title": "The Ramsey Theory of DNA: Subsequence Avoidance in Genetic Codes"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 19,
+      "domain": "Combinatorics",
+      "duration_seconds": 1243.2200310230255,
+      "end_time": 1784448036.66733,
+      "files_integrated": 4,
+      "job_id": "77a52651",
+      "outcome_quality": 0.8,
+      "phase": "complete",
+      "phase_a_prompt_version": "v27",
+      "phase_a_quality_score": 0.8,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v27",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.78,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.81,
+        "composite": 0.6085,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.88,
+        "novelty": 0.72,
+        "proof_depth": 0.76,
+        "usefulness": 0.86
+      },
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1784446793.447299,
+      "strategy_count": 0,
+      "theorem_count": 6,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 5,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-19T08:00:51.046895+00:00",
+      "title": "Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
     }
   ]
 }

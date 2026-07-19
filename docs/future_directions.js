@@ -60,6 +60,20 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The Fourier Analysis of Collatz: Spectral Gaps in the 3n+1 Map"
   },
   {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 77a52651 (Q=0.800), which proved 6 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: A quantum random walk on a group G is defined by a unitary operator U = sum_{g in S} |g><0| (where S is a generating set) acting on the Hilbert space l^2(G). The walk is periodic if U^k = I for some k, and mixing if the probability distribution P_n(g) = |<g|U^n|0>|^2 converges to the uniform distrib",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "push_77a52651_1dafc39d",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "77a52651",
+    "status": "available",
+    "timestamp": "2026-07-19T08:00:50.933822+00:00",
+    "title": "Deepening: Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
+  },
+  {
     "consumed_by_exp_id": "5961ca02",
     "description": "Construct a formal proof system where the soundness predicate appears inside the system it validates. Prove that such tangled hierarchies are unavoidable in any system that can reason about its own consistency. Formalize using modal fixed-point logics and Kripke frames.",
     "domains": [
@@ -90,6 +104,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Develop a rigorous theory of infinite games where moves are indexed by transfinite ordinals. Prove that Zermelo's theorem extends: every such game has a determined outcome under AD. Formalize the connection between the determinacy hierarchy and large cardinal axioms.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0421",
+    "priority_score": 0.87,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-19T08:00:24.928022+00:00",
+    "title": "Transfinite Game Theory: Games That Last Forever"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle fff627f3 (Q=0.770), which proved 7 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Hilbert's Hotel has infinitely many rooms, each containing a prime number. Room n contains the n-th prime p_n. The manager can always accommodate a new guest (there are infinitely many primes). But what if the guests want to REARRANGE? Conjecture: For any permutation sigma of N, there exists a rearr",
     "domains": [
       "Pythagorean"
@@ -101,6 +130,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-18T12:16:03.050816+00:00",
     "title": "Deepening: Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the hypothesis that consciousness is a fixed point of a self-modeling function: a system that models itself modeling itself. Prove that such fixed points exist in sufficiently rich Cartesian closed categories and that they exhibit strange-loop topology. Connect to the Yoneda lemma and self-reference in type theory.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0420",
+    "priority_score": 0.86,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-19T08:00:24.893031+00:00",
+    "title": "Consciousness as Emergent Fixed Point"
   },
   {
     "consumed_by_exp_id": "",
@@ -228,21 +272,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-18T13:21:34.658597+00:00",
     "title": "Deepening: Quantum Entanglement as Algebraic Topology: The Linking Number Is Entanglement"
-  },
-  {
-    "consumed_by_exp_id": "77a52651",
-    "description": "A quantum random walk on a group G is defined by a unitary operator U = sum_{g in S} |g><0| (where S is a generating set) acting on the Hilbert space l^2(G). The walk is periodic if U^k = I for some k, and mixing if the probability distribution P_n(g) = |<g|U^n|0>|^2 converges to the uniform distribution on G. Conjecture: for the Cayley graph Cay(G, S) where G is a finite group and S is a symmetric generating set, the quantum walk mixes in O(sqrt(|G|) * log(|G|)) steps, which is quadratically faster than the classical random walk (which takes O(|G|^2) steps for the spectral gap to kick in). The mixing time is determined by the spectral gap of U: tau_mix ~ 1/gap where gap = 1 - |lambda_2| and lambda_2 is the second-largest eigenvalue of U. Conjecture: for Cay(G, S) with S = the set of transpositions in S_n, the spectral gap of U is Omega(1/n), giving a mixing time of O(n * log(n)). This matches the known classical mixing time of O(n * log(n)) for the random transposition walk on S_n. The quantum advantage comes from the quadratically faster convergence of the probability distribution, not from the spectral gap. Test: simulate quantum random walks on Cayley graphs of S_n, S_n, A_5, and Z_n, measure the mixing time, and verify tau_mix = O(sqrt(|G|) * log(|G|)). Impact: quantum random walks mix quadratically faster than classical random walks on Cayley graphs. The quadratic speedup is universal.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0410",
-    "priority_score": 0.82,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T06:30:24.182356+00:00",
-    "title": "Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
   },
   {
     "consumed_by_exp_id": "",
@@ -4605,6 +4634,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-19T07:39:57.644504+00:00",
     "title": "For an alphabet of size `q`, determine the largest word length for which one can"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## What was established\n\n`QuantumWalkPeriodicityMixing.lean` proves a no-go bridge between algebraic periodicity and topological mixing. If an evolution operator has positive finite order, then every coordinate Born-probability sequence is periodic. A periodic sequence in a Hausdorff space can converge only to its initial value. Therefore a finite-order quantum walk can converge pointwise to uniform only if its initial Born distribution was already uniform; in particular, a basis-state start on a finite space of cardinality greater than one cannot mix in this sense.\n\nThis directly limits the universal mixing conjecture as framed: periodic coherent unitary dynamics does not generally converge pointwise to uniform. Spectral-gap language using `1 - |\u03bb\u2082|` is also unsuitable for a unitary operator, because every eigenvalue of a unitary has modulus one. The displayed expression `sum_{g in S} |g><0|` should additionally be checked: without a coin register or normalization/completion on the orthogonal complement, it is generally not a unitary operator.\n\n## Mathematically viable next steps\n\n1. **Time-averaged mixing.** Replace `P_n` by the Ces\u00e0ro average `(1/T) \u2211_{n<T} P_n`. Phase cancellation can produce convergence even when the instantaneous distribution remains periodic or quasiperiodic. Formalize the finite geometric-sum identity and show that unequal eigenphases vanish in the average.\n\n2. **Decoherent or measured walks.** Introduce a quantum channel rather than a unitary operator. Its nontrivial eigenvalues may have modulus strictly below one, making a genuine modulus spectral gap and exponential convergence possible.\n\n3. **Coined walks on Cayley graphs.** Define the Hilbert space on vertices times generators and use a shift composed with a coin unitary. This gives a valid local unitary walk for generating sets of size greater than one.\n\n4. **Continuous-time walks.** Study `exp(-itA)` for the Cayley adjacency operator `A`. Again, instantaneous convergence is not expected, but time averages and hitting-time questions are meaningful.\n\n5. **Representation-theoretic diagonalization.** For abelian groups, characters diagonalize convolution. For nonabelian groups such as `S_n` and `A_5`, use irreducible representations and matrix-valued Fourier transforms. The random-transposition *Markov* operator has a classical spectral gap of order `1/n`; a separate quantum model must be specified before transferring any mixing assertion.\n\n6. **Quantitative recurrence obstruction.** Strengthen the exact-period theorem to approximate recurrence in finite-dimensional unitary dynamics, showing that even non-periodic coherent walks recur arbitrarily close to their initial distributions and hence cannot converge to a different limit.\n\n7. **Counterexample families.** Instantiate the theorem for cyclic shifts on `ZMod n`: the point mass moves deterministically around the cycle and returns after `n` steps. This supplies explicit counterexamples for every `n > 1` to universal instantaneous mixing.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0422",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "77a52651",
+    "status": "available",
+    "timestamp": "2026-07-19T08:00:46.598719+00:00",
+    "title": "`QuantumWalkPeriodicityMixing.lean` proves a no-go bridge between algebraic peri"
   },
   {
     "consumed_by_exp_id": "",

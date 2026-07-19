@@ -1,66 +1,26 @@
-# Computational Evidence — The Topology of Argumentation
+# Computational Evidence
 
-All numbers below were computed inside Lean 4 / Mathlib (an executable model of
-finite argumentation frameworks over `Fin n`) and cross-checked against the
-formal proofs in the accompanying `.lean` files. Nothing here is hand-waved:
-the executable definitions mirror the ones that are proved about.
+## Small-case calculations
 
-## Objects computed
+Two frameworks on two arguments isolate the foundational claims.
 
-For a finite framework `(A, R)`:
+| Attack relation | Preferred extensions | Grounded extension | Outcome |
+|---|---:|---:|---|
+| Mutual attack between distinct arguments | `{0}`, `{1}` | `∅` | Preferred family omits `∅`, so it is not downward closed. |
+| No attacks | `{0,1}` | `{0,1}` | Proposed scalar identity gives `2 - 0 + 0 = 2` on the left and `1 - 2 = -1` on the right. |
 
-* `chi`  = (unreduced) Euler characteristic of the **conflict-free complex**
-  `K(AF)` = `∑_{∅ ≠ s conflict-free} (-1)^(|s|-1)`.
-* `#pref` = number of **preferred extensions** (maximal admissible sets).
-* `|grnd|` = size of the **grounded extension** (least fixed point of the
-  defense operator, computed by iterating `charF` from `∅`).
-* `RHS`  = `#pref − |grnd|`, the right-hand side of the conjectured identity
-  `chi = #pref − |grnd|`.
+The accompanying declarations prove the semantic classifications from the definitions rather than treating the table as an unchecked enumeration.
 
-## Data table
+## OEIS search results
 
-| framework                       | chi | #pref | \|grnd\| | RHS = #pref − \|grnd\| | chi = RHS ? |
-|---------------------------------|----:|------:|---------:|-----------------------:|:-----------:|
-| no-attack, `Fin 1`              |  1  |   1   |    1     |          0             |   **no**    |
-| no-attack, `Fin 2`              |  1  |   1   |    2     |         −1             |   **no**    |
-| no-attack, `Fin 3`              |  1  |   1   |    3     |         −2             |   **no**    |
-| self-attack `0→0`, `Fin 1`      |  0  |   1   |    0     |          1             |   **no**    |
-| 2-cycle `0↔1`, `Fin 2`          |  2  |   2   |    0     |          2             |     yes     |
-| 3-cycle `0→1→2→0`, `Fin 3`      |  3  |   1   |    0     |          1             |   **no**    |
-| single attack `0→1`, `Fin 2`    |  2  |   1   |    1     |          0             |   **no**    |
-| path `0→1→2`, `Fin 3`           |  2  |   1   |    2     |         −1             |   **no**    |
-| isolated `0→1` in `Fin 3`       |  1  |   1   |    2     |         −1             |   **no**    |
+No integer sequence arises from these minimal structural counterexamples, so no OEIS identification is applicable.
 
-## Counterexample hunt — conclusion
+## Counterexample hunt
 
-The conjectured identity `chi(K(AF)) = |preferred| − |grounded|` **fails on the
-very first example** (a single, unattacked argument: `chi = 1`, but
-`#pref − |grnd| = 1 − 1 = 0`). It fails on 8 of the 9 sampled frameworks; the
-lone agreement (the 2-cycle) is a numerical coincidence. The failure is not an
-edge case: the two sides are invariants of genuinely different character — `chi`
-is a topological invariant of the conflict (independence) complex, while
-`#pref − |grnd|` is an order-theoretic quantity of the admissibility lattice.
+The universal simplicial-complex claim fails on the mutual-attack pair: each singleton is a preferred extension, but its empty subset is not preferred. The universal Euler formula fails on the attack-free pair before any higher-dimensional homology term can contribute.
 
-The single-argument counterexample is the one formalized as
-`euler_semantics_conjecture_false` in `ArgumentationSimplicial.lean`.
+These examples also identify a corrected construction: take every subset of every preferred extension. This family is downward closed and has the preferred extensions among its maximal faces.
 
-## What *is* true (and formalized)
+## Table interpretation
 
-* The conflict-free sets are downward closed, so `K(AF)` genuinely **is** a
-  simplicial complex (`conflictFreeComplex`). (Note: it is the *conflict-free
-  sets*, not the *preferred extensions*, that form the complex; preferred
-  extensions are maximal and not downward closed.)
-* `chi(full simplex on a nonempty vertex set) = 1` (`eulerChar_powerset`): the
-  no-attack framework is contractible, matching the `chi = 1` rows above.
-* A vertex `{a}` is a face iff `a` does not attack itself
-  (`singleton_mem_conflictFreeComplex`), matching `self-attack Fin 1` having
-  `chi = 0` (its only vertex is a phantom).
-
-## Remark on `chi` as a component/hole count
-
-For the *complete conflict graph* (every pair attacks, e.g. the 2- and 3-cycles
-here) `K(AF)` is a set of `n` isolated points, so `chi = n` counts the
-"independent debate threads". For the *empty conflict graph* (no attacks)
-`K(AF)` is one big contractible simplex, so `chi = 1`. Thus `chi` really does
-measure the topology of the disagreement pattern — just not the semantic
-quantity proposed in the informal conjecture.
+The evidence shows that sampling 100 transcript-derived frameworks cannot verify either universal conjecture: both already fail at two vertices. A meaningful empirical program should instead compute the homology of the downward-closed complex generated by preferred extensions and compare it with invariants retaining intersection data among preferred extensions.

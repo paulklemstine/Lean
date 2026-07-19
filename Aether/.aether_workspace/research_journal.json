@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "717f7483",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions\n\n## What was established\n\nThe completed development has two complementary formalizations. `Catalog/NumberTheory/GodelCasino.lean` studies finite sequences of unit bets and their ac",
-      "quality_score": 0.75,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-07-18T06:56:52",
-      "title": "Godel's Casino: Incomplete but Winnable Games"
-    },
-    {
       "cycle_id": "70b6aa60",
       "domain": "Logic",
       "key_insight": "# Future Directions: From Evaluation to Certification\n\n## 1. Effective zero-exclusion certificates for completed L-functions\n\n**Conjecture.** There is a uniform certificate language for standard compl",
@@ -499,19 +489,19 @@
       "theorem_count": 14,
       "timestamp": "2026-07-19T07:40:03",
       "title": "The Ramsey Theory of DNA: Subsequence Avoidance in Genetic Codes"
+    },
+    {
+      "cycle_id": "77a52651",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions\n\n## What was established\n\n`QuantumWalkPeriodicityMixing.lean` proves a no-go bridge between algebraic periodicity and topological mixing. If an evolution operator has positive fini",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-07-19T08:00:50",
+      "title": "Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "a8d24466",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions: Arithmetic on Hyperbolic Orbits\n\n## 1. Primitive conjugacy classes as geometric primes\n\nFor the modular group, define a hyperbolic prime to be a primitive hyperbolic conjugacy cla",
-      "quality_score": 0.73,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-07-15T07:28:14",
-      "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk"
-    },
     {
       "cycle_id": "192aef6c",
       "domain": "NumberTheory",
@@ -2501,27 +2491,19 @@
       "theorem_count": 14,
       "timestamp": "2026-07-19T07:40:03",
       "title": "The Ramsey Theory of DNA: Subsequence Avoidance in Genetic Codes"
+    },
+    {
+      "cycle_id": "77a52651",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions\n\n## What was established\n\n`QuantumWalkPeriodicityMixing.lean` proves a no-go bridge between algebraic periodicity and topological mixing. If an evolution operator has positive fini",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-07-19T08:00:50",
+      "title": "Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "f48abc37",
-      "domain": "Cryptography",
-      "name": "uses",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "fff627f3",
-      "domain": "Pythagorean",
-      "name": "about",
-      "quality": 0.77
-    },
-    {
-      "cycle_id": "fff627f3",
-      "domain": "Pythagorean",
-      "name": "wellBehaved_of_eventually_fixed",
-      "quality": 0.77
-    },
     {
       "cycle_id": "fff627f3",
       "domain": "Pythagorean",
@@ -2803,9 +2785,27 @@
       "domain": "Tropical",
       "name": "periodic_search_benchmark",
       "quality": 0.7
+    },
+    {
+      "cycle_id": "77a52651",
+      "domain": "Combinatorics",
+      "name": "says",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "77a52651",
+      "domain": "Combinatorics",
+      "name": "periodic_tendsto_eq_initial",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "77a52651",
+      "domain": "Combinatorics",
+      "name": "bornProbability_periodic",
+      "quality": 0.8
     }
   ],
-  "last_updated": "2026-07-19T07:40:03",
+  "last_updated": "2026-07-19T08:00:50",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3213,12 +3213,6 @@
         "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
       },
       {
-        "cycle_id": "4665f966",
-        "quality": 0.71,
-        "theorems": 7,
-        "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
-      },
-      {
         "cycle_id": "5543d24b",
         "quality": 0.64,
         "theorems": 24,
@@ -3265,6 +3259,12 @@
         "quality": 0.76,
         "theorems": 0,
         "title": "The Combinatorics of Compiler Optimization: Register Allocation as Graph Colorin"
+      },
+      {
+        "cycle_id": "77a52651",
+        "quality": 0.8,
+        "theorems": 6,
+        "title": "Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
       }
     ],
     "Computation": [
