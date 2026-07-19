@@ -89,20 +89,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Thermodynamics of Mathematical Proof"
   },
   {
-    "consumed_by_exp_id": "8d3b0867",
-    "description": "Building on cycle 7bc47166 (Q=0.780), which proved 13 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Sorting a list of n elements reduces the entropy from log(n!) bits to 0 bits, doing thermodynamic work W = kT * log(n!) in the process. But this is only true if sorting is irreversible \u2014 if the sorted list uniquely determines the input, then sorting is reversible and does no thermodynamic work. The ",
-    "domains": [
-      "Shared"
-    ],
-    "id": "push_7bc47166_20643918",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "7bc47166",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T01:02:46.395999+00:00",
-    "title": "Deepening: The Thermodynamics of Sorting: Entropy and Computational Work"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Prove that Novikov's self-consistency principle follows from the Banach fixed-point theorem applied to the causal structure of spacetime. Formalize time-travel paradoxes as boundary value problems and prove existence of self-consistent solutions for polynomial causal maps.",
     "domains": [
@@ -4993,6 +4979,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-19T16:07:08.456382+00:00",
     "title": "The current finite-memory theorem proves that a collision exists. A sharper deve"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThe completed development separates three notions that are often conflated in informal thermodynamic accounts of sorting:\n\n1. **Decision-tree complexity.** A binary comparison tree with enough leaves to distinguish all `n!` orderings has height at least `Nat.clog 2 n.factorial`.\n2. **Logical erasure.** The visible sorting map from input permutations to one sorted output loses exactly `Real.logb 2 n.factorial` units of information and has Landauer scale `kT * Real.log n.factorial`.\n3. **Reversible implementation.** Retaining the input permutation as history gives an explicit equivalence and therefore zero information loss. Any product-form reversible implementation requires at least `n!` history states.\n\nNatural next steps are:\n\n- Replace `SortsOrderings`, which expresses transcript capacity, by a semantic comparison-tree evaluator and prove the same lower bound from a full correctness specification.\n- Generalize from permutations of distinct elements to multisets with repeated keys. The expected number of distinguishable inputs is the multinomial coefficient `n! / \u220f m\u1d62!`, and the corresponding erased information should be its logarithm.\n- Formalize average comparison depth under a probability distribution, yielding a Shannon-entropy lower bound rather than only a worst-case height bound.\n- Model reversible comparison circuits gate by gate, distinguishing retained history, uncomputation, and deliberate reset. This would connect the finite-state cardinality results to an operational cost semantics.\n- Prove sharper analytic estimates for `Real.log n.factorial` (for example explicit Stirling bounds) and derive quantitative `n log n - O(n)` work bounds.\n- Extend the padding result to arbitrary semantics-preserving decision-tree transformations, making precise that logical erasure is invariant under implementation changes while comparison count is not.\n\nThe present results deliberately do not claim that every comparison dissipates one bit of thermodynamic work. Such a statement needs a physical reset model; the proved padding theorem shows that it cannot follow from comparison count alone.\n",
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "fd_0464",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "8d3b0867",
+    "status": "available",
+    "timestamp": "2026-07-19T16:07:16.665246+00:00",
+    "title": "The completed development separates three notions that are often conflated in in"
   },
   {
     "consumed_by_exp_id": "",
