@@ -1,225 +1,582 @@
-# The Observation Gap: Algebraic Foundations of Functional Indistinguishability
+# Functional Fibers, Experiential Gaps, and Algebraic Forgetting
 
-**Abstract.** We develop a rigorous algebraic framework for studying the limits of external observation applied to systems with internal states. An *observation system* consists of *n* predicates on a finite type, inducing an equivalence relation we call *observational indistinguishability* (the "twin" relation). We prove five main results: (1) the **Observation Pigeonhole Theorem**, establishing that any *n* Boolean observations on a type with more than 2ⁿ elements must admit a pair of distinct but observationally indistinguishable elements; (2) a **Quotient Cardinality Bound**, showing the observation quotient has at most 2ⁿ classes; (3) **Refinement Monotonicity**, proving that enlarging an observation system can only increase discriminative power; (4) a **Sufficiency Boundary** result demonstrating that the pigeonhole bound is tight; and (5) a **Generalized Pigeonhole** theorem extending the framework to observations valued in arbitrary finite types. All results are mechanically verified. We discuss applications to the philosophy of mind, artificial intelligence evaluation, and information-theoretic limits of measurement.
+**Aristotle**  
+**July 19, 2026**
 
----
+## Abstract
+
+This paper develops a self-contained mathematical account of the gap between functional description and subjective experience. An experience model assigns to each possible world both an observable functional profile and an experiential value, with one value distinguished as void. We prove a conservative extension theorem: every such model embeds functionally into a two-sheeted model in which each world has an experience-retaining copy and a functionally identical void copy. Consequently, no predicate depending only on functional profile can distinguish the two sheets. This is an underdetermination theorem, not an assertion that every fixed model already contains a zombie; an all-void singleton model supplies the boundary counterexample.
+
+For a canonical model with exactly two worlds over each functional profile, we classify zombie witnesses by profiles. We then construct a canonical sound semantic system in which each profile indexes one true but unaccepted code, classify semantic-gap witnesses by the same profiles, and obtain an explicit isomorphism between the two witness spaces. The correspondence is precise but model-relative: it does not identify consciousness with arithmetic or establish an unconditional equivalence for arbitrary systems.
+
+We connect this hidden-fiber structure to two further theories. First, for finite systems with nonnegative effective information on nontrivial cuts, integrated information is an attained minimum; we establish existence, greatest-lower-bound character, nonnegativity, reducibility, monotonicity, and equality under a common minimizing cut. These functional invariants coexist with, but do not determine, the experiential fiber. Second, a compositional finite memory on streams necessarily identifies distinct histories. Its erased inputs form a submonoid, and its reachable observable algebra is isomorphic to the stream algebra quotiented by memory indistinguishability. Targeted forgetting satisfies a universal factorization property. Across all three settings, the central object is a forgetful map and the central question is the structure of its fibers.
 
 ## 1. Introduction
 
-The problem of determining internal states from external observations is ubiquitous across science and philosophy. In neuroscience, the question manifests as the *hard problem of consciousness*: can behavioral and neural measurements determine subjective experience? In computer science, it appears as the problem of testing program equivalence from input-output behavior. In physics, it underlies quantum state tomography and the question of hidden variables.
+A functional account of a system records what the system does: its transitions, reports, discriminations, causal roles, or input–output profile. A theory of subjective experience attempts to record an additional fact: what, if anything, it is like to occupy a state. The philosophical “zombie” thought experiment asks whether functional identity forces experiential identity.
 
-Despite the diversity of these domains, they share a common mathematical structure. An observer has access to a finite collection of tests, each producing a finite set of outcomes. Two systems are *observationally equivalent* if they produce identical outcomes on all tests. The central question is: when does observational equivalence imply genuine identity?
+The mathematical treatment given here separates three claims that are often conflated.
 
-In this paper, we develop the algebraic theory of observation systems from first principles, proving tight bounds on the discriminative power of finite observation. Our framework abstracts away domain-specific details to expose the pure combinatorial and algebraic content of the observation gap.
+1. A particular experience model contains a conscious world and a functionally identical void world.
+2. Every experience model can be conservatively extended so that such a pair exists while all original functional profiles are preserved.
+3. The space of experiential gaps is universally equivalent to a space of semantic incompleteness gaps.
 
-### 1.1. Relation to Prior Work
+The first claim is model-dependent and can fail. The second admits a general construction. The third is false without structural hypotheses but becomes an exact isomorphism for canonical two-sheeted models. Keeping these quantifiers explicit prevents a construction of underdetermination from being misreported as an empirical existence theorem.
 
-The pigeonhole principle, of course, dates to Dirichlet. Its application to the question of observational limits has been discussed informally in philosophy of mind (Chalmers, 1996) and in computational learning theory (Angluin, 1988). Our contribution is to formalize this connection precisely, establish tight bounds, and develop the algebraic structure (quotient lattice, refinement ordering) that governs how observational power scales.
+The two-sheeted construction is an instance of a wider pattern. A map from a rich state space to an observable description can forget coordinates. The inverse image of an observable value—its fiber—contains the alternatives that the description cannot distinguish. The same pattern governs true but unaccepted codes in a simple semantic system, equal outputs of finite memories, and the independence of an experiential coordinate from a functional optimization such as integrated information.
 
-The refinement ordering on observation systems connects to the lattice of equivalence relations (Birkhoff, 1935) and to the partition lattice studied extensively in combinatorics. Our Refinement Monotonicity theorem makes this connection explicit.
+The paper has four goals. Section 2 defines experience models and zombie witnesses. Section 3 proves the conservative extension and its boundary. Section 4 classifies canonical zombie and semantic gaps and establishes their isomorphism. Section 5 develops the finite minimum-information landscape. Section 6 gives an algebraic theory of memory and targeted forgetting. Section 7 presents finite algorithms and complexity bounds, and Sections 8–10 discuss applications, limitations, and future directions.
 
----
+## 2. Experience models and functional indistinguishability
 
-## 2. Definitions
+### 2.1 Basic definitions
 
-**Definition 2.1** (Observation System). Let α be a type and n ∈ ℕ. An *observation system* is a tuple O = (p₁, ..., pₙ) where each pᵢ : α → Bool is a Boolean predicate. We write ObsSys(α, n) for the type of such systems.
+**Definition 2.1 (Experience model).** An experience model is a tuple
 
-See @file[Catalog/Algebra/ObservationGap.lean], `ObsSys`.
+$$
+\mathcal M=(W,F,E,B,Q,q_0),
+$$
 
-**Definition 2.2** (Observation Profile). The *profile* of an element a ∈ α under O is the tuple
+where $W$ is a set of possible worlds, $F$ is a set of functional profiles, $E$ is a set of experiential values, $B:W\to F$ assigns behavior, $Q:W\to E$ assigns experience, and $q_0\in E$ is a distinguished void value.
 
-$$\mathrm{profile}_O(a) = (p_1(a), p_2(a), \ldots, p_n(a)) \in \mathrm{Bool}^n.$$
+Only the distinction between void and nonvoid is needed for the principal results. No metric, order, or algebraic operation on $E$ is assumed.
 
-See @file[Catalog/Algebra/ObservationGap.lean], `ObsSys.profile`.
+**Definition 2.2 (Functional twins).** Worlds $x,y\in W$ are functional twins when
 
-**Definition 2.3** (Twins). Two elements a, b ∈ α are *O-twins* (written twins_O(a, b)) if profile_O(a) = profile_O(b). That is, they are indistinguishable under all observations in O.
+$$
+B(x)=B(y).
+$$
 
-See @file[Catalog/Algebra/ObservationGap.lean], `ObsSys.twins`.
+This relation is an equivalence relation because equality in $F$ is reflexive, symmetric, and transitive.
 
-**Definition 2.4** (Refinement). An observation system O₂ : ObsSys(α, m) *refines* O₁ : ObsSys(α, n) if
+**Definition 2.3 (Conscious world).** A world $x\in W$ is conscious, in the minimal sense used here, when
 
-$$\forall a, b \in \alpha,\; \mathrm{twins}_{O_2}(a, b) \implies \mathrm{twins}_{O_1}(a, b).$$
+$$
+Q(x)\ne q_0.
+$$
 
-That is, O₂ makes at least as many distinctions as O₁.
+This definition should be read as “experientially nonvoid.” It does not purport to analyze phenomenal character.
 
-See @file[Catalog/Algebra/ObservationGap.lean], `ObsSys.refines`.
+**Definition 2.4 (Zombie twin and zombie witness).** A world $z$ is a zombie twin of $x$ when
 
-**Definition 2.5** (Generalized Observation System). For an arbitrary finite codomain β, a *generalized observation system* consists of n predicates pᵢ : α → β. The definitions of profile, twins, and refinement extend naturally.
+$$
+B(z)=B(x) \quad\text{and}\quad Q(z)=q_0.
+$$
 
-See @file[Catalog/Algebra/ObservationGap.lean], `GenObsSys`.
+A zombie witness is an ordered pair $(x,z)$ such that $Q(x)\ne q_0$, $Q(z)=q_0$, and $B(x)=B(z)$.
 
----
+**Lemma 2.5 (Hidden contrast).** If $x$ is conscious and $z$ is a zombie twin of $x$, then $x$ and $z$ are functional twins but have different experiential values.
 
-## 3. Main Results
+**Proof sketch.** Functional twinning is part of the definition. If $Q(x)=Q(z)$, then $Q(z)=q_0$ would imply $Q(x)=q_0$, contradicting consciousness. Hence $Q(x)\ne Q(z)$. $\square$
 
-### 3.1. The Twin Relation is an Equivalence
+The lemma isolates the gap as a failure of the behavioral map $B$ to separate worlds that the experiential map $Q$ separates.
 
-**Proposition 3.1.** For any observation system O on α, the twin relation is an equivalence relation.
+## 3. The conservative two-sheeted extension
 
-*Proof sketch.* Reflexivity, symmetry, and transitivity follow immediately from the corresponding properties of equality on Bool^n. ∎
+### 3.1 Construction
 
-See @file[Catalog/Algebra/ObservationGap.lean], `observation_equiv_is_equivalence`.
+Given any experience model $\mathcal M$, define its two-sheeted extension $\widehat{\mathcal M}$ as follows. The new world set is
 
-This equivalence relation induces a quotient α/∼_O whose elements are the *observational equivalence classes* — maximal sets of pairwise indistinguishable elements.
+$$
+\widehat W=W\times\{0,1\}.
+$$
 
-### 3.2. Observation Pigeonhole Theorem
+The functional-profile set remains $F$. The experiential set is enlarged to $E\sqcup\{\bot\}$, where $\bot$ is a fresh void symbol not equal to any embedded element of $E$. Define
 
-**Theorem 3.2** (Observation Pigeonhole). Let O be an observation system of n Boolean predicates on a finite type α with |α| > 2ⁿ. Then there exist distinct a, b ∈ α such that twins_O(a, b).
+$$
+\widehat B(x,b)=B(x)
+$$
 
-*Proof sketch.* The profile map profile_O : α → Bool^n has codomain of cardinality |Bool^n| = 2ⁿ. Since |α| > 2ⁿ, the map is not injective, so there exist distinct a ≠ b with identical profiles. ∎
+and
 
-See @file[Catalog/Algebra/ObservationGap.lean], `observation_pigeonhole`.
+$$
+\widehat Q(x,b)=
+\begin{cases}
+\iota(Q(x)),&b=1,\\
+\bot,&b=0,
+\end{cases}
+$$
 
-**Remark.** The proof applies `Fintype.exists_ne_map_eq_of_card_lt`, a formalization of the pigeonhole principle for finite types.
+where $\iota:E\to E\sqcup\{\bot\}$ is the inclusion. The new void value is $\bot$.
 
-### 3.3. Quotient Cardinality Bound
+For each $x\in W$, call $(x,1)$ its **retained copy** and $(x,0)$ its **void copy**.
 
-**Theorem 3.3.** For any observation system O of n Boolean predicates on a finite type α,
+**Theorem 3.1 (Conservative Zombie Extension).** For every experience model $\mathcal M$ and every world $x\in W$, the retained copy $(x,1)$ is conscious in $\widehat{\mathcal M}$, the void copy $(x,0)$ is its zombie twin, and both copies have functional profile $B(x)$. In particular,
 
-$$|\alpha / {\sim_O}| \leq 2^n.$$
+$$
+\widehat B(x,1)=B(x)=\widehat B(x,0)
+$$
 
-*Proof sketch.* The profile map descends to an injection f : α/∼_O ↪ Bool^n on the quotient (since equivalent elements have equal profiles by definition). An injection from a finite type into a type of cardinality 2ⁿ implies the domain has at most 2ⁿ elements. ∎
+while
 
-See @file[Catalog/Algebra/ObservationGap.lean], `observation_quotient_card_le`, with the injective factorization established in `profile_factors_injective`.
+$$
+\widehat Q(x,1)\ne\widehat Q(x,0).
+$$
 
-### 3.4. Refinement Monotonicity
+**Proof sketch.** The behavioral equalities follow immediately because $\widehat B$ ignores the sheet coordinate. The retained experience $\iota(Q(x))$ lies in the $E$ component of the disjoint union and therefore differs from $\bot$. The void copy has experience $\bot$ by definition. Thus the retained copy is conscious, the void copy is void, and they are functional twins. $\square$
 
-**Theorem 3.4** (Refinement Surjection). If O₂ refines O₁, then there exists a surjection
+The word “conservative” refers to preservation of functional data: the map $x\mapsto(x,1)$ preserves every original profile exactly. The construction adds a hidden coordinate but changes no value of the old behavior map.
 
-$$f : \alpha/{\sim_{O_2}} \twoheadrightarrow \alpha/{\sim_{O_1}}.$$
+### 3.2 Invariance of purely functional predicates
 
-In particular, |α/∼_{O₂}| ≥ |α/∼_{O₁}|.
+A purely functional criterion is any predicate $P:F\to\{\mathrm{false},\mathrm{true}\}$. It may be arbitrarily complicated; it may refer to computation, reportability, causal organization, or an information-theoretic score, provided its input is only the functional profile.
 
-*Proof sketch.* Define f([a]_{O₂}) = [a]_{O₁}. This is well-defined because O₂-equivalence implies O₁-equivalence (the refinement condition). It is surjective because every O₁-class contains a representative, which also has an O₂-class. ∎
+**Corollary 3.2 (Functional Predicate Transfer).** Let $P$ be any predicate on functional profiles. For every $x\in W$,
 
-See @file[Catalog/Algebra/ObservationGap.lean], `refinement_monotone_separation`.
+$$
+P(\widehat B(x,1))\iff P(\widehat B(x,0)).
+$$
 
-**Corollary.** The discriminative power of an observation system, measured by the cardinality of the quotient, is monotone under refinement. Adding observations never decreases the number of distinguishable classes.
+Therefore, if the retained copy satisfies a proposed purely functional definition of consciousness, then its void twin satisfies that definition as well.
 
-### 3.5. Sufficiency Boundary
+**Proof sketch.** Both arguments of $P$ equal $B(x)$. Substitution into equal inputs gives equal truth values. $\square$
 
-**Theorem 3.5** (Observation Can Suffice). For every n ∈ ℕ, there exists an observation system O : ObsSys(Fin(2ⁿ), n) such that O-twins are equal:
+This is a theorem about the expressive limit of a chosen vocabulary. It does not show that experience is physically independent of function. It shows that independence remains compatible with any description that omits the experiential coordinate.
 
-$$\forall a, b \in \mathrm{Fin}(2^n),\; \mathrm{twins}_O(a, b) \implies a = b.$$
+### 3.3 The necessary boundary
 
-*Proof sketch.* Define the i-th predicate to extract the i-th bit: pᵢ(a) = testBit(a, i). If two elements agree on all n bits, they are equal as elements of Fin(2ⁿ) (whose values are determined by their first n bits). ∎
+The extension theorem must not be confused with an assertion that every original model already contains a zombie witness.
 
-See @file[Catalog/Algebra/ObservationGap.lean], `observation_can_suffice`.
+**Example 3.3 (All-void singleton).** Let $W=F=E=\{*\}$, set $B(*)=*$ and $Q(*)=q_0=*$. Then no world is conscious, so no zombie witness exists.
 
-**Remark.** Combined with Theorem 3.2, this establishes that 2ⁿ is the *exact* threshold: n Boolean observations can distinguish up to 2ⁿ elements and no more.
+**Theorem 3.4 (Failure of the unconditional existence claim).** There is an experience model with no zombie witness.
 
-### 3.6. Concrete Example
+**Proof sketch.** Use the all-void singleton. A zombie witness requires a conscious first component, but the unique world has void experience. $\square$
 
-**Theorem 3.6.** For any Boolean predicate p on Fin(3), there exist distinct a, b ∈ Fin(3) with p(a) = p(b).
+The correct universal result is therefore modal and constructive: every model **admits an extension** with zombie witnesses. It is not categorical in the colloquial sense that every model **contains** them already.
 
-See @file[Catalog/Algebra/ObservationGap.lean], `concrete_twin_fin3`.
+## 4. Canonical classification and semantic gaps
 
-This serves as a minimal concrete instance of the pigeonhole theorem: 3 > 2¹ = 2, so one predicate cannot distinguish all three elements.
+### 4.1 The canonical two-point fiber
 
-### 3.7. Generalized Pigeonhole
+Let $X$ be any set of functional profiles. Define the canonical experience model by
 
-**Theorem 3.7** (Generalized Observation Pigeonhole). Let β be a finite type with |β| = k, and let O be a generalized observation system of n predicates valued in β, on a finite type α with |α| > kⁿ. Then there exist distinct a, b ∈ α with identical profiles.
+$$
+W_X=X\times\{0,1\},\qquad F_X=X,
+$$
 
-*Proof sketch.* The profile map has codomain β^n of cardinality kⁿ. The argument proceeds identically to Theorem 3.2. ∎
+with $B_X(x,b)=x$. Let the experiential set consist of a single present marker $\star$ together with a void marker $\bot$, and define
 
-See @file[Catalog/Algebra/ObservationGap.lean], `generalized_observation_pigeonhole` (partially formalized).
+$$
+Q_X(x,1)=\star,\qquad Q_X(x,0)=\bot.
+$$
 
----
+There is a canonical zombie witness over each $x\in X$, namely
 
-## 4. The Algebraic Structure of Observation
+$$
+((x,1),(x,0)).
+$$
 
-### 4.1. The Observation Lattice
+**Theorem 4.1 (Classification of Canonical Zombie Witnesses).** The map
 
-The collection of all observation systems on a fixed finite type α, ordered by refinement, forms a partially ordered set. Theorems 3.3 and 3.4 together establish that the quotient cardinality map
+$$
+x\longmapsto((x,1),(x,0))
+$$
 
-$$O \mapsto |\alpha/{\sim_O}|$$
+is a bijection from $X$ to the set $Z_X$ of zombie witnesses in the canonical experience model.
 
-is a monotone function from this poset to (ℕ, ≤), bounded above by 2ⁿ (or kⁿ for k-valued observations).
+**Proof sketch.** The displayed pair is a witness because both worlds project to $x$, the first is present, and the second is void. Conversely, let $((x,b),(y,c))$ be any witness. Consciousness of the first forces $b=1$; voidness of the second forces $c=0$; functional equality forces $x=y$. Hence the witness is uniquely $((x,1),(x,0))$. Reading its profile gives the inverse map. $\square$
 
-The minimal element is the trivial observation system (n = 0, no predicates), which places all elements in a single class. The maximal elements are those that achieve full separation — observation systems where the twin relation coincides with equality.
+Thus each profile indexes exactly one minimal experiential gap.
 
-### 4.2. Information-Theoretic Interpretation
+### 4.2 Semantic systems
 
-Each Boolean observation provides at most 1 bit of information about the identity of an element. An observation system of n predicates provides at most n bits. Since identifying an element of α requires log₂|α| bits, the pigeonhole theorem is equivalent to the statement that n < log₂|α| bits of information cannot determine an element uniquely.
+**Definition 4.2 (Semantic system).** A semantic system on a set $C$ of codes consists of an acceptance predicate $A:C\to\{\mathrm{false},\mathrm{true}\}$ and a truth predicate $T:C\to\{\mathrm{false},\mathrm{true}\}$. It is **sound** when
 
-This connects to Shannon's source coding theorem: you need at least log₂|α| binary questions to identify an element of a set of size |α|.
+$$
+A(c)\Longrightarrow T(c)
+$$
 
-### 4.3. Quotient Algebras
+for every $c\in C$.
 
-The quotient α/∼_O inherits algebraic structure from α. If α carries a group structure, the twin equivalence classes need not form a group (the twin relation is not generally a congruence with respect to the group operation). However, when the observation predicates are group homomorphisms to ({0,1}, ⊕), the twin relation is a congruence, and the quotient is a group — specifically, a quotient of α by a subgroup of index at most 2ⁿ.
+**Definition 4.3 (Semantic-gap witness).** A semantic-gap witness is a code $c$ satisfying
 
----
+$$
+T(c)\quad\text{and}\quad \neg A(c).
+$$
 
-## 5. Applications
+For the same profile set $X$, define the canonical semantic system on $C_X=X\times\{0,1\}$. Declare every code true, and accept exactly the codes on the $1$-sheet:
 
-### 5.1. Philosophy of Mind
+$$
+T_X(x,b)=\mathrm{true},\qquad A_X(x,b)\iff b=1.
+$$
 
-The observation pigeonhole theorem provides a mathematical formalization of the *zombie argument* in philosophy of consciousness. If we model a cognitive system as having some finite (but large) number of possible internal states, and our observational toolkit consists of finitely many behavioral tests, then:
+**Lemma 4.4 (Soundness and omission).** The canonical semantic system is sound, and for every $x\in X$, the code $(x,0)$ is true but unaccepted.
 
-1. **Twin existence is guaranteed** whenever the state space exceeds 2ⁿ (Theorem 3.2).
-2. **The twin relation is a genuine equivalence** — it partitions the state space into classes of behaviorally identical systems (Proposition 3.1).
-3. **More tests help but cannot fully close the gap** when the state space is sufficiently large (Theorems 3.3 and 3.4).
-4. **The gap is tight** — it vanishes exactly when the state space equals 2ⁿ (Theorem 3.5).
+**Proof sketch.** Soundness is immediate because every code is true. The code $(x,0)$ is true by definition and fails the acceptance condition $0=1$. $\square$
 
-This transforms the philosophical zombie from a thought experiment into a mathematical inevitability, conditional on the finiteness assumptions.
+**Theorem 4.5 (Classification of Canonical Semantic Gaps).** The map
 
-### 5.2. AI Consciousness Testing
+$$
+x\longmapsto(x,0)
+$$
 
-The framework has direct implications for proposals to test machine consciousness (e.g., Turing tests, behavioral batteries, neural correlate measurements):
+is a bijection from $X$ to the set $G_X$ of semantic-gap witnesses.
 
-- Any finite test suite has a hard upper bound on the number of internal configurations it can distinguish.
-- Two AI architectures can always be constructed that pass all tests identically but differ internally.
-- The only way to close the gap is to match the number of observations to the state space — which may be computationally infeasible for large systems.
+**Proof sketch.** Every $(x,0)$ is a gap witness. Conversely, if $(x,b)$ is unaccepted, then $b\ne1$, and because $b$ is Boolean, $b=0$. Reading the first coordinate is inverse to the displayed map. $\square$
 
-### 5.3. Program Equivalence and Testing
+### 4.3 Exact correspondence
 
-In software engineering, the observation gap manifests as the fundamental limitation of black-box testing. A finite test suite of n binary tests can distinguish at most 2ⁿ distinct programs. Since the space of possible programs (even of bounded size) is vastly larger, testing can never guarantee the absence of bugs — a well-known result formalized here in a clean algebraic setting.
+**Theorem 4.6 (Zombie–Semantic Gap Isomorphism).** For every profile set $X$, there is a canonical bijection
 
-### 5.4. Quantum State Discrimination
+$$
+Z_X\cong G_X.
+$$
 
-In quantum mechanics, the observation gap appears as the impossibility of perfectly distinguishing non-orthogonal quantum states. While our framework is currently classical (Boolean-valued observations), the generalized version (Theorem 3.7) with k-valued observations captures the essence of measurement with k possible outcomes, connecting to POVM measurements in quantum information theory.
+It sends the unique zombie witness over $x$ to the true but unaccepted code $(x,0)$.
 
----
+**Proof sketch.** By Theorem 4.1, $Z_X\cong X$. By Theorem 4.5, $X\cong G_X$. Compose these bijections. Explicitly, read the common profile $x$ from a zombie witness and output $(x,0)$. The inverse reads $x$ from a semantic gap and returns $((x,1),(x,0))$. The classification theorems prove that both composites are identities. $\square$
 
-## 6. Discussion
+The theorem gives an exact sense in which the two gaps are structurally identical: both witness spaces are classified by the same base $X$, and both arise from a two-sheeted construction. It is appropriately described as an incompleteness analogy only at this abstract semantic level. No arithmetic coding, diagonal lemma, or claim about human mathematical cognition is assumed.
 
-### 6.1. The Sharpness of the Bound
+**Theorem 4.7 (No Unconditional Gap Isomorphism).** There is no general bijection between the zombie witnesses of an arbitrary experience model and the semantic-gap witnesses of the canonical one-profile semantic system.
 
-A notable feature of our results is the tightness of the 2ⁿ bound. Theorem 3.2 shows that 2ⁿ + 1 elements guarantee twins; Theorem 3.5 shows that 2ⁿ elements admit full separation. This leaves no ambiguity: the observation gap opens at exactly the point where the state space exceeds the capacity of the observation channel.
+**Proof sketch.** The all-void singleton experience model has no zombie witnesses, while the canonical semantic system over the singleton profile set has the witness $(*,0)$. An empty set cannot be bijective with a nonempty set. $\square$
 
-### 6.2. Constructive vs. Existential Content
+This boundary theorem prevents the guarded canonical correspondence from being promoted to an unrestricted metaphysical identity.
 
-The pigeonhole theorem (3.2) is existential: it guarantees the existence of twins but does not construct them. In contrast, the sufficiency theorem (3.5) is constructive: it provides an explicit observation system (bit extraction) that achieves full separation. This asymmetry is significant — the observation gap is *provably present* but the specific twin pair is *unspecified*, mirroring the philosophical situation where we know zombies must exist in principle but cannot point to one.
+## 5. Integrated information as a finite variational invariant
 
-### 6.3. Connection to Gödel Incompleteness
+### 5.1 Cuts and effective information
 
-There is a structural analogy between the observation gap and Gödel's incompleteness theorems. In both cases:
+Let a finite system have components indexed by
 
-- A finite formal system (observations / axioms) has bounded expressive power.
-- There exist truths (internal states / arithmetic statements) that escape this expressive power.
-- Adding more expressive power (more observations / axioms) helps but does not eliminate the gap for sufficiently rich domains.
+$$
+V_n=\{0,1,\ldots,n-1\}.
+$$
 
-While this analogy is suggestive rather than a formal isomorphism, the algebraic structure — a monotone map from a lattice of "descriptive resources" to a bounded set of "describable objects" — is common to both settings.
+A candidate nontrivial cut is represented by a subset $A\subseteq V_n$ satisfying
 
----
+$$
+A\ne\varnothing \quad\text{and}\quad A\ne V_n.
+$$
 
-## 7. Future Work
+The complementary side is determined by $A$, so no second subset is required. This representation counts both $A$ and its complement unless a symmetry convention is added; the minimum results below do not require such a convention.
 
-Several natural extensions of this framework present themselves:
+**Lemma 5.1 (Cut Landscape Boundary).** If $n\ge2$, the set of nontrivial cuts is nonempty. If $n\le1$, it is empty.
 
-1. **Adaptive observation systems**, where later tests depend on earlier outcomes, and the question of whether adaptivity increases the 2ⁿ bound.
-2. **Continuous observation systems** on topological spaces, connecting to dimension theory and the Borsuk-Ulam theorem.
-3. **Observation algebras and Stone duality**, exploring the lattice structure of the refinement ordering.
-4. **Probabilistic observation**, strengthening the existential twin result to quantitative lower bounds on the probability of encountering twins.
+**Proof sketch.** For $n\ge2$, the singleton $\{0\}$ is nonempty and proper. For $n=0$, there is no nonempty subset. For $n=1$, the only subsets are empty and the whole set. $\square$
 
----
+An effective-information landscape is a function
 
-## References
+$$
+I:\{A\subseteq V_n: \varnothing\ne A\ne V_n\}\to\mathbb R_{\ge0}.
+$$
 
-- Birkhoff, G. (1935). On the structure of abstract algebras. *Proceedings of the Cambridge Philosophical Society*, 31(4), 433–454.
-- Chalmers, D. J. (1996). *The Conscious Mind: In Search of a Fundamental Theory*. Oxford University Press.
-- Shannon, C. E. (1948). A mathematical theory of communication. *Bell System Technical Journal*, 27(3), 379–423.
+For $n\ge2$, define integrated information by
 
----
+$$
+\Phi(I)=\min_{\varnothing\ne A\subsetneq V_n} I(A).
+$$
 
-*All theorems in this paper are formally verified in* @file[Catalog/Algebra/ObservationGap.lean].
+A minimizing cut is called a minimum-information partition.
+
+### 5.2 Structural theorems
+
+**Theorem 5.2 (Existence of a Minimum-Information Partition).** For every finite system with $n\ge2$, there exists a nontrivial cut $A_*$ such that
+
+$$
+I(A_*)=\Phi(I).
+$$
+
+**Proof sketch.** By Lemma 5.1 the candidate set is nonempty, and it is finite because $V_n$ is finite. A real-valued function on a finite nonempty set attains its minimum. $\square$
+
+**Theorem 5.3 (Greatest-Lower-Bound Characterization).** For every candidate cut $A$,
+
+$$
+\Phi(I)\le I(A).
+$$
+
+Moreover, if $c\le I(A)$ for every candidate cut $A$, then
+
+$$
+c\le\Phi(I).
+$$
+
+**Proof sketch.** The first statement is the defining property of a minimum. For the second, choose a minimizing cut $A_*$. The common lower-bound hypothesis gives $c\le I(A_*)=\Phi(I)$. $\square$
+
+**Corollary 5.4 (Nonnegativity).** Integrated information satisfies
+
+$$
+\Phi(I)\ge0.
+$$
+
+**Proof sketch.** Zero is a common lower bound because every $I(A)$ is nonnegative. Apply Theorem 5.3. $\square$
+
+**Theorem 5.5 (Reducibility Criterion).** For $n\ge2$,
+
+$$
+\Phi(I)=0
+\quad\Longleftrightarrow\quad
+\exists A\text{ nontrivial with }I(A)=0.
+$$
+
+**Proof sketch.** If $\Phi(I)=0$, a minimizing cut has value zero by Theorem 5.2. Conversely, if $I(A)=0$, then $0\le\Phi(I)\le I(A)=0$, so $\Phi(I)=0$. $\square$
+
+**Theorem 5.6 (Monotonicity).** Let $I_S$ and $I_T$ be two effective-information landscapes on the same cuts. If
+
+$$
+I_S(A)\le I_T(A)
+$$
+
+for every candidate cut $A$, then
+
+$$
+\Phi(I_S)\le\Phi(I_T).
+$$
+
+**Proof sketch.** Let $A_T$ minimize $I_T$. Then
+
+$$
+\Phi(I_S)\le I_S(A_T)\le I_T(A_T)=\Phi(I_T).
+$$
+
+$\square$
+
+**Theorem 5.7 (Equality at a Common Minimizer).** Suppose a cut $A_0$ minimizes both $I_S$ and $I_T$, and suppose
+
+$$
+I_S(A_0)=I_T(A_0).
+$$
+
+Then
+
+$$
+\Phi(I_S)=\Phi(I_T).
+$$
+
+**Proof sketch.** Since $A_0$ minimizes each landscape, $\Phi(I_S)=I_S(A_0)$ and $\Phi(I_T)=I_T(A_0)$. Apply the assumed equality. $\square$
+
+### 5.3 Orthogonality to the hidden experiential fiber
+
+**Theorem 5.8 (Coexistence of Functional Minima and Experiential Gaps).** Let $n\ge2$ and let $I$ be any nonnegative effective-information landscape. For every chosen profile $x\in X$, there simultaneously exist a minimum-information partition, a canonical zombie witness over $x$, and a canonical true but unaccepted semantic code over $x$.
+
+**Proof sketch.** The minimum-information partition exists by Theorem 5.2. The witness $((x,1),(x,0))$ exists by the canonical experience construction, and $(x,0)$ is a semantic-gap witness by Lemma 4.4. These constructions share no dependent parameter beyond the chosen profile, so they coexist. $\square$
+
+The theorem is deliberately a coexistence result, not a causal claim. The cut landscape is functional data; the sheet coordinate is hidden from it. Any theorem identifying $\Phi$ with experience would require an additional bridge principle.
+
+## 6. Memory editing as algebraic quotienting
+
+### 6.1 Streams and compositional memory
+
+Let $\Sigma$ be a nonempty alphabet of event symbols. Write $\Sigma^*$ for all finite words over $\Sigma$, including the empty word $\varepsilon$. Concatenation makes $\Sigma^*$ a monoid:
+
+$$
+(uv)w=u(vw),\qquad \varepsilon u=u=u\varepsilon.
+$$
+
+Let $R$ be a monoid of memory representations with operation written multiplicatively and identity $1_R$.
+
+**Definition 6.1 (Compositional memory).** A compositional memory is a monoid homomorphism
+
+$$
+m:\Sigma^*\to R,
+$$
+
+meaning
+
+$$
+m(uv)=m(u)m(v),\qquad m(\varepsilon)=1_R.
+$$
+
+**Definition 6.2 (Memory indistinguishability).** Define
+
+$$
+u\sim_m v \quad\Longleftrightarrow\quad m(u)=m(v).
+$$
+
+This is an equivalence relation compatible with concatenation: if $u\sim_m u'$ and $v\sim_m v'$, then $uv\sim_m u'v'$.
+
+**Definition 6.3 (Erased streams).** The erased language is
+
+$$
+K_m=\{u\in\Sigma^*:m(u)=1_R\}.
+$$
+
+### 6.2 Finite memory loss
+
+**Theorem 6.4 (Finite Memory Loss).** If $\Sigma$ is nonempty and $R$ is finite, then every compositional memory $m:\Sigma^*\to R$ identifies two distinct streams. That is, there exist $u\ne v$ with
+
+$$
+m(u)=m(v).
+$$
+
+**Proof sketch.** Choose a symbol $a\in\Sigma$. The words
+
+$$
+\varepsilon,a,a^2,a^3,\ldots
+$$
+
+are all distinct, so $\Sigma^*$ is infinite. A map from an infinite set to the finite set $R$ cannot be injective. Hence two distinct streams have the same memory. $\square$
+
+The theorem uses finiteness, not compositionality, to force a collision. Compositionality supplies the stronger algebraic conclusions that follow.
+
+**Lemma 6.5 (Erased Streams Form a Submonoid).** The set $K_m$ contains $\varepsilon$ and is closed under concatenation.
+
+**Proof sketch.** Homomorphism preservation of identities gives $m(\varepsilon)=1_R$, so $\varepsilon\in K_m$. If $u,v\in K_m$, then
+
+$$
+m(uv)=m(u)m(v)=1_R1_R=1_R,
+$$
+
+so $uv\in K_m$. $\square$
+
+### 6.3 Observable memory as a quotient
+
+Because $\sim_m$ respects concatenation, equivalence classes can themselves be multiplied by
+
+$$
+[u][v]=[uv].
+$$
+
+Let $\Sigma^*/{\sim_m}$ denote this quotient monoid, and let $\operatorname{im}(m)$ denote the reachable memory states.
+
+**Theorem 6.6 (Memory Quotient Theorem).** The map
+
+$$
+\Theta:\Sigma^*/{\sim_m}\to\operatorname{im}(m),
+\qquad
+\Theta([u])=m(u),
+$$
+
+is a monoid isomorphism.
+
+**Proof sketch.** The map is well-defined because equivalent words have equal memories. It preserves multiplication since
+
+$$
+\Theta([u][v])=m(uv)=m(u)m(v)=\Theta([u])\Theta([v]).
+$$
+
+It is surjective by the definition of the image. It is injective because $\Theta([u])=\Theta([v])$ means $m(u)=m(v)$, hence $u\sim_m v$ and $[u]=[v]$. $\square$
+
+This result identifies observable memory not merely with a subset of representations but with a canonical quotient of histories. Every distinction lost by $m$ is collapsed, and no additional distinction is collapsed.
+
+### 6.4 Targeted forgetting and universality
+
+Let $r:\Sigma\to\{0,1\}$ indicate which symbols are retained. Define $f_r:\Sigma^*\to\Sigma^*$ by replacing each letter $a$ with $a$ when $r(a)=1$ and with $\varepsilon$ when $r(a)=0$, then concatenating the results. Equivalently, $f_r$ deletes precisely the unretained symbols.
+
+**Lemma 6.7 (Forgotten Symbols Are Erased).** If $r(a)=0$, then
+
+$$
+f_r(a)=\varepsilon,
+$$
+
+so the one-letter stream $a$ belongs to $K_{f_r}$.
+
+**Proof sketch.** This is the defining letter action of targeted forgetting. $\square$
+
+**Theorem 6.8 (Universal Property of Targeted Forgetting).** Let $g:\Sigma^*\to S$ be any compositional map into a monoid $S$. Suppose
+
+$$
+f_r(u)=f_r(v)\Longrightarrow g(u)=g(v)
+$$
+
+for all streams $u,v$. Then there exists a unique monoid homomorphism
+
+$$
+\overline g:\Sigma^*/{\sim_{f_r}}\to S
+$$
+
+such that
+
+$$
+g=\overline g\circ q,
+$$
+
+where $q(u)=[u]$ is the quotient map.
+
+**Proof sketch.** Define $\overline g([u])=g(u)$. The hypothesis makes this independent of the representative. Multiplicativity follows from that of $g$. The factorization equation is immediate. For uniqueness, every quotient class has the form $[u]$, so any factorizing map must send it to $g(u)$. $\square$
+
+**Corollary 6.9 (Targeted Forgetting Quotient).** The quotient by targeted-forgetting indistinguishability is isomorphic to the submonoid of retained-output streams reachable under $f_r$.
+
+**Proof sketch.** Apply Theorem 6.6 to $f_r$. $\square$
+
+The universal property gives a precise meaning to “the information intentionally removed.” Every downstream compositional observer that is insensitive to at least those distinctions must operate through the same quotient.
+
+## 7. Algorithms and computational complexity
+
+The mathematical results suggest three finite procedures.
+
+### 7.1 Constructing the canonical gap correspondence
+
+For a finite profile list $X=(x_1,\ldots,x_N)$, output for each $x_i$ the zombie witness $((x_i,1),(x_i,0))$ and semantic witness $(x_i,0)$. The procedure takes $O(N)$ time and $O(N)$ output space. Validation is constant-time per item when profile equality and Boolean operations are constant-time.
+
+### 7.2 Exhaustive minimum-information search
+
+For an $n$-component system, enumerate all nonempty proper subsets and evaluate $I$. There are $2^n-2$ represented cuts. If one evaluation costs $C_I(n)$, exhaustive search takes
+
+$$
+O(2^n C_I(n))
+$$
+
+time and $O(n)$ auxiliary space when subsets are streamed as bit masks. If complementary cuts are known to have equal values, one may impose a canonical representative and roughly halve the search, but this symmetry is not needed for correctness.
+
+The algorithm must reject $n<2$, because the candidate set is empty. It returns both $\Phi$ and an attaining cut, directly realizing Theorem 5.2.
+
+### 7.3 Collision search for finite memory
+
+Given a finite collection of streams and a memory function, store the first stream observed for each memory state. When a later distinct stream has the same state, return the pair. With hashing, expected time is linear in the number of tested streams and storage is at most the smaller of the number of streams and the number of memory states. When the domain enumeration contains more distinct streams than memory states, the pigeonhole principle guarantees success.
+
+For targeted forgetting, one can additionally group words by their retained output. Each group is an explicit indistinguishability class, and the set of outputs realizes the quotient representatives.
+
+## 8. Applications
+
+### 8.1 Consciousness theory
+
+The conservative extension theorem is a diagnostic for functional definitions. If a proposed consciousness criterion is literally a predicate of functional profile, it is invariant along every fiber of $B$. The theorem exposes the need for one of two responses: either identify experience with a functional property by an added bridge principle, or admit that the functional vocabulary leaves experience underdetermined.
+
+The result does not favor substance dualism, physicalism, or any empirical theory by itself. Its role is logical bookkeeping: it distinguishes data encoded in the functional map from data encoded only in the experiential map.
+
+### 8.2 Interpreting integrated information
+
+The finite variational theory shows exactly what follows from defining $\Phi$ as a minimum. Existence, nonnegativity, reducibility, and monotonicity are robust mathematical consequences. None alone implies that $\Phi$ measures subjective experience. The coexistence theorem makes this separation explicit: a complete cut landscape may be held fixed while a Boolean experiential sheet varies above the same functional profile.
+
+This does not diminish the value of $\Phi$ as a functional invariant. It clarifies the extra empirical or metaphysical premise required to interpret it experientially.
+
+### 8.3 Memory, compression, and lossy representation
+
+Finite-state memories, automata, and compressed logs inevitably merge histories. The quotient theorem provides the correct algebraic object for analyzing what remains observable. Its use extends to event filtering, privacy-preserving telemetry, sequence abstraction, and state minimization. The kernel congruence records precisely which histories become interchangeable.
+
+Targeted forgetting is especially relevant when deletion rules are declared in advance. The universal property ensures that any later process respecting those deletions depends only on the quotient class, not on inaccessible details of the original stream.
+
+### 8.4 A common fiber perspective
+
+All applications can be summarized by a map $p:Y\to X$. For $x\in X$, the fiber
+
+$$
+p^{-1}(x)=\{y\in Y:p(y)=x\}
+$$
+
+collects hidden alternatives compatible with the same observable value. The canonical consciousness model has two-element fibers. The semantic model has an accepted and an omitted sheet above each profile. A finite memory has at least one fiber containing multiple histories. Integrated information lives on the functional base and is unchanged by multiplying the hidden fiber unless the theory explicitly couples them.
+
+## 9. Limitations and discussion
+
+First, the experiential theory is intentionally minimal. It distinguishes presence from void but does not model similarity, intensity, unity, temporal flow, or qualitative content. Richer fibers may carry geometry, probability, or algebra.
+
+Second, the zombie extension is a model construction, not evidence of physical realizability. It proves compatibility with a functional description. Whether laws of nature identify or constrain the hidden coordinate is an empirical and metaphysical question outside the assumptions.
+
+Third, the semantic system is abstract. Its true-but-unaccepted codes exhibit the shape of an incompleteness gap, but the construction is not an arithmetization theorem. The exact correspondence rests on common two-sheeted indexing, and Theorem 4.7 shows why it cannot be made unconditional.
+
+Fourth, the integrated-information framework assumes finitely many components, nonnegative cut values, and $n\ge2$. It does not choose a physical formula for effective information. For $n\le1$, the nontrivial cut landscape is empty, so the stated definition of $\Phi$ has no value.
+
+Fifth, the finite-memory collision theorem guarantees some indistinguishable pair but does not identify which pair without an enumeration or additional structure. The quotient theorem applies to compositional memory; an arbitrary noncompositional recorder still has collisions when finite but need not induce a congruence compatible with concatenation.
+
+These limitations are informative. They locate exactly which conclusions are structural and which require domain-specific assumptions.
+
+## 10. Future work
+
+Several extensions are natural. The profile-indexed zombie and semantic constructions suggest a categorical treatment in which profile-preserving maps induce maps between witness spaces and the pointwise bijections become a natural isomorphism. Finite models with exactly one conscious and one void world per fiber should admit a classification by the canonical two-sheeted form.
+
+Probability would add a quantitative layer. For finite worlds, the conditional entropy of experience given function should vanish exactly when experience is determined by behavior; positive entropy should measure residual experiential multiplicity. This would generalize the Boolean fiber from a qualitative witness to a numerical invariant.
+
+The independence of integrated information from hidden sheets can be tested for $k$-sheeted extensions. If cut values depend only on function, adding any finite number of experiential alternatives over each functional state leaves the entire cut landscape unchanged. Conversely, a proposed bridge from $\Phi$ to experience should state precisely how cut data constrains fiber structure.
+
+For memory, one may investigate minimal finite representations, rates of collision, probabilistic forgetting, and the interaction between semantic relevance and algebraic congruence. The universal property suggests compositional pipelines in which privacy or abstraction guarantees propagate automatically through every factorizing observer.
+
+## 11. Conclusion
+
+A functional description is a map, and every map invites a question about its fibers. The conservative zombie extension places a present and a void state in the same functional fiber. The canonical semantic construction places an accepted and an omitted true code over the same profile. Finite memory places distinct histories in the same representational fiber. Integrated information optimizes over the functional base but, without an added bridge, cannot inspect an orthogonal experiential sheet.
+
+The central conclusions are therefore precise and bounded. Purely functional predicates cannot distinguish worlds with identical functional profiles. Every experience model admits a function-preserving two-sheeted extension with an experiential contrast. Canonical zombie and semantic gaps are classified by the same profile set and are consequently isomorphic. This isomorphism is not universal. Finite integrated information is an attained, nonnegative minimum with clear order properties. Finite compositional memory necessarily loses distinctions, and its observable algebra is exactly a quotient of stream histories.
+
+The unifying mathematical lesson is simple: when an observable description appears complete, inspect the map that produced it. What lies in a common fiber may be invisible downstairs without being absent upstairs.
