@@ -119,6 +119,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Construct a rigorous model of hypercomputation that can solve the halting problem. Prove that any physical system implementing hypercomputation requires infinite energy density or infinite precision. Formalize the distinction between accidentally computable (physical oracles) and essentially computable (Turing machines).",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_0461",
+    "priority_score": 0.87,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-19T15:32:52.351074+00:00",
+    "title": "Hypercomputation: Computing the Uncomputable"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle fff627f3 (Q=0.770), which proved 7 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Hilbert's Hotel has infinitely many rooms, each containing a prime number. Room n contains the n-th prime p_n. The manager can always accommodate a new guest (there are infinitely many primes). But what if the guests want to REARRANGE? Conjecture: For any permutation sigma of N, there exists a rearr",
     "domains": [
       "Pythagorean"
@@ -302,6 +317,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-19T10:41:15.077942+00:00",
     "title": "Negative-Dimensional Topology: What Lives in Dimension -1?"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize retrocausal mathematical structures where implications can flow backward in time. Prove that in a retrocausal Heyting algebra, the law of excluded middle fails but a temporal excluded middle holds. Connect to the CPT theorem in QFT and prove that any retrocausal logic must be intuitionistic.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0462",
+    "priority_score": 0.83,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-19T15:32:52.396850+00:00",
+    "title": "Retrocausal Mathematics: Where Effects Precede Causes"
   },
   {
     "consumed_by_exp_id": "d23a186f",
