@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "d68f278c",
-      "domain": "Applications",
-      "key_insight": "# Future directions\n\n- Formalize the paper's exact `(k, ωᵘ)`-core, `(k, ωᵘ)`-truss, and `(k, d, ωᵘ)`-truss definitions as graph operators and identify them with the generic seed rule proved here.\n- Ex",
-      "quality_score": 0.76,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-15T21:54:37",
-      "title": "ArXiv paper: Improving Upper Bounds for the Maximum Clique Problem using Reduction Rules"
-    },
-    {
       "cycle_id": "f4980b02",
       "domain": "MachineLearning",
       "key_insight": "# Future directions\n\nThe formalization proves the invariant spectral splitting that underlies the generalized-join formulas: internal zero-mass modes acquire an external-degree shift, while fiber-cons",
@@ -2501,6 +2491,16 @@
       "theorem_count": 16,
       "timestamp": "2026-07-19T17:15:41",
       "title": "ArXiv paper: Reproducing the k-copwin Algorithm: Theory vs. Implementation"
+    },
+    {
+      "cycle_id": "32ad85ae",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Anti-Axioms as Structural Data\n\n## 1. The extensional shadow as a universal quotient\n\n**Conjecture.** For every relational set universe, quotienting set-codes by equality of membe",
+      "quality_score": 0.67,
+      "sorry_count": 0,
+      "theorem_count": 28,
+      "timestamp": "2026-07-19T17:32:42",
+      "title": "Anti-Mathematics: What If All Axioms Were Negated?"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.79
     }
   ],
-  "last_updated": "2026-07-19T17:15:41",
+  "last_updated": "2026-07-19T17:32:42",
   "open_questions": [
     {
       "context": "",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "198023c0",
-        "quality": 0.72,
-        "theorems": 0,
-        "title": "Isomorphisms of Meaning: When Structures Collide"
-      },
-      {
         "cycle_id": "e170790e",
         "quality": 0.67,
         "theorems": 9,
@@ -3141,6 +3135,12 @@
         "quality": 0.73,
         "theorems": 10,
         "title": "The Topology of Impossible Objects: Escher Stairs and Klein Bottles"
+      },
+      {
+        "cycle_id": "32ad85ae",
+        "quality": 0.67,
+        "theorems": 28,
+        "title": "Anti-Mathematics: What If All Axioms Were Negated?"
       }
     ],
     "Bridges": [
