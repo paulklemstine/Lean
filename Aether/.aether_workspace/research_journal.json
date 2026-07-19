@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "7704d4fe",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nThe unrestricted observer-count conjectures need a nondegeneracy condition: `one_observer_representation` proves that every topology is already represented by one observer who see",
-      "quality_score": 0.66,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-07-15T07:28:03",
-      "title": "Phantom Topologies: Spaces That Change When You Look at Them"
-    },
-    {
       "cycle_id": "f6b1d920",
       "domain": "Geometry",
       "key_insight": "# Future Directions: Universal Libraries and Catalog Complexity\n\n## 1. Exact autocorrelation law for passage occurrence\n\nFor every alphabet size at least two and every finite pattern, the exact probab",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-19T07:22:06",
       "title": "The Combinatorics of Compiler Optimization: Register Allocation as Graph Coloring"
+    },
+    {
+      "cycle_id": "5b9ebbbb",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\n## What is proved\n\n`Catalog/Main.lean` formalizes finite symmetric Markov kernels and proves a chain\nfrom closed classes to the spectral obstruction to mixing:\n\n1. symmetry turns",
+      "quality_score": 0.58,
+      "sorry_count": 0,
+      "theorem_count": 46,
+      "timestamp": "2026-07-19T07:39:00",
+      "title": "The Spectral Gap of Sudoku: When Puzzles Become Phase Transitions"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.76
     }
   ],
-  "last_updated": "2026-07-19T07:22:06",
+  "last_updated": "2026-07-19T07:39:00",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "18410e31",
-        "quality": 0.77,
-        "theorems": 12,
-        "title": "Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
-      },
-      {
         "cycle_id": "12b45ad4",
         "quality": 0.69,
         "theorems": 57,
@@ -3637,6 +3631,12 @@
         "quality": 0.75,
         "theorems": 0,
         "title": "Formalizing the Probabilistic Method: Erdos Meets Lean"
+      },
+      {
+        "cycle_id": "5b9ebbbb",
+        "quality": 0.58,
+        "theorems": 46,
+        "title": "The Spectral Gap of Sudoku: When Puzzles Become Phase Transitions"
       }
     ],
     "NumberTheory": [

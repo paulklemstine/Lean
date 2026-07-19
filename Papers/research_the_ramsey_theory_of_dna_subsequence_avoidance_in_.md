@@ -1,295 +1,386 @@
-# Forced Structure in Symbolic Sequences: Pigeonhole and Ramsey Thresholds for Genetic Codes
+# Forced Repetition in Finite Genetic Alphabets: Aligned Collisions, Disjoint Copies, and Multiplicity
+
+**Aristotle**  
+**July 19, 2026**
 
 ## Abstract
 
-We study two complementary "forcing" phenomena for finite sequences over a
-finite alphabet, motivated by the combinatorics of genetic codes over the
-four-letter nucleotide alphabet $\{A, C, G, T\}$. The first is a *linear*
-threshold: sliding a length-$m$ window along a sequence over a $q$-symbol
-alphabet, once strictly more than $q^m$ window positions are examined, two must
-carry the same contiguous block ($m$-mer). We prove this pigeonhole threshold,
-its extremal converse (a repeat-free sequence exposes at most $q^m$ windows), a
-sharp non-injectivity statement, and a count of the number of distinct $m$-mers.
-We specialize to DNA ($q = 4$), obtaining the exact constants: any $257$
-consecutive windows contain a repeated tetramer, any $4097$ contain a repeated
-hexamer (equivalently $L \geq 4102$ raw bases), and a tetramer-repeat-free block
-spans at most $259$ bases. The second phenomenon is *relational*: we prove the
-classical Ramsey bound $R(3,3) \leq 6$ — every symmetric two-coloring of the
-complete graph on six vertices contains a monochromatic triangle — via a
-two-level pigeonhole argument, and read it as forced consistency under pairwise
-comparison of genetic loci. Together these results give a two-sided,
-constant-explicit account of unavoidable structure in symbolic sequences.
-
-**Keywords.** Pigeonhole principle, Ramsey theory, de Bruijn sequences,
-$k$-mers, genetic codes, extremal combinatorics, monochromatic triangle.
+Finite alphabets force repetition. This paper develops a self-contained extremal theory for regularly aligned words in an arbitrary finite sequence and then specializes it to DNA. For an alphabet of cardinality $q$, the space of length-$m$ words has exactly $q^m$ elements. It follows that more than $q^m$ aligned samples force two equal words, while more than $rq^m$ samples force one word to occur at least $r+1$ times. Equal aligned blocks yield equal order-preserving subsequences, and distinct aligned blocks are disjoint whenever $m>0$. Consequently, every DNA sequence of length at least $1028$ contains two identical, disjoint four-base blocks among the $257$ blocks beginning at positions $0,4,8,\ldots,1024$. The associated avoidance bound $n\le q^m$ is sharp for aligned sampling. We distinguish these universal worst-case results from claims about arbitrary scattered subsequences, random sequences, and real genomes. Algorithms are given for detecting collisions, measuring multiplicity, and computing a window-uniform repetition statistic. The framework supplies a rigorous baseline for entropy-sensitive and genome-dependent studies without conflating deterministic pigeonhole bounds with probabilistic birthday effects.
 
 ## 1. Introduction
 
-A genome is a finite word over the alphabet $\Sigma = \{A, C, G, T\}$ of the four
-nucleotides. Repetition of short subwords is ubiquitous in genomes, and a
-central question in genomic combinatorics is how much of that repetition is
-*biologically authored* and how much is *combinatorially forced*: a consequence
-of the finiteness of the space of possible blocks rather than of any biological
-process.
+A finite alphabet can encode only finitely many words of a fixed length. This observation is elementary, but it gives exact extremal statements about when repetition becomes unavoidable. The statements are particularly transparent for DNA, whose alphabet is
 
-This paper isolates the forced component with exact constants. We work in the
-setting of Ramsey theory, whose organizing principle is that sufficiently large
-combinatorial structures necessarily contain highly ordered substructures. Two
-instances are developed:
+$$
+\Sigma_{\mathrm{DNA}}=\{A,C,G,T\}.
+$$
 
-1. **Block-repetition thresholds (linear forcing).** Over a $q$-letter alphabet
-   there are only $q^m$ distinct length-$m$ blocks, so a sliding window cannot
-   keep producing fresh blocks indefinitely. We make the threshold precise and
-   prove it is sharp, recovering the extremal content of de Bruijn sequences.
+A four-base word, or four-mer, is one of $4^4=256$ possibilities. Therefore a list of $257$ four-mers must repeat. To turn this list-level observation into a theorem about one long genetic sequence, we sample the sequence in consecutive, nonoverlapping blocks. The resulting collision is not merely an equality of abstract words: it identifies two equal, disjoint, order-preserving subsequences at explicit positions.
 
-2. **The Ramsey threshold $R(3,3) \leq 6$ (relational forcing).** Any binary
-   symmetric relation on six objects, viewed as a two-coloring of pair
-   comparisons, contains a monochromatic triangle.
+The aligned model is deliberately modest. It does not claim an optimal threshold for all contiguous substrings, still less for arbitrary scattered subsequences. Rather, it isolates the exact contribution of finite coding. This separation is essential in discussions of genomic repetition. Three regimes must not be confused:
 
-We give full statements and proof sketches for all results, DNA specializations
-with exact numeric constants, and a discussion connecting the thresholds to the
-distinction between forced and authored repetition in real genomes.
+1. **Worst-case aligned repetition**, governed exactly by the $q^m$ possible words.
+2. **Typical random repetition**, often governed by birthday-paradox scales and source entropy.
+3. **Genome-specific repetition**, influenced by low-complexity regions, duplication, local composition, and biological history.
+
+The main results establish the first regime. They also provide baselines and statistics suitable for studying the other two.
+
+The paper proceeds as follows. Section 2 defines words, aligned blocks, scattered occurrences, collisions, and multiplicity. Section 3 counts the word space. Sections 4–7 prove collision, disjointness, multiplicity, and avoidance results. Section 8 gives the explicit DNA four-mer corollary. Section 9 describes computational methods. Sections 10 and 11 explain probabilistic and empirical extensions, while Section 12 identifies open extremal problems.
 
 ## 2. Definitions
 
-Throughout, an *alphabet of size $q$* is modeled by the set
-$\{0, 1, \dots, q-1\}$, and a (bi-infinite, one-sided) *sequence* is a function
-$w : \mathbb{N} \to \{0, \dots, q-1\}$ assigning to each position a symbol. For
-DNA we take $q = 4$ with the identification $A = 0$, $C = 1$, $G = 2$, $T = 3$.
+### 2.1 Alphabets and sequences
 
-**Definition 2.1 (m-mer / window).** For a sequence $w$ and integers
-$m, i \geq 0$, the *length-$m$ block* (or *$m$-mer*, or *window*) starting at
-position $i$ is the tuple
-$$\mathrm{mer}(w, m, i) = \big(w(i),\, w(i+1),\, \dots,\, w(i+m-1)\big),$$
-an element of the set $\Sigma^m$ of functions from $\{0, \dots, m-1\}$ to the
-alphabet. The set $\Sigma^m$ has exactly $q^m$ elements.
+Let $\Sigma$ be a finite nonempty alphabet, and write
 
-**Definition 2.2 (repeat-free / injective windows).** A sequence $w$ is
-*$m$-repeat-free on the first $N$ windows* if the map
-$$i \mapsto \mathrm{mer}(w, m, i), \qquad i \in \{0, 1, \dots, N-1\},$$
-is injective; equivalently, the $m$-mers at positions $0, \dots, N-1$ are
-pairwise distinct.
+$$
+q=|\Sigma|.
+$$
 
-## 3. Linear forcing: the block-repetition threshold
+A one-sided infinite sequence over $\Sigma$ is a function
 
-### 3.1 The pigeonhole threshold
+$$
+x:\mathbb{N}\to\Sigma,
+$$
 
-**Theorem 3.1 (Pigeonhole threshold for repeated blocks).** *Let $w$ be a
-sequence over an alphabet of size $q$, and let $m, N$ be integers with
-$q^m < N$. Then there exist distinct positions $i \neq j$ in $\{0, \dots, N-1\}$
-with $\mathrm{mer}(w, m, i) = \mathrm{mer}(w, m, j)$.*
+where $x(s)$ is the symbol at position $s$. The same definitions apply to a finite sequence whenever all referenced positions lie within its length.
 
-*Proof sketch.* Consider the map $\Phi : \{0, \dots, N-1\} \to \Sigma^m$ defined
-by $\Phi(i) = \mathrm{mer}(w, m, i)$. The domain has $N$ elements and the
-codomain has $|\Sigma^m| = q^m$ elements. Since $q^m < N$, the codomain is
-strictly smaller than the domain, so $\Phi$ cannot be injective. Hence there
-exist $i \neq j$ with $\Phi(i) = \Phi(j)$, which is the claimed repeated
-$m$-mer. $\qquad\blacksquare$
+A **word of length $m$** is a function
 
-### 3.2 The extremal converse and sharpness
+$$
+w:\{0,1,\ldots,m-1\}\to\Sigma.
+$$
 
-**Theorem 3.2 (Extremal converse).** *If $w$ is $m$-repeat-free on the first $N$
-windows, then $N \leq q^m$.*
+Equivalently, it is an ordered tuple $(w_0,\ldots,w_{m-1})$. When $m=0$, there is one empty word.
 
-*Proof sketch.* Repeat-freeness means $\Phi : \{0, \dots, N-1\} \to \Sigma^m$ is
-injective. An injection cannot have a domain larger than its codomain, so
-$N = |\{0, \dots, N-1\}| \leq |\Sigma^m| = q^m$. $\qquad\blacksquare$
+### 2.2 Aligned blocks
 
-Theorems 3.1 and 3.2 are logically dual and together pin the threshold exactly:
-$q^m$ windows can be repeat-free, but $q^m + 1$ cannot. We record the
-contrapositive packaging explicitly.
+For a block length $m$ and block index $i$, define the **aligned block** $B_i^{(m)}(x)$ by
 
-**Corollary 3.3 (Sharp non-injectivity).** *If $q^m < N$, then $w$ is not
-$m$-repeat-free on the first $N$ windows.*
+$$
+B_i^{(m)}(x)(t)=x(im+t),\qquad 0\le t<m.
+$$
 
-*Proof sketch.* If it were repeat-free, Theorem 3.2 would give $N \leq q^m$,
-contradicting $q^m < N$. $\qquad\blacksquare$
+Thus the blocks are sampled at starts $0,m,2m,\ldots$. For $m>0$, distinct aligned blocks occupy disjoint intervals. Sampling the first $n$ blocks examines the prefix of length $nm$.
 
-That the bound $N \leq q^m$ is attained (not merely an upper estimate) is the
-content of de Bruijn sequences: for every $q$ and $m$ there is a cyclic word of
-length $q^m$ in which every one of the $q^m$ blocks occurs exactly once, so all
-$q^m$ windows are distinct. Thus $q^m$ is the exact maximum number of repeat-free
-windows.
+Two sampled blocks form an **aligned collision** if
 
-### 3.3 Counting distinct blocks
+$$
+B_i^{(m)}(x)=B_j^{(m)}(x)
+$$
 
-**Theorem 3.4 (Distinct-block count).** *For any sequence $w$ and any $m, N$, the
-number of distinct $m$-mers occurring among the first $N$ window positions is at
-most $\min(N,\, q^m)$.*
+for distinct indices $i$ and $j$.
 
-*Proof sketch.* The set of distinct $m$-mers observed is the image of $\Phi$
-restricted to $\{0, \dots, N-1\}$. The image of a map has cardinality at most the
-size of its domain, giving the bound $\leq N$; and it is a subset of $\Sigma^m$,
-giving the bound $\leq q^m$. The number of distinct blocks is therefore at most
-the smaller of the two, $\min(N, q^m)$. $\qquad\blacksquare$
+### 2.3 Subsequences and disjoint occurrences
 
-### 3.4 DNA specializations ($q = 4$)
+A **scattered occurrence** of a word $w$ of length $m$ in $x$ is a strictly increasing sequence of positions
 
-Evaluating the above at $q = 4$ yields exact constants for nucleotide sequences,
-using $4^4 = 256$ and $4^6 = 4096$.
+$$
+s_0<s_1<\cdots<s_{m-1}
+$$
 
-**Theorem 3.5 (Repeated tetramer).** *Any $257$ consecutive window positions of a
-nucleotide sequence contain a repeated $4$-mer.*
+such that $x(s_t)=w_t$ for every $t$. A contiguous block is a special scattered occurrence with $s_t=s_0+t$. An aligned block is a still more specialized contiguous occurrence with $s_0$ divisible by $m$.
 
-*Proof sketch.* Apply Theorem 3.1 with $q = 4$, $m = 4$, $N = 257$; the
-hypothesis is $4^4 = 256 < 257$. $\qquad\blacksquare$
+Two occurrences are **disjoint** if their sets of positions are disjoint. For aligned blocks with indices $i<j$ and $m>0$, disjointness follows from
 
-**Theorem 3.6 (Repeated hexamer, corrected constant).** *Any $4097$ consecutive
-window positions of a nucleotide sequence contain a repeated $6$-mer.*
+$$
+im+m\le jm.
+$$
 
-*Proof sketch.* Apply Theorem 3.1 with $q = 4$, $m = 6$, $N = 4097$; the
-hypothesis is $4^6 = 4096 < 4097$. $\qquad\blacksquare$
+### 2.4 Multiplicity and avoidance
 
-**Remark 3.7 (The window-count correction).** A raw sequence of length $L$
-contains only $L - m + 1$ full length-$m$ windows. Consequently the constant in
-Theorem 3.6 corresponds to a raw-length requirement of $L - 6 + 1 \geq 4097$,
-i.e. $L \geq 4102$ bases, not the frequently quoted "$4097$ nucleotides." The
-naive slogan omits the $m - 1$ boundary positions that cannot start a full
-window.
+The **aligned multiplicity** of a word $w$ among the first $n$ blocks is
 
-**Theorem 3.8 (de Bruijn length bound for tetramers).** *If a nucleotide
-sequence is $4$-repeat-free on the first $N$ windows, then $N \leq 256$; hence the
-underlying block spans at most $256 + 3 = 259$ bases.*
+$$
+M_{x,m,n}(w)=\left|\left\{i\in\{0,\ldots,n-1\}:B_i^{(m)}(x)=w\right\}\right|.
+$$
 
-*Proof sketch.* Apply Theorem 3.2 with $q = 4$, $m = 4$, giving $N \leq 4^4 =
-256$. The $+3$ converts a window count to a raw-base span via the $m - 1 = 3$
-boundary positions. $\qquad\blacksquare$
+The sample is **collision-free** if every multiplicity is at most $1$. More generally, it avoids multiplicity $r+1$ if every word has multiplicity at most $r$.
 
-## 4. Relational forcing: the Ramsey threshold $R(3,3) \leq 6$
+For a finite genome $g$, a useful empirical statistic is $U_g(m,r)$, defined as the least positive integer $L$, if one exists, such that every length-$L$ window of $g$ contains some length-$m$ word with at least $r$ pairwise disjoint contiguous occurrences. This statistic is window-uniform: it is controlled by the least repetitive region rather than by a genome-wide average.
 
-We now turn from a single sequence to pairwise comparisons among a family of
-objects. Model six objects as vertices $\{0, 1, 2, 3, 4, 5\}$ and a binary
-symmetric comparison as a coloring $c$ assigning to each unordered pair
-$\{i, j\}$ a Boolean color, with $c(i,j) = c(j,i)$ (symmetry). We interpret the
-two colors as "same similarity class" and "different similarity class."
+## 3. Cardinality of the word space
 
-**Lemma 4.1 (Local pigeonhole).** *Among any five Boolean-colored items, at least
-three share a color: for any $f : \{0, 1, 2, 3, 4\} \to \{\text{true},
-\text{false}\}$ there is a color $x$ and three distinct indices $a, b, d$ with
-$f(a) = f(b) = f(d) = x$.*
+### Theorem 3.1 (Word-Space Cardinality)
 
-*Proof sketch.* Five items are split into two color classes; if both classes had
-at most two items, they would total at most four, contradicting five. Hence some
-class contains at least three items. (This is a finite statement over
-$2^5 = 32$ colorings and can be verified by exhaustive case check.)
-$\qquad\blacksquare$
+Let $\Sigma$ be a finite alphabet of size $q$. For every nonnegative integer $m$, the number of length-$m$ words over $\Sigma$ is exactly
 
-**Theorem 4.2 (Ramsey $R(3,3) \leq 6$).** *For any symmetric two-coloring $c$ of
-the pairs among six vertices, there exist three distinct vertices $a, b, d$ whose
-three mutual comparisons all share one color:
-$c(a,b) = c(a,d) = c(b,d)$.*
+$$
+q^m.
+$$
 
-*Proof sketch.* Fix the vertex $0$. Its five incident edges $c(0, k)$ for
-$k \in \{1, \dots, 5\}$ are colored by two colors, so by Lemma 4.1 three of them,
-to vertices $a, b, d$, share a color $x$; thus $c(0,a) = c(0,b) = c(0,d) = x$.
-Now inspect the three edges among $a, b, d$:
+#### Proof sketch
 
-- If any one of $c(a,b), c(a,d), c(b,d)$ equals $x$, that edge together with the
-  two $x$-colored edges from $0$ forms a monochromatic triangle of color $x$
-  (using $0$ and the two relevant vertices).
-- Otherwise all three edges $c(a,b), c(a,d), c(b,d)$ carry the color opposite to
-  $x$, and then $\{a, b, d\}$ is itself a monochromatic triangle.
+A word specifies one of $q$ symbols independently at each of $m$ positions. By the product rule, the number of choices is the product of $m$ copies of $q$, namely $q^m$. For $m=0$, the unique empty function gives one word, agreeing with $q^0=1$.
 
-In every case a monochromatic triangle exists. $\qquad\blacksquare$
+This count is the invariant behind all subsequent deterministic bounds. The internal structure of the sequence is irrelevant until one asks for stronger conclusions than aligned repetition.
 
-**Remark 4.3 (A genuine universal statement).** Theorem 4.2 quantifies over all
-symmetric colorings — a space of size $2^{\binom{6}{2}} = 2^{15} = 32768$ — and
-the argument is structural (two nested pigeonhole steps plus the Boolean
-dichotomy on the inner triangle), not brute enumeration. It is the exact
-combinatorial core of the classical identity $R(3,3) = 6$; the matching lower
-bound $R(3,3) > 5$ is witnessed by the well-known triangle-free two-coloring of
-the pairs among five vertices (the pentagon/pentagram coloring).
+## 4. The aligned collision theorem
 
-**Genetic reading.** If six loci are compared pairwise under a binary similarity
-relation, three of them are forced to be mutually consistent — a *forced motif*
-no arrangement can avoid. This is the relational analogue of the linear
-block-repetition forcing of Section 3.
+### Theorem 4.1 (Aligned-Block Collision)
 
-## 5. Algorithms
+Let $x$ be any sequence over a finite alphabet $\Sigma$ of size $q$. Fix integers $m,n\ge 0$. If
 
-The proofs are constructive and translate directly into algorithms.
+$$
+q^m<n,
+$$
 
-**Algorithm A (First repeated $m$-mer).** Slide a width-$m$ window along the
-sequence, hashing each block into a dictionary that maps blocks to their first
-seen starting position. On the first collision, return the two positions. By
-Theorem 3.1 a collision must occur within the first $q^m + 1$ windows, so the
-loop terminates after at most $q^m + 1$ iterations; each iteration is $O(m)$ to
-form the block (or $O(1)$ with a rolling hash), for total time $O(m \cdot q^m)$
-in the worst case and $O(1)$ additional space per stored block.
+then there exist block indices $i$ and $j$ satisfying
 
-**Algorithm B (Distinct-block growth curve).** Maintain a running set of blocks
-seen and, at each window position $N$, record the current number of distinct
-$m$-mers. By Theorem 3.4 this curve is bounded above by $\min(N, q^m)$ and (for
-sufficiently structured input) plateaus at the saturation value; the plateau
-onset localizes the transition from novelty to forced repetition.
+$$
+0\le i<j<n
+$$
 
-**Algorithm C (Monochromatic triangle finder).** Given the symmetric color
-matrix on six vertices, fix vertex $0$, bucket its five neighbors by edge color,
-select a color with at least three neighbors $\{a, b, d\}$ (guaranteed by Lemma
-4.1), and test the three edges among them; return either the triangle through
-vertex $0$ or the triangle $\{a, b, d\}$ per the case analysis of Theorem 4.2.
-This runs in $O(1)$ time on six vertices and $O(n^2)$ on $n$ vertices via the
-same fixed-vertex reduction.
+and
 
-## 6. Applications
+$$
+B_i^{(m)}(x)=B_j^{(m)}(x).
+$$
 
-- **Baselines for genomic repeat analysis.** Theorem 3.1 gives the exact window
-  count beyond which repetition is unavoidable. Repeats appearing earlier than
-  $q^m$ windows are candidates for biological structure (microsatellites, mobile
-  elements) rather than combinatorial inevitability.
+#### Proof sketch
 
-- **Repeat-free code design.** Theorem 3.2 and the de Bruijn attainability
-  bound quantify the maximum length of a synthetic sequence whose $m$-mers are
-  all distinct — relevant to designing unique molecular barcodes and primer sets.
+Map each block index $i\in\{0,\ldots,n-1\}$ to the word $B_i^{(m)}(x)$. The domain has $n$ elements, whereas the codomain has $q^m$ elements by Theorem 3.1. Under the hypothesis $n>q^m$, the map cannot be injective. Hence two distinct indices have equal images. Ordering those two indices gives $i<j$.
 
-- **Consistency motifs in comparison data.** Theorem 4.2 guarantees a consistent
-  triple in any binary pairwise-similarity dataset on six items, a structural
-  fact usable as a sanity invariant in clustering and phylogenetic pre-processing.
+The proof is a direct pigeonhole argument, but its quantifiers are worth emphasizing: it applies to every sequence, including sequences chosen adversarially after $q$, $m$, and $n$ are fixed.
 
-## 7. Discussion
+### Corollary 4.2 (Prefix-Length Form)
 
-The two thresholds are two costumes for one idea. Linear repetition is forced by
-a single pigeonhole on the window-to-block map; relational consistency is forced
-by pigeonhole applied twice from the vantage of a single object. In both cases
-there is a precise, computable threshold beyond which the ordered substructure is
-not merely possible but certain.
+Every sequence prefix containing at least
 
-A random four-letter sequence saturates the block space slowly, staying near the
-de Bruijn extremal limit and requiring on the order of $q^m$ windows before
-tetramer repeats accumulate. Real genomes, dense with low-complexity regions,
-saturate substantially earlier — empirically several times faster — indicating
-that a large share of genomic repetition is authored by biology rather than
-dictated by counting. The thresholds proved here make this comparison
-quantitative by supplying the exact combinatorial baseline.
+$$
+m(q^m+1)
+$$
 
-## 8. Future Directions
+symbols contains a repeated word among its first $q^m+1$ aligned length-$m$ blocks.
 
-- **Sharpness via de Bruijn saturation.** The extremal converse $N \leq q^m$ is
-  an upper bound; matching it constructively requires an Eulerian circuit in the
-  de Bruijn graph on $(m-1)$-mers, turning the extremal question into a
-  graph-connectivity statement and yielding certified maximal repeat-free codes.
+#### Proof sketch
 
-- **Counting monochromatic triangles.** Beyond existence, every symmetric
-  two-coloring on six vertices plausibly contains at least two monochromatic
-  triangles, with the count growing linearly as vertices are added — a
-  Goodman-type refinement reachable by the same fixed-vertex method.
+A prefix of that length contains the required $q^m+1$ complete aligned blocks. Apply Theorem 4.1 with $n=q^m+1$.
 
-- **Subsequence (non-contiguous) thresholds.** For repeats among all ordered
-  subsequences, the correct tool is a Dilworth / Erdős–Szekeres decomposition
-  layered on the contiguous pigeonhole; the order of growth should remain
-  exponential in $m$ but larger than the contiguous threshold by a polynomial
-  factor.
+## 5. Collisions as disjoint subsequences
 
-- **Larger palettes.** For $r$ similarity classes, pairwise comparison of
-  $R(3; r)$ loci should force a monochromatic triangle, with the fixed-vertex
-  pigeonhole proof generalizing by replacing the Boolean dichotomy with an
-  $r$-way pigeonhole in the inner step.
+### Theorem 5.1 (Disjoint-Subsequence Consequence)
 
-## 9. Conclusion
+Suppose $i<j$ and
 
-We have established, with exact constants, two forms of unavoidable structure in
-symbolic sequences: a sharp linear threshold $q^m$ forcing repeated contiguous
-blocks (with DNA constants $257$, $4097$/$4102$, and $259$), and the relational
-Ramsey threshold $R(3,3) \leq 6$ forcing a monochromatic triangle under pairwise
-comparison. Together they delineate precisely where the freedom of a genetic code
-ends and the necessity of finite-alphabet arithmetic begins.
+$$
+B_i^{(m)}(x)=B_j^{(m)}(x).
+$$
+
+Then, for every $t$ with $0\le t<m$,
+
+$$
+x(im+t)=x(jm+t).
+$$
+
+If $m>0$, the first occurrence ends no later than the second begins:
+
+$$
+im+m\le jm.
+$$
+
+Consequently, the two blocks define equal, disjoint, order-preserving subsequences of length $m$.
+
+#### Proof sketch
+
+Equality of words is pointwise equality, yielding the first displayed identity at each offset $t$. Since $i<j$, one has $i+1\le j$. Multiplication by the nonnegative number $m$ gives $(i+1)m\le jm$, which is the separation inequality $im+m\le jm$. The occupied intervals are therefore disjoint.
+
+### Remark 5.2 (Hierarchy of pattern classes)
+
+The theorem passes from an aligned collision to a scattered-subsequence collision because aligned blocks are special subsequences. It does not provide the sharp extremal threshold for arbitrary scattered occurrences. Allowing arbitrary starts or gaps creates many additional candidate occurrences and can lower the true threshold.
+
+## 6. Quantitative supersaturation
+
+A collision theorem answers when multiplicity $2$ is forced. The same finite-fiber argument gives every higher multiplicity at once.
+
+### Theorem 6.1 (Aligned-Block Multiplicity)
+
+Let $x$ be a sequence over an alphabet of size $q$, and let $m,n,r\ge 0$. If
+
+$$
+rq^m<n,
+$$
+
+then there exists a length-$m$ word $w$ such that
+
+$$
+M_{x,m,n}(w)>r.
+$$
+
+Equivalently, some aligned word occurs at least $r+1$ times among the first $n$ blocks.
+
+#### Proof sketch
+
+Assume instead that every word occurs at most $r$ times. There are $q^m$ possible words, so summing all fiber sizes gives at most $rq^m$ sampled blocks. But the fibers partition the $n$ block indices, so their sizes sum to $n$. This contradicts $n>rq^m$.
+
+### Corollary 6.2 (Pairwise Disjoint Multiplicity)
+
+Under the hypotheses of Theorem 6.1, if $m>0$, one length-$m$ word has at least $r+1$ pairwise disjoint contiguous occurrences.
+
+#### Proof sketch
+
+The occurrences supplied by Theorem 6.1 lie in distinct aligned blocks. Distinct aligned blocks of positive length occupy disjoint intervals.
+
+### Corollary 6.3 (DNA Multiplicity Scale)
+
+Among more than $256r$ aligned four-base blocks of a DNA sequence, some four-mer occurs at least $r+1$ times, with all occurrences pairwise disjoint.
+
+#### Proof sketch
+
+Substitute $q=4$ and $m=4$ into Theorem 6.1 and use $4^4=256$.
+
+This result can be read as a deterministic supersaturation law. Once the sample size exceeds a multiple of the word-space cardinality, repetition is forced at the corresponding multiple.
+
+## 7. Avoidance bounds and sharpness
+
+### Theorem 7.1 (Aligned-Avoidance Bound)
+
+If the first $n$ aligned length-$m$ blocks of a sequence over a $q$-symbol alphabet are pairwise distinct, then
+
+$$
+n\le q^m.
+$$
+
+#### Proof sketch
+
+The block map from $n$ indices to the $q^m$ words is injective by hypothesis. An injection between finite sets can exist only if the domain cardinality does not exceed the codomain cardinality.
+
+Equivalently, this is the contrapositive of Theorem 4.1.
+
+### Proposition 7.2 (Sharpness for Aligned Sampling)
+
+For every finite alphabet of size $q$ and every $m\ge 0$, there exists a sequence prefix with exactly $q^m$ pairwise distinct aligned length-$m$ blocks.
+
+#### Proof sketch
+
+Enumerate all length-$m$ words in any order and concatenate them. Each word then appears exactly once as an aligned block in the resulting prefix. Thus $q^m$ collision-free aligned samples are possible, while Theorem 4.1 shows that $q^m+1$ are impossible.
+
+The aligned extremal problem is therefore solved exactly. Its simplicity should not be transferred uncritically to arbitrary scattered words, where occurrences overlap in a complicated way.
+
+## 8. Explicit DNA specialization
+
+### Theorem 8.1 (DNA Four-Mer Collision within $1028$ Bases)
+
+Let $x$ be any DNA sequence. Among the $257$ aligned four-base blocks beginning at positions
+
+$$
+0,4,8,\ldots,1024,
+$$
+
+two blocks are identical. More precisely, there exist integers $0\le i<j<257$ such that
+
+$$
+x(4i+t)=x(4j+t)
+$$
+
+for $t=0,1,2,3$. The two occurrences are disjoint, since
+
+$$
+4i+4\le 4j,
+$$
+
+and the last position of the second copy satisfies
+
+$$
+4j+3<1028.
+$$
+
+#### Proof sketch
+
+There are exactly $4^4=256$ possible four-mers. Apply Theorem 4.1 to $257$ aligned blocks. The pointwise identity and disjointness follow from Theorem 5.1. Since $j<257$, one has $j\le256$, hence $4j+3\le1027<1028$.
+
+### Interpretation
+
+The theorem is a universal upper bound: every sequence of $1028$ bases has the asserted collision under the fixed alignment. It is not a claim about the average waiting time in random DNA. It also does not claim that $1028$ is the least length forcing repeated four-mers when every possible starting position is examined. Sampling overlapping windows gives more opportunities for collisions and requires a different extremal analysis.
+
+## 9. Algorithms
+
+### 9.1 First aligned collision
+
+Given a finite sequence $s$ and motif length $m>0$, partition $s$ into $N=\lfloor |s|/m\rfloor$ complete aligned blocks. Maintain a dictionary from block words to their first indices. When a word is encountered again, return the stored index and the current index.
+
+With hashing, the expected running time is $O(Nm)$ because each block contains $m$ symbols and dictionary operations are expected $O(1)$. The memory usage is $O(\min(N,q^m)m)$ if words are stored explicitly. A trie or integer encoding can reduce constants.
+
+Correctness follows from a loop invariant: after processing indices below $i$, the dictionary contains exactly the first occurrence of each word seen so far. A repeated key therefore supplies a genuine collision. If no repeat is found, all sampled blocks are distinct and Theorem 7.1 implies $N\le q^m$.
+
+### 9.2 Maximum aligned multiplicity
+
+To measure supersaturation, count every aligned block in a frequency dictionary and return a word of maximum frequency. The time and memory bounds are the same order as collision detection. If $N>rq^m$, Theorem 6.1 certifies in advance that the returned maximum exceeds $r$.
+
+### 9.3 Window-uniform disjoint repetition
+
+For a finite genome $g$, fixed $m$, and target multiplicity $r$, one can compute $U_g(m,r)$ by binary search over candidate window lengths. For each window, greedily scan occurrences of each word from left to right and accept an occurrence only when it begins after the previous accepted copy ends. For identical fixed-length contiguous intervals, this earliest-finish greedy rule maximizes the number of pairwise disjoint occurrences.
+
+A candidate length $L$ passes if every length-$L$ window contains some word with at least $r$ accepted occurrences. The property is monotone in $L$: extending a qualifying window cannot destroy the occurrences already present. Binary search is therefore valid. A direct implementation is suitable for demonstrations; suffix arrays, rolling hashes, and incremental window data structures are preferable at genomic scale.
+
+## 10. Deterministic bounds and random collision scales
+
+The worst-case threshold $q^m+1$ counts all possible words. A random source behaves differently. If aligned words were independent and uniformly distributed among $Q=q^m$ possibilities, then after $n$ samples the expected number of colliding pairs would be
+
+$$
+\binom{n}{2}\frac{1}{Q}.
+$$
+
+This becomes order $1$ around $n\asymp\sqrt{Q}=q^{m/2}$. This is the birthday-paradox scale, far below the adversarial exhaustion threshold $Q+1$.
+
+For a stationary source with entropy rate $h<\log q$, the effective typical set of length-$m$ words has size approximately $e^{hm}$. The corresponding heuristic collision scale is
+
+$$
+e^{hm/2}.
+$$
+
+These formulas are not universal deterministic theorems. Dependence between adjacent blocks, nonuniform word probabilities, and finite-size effects all matter. Their role is to motivate statistical models against which an observed genome can be compared.
+
+A low-complexity genomic region may have much smaller effective entropy than a composition-matched random sequence. Homopolymers and microsatellites can create immediate repetition; segmental duplications can create repetition over much larger scales. Consequently, any empirical claim of a constant-factor “compression” in waiting time should report the exact statistic, the surrogate model, uncertainty across windows, and treatment of ambiguous bases and assembly gaps.
+
+## 11. Applications and empirical protocol
+
+### 11.1 Motif redundancy
+
+The multiplicity theorem gives a baseline for unavoidable motif reuse. If a data set contains $n$ nonoverlapping $m$-mers over $q$ symbols, then some motif appears at least
+
+$$
+\left\lceil\frac{n}{q^m}\right\rceil
+$$
+
+times. This lower bound follows by choosing the largest integer $r$ with $rq^m<n$.
+
+### 11.2 Compression and indexing
+
+A collision-free aligned block list can have length at most $q^m$. Thus any longer list necessarily contains redundancy at the block level. Dictionary compressors and motif indexes exploit precisely this reuse, although practical compression also depends on the cost of pointers, context models, and near-matches.
+
+### 11.3 A reproducible genome comparison
+
+A robust study of real versus synthetic genomes can proceed as follows:
+
+1. Select chromosomes or contigs and define a policy for ambiguous symbols.
+2. Choose motif length $m$ and multiplicity $r$.
+3. Compute $U_g(m,r)$ for the observed sequence.
+4. Generate matched surrogates, preferably including independent shuffles and first-order Markov sequences preserving local transition frequencies.
+5. Compute the same statistic for every surrogate.
+6. Report the observed-to-surrogate ratio, confidence intervals, chromosome-level variation, and sensitivity to GC content and gaps.
+7. Compare every value with the universal aligned benchmark $m(r-1)q^m+m$ for $r$ occurrences among aligned blocks, while clearly noting that $U_g$ scans all window positions and may use arbitrary disjoint contiguous occurrences.
+
+This protocol separates a mathematical certainty from a biological effect. The certainty is that finite word space forces repetition. The biological question is how much earlier repetition occurs under the structure of actual genomes.
+
+Several reporting choices are essential. Windows crossing long runs of unknown bases should either be excluded or analyzed separately. Reverse complements may be treated as distinct words or identified as one motif class, but that convention must be declared before analysis. Multiple motif lengths should not be searched and then selectively reported without an appropriate correction. Finally, a ratio of observed and surrogate thresholds should be accompanied by the raw thresholds: the ratio alone can conceal chromosome length effects or a ceiling caused by the finite sequence. These controls make the statistic interpretable across assemblies and species.
+
+## 12. Discussion and future work
+
+The aligned theory is complete at the counting level: $q^m$ is the exact maximum number of distinct aligned words, and $rq^m$ is the exact capacity if each word may be used at most $r$ times. Yet the simplicity of these results marks the boundary of a harder theory.
+
+First, arbitrary scattered occurrences introduce many embeddings whose overlaps are strongly dependent. Determining the longest sequence that avoids two disjoint copies of the same scattered length-$m$ word is a natural extremal problem. The aligned construction supplies an upper benchmark, but likely wastes information because scattered occurrences can cross block boundaries.
+
+Second, multiplicity may undergo a sharper phase transition when all embeddings are allowed. One expects a threshold linear in the requested number of disjoint copies but with a constant smaller than the aligned value $mq^m$ for $m\ge2$.
+
+Third, entropy should replace alphabet cardinality in typical-source analysis. Proving waiting-time laws near $e^{hm/2}$ under explicit mixing conditions would connect combinatorial collision bounds to information theory.
+
+Fourth, window-uniform statistics deserve empirical study. The quantity $U_g(m,r)$ can reveal whether every region of a chromosome is repetition-rich, rather than merely whether the chromosome has many repeats on average. Comparisons with matched Markov surrogates can distinguish effects of marginal composition from higher-order genomic organization.
+
+Finally, the numerical value sometimes suggested by expressions such as $q^m\log(q^m)$ depends on the logarithm base and does not follow from the pigeonhole argument. For $q=4$ and $m=4$, the deterministic aligned collision threshold is exactly $257$ blocks or $1028$ bases. Any larger logarithmic scale must arise from a separately defined probabilistic, covering, or uniform-window question.
+
+## 13. Conclusion
+
+A finite genetic alphabet imposes exact repetition laws. There are $q^m$ length-$m$ words; more than $q^m$ aligned samples force a collision; more than $rq^m$ force multiplicity $r+1$; and equal aligned blocks yield disjoint equal subsequences. For DNA four-mers, the universal statement becomes concrete: $257$ aligned blocks, occupying $1028$ bases, always contain two identical disjoint copies.
+
+These results are simultaneously strong and limited. They are strong because they require no randomness or biological assumptions and are sharp for aligned sampling. They are limited because they do not determine optimal scattered-subsequence thresholds or genome-specific waiting times. That boundary is productive: it supplies a clean universal baseline while identifying overlap geometry, entropy, and empirical sequence structure as the sources of any stronger phenomenon.
