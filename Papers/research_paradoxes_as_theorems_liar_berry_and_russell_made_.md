@@ -1,227 +1,377 @@
-# Paradoxes as Theorems: The Liar, Russell, and Berry Made Consistent
+# Paradoxes as Theorems: A Finite Non-Explosive Calculus for Self-Negating Sentences
+
+**Aristotle**  
+**19 July 2026**
 
 ## Abstract
 
-The Liar, Russell's, and Berry's paradoxes are traditionally regarded as pathologies: in classical logic each produces a contradiction, and a single contradiction trivialises the theory through the principle of explosion. We adopt the opposite stance. We construct an explicit, finite formal framework in which all three paradoxes are *provable theorems* of a theory that is nevertheless **sound** (it asserts only designated, at-least-true sentences) and **non-trivial** (it does not assert everything). The mathematical engine is Belnap's four-valued logic of First-Degree Entailment (FDE), whose values are *true* ($T$), *false* ($F$), *both* ($B$, a glut), and *neither* ($N$, a gap). We prove that the truth values form a distributive De Morgan algebra, that negation has a designated fixed point (the glut $B$), and — the structural core — that **every sound self-negating sentence must be a glut**, whereas **no bivalent theory can soundly host a self-negating sentence at all**. We isolate the exact condition under which explosion collapses a paraconsistent theory, exhibit a six-sentence witness in which the Liar, Russell, and Berry sentences are three distinct provable gluts, and show the witness reflects its own soundness — sidestepping Tarski's undefinability barrier. We introduce the *inconsistency degree* (the number of gluts) as a stable structural invariant, equal to exactly three in the witness.
-
-**Keywords:** paraconsistent logic, First-Degree Entailment, Belnap four-valued logic, Liar paradox, Russell's paradox, Berry's paradox, truth-value glut, De Morgan algebra, self-reference, Tarski undefinability.
-
----
+We exhibit a finite paraconsistent calculus in which three pairwise distinct sentences, representing the common self-negating core of the Liar, Russell, and Berry paradoxes, are derivable gluts while an explicit false sentence remains underivable. The semantics is the four-valued support algebra $\{0,1\}^2$: one coordinate records positive support and the other records negative support. Negation exchanges the coordinates, designation requires positive support, and the value $(1,1)$ is a designated negation fixed point. We first identify the classical obstruction. A fixed point of complementation collapses every Boolean algebra, and point-surjective diagonal self-reference therefore collapses Boolean semantics when applied to complementation. We then define a seven-sentence language, a negation-coherent valuation, and an inductively generated derivability relation closed under double-negation introduction. Structural induction establishes semantic soundness for derivations of arbitrary depth. It follows that the explicit false witness is not derivable, so explosion fails despite the derivability of each paradox and its negation. A distinguished certificate is also derivable and expresses the finite soundness property established by the metatheorem. This is finite reflection, not a claim that a sufficiently strong arithmetical theory proves its own classical consistency. The construction isolates designated negation fixed points as the algebraic resource that permits paradoxical theorems without triviality.
 
 ## 1. Introduction
 
-A **self-referential paradox** arises when an object refers, through negation, to itself. The three canonical examples are:
+The familiar response to semantic and set-theoretic paradox is restriction. The Liar motivates hierarchies or partial truth predicates; Russell’s paradox motivates restricted comprehension; Berry’s paradox exposes the instability of unrestricted definability in natural language. Those responses are indispensable when one wants a classical theory. A different question is nevertheless mathematically coherent: can the contradictory core of several paradoxes be admitted as theoremhood without making every sentence a theorem?
 
-- **The Liar.** A sentence $L$ that asserts its own falsehood: $L \leftrightarrow \lnot L$.
-- **Russell's paradox.** The set $R = \{x : x \notin x\}$; then $R \in R \leftrightarrow R \notin R$.
-- **Berry's paradox.** "The least positive integer not definable in fewer than twelve words," an eleven-word phrase defining a number it declares undefinable in so few words.
+The answer depends on distinguishing **consistency** from **nontriviality**. Classical consistency prohibits simultaneous derivations of $s$ and $\neg s$. Nontriviality asks only that some sentence remain underivable. In an explosive logic, inconsistency implies triviality. In a paraconsistent logic, it need not. The present construction gives an explicit finite witness: three distinct self-negating sentences are theorems and semantic gluts, but a designated control sentence is provably not a theorem.
 
-Under classical two-valued semantics each yields $\varphi \leftrightarrow \lnot\varphi$, hence $\varphi \wedge \lnot\varphi$, and then the rule of explosion (*ex contradictione quodlibet*, ECQ) — from $\varphi$ and $\lnot\varphi$ infer any $\psi$ — trivialises the theory: every sentence becomes provable.
+The construction has two complementary parts. First, we prove that ordinary Boolean semantics cannot house a self-negating value without collapse. This is not merely a peculiarity of the two-element Boolean algebra; it holds in every Boolean algebra. A diagonal fixed-point principle then connects expressive self-reference to this algebraic obstruction.
 
-The classical response is prophylactic: stratify truth (Tarski), forbid impredicative comprehension (type theory, ZFC's separation), or restrict definability. We take a **paraconsistent** route instead. Rather than preventing the contradiction, we house it in a logic where contradiction is locally tolerated and globally contained. Our contributions are:
+Second, we replace Boolean truth with four support profiles. Positive and negative support become independent bits. Negation exchanges them rather than taking Boolean complement. The “both” value is consequently fixed by negation and remains distinct from the other three values. This supplies a stable semantic home for contradictions.
 
-1. A self-contained algebra of four truth values (§3) with negation, designation, meet, and join, proved to be a **distributive De Morgan algebra**.
-2. The identification of a **designated fixed point of negation** (the glut $B$) as the single algebraic phenomenon underlying all three paradoxes, together with the two-valued obstruction that rules out any classical solution (§3–§4).
-3. An abstract theory of **paraconsistent theories** with a coherence law linking syntactic negation to semantic negation, the theorem that every sound self-negating sentence is a glut, and a characterisation of when explosion collapses a theory (§4).
-4. An explicit **six-sentence witness** realising the Liar, Russell, and Berry sentences as three distinct provable gluts, proved sound, non-explosive, and self-reflective, with **inconsistency degree** exactly three (§5).
+Our finite language contains seven sentence codes. Three are abstract paradox names. Four control sentences realize true-only, false-only, neither, and a finite soundness certificate. The derivability relation has five axioms and closure under double-negation introduction. Its derivation trees have unbounded depth even though the language and valuation are finite. Soundness is therefore established structurally, not by enumerating a finite list of proofs.
 
-Everything is finite and effectively checkable; the paper is self-contained.
+The scope is deliberately exact. The paradox names model the shared support profile relevant to self-negation; they do not encode natural-language quotation, bounded descriptions, or unrestricted comprehension. The finite soundness certificate is an interpreted atom whose intended property is established externally. Neither choice should be confused with a full compositional theory of truth or an evasion of incompleteness phenomena.
 
----
+## 2. Boolean semantics and the fixed-point obstruction
 
-## 2. Background and Related Ideas
+We begin with the algebraic boundary that motivates the four-valued replacement.
 
-**First-Degree Entailment (FDE).** Belnap and Dunn introduced a four-valued semantics motivated by "how a computer should think" when fed information from multiple, possibly conflicting or silent, sources. Each atomic sentence is tagged with a subset of $\{\text{told-true},\text{told-false}\}$: neither ($N$), told-true-only ($T$), told-false-only ($F$), or both ($B$). FDE is the paradigmatic paraconsistent *and* paracomplete logic.
+### Definition 2.1 (Boolean semantic algebra)
 
-**Paraconsistency.** A consequence relation is paraconsistent if it does not validate ECQ: there exist $\varphi,\psi$ with $\{\varphi,\lnot\varphi\}$ not entailing $\psi$. This is precisely what allows a theory to contain a contradiction without exploding.
+A Boolean algebra is a bounded distributive lattice $B$ with bottom $\bot$, top $\top$, meet $\wedge$, join $\vee$, and complementation $x\mapsto x^{\mathsf c}$ satisfying
 
-**Tarski's undefinability.** No consistent classical theory extending arithmetic can define its own truth predicate; the diagonal Liar would otherwise be constructible and explode. We show the obstruction is exactly the absence of a designated negation fixed point, and hence lifts in the four-valued setting.
+$$
+x\wedge x^{\mathsf c}=\bot,
+\qquad
+x\vee x^{\mathsf c}=\top.
+$$
 
----
+It is **nontrivial** when $\bot\ne\top$.
 
-## 3. The Four-Valued Truth Algebra
+### Theorem 2.2 (Boolean fixed-point collapse)
 
-### 3.1 Values, negation, designation
+Let $B$ be a Boolean algebra. If some $x\in B$ satisfies $x^{\mathsf c}=x$, then $\bot=\top$.
 
-**Definition 3.1 (Truth values).** Let $\mathbf{4} = \{T, F, B, N\}$, read as *true only*, *false only*, *both* (glut), and *neither* (gap).
+**Proof sketch.** From the complement laws and the fixed-point equation,
 
-**Definition 3.2 (Negation).** The involution $\lnot : \mathbf{4} \to \mathbf{4}$ is
-$$\lnot T = F, \quad \lnot F = T, \quad \lnot B = B, \quad \lnot N = N.$$
-Negation swaps the two classical values and fixes the two non-classical ones.
+$$
+x\wedge x=x\wedge x^{\mathsf c}=\bot
+$$
 
-**Definition 3.3 (Designation).** A value is *designated* (written $\mathsf{des}(v)$, "at least true") iff it is $T$ or $B$:
-$$\mathsf{des}(T) = \mathsf{des}(B) = \text{true}, \qquad \mathsf{des}(F) = \mathsf{des}(N) = \text{false}.$$
+and
 
-**Definition 3.4 (Meet and join).** FDE conjunction $\sqcap$ (meet) and disjunction $\sqcup$ (join) in the truth ordering are given by the tables
+$$
+x\vee x=x\vee x^{\mathsf c}=\top.
+$$
 
-| $\sqcap$ | $T$ | $F$ | $B$ | $N$ |  | $\sqcup$ | $T$ | $F$ | $B$ | $N$ |
-|---|---|---|---|---|---|---|---|---|---|---|
-| $T$ | $T$ | $F$ | $B$ | $N$ |  | $T$ | $T$ | $T$ | $T$ | $T$ |
-| $F$ | $F$ | $F$ | $F$ | $F$ |  | $F$ | $T$ | $F$ | $B$ | $N$ |
-| $B$ | $B$ | $F$ | $B$ | $F$ |  | $B$ | $T$ | $B$ | $B$ | $T$ |
-| $N$ | $N$ | $F$ | $F$ | $N$ |  | $N$ | $T$ | $N$ | $T$ | $N$ |
+Idempotence of meet and join gives $x=\bot$ and $x=\top$. Therefore $\bot=\top$. $\square$
 
-Equivalently, identifying each value with a pair (told-true?, told-false?) — $T=(1,0)$, $F=(0,1)$, $B=(1,1)$, $N=(0,0)$ — meet takes the componentwise min on told-true and max on told-false, and join does the reverse; negation swaps the two components.
+### Corollary 2.3 (No nontrivial Boolean negation fixed point)
 
-### 3.2 The algebra is a distributive De Morgan algebra
+If $B$ is a nontrivial Boolean algebra, then $x^{\mathsf c}\ne x$ for every $x\in B$.
 
-**Theorem 3.5 (Involution).** $\lnot\lnot v = v$ for all $v \in \mathbf{4}$.
+This corollary identifies precisely why a self-negating truth value is unavailable classically. The problem is not self-reference alone but the conjunction of self-negation, Boolean complementation, and nontriviality.
 
-**Theorem 3.6 (De Morgan laws).** For all $x, y$,
-$$\lnot(x \sqcap y) = \lnot x \sqcup \lnot y, \qquad \lnot(x \sqcup y) = \lnot x \sqcap \lnot y.$$
+To connect that obstruction to diagonalization, consider a set $A$ of codes, a value space $B$, and an encoding function
 
-**Theorem 3.7 (Lattice laws).** $\sqcap$ and $\sqcup$ are each commutative, associative, and idempotent, and satisfy the absorption laws $x \sqcap (x \sqcup y) = x$ and $x \sqcup (x \sqcap y) = x$.
+$$
+e:A\longrightarrow (A\to B).
+$$
 
-**Theorem 3.8 (Distributivity).** For all $x, y, z$,
-$$x \sqcap (y \sqcup z) = (x \sqcap y) \sqcup (x \sqcap z), \qquad x \sqcup (y \sqcap z) = (x \sqcup y) \sqcap (x \sqcup z).$$
+Call $e$ **point-surjective** when every function $f:A\to B$ is $e(a)$ for some $a\in A$. A standard diagonal argument states that for every $g:B\to B$, point-surjectivity produces $b\in B$ with $g(b)=b$. Indeed, define $d(a)=g(e(a)(a))$. Choose $a_0$ with $e(a_0)=d$ and put $b=e(a_0)(a_0)$. Then
 
-*Proof of 3.5–3.8.* Each identity is a statement over the finite set $\mathbf{4}$ and is verified by exhaustive case analysis (four cases for unary laws, sixteen for binary, sixty-four for ternary). For example, De Morgan at $(B,N)$: $\lnot(B \sqcap N) = \lnot F = T$, while $\lnot B \sqcup \lnot N = B \sqcup N = T$. $\square$
+$$
+b=e(a_0)(a_0)=d(a_0)=g(e(a_0)(a_0))=g(b).
+$$
 
-**Corollary 3.9.** $(\mathbf{4}, \sqcap, \sqcup, \lnot)$ is a distributive De Morgan algebra. It is *not* a Boolean algebra: complementation fails, since $B \sqcap \lnot B = B \sqcap B = B \neq F$ and $N \sqcup \lnot N = N \neq T$.
+### Theorem 2.4 (Diagonal Boolean collapse)
 
-### 3.3 The negation fixed point — the algebraic heart
+Let $B$ be a Boolean algebra and let $e:A\to(A\to B)$ be point-surjective. Then $\bot=\top$ in $B$.
 
-**Theorem 3.10 (Fixed points of negation).** $\lnot v = v \iff v \in \{B, N\}$.
+**Proof sketch.** Apply the diagonal fixed-point argument to $g(b)=b^{\mathsf c}$. It yields $b=b^{\mathsf c}$. Theorem 2.2 then gives $\bot=\top$. $\square$
 
-*Proof.* By 3.2, $\lnot T = F \neq T$ and $\lnot F = T \neq F$, while $\lnot B = B$ and $\lnot N = N$. $\square$
+Thus a nontrivial Boolean algebra cannot support an encoding rich enough to diagonalize against every $B$-valued predicate. The theorem is a boundary result: it tells us which assumption must change. Our response is to retain nontriviality and negation fixed points while abandoning Boolean complementation as the semantics of negation.
 
-**Theorem 3.11 (No classical fixed point).** In the two-element Boolean algebra $\{0,1\}$ with Boolean negation, $\lnot b \neq b$ for every $b$.
+## 3. Four-valued support semantics
 
-*Proof.* $\lnot 0 = 1 \neq 0$ and $\lnot 1 = 0 \neq 1$. $\square$
+### Definition 3.1 (Support value)
 
-**Theorem 3.12 (Designated fixed point is the glut).** If $\lnot v = v$ and $\mathsf{des}(v)$, then $v = B$.
+A support value is a pair
 
-*Proof.* By 3.10 the fixed points are $B$ and $N$; of these only $B$ is designated (3.3). $\square$
+$$
+v=(p,n)\in\mathbb{F}_2^2=\{0,1\}^2,
+$$
 
-Theorems 3.11 and 3.12 together constitute the paper's pivot: the classical world has *no* fixed point of negation, so it cannot resolve self-negation at all; the four-valued world has *exactly one designated* fixed point, and it is the glut.
+where $p$ records positive support for a sentence and $n$ records positive support for its negation. The four values are
 
----
+$$
+\mathbf{T}=(1,0),\qquad
+\mathbf{F}=(0,1),\qquad
+\mathbf{B}=(1,1),\qquad
+\mathbf{N}=(0,0).
+$$
 
-## 4. Paraconsistent Theories and the Structure of Paradox
+They are read as true only, false only, both, and neither.
 
-### 4.1 Abstract theories
+### Definition 3.2 (Negation, designation, and glut)
 
-**Definition 4.1 (Paraconsistent theory).** Let $S$ be a set of *sentences*. A *paraconsistent theory* on $S$ is a pair $(\tau, \nu)$ where $\tau : S \to \mathbf{4}$ assigns a truth value to each sentence and $\nu : S \to S$ is a *syntactic negation* operator. The theory is **coherent** if syntactic negation realises semantic negation:
-$$\tau(\nu(s)) = \lnot\,\tau(s) \quad \text{for all } s \in S. \tag{Coh}$$
+Negation exchanges support coordinates:
 
-**Definition 4.2 (Soundness).** For a set $P \subseteq S$ of *provable* (asserted) sentences, the theory is **sound on $P$** iff every provable sentence is designated: $\mathsf{des}(\tau(s)) = \text{true}$ for all $s \in P$.
+$$
+\sim(p,n)=(n,p).
+$$
 
-**Definition 4.3 (Self-negating sentence).** A sentence $s$ is *self-negating* iff $\nu(s) = s$; syntactically it *is* its own denial. This is the abstract form of the Liar ($L = \lnot L$), Russell's set ($R\in R \equiv R \notin R$), and Berry's number.
+A value $(p,n)$ is **designated** exactly when $p=1$. It is a **glut** exactly when $p=n=1$.
 
-### 4.2 The core dichotomy
+The designated set is therefore $\{\mathbf{T},\mathbf{B}\}$. Designation represents assertibility or positive support; it does not require the absence of negative support.
 
-**Theorem 4.4 (Sound self-negation forces a glut).** In a coherent theory, if $s$ is self-negating and $s$ is designated, then $\tau(s) = B$.
+### Lemma 3.3 (Involutive negation)
 
-*Proof.* By coherence and $\nu(s) = s$, we have $\lnot\tau(s) = \tau(\nu(s)) = \tau(s)$, so $\tau(s)$ is a fixed point of negation. Since $\tau(s)$ is designated, Theorem 3.12 gives $\tau(s) = B$. $\square$
+For every support value $v$, $\sim\sim v=v$.
 
-**Theorem 4.5 (No sound classical Liar).** There is no bivalent coherent theory — one whose values lie in $\{T, F\}$ with classical negation — containing a designated self-negating sentence.
+**Proof sketch.** Swapping two coordinates twice restores their original order. $\square$
 
-*Proof.* Such a sentence would satisfy $\lnot\tau(s) = \tau(s)$ with $\tau(s) \in \{T,F\}$, contradicting Theorem 3.11. $\square$
+### Lemma 3.4 (Designated fixed point)
 
-Theorem 4.4 says the paradoxes *can* be theorems, and dictates their value; Theorem 4.5 says a classical theory has no choice but to fail (explode) if it tries. Paraconsistency is therefore not optional but *necessary* for sound self-reference.
+The value $\mathbf{B}$ is designated and satisfies $\sim\mathbf{B}=\mathbf{B}$.
 
-### 4.3 Explosion
+**Proof sketch.** Its positive coordinate is $1$, and swapping the coordinates of $(1,1)$ changes nothing. $\square$
 
-**Definition 4.6 (Explosion).** A theory $(\tau,\nu)$ *has explosion* if there is a designated, self-negating sentence $p$ (a "true contradiction") from which every sentence inherits designation:
-$$\mathsf{des}(\tau(p)) \wedge (\nu(p)=p) \;\Rightarrow\; \forall q,\ \mathsf{des}(\tau(q)).$$
-Concretely, explosion holds when the presence of a provable glut forces every sentence to be designated.
+### Lemma 3.5 (Characterization of gluts)
 
-**Proposition 4.7 (Explosion collapses a theory).** If a theory has explosion and possesses even one provable glut, then every sentence is designated; in particular the theory is trivial in the sense that no sentence is undesignated (no genuine falsehood or gap survives as unprovable).
+A support value is a glut if and only if it equals $\mathbf{B}$.
 
-*Proof.* Immediate from Definition 4.6: the glut discharges the antecedent, so all $q$ are designated. $\square$
+**Proof sketch.** A glut is defined by the two equations $p=1$ and $n=1$, which uniquely determine the pair $(1,1)$. $\square$
 
-**Proposition 4.8 (Non-explosion certificate).** A theory *rejects* explosion iff there is a designated self-negating $p$ and some $q$ with $\lnot\mathsf{des}(\tau(q))$. Exhibiting such a pair $(p, q)$ certifies paraconsistency.
+The contrast with Boolean semantics is exact. Boolean complementation has no fixed point in a nontrivial algebra, whereas coordinate-swapping negation has two fixed points, $\mathbf{B}$ and $\mathbf{N}$. Neither causes the four-element value space to collapse. The interpretation of these fixed points differs: $\mathbf{B}$ is designated and contradictory, while $\mathbf{N}$ is undesignated and informationally incomplete.
 
-### 4.4 Measuring inconsistency
+## 4. The finite language and its interpretation
 
-**Definition 4.9 (Inconsistency degree).** For a theory on a finite $S$, the *inconsistency degree* is the number of glut-valued sentences:
-$$\deg(\tau, \nu) = \#\{\, s \in S : \tau(s) = B \,\}.$$
+### Definition 4.1 (Sentence space)
 
-The degree is $0$ exactly for glut-free (consistency-in-the-strong-sense) theories, and positive precisely when the theory tolerates at least one true contradiction. It quantifies "how inconsistent" a sound, non-explosive theory is.
+Let the language consist of seven pairwise distinct sentence codes:
 
----
+$$
+S=\{L,R,B,T,F,G,C\}.
+$$
 
-## 5. The Witness: A Six-Sentence Consistent Home for Three Paradoxes
+Here $L$, $R$, and $B$ name abstract Liar, Russell, and Berry sentences; $T$ is an ordinary truth; $F$ is a false witness; $G$ is a gap witness; and $C$ is a finite soundness certificate.
 
-We instantiate the framework on $S = \{0,1,2,3,4,5\}$.
+The letters are sentence codes, not truth values; in particular, the Berry code $B$ should not be confused with the support value $\mathbf{B}$.
 
-**Definition 5.1 (The witness theory).** Let
-$$\tau = (\,0{:}B,\ 1{:}B,\ 2{:}B,\ 3{:}T,\ 4{:}F,\ 5{:}N\,), \qquad \nu = (\,0{\mapsto}0,\ 1{\mapsto}1,\ 2{\mapsto}2,\ 3{\mapsto}4,\ 4{\mapsto}3,\ 5{\mapsto}5\,),$$
-with provable set $P = \{0, 1, 2, 3\}$. Sentences $0, 1, 2$ are the Liar, Russell, and Berry witnesses (self-negating gluts); $3$ is a genuine truth, $4$ a genuine falsehood (unproved), $5$ a gap.
+### Definition 4.2 (Syntactic negation)
 
-**Theorem 5.2 (Coherence).** For every $s$, $\tau(\nu(s)) = \lnot\tau(s)$.
+Define $\nu:S\to S$ by
 
-*Proof.* Case check: for $s\in\{0,1,2\}$, $\nu(s)=s$ and $\lnot B = B$; for $s=3$, $\tau(\nu 3)=\tau 4=F=\lnot T$; for $s=4$, $\tau(\nu 4)=\tau 3=T=\lnot F$; for $s=5$, $\lnot N = N$. $\square$
+$$
+\begin{aligned}
+&\nu(L)=L, &&\nu(R)=R, &&\nu(B)=B,\\
+&\nu(T)=F, &&\nu(F)=T, &&\nu(G)=G, &&\nu(C)=C.
+\end{aligned}
+$$
 
-**Theorem 5.3 (Three distinct paradox gluts).** The sentences $0, 1, 2$ are pairwise distinct and each satisfies $\tau(s) = B$.
+Thus the three paradox codes are self-negating. The ordinary truth and explicit falsehood form a negation pair. The gap and certificate are also fixed syntactically.
 
-**Theorem 5.4 (Paradoxes as theorems).** For each $s \in \{0,1,2\}$: $s \in P$, $\mathsf{des}(\tau(s)) = \text{true}$, and $\tau(s) = B$. That is, the Liar, Russell, and Berry sentences are all provable, all designated, and all gluts, simultaneously.
+### Definition 4.3 (Valuation)
 
-**Theorem 5.5 (Self-soundness).** The theory is sound on $P$: every provable sentence is designated. Indeed $\tau(0)=\tau(1)=\tau(2)=B$ and $\tau(3)=T$ are all designated, and $4, 5 \notin P$.
+Define $v:S\to\{\mathbf{T},\mathbf{F},\mathbf{B},\mathbf{N}\}$ by
 
-**Theorem 5.6 (Explosion would collapse the witness).** If the witness had explosion, then every sentence — including $4$ — would be designated.
+$$
+\begin{aligned}
+&v(L)=v(R)=v(B)=\mathbf{B},\\
+&v(T)=\mathbf{T},\qquad v(F)=\mathbf{F},\qquad v(G)=\mathbf{N},\qquad v(C)=\mathbf{B}.
+\end{aligned}
+$$
 
-*Proof.* The glut $0$ is provable, designated, and self-negating; explosion would then designate all $q$. $\square$
+### Lemma 4.4 (Negation coherence)
 
-**Theorem 5.7 (Non-explosion).** The witness rejects explosion: the designated self-negating glut $0$ does *not* make the falsehood $4$ designated, since $\mathsf{des}(\tau(4)) = \mathsf{des}(F) = \text{false}$. Hence the theory is non-trivial.
+For every $s\in S$,
 
-**Theorem 5.8 (Inconsistency degree).** $\deg(\tau, \nu) = 3$, exactly one glut per paradox, and no more.
+$$
+v(\nu(s))=\sim v(s).
+$$
 
-*Proofs of 5.3–5.8.* All are finite verifications over the six-element domain, discharged by direct computation on the tables of §3 and Definition 5.1. $\square$
+**Proof sketch.** There are seven cases. On $L$, $R$, $B$, and $C$, both sides equal $\mathbf{B}$. On $G$, both sides equal $\mathbf{N}$. On $T$ and $F$, syntactic negation swaps the two codes while semantic negation swaps $\mathbf{T}$ and $\mathbf{F}$. $\square$
 
-### 5.1 Self-reflection and Tarski's barrier
+### Lemma 4.5 (Involutive syntactic negation)
 
-Tarski's theorem forbids a consistent classical theory from internalising its own truth (or soundness) predicate. The obstruction is exactly the two-valued fact of Theorem 3.11: the internal soundness sentence would be self-negating, hence would need a designated fixed point, which classically does not exist. In the four-valued setting the fixed point *does* exist, so the barrier lifts.
+For every $s\in S$, $\nu(\nu(s))=s$.
 
-Concretely, the witness contains the designated true sentence $3$, whose status can be read as an internal assertion "every provable sentence is designated." Because Theorem 5.5 makes this genuinely correct, the theory contains a provable, designated sentence whose designation *tracks its own soundness*: the theory soundly vouches for itself. This is the reflective phenomenon impossible for a bivalent consistent theory.
+**Proof sketch.** Five codes are fixed by $\nu$, and $T$ and $F$ are exchanged. In either case, two applications restore the input. $\square$
 
----
+These lemmas ensure that syntax and semantics agree about the only connective present in the calculus. More importantly, they distinguish the roles of the control sentences. The non-designated value of $F$ will witness nontriviality; $G$ shows that informational gaps can coexist with gluts; and $T$ verifies that ordinary unopposed positive support remains available.
 
-## 6. Algorithms
+## 5. Derivations and soundness
 
-We summarise the effective procedures underlying the results; full implementations accompany this work.
+### Definition 5.1 (Finite paradox calculus)
 
-**A. Table verification.** To confirm the De Morgan-algebra laws (Theorems 3.5–3.8), enumerate all tuples over $\mathbf{4}$ (up to $4^3 = 64$) and check each identity; total cost $O(|\mathbf{4}|^k)$ for a $k$-ary law — constant time.
+The derivability relation $\vdash s$ is the least relation on $S$ generated by five axioms
 
-**B. Soundness auditing.** Given $(\tau, \nu, P)$, verify soundness by checking $\mathsf{des}(\tau(s))$ for each $s\in P$; cost $O(|P|)$.
+$$
+\vdash L,
+\qquad
+\vdash R,
+\qquad
+\vdash B,
+\qquad
+\vdash T,
+\qquad
+\vdash C,
+$$
 
-**C. Non-explosion search.** To certify paraconsistency, search for a pair $(p,q)$ with $p$ a designated self-negating glut and $q$ undesignated; cost $O(|S|^2)$ worst case, $O(|S|)$ once a glut is fixed.
+and the rule of double-negation introduction
 
-**D. Inconsistency-degree computation.** Count glut-valued sentences; cost $O(|S|)$.
+$$
+\frac{\vdash s}{\vdash\nu(\nu(s))}.
+$$
 
-**E. Coherence checking.** Verify $\tau(\nu(s)) = \lnot\tau(s)$ for all $s$; cost $O(|S|)$.
+“Least” means that a derivation is a finite tree built only from these constructors. The rule may be iterated arbitrarily often, so derivations have no fixed depth bound.
 
----
+### Theorem 5.2 (Soundness of derivations)
 
-## 7. Applications
+For every $s\in S$, if $\vdash s$, then $v(s)$ is designated.
 
-- **Inconsistency-tolerant databases and knowledge bases.** Belnap's four values were designed for reasoning under conflicting or missing data. The framework models a knowledge base that flags conflicting entries as gluts, continues to answer queries soundly about consistent parts, and quantifies conflict via inconsistency degree.
-- **Belief revision and multi-agent fusion.** When merging agents' assertions, contradictions map to gluts rather than triggering collapse; the degree measures residual conflict after fusion.
-- **Foundational semantics of self-reference.** The single fixed-point lemma unifies the Liar, Russell, and Berry treatments, suggesting a uniform semantics for self-referential constructs in specification languages.
-- **Reflective systems.** The self-soundness result indicates how a reasoning system can safely contain a (paraconsistent) internal soundness predicate.
+**Proof sketch.** Proceed by structural induction on the derivation. Each of the five axiom cases has positive support: the paradoxes and certificate have value $\mathbf{B}$, and the ordinary truth has value $\mathbf{T}$. For the inductive case, suppose a derivation of $s$ is sound. The conclusion is $\nu(\nu(s))$, which equals $s$ by Lemma 4.5. It therefore has the same designated value. This proves the claim for derivations of every finite depth. $\square$
 
----
+The proof is intentionally proof-theoretic rather than enumerative. Although only five distinct codes are derivable in this particular system, the inductive definition admits infinitely many derivation trees obtained by repeated double negation. Structural induction establishes the invariant at the level of derivation formation.
 
-## 8. Discussion
+### Theorem 5.3 (The false witness is underivable)
 
-The results recast paradox as an *algebraic* rather than a *logical-pathological* phenomenon. The Liar, Russell, and Berry sentences share one structural feature — being a fixed point of syntactic negation — and one algebraic consequence — that soundness forces them onto the unique designated negation fixed point, the glut $B$. Classical logic fails not for lack of ingenuity but because its two-element negation involution has no fixed point (Theorem 3.11); paraconsistency succeeds precisely because the four-valued algebra supplies one (Theorem 3.12). The witness demonstrates that all of this coexists with soundness, non-triviality, and reflective self-endorsement.
+The sentence $F$ is not derivable:
 
-A limitation worth stating plainly: the witness abstracts the *shape* of self-reference (self-negation via $\nu$) rather than encoding the full arithmetised diagonal constructions of the Liar/Russell/Berry sentences. What is proved is that the essential logical obstruction — self-negation under soundness — is resolvable in a distributive De Morgan algebra, and that a concrete finite theory realises the resolution with degree exactly three.
+$$
+\nvdash F.
+$$
 
----
+**Proof sketch.** If $\vdash F$, Theorem 5.2 would imply that $v(F)$ is designated. But $v(F)=\mathbf{F}=(0,1)$ has positive coordinate $0$, hence is not designated. Contradiction. $\square$
 
-## 9. Future Directions
+### Corollary 5.4 (Nontriviality)
 
-**Conjecture 1 — The inconsistency degree is a genuine hierarchy invariant.** For each $n$ there is a sound, non-explosive theory of inconsistency degree exactly $n$, and no sound degree-$n$ theory collapses to degree $< n$ without dropping a paradox or validating explosion. Gluts are individuated by which self-negating sentences a theory commits to, so the glut count is a structural invariant rather than a presentation artifact.
+There exists a sentence that is not derivable; in particular, the calculus is nontrivial.
 
-**Conjecture 2 — Self-soundness is available exactly when bivalence fails.** A coherent theory can contain a provable sentence whose designated status tracks its own soundness iff its value algebra admits a designated fixed point of negation; no bivalent theory admits internal self-soundness. Tarski-style undefinability is powered specifically by the classical involution's lack of fixed points, so the barrier dissolves precisely when a designated fixed point is introduced.
+**Proof sketch.** Take $F$ and apply Theorem 5.3. $\square$
 
-**Conjecture 3 — A compositional paradox calculus.** For every endomorphism $f$ of the sentence algebra whose induced action on values has a designated fixed point, there is a sound non-explosive theory in which every $f$-fixed sentence is a provable glut; the Liar/Russell/Berry cases are the involutive instances. "Self-reference" is exactly "being a fixed point of a syntactic endomorphism," so paradoxes form a category indexed by such endomorphisms.
+Nontriviality is the relevant replacement for classical consistency. The calculus is inconsistent in the support sense because it derives gluts. It nevertheless distinguishes theorem from non-theorem.
 
-**Conjecture 4 — Distributivity is the boundary of tame inconsistency.** The four-valued algebra used here is a distributive De Morgan algebra; any value algebra that supports a designated negation fixed point while keeping inconsistency "tame" (sound, non-explosive) must retain distributivity, so abandoning distributivity forces a qualitative loss of control over inconsistency.
+## 6. Coexistence of paradoxes and explicit non-explosion
 
----
+### Theorem 6.1 (Three distinct theorem gluts)
 
-## 10. Conclusion
+The codes $L$, $R$, and $B$ are pairwise distinct. Each is derivable, and each has glut value $\mathbf{B}$.
 
-By enlarging the space of truth values from two to four and locating the single designated fixed point of negation, we have turned three of logic's most notorious paradoxes into honest theorems of a sound, non-explosive, self-reflective theory. Paradox, on this view, is not a wound but a coordinate: the place where a self-negating sentence comes to rest. The inconsistency degree measures how many such coordinates a theory occupies, and the witness shows that occupying three of them costs nothing in soundness or coherence.
+**Proof sketch.** Pairwise distinctness is part of the seven-element sentence construction. Their derivability follows from the three paradox axioms. Their values are assigned to $\mathbf{B}$, which is a glut by Lemma 3.5. $\square$
+
+This theorem realizes simultaneous rather than merely isolated inconsistency. The three names do not collapse into one syntactic token, even though they share a semantic profile.
+
+### Theorem 6.2 (Explicit failure of explosion)
+
+There exist sentences $p$ and $q$ such that $p$ and its negation are derivable while $q$ is not. Specifically,
+
+$$
+\vdash L,
+\qquad
+\vdash\nu(L),
+\qquad
+\nvdash F.
+$$
+
+**Proof sketch.** The Liar axiom gives $\vdash L$. Since $\nu(L)=L$, the same derivation establishes $\vdash\nu(L)$. Theorem 5.3 gives $\nvdash F$. Hence contradiction does not entail arbitrary derivability. $\square$
+
+The result is stronger than the observation that the semantic value set has four elements. It provides a syntactic counterexample to explosion inside the calculus itself. The contradiction is derivable on both sides, while a named conclusion remains outside the derivability relation.
+
+One should not read the theorem as saying that contradictions are harmless in every extension. Additional inference rules could propagate support and perhaps trivialize a badly designed theory. The theorem states exactly that the specified calculus is non-explosive.
+
+## 7. Finite reflection and the soundness certificate
+
+We now make precise the role of $C$.
+
+### Definition 7.1 (Expression of finite soundness)
+
+A sentence $s\in S$ **expresses finite soundness** when
+
+1. $s=C$, and
+2. for every $q\in S$, if $\vdash q$, then $v(q)$ is designated.
+
+This is an interpreted notion: the first clause identifies the sentence assigned the role of certificate, and the second gives its intended semantic content.
+
+### Theorem 7.2 (Finite self-soundness)
+
+The certificate $C$ is derivable, its value is designated, and it expresses finite soundness.
+
+**Proof sketch.** Derivability follows from the certificate axiom. Its value is $\mathbf{B}$, whose positive coordinate is $1$. It is the distinguished certificate by identity. Finally, the universal designation clause is exactly Theorem 5.2. $\square$
+
+The theorem combines an object-level fact, $\vdash C$, with a metatheoretic interpretation of $C$. It should not be inflated into a claim about an arithmetically strong theory proving its own classical consistency. The language has seven atomic codes and no arithmetization of syntax, proof, or semantic satisfaction. The certificate is stipulated as an atom and interpreted through a finite external definition. What the theorem establishes is a clean finite reflection pattern: a theorem is designated as a certificate, and its intended finite soundness condition is independently proved.
+
+The value $v(C)=\mathbf{B}$ is also instructive. In a support semantics, positive designation is compatible with negative support. The certificate need not be true only in order to be assertible. This illustrates how reflection itself can be handled paraconsistently.
+
+## 8. The combined boundary theorem
+
+The preceding results can be summarized in one dichotomy.
+
+### Theorem 8.1 (Classical boundary and paraconsistent realization)
+
+The following statements hold simultaneously:
+
+1. for every nontrivial Boolean algebra $D$ and every $x\in D$, $x^{\mathsf c}\ne x$;
+2. $L$, $R$, and $B$ are derivable;
+3. every derivable sentence has a designated four-valued interpretation; and
+4. $F$ is not derivable.
+
+**Proof sketch.** Clause 1 is Corollary 2.3. Clause 2 follows from the paradox axioms. Clause 3 is Theorem 5.2, and Clause 4 is Theorem 5.3. $\square$
+
+The theorem locates the logical trade. A nontrivial Boolean semantics refuses self-negating values. The support-pair semantics accepts them by changing the operation assigned to negation. It then separates designation from exclusivity and soundness from classical consistency.
+
+## 9. Algorithms and computational illustrations
+
+The theory admits simple finite procedures that illuminate its structure.
+
+### 9.1 Support evaluation
+
+Represent a value as two bits. Negation is constant-time coordinate exchange. Designation tests the first coordinate, and glut detection tests both. For a list of $n$ sentence codes, a complete semantic audit takes $O(n)$ time and $O(1)$ auxiliary space beyond the output.
+
+### 9.2 Derivability closure
+
+Start with the axiom set $A_0=\{L,R,B,T,C\}$. Repeatedly add $\nu(\nu(s))$ for every currently known theorem $s$ until no change occurs. Since double negation is identity, the first pass reaches a fixed point and the closure is exactly $A_0$. In a general finite language of $n$ codes with a supplied negation map, a worklist implementation visits each newly derived code once and runs in $O(n)$ set operations, assuming constant-time hashing.
+
+### 9.3 Soundness and explosion audit
+
+Compute the derivability closure. Check that each theorem has positive support. Then search for a derived $s$ whose negation is also derived and an underived $q$. The present model returns $s=L$ and $q=F$. A straightforward scan is $O(n)$ after closure computation.
+
+These algorithms are not substitutes for the structural proofs. They are executable illustrations and scale naturally to finite variants with more paradox codes.
+
+## 10. Applications and conceptual implications
+
+### 10.1 Inconsistent databases
+
+A pair of support bits is a natural abstraction for information assembled from independent sources. Positive reports set the first bit; negative reports set the second. Conflicting reports produce $\mathbf{B}$ rather than forcing deletion or arbitrary inference. Query systems can designate records with positive support while separately flagging their glut status.
+
+### 10.2 Distributed systems
+
+Replicas can temporarily disagree. A four-state summary distinguishes agreement on truth, agreement on falsity, conflict, and lack of information. Coordinate-swapping negation preserves the provenance-neutral symmetry between positive and negative support. The non-explosion theorem models an essential operational requirement: one conflicting key should not authorize arbitrary facts about unrelated keys.
+
+### 10.3 Knowledge integration
+
+Scientific, legal, and intelligence workflows often preserve contradictory testimony. Classical preprocessing may force a premature choice; indiscriminate reasoning may spread contradiction. A paraconsistent support layer offers a middle course. The finite calculus demonstrates the logical possibility of localizing conflict, though realistic systems require richer connectives, provenance, confidence, and revision policies.
+
+### 10.4 Semantic paradox
+
+For theories of truth, the key result is diagnostic. If diagonalization generates a negation fixed point, Boolean complement semantics collapses. A four-valued fixed point can instead be a stable glut. This does not by itself construct a compositional truth theory, but it identifies the algebraic resource such a theory can exploit.
+
+## 11. Limitations
+
+Three limitations are central.
+
+First, $L$, $R$, and $B$ are abstract constants. The construction does not encode the Liar’s quotation and substitution, Russell’s unrestricted comprehension, or Berry’s dependence on descriptions and length. It proves coexistence for three distinct self-negating theorem codes, not a faithful reconstruction of all three historical arguments.
+
+Second, the calculus has only negation and double-negation introduction. There are no conjunction, disjunction, implication, quantifiers, or comprehension principles. Consequently, the model isolates non-explosion rather than offering a general-purpose logic.
+
+Third, finite self-soundness is limited reflection. The certificate’s interpretation explicitly incorporates the externally established soundness condition. No derivability predicate is internally arithmetized, and no claim is made about the classical consistency of a strong recursively axiomatized theory.
+
+These restrictions are virtues for the theorem proved: they make the boundary transparent. They also mark the tasks required for a broader theory.
+
+## 12. Future work
+
+A first extension should construct a recursively generated language with quotation, substitution, a truth predicate, bounded description, and restricted comprehension. Its semantic operator on valuations should be monotone in an information order, allowing a least fixed point in which genuine diagonal Liar, Berry, and Russell sentences become distinct designated gluts while an arithmetic fragment remains non-designated where appropriate.
+
+A second problem is conservativity. If a paraconsistent theory extends a classical base by truth and restricted comprehension, one would like every theorem in the truth-free and comprehension-free fragment to have already been a theorem of the classical base. This would sharpen finite non-explosion into isolation of inconsistency from ordinary mathematics.
+
+A third direction concerns internal soundness in an effectively presented infinite system. The target is a recursively axiomatized paraconsistent theory that proves a formula expressing designation of its derivations, remains nontrivial, and does not prove every sentence in its classical arithmetic fragment. Such a result would have to separate paraconsistent reflection from classical consistency claims with great care.
+
+Finally, there is a finite combinatorial question. For $n$ pairwise distinct self-negating theorem codes and at least one non-designated code, at least $n+1$ codes appear necessary, and the bound should be attainable. If separate true-only and gap witnesses are required, the expected sharp bound is $n+3$. Proving these bounds would turn the present seven-code example into an instance of a general minimality theorem.
+
+## 13. Conclusion
+
+A contradiction becomes catastrophic only when the inference system grants it catastrophic reach. The Boolean fixed-point theorem explains why self-negation cannot be represented by ordinary complement in a nontrivial truth algebra. Four-valued support semantics changes the geometry: positive and negative evidence occupy independent coordinates, and the glut $\mathbf{B}$ is a designated fixed point of negation.
+
+Within the resulting seven-sentence calculus, the Liar, Russell, and Berry codes are pairwise distinct derivable gluts. Every derivation is semantically designated. The explicit false witness remains underivable, furnishing a direct counterexample to explosion. A distinguished theorem also serves as a finite soundness certificate under the stated interpretation.
+
+The result is not the elimination of paradox but its localization. Self-negating sentences can be theorems; contradictions can be recorded honestly; and the theory can still say no.
