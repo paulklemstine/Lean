@@ -1,228 +1,203 @@
-"""
-Numerical demonstrations for:
+#!/usr/bin/env python3
+"""Exact numerical demonstrations of cellular homology rank formulas.
 
-    Algebraic Cycles in Piecewise-Linear Decision Surfaces:
-    A Width-Driven Bound on the Homology of ReLU Classifiers
-
-This self-contained script illustrates the three quantitative pillars of the
-paper for small ReLU networks:
-
-  1. The activation-pattern count of a network equals
-         prod_i 2^{w_i} = 2^{sum_i w_i}.
-  2. The Betti number of a cellular chain complex over a field is a subquotient
-     dimension, bounded by the number of cells, and satisfies the exact
-     rank identity  beta + rank(B) = rank(Z).
-  3. The width-driven bound  beta <= #cells <= 2^{sum_i w_i}  holds by
-     transitivity, and we sample random ReLU networks to observe realised
-     region counts staying under the bound.
-
-No external dependencies beyond the Python standard library are required; a
-minimal exact-rational linear algebra layer is inlined so the homology
-computations are exact (no floating-point error).
+The script uses only the Python standard library. Matrices are reduced over the
+rational numbers, so all reported ranks and Betti numbers are exact.
 """
 
 from __future__ import annotations
 
+from dataclasses import dataclass
 from fractions import Fraction
 from itertools import product
-from typing import Iterable, List, Sequence, Tuple
+from typing import Iterable, Sequence
 
-Matrix = List[List[Fraction]]
-
-
-# ----------------------------------------------------------------------
-# 1. Activation-pattern counting
-# ----------------------------------------------------------------------
-def activation_pattern_count(widths: Sequence[int]) -> int:
-    """Number of activation patterns of a network with the given hidden widths.
-
-    Equals prod_i 2^{w_i} = 2^{sum_i w_i}.
-    """
-    prod = 1
-    for w in widths:
-        prod *= 2 ** w
-    return prod
+Number = int | Fraction
+Matrix = list[list[Fraction]]
 
 
-def activation_pattern_count_via_sum(widths: Sequence[int]) -> int:
-    """Same count computed as 2^{sum_i w_i}; must equal the product form."""
-    return 2 ** sum(widths)
+def as_fraction_matrix(rows: Sequence[Sequence[Number]]) -> Matrix:
+    """Convert a rectangular numeric matrix to exact rational entries."""
+    matrix = [[Fraction(value) for value in row] for row in rows]
+    if matrix and any(len(row) != len(matrix[0]) for row in matrix):
+        raise ValueError("matrix rows must have equal length")
+    return matrix
 
 
-def enumerate_activation_patterns(widths: Sequence[int]) -> Iterable[Tuple[Tuple[bool, ...], ...]]:
-    """Explicitly enumerate all activation patterns (one bool per neuron)."""
-    per_layer = [list(product([False, True], repeat=w)) for w in widths]
-    yield from product(*per_layer)
+def matrix_shape(matrix: Matrix, empty_columns: int = 0) -> tuple[int, int]:
+    """Return matrix dimensions, allowing a declared width for zero-row matrices."""
+    return (len(matrix), len(matrix[0]) if matrix else empty_columns)
 
 
-# ----------------------------------------------------------------------
-# 2. Exact rational linear algebra (rank via Gaussian elimination)
-# ----------------------------------------------------------------------
-def matrix_rank(rows: Matrix) -> int:
-    """Exact rank of a matrix over the rationals via Gaussian elimination."""
-    if not rows:
+def matrix_rank(rows: Sequence[Sequence[Number]]) -> int:
+    """Compute exact rank by Gaussian elimination over the rational numbers."""
+    matrix = as_fraction_matrix(rows)
+    if not matrix:
         return 0
-    m = [row[:] for row in rows]
-    n_rows = len(m)
-    n_cols = len(m[0]) if m else 0
-    rank = 0
-    pivot_col = 0
-    for r in range(n_rows):
-        if pivot_col >= n_cols:
+    row_count, column_count = len(matrix), len(matrix[0])
+    pivot_row = 0
+    for column in range(column_count):
+        pivot = next(
+            (row for row in range(pivot_row, row_count) if matrix[row][column]),
+            None,
+        )
+        if pivot is None:
+            continue
+        matrix[pivot_row], matrix[pivot] = matrix[pivot], matrix[pivot_row]
+        pivot_value = matrix[pivot_row][column]
+        matrix[pivot_row] = [value / pivot_value for value in matrix[pivot_row]]
+        for row in range(row_count):
+            if row != pivot_row and matrix[row][column]:
+                factor = matrix[row][column]
+                matrix[row] = [
+                    value - factor * pivot_value
+                    for value, pivot_value in zip(matrix[row], matrix[pivot_row])
+                ]
+        pivot_row += 1
+        if pivot_row == row_count:
             break
-        # find a pivot in column pivot_col at or below row r
-        piv = None
-        while pivot_col < n_cols:
-            for i in range(r, n_rows):
-                if m[i][pivot_col] != 0:
-                    piv = i
-                    break
-            if piv is not None:
-                break
-            pivot_col += 1
-        if piv is None:
-            break
-        m[r], m[piv] = m[piv], m[r]
-        inv = m[r][pivot_col]
-        m[r] = [x / inv for x in m[r]]
-        for i in range(n_rows):
-            if i != r and m[i][pivot_col] != 0:
-                factor = m[i][pivot_col]
-                m[i] = [a - factor * b for a, b in zip(m[i], m[r])]
-        rank += 1
-        pivot_col += 1
-    return rank
+    return pivot_row
 
 
-def homology_ranks(d2: Matrix, d1: Matrix) -> Tuple[int, int, int, int]:
-    """Given boundary matrices d2: C2 -> C1 and d1: C1 -> C0, return
-    (dim C1, rank Z = nullity d1, rank B = rank d2, beta = dim H).
-
-    Here Z = ker d1, B = range d2 (assumed inside Z), and beta = dim(Z/B).
-    """
-    dim_c1 = len(d1[0]) if d1 else (len(d2) if d2 else 0)
-    rank_d1 = matrix_rank(d1)
-    rank_z = dim_c1 - rank_d1          # nullity of d1
-    rank_b = matrix_rank(d2)           # dim range d2
-    beta = rank_z - rank_b             # dim(Z / B)
-    return dim_c1, rank_z, rank_b, beta
-
-
-# ----------------------------------------------------------------------
-# 3. A concrete tiny complex:  a hollow triangle (circle), beta_1 = 1
-# ----------------------------------------------------------------------
-def triangle_boundary_matrices() -> Tuple[Matrix, Matrix]:
-    """Cellular chain complex of the boundary of a triangle (a 1-cycle).
-
-    3 vertices v0,v1,v2 (C0), 3 edges e0=v0->v1, e1=v1->v2, e2=v2->v0 (C1),
-    no 2-cells (C2 = 0).  Expected: beta_1 = 1 (one loop).
-    d1 : C1 -> C0 is the 3x3 incidence matrix; d2 is empty (0 columns).
-    """
-    F = Fraction
-    # columns = edges, rows = vertices; entry -1 at tail, +1 at head
-    d1: Matrix = [
-        [F(-1), F(0), F(1)],   # v0: tail of e0, head of e2
-        [F(1), F(-1), F(0)],   # v1: head of e0, tail of e1
-        [F(0), F(1), F(-1)],   # v2: head of e1, tail of e2
+def matrix_product(left: Matrix, right: Matrix, right_columns: int = 0) -> Matrix:
+    """Multiply exact matrices, including a matrix with zero rows when declared."""
+    left_rows, left_columns = matrix_shape(left)
+    right_rows, columns = matrix_shape(right, right_columns)
+    if left_columns != right_rows:
+        raise ValueError(
+            f"incompatible matrix dimensions: {left_rows}x{left_columns} and "
+            f"{right_rows}x{columns}"
+        )
+    return [
+        [sum((left[i][k] * right[k][j] for k in range(left_columns)), Fraction(0))
+         for j in range(columns)]
+        for i in range(left_rows)
     ]
-    d2: Matrix = [[F(0)], [F(0)], [F(0)]]  # placeholder single zero 2-cell
-    # Use a genuinely empty C2 (rank 0): represent as 3x0
-    d2 = [[] for _ in range(3)]
-    return d2, d1
 
 
-def filled_triangle_boundary_matrices() -> Tuple[Matrix, Matrix]:
-    """Same 1-skeleton but with the 2-cell filling the disk: beta_1 = 0."""
-    F = Fraction
-    d1: Matrix = [
-        [F(-1), F(0), F(1)],
-        [F(1), F(-1), F(0)],
-        [F(0), F(1), F(-1)],
-    ]
-    # one 2-cell whose boundary is e0 + e1 + e2
-    d2: Matrix = [[F(1)], [F(1)], [F(1)]]
-    return d2, d1
+def is_zero_matrix(matrix: Matrix) -> bool:
+    """Test whether every matrix entry vanishes."""
+    return all(value == 0 for row in matrix for value in row)
 
 
-# ----------------------------------------------------------------------
-# Demonstrations
-# ----------------------------------------------------------------------
-def demo_activation_counts() -> None:
-    print("=" * 64)
-    print("1. Activation-pattern counts:  prod 2^{w_i} = 2^{sum w_i}")
-    print("=" * 64)
-    for widths in [(2,), (3, 3), (2, 4, 2), (5, 1, 1, 1)]:
-        prod_form = activation_pattern_count(widths)
-        sum_form = activation_pattern_count_via_sum(widths)
-        enumerated = sum(1 for _ in enumerate_activation_patterns(widths))
-        assert prod_form == sum_form == enumerated
-        print(f"  widths={widths!s:<14} "
-              f"prod 2^w_i = {prod_form:<8} "
-              f"2^sum = {sum_form:<8} enumerated = {enumerated}")
-    print()
+@dataclass(frozen=True)
+class HomologyReport:
+    """Dimensions, ranks, Betti numbers, and Euler characteristics."""
+
+    cells: tuple[int, int, int]
+    ranks: tuple[int, int]
+    betti: tuple[int, int, int]
+    euler_from_homology: int
+    euler_from_cells: int
 
 
-def demo_homology_identity() -> None:
-    print("=" * 64)
-    print("2. Betti number, cell bound, and exact rank identity")
-    print("=" * 64)
-    for name, mats in [
-        ("hollow triangle (circle)", triangle_boundary_matrices()),
-        ("filled triangle (disk)", filled_triangle_boundary_matrices()),
-    ]:
-        d2, d1 = mats
-        dim_c1, rank_z, rank_b, beta = homology_ranks(d2, d1)
-        print(f"  {name}")
-        print(f"    dim C1 (#1-cells) = {dim_c1}")
-        print(f"    rank Z (cycles)   = {rank_z}")
-        print(f"    rank B (bdries)   = {rank_b}")
-        print(f"    beta = dim H      = {beta}")
-        # exact rank identity: beta + rank B = rank Z
-        assert beta + rank_b == rank_z, "rank identity failed!"
-        # cell bound: beta <= dim C1
-        assert beta <= dim_c1, "cell bound failed!"
-        print(f"    check  beta + rank B = rank Z : "
-              f"{beta} + {rank_b} = {rank_z}  OK")
-        print(f"    check  beta <= #cells         : {beta} <= {dim_c1}  OK")
-    print()
+def analyze_chain_complex(
+    d1_rows: Sequence[Sequence[Number]],
+    d2_rows: Sequence[Sequence[Number]],
+    *,
+    c2_if_empty: int = 0,
+) -> HomologyReport:
+    """Analyze C2 --d2--> C1 --d1--> C0 using exact rational arithmetic.
+
+    ``d1_rows`` is a c0-by-c1 matrix and ``d2_rows`` is a c1-by-c2 matrix.
+    For c1 = 0, use an empty d2 matrix and pass c2_if_empty.
+    """
+    d1 = as_fraction_matrix(d1_rows)
+    d2 = as_fraction_matrix(d2_rows)
+    c0, c1 = matrix_shape(d1)
+    d2_row_count, c2 = matrix_shape(d2, c2_if_empty)
+    if d2_row_count != c1:
+        raise ValueError("d2 must have one row for every basis vector of C1")
+    if not is_zero_matrix(matrix_product(d1, d2, c2)):
+        raise ValueError("the matrices do not form a chain complex: d1*d2 is nonzero")
+    r1, r2 = matrix_rank(d1), matrix_rank(d2)
+    beta0 = c0 - r1
+    beta1 = c1 - r1 - r2
+    beta2 = c2 - r2
+    euler_h = beta0 - beta1 + beta2
+    euler_c = c0 - c1 + c2
+    if beta1 < 0 or euler_h != euler_c:
+        raise ArithmeticError("internal consistency check failed")
+    return HomologyReport(
+        cells=(c0, c1, c2),
+        ranks=(r1, r2),
+        betti=(beta0, beta1, beta2),
+        euler_from_homology=euler_h,
+        euler_from_cells=euler_c,
+    )
 
 
-def relu_regions_1d(weights: Sequence[float], biases: Sequence[float],
-                    samples: int = 20001, lo: float = -10.0,
-                    hi: float = 10.0) -> int:
-    """Count realised activation regions of a 1-hidden-layer ReLU net on [lo,hi]
-    by sampling: each neuron j is active where w_j x + b_j > 0; the region is the
-    tuple of activation bits, and we count distinct tuples encountered."""
-    seen = set()
-    for k in range(samples):
-        x = lo + (hi - lo) * k / (samples - 1)
-        pattern = tuple((w * x + b) > 0 for w, b in zip(weights, biases))
-        seen.add(pattern)
-    return len(seen)
+def activation_patterns(widths: Sequence[int]) -> Iterable[tuple[int, ...]]:
+    """Generate every Boolean activation pattern for the given hidden widths."""
+    if any(width < 0 for width in widths):
+        raise ValueError("layer widths must be nonnegative")
+    return product((0, 1), repeat=sum(widths))
 
 
-def demo_region_bound() -> None:
-    print("=" * 64)
-    print("3. Realised regions stay under the width-driven bound 2^{sum w}")
-    print("=" * 64)
-    import random
-    random.seed(0)
-    for width in [1, 2, 3, 4, 5]:
-        weights = [random.uniform(-3, 3) for _ in range(width)]
-        biases = [random.uniform(-3, 3) for _ in range(width)]
-        realised = relu_regions_1d(weights, biases)
-        bound = 2 ** width
-        assert realised <= bound
-        print(f"  width={width}:  realised regions = {realised:<4} "
-              f"<=  2^{width} = {bound}")
-    print()
+def activation_pattern_count(widths: Sequence[int]) -> int:
+    """Return the exact architecture count product_i 2**width_i."""
+    if any(width < 0 for width in widths):
+        raise ValueError("layer widths must be nonnegative")
+    result = 1
+    for width in widths:
+        result *= 2**width
+    return result
+
+
+def print_report(name: str, report: HomologyReport) -> None:
+    """Print a compact mathematical summary."""
+    c0, c1, c2 = report.cells
+    r1, r2 = report.ranks
+    b0, b1, b2 = report.betti
+    print(f"\n{name}")
+    print("-" * len(name))
+    print(f"cell dimensions (c0,c1,c2): {report.cells}")
+    print(f"boundary ranks (r1,r2):     {report.ranks}")
+    print(f"Betti numbers (b0,b1,b2):   {report.betti}")
+    print(f"middle identity: {b1} + {r1} + {r2} = {c1}")
+    print(
+        f"Euler identity: {b0} - {b1} + {b2} = "
+        f"{c0} - {c1} + {c2} = {report.euler_from_cells}"
+    )
 
 
 def main() -> None:
-    demo_activation_counts()
-    demo_homology_identity()
-    demo_region_bound()
-    print("All checks passed.")
+    """Run three canonical complexes and an activation-pattern calculation."""
+    # Three oriented edges: v0->v1, v1->v2, v2->v0.
+    triangle_boundary_1 = [
+        [-1, 0, 1],
+        [1, -1, 0],
+        [0, 1, -1],
+    ]
+
+    circle = analyze_chain_complex(
+        triangle_boundary_1,
+        [[], [], []],
+    )
+    print_report("Polygonal circle (triangle boundary)", circle)
+
+    filled_triangle = analyze_chain_complex(
+        triangle_boundary_1,
+        [[1], [1], [1]],
+    )
+    print_report("Filled triangle", filled_triangle)
+
+    isolated_points = analyze_chain_complex(
+        [[], []],
+        [],
+    )
+    print_report("Two isolated points", isolated_points)
+
+    widths = (2, 3, 1)
+    count = activation_pattern_count(widths)
+    enumerated = sum(1 for _ in activation_patterns(widths))
+    print("\nActivation-pattern count")
+    print("------------------------")
+    print(f"widths: {widths}")
+    print(f"product_i 2^w_i: {count}")
+    print(f"enumerated patterns: {enumerated}")
+    print(f"conditional Euler ceiling 3P: {3 * count}")
+    assert count == enumerated
 
 
 if __name__ == "__main__":

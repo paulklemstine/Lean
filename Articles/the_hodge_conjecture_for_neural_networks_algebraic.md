@@ -1,81 +1,202 @@
-# The Shape of a Decision: Algebraic Cycles Hidden Inside Neural Networks
+# The Topology Hidden Inside a ReLU Network
 
-## A boundary you cannot see
+## How ranks, cycles, and activation patterns turn a jagged decision surface into computable mathematics
 
-Every time a neural network decides between "cat" and "dog," "spam" and "not spam," or "benign" and "malignant," it draws an invisible boundary through the space of all possible inputs. On one side of the boundary the answer is *yes*; on the other side it is *no*. That boundary — the set of inputs on which the network is perfectly undecided — is called the **decision surface**. It is where the network changes its mind.
+A neural network can draw a boundary without ever being told what a boundary is. Feed it points from two classes—a benign scan and a suspicious scan, a safe transaction and a fraudulent one—and its output changes sign somewhere between them. The set where the output is exactly zero is the network’s **decision surface**. Crossing that surface changes the prediction.
 
-For the most common kind of network, built from the humble *rectified linear unit* (ReLU), this surface has a startlingly rigid geometry. It is not a smooth, curving sheet like the surface of a soap bubble. Instead it is *piecewise linear*: it is stitched together from perfectly flat polygonal panels, like a geodesic dome or a paper model folded from flat sheets. The whole surface is a crumpled origami of flat faces.
+For a network built from rectified linear units, or ReLUs, this boundary is not smoothly curved. A ReLU replaces a number $t$ by $\max(0,t)$, so the network is affine on every region where the pattern of active and inactive units is fixed. Its zero set is therefore assembled from flat polyhedral pieces. In two input dimensions it resembles a polygonal collection of curves; in three dimensions it resembles a surface made from planar patches; in higher dimensions it is a polyhedral hypersurface.
 
-This article is about a surprising bridge between that origami and one of the most famous unsolved problems in pure mathematics — the **Hodge conjecture** — and about a clean, provable statement that emerges once you cross the bridge. The punchline, stated up front, is a pair of facts:
+That geometry invites an ambitious analogy. Classical algebraic geometry studies the relation between holes and geometric cycles on smooth complex projective varieties. Could a neural decision surface have a similarly rich “Hodge theory”? The analogy is evocative, but it must be handled carefully. A general ReLU zero set is real, often unbounded, and piecewise linear. It is not automatically a smooth complex projective variety, so classical Hodge numbers are not naturally attached to it. Nor does lying inside a hyperplane make a bounded polyhedral face an algebraic subvariety.
 
-1. For a ReLU network's decision surface, the analogue of the Hodge conjecture is **true**, and true for an almost embarrassingly simple reason.
-2. The genuinely interesting question is not *whether* the surface's holes come from flat algebraic pieces, but *how many* holes there can be — and this number is controlled, exponentially, by the *width* of the network.
+What survives is both more modest and more concrete: **cellular homology**. Once a finite portion of the decision surface is represented as a finite polyhedral cell complex, its holes can be computed by linear algebra. In a three-term portion of that complex, every question is organized by two boundary maps
 
-Let me unpack both.
+$$
+C_2 \xrightarrow{d_2} C_1 \xrightarrow{d_1} C_0,
+$$
 
-## What the Hodge conjecture asks
+with the essential condition
 
-In pure geometry, mathematicians study shapes called *projective varieties* — the solution sets of polynomial equations. Such a shape can have "holes" of various dimensions, and the bookkeeping of those holes is done by an algebraic gadget called **cohomology**. A hole is recorded as a *cohomology class*.
+$$
+d_1d_2=0.
+$$
 
-Some of these classes are especially concrete: they come from actual geometric sub-shapes sitting inside the variety, called **algebraic cycles**. Think of a circle drawn on the surface of a doughnut — it is a genuine curve you can point to, and it "detects" the doughnut's hole. The Hodge conjecture, one of the Clay Institute's million-dollar Millennium Prize Problems, asks whether *every* hole of a certain natural type can be detected this way: is every rational cohomology class a combination of algebraic cycles?
+Here $C_0$, $C_1$, and $C_2$ are vector spaces spanned by vertices, edges, and two-dimensional faces. The equation says that the boundary of a boundary vanishes: the oriented edges surrounding a face have endpoints that cancel in pairs.
 
-For general smooth varieties this is fiendishly hard and remains open. But something remarkable happens when we replace the smooth polynomial world with the *piecewise linear* world of neural networks.
+This simple equation leads to exact formulas for the topology of the complex—and to a principled way to connect network architecture with topological complexity.
 
-## Why it becomes easy — and why that's the point
+## Holes as what remains after two kinds of cancellation
 
-The decision surface $V(f) = \{x : f(x) = 0\}$ of a ReLU network is assembled from flat faces. Here is the key observation: **each flat face is itself an algebraic cycle**. A flat panel is exactly the set of points satisfying a single linear equation — a *hyperplane section*. Linear equations are the simplest possible polynomial equations, so every panel is, by definition, an algebraic piece.
+Focus on the middle space $C_1$. An element of $C_1$ is a linear combination of edges. It is a **cycle** if it has no boundary, meaning that $d_1x=0$. All cycles form the kernel $\ker d_1$. But some cycles are already boundaries of faces: they have the form $d_2y$ for some $y\in C_2$. These form the image $\operatorname{im}d_2$. Because $d_1d_2=0$, every boundary is a cycle.
 
-Now the topology of any such cellular shape is computed from its panels. Every "hole," every homology class, is a formal combination of these flat cells. Since the cells are already algebraic, *every* class is automatically a combination of algebraic cycles.
+The first homology space is the quotient
 
-We can state this cleanly.
+$$
+H_1=\ker d_1/\operatorname{im}d_2.
+$$
 
-> **Piecewise-Linear Hodge Representability.** Let $V(f)$ be the decision surface of a ReLU network, decomposed into its flat cells. Then every homology class of $V(f)$ is represented by a genuine cycle supported on those cells, each of which is a hyperplane section. In particular, every class is a rational combination of algebraic cycles.
+It records closed edge combinations after discarding those filled by faces. Its dimension $\beta_1=\dim H_1$ is the first Betti number, the number of independent one-dimensional holes over the chosen field.
 
-The proof is a single structural remark. Working over a field, homology in a fixed degree is a *subquotient* $Z/B$ of the group of cellular chains: $Z$ is the group of *cycles* (chains with no boundary) and $B \subseteq Z$ is the group of *boundaries*. Passing from a cycle to its homology class is just the quotient map $Z \to Z/B$, and quotient maps are always surjective. So every class *is* the class of an actual cycle — and cycles are combinations of the flat cells. Existence is free.
+The central rank identity is strikingly clean.
 
-This is why the "Hodge conjecture for neural networks" is true but, on its own, not the interesting statement. The interesting content is quantitative.
+**Middle Betti Rank Formula.** For any finite-dimensional three-term chain complex over a field satisfying $d_1d_2=0$,
 
-## The real question: how many holes can a network draw?
+$$
+\beta_1+\operatorname{rank}(d_1)+\operatorname{rank}(d_2)=\dim C_1.
+$$
 
-If existence is automatic, *counting* is where the mathematics lives. How complicated can a decision surface be? How many independent holes — how large a **Betti number** — can a network of a given size produce?
+Why? Rank–nullity first divides $C_1$ into directions detected by $d_1$ and directions in $\ker d_1$:
 
-There is a beautiful two-part answer, one part topological and one part combinatorial.
+$$
+\dim\ker d_1=\dim C_1-\operatorname{rank}(d_1).
+$$
 
-**The topological half.** Over a field, the dimension of homology (the Betti number) is a subquotient dimension. Dimensions only shrink under passing to subgroups and quotients, so
-$$\dim(Z/B) \le \dim Z \le \dim C,$$
-where $C$ is the whole chain group. In words: *the number of independent holes is at most the number of cells.* You cannot manufacture more topological complexity than you have flat panels to build it from. Alongside this comes an exact accounting identity,
-$$\beta + \operatorname{rank} B = \operatorname{rank} Z,$$
-which says the Betti number $\beta$, plus the rank of the boundaries, equals the rank of the cycles — the local Euler-characteristic relation of the chain complex.
+Quotienting cycles by boundaries removes another $\operatorname{rank}(d_2)$ dimensions. Thus
 
-**The combinatorial half.** So how many cells are there? A ReLU network partitions its input space into *activation regions*: on each region, every neuron is either firing or silent, and $f$ is a single affine function. An **activation pattern** is the record of which neurons fire — one Boolean flag per hidden neuron. For a network with $L$ hidden layers of widths $w_1, \dots, w_L$, the number of possible activation patterns is exactly
-$$\prod_{i=1}^{L} 2^{w_i} \;=\; 2^{\,w_1 + \cdots + w_L},$$
-because each of the $w_i$ neurons in layer $i$ contributes an independent binary choice. Two to the power of the *total number of hidden neurons*.
+$$
+\beta_1=\dim C_1-\operatorname{rank}(d_1)-\operatorname{rank}(d_2).
+$$
 
-There is a companion bound from the theory of hyperplane arrangements: $m$ hyperplanes cut space into at most $3^m$ sign-cells (each hyperplane assigns every point one of three states — above, on, or below), and any labelling of regions can realise at most that many.
+This interpretation is useful. The middle cell space provides a budget of $\dim C_1$ directions. The outgoing map spends some of that budget by exposing nonzero boundaries. The incoming map spends more by filling cycles. What remains is homology.
 
-**Putting the halves together** gives the headline theorem.
+Several consequences follow immediately.
 
-> **Width-Driven Betti Bound.** For the decision surface of a ReLU network with hidden widths $w_1, \dots, w_L$, every Betti number satisfies
-> $$\beta \;\le\; \#\{\text{cells}\} \;\le\; \prod_{i=1}^{L} 2^{w_i} \;=\; 2^{\,\sum_i w_i}.$$
+**Nonvanishing Criterion.** The space $H_1$ is nonzero exactly when
 
-This is not a definitional triviality: the topological side genuinely uses the field structure (subquotient dimensions), the arithmetic side genuinely uses the product calculus of finite types, and the theorem is a real transitivity across the geometric bridge "number of cells $\le$ number of activation patterns."
+$$
+\operatorname{rank}(d_1)+\operatorname{rank}(d_2)<\dim C_1.
+$$
 
-## What this tells us about deep learning
+**Vanishing Criterion.** The space $H_1$ vanishes exactly when
 
-The bound $2^{\sum_i w_i}$ is deliberately honest — and being honest, it is *loose*, and its looseness is informative. It depends only on the *total* neuron count, so it cannot yet distinguish a shallow-and-wide network from a deep-and-narrow one with the same number of neurons. Yet everything we know about deep learning says these two are not equal: depth seems to manufacture complexity far more efficiently than width.
+$$
+\operatorname{rank}(d_1)+\operatorname{rank}(d_2)=\dim C_1.
+$$
 
-This gap points to a sharper, still-conjectural refinement. The idea is that the *first* and *last* hidden layers play a special, "polarised" role. The first layer selects which input hyperplanes bound a face; the last selects which output half-spaces co-bound it; the interior layers only multiply the number of affine pieces linearly. This suggests a **bigraded** bound on the finer Hodge numbers $h^{p,q}$ of the surface:
-$$h^{p,q}(V(f)) \;\le\; \binom{w_1}{p}\binom{w_L}{q}\prod_{i=2}^{L-1} w_i,$$
-a Künneth-style product that separates the roles of the boundary layers from the interior — far finer than the crude $2^{\sum w_i}$.
+**Maximality Criterion.** The equality $\beta_1=\dim C_1$ holds exactly when both boundary maps are zero.
 
-A second theme is that *depth manufactures homology while width manufactures cycles*. Consider iterated "tent" folds: a depth-$k$ folding can create on the order of $2^k$ topological handles in a level set, even though the number of independent flat pieces needed per layer grows only linearly. The ratio (Betti number)/(cells per layer) then becomes an intrinsic complexity measure that cleanly separates deep from shallow representations — turning a count of how often a function crosses a threshold directly into a count of topological holes.
+These are not merely bounds. They identify the precise obstruction to a middle-dimensional hole: the adjacent boundary maps fail to consume all available dimensions.
 
-Finally, the exact identity $\beta + \operatorname{rank} B = \operatorname{rank} Z$ is a diagnostic tool. If a hidden neuron never fires simultaneously with its layer-mates, the corresponding boundary map loses rank, and the identity forces the surface to carry *more* holes than the generic bound would predict. In other words, **redundant neurons leave a topological fingerprint.**
+## Every class has a cellular representative
 
-## Why any of this matters
+A homology class is an equivalence class of cycles, so every class comes from some element of $\ker d_1$. This gives the **Cellular Representation Theorem**: every element of $H_1$ is represented by a cellular cycle, hence by a linear combination of the chosen one-dimensional cells.
 
-There is a growing recognition that to understand what neural networks *are* — not just how to train them — we need geometry and topology, not only statistics. The decision surface is the network's actual output as a geometric object, and its holes measure how tangled, how expressive, how potentially brittle the classifier is.
+Over $\mathbb{Q}$, the coefficients may be rational. For a rational polyhedral model, every rational homology class therefore has a rational cellular representative.
 
-The bridge to the Hodge circle of ideas reframes a fashionable computational object in the language of one of mathematics' deepest conjectures, and in doing so clarifies what is easy and what is hard. Existence of algebraic representatives — the thing that is monstrously difficult for smooth varieties — is *automatic* here, because flatness is algebraicity. The difficulty migrates entirely into counting, where it becomes a precise question about network architecture: **how much topology can a given shape of network draw?**
+This statement captures the sound part of the proposed “Hodge conjecture for neural networks.” It does **not** say that every class is represented by an algebraic cycle in the classical sense. A polyhedral face may lie in an affine hyperplane while failing to be a complete algebraic subvariety or global hyperplane section. To make a genuine Hodge-type claim, one would need to define a geometric cohomology theory and an explicit cycle-class map, then prove that map surjective. Cellular representability alone cannot supply those missing structures.
 
-The answer, for now, is bounded above by two raised to the number of hidden neurons. Tightening that bound — separating depth from width, boundary layers from interior — is where the geometry of intelligence gets genuinely interesting.
+The correction strengthens the mathematics by clarifying exactly what has been established: decision-surface classes are represented by the cells used to build the surface, and their number is governed by ranks.
+
+## The alternating sum that refuses to change
+
+The same three-term complex has homology in all three degrees. At the bottom,
+
+$$
+H_0=C_0/\operatorname{im}d_1,
+$$
+
+which measures connected components. In the middle,
+
+$$
+H_1=\ker d_1/\operatorname{im}d_2.
+$$
+
+At the top,
+
+$$
+H_2=\ker d_2,
+$$
+
+because no higher boundary map is present. Write $\beta_i=\dim H_i$ and $c_i=\dim C_i$. Rank–nullity gives
+
+$$
+\beta_0=c_0-\operatorname{rank}(d_1),
+$$
+
+$$
+\beta_1=c_1-\operatorname{rank}(d_1)-\operatorname{rank}(d_2),
+$$
+
+and
+
+$$
+\beta_2=c_2-\operatorname{rank}(d_2).
+$$
+
+Now take the alternating sum. Both ranks cancel:
+
+$$
+\beta_0-\beta_1+\beta_2=c_0-c_1+c_2.
+$$
+
+This is the **Euler–Poincaré Theorem for a Three-Term Complex**. The common integer is the Euler characteristic $\chi$.
+
+The theorem reveals a robust form of rigidity. Individual Betti numbers can change when boundary maps change, but their alternating sum depends only on the numbers of cells. Any two three-term complexes with the same dimensions $c_0,c_1,c_2$ have the same Euler characteristic, provided each is genuinely a chain complex.
+
+There is also an immediate estimate:
+
+$$
+|\chi|\le c_0+c_1+c_2.
+$$
+
+The alternating sum can never exceed the total cellular dimension in absolute value. For a triangulated loop, for example, $c_0=c_1$ and $c_2=0$, so $\chi=0$. For a filled triangle, $c_0=3$, $c_1=3$, and $c_2=1$, so $\chi=1$. The boundary map distinguishes their homology: the loop has $\beta_1=1$, while the filled triangle has $\beta_1=0$. Yet in each case the cell count correctly predicts the alternating sum.
+
+## From neurons to a coarse topological ceiling
+
+How does network architecture enter? A hidden ReLU unit has two states: active or inactive. If the hidden-layer widths are $w_1,\ldots,w_L$, then the total number of Boolean activation patterns is
+
+$$
+P=\prod_{i=1}^{L}2^{w_i}=2^{\sum_{i=1}^{L}w_i}.
+$$
+
+Not every pattern need occur in input space, and one activation region may contribute several cells after further subdivision. Consequently, $P$ is best treated as a coarse combinatorial ceiling under an explicit cell-count hypothesis, not as an automatic exact count of decision-surface cells.
+
+Suppose a finite cellular model satisfies
+
+$$
+c_0\le P,\qquad c_1\le P,\qquad c_2\le P.
+$$
+
+Combining these inequalities with the total-dimension estimate yields the **Architecture-Driven Euler Bound**:
+
+$$
+|\chi|\le 3P=3\prod_{i=1}^{L}2^{w_i}.
+$$
+
+This bound is deliberately broad. It does not establish the proposed binomial inequality for quantities $h^{p,q}$, because no canonical bigrading $H^{p,q}$ has yet been defined for a general ReLU zero set. What it does provide is a valid quantitative shadow: if activation patterns control cell counts, then they also control the Euler characteristic.
+
+## A practical computation
+
+For an actual finite polyhedral complex, the calculation is straightforward.
+
+1. Choose a field, commonly $\mathbb{Q}$ for rational cellular chains.
+2. List the vertices, edges, and faces, fixing orientations.
+3. Build matrices $D_1$ and $D_2$ for the boundary maps.
+4. Check $D_1D_2=0$.
+5. Compute $r_1=\operatorname{rank}(D_1)$ and $r_2=\operatorname{rank}(D_2)$.
+6. Evaluate
+
+$$
+\beta_0=c_0-r_1,
+\qquad
+\beta_1=c_1-r_1-r_2,
+\qquad
+\beta_2=c_2-r_2.
+$$
+
+7. Confirm
+
+$$
+\beta_0-\beta_1+\beta_2=c_0-c_1+c_2.
+$$
+
+The expensive part is not the final topology calculation; ordinary exact matrix reduction handles that. The difficult geometric step is producing a correct finite complex from the network’s zero set, especially when the surface is unbounded.
+
+## What the result says—and what comes next
+
+The topology of a piecewise-linear decision surface is accessible because its cells turn topology into linear algebra. Every cellular homology class has a cellular-cycle representative. The middle Betti number obeys an exact rank formula. Its vanishing, nonvanishing, and maximality are characterized precisely. The Euler characteristic is determined by cell counts and, under a common activation-pattern ceiling, is bounded by $3P$.
+
+But the classical Hodge conjecture has not become trivial. Its ingredients—complex projective geometry, a Hodge decomposition, and algebraic cycle classes—are absent from a generic real ReLU zero set. The responsible bridge is therefore not an identification but a research program.
+
+That program has clear next steps: build finite rational polyhedral complexes from compact truncations of network zero sets; prove their boundary maps compose to zero; extend the theory to locally finite or compactly supported homology for unbounded surfaces; define an honest realization map from rational polyhedral cycles into a chosen cohomology theory; and derive sharper architecture-sensitive cell bounds.
+
+The enduring idea is simple. A network’s jagged boundary may look geometrically complicated, but its topology is governed by what two matrices fail to cancel. Between activation patterns and homology lies a chain complex—and in that narrow space, holes become ranks, alternating sums become rigid, and a speculative analogy becomes a precise mathematical theory.

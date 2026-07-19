@@ -1,138 +1,478 @@
-# Algebraic Cycles in Piecewise-Linear Decision Surfaces: A Width-Driven Bound on the Homology of ReLU Classifiers
+# Cellular Homology and Architecture Bounds for Piecewise-Linear Neural Decision Surfaces
 
-**Author:** Aristotle
-**Date:** 2026-07-10
+**Aristotle**  
+**July 19, 2026**
 
 ## Abstract
 
-For a rectified-linear (ReLU) network $f : \mathbb{R}^n \to \mathbb{R}$, the *decision surface* $V(f) = \{x : f(x) = 0\}$ is a piecewise-linear hypersurface: the ambient space is partitioned into finitely many polyhedral *activation regions* on each of which $f$ is affine, and $V(f)$ is assembled from the flat faces cut out by the local equations $f = 0$. Each such face is the zero locus of a linear form and is therefore an algebraic cycle (a hyperplane section). We prove that the piecewise-linear analogue of the Hodge problem — *is every homology class a rational combination of algebraic cycles?* — has an affirmative and structural answer: the cellular chain group is by construction spanned by the algebraic cells, and homology is a subquotient of it, so every homology class is represented by a cycle supported on those cells. The substantive question is therefore not existence but *size*. We establish a width-driven bound: every Betti number of $V(f)$ is at most the number of cells, which is at most the number of activation patterns $\prod_{i=1}^{L} 2^{w_i} = 2^{\sum_i w_i}$ of a network with hidden widths $w_1,\dots,w_L$. We also record the exact rank identity $\beta + \operatorname{rank} B = \operatorname{rank} Z$ and combinatorial cell counts, and we discuss a conjectural bigraded refinement matching the roles of the boundary layers.
+The zero set of a real-valued ReLU network is piecewise linear, but it is generally real, noncompact, and singular rather than a smooth complex projective variety. Consequently, classical Hodge numbers and the classical Hodge conjecture do not apply without substantial additional structure. This paper develops a rigorous finite-dimensional replacement. For a three-term cellular chain complex $C_2\xrightarrow{d_2}C_1\xrightarrow{d_1}C_0$ over any field, with $d_1d_2=0$, we prove the exact middle-rank identity
 
-**Keywords:** ReLU networks, decision surface, piecewise-linear topology, Hodge conjecture, algebraic cycles, homology, Betti number, activation patterns, hyperplane arrangements.
+$$
+\dim H_1+\operatorname{rank}(d_1)+\operatorname{rank}(d_2)=\dim C_1.
+$$
+
+It follows that middle homology is nonzero precisely when the two adjacent ranks do not exhaust $C_1$, vanishes precisely when they do, and is maximal precisely when both differentials vanish. Every homology class has a cellular-cycle representative. We also derive the three-term Euler–Poincaré identity
+
+$$
+\dim H_0-\dim H_1+\dim H_2=\dim C_0-\dim C_1+\dim C_2,
+$$
+
+prove independence from the differentials once chain dimensions are fixed, and establish an absolute bound by total chain dimension. A network with hidden widths $w_1,\ldots,w_L$ has exactly $P=\prod_i2^{w_i}$ Boolean activation patterns. Under the explicit hypothesis that each of the three chain dimensions is at most $P$, the Euler characteristic obeys $|\chi|\le 3P$. These results provide a precise cellular theory for finite polyhedral models of decision surfaces while identifying the additional constructions required for a genuine Hodge-type representability theorem.
 
 ## 1. Introduction
 
-Modern classifiers implemented as ReLU networks compute continuous piecewise-linear functions. The geometric object that summarises a binary classifier is its **decision surface**, the level set on which the network is undecided:
-$$V(f) \;=\; \{x \in \mathbb{R}^n : f(x) = 0\}.$$
-Because $f$ is piecewise-linear, $V(f)$ is a piecewise-linear hypersurface built from flat polyhedral faces. The topology of $V(f)$ — its connected components, tunnels, cavities, and higher holes, quantified by its Betti numbers — measures the expressive complexity of the classifier.
+Let $f:\mathbb{R}^n\to\mathbb{R}$ be represented by a feed-forward neural network with rectified linear activations. Its decision surface is
 
-The **Hodge conjecture** of algebraic geometry asserts that on a smooth complex projective variety, every rational $(p,p)$-cohomology class is a rational linear combination of the classes of algebraic subvarieties (algebraic cycles). For general varieties this is one of the deepest open problems in mathematics. This paper asks the analogous question for the piecewise-linear surfaces $V(f)$ and finds that it resolves affirmatively for a simple structural reason, after which the interesting mathematics becomes quantitative: bounding the size of homology in terms of the network's shape.
+$$
+V(f)=\{x\in\mathbb{R}^n:f(x)=0\}.
+$$
 
-### Contributions
+A ReLU network is affine on each region where every hidden unit has a fixed active/inactive state. Thus $V(f)$ is assembled from polyhedral pieces. This makes cellular and polyhedral topology natural tools for studying connected components, loops, voids, and higher-dimensional cycles in a finite model of $V(f)$.
 
-1. **Representability (§3).** Every homology class of $V(f)$ is represented by a genuine cycle supported on the flat cells; since each cell is a hyperplane section (an algebraic cycle), every class is a rational combination of algebraic cycles. This is the piecewise-linear Hodge property.
-2. **Subquotient bounds (§3).** Over a field, the Betti number is bounded by the number of cycles and hence by the number of cells, together with the exact rank identity $\beta + \operatorname{rank} B = \operatorname{rank} Z$.
-3. **Cell counting (§4).** A network with $L$ hidden layers of widths $w_1,\dots,w_L$ has exactly $\prod_i 2^{w_i} = 2^{\sum_i w_i}$ activation patterns; an arrangement of $m$ hyperplanes carves out at most $3^m$ sign-cells.
-4. **The width-driven bound (§5).** Combining the halves: every Betti number of $V(f)$ is at most $2^{\sum_i w_i}$.
+A tempting analogy compares such cycles with algebraic cycles in the classical Hodge conjecture. That analogy is not, by itself, a theorem. Classical Hodge theory concerns smooth complex projective varieties and a decomposition of complex cohomology into spaces of type $(p,q)$. A general ReLU zero set is a real piecewise-linear set, often noncompact and singular. There is no canonical bigrading $H^{p,q}$ in this setting. Furthermore, although every polyhedral face is contained in an affine subspace cut out by linear equations, the face itself is usually constrained by inequalities and need not be a global algebraic subvariety or hyperplane section.
 
-## 2. Definitions and setup
+The mathematically available statement is cellular. Given a finite polyhedral cell complex modeling a compact decision surface or a compact truncation, cellular chains form finite-dimensional vector spaces. Boundary operators make them a chain complex. Homology classes are represented by cellular cycles, while their dimensions are determined by ranks. This paper isolates the complete theory of three consecutive degrees and relates its numerical invariants to a coarse count derived from network architecture.
 
-**Definition 2.1 (Decision surface).** For $f : \mathbb{R}^n \to \mathbb{R}$ the decision surface is $V(f) = f^{-1}(0)$. When $f$ is a ReLU network, $V(f)$ is a piecewise-linear hypersurface.
+The main contributions are:
 
-**Definition 2.2 (Activation region and pattern).** A ReLU network with $L$ hidden layers, layer $i$ having width $w_i$, computes $f$ that is affine on each maximal region where every hidden unit has a fixed sign of pre-activation. Such a region is an *activation region*. Its *activation pattern* records, for each hidden neuron, whether it is active. Formally, the set of activation patterns is the product type
-$$\mathrm{AP}(L, w) \;=\; \prod_{i=1}^{L} \big(\{1,\dots,w_i\} \to \{\text{true}, \text{false}\}\big),$$
-one Boolean flag per hidden neuron.
+1. an exact rank formula for middle homology;
+2. exact criteria for nonzero, zero, and maximal middle homology;
+3. cellular representability of every quotient class;
+4. an abstract telescoping Euler–Poincaré principle and its three-term specialization;
+5. rigidity of the Euler characteristic under changes of boundary maps that preserve chain dimensions;
+6. total-dimension and activation-pattern bounds;
+7. an exact rational-matrix algorithm for numerical examples.
 
-**Definition 2.3 (Cellular chain complex).** Fix a field $F$. The piecewise-linear structure of $V(f)$ gives a finite cell decomposition and hence a chain complex of $F$-vector spaces
-$$\cdots \longrightarrow C_2 \xrightarrow{\;d_2\;} C_1 \xrightarrow{\;d_1\;} C_0 \longrightarrow \cdots,$$
-where $C_k$ is the free $F$-vector space on the $k$-cells and $d_{k}$ is the cellular boundary map. Each $C_k$ is finite-dimensional. We write, in a fixed degree,
-$$Z = \ker d_1 \quad (\text{cycles}), \qquad B = \operatorname{range} d_2 \quad (\text{boundaries}),$$
-and the **homology** is the quotient $H = Z / B$. The **Betti number** is $\beta = \dim_F H = \operatorname{finrank}_F H$.
+All statements hold over an arbitrary field unless a coefficient field is specified. Taking the field to be $\mathbb{Q}$ gives the rational cellular theory relevant to rational polyhedral complexes.
 
-**Definition 2.4 (Algebraic cycle, PL sense).** A flat cell of $V(f)$ is the intersection of $V(f)$ with the affine subspace on which the relevant linear pieces vanish; it is a *hyperplane section* and we call it an **algebraic cycle**. A chain is a formal $F$-combination of cells, hence a combination of algebraic cycles.
+## 2. Piecewise-linear decision surfaces
 
-Throughout, "over a field" is essential: dimensions of subspaces and quotients behave additively, which is what makes the bounds clean.
+### 2.1 ReLU networks and activation patterns
 
-## 3. Homology of the cellular complex
+The rectified linear unit is the function
 
-We work with three consecutive chain groups $C_2 \xrightarrow{d_2} C_1 \xrightarrow{d_1} C_0$ with $C_1$ finite-dimensional. Cycles are $Z = \ker d_1$, boundaries are $B = \operatorname{range} d_2$ viewed inside $Z$, and homology is $H = Z/B$.
+$$
+\rho(t)=\max(0,t).
+$$
 
-**Lemma 3.1 (Boundaries are cycles).** In a genuine chain complex, $d_1 \circ d_2 = 0$, and therefore $\operatorname{range} d_2 \subseteq \ker d_1$, i.e. $B \subseteq Z$.
+Consider a network with $L$ hidden layers of widths $w_1,\ldots,w_L$. Each hidden unit is either active, when its preactivation is positive, or inactive, when its preactivation is nonpositive. An **activation pattern** assigns one of these two states to every hidden unit.
 
-*Proof.* The condition $d_1 \circ d_2 = 0$ is exactly the statement that the range of $d_2$ lies in the kernel of $d_1$. $\square$
+**Proposition 2.1 (Activation-pattern count).** The number of Boolean activation patterns is
 
-This makes the quotient $H = Z/B$ well-defined.
+$$
+P(w_1,\ldots,w_L)=\prod_{i=1}^{L}2^{w_i}=2^{\sum_{i=1}^{L}w_i}.
+$$
 
-**Theorem 3.2 (Piecewise-linear Hodge representability).** The quotient map $Z \to H = Z/B$ is surjective. Consequently every homology class is the class of an actual cycle. Since cycles lie in the cellular chain group, which is spanned by the algebraic (linearly cut-out) cells, every homology class is represented by a rational combination of algebraic cycles.
+**Proof sketch.** Layer $i$ contains $w_i$ units and therefore has $2^{w_i}$ Boolean state assignments. Choices in different layers form a Cartesian product, so their cardinalities multiply. $\square$
 
-*Proof.* Every quotient map of modules is surjective; an element of $Z/B$ is by definition $z + B$ for some $z \in Z$, and $z$ is a chain, i.e. a combination of cells. $\square$
+On the subset of input space realizing a fixed pattern, every ReLU acts either as the identity or as zero. The network therefore restricts to an affine function there, and its zero set within that region lies in an affine hyperplane.
 
-Theorem 3.2 is the piecewise-linear Hodge conjecture: existence of algebraic representatives is automatic because flatness *is* algebraicity in codimension one.
+The number $P$ counts abstract Boolean assignments, not necessarily nonempty regions in input space. It is therefore a coarse ceiling on activation states. Turning it into a bound on cells requires an explicit geometric construction and a cell-count hypothesis.
 
-**Theorem 3.3 (Betti number bounded by cycles).** $\displaystyle \operatorname{finrank}_F H \le \operatorname{finrank}_F Z.$
+### 2.2 Finite cellular models
 
-*Proof.* $H = Z/B$ is a quotient of $Z$, and the dimension of a quotient never exceeds the dimension of the space. $\square$
+A general decision surface may be unbounded. The theory below applies to a finite cellular model, such as a compact decision surface, a compact truncation equipped with a finite polyhedral decomposition, or any finite complex extracted from the network geometry.
 
-**Theorem 3.4 (Betti number bounded by cell count).** $\displaystyle \operatorname{finrank}_F H \le \operatorname{finrank}_F C_1.$
+Fix a field $F$. Let $C_k$ be the finite-dimensional $F$-vector space generated by the oriented $k$-cells. The cellular boundary map $d_k:C_k\to C_{k-1}$ sends each cell to its oriented boundary. The geometric cancellation of codimension-two faces yields
 
-*Proof.* Compose the quotient bound $\dim(Z/B) \le \dim Z$ with the subspace bound $\dim Z = \dim \ker d_1 \le \dim C_1$. $\square$
+$$
+d_{k-1}d_k=0.
+$$
 
-Since $\dim_F C_1$ equals the number of $1$-cells, Theorem 3.4 says the Betti number is at most the number of cells.
+We concentrate on
 
-**Theorem 3.5 (Exact rank identity).** $\displaystyle \operatorname{finrank}_F H + \operatorname{finrank}_F B = \operatorname{finrank}_F Z,$ i.e. $\beta + \operatorname{rank} B = \operatorname{rank} Z$.
+$$
+C_2\xrightarrow{d_2}C_1\xrightarrow{d_1}C_0,
+$$
 
-*Proof.* For the short exact sequence $0 \to B \to Z \to Z/B \to 0$ of finite-dimensional vector spaces, dimensions add: $\dim(Z/B) + \dim B = \dim Z$. $\square$
+where $d_1d_2=0$. Denote $c_i=\dim_F C_i$ and $r_i=\operatorname{rank}(d_i)$.
 
-This is the local Euler-characteristic relation of the chain complex; it will be used to detect rank-deficient boundary maps (see §6).
+## 3. Cycles, boundaries, and homology
 
-**Corollary 3.6 (Basis form).** If the cells form a basis $\{e_c\}_{c \in \mathrm{Cells}}$ of $C_1$ indexed by a finite type $\mathrm{Cells}$, then
-$$\beta \;=\; \operatorname{finrank}_F H \;\le\; \#\,\mathrm{Cells}.$$
+### 3.1 Definitions
 
-*Proof.* $\operatorname{finrank}_F C_1 = \#\,\mathrm{Cells}$ for a basis indexed by $\mathrm{Cells}$; substitute into Theorem 3.4. $\square$
+The middle **cycle space** is
 
-## 4. Counting cells
+$$
+Z_1=\ker d_1.
+$$
 
-The cells of $V(f)$ are indexed by the network's activation structure. We count activation patterns and, independently, sign-cells of a hyperplane arrangement.
+The middle **boundary space** is
 
-**Theorem 4.1 (Activation-pattern count).** For a network with $L$ hidden layers of widths $w : \{1,\dots,L\} \to \mathbb{N}$,
-$$\#\,\mathrm{AP}(L, w) \;=\; \prod_{i=1}^{L} 2^{w_i}.$$
+$$
+B_1=\operatorname{im}d_2.
+$$
 
-*Proof.* $\mathrm{AP}(L,w)$ is the product over layers of the function types $(\{1,\dots,w_i\} \to \{\text{true},\text{false}\})$. A function from a $w_i$-element set to a $2$-element set has $2^{w_i}$ values, and the cardinality of a finite product is the product of the cardinalities. $\square$
+The chain condition gives $B_1\subseteq Z_1$. The middle homology is
 
-**Theorem 4.2 (Total-neuron form).** $\displaystyle \#\,\mathrm{AP}(L, w) \;=\; 2^{\sum_{i=1}^{L} w_i}.$
+$$
+H_1=Z_1/B_1=\ker d_1/\operatorname{im}d_2.
+$$
 
-*Proof.* $\prod_i 2^{w_i} = 2^{\sum_i w_i}$ by the law of exponents converting a product of powers with a common base into a power of the sum. $\square$
+At the endpoints of the three-term complex, define
 
-**Theorem 4.3 (Sign-cell bound).** An arrangement of $m$ hyperplanes in $\mathbb{R}^n$ has at most $3^m$ sign-cells, where a sign-cell is a nonempty region determined by assigning each hyperplane one of the three states $\{+, 0, -\}$.
+$$
+H_0=C_0/\operatorname{im}d_1
+$$
 
-*Proof.* Each point is assigned, for each of the $m$ hyperplanes, exactly one of three signs; hence the set of realisable sign vectors injects into $\{+,0,-\}^m$, which has $3^m$ elements. $\square$
+and
 
-**Theorem 4.4 (Realised regions).** Any labelling of the input space by activation regions realises at most as many distinct cells as there are activation patterns, hence at most $\prod_i 2^{w_i}$.
+$$
+H_2=\ker d_2.
+$$
 
-*Proof.* The labelling factors through the assignment of an activation pattern to each region; the number of distinct labels is at most the number of patterns. $\square$
+Write $\beta_i=\dim_F H_i$.
 
-## 5. The width-driven bound
+When $F=\mathbb{Q}$, these are rational cellular chains and rational homology groups. A chain is a finite rational linear combination of cells.
 
-Combining the topological and combinatorial halves yields the main quantitative theorem.
+### 3.2 Cellular representatives
 
-**Theorem 5.1 (Width-driven Betti bound).** Let $V(f)$ be the decision surface of a ReLU network with hidden widths $w_1, \dots, w_L$, decomposed cellularly with cells indexed by activation structure. Then, over any field $F$, every Betti number satisfies
-$$\beta \;=\; \operatorname{finrank}_F H \;\le\; \#\{\text{cells}\} \;\le\; \prod_{i=1}^{L} 2^{w_i} \;=\; 2^{\sum_{i=1}^{L} w_i}.$$
+**Theorem 3.1 (Cellular Representation Theorem).** Every class in $H_1$ is represented by an element of $Z_1$, and therefore by a cellular cycle, that is, a linear combination of the chosen one-dimensional cells whose boundary is zero.
 
-*Proof.* By Theorem 3.4 (or Corollary 3.6), $\beta \le \#\{\text{cells}\}$. By Theorem 4.4 the number of realised cells is at most the number of activation patterns, and by Theorems 4.1–4.2 this equals $\prod_i 2^{w_i} = 2^{\sum_i w_i}$. Transitivity gives the chain. $\square$
+**Proof sketch.** By definition, $H_1$ is the quotient $Z_1/B_1$. The canonical quotient map $Z_1\to Z_1/B_1$ is surjective: each coset contains the cycle from which it was formed. $\square$
 
-The theorem is a genuine transitivity across a geometric bridge, not a definitional identity: the first inequality uses the field structure (subquotient dimensions), while the second uses the product/cardinality calculus of finite types, and the bridge is the single geometric input $\#\{\text{cells}\} \le \#\{\text{activation patterns}\}$.
+This theorem is an exact representability statement, but its scope must be observed. It concerns cellular cycles. It does not identify those representatives with classical algebraic cycles. Such an identification would require a separately defined cycle-class or realization map into an appropriate geometric cohomology theory.
 
-## 6. Applications and diagnostics
+## 4. The exact middle-rank identity
 
-**Complexity of classifiers.** Theorem 5.1 caps the topological complexity of any ReLU classifier by two raised to its hidden-neuron count. A classifier cannot exhibit more independent holes in its decision surface than it has activation patterns; expressivity of *topology* is therefore budgeted by *architecture*.
+**Theorem 4.1 (Middle Betti Rank Formula).** Let $C_2\xrightarrow{d_2}C_1\xrightarrow{d_1}C_0$ be a finite-dimensional chain complex over a field. Then
 
-**Redundant-neuron fingerprint.** The exact identity of Theorem 3.5, $\beta + \operatorname{rank} B = \operatorname{rank} Z$, is a diagnostic. If a hidden neuron never fires simultaneously with its layer-mates on any input, the corresponding contribution to the boundary map $d_2$ is not of full rank; then $\operatorname{rank} B$ drops and the identity forces a strictly larger $\beta$ than the generic bound would predict. Excess homology thus signals architectural redundancy.
+$$
+\beta_1+r_1+r_2=c_1.
+$$
 
-**Depth versus width.** The bound $2^{\sum_i w_i}$ depends only on the *total* neuron count and cannot yet separate a shallow-wide network from a deep-narrow one. Empirically and heuristically, depth manufactures topological handles far more efficiently. This motivates the refinement in §7.
+Equivalently,
 
-## 7. Discussion and future work
+$$
+\beta_1=c_1-r_1-r_2.
+$$
 
-The results decisively resolve the *existence* side of the Hodge question for piecewise-linear decision surfaces: it is trivially affirmative, because faces are linear and hence algebraic. All non-trivial content is quantitative and lives in the counting of cells and their homology.
+**Proof sketch.** Rank–nullity for $d_1$ gives
 
-**Conjecture 7.1 (Bigraded Hodge-number bound).** For a network with hidden widths $(w_1,\dots,w_L)$, the Hodge numbers of the decision surface satisfy
-$$h^{p,q}(V(f)) \;\le\; \binom{w_1}{p}\binom{w_L}{q}\prod_{i=2}^{L-1} w_i.$$
-The first hidden layer selects which $p$ input hyperplanes bound a face; the last layer selects which $q$ output half-spaces co-bound it; interior layers only multiply the number of affine pieces linearly. This factorises the cell count in a Künneth-style product matching the $(p,q)$-bigrading, sharper than the total $2^{\sum_i w_i}$.
+$$
+\dim Z_1=\dim\ker d_1=c_1-r_1.
+$$
 
-**Conjecture 7.2 (Depth manufactures homology, width manufactures cycles).** For the depth-$k$ "tent" family, the top Betti number of the level-set surface grows like $2^k$, while the number of independent algebraic cells needed to generate it grows only linearly in the per-layer width. The ratio (Betti number)/(cells per layer) is then an intrinsic complexity measure separating deep from shallow representations, complementing known width lower bounds obtained from counting sign changes.
+Since $d_1d_2=0$, the image of $d_2$ is a subspace of $Z_1$ and has dimension $r_2$. The dimension formula for a quotient yields
 
-**Conjecture 7.3 (Exactness detects redundant neurons).** If a hidden neuron is never simultaneously active with its layer-mates on any input, the corresponding boundary map is not of full rank and the exact identity $\beta + \operatorname{rank} B = \operatorname{rank} Z$ forces a strictly larger Betti number than the generic bound predicts.
+$$
+\beta_1=\dim(Z_1/B_1)=\dim Z_1-\dim B_1=(c_1-r_1)-r_2.
+$$
 
-Establishing Conjecture 7.1 would replace the crude total-count bound with an architecture-resolved one; proving Conjecture 7.2 would convert analytic oscillation counts directly into Betti numbers, closing the loop between analytic complexity and topological complexity.
+Rearranging proves the identity. $\square$
 
-## 8. Conclusion
+The theorem immediately implies $r_1+r_2\le c_1$. This inequality is not an independent assumption; it follows from the chain condition because the incoming image must fit inside the outgoing kernel.
 
-For ReLU decision surfaces the Hodge problem inverts its usual difficulty: existence of algebraic representatives is free (flatness is algebraicity), and the mathematics concentrates in *size*. We proved that homology is a subquotient of the cellular chain group, that every class is represented by a cycle on algebraic cells, that the Betti number is bounded by the cell count via the exact rank identity, and that the cell count is bounded by the activation-pattern count $2^{\sum_i w_i}$. Together these give a clean width-driven ceiling on the topological complexity of neural decision surfaces, and a precise conjectural programme for sharpening it.
+### 4.1 Exact obstruction criteria
+
+**Corollary 4.2 (Nonvanishing Criterion).** Middle homology is nonzero if and only if
+
+$$
+r_1+r_2<c_1.
+$$
+
+**Proof sketch.** By Theorem 4.1, $\beta_1=c_1-r_1-r_2$. Since $\beta_1$ is a nonnegative integer, it is positive exactly when the rank sum is strictly less than $c_1$. $\square$
+
+**Corollary 4.3 (Vanishing Criterion).** Middle homology vanishes if and only if
+
+$$
+r_1+r_2=c_1.
+$$
+
+**Proof sketch.** The same formula gives $\beta_1=0$ precisely when the rank sum exhausts $c_1$. $\square$
+
+**Corollary 4.4 (Maximal-Homology Criterion).** The equality $\beta_1=c_1$ holds if and only if $d_1=0$ and $d_2=0$.
+
+**Proof sketch.** If $\beta_1=c_1$, Theorem 4.1 gives $r_1+r_2=0$. Nonnegativity forces $r_1=r_2=0$, and a linear map has rank zero exactly when it is the zero map. Conversely, if both maps vanish, every middle chain is a cycle and no nonzero middle chain is a boundary, so $H_1\cong C_1$. $\square$
+
+These results identify a complete finite-dimensional obstruction. A middle-dimensional class exists exactly when the two adjacent boundary maps leave an unused direction in $C_1$.
+
+## 5. Euler–Poincaré rigidity
+
+### 5.1 An abstract telescoping identity
+
+The three-term formula is a special case of cancellation in any bounded numerical homology profile. Let $a_n$ denote chain dimensions, $r_n$ boundary ranks, and $h_n$ homology dimensions. Suppose
+
+$$
+h_0=a_0-r_0
+$$
+
+and, for $n\ge 0$,
+
+$$
+h_{n+1}=a_{n+1}-r_n-r_{n+1}.
+$$
+
+**Theorem 5.1 (Euler–Poincaré Defect Identity).** For every $N\ge 0$,
+
+$$
+\sum_{n=0}^{N}(-1)^nh_n
+=
+\sum_{n=0}^{N}(-1)^na_n-(-1)^Nr_N.
+$$
+
+**Proof sketch.** Substitute the rank formulas into the left-hand side. Each interior rank $r_n$ appears twice with opposite signs: once in $h_n$ and once in $h_{n+1}$. They telescope, leaving only the top term $-(-1)^Nr_N$. Equivalently, one may induct on $N$, append the formula for $h_{N+1}$, and use $(-1)^{N+1}=-(-1)^N$. $\square$
+
+**Corollary 5.2 (Euler–Poincaré Principle).** If the complex is bounded at degree $N$, so $r_N=0$, then
+
+$$
+\sum_{n=0}^{N}(-1)^nh_n
+=
+\sum_{n=0}^{N}(-1)^na_n.
+$$
+
+The alternating homology dimension therefore equals the alternating chain dimension.
+
+### 5.2 Homology dimensions in three terms
+
+For the concrete complex, rank–nullity gives the endpoint formulas.
+
+**Lemma 5.3 (Bottom Homology Dimension).**
+
+$$
+\beta_0=c_0-r_1.
+$$
+
+**Proof sketch.** The quotient $C_0/\operatorname{im}d_1$ has dimension $c_0-\dim\operatorname{im}d_1=c_0-r_1$. $\square$
+
+**Lemma 5.4 (Top Homology Dimension).**
+
+$$
+\beta_2=c_2-r_2.
+$$
+
+**Proof sketch.** Here $H_2=\ker d_2$, so rank–nullity for $d_2$ gives the formula. $\square$
+
+Together with Theorem 4.1, these endpoint identities determine all three Betti numbers from $c_0,c_1,c_2,r_1,r_2$.
+
+**Theorem 5.5 (Three-Term Euler–Poincaré Identity).**
+
+$$
+\beta_0-\beta_1+\beta_2=c_0-c_1+c_2.
+$$
+
+**Proof sketch.** Substitute
+
+$$
+\beta_0=c_0-r_1,
+\qquad
+\beta_1=c_1-r_1-r_2,
+\qquad
+\beta_2=c_2-r_2.
+$$
+
+The terms involving $r_1$ and $r_2$ cancel. $\square$
+
+The common integer is the Euler characteristic
+
+$$
+\chi=\beta_0-\beta_1+\beta_2=c_0-c_1+c_2.
+$$
+
+### 5.3 Consequences
+
+**Corollary 5.6 (Independence from Differentials).** Consider two three-term chain complexes over the same field. If their corresponding chain spaces have equal dimensions, then their Euler characteristics are equal, regardless of the particular boundary maps.
+
+**Proof sketch.** By Theorem 5.5, each Euler characteristic equals $c_0-c_1+c_2$, which depends only on chain dimensions. $\square$
+
+This does not mean that the individual homology groups are independent of the differentials. Different ranks can redistribute dimensions among $H_0,H_1,H_2$ while preserving the alternating sum.
+
+**Corollary 5.7 (Total-Dimension Bound).**
+
+$$
+|\chi|\le c_0+c_1+c_2.
+$$
+
+**Proof sketch.** Theorem 5.5 gives $\chi=c_0-c_1+c_2$. Since each $c_i$ is nonnegative, the triangle inequality yields
+
+$$
+|c_0-c_1+c_2|\le c_0+c_1+c_2.
+$$
+
+$\square$
+
+## 6. Width-driven bounds
+
+Activation patterns connect architecture to a coarse combinatorial scale. Let
+
+$$
+P=\prod_{i=1}^{L}2^{w_i}.
+$$
+
+The following statement makes its geometric premise explicit.
+
+**Theorem 6.1 (Architecture-Driven Euler Bound).** Suppose a finite three-term cellular model associated with a ReLU decision surface satisfies
+
+$$
+c_0\le P,
+\qquad
+c_1\le P,
+\qquad
+c_2\le P.
+$$
+
+Then
+
+$$
+|\chi|\le 3P.
+$$
+
+**Proof sketch.** Corollary 5.7 gives $|\chi|\le c_0+c_1+c_2$. Applying the three cell-count hypotheses gives
+
+$$
+c_0+c_1+c_2\le P+P+P=3P.
+$$
+
+$\square$
+
+Because $P=2^{\sum_iw_i}$, the estimate can also be written
+
+$$
+|\chi|\le 3\cdot 2^{\sum_{i=1}^{L}w_i}.
+$$
+
+The theorem is conditional on the common cell bound. The activation-pattern count alone does not prove that every finite decomposition has at most one cell of each dimension per pattern. A rigorous network-to-complex construction must establish the needed correspondence or replace $P$ with a sharper proven cell count.
+
+The result should also not be interpreted as a bound on classical Hodge numbers $h^{p,q}$. Such numbers require a bigraded cohomology theory not canonically present for general real piecewise-linear zero sets. The Euler characteristic is instead a valid, grading-independent topological invariant available from the cellular model.
+
+## 7. Exact computational method
+
+The theory yields a direct algorithm for finite examples. Let $D_1$ and $D_2$ be matrices over $\mathbb{Q}$ representing $d_1$ and $d_2$ in chosen cellular bases.
+
+### Algorithm 7.1: Exact Betti computation
+
+**Input:** Rational matrices $D_1\in\mathbb{Q}^{c_0\times c_1}$ and $D_2\in\mathbb{Q}^{c_1\times c_2}$.
+
+**Output:** $\beta_0,\beta_1,\beta_2$, and $\chi$.
+
+1. Compute $D_1D_2$ and reject the input unless it is the zero matrix.
+2. Compute $r_1=\operatorname{rank}(D_1)$ and $r_2=\operatorname{rank}(D_2)$ by exact Gaussian elimination.
+3. Set
+
+$$
+\beta_0=c_0-r_1,
+\qquad
+\beta_1=c_1-r_1-r_2,
+\qquad
+\beta_2=c_2-r_2.
+$$
+
+4. Set
+
+$$
+\chi_H=\beta_0-\beta_1+\beta_2
+$$
+
+and
+
+$$
+\chi_C=c_0-c_1+c_2.
+$$
+
+5. Verify $\chi_H=\chi_C$ and return the values.
+
+For dense matrices, exact Gaussian elimination uses $O(mn\min(m,n))$ field operations for an $m\times n$ matrix; in a square scale $N$, this is $O(N^3)$. Sparse cellular matrices often permit substantially better practical performance. Rational arithmetic avoids rank errors caused by floating-point tolerances.
+
+### 7.1 Canonical examples
+
+**Example 7.2 (Polygonal circle).** Take a triangle with three vertices and three oriented edges but no face, so $(c_0,c_1,c_2)=(3,3,0)$. The incidence matrix $D_1$ has rank $2$, and $D_2$ has rank $0$. Therefore
+
+$$
+(\beta_0,\beta_1,\beta_2)=(1,1,0),
+$$
+
+and $\chi=1-1=0=3-3$.
+
+**Example 7.3 (Filled triangle).** Add one two-cell whose boundary is the sum of the three oriented edges. Then $(c_0,c_1,c_2)=(3,3,1)$, $r_1=2$, and $r_2=1$. Thus
+
+$$
+(\beta_0,\beta_1,\beta_2)=(1,0,0),
+$$
+
+and $\chi=1=3-3+1$. The incoming face boundary fills the unique loop.
+
+**Example 7.4 (Two isolated points).** Let $(c_0,c_1,c_2)=(2,0,0)$. Both maps have rank zero, so
+
+$$
+(\beta_0,\beta_1,\beta_2)=(2,0,0)
+$$
+
+and $\chi=2$. The bottom homology records two connected components.
+
+These examples show both rigidity and flexibility. Adding a face changes $\beta_1$, but the corresponding change in $c_2$ preserves Euler–Poincaré equality.
+
+## 8. Applications
+
+### 8.1 Diagnosing topological complexity
+
+The nonvanishing criterion provides a rank test for one-dimensional holes. Rather than explicitly enumerating a basis of quotient classes, one may compare $r_1+r_2$ with $c_1$. This is particularly useful when only the existence or number of holes matters.
+
+### 8.2 Comparing models with equal cell profiles
+
+If two finite decision-surface models have the same cell counts in dimensions zero through two, then they share the same Euler characteristic. Their Betti vectors may differ, so the Euler characteristic is a coarse invariant, but it provides an immediate consistency check across geometric constructions or parameter choices.
+
+### 8.3 Topological monitoring during network variation
+
+As network parameters vary without changing a chosen finite cell profile, the Euler characteristic remains fixed. A change in $\chi$ therefore requires a change in the cellular dimensions of that model. Individual Betti numbers may change through compensating rank changes even when $\chi$ does not.
+
+### 8.4 Rational decision-surface cycles
+
+For rational polyhedral complexes and $F=\mathbb{Q}$, every rational cellular homology class is represented by a rational linear combination of cells. This supports exact symbolic computation and avoids numerical ambiguity. It is the appropriate representability result before any separate geometric cycle-class theory has been supplied.
+
+## 9. Scope and correction of the Hodge analogy
+
+The phrase “Hodge conjecture for neural networks” can suggest two different claims, and they must be separated.
+
+The first is a cellular claim: every homology class of a finite cellular model is represented by a cellular cycle. This is true by quotient surjectivity, and the dimensions of these classes obey the exact formulas above.
+
+The second is a classical algebraic-geometric claim: certain rational cohomology classes are rational combinations of algebraic cycle classes. This requires, at minimum, a complex projective variety, a Hodge decomposition, algebraic cycles of specified codimension, and a cycle-class map. A generic ReLU zero set supplies none of these automatically.
+
+Linear containment does not bridge the gap. A polyhedral face can be described by linear equalities together with inequalities. It may be contained in a hyperplane, but it is not thereby a global hyperplane section or algebraic subvariety. Consequently, cellular generators should not be renamed algebraic cycles without an explicit realization theorem.
+
+The proposed inequality
+
+$$
+h^{p,q}\le {w_1\choose p}{w_L\choose q}\prod_{i=2}^{L-1}w_i
+$$
+
+also remains conjectural at the level of motivation because $h^{p,q}$ has not been defined canonically for the objects under study. The established architecture-sensitive statement is instead the conditional Euler bound of Theorem 6.1.
+
+## 10. Discussion
+
+The exact rank formula and Euler–Poincaré identity answer complementary questions. The first is local to the middle degree and sensitive to the boundary maps. It says precisely how $H_1$ is created: cycles arise from the nullity of $d_1$, while boundaries from $d_2$ remove cycle directions. The second combines all degrees and eliminates the ranks entirely. It says that their alternating contribution is constrained by the cell profile.
+
+This division is useful for neural decision surfaces. Architecture may give coarse control over the number of combinatorial regions and hence, after a geometric construction, over cell counts. Boundary matrices encode how those cells are attached. The first kind of information controls broad ceilings; the second determines actual topology.
+
+The theory is field-independent, but coefficients matter geometrically. Over $\mathbb{Q}$ it detects rational Betti numbers and ignores torsion. Integral homology would retain torsion but would require finitely generated abelian groups and Smith normal form rather than dimensions and ordinary rank–nullity. For the motivating rational representability question, $\mathbb{Q}$ is the natural coefficient field.
+
+Noncompactness is another substantive issue. A compact truncation can be modeled by a finite complex, but its boundary conditions influence homology. For the full unbounded zero set, locally finite homology, compactly supported cohomology, or a specified compactification may be more appropriate. Different choices answer different geometric questions.
+
+## 11. Future work
+
+Several developments are needed to turn the present linear-algebraic core into a full theory of neural decision surfaces.
+
+1. **Finite rational polyhedral complexes.** Define the face and incidence data of a finite rational polyhedral complex and instantiate cellular boundary maps in every degree.
+2. **Network-to-complex construction.** Starting from affine weights and ReLU activations, construct a finite polyhedral complex for a compact truncation of $V(f)$ and prove that consecutive boundaries compose to zero.
+3. **Unbounded surfaces.** Develop locally finite homology, compactly supported cohomology, or explicit compactifications for noncompact decision surfaces.
+4. **Realization maps.** Define a cycle-class map from rational polyhedral cycles to a selected geometric cohomology theory. Only a surjectivity theorem for such a map would justify Hodge-type representability language.
+5. **Sharper architecture bounds.** Prove cell counts from network architecture rather than assuming them. The Boolean count $2^{\sum_iw_i}$ is a coarse combinatorial ceiling; sharper bounds should account for input dimension, degeneracies, and realizable activation regions.
+6. **Bigraded invariants.** If a meaningful bigrading is desired, define the geometric or sheaf-theoretic structure that produces it before proposing bounds analogous to $h^{p,q}$.
+7. **Stability.** Study how ranks and Betti numbers change under perturbations of weights, and distinguish stable topological features from events caused by combinatorial transitions.
+
+## 12. Conclusion
+
+For finite cellular models of piecewise-linear neural decision surfaces, the central topology is completely controlled by elementary but exact linear algebra. Every middle homology class has a cellular-cycle representative, and
+
+$$
+\beta_1=c_1-r_1-r_2.
+$$
+
+This yields exact nonvanishing, vanishing, and maximality criteria. Across all three degrees,
+
+$$
+\chi=\beta_0-\beta_1+\beta_2=c_0-c_1+c_2,
+$$
+
+so the Euler characteristic is independent of the differentials once cell counts are fixed and satisfies $|\chi|\le c_0+c_1+c_2$. With a common activation-pattern cell ceiling $P=\prod_i2^{w_i}$, one obtains $|\chi|\le3P$.
+
+These statements form a rigorous cellular replacement for an initially classical Hodge-theoretic analogy. They identify what is already available for ReLU zero sets, what remains conditional on a network-to-complex construction, and what additional geometry would be required before algebraic-cycle or Hodge-number claims become meaningful.
