@@ -363,6 +363,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
   },
   {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the hard problem of consciousness as a theorem about the gap between functional descriptions and subjective experience. Prove that any system satisfying the functional definition of consciousness can have a zombie twin that is functionally identical but experientially void. Show this gap is isomorphic to G\u00f6del's incompleteness gap.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0479",
+    "priority_score": 0.84,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-19T18:58:00.688995+00:00",
+    "title": "Zombies and Qualia: Mathematics of Subjective Experience"
+  },
+  {
     "consumed_by_exp_id": "238d5b60",
     "description": "Construct a surface whose Hausdorff dimension is exactly aleph-1 (assuming CH). Prove that such a surface cannot be embedded in any finite-dimensional Euclidean space but can be embedded in the Hilbert cube. Formalize transfinite-dimensional manifolds and prove they have no finite triangulation.",
     "domains": [
