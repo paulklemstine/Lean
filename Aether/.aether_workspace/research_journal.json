@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "6097a507",
-      "domain": "MachineLearning",
-      "key_insight": "# Future directions\n\nThe present cycle refines the exact uniform coset exponent to exact finite-length first and second moments and their asymptotic prefactors.  Several natural extensions remain.\n\n1.",
-      "quality_score": 0.91,
-      "sorry_count": 3,
-      "theorem_count": 3,
-      "timestamp": "2026-07-15T02:32:57",
-      "title": "Deepening: The prior cycle (`CosetGuesswork.lean`) proved the exact coset-exponent *shift*"
-    },
-    {
       "cycle_id": "f243395d",
       "domain": "Tropical",
       "key_insight": "# Future Directions: Stable-Core Rank for Tropical Analogies\n\n## 1. A semiring-valued rank functor for adjoint analogies\n\n**Conjecture.** Stable-core cardinality extends from finite posets to a rank f",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-19T02:06:49",
       "title": "Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theory"
+    },
+    {
+      "cycle_id": "99a8a1e3",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions\n\nThe formal results establish the one-dimensional Borsuk–Ulam kernel and also show why it is not, by itself, Arrow's theorem.\n\n1. **Formalize the actual Arrow domain.** Define fini",
+      "quality_score": 0.66,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-07-19T02:07:43",
+      "title": "The Borsuk-Ulam Theorem Implies Arrow's Impossibility: Social Choice Is Topology"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.78
     }
   ],
-  "last_updated": "2026-07-19T02:06:49",
+  "last_updated": "2026-07-19T02:07:43",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "52557551",
-        "quality": 0.63,
-        "theorems": 20,
-        "title": "Local-to-Global KKL Theorem for Simplicial Complexes with Local KKL Links"
-      },
-      {
         "cycle_id": "17fb4d11",
         "quality": 0.82,
         "theorems": 17,
@@ -3389,6 +3383,12 @@
         "quality": 0.73,
         "theorems": 0,
         "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
+      },
+      {
+        "cycle_id": "99a8a1e3",
+        "quality": 0.66,
+        "theorems": 10,
+        "title": "The Borsuk-Ulam Theorem Implies Arrow's Impossibility: Social Choice Is Topology"
       }
     ],
     "Geometry": [
