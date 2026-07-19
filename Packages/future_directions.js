@@ -2977,21 +2977,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Improved constant in Erd\u0151s sumset avoidance for dense subsets"
   },
   {
-    "consumed_by_exp_id": "4b7e775f",
-    "description": "The natural gradient algorithm updates parameters theta in the direction of steepest descent on the Fisher information manifold: theta_{t+1} = theta_t - eta * G^{-1}(theta_t) * gradient L(theta_t) where G is the Fisher information matrix. This is equivalent to following the geodesic on the statistical manifold (the Riemannian manifold with metric G). Conjecture: for any optimization problem with loss function L, the natural gradient descent converges to the minimum in O(1/t) iterations, regardless of the condition number of G. This is because the natural gradient follows the geodesic, which is the shortest path on the manifold, and the path length is O(1) (bounded by the diameter of the manifold). In contrast, standard gradient descent takes O(kappa) iterations where kappa is the condition number of G. Conjecture: natural gradient descent with step size eta = 1/t achieves L(theta_t) - L(theta*) = O(1/t) for convex losses, and L(theta_t) - L(theta*) = O(exp(-t/d)) for strongly convex losses, where d is the dimension. Test: compare natural gradient descent and standard gradient descent on logistic regression with varying condition numbers, verify the convergence rates. Impact: optimization is geometry. The natural gradient is the geodesic on the Fisher manifold, and geodesics are the shortest paths.",
-    "domains": [
-      "Novelty",
-      "MachineLearning"
-    ],
-    "id": "fd_0383",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T02:43:52.611669+00:00",
-    "title": "Information Geometry of Optimization: Natural Gradient Follows Geodesics"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Cycle dcd7a4b2 (Q=0.750) proved 0 theorems in Tropical but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION \u2014 simulta",
     "domains": [
@@ -3048,6 +3033,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-19T03:03:23.727138+00:00",
     "title": "The Spectral Gap of Sudoku: When Puzzles Become Phase Transitions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Ramsey's theorem for graphs states that R(k,l) = the minimum n such that any 2-coloring of the edges of K_n contains a red K_k or a blue K_l. For hypergraphs: R_r(k,l) = the minimum n such that any 2-coloring of the r-tuples of an n-set contains a red K_k^{(r)} or a blue K_l^{(r)}. The growth rate is an open problem: R_3(4,4) = 13 (known), R_3(5,5) is between 34 and 55, and R_3(k,k) is believed to grow like a double exponential 2^{c*k^2}. Conjecture: R_3(k,k) ~ 2^{2^{ck}} for some constant c > 0. This is a tower function (height 2 exponential). More precisely: the lower bound R_3(k,k) >= 2^{ck^2} (from the probabilistic method) and the upper bound R_3(k,k) <= 2^{2^{ck}} (from the stepping-up lemma). The gap is between a single exponential and a double exponential. Conjecture: the true growth rate is double exponential, and the upper bound is tight. This would mean that 3-uniform Ramsey numbers grow much faster than graph Ramsey numbers. Test: compute R_3(k,k) for k = 3, 4, 5, 6 by exhaustive search and verify the growth rate. Impact: 3-uniform Ramsey numbers are double exponential. Combinatorics at the hypergraph level is fundamentally harder than at the graph level.",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_0407",
+    "priority_score": 0.77,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-19T06:12:50.696649+00:00",
+    "title": "Hypergraph Ramsey Theory: Beyond Graphs"
   },
   {
     "consumed_by_exp_id": "",
@@ -4456,6 +4456,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-19T05:56:24.774658+00:00",
     "title": "For composable functors between finite skeletal categories, define object loss f"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Information Geometry of Optimization\n\n## 1. Curvature-controlled exponential-map descent\n\n**Conjecture.** On a geodesically complete statistical manifold with sectional curvature in a fixed interval, positive injectivity radius, and a geodesically strongly convex, geodesically smooth loss, exponential-map natural-gradient descent with a constant admissible step has a linear rate whose constants depend on intrinsic curvature and convexity but not on the coordinate condition number of the Fisher matrix.\n\nThe key insight is that coordinate conditioning should disappear only after both the update and the regularity assumptions are expressed intrinsically; curvature distortion then replaces matrix conditioning as the relevant obstruction.\n\n**Why now?** The exact constant-metric cancellation identifies the flat base case, while the Euler-midpoint counterexample isolates the missing geometric ingredient: the exponential map.\n\n## 2. Retraction error as the boundary between local and geodesic descent\n\n**Conjecture.** For a Fisher metric with Lipschitz covariant derivative, one Euler natural-gradient step differs from the corresponding exponential-map step by a cubic local-model error, and this error accumulates to a sharp global convergence penalty proportional to the integrated metric variation along the orbit.\n\nThe key insight is that natural gradient selects the correct tangent vector, but a retraction determines whether that vector is transported along the manifold with controlled geometric error.\n\n**Why now?** A concrete variable-metric example already separates the Euler endpoint from the geodesic midpoint, making the size and accumulation of that discrepancy the next measurable quantity.\n\n## 3. Fisher\u2013Dirichlet preconditioning for repulsive models\n\n**Conjecture.** For determinantal exponential families whose Fisher tensor is a connected weighted graph Laplacian on the zero-sum tangent space, natural-gradient convergence is governed by effective-resistance diameter rather than the ambient Euclidean spectral condition number.\n\nThe key insight is that Laplacian Fisher energy converts statistical curvature into electrical Dirichlet energy, so resistance geometry may provide intrinsic diameter and coercivity estimates simultaneously.\n\n**Why now?** The existing Fisher\u2013Laplacian bridge and the matched-metric energy law together suggest a testable route from repulsive probability models to condition-number-free optimization bounds.\n\n## 4. Sharp classification of harmonic schedules\n\n**Conjecture.** For a geodesically strongly convex loss and update size `a/(t+b)`, the objective gap has a polynomial exponent determined sharply by the product of intrinsic strong convexity and `a`; exponential decay is impossible unless the effective step sizes have a divergent linear-scale average.\n\nThe key insight is that strong convexity alone does not create an exponential iteration rate when the step sizes vanish harmonically; the cumulative step length, not dimension, determines the exponent.\n\n**Why now?** The matched quadratic admits an exact inverse-square objective law, providing a calibration case against which the general intrinsic theorem can be tested.\n\n## 5. Logistic regression under metric mismatch\n\n**Conjecture.** For regularized logistic regression, empirical natural gradient is insensitive to feature covariance conditioning only while the empirical Fisher remains uniformly comparable to the loss Hessian; outside that regime, the rate degrades according to the generalized eigenvalue spread of the Hessian\u2013Fisher pair.\n\nThe key insight is that cancellation is controlled by metric\u2013curvature matching, not by the Fisher condition number in isolation.\n\n**Why now?** The diagonal matched model proves exact cancellation and exposes generalized mismatch as the minimal falsifiable parameter for numerical and theoretical comparison.\n",
+    "domains": [
+      "Geometry",
+      "Physics"
+    ],
+    "id": "fd_0408",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "4b7e775f",
+    "status": "available",
+    "timestamp": "2026-07-19T06:13:12.901596+00:00",
+    "title": "**Conjecture.** On a geodesically complete statistical manifold with sectional c"
   },
   {
     "consumed_by_exp_id": "",
