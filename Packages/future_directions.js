@@ -258,7 +258,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Quantum Entanglement as Algebraic Topology: The Linking Number Is Entanglement"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "27f58424",
     "description": "Cycle cb3d5d14 (Q=0.800) proved 0 theorems in Novelty but left 13 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Prove that any Turing-complete system with self-modification capabilities has no general algorithm for predicting its own termination. Formalize the halting problem for programs that can rewrite their",
     "domains": [
       "Novelty"
@@ -267,7 +267,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "cb3d5d14",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T22:03:14.459215+00:00",
     "title": "Close Proofs: Self-Modifying Code That Cannot Be Stopped"
   },
