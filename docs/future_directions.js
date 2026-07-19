@@ -59,7 +59,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "68a33b2b",
     "description": "Prove that any Turing-complete system with self-modification capabilities has no general algorithm for predicting its own termination. Formalize the halting problem for programs that can rewrite their own code mid-execution and show this is strictly harder than the classical halting problem. Connect to the virus paradox and AI alignment.",
     "domains": [
       "Novelty",
@@ -69,7 +69,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T10:23:55.997040+00:00",
     "title": "Self-Modifying Code That Cannot Be Stopped"
   },
@@ -202,7 +202,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "[Reset] Fresh approach in Shared"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "622eb97b",
     "description": "Prove information-theoretic bounds on mind uploading: the minimum description length of a human mind exceeds any computable compression of its neural connectome. Formalize the Bekenstein bound applied to neural computation and show that the Kolmogorov complexity of consciousness is at least quadratic in synapse count.",
     "domains": [
       "Novelty",
@@ -212,7 +212,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T10:06:16.705726+00:00",
     "title": "Digital Immortality: Can a Mind Be Encoded?"
   },
@@ -990,7 +990,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: The Action of the Lie Algebra $\\mathfrak{sl}_n$ on Colored Graphs and Multicolored Johnson Graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7881a56b",
     "description": "Investigate the ArXiv paper 'Reproducing the k-copwin Algorithm: Theory vs. Implementation' and formalize its key results. Abstract: Cops and Robbers is a well-studied pursuit-evasion game that provides insights into graph theory and theoretical computing. A central question is determining the minimum number of cops required to capture the robber, known as the cop number. We focus on reproducing an algorithm proposed by Petr, Portier, and Versteegen in 2022, which efficiently determines whether a graph is $k$-copwin. This paper presents a Python implementation of the $k$-copwin algorithm. In this work, we present our implementation in detail, clarify key aspects of the algorithm, and discuss its implications for future practical deployments.",
     "domains": [
       "Computation"
@@ -999,7 +999,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.13271v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T04:59:07.834459+00:00",
     "title": "ArXiv paper: Reproducing the k-copwin Algorithm: Theory vs. Implementation"
   },
