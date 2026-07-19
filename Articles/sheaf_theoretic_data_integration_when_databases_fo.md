@@ -1,265 +1,115 @@
-# When Your Spreadsheet Becomes Geometry: Databases as Sheaves
+# When Databases Behave Like Sheaves
 
-## The everyday miracle of merging two tables
+## The difference between filling a blank and resolving a contradiction
 
-Every data analyst has done it a thousand times. You have one spreadsheet of
-customers and their email addresses. A colleague hands you another spreadsheet
-of customers and their phone numbers. You want a single table with names,
-emails, and phone numbers. So you *merge*.
+A hospital combines laboratory results, medication records, and discharge summaries. A climate scientist joins readings from weather stations that overlap in space and time. A retailer reconciles inventories reported by stores, warehouses, and delivery systems. In each case, information arrives in pieces. Some cells are blank, and some pieces cover the same underlying fact.
 
-Most of the time the merge just works. But sometimes it doesn't: the same
-customer appears in both tables with two different email addresses, and now your
-software throws up its hands. Which one is right? The merge has hit a
-**contradiction**.
+It is tempting to treat these situations as one problem: “missing data.” But two mathematically different questions are hiding inside that phrase. The first is **completion**: can blank cells be assigned values? The second is **consistency**: can locally reported pieces be made to agree wherever they overlap?
 
-This tiny, mundane drama — *can I combine these two tables into one consistent
-table?* — turns out to be a deep mathematical question. And the branch of
-mathematics that answers it most precisely is one that was invented to study
-something completely different: the geometry of how *local* information glues
-into *global* information. That subject is called **sheaf theory**, and its
-central insight is that consistency is a geometric property.
+Sheaf theory supplies an elegant vocabulary for the second question. Imagine that every region of a database—perhaps a subset of columns, a group of rows, or a collection of sensors—carries a local record. Whenever one region sits inside another, the larger record can be restricted to the smaller one. A family of local records is **compatible** when any two records give the same answer on their common part. The sheaf principle says that compatible local records glue to one global record, and that this global record is unique.
 
-This article tells the story of a precise theorem: **databases form a sheaf.**
-Not "databases are *like* a sheaf" as a loose analogy, but a genuine theorem
-with the full strength of a mathematical proof behind it. Once you see it, the
-question "can these tables be merged?" stops being a software heuristic and
-becomes a statement about geometry — and the answer comes with a guarantee of
-*uniqueness*.
+This perspective is powerful, but it also prevents an attractive mistake. Missingness alone is not generally an obstruction to gluing. If a cell may receive any value from a nonempty set, then every partial table has at least one completion. The interesting mathematics begins not with the blanks themselves, but with restrictions that connect different cells or views.
 
-## What a sheaf actually is (without the jargon)
+## A partial table always has a completion
 
-Imagine a map of a country, and suppose every town keeps its own local weather
-log. Each log records the temperature only for that town and its immediate
-surroundings. Now ask: can all these local logs be stitched together into one
-coherent national weather map?
+Let $I$ be a set of database cells and let $V$ be a nonempty set of allowed values. A partial database specifies a value for some cells and leaves the rest blank. A **completion** is a total assignment $x:I\to V$ that agrees with every observed entry.
 
-There's an obvious requirement. Wherever two towns' regions overlap, their logs
-had better *agree* on the temperature in the shared area. If town A says it's
-20°C in the valley between them and town B says it's 25°C in that same valley,
-no national map can satisfy both. But if every pair of overlapping logs agrees
-on the overlap, intuition says they should fit together into one big map — and
-in exactly one way.
+The basic completion theorem is simple and decisive:
 
-A **sheaf** is the mathematical structure that makes this intuition into a
-theorem. It has two ingredients:
+**Completion Theorem.** Every partial database with values in a nonempty set has a total completion. If every cell is observed, the completion is unique. If at least one cell is missing and $V$ contains two distinct values, then at least two completions exist.
 
-- **Restriction.** From data on a big region you can always *forget* down to
-  data on a smaller region. (From the national map you can read off any town's
-  local weather.) This is just "looking at a sub-part."
-- **The sheaf condition (gluing + separation).** If you have local data on a
-  cover — a collection of regions whose union is the whole space — and the local
-  pieces *agree on overlaps*, then there is **one and only one** global piece of
-  data that restricts back to each of them.
+To see existence, choose any default value $v_0\in V$. Keep each observed value and put $v_0$ into every blank. If no cells are blank, agreement with the observations determines every value, so uniqueness follows. If a cell $i$ is blank and $a\ne b$ are allowed values, make two completions that differ only by assigning $a$ or $b$ at $i$.
 
-"Gluing" says a consistent family *can* be assembled. "Separation" says the
-assembled object is *unique* — two global objects that look the same locally
-everywhere must actually be equal. Together they are the beating heart of sheaf
-theory.
+This theorem overturns a proposed probability law. Suppose entries are independently missing with rate $r$, and suppose someone claims that the chance of completability is
 
-The claim of this work is that a database, with all its rows and columns and
-its inevitable missing entries, is *exactly* such a structure.
+$$
+(1-r)^C,
+$$
 
-## The dictionary: from spreadsheets to sheaves
+where $C$ counts overlap constraints. Under the partial-function model just described, the probability of completability is actually $1$ for every missingness pattern. For example, with $r=1/2$ and $C=1$, the proposed expression gives $1/2$, while every partial table still has a completion.
 
-Here is the translation that powers everything.
+The formula fails because it confuses “this cell was observed” with “these two local reports agree.” Those are different events. A blank creates freedom; a disagreement creates an obstruction.
 
-Fix a space of **keys** $K$. Think of a key as "the address of one cell" — for
-instance, the pair (customer #4096, field "email"). Fix a type $\mathrm{Val}$ of
-possible **values** — strings, numbers, whatever your cells hold.
+## Why counting overlaps can exaggerate difficulty
 
-A **database over a set of keys $U \subseteq K$** is then nothing more than a
-rule that assigns a value to every key in $U$. Formally it is a function
+Once genuine equality constraints are introduced, consistency becomes nontrivial. But another trap appears: overlap equations need not be independent.
 
-$$ s : U \to \mathrm{Val}. $$
+Consider three Boolean reports $x_1,x_2,x_3\in\{0,1\}$ and impose the triangle constraints
 
-We call such a thing a *record* over $U$. A complete database is a record over
-*all* the keys it needs; a database "with missing entries" is a record over a
-*partial* set of keys — the cells that happen to be filled in. The missing cells
-are simply the keys not in $U$.
+$$
+x_1=x_2,\qquad x_2=x_3,\qquad x_1=x_3.
+$$
 
-**Restriction** is then trivial: if $W \subseteq U$ is a smaller set of keys, a
-record $s$ on $U$ restricts to a record on $W$ by just reading off the values at
-the keys in $W$:
+There are three written equations, yet the third follows from the first two. Among the eight Boolean triples, only $(0,0,0)$ and $(1,1,1)$ are consistent, so the consistent fraction is $2/8=1/4$. Treating all three equations as independent events of probability $1/2$ predicts $1/8$, which is wrong.
 
-$$ (\mathrm{restrict}\, s)(x) = s(x), \qquad x \in W. $$
+The triangle illustrates a general root principle.
 
-Two bookkeeping facts make this a genuine *presheaf* — the raw scaffolding a
-sheaf is built on. First, restricting to the same set you started with changes
-nothing:
+**Root-Constraint Theorem.** For any nonempty family $(x_i)_{i\in I}$, all pairwise equalities $x_i=x_j$ are equivalent to choosing one root $r\in I$ and requiring only $x_i=x_r$ for every $i\in I$.
 
-$$ \mathrm{restrict}_{U \subseteq U}\, s = s. $$
+One direction is immediate: pairwise equality includes equality with the root. Conversely, if every value equals the root, then $x_i=x_r=x_j$ for any pair $i,j$.
 
-Second, restricting in two steps (from $U$ down to $W$, then down to $X$) is the
-same as restricting in one step straight to $X$:
+In network language, a connected cluster needs only enough independent equalities to connect all its vertices. Extra edges around cycles repeat information. If values come from a set of size $q$, then a graph with $c$ connected components has $q^c$ consistent assignments: choose one value independently for each component, and every vertex in that component is forced to share it. Thus consistency depends on connectivity or rank, not merely on the raw number of overlaps.
 
-$$ \mathrm{restrict}_{X \subseteq W}\big(\mathrm{restrict}_{W \subseteq U}\, s\big)
-   = \mathrm{restrict}_{X \subseteq U}\, s. $$
+This matters in real data systems. Ten reconciliation rules can represent ten independent checks, or they can be ten ways of restating two underlying requirements. Any probability estimate that multiplies a success probability once per written rule must first justify independence.
 
-These look almost too obvious to state. But they are the formal "presheaf laws,"
-and they are the first two theorems proved in this work. Stating the obvious
-precisely is exactly what lets us prove the non-obvious rigorously.
+## Imputation as constrained optimization
 
-## Consistency, made exact
+The sheaf viewpoint becomes constructive when observations are noisy or incomplete. Let the database have finitely many cells and a finite value set. Let $E$ be a finite family of equality constraints, each requiring two designated cells to agree. A total assignment is **feasible** if it satisfies every constraint.
 
-Now suppose we have a whole family of partial databases. We index them by some
-label $i$, so database number $i$ is a record $r_i$ defined on a key set $S_i$.
-These might be the customer table, the orders table, the shipping table — each
-covering its own slice of the key space, with plenty of overlap.
+Given an observed partial table $y$, define its observed Hamming loss by
 
-When can they be merged? The everyday answer is "when they don't contradict each
-other." The exact answer is a single clean condition. The family is
-**overlap-consistent** when, for any two databases $i$ and $j$ and any key $x$
-that lies in *both* $S_i$ and $S_j$, the two databases assign the same value:
+$$
+L(x;y)=\#\{i:\text{$i$ is observed and }x_i\ne y_i\}.
+$$
 
-$$ r_i(x) = r_j(x) \quad \text{whenever } x \in S_i \cap S_j. $$
+A sheaf-style imputation seeks a feasible assignment minimizing $L$.
 
-That's it. No averaging, no priorities, no tie-breaking — just literal
-agreement on shared cells. This is the database administrator's intuition
-("the tables agree on the columns they share") promoted to a mathematical
-definition.
+**Finite Constrained-Imputation Theorem.** For finite cells and finite values, provided the value set is nonempty, at least one feasible assignment minimizes observed Hamming loss under any finite family of equality constraints.
 
-## The headline theorems
+Feasibility is guaranteed by constant assignments: choose $v\in V$ and assign $v$ everywhere. Such an assignment satisfies every equality. The feasible set is finite and nonempty, and the integer-valued loss therefore attains a minimum.
 
-With the dictionary in place, the sheaf axioms become statements about merging
-data — and they are *proved*, not assumed.
+This theorem separates two tasks cleanly. The constraints encode structural coherence; the objective measures fidelity to observations. The minimizer balances the two. It may preserve all observations when they are mutually compatible, or alter some observations when that is the least costly way to restore global consistency.
 
-**Separation (a global database is pinned down by its parts).** Suppose two
-complete databases $g$ and $g'$ live over the union $\bigcup_i S_i$ of a cover,
-and suppose they look *identical* when restricted to every piece $S_i$ of the
-cover. Then they are the same database:
+For equality constraints on a graph, the optimizer has a particularly transparent form. Each connected component must receive one common value. Therefore, for each component, count the observed occurrences of each value and select a most frequent one. Components can be processed independently. If there are $N$ cells, $M$ equality edges, and $Q$ possible values, connected components can be found in nearly linear time, and the value counts can be accumulated in $O(N)$ time.
 
-$$ \big(\forall i,\ \mathrm{restrict}_{S_i}\, g = \mathrm{restrict}_{S_i}\, g'\big)
-   \implies g = g'. $$
+## Why no imputation method wins everywhere
 
-In plain language: there is no "hidden" information in a database beyond what its
-sub-tables reveal. If every view agrees, the underlying data is unique. This is
-the theorem `glue_eq_of_locally_eq`.
+The promise of structural constraints can encourage a second overstatement: that a sheaf-based method must always outperform mean, nearest-neighbor, or other imputation methods whenever the missing rate is below $1/2$ and the feature count exceeds ten.
 
-**Gluing (consistent parts assemble into a whole).** This is the centerpiece,
-`exists_unique_glue`. Take any family of partial databases $r_i$ over a cover
-$\{S_i\}$, and suppose the family is overlap-consistent. Then there exists a
-**unique** global database $g$ over the union $\bigcup_i S_i$ whose restriction to
-each $S_i$ is exactly the local database $r_i$:
+No distribution-free strict claim of this kind can hold. The reason is the boundary case $r=0$, which lies below $1/2$. With complete data, any observation-preserving method returns the observed truth. If the loss is zero when an estimate equals the truth, then both methods have loss zero and tie.
 
-$$ \exists!\, g,\quad \forall i,\ \mathrm{restrict}_{S_i}\, g = r_i. $$
+**No-Uniform-Strict-Superiority Theorem.** On complete data, any two imputation procedures that preserve all observations return the same true table and therefore tie under every loss normalized to vanish at the truth. Consequently, no theorem can assert strict superiority of one such method for every missing rate $r<1/2$ without additional assumptions.
 
-The merge always succeeds, *and the result is one of a kind*. There is no
-ambiguity about which merged table you get: agreement on overlaps forces a single
-answer. The proof is constructive — to find the value of $g$ at a key $x$, locate
-any database $S_i$ that contains $x$ and read off $r_i(x)$; overlap-consistency
-guarantees that the choice of $i$ does not matter.
+This does not say structural imputation is ineffective. It says performance is a statistical question, not a consequence of terminology. To prove an expected advantage, one must specify how the ground truth is generated, how missingness occurs, how noise enters, and how faithfully the proposed restrictions describe the data. If the true table approximately follows a shared latent structure, consistency constraints may pool information and lower risk. If the constraints are wrong, they may force unrelated values together and increase error.
 
-These two combine into a perfect "if and only if," the theorem
-`exists_glue_iff_consistent`, which is the actual decision procedure a database
-engine implements:
+## A better probability question
 
-$$ \big(\text{the tables can be merged}\big) \iff \big(\text{they are
-   overlap-consistent}\big). $$
+The rejected expression $(1-r)^C$ can be replaced by more meaningful questions.
 
-The everyday question — *can I merge?* — is provably **equivalent** to the
-cheap-to-check question — *do they agree on shared keys?* You never have to
-search for a merge to know whether one exists; you only have to check pairwise
-agreement.
+First, distinguish the random objects. Is only the missingness mask random? Are observed values random too? Are local reports noisy copies of a latent global state? Second, represent constraints by a graph or, more generally, by restriction maps. Third, count independent conditions through connected components or algebraic rank.
 
-Finally, the most common case of all, merging just two tables, gets its own
-sharp statement, `exists_unique_merge_two`. If two databases $r_0$ on keys $S_0$
-and $r_1$ on keys $S_1$ agree on the shared keys $S_0 \cap S_1$, then there is a
-*unique* merged database on $S_0 \cup S_1$ restricting to each. This is the
-mathematical content of the SQL `JOIN`/`UNION` you run every day.
+For a graph of equality constraints with $N$ vertices, $c$ connected components, and $q$ equally likely independent values at the vertices, the probability that a fully sampled assignment is consistent is
 
-## The second picture: schemas as networks
+$$
+\frac{q^c}{q^N}=q^{c-N}.
+$$
 
-There is a second, complementary way databases become sheaves, and it connects
-data integration to a field called **cellular sheaf cohomology** — the algebra
-of how local agreements obstruct (or permit) global consistency.
+This formula makes redundancy visible. Adding an edge inside an already connected component changes neither $c$ nor the probability. Adding an edge that joins two components decreases $c$ by one and multiplies the consistency probability by $1/q$. The relevant quantity is the number of independent mergers, $N-c$, not the number of edges.
 
-Picture your data sources as **nodes** in a network, and draw an **edge**
-between two sources whenever they are supposed to agree about something. This is
-a *schema graph* $G$. A **consistent integration** of the whole system is an
-assignment of data to every node such that every edge's agreement constraint is
-satisfied. These consistent integrations form a tidy algebraic object — a
-submodule called `globalSections`.
+Missingness then requires a separately specified observation model. If unobserved entries remain freely assignable, missingness may make observed compatibility easier rather than harder. If missing entries hide fixed latent values, the probability concerns recovery of those values, not mere existence of a completion. Precise modeling determines which question is being answered.
 
-When the agreement constraint is simply "equal values," the consistent
-integrations are precisely the **zeroth cohomology** $H^0(G)$ of the graph — the
-space of functions that are constant along edges. And cohomology answers a
-beautiful structural question with a one-line theorem:
+## From tables to systems of local knowledge
 
-> **Rigidity over a connected schema.** If the schema graph is *connected* — every
-> source is linked, directly or through a chain, to every other — then a
-> consistent integration is completely determined by its value at any *single*
-> node.
+The sheaf metaphor is most useful when a database is not merely a rectangular array but a system of overlapping viewpoints. A patient’s medication appears in a prescription log, a pharmacy record, and a discharge plan. A city’s traffic state appears in neighboring sensor zones. A company’s revenue appears in product, regional, and consolidated reports. Restrictions describe how each broad view should agree with a narrower overlap.
 
-This is `globalSections_eval_injective_of_connected`, resting on the cohomology
-fact `H0_eq_const_of_connected` that over a connected graph the only globally
-consistent assignments are the constant ones. The intuition is irresistible: if
-everything must agree with its neighbors, and everything is connected, then one
-value propagates across the entire system. Knowing one cell tells you all of
-them. Disconnected schemas, by contrast, can carry independent values on each
-island — which is exactly cohomology detecting the "holes" in your data network.
+The central lesson is both encouraging and cautionary. Local-to-global mathematics gives a principled language for consistency and a concrete route to constrained imputation. Yet the number of blanks does not by itself measure obstruction, and the number of written overlap rules does not measure independent information.
 
-## Why this matters beyond elegance
+A sound workflow is therefore:
 
-It is tempting to file all this under "pretty mathematics," but the payoff is
-practical and pointed.
+1. define the local records and their overlaps;
+2. distinguish observed entries from compatibility constraints;
+3. reduce redundant constraints using connectivity or rank;
+4. optimize fidelity to observations over the feasible global assignments; and
+5. compare methods under an explicit stochastic model.
 
-**Imputation becomes geometry.** A database with missing entries is a *partial
-section* of the data sheaf — a record defined only on the filled-in keys. Filling
-the holes "consistently" means extending that partial section to a global one.
-The sheaf viewpoint says the right way to impute missing values is to snap your
-incomplete data onto the nearest *global section* — the nearest assignment that
-respects every overlap constraint at once. Where mean imputation ignores
-structure and nearest-neighbor imputation uses only local similarity, **sheaf
-imputation** uses *exponentially many* consistency constraints simultaneously,
-one for every overlapping pair of feature subsets.
-
-This leads to a striking quantitative conjecture about how hard consistent
-imputation is. If a database has its entries missing independently at a rate $r$,
-and there are $C$ overlapping consistency constraints to satisfy, then the
-probability that a random partial database *can* be consistently completed
-behaves like
-
-$$ P(\text{sheaf}) = (1 - r)^{C}. $$
-
-Consistency gets exponentially rarer as the web of overlaps grows. That is not a
-bug; it is the signal. Each overlap is a constraint, and constraints are exactly
-the information a good imputation method should exploit. The same exponential
-that makes random consistency rare is what makes a *genuinely* consistent dataset
-so informative.
-
-**Integration is a cohomology problem.** Whether two systems can be merged is
-governed by whether a certain obstruction class vanishes. In the language above,
-acyclic schemas (trees) always integrate, while cycles can carry "twists" — a
-loop of pairwise agreements that nonetheless admits no global solution, like an
-Escher staircase of data. Detecting and measuring these twists is precisely what
-the first cohomology $H^1$ does, and it suggests a future where data-pipeline
-debuggers report a *cohomology class* to explain why a merge failed.
-
-**A bridge to cryptography.** Secret-sharing schemes can be modeled as sheaves
-on a graph whose nodes hold shares and whose edges encode reconstruction rules.
-Whether an unauthorized coalition learns anything about the secret turns out to
-be a statement about whether a restriction map on global sections is injective on
-the secret coordinate. Security and consistency, it turns out, are two faces of
-the same gluing question.
-
-## The takeaway
-
-The next time a database merge fails, picture it geometrically. Your tables are
-local patches of weather data over the same map. The merge fails because two
-patches disagree on their overlap — and no global map can serve two masters. The
-merge succeeds, *uniquely*, exactly when all patches agree on all overlaps. This
-is not a rule of thumb. It is the gluing axiom of a sheaf, and it has been proved
-with full rigor:
-
-- Databases over a key space satisfy the **presheaf laws** (restriction is
-  functorial).
-- They satisfy **separation**: a database is determined by its sub-tables.
-- They satisfy **gluing**: overlap-consistent tables merge into a unique whole.
-- Mergeability is **exactly** overlap-consistency — a checkable, local criterion
-  for a global property.
-- Over a **connected** schema, consistency is **rigid**: one value determines
-  everything.
-
-Data integration, the most quotidian task in all of computing, is sheaf theory
-in disguise. And once you know that, every spreadsheet is a little piece of
-geometry waiting to be glued.
+Seen this way, data integration is not the art of pouring averages into empty boxes. It is the study of whether many partial stories can be told as one coherent story—and, when they cannot, of finding the smallest principled revision that makes them agree.
