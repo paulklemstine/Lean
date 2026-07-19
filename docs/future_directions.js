@@ -3155,21 +3155,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Improved constant in Erd\u0151s sumset avoidance for dense subsets"
   },
   {
-    "consumed_by_exp_id": "d5e79e07",
-    "description": "Formalize the mathematical conditions under which impossible figures (Penrose triangles, Escher stairs) can exist as manifolds. Prove that every non-orientable 3-manifold contains an embedded Penrose triangle as a smoothly immersed surface. Classify which impossible figures are realizable as developable surfaces.",
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0445",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T10:41:15.115361+00:00",
-    "title": "The Topology of Impossible Objects: Escher Stairs and Klein Bottles"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Cycle dcd7a4b2 (Q=0.750) proved 0 theorems in Tropical but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION \u2014 simulta",
     "domains": [
@@ -5039,6 +5024,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-19T16:24:17.981685+00:00",
     "title": "The formal model treats theories as points in a real inner-product space and phe"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Impossible Figures as Geometric Obstructions\n\n## 1. Cellular classification beyond the torus\n\n**Conjecture.** For every finite connected two-dimensional cell complex and every additive coefficient group, a discrete increment field is developable if and only if its cellular curvature vanishes and its period vanishes on a generating family of one-cycles.\n\nThe key insight is that the torus calculation separates the local obstruction, represented by the cellular coboundary, from the global obstruction, represented by first cohomology. **Why now?** The complete periodic-grid classification and its gauge invariance identify exactly which ingredients must be replaced by cellular boundary maps and cycle generators.\n\n## 2. Minimal certificates of periodic impossibility\n\n**Conjecture.** On an `m \u00d7 n` periodic grid, every non-developable increment field has a certificate consisting either of one tile with nonzero curvature or of a simple noncontractible cycle of length at most `m + n` with nonzero period.\n\nThe key insight is that local curvature and two fundamental holonomies form a complete obstruction triple, so a compact witness should be extractable without inspecting every closed walk. **Why now?** The classification gives completeness; the remaining testable problem is to obtain sharp bounds and an explicit certificate-extraction algorithm.\n\n## 3. Piecewise-linear Penrose semantics\n\n**Conjecture.** For a piecewise-linear surface equipped with a specified projection and depth-order relation, realizability of a Penrose-type cyclic beam configuration is equivalent to acyclicity of the induced depth-order cocycle after subdivision.\n\nThe key insight is that a Penrose triangle is not determined by the topology of its underlying loop; its impossibility comes from projection-dependent depth inequalities that accumulate around that loop. **Why now?** Gauge-invariant additive holonomy supplies a rigorous template, while the explicit projection and order data remove the ambiguity that blocks a smooth-manifold statement.\n\n## 4. Orientation covers and signed holonomy\n\n**Conjecture.** Let a triangulated non-orientable manifold carry increments twisted by its orientation local system. A flat twisted field is developable precisely when all periods vanish on the orientation double cover and satisfy the deck-transformation anti-invariance condition.\n\nThe key insight is that non-orientability should enter through twisted coefficients rather than through an undefined assertion that the manifold contains a particular optical illusion. **Why now?** The untwisted torus theorem isolates the integration argument, making the orientation local system the single new structural component to test.\n\n## 5. Developable realizations with metric constraints\n\n**Conjecture.** A flat, period-free periodic increment field admits a piecewise-linear developable realization in three-space with prescribed edge lengths if and only if each fundamental tile satisfies its polygon inequalities and the induced rotational holonomy is trivial.\n\nThe key insight is that additive height integrability is necessary but does not control metric compatibility or rotational holonomy. **Why now?** The additive classification cleanly identifies the residual geometric data, allowing counterexamples and positive constructions to target metric and rotational constraints separately.\n",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_0469",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "d5e79e07",
+    "status": "available",
+    "timestamp": "2026-07-19T16:58:16.382490+00:00",
+    "title": "**Conjecture.** For every finite connected two-dimensional cell complex and ever"
   },
   {
     "consumed_by_exp_id": "",
