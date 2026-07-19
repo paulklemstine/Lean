@@ -1,254 +1,393 @@
-# Chip-Firing, Divisors, and the Riemann–Roch Theorem for Complete Graphs
+# Canonical Divisors and Riemann–Roch on Complete Graphs
+
+**Aristotle — July 19, 2026**
 
 ## Abstract
 
-We develop a self-contained, formally verified foundation for Baker–Norine divisor theory on finite graphs and specialize it to the complete graphs $K_n$. Working over an arbitrary finite simple graph $G = (V, E)$, we introduce the group of integer divisors, the graph Laplacian (chip-firing operator) $\mathrm{lap}$, the degree functional, the combinatorial genus $g = |E| - |V| + 1$, and the canonical divisor $K(v) = \deg(v) - 2$. We prove that $\mathrm{lap}$ is an additive, constant-killing, sign-respecting, degree-annihilating homomorphism — exactly the four properties that make chip-firing (linear) equivalence an equivalence relation and degree a class invariant. The degree-annihilation property is established by a pure antisymmetry argument: the endpoint-swap involution on directed adjacent pairs negates every summand while fixing the index set. We then derive closed forms for $K_n$: every vertex has degree $n-1$; there are $n(n-1)/2$ edges; the genus is $(n-1)(n-2)/2$; the canonical coefficient is $n-3$ (correcting an "$n-2$" guess from the literature folklore); and the canonical degree is $n(n-3) = 2g - 2$. We verify the genus values for $K_3, K_4, K_5$ explicitly and establish connectivity of $K_n$ for $n \geq 2$. We situate these results within the full Riemann–Roch program of Baker and Norine and identify the precise primitives needed to close it.
-
-**Keywords:** chip-firing, sandpile, graph divisors, Riemann–Roch, canonical divisor, genus, graph Laplacian, complete graph, tropical geometry.
-
----
+Divisor theory on finite graphs translates linear equivalence into chip-firing and gives a discrete Riemann–Roch theorem. This paper develops the canonical calculation for the complete graph $K_n$ from first principles, with particular attention to two normalization issues that can otherwise create an apparent contradiction. For a graph, the canonical divisor is $K_G(v)=\operatorname{val}(v)-2$, while the Baker–Norine rank $r(D)$ differs by one from the dimension convention $\ell(D)=r(D)+1$. We prove directly that the zero divisor on a nonempty graph has rank $0$. For $K_n$ we derive the vertex valency $n-1$, canonical coefficient $n-3$, genus $(n-1)(n-2)/2$, and canonical degree $n(n-3)=2g-2$. Assuming the graph Riemann–Roch identity, specialization to the canonical divisor yields $r(K_G)=g(G)-1$, and hence $r(K_{K_n})=(n-1)(n-2)/2-1$. The cases $n=3,4,5,6$ are evaluated explicitly. We also describe finite computational procedures for the numerical invariants, chip-firing, reduced divisors, and rank testing, and discuss connections with Laplacian lattices, parking functions, critical groups, spanning trees, and permutohedral geometry.
 
 ## 1. Introduction
 
-The Riemann–Roch theorem is a cornerstone of algebraic geometry. For a smooth projective curve $C$ of genus $g$ over an algebraically closed field, with canonical divisor $K$, it asserts
+The classical Riemann–Roch theorem relates divisors on an algebraic curve to its genus and canonical divisor. Baker–Norine divisor theory replaces the curve by a finite connected graph and rational functions by integer-valued firing scripts. A divisor is then an integer configuration on the vertices. Firing redistributes chips locally without changing their total, and linear equivalence records which configurations can be reached from one another.
+
+This discrete setting preserves the characteristic form of Riemann–Roch:
+
 $$
-\ell(D) - \ell(K - D) = \deg D + 1 - g
-$$
-for every divisor $D$, where $\ell(D) = \dim H^0(C, \mathcal{O}_C(D))$. In 2007, Baker and Norine discovered a combinatorial analogue living entirely on a finite graph. Replacing the curve by a graph $G$, divisors by integer-valued functions on the vertex set, and linear equivalence by the *chip-firing* relation, they proved a graph Riemann–Roch theorem of exactly the same shape, with $g$ the cyclomatic number (first Betti number) of $G$.
-
-The combinatorial engine underneath is the **chip-firing game** (closely related to the abelian sandpile model). Each vertex holds an integer number of chips — negative values modeling debt. *Firing* a vertex sends one chip along each incident edge, decreasing the vertex's pile by its degree and increasing each neighbor's pile by one. Two configurations are equivalent if related by a sequence of such moves. The arithmetic of these moves turns out to encode the same invariants that Riemann–Roch governs for curves.
-
-This paper records a formally verified development of the foundational layer of this theory, together with complete closed-form specializations to the complete graphs $K_n$. Our contributions are:
-
-1. A clean construction of the divisor group and the Laplacian as a homomorphism, isolating the four structural properties that drive the entire algebraic theory (§3, §4).
-2. A symmetry proof that every principal (Laplacian) divisor has degree zero — the conservation law underlying class invariance of degree (Theorem 4.5).
-3. The canonical-degree identity $\deg K = 2g - 2$ for arbitrary finite graphs (Theorem 5.3).
-4. Exact formulas for $K_n$: vertex degree, edge count, genus, canonical coefficient, and canonical degree (§6), including a correction of an off-by-one folklore claim about the canonical coefficient.
-5. Verified numerical instances ($K_3, K_4, K_5$) and connectivity of $K_n$ (§6.3, §7).
-
-All statements have been mechanically checked. We present mathematical proof sketches throughout; the formal artifacts are the ground truth.
-
----
-
-## 2. Preliminaries and notation
-
-Throughout, $G = (V, E)$ is a finite simple graph: $V$ is a finite vertex set and adjacency $\sim$ is an irreflexive symmetric relation. We write $u \sim v$ for "$u$ adjacent to $v$," $N(v) = \{u : u \sim v\}$ for the neighborhood, and $\deg(v) = |N(v)|$ for the degree. The edge set $E$ is identified with the set of unordered adjacent pairs; $|E|$ is its cardinality.
-
-The **complete graph** on $n$ vertices, $K_n$, has vertex set of size $n$ and $u \sim v$ iff $u \neq v$. We model it on the finite type $\{0, 1, \dots, n-1\}$.
-
----
-
-## 3. Divisors
-
-**Definition 3.1 (Divisor).** A *divisor* on $G$ is a function $D : V \to \mathbb{Z}$. We write $D(v)$ for its coefficient at $v$. Equivalently, a divisor is a formal $\mathbb{Z}$-linear combination $\sum_v D(v)\,[v]$ of vertices.
-
-Divisors are added, negated, and subtracted pointwise, with the zero divisor $0(v) = 0$. These operations make the set of divisors an abelian group.
-
-**Proposition 3.2 (Divisor group).** The coefficient map $D \mapsto (v \mapsto D(v))$ is injective, and under pointwise operations the divisors form an additive commutative group.
-
-*Proof sketch.* Two divisors with equal coefficient functions are equal (extensionality). The group axioms are inherited componentwise from $(\mathbb{Z}, +)$ via the injective coefficient embedding. ∎
-
-**Definition 3.3 (Effective divisor).** A divisor $D$ is *effective*, written $D \geq 0$, if $D(v) \geq 0$ for all $v$.
-
-**Definition 3.4 (Single-vertex divisor).** For $v_0 \in V$ and $k \in \mathbb{Z}$, the divisor $k\,[v_0]$ places $k$ chips on $v_0$ and none elsewhere:
-$$
-(k\,[v_0])(w) = \begin{cases} k & w = v_0 \\ 0 & w \neq v_0. \end{cases}
+r(D)-r(K_G-D)=\deg(D)+1-g(G).
 $$
 
-**Proposition 3.5.** If $k \geq 0$ then $k\,[v_0]$ is effective. Its degree (Definition 4.1) equals $k$.
+The theorem is both structural and algorithmic. Its terms can be interpreted through the graph Laplacian, and equivalence to an effective divisor can be tested by reduction algorithms. Complete graphs provide the most symmetric examples and admit closed formulas for all elementary invariants.
 
-*Proof sketch.* Every coefficient is either $k \geq 0$ or $0$, giving effectivity. The degree is a single nonzero summand $k$. ∎
+A frequently encountered calculation proposes the coefficient $n-2$ for the canonical divisor of $K_n$ and then identifies a quantity called $\ell$ with rank while assigning it the value $0$ at the zero divisor. Both steps are inconsistent with the standard conventions. The canonical coefficient is valency minus $2$, hence $n-3$. Moreover, $r(0)=0$ whereas $\ell(0)=r(0)+1=1$. Correcting these points yields the expected canonical rank $g-1$.
 
----
+Our purpose is to give a self-contained account of that correction and its consequences. The elementary complete-graph formulas are proved independently of Riemann–Roch. The canonical-rank statement is then derived transparently from the Riemann–Roch identity, avoiding any circular claim that the numerical computation proves the full theorem.
 
-## 4. Degree and the graph Laplacian
+## 2. Graphs, divisors, and the Laplacian
 
-**Definition 4.1 (Degree of a divisor).** The *degree* of a divisor is the total chip count
+Let $G=(V,E)$ be a finite connected loopless undirected graph. Parallel edges may be incorporated by multiplicity, although the complete graphs considered below are simple. The valency $\operatorname{val}(v)$ is the number of incident edge ends at $v$, counted with multiplicity.
+
+**Definition 2.1 (Divisor).** A divisor on $G$ is an integer-valued function $D:V\to\mathbb Z$, customarily written
+
 $$
-\deg D = \sum_{v \in V} D(v).
-$$
-
-**Proposition 4.2.** The degree is a group homomorphism: $\deg 0 = 0$, $\deg(D + E) = \deg D + \deg E$, and $\deg(-D) = -\deg D$.
-
-*Proof sketch.* Linearity of finite sums. ∎
-
-**Definition 4.3 (Graph Laplacian / chip-firing operator).** For a firing pattern $f : V \to \mathbb{Z}$, the *Laplacian* $\mathrm{lap}\,f$ is the divisor
-$$
-(\mathrm{lap}\,f)(v) = \sum_{u \in N(v)} \bigl(f(v) - f(u)\bigr).
-$$
-Firing the single vertex $w$ once corresponds to $f = [w]$ (the indicator of $w$): it yields the divisor sending $-\deg(w)$ chips at $w$ and $+1$ to each neighbor. A *principal divisor* is one of the form $\mathrm{lap}\,f$; two divisors $D, D'$ are *linearly equivalent* ($D \sim D'$) if $D - D'$ is principal.
-
-The next four facts are the homomorphism layer.
-
-**Theorem 4.4 (Structural properties of $\mathrm{lap}$).**
-1. $\mathrm{lap}\,0 = 0$ (firing nothing moves nothing).
-2. For any constant $c$, $\mathrm{lap}(\,c\mathbf{1}\,) = 0$ (uniform firing is invisible).
-3. $\mathrm{lap}(f + g) = \mathrm{lap}\,f + \mathrm{lap}\,g$ (additivity).
-4. $\mathrm{lap}(-f) = -\mathrm{lap}\,f$ (sign respect).
-
-*Proof sketch.* (1) Each summand is $0 - 0 = 0$. (2) Each summand is $c - c = 0$. (3) $(f+g)(v) - (f+g)(u) = (f(v)-f(u)) + (g(v)-g(u))$; split the sum. (4) Distribute negation through the sum. ∎
-
-**Corollary 4.4a (Linear equivalence is an equivalence relation).** Reflexivity follows from (1) ($D - D = 0 = \mathrm{lap}\,0$); symmetry from (4) (if $D - D' = \mathrm{lap}\,f$ then $D' - D = \mathrm{lap}(-f)$); transitivity from (3) (sum the patterns). Thus $\sim$ partitions divisors into classes.
-
-**Theorem 4.5 (Conservation law: principal divisors have degree zero).** For every firing pattern $f$,
-$$
-\deg(\mathrm{lap}\,f) = 0.
+D=\sum_{v\in V}D(v)\,v.
 $$
 
-*Proof sketch.* Expand:
+Its degree is
+
 $$
-\deg(\mathrm{lap}\,f) = \sum_{v}\sum_{u \in N(v)} \bigl(f(v) - f(u)\bigr) = \sum_{(v,u)\,:\,v \sim u} \bigl(f(v) - f(u)\bigr),
-$$
-a sum over the set $S$ of *ordered* adjacent pairs. The involution $\sigma(v,u) = (u,v)$ maps $S$ bijectively onto itself (adjacency is symmetric) and sends the summand $f(v) - f(u)$ to $f(u) - f(v) = -(f(v) - f(u))$. Hence the sum equals its own negative, so it is zero. Formally this is a single sum-reindexing bijection (`Finset.sum_nbij'`) composed with a termwise sign flip. No handshake or degree-counting lemma is needed. ∎
-
-**Corollary 4.6 (Degree is a linear-equivalence invariant).** If $D \sim D'$ then $\deg D = \deg D'$, since $\deg D - \deg D' = \deg(D - D') = \deg(\mathrm{lap}\,f) = 0$.
-
-**Corollary 4.7 (Degree obstruction to winnability).** Call $D$ *winnable* if it is linearly equivalent to an effective divisor. Any effective divisor has degree $\geq 0$, so by Corollary 4.6 every winnable divisor satisfies $\deg D \geq 0$. Net debt can never be cleared by firing.
-
----
-
-## 5. Genus and the canonical divisor
-
-**Definition 5.1 (Genus).** The *(combinatorial) genus* of $G$ is its first Betti number,
-$$
-g(G) = |E| - |V| + 1.
-$$
-For connected $G$ this is the rank of the cycle space: trees have $g = 0$, and each independent cycle contributes $1$.
-
-**Definition 5.2 (Canonical divisor).** The *canonical divisor* $K_G$ assigns to each vertex
-$$
-K_G(v) = \deg(v) - 2.
+\deg(D)=\sum_{v\in V}D(v).
 $$
 
-**Theorem 5.3 (Canonical degree identity).** For every finite graph,
+The divisor is effective, written $D\ge 0$, if $D(v)\ge 0$ for every $v\in V$.
+
+Negative coefficients represent debt. The degree is the net number of chips and may be negative.
+
+**Definition 2.2 (Laplacian and firing).** For an integer-valued function $f:V\to\mathbb Z$, define
+
 $$
-\deg K_G = 2g(G) - 2.
-$$
-
-*Proof sketch.* By the handshake lemma $\sum_v \deg(v) = 2|E|$. Hence
-$$
-\deg K_G = \sum_v (\deg(v) - 2) = 2|E| - 2|V| = 2(|E| - |V|) = 2(g(G) - 1) = 2g(G) - 2. \qquad \blacksquare
-$$
-
-This is precisely the graph analogue of the classical $\deg K_C = 2g - 2$ for curves, and it is the term that makes both sides of graph Riemann–Roch numerically consistent at $D = K$.
-
----
-
-## 6. The complete graphs $K_n$
-
-We now specialize all invariants to $K_n$, where total symmetry forces closed forms.
-
-### 6.1 Local structure
-
-**Theorem 6.1 (Vertex degree).** Every vertex of $K_n$ has degree $n - 1$.
-
-*Proof sketch.* The neighborhood of $v$ is $V \setminus \{v\}$, of size $n - 1$. Formally, the neighbor finset is the universe with $v$ erased. ∎
-
-**Theorem 6.2 (Edge count).** The number of edges of $K_n$ is
-$$
-|E(K_n)| = \binom{n}{2} = \frac{n(n-1)}{2}.
+(\Delta f)(v)=\operatorname{val}(v)f(v)-\sum_{w\sim v}f(w),
 $$
 
-*Proof sketch.* Edges of $K_n$ are in bijection with $2$-element subsets of $V$: send the subset $\{u, v\}$ (with $u < v$) to the edge it spans, and an edge $\{u,v\}$ back to that subset. This bijection (built from the $\min$/$\max$ of a two-element set) identifies $E(K_n)$ with $\binom{V}{2}$, whose cardinality is $\binom{n}{2} = n(n-1)/2$. ∎
+where adjacency is counted with multiplicity. A principal divisor is a divisor of the form $\Delta f$. Two divisors $D$ and $D'$ are linearly equivalent, written $D\sim D'$, if $D-D'=\Delta f$ for some integer-valued $f$.
 
-### 6.2 Global invariants
+With the opposite sign convention, firing according to $f$ changes $D$ to $D-\Delta f$. Firing a single vertex once removes $\operatorname{val}(v)$ chips there and sends one chip along every incident edge. Since every edge contribution occurs once positively and once negatively,
 
-**Theorem 6.3 (Genus of $K_n$).** For $n \geq 2$,
 $$
-g(K_n) = \frac{(n-1)(n-2)}{2}.
-$$
-
-*Proof sketch.* Substitute Theorem 6.2 and $|V| = n$ into Definition 5.1:
-$$
-g(K_n) = \frac{n(n-1)}{2} - n + 1 = \frac{n(n-1) - 2n + 2}{2} = \frac{n^2 - 3n + 2}{2} = \frac{(n-1)(n-2)}{2}. \qquad \blacksquare
+\sum_{v\in V}(\Delta f)(v)=0.
 $$
 
-**Theorem 6.4 (Canonical coefficient of $K_n$).** For every vertex $v$ of $K_n$,
+**Lemma 2.3 (Degree invariance).** If $D\sim D'$, then $\deg(D)=\deg(D')$.
+
+**Proof sketch.** Their difference is $\Delta f$. Summing the Laplacian over all vertices cancels every edge contribution, so $\deg(\Delta f)=0$. Hence the degrees agree. $\square$
+
+This elementary conservation law is decisive whenever a proposed effective representative would have negative degree.
+
+## 3. Rank and the zero divisor
+
+**Definition 3.1 (Baker–Norine rank).** If $D$ is not linearly equivalent to an effective divisor, define $r(D)=-1$. Otherwise, $r(D)$ is the largest integer $q\ge 0$ such that, for every effective divisor $E$ of degree $q$, the divisor $D-E$ is linearly equivalent to an effective divisor.
+
+Thus $r(D)\ge q$ means that any placement of $q$ removed chips can be repaired by firing. The definition quantifies over effective divisors, not merely over subsets of vertices: repeated removal from one vertex is allowed.
+
+Some literature uses the dimension
+
 $$
-K_{K_n}(v) = n - 3.
-$$
-
-*Proof sketch.* By Definition 5.2 and Theorem 6.1, $K_{K_n}(v) = \deg(v) - 2 = (n-1) - 2 = n - 3$. ∎
-
-> **Remark (correction of folklore).** A common informal guess gives the canonical coefficient as $n - 2$ (mistakenly using $\deg(v) - 1$ or conflating it with the firing depth). The verified value is $n - 3$, i.e. $\deg(v) - 2$. The discrepancy is exactly the "$-2$" intrinsic to the canonical divisor, and it propagates correctly into the $2g-2$ identity below.
-
-**Theorem 6.5 (Canonical degree of $K_n$).** For $n \geq 2$,
-$$
-\deg K_{K_n} = n(n - 3).
-$$
-Equivalently $\deg K_{K_n} = 2g(K_n) - 2$, consistent with Theorem 5.3.
-
-*Proof sketch.* Summing the constant coefficient $n - 3$ over $n$ vertices gives $n(n-3)$. Independently, $2g(K_n) - 2 = (n-1)(n-2) - 2 = n^2 - 3n + 2 - 2 = n^2 - 3n = n(n-3)$. The two computations agree, cross-validating Theorems 5.3, 6.3, and 6.4. ∎
-
-### 6.3 Verified numerical instances
-
-| $n$ | $|E|$ | genus $g$ | canonical coeff $n{-}3$ | $\deg K = n(n{-}3)$ | $2g-2$ |
-|----|------|-----------|-------------------------|----------------------|--------|
-| 3  | 3    | 1         | 0                       | 0                    | 0      |
-| 4  | 6    | 3         | 1                       | 4                    | 4      |
-| 5  | 10   | 6         | 2                       | 10                   | 10     |
-| 6  | 15   | 10        | 3                       | 18                   | 18     |
-
-The genus values for $K_3, K_4, K_5$ are verified directly: $g(K_3) = 1$ (the triangle, one independent cycle — the graph analogue of a torus), $g(K_4) = 3$, $g(K_5) = 6$. Every row satisfies $\deg K = 2g - 2$.
-
----
-
-## 7. Connectivity
-
-**Theorem 7.1.** For $n \geq 2$, $K_n$ is connected.
-
-*Proof sketch.* Any two distinct vertices are adjacent (hence reachable in one step), and a single vertex is reachable from itself. The "exists a common reachability witness" criterion is satisfied by any fixed vertex. ∎
-
-Connectivity is the standing hypothesis under which genus equals the cycle-space rank and under which the full Riemann–Roch theorem is stated; it is recorded here for completeness of the $K_n$ specialization.
-
----
-
-## 8. Toward the full Riemann–Roch theorem
-
-The development above is the *algebraic backbone* of Baker–Norine theory. We summarize how the remaining pieces attach, framed as the rank function and the main theorem.
-
-**Definition 8.1 (Rank).** The *rank* $r(D)$ of a divisor is $-1$ if $D$ is not winnable, and otherwise the largest $k \geq 0$ such that $D - E$ is winnable for every effective $E$ of degree $k$. Intuitively, $r(D)$ measures how much extra debt $D$ can absorb anywhere and still be cleared by firing.
-
-Boundary values follow immediately from our foundations: $r(0) = 0$ (the empty divisor is winnable but $0 - [v]$ is not, by Corollary 4.7), and $r(D) = -1$ whenever $\deg D < 0$ (Corollary 4.7).
-
-**Theorem 8.2 (Graph Riemann–Roch; Baker–Norine 2007).** For every divisor $D$ on a finite connected graph $G$ of genus $g$, with canonical divisor $K$,
-$$
-r(D) - r(K - D) = \deg D + 1 - g.
+\ell(D)=r(D)+1.
 $$
 
-The proof in the literature proceeds via **Dhar's burning algorithm** and $q$-**reduced divisors**: each linear equivalence class has a unique representative that is "maximally fired toward a sink $q$," and winnability is read off from the sink's coefficient. Two ingredients remain to mechanize on top of our backbone:
+Under this convention, a divisor with no effective representative has dimension $0$, and an effective divisor of rank $0$ has dimension $1$. Rank and dimension encode the same information but must not be interchanged inside a calculation.
 
-- *Riemann inequality* $r(D) \geq \deg D - g$: every divisor of degree $\geq g$ is winnable. This reduces, via the reduced-divisor normal form, to a local non-negativity check.
-- *Duality* under the involution $E \mapsto K - E$: a counting bound on maximal non-special (non-winnable-witnessing) divisors, made numerically consistent by our $\deg K = 2g - 2$ (Theorem 5.3).
+**Theorem 3.2 (Rank of the zero divisor).** On every nonempty finite connected graph,
 
-**Specialization to $K_n$.** Combining Theorem 8.2 with §6, the canonical configuration on $K_n$ has predicted rank
 $$
-r(K_{K_n}) = g(K_n) - 1 = \frac{(n-1)(n-2)}{2} - 1.
+r(0)=0.
 $$
-For $n = 3$ this yields $r(K_{K_3}) = 0$, which dissolves the apparent paradox in the original conjecture: setting $D = K$ in Theorem 8.2 and using $r(0) = 0$ gives $r(K) - r(0) = \deg K + 1 - g = (2g - 2) + 1 - g = g - 1$, hence $r(K) = g - 1$, perfectly consistent.
 
----
+**Proof.** The zero divisor is effective, so $r(0)\ge 0$. Choose a vertex $v$ and let $E=v$ be the effective divisor consisting of one chip at $v$. Then $\deg(0-E)=-1$. By degree invariance, every divisor equivalent to $-E$ also has degree $-1$, whereas every effective divisor has nonnegative degree. Thus $-E$ has no effective representative, so $r(0)\not\ge 1$. Therefore $r(0)=0$. $\square$
 
-## 9. Discussion
+**Corollary 3.3.** With the dimension normalization, $\ell(0)=1$.
 
-The structural lesson of this development is that the *entire algebraic layer of divisor theory is the coset relation of a single homomorphism.* Once the Laplacian is recognized as an additive, constant-killing, sign-respecting, degree-annihilating map, linear equivalence is automatically an equivalence relation and degree is automatically a class invariant — with no graph-specific combinatorics beyond the symmetry of adjacency. In particular, the conservation law (Theorem 4.5) needs no handshake or degree-counting; it is pure antisymmetry of $f(v) - f(u)$ under endpoint swap. Earlier, heavier encodings (weighted multigraphs carrying explicit symmetry, or a $\deg(v)\,f(v) - \sum f(u)$ form of the Laplacian) obscured exactly the antisymmetry that does all the work; the form $\sum_{u \sim v}(f(v) - f(u))$ makes the swap argument immediate.
+This corollary identifies one source of the apparent canonical-rank paradox: assigning $\ell(0)=0$ silently treats $\ell$ as rank rather than dimension.
 
-The complete-graph specialization serves as a high-confidence testing ground: every invariant is a closed-form polynomial in $n$, and the redundant routes to $\deg K_{K_n}$ (direct summation vs. $2g - 2$) cross-check one another. The folklore correction ($n - 3$, not $n - 2$) illustrates the value of mechanized rigor at the level of constants.
+## 4. Genus and the canonical divisor
 
----
+**Definition 4.1 (Graph genus).** For a finite connected graph,
 
-## 10. Future work
+$$
+g(G)=|E|-|V|+1.
+$$
 
-- **Reduced divisors and Dhar's algorithm.** Build the $q$-reduced normal form on top of $\mathrm{lap}$ to obtain a decision procedure for winnability.
-- **Riemann inequality.** Mechanize $r(D) \geq \deg D - g$ via the normal form.
-- **Full duality.** Complete Baker–Norine (Theorem 8.2) using the involution $E \mapsto K - E$ and the maximal-non-special counting bound.
-- **Canonical rank of $K_n$.** Prove $r(K_{K_n}) = g(K_n) - 1$ directly from the complete-graph closed forms.
-- **Beyond $K_n$.** Extend the closed-form library to complete bipartite graphs, cycles, trees, and wheels, where genus and canonical data are again explicit.
+This is the first Betti number or cyclomatic number: the number of independent cycles. Starting with a spanning tree, which has $|V|-1$ edges, each remaining edge contributes one independent cycle.
 
----
+**Definition 4.2 (Canonical divisor).** The canonical divisor of $G$ is
 
-## References
+$$
+K_G=\sum_{v\in V}\bigl(\operatorname{val}(v)-2\bigr)v.
+$$
 
-- M. Baker and S. Norine, *Riemann–Roch and Abel–Jacobi theory on a finite graph*, Advances in Mathematics 215 (2007), 766–788.
-- N. L. Biggs, *Chip-firing and the critical group of a graph*, J. Algebraic Combin. 9 (1999), 25–45.
-- D. Dhar, *Self-organized critical state of sandpile automaton models*, Phys. Rev. Lett. 64 (1990), 1613–1616.
+The subtraction by $2$ is part of the standard graph-theoretic convention.
+
+**Proposition 4.3 (Canonical degree formula).** For every finite connected graph,
+
+$$
+\deg(K_G)=2g(G)-2.
+$$
+
+**Proof.** By the handshaking identity, $\sum_v\operatorname{val}(v)=2|E|$. Therefore
+
+$$
+\deg(K_G)=\sum_v(\operatorname{val}(v)-2)
+=2|E|-2|V|
+=2(|E|-|V|+1)-2
+=2g(G)-2.
+$$
+
+$\square$
+
+The formula explains why replacing valency minus $2$ by valency minus $1$ cannot be harmless: it increases the canonical degree by $|V|$ and breaks the fundamental relation with genus.
+
+## 5. Complete-graph calculations
+
+Let $K_n$ denote the loopless simple graph on $n\ge 1$ labelled vertices in which every pair of distinct vertices is joined by one edge.
+
+**Lemma 5.1 (Valency).** Every vertex of $K_n$ has valency $n-1$.
+
+**Proof.** A fixed vertex is adjacent to each of the other $n-1$ vertices and not to itself. $\square$
+
+**Theorem 5.2 (Canonical divisor of a complete graph).** For every vertex $v$ of $K_n$,
+
+$$
+K_{K_n}(v)=n-3.
+$$
+
+Equivalently,
+
+$$
+K_{K_n}=(n-3)\sum_{v\in V(K_n)}v.
+$$
+
+**Proof.** Substitute $\operatorname{val}(v)=n-1$ into $K_G(v)=\operatorname{val}(v)-2$. $\square$
+
+**Lemma 5.3 (Edge and valency counts).** The number of edges of $K_n$ is $n(n-1)/2$, and the sum of all valencies is $n(n-1)$.
+
+**Proof.** An edge is an unordered pair of distinct vertices, giving $\binom n2=n(n-1)/2$ choices. The valency sum is twice the edge count, or directly $n$ vertices times valency $n-1$. $\square$
+
+**Theorem 5.4 (Genus of a complete graph).** For $n\ge 1$,
+
+$$
+g(K_n)=\frac{(n-1)(n-2)}2.
+$$
+
+**Proof.** Apply the definition of genus:
+
+$$
+g(K_n)=\frac{n(n-1)}2-n+1
+=\frac{n^2-3n+2}{2}
+=\frac{(n-1)(n-2)}2.
+$$
+
+$\square$
+
+**Theorem 5.5 (Canonical degree of a complete graph).** For $n\ge 1$,
+
+$$
+\deg(K_{K_n})=n(n-3)=2g(K_n)-2.
+$$
+
+**Proof.** There are $n$ vertices, each with canonical coefficient $n-3$, so the degree is $n(n-3)$. Using Theorem 5.4,
+
+$$
+2g(K_n)-2=(n-1)(n-2)-2=n^2-3n=n(n-3).
+$$
+
+$\square$
+
+For $n=1$ and $n=2$, the canonical divisor has negative coefficients and the genus is $0$. The formulas remain arithmetically valid. The cases central to the requested comparison begin at $n=3$.
+
+## 6. Riemann–Roch and canonical rank
+
+**Theorem 6.1 (Baker–Norine Riemann–Roch).** Let $G$ be a finite connected graph and $D$ a divisor on $G$. Then
+
+$$
+r(D)-r(K_G-D)=\deg(D)+1-g(G).
+$$
+
+This theorem is the graph analogue of the classical Riemann–Roch formula. Its deep content lies in the symmetry between $D$ and the canonical complement $K_G-D$. The present paper uses the theorem to derive the canonical rank; the elementary formulas in Sections 3–5 do not depend on it.
+
+**Theorem 6.2 (Canonical rank).** On every nonempty finite connected graph satisfying the Riemann–Roch identity,
+
+$$
+r(K_G)=g(G)-1.
+$$
+
+**Proof.** Substitute $D=K_G$ in Theorem 6.1. Since $K_G-K_G=0$,
+
+$$
+r(K_G)-r(0)=\deg(K_G)+1-g(G).
+$$
+
+Theorem 3.2 gives $r(0)=0$, and Proposition 4.3 gives $\deg(K_G)=2g(G)-2$. Consequently
+
+$$
+r(K_G)=2g(G)-2+1-g(G)=g(G)-1.
+$$
+
+$\square$
+
+**Corollary 6.3 (Canonical rank on $K_n$).** For every $n\ge 1$ for which the connected complete graph is nonempty,
+
+$$
+r(K_{K_n})=\frac{(n-1)(n-2)}2-1.
+$$
+
+**Proof.** Combine Theorem 6.2 with Theorem 5.4. $\square$
+
+For $n=1$ and $n=2$, this gives rank $-1$, consistent with the negative canonical divisor on a genus-zero graph. For $n\ge 3$, the canonical rank is nonnegative.
+
+Under the dimension convention $\ell(D)=r(D)+1$, the same result is
+
+$$
+\ell(K_G)=g(G).
+$$
+
+Indeed, the dimension form of Riemann–Roch is
+
+$$
+\ell(D)-\ell(K_G-D)=\deg(D)+1-g(G),
+$$
+
+because adding $1$ to both rank terms cancels. At $D=K_G$, one must use $\ell(0)=1$. This yields $\ell(K_G)=g(G)$ and therefore $r(K_G)=g(G)-1$. There is no contradiction; there are only two shifted normalizations.
+
+## 7. Explicit cases
+
+The complete-graph formulas yield the following data:
+
+$$
+\begin{array}{c|c|c|c|c|c}
+n & \operatorname{val}(v) & K(v) & g & \deg K & r(K)\\ \hline
+3&2&0&1&0&0\\
+4&3&1&3&4&2\\
+5&4&2&6&10&5\\
+6&5&3&10&18&9
+\end{array}
+$$
+
+**Proposition 7.1 (The triangle).** On $K_3$, the canonical divisor is zero, the genus is $1$, the canonical degree is $0$, and the canonical rank is $0$.
+
+**Proof sketch.** Every vertex has valency $2$, hence canonical coefficient $0$. The graph has three edges and three vertices, so $g=3-3+1=1$. The degree and rank conclusions follow from $K=0$ and Theorem 3.2. $\square$
+
+**Proposition 7.2 (The tetrahedral graph).** On $K_4$, the canonical divisor has coefficient $1$ at every vertex, genus $3$, degree $4$, and rank $2$.
+
+**Proof sketch.** Substitute $n=4$ into Theorems 5.2, 5.4, 5.5, and Corollary 6.3. $\square$
+
+**Proposition 7.3.** On $K_5$, the canonical divisor has coefficient $2$ at every vertex, genus $6$, degree $10$, and rank $5$.
+
+**Proof sketch.** Substitute $n=5$ into the same formulas. $\square$
+
+**Proposition 7.4.** On $K_6$, the canonical divisor has coefficient $3$ at every vertex, genus $10$, degree $18$, and rank $9$.
+
+**Proof sketch.** Substitute $n=6$ into the same formulas. $\square$
+
+The coefficient, genus, and degree computations are elementary and unconditional. The rank values are consequences of the Riemann–Roch theorem, except that the $K_3$ value also follows directly because its canonical divisor is zero.
+
+## 8. Algorithms
+
+### 8.1 Closed-form invariant evaluation
+
+For complete graphs, no adjacency matrix is needed. Given $n$, compute
+
+$$
+\operatorname{val}=n-1,
+\quad K(v)=n-3,
+\quad g=\frac{(n-1)(n-2)}2,
+\quad \deg K=n(n-3),
+\quad r(K)=g-1.
+$$
+
+Each requires constant many integer operations, so the arithmetic-operation complexity is $O(1)$. In bit complexity, multiplication of $O(\log n)$-bit integers determines the cost.
+
+A robust implementation should verify the consistency identity $\deg K=2g-2$. This catches the valency-minus-$1$ convention error immediately.
+
+### 8.2 Simulating chip-firing on $K_n$
+
+Represent a divisor by an integer vector $(d_1,\ldots,d_n)$. Firing vertex $i$ once performs
+
+$$
+d_i\leftarrow d_i-(n-1),
+\qquad
+d_j\leftarrow d_j+1\quad(j\ne i).
+$$
+
+A direct update takes $O(n)$ time and preserves $\sum_j d_j$. If a firing script $f=(f_1,\ldots,f_n)$ is given, the complete-graph Laplacian satisfies
+
+$$
+(\Delta f)_i=n f_i-\sum_{j=1}^n f_j.
+$$
+
+Thus the entire scripted update can be computed in $O(n)$ time after one sum, rather than applying individual firings one by one.
+
+### 8.3 Reduced representatives and Dhar’s algorithm
+
+Choose a sink $q$. A divisor is $q$-reduced when it is nonnegative away from $q$ and every nonempty set of nonsink vertices contains a vertex whose chip count is smaller than its number of edges leaving that set. Dhar’s burning algorithm tests this condition. Begin with the sink burned; repeatedly burn any unburned vertex that has fewer chips than edges to burned vertices. If all vertices burn, the divisor is reduced. If some remain, firing the unburned set advances the reduction process.
+
+For a dense graph represented by an adjacency matrix, a straightforward burning pass costs $O(n^2)$. On $K_n$, symmetry and sorted coordinates permit faster bookkeeping. Reduction is fundamental because each divisor class has a unique $q$-reduced representative, turning equivalence questions into finite inequalities.
+
+### 8.4 Finite rank testing
+
+To test whether $r(D)\ge q$, enumerate effective divisors $E$ of degree $q$ and test whether $D-E$ is equivalent to an effective divisor, for example via sink reduction. There are
+
+$$
+\binom{n+q-1}{q}
+$$
+
+weak compositions of $q$ into $n$ vertex counts. The naive algorithm is therefore combinatorial in $q$ and $n$. It is useful for small examples but not the preferred method for large instances. Parking-function descriptions and rank algorithms exploit structure to avoid exhaustive enumeration.
+
+## 9. Structural connections and applications
+
+### 9.1 The critical group
+
+Degree-zero divisors form the lattice
+
+$$
+A_{n-1}=\left\{x\in\mathbb Z^n:\sum_i x_i=0\right\}.
+$$
+
+Principal divisors form the image of the graph Laplacian inside this lattice. Their quotient is the critical group, also called the Jacobian or sandpile group. For $K_n$, the Laplacian matrix is $nI-J$, where $J$ is the all-ones matrix. On the real zero-sum hyperplane, $J$ vanishes, so the Laplacian acts as multiplication by $n$. Integrality leaves a nontrivial quotient whose structure is $(\mathbb Z/n\mathbb Z)^{n-2}$ and whose order is $n^{n-2}$.
+
+The order agrees with the number of spanning trees of $K_n$. This is a manifestation of the matrix-tree theorem and Cayley’s formula. Thus chip-firing classes and labelled trees are enumerated by the same number for structural reasons.
+
+### 9.2 Parking functions and reduced divisors
+
+After choosing a sink and sorting nonsink coordinates, reducedness becomes a family of inequalities closely related to parking functions. A classical parking function is a sequence whose sorted form $(a_1,\ldots,a_{n-1})$ satisfies $a_i<i$ under a standard zero-based convention. Burning explains this condition: each successive car, or vertex, must find enough previously available capacity, or burned neighbors.
+
+This correspondence supplies finite normal forms for divisor classes. It is also the natural route toward a complete-graph proof of Riemann–Roch: canonical complementation should reverse the relevant defect statistic on reduced configurations.
+
+### 9.3 Permutohedral geometry
+
+Real divisors modulo constants live in an $(n-1)$-dimensional quotient. Hyperplanes where coordinates coincide divide this space into Weyl chambers of type $A$. Sorting a divisor chooses a chamber, and firing vectors lie in the type-$A$ root lattice. The resulting fan is related to the normal fan of the permutohedron. Since $K_{K_n}$ is the symmetric vector with every coordinate $n-3$, the map $D\mapsto K-D$ acts as an affine reflection. The rank correction in Riemann–Roch can therefore be sought as an integer-point shadow of an order-reversing chamber duality.
+
+### 9.4 Network interpretations
+
+The Laplacian also governs electrical potentials, diffusion, and consensus. Chip-firing differs from continuous flow because firing scripts are integral and effectiveness imposes inequalities, but the conservation law is shared. Critical groups measure an arithmetic obstruction invisible over the real numbers. This makes divisor theory relevant to discrete network dynamics: local redistribution may be easy over continuous quantities yet retain finite torsion when resources are indivisible.
+
+## 10. Discussion
+
+The complete-graph calculation separates three logical layers. First, graph counting gives valency, edge count, genus, and canonical degree. Second, the definition of rank and degree invariance give $r(0)=0$. Third, the Riemann–Roch identity supplies canonical duality and therefore $r(K)=g-1$. Keeping these layers distinct prevents the elementary numerical checks from being mistaken for a proof of the full Riemann–Roch theorem.
+
+The correction to the proposed canonical divisor is forced in several independent ways. Local definition gives $n-3$. Global degree gives $n(n-3)$. Topology gives $2g-2=n(n-3)$. A proposed coefficient $n-2$ fails both local convention and global consistency. Likewise, the rank/dimension shift can be detected by the zero divisor: $r(0)=0$ but $\ell(0)=1$.
+
+The examples $K_3$ through $K_6$ illustrate increasingly positive canonical divisors. The triangle is genus one and has trivial canonical divisor, paralleling the degree-zero canonical class of a genus-one curve. For $n\ge 4$, the canonical divisor is effective and its rank grows quadratically with $n$, tracking the cycle-space dimension rather than merely the local valency.
+
+## 11. Future work
+
+A direct parking-function proof of Riemann–Roch for $K_n$ would complete the structural narrative. The main task is to express rank as a minimum defect over reduced representatives and show that canonical complementation reverses that defect.
+
+A second direction is an explicit integral derivation of the critical group as $(\mathbb Z/n\mathbb Z)^{n-2}$ using the type-$A$ root lattice and Smith normal form. This would clarify the one global relation that distinguishes the quotient from naive coordinatewise reduction modulo $n$.
+
+A third direction is to construct mutually inverse bijections among rooted spanning trees, recurrent chip configurations, and sink-reduced divisor classes. The burning algorithm should provide the maps and explain the common count $n^{n-2}$ without relying only on determinant evaluation.
+
+Finally, the canonical involution should be studied on the permutohedral fan. Sorting selects Weyl chambers, while $D\mapsto K-D$ reverses inequalities around a symmetric lattice point. A polyhedral account could turn the rank correction into a visible lattice-point duality and suggest algorithms extending beyond complete graphs.
+
+## 12. A reproducible numerical protocol
+
+The principal formulas can be checked without constructing firing classes. For each integer $n\ge 1$, first count $n-1$ neighbors at a fixed vertex. Subtract $2$ to obtain the canonical coefficient $n-3$. Multiply by $n$ for the canonical degree. Independently count unordered vertex pairs to obtain $n(n-1)/2$ edges, then subtract $n-1$ to obtain the genus. Finally compare the canonical degree with $2g-2$. For canonical rank, invoke Riemann–Roch only after these independent quantities have been established. This order prevents the desired rank from being fed back into an earlier definition.
+
+The protocol also distinguishes theorem testing from theorem proving. Agreement for $n=3,4,5,6$ illustrates the formulas and catches convention errors, but finite examples alone cannot establish an identity for every $n$. The general elementary formulas follow from symbolic counting, while the rank formula follows from the general Riemann–Roch theorem. Numerical software should preserve this distinction in its output: it may label valency, genus, and degree as direct computations and canonical rank as a Riemann–Roch consequence.
+
+## 13. Conclusion
+
+For the complete graph $K_n$, the standard canonical divisor is constant with coefficient $n-3$, not $n-2$. Its genus and degree are
+
+$$
+g(K_n)=\frac{(n-1)(n-2)}2,
+\qquad
+\deg(K_{K_n})=n(n-3)=2g(K_n)-2.
+$$
+
+The zero divisor on every nonempty graph has rank $0$. Consequently, the Riemann–Roch theorem evaluated at the canonical divisor gives
+
+$$
+r(K_{K_n})=g(K_n)-1
+=\frac{(n-1)(n-2)}2-1.
+$$
+
+The values for $n=3,4,5,6$ are respectively $0,2,5,9$. The apparent contradictory value disappears once rank is distinguished from the shifted dimension $\ell=r+1$ and the canonical coefficient is defined using valency minus $2$. These corrections reveal the intended synthesis: local chip-firing, global cycle topology, and canonical duality are different facets of one discrete Riemann–Roch theory.
