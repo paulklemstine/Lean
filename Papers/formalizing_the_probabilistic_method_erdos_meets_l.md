@@ -1,69 +1,43 @@
 # Computational Evidence
 
-This note records the small-case computations that guided the formalization in
-`ErdosRamseyLowerBound.lean`, `TuranEdgeBound.lean`, and `ProbabilisticMethod.lean`.
+## Small-case calculations
 
-## 1. Erdős's counting inequality `2 · C(n,k) < 2^{C(k,2)}`
+For the Ramsey first-moment criterion
 
-The counting theorem `not_arrows_of_two_mul_choose_lt` shows that whenever
-`2 * (n.choose k) < 2 ^ (k.choose 2)`, the complete graph `K_n` has a 2-colouring with no
-monochromatic `K_k`, i.e. `R(k,k) > n`.
+`2 · C(n,k) < 2^{C(k,2)}`,
 
-For the explicit Erdős bound `R(k,k) > 2^{k/2}` we instantiate `n = 2^{⌊k/2⌋}`. The relevant
-inequality `2 * (2^{⌊k/2⌋}.choose k) < 2 ^ (k.choose 2)` was checked for `k = 3..20`
-(all `true`):
+the verified concrete instance used in the development is `n = 16`, `k = 10`:
 
-```
-#eval (List.range 21).filter (3 ≤ ·) |>.map
-  (fun k => (k, decide (2 * (2^(k/2)).choose k < 2^(k.choose 2))))
--- [(3,true),(4,true),(5,true),(6,true),(7,true),(8,true),(9,true),(10,true),
---  (11,true),(12,true),(13,true),(14,true),(15,true),(16,true),(17,true),
---  (18,true),(19,true),(20,true)]
-```
+| quantity | value |
+|---|---:|
+| `C(16,10)` | 8008 |
+| `2 · C(16,10)` | 16016 |
+| `C(10,2)` | 45 |
+| `2^45` | 35184372088832 |
 
-Sample slack (`RHS − LHS`), showing the exponential comfort margin:
+Thus the bad-coloring union bound is far below the total coloring count.
 
-| k | ⌊k/2⌋ | n = 2^{⌊k/2⌋} | 2·C(n,k) | 2^{C(k,2)} |
-|---|-------|---------------|----------|------------|
-| 3 | 1     | 2             | 0        | 8          |
-| 4 | 2     | 4             | 2        | 64         |
-| 5 | 2     | 4             | 0        | 1024       |
-| 6 | 3     | 8             | 56       | 32768      |
-| 7 | 3     | 8             | 16       | 2097152    |
-| 8 | 4     | 16            | 25740    | 268435456  |
+For balanced two-part Turán graphs on `2m` vertices, the first cases are:
 
-The two integer-arithmetic ingredients of the general proof were isolated and checked:
+| `m` | vertices | edges | `4 · edges` | vertices² |
+|---:|---:|---:|---:|---:|
+| 1 | 2 | 1 | 4 | 4 |
+| 2 | 4 | 4 | 16 | 16 |
+| 3 | 6 | 9 | 36 | 36 |
+| 4 | 8 | 16 | 64 | 64 |
 
-* `half_mul_self_le`: `⌊k/2⌋ · k ≤ C(k,2) + ⌊k/2⌋` (equality for even `k`).
-* `two_pow_half_succ_lt_factorial`: `2^{⌊k/2⌋+1} < k!` for `k ≥ 3`.
+These cases exhibit exact equality in Mantel’s bound.
 
-These yield `2 · C(2^{⌊k/2⌋}, k) < 2^{C(k,2)}` via the descending-factorial bound
-`k! · C(n,k) = n^{\underline k} ≤ n^k`.
+## OEIS search results
 
-## 2. Concrete Ramsey lower bounds
+The balanced bipartite edge counts are the squares `1, 4, 9, 16, 25, …`, OEIS A000290. No sequence identification is needed for the Ramsey inequality, which compares binomial and exponential expressions directly.
 
-The general theorem specializes (via `decide` on the finite arithmetic side) to:
+## Counterexample hunt
 
-* `not_arrows_5_4 : ¬ Arrows 5 4`  — `R(4,4) > 5` (indeed `2·C(5,4) = 10 < 2^6 = 64`).
-* `not_arrows_8_6 : ¬ Arrows 8 6`  — `R(6,6) > 8 = 2^{6/2}` (`2·C(8,6) = 56 < 2^{15}`).
+The unconditional finite conditional-avoidance statement fails if the outcome type is empty: no avoiding outcome can exist even when the index type is also empty. The corrected theorem explicitly assumes that the finite outcome space is nonempty.
 
-## 3. Turán's edge bound
+The proposed Moser–Tardos runtime `O(n d log(1/p))` was not used: its exact scope depends on the variable model, event representation, and cost model. The present results therefore make no runtime claim.
 
-`CliqueFree.card_edgeFinset_le_turan_real` gives `|E(G)| ≤ (1 − 1/r)·n²/2` for `K_{r+1}`-free
-`G`. Sanity checks against the exact optimum (the Turán graph `T(n,r)`):
+## Tables and interpretation
 
-| n | r | (1−1/r)·n²/2 | max edges (Turán graph) |
-|---|---|--------------|--------------------------|
-| 4 | 2 | 4.0          | 4  (K_{2,2})             |
-| 6 | 2 | 9.0          | 9  (K_{3,3})             |
-| 6 | 3 | 12.0         | 12 (K_{2,2,2})           |
-| 5 | 2 | 6.25         | 6                        |
-
-The real bound is tight when `r | n` and otherwise slightly loose, as expected.
-
-## 4. Independent Lovász Local Lemma
-
-For mutually independent events, `iIndep_measure_iInter_compl_eq_prod` gives
-`P(⋂ Aᵢᶜ) = ∏ (1 − P(Aᵢ))`, positive whenever every `P(Aᵢ) < 1`. This is the `d = 0`
-degenerate case of the LLL and needs no counting; it is verified symbolically rather than
-numerically.
+The two tables display opposite extremal uses of counting. In Ramsey theory, the forbidden colorings occupy fewer than all colorings, leaving an avoiding witness. In Turán theory, balanced bipartition attains the maximum edge count permitted by triangle-freeness.

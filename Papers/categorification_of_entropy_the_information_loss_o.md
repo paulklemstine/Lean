@@ -1,53 +1,32 @@
-# Computational Evidence — Functorial Entropy (Information Loss)
+# Computational Evidence
 
-We measure the information a functor `F : C → D` destroys by the **conditional
-entropy** of the domain object given its image, under the uniform distribution on
-the objects of `C`:
+## Small-case calculations
 
-```
-    H(F) = -∑_c (1/n) log( p(c | F c) )  =  ∑_d (c_d / n) · log c_d,
-```
+For a uniform map with `n = mk` source states, `m` attained outputs, and fibers of size `k`, each output has probability `1/m`. Hence the output entropy is `log m`, the expected logarithmic fiber size is `log k`, and their sum is `log n`.
 
-where `c_d = |F⁻¹(d)|` is the fiber cardinality and `n = |Ob C|`.
+| Source states | Attained outputs | Fiber size | Output entropy | Fiber loss |
+|---:|---:|---:|---:|---:|
+| 6 | 3 | 2 | `log 3` | `log 2` |
+| 8 | 4 | 2 | `log 4` | `log 2` |
+| 12 | 3 | 4 | `log 3` | `log 4` |
+| 12 | 1 | 12 | `0` | `log 12` |
 
-> **Why not the naive marginal entropy `-∑ p(d) log p(d)`?**
-> The description's naive formula does *not* vanish for faithful functors: an
-> injective map into an `n`-point target already has marginal entropy `log n`.
-> The information *lost* is the residual uncertainty about `c` after observing
-> `F c`, i.e. the conditional entropy above. With this (standard) correction the
-> conjectures "`H(F)=0` iff faithful" and "`H(F)=log(|C|/|D|)` for uniform
-> fibers" both become true.
+The six-to-three residue channel is included as a concrete theorem: all three residue classes have exactly two elements.
 
-## 1. Small-case calculations
+## Counterexample hunt
 
-| Functor (on objects)                    | fiber sizes | H(F)        |
-|-----------------------------------------|-------------|-------------|
-| `id : Bool → Bool`                      | `1,1`       | `log 1 = 0` |
-| `fst : Bool × Bool → Bool`              | `2,2`       | `log 2`     |
-| constant `Fin n → Fin 1`                | `n`         | `log n`     |
-| `Fin 6 → Fin 2` uniform (3 each)        | `3,3`       | `log 3`     |
-| `Fin 6 → Fin 3` uniform (2 each)        | `2,2,2`     | `log 2`     |
+Three proposed identifications fail on elementary finite examples.
 
-Uniform check: `H = (1/n)·(#fibers)·k·log k = log k` with `k = n / #fibers`,
-matching `log(|C|/|D|)`.
+1. The expression `-∑ p log p` is not information loss. A constant map has one output of probability one, so this expression is zero, although all source ambiguity remains. Its fiber loss is `log n`.
+2. For a uniform `k`-to-one map onto `m` outputs, output entropy is `log m`, not `log k` or `log(n/m)` unless `m = k` accidentally.
+3. Zero object loss cannot characterize categorical faithfulness: faithfulness concerns injectivity on morphisms, while object loss only sees the object function.
 
-## 2. Faithfulness ⇔ zero entropy
+No counterexample was found to the corrected finite chain rule or to the characterization of zero fiber loss by injectivity of the object map; both are established in the accompanying development.
 
-For any `F`, every fiber term `(c_d/n) log c_d ≥ 0`, and it is `0` exactly when
-`c_d ∈ {0,1}`. Thus `H(F)=0` iff all fibers are singletons iff `F` is injective
-on objects. Sampled random maps `Fin m → Fin k`: `H = 0` observed **iff** the map
-was injective, no counterexamples in the tested range `m,k ≤ 6`.
+## OEIS search results
 
-## 3. Data-processing (monotonicity) check
+No OEIS search is relevant: the central data are arbitrary finite fiber partitions rather than a distinguished integer sequence.
 
-For composites `Fin m --f--> Fin k --g--> Fin j`, always `H(f) ≤ H(g∘f)`:
-coarsening the target can only lose more. This follows from superadditivity of
-`x ↦ x log x`: for nonnegative `a_i` with sum `S`, `∑ a_i log a_i ≤ S log S`
-since each `a_i ≤ S`. No violation found in sampled compositions.
+## Tables and plots
 
-## 4. Upper bound
-
-`H(F) ≤ log n` for every `F`, with equality for the constant functor; verified on
-all tabulated cases (e.g. constant `Fin n → Fin 1` attains `log n`).
-
-All of the above are proved in `FunctorialEntropy.lean` (0 sorries).
+The table above is the relevant finite profile. A plot would duplicate the elementary logarithmic dependence without adding discriminatory evidence.
