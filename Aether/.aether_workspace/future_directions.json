@@ -4142,11 +4142,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "93551ae8",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -4158,7 +4158,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0101",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-19T20:26:53.319744+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Bypassed",
       "lineage_refs": [],
@@ -4173,7 +4173,7 @@
       "source": "",
       "source_exp_id": "2607.12131v1",
       "source_path": "http://arxiv.org/abs/2607.12131v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-16T06:51:57.150644+00:00",
       "title": "ArXiv paper: On strongly regular signed graphs of higher girth"
@@ -21385,7 +21385,6 @@
     "famous_subtask",
     "famous_subtask",
     "famous_subtask",
-    "famous_subtask",
     "cross_domain_bridge",
     "famous_subtask",
     "famous_subtask",
@@ -21397,6 +21396,7 @@
     "cross_domain_bridge",
     "famous_subtask",
     "famous_subtask",
+    "cross_domain_bridge",
     "cross_domain_bridge"
   ]
 }

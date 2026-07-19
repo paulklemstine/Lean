@@ -407,26 +407,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "7286e7be",
-    "description": "Formalize a logic where contradictions do not explode and beliefs can be retracted. Prove that paraconsistent logics can model dream-like reasoning where impossible objects coexist. Show that such logics correspond to topological spaces where open sets are not closed under arbitrary union.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0451",
-    "lineage_refs": [],
-    "priority_score": 0.84,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T11:51:31.534494+00:00",
-    "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "ca6fc5a2",
     "description": "Construct a consistent formal system where the Liar sentence, Berry's paradox, and Russell's paradox are all provable theorems rather than contradictions. Prove this requires rejecting classical logic in favor of a paraconsistent logic with a nontrivial inconsistency-tolerant truth predicate. Show this system proves its own soundness.",
     "domain_bridges": [],
@@ -7040,6 +7020,26 @@
     "status": "available",
     "timestamp": "2026-07-19T20:26:03.577332+00:00",
     "title": "**Conjecture.** If two machine substrates simulate one another with polynomially"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## 1. Last-occurrence normal forms for revision histories\n\n**Conjecture.** Every finite sequence of signed-literal revisions has a unique normal form containing, for each atom mentioned by the sequence, exactly the sign appearing at that atom’s last occurrence; atoms never revised retain their initial status.\n\nThe key insight is that revisions at distinct atoms should commute, while contrary revisions at the same atom obey a last-write-wins law.\n\n**Why now?** Single-step consistency preservation and the demonstrated noncommutativity of contrary revisions isolate precisely the local rewriting rules needed for a global normalization theorem.\n\n## 2. Revision paths and cubical state geometry\n\n**Conjecture.** For a finite atom set, consistent signed states and single-atom revisions form an oriented cubical graph whose strongly connected components are classified by the set of atoms that have been assigned a sign.\n\nThe key insight is that a consistent state chooses at most one of two complementary vertices over each atom, while revision changes one coordinate without disturbing the others.\n\n**Why now?** The exact equivalence between consistency and conflict-freedom supplies a combinatorial complex, and the revision invariant supplies a well-defined dynamics on its faces.\n\n## 3. Compact completion of finitary dream states\n\n**Conjecture.** The ideal completion of the poset of finite signed states is homeomorphic, under a natural Scott topology, to the space of arbitrary signed states; consistent ideals correspond exactly to globally consistent states.\n\nThe key insight is that arbitrary states are directed unions of finite fragments even though the finite fragments themselves are not closed under arbitrary unions.\n\n**Why now?** The arbitrary-union obstruction identifies the missing operation, while finite-union closure suggests ideal completion as the canonical repair rather than an ad hoc enlargement.\n\n## 4. Persistent non-explosion under irrelevant revision\n\n**Conjecture.** If a state contains both signs of one atom and omits a literal over a distinct atom, then every revision history avoiding that distinct atom preserves omission of that literal, regardless of how often the contradictory atom is revised.\n\nThe key insight is that revision is local to one complementary pair, so unrelated coordinates should satisfy a frame property.\n\n**Why now?** The two-atom countermodel establishes the base case, and the local definition of revision makes the proposed persistence law sharply testable by induction on histories.\n\n## 5. Semantic information retained by downward closure\n\n**Conjecture.** For finite complementary-attack frameworks, the maximal faces of the conflict-free complex determine all total consistent belief states, while the face poset together with revision orientation determines the atom partition into complementary pairs up to relabeling.\n\nThe key insight is that topology alone records compatibility, whereas oriented revision records which incompatibilities arise from paired signs of the same atom.\n\n**Why now?** The current bridge identifies consistent states with conflict-free faces, but also shows that semantics and finitary topology are distinct; adding dynamics may recover the semantic information forgotten by downward closure.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0488",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "7286e7be",
+    "status": "available",
+    "timestamp": "2026-07-19T20:26:28.580190+00:00",
+    "title": "**Conjecture.** Every finite sequence of signed-literal revisions has a unique n"
   },
   {
     "ambition_level": "extension",
