@@ -58,10 +58,16 @@ colours then some edge is fully coloured.
 -/
 theorem exists_fullyColoured_of_ne (c : ℕ → Bool) (n : ℕ) (h : c 0 ≠ c n) :
     ∃ i < n, c i ≠ c (i + 1) := by
-  contrapose! h;
-  induction' n with n ih;
-  · rfl;
-  · grind
+  have hodd : (fullyColoured c n).card % 2 = 1 := by
+    rw [parity]
+    simp [h]
+  have hnonempty : (fullyColoured c n).Nonempty := by
+    by_contra hempty
+    rw [Finset.not_nonempty_iff_eq_empty.mp hempty] at hodd
+    simp at hodd
+  obtain ⟨i, hi⟩ := hnonempty
+  simp [fullyColoured] at hi
+  exact ⟨i, hi.1, hi.2⟩
 
 /-
 **Oriented Sperner existence in 1D.**  A Sperner colouring of `0, …, n`
