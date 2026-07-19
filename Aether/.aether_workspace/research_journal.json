@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "fff627f3",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions\n\n## 1. Baire-category classification of convergent prime rearrangements\n\n**Conjecture.** In the pointwise topology on the infinite symmetric group, the set of permutations for whic",
-      "quality_score": 0.77,
-      "sorry_count": 0,
-      "theorem_count": 7,
-      "timestamp": "2026-07-18T12:16:03",
-      "title": "Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
-    },
-    {
       "cycle_id": "4920904c",
       "domain": "Logic",
       "key_insight": "# Future Directions: Complex-Weighted Random Graph Spectra\n\n## 1. Directed fixed-amplitude circular law\nLet each ordered off-diagonal edge be present independently with probability `p`, give every pre",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-19T11:52:48",
       "title": "Surveillance Networks: Information-Theoretic Undetectability"
+    },
+    {
+      "cycle_id": "6d1b5339",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Infinite-Dimensional Chess\n\n## 1. Countable-Ordinal Realization by Finite Material\n\n**Conjecture.** Every countable ordinal is the game value of a winning position on an infinite",
+      "quality_score": 0.79,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-19T12:11:44",
+      "title": "Infinite-Dimensional Chess: Winning on the Hilbert Board"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "7c4372de",
-      "domain": "Applications",
-      "key_insight": "# Future directions\n\nThe formalization now provides a finite-set model of zero forcing, proves that the minimum is attained, establishes the general bound `Z(G) ≤ |V| - 1` for graphs without isolated",
-      "quality_score": 0.58,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-15T21:19:37",
-      "title": "ArXiv paper: Claw-free cubic graphs and zero forcing"
-    },
     {
       "cycle_id": "1a2ab56f",
       "domain": "Novelty",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-19T12:11:39",
       "title": "Transfinite Game Theory: Games That Last Forever"
+    },
+    {
+      "cycle_id": "6d1b5339",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Infinite-Dimensional Chess\n\n## 1. Countable-Ordinal Realization by Finite Material\n\n**Conjecture.** Every countable ordinal is the game value of a winning position on an infinite",
+      "quality_score": 0.79,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-19T12:11:44",
+      "title": "Infinite-Dimensional Chess: Winning on the Hilbert Board"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-19T12:11:39",
+  "last_updated": "2026-07-19T12:11:44",
   "open_questions": [
     {
       "context": "",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "ef699512",
-        "quality": 0.72,
-        "theorems": 6,
-        "title": "Crystallographic Groups and Music: The 17 Wallpaper Groups of Rhythm"
-      },
-      {
         "cycle_id": "19a1a7a8",
         "quality": 0.76,
         "theorems": 0,
@@ -3141,6 +3135,12 @@
         "quality": 0.6256666666666666,
         "theorems": 18,
         "title": "Cellular Automata at the Ordinals: Transfinite Computation"
+      },
+      {
+        "cycle_id": "6d1b5339",
+        "quality": 0.79,
+        "theorems": 0,
+        "title": "Infinite-Dimensional Chess: Winning on the Hilbert Board"
       }
     ],
     "Bridges": [
