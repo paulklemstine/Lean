@@ -1,201 +1,151 @@
-# The Mathematics Every Alien Must Discover
+# The Laws of Computation an Alien Civilization Cannot Avoid
 
-Imagine, somewhere across the gulf of interstellar space, a civilization utterly
-unlike our own. Perhaps its members are clouds of plasma dancing in a star's
-corona, or crystalline lattices growing in the cold of a rogue planet, or vast
-networks of chemical signals in a planet-wide ocean. They share none of our
-biology, none of our history, none of our accidents of language. And yet — if
-they build machines that compute, if they write anything we would recognize as a
-*program* — they will inevitably run into exactly the same wall we did.
+Imagine first contact not as a meeting of bodies, but of algorithms. A signal arrives bearing a proof, a star map, or a compressed history. Its authors may think with crystal defects, chemical waves, engineered organisms, or structures we have no words for. Their hardware could make our fastest machines look like abacuses. Would they nevertheless recognize the same boundaries between easy and difficult problems?
 
-They will discover that some questions cannot be answered by any program at all.
-They will discover that the universe of "problems" is bottomless, an infinite
-staircase with no top step. They will discover that a program can be made to
-print its own source code, and that no system powerful enough to talk about all
-its own procedures can also decide the truth of all its own questions. And if
-they somehow build a *hypercomputer* — a machine that transcends the ordinary
-limits of computation — they will find that the wall has simply moved up one
-floor and is waiting for them there too.
+A precise answer begins by separating computation from the material that performs it. The central conclusion is both strong and carefully qualified: **complexity is invariant under resource-respecting semantic equivalence**. If two computational substrates can translate programs back and forth without changing what they accept and without inflating the chosen resource, then they classify every decision problem identically at every resource level. They also agree about deterministic computation, witness-assisted computation, separations in an infinite hierarchy, and any successive “jump” to harder problems.
 
-None of this is an accident of silicon, or of carbon, or of the particular
-machines we happen to have built. It is a theorem about the *shape* of
-computation itself. This article is about that theorem, and about why the deepest
-truths of computer science are not inventions but discoveries — facts as
-universal as the fact that a circle's circumference is $2\pi$ times its radius.
+This is not a solution of the famous P-versus-NP problem. It says something different: for exactly equivalent substrates, the truth or falsity of the corresponding deterministic-versus-witness equality cannot depend on the substance of the computer.
 
-## One idea behind every impossibility
+## What counts as a computational world?
 
-In our own history, the great impossibility results arrived one at a time, each
-looking like its own separate marvel. Cantor proved that there is no way to list
-all the real numbers — that infinity comes in different sizes. Russell found a
-paradox at the heart of naive set theory: the set of all sets that do not contain
-themselves. Gödel showed that any consistent mathematical system rich enough to
-describe arithmetic must contain true statements it cannot prove. Turing proved
-that no program can decide, in general, whether another program will eventually
-halt. Tarski showed that no language can consistently define its own notion of
-truth.
+Fix a collection $X$ of possible inputs. A **machine model** consists of three ingredients: a collection of programs; a statement saying whether program $p$ accepts input $x$; and a natural-number cost $c(p,x)$. The cost might count time steps, memory cells, energy quanta, communication rounds, or another agreed resource.
 
-For decades these looked like five different mountains. But they are five faces
-of a single peak. There is one clean statement of pure logic — nothing about
-machines, nothing about physics, nothing about bits — from which every one of
-them follows by choosing a couple of ingredients. It is called the **fixed-point
-theorem**, and it goes like this.
+A language is simply a set $L\subseteq X$. Program $p$ **decides** $L$ when it accepts exactly the members of $L$. Given a pointwise budget $b:X\to\mathbb N$, the language lies in the bounded class $\mathcal C_M(b)$ when some program on model $M$ decides $L$ and satisfies
 
-Suppose we have a collection $A$ of "codes," and each code names a function that
-takes a code and produces an "answer" of some type $B$. Write $\varphi(a)$ for
-the function named by code $a$; then $\varphi(a)(x)$ is the answer that code $a$
-gives when handed code $x$. Call the coding scheme **complete** if *every*
-function from codes to answers is named by some code — nothing is left out.
+$$
+c_M(p,x)\le b(x)
+$$
 
-**The Fixed-Point Theorem.** *If the coding scheme is complete, then every
-transformation $f$ of answers has a fixed point: some answer $b$ with
-$f(b) = b$.*
+for every input $x$.
 
-The proof is a single, almost magical line. Consider the "diagonal" function
-$d(x) = f(\varphi(x)(x))$ — feed each code to itself, then bend the result with
-$f$. Because the scheme is complete, some code $a$ names this very function, so
-$\varphi(a) = d$. Now evaluate at $a$:
-$$\varphi(a)(a) = d(a) = f(\varphi(a)(a)).$$
-The value $b = \varphi(a)(a)$ satisfies $f(b) = b$. Done.
+This spare definition is intentionally indifferent to architecture. It can describe familiar computers, distributed networks, biological information processors, or hypothetical machines. What matters is behavior and cost.
 
-That is the whole engine. Everything else is a matter of what you plug in.
+## Translation is the bridge
 
-## Turning the crank
+Suppose model $M$ can be simulated by model $N$. Such a simulation translates every $M$-program $p$ into an $N$-program $T(p)$. It must preserve acceptance:
 
-Read the theorem *backwards* and it becomes a machine for proving that things are
-impossible. If some transformation $f$ has *no* fixed point, then no coding
-scheme can be complete — something must always slip through the net.
+$$
+N\text{ accepts }T(p)\text{ on }x
+\quad\Longleftrightarrow\quad
+M\text{ accepts }p\text{ on }x.
+$$
 
-Choose the answers to be just $\{\text{true}, \text{false}\}$ and let $f$ be
-logical negation, which flips true and false and so obviously has no fixed point
-(true is not false). Instantly you get **Cantor's theorem**: no scheme can name
-every true/false function on $A$. The function $x \mapsto \text{not }
-\varphi(x)(x)$ disagrees with every $\varphi(a)$ at the point $a$, so it is never
-named. In the language of computation, let the codes be *programs* and let
-$\varphi(a)(x)$ mean "program $a$ accepts program $x$." The unnamed function is
-the **halting problem**: no program decides whether an arbitrary program halts.
-Let the answers be *sentences* and $f$ be "prepend a negation," and out drops
-**Gödel's incompleteness**. Let $\varphi(a)(x)$ mean "$x$ belongs to the set
-coded by $a$" and you recover **Russell's paradox**. Five mountains, one peak.
+It must also have a monotone overhead function $h:\mathbb N\to\mathbb N$ such that
 
-The point for our alien friends is that this argument mentions no machine at all.
-It never says what a program *is*. It needs only the notions of a code, a
-function, and a transformation without a fixed point. Any civilization that can
-express "a function from codes to answers" already has everything the proof
-requires. The obstruction is not in the hardware. It is in the mathematics, and
-the mathematics is the same everywhere.
+$$
+c_N(T(p),x)\le h(c_M(p,x)).
+$$
 
-## Modeling computation without committing to a machine
+Monotonicity means that a larger original cost never receives a smaller advertised allowance. Simulations compose: if $M$ translates to $N$ with overhead $h_1$, and $N$ translates to $K$ with overhead $h_2$, then $M$ translates to $K$ with overhead $h_2\circ h_1$. The identity translation has identity overhead. Thus models and simulations form a coherent calculus of compilation.
 
-To make "any notion of computation" precise without smuggling in our own
-prejudices, we strip the idea down to its bones. A **computation model** is
-nothing more than a type of programs together with a rule that says, for each
-pair of programs $p$ and $q$, whether $p$ *accepts* the code of $q$ — a single
-true/false answer. No tapes. No clocks. No memory. No assumption that programs
-are finite, or that the acceptance rule is itself computable. Just programs, and
-a yes/no relation between them.
+The first transport theorem follows immediately but carries the whole story.
 
-Even at this extreme level of generality, the diagonal bites. Define the
-**diagonal behavior** of a model: on input $q$, return the *opposite* of what $q$
-says about itself. Then no program in the model realizes this behavior, because
-any program $p$ that tried would have to disagree with itself on the input $p$.
+**Bounded-Class Transport Theorem.** If $L\in\mathcal C_M(b)$ and $M$ is simulated by $N$ with monotone overhead $h$, then
 
-**Substrate Independence.** *Every computation model — whatever its programs are
-made of — contains a decision behavior that none of its own programs can
-perform.* There are no hypotheses to check. The gap between what can be *asked*
-and what can be *computed* is a permanent feature of the landscape, present in
-every model at once.
+$$
+L\in\mathcal C_N(h\circ b).
+$$
 
-## The hypercomputer's false hope
+Indeed, translate a deciding program. Its answers remain the same. Since its old cost is at most $b(x)$, monotonicity turns the simulation bound into a new cost at most $h(b(x))$.
 
-A natural dream is to escape the wall by building a stronger machine. Give every
-program access to an **oracle** — a magical black box that answers some question
-no ordinary computer could, perhaps even a question that is not computable by any
-conventional means at all. This is the mathematical stand-in for a
-*hypercomputer*. Surely infinite power dissolves the obstruction?
+The theorem can be pictured as a customs declaration attached to every migrating algorithm: meaning passes unchanged, but resource consumption must be declared. This distinction separates a universal law from a merely optimistic slogan.
 
-It does not. Let the oracle be *absolutely anything* — any function from programs
-to true/false, however exotic. The programs may consult it however they like. The
-same diagonal construction produces the model's **jump**: the behavior that
-contradicts each program's verdict on itself. And once again no program, oracle
-and all, can realize it.
+This theorem exposes an important limit. An arbitrary compiler does not preserve the original budget. A machine taking $b(x)$ steps may require $h(b(x))$ steps elsewhere. Claims of substrate independence are meaningless unless the overhead is stated.
 
-**The Hypercomputation Barrier.** *For every type of programs, every oracle
-whatsoever, and every acceptance rule, there is a decision behavior no
-oracle-program performs.* Adding power does not remove the wall; it only pushes
-the wall up one floor. The "jump" of a class of machines always lands strictly
-outside that class. A civilization of hypercomputers meets an exact analog of our
-own halting problem — a question their superpowered machines cannot settle,
-waiting for a still-more-powerful machine that will, in turn, have its own
-unanswerable question.
+## Exact equivalence and universal hierarchies
 
-## An infinite staircase of problems
+Call a simulation **exact** when its overhead is the identity function. This permits the translated program to cost no more than the original. Call two models **resource-equivalent** when each simulates the other. If both directions are exact, bounded classes coincide:
 
-If a single Cantor step lifts us from a set to the strictly larger set of its
-true/false questions, why stop at one step? Build a tower. Let level $0$ be some
-starting type $A$ — think of it as raw data. Let level $n+1$ be the set of all
-true/false procedures over level $n$: the *problems about* level $n$. Then level
-$2$ consists of problems about problems, level $3$ of problems about those, and
-so on forever.
+**Exact Substrate-Invariance Theorem.** For every language $L$ and every pointwise budget $b$,
 
-Two facts hold at every single step, and both are the two faces of Cantor's
-theorem. First, each level **embeds** into the next: any object at level $n$ can
-be encoded as the procedure "are you equal to me?", so decision-power never
-decreases as we climb. Second, there is **no way to cover** level $n+1$ from
-level $n$ — no map from a level onto the next is complete, by the diagonal.
-Combining them, each level is *strictly* richer than the one below.
+$$
+L\in\mathcal C_M(b)
+\quad\Longleftrightarrow\quad
+L\in\mathcal C_N(b).
+$$
 
-**The Universal Hierarchy.** *The tower $A,\; A\to\text{Bool},\;
-(A\to\text{Bool})\to\text{Bool},\ldots$ strictly increases at every step, and it
-has no maximal level.* Whatever height of decision-power a civilization reaches,
-a provably greater height exists above it. In the language of sizes of infinity,
-each level's cardinality is strictly smaller than the next's — the same
-$2^\kappa > \kappa$ that separates the counting numbers from the real line,
-iterated without end. This staircase is not something anyone designs. It is
-forced into existence the moment a civilization can form the idea of "a question
-about a question."
+The proof transports a program forward for one implication and backward for the other. No biology, physics, or instruction set appears in the conclusion.
 
-## The bright side: self-reference as a gift
+Now choose budgets $b_0,b_1,b_2,\ldots$. They define a **complexity hierarchy** whose $n$th level is
 
-Read forwards rather than backwards, the very same fixed-point theorem stops
-being a prophet of doom and becomes a source of creative power. In a programming
-system rich enough to represent all of its own program-transformations, *every*
-transformation has a fixed program — a program that the transformation leaves
-essentially unchanged. This is **Kleene's recursion theorem**, and it is the
-secret behind one of computing's most charming tricks: the **quine**, a program
-whose only output is its own source code.
+$$
+\mathcal H_M(n)=\{L\subseteq X:L\in\mathcal C_M(b_n)\}.
+$$
 
-Ask for the transformation "turn a program into the program that prints it," and
-the theorem hands you a program that prints *itself*. The same principle
-underlies compilers that compile their own source, systems that inspect and
-modify their own code, and — in living systems — the machinery by which a cell's
-instructions describe how to copy those very instructions. Self-reference, the
-same trick that generates every impossibility when read backwards, generates
-every self-reproducing structure when read forwards.
+Exact mutual simulation identifies this entire hierarchy level by level: $\mathcal H_M(n)=\mathcal H_N(n)$ for every $n$. Consequently, an adjacent separation is also invariant. There exists a language decidable at level $n+1$ but not at level $n$ on $M$ if and only if the same is true on $N$. The separating language itself can be carried across unchanged because languages are extensional sets of inputs, not pieces of hardware.
 
-And here is the deep duality that any advanced civilization must confront. A
-single system can be *complete for its own transformations* — able to name every
-way of rewriting its programs, giving it recursion, quines, and self-modification
-— and yet, in the very same breath, it can *never* be complete for its own
-true/false questions. Creativity and limitation are not opposites. They are the
-two readings of one theorem, distinguished only by whether the answers are
-programs or truth values.
+One may imagine two observatories exchanging programs together with certified cost ledgers. Exact equivalence says that neither side can hide an advantage in translation: each ledger remains valid after crossing the bridge and after returning.
 
-## Discovered, not invented
+A civilization may choose unfamiliar units, but if its translations preserve the agreed resource exactly, it sees the same ladder.
 
-We tend to think of computer science as a human artifact, a tower of clever
-conventions built on the accident of the transistor. This picture has it exactly
-backwards. The transistor is the accident; the structure it reveals is eternal.
-The halting problem, the endless hierarchy of harder and harder problems, the
-persistence of the barrier even under hypercomputation, and the bright gift of
-self-reference are not features of our machines. They are theorems about the bare
-notion of a function acting on the codes that name it.
+## The P-versus-NP shape
 
-That is why we can say, with a confidence that goes beyond speculation, what an
-alien civilization's computer scientists will know. They will not use our
-notation or our names. But they will have their own Cantor, their own Turing,
-their own Gödel and Kleene — because they will have the fixed-point theorem, and
-from it everything else follows. Across every possible mind and every possible
-machine, the mathematics of computation is one and the same. It is waiting to be
-found, not made, on every world where anyone ever learns to ask a question about
-a question.
+Witness computation adds a second input. Let $X$ be the ordinary input space and $W$ a space of certificates. A verifier model acts on pairs $(x,w)$. Given a verifier budget $q:X\times W\to\mathbb N$, a language $L$ belongs to the witness class when there is a verifier program $v$ such that
+
+$$
+x\in L
+\quad\Longleftrightarrow\quad
+\text{there exists }w\in W\text{ accepted by }v,
+$$
+
+and $c_V(v,(x,w))\le q(x,w)$ for every pair.
+
+Exact mutual simulations of verifier architectures preserve this witness class, just as exact simulations of ordinary machines preserve deterministic bounded classes. Put the two observations together:
+
+**Deterministic-versus-Witness Invariance Theorem.** Suppose $M$ and $N$ are exactly resource-equivalent decision models, while $V$ and $W$ are exactly resource-equivalent verifier models. For fixed bounds $b$ and $q$, the statement
+
+$$
+\forall L\subseteq X,
+\quad L\in\mathcal C_M(b)
+\Longleftrightarrow
+L\in\mathcal W_V(q)
+$$
+
+holds if and only if the analogous statement with $N$ and $W$ holds.
+
+This theorem captures the logical shape of P versus NP at fixed bounds. It neither proves equality nor separation. Instead, it proves that an exact change of substrate cannot flip the answer. If one civilization establishes a separating language under these shared resource conventions, another exactly equivalent civilization inherits it. If one establishes equality, the other inherits that too.
+
+## Reductions: reusing a solver
+
+Complexity theory advances by translating problems as well as programs. Suppose $f:X\to X$ reduces language $A$ to language $B$:
+
+$$
+x\in A\quad\Longleftrightarrow\quad f(x)\in B.
+$$
+
+Assume model $M$ can precompose any program for $B$ with $f$ without extra cost beyond running that program on $f(x)$. Then a $b$-bounded solver for $B$ becomes a $(b\circ f)$-bounded solver for $A$.
+
+**Reduction Transport Theorem.** Under this precomposition support,
+
+$$
+B\in\mathcal C_M(b)
+\quad\Longrightarrow\quad
+A\in\mathcal C_M(b\circ f).
+$$
+
+The algorithm is simple: transform $x$ into $f(x)$ and invoke the solver for $B$. The theorem clarifies why architectural support matters. Extensional reducibility describes logical equivalence of membership; complexity transfer additionally requires a cost-respecting way to perform the precomposition.
+
+## Why stronger machines still meet horizons
+
+Perhaps an alien civilization has “hypercomputers” that decide questions our machines cannot. Does greater power erase hierarchy? Not in the presence of a jump operation.
+
+Choose a seed language $S$ and an operation $J$ that maps a language to a harder one. Write $J^n(S)$ for the result of applying $J$ $n$ times. A **jump hierarchy** for model $M$ and budgets $b_n$ satisfies two laws:
+
+1. $J^n(S)$ is decidable within $b_n$.
+2. $J^{n+1}(S)$ is not decidable within $b_n$.
+
+The first law places each current problem at its tier; the second says the next jump escapes that tier.
+
+It follows that every adjacent pair is genuinely separated: $J^{n+1}(S)$ lies at level $n+1$ but not level $n$. No finite level stabilizes by already containing its own next jump. And exact mutual simulation preserves the whole jump hierarchy in both directions.
+
+**Jump-Barrier Invariance Theorem.** If $M$ and $N$ are exactly resource-equivalent, then $(S,J,(b_n))$ is a jump hierarchy on $M$ if and only if it is a jump hierarchy on $N$.
+
+So hypercomputation changes the starting altitude, not the logic of the mountain range. Once a stronger model has a successor operation satisfying the two jump laws, architecture changes cannot flatten its successive barriers.
+
+## The message in the signal
+
+The theory does not claim that every physically possible computer is equivalent, nor that every simulation is exact. Exactness is deliberately stringent. Real complexity classes such as polynomial time usually tolerate polynomial overhead, suggesting a broader next theorem based on admissible rescalings rather than identity cost. Concrete hypercomputational models also need concrete jump constructions; the abstract result tells us what follows once those constructions exist.
+
+Yet the established core is already a powerful guide to first contact. To compare computational sciences, we should not ask whether alien devices resemble ours. We should ask for translations: Do they preserve accepted languages? What is their overhead? Can programs travel both ways? Can verifiers and reductions travel too?
+
+If the answers meet the exact hypotheses, then complexity is not provincial knowledge. Hierarchy separations, witness barriers, and successive jumps belong to the structure of computation shared by both civilizations. Their processors may be grown, assembled, condensed, or woven into spacetime. The laws proved here do not care. They live in the bridge between meaning and resource—and any civilization that builds that bridge encounters the same mathematics.

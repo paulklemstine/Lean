@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "fc5e97aa",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions\n\n## 1. Stable exponents under dependency extraction\n\n**Conjecture.** For a fixed, versioned mathematical corpus, the tail exponent of theorem reuse remains within a narrow interval",
-      "quality_score": 0.76,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-18T15:01:35",
-      "title": "Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
-    },
-    {
       "cycle_id": "44b2da31",
       "domain": "Geometry",
       "key_insight": "# Future Directions: Chromatic Thresholds and Social-Network Palettes\n\n## 1. Clique minors as chromatic vanishing certificates\n\n**Conjecture.** If a finite graph contains a complete graph on `t` verti",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-19T20:08:39",
       "title": "Hypercomputation: Computing the Uncomputable"
+    },
+    {
+      "cycle_id": "238d5b60",
+      "domain": "Applications",
+      "key_insight": "# Future directions\n\n## Scope of the completed formalization\n\n`AlephOneSurface.lean` formalizes the mathematically well-typed replacement for the phrase “Hausdorff dimension exactly aleph-one.” In Mat",
+      "quality_score": 0.76,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-19T20:25:54",
+      "title": "Aleph-1 Surface: Geometry Between Dimensions"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "57481379",
-      "domain": "Physics",
-      "key_insight": "# Future Directions\n\n## 1. A complete phase-invariant certificate for the order-six cardinality-19 matrix\n\nConjecture: the eighth-root Butson matrix underlying the cardinality-19 construction has exac",
-      "quality_score": 0.75,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-07-16T03:35:50",
-      "title": "ArXiv paper: Quantum Latin Squares of Order Six with Cardinalities Nineteen, Twenty-One, and Twenty-"
-    },
     {
       "cycle_id": "57481379",
       "domain": "Physics",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-19T20:08:39",
       "title": "Hypercomputation: Computing the Uncomputable"
+    },
+    {
+      "cycle_id": "238d5b60",
+      "domain": "Applications",
+      "key_insight": "# Future directions\n\n## Scope of the completed formalization\n\n`AlephOneSurface.lean` formalizes the mathematically well-typed replacement for the phrase “Hausdorff dimension exactly aleph-one.” In Mat",
+      "quality_score": 0.76,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-19T20:25:54",
+      "title": "Aleph-1 Surface: Geometry Between Dimensions"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.73
     }
   ],
-  "last_updated": "2026-07-19T20:08:39",
+  "last_updated": "2026-07-19T20:25:54",
   "open_questions": [
     {
       "context": "",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "a88a4e5d",
-        "quality": 0.6256666666666666,
-        "theorems": 18,
-        "title": "Cellular Automata at the Ordinals: Transfinite Computation"
-      },
-      {
         "cycle_id": "6d1b5339",
         "quality": 0.79,
         "theorems": 0,
@@ -3141,6 +3135,12 @@
         "quality": 0.61,
         "theorems": 14,
         "title": "Categorical Physics: The Shape of a Theory of Everything"
+      },
+      {
+        "cycle_id": "238d5b60",
+        "quality": 0.76,
+        "theorems": 0,
+        "title": "Aleph-1 Surface: Geometry Between Dimensions"
       }
     ],
     "Bridges": [
