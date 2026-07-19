@@ -172,6 +172,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Quantum Entanglement as Algebraic Topology: The Linking Number Is Entanglement"
   },
   {
+    "consumed_by_exp_id": "",
+    "description": "Tropical arithmetic (min-plus algebra) replaces + with min and * with +. A tropical matrix A over Z union {infinity} acts on vectors by tropical matrix multiplication: (A tropimes v)_i = min_j (A_{ij} + v_j). Tropical matrices have eigenvalues in the max-plus sense: lambda is a tropical eigenvalue if A tropimes v = lambda + v for some v. Conjecture: tropical matrix multiplication is a one-way function suitable for cryptography. Specifically, the 'tropical discrete logarithm problem' (TDLP) is: given a tropical matrix A and B = A^{otimes k} (tropical matrix power), find k. The tropical matrix power A^{otimes k} is computed in O(n^3 * log(k)) time (by repeated squaring), but recovering k from (A, A^{otimes k}) is hard because the tropical eigenvalues satisfy lambda(A^{otimes k}) = k * lambda(A) (tropical eigenvalues are additive under power), so k = lambda(A^{otimes k}) / lambda(A). But this only works if lambda(A) != 0 (in the tropical sense, lambda(A) != infinity). Conjecture: the tropical Diffie-Hellman key exchange is secure: Alice sends A^{otimes a}, Bob sends A^{otimes b}, and the shared key is A^{otimes ab}. Breaking this requires solving the TDLP, which is believed to be hard for random tropical matrices of size n >= 10. Test: implement the tropical DH key exchange and measure the key generation time vs matrix size. Attempt to break it with known attacks (tropical eigenvalue computation, shortest path algorithms). Impact: tropical arithmetic provides a new foundation for post-quantum cryptography.",
+    "domains": [
+      "Novelty",
+      "Cryptography"
+    ],
+    "id": "fd_0395",
+    "priority_score": 0.83,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-19T04:12:06.569515+00:00",
+    "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
+  },
+  {
     "consumed_by_exp_id": "8280a2b4",
     "description": "The Riemann-Roch theorem for graphs (Baker-Norine, 2007) states that for a divisor D on a graph G, l(D) - l(K_G - D) = deg(D) + 1 - g(G) where l(D) is the rank of D, K_G is the canonical divisor, and g(G) is the genus (cyclomatic number). The chip-firing game is a combinatorial model: vertices hold chips, and 'firing' a vertex sends one chip along each incident edge. Conjecture: for the complete graph K_n, the canonical divisor K_{K_n} has rank (n-1)(n-2)/2 - 1, and the Riemann-Roch formula gives l(D) = deg(D) + 1 - (n-1)(n-2)/2 + l(K_{K_n} - D). For D = K_{K_n} (the canonical divisor itself): l(K_{K_n}) = (n-1)(n-2)/2 - 1 + 1 - (n-1)(n-2)/2 + l(0) = 0 + l(0). But l(0) = 0 (the empty divisor has rank 0). So l(K_{K_n}) = 0. Wait, this gives l(K_{K_n}) = 0, but the canonical divisor of K_n should have positive rank. Conjecture: the canonical divisor of K_n is K_{K_n} = sum_v (deg(v) - 1) * v = (n-2) * sum_v v, and l(K_{K_n}) = (n-1)(n-2)/2 - 1 (it achieves the genus minus 1). Test: compute the canonical divisor and verify the Riemann-Roch formula for K_n with n = 3, 4, 5, 6. Impact: chip-firing on complete graphs encodes the same information as the Riemann-Roch theorem on projective curves.",
     "domains": [
@@ -4439,6 +4454,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-19T01:02:08.127668+00:00",
     "title": "Categorification of Entropy: The Information Loss of Functors"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Register allocation in a compiler assigns variables to CPU registers. The interference graph G has variables as vertices and edges between variables that are 'live' at the same time. Register allocation is equivalent to coloring G with k colors (k = number of registers). Conjecture: for SSA-form programs with n variables and maximum interference degree delta, the chromatic number chi(G) satisfies chi(G) = max(delta + 1, omega(G)) where omega(G) is the clique number. This is stronger than Brooks' theorem (which gives chi(G) <= delta + 1) because it predicts that chi(G) = delta + 1 ONLY when G contains a (delta+1)-clique. For typical programs: delta <= 5 and omega(G) <= 4, so chi(G) = delta + 1 <= 6. Conjecture: the optimal number of registers for SSA programs is at most delta + 1, and spill code (storing variables in memory instead of registers) is needed only when k < delta + 1. Moreover, the spill cost is minimized by spilling the vertex with maximum degree in the interference graph (a heuristic known as 'degree-based spilling'). Test: extract interference graphs from 100 real programs, compute chi(G) and delta, and verify chi(G) = max(delta + 1, omega(G)). Impact: register allocation is graph coloring with a precise formula for the chromatic number.",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_0394",
+    "priority_score": 0.72,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-19T04:12:06.532562+00:00",
+    "title": "The Combinatorics of Compiler Optimization: Register Allocation as Graph Coloring"
   },
   {
     "consumed_by_exp_id": "",
