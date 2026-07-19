@@ -132,7 +132,7 @@ theorem register_pressure_eq_local_clique_card {n : ℕ} (G : SimpleGraph (Fin n
     [DecidableRel G.Adj] (peo : PerfectEliminationOrdering G) (i : Fin n) :
     registerPressure G peo i = (localClique G peo i).card := by
   rw [ localClique, Finset.card_union_of_disjoint ];
-  · unfold registerPressure; simp +decide [ Finset.Nonempty ] ;
+  · unfold registerPressure; simp +decide ;
     rw [ add_comm, laterNeighbors ];
   · simp +decide [ laterNeighbors ]
 

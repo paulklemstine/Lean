@@ -17,21 +17,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
   },
   {
-    "consumed_by_exp_id": "961be33a",
-    "description": "Prove that any theory of everything in physics must be a (2,infinity)-category with duals. Formalize the cobordism hypothesis as a universal property and show that TQFTs, CFTs, and string theories are all shadows of a single object in this higher category. Determine whether the resulting theory is computable or contains oracle information.",
-    "domains": [
-      "Novelty",
-      "Physics"
-    ],
-    "id": "fd_0468",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T16:41:02.194341+00:00",
-    "title": "Categorical Physics: The Shape of a Theory of Everything"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 4920904c (Q=0.800), which proved 46 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Erdos-Renyi random graph G(n, p) has n vertices where each edge appears independently with probability p. At p = log(n)/n, G(n,p) becomes connected. But what if p is COMPLEX? Define G(n, z) where z is a complex number: each edge (i,j) appears with 'probability' z, meaning the edge weight is z in",
     "domains": [
@@ -103,7 +88,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Self-Modifying Code That Cannot Be Stopped"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1deb463e",
     "description": "Formalize a Landauer-like principle for mathematical reasoning: every bit of information destroyed in a proof step costs at least kT ln 2 of entropy. Prove that there exist theorems whose shortest proof requires exponentially more erasure than creation, and connect to Kolmogorov complexity and the thermodynamic cost of verification.",
     "domains": [
       "Novelty",
@@ -113,7 +98,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T12:28:35.662011+00:00",
     "title": "Thermodynamics of Mathematical Proof"
   },
@@ -5129,6 +5114,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-19T18:41:09.759734+00:00",
     "title": "**Conjecture.** Let an inverse tower of finite spectra have eventually perfect b"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## Scope and main conclusion\n\nThe literal research slogan cannot presently be proved as stated: \u201ctheory of everything,\u201d \u201cphysics,\u201d and \u201cmust\u201d do not specify mathematical predicates, and an `(\u221e,2)`-category is not merely a structure that can be inferred from an arbitrary object called a theory. The Lean development therefore formalizes a precise decategorified universal-property fragment and tests the strongest conclusions that survive that precision.\n\n## Proved\n\n* `DualCharge G = G \u2192\u2080 \u2124` is the free finite integer charge sector on generators `G`, with negative coefficients modeling formal duals.\n* Every assignment `G \u2192 A` into an additive commutative group extends uniquely to an additive shadow `DualCharge G \u2192+ A`.\n* Such shadows preserve tensor composition (addition) and duality (negation).\n* Three separately named sectors\u2014standing for decategorified TQFT, CFT, and string data\u2014bundle uniquely into one product-valued shadow. This is a rigorous sense in which they can be components of one universal object; it does **not** claim that the actual analytic and higher-categorical theories have been identified.\n* Evaluation is explicitly a finite `Finsupp.sum`.\n* Arbitrary Boolean data embed injectively into positive-charge shadows valued in `ZMod 2`, and each bit is recovered by singleton evaluation. Hence finite evaluation is computable relative to generator data, while unrestricted generator data can carry arbitrary oracle information.\n\n## Disproved / rejected\n\nThe unqualified algebraic necessity of duals is false. A one-generator positive charge theory over `\u2115` has tensor composition but its generator has no additive inverse. Thus a theorem forcing duals requires substantive assumptions\u2014such as full dualizability\u2014not merely the word \u201ctheory.\u201d This also blocks the stronger slogan that *any* physical theory must already be an `(\u221e,2)`-category with duals.\n\n## Next formalization targets\n\n1. Replace the decategorified free abelian group by a symmetric monoidal category with explicitly dualizable objects.\n2. Formalize a low-dimensional cobordism category (starting with oriented 1-cobordisms), prove its generators-and-relations presentation, and derive classification of 1D TQFTs.\n3. Lift the universal property through bicategories before attempting complete Segal spaces or another model of `(\u221e,2)`-categories.\n4. Distinguish field theories by their actual extra structure: locality, conformal structure, supersymmetry, boundary conditions, and analytic constraints. Product bundling alone is not physical unification.\n5. State computability parametrically: define effective encodings of generators and target operations, prove evaluation algorithms under those assumptions, and separately instantiate generator assignments with formally noncomputable predicates.\n6. Formulate a defensible \u201ctheory of everything\u201d conjecture only after specifying an observational semantics and a universality criterion connecting mathematical models to experiments.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0480",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "961be33a",
+    "status": "available",
+    "timestamp": "2026-07-19T19:32:44.018487+00:00",
+    "title": "The literal research slogan cannot presently be proved as stated: \u201ctheory of eve"
   },
   {
     "consumed_by_exp_id": "",
