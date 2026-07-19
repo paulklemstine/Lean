@@ -1,101 +1,203 @@
-# The Secret Life of Shortest Paths: Why "Tropical" Cryptography Isn't as Safe as It Looks
+# The Arithmetic That Makes a Cryptographic Secret Visible
 
-## A different kind of arithmetic
+## Tropical matrices, hidden exponents, and an eigenvalue leakage channel
 
-Imagine an arithmetic in which addition and multiplication are not the operations you learned in school. Instead, "adding" two numbers means *taking the smaller of them*, and "multiplying" two numbers means *adding them in the ordinary sense*. This strange-sounding system is called the **tropical semiring** (or **min-plus algebra**), and despite its playful name — coined in honor of the Brazilian mathematician Imre Simon — it is a serious and beautiful piece of mathematics with deep connections to optimization, geometry, and computer science.
-
-To keep the two worlds straight, we write $\oplus$ for tropical addition and $\otimes$ for tropical multiplication:
+Ordinary arithmetic has trained us to expect that addition means adding and multiplication means multiplying. Tropical mathematics changes the rules. In the **min-plus algebra**, the smaller of two numbers plays the role of a sum, while ordinary addition plays the role of a product:
 
 $$
-x \oplus y = \min(x, y), \qquad x \otimes y = x + y.
+x\oplus y=\min(x,y),\qquad x\otimes y=x+y.
 $$
 
-The numbers themselves are the integers together with an extra symbol $\infty$, which plays the role of a "zero" for this arithmetic: $\min(x, \infty) = x$, just as $x + 0 = x$ in ordinary arithmetic. And the ordinary number $0$ plays the role of the tropical "one," because $x \otimes 0 = x + 0 = x$.
+This modest substitution creates a surprisingly rich world. Polynomial graphs become angular landscapes. Matrix products become shortest-path calculations. Repeated multiplication records the cheapest cost of a journey made in a prescribed number of steps. These connections have encouraged proposals to use tropical matrix powers as cryptographic hiding places: publish a matrix $A$ and a large power $A^{\otimes r}$, then challenge an observer to recover $r$.
 
-Why would anyone bother with such a thing? Because it turns hard combinatorial questions into clean algebraic ones. The single most important example is **shortest paths**. If you weight the roads of a map and want the cheapest route between two cities, you are — without knowing it — doing tropical arithmetic. Every time you compare two routes you take a *minimum* (tropical addition); every time you extend a route by one more road you *add* a distance (tropical multiplication). This is the secret that makes the tropical world tick, and, as we will see, it is also the secret that unravels a tempting idea for building codes.
+The attraction is easy to understand. Fast exponentiation computes a power without walking through every preceding exponent. If tropical matrix multiplication is expensive to reverse, perhaps the exponent can serve as a secret. But tropical arithmetic has spectral invariants of its own, and one of them moves in exact lockstep with the exponent. That creates a basic leakage channel.
 
-## A tempting idea: encryption from the tropics
+The central result is simple to state. If a tropical matrix has an eigenvector with a nonzero eigenvalue, then its positive powers cannot collide, and the eigenvalue of a public power reveals the exact scaling of the hidden exponent. This is an identifiability theorem, not by itself an efficient attack: it says the secret is mathematically encoded in a scalar spectral quantity. Whether that quantity can be computed efficiently depends on the representation and assumptions of a concrete system. Yet any security design must confront the leakage rather than treating the eigenvalue law as evidence of hardness.
 
-Modern cryptography rests on **one-way functions**: computations that are easy to perform but effectively impossible to reverse. The most famous example underlies the Diffie–Hellman key exchange, which lets two strangers, Alice and Bob, agree on a shared secret over a public channel that everyone can hear. Its security rests on the *discrete logarithm problem*: given a number $g$ and a power $g^k$, it is believed to be very hard to recover the exponent $k$.
+## A matrix multiplication built from cheapest routes
 
-In the last decade, researchers asked a natural question: could we replace ordinary numbers with **tropical matrices** and get a new, possibly quantum-resistant, cryptosystem? The plan is seductively simple. Fix a public tropical matrix $A$. Alice secretly picks an exponent $a$ and publishes the tropical power $A^{\otimes a}$; Bob secretly picks $b$ and publishes $A^{\otimes b}$. Each then raises the other's matrix to their own secret exponent, and both arrive at the same shared key $A^{\otimes ab}$. An eavesdropper who sees $A$, $A^{\otimes a}$, and $A^{\otimes b}$ would — so the hope goes — be unable to recover the secret exponents.
-
-Computing a tropical matrix power is genuinely cheap: by repeated squaring one reaches $A^{\otimes k}$ in about $\log k$ matrix multiplications, so the honest parties do only $O(n^3 \log k)$ arithmetic. The entire security of the scheme therefore hinges on one question, the **tropical discrete logarithm problem (TDLP)**:
-
-> Given the public matrix $A$ and one of its tropical powers $B = A^{\otimes k}$, recover the exponent $k$.
-
-Is this really hard? This article tells the story of two theorems that answer the question — and the answer is not comforting for the would-be cryptographer.
-
-## Tropical matrices *are* shortest paths
-
-First we need to understand what a tropical matrix power actually *computes*. Ordinary matrix multiplication combines rows and columns using $+$ and $\times$. Tropical matrix multiplication does the same bookkeeping but with $\oplus = \min$ and $\otimes = +$:
+Let $A$ and $B$ be $n\times n$ real matrices, where $n\ge 1$. Their min-plus product is the matrix $A\otimes B$ defined by
 
 $$
-(A \otimes B)_{ij} = \min_{\ell}\bigl(A_{i\ell} + B_{\ell j}\bigr).
+(A\otimes B)_{ij}=\min_{1\le k\le n}(A_{ik}+B_{kj}).
 $$
 
-Read this out loud: to get from $i$ to $j$ in two steps, try every intermediate stop $\ell$, add the cost of the first leg to the cost of the second, and keep the cheapest total. That is exactly the recursive definition of a shortest two-step route in a weighted graph whose adjacency matrix is $A$.
+Read $A_{ik}$ as the cost of going from $i$ to $k$ in one stage and $B_{kj}$ as the cost from $k$ to $j$ in a second stage. Then $(A\otimes B)_{ij}$ is the cheapest two-stage route from $i$ to $j$. This is the same dynamic-programming pattern that underlies shortest-path algorithms, scheduling, and discrete-event systems.
 
-The first of our two theorems says this pattern holds at every power, not just the second. It is completely general — it holds in *any* arithmetic where you have an "add" and a "multiply" satisfying the usual distributive laws — and only afterward do we specialize to the tropics.
-
-**Theorem 1 (Powers count walks).** *Let $A$ be an $n \times n$ matrix over any commutative semiring, indexed by a set $V$ of vertices. Then the $(i,j)$ entry of the $k$-th power is a sum over all length-$k$ walks from $i$ to $j$:*
-$$
-\bigl(A^{k}\bigr)_{ij} = \sum_{\substack{p_0, p_1, \ldots, p_k \\ p_0 = i,\; p_k = j}} \ \prod_{t=0}^{k-1} A_{p_t\, p_{t+1}}.
-$$
-*Here a "walk" is any sequence of $k+1$ vertices starting at $i$ and ending at $j$, and the product runs over the $k$ edges it traverses.*
-
-In ordinary arithmetic this is the familiar fact that the powers of an adjacency matrix count paths. But translate the sum and product into tropical language — turn each $\sum$ into a $\min$ and each $\prod$ into a $+$ — and it becomes something far more evocative:
+A matrix acts on a vector $v\in\mathbb{R}^n$ by
 
 $$
-\bigl(A^{\otimes k}\bigr)_{ij} = \min_{\text{length-}k\text{ walks } i \to j} \ \sum_{t=0}^{k-1} A_{p_t\, p_{t+1}}.
+(A\otimes v)_i=\min_{1\le j\le n}(A_{ij}+v_j).
 $$
 
-**The $(i,j)$ entry of the $k$-th tropical power is the minimum total weight of a $k$-step walk from $i$ to $j$.** This is precisely the identity at the heart of the classical Bellman–Ford and Floyd–Warshall shortest-path algorithms. A tropical matrix power is not an abstract object at all — it is a table of shortest $k$-step distances.
+The vector entry $v_j$ may be viewed as a terminal cost attached to state $j$. The action asks for the cheapest first step plus terminal cost.
 
-This already sounds an alarm. An eavesdropper facing $B = A^{\otimes k}$ is not staring at random noise; they are staring at a shortest-path table, and shortest-path structure is exactly what a century of algorithmic graph theory knows how to exploit.
-
-## The fatal leak: eigenvalues that add up
-
-The second theorem delivers the decisive blow. To state it we need the tropical analogue of an eigenvalue. In ordinary linear algebra, $\lambda$ is an eigenvalue of $A$ with eigenvector $v$ when $A v = \lambda v$. Tropically, the same equation reads
+For clarity, define positive powers with an index beginning at zero:
 
 $$
-A \otimes v = \lambda \otimes v, \qquad \text{that is,} \qquad \min_{j}\bigl(A_{ij} + v_j\bigr) = \lambda + v_i \ \text{ for every } i.
+P_0(A)=A,\qquad P_{k+1}(A)=A\otimes P_k(A).
 $$
 
-Here $\lambda$ is a single number — the **tropical eigenvalue** — and $v$ is the corresponding eigenvector. Geometrically, $\lambda$ measures the "cost per step" of cycling through the graph forever along the most efficient loop; it is the minimum cycle mean.
+Thus $P_k(A)$ is the usual tropical power with exponent $k+1$. This shift matters. A secret index $k$ in this convention corresponds to $k+1$ matrix factors.
 
-Now watch what happens when we take powers. If $A \otimes v = \lambda \otimes v$, then applying $A$ again gives $A^{\otimes 2} \otimes v = \lambda \otimes \lambda \otimes v$, and in general the eigenvector survives every power while the eigenvalue simply repeats. In tropical language, "repeating $\lambda$ $k$ times under $\otimes$" means *adding $\lambda$ to itself $k$ times* — ordinary multiplication. That is the content of our second theorem.
-
-**Theorem 2 (Tropical eigenvalues are additive under powering).** *Suppose $v$ is a tropical eigenvector of $A$ with eigenvalue $\lambda$, so that $A \otimes v = \lambda \otimes v$. Then for every exponent $k$, the same $v$ is a tropical eigenvector of $A^{\otimes k}$, and its eigenvalue is*
-$$
-\lambda\bigl(A^{\otimes k}\bigr) = k \cdot \lambda(A).
-$$
-*(In ordinary numbers: the min-plus eigenvalue of the $k$-th power is exactly $k$ times the min-plus eigenvalue of $A$.)*
-
-This is where the discrete logarithm dies. The whole point of a discrete-logarithm-style problem is that the exponent $k$ should be buried, recoverable only by brute force. But Theorem 2 hands the attacker a linear equation. The eigenvalue $\lambda(A)$ of the public matrix can be computed quickly — it is the minimum cycle mean of a weighted graph, obtainable by classical algorithms such as Karp's. The eigenvalue $\lambda(B)$ of the intercepted power $B = A^{\otimes k}$ can be computed just as quickly. And then the secret exponent falls out of a single division:
+The engine behind the theory is an associativity law for actions:
 
 $$
-k = \frac{\lambda\bigl(A^{\otimes k}\bigr)}{\lambda(A)}, \qquad \text{provided } \lambda(A) \neq 0.
+(A\otimes B)\otimes v=A\otimes(B\otimes v).
 $$
 
-No brute force, no quantum computer, no clever number theory — just two shortest-path computations and one division. The would-be one-way function leaks the secret through its spectrum.
+Why is this true? The $i$th coordinate of the left side minimizes first over a final state $j$ and then over an intermediate state $k$. Expanding it gives the minimum of
 
-## Where the danger hides — and where it doesn't
+$$
+A_{ik}+B_{kj}+v_j
+$$
 
-The attack has one visible loophole: it requires $\lambda(A) \neq 0$ in the tropical sense (that is, the minimum cycle mean must be a genuine finite nonzero number, not $\infty$). If the public matrix is engineered so that its tropical eigenvalue vanishes or is undefined, the division above becomes meaningless and this particular attack stalls.
+over all pairs $(k,j)$. The right side takes exactly the same minimum, merely in the opposite order. Because both index sets are finite and nonempty, reordering the minimization changes nothing.
 
-But that observation is a warning, not a rescue. It tells us that *any* tropical scheme hoping to be secure must actively avoid the entire family of matrices with usable eigenvalues — and Theorems 1 and 2 together show just how much structure a tropical power carries even when the eigenvalue trick is blocked. The shortest-path identity of Theorem 1 means the public data $B = A^{\otimes k}$ still encodes a rich combinatorial object that shortest-path and cycle-detection algorithms can pick apart. Historically, this is exactly what has happened: the earliest tropical Diffie–Hellman proposals were broken, patched with random perturbations, and broken again. Our two theorems explain *why* at the structural level: the tropical world is transparent to the very algorithms — shortest paths, minimum cycle means — that gave it life.
+There is a second useful identity. Adding the same scalar $c$ to every component of a vector commutes with the matrix action:
 
-## The moral of the story
+$$
+A\otimes(c+v)=c+(A\otimes v),
+$$
 
-There is a lovely irony here. The tropical semiring is powerful *precisely because* it linearizes optimization: shortest paths, scheduling problems, and dynamic programming all become matrix algebra. That same linearization is poison for cryptography, whose lifeblood is the *absence* of exploitable structure. A good one-way function must look like chaos; a tropical matrix power looks like a shortest-path table with an eigenvalue stamped on its forehead.
+where $c+v$ denotes the vector with components $c+v_i$. Every candidate inside the minimum gains the same amount $c$, so the minimum does too.
 
-The two theorems in this article draw a bright line between three mathematical worlds that rarely meet in the same sentence:
+## Tropical eigenvectors are clocks
 
-- **Linear algebra** (matrix powers),
-- **Combinatorial optimization** (shortest walks in weighted graphs), and
-- **Spectral theory** (eigenvalues and cycle means).
+A scalar $\lambda\in\mathbb{R}$ and vector $v\in\mathbb{R}^n$ form a **min-plus eigenpair** of $A$ when
 
-Theorem 1 fuses the first two: a matrix power *is* a catalogue of walks, and tropically a catalogue of shortest walks. Theorem 2 fuses the first and third: taking powers multiplies the tropical eigenvalue, turning an exponent into a simple linear coefficient.
+$$
+A\otimes v=\lambda+v.
+$$
 
-For the cryptographer, the lesson is sobering but valuable: min-plus algebra, in its raw form, is the wrong soil for a one-way function, because its beautiful transparency is exactly the property an attacker needs. For the mathematician, the lesson is exhilarating: the same handful of ideas that route packets across the internet and schedule trains through a network also decide, in a single elegant stroke, the fate of a cryptographic dream. Sometimes the deepest security question is really a question about shortest paths — and the tropics answer it in the open.
+This differs in appearance from the familiar equation $Av=\lambda v$, but it expresses the same organizing idea: applying the matrix preserves the shape of the vector while changing its overall scale. In min-plus arithmetic, scaling means ordinary translation. Each application of $A$ adds $\lambda$ to every coordinate.
+
+That makes an eigenvector behave like a clock. Apply the matrix once, and the clock advances by $\lambda$. Apply it again, and it advances by another $\lambda$. After $k+1$ applications, it has advanced by $(k+1)\lambda$.
+
+**Power-law theorem.** If $A\otimes v=\lambda+v$, then for every integer $k\ge 0$,
+
+$$
+P_k(A)\otimes v=(k+1)\lambda+v.
+$$
+
+The proof is induction. The case $k=0$ is precisely the eigenpair equation. For the next power, associate the action as
+
+$$
+P_{k+1}(A)\otimes v
+=A\otimes(P_k(A)\otimes v).
+$$
+
+Insert the induction hypothesis and move the scalar translation through the action:
+
+$$
+A\otimes((k+1)\lambda+v)
+=(k+1)\lambda+(A\otimes v)
+=(k+2)\lambda+v.
+$$
+
+The spectral clock therefore ticks with perfect regularity.
+
+## When two powers look the same
+
+Suppose two public powers coincide:
+
+$$
+P_a(A)=P_b(A).
+$$
+
+Act on the same eigenvector $v$. The power law gives
+
+$$
+(a+1)\lambda+v=(b+1)\lambda+v.
+$$
+
+Canceling $v$ yields $(a-b)\lambda=0$. If $\lambda\ne 0$, then $a=b$.
+
+This proves the **nonzero-eigenvalue injectivity theorem**: for any matrix possessing a min-plus eigenpair with nonzero eigenvalue, the map $k\mapsto P_k(A)$ is injective. Distinct positive exponents produce distinct matrices.
+
+The contrapositive is equally revealing. If distinct positive powers do collide, then every eigenvalue represented by an eigenvector must be zero. A collision is therefore not spectrally neutral; it forces the spectral clock to stop.
+
+Now suppose an observer knows that $B=P_k(A)$ and finds that the same vector $v$ satisfies
+
+$$
+A\otimes v=\lambda+v,
+\qquad
+B\otimes v=\mu+v.
+$$
+
+The power law and the observed equation describe the same action, so
+
+$$
+\mu=(k+1)\lambda.
+$$
+
+If $\lambda\ne 0$, the index is algebraically determined:
+
+$$
+k=\frac{\mu}{\lambda}-1.
+$$
+
+This is the leakage formula. It should be interpreted carefully. The theorem does not promise that an eigenpair is available, that it can be found quickly, or that floating-point calculations recover it reliably. It says that once certified values $\lambda$ and $\mu$ on a common eigenvector are available, there is no remaining ambiguity about the exponent.
+
+## Shifting all costs does not hide the clock
+
+A natural masking attempt is to add a constant $c$ to every entry of $A$. Let the shifted matrix $S_c(A)$ be defined by
+
+$$
+S_c(A)_{ij}=c+A_{ij}.
+$$
+
+Uniformly increasing every edge cost seems as though it might obscure the spectrum. Instead, it merely resets the clock.
+
+**Shift theorem.** If $A\otimes v=\lambda+v$, then
+
+$$
+S_c(A)\otimes v=(c+\lambda)+v.
+$$
+
+Indeed, every candidate $A_{ij}+v_j$ inside the minimum gains $c$, so the minimum gains $c$. The eigenvector remains unchanged and the eigenvalue moves from $\lambda$ to $c+\lambda$.
+
+Consequently, the positive powers of $S_c(A)$ are injective whenever $c+\lambda\ne 0$. There is exactly one exceptional offset relative to this eigenpair, namely $c=-\lambda$. Every other uniform shift leaves a nonzero spectral clock. Uniform scalar masking therefore does not generically remove exponent identifiability.
+
+## A concrete two-state example
+
+Consider
+
+$$
+A=
+\begin{pmatrix}
+2&5\\
+4&2
+\end{pmatrix},
+\qquad
+v=
+\begin{pmatrix}
+0\\
+1
+\end{pmatrix}.
+$$
+
+The first coordinate of $A\otimes v$ is $\min(2+0,5+1)=2$, and the second is $\min(4+0,2+1)=3$. Hence
+
+$$
+A\otimes v=
+\begin{pmatrix}2\\3\end{pmatrix}
+=2+
+\begin{pmatrix}0\\1\end{pmatrix},
+$$
+
+so $(2,v)$ is an eigenpair. The spectral clock advances by $2$ per factor. For the third positive power, corresponding to $k=2$, the eigenvalue is $6$. If an observer measures $\mu=6$ against the same vector, the leakage formula returns $k=6/2-1=2$.
+
+Shift every entry by $-2$. The eigenvalue becomes zero, which is the unique exceptional shift for this eigenpair. Shift instead by $1$, and the new eigenvalue is $3$; all positive powers remain distinct, and the clock now advances by $3$.
+
+## What this means for tropical cryptography
+
+A proposed tropical discrete-logarithm problem asks for the exponent hidden in a pair $(A,P_k(A))$. The results above do not settle the computational complexity of that problem for every matrix family. They identify a structural condition under which the exponent has a direct spectral description. Any claim of one-wayness must therefore specify how matrices are sampled, whether eigenpairs exist in the chosen number system, how hard they are to compute, how zero eigenvalues are handled, and whether normalization destroys or preserves the relevant scalar information.
+
+The same caution applies to key exchange. In a single-base power semigroup, parties may hope to combine private exponents through repeated powering. Before security can even be discussed, the exponent convention, associativity, public transcript, and shared-key identity must be stated precisely. Spectral leakage must then be analyzed in that exact model.
+
+This is not a verdict against tropical methods. It is a design lesson. Tropical algebra has genuine computational structure, deep links to optimization, and unusual nonclassical behavior. But cryptography cannot rely on unfamiliar notation alone. A hard problem must remain hard after every efficiently accessible invariant has been extracted.
+
+The broader lesson reaches beyond this particular algebra. Cryptographic candidates are often built from operations that are easy to perform and seem awkward to undo. Before trusting that asymmetry, one searches for a projection that turns the complicated operation into something simpler. Determinants, traces, norms, parities, and eigenvalues have all played this role in different settings. A projection need not reconstruct the whole secret object; it only needs to retain the secret quantity. Here the eigenvector supplies exactly such a projection, reducing a matrix-power problem to a one-dimensional linear equation.
+
+Here the invariant tells a vivid story: an eigenvector turns repeated tropical multiplication into ordinary addition. With a nonzero eigenvalue, every power leaves a timestamp. The matrix may look complicated, yet along one special direction its hidden exponent is counting out loud.

@@ -1,213 +1,130 @@
-"""
-Tropical Cryptography: Min-Plus Matrix Powers, Shortest Walks, and the
-Eigenvalue Attack on the Tropical Discrete Logarithm Problem.
-
-This self-contained script demonstrates the two central results:
-
-  1. Walk-sum identity (tropical case): the (i, j) entry of the k-th tropical
-     matrix power equals the minimum total weight of a k-step walk from i to j.
-     We verify this by comparing the algebraic matrix power against a brute-force
-     enumeration of all length-k walks.
-
-  2. Additivity of tropical eigenvalues under powering: lambda(A^{otimes k})
-     = k * lambda(A). We verify it numerically via the minimum cycle mean and
-     then run the eigenvalue attack that recovers the secret exponent k from
-     (A, A^{otimes k}), thereby breaking the tropical Diffie-Hellman scheme.
-
-Tropical arithmetic:  x (+) y = min(x, y),   x (*) y = x + y,
-with tropical zero = +infinity and tropical one = 0.
-
-Run:  python demo.py
-"""
+#!/usr/bin/env python3
+"""Exact numerical demonstrations of eigenvalue leakage in min-plus powers."""
 
 from __future__ import annotations
 
-import itertools
-import math
 from fractions import Fraction
-from typing import List, Sequence, Tuple
+from typing import Sequence, TypeAlias
 
-INF: float = math.inf
-Matrix = List[List[float]]
-Vector = List[float]
-
-
-# --------------------------------------------------------------------------- #
-# Core tropical linear algebra                                                 #
-# --------------------------------------------------------------------------- #
-def trop_matmul(a: Matrix, b: Matrix) -> Matrix:
-    """Tropical (min-plus) matrix product: (A (*) B)_{ij} = min_l (A_il + B_lj)."""
-    n, m, p = len(a), len(b), len(b[0])
-    out: Matrix = [[INF] * p for _ in range(n)]
-    for i in range(n):
-        for j in range(p):
-            best = INF
-            for l in range(m):
-                cand = a[i][l] + b[l][j]
-                if cand < best:
-                    best = cand
-            out[i][j] = best
-    return out
+Scalar: TypeAlias = Fraction
+Vector: TypeAlias = list[Scalar]
+Matrix: TypeAlias = list[list[Scalar]]
 
 
-def trop_identity(n: int) -> Matrix:
-    """Tropical identity: 0 on the diagonal, +infinity off-diagonal."""
-    return [[0.0 if i == j else INF for j in range(n)] for i in range(n)]
-
-
-def trop_matpow(a: Matrix, k: int) -> Matrix:
-    """Tropical k-th power A^{otimes k} by repeated squaring: O(n^3 log k)."""
+def validate_matrix(a: Sequence[Sequence[Scalar]]) -> int:
+    """Return the positive dimension of a square matrix, or raise ValueError."""
     n = len(a)
-    result = trop_identity(n)
-    base = [row[:] for row in a]
-    e = k
-    while e > 0:
-        if e & 1:
-            result = trop_matmul(result, base)
-        base = trop_matmul(base, base)
-        e >>= 1
+    if n == 0 or any(len(row) != n for row in a):
+        raise ValueError("a min-plus matrix must be nonempty and square")
+    return n
+
+
+def min_plus_multiply(a: Matrix, b: Matrix) -> Matrix:
+    """Compute the dense min-plus matrix product in O(n^3) time."""
+    n = validate_matrix(a)
+    if validate_matrix(b) != n:
+        raise ValueError("matrix dimensions must agree")
+    return [
+        [min(a[i][k] + b[k][j] for k in range(n)) for j in range(n)]
+        for i in range(n)
+    ]
+
+
+def min_plus_action(a: Matrix, v: Vector) -> Vector:
+    """Apply a dense min-plus matrix to a vector in O(n^2) time."""
+    n = validate_matrix(a)
+    if len(v) != n:
+        raise ValueError("vector dimension must match the matrix")
+    return [min(a[i][j] + v[j] for j in range(n)) for i in range(n)]
+
+
+def positive_power(a: Matrix, k: int) -> Matrix:
+    """Return P_k(A), which has k+1 factors, using the defining recurrence."""
+    if k < 0:
+        raise ValueError("the positive-power index must be nonnegative")
+    result = [row[:] for row in a]
+    for _ in range(k):
+        result = min_plus_multiply(a, result)
     return result
 
 
-def trop_matvec(a: Matrix, v: Vector) -> Vector:
-    """Tropical matrix-vector product: (A (*) v)_i = min_j (A_ij + v_j)."""
-    n, m = len(a), len(v)
-    return [min(a[i][j] + v[j] for j in range(m)) for i in range(n)]
+def observed_eigenvalue(a: Matrix, v: Vector) -> Scalar:
+    """Return lambda if A⊗v=lambda+v; raise ValueError otherwise."""
+    acted = min_plus_action(a, v)
+    offsets = [x - y for x, y in zip(acted, v)]
+    if not offsets or any(x != offsets[0] for x in offsets[1:]):
+        raise ValueError("the supplied vector is not a min-plus eigenvector")
+    return offsets[0]
 
 
-# --------------------------------------------------------------------------- #
-# 1. Walk-sum identity (brute-force verification)                             #
-# --------------------------------------------------------------------------- #
-def shortest_kstep_walk(a: Matrix, k: int, i: int, j: int) -> float:
-    """Minimum total weight over all length-k walks i -> j, by brute force."""
-    n = len(a)
-    best = INF
-    for interior in itertools.product(range(n), repeat=max(k - 1, 0)):
-        path: Tuple[int, ...] = (i,) + interior + (j,) if k >= 1 else (i,)
-        if k == 0:
-            weight = 0.0 if i == j else INF
-        else:
-            weight = sum(a[path[t]][path[t + 1]] for t in range(k))
-        best = min(best, weight)
-    return best
+def recover_power_index(base_lambda: Scalar, power_mu: Scalar) -> int:
+    """Recover k from mu=(k+1)lambda using exact rational arithmetic."""
+    if base_lambda == 0:
+        raise ValueError("a zero base eigenvalue does not identify the exponent")
+    candidate = power_mu / base_lambda - 1
+    if candidate.denominator != 1 or candidate < 0:
+        raise ValueError("the observations do not encode a nonnegative integer index")
+    return candidate.numerator
 
 
-def verify_walk_sum_identity(a: Matrix, k: int) -> bool:
-    """Check (A^{otimes k})_{ij} == shortest k-step walk weight for all i, j."""
-    n = len(a)
-    powered = trop_matpow(a, k)
-    ok = True
-    for i in range(n):
-        for j in range(n):
-            algebraic = powered[i][j]
-            combinatorial = shortest_kstep_walk(a, k, i, j)
-            if not (algebraic == combinatorial or
-                    (math.isinf(algebraic) and math.isinf(combinatorial))):
-                ok = False
-    return ok
+def shift_matrix(a: Matrix, c: Scalar) -> Matrix:
+    """Add c uniformly to every matrix entry."""
+    validate_matrix(a)
+    return [[c + entry for entry in row] for row in a]
 
 
-# --------------------------------------------------------------------------- #
-# 2. Minimum cycle mean (the tropical eigenvalue) via Karp's algorithm        #
-# --------------------------------------------------------------------------- #
-def min_cycle_mean(a: Matrix) -> Fraction | None:
-    """
-    Karp's minimum cycle mean = the tropical eigenvalue lambda(A).
-    Returns None if the graph has no cycle reachable from the source.
-    """
-    n = len(a)
-    if n == 0:
-        return None
-    # d[t][v] = min weight of a length-t walk from source 0 to v.
-    NEG = None
-    d: List[List[Fraction | None]] = [[NEG] * n for _ in range(n + 1)]
-    d[0][0] = Fraction(0)
-    for t in range(1, n + 1):
-        for v in range(n):
-            best: Fraction | None = None
-            for u in range(n):
-                if d[t - 1][u] is not None and not math.isinf(a[u][v]):
-                    cand = d[t - 1][u] + Fraction(int(a[u][v]))
-                    if best is None or cand < best:
-                        best = cand
-            d[t][v] = best
-    lam: Fraction | None = None
-    for v in range(n):
-        if d[n][v] is None:
-            continue
-        worst: Fraction | None = None
-        for t in range(n):
-            if d[t][v] is not None:
-                val = Fraction(d[n][v] - d[t][v], n - t)
-                if worst is None or val > worst:
-                    worst = val
-        if worst is not None and (lam is None or worst < lam):
-            lam = worst
-    return lam
+def format_matrix(a: Matrix) -> str:
+    """Format an exact matrix compactly."""
+    return "[\n  " + ",\n  ".join(str(row) for row in a) + "\n]"
 
 
-# --------------------------------------------------------------------------- #
-# 3. The eigenvalue attack on the tropical discrete logarithm problem         #
-# --------------------------------------------------------------------------- #
-def eigenvalue_attack(a: Matrix, b: Matrix) -> int | None:
-    """
-    Recover k from (A, B = A^{otimes k}) using lambda(B) = k * lambda(A).
-    Returns None if lambda(A) is zero/undefined (attack does not apply).
-    """
-    lam_a = min_cycle_mean(a)
-    lam_b = min_cycle_mean(b)
-    if lam_a is None or lam_a == 0 or lam_b is None:
-        return None
-    ratio = lam_b / lam_a
-    if ratio.denominator == 1:
-        return int(ratio)
-    return None
+def demonstrate_power_law() -> None:
+    """Show exact scaling and exponent recovery for a two-state matrix."""
+    a = [[Fraction(2), Fraction(5)], [Fraction(4), Fraction(2)]]
+    v = [Fraction(0), Fraction(1)]
+    lam = observed_eigenvalue(a, v)
+    print("Base matrix A =", format_matrix(a))
+    print(f"Eigenvector v = {v}; base eigenvalue lambda = {lam}\n")
+    for k in range(6):
+        power = positive_power(a, k)
+        mu = observed_eigenvalue(power, v)
+        recovered = recover_power_index(lam, mu)
+        predicted = (k + 1) * lam
+        assert mu == predicted and recovered == k
+        print(
+            f"k={k}: observed mu={mu}, predicted (k+1)lambda={predicted}, "
+            f"recovered k={recovered}"
+        )
 
 
-# --------------------------------------------------------------------------- #
-# Demonstration                                                                #
-# --------------------------------------------------------------------------- #
+def demonstrate_injectivity() -> None:
+    """Confirm that the first several powers are distinct when lambda is nonzero."""
+    a = [[Fraction(2), Fraction(5)], [Fraction(4), Fraction(2)]]
+    powers = [positive_power(a, k) for k in range(8)]
+    encodings = {tuple(tuple(row) for row in power) for power in powers}
+    assert len(encodings) == len(powers)
+    print(f"\nInjectivity sample: all {len(powers)} powers P_0(A),...,P_7(A) differ.")
+
+
+def demonstrate_shifts() -> None:
+    """Show the eigenvalue shift law and the unique exceptional offset."""
+    a = [[Fraction(2), Fraction(5)], [Fraction(4), Fraction(2)]]
+    v = [Fraction(0), Fraction(1)]
+    lam = observed_eigenvalue(a, v)
+    print("\nUniform entry shifts:")
+    for c in (Fraction(-2), Fraction(-1), Fraction(0), Fraction(1), Fraction(3)):
+        shifted_lambda = observed_eigenvalue(shift_matrix(a, c), v)
+        assert shifted_lambda == c + lam
+        status = "exceptional zero clock" if shifted_lambda == 0 else "nonzero clock"
+        print(f"c={str(c):>2}: shifted eigenvalue={str(shifted_lambda):>2} ({status})")
+
+
 def main() -> None:
-    print("=" * 70)
-    print("Tropical Cryptography Demonstration")
-    print("=" * 70)
-
-    A: Matrix = [
-        [4.0, 1.0, INF],
-        [INF, 3.0, 2.0],
-        [1.0, INF, 5.0],
-    ]
-
-    print("\nPublic tropical matrix A (INF = no edge):")
-    for row in A:
-        print("  ", ["inf" if math.isinf(x) else int(x) for x in row])
-
-    # --- Result 1: walk-sum / shortest-walk identity -----------------------
-    print("\n[1] Walk-sum identity  (A^{otimes k})_{ij} = shortest k-step walk")
-    for k in range(0, 5):
-        ok = verify_walk_sum_identity(A, k)
-        print(f"    k = {k}: matrix power matches brute-force shortest walk -> {ok}")
-
-    # --- Result 2: eigenvalue additivity -----------------------------------
-    print("\n[2] Tropical eigenvalue additivity  lambda(A^{otimes k}) = k*lambda(A)")
-    lam_A = min_cycle_mean(A)
-    print(f"    lambda(A) = {lam_A}")
-    for k in range(1, 6):
-        lam_Ak = min_cycle_mean(trop_matpow(A, k))
-        expected = None if lam_A is None else k * lam_A
-        print(f"    k = {k}: lambda(A^k) = {lam_Ak}, k*lambda(A) = {expected}, "
-              f"match -> {lam_Ak == expected}")
-
-    # --- Result 3: breaking tropical Diffie-Hellman ------------------------
-    print("\n[3] Eigenvalue attack on the tropical discrete logarithm problem")
-    for secret_k in (7, 13, 100, 1000):
-        B = trop_matpow(A, secret_k)
-        recovered = eigenvalue_attack(A, B)
-        status = "BROKEN" if recovered == secret_k else "failed"
-        print(f"    secret k = {secret_k:5d}  ->  recovered k = {recovered}  [{status}]")
-
-    print("\nConclusion: the tropical eigenvalue leaks the secret exponent,")
-    print("so raw min-plus matrix powering is not a one-way function.")
+    """Run all exact demonstrations."""
+    demonstrate_power_law()
+    demonstrate_injectivity()
+    demonstrate_shifts()
+    print("\nAll exact checks passed.")
 
 
 if __name__ == "__main__":
