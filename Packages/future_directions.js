@@ -303,7 +303,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ca6fc5a2",
     "description": "Construct a consistent formal system where the Liar sentence, Berry's paradox, and Russell's paradox are all provable theorems rather than contradictions. Prove this requires rejecting classical logic in favor of a paraconsistent logic with a nontrivial inconsistency-tolerant truth predicate. Show this system proves its own soundness.",
     "domains": [
       "Novelty",
@@ -313,12 +313,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T16:23:59.781707+00:00",
     "title": "Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "606f7bdd",
     "description": "Formalize the hard problem of consciousness as a theorem about the gap between functional descriptions and subjective experience. Prove that any system satisfying the functional definition of consciousness can have a zombie twin that is functionally identical but experientially void. Show this gap is isomorphic to G\u00f6del's incompleteness gap.",
     "domains": [
       "Novelty",
@@ -328,7 +328,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T18:58:00.688995+00:00",
     "title": "Zombies and Qualia: Mathematics of Subjective Experience"
   },
