@@ -61,6 +61,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Construct a formal proof system where the soundness predicate appears inside the system it validates. Prove that such tangled hierarchies are unavoidable in any system that can reason about its own consistency. Formalize using modal fixed-point logics and Kripke frames.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0417",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-19T07:38:39.259918+00:00",
+    "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 7bc47166 (Q=0.780), which proved 13 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Sorting a list of n elements reduces the entropy from log(n!) bits to 0 bits, doing thermodynamic work W = kT * log(n!) in the process. But this is only true if sorting is irreversible \u2014 if the sorted list uniquely determines the input, then sorting is reversible and does no thermodynamic work. The ",
     "domains": [
       "Shared"
@@ -156,6 +171,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-17T13:45:52.051601+00:00",
     "title": "[Reset] Fresh approach in Shared"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that isomorphic mathematical structures can carry semantically different meanings that no formal system can distinguish. Formalize the concept of 'isomorphism of isomorphisms' and show that categorical equivalence preserves truth but not meaning. Connect to Hofstadter's Copycat architecture for analogical reasoning.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0416",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-19T07:38:39.222186+00:00",
+    "title": "Isomorphisms of Meaning: When Structures Collide"
   },
   {
     "consumed_by_exp_id": "",
@@ -3049,21 +3079,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Information-Theoretic Limits of Proof Search: How Hard Is It to Find a Lean Proof?"
   },
   {
-    "consumed_by_exp_id": "5b9ebbbb",
-    "description": "A Sudoku puzzle is a constraint satisfaction problem on a 9x9 grid. The 'spectral gap' of a Sudoku puzzle is the gap between the two largest eigenvalues of the transition matrix of the Markov chain that randomly swaps two compatible entries. The spectral gap determines the mixing time: the number of swaps needed to generate a uniformly random solution. Conjecture: the spectral gap of a Sudoku puzzle undergoes a phase transition at the critical density d_c = 17/81 (the density of the minimal number of clues, 17, divided by 81). For puzzles with fewer than 17 clues, the spectral gap is large (the Markov chain mixes quickly, meaning there are many solutions). For puzzles with exactly 17 clues, the spectral gap is minimal (the chain mixes slowly, meaning solutions are hard to find). For puzzles with more than 30 clues, the spectral gap is zero (the chain is reducible, meaning the puzzle has a unique solution and no swaps are possible). Conjecture: the spectral gap lambda_1 - lambda_2 of the Sudoku Markov chain satisfies: lambda_1 - lambda_2 > epsilon for d < 17/81 (many solutions, fast mixing), lambda_1 - lambda_2 ~ 0 for d ~ 17/81 (critical point, slow mixing), and the chain is absorbing for d > 30/81 (unique solution, no mixing). Test: compute the spectral gap for Sudoku puzzles with varying numbers of clues and verify the phase transition. Impact: Sudoku has a spectral gap phase transition. The hardness of the puzzle is determined by the gap, not by the number of clues.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0386",
-    "priority_score": 0.77,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T03:03:23.727138+00:00",
-    "title": "The Spectral Gap of Sudoku: When Puzzles Become Phase Transitions"
-  },
-  {
     "consumed_by_exp_id": "8b838f97",
     "description": "Ramsey's theorem for graphs states that R(k,l) = the minimum n such that any 2-coloring of the edges of K_n contains a red K_k or a blue K_l. For hypergraphs: R_r(k,l) = the minimum n such that any 2-coloring of the r-tuples of an n-set contains a red K_k^{(r)} or a blue K_l^{(r)}. The growth rate is an open problem: R_3(4,4) = 13 (known), R_3(5,5) is between 34 and 55, and R_3(k,k) is believed to grow like a double exponential 2^{c*k^2}. Conjecture: R_3(k,k) ~ 2^{2^{ck}} for some constant c > 0. This is a tower function (height 2 exponential). More precisely: the lower bound R_3(k,k) >= 2^{ck^2} (from the probabilistic method) and the upper bound R_3(k,k) <= 2^{2^{ck}} (from the stepping-up lemma). The gap is between a single exponential and a double exponential. Conjecture: the true growth rate is double exponential, and the upper bound is tight. This would mean that 3-uniform Ramsey numbers grow much faster than graph Ramsey numbers. Test: compute R_3(k,k) for k = 3, 4, 5, 6 by exhaustive search and verify the growth rate. Impact: 3-uniform Ramsey numbers are double exponential. Combinatorics at the hypergraph level is fundamentally harder than at the graph level.",
     "domains": [
@@ -4563,6 +4578,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## What is proved\n\n`Catalog/Main.lean` formalizes finite symmetric Markov kernels and proves a chain\nfrom closed classes to the spectral obstruction to mixing:\n\n1. symmetry turns \u201cno transitions out\u201d into \u201cno transitions in\u201d;\n2. the indicator of a closed class is fixed by the Markov operator;\n3. disjoint nonempty closed classes give linearly independent fixed functions;\n4. hence eigenvalue `1` has multiplicity at least two;\n5. the complement of a closed class is closed;\n6. consequently, any nonempty proper closed class forces the above zero-gap\n   condition.\n\nThe final condition is expressed without ordering all eigenvalues: two linearly\nindependent `1`-eigenfunctions are exactly the obstruction needed for the usual\nfinite reversible-chain spectral gap to vanish.\n\n## Limits of the clue-density conjecture\n\nThe proposed density thresholds cannot yet be stated as a theorem. A clue count\ndoes not determine a Sudoku instance's solution graph, uniqueness, difficulty,\nor transition matrix. In particular, \u201crandomly swaps two compatible entries\u201d\nneeds a precise state space and compatibility rule. If states are completed\nsolutions satisfying fixed clues, ordinary swaps of two cells generally leave\nthe state space; if states are partial assignments, the stationary distribution\nand reversibility must be specified.\n\nStatements involving `~ 0`, \u201clarge,\u201d and a universal `epsilon` also require\nquantifiers and a family of probability distributions on puzzle instances.\nThe fact that 17 is the minimum clue count among uniquely solvable standard\nSudokus does not by itself imply a spectral critical point at `17/81`.\n\n## Next formal steps\n\n1. Define rows, columns, boxes, clues, valid completions, and a precise local\n   transition rule.\n2. Prove that the transition rule preserves validity and fixed clues.\n3. Add laziness (or otherwise prove aperiodicity) and prove symmetry/detailed\n   balance, connecting the concrete chain to `SymmetricMarkovKernel`.\n4. Enumerate tiny Sudoku analogues (for example 4\u00d74 grids) and prove their\n   transition matrices and spectra by exact rational arithmetic.\n5. Formulate statistical claims over a specified distribution of clue sets,\n   rather than as universal claims based solely on clue count.\n6. Relate `HasZeroSpectralGap` to an ordered self-adjoint matrix spectrum and a\n   standard numerical definition of spectral gap.\n7. Only after those definitions are fixed, collect reproducible 9\u00d79 data and\n   test whether any threshold survives controls for number of solutions and\n   graph connectivity.\n",
+    "domains": [
+      "Computation",
+      "Pythagorean"
+    ],
+    "id": "fd_0418",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "5b9ebbbb",
+    "status": "available",
+    "timestamp": "2026-07-19T07:38:55.684029+00:00",
+    "title": "`Catalog/Main.lean` formalizes finite symmetric Markov kernels and proves a chai"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Subsequence Ramsey Theory for Genetic Words\n\n## 1. Sharp extremal law for repeated scattered words\n\nFor an alphabet of size `q`, determine the largest word length for which one can avoid two disjoint, order-isomorphic occurrences of the same scattered word of length `m`. The conjecture is that the extremal function has an exponential main term in `m`, but with a base strictly smaller than the naive `q^m` once arbitrary scattered occurrences, rather than aligned blocks, are counted.\n\nThe key insight is that aligned-block coding supplies a universal benchmark while overlap constraints among scattered words should create additional entropy loss. **Why now?** The collision and disjointness bounds isolate the exact structural point where ordinary pigeonhole counting stops, making the missing overlap estimate sharply testable.\n\n## 2. Multiplicity phase transition for repeated genetic motifs\n\nFix `q` and `m`. Conjecturally, every sufficiently long word contains a scattered length-`m` motif with `r` pairwise disjoint occurrences at a threshold asymptotic to `c(q,m)r`, where `c(q,m)` is strictly below `q^m m` for `m \u2265 2`.\n\nThe key insight is that large fibers already force multiplicity among aligned blocks, while a disjoint scattered-occurrence theorem could compress the threshold by exploiting many possible embeddings. **Why now?** The established fiber hierarchy provides a precise baseline against which any genuine subsequence gain can be measured.\n\n## 3. Entropy-sensitive compression in stationary genomic models\n\nFor a stationary ergodic source of entropy rate `h < log q`, conjecture that the typical waiting time for a repeated length-`m` block scales as `exp(hm/2)` up to subexponential factors, and that low-complexity mixtures exhibit a detectable downward deviation governed by their lowest-entropy component.\n\nThe key insight is that cardinality `q^m` should be replaced probabilistically by the effective typical-set size `exp(hm)`, after which birthday-type collision behavior predicts a square-root threshold. **Why now?** The worst-case coding theorem clarifies which part of the claimed genomic compression is universal and which part must be attributed to source entropy.\n\n## 4. Window-uniform repetition statistic for real genomes\n\nDefine `U_g(m,r)` as the least window length such that every window in a finite genome `g` contains some length-`m` word with at least `r` disjoint occurrences. Conjecture that, after controlling for local GC content and assembly gaps, human chromosomes have `U_g(4,2)` separated by a constant factor from matched first-order Markov surrogates.\n\nThe key insight is that a window-uniform statistic turns the informal phrase \u201cany consecutive bases\u201d into a reproducible extremal observable, while disjointness prevents a homopolymer overlap from being counted ambiguously. **Why now?** A universal upper benchmark is available, so empirical comparisons can report both absolute values and normalized compression ratios.\n\n## 5. Tropical recurrence profile of motif fibers\n\nAssociate to each motif its first-occurrence and recurrence positions, and combine these by min-plus convolution. Conjecture that the lower envelope of these recurrence profiles determines the exact first aligned collision time and admits a stable extension to approximate matches under Hamming penalties.\n\nThe key insight is that first collision is a minimum over motif-specific return times, naturally placing the statistic in min-plus geometry, while fiber multiplicity records higher-order breakpoints. **Why now?** Exact finite-alphabet collision and multiplicity laws provide boundary conditions for a tropical model that can be falsified on both synthetic and genomic sequences.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0419",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "d00870b3",
+    "status": "available",
+    "timestamp": "2026-07-19T07:39:57.644504+00:00",
+    "title": "For an alphabet of size `q`, determine the largest word length for which one can"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle d1663b23 (Q=0.700) proved 0 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'A minimal modularity lifting theorem for Siegel modular forms' and formalize its key results. Abstract: We prove a minimal modularity lifting theorem (in the spirit of Gen",
     "domains": [
       "Applications"
@@ -4603,21 +4648,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-19T05:55:58.494804+00:00",
     "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
-  },
-  {
-    "consumed_by_exp_id": "d00870b3",
-    "description": "Ramsey's theorem states that any 2-coloring of the edges of K_6 contains a monochromatic K_3 (a triangle of one color). Applied to DNA: any sequence of 4^6 + 1 = 4097 nucleotides must contain a repeated 6-mer (by pigeonhole). But Ramsey theory for subsequences is more subtle: what is the minimum length L(k) of a DNA sequence over {A, C, G, T} such that every subsequence of length k contains a repeated 4-mer? Conjecture: L(k) = Theta(k * 4^4 * log(4^4)) = Theta(k * 256 * 8) = Theta(k * 2048). More precisely, by the Lovasz local lemma, L(k) >= 4^{4k/5} for sequences that avoid repeated k-mers in all subsequences. Conjecture: for real genomes, the actual L(k) is much smaller because real DNA has low complexity regions (microsatellites, Alu repeats) that create forced repeats. Specifically, the human genome has L(4) ~ 1000 (any 1000 consecutive bases contain a repeated 4-mer in some subsequence), while the random genome has L(4) ~ 4^4 * log(4^4) ~ 5000. Test: compute L(k) for real genomes vs random genomes and verify the factor-of-5 compression. Impact: DNA avoids subsequential repeats in a way that Ramsey theory predicts, but real genomes are 5x more 'forced' than random sequences.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0373",
-    "priority_score": 0.71,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T01:02:08.067227+00:00",
-    "title": "The Ramsey Theory of DNA: Subsequence Avoidance in Genetic Codes"
   },
   {
     "consumed_by_exp_id": "",

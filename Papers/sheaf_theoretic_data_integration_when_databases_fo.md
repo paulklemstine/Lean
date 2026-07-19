@@ -1,42 +1,29 @@
-# Computational Evidence — Sheaf-Theoretic Data Integration
+# Computational Evidence
 
-The headline results are *universal* sheaf-theoretic statements (gluing, separation,
-consistency ⇔ integrability), proved directly and machine-checked in Lean 4 in
-`Catalog/Cryptography/SheafDataIntegration.lean` (0 sorries; axioms: `propext`,
-`Classical.choice`, `Quot.sound`). The Lean kernel check *is* the verification, so heavy
-numerical experimentation is unnecessary. We record the small-case sanity checks that
-guided the formalization.
+## Small cases
 
-## 1. Two-table merge (smallest nontrivial gluing)
-Keys `K = {a, b, c}`, values in `ℤ`.
-- Table `r₀` on `S₀ = {a, b}`: `a ↦ 1, b ↦ 2`.
-- Table `r₁` on `S₁ = {b, c}`: `b ↦ 2, c ↦ 3`.
-- Overlap `S₀ ∩ S₁ = {b}`: both give `b ↦ 2` ⇒ consistent.
-- Predicted unique merge on `{a,b,c}`: `a ↦ 1, b ↦ 2, c ↦ 3`. ✓ (matches
-  `exists_unique_merge_two`).
-- Inconsistent variant `r₁'(b) = 5` violates `hagree`; no merge exists ⇒ matches
-  `exists_glue_iff_consistent` (the ∃-glue side fails because consistency fails).
+For a Boolean triangle there are `2^3 = 8` vertex assignments. Consistency requires all three values to agree. The two consistent assignments are `000` and `111`, so the consistent fraction is `2/8 = 1/4`.
 
-## 2. Separation on a 2-set cover
-With the cover above, a global record over `{a,b,c}` is fully determined by its
-restrictions to `{a,b}` and `{b,c}` (their union is everything). Hand-checking all
-assignments confirms restriction is injective on the cover — the content of
-`glue_eq_of_locally_eq`.
+| schema | raw assignments | consistent assignments | fraction |
+|---|---:|---:|---:|
+| one Boolean vertex | 2 | 2 | 1 |
+| two Boolean vertices, one equality | 4 | 2 | 1/2 |
+| three Boolean vertices, triangle equalities | 8 | 2 | 1/4 |
 
-## 3. H0 / global sections on small graphs (constant sheaf, values in `ℤ`)
-- Discrete graph on `Fin n` (no edges): every function is a section ⇒ `H0 = ⊤`,
-  `dim = n` connected components. (e.g. `n = 2`: the section `0,1` is global.)
-- Path / complete graph on `Fin 3` (connected): sections are exactly the constants ⇒
-  `dim = 1`. Evaluation at any vertex is a bijection onto `ℤ`, matching
-  `globalSections_eval_injective_of_connected`.
-- These match `finrank_H0_eq_card_connectedComponent` from the catalog reference
-  `CellularSheafCohomology.lean`.
+Treating the three triangle edges as independent conditions would instead predict `(1/2)^3 = 1/8`. The discrepancy is caused by the third equality being implied by the first two. The count `2` is kernel-checked in `boolean_triangle_consistent_count`; the logical redundancy is proved in `triangle_constraint_redundant`.
 
-## 4. Counterexample hunt
-- *Claim tested:* "pairwise-consistent ⇒ jointly consistent for plain records." On all
-  hand-enumerated 3-set covers of `{a,b,c}` no counterexample appears (consistent with
-  Conjecture 3). The conjectured boundary — failure once stalks carry nontrivial transition
-  maps — is left to the next cycle.
-- No OEIS sequence is involved (the objects are sheaves/submodules, not integer
-  sequences); `dim H0 = #components` is the only numeric invariant and it is already a
-  proved catalog theorem.
+For a single-valued partial database, exhaustive completion behaves differently: every pattern of missing cells is completable by assigning arbitrary values to missing positions. This is proved uniformly, rather than sampled, by `every_partial_database_completes`.
+
+## Counterexample hunt
+
+The proposed formula predicts `(1-r)^C`. At `r = 1/2` and `C = 1`, this is `1/2`; mere completability of a partial function has probability `1`. The numerical inequality is formalized by `missing_rate_formula_counterexample`, while the event-level reason is `every_partial_database_completes`.
+
+A second counterexample targets independence of overlap constraints: on a triangle, the equality on the closing edge is redundant. More generally, `pairwise_constraints_iff_anchor` proves that all pairwise equalities are equivalent to equalities against one root.
+
+## OEIS search
+
+No OEIS search is relevant here. The finite count used is the elementary constant count of globally equal Boolean assignments, not a newly observed integer sequence.
+
+## Scope of the evidence
+
+No synthetic performance benchmark is claimed. Mean, KNN, MICE, and constrained imputation require a specified data distribution, metric, hyperparameters, and tie-breaking rules. The formal result only rules out a distribution-free claim of strict superiority and proves existence of a finite constrained optimum.

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "e456357e",
-      "domain": "Shared",
-      "key_insight": "# Future directions\n\n1. **Repair the definition before studying asymptotics.** The literal rule excludes one integer and collapses to the constant-one sequence. A revised rule must specify the candida",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-18T06:39:55",
-      "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
-    },
-    {
       "cycle_id": "717f7483",
       "domain": "NumberTheory",
       "key_insight": "# Future directions\n\n## What was established\n\nThe completed development has two complementary formalizations. `Catalog/NumberTheory/GodelCasino.lean` studies finite sequences of unit bets and their ac",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-19T07:22:06",
       "title": "The Combinatorics of Compiler Optimization: Register Allocation as Graph Coloring"
+    },
+    {
+      "cycle_id": "d00870b3",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions: Subsequence Ramsey Theory for Genetic Words\n\n## 1. Sharp extremal law for repeated scattered words\n\nFor an alphabet of size `q`, determine the largest word length for which one ca",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-19T07:40:03",
+      "title": "The Ramsey Theory of DNA: Subsequence Avoidance in Genetic Codes"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "f6b1d920",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions: Universal Libraries and Catalog Complexity\n\n## 1. Exact autocorrelation law for passage occurrence\n\nFor every alphabet size at least two and every finite pattern, the exact probab",
-      "quality_score": 0.76,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-07-15T07:28:11",
-      "title": "The Library of Babel: Combinatorics of the Universal Library"
-    },
     {
       "cycle_id": "a8d24466",
       "domain": "NumberTheory",
@@ -2501,27 +2491,19 @@
       "theorem_count": 46,
       "timestamp": "2026-07-19T07:39:00",
       "title": "The Spectral Gap of Sudoku: When Puzzles Become Phase Transitions"
+    },
+    {
+      "cycle_id": "d00870b3",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions: Subsequence Ramsey Theory for Genetic Words\n\n## 1. Sharp extremal law for repeated scattered words\n\nFor an alphabet of size `q`, determine the largest word length for which one ca",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-19T07:40:03",
+      "title": "The Ramsey Theory of DNA: Subsequence Avoidance in Genetic Codes"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "18410e31",
-      "domain": "Novelty",
-      "name": "is",
-      "quality": 0.77
-    },
-    {
-      "cycle_id": "18410e31",
-      "domain": "Novelty",
-      "name": "searchDim_le_one",
-      "quality": 0.77
-    },
-    {
-      "cycle_id": "18410e31",
-      "domain": "Novelty",
-      "name": "no_superunit_hard_regime",
-      "quality": 0.77
-    },
     {
       "cycle_id": "f48abc37",
       "domain": "Cryptography",
@@ -2803,9 +2785,27 @@
       "domain": "Algebra",
       "name": "explicitly",
       "quality": 0.76
+    },
+    {
+      "cycle_id": "d00870b3",
+      "domain": "Tropical",
+      "name": "sorting_info_erased",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "d00870b3",
+      "domain": "Tropical",
+      "name": "sorting_info_erased",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "d00870b3",
+      "domain": "Tropical",
+      "name": "periodic_search_benchmark",
+      "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-19T07:39:00",
+  "last_updated": "2026-07-19T07:40:03",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3957,12 +3957,6 @@
         "title": "ArXiv paper: A Note on Iterated Beatty Sequences"
       },
       {
-        "cycle_id": "9b262bd9",
-        "quality": 0.69,
-        "theorems": 11,
-        "title": "ArXiv paper: A Note on Iterated Beatty Sequences"
-      },
-      {
         "cycle_id": "4dee9bd5",
         "quality": 0.65,
         "theorems": 14,
@@ -4009,6 +4003,12 @@
         "quality": 0.74,
         "theorems": 14,
         "title": "Categorification of Entropy: The Information Loss of Functors"
+      },
+      {
+        "cycle_id": "d00870b3",
+        "quality": 0.7,
+        "theorems": 14,
+        "title": "The Ramsey Theory of DNA: Subsequence Avoidance in Genetic Codes"
       }
     ]
   }
