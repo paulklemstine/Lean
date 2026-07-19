@@ -1,73 +1,35 @@
 # Computational evidence
 
-This project formalizes the combinatorial-fixed-point / game-theory story in two
-self-contained Lean files.  The claims are elementary enough that the "evidence"
-is itself checked by the Lean kernel (all theorems compile with no `sorry` and only
-the standard axioms `propext`, `Classical.choice`, `Quot.sound`).  The small-case
-computations that motivated the formal statements are recorded below.
+## Small cases
 
-## 1. One-dimensional Sperner lemma (parity)
+The formal files carry out the relevant finite calculations inside Lean.
 
-For a colouring `c : ℕ → Bool`, `fullyColoured c n` counts edges `(i,i+1)`, `i < n`,
-whose endpoints differ.  The parity theorem says its cardinality is odd iff
-`c 0 ≠ c n`.  Small cases (`•` = false, `|` = true):
+| Instance | Result |
+|---|---|
+| Boolean path coloring with unequal endpoint colors | The number of color-changing edges is odd, hence at least one exists. |
+| Matching Pennies, profile `(1/2, 1/2)` for both players | Every pure deviation has expected payoff `0`, so the profile is Nash. |
+| Arbitrary Matching Pennies equilibrium | The Nash inequalities and probability-sum equations force `p(false) = q(false) = 1/2`; the remaining probabilities are also `1/2`. |
+| Prisoner’s Dilemma, mutual defection | Every pure unilateral deviation has payoff no greater than staying with defection. |
 
-| path (n=4)      | fully coloured edges | count | c0 ≠ c4 | parity |
-|-----------------|----------------------|-------|---------|--------|
-| `• • • • •`     | none                 | 0     | no      | even ✓ |
-| `• • | | |`     | {(1,2)}              | 1     | yes     | odd  ✓ |
-| `• | • | •`     | {(0,1),(1,2),(2,3),(3,4)} | 4 | no    | even ✓ |
-| `• | | • |`     | {(0,1),(2,3),(3,4)}  | 3     | yes     | odd  ✓ |
+These calculations are kernel-checked in `Sperner1D.lean` and `Nash.lean`; the Matching Pennies result is an exhaustive symbolic classification of all real-valued probability profiles, not a grid sample.
 
-Every Sperner colouring (`c 0 = false`, `c n = true`) therefore has an odd, hence
-positive, number of fully labelled edges — the 1-D case of Sperner's lemma.
+## OEIS search
 
-## 2. Discrete Brouwer fixed point
-
-For `g : {0,…,n} → {0,…,n}` the theorem produces `i < n` with `g i ≥ i` and
-`g (i+1) ≤ i+1` (an approximate fixed point straddling an edge).  Example
-`n = 3`, `g = [2,3,1,3]`:
-
-* `i=0`: `g 0 = 2 ≥ 0` but `g 1 = 3 ≤ 1`? no.
-* `i=1`: `g 1 = 3 ≥ 1` and `g 2 = 1 ≤ 2`? yes.  ✔  (edge `(1,2)` is a fixed edge)
-
-This is precisely the discretization used in Scarf/Sperner style algorithms.
-
-## 3. Matching Pennies
-
-Payoffs (row = player 1, `+1` on a match).  Best-response cycling shows there is
-**no pure equilibrium**:
-
-```
-        H       T
-  H   (+1,-1) (-1,+1)
-  T   (-1,+1) (+1,-1)
-```
-
-Against the uniform column `(1/2,1/2)` every row of player 1 yields expected payoff
-`1/2·(+1) + 1/2·(-1) = 0`; symmetrically for player 2.  Hence the uniform profile is
-a Nash equilibrium (all deviations tie), which the file proves formally.
-
-## 4. Prisoner's Dilemma
-
-Payoffs (`false` = Cooperate, `true` = Defect), classic `(3,3),(0,5),(5,0),(1,1)`:
-
-```
-          C       D
-  C     (3,3)   (0,5)
-  D     (5,0)   (1,1)
-```
-
-Against `D`, player 1 gets `1` from `D` versus `0` from `C`; symmetric for player 2.
-So `(D,D)` is the unique pure Nash equilibrium — proved via the pure-deviation
-principle `isNash_of_pure`.
+No new integer sequence is central to the formalized claim. The parity invariant concerns the number of color changes in an arbitrary Boolean word and therefore does not define a single sequence without choosing a family of colorings. An OEIS lookup was consequently not applicable.
 
 ## Counterexample hunt
 
-No counterexamples were sought against the *statements* (they are theorems, verified
-by Lean).  The design phase did rule out two tempting but false formulations:
+The exact formal analysis found no counterexample to the one-dimensional Sperner statements or to the claimed equilibria.
 
-* The sign-change / discrete-IVT statements are **false at `n = 0`** (there is no
-  edge to straddle), so the theorems carry the hypothesis `0 < n`.
-* A naive "`c 0 ≠ c n` ⇒ *odd*" phrased over `ℕ`-truncated subtraction fails; the
-  parity is stated with `% 2` over `Finset.card` to avoid this.
+It did expose structural problems with the proposed general construction: the simplex of distributions over pure profiles is not the product of players’ mixed-strategy simplices, and a player index cannot generally serve as a strategy label. These are type/dimension mismatches rather than numerical counterexamples. The claimed general algorithm and `O(N^n)` bound were therefore not encoded as theorems.
+
+## Numerical table for Matching Pennies
+
+Against an opponent who plays `false` with probability `q`, player 1’s pure payoffs are:
+
+| Pure action | Expected payoff |
+|---|---:|
+| `false` | `2q - 1` |
+| `true` | `1 - 2q` |
+
+Both can be best responses only at `q = 1/2`. The symmetric calculation for player 2 forces player 1’s probability to be `1/2`. Lean proves these equations from the full Nash definition in `matchingPennies_nash_probabilities`, then proves the biconditional classification in `matchingPennies_isNash_iff`.
