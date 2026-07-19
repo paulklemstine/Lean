@@ -4548,6 +4548,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: Structural Register Allocation\n\n## 1. Weighted elimination-optimal spilling\n\n**Conjecture.** For a chordal interference graph with nonnegative vertex spill costs and a fixed register budget, there is an optimal spill set obtainable by dynamic programming over a clique tree, with state space bounded by a function of the maximum clique size.\n\nThe key insight is that chordality localizes all coloring obstructions to maximal cliques, while a clique tree records exactly how those obstructions overlap. **Why now?** The clique spill lower bound identifies the correct local constraint, but the failure of degree-only optimality leaves open how to combine local constraints globally and economically.\n\n## 2. Register-class list coloring with elimination certificates\n\n**Conjecture.** If every variable in a chordal interference graph has a list of admissible registers whose size is at least the largest clique containing that variable, then a valid list allocation exists.\n\nThe key insight is that a perfect elimination ordering exposes a local clique at every coloring step, suggesting a vertex-sensitive strengthening of the uniform clique bound. **Why now?** Modern architectures divide registers into heterogeneous classes, so a theorem with local list bounds would connect chordal perfectness to realistic allocation constraints.\n\n## 3. Semantic characterization of chordal SSA interference\n\n**Conjecture.** An SSA program whose live ranges are connected subtrees of a dominance tree has a chordal interference graph, and every finite chordal graph arises from such a subtree-liveness instance.\n\nThe key insight is that intersection graphs of subtrees of a tree are chordal, turning compiler dominance into a graph-theoretic representation theorem. **Why now?** Exact clique-based allocation is useful only when the semantic conditions producing the elimination structure are explicit and testable.\n\n## 4. A sharp boundary for degree-based spilling\n\n**Conjecture.** On unweighted chordal graphs, repeatedly deleting a maximum-degree vertex minimizes the number of spills needed for a one-register budget if and only if every block is a clique.\n\nThe key insight is that the three-vertex path already separates degree from chromatic demand, while block graphs form a natural class where local degree and clique congestion may align. **Why now?** The universal maximum-degree heuristic is false without restrictions; identifying its exact validity class would turn a heuristic into a structural theorem.\n\n## 5. Fixed-parameter allocation beyond chordality\n\n**Conjecture.** For interference graphs with chordality defect at most `d`\u2014meaning deletion of at most `d` vertices makes the graph chordal\u2014optimal weighted spilling and register allocation are fixed-parameter tractable in `d` plus the target register count.\n\nThe key insight is that a small exceptional set can isolate all non-clique coloring obstructions, after which elimination-based methods handle the chordal remainder. **Why now?** Real interference graphs may be nearly, but not exactly, chordal; a defect parameter provides a falsifiable bridge between exact structure and practical instances.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0415",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "192fa110",
+    "status": "available",
+    "timestamp": "2026-07-19T07:21:35.711367+00:00",
+    "title": "**Conjecture.** For a chordal interference graph with nonnegative vertex spill c"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle d1663b23 (Q=0.700) proved 0 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'A minimal modularity lifting theorem for Siegel modular forms' and formalize its key results. Abstract: We prove a minimal modularity lifting theorem (in the spirit of Gen",
     "domains": [
       "Applications"
@@ -4588,21 +4603,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-19T05:55:58.494804+00:00",
     "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
-  },
-  {
-    "consumed_by_exp_id": "192fa110",
-    "description": "Register allocation in a compiler assigns variables to CPU registers. The interference graph G has variables as vertices and edges between variables that are 'live' at the same time. Register allocation is equivalent to coloring G with k colors (k = number of registers). Conjecture: for SSA-form programs with n variables and maximum interference degree delta, the chromatic number chi(G) satisfies chi(G) = max(delta + 1, omega(G)) where omega(G) is the clique number. This is stronger than Brooks' theorem (which gives chi(G) <= delta + 1) because it predicts that chi(G) = delta + 1 ONLY when G contains a (delta+1)-clique. For typical programs: delta <= 5 and omega(G) <= 4, so chi(G) = delta + 1 <= 6. Conjecture: the optimal number of registers for SSA programs is at most delta + 1, and spill code (storing variables in memory instead of registers) is needed only when k < delta + 1. Moreover, the spill cost is minimized by spilling the vertex with maximum degree in the interference graph (a heuristic known as 'degree-based spilling'). Test: extract interference graphs from 100 real programs, compute chi(G) and delta, and verify chi(G) = max(delta + 1, omega(G)). Impact: register allocation is graph coloring with a precise formula for the chromatic number.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0394",
-    "priority_score": 0.72,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T04:12:06.532562+00:00",
-    "title": "The Combinatorics of Compiler Optimization: Register Allocation as Graph Coloring"
   },
   {
     "consumed_by_exp_id": "d00870b3",
