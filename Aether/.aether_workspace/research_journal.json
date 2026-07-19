@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "21c08839",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions: Self-Improving Cryptographic Certificates\n\n## 1. Confluence of audited certificate refinement\n\n**Conjecture.** For every certificate tree, augmenting redundant-restatement elimina",
-      "quality_score": 0.73,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-18T10:39:19",
-      "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
-    },
-    {
       "cycle_id": "fff627f3",
       "domain": "Pythagorean",
       "key_insight": "# Future Directions\n\n## 1. Baire-category classification of convergent prime rearrangements\n\n**Conjecture.** In the pointwise topology on the infinite symmetric group, the set of permutations for whic",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-19T11:16:18",
       "title": "Isomorphisms of Meaning: When Structures Collide"
+    },
+    {
+      "cycle_id": "5f462d59",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Surveillance Networks and Information Limits\n\n## 1. Entropy-sensitive dynamic converse\n\n**Conjecture.** For a nonuniform distribution on finite network histories and any randomize",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-19T11:52:48",
+      "title": "Surveillance Networks: Information-Theoretic Undetectability"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "7a91e930",
-      "domain": "Geometry",
-      "key_insight": "# Future directions\n\nThe formal development proves the classical affine construction inside the quantum definition: over every finite field, the nonzero slopes index `|K| - 1` pairwise orthogonal quan",
-      "quality_score": 0.68,
-      "sorry_count": 0,
-      "theorem_count": 18,
-      "timestamp": "2026-07-15T21:17:34",
-      "title": "ArXiv paper: Large sets of mutually orthogonal quantum Latin squares"
-    },
     {
       "cycle_id": "e0f3150d",
       "domain": "Geometry",
@@ -2501,6 +2491,16 @@
       "theorem_count": 18,
       "timestamp": "2026-07-19T11:52:43",
       "title": "Cellular Automata at the Ordinals: Transfinite Computation"
+    },
+    {
+      "cycle_id": "5f462d59",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Surveillance Networks and Information Limits\n\n## 1. Entropy-sensitive dynamic converse\n\n**Conjecture.** For a nonuniform distribution on finite network histories and any randomize",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-19T11:52:48",
+      "title": "Surveillance Networks: Information-Theoretic Undetectability"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-19T11:52:43",
+  "last_updated": "2026-07-19T11:52:48",
   "open_questions": [
     {
       "context": "",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "6e1376aa",
-        "quality": 0.8,
-        "theorems": 14,
-        "title": "Deepening: The Topology of Knotted Light: How Laser Beams Get Tangled"
-      },
-      {
         "cycle_id": "091f8315",
         "quality": 0.8,
         "theorems": 46,
@@ -3637,6 +3631,12 @@
         "quality": 0.76,
         "theorems": 0,
         "title": "Stone Duality for Machine Learning: Neural Networks as Geometric Realizations"
+      },
+      {
+        "cycle_id": "5f462d59",
+        "quality": 0.78,
+        "theorems": 0,
+        "title": "Surveillance Networks: Information-Theoretic Undetectability"
       }
     ],
     "NumberTheory": [

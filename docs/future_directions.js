@@ -74,7 +74,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Self-Modifying Code That Cannot Be Stopped"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8d3b0867",
     "description": "Building on cycle 7bc47166 (Q=0.780), which proved 13 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Sorting a list of n elements reduces the entropy from log(n!) bits to 0 bits, doing thermodynamic work W = kT * log(n!) in the process. But this is only true if sorting is irreversible \u2014 if the sorted list uniquely determines the input, then sorting is reversible and does no thermodynamic work. The ",
     "domains": [
       "Shared"
@@ -83,7 +83,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "7bc47166",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T01:02:46.395999+00:00",
     "title": "Deepening: The Thermodynamics of Sorting: Entropy and Computational Work"
   },
@@ -130,21 +130,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-18T12:16:03.050816+00:00",
     "title": "Deepening: Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
-  },
-  {
-    "consumed_by_exp_id": "5f462d59",
-    "description": "Prove a theorem about the minimum information an observer must collect to reconstruct a dynamic social network with bounded error. Formalize the privacy-utility tradeoff as a rate-distortion problem and prove that perfect surveillance and perfect privacy are mutually exclusive in finite networks.",
-    "domains": [
-      "Novelty",
-      "Cryptography"
-    ],
-    "id": "fd_0433",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T09:31:58.039439+00:00",
-    "title": "Surveillance Networks: Information-Theoretic Undetectability"
   },
   {
     "consumed_by_exp_id": "",
@@ -274,34 +259,19 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Quantum Entanglement as Algebraic Topology: The Linking Number Is Entanglement"
   },
   {
-    "consumed_by_exp_id": "a88a4e5d",
-    "description": "Prove that cellular automata can perform transfinite computations when run on ordinals instead of N. Formalize a Rule 110 analog on omega-squared and prove it achieves super-Turing computation. Connect to Infinite Time Turing Machines and ordinal computation.",
+    "consumed_by_exp_id": "",
+    "description": "Formalize a logic where contradictions do not explode and beliefs can be retracted. Prove that paraconsistent logics can model dream-like reasoning where impossible objects coexist. Show that such logics correspond to topological spaces where open sets are not closed under arbitrary union.",
     "domains": [
       "Novelty",
-      "Computation"
+      "Logic"
     ],
-    "id": "fd_0427",
+    "id": "fd_0451",
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T08:40:11.399800+00:00",
-    "title": "Cellular Automata at the Ordinals: Transfinite Computation"
-  },
-  {
-    "consumed_by_exp_id": "b14c422f",
-    "description": "Construct and classify finite projective planes where Desargues' theorem fails. Prove that such planes exist at every prime power order and that their collineation groups are strictly smaller than PGL. Formalize the connection to non-associative division algebras and Hall triple systems.",
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0441",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T10:23:56.030248+00:00",
-    "title": "Non-Desarguesian Worlds: Geometry Without Desargues"
+    "status": "available",
+    "timestamp": "2026-07-19T11:51:31.534494+00:00",
+    "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
   },
   {
     "consumed_by_exp_id": "",
@@ -317,21 +287,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-19T10:41:15.077942+00:00",
     "title": "Negative-Dimensional Topology: What Lives in Dimension -1?"
-  },
-  {
-    "consumed_by_exp_id": "a9bce66e",
-    "description": "Formalize transreal arithmetic (Anderson's system: R \u222a {Phi, +inf, -inf} with Phi = 0/0). Prove the ring axioms fail but a wheel structure emerges. Determine which theorems of real analysis survive transreal extension and which collapse.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0423",
-    "priority_score": 0.82,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T08:17:32.947136+00:00",
-    "title": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
   },
   {
     "consumed_by_exp_id": "2d8c7907",
@@ -4922,6 +4877,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: Transreal Arithmetic\n\n## 1. Signed-zero completion and genuine wheel involution\n\n**Conjecture.** Adjoining distinct positive and negative zeros to the transreal carrier admits a conservative total arithmetic in which reciprocal is an involution on every value, nullity remains absorbing, and the ordinary real field embeds as precisely the quotient identifying the two signed zeros.\n\nThe key insight is that the failure of double reciprocal at negative infinity is not caused by infinity itself, but by the loss of sign when both infinities map to one ordinary zero. **Why now?** The reciprocal boundary calculation isolates this as the only obstruction visible in the four-constructor model, making a minimal completion concrete and testable.\n\n## 2. Maximal associative totalization\n\n**Conjecture.** The stated transreal multiplication is associative on the entire carrier, and it is the unique commutative associative extension of real multiplication satisfying nullity absorption, the signed infinity rules, and `0 \u00b7 (\u00b1\u221e) = \u03a6`.\n\nThe key insight is that the nullity classification reduces all difficult associativity cases to sign multiplication and the zero-infinity boundary. **Why now?** A complete exceptional-case classification is available, so uniqueness can be attacked by a finite table argument coupled to ordinary real sign algebra.\n\n## 3. Guarded transfer principle for real analysis\n\n**Conjecture.** Every theorem built from continuous real functions using finite composition, addition, multiplication, and division by a nowhere-zero denominator transfers through the finite transreal fragment, while any unguarded extension allowing a denominator to reach zero generally fails to preserve continuity into a natural Hausdorff topology on the four-constructor carrier.\n\nThe key insight is that finite arithmetic and nonzero division are exactly conservative, whereas division at zero jumps to an exceptional constructor. **Why now?** Continuity of the exponential has already transferred through the real shadow, and the division boundary supplies a sharp candidate for the necessary guard.\n\n## 4. Topological impossibility at nullity\n\n**Conjecture.** No Hausdorff topology simultaneously extends the Euclidean topology on the finite fragment, makes total addition and multiplication jointly continuous everywhere, and makes both signed infinities non-isolated.\n\nThe key insight is that limits approaching opposite infinities force their sum toward nullity, while nearby finite cancellations remain finite, creating incompatible separation requirements. **Why now?** The algebraic table identifies the precise exceptional fibers whose topological neighborhoods must be compared.\n\n## 5. Exceptional-ideal normal forms\n\n**Conjecture.** For every rational expression over transreal variables, there is a finite stratification by polynomial sign and vanishing conditions such that the expression is either an ordinary rational function or one of `+\u221e`, `-\u221e`, and `\u03a6` on each stratum.\n\nThe key insight is that nullity can arise only from null input or zero-infinity multiplication, and all other exceptional outputs are controlled by signs. **Why now?** The multiplication classification and exact finite division theorem provide the local rewriting rules needed for a structural induction on expressions.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0452",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "a9bce66e",
+    "status": "available",
+    "timestamp": "2026-07-19T11:52:13.254664+00:00",
+    "title": "**Conjecture.** Adjoining distinct positive and negative zeros to the transreal "
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Surveillance Networks and Information Limits\n\n## 1. Entropy-sensitive dynamic converse\n\n**Conjecture.** For a nonuniform distribution on finite network histories and any randomized observation channel whose expected Hamming distortion is at most \\(D\\), the mutual information between the history and the record is bounded below by source entropy minus the logarithm of the largest admissible distortion ball, with a correction determined by the decoder's excess-distortion probability.\n\nThe key insight is that the deterministic fibre-covering argument should become an entropy decomposition: conditioning on a record confines likely histories to a distortion neighborhood, while atypical reconstruction failures contribute a controlled correction.\n\n**Why now?** The exact finite covering converse identifies the correct combinatorial volume term, so the remaining work is to replace worst-case fibre cardinality by conditional entropy without changing the geometric core.\n\n## 2. Causal surveillance and directed information\n\n**Conjecture.** For a time-indexed network observed through a causal channel, any causal decoder achieving per-time distortion budgets \\(D_1,\\ldots,D_T\\) must collect directed information at least the logarithm of a sequential covering number; equality holds for a class of memoryless network evolutions and product observation channels.\n\nThe key insight is that ordinary covering counts ignore the order in which information arrives, whereas a causal observer can only refine the set of compatible histories along a filtration.\n\n**Why now?** The proved \\(Tn^2\\) exact-reconstruction bound gives the terminal, zero-distortion endpoint against which a genuinely sequential rate law can be calibrated.\n\n## 3. Markov-network rate reduction from mixing\n\n**Conjecture.** If network snapshots evolve by an irreducible reversible Markov chain with spectral gap \\(\\gamma\\), then the minimum record rate for bounded reconstruction error is strictly below the unconstrained-history bound once the observation horizon exceeds the mixing time, with an explicit deficit controlled by the transition entropy and \\(\\gamma\\).\n\nThe key insight is that dynamic histories are not arbitrary binary tensors when temporal transitions are constrained; spectral mixing should quantify the reduction from raw state-space cardinality to effective trajectory complexity.\n\n**Why now?** The unrestricted dynamic count isolates exactly what must be improved: all possible histories cost \\(Tn^2\\) bits, so every valid reduction must come from a mathematically stated dependence model rather than from the observer alone.\n\n## 4. Sharp privacy threshold for binary network histories\n\n**Conjecture.** For binary directed-network histories under Hamming distortion, a perfectly private deterministic channel admits worst-case distortion \\(D\\) if and only if a radius-\\(D\\) Hamming ball covers the full history space; equivalently, the optimal private worst-case distortion equals the covering radius of the one-codeword code. For randomized privacy defined by equality of output laws, the same threshold persists for worst-case almost-sure distortion.\n\nThe key insight is that perfect privacy collapses all deterministic fibres to one record, turning rate--distortion into a one-center covering problem; randomization should not help under an almost-sure worst-case requirement.\n\n**Why now?** The necessary ball-volume inequality is established, and the deterministic sufficiency direction can be attacked by explicitly selecting an optimal reconstruction center before extending the argument to randomized channels.\n\n## 5. Graph-aware distortion beyond edgewise Hamming distance\n\n**Conjecture.** For distortion measured by edit distance modulo vertex relabeling, the minimum surveillance rate is controlled by orbit-ball volumes under the symmetric-group action, and asymmetry of typical graphs yields an asymptotic rate within a lower-order term of the labeled Hamming bound.\n\nThe key insight is that surveillance of social structure should not pay for arbitrary participant labels; quotienting by graph isomorphism replaces ordinary Hamming balls by unions of group orbits whose stabilizers govern the information saving.\n\n**Why now?** The fibre-covering proof is metric-agnostic, so only the orbit-ball counting layer must change; this provides a direct bridge between rate--distortion, finite group actions, and random graph asymmetry.\n",
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "fd_0453",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "5f462d59",
+    "status": "available",
+    "timestamp": "2026-07-19T11:52:44.403749+00:00",
+    "title": "**Conjecture.** For a nonuniform distribution on finite network histories and an"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle d1663b23 (Q=0.700) proved 0 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'A minimal modularity lifting theorem for Siegel modular forms' and formalize its key results. Abstract: We prove a minimal modularity lifting theorem (in the spirit of Gen",
     "domains": [
       "Applications"
@@ -4961,6 +4946,34 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-15T05:23:22.329230+00:00",
     "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle a88a4e5d (Q=0.626) proved 18 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Prove that cellular automata can perform transfinite computations when run on ordinals instead of N. Formalize a Rule 110 analog on omega-squared and prove it achieves super-Turing computation. Connec",
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_a88a4e5d_285a4c01",
+    "priority_score": 0.6756666666666666,
+    "research_mode": "team",
+    "source_exp_id": "a88a4e5d",
+    "status": "available",
+    "timestamp": "2026-07-19T11:52:43.410408+00:00",
+    "title": "Close Proofs: Cellular Automata at the Ordinals: Transfinite Computation"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle b14c422f (Q=0.618) proved 61 theorems in Applications but left 12 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Construct and classify finite projective planes where Desargues' theorem fails. Prove that such planes exist at every prime power order and that their collineation groups are strictly smaller than PGL",
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_b14c422f_85cf9017",
+    "priority_score": 0.6681967213114755,
+    "research_mode": "team",
+    "source_exp_id": "b14c422f",
+    "status": "available",
+    "timestamp": "2026-07-19T11:52:35.440869+00:00",
+    "title": "Close Proofs: Non-Desarguesian Worlds: Geometry Without Desargues"
   },
   {
     "consumed_by_exp_id": "",
