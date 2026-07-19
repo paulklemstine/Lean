@@ -233,7 +233,7 @@
     const WORLD_HALF = WORLD_SIZE / 2;
     const K_SPRING = 0;              // No continuous spring — edges are lazy
     const REST_LENGTH = 9000;          // Rest length for provenance springs
-    const EDGE_DRAW_DISTANCE = 18000;  // Max distance to draw/spring edges
+    const EDGE_DRAW_DISTANCE = 9000;  // Max distance to draw/spring edges (reduced from 18000 so they only connect when close)
     const G_UNIVERSAL = 25.0;       // Universal gravitational constant (all pairs attract)
     const G_CLUSTER_MULT = 2.5;     // Same-cluster pairs attract more strongly
     const G_CORE = 12.0;            // Central galactic attractor pull
@@ -484,9 +484,9 @@
         }
 
         // ─── Edge springiness: nearby connected nodes attract each other ───
-        const EDGE_SPRING_K = 0.35;       // Spring constant — stronger attraction
-        const EDGE_SPRING_REST = 2400;    // Rest length matches bumper radius so they pull tight together
-        const EDGE_DAMPING = 0.10;        // Relative-velocity damping to smooth jitter between connected nodes
+        const EDGE_SPRING_K = 2.0;        // Spring constant — very strong attraction
+        const EDGE_SPRING_REST = REST_LENGTH * 0.6;  // Rest length where force is zero (5400)
+        const EDGE_DAMPING = 0.20;        // Relative-velocity damping to smooth jitter between connected nodes
         graphEdges.forEach(e => {
             const a = nodeMap[e.source], b = nodeMap[e.target];
             if (!a || !b) return;
