@@ -1,193 +1,166 @@
-"""
-The Fractal Dimension of Mathematical Truth -- numerical demonstrations.
-
-This self-contained script illustrates the paper's main results:
-
-  * statements are encoded as binary sequences (Cantor space) with the prefix
-    metric d(x, y) = 2^{-m}, where m is the first index of disagreement;
-  * a "theory" admits/rejects finite prefixes, carving out a "truth set";
-  * the box-counting dimension of a truth set equals the growth rate of the
-    number A_n of admissible length-n prefixes:
-        dim_B = lim_n  log2(A_n) / n
-      which equals the asymptotic density of information-bearing coordinates;
-  * the parity theory has dimension exactly 1/2 (sparse but not negligible);
-  * arbitrary densities in [0, 1] are realizable (full dimension spectrum);
-  * the dimension is approximable from above, dual to Chaitin's Omega, which is
-    approximable from below (both uncomputable in general).
-
-Run:  python demo.py
-"""
+#!/usr/bin/env python3
+"""Numerical demonstrations for prefix geometry and half-dimensional truth languages."""
 
 from __future__ import annotations
 
-import math
-from typing import Callable, Iterator, List, Tuple
+from dataclasses import dataclass
+from fractions import Fraction
+from itertools import product
+from typing import Iterable, Iterator, Sequence
 
-# A theory is described by a predicate telling whether coordinate i is "free".
-# Non-free coordinates are forced (here, to a default), so they carry no
-# branching; free coordinates each double the number of admissible prefixes.
-FreePredicate = Callable[[int], bool]
-
-
-def admissible_prefix_count(free: FreePredicate, n: int) -> int:
-    """A_n : the number of admissible length-n prefixes of a density-pattern
-    theory whose free coordinates are exactly those i < n with free(i) true.
-    Each free coordinate contributes a factor of 2 (the identity
-    sum_{i<=k} C(k, i) = 2^k made concrete)."""
-    free_coords: int = sum(1 for i in range(n) if free(i))
-    return 2 ** free_coords
+Bit = int
 
 
-def dimension_estimate(free: FreePredicate, n: int) -> float:
-    """Finite box-counting estimate log2(A_n) / n at resolution 2^{-n}."""
-    a_n: int = admissible_prefix_count(free, n)
-    return math.log2(a_n) / n if n > 0 else 0.0
+def validate_bits(bits: Sequence[Bit]) -> None:
+    """Raise ValueError unless every entry is 0 or 1."""
+    if any(bit not in (0, 1) for bit in bits):
+        raise ValueError("bits must contain only 0 and 1")
 
 
-def free_coordinate_density(free: FreePredicate, n: int) -> float:
-    """Empirical density of free coordinates among the first n positions;
-    this equals the dimension estimate and converges to dim_B."""
-    return sum(1 for i in range(n) if free(i)) / n if n > 0 else 0.0
+def paired_prefixes(n: int) -> Iterator[tuple[Bit, ...]]:
+    """Generate all length-2n prefixes whose even-indexed bits are 1."""
+    if n < 0:
+        raise ValueError("n must be nonnegative")
+    for free_bits in product((0, 1), repeat=n):
+        yield tuple(value for bit in free_bits for value in (1, bit))
 
 
-# ---- Concrete theories -------------------------------------------------------
-
-def parity_free(i: int) -> bool:
-    """Parity theory: even coordinates free, odd coordinates forced (copies)."""
-    return i % 2 == 0
-
-
-def periodic_free(p: int, q: int) -> FreePredicate:
-    """Rational density p/q: free on p positions in every block of q."""
-    return lambda i: (i % q) < p
+def paired_count(n: int) -> int:
+    """Return the exact paired-prefix count 2^n."""
+    if n < 0:
+        raise ValueError("n must be nonnegative")
+    return 1 << n
 
 
-def beatty_free(r: float) -> FreePredicate:
-    """Irrational density r via a Beatty pattern; asymptotic density -> r."""
-    return lambda i: (math.floor((i + 1) * r) - math.floor(i * r)) == 1
+def ambient_count(length: int) -> int:
+    """Return the number 2^length of unrestricted binary prefixes."""
+    if length < 0:
+        raise ValueError("length must be nonnegative")
+    return 1 << length
 
 
-def prefix_distance(x: str, y: str) -> float:
-    """Prefix (ultra)metric on finite/prefix-truncated sequences."""
-    m: int = 0
-    for a, b in zip(x, y):
-        if a != b:
-            return 2.0 ** (-m)
-        m += 1
-    return 2.0 ** (-min(len(x), len(y)))
+def symbolic_dimension_even_scale(n: int) -> Fraction:
+    """Return log_2(A_n)/(2n), represented exactly for n > 0."""
+    if n <= 0:
+        raise ValueError("n must be positive")
+    return Fraction(n, 2 * n)
 
 
-# ---- Chaitin-Omega-style from-below approximation ---------------------------
-
-def toy_halting(program: int, steps: int) -> bool:
-    """A decidable stand-in for a universal machine: 'program' halts within
-    'steps' iff steps exceeds a deterministic pseudo-random runtime. Purely
-    illustrative -- it mimics the *shape* of Omega's from-below approximation,
-    not a real universal machine."""
-    runtime: int = (program * 2654435761) % 97 + 1
-    return steps >= runtime
-
-
-def omega_lower_bounds(num_programs: int, budgets: List[int]) -> List[float]:
-    """Ascending rational lower bounds for a toy halting probability
-    Omega = sum over halting programs p of 2^{-(|p|+1)}. As the step budget
-    grows, more programs are seen to halt and the estimate rises monotonically
-    -- the dual of the dimension's from-above approximation."""
-    bounds: List[float] = []
-    for budget in budgets:
-        total: float = 0.0
-        for p in range(num_programs):
-            weight: float = 2.0 ** (-(p + 1))
-            if toy_halting(p, budget):
-                total += weight
-        bounds.append(total)
-    return bounds
+def prefix_distance(x: Sequence[Bit], y: Sequence[Bit]) -> Fraction:
+    """Compute weighted disagreement for finite streams, padding by zeros."""
+    validate_bits(x)
+    validate_bits(y)
+    length = max(len(x), len(y))
+    total = Fraction(0)
+    for index in range(length):
+        xb = x[index] if index < len(x) else 0
+        yb = y[index] if index < len(y) else 0
+        if xb != yb:
+            total += Fraction(1, 2 ** (index + 1))
+    return total
 
 
-def dimension_upper_bounds(free: FreePredicate, depths: List[int]) -> List[float]:
-    """A descending-in-the-limit sequence of dimension estimates. For the
-    density-pattern theories the estimate converges to the density from both
-    sides; we report the running tail-max to emphasise the from-above view."""
-    raw: List[float] = [dimension_estimate(free, n) for n in depths]
-    tail_max: List[float] = []
-    running: float = 0.0
-    for value in reversed(raw):
-        running = max(running, value)
-        tail_max.append(running)
-    return list(reversed(tail_max))
+def binary_truncation(bits: Sequence[Bit], n: int | None = None) -> Fraction:
+    """Return the exact dyadic sum of the first n supplied bits."""
+    validate_bits(bits)
+    count = len(bits) if n is None else n
+    if count < 0 or count > len(bits):
+        raise ValueError("n must lie between 0 and the number of supplied bits")
+    return sum(
+        (Fraction(bits[index], 2 ** (index + 1)) for index in range(count)),
+        start=Fraction(0),
+    )
 
 
-# ---- Reporting ---------------------------------------------------------------
+@dataclass(frozen=True)
+class CertifiedInterval:
+    """A rigorous interval determined by a finite binary prefix."""
 
-def _banner(title: str) -> None:
-    print("\n" + "=" * 68)
-    print(title)
-    print("=" * 68)
+    lower: Fraction
+    upper: Fraction
 
-
-def demo_parity() -> None:
-    _banner("1. Parity theory: dimension -> 1/2 (sparse but not negligible)")
-    print(f"{'n':>6} | {'A_n':>14} | {'log2(A_n)/n':>12}")
-    print("-" * 40)
-    for n in [2, 4, 8, 16, 32, 64, 128, 256]:
-        est: float = dimension_estimate(parity_free, n)
-        print(f"{n:>6} | {admissible_prefix_count(parity_free, n):>14} | {est:>12.6f}")
-    print("Limit dimension = 0.5  (0 < 0.5 < 1)")
-    mu: float = 2.0 ** (-(256 // 2))  # fair-coin measure of depth-256 truth set
-    print(f"Fair-coin measure at depth 256 ~ {mu:.3e}  (-> 0: Lebesgue-null)")
+    @property
+    def width(self) -> Fraction:
+        return self.upper - self.lower
 
 
-def demo_spectrum() -> None:
-    _banner("2. Dimension spectrum: every target in [0,1] is realizable")
-    targets: List[Tuple[str, FreePredicate, float]] = [
-        ("periodic 1/3", periodic_free(1, 3), 1 / 3),
-        ("periodic 2/5", periodic_free(2, 5), 2 / 5),
-        ("periodic 3/4", periodic_free(3, 4), 3 / 4),
-        ("Beatty 1/sqrt2", beatty_free(1 / math.sqrt(2)), 1 / math.sqrt(2)),
-        ("Beatty golden-1", beatty_free((math.sqrt(5) - 1) / 2), (math.sqrt(5) - 1) / 2),
-    ]
-    print(f"{'theory':>16} | {'target':>10} | {'estimate n=2048':>16} | {'|error|':>10}")
-    print("-" * 62)
-    for name, free, target in targets:
-        est: float = free_coordinate_density(free, 2048)
-        print(f"{name:>16} | {target:>10.6f} | {est:>16.6f} | {abs(est - target):>10.2e}")
+def certified_interval(prefix: Sequence[Bit]) -> CertifiedInterval:
+    """Enclose every infinite continuation of prefix in an interval of width 2^-N."""
+    lower = binary_truncation(prefix)
+    error = Fraction(1, 2 ** len(prefix))
+    return CertifiedInterval(lower, lower + error)
 
 
-def demo_metric() -> None:
-    _banner("3. The prefix ultrametric on statement encodings")
-    samples: List[Tuple[str, str]] = [
-        ("0000", "0001"),
-        ("0101", "0100"),
-        ("1010", "0010"),
-        ("1111", "1111"),
-    ]
-    for x, y in samples:
-        print(f"d({x}, {y}) = {prefix_distance(x, y):.4f}")
+def common_prefix_length(x: Sequence[Bit], y: Sequence[Bit]) -> int:
+    """Return the number of equal leading bits in two finite streams."""
+    validate_bits(x)
+    validate_bits(y)
+    for index, (xb, yb) in enumerate(zip(x, y)):
+        if xb != yb:
+            return index
+    return min(len(x), len(y))
 
 
-def demo_duality() -> None:
-    _banner("4. Duality: Omega from below vs. dimension from above")
-    budgets: List[int] = [1, 5, 20, 60, 200]
-    om: List[float] = omega_lower_bounds(64, budgets)
-    print("Toy-Omega ascending lower bounds (approximable from BELOW):")
-    for b, v in zip(budgets, om):
-        print(f"   budget {b:>4} -> {v:.6f}")
-    print("   (monotonically non-decreasing towards the toy halting probability)")
+def print_count_table(max_n: int = 8) -> None:
+    """Print exact paired and ambient counts and verify the square identity."""
+    print("Exact paired-prefix growth")
+    print(" n | paired A_n | ambient B_2n | A_n^2 = B_2n")
+    print("---+------------+--------------+----------------")
+    for n in range(max_n + 1):
+        paired = paired_count(n)
+        ambient = ambient_count(2 * n)
+        print(f"{n:2d} | {paired:10d} | {ambient:12d} | {paired * paired == ambient}")
 
-    depths: List[int] = [4, 8, 16, 32, 64, 128, 256, 512]
-    ub: List[float] = dimension_upper_bounds(parity_free, depths)
-    print("\nParity dimension upper bounds (approximable from ABOVE):")
-    for d, v in zip(depths, ub):
-        print(f"   depth  {d:>4} -> {v:.6f}")
-    print("   (tail suprema descending towards dim_B = 0.5)")
+
+def demonstrate_completion(n: int = 3) -> None:
+    """Enumerate paired prefixes and show that all fixed coordinates equal 1."""
+    prefixes = list(paired_prefixes(n))
+    valid = all(all(prefix[2 * k] == 1 for k in range(n)) for prefix in prefixes)
+    print(f"\nThere are {len(prefixes)} paired prefixes at scale n={n}:")
+    print(" ".join("".join(map(str, prefix)) for prefix in prefixes))
+    print(f"Every even-indexed coordinate is fixed to 1: {valid}")
+
+
+def demonstrate_real_bounds() -> None:
+    """Show certified convergence and common-prefix stability."""
+    x = (1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1)
+    y = (1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 0)
+    print("\nCertified binary-real intervals")
+    for n in (2, 4, 6, 8):
+        interval = certified_interval(x[:n])
+        print(
+            f"N={n:2d}: [{float(interval.lower):.6f}, "
+            f"{float(interval.upper):.6f}], width={float(interval.width):.6f}"
+        )
+    shared = common_prefix_length(x, y)
+    rx = binary_truncation(x)
+    ry = binary_truncation(y)
+    bound = Fraction(1, 2 ** shared)
+    print(f"\nTwo samples share {shared} initial bits.")
+    print(f"Observed finite-value gap: {float(abs(rx - ry)):.6f}")
+    print(f"Certified infinite-continuation bound: 2^-{shared} = {float(bound):.6f}")
+
+
+def demonstrate_triangle_inequality() -> None:
+    """Numerically check a representative metric triangle."""
+    x = (1, 0, 1, 0, 1, 0)
+    y = (1, 1, 1, 0, 0, 0)
+    z = (0, 1, 1, 1, 0, 1)
+    dxz = prefix_distance(x, z)
+    dxy = prefix_distance(x, y)
+    dyz = prefix_distance(y, z)
+    print("\nRepresentative prefix-metric triangle")
+    print(f"d(x,z) = {dxz} = {float(dxz):.6f}")
+    print(f"d(x,y) + d(y,z) = {dxy + dyz} = {float(dxy + dyz):.6f}")
+    print(f"Triangle inequality holds: {dxz <= dxy + dyz}")
 
 
 def main() -> None:
-    demo_parity()
-    demo_spectrum()
-    demo_metric()
-    demo_duality()
-    print("\nAll demonstrations complete.")
+    print_count_table()
+    demonstrate_completion()
+    demonstrate_real_bounds()
+    demonstrate_triangle_inequality()
+    print(f"\nExact symbolic dimension at every positive even scale: {symbolic_dimension_even_scale(7)}")
 
 
 if __name__ == "__main__":

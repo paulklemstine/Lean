@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "57f5aa5e",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Tropical Cryptocurrency\n\n## 1. Exact recession dimension of generic fibers\n\n**Conjecture.** For a generic family of `r` min-plus keys on `k` coordinates with `r < k`, every nonemp",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-18T19:01:52",
-      "title": "Deepening: Tropical Cryptocurrency: Mining on the Min-Plus Semiring"
-    },
-    {
       "cycle_id": "d757b941",
       "domain": "MachineLearning",
       "key_insight": "# Future Directions: Transform Uncertainty Beyond Fourier Duality\n\n## 1. Quantitative analytic-continuation uncertainty\n\n**Conjecture.** Let a normalized integral transform send compactly supported in",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-19T22:03:14",
       "title": "Self-Modifying Code That Cannot Be Stopped"
+    },
+    {
+      "cycle_id": "606f7bdd",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Functional Fibers, Experience, and Semantic Gaps\n\n## 1. Naturality of the zombie–semantic gap correspondence\n\n**Conjecture.** There is a category of functional profiles and profil",
+      "quality_score": 0.73,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-19T22:38:37",
+      "title": "Zombies and Qualia: Mathematics of Subjective Experience"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "5543d24b",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions\n\n## Results established\n\nThe formalization distinguishes circular *syntax* from valid derivability.\n\n1. **Finite observations do have limits.** Proof-tree observations are sets of",
-      "quality_score": 0.64,
-      "sorry_count": 0,
-      "theorem_count": 24,
-      "timestamp": "2026-07-16T05:14:48",
-      "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
-    },
     {
       "cycle_id": "5543d24b",
       "domain": "Combinatorics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 16,
       "timestamp": "2026-07-19T22:20:27",
       "title": "Fermat Near-Misses in the Twilight Zone"
+    },
+    {
+      "cycle_id": "606f7bdd",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Functional Fibers, Experience, and Semantic Gaps\n\n## 1. Naturality of the zombie–semantic gap correspondence\n\n**Conjecture.** There is a category of functional profiles and profil",
+      "quality_score": 0.73,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-19T22:38:37",
+      "title": "Zombies and Qualia: Mathematics of Subjective Experience"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "64b7f63b",
-      "domain": "Combinatorics",
-      "name": "benchmark_does_not_determine_length",
-      "quality": 0.73
-    },
-    {
-      "cycle_id": "64b7f63b",
-      "domain": "Combinatorics",
-      "name": "count",
-      "quality": 0.73
-    },
-    {
-      "cycle_id": "6e1376aa",
-      "domain": "Novelty",
-      "name": "deriv_eq",
-      "quality": 0.8
-    },
     {
       "cycle_id": "6e1376aa",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "euler_negative_dimension",
       "quality": 0.73
+    },
+    {
+      "cycle_id": "606f7bdd",
+      "domain": "Applications",
+      "name": "joins",
+      "quality": 0.73
+    },
+    {
+      "cycle_id": "606f7bdd",
+      "domain": "Applications",
+      "name": "for",
+      "quality": 0.73
+    },
+    {
+      "cycle_id": "606f7bdd",
+      "domain": "Applications",
+      "name": "finite_memory_is_lossy",
+      "quality": 0.73
     }
   ],
-  "last_updated": "2026-07-19T22:20:27",
+  "last_updated": "2026-07-19T22:38:37",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "8d3b0867",
-        "quality": 0.8,
-        "theorems": 0,
-        "title": "Deepening: The Thermodynamics of Sorting: Entropy and Computational Work"
-      },
-      {
         "cycle_id": "d5e79e07",
         "quality": 0.73,
         "theorems": 10,
@@ -3141,6 +3135,12 @@
         "quality": 0.69,
         "theorems": 22,
         "title": "Quantum Proofs of Classical Theorems"
+      },
+      {
+        "cycle_id": "606f7bdd",
+        "quality": 0.73,
+        "theorems": 11,
+        "title": "Zombies and Qualia: Mathematics of Subjective Experience"
       }
     ],
     "Bridges": [
