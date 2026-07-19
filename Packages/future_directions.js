@@ -4444,6 +4444,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: Functorial Information Loss\n\n## 1. A chain rule for composable finite functors\n\nFor composable functors between finite skeletal categories, define object loss from the uniform distribution on source objects and conditional loss relative to the intermediate image. Conjecturally, the loss of the composite is the first loss plus the expected loss of the second stage precisely when the intermediate fibers satisfy a conditional-uniformity law.\n\nThe key insight is that the proved finite chain rule should admit a relative version analogous to conditional entropy, but composition requires weighting each intermediate object by its actual pushforward probability.\n\nWhy now? The separation of output entropy from expected logarithmic fiber size isolates the two terms that a compositional theorem must track and reveals exactly where naive additivity can fail.\n\n## 2. Groupoid-cardinality entropy\n\nFor finite groupoids, replace raw object counts by homotopy cardinality, weighting an isomorphism class by the reciprocal of its automorphism-group order. Conjecture: an essentially surjective functor with homotopically uniform fibers satisfies an entropy-loss identity in which ordinary fiber cardinality is replaced by homotopy fiber cardinality.\n\nThe key insight is that entropy on categories should be invariant under equivalence, whereas counting displayed objects is not; automorphism weights provide the canonical correction.\n\nWhy now? The finite-set theorem identifies the exact counting argument to generalize, while the critique of object-level counting shows that equivalence invariance is the next necessary structural constraint.\n\n## 3. Mutual information between objects and morphisms\n\nFor finite categories equipped with probability distributions on objects and conditional distributions on hom-sets, conjecture that information loss splits into an object-identification term and a morphism-identification term. Vanishing total loss should characterize functors that are injective on supported objects and faithful on supported hom-sets.\n\nThe key insight is that object injectivity and categorical faithfulness are independent, so a genuine categorical entropy must carry at least two components rather than forcing one scalar object statistic to detect both.\n\nWhy now? The zero-loss theorem settles the object component completely and thereby supplies a precise baseline against which a morphism-sensitive extension can be tested.\n\n## 4. Measured entropy for infinite categories\n\nFor essentially small categories whose sets of isomorphism classes carry probability measures, conjecture a measurable chain rule for functors with countable or standard Borel fibers. Infinite information loss should occur exactly when the conditional fiber entropy diverges on a set of positive output measure, rather than merely when one infinite fiber exists.\n\nThe key insight is that infinity is a property of a weighted conditional expectation, not a consequence of cardinality alone.\n\nWhy now? Finite uniform fibers exhibit the logarithmic law exactly, while the failure of unweighted counting on large categories pinpoints the measure-theoretic hypotheses needed for an infinite extension.\n\n## 5. Extremal entropy under a maximum-fiber constraint\n\nFix finite source size `n`, attained-image size `m`, and maximum fiber size `r`. Conjecture that object entropy is minimized by making fibers as unequal as the constraint permits and maximized by fibers whose sizes differ by at most one; the inequalities should be strict except for permutations of the fiber-size profile.\n\nThe key insight is that object entropy depends only on the normalized partition of the source into fibers, turning functorial information loss into a discrete majorization problem.\n\nWhy now? The uniform-fiber theorem identifies the maximally symmetric equality case, and the chain rule converts every entropy extremum into a dual extremum for expected logarithmic fiber size.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0406",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "cc0903e0",
+    "status": "available",
+    "timestamp": "2026-07-19T05:56:24.774658+00:00",
+    "title": "For composable functors between finite skeletal categories, define object loss f"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle d1663b23 (Q=0.700) proved 0 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'A minimal modularity lifting theorem for Siegel modular forms' and formalize its key results. Abstract: We prove a minimal modularity lifting theorem (in the spirit of Gen",
     "domains": [
       "Applications"
@@ -4486,19 +4501,19 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Dark Mathematics: Theorems That Exist But Cannot Be Found"
   },
   {
-    "consumed_by_exp_id": "cc0903e0",
-    "description": "Entropy H(X) = -sum p(x) log p(x) measures the information content of a random variable. In category theory, a functor F: C -> D 'loses information' when it maps non-isomorphic objects to isomorphic ones. Define the 'functorial entropy' H(F) as the expected information lost by F: H(F) = -sum_{d in Ob(D)} p(d) * log(p(d)) where p(d) = |F^{-1}(d)| / |Ob(C)|. Conjecture: For the forgetful functor U: Top -> Set that forgets the topology, H(U) = log(2^{aleph_0}) = aleph_0 (infinite entropy, because uncountably many topologies map to the same set). For the abelianization functor Ab: Grp -> AbGrp, H(Ab) = log(2) (each abelian group has 2 non-abelian preimages on average: G and G x Z/2Z). For the inclusion functor Inc: FinGrp -> Grp, H(Inc) = 0 (no information loss, since finite groups embed as themselves). Conjecture: H(F) = 0 iff F is faithful, and H(F) = infinity iff F identifies infinitely many non-isomorphic objects. For finite categories: H(F) = log(|Ob(C)| / |Ob(D)|) when F is 'uniform' (each fiber has the same size). Test: compute H(F) for various functors between finite categories and verify the formula. Impact: entropy is not just a measure-theoretic concept \u2014 it is the information-theoretic shadow of functoriality. Every functor loses information, and the entropy measures how much.",
+    "consumed_by_exp_id": "",
+    "description": "A database with missing entries is a partial section of a sheaf. The sheaf condition (gluing) says that if two partial sections agree on their overlap, they can be glued into a global section. Conjecture: the probability that a random database with missing rate r satisfies the sheaf condition (i.e., can be consistently filled in) is P(sheaf) = (1-r)^{C(n,k)} where n is the number of columns, k is the number of rows, and C(n,k) is the number of overlapping constraints. This means: for a database with n columns and k rows, the probability of consistent imputation drops exponentially with the number of overlapping constraints. The sheaf imputation method: fill in missing values by finding the closest global section of the data sheaf. This is equivalent to solving a constrained optimization problem where the constraints are the sheaf condition on every overlapping pair of feature subsets. Conjecture: sheaf imputation outperforms mean imputation and KNN imputation when the missing rate r < 0.5 and the number of features n > 10, because the sheaf condition provides exponentially many consistency constraints that other methods ignore. Test: generate synthetic databases with known ground truth, introduce missing values at rate r, compare sheaf imputation with mean, KNN, and MICE. Impact: data imputation is a sheaf cohomology problem. The sheaf condition is the natural consistency constraint for databases.",
     "domains": [
       "Novelty",
       "Algebra"
     ],
-    "id": "fd_0374",
+    "id": "fd_0404",
     "priority_score": 0.73,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T01:02:08.127668+00:00",
-    "title": "Categorification of Entropy: The Information Loss of Functors"
+    "status": "available",
+    "timestamp": "2026-07-19T05:55:58.494804+00:00",
+    "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
   },
   {
     "consumed_by_exp_id": "192fa110",
@@ -4543,6 +4558,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-15T05:23:22.329230+00:00",
     "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Arrow's impossibility theorem states that no ranked voting system with 3+ alternatives can be Pareto efficient, non-dictatorial, and independent of irrelevant alternatives (IIA). Conjecture: Arrow's theorem is a curvature statement. The space of preference profiles is a Riemannian manifold M with the Fisher information metric. The social welfare function F: M -> M is a mapping from profiles to social preferences. Arrow's conditions translate to geometric conditions: (1) Pareto efficiency means F preserves the direction of unanimous preference (F is 'forward-looking'). (2) IIA means F is a local mapping (the social preference at x depends only on local information near x). (3) Non-dictatorial means F is not a projection onto a single voter's preference. Conjecture: the only smooth, local, forward-looking maps on a positively curved manifold are projections (dictatorships). This is because a positively curved manifold has the property that parallel transport around a small loop rotates vectors (Holonomy), and a local, forward-looking map must preserve this holonomy, which forces it to be a projection. Conjecture: the curvature of the preference space is related to the 'polarization' of the electorate: when preferences are polarized (bimodal), the curvature is positive (sphere-like), and Arrow's theorem applies. When preferences are unimodal (consensus), the curvature is zero (flat), and majority rule works. Test: compute the curvature of the preference space for synthetic election data and verify the connection to Arrow's theorem. Impact: Arrow's impossibility is a theorem of differential geometry. Voting is curved.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0405",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-19T05:55:58.532807+00:00",
+    "title": "The Geometry of Consensus: Arrow's Theorem as Curvature"
   },
   {
     "consumed_by_exp_id": "6fa68166",
