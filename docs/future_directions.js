@@ -59,21 +59,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
   },
   {
-    "consumed_by_exp_id": "c231497c",
-    "description": "Prove that every classical mathematical theorem has a quantum proof that is shorter by at most a polynomial factor. Formalize quantum proof systems (QMA) and show that some classical theorems (e.g., pigeonhole principle) have exponentially shorter quantum proofs. Determine whether super-polynomial quantum advantage exists.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0485",
-    "priority_score": 0.89,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T20:25:40.553471+00:00",
-    "title": "Quantum Proofs of Classical Theorems"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 7881a56b (Q=0.790), which proved 16 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'Reproducing the k-copwin Algorithm: Theory vs. Implementation' and formalize its key results. Abstract: Cops and Robbers is a well-studied pursuit-evasion game that provides insights into graph theory and theoretical computing. A central question is determining the minim",
     "domains": [
@@ -86,21 +71,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-19T17:15:41.451394+00:00",
     "title": "Deepening: ArXiv paper: Reproducing the k-copwin Algorithm: Theory vs. Implementation"
-  },
-  {
-    "consumed_by_exp_id": "cb3d5d14",
-    "description": "Prove that any Turing-complete system with self-modification capabilities has no general algorithm for predicting its own termination. Formalize the halting problem for programs that can rewrite their own code mid-execution and show this is strictly harder than the classical halting problem. Connect to the virus paradox and AI alignment.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0440",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T10:23:55.997040+00:00",
-    "title": "Self-Modifying Code That Cannot Be Stopped"
   },
   {
     "consumed_by_exp_id": "1deb463e",
@@ -286,6 +256,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-18T13:21:34.658597+00:00",
     "title": "Deepening: Quantum Entanglement as Algebraic Topology: The Linking Number Is Entanglement"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle cb3d5d14 (Q=0.800) proved 0 theorems in Novelty but left 13 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Prove that any Turing-complete system with self-modification capabilities has no general algorithm for predicting its own termination. Formalize the halting problem for programs that can rewrite their",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_cb3d5d14_ba296296",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "cb3d5d14",
+    "status": "available",
+    "timestamp": "2026-07-19T22:03:14.459215+00:00",
+    "title": "Close Proofs: Self-Modifying Code That Cannot Be Stopped"
   },
   {
     "consumed_by_exp_id": "ca6fc5a2",
@@ -1558,20 +1542,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-16T06:36:16.940988+00:00",
     "title": "ArXiv paper: On nontrivial cross-2-intersecting families"
-  },
-  {
-    "consumed_by_exp_id": "93551ae8",
-    "description": "Investigate the ArXiv paper 'On strongly regular signed graphs of higher girth' and formalize its key results. Abstract: Strongly regular signed graphs are an extension of strongly regular graphs to the realm of signed graphs, that is, graphs where each edge is positive or negative. Unlike with ordinary strongly regular graphs, most kinds of signed counterparts with girth 4 or higher are describable in terms of known structures. We prove that those with girth 4 that are bipartite are classified by designs of two kinds: weighing matrix designs and symmetric block designs. Those of girth 5 are few and readily described. There are none of higher girth. Those with girth 4 that are not bipartite are unsolved.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0101",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.12131v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-16T06:51:57.150644+00:00",
-    "title": "ArXiv paper: On strongly regular signed graphs of higher girth"
   },
   {
     "consumed_by_exp_id": "",
@@ -5237,6 +5207,50 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n- Define finite simple signed graphs directly over `SimpleGraph`, including signed walks, signed two-path counts, regularity, girth, and strong regularity.\n- Lift the matrix results in `HigherGirth.lean` to the full bipartite classification theorem: the zero common-neighbour parameter gives weighing matrices, while the nonzero parameter gives complete bipartite underlying graphs and symmetric-design incidence matrices.\n- Formalize the equidistant binary-code switching theorem used to pass from constant symmetric differences to symmetric block designs.\n- Formalize diameter at most two for connected strongly regular signed graphs and derive the exclusion of finite girth greater than five except for stars.\n- Formalize the graph-theoretic pentagon lemmas: uniqueness of two-paths at girth five, homogeneity of each pentagon, and existence of a pentagon containing any two edges. Combining these with the present algebraic pentagon theorem will yield the full girth-five classification.\n- Extend switching from row signs to simultaneous row and column switching and connect it to diagonal conjugation of the full signed adjacency matrix.\n",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0495",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "93551ae8",
+    "status": "available",
+    "timestamp": "2026-07-19T22:02:41.254517+00:00",
+    "title": "Future directions from cycle 93551ae8"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## 1. Polynomial extraction for restricted stabilizer witnesses\n\n**Conjecture.** For every verifier whose gates and witnesses are restricted to the stabilizer fragment, every accepted witness above a fixed completeness threshold admits a classical certificate whose size is polynomial in the verifier description and witness qubit count, with acceptance preserved up to inverse-polynomial error.\n\nThe key insight is that stabilizer states possess compact tableau descriptions and their measurement statistics can be propagated by discrete linear algebra, potentially furnishing the extractor that is absent for general amplitude vectors.\n\n**Why now?** The simulation results isolate polynomial extraction as the exact missing reverse implication, while the stabilizer fragment supplies enough algebraic structure to make extraction falsifiable on explicit verifier families.\n\n## 2. Lossy pigeonhole compression with a quantitative decoding tradeoff\n\n**Conjecture.** Let a finite family of classical proofs be encoded into fewer quantum witness labels and decoded with worst-case error probability at most `\u03b5`. Then the compression ratio is bounded by an explicit function of `\u03b5` and the maximum pairwise distinguishability of the encoded states; equality is attained by a symmetric family.\n\nThe key insight is that the lossless pigeonhole collision theorem should extend to an approximate statement by replacing injectivity with distinguishability and exact decoding with bounded-error recovery.\n\n**Why now?** Exact finite compression has a sharp counting obstruction, so the next testable regime is to quantify precisely how error or nonorthogonality relaxes that obstruction.\n\n## 3. Proof-complexity separation requires verifier structure, not dimension alone\n\n**Conjecture.** There exists a natural family of propositional tautologies and a uniform local quantum verifier for which polynomial-size quantum witnesses exist, while every proof in a fixed classical bounded-depth proof system has exponential size.\n\nThe key insight is that amplitude-space dimension cannot itself yield compression; a separation must couple interference with a restricted classical inference system and a uniform verification procedure.\n\n**Why now?** Classical lower bounds are known for several restricted proof systems, and the present framework identifies the additional ingredient needed on the quantum side: an explicit verifier and a witness family rather than a bare counting argument.\n\n## 4. Extractor overhead transfers lower bounds sharply\n\n**Conjecture.** For every natural classical proof system admitting a degree-`d` quantum-to-classical extractor, there is a family of formulas whose optimal quantum witness cost is asymptotically the `d`-th root of the optimal classical proof size, up to polylogarithmic factors.\n\nThe key insight is that polynomial extraction already forces a root-type quantum lower bound; sharpness asks whether formulas can saturate that structural inequality.\n\n**Why now?** The lower-bound transfer is unconditional once an extractor is supplied, turning sharpness into a concrete search over proof systems, extractors, and explicit formula families.\n\n## 5. No universal polynomial quantum advantage without a universal extractor\n\n**Conjecture.** Any theorem asserting polynomial equivalence between all sound classical proof systems and a bounded-error quantum proof model is equivalent, under standard uniformity and encoding conditions, to the existence of a uniform polynomial-size classical extractor for every accepting quantum witness family.\n\nThe key insight is that forward simulation is supplied by computational-basis witnesses, whereas every substantive converse is an extraction statement in disguise.\n\n**Why now?** Separating the automatic forward embedding from the conjectural reverse translation gives a precise equivalence target that can be attacked by constructing extractors or by exhibiting witness families that obstruct them.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0496",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "c231497c",
+    "status": "available",
+    "timestamp": "2026-07-19T22:02:50.148909+00:00",
+    "title": "**Conjecture.** For every verifier whose gates and witnesses are restricted to t"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Self-Modifying Computation\n\n## 1. Resource-Bounded Rewrite Hierarchy\n\nFor every positive integer `k`, there exists a natural machine model in which permitting at most `k + 1` code rewrites yields a strict reduction in optimal simulation overhead compared with permitting at most `k` rewrites, even though all levels have the same computability degree.\n\nThe key insight is that code-as-data collapses extensional computability but need not preserve time, space, communication, or description complexity.\n\nWhy now? The exact simulation theorem identifies the invariant that prevents a computability hierarchy, making resource overhead the next falsifiable place to seek strictness.\n\n## 2. Oracle-Relative Self-Modification\n\nFor every oracle `A`, effective self-modifying machines with read access to `A` have a halting problem of exactly the Turing degree of the jump `A\u2032`; allowing code rewriting alone does not add a further jump.\n\nThe key insight is that the mutable program can again be moved into ordinary state, while oracle access remains the sole source of additional computability power.\n\nWhy now? The non-oracle equivalence supplies the base case and suggests a uniform relativized simulation whose failure would pinpoint a genuinely stronger form of reflection.\n\n## 3. Quantitative Monitor Tradeoff\n\nFor every universal self-modifying machine and every total sound monitor for perpetual safety, there is an infinite computable family of safe configurations on which the monitor never certifies safety; moreover, the family can be chosen with bounded rewrite rate.\n\nThe key insight is that complement non-enumerability should force not merely one missed safe execution but a structured, infinite blind spot for every sound finite-evidence monitor.\n\nWhy now? Exact monitoring has been ruled out, so the next testable question is how large and regular the unavoidable incompleteness must be.\n\n## 4. Semantic Malware Detection Under Distributional Promises\n\nThere exists a computable probability distribution with full support on program codes such that every computable malware classifier for a fixed nontrivial extensional behavior has either positive false-positive probability or positive false-negative probability; determine whether a universal positive lower bound can hold under natural entropy constraints.\n\nThe key insight is that Rice-style impossibility is worst-case, while practical detection and alignment evaluation are distributional; full support prevents undecidable cases from being assigned zero probability.\n\nWhy now? The extensional classifier obstruction identifies precisely which behaviors cannot be classified exactly and provides a foundation for quantitative error lower bounds.\n\n## 5. Proof-Carrying Alignment as a Maximal Enumerable Fragment\n\nFor a universal self-modifying machine, characterize the largest recursively enumerable class of configurations admitting finite certificates that every reachable rewrite preserves a specified safety invariant, and determine conditions under which this class is extensionally maximal among all sound certifying monitors.\n\nThe key insight is that exact perpetual-safety classification is impossible, but finite proof objects may define a maximal sound fragment whose incompleteness is mathematically controlled.\n\nWhy now? The separation between finite confirmation of halting and non-enumerability of perpetual execution suggests certificate systems as the natural boundary between attainable assurance and impossible prediction.\n",
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "fd_0497",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "cb3d5d14",
+    "status": "available",
+    "timestamp": "2026-07-19T22:02:57.144410+00:00",
+    "title": "For every positive integer `k`, there exists a natural machine model in which pe"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle d1663b23 (Q=0.700) proved 0 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'A minimal modularity lifting theorem for Siegel modular forms' and formalize its key results. Abstract: We prove a minimal modularity lifting theorem (in the spirit of Gen",
     "domains": [
       "Applications"
@@ -5262,6 +5276,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-17T14:03:03.735341+00:00",
     "title": "Close Proofs: Dark Mathematics: Theorems That Exist But Cannot Be Found"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 93551ae8 (Q=0.650) proved 10 theorems in Applications but left 13 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'On strongly regular signed graphs of higher girth' and formalize its key results. Abstract: Strongly regular signed graphs are an extension of strongly regular graphs to t",
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_93551ae8_f94fb9ff",
+    "priority_score": 0.7000000000000001,
+    "research_mode": "team",
+    "source_exp_id": "93551ae8",
+    "status": "available",
+    "timestamp": "2026-07-19T22:02:46.082726+00:00",
+    "title": "Close Proofs: ArXiv paper: On strongly regular signed graphs of higher girth"
   },
   {
     "consumed_by_exp_id": "",

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "2170ccdf",
-      "domain": "Algebra",
-      "key_insight": "# Future directions\n\n1. **Full Frobenius factorization dictionary.** Formalize that an irreducible factor of\ndegree `d` corresponds to a `d`-cycle of Frobenius on the geometric roots, including\nmultip",
-      "quality_score": 0.74,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-18T17:57:41",
-      "title": "Stochastic Galois Theory: Random Permutations Have Generic Galois Groups"
-    },
-    {
       "cycle_id": "57f5aa5e",
       "domain": "Applications",
       "key_insight": "# Future Directions: Tropical Cryptocurrency\n\n## 1. Exact recession dimension of generic fibers\n\n**Conjecture.** For a generic family of `r` min-plus keys on `k` coordinates with `r < k`, every nonemp",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-19T20:44:12",
       "title": "Time Travel Consistency: Novikov's Principle as a Fixed-Point Theorem"
+    },
+    {
+      "cycle_id": "cb3d5d14",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Self-Modifying Computation\n\n## 1. Resource-Bounded Rewrite Hierarchy\n\nFor every positive integer `k`, there exists a natural machine model in which permitting at most `k + 1` code",
+      "quality_score": 0.8,
+      "sorry_count": 13,
+      "theorem_count": 0,
+      "timestamp": "2026-07-19T22:03:14",
+      "title": "Self-Modifying Code That Cannot Be Stopped"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "4665f966",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions: Anti-Fibonacci Structure\n\n## 1. Pell classification of shifted-square values\n\nClassify all pairs `(m,n)` for which an anti-Fibonacci value is also a consecutive anti-Fibonacci sum",
-      "quality_score": 0.71,
-      "sorry_count": 0,
-      "theorem_count": 7,
-      "timestamp": "2026-07-16T04:26:17",
-      "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
-    },
     {
       "cycle_id": "4665f966",
       "domain": "Combinatorics",
@@ -2501,6 +2491,16 @@
       "theorem_count": 22,
       "timestamp": "2026-07-19T22:02:51",
       "title": "Quantum Proofs of Classical Theorems"
+    },
+    {
+      "cycle_id": "cb3d5d14",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Self-Modifying Computation\n\n## 1. Resource-Bounded Rewrite Hierarchy\n\nFor every positive integer `k`, there exists a natural machine model in which permitting at most `k + 1` code",
+      "quality_score": 0.8,
+      "sorry_count": 13,
+      "theorem_count": 0,
+      "timestamp": "2026-07-19T22:03:14",
+      "title": "Self-Modifying Code That Cannot Be Stopped"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.73
     }
   ],
-  "last_updated": "2026-07-19T22:02:51",
+  "last_updated": "2026-07-19T22:03:14",
   "open_questions": [
-    {
-      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "42e1a665",
-      "domain": "Shared",
-      "sorry_count": 4,
-      "timestamp": "2026-07-15T04:08:36"
-    },
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
       "cycle_id": "ca1c3afc",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 13,
       "timestamp": "2026-07-19T22:02:46"
+    },
+    {
+      "context": "-  sorry; -  sorry; -  sorry",
+      "cycle_id": "cb3d5d14",
+      "domain": "Novelty",
+      "sorry_count": 13,
+      "timestamp": "2026-07-19T22:03:14"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "86896469",
-        "quality": 0.76,
-        "theorems": 0,
-        "title": "Stone Duality for Machine Learning: Neural Networks as Geometric Realizations"
-      },
-      {
         "cycle_id": "5f462d59",
         "quality": 0.78,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.74,
         "theorems": 0,
         "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
+      },
+      {
+        "cycle_id": "cb3d5d14",
+        "quality": 0.8,
+        "theorems": 0,
+        "title": "Self-Modifying Code That Cannot Be Stopped"
       }
     ],
     "NumberTheory": [

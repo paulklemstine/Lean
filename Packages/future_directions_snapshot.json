@@ -97,26 +97,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "cb3d5d14",
-    "description": "Prove that any Turing-complete system with self-modification capabilities has no general algorithm for predicting its own termination. Formalize the halting problem for programs that can rewrite their own code mid-execution and show this is strictly harder than the classical halting problem. Connect to the virus paradox and AI alignment.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0440",
-    "lineage_refs": [],
-    "priority_score": 0.88,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T10:23:55.997040+00:00",
-    "title": "Self-Modifying Code That Cannot Be Stopped"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "1deb463e",
     "description": "Formalize a Landauer-like principle for mathematical reasoning: every bit of information destroyed in a proof step costs at least kT ln 2 of entropy. Prove that there exist theorems whose shortest proof requires exponentially more erasure than creation, and connect to Kolmogorov complexity and the thermodynamic cost of verification.",
     "domain_bridges": [],
@@ -363,6 +343,25 @@
     "status": "available",
     "timestamp": "2026-07-18T13:21:34.658597+00:00",
     "title": "Deepening: Quantum Entanglement as Algebraic Topology: The Linking Number Is Entanglement"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Cycle cb3d5d14 (Q=0.800) proved 0 theorems in Novelty but left 13 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Prove that any Turing-complete system with self-modification capabilities has no general algorithm for predicting its own termination. Formalize the halting problem for programs that can rewrite their",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_cb3d5d14_ba296296",
+    "lineage_refs": [],
+    "priority_score": 0.85,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "cb3d5d14",
+    "status": "available",
+    "timestamp": "2026-07-19T22:03:14.459215+00:00",
+    "title": "Close Proofs: Self-Modifying Code That Cannot Be Stopped"
   },
   {
     "ambition_level": "extension",
@@ -3997,7 +3996,7 @@
       "Balogh, J., Linz, M., Mattos, L. (2015). Bounds on multipartite Ramsey numbers. Electronic Journal of Combinatorics, 22(1), P1.10.",
       "Bollobás, B. (1986). Combinatorics: Set Systems, Hypergraphs, Posets, and Probabilities. Cambridge University Press."
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "00cf3210",
     "description": "The exact asymptotic growth of T_k = Θ(k² log k) with computable constants. Specifically, there exist positive constants c₁, c₂ such that lim inf (T_k / (k² log k)) ≥ c₁ and lim sup (T_k / (k² log k)) ≤ c₂, and the optimal values satisfy 0.1 ≤ c₁ ≤ c₂ ≤ 10.",
     "domain_bridges": [
       "Erdős-Szekeres type problems in combinatorial geometry",
@@ -4014,7 +4013,7 @@
     "proof_strategy": "Establish tight upper and lower bounds using probabilistic construction for the lower bound and the Lovász Local Lemma for the upper bound, combined with careful entropy compression arguments. The key technical challenge is handling the equinumerous condition while avoiding rainbow structures.",
     "research_mode": "team",
     "source_exp_id": "2607.15116v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-17T12:55:09.512961+00:00",
     "title": "Rainbow Arithmetic Progression Threshold Conjecture"
   },
@@ -7120,6 +7119,26 @@
     "status": "available",
     "timestamp": "2026-07-19T22:02:50.148909+00:00",
     "title": "**Conjecture.** For every verifier whose gates and witnesses are restricted to t"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Self-Modifying Computation\n\n## 1. Resource-Bounded Rewrite Hierarchy\n\nFor every positive integer `k`, there exists a natural machine model in which permitting at most `k + 1` code rewrites yields a strict reduction in optimal simulation overhead compared with permitting at most `k` rewrites, even though all levels have the same computability degree.\n\nThe key insight is that code-as-data collapses extensional computability but need not preserve time, space, communication, or description complexity.\n\nWhy now? The exact simulation theorem identifies the invariant that prevents a computability hierarchy, making resource overhead the next falsifiable place to seek strictness.\n\n## 2. Oracle-Relative Self-Modification\n\nFor every oracle `A`, effective self-modifying machines with read access to `A` have a halting problem of exactly the Turing degree of the jump `A′`; allowing code rewriting alone does not add a further jump.\n\nThe key insight is that the mutable program can again be moved into ordinary state, while oracle access remains the sole source of additional computability power.\n\nWhy now? The non-oracle equivalence supplies the base case and suggests a uniform relativized simulation whose failure would pinpoint a genuinely stronger form of reflection.\n\n## 3. Quantitative Monitor Tradeoff\n\nFor every universal self-modifying machine and every total sound monitor for perpetual safety, there is an infinite computable family of safe configurations on which the monitor never certifies safety; moreover, the family can be chosen with bounded rewrite rate.\n\nThe key insight is that complement non-enumerability should force not merely one missed safe execution but a structured, infinite blind spot for every sound finite-evidence monitor.\n\nWhy now? Exact monitoring has been ruled out, so the next testable question is how large and regular the unavoidable incompleteness must be.\n\n## 4. Semantic Malware Detection Under Distributional Promises\n\nThere exists a computable probability distribution with full support on program codes such that every computable malware classifier for a fixed nontrivial extensional behavior has either positive false-positive probability or positive false-negative probability; determine whether a universal positive lower bound can hold under natural entropy constraints.\n\nThe key insight is that Rice-style impossibility is worst-case, while practical detection and alignment evaluation are distributional; full support prevents undecidable cases from being assigned zero probability.\n\nWhy now? The extensional classifier obstruction identifies precisely which behaviors cannot be classified exactly and provides a foundation for quantitative error lower bounds.\n\n## 5. Proof-Carrying Alignment as a Maximal Enumerable Fragment\n\nFor a universal self-modifying machine, characterize the largest recursively enumerable class of configurations admitting finite certificates that every reachable rewrite preserves a specified safety invariant, and determine conditions under which this class is extensionally maximal among all sound certifying monitors.\n\nThe key insight is that exact perpetual-safety classification is impossible, but finite proof objects may define a maximal sound fragment whose incompleteness is mathematically controlled.\n\nWhy now? The separation between finite confirmation of halting and non-enumerability of perpetual execution suggests certificate systems as the natural boundary between attainable assurance and impossible prediction.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "fd_0497",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "cb3d5d14",
+    "status": "available",
+    "timestamp": "2026-07-19T22:02:57.144410+00:00",
+    "title": "For every positive integer `k`, there exists a natural machine model in which pe"
   },
   {
     "ambition_level": "extension",
