@@ -1,73 +1,36 @@
-# Computational Evidence: Hypergraph Ramsey Numbers
+# Computational Evidence
 
-This note records the small-case data that motivates the formalized results in
-`Logic/HypergraphRamsey.lean`.
+## Small-case calculations
 
-## 1. The boundary family `R_r(r, l)` (the part we prove exactly)
+The Property-B transfer criterion for 3-uniform diagonal Ramsey avoidance is
 
-A red clique `K_r^{(r)}` is a *single* red `r`-edge, so the diagonal-boundary
-Ramsey number collapses to a clean formula:
+`C(n,k) < 2^(C(k,3)-1)`.
 
-| r | l | R_r(r,l) | reason                                              |
-|---|---|----------|-----------------------------------------------------|
-| 3 | 3 | 3        | the one 3-subset of a 3-set is red or blue          |
-| 3 | 4 | 4        | any red 3-edge, else all-blue on 4 points is a K_4  |
-| 3 | 5 | 5        | same argument                                       |
-| 2 | 2 | 2        | one edge of K_2 is red or blue                      |
-| 2 | l | l        | classical: a red edge, or an all-blue K_l           |
-| r | l | l        | (for r ≤ l)                                         |
+For `k = 3`, the right side is `1`. The criterion holds precisely when `n<3`, since then `C(n,3)=0`; this is consistent with the exact boundary value `R₃(3,3)=3`.
 
-The general pattern `R_r(r, l) = l` for `r ≤ l` is exactly `RamseyNumber_r_l`,
-with matching upper bound (`RamseyProp_r_l_upper`) and lower bound
-(`not_RamseyProp_r_l`). The diagonal `R_r(r,r) = r` is the specialization
-`RamseyNumber_diag_eq`.
+For `k = 4`, the right side is `8`. The inequality holds through `n=4`, where `C(4,4)=1`, but fails at `n=5`, where `C(5,4)=5` still actually remains below 8; it first fails at `n=6`, where `C(6,4)=15`. Thus this elementary criterion only witnesses avoidance through five vertices, far below the exact value `R₃(4,4)=13`.
 
-## 2. The hard diagonal `R_3(k, k)` (the conjecture, not proved)
+For `k = 5`, the right side is `2^9=512`. The values near the cutoff are `C(11,5)=462` and `C(12,5)=792`; hence the transfer theorem proves `R₃(5,5)>11`.
 
-Known / bounded values (literature):
+For `k = 6`, the right side is `2^19=524288`. The values near the cutoff are `C(29,6)=475020` and `C(30,6)=593775`; hence the same criterion witnesses avoidance through 29 vertices.
 
-| k | R_3(k,k)      |
-|---|---------------|
-| 3 | 3             |
-| 4 | 13   (known)  |
-| 5 | 34 – 55       |
-| 6 | 82 – ~6000    |
+| k | C(k,3) | threshold 2^(C(k,3)-1) | largest n certified |
+|---:|---:|---:|---:|
+| 3 | 1 | 1 | 2 |
+| 4 | 4 | 8 | 5 |
+| 5 | 10 | 512 | 11 |
+| 6 | 20 | 524288 | 29 |
 
-These are far beyond exhaustive verification: the number of 2-colorings of the
-3-subsets of an n-set is `2^{C(n,3)}`, e.g. `2^{C(13,3)} = 2^286`, so a direct
-`decide` search is infeasible. This is why the file proves the *boundary* family
-exactly and treats the diagonal growth only through the tower function.
+## OEIS search results
 
-## 3. Growth-rate separation (the tower function)
+No OEIS identification is needed for the binomial and power sequences used here. The target sequence of exact diagonal 3-uniform Ramsey numbers is not known beyond the earliest nontrivial cases, so it does not provide a settled sequence suitable for identification.
 
-`tower 2 k` (height-2 tower, `= 2^2^…`) is the conjectured order of `R_3(k,k)`.
+## Counterexample hunt
 
-| k | tower 2 k |  4^k  |
-|---|-----------|-------|
-| 0 | 1         | 1     |
-| 1 | 2         | 4     |
-| 2 | 4         | 16    |
-| 3 | 16        | 64    |
-| 4 | 65536     | 256   |
-| 5 | 2^65536   | 1024  |
+The proposed exhaustive computation of `R₃(k,k)` for `k=5,6` is infeasible with present brute-force methods: even for 55 vertices, a colouring assigns colours to `C(55,3)=26235` triples. More importantly, the exact values are not presently known. Consequently no claim of an exhaustive determination is made.
 
-From `k = 4` on, `tower 2 k` overtakes `4^k` (the Erdős–Szekeres graph bound
-`R_2(k,k) ≤ 4^k`), and the gap explodes. The formalized statement
-`four_pow_lt_tower` proves `4^k < tower 2 k` for all `k ≥ 5`, capturing the
-sense in which 3-uniform Ramsey numbers are conjectured to dwarf graph Ramsey
-numbers.
+The finite arithmetic instances supporting the proved transfer result were checked at the cutoff: `462 < 512`, whereas `792 ≥ 512`; and `475020 < 524288`, whereas `593775 ≥ 524288`. These calculations test the theorem's numerical boundary, not the true Ramsey-number boundary.
 
-## 4. Counterexample hunt
+## Interpretation
 
-- `RamseyNumber_r_l` was tested against the table in §1 before formalizing; no
-  counterexample. The exact boundary formula `R_r(r,l) = l` (r ≤ l) matches all
-  known small values.
-- The monotonicity lemmas (`mono_left`, `mono_right`, `mono_n`) and color
-  symmetry (`symm`) are structural and were sanity-checked on the boundary
-  family; all consistent.
-- `tower_two_strict_mono` and `four_pow_lt_tower` were checked numerically
-  (table §3) before proof.
-
-All numeric claims used in the Lean file (e.g. `4^5 = 1024 < 65536 = tower 2 4`)
-are discharged inside Lean by `decide`/`native_decide`, so the evidence above is
-backed by machine-checked arithmetic where it enters a proof.
+The data do not verify double-exponential growth. Four small values—two of which remain unknown—could not establish an asymptotic growth class in any event. The useful experimental outcome is instead structural: the first-moment lower bound is exactly the sparse Property-B threshold of the clique-incidence hypergraph, and its weakness at `k=4` identifies overlap structure as the natural target for stronger methods.

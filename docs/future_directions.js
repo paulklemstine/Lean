@@ -74,19 +74,19 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
   },
   {
-    "consumed_by_exp_id": "5961ca02",
-    "description": "Construct a formal proof system where the soundness predicate appears inside the system it validates. Prove that such tangled hierarchies are unavoidable in any system that can reason about its own consistency. Formalize using modal fixed-point logics and Kripke frames.",
+    "consumed_by_exp_id": "1c1d1205",
+    "description": "Formalize the Lucas-Penrose argument that human minds can see truths that formal systems cannot prove about themselves. Prove or disprove: there exists a computational system that can consistently recognize its own G\u00f6del sentences. Connect to Chaitin's incompleteness theorem and the Berry paradox.",
     "domains": [
       "Novelty",
       "Logic"
     ],
-    "id": "fd_0417",
-    "priority_score": 0.88,
+    "id": "fd_0429",
+    "priority_score": 0.89,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "in_progress",
-    "timestamp": "2026-07-19T07:38:39.259918+00:00",
-    "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
+    "timestamp": "2026-07-19T09:14:22.770028+00:00",
+    "title": "Mind vs G\u00f6del: Can Minds Outperform Algorithms?"
   },
   {
     "consumed_by_exp_id": "",
@@ -3138,21 +3138,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem With"
   },
   {
-    "consumed_by_exp_id": "d1a99009",
-    "description": "The information content of a Lean 4 proof is the number of bits needed to specify the proof among all possible proofs of the same theorem. For a theorem T with proof P, the information content is I(P) = -log_2(P(proof of T has length |P|)). Conjecture: the expected information content of a proof of a theorem with statement length n is I(n) = Theta(n * log(n)). This means that proofs are typically longer than their statements by a factor of log(n), matching the known results on proof complexity. Moreover, the search problem (finding a proof given the theorem) has time complexity 2^{I(n)} = 2^{Theta(n * log(n))}, which matches the complexity of brute-force search over all proofs of length n * log(n). Conjecture: proof search in Lean 4 is EXPTIME-hard, and the average-case complexity of finding a proof of a random theorem of length n is 2^{Theta(n)} (exponential in n, not n*log(n), because most random theorems are unprovable). Test: measure the length of Lean 4 proofs vs theorem statement length for 1000 theorems in Mathlib and verify I(n) ~ n * log(n). Impact: proof search has fundamental information-theoretic limits. Finding a proof is exponentially harder than verifying one.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0401",
-    "priority_score": 0.78,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T05:05:34.178575+00:00",
-    "title": "Information-Theoretic Limits of Proof Search: How Hard Is It to Find a Lean Proof?"
-  },
-  {
     "consumed_by_exp_id": "8b838f97",
     "description": "Ramsey's theorem for graphs states that R(k,l) = the minimum n such that any 2-coloring of the edges of K_n contains a red K_k or a blue K_l. For hypergraphs: R_r(k,l) = the minimum n such that any 2-coloring of the r-tuples of an n-set contains a red K_k^{(r)} or a blue K_l^{(r)}. The growth rate is an open problem: R_3(4,4) = 13 (known), R_3(5,5) is between 34 and 55, and R_3(k,k) is believed to grow like a double exponential 2^{c*k^2}. Conjecture: R_3(k,k) ~ 2^{2^{ck}} for some constant c > 0. This is a tower function (height 2 exponential). More precisely: the lower bound R_3(k,k) >= 2^{ck^2} (from the probabilistic method) and the upper bound R_3(k,k) <= 2^{2^{ck}} (from the stepping-up lemma). The gap is between a single exponential and a double exponential. Conjecture: the true growth rate is double exponential, and the upper bound is tight. This would mean that 3-uniform Ramsey numbers grow much faster than graph Ramsey numbers. Test: compute R_3(k,k) for k = 3, 4, 5, 6 by exhaustive search and verify the growth rate. Impact: 3-uniform Ramsey numbers are double exponential. Combinatorics at the hypergraph level is fundamentally harder than at the graph level.",
     "domains": [
@@ -4739,6 +4724,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-19T08:57:25.181083+00:00",
     "title": "**Conjecture.** Let each respondent's confidence profile be strictly convex on a"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n- Extend the two-component construction to arbitrary finite and infinite dependency graphs of proof systems, with one soundness predicate per node.\n- Add a syntax of modal \u03bc-calculus formulas and prove that the semantic `sound` and `tangled` constructions interpret greatest fixed-point binders.\n- Connect the semantic fixed points to transitive, conversely well-founded GL frames and formalize L\u00f6b-style constraints on internal consistency assertions.\n- Develop bisimulation invariance and bounded-morphism preservation for the tangled predicates.\n- Relate the greatest-fixed-point semantics to ordinal approximants, proving convergence bounds on finite and well-founded frames.\n- Add concrete finite Kripke models that separate unary self-soundness from genuinely mutual soundness when the local-validity predicates differ.\n",
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "fd_0430",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "5961ca02",
+    "status": "available",
+    "timestamp": "2026-07-19T09:14:45.958552+00:00",
+    "title": "Future directions from cycle 5961ca02"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Information and Derivation Search\n\n## 1. Variable-branching entropy law\n\nFor a depth-dependent derivation tree with branching sequence `b\u2081, b\u2082, \u2026`, the minimal worst-case number of unstructured queries is the product of the branching factors, while the information scale is the sum of their base-two logarithms. If the Ces\u00e0ro mean of `log\u2082 b\u1d62` converges, the normalized logarithmic search cost converges to the same limit.\n\n**The key insight is...** logarithms transform the multiplicative geometry of a nonuniform tree into an additive sequence, making asymptotic entropy accessible through subadditive methods.\n\n**Why now?** Exact uniform-branching identities and additive composition have isolated the finite mechanism needed to attack the nonuniform case.\n\n## 2. Kraft-weighted incompressibility on derivation trees\n\nFor every prefix-free encoding of a finite derivation family, at least a `1 - 2^{-c}` fraction of derivations require code length at least `log\u2082 N - c`, where `N` is the family size and the fraction is measured uniformly. A weighted analogue should hold with cardinality replaced by source entropy and code lengths constrained by Kraft mass.\n\n**The key insight is...** the finite pigeonhole obstruction should persist quantitatively when equal-size code bins are replaced by prefix-free weighted cylinders.\n\n**Why now?** The exact count of all shorter binary descriptions supplies the sharp finite endpoint from which a weighted theorem can be developed.\n\n## 3. Structure-sensitive separation from oracle search\n\nThere exists a natural family of finite derivation systems for which candidate verification is polynomial in the input size, unstructured search requires exponentially many queries, yet a structure-aware algorithm finds a derivation in polynomial time. The separation should be witnessed by an explicit algebraic invariant rather than by an artificial promise.\n\n**The key insight is...** the adversarial singleton lower bound measures absence of exploitable structure, so a meaningful theory of proof search must quantify the information exposed by semantic invariants.\n\n**Why now?** The sharp oracle boundary makes it possible to state precisely which cost disappears when structure is added.\n\n## 4. Conditional `n log n` universality\n\nFor derivation models whose depth is asymptotic to `n` and whose geometric-mean branching factor is asymptotic to `n^\u03b1` for some positive constant `\u03b1`, logarithmic candidate count is asymptotic to `\u03b1 n log\u2082 n`. Conversely, any model with bounded geometric-mean branching has only linear logarithmic candidate growth.\n\n**The key insight is...** `n log n` is not universal; it is the signature of polynomially growing effective branching combined with linear depth.\n\n**Why now?** The exact `n^n` calculation identifies the hidden branching assumption and suggests a falsifiable classification by effective branching growth.\n\n## 5. Entropy is insufficient without a search policy\n\nThere are pairs of derivation families with identical candidate-count entropy at every depth but exponentially different expected discovery times under a fixed deterministic enumeration. A complete average-case invariant must therefore combine entropy with the rank distribution of successful candidates.\n\n**The key insight is...** cardinality measures how many candidates exist, whereas search time depends on where successful candidates lie in the order induced by a policy.\n\n**Why now?** Exact composition and oracle lower bounds separate population size from access order, exposing rank distribution as the next missing variable.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0431",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "d1a99009",
+    "status": "available",
+    "timestamp": "2026-07-19T09:14:53.537200+00:00",
+    "title": "For a depth-dependent derivation tree with branching sequence `b\u2081, b\u2082, \u2026`, the m"
   },
   {
     "consumed_by_exp_id": "",

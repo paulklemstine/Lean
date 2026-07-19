@@ -4,8 +4,8 @@
    modus-ponens chain.
  -/
  import Logic.Propositional
--import Learning.TreeComplexity
-+import Shared.TreeComplexity
+-import Shared.TreeComplexity
++import Learning.TreeComplexity
  
  
  
