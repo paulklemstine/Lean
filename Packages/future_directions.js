@@ -334,7 +334,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2d8c7907",
     "description": "Formalize memory as a monoid homomorphism from experience streams to compressed representations. Prove that any such homomorphism satisfying a finite-memory bound must be lossy and that the information loss forms a submonoid. Show that targeted forgetting is equivalent to a quotient construction in the category of memory algebras.",
     "domains": [
       "Novelty",
@@ -344,7 +344,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.81,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T10:06:16.668972+00:00",
     "title": "Memory Editing: When Forgetting Is a Mathematical Operation"
   },
@@ -3140,7 +3140,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Infinite-Dimensional Chess: Winning on the Hilbert Board"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d5e79e07",
     "description": "Formalize the mathematical conditions under which impossible figures (Penrose triangles, Escher stairs) can exist as manifolds. Prove that every non-orientable 3-manifold contains an embedded Penrose triangle as a smoothly immersed surface. Classify which impossible figures are realizable as developable surfaces.",
     "domains": [
       "Novelty",
@@ -3150,7 +3150,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T10:41:15.115361+00:00",
     "title": "The Topology of Impossible Objects: Escher Stairs and Klein Bottles"
   },

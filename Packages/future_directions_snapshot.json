@@ -4328,7 +4328,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d5e79e07",
     "description": "Formalize the mathematical conditions under which impossible figures (Penrose triangles, Escher stairs) can exist as manifolds. Prove that every non-orientable 3-manifold contains an embedded Penrose triangle as a smoothly immersed surface. Classify which impossible figures are realizable as developable surfaces.",
     "domain_bridges": [],
     "domains": [
@@ -4341,7 +4341,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T10:41:15.115361+00:00",
     "title": "The Topology of Impossible Objects: Escher Stairs and Klein Bottles"
   },
