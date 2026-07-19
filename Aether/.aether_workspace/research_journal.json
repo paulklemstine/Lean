@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "dae162a9",
-      "domain": "Computation",
-      "key_insight": "# Future directions\n\nThe formalization now establishes both the general arithmetic-to-symbolic interface and its connection to the concrete nearest-integer orbit. In particular, it proves that the exp",
-      "quality_score": 0.63,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-07-15T21:42:33",
-      "title": "ArXiv paper: Superlinear complexity of the $(3/2)^n$ steering word"
-    },
-    {
       "cycle_id": "d68f278c",
       "domain": "Applications",
       "key_insight": "# Future directions\n\n- Formalize the paper's exact `(k, ωᵘ)`-core, `(k, ωᵘ)`-truss, and `(k, d, ωᵘ)`-truss definitions as graph operators and identify them with the generic seed rule proved here.\n- Ex",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-19T16:07:17",
       "title": "Deepening: The Thermodynamics of Sorting: Entropy and Computational Work"
+    },
+    {
+      "cycle_id": "d23a186f",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n## What was proved\n\nThe formal model treats theories as points in a real inner-product space and phenomena as measurement directions. Prediction error is the absolute inner produc",
+      "quality_score": 0.69,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-07-19T16:24:23",
+      "title": "The Unreasonable Effectiveness of Wrong Theories"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.76
     }
   ],
-  "last_updated": "2026-07-19T16:07:17",
+  "last_updated": "2026-07-19T16:24:23",
   "open_questions": [
     {
       "context": "",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "ac5fc431",
-        "quality": 0.69,
-        "theorems": 15,
-        "title": "Galois Theory of Cellular Automata: Which Rules Have Reversible Dynamics?"
-      },
-      {
         "cycle_id": "ae36b246",
         "quality": 0.7,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.67,
         "theorems": 10,
         "title": "Flatland Catastrophe: When 2D Physics Breaks"
+      },
+      {
+        "cycle_id": "d23a186f",
+        "quality": 0.69,
+        "theorems": 8,
+        "title": "The Unreasonable Effectiveness of Wrong Theories"
       }
     ],
     "NumberTheory": [

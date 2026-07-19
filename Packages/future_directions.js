@@ -59,7 +59,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cb3d5d14",
     "description": "Prove that any Turing-complete system with self-modification capabilities has no general algorithm for predicting its own termination. Formalize the halting problem for programs that can rewrite their own code mid-execution and show this is strictly harder than the classical halting problem. Connect to the virus paradox and AI alignment.",
     "domains": [
       "Novelty",
@@ -69,7 +69,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T10:23:55.997040+00:00",
     "title": "Self-Modifying Code That Cannot Be Stopped"
   },
@@ -146,6 +146,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-19T12:10:24.244362+00:00",
     "title": "Surreal Topology: Open Sets at Infinity"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that any technological civilization must discover computational complexity independently of its biological substrate. Formalize a universal complexity hierarchy and prove that P vs NP is a theorem about the structure of computation itself, not about any particular model. Show that even hypercomputational civilizations face analogous barriers.",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_0465",
+    "priority_score": 0.86,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-19T16:23:59.732994+00:00",
+    "title": "Computational Complexity of Alien Civilizations"
   },
   {
     "consumed_by_exp_id": "",
@@ -304,6 +319,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
   },
   {
+    "consumed_by_exp_id": "",
+    "description": "Construct a consistent formal system where the Liar sentence, Berry's paradox, and Russell's paradox are all provable theorems rather than contradictions. Prove this requires rejecting classical logic in favor of a paraconsistent logic with a nontrivial inconsistency-tolerant truth predicate. Show this system proves its own soundness.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0466",
+    "priority_score": 0.84,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-19T16:23:59.781707+00:00",
+    "title": "Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
+  },
+  {
     "consumed_by_exp_id": "d0217292",
     "description": "Develop a rigorous theory of negative-dimensional spaces using pro-spectra and formal dimension theory. Prove that Euler characteristic extends to negative dimensions and that chi(X) for dim X = -n satisfies chi = (-1)^n \u00b7 |pi_0(X)|. Formalize the stabilization map from negative to positive dimensions.",
     "domains": [
@@ -332,21 +362,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-19T15:32:52.396850+00:00",
     "title": "Retrocausal Mathematics: Where Effects Precede Causes"
-  },
-  {
-    "consumed_by_exp_id": "d23a186f",
-    "description": "Prove a meta-theorem: for any approximately correct physical theory T, there exists a class of phenomena for which T makes predictions closer to truth than any known correct theory. Formalize using perturbation theory on theory-space and prove that the wrongness of T forms a convergent series toward truth.",
-    "domains": [
-      "Novelty",
-      "Physics"
-    ],
-    "id": "fd_0454",
-    "priority_score": 0.82,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T12:10:24.196488+00:00",
-    "title": "The Unreasonable Effectiveness of Wrong Theories"
   },
   {
     "consumed_by_exp_id": "",
@@ -4994,6 +5009,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-19T16:07:16.665246+00:00",
     "title": "The completed development separates three notions that are often conflated in in"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## What was proved\n\nThe formal model treats theories as points in a real inner-product space and phenomena as measurement directions. Prediction error is the absolute inner product of a theory's error vector with the phenomenon.\n\n1. **Perturbative convergence:** if a correction series sums to the exact displacement from the initial theory to truth, the wrongness of its partial theories converges to zero (`wrongness_converges_of_hasSum`). This is the precise sense in which a convergent series of corrections approaches truth.\n2. **Conditional unreasonable effectiveness:** a wrong theory beats any rival whose error vector is not parallel to its own on an explicitly constructible measurement direction (`wrong_theory_beats_nonparallel_rival`). Geometrically, the witness is the rival error's component orthogonal to the wrong theory's error.\n3. **Orthogonal exactness:** every theory, however globally wrong, is exact on measurement directions orthogonal to its error (`exact_on_orthogonal_phenomena`).\n\n## What was disproved\n\n1. **The unrestricted headline claim is false when \u201cknown correct theories\u201d includes truth.** Truth has zero prediction error on every phenomenon, so no wrong theory can be strictly closer than every member of such a class (`cannot_beat_a_class_containing_truth`).\n2. **A wrong theory cannot uniformly dominate truth.** Testing in the direction of the wrong theory's own error makes truth strictly better (`truth_strictly_beats_every_wrong_theory_somewhere`).\n3. **Convergence is not monotone improvement.** The formal finite-support correction series in `convergent_correction_can_initially_worsen` first doubles wrongness and then reaches truth exactly.\n\nThus the strongest defensible result requires a nonparallel-error condition and a phenomenon selected for that geometry. Approximate correctness by itself does not imply superiority to correct theories.\n\n## Next formal questions\n\n- Replace linear measurements by bounded linear maps into a normed observation space and characterize when one model beats another on the kernel of its own residual.\n- For a finite set of rivals, prove existence of one measurement direction where the focal theory is exact and all rivals err, under suitable nonparallelity hypotheses.\n- Add a probability distribution on normalized phenomena and quantify the measure of directions on which one theory beats another.\n- Study noisy observations and prove robustness margins for the Gram\u2013Schmidt witness.\n- Formalize asymptotic perturbation series separately from convergent series; physical perturbation expansions are often useful despite divergence, which the present `HasSum` theorem intentionally does not cover.\n- Characterize correction schedules that make wrongness monotone, rather than merely convergent.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0467",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "d23a186f",
+    "status": "available",
+    "timestamp": "2026-07-19T16:24:17.981685+00:00",
+    "title": "The formal model treats theories as points in a real inner-product space and phe"
   },
   {
     "consumed_by_exp_id": "",
