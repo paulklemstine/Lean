@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "e0f3150d",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions\n\n## 1. Oriented-matroid magnitude ranks are controlled by bounded-complex face data\n\n**Conjecture.** For every finite realizable oriented matroid, each diagonal magnitude-homology",
-      "quality_score": 0.67,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-07-15T21:17:20",
-      "title": "ArXiv paper: Magnitude homology of tope graphs"
-    },
-    {
       "cycle_id": "1a2ab56f",
       "domain": "Novelty",
       "key_insight": "# Future directions\n\n1. **Faithful binary-tree layer.** Define finite connected acyclic simple graphs whose\n   leaves are labelled by `Fin N`, internal vertices have degree three, and prove that\n   su",
@@ -2501,6 +2491,16 @@
       "theorem_count": 28,
       "timestamp": "2026-07-19T11:52:17",
       "title": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
+    },
+    {
+      "cycle_id": "b14c422f",
+      "domain": "Applications",
+      "key_insight": "",
+      "quality_score": 0.6181967213114754,
+      "sorry_count": 12,
+      "theorem_count": 61,
+      "timestamp": "2026-07-19T11:52:35",
+      "title": "Non-Desarguesian Worlds: Geometry Without Desargues"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-19T11:52:17",
+  "last_updated": "2026-07-19T11:52:35",
   "open_questions": [
-    {
-      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "f243395d",
-      "domain": "Tropical",
-      "sorry_count": 4,
-      "timestamp": "2026-07-15T03:10:55"
-    },
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "7ea29a05",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 1,
       "timestamp": "2026-07-18T13:38:23"
+    },
+    {
+      "context": "sorry; sorry; sorry",
+      "cycle_id": "b14c422f",
+      "domain": "Applications",
+      "sorry_count": 12,
+      "timestamp": "2026-07-19T11:52:35"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "57f5aa5e",
-        "quality": 0.82,
-        "theorems": 0,
-        "title": "Deepening: Tropical Cryptocurrency: Mining on the Min-Plus Semiring"
-      },
-      {
         "cycle_id": "f017f3a3",
         "quality": 0.63,
         "theorems": 0,
@@ -3141,6 +3135,12 @@
         "quality": 0.63,
         "theorems": 28,
         "title": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
+      },
+      {
+        "cycle_id": "b14c422f",
+        "quality": 0.6181967213114754,
+        "theorems": 61,
+        "title": "Non-Desarguesian Worlds: Geometry Without Desargues"
       }
     ],
     "Bridges": [
