@@ -1,508 +1,357 @@
-# Crystallographic Groups and Music: A Formal Theory of the Symmetries of Periodic Rhythm
+# Symmetry Quotients and the Information Capacity of Periodic Rhythmic Patterns
+
+**Author:** Aristotle  
+**Date:** 2026-07-19
 
 ## Abstract
 
-We develop a self-contained mathematical theory connecting periodic musical
-rhythm to crystallographic (wallpaper) symmetry. A rhythm is modeled as a
-boolean function on a one-dimensional timeline, and a two-dimensional drum
-pattern as a boolean function on a (time × pitch) grid; periodicity makes each a
-discrete analog of a repeating planar design. We define the translational
-symmetry group of a rhythm and prove it is a genuine subgroup of the integers
-(closed under addition, negation, and containing all integer multiples of the
-period). We formalize palindromic (mirror) symmetry, prove that reflection is an
-involution and that palindromicity is equivalent to fixed-point invariance under
-reflection, and establish a parity theorem: a palindromic rhythm of odd length
-has total onset-count parity equal to its central beat. In two dimensions we
-define the time mirror, pitch mirror, and 180-degree rotation, prove each
-reflection is involutive, and prove the structural bridge **double mirror implies
-rotation** (the crystallographic containment pmm ⊇ p2). We enumerate the
-seventeen wallpaper types as a finite structure, verify by exhaustive computation
-that there are exactly seventeen (with ten mirror types and eight glide types),
-attach to each a maximal rotation order and a musical interpretation, and prove
-the **crystallographic restriction**: every type's rotation order lies in
-{1, 2, 3, 4, 6}. Finally, we bridge symmetry to information by proving a
-degrees-of-freedom monotonicity theorem (more symmetry yields fewer independent
-bits) and connect to classical necklace counting, proving that under a prime
-period only the two trivial patterns survive a nonzero rotation. All results are
-machine-checked. We close with three precise, falsifiable conjectures extending
-the theory to the full dihedral lattice, to Möbius enumeration of rhythmic
-crystal classes, and to genuine two-dimensional toroidal wallpaper groups.
-
-**Keywords:** wallpaper groups, crystallographic restriction, rhythm, symmetry
-group, palindrome, necklace counting, music theory, formalization.
-
----
+Periodic musical data can be represented by binary labelings of a finite time, pitch, or instrument grid. Geometric or structural symmetries identify cells and require their labels to agree. This paper develops a general quotient model for such constraints. For an arbitrary equivalence relation on a cell set, invariant binary patterns are shown to be in bijection with Boolean functions on the quotient set of equivalence classes. Consequently, if a finite grid has $m$ symmetry classes, it admits exactly $2^m$ invariant patterns and has uniform binary information capacity $m$ bits. An injective comparison between quotient spaces yields a monotonicity theorem: increasing identifications cannot increase the number of admissible patterns. Under maximal symmetry on any nonempty finite grid, precisely two patterns remain, complete silence and complete saturation. Algorithms for orbit construction, invariant-pattern enumeration, sampling, verification, and compression are presented with complexity analyses. The framework applies to finite models derived from translations, reflections, rotations, glides, and other group actions, while carefully distinguishing the exact counting results from the untested conjecture that the seventeen planar wallpaper groups define seventeen musically fundamental rhythmic types.
 
 ## 1. Introduction
 
-The classification of plane symmetry into exactly seventeen *wallpaper groups* is
-one of the most celebrated facts of geometric group theory: every doubly-periodic
-pattern of the Euclidean plane has a symmetry group isomorphic to one of exactly
-seventeen abstract groups. The number seventeen is forced by the interaction of
-two ingredients — a two-dimensional translation lattice and the *crystallographic
-restriction*, which permits rotational symmetries only of orders 1, 2, 3, 4, and
-6.
-
-Music is built from periodic patterns. A rhythm repeats; a groove tiles the
-timeline; a drum score tiles a time-by-pitch grid. The thesis of this work is
-that the symmetry classification of repeating patterns is not merely analogous to
-the structure of rhythm but is *literally the same mathematics applied to a
-different substrate*. We make this precise by formalizing rhythms as boolean
-functions, defining their symmetry groups and reflective symmetries, and proving
-the structural theorems that organize them into the crystallographic catalog.
-
-Our contributions are:
-
-1. A clean model of one-dimensional periodic rhythm (`PeriodicRhythm`) and of
-   cyclic rhythm on `ZMod p`, together with the proof that translational
-   symmetries form a subgroup (Section 3).
-2. A theory of palindromic (mirror) symmetry, including the involutivity of
-   reflection, the fixed-point characterization, and a parity theorem for
-   odd-length palindromes (Section 4).
-3. A two-dimensional drum-pattern model with time mirror, pitch mirror, and
-   180-degree rotation, and the bridge theorem **double mirror implies rotation**
-   (Section 5).
-4. The finite enumeration of the seventeen wallpaper types, the exact-count
-   verification (17 types, 10 mirror, 8 glide), and the crystallographic
-   restriction theorem (Section 6).
-5. An information-theoretic bridge relating symmetry order to degrees of freedom,
-   and the connection to necklace counting and primality (Section 7).
-
-All theorems below are stated with their full mathematical content; proof
-sketches give the essential argument. The treatment is self-contained.
-
----
-
-## 2. Preliminaries and notation
-
-We write `Bool = {true, false}`, interpreting `true` as an *onset* (a struck
-beat) and `false` as silence. We work over the integers `ℤ`, the natural numbers
-`ℕ`, and the cyclic group `ZMod p = ℤ/pℤ`. For a finite type `T`, `Fintype.card
-T` denotes its cardinality, and `Finset.univ.filter P` denotes the subset of
-elements satisfying a decidable predicate `P`. An *additive subgroup* of an
-additive group `G` is a subset containing `0` and closed under `+` and negation.
-
----
-
-## 3. Periodic rhythms and their translation groups
-
-### 3.1 Definition
-
-**Definition 3.1 (Periodic rhythm).** A *periodic rhythm* is a tuple
-`(pattern, period)` where `pattern : ℤ → Bool`, `period : ℕ` with `period > 0`,
-and the periodicity law holds:
-$$\text{pattern}(n + \text{period}) = \text{pattern}(n) \quad \text{for all } n \in \mathbb{Z}.$$
-
-The *onset set* is `{ n ∈ ℤ : pattern(n) = true }`.
-
-**Lemma 3.2 (Periodicity over multiples).** For every `n ∈ ℤ` and `m ∈ ℕ`,
-$$\text{pattern}(n + m \cdot \text{period}) = \text{pattern}(n).$$
-*Proof sketch.* Induction on `m`. The base case `m = 0` is immediate. For the
-step, write `(m+1)·period = m·period + period`, reassociate, apply the period law
-once, then the inductive hypothesis. ∎
-
-### 3.2 The symmetry group
-
-**Definition 3.3 (Translational symmetry group).** The *symmetry group* of a
-rhythm `r` is
-$$\text{symmGroup}(r) = \{\, d \in \mathbb{Z} : \forall n,\ \text{pattern}(n + d) = \text{pattern}(n) \,\}.$$
-
-**Theorem 3.4.** `symmGroup(r)` is an additive subgroup of `ℤ`.
-*Proof sketch.* Zero membership: `pattern(n+0)=pattern(n)`. Closure under
-addition: if `a, b` are symmetries, then
-`pattern(n+(a+b)) = pattern((n+a)+b) = pattern(n+a) = pattern(n)`. Closure under
-negation: applying the `a`-symmetry at `n−a` gives `pattern(n)=pattern(n−a)`,
-i.e. `−a` is a symmetry. ∎
-
-**Theorem 3.5 (Period membership).** `period ∈ symmGroup(r)`, and more generally
-for every `m ∈ ℤ`, `m·period ∈ symmGroup(r)`.
-*Proof sketch.* The period law states exactly that `period` is a symmetry. For
-arbitrary integer multiples, split into nonnegative and negative cases; the
-nonnegative case is Lemma 3.2, and the negative case follows by closure under
-negation (Theorem 3.4). ∎
-
-### 3.3 Cyclic equivalence
-
-**Definition 3.6 (Cyclic equivalence).** Rhythms `r₁, r₂` are *cyclically
-equivalent* when one is a time-translate of the other: there exists `d ∈ ℤ` with
-`r₁.pattern(n + d) = r₂.pattern(n)` for all `n`.
-
-**Theorem 3.7.** Cyclic equivalence is an equivalence relation.
-*Proof sketch.* Reflexivity uses `d = 0`. Symmetry negates the offset `d ↦ −d`.
-Transitivity composes offsets `d₁, d₂ ↦ d₁ + d₂` with a reassociation. ∎
-
-### 3.4 Cyclic model on `ZMod p`
-
-For computational and counting purposes it is convenient to model a rhythm of
-period `p` directly on the cyclic group.
-
-**Definition 3.8.** A *cyclic rhythm* of period `p` is a function `r : ZMod p →
-Bool`. We define:
-- the *complement* `complement(r)(n) = ¬ r(n)`;
-- the *full* and *silent* rhythms, constantly `true` and `false`;
-- the *translate* `translate(r, k)(n) = r(n + k)`;
-- `k` is a *translation symmetry* when `r(n + k) = r(n)` for all `n`;
-- `translationSymSet(r) = { k : k is a translation symmetry }`;
-- `r` is a *palindrome* when `r(n) = r(−n)` for all `n`;
-- `r` is *maximally symmetric* when every `k ∈ ZMod p` is a translation symmetry.
-
-**Theorem 3.9 (Subgroup structure, cyclic form).** For a cyclic rhythm `r`:
-(i) `0 ∈ translationSymSet(r)`; (ii) if `k₁, k₂` are symmetries then so is
-`k₁ + k₂`; (iii) if `k` is a symmetry then so is `−k`. Hence
-`translationSymSet(r)` is a subgroup of `ZMod p`.
-*Proof sketch.* Identical in spirit to Theorem 3.4, using the abelian group
-structure of `ZMod p`. ∎
-
-**Theorem 3.10 (Constant rhythms are maximally symmetric).** The full rhythm, the
-silent rhythm, and indeed any constant rhythm `n ↦ b` are maximally symmetric.
-*Proof sketch.* A constant function is unchanged by any reindexing. ∎
-
-**Theorem 3.11 (Complement preserves symmetry).** If `k` is a translation
-symmetry of `r`, it is a translation symmetry of `complement(r)`.
-*Proof sketch.* Negation commutes with reindexing: `¬r(n+k) = ¬r(n)`. ∎
-
-**Theorem 3.12 (Translation composition).** `translate(translate(r, k₁), k₂) =
-translate(r, k₁ + k₂)`. *Proof sketch.* Both sides evaluate to `r(n + k₁ + k₂)`. ∎
-
----
-
-## 4. Palindromic rhythms
-
-### 4.1 Reflection and its basic properties
-
-For a finite rhythm `f : Fin n → Bool` we define the *reflection*
-`reflectRhythm(f)(k) = f(n − 1 − k)`, and call `f` *palindromic* when
-`f(n − 1 − k) = f(k)` for every position `k`.
-
-**Theorem 4.1 (Reflection is an involution).** `reflectRhythm(reflectRhythm(f)) =
-f`. *Proof sketch.* Applying the index map twice sends `k ↦ n−1−(n−1−k) = k`;
-extensionality on indices closes the goal. ∎
-
-**Theorem 4.2 (Palindrome characterization).** `f` is palindromic if and only if
-`reflectRhythm(f) = f`. *Proof sketch.* Pointwise unfolding: `f` palindromic
-means `f(n−1−k) = f(k)` for all `k`, which is exactly the function equality
-`reflectRhythm(f) = f`. ∎
-
-In the cyclic model, palindromicity is `r(n) = r(−n)`; the analogous facts hold,
-e.g. the complement of a palindrome is a palindrome (`¬r(n) = ¬r(−n)`), and both
-the full and silent rhythms are palindromic.
-
-**Theorem 4.3 (Palindrome–translate yields glide).** If `r` is a cyclic
-palindrome and `k` is a translation symmetry of `r`, then for all `n`,
-$$r(n + k) = r(-(n + k)).$$
-*Proof sketch.* `r(n+k) = r(n)` (translation symmetry) `= r(−n)` (palindrome)
-`= r(−n − k)` (`−k` is a symmetry by Theorem 3.9(iii)) `= r(−(n+k))`. This is the
-algebraic shadow of a *glide reflection*: a reflection combined with a
-translation. ∎
-
-### 4.2 A parity theorem for odd-length palindromes
-
-**Theorem 4.4 (Center determines parity).** Let `f : Fin (2k+1) → Bool` be
-palindromic. Then the total onset count is congruent mod 2 to the value of the
-central beat:
-$$\#\{\, i : f(i) = \text{true} \,\} \equiv [\,f(k) = \text{true}\,] \pmod 2,$$
-where `[·]` is 1 if true and 0 otherwise.
-*Proof sketch.* Partition the index set `{0, …, 2k}` into three parts: positions
-strictly below the center, positions strictly above the center, and the center
-itself. The reflection `i ↦ 2k − i` is a bijection between the lower-onset set
-and the upper-onset set that preserves the onset property (because `f` is
-palindromic), so the two flanks have equal onset counts. Hence the total count is
-`2·(flank count) + [center is onset]`, whose parity is exactly the parity of the
-center indicator. The formal proof carries out the bijection via
-`Finset.card_bij` and finishes by `omega`. ∎
-
-This theorem is a genuine consequence of symmetry: the global parity of the
-rhythm is pinned down by a single central beat, a fact with no analog for
-non-palindromic rhythms.
-
----
-
-## 5. Two-dimensional drum patterns
-
-### 5.1 Definitions
-
-**Definition 5.1 (Drum pattern, doubly-periodic form).** A *drum pattern* is a
-tuple `(pattern, period_time, period_pitch)` with `pattern : ℤ × ℤ → Bool`,
-`period_time, period_pitch > 0`, and the two periodicity laws
-$$\text{pattern}(t + \text{period\_time}, v) = \text{pattern}(t, v), \qquad
-\text{pattern}(t, v + \text{period\_pitch}) = \text{pattern}(t, v).$$
-
-**Theorem 5.2 (2D translation group).** The set
-`{ (a,b) ∈ ℤ × ℤ : ∀ p, pattern(p₁+a, p₂+b) = pattern(p) }` is an additive
-subgroup of `ℤ × ℤ`. *Proof sketch.* Componentwise repetition of the argument of
-Theorem 3.4 using the product group structure. ∎
-
-We also use the cyclic 2D model `DrumPattern p q := ZMod p × ZMod q → Bool`, with
-the operators
-- `translateTime(g, k)(t, v) = g(t + k, v)`, `translatePitch(g, k)(t, v) = g(t, v + k)`;
-- `mirrorTime(g)(t, v) = g(−t, v)` (retrograde);
-- `mirrorPitch(g)(t, v) = g(t, −v)` (inversion);
-- `rotate180(g)(t, v) = g(−t, −v)` (retrograde-inversion).
-
-The symmetry predicates are:
-- `hasTimeMirror(g) : ∀ t v, g(−t, v) = g(t, v)`;
-- `hasPitchMirror(g) : ∀ t v, g(t, −v) = g(t, v)`;
-- `hasRotation2(g) : ∀ t v, g(−t, −v) = g(t, v)`.
-
-### 5.2 Involutions and the central bridge
-
-**Theorem 5.3 (Reflections and the half-turn are involutions).**
-`mirrorTime(mirrorTime(g)) = g` and `rotate180(rotate180(g)) = g`.
-*Proof sketch.* Double negation of coordinates is the identity; extensionality on
-`(t, v)` closes both goals. ∎
-
-**Theorem 5.4 (Double mirror implies rotation — pmm ⊇ p2).** If a drum pattern
-has both time-mirror and pitch-mirror symmetry, it has 2-fold rotational
-symmetry:
-$$\text{hasTimeMirror}(g) \ \wedge\ \text{hasPitchMirror}(g)\ \Longrightarrow\ \text{hasRotation2}(g).$$
-*Proof sketch.* For any `(t, v)`,
-$$g(-t, -v) \overset{\text{pitch mirror at }(-t)}{=} g(-t, v) \overset{\text{time mirror}}{=} g(t, v).$$
-Two perpendicular reflections compose to a half-turn. This is the discrete,
-rhythmic incarnation of the crystallographic containment that the symmetry type
-**pmm** (two mirrors) necessarily contains **p2** (a rotation), and the musical
-statement that retrograde combined with inversion yields retrograde-inversion. ∎
-
-(The same theorem holds in the doubly-periodic `ℤ × ℤ` model, with the mirror and
-rotation predicates phrased relative to the fundamental domain via
-`period_time − 1 − t` and `period_pitch − 1 − v`.)
-
-**Theorem 5.5 (Time-translation composition).**
-`translateTime(translateTime(g, k₁), k₂) = translateTime(g, k₂ + k₁)`.
-*Proof sketch.* Both sides reduce to `g(t + k₂ + k₁, v)` by associativity. ∎
-
----
-
-## 6. The seventeen wallpaper types
-
-### 6.1 Enumeration
-
-**Definition 6.1 (Wallpaper type).** `WallpaperType` is the finite enumerated
-type with the seventeen constructors
-$$\texttt{p1, p2, pm, pg, cm, pmm, pmg, pgg, cmm, p4, p4m, p4g, p3, p3m1, p31m, p6, p6m}.$$
-It carries decidable equality and is a finite type.
-
-**Theorem 6.2 (Exactly seventeen).** `Fintype.card WallpaperType = 17`.
-*Proof sketch.* The type is a finite enumeration; the cardinality is computed by
-exhaustive evaluation (`decide`). ∎
-
-**Definition 6.3 (Invariants).** We attach to each type three computable
-invariants:
-- `maxRotationOrder : WallpaperType → ℕ`, the largest order of a rotation in the
-  group, given by `p1,pm,pg,cm ↦ 1`; `p2,pmm,pmg,pgg,cmm ↦ 2`;
-  `p3,p3m1,p31m ↦ 3`; `p4,p4m,p4g ↦ 4`; `p6,p6m ↦ 6`.
-- `hasMirror : WallpaperType → Bool`, true for
-  `pm, cm, pmm, pmg, cmm, p4m, p4g, p3m1, p31m, p6m`.
-- `hasGlide : WallpaperType → Bool`, true for
-  `pg, cm, pmg, pgg, cmm, p4g, p31m, p6m`.
-
-We also attach `musicalName`, e.g. `p1 ↦ "free rhythm"`, `p2 ↦
-"call-and-response"`, `pm ↦ "palindrome"`, `pg ↦ "canon"`, `p6m ↦ "maximal
-symmetry"`, providing the dictionary between symmetry types and rhythmic idioms.
-
-**Theorem 6.4 (Census).** Exactly ten wallpaper types contain a mirror and
-exactly eight contain a glide reflection:
-$$\#\{ w : \text{hasMirror}(w) \} = 10, \qquad \#\{ w : \text{hasGlide}(w) \} = 8.$$
-*Proof sketch.* Filter the universe of the seventeen types by each predicate and
-evaluate the cardinality (`decide` / `rfl`). ∎
-
-### 6.2 The crystallographic restriction
-
-**Definition 6.5.** A natural number is a *crystallographic order* when it is one
-of `1, 2, 3, 4, 6`.
-
-**Theorem 6.6 (Crystallographic restriction).** For every wallpaper type `w`, its
-maximal rotation order is a crystallographic order:
-$$\text{maxRotationOrder}(w) \in \{1, 2, 3, 4, 6\}.$$
-*Proof sketch.* Case split over the seventeen constructors; each value is one of
-the five admissible orders by definition (`simp`/`decide`). ∎
-
-The salient absences are 5 and 7: no wallpaper group, hence no perfectly
-repeating rhythmic crystal, has five-fold or seven-fold rotational symmetry. This
-is the rhythmic content of the classical crystallographic restriction.
-
-### 6.3 The symmetry lattice
-
-**Definition 6.7.** `symmetryLevel : WallpaperType → ℕ` assigns an integer height
-encoding the containment order of the types, with `p1 ↦ 0` (lowest) and `p6m ↦ 6`
-(highest).
-
-**Theorem 6.8 (Maximal symmetry).** For every `w`, `symmetryLevel(w) ≤
-symmetryLevel(p6m)`. *Proof sketch.* Exhaustive case analysis over the seventeen
-types (`decide`). Thus **p6m** sits at the top of the lattice — the "perfect"
-maximally-symmetric rhythm. ∎
-
----
-
-## 7. Symmetry as information
-
-### 7.1 Degrees of freedom
-
-A rhythm of period `p` that is forced to be invariant under a symmetry group of
-order `d` (with `d ∣ p`) has only `p / d` independent positions: once a
-fundamental domain is chosen, symmetry determines the rest.
-
-**Definition 7.1.** `rhythmDegreesOfFreedom(p, d) = p / d` (integer division).
-
-**Theorem 7.2 (More symmetry, fewer degrees of freedom).** If `0 < d₁`, `d₁ ∣ p`,
-`d₂ ∣ p`, and `d₁ ≤ d₂`, then
-$$\text{rhythmDegreesOfFreedom}(p, d₂) \le \text{rhythmDegreesOfFreedom}(p, d₁).$$
-*Proof sketch.* Monotonicity of `p / ·` in the divisor (`Nat.div_le_div_left`). ∎
-
-**Theorem 7.3 (Extremes).** `rhythmDegreesOfFreedom(p, p) = 1` for `p > 0`
-(maximal symmetry collapses to one bit), and `rhythmDegreesOfFreedom(p, 1) = p`
-(trivial symmetry leaves all bits free). *Proof sketch.* `p / p = 1` and
-`p / 1 = p`. ∎
-
-We package the relationship as a structure `RhythmEntropyBound`, recording a
-period, a symmetry order dividing it, a fundamental-domain size `period /
-symOrder`, and an entropy bound (in bits) equal to that domain size — formalizing
-the principle that *a rhythm carries at most one bit of information per
-fundamental position*.
-
-### 7.2 Onset counting and duality
-
-For a cyclic rhythm of period `p` (with `p > 0`) we define the *onset count*
-`onsetCount(r) = #{ n : r(n) = true }`.
-
-**Theorem 7.4.** `onsetCount(r) ≤ Fintype.card(ZMod p)`, with `onsetCount(full) =
-Fintype.card(ZMod p)` and `onsetCount(silent) = 0`. *Proof sketch.* A filtered
-subset has cardinality at most the whole; the full rhythm selects everything and
-the silent rhythm selects nothing. ∎
-
-**Theorem 7.5 (Complement duality).**
-$$\text{onsetCount}(\text{complement}(r)) + \text{onsetCount}(r) = \text{Fintype.card}(\mathbb{Z}/p\mathbb{Z}).$$
-*Proof sketch.* The onset set of `r` and the onset set of `complement(r)` are
-disjoint and their union is all of `ZMod p`; the cardinality of a disjoint union
-is the sum of cardinalities. ∎
-
-### 7.3 Necklace counting and primality
-
-The number of length-`p` binary patterns fixed by a rotation of `k` positions is
-classically `2^{\gcd(k, p)}`; we encode this as `fixedByRotation(p, k) =
-2^{\gcd(k, p)}`.
-
-**Theorem 7.6 (Identity rotation).** `fixedByRotation(p, 0) = 2^p`. *Proof
-sketch.* `gcd(0, p) = p`. The identity fixes every pattern. ∎
-
-**Theorem 7.7 (Coprimality under a prime).** If `p` is prime and `0 < k < p`,
-then `gcd(k, p) = 1`. *Proof sketch.* A prime is coprime to anything it does not
-divide; `p ∤ k` because `0 < k < p`. ∎
-
-**Theorem 7.8 (Rigidity of prime-length rhythms).** If `p` is prime and
-`0 < k < p`, then `fixedByRotation(p, k) = 2`. *Proof sketch.* By Theorem 7.7,
-`gcd(k, p) = 1`, so `2^{\gcd(k,p)} = 2^1 = 2`. The only patterns fixed by a
-nontrivial rotation are the all-onset and all-silence patterns. ∎
-
-Thus prime periods admit no nontrivial rotational symmetry beyond the two
-degenerate patterns — the combinatorial reason prime-length meters feel
-irreducible.
-
-### 7.4 A falsifiable empirical conjecture
-
-**Conjecture 7.9 (Rhythmic wallpaper distribution).** In a natural corpus of drum
-patterns, the distribution over wallpaper types is non-uniform: `p1` (free
-rhythm) exceeds 50% of patterns, `p6m` (maximal symmetry) is under 1%, and
-frequency decreases monotonically with `maxRotationOrder`. Formally, a frequency
-function `freq : WallpaperType → ℝ` is a *natural distribution* when `freq(w) ≥ 0`
-for all `w`, `freq(p1) > 1/2`, and `freq(p6m) < 1/100`. This is directly testable
-against a MIDI corpus (see the accompanying demonstration code).
-
----
-
-## 8. Algorithms
-
-We summarize the computational content implicit in the formalization.
-
-**Algorithm A (Translation symmetry group).** Given a cyclic rhythm `r : ZMod p →
-Bool`, compute `{ k : ∀ n, r(n+k) = r(n) }` by testing each of the `p` shifts
-against all `p` positions. Complexity `O(p²)`. The output is always a subgroup,
-whose order divides `p` by Lagrange's theorem.
-
-**Algorithm B (Wallpaper classification of a drum pattern).** Given a 2D pattern
-on `ZMod p × ZMod q`, detect the presence of translation, time/pitch mirror,
-glide, and rotation symmetries by direct evaluation, then match the detected
-symmetry content against the seventeen-type signature table to assign a
-`WallpaperType`. Complexity `O((pq)²)` for the symmetry scan.
-
-**Algorithm C (Necklace census).** Use `fixedByRotation` together with Burnside's
-lemma to count rhythm equivalence classes: the number of necklaces of length `p`
-is `(1/p) · Σ_{k=0}^{p-1} 2^{\gcd(k,p)}`. Complexity `O(p log p)` using gcd.
-
----
-
-## 9. Applications and discussion
-
-The framework gives a vocabulary for *why* certain grooves feel the way they do.
-Maximal-symmetry rhythms (p6m, or maximally translation-symmetric cyclic rhythms)
-are information-poor and quickly monotonous (Theorem 7.2–7.3); free rhythms (p1)
-are information-rich; satisfying grooves typically inhabit the partially symmetric
-middle. The bridge theorem (Theorem 5.4) explains the prevalence of
-retrograde-inversion in canon and serial music as an unavoidable consequence of
-combining retrograde and inversion. The crystallographic restriction (Theorem
-6.6) explains the structural absence of "5-fold rhythmic crystals" even in music
-notated in 5/4 or 7/8: such meters derive character precisely from resisting
-symmetric closure. The primality rigidity (Theorem 7.8) explains why prime-length
-patterns feel irreducible.
-
-The information-theoretic reading (Section 7) is a compression statement:
-symmetry is redundancy, and the symmetry order is a measure of how much of a
-rhythm is determined by its fundamental domain. This connects rhythm analysis to
-classical combinatorics (necklace counting, Burnside) and to the broader program
-of measuring musical structure by the size of its symmetry group.
-
-**Limitations.** The present formalization treats translational and reflective
-symmetries and the 180-degree rotation explicitly; the full planar action of all
-seventeen groups on a finite torus, including the 3-, 4-, and 6-fold rotations
-acting on `ZMod m × ZMod n`, is enumerated as a type with invariants rather than
-realized as a single faithful group action. Bridging that gap is the subject of
-the conjectures below.
-
----
-
-## 10. Future directions
-
-This cycle established a self-contained theory of the symmetry groups of cyclic
-rhythms via the action of the relevant point groups on beat-position sets. Three
-precise, falsifiable, computationally testable conjectures extend it.
-
-**Conjecture 10.1 (Full dihedral realisability).** Every subgroup `H` of the
-dihedral group `DihedralGroup n` is the symmetry group of some rhythm `S :
-Finset (ZMod n)`; i.e. `∀ H, ∃ S, symmetryGroup(n, S) = H`. This strengthens the
-realisability of *rotation* orders to the full dihedral lattice, including
-reflection (palindromic) symmetry. *Test:* enumerate subgroups of `DihedralGroup
-n` for `n ≤ 8` and search for a realising `S` by exhaustive decision. *Risk:*
-small `n` may have unrealisable subgroups (e.g. a lone reflection with no
-compatible rotation), in which case the corrected conjecture characterises the
-realisable subgroups as exactly the stabiliser-closed ones.
-
-**Conjecture 10.2 (Möbius enumeration of rhythmic crystal classes).** The number
-`Aₙ(d)` of rhythms in `ZMod n` whose rotation-period group has order exactly `d`
-(for `d ∣ n`) is governed by Möbius inversion of `d ↦ 2^{n/d}`. Trivially
-`Σ_{d ∣ n} Aₙ(d) = 2ⁿ`; the content is that `Aₙ(d)` is the Möbius-inverted
-necklace count. *Test:* tabulate `Aₙ(d)` by brute force for `n ≤ 12` and fit
-against the Möbius formula.
-
-**Conjecture 10.3 (Two-dimensional polyrhythms and the genuine seventeen).**
-Define rhythms on the torus `ZMod m × ZMod n` with the full planar
-crystallographic action (translations, the rotation `(x, y) ↦ (−x, −y)`, and the
-reflections) and conjecture that exactly the toroidal quotients of the seventeen
-wallpaper groups arise as symmetry groups. This is the literal realisation of the
-title: 1D rhythm gives dihedral (frieze-like) symmetry; the 2D polyrhythmic grid
-should expose genuine wallpaper-group structure. *Test:* build the action of the
-relevant point group on `Finset (ZMod m × ZMod n)` and classify stabilisers for
-small `m, n`.
-
----
+A periodic rhythm is often modeled as a binary sequence: at each discrete time, $1$ denotes an onset and $0$ denotes silence. If the sequence has period $p$, then its infinite behavior is determined by a finite cyclic word of length $p$. Contemporary musical representations naturally add a second coordinate. Drum-machine grids use time and instrumental voice; piano rolls use time and pitch; phase diagrams for polyrhythm may use pulse and subdivision. The result is a binary pattern on a finite two-dimensional cell set whose repetitions suggest a periodic planar tiling.
+
+Periodic planar geometry is governed by translations together with possible rotations, reflections, and glide reflections. The classical crystallographic classification gives exactly seventeen wallpaper-group types for discrete, cocompact groups of Euclidean-plane isometries. This classification motivates a musical question: can rhythmic organization be classified through the same geometric symmetries?
+
+Before a corpus-level or perceptual classification can be credible, one needs a precise account of what symmetry does to the pattern space. The central problem treated here is therefore finite and structural. Given a finite set of musical cells and a specified collection of identifications among them, how many binary patterns respect those identifications? How much independent binary information can such patterns carry? How do two different systems of identifications compare?
+
+The answer depends only on the number of equivalence classes. If there are $m$ classes, an invariant pattern makes one independent binary choice per class and no others. Thus there are $2^m$ patterns. This conclusion is elementary in form, but its quotient formulation is useful: it applies uniformly to orbits of group actions, mirror pairings, periodic boundary identifications, and relations generated by several transformations.
+
+The contribution is organized as follows. Section 2 defines periodic grids, equivalence relations, quotients, invariant patterns, and capacity. Section 3 proves the quotient representation and uniqueness principles. Section 4 derives exact counting, monotonicity, and the maximal-symmetry case. Section 5 presents finite algorithms. Section 6 gives examples involving cyclic, reflected, and two-dimensional patterns. Section 7 explains how the framework interfaces with wallpaper symmetries. Section 8 develops applications to generation, compression, and corpus analysis. Section 9 states the limitations of the present conclusions, and Section 10 outlines future work.
+
+## 2. Mathematical framework
+
+### 2.1 Periodic binary patterns
+
+A one-dimensional binary rhythm is a function $f:\mathbb{Z}\to\{0,1\}$. It is periodic with positive period $p$ if
+
+$$
+f(n+p)=f(n)
+$$
+
+for all $n\in\mathbb{Z}$. Such a function factors through the cyclic set $\mathbb{Z}/p\mathbb{Z}$, so it is equivalent to a binary labeling of $p$ cells.
+
+A two-dimensional periodic pattern is similarly a function $g:\mathbb{Z}^2\to\{0,1\}$ invariant under translations by a rank-two lattice. Choosing a fundamental region turns it into a finite labeling. In sampled music, one often works directly with a finite toroidal grid
+
+$$
+X=(\mathbb{Z}/p\mathbb{Z})\times(\mathbb{Z}/q\mathbb{Z}),
+$$
+
+where the first coordinate may represent time and the second pitch, voice, or phase. The arguments below do not require coordinates: $X$ may be any set, finite when cardinalities are discussed.
+
+### 2.2 Equivalence relations and quotient cells
+
+**Definition 2.1 (Cell equivalence).** An equivalence relation $\sim$ on a set $X$ is a relation satisfying reflexivity, symmetry, and transitivity. The equivalence class of $x\in X$ is
+
+$$
+[x]=\{y\in X:y\sim x\}.
+$$
+
+The quotient $X/{\sim}$ is the set of all equivalence classes.
+
+A family of geometric transformations generates such a relation: declare $x\sim y$ when $x$ and $y$ lie in the same orbit. More generally, one may begin with pairwise musical constraints and close them under reflexivity, symmetry, and transitivity. Nothing in the main theorem requires the relation to arise from a group.
+
+**Definition 2.2 (Invariant binary pattern).** A binary pattern on $X$ is a function $f:X\to\{0,1\}$. It is invariant under $\sim$ if
+
+$$
+x\sim y\implies f(x)=f(y)
+$$
+
+for all $x,y\in X$. The set of invariant patterns is denoted here by $\mathcal{I}(X,{\sim})$.
+
+**Definition 2.3 (Quotient labeling).** A quotient labeling is an arbitrary function
+
+$$
+\varphi:X/{\sim}\longrightarrow\{0,1\}.
+$$
+
+The distinction between an invariant pattern and a quotient labeling is representational. The former labels every original cell subject to consistency constraints; the latter labels only the independent classes.
+
+### 2.3 Information capacity
+
+For a finite set $\mathcal{P}$ of admissible patterns, define its uniform binary capacity by
+
+$$
+C(\mathcal{P})=\log_2 |\mathcal{P}|.
+$$
+
+This is a support-size measure. It equals Shannon entropy only under the uniform distribution on $\mathcal{P}$. No probabilistic distribution is assumed in the main results.
+
+## 3. Quotient representation
+
+We first identify the exact structure of invariant patterns.
+
+**Theorem 3.1 (Quotient Representation Theorem).** Let $X$ be a set with equivalence relation $\sim$. There is a bijection between quotient labelings $X/{\sim}\to\{0,1\}$ and invariant binary patterns on $X$.
+
+**Proof sketch.** Given a quotient labeling $\varphi$, define its pullback $P\varphi$ by
+
+$$
+(P\varphi)(x)=\varphi([x]).
+$$
+
+If $x\sim y$, then $[x]=[y]$, so $(P\varphi)(x)=(P\varphi)(y)$; hence the pullback is invariant.
+
+Conversely, let $f$ be invariant. Define $Qf$ on quotient classes by
+
+$$
+(Qf)([x])=f(x).
+$$
+
+This definition is independent of the representative: if $[x]=[y]$, then $x\sim y$, and invariance gives $f(x)=f(y)$. Finally,
+
+$$
+Q(P\varphi)([x])=\varphi([x])
+$$
+
+and
+
+$$
+P(Qf)(x)=f(x).
+$$
+
+Thus $P$ and $Q$ are mutually inverse. $\square$
+
+The construction immediately gives a uniqueness principle.
+
+**Corollary 3.2 (Quotient Extension Uniqueness).** If two invariant patterns induce the same value on every quotient class, then they are equal on every cell of $X$.
+
+**Proof sketch.** Let $f$ and $g$ be invariant and suppose their quotient labelings agree. For any $x\in X$, both $f(x)$ and $g(x)$ equal the common label assigned to $[x]$. Therefore $f(x)=g(x)$ for every $x$. $\square$
+
+This corollary justifies storing or manipulating only one value per orbit: no information about an invariant pattern is lost.
+
+The theorem also generalizes without changing its proof. Replacing $\{0,1\}$ by any label set $A$, the $A$-valued invariant functions on $X$ are in bijection with functions $X/{\sim}\to A$. Binary patterns are the case relevant to onset grids.
+
+## 4. Exact cardinality and monotonicity
+
+### 4.1 Symmetry–entropy counting
+
+**Theorem 4.1 (Symmetry–Entropy Counting Theorem).** Let $X$ be finite, and suppose the quotient $X/{\sim}$ has $m$ elements. Then
+
+$$
+|\mathcal{I}(X,{\sim})|=2^m.
+$$
+
+Consequently,
+
+$$
+C(\mathcal{I}(X,{\sim}))=m
+$$
+
+bits.
+
+**Proof sketch.** By Theorem 3.1, invariant patterns are in bijection with Boolean functions on an $m$-element quotient. Each quotient class may independently receive either $0$ or $1$. The multiplication principle therefore gives two choices in each of $m$ positions, hence $2^m$ functions. Taking the base-two logarithm gives $m$. $\square$
+
+The theorem distinguishes the number $N=|X|$ of sampled cells from the number $m=|X/{\sim}|$ of independent cells. Since every quotient class is nonempty, $m\le N$. With no identifications, $m=N$ and all $2^N$ binary patterns are allowed. Every nontrivial identification lowers $m$ and therefore lowers capacity.
+
+### 4.2 Comparing symmetry systems
+
+Let $\sim_s$ and $\sim_t$ be two equivalence relations on the same finite set $X$. A common special case is refinement: if $x\sim_s y$ implies $x\sim_t y$, then $\sim_t$ makes at least the identifications made by $\sim_s$. The monotonicity result can be stated more abstractly and sometimes more flexibly in terms of quotient embeddings.
+
+**Theorem 4.2 (Quotient Monotonicity).** Suppose there is an injective map
+
+$$
+\iota:X/{\sim_t}\hookrightarrow X/{\sim_s}.
+$$
+
+Then
+
+$$
+|\mathcal{I}(X,{\sim_t})|\le |\mathcal{I}(X,{\sim_s})|.
+$$
+
+**Proof sketch.** Injectivity between finite sets gives
+
+$$
+|X/{\sim_t}|\le |X/{\sim_s}|.
+$$
+
+The function $m\mapsto2^m$ is increasing on nonnegative integers. Applying Theorem 4.1 to both relations yields
+
+$$
+|\mathcal{I}(X,{\sim_t})|
+=2^{|X/{\sim_t}|}
+\le2^{|X/{\sim_s}|}
+=|\mathcal{I}(X,{\sim_s})|.
+$$
+
+$\square$
+
+The injection hypothesis is intentionally explicit. The informal phrase “more symmetric” can be ambiguous because distinct symmetry groups need not be comparable by inclusion and may induce different orbit structures. Quotient cardinality is the quantity that controls binary capacity.
+
+### 4.3 Maximal symmetry
+
+**Definition 4.3 (Maximal cell equivalence).** The maximal equivalence relation on $X$ declares $x\sim y$ for every pair $x,y\in X$.
+
+If $X$ is nonempty, its quotient under maximal equivalence has exactly one class.
+
+**Theorem 4.4 (Maximal-Symmetry Theorem).** On any nonempty finite cell set with maximal equivalence, exactly two invariant binary patterns exist.
+
+**Proof sketch.** The quotient has one element, so Theorem 4.1 gives $2^1=2$ invariant patterns. Equivalently, invariance forces all cells to share one bit. Choosing $0$ gives complete silence; choosing $1$ gives an onset in every cell. $\square$
+
+Nonemptiness matters. The empty set has one function to $\{0,1\}$, not two, and its quotient has zero classes.
+
+## 5. Algorithms
+
+The quotient formulation leads directly to computational procedures.
+
+### 5.1 Constructing equivalence classes
+
+Suppose $X=\{0,\ldots,N-1\}$ and the input gives $E$ pairs of cells required to be equivalent. A disjoint-set union structure computes the transitive closure. Initially each cell is its own class. For every pair $(u,v)$, merge the classes containing $u$ and $v$. Path compression and union by rank give amortized running time
+
+$$
+O((N+E)\alpha(N)),
+$$
+
+where $\alpha$ is the inverse Ackermann function. The memory cost is $O(N)$.
+
+If the relation is induced by $k$ explicitly given transformations, one may add pairs $(x,T_i(x))$ for all cells and generators that are defined on the finite grid. This creates at most $kN$ merge requests.
+
+### 5.2 Enumerating invariant patterns
+
+After quotient construction, choose a representative ordering $C_0,\ldots,C_{m-1}$ of the classes. For each integer mask $r$ with $0\le r<2^m$, use the $j$th bit of $r$ as the label of $C_j$ and assign that label to every cell in $C_j$.
+
+The algorithm emits exactly $2^m$ patterns. Materializing each $N$-cell output costs $O(N2^m)$ time and $O(N+m)$ working memory beyond the outputs. This exponential cost is unavoidable when all $2^m$ patterns must be listed.
+
+### 5.3 Uniform sampling
+
+Enumeration is unnecessary for generation. Draw $m$ independent fair bits, one for each class, and expand them to the cells. Quotient labels require $O(m)$ random choices, and expansion requires $O(N)$ time. The resulting distribution is uniform on the invariant pattern set because Theorem 3.1 is a bijection.
+
+For a biased onset probability $p$, draw each quotient label independently from a Bernoulli distribution with parameter $p$. This defines a distribution on invariant patterns, though its Shannon entropy is then $mH_2(p)$ only when the class bits are independent, where
+
+$$
+H_2(p)=-p\log_2p-(1-p)\log_2(1-p).
+$$
+
+This probabilistic extension is conceptually natural but lies beyond the support-size theorem itself.
+
+### 5.4 Verification and compression
+
+To test invariance, select one reference value per class and scan all cells, rejecting if a cell differs from its class reference. This takes $O(N)$ time after class membership is known.
+
+To compress a known invariant pattern, store one bit per class. Reconstruction copies each stored class bit to all member cells. The onset data use $m$ bits instead of $N$ bits, a saving of $N-m$ bits before accounting for the cost of describing the relation. Corollary 3.2 guarantees lossless reconstruction within the invariant family.
+
+## 6. Examples
+
+### 6.1 Unconstrained sixteen-step loop
+
+Let $X=\mathbb{Z}/16\mathbb{Z}$ with equality as the equivalence relation. There are $m=16$ classes, so
+
+$$
+|\mathcal{I}|=2^{16}=65{,}536,
+$$
+
+and the capacity is $16$ bits.
+
+### 6.2 Mirror-symmetric loop
+
+Identify step $i$ with step $15-i$. There are eight pairs and therefore $m=8$ classes. The invariant family has
+
+$$
+2^8=256
+$$
+
+patterns and capacity $8$ bits. Every compatible loop is determined by its first eight positions, with the remaining positions fixed by reflection.
+
+### 6.3 Half-turn on a $4\times4$ torus
+
+Let $X=(\mathbb{Z}/4\mathbb{Z})^2$ and identify $(i,j)$ with $(-i,-j)$. Four cells are fixed by the half-turn: those whose coordinates are each $0$ or $2$. The remaining twelve cells form six two-element pairs. Hence there are
+
+$$
+4+6=10
+$$
+
+orbits, giving
+
+$$
+2^{10}=1{,}024
+$$
+
+invariant patterns. This example shows why counting the order of a symmetry is insufficient; fixed points affect the orbit count.
+
+### 6.4 Row-constant time–voice grid
+
+On a grid with four voices and sixteen times, identify all sixteen positions within each voice. The quotient consists of four rows, so there are $2^4=16$ invariant patterns. If the four rows are additionally identified, maximal equivalence leaves only the all-silent and all-onset patterns.
+
+### 6.5 Same capacity, different geometry
+
+A reflection relation and a translation relation may each partition a particular finite grid into eight classes. They then have the same pattern count $2^8$, even though their patterns look and sound different. Capacity records the number of independent choices, not their geometric arrangement or perceptual effect.
+
+## 7. Wallpaper symmetries and rhythmic interpretation
+
+A wallpaper group is a discrete group of Euclidean-plane isometries with a compact fundamental region. Such groups include translations and may also include rotations of orders $2$, $3$, $4$, or $6$, reflections, and glide reflections. Up to affine or crystallographic equivalence, exactly seventeen types occur.
+
+For a finite musical model, a group action on the sampled cells induces an orbit relation:
+
+$$
+x\sim_G y \quad\text{if and only if}\quad y=g\cdot x
+$$
+
+for some $g\in G$. Theorems 3.1 and 4.1 then imply that $G$-invariant binary rhythms are exactly binary labelings of the orbit space $X/G$, and their number is
+
+$$
+2^{|X/G|}.
+$$
+
+This statement is valid for any finite action. However, several distinctions are necessary.
+
+First, an infinite wallpaper group does not automatically act on every finite rectangular grid. A transformation must preserve the sampling lattice and periodic boundary conditions to descend to a finite torus. Second, the ambient group used to generate a pattern is not always the full stabilizer of the resulting pattern; special labelings may acquire accidental extra symmetries. Third, the seventeen-group theorem classifies planar crystallographic groups, not musical forms. Terms such as palindrome, canon, round, variation, or blues have musical definitions involving temporal ordering, voice entry, harmony, and perception. Geometric resemblance alone does not establish equivalence.
+
+Therefore the proposition that there are exactly seventeen fundamental rhythmic types remains a conjectural interpretation, not a consequence of the counting theorem. The exact result is conditional and quantitative: for any specified symmetry relation on a finite musical cell set, orbit count determines invariant-pattern count and uniform capacity.
+
+## 8. Applications
+
+### 8.1 Symmetry-aware generative composition
+
+A generative system can expose orbit count as a controllable parameter. Given a grid and transformation generators, it computes classes, chooses class labels, and expands them. The geometry and content are separated: transformations determine dependency, while quotient bits determine onsets. Moving from $m$ to $m-1$ classes halves the admissible binary family.
+
+### 8.2 Exact combinatorial baselines
+
+Corpus studies often report how many observed patterns have a given symmetry. Raw frequencies can be misleading because symmetry classes have different combinatorial capacities. If one model admits $2^{m_1}$ patterns and another admits $2^{m_2}$, their prior support sizes differ by
+
+$$
+2^{m_1-m_2}.
+$$
+
+The counting theorem supplies an exact baseline that may be incorporated into null models or model-selection penalties.
+
+### 8.3 Lossless representation
+
+Invariant patterns admit quotient coding. If the symmetry is shared in advance, only $m$ data bits are needed. This is useful for repeated motifs, tiled interfaces, symbolic music, and any binary image constrained by known symmetry. If the symmetry must also be transmitted, total compression depends on the description length of the relation or its generators.
+
+### 8.4 Design and pedagogy
+
+The quotient makes visible which decisions remain independent. Students can manipulate transformations and immediately observe merged cells, decreasing orbit count, and halving of the pattern space with each lost class. The model thereby connects group actions, equivalence relations, combinatorics, and information theory through an audible application.
+
+## 9. Scope and limitations
+
+The results concern exact invariance of binary data. They do not model velocity, duration, microtiming, timbre, probabilistic onset, approximate symmetry, or perceptual grouping. Multivalued labels are mathematically straightforward: with an alphabet of size $a$, the count becomes $a^m$. Their musical interpretation may be less straightforward.
+
+The capacity $m$ is a logarithm of support size, not an empirical entropy estimate. A musical style may use invariant patterns nonuniformly; correlations among quotient labels may reduce Shannon entropy below $m$ bits.
+
+No corpus of one thousand drum patterns or classification protocol is supplied here. Consequently, no empirical distribution among wallpaper types is asserted. Such a study requires an encoding standard, quantization and tolerance rules, symmetry-detection procedures, treatment of boundary conditions, and a statistical null model.
+
+Finally, orbit count is not a complete measure of musical complexity. Two relations with equal $m$ have equal capacity but may differ in locality, geometry, accent distribution, voice leading, or perceptual salience. The theorem measures independent binary degrees of freedom and should be used as one component of a broader analysis.
+
+## 10. Future work
+
+Several extensions follow naturally.
+
+1. **Group actions and orbit relations.** Instantiate the framework with explicit finite group actions and state the cardinality theorem directly in terms of group orbits.
+2. **Burnside counting.** Compute orbit counts from fixed-point counts. For a finite group $G$ acting on $X$, Burnside’s lemma gives
+
+   $$
+   |X/G|=\frac{1}{|G|}\sum_{g\in G}|\operatorname{Fix}(g)|,
+   $$
+
+   which would connect geometric generators to capacity.
+3. **Faithful wallpaper-group models.** Develop precise planar isometries, lattices, discreteness, and compact-quotient conditions before attempting an exact seventeen-group rhythmic classification.
+4. **Finite toroidal drum grids.** Determine which planar symmetries descend to $(\mathbb{Z}/p\mathbb{Z})\times(\mathbb{Z}/q\mathbb{Z})$ and separate ambient symmetry from the full stabilizer of an individual pattern.
+5. **Probabilistic entropy.** Place probability distributions on quotient labelings and establish Shannon-entropy bounds beyond uniform support size.
+6. **Corpus methodology.** Specify reproducible MIDI encoding, tolerance rules, detection algorithms, and null models before testing distributional claims.
+7. **Musical interpretation.** Define falsifiable predicates for canons, rounds, palindromes, and other proposed correspondences rather than treating names as consequences of crystallographic type.
 
 ## 11. Conclusion
 
-We have formalized the symmetry theory of periodic rhythm and shown that it is the
-same mathematics that classifies repeating planar patterns. From a single
-periodicity law we derived the subgroup structure of translational symmetries;
-from reflection we obtained palindromes, an involutivity theorem, and a parity
-law; from two-dimensional drum patterns we proved that double mirror symmetry
-forces rotation; and we enumerated the seventeen wallpaper types, verified their
-count and census, and proved the crystallographic restriction. Linking symmetry
-to information, we showed that symmetry is compression and that prime-length
-rhythms are rigid. The seventeen wallpaper groups are not merely a metaphor for
-rhythm — they are its classification.
+Symmetry constrains a binary rhythm by identifying cells. The quotient set records exactly the independent choices that survive. Invariant patterns on the original grid are in one-to-one correspondence with arbitrary binary labelings of that quotient. A finite quotient of size $m$ therefore supports exactly $2^m$ patterns and has uniform binary capacity $m$ bits. Quotient injections yield monotonicity, and maximal symmetry on a nonempty grid leaves exactly two patterns.
+
+These results provide a rigorous foundation for symmetry-aware generation, compression, and statistical baselines. They also mark the boundary between established combinatorics and musical conjecture. The seventeen wallpaper groups offer a compelling geometric vocabulary, but the existence of seventeen crystallographic types alone does not classify all rhythm. What is exact, general, and immediately usable is the quotient law: geometry determines shared decisions, and the number of remaining orbits determines information capacity.

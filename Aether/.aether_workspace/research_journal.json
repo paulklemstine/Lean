@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "ca1c3afc",
-      "domain": "Novelty",
-      "key_insight": "# Future directions: factorial coordinates versus residue coordinates\n\n## Completed foundations and result of this cycle\n\nThe previously incomplete bridge from the general mixed-radix system to the\nfa",
-      "quality_score": 0.87,
-      "sorry_count": 3,
-      "theorem_count": 6,
-      "timestamp": "2026-07-15T04:08:41",
-      "title": "For every natural number `k`, the factorial-code space of length `k` should admi"
-    },
-    {
       "cycle_id": "0ee2f71b",
       "domain": "Novelty",
       "key_insight": "# Future directions\n\n1. **Connect the algebraic constant to the actual cutting process.** The present result proves that the candidate cake ratio `1 + ρ` is exactly the square of the plastic number an",
@@ -2501,6 +2491,16 @@
       "theorem_count": 46,
       "timestamp": "2026-07-19T02:44:51",
       "title": "The Fourier Analysis of Collatz: Spectral Gaps in the 3n+1 Map"
+    },
+    {
+      "cycle_id": "c2f98a25",
+      "domain": "NumberTheory",
+      "key_insight": "# Future directions\n\n1. Specify an actual operator and Hilbert space, then prove dense definition,\n   symmetry, and self-adjointness before discussing its spectrum.\n2. Replace the unrestricted interpo",
+      "quality_score": 0.64,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-19T03:20:26",
+      "title": "Quantum Groups from Number Theory: The Riemann Hypothesis as a Representation Problem"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8
     }
   ],
-  "last_updated": "2026-07-19T02:44:51",
+  "last_updated": "2026-07-19T03:20:26",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "47a54792",
-        "quality": 0.82,
-        "theorems": 21,
-        "title": "Rucker: The Fourth Dimension as a Mathematical Playground"
-      },
-      {
         "cycle_id": "582560af",
         "quality": 0.91,
         "theorems": 30,
@@ -3699,6 +3693,12 @@
         "quality": 0.77,
         "theorems": 0,
         "title": "The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
+      },
+      {
+        "cycle_id": "c2f98a25",
+        "quality": 0.64,
+        "theorems": 9,
+        "title": "Quantum Groups from Number Theory: The Riemann Hypothesis as a Representation Pr"
       }
     ],
     "Physics": [
