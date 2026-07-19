@@ -41,6 +41,7 @@ finite-state algebra that a diagram-local lattice model would have to preserve.
 -- nested sums and therefore require more than the default elaboration budget.
 set_option maxHeartbeats 1000000
 
+>>>>>>> origin/master
 /-!
 -- !-- Lab Notes -- !--
 Hypothesis (Hypothesizer): The Kauffman bracket state sum is controlled entirely
@@ -87,6 +88,9 @@ finite-state algebra that a diagram-local lattice model would have to preserve.
 -- nested sums and therefore require more than the default elaboration budget.
 set_option maxHeartbeats 1000000
 
+<<<<<<< HEAD
+=======
+>>>>>>> origin/master
 namespace Knot
 
 open LaurentPolynomial Finset
