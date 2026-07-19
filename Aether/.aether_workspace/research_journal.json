@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "5f139cd0",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\n## What was established\n\n`AffineDuality.lean` formalizes a finite additive-group identification protocol and proves a cross-domain connection between affine symmetry and cryptogra",
-      "quality_score": 0.71,
-      "sorry_count": 3,
-      "theorem_count": 0,
-      "timestamp": "2026-07-17T11:50:23",
-      "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
-    },
-    {
       "cycle_id": "ad5825e2",
       "domain": "MachineLearning",
       "key_insight": "# Future directions\n\n## What the formal result establishes\n\n`Catalog/MachineLearning/FiniteGroupPeriodicLaw.lean` proves an infinite counterexample family to prediction from coarse “periodic-table coo",
@@ -499,19 +489,19 @@
       "theorem_count": 13,
       "timestamp": "2026-07-19T01:02:46",
       "title": "The Thermodynamics of Sorting: Entropy and Computational Work"
+    },
+    {
+      "cycle_id": "eb62b00a",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions\n\n- Formalize matrix representability of finite matroids over `ZMod 3` and prove that it is preserved by deletion and contraction.\n- Connect the abstract theorem `matroid_wqo_gives_",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-19T02:26:34",
+      "title": "Matroid Minors and the Graph Theorem: Robertson-Seymour for Matroids"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "7ea29a05",
-      "domain": "Shared",
-      "key_insight": "# Future Directions — Thresholds, defects, and toughness\n\n## 1. Stability of complete-host induced containment\n\nFor each finite pattern graph \\(H\\), determine the least edge deficit \\(d(H)\\) such that",
-      "quality_score": 0.9,
-      "sorry_count": 4,
-      "theorem_count": 16,
-      "timestamp": "2026-07-15T03:46:49",
-      "title": "This cycle promoted the component-count toughness toolkit from a collection of"
-    },
     {
       "cycle_id": "dc502c2d",
       "domain": "MachineLearning",
@@ -2501,6 +2491,16 @@
       "theorem_count": 14,
       "timestamp": "2026-07-19T02:08:05",
       "title": "The Collatz Conjecture Is Undecidable: What If 3n+1 Can't Be Proved?"
+    },
+    {
+      "cycle_id": "eb62b00a",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions\n\n- Formalize matrix representability of finite matroids over `ZMod 3` and prove that it is preserved by deletion and contraction.\n- Connect the abstract theorem `matroid_wqo_gives_",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-19T02:26:34",
+      "title": "Matroid Minors and the Graph Theorem: Robertson-Seymour for Matroids"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.78
     }
   ],
-  "last_updated": "2026-07-19T02:08:05",
+  "last_updated": "2026-07-19T02:26:34",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "de167401",
-        "quality": 0.78,
-        "theorems": 11,
-        "title": "Rucker: The Lifebox — Information-Theoretic Identity"
-      },
-      {
         "cycle_id": "98ba1a43",
         "quality": 0.92,
         "theorems": 0,
@@ -3203,6 +3197,12 @@
         "quality": 0.83,
         "theorems": 0,
         "title": "Deepening: Cryptography from Chaos: Encrypting with the Logistic Map"
+      },
+      {
+        "cycle_id": "eb62b00a",
+        "quality": 0.7,
+        "theorems": 0,
+        "title": "Matroid Minors and the Graph Theorem: Robertson-Seymour for Matroids"
       }
     ],
     "Combinatorics": [

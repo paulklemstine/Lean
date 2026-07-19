@@ -1,38 +1,38 @@
 --- ProofSearchFractalDimension.lean
 +++ ProofSearchFractalDimension.lean
-@@ -132,6 +132,35 @@
+@@ -132,35 +132,6 @@
    obtain ⟨ S, hS ⟩ := every_rational_search_dimension p q hpq hq;
    exact ⟨ ⟨ S, L ⟩, hS, rfl ⟩
  
-+/-
-+The preceding realization and exact finite-depth results combine into a single
-+benchmark: one periodically pruned profile simultaneously has the prescribed
-+limiting dimension and an exact estimate at every positive complete period.
-+-/
-+theorem periodic_search_benchmark (p q k : ℕ)
-+    (hpq : p ≤ q) (hq : 1 ≤ q) (hk : 1 ≤ k) :
-+    ∃ S : SearchProfile,
-+      searchDim S = (p : ℝ) / q ∧
-+      finiteEstimate S (q * k) = (p : ℝ) / q := by
-+  refine ⟨densityTheory q (Finset.range p), ?_, ?_⟩
-+  · simpa using periodic_search_dimension q (Finset.range p) (Finset.range_mono hpq) hq
-+  · simpa using finiteEstimate_at_periods q (Finset.range p)
-+      (Finset.range_mono hpq) k hk
-+
-+/-
-+Even after fixing both the limiting geometry and an exact finite-depth
-+measurement, the independently designated shortest proof length remains
-+arbitrary. This sharpens the earlier non-determination theorem.
-+-/
-+theorem benchmark_does_not_determine_length (p q k L : ℕ)
-+    (hpq : p ≤ q) (hq : 1 ≤ q) (hk : 1 ≤ k) :
-+    ∃ I : SearchInstance,
-+      searchDim I.profile = (p : ℝ) / q ∧
-+      finiteEstimate I.profile (q * k) = (p : ℝ) / q ∧
-+      I.shortestProof = L := by
-+  obtain ⟨ S, hS₁, hS₂ ⟩ := periodic_search_benchmark p q k hpq hq hk;
-+  exact ⟨ ⟨ S, L ⟩, hS₁, hS₂, rfl ⟩
-+
+-/-
+-The preceding realization and exact finite-depth results combine into a single
+-benchmark: one periodically pruned profile simultaneously has the prescribed
+-limiting dimension and an exact estimate at every positive complete period.
+--/
+-theorem periodic_search_benchmark (p q k : ℕ)
+-    (hpq : p ≤ q) (hq : 1 ≤ q) (hk : 1 ≤ k) :
+-    ∃ S : SearchProfile,
+-      searchDim S = (p : ℝ) / q ∧
+-      finiteEstimate S (q * k) = (p : ℝ) / q := by
+-  refine ⟨densityTheory q (Finset.range p), ?_, ?_⟩
+-  · simpa using periodic_search_dimension q (Finset.range p) (Finset.range_mono hpq) hq
+-  · simpa using finiteEstimate_at_periods q (Finset.range p)
+-      (Finset.range_mono hpq) k hk
+-
+-/-
+-Even after fixing both the limiting geometry and an exact finite-depth
+-measurement, the independently designated shortest proof length remains
+-arbitrary. This sharpens the earlier non-determination theorem.
+--/
+-theorem benchmark_does_not_determine_length (p q k L : ℕ)
+-    (hpq : p ≤ q) (hq : 1 ≤ q) (hk : 1 ≤ k) :
+-    ∃ I : SearchInstance,
+-      searchDim I.profile = (p : ℝ) / q ∧
+-      finiteEstimate I.profile (q * k) = (p : ℝ) / q ∧
+-      I.shortestProof = L := by
+-  obtain ⟨ S, hS₁, hS₂ ⟩ := periodic_search_benchmark p q k hpq hq hk;
+-  exact ⟨ ⟨ S, L ⟩, hS₁, hS₂, rfl ⟩
+-
  #check @searchDim_le_one
  #check @finiteEstimate_at_periods
  
