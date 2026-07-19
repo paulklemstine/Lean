@@ -1,26 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "4920904c",
-      "domain": "Logic",
-      "key_insight": "# Future Directions: Complex-Weighted Random Graph Spectra\n\n## 1. Directed fixed-amplitude circular law\nLet each ordered off-diagonal edge be present independently with probability `p`, give every pre",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 46,
-      "timestamp": "2026-07-18T12:32:18",
-      "title": "Erdos-Renyi on Acid: Random Graphs That Hallucinate"
-    },
-    {
-      "cycle_id": "f86cfe8a",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Alexander Spectra of Knotted Light\n\n## 1. Composite torus knots split into cyclotomic spectral strata\n\n**Conjecture.** For every odd positive integer `n`, the angular spectrum sel",
-      "quality_score": 0.76,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-07-18T12:48:40",
-      "title": "The Topology of Knotted Light: How Laser Beams Get Tangled"
-    },
-    {
       "cycle_id": "154045db",
       "domain": "Shared",
       "key_insight": "# Future Directions: Jigsaw Complexity and Topology\n\n## 1. Geometric NP-completeness with four-sided pieces\n\nConjecture: deciding whether a finite multiset of non-rotatable square pieces with flat, ta",
@@ -499,29 +479,29 @@
       "theorem_count": 0,
       "timestamp": "2026-07-19T12:11:44",
       "title": "Infinite-Dimensional Chess: Winning on the Hilbert Board"
+    },
+    {
+      "cycle_id": "2d8c7907",
+      "domain": "Applications",
+      "key_insight": "# Future directions\n\n## 1. Quantitative collision bounds\nThe current finite-memory theorem proves that a collision exists. A sharper development could restrict streams to length at most `n`, count the",
+      "quality_score": 0.76,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-19T16:07:13",
+      "title": "Memory Editing: When Forgetting Is a Mathematical Operation"
+    },
+    {
+      "cycle_id": "8d3b0867",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nThe completed development separates three notions that are often conflated in informal thermodynamic accounts of sorting:\n\n1. **Decision-tree complexity.** A binary comparison tre",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-19T16:07:17",
+      "title": "Deepening: The Thermodynamics of Sorting: Entropy and Computational Work"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "4dee9bd5",
-      "domain": "Tropical",
-      "key_insight": "# Future directions\n\n1. **Lower chromatic bound for 3-stability.** The present development proves the\n   constructive upper bound. The central next target is the paper's lower bound\n   for `s=3`, requ",
-      "quality_score": 0.65,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-15T21:25:27",
-      "title": "ArXiv paper: The chromatic number of 3-stable Kneser graphs"
-    },
-    {
-      "cycle_id": "4dee9bd5",
-      "domain": "Tropical",
-      "key_insight": "# Future directions\n\n1. **Lower chromatic bound for 3-stability.** The present development proves the\n   constructive upper bound. The central next target is the paper's lower bound\n   for `s=3`, requ",
-      "quality_score": 0.65,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-15T21:37:16",
-      "title": "ArXiv paper: The chromatic number of 3-stable Kneser graphs"
-    },
     {
       "cycle_id": "dae162a9",
       "domain": "Computation",
@@ -2501,27 +2481,29 @@
       "theorem_count": 0,
       "timestamp": "2026-07-19T15:15:59",
       "title": "Digital Immortality: Can a Mind Be Encoded?"
+    },
+    {
+      "cycle_id": "2d8c7907",
+      "domain": "Applications",
+      "key_insight": "# Future directions\n\n## 1. Quantitative collision bounds\nThe current finite-memory theorem proves that a collision exists. A sharper development could restrict streams to length at most `n`, count the",
+      "quality_score": 0.76,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-19T16:07:13",
+      "title": "Memory Editing: When Forgetting Is a Mathematical Operation"
+    },
+    {
+      "cycle_id": "8d3b0867",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nThe completed development separates three notions that are often conflated in informal thermodynamic accounts of sorting:\n\n1. **Decision-tree complexity.** A binary comparison tre",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-19T16:07:17",
+      "title": "Deepening: The Thermodynamics of Sorting: Entropy and Computational Work"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "154045db",
-      "domain": "Shared",
-      "name": "unique_assembly_iff_unique_satisfying",
-      "quality": 0.74
-    },
-    {
-      "cycle_id": "154045db",
-      "domain": "Shared",
-      "name": "litSat_complement",
-      "quality": 0.74
-    },
-    {
-      "cycle_id": "b596d3d1",
-      "domain": "Pythagorean",
-      "name": "eisensteinNormSq_pow",
-      "quality": 0.75
-    },
     {
       "cycle_id": "b596d3d1",
       "domain": "Pythagorean",
@@ -2803,9 +2785,27 @@
       "domain": "Combinatorics",
       "name": "strictValley_location_unique",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "2d8c7907",
+      "domain": "Applications",
+      "name": "joins",
+      "quality": 0.76
+    },
+    {
+      "cycle_id": "2d8c7907",
+      "domain": "Applications",
+      "name": "for",
+      "quality": 0.76
+    },
+    {
+      "cycle_id": "2d8c7907",
+      "domain": "Applications",
+      "name": "finite_memory_is_lossy",
+      "quality": 0.76
     }
   ],
-  "last_updated": "2026-07-19T15:15:59",
+  "last_updated": "2026-07-19T16:07:17",
   "open_questions": [
     {
       "context": "",
@@ -3083,18 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "2d0916f9",
-        "quality": 0.55,
-        "theorems": 13,
-        "title": "Strange Loops: Self-Reference and Gödel's Incompleteness"
-      },
-      {
-        "cycle_id": "e5cc823f",
-        "quality": 0.69,
-        "theorems": 10,
-        "title": "Consciousness as Emergent Fixed Point"
-      },
-      {
         "cycle_id": "1c1d1205",
         "quality": 0.67,
         "theorems": 58,
@@ -3141,6 +3129,18 @@
         "quality": 0.69,
         "theorems": 0,
         "title": "Digital Immortality: Can a Mind Be Encoded?"
+      },
+      {
+        "cycle_id": "2d8c7907",
+        "quality": 0.76,
+        "theorems": 11,
+        "title": "Memory Editing: When Forgetting Is a Mathematical Operation"
+      },
+      {
+        "cycle_id": "8d3b0867",
+        "quality": 0.8,
+        "theorems": 0,
+        "title": "Deepening: The Thermodynamics of Sorting: Entropy and Computational Work"
       }
     ],
     "Bridges": [

@@ -118,25 +118,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "8d3b0867",
-    "description": "Building on cycle 7bc47166 (Q=0.780), which proved 13 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Sorting a list of n elements reduces the entropy from log(n!) bits to 0 bits, doing thermodynamic work W = kT * log(n!) in the process. But this is only true if sorting is irreversible — if the sorted list uniquely determines the input, then sorting is reversible and does no thermodynamic work. The ",
-    "domain_bridges": [],
-    "domains": [
-      "Shared"
-    ],
-    "id": "push_7bc47166_20643918",
-    "lineage_refs": [],
-    "priority_score": 0.88,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "7bc47166",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T01:02:46.395999+00:00",
-    "title": "Deepening: The Thermodynamics of Sorting: Entropy and Computational Work"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Prove that Novikov's self-consistency principle follows from the Banach fixed-point theorem applied to the causal structure of spacetime. Formalize time-travel paradoxes as boundary value problems and prove existence of self-consistent solutions for polynomial causal maps.",
     "domain_bridges": [],
@@ -212,6 +193,25 @@
     "status": "in_progress",
     "timestamp": "2026-07-19T12:10:24.244362+00:00",
     "title": "Surreal Topology: Open Sets at Infinity"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 2d8c7907 (Q=0.760), which proved 11 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize memory as a monoid homomorphism from experience streams to compressed representations. Prove that any such homomorphism satisfying a finite-memory bound must be lossy and that the information loss forms a submonoid. Show that targeted forgetting is equivalent to a quotient construction in ",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_2d8c7907_87a49a08",
+    "lineage_refs": [],
+    "priority_score": 0.86,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "2d8c7907",
+    "status": "available",
+    "timestamp": "2026-07-19T16:07:13.673955+00:00",
+    "title": "Deepening: Memory Editing: When Forgetting Is a Mathematical Operation"
   },
   {
     "ambition_level": "extension",
@@ -464,26 +464,6 @@
     "status": "in_progress",
     "timestamp": "2026-07-19T12:10:24.196488+00:00",
     "title": "The Unreasonable Effectiveness of Wrong Theories"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "2d8c7907",
-    "description": "Formalize memory as a monoid homomorphism from experience streams to compressed representations. Prove that any such homomorphism satisfying a finite-memory bound must be lossy and that the information loss forms a submonoid. Show that targeted forgetting is equivalent to a quotient construction in the category of memory algebras.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0436",
-    "lineage_refs": [],
-    "priority_score": 0.81,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T10:06:16.668972+00:00",
-    "title": "Memory Editing: When Forgetting Is a Mathematical Operation"
   },
   {
     "ambition_level": "extension",
@@ -6780,6 +6760,46 @@
     "status": "available",
     "timestamp": "2026-07-19T15:15:54.840240+00:00",
     "title": "1. **Prefix-free Kolmogorov complexity.** Replace natural-number code size by a "
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## 1. Quantitative collision bounds\nThe current finite-memory theorem proves that a collision exists. A sharper development could restrict streams to length at most `n`, count them for a finite alphabet, and prove lower bounds on the largest indistinguishability class in terms of the number of memory states.\n\n## 2. Minimal automata and Myhill–Nerode theory\nThe congruence `indistinguishability mem` is two-sided because the memory is a monoid homomorphism. Relating its finite-index quotients to syntactic monoids and minimal deterministic automata would connect compositional memory directly to formal-language recognition.\n\n## 3. Exact description of targeted-forgetting classes\nFor `targetedForgetting retain`, one can characterize two streams as indistinguishable exactly when deleting all rejected symbols yields the same retained stream. This would turn the abstract kernel congruence into a concrete normalization theorem and identify the observable range with the free monoid on the retained subtype.\n\n## 4. Composing forgetting policies\nSuccessive targeted-forgetting maps should correspond to intersecting retained alphabets. Formalizing this would give a lattice of policies, with policy refinement reflected contravariantly by quotient maps between memory algebras.\n\n## 5. Probabilistic and approximate memory\nFinite deterministic memory forces exact collisions. A probabilistic extension could replace monoids by Markov kernels or distributions and study approximate indistinguishability, entropy loss, and data-processing inequalities.\n\n## 6. Groups, rings, and modules\nFor memory representations with richer algebraic structure, the same idea specializes to normal-subgroup, ideal, or submodule quotients. Comparing these notions could clarify which kinds of information loss are expressible under different composition laws.\n\n## 7. Categorical packaging\nThe proved universal property can be lifted from the concrete category of monoids to a statement about coequalizers or regular epimorphisms in categories of algebraic structures. This would make “forgetting is quotienting” functorial and allow compatibility results for products and further quotients.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0463",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "2d8c7907",
+    "status": "available",
+    "timestamp": "2026-07-19T16:07:08.456382+00:00",
+    "title": "The current finite-memory theorem proves that a collision exists. A sharper deve"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThe completed development separates three notions that are often conflated in informal thermodynamic accounts of sorting:\n\n1. **Decision-tree complexity.** A binary comparison tree with enough leaves to distinguish all `n!` orderings has height at least `Nat.clog 2 n.factorial`.\n2. **Logical erasure.** The visible sorting map from input permutations to one sorted output loses exactly `Real.logb 2 n.factorial` units of information and has Landauer scale `kT * Real.log n.factorial`.\n3. **Reversible implementation.** Retaining the input permutation as history gives an explicit equivalence and therefore zero information loss. Any product-form reversible implementation requires at least `n!` history states.\n\nNatural next steps are:\n\n- Replace `SortsOrderings`, which expresses transcript capacity, by a semantic comparison-tree evaluator and prove the same lower bound from a full correctness specification.\n- Generalize from permutations of distinct elements to multisets with repeated keys. The expected number of distinguishable inputs is the multinomial coefficient `n! / ∏ mᵢ!`, and the corresponding erased information should be its logarithm.\n- Formalize average comparison depth under a probability distribution, yielding a Shannon-entropy lower bound rather than only a worst-case height bound.\n- Model reversible comparison circuits gate by gate, distinguishing retained history, uncomputation, and deliberate reset. This would connect the finite-state cardinality results to an operational cost semantics.\n- Prove sharper analytic estimates for `Real.log n.factorial` (for example explicit Stirling bounds) and derive quantitative `n log n - O(n)` work bounds.\n- Extend the padding result to arbitrary semantics-preserving decision-tree transformations, making precise that logical erasure is invariant under implementation changes while comparison count is not.\n\nThe present results deliberately do not claim that every comparison dissipates one bit of thermodynamic work. Such a statement needs a physical reset model; the proved padding theorem shows that it cannot follow from comparison count alone.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "fd_0464",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "8d3b0867",
+    "status": "available",
+    "timestamp": "2026-07-19T16:07:16.665246+00:00",
+    "title": "The completed development separates three notions that are often conflated in in"
   },
   {
     "ambition_level": "extension",

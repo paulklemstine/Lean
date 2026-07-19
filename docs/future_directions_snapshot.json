@@ -217,6 +217,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 2d8c7907 (Q=0.760), which proved 11 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize memory as a monoid homomorphism from experience streams to compressed representations. Prove that any such homomorphism satisfying a finite-memory bound must be lossy and that the information loss forms a submonoid. Show that targeted forgetting is equivalent to a quotient construction in ",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_2d8c7907_87a49a08",
+    "lineage_refs": [],
+    "priority_score": 0.86,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "2d8c7907",
+    "status": "available",
+    "timestamp": "2026-07-19T16:07:13.673955+00:00",
+    "title": "Deepening: Memory Editing: When Forgetting Is a Mathematical Operation"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 8280a2b4 (Q=0.760), which proved 14 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Riemann-Roch theorem for graphs (Baker-Norine, 2007) states that for a divisor D on a graph G, l(D) - l(K_G - D) = deg(D) + 1 - g(G) where l(D) is the rank of D, K_G is the canonical divisor, and g(G) is the genus (cyclomatic number). The chip-firing game is a combinatorial model: vertices hold ",
     "domain_bridges": [],
     "domains": [
@@ -464,26 +483,6 @@
     "status": "in_progress",
     "timestamp": "2026-07-19T12:10:24.196488+00:00",
     "title": "The Unreasonable Effectiveness of Wrong Theories"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "2d8c7907",
-    "description": "Formalize memory as a monoid homomorphism from experience streams to compressed representations. Prove that any such homomorphism satisfying a finite-memory bound must be lossy and that the information loss forms a submonoid. Show that targeted forgetting is equivalent to a quotient construction in the category of memory algebras.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0436",
-    "lineage_refs": [],
-    "priority_score": 0.81,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T10:06:16.668972+00:00",
-    "title": "Memory Editing: When Forgetting Is a Mathematical Operation"
   },
   {
     "ambition_level": "extension",
@@ -6780,6 +6779,26 @@
     "status": "available",
     "timestamp": "2026-07-19T15:15:54.840240+00:00",
     "title": "1. **Prefix-free Kolmogorov complexity.** Replace natural-number code size by a "
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## 1. Quantitative collision bounds\nThe current finite-memory theorem proves that a collision exists. A sharper development could restrict streams to length at most `n`, count them for a finite alphabet, and prove lower bounds on the largest indistinguishability class in terms of the number of memory states.\n\n## 2. Minimal automata and Myhill–Nerode theory\nThe congruence `indistinguishability mem` is two-sided because the memory is a monoid homomorphism. Relating its finite-index quotients to syntactic monoids and minimal deterministic automata would connect compositional memory directly to formal-language recognition.\n\n## 3. Exact description of targeted-forgetting classes\nFor `targetedForgetting retain`, one can characterize two streams as indistinguishable exactly when deleting all rejected symbols yields the same retained stream. This would turn the abstract kernel congruence into a concrete normalization theorem and identify the observable range with the free monoid on the retained subtype.\n\n## 4. Composing forgetting policies\nSuccessive targeted-forgetting maps should correspond to intersecting retained alphabets. Formalizing this would give a lattice of policies, with policy refinement reflected contravariantly by quotient maps between memory algebras.\n\n## 5. Probabilistic and approximate memory\nFinite deterministic memory forces exact collisions. A probabilistic extension could replace monoids by Markov kernels or distributions and study approximate indistinguishability, entropy loss, and data-processing inequalities.\n\n## 6. Groups, rings, and modules\nFor memory representations with richer algebraic structure, the same idea specializes to normal-subgroup, ideal, or submodule quotients. Comparing these notions could clarify which kinds of information loss are expressible under different composition laws.\n\n## 7. Categorical packaging\nThe proved universal property can be lifted from the concrete category of monoids to a statement about coequalizers or regular epimorphisms in categories of algebraic structures. This would make “forgetting is quotienting” functorial and allow compatibility results for products and further quotients.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0463",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "2d8c7907",
+    "status": "available",
+    "timestamp": "2026-07-19T16:07:08.456382+00:00",
+    "title": "The current finite-memory theorem proves that a collision exists. A sharper deve"
   },
   {
     "ambition_level": "extension",
