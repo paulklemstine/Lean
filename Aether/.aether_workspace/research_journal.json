@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "e93835e7",
-      "domain": "Bridges",
-      "key_insight": "# Future directions\n\n- Formalize an explicit iterative peeling operator on finite simple graphs and prove that its fixed point is independent of deletion order.\n- Refine seeds into the paper's exact `",
-      "quality_score": 0.68,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-07-15T13:43:01",
-      "title": "ArXiv paper: Improving Upper Bounds for the Maximum Clique Problem using Reduction Rules"
-    },
-    {
       "cycle_id": "08212964",
       "domain": "Logic",
       "key_insight": "# Future directions\n\n## Scope completed\n\nThe formal development in `Catalog/Logic/RootedPathIrregularity/Contrarian.lean` isolates the exceptional three-vertex-path case from the paper and proves two",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-19T09:49:32",
       "title": "The Poincare Conjecture for Data: Manifold Detection via Persistent Homology"
+    },
+    {
+      "cycle_id": "2d0916f9",
+      "domain": "Applications",
+      "key_insight": "# Future directions\n\nThe completed Lean development isolates a precise abstract diagonal argument, but it intentionally stops short of claiming a full arithmetized Gödel theorem for a concrete theory.",
+      "quality_score": 0.55,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-07-19T10:06:50",
+      "title": "Strange Loops: Self-Reference and Gödel's Incompleteness"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-19T09:49:32",
+  "last_updated": "2026-07-19T10:06:50",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "60e00dda",
-        "quality": 0.66,
-        "theorems": 23,
-        "title": "Tropical Dreams: The Field with One Element Meets Tropical Geometry"
-      },
-      {
         "cycle_id": "71fc60c7",
         "quality": 0.75,
         "theorems": 23,
@@ -3141,6 +3135,12 @@
         "quality": 0.76,
         "theorems": 0,
         "title": "The Poincare Conjecture for Data: Manifold Detection via Persistent Homology"
+      },
+      {
+        "cycle_id": "2d0916f9",
+        "quality": 0.55,
+        "theorems": 13,
+        "title": "Strange Loops: Self-Reference and Gödel's Incompleteness"
       }
     ],
     "Bridges": [
