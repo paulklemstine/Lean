@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "115a4ee3",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\n## 1. Entropy dimension for genuinely submultiplicative search languages\n\n**Conjecture.** Let `N(n)` be the number of successful prefixes of length `n` in a finitely branching sea",
-      "quality_score": 0.78,
-      "sorry_count": 1,
-      "theorem_count": 11,
-      "timestamp": "2026-07-18T13:38:23",
-      "title": "Deepening: Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
-    },
-    {
       "cycle_id": "7328a55d",
       "domain": "Bridges",
       "key_insight": "# Future Directions\n\nThe formal results show that the proposed Hausdorff-dimension conjectures are false: the prime set is countable, and every countable set has zero Hausdorff measure in every positi",
@@ -499,19 +489,19 @@
       "theorem_count": 16,
       "timestamp": "2026-07-19T17:15:41",
       "title": "ArXiv paper: Reproducing the k-copwin Algorithm: Theory vs. Implementation"
+    },
+    {
+      "cycle_id": "cf6c2cd9",
+      "domain": "Applications",
+      "key_insight": "# Future directions\n\n## Results established\n\n`OpenSetsAtInfinity.lean` equips `Surreal.{0}` with its order topology and proves:\n\n- every countable positive family has a common positive strict lower bo",
+      "quality_score": 0.79,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-19T17:32:50",
+      "title": "Surreal Topology: Open Sets at Infinity"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "f4980b02",
-      "domain": "MachineLearning",
-      "key_insight": "# Future directions\n\nThe formalization proves the invariant spectral splitting that underlies the generalized-join formulas: internal zero-mass modes acquire an external-degree shift, while fiber-cons",
-      "quality_score": 0.74,
-      "sorry_count": 0,
-      "theorem_count": 18,
-      "timestamp": "2026-07-16T01:42:51",
-      "title": "ArXiv paper: Counting oriented spanning trees in generalized join digraphs"
-    },
     {
       "cycle_id": "f4980b02",
       "domain": "MachineLearning",
@@ -2501,6 +2491,16 @@
       "theorem_count": 28,
       "timestamp": "2026-07-19T17:32:42",
       "title": "Anti-Mathematics: What If All Axioms Were Negated?"
+    },
+    {
+      "cycle_id": "cf6c2cd9",
+      "domain": "Applications",
+      "key_insight": "# Future directions\n\n## Results established\n\n`OpenSetsAtInfinity.lean` equips `Surreal.{0}` with its order topology and proves:\n\n- every countable positive family has a common positive strict lower bo",
+      "quality_score": 0.79,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-19T17:32:50",
+      "title": "Surreal Topology: Open Sets at Infinity"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.79
     }
   ],
-  "last_updated": "2026-07-19T17:32:42",
+  "last_updated": "2026-07-19T17:32:50",
   "open_questions": [
     {
       "context": "",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "e170790e",
-        "quality": 0.67,
-        "theorems": 9,
-        "title": "Social Credit Scores as Topological Invariants"
-      },
-      {
         "cycle_id": "a9bce66e",
         "quality": 0.63,
         "theorems": 28,
@@ -3141,6 +3135,12 @@
         "quality": 0.67,
         "theorems": 28,
         "title": "Anti-Mathematics: What If All Axioms Were Negated?"
+      },
+      {
+        "cycle_id": "cf6c2cd9",
+        "quality": 0.79,
+        "theorems": 0,
+        "title": "Surreal Topology: Open Sets at Infinity"
       }
     ],
     "Bridges": [

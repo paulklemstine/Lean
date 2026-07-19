@@ -216,26 +216,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "cf6c2cd9",
-    "description": "Extend topological space theory to include Conway's surreal numbers as the underlying set. Prove that the order topology on No is not first-countable and that every real open set has a surreal extension. Determine whether No is connected, compact, or paracompact in the interval topology.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0455",
-    "lineage_refs": [],
-    "priority_score": 0.86,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T12:10:24.244362+00:00",
-    "title": "Surreal Topology: Open Sets at Infinity"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Prove that any technological civilization must discover computational complexity independently of its biological substrate. Formalize a universal complexity hierarchy and prove that P vs NP is a theorem about the structure of computation itself, not about any particular model. Show that even hypercomputational civilizations face analogous barriers.",
     "domain_bridges": [],
@@ -366,26 +346,6 @@
     "status": "available",
     "timestamp": "2026-07-17T13:45:52.051601+00:00",
     "title": "[Reset] Fresh approach in Shared"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "32ad85ae",
-    "description": "Systematically negate the ZFC axioms and study the resulting anti-mathematics. Prove that not-Extensionality yields a theory of indistinguishable sets, not-Infinity yields hereditarily finite set theory, and not-Choice yields universes where every set is measurable. Determine which anti-axioms are consistent with each other.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0457",
-    "lineage_refs": [],
-    "priority_score": 0.85,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T12:28:35.623432+00:00",
-    "title": "Anti-Mathematics: What If All Axioms Were Negated?"
   },
   {
     "ambition_level": "extension",
@@ -6900,6 +6860,46 @@
     "status": "available",
     "timestamp": "2026-07-19T17:15:36.318557+00:00",
     "title": "**Conjecture.** For every finite graph and every positive `k`, quotienting cop c"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Anti-Axioms as Structural Data\n\n## 1. The extensional shadow as a universal quotient\n\n**Conjecture.** For every relational set universe, quotienting set-codes by equality of membership observations produces an extensional universe that is universal among all extensional targets preserving and reflecting membership observations.\n\nThe key insight is that failed Extensionality is not an alternative membership law; it is nontrivial kernel data for the observation map. A universal property would turn the extensional shadow from a useful construction into a canonical reflection.\n\n**Why now?** The kernel characterization and extensionality of the represented observation shadow isolate exactly the equivalence relation that the quotient must collapse.\n\n## 2. Quantitative Mostowski collapse for finite anti-foundational universes\n\n**Conjecture.** Every finite extensional acyclic membership universe admits a unique rank-preserving embedding into hereditarily finite sets, and the maximal rank is strictly smaller than the number of set-codes.\n\nThe key insight is that acyclicity supplies a finite topological order, while extensionality makes the recursively constructed image injective. This combines graph ranking with the set-theoretic collapse principle.\n\n**Why now?** The hereditary-closure bound establishes finiteness, and the four-way compatibility classification identifies extensionality plus acyclicity as the precise quadrant in which a collapse theorem should hold.\n\n## 3. Classification of minimal models for anti-axiom signatures\n\n**Conjecture.** For every consistent Boolean signature formed from Extensionality, acyclicity, existence of an empty code, and existence of a universal code, there is a finite relational universe of at most four set-codes realizing that signature; the optimal carrier size is computable from the signature.\n\nThe key insight is that small relational universes behave like finite constraint-satisfaction instances, while the axioms impose graph-theoretic separation, cycle, source, and sink conditions.\n\n**Why now?** Two one-point and two two-point witnesses already realize every combination of Extensionality and acyclicity, suggesting a broader finite-basis phenomenon.\n\n## 4. Choice failure versus universal measurability under explicit regularity hypotheses\n\n**Conjecture.** In a precisely specified choiceless set theory with dependent choice and a strong regularity principle, universal Lebesgue measurability is equivalent to a determinacy-style statement for a definable class of infinite games, but it is independent of the bare negation of Choice.\n\nThe key insight is that measurability arises from regularity or determinacy structure, not from the logical negation of a selection principle by itself. The correct bridge should therefore factor through games rather than proceed directly from anti-Choice.\n\n**Why now?** Separating relation-level anti-axioms from extra semantic structure prevents the common invalid inference from “Choice fails” to “every set is measurable” and gives a falsifiable route to a guarded replacement.\n\n## 5. Modal persistence of anti-axiom witnesses\n\n**Conjecture.** In a directed reflexive-transitive multiverse of relational set universes, the modal persistence profile of anti-Extensionality is determined by whether forcing maps preserve the kernel of the membership-observation map; kernel-preserving extensions validate necessity of anti-Extensionality, while kernel-separating extensions make it merely possible.\n\nThe key insight is that the observation kernel converts a foundational anti-axiom into algebraic data whose behavior under world extension can be tracked by modal frame semantics.\n\n**Why now?** Membership codes already admit a direct representation as Boolean worlds, providing a concrete bridge between relational set semantics and modal forcing frames.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_0472",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "32ad85ae",
+    "status": "available",
+    "timestamp": "2026-07-19T17:32:37.005774+00:00",
+    "title": "**Conjecture.** For every relational set universe, quotienting set-codes by equa"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## Results established\n\n`OpenSetsAtInfinity.lean` equips `Surreal.{0}` with its order topology and proves:\n\n- every countable positive family has a common positive strict lower bound, using an explicit Conway cut;\n- no countable neighborhood basis exists at zero;\n- the surreal order topology is not first-countable and therefore not metrizable;\n- the finite surreals form a nonempty proper clopen set, so the space is disconnected;\n- the space is not compact;\n- the topology is Hausdorff.\n\n## Remaining questions\n\n1. **Real open-set extension.** Mathlib currently notes that a canonical embedding of all real numbers into surreals remains to be constructed (`SetTheory/Surreal/Dyadic.lean`). Once an ordered embedding `ι : ℝ → No` is available and its topological embedding property is proved, one should show that each real open set is the inverse image along `ι` of a surreal-open set. A natural candidate for an interval union is\n   `⋃ (a,b) with Ioo a b ⊆ U, Ioo (ι a) (ι b)`.\n\n2. **Paracompactness.** The present development does not decide paracompactness. A promising route is to study whether the clopen finite-step partitions generated by infinitesimals refine arbitrary open covers locally finitely. Conversely, a counterexample may come from a proper-class-like hierarchy of cofinality levels represented inside the fixed universe.\n\n3. **Local character at every point.** Translation should transfer failure of first countability from zero to every surreal. Formalizing continuity of addition for the chosen order topology would yield this strengthening and show that no point has countable character.\n\n4. **Stronger disconnectedness.** The finite-surreal cut proves disconnectedness. Constructing arbitrarily small clopen finite-step rays should prove total separatedness and total disconnectedness, and imply that every path is constant.\n\n5. **Universe dependence.** Mathlib's `Surreal.{u}` is a universe-relative type. It would be useful to state the non-first-countability theorem uniformly in `u`, carefully tracking the `Small` assumptions used for countable families.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0473",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "cf6c2cd9",
+    "status": "available",
+    "timestamp": "2026-07-19T17:32:45.923773+00:00",
+    "title": "`OpenSetsAtInfinity.lean` equips `Surreal.{0}` with its order topology and prove"
   },
   {
     "ambition_level": "extension",
