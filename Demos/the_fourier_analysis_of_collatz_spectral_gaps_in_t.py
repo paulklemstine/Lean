@@ -1,191 +1,170 @@
-"""
-The Fourier Analysis of Collatz: Spectral Gaps in the 3n+1 Map
-==============================================================
+#!/usr/bin/env python3
+"""Numerical demonstrations for finite Collatz exponential sums.
 
-Self-contained numerical demonstrations of the results in the accompanying
-paper.  We illustrate, using only the Python standard library:
-
-  1. The spectral dichotomy of the geometric character sum
-         S_N(w) = sum_{n<N} e(w)^n,      e(w) = exp(2*pi*i*w),
-     comparing full resonance at integer frequencies (S_N = N) with the
-     N-independent spectral gap |S_N(w)| <= 1/|sin(pi w)| at non-integer w.
-
-  2. The half-angle modulus identity  |e(w) - 1| = 2|sin(pi w)|.
-
-  3. The Nyquist bridge:  (e(1/2))^n = (-1)^n selects the Collatz branch, so
-         T(n) = n/2 if (e(1/2))^n == 1 else 3n+1.
-
-  4. The parity split of the Collatz Fourier transform
-         F_N(w) = sum_{n<N} e(w * T(n)).
-
-  5. The exact stopping time of powers of two:  T^[k](2^k) = 1.
-
-Run:  python demo.py
+The script uses only the Python standard library. It compares direct and
+parity-reduced evaluation, probes irrational frequencies approaching zero,
+checks the universal triangle bound on a grid, compares odd multipliers
+3, 5, and 7, and optionally writes an SVG resonance plot.
 """
 
 from __future__ import annotations
 
+import argparse
 import cmath
 import math
-from typing import Callable
+from pathlib import Path
+from typing import Iterable, Sequence
 
 
-# --------------------------------------------------------------------------
-# Fourier primitives
-# --------------------------------------------------------------------------
-
-def e(x: float) -> complex:
-    """The additive character e(x) = exp(2*pi*i*x); a point on the unit circle."""
-    return cmath.exp(2.0 * math.pi * 1j * x)
+def collatz(n: int, odd_multiplier: int = 3) -> int:
+    """Return one step of the generalized odd-multiplier Collatz map."""
+    if n <= 0:
+        raise ValueError("n must be positive")
+    return n // 2 if n % 2 == 0 else odd_multiplier * n + 1
 
 
-def character_sum(omega: float, N: int) -> complex:
-    """Geometric character sum S_N(omega) = sum_{n<N} e(omega)^n."""
-    base = e(omega)
-    total = 0.0 + 0.0j
-    power = 1.0 + 0.0j
-    for _ in range(N):
-        total += power
-        power *= base
-    return total
-
-
-def spectral_gap_bound(omega: float) -> float:
-    """The N-independent ceiling 1/|sin(pi*omega)| for non-integer omega."""
-    s = abs(math.sin(math.pi * omega))
-    return math.inf if s == 0.0 else 1.0 / s
-
-
-# --------------------------------------------------------------------------
-# Collatz primitives
-# --------------------------------------------------------------------------
-
-def collatz(n: int) -> int:
-    """One step of the Collatz map: n/2 if even, else 3n+1."""
-    return n // 2 if n % 2 == 0 else 3 * n + 1
-
-
-def collatz_fourier(n: int) -> int:
-    """Collatz step written purely via the Nyquist character e(1/2)^n."""
-    # (e(1/2))^n = (-1)^n, which is +1 exactly when n is even.
-    nyquist_power = e(0.5) ** n
-    is_even_branch = abs(nyquist_power - 1.0) < 1e-9
-    return n // 2 if is_even_branch else 3 * n + 1
-
-
-def iterate(f: Callable[[int], int], n: int, k: int) -> int:
-    """Apply f to n exactly k times."""
-    for _ in range(k):
-        n = f(n)
-    return n
-
-
-def stopping_time(n: int, cap: int = 100000) -> int:
-    """Number of Collatz steps for n to first reach 1."""
-    steps = 0
-    while n != 1 and steps < cap:
-        n = collatz(n)
-        steps += 1
-    return steps
-
-
-def collatz_fourier_transform(omega: float, N: int) -> complex:
-    """F_N(omega) = sum_{n<N} e(omega * T(n))."""
-    return sum((e(omega * collatz(n)) for n in range(N)), 0.0 + 0.0j)
-
-
-def collatz_fourier_transform_split(omega: float, N: int) -> complex:
-    """Parity split of F_N(omega): even (halving) branch + odd (3n+1) branch."""
-    even_branch = sum(
-        (e(omega * (n // 2)) for n in range(N) if n % 2 == 0), 0.0 + 0.0j
+def collatz_fourier_direct(
+    cutoff: int, omega: float, odd_multiplier: int = 3
+) -> complex:
+    """Evaluate the finite exponential sum directly in O(cutoff) time."""
+    if cutoff < 1:
+        raise ValueError("cutoff must be positive")
+    return sum(
+        cmath.exp(2j * math.pi * omega * collatz(n, odd_multiplier) / n)
+        for n in range(1, cutoff + 1)
     )
-    odd_branch = sum(
-        (e(omega * (3 * n + 1)) for n in range(N) if n % 2 != 0), 0.0 + 0.0j
+
+
+def collatz_fourier_split(
+    cutoff: int, omega: float, odd_multiplier: int = 3
+) -> complex:
+    """Evaluate the exact even-odd decomposition using half as many loop terms."""
+    if cutoff < 1:
+        raise ValueError("cutoff must be positive")
+    even_count = cutoff // 2
+    even_block = even_count * cmath.exp(1j * math.pi * omega)
+    odd_remainder = sum(
+        cmath.exp(2j * math.pi * omega / n)
+        for n in range(1, cutoff + 1, 2)
     )
-    return even_branch + odd_branch
+    odd_block = cmath.exp(2j * math.pi * odd_multiplier * omega) * odd_remainder
+    return even_block + odd_block
 
 
-# --------------------------------------------------------------------------
-# Demonstrations
-# --------------------------------------------------------------------------
-
-def demo_dichotomy() -> None:
-    print("=" * 70)
-    print("1. Spectral dichotomy of the geometric character sum S_N(omega)")
-    print("=" * 70)
-    print("\n  Full resonance at integer frequencies (|S_N| should equal N):")
-    for m in (0, 1, 2, 3):
-        for N in (10, 100, 1000):
-            s = character_sum(float(m), N)
-            print(f"    omega={m}, N={N:5d}:  |S_N| = {abs(s):10.4f}  (N = {N})")
-    print("\n  Spectral gap at non-integer frequencies (|S_N| <= 1/|sin(pi w)|,")
-    print("  a ceiling independent of N):")
-    for omega in (0.5, 1.0 / 3.0, math.sqrt(2) - 1, 0.1):
-        bound = spectral_gap_bound(omega)
-        print(f"    omega = {omega:.6f},  bound = {bound:10.4f}")
-        for N in (10, 100, 10000):
-            s = character_sum(omega, N)
-            ok = "OK" if abs(s) <= bound + 1e-6 else "VIOLATION"
-            print(f"        N={N:6d}:  |S_N| = {abs(s):10.4f}   [{ok}]")
+def irrational_peak_table(cutoff: int, denominators: Iterable[int]) -> list[tuple[int, float, float]]:
+    """Return (m, sqrt(2)/m, magnitude) rows showing approach to the peak."""
+    rows: list[tuple[int, float, float]] = []
+    for m in denominators:
+        if m <= 0:
+            raise ValueError("denominators must be positive")
+        omega = math.sqrt(2.0) / m
+        rows.append((m, omega, abs(collatz_fourier_split(cutoff, omega))))
+    return rows
 
 
-def demo_half_angle() -> None:
-    print("\n" + "=" * 70)
-    print("2. Half-angle modulus identity  |e(w) - 1| = 2|sin(pi w)|")
-    print("=" * 70)
-    for omega in (0.1, 0.25, 0.5, 1.0 / 3.0, 0.9):
-        lhs = abs(e(omega) - 1.0)
-        rhs = 2.0 * abs(math.sin(math.pi * omega))
-        print(f"    w={omega:.5f}:  |e(w)-1| = {lhs:.8f}   2|sin(pi w)| = {rhs:.8f}")
+def scan_frequencies(
+    cutoff: int,
+    start: float,
+    stop: float,
+    samples: int,
+    odd_multiplier: int = 3,
+) -> list[tuple[float, float]]:
+    """Sample transform magnitudes on an inclusive uniform grid."""
+    if samples < 2:
+        raise ValueError("samples must be at least two")
+    return [
+        (
+            start + (stop - start) * j / (samples - 1),
+            abs(
+                collatz_fourier_split(
+                    cutoff,
+                    start + (stop - start) * j / (samples - 1),
+                    odd_multiplier,
+                )
+            ),
+        )
+        for j in range(samples)
+    ]
 
 
-def demo_bridge() -> None:
-    print("\n" + "=" * 70)
-    print("3. The Nyquist bridge:  T(n) via the character e(1/2)^n = (-1)^n")
-    print("=" * 70)
-    print(f"    e(1/2) = {e(0.5):.4f}  (equals -1)")
-    mismatches = 0
-    for n in range(0, 30):
-        if collatz(n) != collatz_fourier(n):
-            mismatches += 1
-    print(f"    collatz(n) vs Fourier-branch form agree on 0..29: "
-          f"{'YES' if mismatches == 0 else f'NO ({mismatches} diffs)'}")
-    for n in (6, 7, 8, 27):
-        print(f"      n={n:3d}:  parity T = {collatz(n):4d},  "
-              f"Fourier T = {collatz_fourier(n):4d}")
+def write_svg_plot(series: Sequence[tuple[float, float]], cutoff: int, path: Path) -> None:
+    """Write a dependency-free SVG line plot for a sampled magnitude series."""
+    if not series:
+        raise ValueError("series must not be empty")
+    width, height, margin = 900, 500, 60
+    x_values = [point[0] for point in series]
+    y_values = [point[1] for point in series]
+    x_min, x_max = min(x_values), max(x_values)
+    y_max = max(float(cutoff), max(y_values), 1.0)
+
+    def sx(x: float) -> float:
+        return margin + (x - x_min) * (width - 2 * margin) / (x_max - x_min)
+
+    def sy(y: float) -> float:
+        return height - margin - y * (height - 2 * margin) / y_max
+
+    points = " ".join(f"{sx(x):.2f},{sy(y):.2f}" for x, y in series)
+    svg = f"""<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}">
+<rect width="100%" height="100%" fill="#081526"/>
+<line x1="{margin}" y1="{height-margin}" x2="{width-margin}" y2="{height-margin}" stroke="#91a4bd"/>
+<line x1="{margin}" y1="{margin}" x2="{margin}" y2="{height-margin}" stroke="#91a4bd"/>
+<line x1="{margin}" y1="{sy(cutoff):.2f}" x2="{width-margin}" y2="{sy(cutoff):.2f}" stroke="#ffcc66" stroke-dasharray="6 6"/>
+<polyline fill="none" stroke="#5eead4" stroke-width="2.5" points="{points}"/>
+<text x="{width/2}" y="30" text-anchor="middle" fill="white" font-family="sans-serif" font-size="20">Collatz exponential-sum magnitude</text>
+<text x="{width/2}" y="{height-15}" text-anchor="middle" fill="#dbeafe" font-family="sans-serif">frequency ω</text>
+<text x="18" y="{height/2}" fill="#dbeafe" font-family="sans-serif" transform="rotate(-90 18 {height/2})">|F_N(ω)|</text>
+<text x="{width-margin-5}" y="{sy(cutoff)-8:.2f}" text-anchor="end" fill="#ffcc66" font-family="sans-serif">sharp bound N={cutoff}</text>
+</svg>
+"""
+    path.write_text(svg, encoding="utf-8")
 
 
-def demo_parity_split() -> None:
-    print("\n" + "=" * 70)
-    print("4. Parity split of the Collatz Fourier transform F_N(omega)")
-    print("=" * 70)
-    for omega in (0.3, 1.0 / 7.0, math.sqrt(3) - 1):
-        for N in (50, 500):
-            direct = collatz_fourier_transform(omega, N)
-            split = collatz_fourier_transform_split(omega, N)
-            err = abs(direct - split)
-            print(f"    omega={omega:.5f}, N={N:4d}:  |F_N| = {abs(direct):10.4f}"
-                  f"   split error = {err:.2e}")
+def run_demo(cutoff: int, plot_path: Path | None) -> None:
+    """Run all numerical demonstrations and print human-readable tables."""
+    print(f"Cutoff N = {cutoff}")
+    zero_value = collatz_fourier_split(cutoff, 0.0)
+    print(f"Zero-frequency value: {zero_value.real:.12f} + {zero_value.imag:.12f}i")
+    print(f"Sharp triangle bound: |F_N(omega)| <= {cutoff}\n")
+
+    print("Irrational probes omega = sqrt(2)/m")
+    print("m          omega                 |F_N(omega)|       gap from N")
+    for m, omega, magnitude in irrational_peak_table(
+        cutoff, [10, 100, 1_000, 10_000, 100_000]
+    ):
+        print(f"{m:<10d} {omega:<21.14g} {magnitude:<20.12f} {cutoff-magnitude:.6e}")
+
+    print("\nDirect/split identity checks")
+    for omega in [0.0, math.sqrt(2.0) / 10.0, 0.37, 1.0]:
+        direct = collatz_fourier_direct(cutoff, omega)
+        split = collatz_fourier_split(cutoff, omega)
+        print(f"omega={omega:.9f}: absolute discrepancy={abs(direct-split):.3e}")
+
+    print("\nComparison of generalized odd branches at omega=sqrt(2)/10000")
+    omega = math.sqrt(2.0) / 10_000.0
+    for multiplier in (3, 5, 7):
+        magnitude = abs(collatz_fourier_split(cutoff, omega, multiplier))
+        print(f"{multiplier}n+1: |F_N|={magnitude:.12f}, gap from N={cutoff-magnitude:.6e}")
+
+    grid = scan_frequencies(cutoff, -0.1, 0.1, 401)
+    grid_max = max(value for _, value in grid)
+    assert grid_max <= cutoff + 1e-9
+    print(f"\nGrid check: maximum sampled magnitude={grid_max:.12f} <= N")
+
+    if plot_path is not None:
+        write_svg_plot(grid, cutoff, plot_path)
+        print(f"Wrote SVG plot to {plot_path}")
 
 
-def demo_powers_of_two() -> None:
-    print("\n" + "=" * 70)
-    print("5. Exact stopping time of powers of two:  T^[k](2^k) = 1")
-    print("=" * 70)
-    for k in range(0, 12):
-        result = iterate(collatz, 2 ** k, k)
-        st = stopping_time(2 ** k)
-        print(f"    k={k:2d}:  2^k = {2**k:5d},  T^[k](2^k) = {result},  "
-              f"stopping time = {st}  (= k = log2(2^k))")
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--cutoff", type=int, default=1000, help="positive cutoff N")
+    parser.add_argument("--plot", type=Path, default=None, help="optional SVG output path")
+    return parser.parse_args()
 
 
 def main() -> None:
-    demo_dichotomy()
-    demo_half_angle()
-    demo_bridge()
-    demo_parity_split()
-    demo_powers_of_two()
-    print("\nAll demonstrations complete.")
+    args = parse_args()
+    run_demo(args.cutoff, args.plot)
 
 
 if __name__ == "__main__":

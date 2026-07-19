@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "dc502c2d",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions — Algebra and Rank in Well-Founded Games\n\n## 1. Transfinite Sprague–Grundy classification\n\n**Conjecture.** Every set-sized well-founded impartial game admits an\nordinal-valued Grun",
-      "quality_score": 0.91,
-      "sorry_count": 1,
-      "theorem_count": 42,
-      "timestamp": "2026-07-15T03:46:59",
-      "title": "This cycle deepens the theory of two-player **well-founded (transfinite) games**"
-    },
-    {
       "cycle_id": "42e1a665",
       "domain": "Shared",
       "key_insight": "# Future Directions\n\n## 1. The unbounded composite-index theorem\n\nFor every composite integer `n ≥ 13`, the Fibonacci number `F(n)` has a prime divisor that divides no earlier positive-index Fibonacci",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-19T02:26:34",
       "title": "Matroid Minors and the Graph Theorem: Robertson-Seymour for Matroids"
+    },
+    {
+      "cycle_id": "f59cf451",
+      "domain": "Computation",
+      "key_insight": "# Future directions\n\n1. **Represent whole chords, not individual pitch classes.** Use 12-dimensional binary or\n   duration-weighted chroma vectors. Distances between these vectors are not all equal, s",
+      "quality_score": 0.63,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-07-19T02:44:40",
+      "title": "Persistent Homology of Musical Harmony: The Topology of Bach"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.78
     }
   ],
-  "last_updated": "2026-07-19T02:26:34",
+  "last_updated": "2026-07-19T02:44:40",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "a1a5801c",
-        "quality": 0.83,
-        "theorems": 13,
-        "title": "Categorification of Entropy: The Information Loss of Functors"
-      },
-      {
         "cycle_id": "5125e235",
         "quality": 0.82,
         "theorems": 7,
@@ -3327,6 +3321,12 @@
         "quality": 0.66,
         "theorems": 14,
         "title": "The Fermi Paradox as a Pigeonhole Principle: Why We Are Alone"
+      },
+      {
+        "cycle_id": "f59cf451",
+        "quality": 0.63,
+        "theorems": 16,
+        "title": "Persistent Homology of Musical Harmony: The Topology of Bach"
       }
     ],
     "Cryptography": [
