@@ -302,21 +302,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
   },
   {
-    "consumed_by_exp_id": "606f7bdd",
-    "description": "Formalize the hard problem of consciousness as a theorem about the gap between functional descriptions and subjective experience. Prove that any system satisfying the functional definition of consciousness can have a zombie twin that is functionally identical but experientially void. Show this gap is isomorphic to G\u00f6del's incompleteness gap.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0479",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T18:58:00.688995+00:00",
-    "title": "Zombies and Qualia: Mathematics of Subjective Experience"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Construct a single algebraic object whose projections give S^0, S^1, S^2, ... simultaneously. Prove it exists as an inverse limit in the category of spheres. Show that its homology groups encode the Bernoulli numbers and that its cohomology ring is the polynomial ring on Stiefel-Whitney classes.",
     "domains": [
@@ -345,6 +330,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-19T20:43:51.867187+00:00",
     "title": "Infinite Games Against Death: Immortality Strategies"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that mathematical discovery undergoes phase transitions: long periods of incremental progress punctuated by sudden reorganizations (like percolation transitions). Formalize this using statistical mechanics: define an order parameter for 'mathematical coherence' and show it undergoes a second-order phase transition as the number of connected theorems crosses a critical threshold. Predict: the next phase transition in number theory will occur when the connections between Langlands and arithmetic geometry exceed ~10^4 edges.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_0500",
+    "priority_score": 0.82,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-19T22:37:59.429001+00:00",
+    "title": "Speculative: Mathematics as a Phase Transition"
   },
   {
     "consumed_by_exp_id": "65e81f6c",
@@ -5262,6 +5261,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-19T22:20:20.550541+00:00",
     "title": "Future directions from cycle 14bbfbeb"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Functional Fibers, Experience, and Semantic Gaps\n\n## 1. Naturality of the zombie\u2013semantic gap correspondence\n\n**Conjecture.** There is a category of functional profiles and profile-preserving maps in which both the canonical zombie-witness construction and the canonical semantic-gap construction are functors, and the established profile-indexed equivalence extends to a natural isomorphism between those functors.\n\nThe key insight is that both witness spaces are classified by the same hidden Boolean fiber, suggesting that their agreement should persist under every coherent change of functional vocabulary rather than only object by object.\n\n**Why now?** The pointwise equivalence and its explicit inverse are known; the next test is whether composition and identity laws preserve the correspondence without additional choices.\n\n## 2. Classification of finite hidden-experience extensions\n\n**Conjecture.** For every finite set of functional profiles, experience models whose behavioral fibers contain exactly one conscious state and one void state are classified, up to behavior- and void-preserving isomorphism, by the canonical two-sheeted model.\n\nThe key insight is that uniqueness within each fiber should turn local conscious/void labels into a global normal form, while any failure of uniqueness records additional qualitative multiplicity invisible to function.\n\n**Why now?** The canonical model already proves existence and classifies its witness type; finite-fiber classification would determine precisely which hypotheses make that construction universal.\n\n## 3. Quantitative underdetermination from fiber entropy\n\n**Conjecture.** For finite models with a probability distribution on worlds, the conditional entropy of experience given functional profile vanishes exactly when experience factors through behavior; positive conditional entropy yields a quantitative lower bound on the number of functionally indistinguishable experiential alternatives.\n\nThe key insight is that the present Boolean fiber is the smallest nontrivial case of conditional uncertainty, so the qualitative existence gap should admit an information-theoretic refinement.\n\n**Why now?** The structural separation between behavior and experience has been isolated; adding finite probability measures can test whether the separation has a robust numerical invariant rather than merely a witness.\n\n## 4. Independence of integrated information from hidden experiential fibers\n\n**Conjecture.** For every finite functional system with a minimum-information partition and every positive integer `k`, there is a conservative experiential extension with exactly `k` mutually distinct experiential sheets over each functional state, all sharing the same integrated-information landscape.\n\nThe key insight is that minimum-information partitions depend on the functional cut data, whereas sheet multiplicity lies entirely in fibers forgotten by that data.\n\n**Why now?** Coexistence of a minimum-information partition with a two-sheeted experiential gap is established; arbitrary finite sheet multiplicity is the decisive test of whether integrated information alone constrains experiential multiplicity.\n\n## 5. Guarded diagonalization for observer-relative experience reports\n\n**Conjecture.** Any sound, self-referential reporting system that can encode both its own acceptance predicate and the presence of a hidden experiential sheet contains a report that is semantically true, unaccepted, and invariant under functional duplication.\n\nThe key insight is that diagonal unacceptability and functional invisibility may be combined only when the coding map respects both self-reference and the forgetful behavioral projection.\n\n**Why now?** Canonical G\u00f6delian codes already correspond to canonical zombie witnesses, but the current construction stipulates the coding. A guarded diagonal theorem would identify the exact structural assumptions under which the correspondence survives genuine self-reference.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0501",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "606f7bdd",
+    "status": "available",
+    "timestamp": "2026-07-19T22:38:27.256880+00:00",
+    "title": "**Conjecture.** There is a category of functional profiles and profile-preservin"
   },
   {
     "consumed_by_exp_id": "",
