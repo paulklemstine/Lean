@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "1a2ab56f",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\n1. **Faithful binary-tree layer.** Define finite connected acyclic simple graphs whose\n   leaves are labelled by `Fin N`, internal vertices have degree three, and prove that\n   su",
-      "quality_score": 0.65,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-07-15T21:17:27",
-      "title": "ArXiv paper: On Agreement Subtrees in Multiple Pylogenetic Trees"
-    },
-    {
       "cycle_id": "7a91e930",
       "domain": "Geometry",
       "key_insight": "# Future directions\n\nThe formal development proves the classical affine construction inside the quantum definition: over every finite field, the nonzero slopes index `|K| - 1` pairwise orthogonal quan",
@@ -2501,6 +2491,16 @@
       "theorem_count": 61,
       "timestamp": "2026-07-19T11:52:35",
       "title": "Non-Desarguesian Worlds: Geometry Without Desargues"
+    },
+    {
+      "cycle_id": "a88a4e5d",
+      "domain": "Applications",
+      "key_insight": "",
+      "quality_score": 0.6256666666666666,
+      "sorry_count": 1,
+      "theorem_count": 18,
+      "timestamp": "2026-07-19T11:52:43",
+      "title": "Cellular Automata at the Ordinals: Transfinite Computation"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-19T11:52:35",
+  "last_updated": "2026-07-19T11:52:43",
   "open_questions": [
-    {
-      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "7ea29a05",
-      "domain": "Shared",
-      "sorry_count": 4,
-      "timestamp": "2026-07-15T03:46:49"
-    },
     {
       "context": "",
       "cycle_id": "dc502c2d",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 12,
       "timestamp": "2026-07-19T11:52:35"
+    },
+    {
+      "context": "¬ Function.Surjective enumerate := by sorry",
+      "cycle_id": "a88a4e5d",
+      "domain": "Applications",
+      "sorry_count": 1,
+      "timestamp": "2026-07-19T11:52:43"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "f017f3a3",
-        "quality": 0.63,
-        "theorems": 0,
-        "title": "Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theo"
-      },
-      {
         "cycle_id": "ef699512",
         "quality": 0.72,
         "theorems": 6,
@@ -3141,6 +3135,12 @@
         "quality": 0.6181967213114754,
         "theorems": 61,
         "title": "Non-Desarguesian Worlds: Geometry Without Desargues"
+      },
+      {
+        "cycle_id": "a88a4e5d",
+        "quality": 0.6256666666666666,
+        "theorems": 18,
+        "title": "Cellular Automata at the Ordinals: Transfinite Computation"
       }
     ],
     "Bridges": [
