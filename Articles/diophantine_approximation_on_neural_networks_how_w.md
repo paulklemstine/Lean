@@ -1,225 +1,180 @@
-# The Walk That Started a Science: Why You Can't Cross Every Bridge Just Once
+# A One-Neuron Staircase to Pi
 
-## A puzzle from a city of bridges
+## How binary digits turn a rectified network into an exact Diophantine compiler
 
-In the eighteenth century, the Prussian city of Königsberg sat astride the
-Pregel River. The river split the city into four landmasses — two banks and two
-islands — and seven bridges stitched them together. On lazy Sunday afternoons the
-citizens entertained themselves with a deceptively simple challenge: could you
-take a stroll through the city that crossed every one of the seven bridges exactly
-once, and return to where you started?
+The number $\pi$ is easy to name and impossible to finish writing. Its decimal expansion begins $3.14159\ldots$, but no finite list of digits captures it exactly. This familiar tension—simple definition, endless expansion—makes $\pi$ a natural test case for a question at the boundary of number theory and neural computation: how economically can a rectified linear network approximate a particular irrational constant?
 
-People tried. They failed. They tried again, sketching routes on scraps of paper,
-convinced that the right clever path was out there if only they looked hard
-enough. Nobody could find it — but nobody could explain *why* it was impossible
-either. "I couldn't do it" is not the same as "it cannot be done."
+At first glance, the answer seems almost embarrassingly easy. A neuron with a freely chosen real bias can simply store $\pi$. Feed it the input $1$, choose the right affine parameters, and the output is exactly $\pi$. But that answer hides all the arithmetic inside one infinitely precise parameter. It is like claiming to compress a library by writing “the library” on the cover while silently assuming the cover can contain unlimited information.
 
-In 1736 the mathematician Leonhard Euler settled the matter, and in doing so he
-quietly invented an entire branch of mathematics. His insight was that the answer
-had nothing to do with cleverness, distances, or the shapes of the islands. It
-depended only on *how many bridges touched each landmass*. That single shift in
-perspective — from geometry to connection, from shape to structure — was the birth
-of **graph theory**, and with it the modern science of networks.
+A meaningful construction must say what its parameters are allowed to be. Here the restriction is severe and transparent. Every hidden weight is the integer $2$. Every hidden bias is one of the two bits $0$ or $1$. The network has width one: there is only a single number moving from layer to layer. Under those rules, depth becomes a visible information budget, and the network’s computation can be understood exactly.
 
-This article tells the story of the clean mathematical heart of Euler's argument:
-a counting law so robust that it can be proved with nothing more than careful
-bookkeeping. We will state it precisely, prove its core, and see why it forces the
-walkers of Königsberg to fail every single time.
+## The dyadic staircase
 
-## From bridges to dots and lines
+For each nonnegative integer $n$, define the integer
 
-The first and most important move is to throw away everything irrelevant. The
-exact positions of the islands, the lengths of the bridges, the bends in the
-river — none of it matters. What matters is the pattern of connections.
+$$
+P_n=\left\lfloor 2^n\pi\right\rfloor.
+$$
 
-So we replace each landmass with a **dot** (a *vertex*) and each bridge with a
-**line** joining two dots (an *edge*). The resulting picture is a **multigraph**:
-"multi" because two landmasses can be joined by several bridges at once, so we
-allow several edges between the same pair of dots. We even allow a bridge that
-loops from a landmass back to itself.
+The associated dyadic approximation is
 
-To make this fully precise, imagine numbering the landmasses $0, 1, \dots, n_V-1$
-and the bridges $0, 1, \dots, n_E-1$. A multigraph is then just a list that
-records, for each bridge, the two landmasses it connects:
+$$
+A_n=\frac{P_n}{2^n}.
+$$
 
-> **Definition (Multigraph).** A multigraph on $n_V$ vertices and $n_E$ edges is a
-> function that assigns to every edge an *ordered pair* of vertices — its two
-> endpoints.
+This is simply $\pi$ rounded downward to $n$ binary places. The first few values are
 
-We store the endpoints as an ordered pair $(\text{ends}(e).1, \text{ends}(e).2)$
-purely for convenience; a walker doesn't care which end of a bridge they cross
-first. A loop is simply a bridge whose two endpoints are the same vertex.
+$$
+A_0=3,\qquad A_1=3,\qquad A_2=\frac{12}{4}=3,
+$$
 
-The single most important quantity in the whole story is the **degree** of a
-vertex: the number of bridge-ends sticking out of it.
+$$
+A_3=\frac{25}{8}=3.125,\qquad
+A_4=\frac{50}{16}=3.125,
+$$
 
-> **Definition (Degree).** The degree of a vertex $v$ is the total number of edge
-> *endpoints* equal to $v$. Concretely, each edge contributes $1$ for each of its
-> two endpoints that lands on $v$:
-> $$ \deg(v) = \sum_{e} \big( [\,\text{ends}(e).1 = v\,] + [\,\text{ends}(e).2 = v\,]\big), $$
-> where $[\,\cdot\,]$ is $1$ when the statement inside is true and $0$ otherwise.
+and then the staircase climbs ever closer to $\pi$. Each $A_n$ lies on the grid of multiples of $2^{-n}$. Because $\pi$ is irrational, it never lands exactly on a grid point.
 
-Notice the elegant consequence of counting *endpoints* rather than edges: an
-ordinary bridge between two different landmasses adds $1$ to each of their degrees,
-but a **loop** at $v$ contributes $1 + 1 = 2$ to $\deg(v)$. A loop, after all, has
-both of its ends planted in the same spot. This convention is exactly what makes
-the parity argument below work flawlessly.
+The basic floor inequality says
 
-## What is a "walk that uses every bridge once"?
+$$
+P_n\le 2^n\pi<P_n+1.
+$$
 
-The Königsberg challenge asks for a route that traverses every bridge exactly
-once. Such a route is called an **Eulerian trail**. Let us pin down what that
-means as data.
+Dividing by $2^n$ immediately yields the central error estimate:
 
-A trail across $n_E$ bridges visits a sequence of $n_E + 1$ landmasses: you start
-somewhere, and each bridge-crossing moves you to the next landmass, so $n_E$
-crossings produce $n_E + 1$ stopping points (counting the start). Call this
-sequence $\text{walk}(0), \text{walk}(1), \dots, \text{walk}(n_E)$.
+$$
+0<\pi-A_n<2^{-n}.
+$$
 
-For the route to use *every* bridge *exactly once*, we need a way to match the
-$i$-th step of the walk with a distinct bridge. That matching is a **permutation**
-$\text{edgeAt}$ of the bridge labels: a perfect, no-repeats, no-omissions
-reshuffling that tells us which bridge is crossed at each step. Finally, the
-matching has to be honest — the bridge assigned to step $i$ must really connect the
-$i$-th landmass to the next one:
+This is the **Dyadic Approximation Theorem for $\pi$**: truncating after $n$ binary places approximates $\pi$ strictly from below, and the error is less than one binary unit at that depth. Every extra layer will therefore halve the guaranteed error.
 
-> **Definition (Eulerian trail).** An Eulerian trail consists of a vertex sequence
-> $\text{walk}(0), \dots, \text{walk}(n_E)$ together with a permutation
-> $\text{edgeAt}$ of the edges, such that for every step $i$ the edge
-> $\text{edgeAt}(i)$ has endpoints $\{\text{walk}(i), \text{walk}(i{+}1)\}$ in one
-> orientation or the other.
+For example, at depth $10$, the error is below $2^{-10}\approx 9.77\times10^{-4}$. At depth $20$, it is below $9.54\times10^{-7}$. At depth $50$, it is below $8.89\times10^{-16}$. The guarantee is exponential in depth, despite the network having only one hidden value at each stage.
 
-The permutation is the crucial ingredient. Because it is a genuine reshuffling of
-all the edges, every bridge appears as $\text{edgeAt}(i)$ for exactly one step $i$.
-That is the formal way of saying "each bridge is used exactly once."
+## Where the neuron enters
 
-## The accounting identity at the heart of it all
+Let the rectified linear unit be
 
-Here is the idea that makes everything click. There are two completely different
-ways to count the bridge-ends at a vertex $v$, and they must agree.
+$$
+\operatorname{ReLU}(x)=\max\{x,0\}.
+$$
 
-**The static count.** Walk around the whole graph and tally every bridge-end that
-touches $v$. That is the definition of $\deg(v)$ above.
+Now define the next binary digit of $\pi$ by
 
-**The dynamic count.** Now replay the Eulerian trail step by step. At each step
-$i$, look at the two landmasses involved, $\text{walk}(i)$ and $\text{walk}(i{+}1)$,
-and count how many of them equal $v$ (that's $0$, $1$, or $2$). Sum this over all
-steps.
+$$
+b_n=P_{n+1}-2P_n.
+$$
 
-These two counts are the same number — because the permutation $\text{edgeAt}$
-pairs up the steps of the walk with the edges of the graph, and crossing an edge
-"uses up" exactly its two endpoints. This is our first theorem.
+A small but decisive theorem states that
 
-> **Theorem A (Degree equals walk-step count).** For every vertex $v$,
-> $$ \deg(v) = \sum_{i} \big([\,\text{walk}(i) = v\,] + [\,\text{walk}(i{+}1) = v\,]\big). $$
+$$
+b_n\in\{0,1\}
+$$
 
-Now comes a beautiful piece of bookkeeping. The right-hand sum counts each landmass
-*visit* almost twice — once as the "arrival" of one step and once as the
-"departure" of the next — but the two ends of the whole trail are special. The very
-first landmass $\text{walk}(0)$ is only ever a departure, and the very last
-landmass $\text{walk}(n_E)$ is only ever an arrival. Every other appearance of $v$
-in the middle of the trail gets counted exactly twice. Making this precise gives a
-clean **endpoint-correction identity**:
+for every $n$. To see why, write $2^n\pi=P_n+r_n$ with $0\le r_n<1$. Doubling gives
 
-> **Theorem B (Endpoint correction).** For every vertex $v$,
-> $$ \deg(v) + \big([\,\text{walk}(0) = v\,] + [\,\text{walk}(n_E) = v\,]\big) = 2 \cdot \big(\text{number of trail positions equal to } v\big). $$
+$$
+2^{n+1}\pi=2P_n+2r_n.
+$$
 
-Stare at this equation, because it contains the entire secret of Königsberg. The
-right-hand side is an **even number** — it is literally two times something. The
-quantity in parentheses on the left is a tiny correction: it is $0$, $1$, or $2$,
-depending on whether $v$ happens to be the start of the trail, the end, both, or
-neither.
+Since $0\le 2r_n<2$, taking the floor adds either $0$ or $1$ to $2P_n$. Thus $P_{n+1}=2P_n+b_n$, with $b_n$ genuinely a bit.
 
-## Odd degrees can only live at the ends
+This arithmetic recurrence is already shaped like a neural layer. Start with
 
-From Theorem B the conclusion tumbles out almost by itself. The total
-$\deg(v) + (\text{correction})$ is even. So $\deg(v)$ and the correction term must
-have the *same parity* — both even or both odd.
+$$
+h_0=3
+$$
 
-**If $v$ is an interior vertex** (neither the start nor the end of the trail), the
-correction term is $0$, which is even. Therefore $\deg(v)$ is even too.
+and iterate
 
-> **Theorem C (Interior vertices have even degree).** If $v$ is neither the start
-> $\text{walk}(0)$ nor the end $\text{walk}(n_E)$ of the trail, then $\deg(v)$ is
-> even.
+$$
+h_{n+1}=\operatorname{ReLU}(2h_n+b_n).
+$$
 
-Flip this around and you get the punchline:
+Because $h_n$ is always nonnegative, the rectifier never clips the signal. Induction gives the **Exact State Theorem**:
 
-> **Theorem D (Odd vertices are endpoints).** If $\deg(v)$ is odd, then $v$ must be
-> the start of the trail or its end.
+$$
+h_n=P_n=\left\lfloor 2^n\pi\right\rfloor
+$$
 
-And since there is only *one* start and *one* end, at most two vertices can have
-odd degree:
+at every depth $n$. A final linear readout divides by $2^n$:
 
-> **Theorem E (At most two odd vertices).** In any multigraph that admits an
-> Eulerian trail, the number of odd-degree vertices is at most $2$.
+$$
+y_n=\frac{h_n}{2^n}.
+$$
 
-This is the law the people of Königsberg ran into without knowing it.
+Consequently $y_n=A_n$, and the network output satisfies
 
-## Back to the seven bridges
+$$
+0<\pi-y_n<2^{-n}.
+$$
 
-Recall the actual city. The two riverbanks, the big island, and the smaller island
-were connected by seven bridges. Counting the bridge-ends at each landmass, the
-classic configuration gives degrees of $5, 3, 3, 3$ — **all four landmasses have
-odd degree.**
+The network is not merely close to the dyadic truncation; its hidden state *is exactly the dyadic numerator*. The arithmetic and neural descriptions are two views of the same process.
 
-Theorem E says an Eulerian trail can tolerate *at most two* odd-degree vertices.
-Königsberg had *four*. Four is more than two. Therefore no route crossing every
-bridge exactly once can possibly exist — not because the citizens weren't clever
-enough, but because the very structure of the city forbids it. No amount of
-ingenuity can change the parity of a count.
+## What the theorem does—and does not—say
 
-The argument is wonderfully sturdy. It never mentions distance, geometry, or
-strategy. It is pure accounting: each time you walk *into* a landmass mid-trail you
-must walk back *out*, consuming bridges two at a time. Only the place where you
-begin and the place where you finish are allowed to break that in-out pairing — and
-those two privileged spots are the only ones that may carry an odd count.
+The construction has width one, depth $n$, hidden weights equal to $2$, and one binary bias per layer. To guarantee an error below a prescribed tolerance $\varepsilon>0$, it is enough to choose $n$ so that
 
-## Why this matters far beyond a Prussian river
+$$
+2^{-n}<\varepsilon.
+$$
 
-It would be a mistake to file this away as a charming historical curiosity. The
-parity-of-degree argument is the prototype of a style of reasoning that now
-underpins enormous swaths of science and engineering.
+Equivalently, any integer depth satisfying
 
-**Routing and logistics.** The modern descendant of the bridge problem is the
-"route inspection" or *Chinese postman* problem: a mail carrier, a snowplow, or a
-street-sweeper must traverse every road in a network and wants to minimize
-backtracking. Whether a no-repeat route exists, and how much repetition is forced
-if it doesn't, is governed precisely by which intersections have an odd number of
-roads. Euler's parity count is the first thing any such algorithm checks.
+$$
+n>\log_2\!\left(\frac1\varepsilon\right)
+$$
 
-**DNA sequencing.** When a genome is reconstructed from millions of short
-fragments, modern assemblers build a graph whose edges are overlapping snippets and
-then look for a trail that uses every edge — an Eulerian trail. The existence and
-shape of that trail, again, hinge on degree parities. A counting trick from 1736
-helps decode the book of life.
+will do. Thus the required depth grows on the order of $\log(1/\varepsilon)$, not $\log\log(1/\varepsilon)$, for this particular bit-by-bit construction.
 
-**Network design and circuit testing.** Engineers laying out the wiring on a chip,
-or testing that every connection in a circuit has been exercised, rely on the same
-even/odd accounting to decide when a single sweep can cover everything.
+There is, however, an essential caveat. The biases $b_0,b_1,\ldots$ are defined from the binary expansion of $\pi$. The network therefore *stores* known digits; it does not discover them. Each new layer reveals one more preselected bit. The result is best understood as an exact compiler from an arithmetic representation into a restricted network architecture.
 
-**The deeper lesson.** Euler's true gift was not the answer but the *method*:
-abstract away the inessential, encode the essential as a graph, and let a
-conserved quantity — here, parity — do the heavy lifting. This is the same
-intellectual reflex that later produced conservation laws in physics, invariants in
-topology, and checksums in computer science. The question "what stays the same no
-matter what you do?" is one of the most powerful in all of mathematics, and the
-bridges of Königsberg are where it first crossed the water.
+That distinction matters whenever one speaks about efficiency. If arbitrary real parameters cost only one unit each, approximation at a single input is trivial: the target constant can be placed directly in a parameter. If parameters must instead be integers, bits, or bounded-length rationals, then information has a price. A serious complexity account must specify the alphabet of allowed parameters, charge for their bit length, distinguish stored advice from uniformly generated data, and say whether accuracy is required at one input or across an entire interval.
 
-## The shape of certainty
+The number of linear regions in a ReLU network does not settle this issue. Region counting is powerful when a network must approximate a varying function over a domain. But a constant evaluated at one point has no geometric oscillations to resolve. At a single point, arithmetic restrictions—not piece count—carry the real content.
 
-What makes this result so satisfying is its finality. Most of us, faced with a
-puzzle, can only report our failures: "I tried for an hour and couldn't do it."
-Euler gave us something categorically stronger — a *proof of impossibility*, a
-guarantee that no future attempt, however inspired, can ever succeed. The four odd
-landmasses of Königsberg are an immovable obstacle written into the arithmetic of
-the city itself.
+## A tiny shift register with a mathematical certificate
 
-That is the quiet power of a counting argument. You do not have to examine every
-possible route — there are astronomically many — to know that all of them fail. You
-only have to notice that each one would force an even number of odd vertices, and
-that four is not at most two. From that single observation, certainty follows.
+The recurrence can be visualized as a binary shift register. If $h_n$ encodes the first $n$ binary places of $\pi$, multiplying by $2$ shifts the stored bits left, and adding $b_n$ appends the next bit. Division by $2^n$ moves the binary point back to its intended location.
 
-A Sunday stroll that seemed merely stubbornly difficult turned out to be flatly
-impossible, and the explanation launched a science. Not bad for a walk that could
-never be taken.
+The same principle works for any positive real number $x$. Define
+
+$$
+Q_n=\lfloor 2^n x\rfloor,
+\qquad
+c_n=Q_{n+1}-2Q_n.
+$$
+
+Then $c_n$ is always $0$ or $1$, and the recurrence $s_{n+1}=2s_n+c_n$ reproduces $Q_n$. If $x$ is irrational, the approximation $Q_n/2^n$ has strict error between $0$ and $2^{-n}$. This gives parallel numerical experiments for $e$ and $\sqrt2$, while $\pi$ remains the central example.
+
+There is also a revealing contrast with continued fractions. Binary truncation spends one stored bit per factor-of-two improvement in the worst-case error. Continued-fraction convergents can achieve unusually strong accuracy for a given denominator, because they adapt their rational approximants to the arithmetic of the target. Implementing that adaptive arithmetic in a restricted rectified network would require more machinery than a simple shift-and-add recurrence, but it offers a promising route for comparing storage, computation, and approximation quality.
+
+## From a tolerance to a blueprint
+
+Suppose an engineer asks for an approximation within one millionth. The theorem turns that request into a blueprint without trial and error. Choose the first depth for which $2^{-n}<10^{-6}$; $n=20$ works. Prepare the first $20$ transition bits of $\pi$, arrange $20$ identical doubling layers, and attach the normalization $2^{-20}$. The resulting output is below $\pi$, differs from it by less than $10^{-6}$, and carries an integer hidden state that can be checked independently.
+
+This one-sidedness is useful. If the output is used in interval arithmetic, it supplies a certified lower endpoint, while $y_n+2^{-n}$ supplies a certified upper endpoint. Thus the network does more than emit a decimal-looking number: it produces a value enclosed in the explicit interval
+
+$$
+\pi\in\left(y_n,\,y_n+2^{-n}\right).
+$$
+
+The interval width is known before the network runs. No statistical estimate or training loss is needed. The guarantee comes from the geometry of the dyadic grid and the elementary behavior of the floor function.
+
+## Why this bridge matters
+
+The construction is modest enough to inspect completely. There are no mysterious high-dimensional weights, no training process, and no appeal to a general approximation principle. Every layer performs the same operation: double, add one bit, rectify. Every hidden state has an exact number-theoretic meaning. Every depth comes with a sharp, explicit error interval.
+
+That transparency makes the example useful beyond $\pi$. It isolates three resources that are often blurred together in discussions of neural approximation:
+
+1. **Architecture:** width one and depth $n$.
+2. **Parameter alphabet:** the fixed weight $2$ and binary biases.
+3. **Arithmetic advice:** the first $n$ bits of the target constant.
+
+Once these resources are separated, the right future questions become clearer. Can a small uniform circuit generate the needed bits rather than merely store them? What lower bounds hold when every parameter has bounded bit length? How does the answer change for approximation on an interval instead of at one input? Can continued fractions beat binary truncation after the computational cost of generating their coefficients is included?
+
+There is a broader lesson here about claims of compression. A short architecture is not automatically a short description when its parameters may carry many bits. Conversely, a long sequence of binary parameters can be perfectly transparent even when it is not computationally surprising. Separating these notions—architectural size, description length, and generation time—turns a slogan about neural power into a well-posed mathematical investigation.
+
+This perspective also encourages honest comparisons: two constructions should be measured under the same rules for parameter precision, advice, input domain, and output certification. Without those shared rules, a smaller diagram may simply conceal a larger number.
+
+The one-neuron staircase does not claim that a network has learned $\pi$. It demonstrates something more precise: a severely quantized, width-one rectified computation can carry a dyadic Diophantine approximation exactly, with one binary decision per layer and an error below $2^{-n}$. The result turns an infinite irrational constant into a sequence of finite, auditable steps—and shows exactly where the information enters.
