@@ -237,6 +237,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Formalize a type theory where types can refer to their own provability. Prove that such a system can express 'this proposition is provable but not provably provable' as a well-typed term. Show that reflective type theory properly extends Martin-Lof type theory and that its proof term language is exactly the modal mu-calculus.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0477",
+    "lineage_refs": [],
+    "priority_score": 0.86,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-19T18:06:44.969236+00:00",
+    "title": "Reflective Type Theory: Proving Things About Proving Things"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 2d8c7907 (Q=0.760), which proved 11 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize memory as a monoid homomorphism from experience streams to compressed representations. Prove that any such homomorphism satisfying a finite-memory bound must be lossy and that the information loss forms a submonoid. Show that targeted forgetting is equivalent to a quotient construction in ",
     "domain_bridges": [],
     "domains": [
