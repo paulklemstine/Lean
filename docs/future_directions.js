@@ -59,19 +59,19 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
   },
   {
-    "consumed_by_exp_id": "1c1d1205",
-    "description": "Formalize the Lucas-Penrose argument that human minds can see truths that formal systems cannot prove about themselves. Prove or disprove: there exists a computational system that can consistently recognize its own G\u00f6del sentences. Connect to Chaitin's incompleteness theorem and the Berry paradox.",
+    "consumed_by_exp_id": "",
+    "description": "Prove that any Turing-complete system with self-modification capabilities has no general algorithm for predicting its own termination. Formalize the halting problem for programs that can rewrite their own code mid-execution and show this is strictly harder than the classical halting problem. Connect to the virus paradox and AI alignment.",
     "domains": [
       "Novelty",
-      "Logic"
+      "Computation"
     ],
-    "id": "fd_0429",
-    "priority_score": 0.89,
+    "id": "fd_0440",
+    "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T09:14:22.770028+00:00",
-    "title": "Mind vs G\u00f6del: Can Minds Outperform Algorithms?"
+    "status": "available",
+    "timestamp": "2026-07-19T10:23:55.997040+00:00",
+    "title": "Self-Modifying Code That Cannot Be Stopped"
   },
   {
     "consumed_by_exp_id": "",
@@ -274,7 +274,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Quantum Entanglement as Algebraic Topology: The Linking Number Is Entanglement"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a88a4e5d",
     "description": "Prove that cellular automata can perform transfinite computations when run on ordinals instead of N. Formalize a Rule 110 analog on omega-squared and prove it achieves super-Turing computation. Connect to Infinite Time Turing Machines and ordinal computation.",
     "domains": [
       "Novelty",
@@ -284,9 +284,24 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T08:40:11.399800+00:00",
     "title": "Cellular Automata at the Ordinals: Transfinite Computation"
+  },
+  {
+    "consumed_by_exp_id": "b14c422f",
+    "description": "Construct and classify finite projective planes where Desargues' theorem fails. Prove that such planes exist at every prime power order and that their collineation groups are strictly smaller than PGL. Formalize the connection to non-associative division algebras and Hall triple systems.",
+    "domains": [
+      "Novelty",
+      "Geometry"
+    ],
+    "id": "fd_0441",
+    "priority_score": 0.84,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-07-19T10:23:56.030248+00:00",
+    "title": "Non-Desarguesian Worlds: Geometry Without Desargues"
   },
   {
     "consumed_by_exp_id": "e170790e",
@@ -4817,6 +4832,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n- Instantiate `SemanticSystem` with an arithmetized recursively enumerable proof system and derive `IsGodelCode` from a diagonal lemma.\n- Separate semantic soundness from syntactic consistency by formalizing the additional representability hypotheses needed for G\u00f6del\u2019s first and second incompleteness theorems.\n- Extend the finite `chaitin_bit_budget` counting core to prefix-free machines, Kolmogorov complexity, and a formal Chaitin bound for computably axiomatized sound theories.\n- Model bounded description languages and prove a quantitative Berry theorem relating syntax size, denotation, and the first undefinable object.\n- Formalize iterated reflection: adjoining one system\u2019s G\u00f6del sentence strengthens that system, while diagonalization produces a new sentence for the strengthened system.\n- Keep the philosophical conclusion conditional: these theorems constrain every fixed sound and complete recognizer, but do not establish that human mathematical reasoning is sound, complete, or noncomputable.\n",
+    "domains": [
+      "Logic",
+      "Computation"
+    ],
+    "id": "fd_0442",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "1c1d1205",
+    "status": "available",
+    "timestamp": "2026-07-19T10:24:09.640785+00:00",
+    "title": "Future directions from cycle 1c1d1205"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n1. Formalize finite strict preference orders and social welfare functions for at least three alternatives.\n2. Prove the standard Arrow reduction: Pareto efficiency and independence of irrelevant alternatives make the decisive coalitions an ultrafilter. Combining that theorem with `finite_decisive_coalitions_are_dictatorial` will yield a complete finite Arrow theorem.\n3. Distinguish locality notions. IIA is pairwise informational separability, not locality in the topology of a smooth manifold; any geometric reformulation must prove an equivalence rather than identify them by analogy.\n4. Specify an actual statistical model of preference profiles before assigning a Fisher information metric. The finite set of deterministic rankings has no canonical Riemannian structure, while an open probability simplex over rankings does.\n5. Test the curvature claim on categorical distributions. The Fisher simplex is sphere-like after the square-root embedding, so its intrinsic curvature does not switch from positive to zero merely because a distribution is unimodal. A polarization-dependent claim therefore needs a different metric, submanifold, or extrinsic statistic.\n6. Formalize single-peaked domains separately. Their compatibility with majority rule is a domain-restriction theorem and should not be described as a zero-curvature consequence without a proved bridge.\n7. Investigate holonomy only after defining a smooth aggregation map and proving that Pareto and IIA imply the required differential or parallel-transport constraints. The present ultrafilter theorem identifies the combinatorial obstruction that such a bridge must recover.\n",
+    "domains": [
+      "Geometry",
+      "Computation"
+    ],
+    "id": "fd_0443",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "3cc7aff9",
+    "status": "available",
+    "timestamp": "2026-07-19T10:24:17.342209+00:00",
+    "title": "1. Formalize finite strict preference orders and social welfare functions for at"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle d1663b23 (Q=0.700) proved 0 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'A minimal modularity lifting theorem for Siegel modular forms' and formalize its key results. Abstract: We prove a minimal modularity lifting theorem (in the spirit of Gen",
     "domains": [
       "Applications"
@@ -4856,21 +4901,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-15T05:23:22.329230+00:00",
     "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
-  },
-  {
-    "consumed_by_exp_id": "3cc7aff9",
-    "description": "Arrow's impossibility theorem states that no ranked voting system with 3+ alternatives can be Pareto efficient, non-dictatorial, and independent of irrelevant alternatives (IIA). Conjecture: Arrow's theorem is a curvature statement. The space of preference profiles is a Riemannian manifold M with the Fisher information metric. The social welfare function F: M -> M is a mapping from profiles to social preferences. Arrow's conditions translate to geometric conditions: (1) Pareto efficiency means F preserves the direction of unanimous preference (F is 'forward-looking'). (2) IIA means F is a local mapping (the social preference at x depends only on local information near x). (3) Non-dictatorial means F is not a projection onto a single voter's preference. Conjecture: the only smooth, local, forward-looking maps on a positively curved manifold are projections (dictatorships). This is because a positively curved manifold has the property that parallel transport around a small loop rotates vectors (Holonomy), and a local, forward-looking map must preserve this holonomy, which forces it to be a projection. Conjecture: the curvature of the preference space is related to the 'polarization' of the electorate: when preferences are polarized (bimodal), the curvature is positive (sphere-like), and Arrow's theorem applies. When preferences are unimodal (consensus), the curvature is zero (flat), and majority rule works. Test: compute the curvature of the preference space for synthetic election data and verify the connection to Arrow's theorem. Impact: Arrow's impossibility is a theorem of differential geometry. Voting is curved.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0405",
-    "priority_score": 0.7,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T05:55:58.532807+00:00",
-    "title": "The Geometry of Consensus: Arrow's Theorem as Curvature"
   },
   {
     "consumed_by_exp_id": "",
