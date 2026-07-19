@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "408bb225",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions\n\n## 1. Measure-calibrated recurrence incidence\n\nFix a distribution of logistic parameters, an absolutely continuous distribution of initial states, a finite observation horizon, an",
-      "quality_score": 0.76,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-07-17T11:50:06",
-      "title": "The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
-    },
-    {
       "cycle_id": "5f139cd0",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\n## What was established\n\n`AffineDuality.lean` formalizes a finite additive-group identification protocol and proves a cross-domain connection between affine symmetry and cryptogra",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-19T00:45:02",
       "title": "Quantum Error Correction from Homological Algebra: CSS Codes as Cohomology"
+    },
+    {
+      "cycle_id": "7bc47166",
+      "domain": "Shared",
+      "key_insight": "# Future Directions\n\n## 1. Physical comparison gates with explicit reset registers\n\n**Conjecture.** For a comparator network implemented by reversible gates with a designated\nreset protocol, the minim",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-07-19T01:02:46",
+      "title": "The Thermodynamics of Sorting: Entropy and Computational Work"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "da85fe77",
-      "domain": "Computation",
-      "key_insight": "# Future Directions: Factorial Codes Beyond Finite Reconstruction\n\n## 1. Lehmer codes as an equivariant factorial-code classification\n\nFor every natural number `k`, the factorial-code space of length",
-      "quality_score": 0.9,
-      "sorry_count": 3,
-      "theorem_count": 5,
-      "timestamp": "2026-07-15T02:32:33",
-      "title": "Deepening: The file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`"
-    },
     {
       "cycle_id": "4b27af05",
       "domain": "Tropical",
@@ -2501,27 +2491,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-19T00:45:02",
       "title": "Quantum Error Correction from Homological Algebra: CSS Codes as Cohomology"
+    },
+    {
+      "cycle_id": "7bc47166",
+      "domain": "Shared",
+      "key_insight": "# Future Directions\n\n## 1. Physical comparison gates with explicit reset registers\n\n**Conjecture.** For a comparator network implemented by reversible gates with a designated\nreset protocol, the minim",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-07-19T01:02:46",
+      "title": "The Thermodynamics of Sorting: Entropy and Computational Work"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "ee626e30",
-      "domain": "MachineLearning",
-      "name": "equal_amplitude_pair_bornProb",
-      "quality": 0.76
-    },
-    {
-      "cycle_id": "e9a483ed",
-      "domain": "Computation",
-      "name": "eisensteinNormSq_pow",
-      "quality": 0.76
-    },
-    {
-      "cycle_id": "e9a483ed",
-      "domain": "Computation",
-      "name": "sigma_pow_injective",
-      "quality": 0.76
-    },
     {
       "cycle_id": "e456357e",
       "domain": "Shared",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "sigma_pow_injective",
       "quality": 0.8
+    },
+    {
+      "cycle_id": "7bc47166",
+      "domain": "Shared",
+      "name": "sorting_info_erased",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "7bc47166",
+      "domain": "Shared",
+      "name": "sorting_info_erased",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "7bc47166",
+      "domain": "Shared",
+      "name": "periodic_search_benchmark",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-07-19T00:45:02",
+  "last_updated": "2026-07-19T01:02:46",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "80f7c124",
-        "quality": 0.73,
-        "theorems": 10,
-        "title": "Elementary spectral-moment foundations of Seidel"
-      },
-      {
         "cycle_id": "cca295e6",
         "quality": 0.71,
         "theorems": 13,
@@ -3947,6 +3941,12 @@
         "quality": 0.75,
         "theorems": 0,
         "title": "Quantum Error Correction from Homological Algebra: CSS Codes as Cohomology"
+      },
+      {
+        "cycle_id": "7bc47166",
+        "quality": 0.78,
+        "theorems": 13,
+        "title": "The Thermodynamics of Sorting: Entropy and Computational Work"
       }
     ],
     "Tropical": [

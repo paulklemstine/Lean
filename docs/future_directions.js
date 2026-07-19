@@ -32,6 +32,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 7bc47166 (Q=0.780), which proved 13 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Sorting a list of n elements reduces the entropy from log(n!) bits to 0 bits, doing thermodynamic work W = kT * log(n!) in the process. But this is only true if sorting is irreversible \u2014 if the sorted list uniquely determines the input, then sorting is reversible and does no thermodynamic work. The ",
+    "domains": [
+      "Shared"
+    ],
+    "id": "push_7bc47166_20643918",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "7bc47166",
+    "status": "available",
+    "timestamp": "2026-07-19T01:02:46.395999+00:00",
+    "title": "Deepening: The Thermodynamics of Sorting: Entropy and Computational Work"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle fff627f3 (Q=0.770), which proved 7 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Hilbert's Hotel has infinitely many rooms, each containing a prime number. Room n contains the n-th prime p_n. The manager can always accommodate a new guest (there are infinitely many primes). But what if the guests want to REARRANGE? Conjecture: For any permutation sigma of N, there exists a rearr",
     "domains": [
       "Pythagorean"
@@ -4236,6 +4250,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## 1. Physical comparison gates with explicit reset registers\n\n**Conjecture.** For a comparator network implemented by reversible gates with a designated\nreset protocol, the minimum dissipated work is governed by the conditional entropy of the\ncomparison transcript given the sorted output, rather than by the transcript length.\n\nThe key insight is that repeated comparisons can be logically correlated, so only the\nunrecoverable part of their joint transcript should incur a Landauer cost. **Why now?** The\nfactorial lower bound and the redundant-padding counterexample isolate precisely the missing\ningredient: an explicit account of which transcript registers are reset.\n\n## 2. Tight entropy-sensitive sorting under nonuniform priors\n\n**Conjecture.** For every distribution on permutations, there is a comparison sorter whose\nexpected comparison count is within an additive constant times `n` of the Shannon entropy,\nand whose reversible history can be compressed to the same scale.\n\nThe key insight is that factorial entropy is merely the uniform-prior case; biased input\norders should admit both shorter decision paths and smaller retained histories. **Why now?**\nThe present synthesis separates worst-case tree capacity from erased information, making a\nprior-sensitive formulation both natural and experimentally testable.\n\n## 3. A thermodynamic direct-sum theorem for independent sorting tasks\n\n**Conjecture.** Sorting independent blocks has additive minimum logical-erasure work, while\nany reversible implementation requires a history space whose cardinality is the product of\nthe block factorials; equality should characterize protocols with no cross-block garbage.\n\nThe key insight is that entropy adds while reversible state counts multiply, suggesting a\nsharp bridge between product decision trees and tensorized thermodynamic resources. **Why\nnow?** Existing composition and history-space results provide the one-block ingredients,\nwhile the equality case remains open and falsifiable on small block systems.\n\n## 4. Fluctuation penalty above the sorting Landauer bound\n\n**Conjecture.** In a finite-time stochastic implementation of irreversible sorting, any\nnonconstant work distribution on the support forces expected work strictly above\n`kT log(n!)`, with a quantitative excess controlled by a divergence between forward and\nreverse sorting trajectories.\n\nThe key insight is that logical entropy supplies only the quasistatic baseline; strict\nconvexity should convert work fluctuations into a positive surcharge. **Why now?** The exact\nfactorial baseline is available, so simulations can test candidate divergence bounds\nwithout ambiguity about the equilibrium term.\n\n## 5. Multiway comparisons and optimal radix\n\n**Conjecture.** If each query has at most `q` outcomes, every sorter requires depth at least\n`\u2308log_q(n!)\u2309`; under a physical model charging `kT log q` per fully erased query register,\nthe ideal total work remains `kT log(n!)`, independent of `q`.\n\nThe key insight is that changing query radix trades depth against information per query but\nshould not alter the reversible information balance. **Why now?** The binary theorem exposes\nthe exact structural argument, and small multiway trees can immediately test sharpness and\nequality conditions.\n",
+    "domains": [
+      "Computation",
+      "Pythagorean"
+    ],
+    "id": "fd_0375",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "7bc47166",
+    "status": "available",
+    "timestamp": "2026-07-19T01:02:40.371534+00:00",
+    "title": "**Conjecture.** For a comparator network implemented by reversible gates with a "
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle d1663b23 (Q=0.700) proved 0 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'A minimal modularity lifting theorem for Siegel modular forms' and formalize its key results. Abstract: We prove a minimal modularity lifting theorem (in the spirit of Gen",
     "domains": [
       "Applications"
@@ -4247,21 +4276,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-17T13:29:16.297936+00:00",
     "title": "Close Proofs: ArXiv paper: A minimal modularity lifting theorem for Siegel modular f"
-  },
-  {
-    "consumed_by_exp_id": "7bc47166",
-    "description": "Sorting a list of n elements reduces the entropy from log(n!) bits to 0 bits, doing thermodynamic work W = kT * log(n!) in the process. But this is only true if sorting is irreversible \u2014 if the sorted list uniquely determines the input, then sorting is reversible and does no thermodynamic work. The key insight: comparison-based sorting makes irreversible comparisons (you learn a < b but discard the possibility a > b), and each comparison reduces entropy by at most 1 bit. So n*log(n) comparisons reduce entropy by at most n*log(n) bits, which matches log(n!) ~ n*log(n) bits. Conjecture: the minimum thermodynamic work of sorting n elements is W_min = kT * log(n!), and this work is achieved by optimal comparison-based sorting algorithms (merge sort, heapsort). Sub-optimal algorithms (bubble sort: n^2 comparisons) do more thermodynamic work than necessary: W_bubble = kT * n^2, wasting kT * (n^2 - n*log(n)) bits of entropy reduction. Conjecture: any sorting algorithm that makes C(n) comparisons does thermodynamic work proportional to C(n) * kT, and the optimal work is W_min = kT * n*log(n) (Stirling's approximation). Test: simulate sorting algorithms with entropy bookkeeping, verify W = kT * log(n!) for merge sort and W = kT * n^2 for bubble sort. Impact: sorting is a thermodynamic process. The n*log(n) lower bound is a consequence of the second law of thermodynamics.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0347",
-    "priority_score": 0.74,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T18:13:46.698124+00:00",
-    "title": "The Thermodynamics of Sorting: Entropy and Computational Work"
   },
   {
     "consumed_by_exp_id": "",
@@ -4276,6 +4290,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-17T14:03:03.735341+00:00",
     "title": "Close Proofs: Dark Mathematics: Theorems That Exist But Cannot Be Found"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Entropy H(X) = -sum p(x) log p(x) measures the information content of a random variable. In category theory, a functor F: C -> D 'loses information' when it maps non-isomorphic objects to isomorphic ones. Define the 'functorial entropy' H(F) as the expected information lost by F: H(F) = -sum_{d in Ob(D)} p(d) * log(p(d)) where p(d) = |F^{-1}(d)| / |Ob(C)|. Conjecture: For the forgetful functor U: Top -> Set that forgets the topology, H(U) = log(2^{aleph_0}) = aleph_0 (infinite entropy, because uncountably many topologies map to the same set). For the abelianization functor Ab: Grp -> AbGrp, H(Ab) = log(2) (each abelian group has 2 non-abelian preimages on average: G and G x Z/2Z). For the inclusion functor Inc: FinGrp -> Grp, H(Inc) = 0 (no information loss, since finite groups embed as themselves). Conjecture: H(F) = 0 iff F is faithful, and H(F) = infinity iff F identifies infinitely many non-isomorphic objects. For finite categories: H(F) = log(|Ob(C)| / |Ob(D)|) when F is 'uniform' (each fiber has the same size). Test: compute H(F) for various functors between finite categories and verify the formula. Impact: entropy is not just a measure-theoretic concept \u2014 it is the information-theoretic shadow of functoriality. Every functor loses information, and the entropy measures how much.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0374",
+    "priority_score": 0.73,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-19T01:02:08.127668+00:00",
+    "title": "Categorification of Entropy: The Information Loss of Functors"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Ramsey's theorem states that any 2-coloring of the edges of K_6 contains a monochromatic K_3 (a triangle of one color). Applied to DNA: any sequence of 4^6 + 1 = 4097 nucleotides must contain a repeated 6-mer (by pigeonhole). But Ramsey theory for subsequences is more subtle: what is the minimum length L(k) of a DNA sequence over {A, C, G, T} such that every subsequence of length k contains a repeated 4-mer? Conjecture: L(k) = Theta(k * 4^4 * log(4^4)) = Theta(k * 256 * 8) = Theta(k * 2048). More precisely, by the Lovasz local lemma, L(k) >= 4^{4k/5} for sequences that avoid repeated k-mers in all subsequences. Conjecture: for real genomes, the actual L(k) is much smaller because real DNA has low complexity regions (microsatellites, Alu repeats) that create forced repeats. Specifically, the human genome has L(4) ~ 1000 (any 1000 consecutive bases contain a repeated 4-mer in some subsequence), while the random genome has L(4) ~ 4^4 * log(4^4) ~ 5000. Test: compute L(k) for real genomes vs random genomes and verify the factor-of-5 compression. Impact: DNA avoids subsequential repeats in a way that Ramsey theory predicts, but real genomes are 5x more 'forced' than random sequences.",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_0373",
+    "priority_score": 0.71,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-19T01:02:08.067227+00:00",
+    "title": "The Ramsey Theory of DNA: Subsequence Avoidance in Genetic Codes"
   },
   {
     "consumed_by_exp_id": "",
