@@ -244,7 +244,7 @@
     const MIN_REPULSION_DIST = 2400;    // Bumper collision radius
     const DAMPING = 0.85;              // High friction — keep graph elegant and slow
     const NODE_RADIUS = 22;
-    const MAX_VELOCITY = 10.0;        // Very gentle cap scaled to large universe
+    const MAX_VELOCITY = 20.0;        // Gentle cap scaled to large universe (increased from 10.0)
     const BOUNCE = 0.0;              // Inelastic — smooth merges, no jittery bounces
     const THRUST_DURATION = 0.0;     // Disable rocket flames to reduce visual noise
 
