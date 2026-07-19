@@ -88,21 +88,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Thermodynamics of Mathematical Proof"
   },
   {
-    "consumed_by_exp_id": "671e7568",
-    "description": "Prove that adding an oracle for the halting problem to PA yields a theory that proves its own consistency but cannot decide its own soundness. Formalize the hierarchy: PA < PA^H < PA^{H^H} < ... and prove that each jump genuinely increases theorem-proving power. Show that the oracle hierarchy is isomorphic to the Turing jump hierarchy.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0494",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T21:02:27.020806+00:00",
-    "title": "The Oracle's Burden: How Much Knowledge Is Too Much?"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle fff627f3 (Q=0.770), which proved 7 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Hilbert's Hotel has infinitely many rooms, each containing a prime number. Room n contains the n-th prime p_n. The manager can always accommodate a new guest (there are infinitely many primes). But what if the guests want to REARRANGE? Conjecture: For any permutation sigma of N, there exists a rearr",
     "domains": [
@@ -347,7 +332,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Infinite Games Against Death: Immortality Strategies"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "28042806",
     "description": "Conjecture that mathematical discovery undergoes phase transitions: long periods of incremental progress punctuated by sudden reorganizations (like percolation transitions). Formalize this using statistical mechanics: define an order parameter for 'mathematical coherence' and show it undergoes a second-order phase transition as the number of connected theorems crosses a critical threshold. Predict: the next phase transition in number theory will occur when the connections between Langlands and arithmetic geometry exceed ~10^4 edges.",
     "domains": [
       "Novelty"
@@ -356,7 +341,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T22:37:59.429001+00:00",
     "title": "Speculative: Mathematics as a Phase Transition"
   },
@@ -5309,6 +5294,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe formal development establishes the order-theoretic and relative-computability skeleton of an oracle hierarchy, but it deliberately does **not** claim a full arithmetization of Peano Arithmetic.\n\n1. **Construct the concrete relativized jump.** Define a universal oracle machine and the diagonal halting set `Jump A`, then prove `A \u2264\u1d40 Jump A` and `\u00ac Jump A \u2264\u1d40 A`. This would supply a concrete instance of `IsJump`, rather than taking those two characteristic facts as structure fields.\n2. **Connect theories to oracle computation.** Define recursively axiomatized theories extending PA, formalized provability, consistency, and arithmetical soundness. Relate adjoining a halting oracle to the corresponding Turing jump.\n3. **Separate consistency from soundness carefully.** The slogan that an oracle extension \u201cproves consistency below but cannot decide its own soundness\u201d needs explicit representation and soundness hypotheses. Formal versions should distinguish `Con(T)`, reflection principles, and complete truth predicates.\n4. **Prove the concrete hierarchy theorem.** Once `Jump` is constructed, instantiate `IsJump.hierarchyEmbedding` to obtain an order isomorphism between `\u2115` and the range of `n \u21a6 deg(Jump^[n] A)`.\n5. **Relate theorem sets and degrees.** Encode theorem sets as subsets of `\u2115`, prove upper and lower Turing-reducibility bounds, and identify exactly which oracle degree each theory realizes.\n6. **Extend beyond finite jumps.** Define effective joins at limit notations and investigate the hyperarithmetical hierarchy through computable ordinals.\n7. **Strengthen degree structure.** Develop joins directly at the quotient level and prove consequences such as strictness above arbitrary finite joins and nonexistence of maximal degrees for the concrete jump.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0505",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "671e7568",
+    "status": "available",
+    "timestamp": "2026-07-19T23:13:38.982345+00:00",
+    "title": "The formal development establishes the order-theoretic and relative-computabilit"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle d1663b23 (Q=0.700) proved 0 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'A minimal modularity lifting theorem for Siegel modular forms' and formalize its key results. Abstract: We prove a minimal modularity lifting theorem (in the spirit of Gen",
     "domains": [
       "Applications"
@@ -5334,6 +5334,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-17T14:03:03.735341+00:00",
     "title": "Close Proofs: Dark Mathematics: Theorems That Exist But Cannot Be Found"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 671e7568 (Q=0.670) proved 25 theorems in Applications but left 13 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Prove that adding an oracle for the halting problem to PA yields a theory that proves its own consistency but cannot decide its own soundness. Formalize the hierarchy: PA < PA^H < PA^{H^H} < ... and p",
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_671e7568_6e8366b8",
+    "priority_score": 0.7200000000000001,
+    "research_mode": "team",
+    "source_exp_id": "671e7568",
+    "status": "available",
+    "timestamp": "2026-07-19T23:13:43.623458+00:00",
+    "title": "Close Proofs: The Oracle's Burden: How Much Knowledge Is Too Much?"
   },
   {
     "consumed_by_exp_id": "",

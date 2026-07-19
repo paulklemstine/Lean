@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "5543d24b",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions\n\n## Results established\n\nThe formalization distinguishes circular *syntax* from valid derivability.\n\n1. **Finite observations do have limits.** Proof-tree observations are sets of",
-      "quality_score": 0.64,
-      "sorry_count": 0,
-      "theorem_count": 24,
-      "timestamp": "2026-07-16T05:15:30",
-      "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
-    },
-    {
       "cycle_id": "573ee086",
       "domain": "Algebra",
       "key_insight": "# Future Directions\n\n## 1. Robust local encodings of arithmetic derivations\n\n**Conjecture.** There is an explicit encoding of every finite Peano-arithmetic derivation into a locally testable object su",
@@ -2501,6 +2491,16 @@
       "theorem_count": 11,
       "timestamp": "2026-07-19T22:38:37",
       "title": "Zombies and Qualia: Mathematics of Subjective Experience"
+    },
+    {
+      "cycle_id": "671e7568",
+      "domain": "Applications",
+      "key_insight": "# Future directions\n\nThe formal development establishes the order-theoretic and relative-computability skeleton of an oracle hierarchy, but it deliberately does **not** claim a full arithmetization of",
+      "quality_score": 0.67,
+      "sorry_count": 13,
+      "theorem_count": 25,
+      "timestamp": "2026-07-19T23:13:43",
+      "title": "The Oracle's Burden: How Much Knowledge Is Too Much?"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.73
     }
   ],
-  "last_updated": "2026-07-19T22:38:37",
+  "last_updated": "2026-07-19T23:13:43",
   "open_questions": [
-    {
-      "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
-      "cycle_id": "ca1c3afc",
-      "domain": "Novelty",
-      "sorry_count": 3,
-      "timestamp": "2026-07-15T04:08:41"
-    },
     {
       "context": "",
       "cycle_id": "bd321901",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 13,
       "timestamp": "2026-07-19T22:03:14"
+    },
+    {
+      "context": "-  sorry; -  sorry; -  sorry",
+      "cycle_id": "671e7568",
+      "domain": "Applications",
+      "sorry_count": 13,
+      "timestamp": "2026-07-19T23:13:43"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "d5e79e07",
-        "quality": 0.73,
-        "theorems": 10,
-        "title": "The Topology of Impossible Objects: Escher Stairs and Klein Bottles"
-      },
-      {
         "cycle_id": "32ad85ae",
         "quality": 0.67,
         "theorems": 28,
@@ -3141,6 +3135,12 @@
         "quality": 0.73,
         "theorems": 11,
         "title": "Zombies and Qualia: Mathematics of Subjective Experience"
+      },
+      {
+        "cycle_id": "671e7568",
+        "quality": 0.67,
+        "theorems": 25,
+        "title": "The Oracle's Burden: How Much Knowledge Is Too Much?"
       }
     ],
     "Bridges": [

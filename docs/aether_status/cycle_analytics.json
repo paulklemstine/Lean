@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-19T22:20:34.020814+00:00",
+  "last_updated": "2026-07-19T23:13:43.838537+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -30140,6 +30140,7 @@
       "outcome_quality": 0.62,
       "phase": "A_only",
       "phase_a_prompt_version": "v24",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v24",
@@ -30168,6 +30169,48 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-19T22:20:33.956597+00:00",
       "title": "Fermat Near-Misses in the Twilight Zone"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 2,
+      "domain": "Applications",
+      "duration_seconds": 1009.3386390209198,
+      "end_time": 1784502791.375963,
+      "files_integrated": 10,
+      "job_id": "671e7568",
+      "outcome_quality": 0.67,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v28",
+      "phase_b_skip_reason": "low_quality_near_miss",
+      "phase_b_skipped": true,
+      "prompt_version": "v28",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.52,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.86,
+        "composite": 0.516,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.78,
+        "novelty": 0.48,
+        "proof_depth": 0.72,
+        "usefulness": 0.74
+      },
+      "quality_score": 0.67,
+      "sorry_count": 13,
+      "sorry_density": 0.52,
+      "start_time": 1784501782.037324,
+      "strategy_count": 0,
+      "theorem_count": 25,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 24,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-19T23:13:43.695392+00:00",
+      "title": "The Oracle's Burden: How Much Knowledge Is Too Much?"
     }
   ]
 }
