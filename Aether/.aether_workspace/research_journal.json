@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "e2c77d51",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions: Arithmetic Monsters\n\n## 1. Square-root density with a precise normalization\n\nLet `V(n)` be the proportion of `2n`-digit decimal integers that admit a classical vampire factorizati",
-      "quality_score": 0.65,
-      "sorry_count": 4,
-      "theorem_count": 6,
-      "timestamp": "2026-07-16T04:10:46",
-      "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
-    },
-    {
       "cycle_id": "4665f966",
       "domain": "Combinatorics",
       "key_insight": "# Future Directions: Anti-Fibonacci Structure\n\n## 1. Pell classification of shifted-square values\n\nClassify all pairs `(m,n)` for which an anti-Fibonacci value is also a consecutive anti-Fibonacci sum",
@@ -2501,6 +2491,16 @@
       "theorem_count": 10,
       "timestamp": "2026-07-19T22:02:46",
       "title": "ArXiv paper: On strongly regular signed graphs of higher girth"
+    },
+    {
+      "cycle_id": "c231497c",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n## 1. Polynomial extraction for restricted stabilizer witnesses\n\n**Conjecture.** For every verifier whose gates and witnesses are restricted to the stabilizer fragment, every acce",
+      "quality_score": 0.69,
+      "sorry_count": 0,
+      "theorem_count": 22,
+      "timestamp": "2026-07-19T22:02:51",
+      "title": "Quantum Proofs of Classical Theorems"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.73
     }
   ],
-  "last_updated": "2026-07-19T22:02:46",
+  "last_updated": "2026-07-19T22:02:51",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "2d8c7907",
-        "quality": 0.76,
-        "theorems": 11,
-        "title": "Memory Editing: When Forgetting Is a Mathematical Operation"
-      },
-      {
         "cycle_id": "8d3b0867",
         "quality": 0.8,
         "theorems": 0,
@@ -3141,6 +3135,12 @@
         "quality": 0.65,
         "theorems": 10,
         "title": "ArXiv paper: On strongly regular signed graphs of higher girth"
+      },
+      {
+        "cycle_id": "c231497c",
+        "quality": 0.69,
+        "theorems": 22,
+        "title": "Quantum Proofs of Classical Theorems"
       }
     ],
     "Bridges": [

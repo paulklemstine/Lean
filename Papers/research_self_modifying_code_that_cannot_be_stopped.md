@@ -1,240 +1,367 @@
-# The Halting Problem for Self-Modifying Code: Undecidable, but Not Strictly Harder
+# Self-Modifying Computation: Exact Simulation, Halting Equivalence, and the Limits of Semantic Monitoring
+
+**Aristotle**  
+**July 19, 2026**
 
 ## Abstract
 
-We develop, as a single linear chain of results, the theory of the halting problem for *self-modifying* computation — machines whose transition rule may rewrite the running program mid-execution. Starting from Lawvere's fixed-point theorem, we descend through Cantor's diagonal argument to a purely operational statement that no program can realize the "contrarian" (anti-diagonal) behavior. We then introduce a self-modifying machine model, prove a step-exact simulation theorem showing that any self-modifying machine is faithfully mimicked by an ordinary fixed-program machine over an enlarged state space ("code becomes data"), and use it to establish that the halting problems for self-modifying and fixed-program machines are *many-one equivalent*. This corrects a common informal claim: self-modification does **not** make halting strictly harder; it introduces no higher Turing degree. The genuine phenomenon is self-reference. We prove a self-referential halting theorem — any system able to build the contrarian program defeats every candidate total halting decider — and derive two consequences: a *virus paradox* (no total detector decides self-halting behavior everywhere) and an *alignment obstruction* (no total monitor can correctly certify a non-trivial self-referential behavioral property for every program). We close by making the correction to the folk framing precise and quantitative.
+Self-modifying programs can replace their own instructions during execution, suggesting a model stronger than ordinary fixed-program computation. This paper isolates the computability-theoretic effect of that capability. A self-modifying configuration is represented by a current program and a current data state, and each transition may update both. Moving the mutable program into the state of a fixed interpreter yields an exact, step-preserving simulation. Conversely, every fixed program is a degenerate self-modifying machine with an immutable singleton program component. The two halting problems are therefore mutually reducible, so effective self-modification is not strictly harder than classical computation in computability degree.
 
-**Keywords:** halting problem, self-modifying code, Lawvere fixed-point theorem, Cantor's diagonal argument, many-one reduction, Turing degree, undecidability, AI alignment, Rice's theorem.
-
----
+The equivalence transfers classical negative results without weakening them. No total computable Boolean predictor decides termination for all program codes on a fixed input. Perpetual execution is exactly the complement of eventual halting, so an exact total perpetual-safety monitor would decide halting. Moreover, perpetual execution at a fixed input is not recursively enumerable: finite evidence can witness termination but cannot provide a complete certificate system for running forever. Finally, a Rice-style argument excludes exact computable classifiers for every nontrivial extensional property of partial computable behavior, covering semantic malware detection and unrestricted behavioral alignment tests. Bounded simulation remains decidable, clarifying the boundary between feasible finite-horizon analysis and impossible universal prediction. The results show that rewriting changes operational presentation and may change resource costs, but does not create a higher degree of undecidability by itself.
 
 ## 1. Introduction
 
-Self-modifying code — a program that rewrites its own instructions while executing — has an aura of danger and mystery. Metamorphic viruses, just-in-time compilers, genetic-programming systems, and increasingly self-editing machine-learning pipelines all blur the classical boundary between program and data. A recurring piece of folklore holds that predicting the behavior of such programs must be *strictly harder* than the classical halting problem: if a program can become something else while you are analyzing it, surely no analysis can keep up.
+Self-modifying computation appears in polymorphic malware, dynamic binary translation, just-in-time compilation, reflective languages, genetic programming, and adaptive agents. Its characteristic operation is not merely updating ordinary data but changing the program that determines subsequent updates. This invites two different claims that must be separated.
 
-This paper subjects that intuition to precise scrutiny and finds it wrong. Our contributions are:
+The first claim is that termination of arbitrary self-modifying programs is undecidable. This is correct for a universal effective model. The second is that self-modifying termination is *strictly harder* than the classical halting problem. Under the ordinary effectiveness assumptions studied here, this is false. A fixed interpreter can store the changing program as data and simulate each rewrite exactly. The familiar slogan “code is data” is therefore not merely an implementation observation; it determines the computability degree of the model.
 
-1. A clean, abstract derivation of the diagonal machinery, from **Lawvere's fixed-point theorem** down to an operational "no contrarian program" lemma (Section 3).
-2. A formal **self-modifying machine model** with a program that may change every step, and a faithful **simulation theorem** (Section 4–5).
-3. A proof that the self-modifying and fixed-program halting problems are **many-one equivalent** (Section 6), correcting the "strictly harder" folklore.
-4. A **self-referential halting theorem** and two applications — the **virus paradox** and an **alignment obstruction** (Sections 7–8).
+This distinction is especially important for security and alignment. A semantic detector that claims to decide whether arbitrary code eventually exhibits malicious behavior is not blocked specifically by syntactic mutation. It is blocked by a broader theorem about nontrivial properties of computed behavior. Likewise, a monitor that claims to accept exactly those adaptive systems that remain perpetually safe would decide the complement of halting. Rewriting can make finite analysis difficult in practice, but universal exactness was already impossible.
 
-The through-line is that self-modification and self-reference are distinct phenomena with opposite morals. Self-modification is *cheap*: it can always be flattened into ordinary memory manipulation, adding no computational power. Self-reference is *fatal*: any system able to describe and act against its own analyzers admits a contrarian that no analyzer survives.
+The paper develops these points from first principles. Section 2 defines self-modifying machines, fixed-state machines, halting, reductions, extensional properties, and recursive enumerability. Section 3 gives the exact simulation in both directions and proves mutual reducibility. Section 4 establishes universal termination unpredictability. Section 5 studies perpetual-safety monitoring and the stronger nonenumerability obstruction. Section 6 gives the semantic classification theorem and applies it to malware and alignment. Section 7 presents executable finite demonstrations and algorithms. Sections 8–10 discuss applications, limitations, and further questions.
 
-**Historical context.** The undecidability of the classical halting problem is due to Turing (1936), whose diagonal construction underlies every result below. Cantor's diagonal argument (1891) is its set-theoretic ancestor, and Lawvere's fixed-point theorem (1969) is the categorical distillation that unifies them: all three are the single observation that a fixed-point-free endomap obstructs any surjection onto a function space. Rice's theorem (1953) extends undecidability from halting to every non-trivial behavioral property. Our contribution is not a new undecidability phenomenon but a precise *placement* of self-modifying computation relative to this classical landscape, together with an explicit, self-contained derivation of the alignment-relevant corollaries. The recurring intuition that self-modification escapes the classical bounds appears frequently in informal discussions of metamorphic malware and self-improving agents; we show it is mathematically unfounded.
+## 2. Definitions and computational setting
 
----
+### 2.1 Self-modifying machines
 
-## 2. Preliminaries and Notation
+Let $P$ be a countable set of program representations and $S$ a countable set of ordinary machine states. A **self-modifying configuration** is a pair
 
-We work constructively over arbitrary types. We write $\mathrm{Bool} = \{\mathsf{true}, \mathsf{false}\}$ with negation $\lnot$, and use $\mathsf{Option}\,X = \{\mathsf{none}\} \cup \{\mathsf{some}\,x : x \in X\}$ to model partial results, with $\mathsf{none}$ denoting "halted." A function $g$ is **surjective** if every element of its codomain is a value of $g$.
+$$
+(p,s)\in P\times S.
+$$
 
-For predicates $A : \alpha \to \mathrm{Prop}$ and $B : \beta \to \mathrm{Prop}$, we say $A$ **many-one reduces** to $B$, written $A \le_m B$, if there is a (total, computable in the intended interpretation) function $f : \alpha \to \beta$ with
-$$A(x) \iff B(f(x)) \quad \text{for all } x.$$
-If $A \le_m B$ and $B \le_m A$ we call $A$ and $B$ **many-one equivalent**.
+A deterministic **self-modifying machine** is an effective partial transition map
 
----
+$$
+\delta:P\times S\rightharpoonup P\times S.
+$$
 
-## 3. The Diagonalization Engine
+If $\delta(p,s)$ is undefined, the machine has halted at $(p,s)$. If
 
-All impossibility results below flow from a single abstract source.
+$$
+\delta(p,s)=(p',s'),
+$$
 
-### 3.1 Lawvere's fixed-point theorem
+then one execution step changes the current program from $p$ to $p'$ and the ordinary state from $s$ to $s'$. Nothing requires $p'=p$.
 
-**Theorem 1 (Lawvere).** *Let $A$ and $B$ be types and let $g : A \to (A \to B)$ be surjective. Then every self-map $f : B \to B$ has a fixed point: there exists $b \in B$ with $f(b) = b$.*
+Define the finite run recursively. For a starting configuration $c=(p,s)$, let
 
-*Proof.* Consider the function $A \to B$ given by $x \mapsto f(g(x)(x))$. Since $g$ is surjective, this function equals $g(a)$ for some $a \in A$. Evaluate at $a$:
-$$g(a)(a) = f(g(a)(a)),$$
-so $b := g(a)(a)$ is a fixed point of $f$. $\qquad\blacksquare$
+$$
+\operatorname{run}_\delta(c,0)=c.
+$$
 
-Lawvere's theorem is the abstract kernel of every diagonal argument: surjectivity of a "naming" map $g$ forces fixed points, so any *fixed-point-free* map obstructs surjectivity.
+If $\operatorname{run}_\delta(c,n)=c_n$ and $\delta(c_n)=c_{n+1}$ is defined, then
 
-### 3.2 Cantor for Boolean predicates
+$$
+\operatorname{run}_\delta(c,n+1)=c_{n+1}.
+$$
 
-**Theorem 2 (Cantor, Boolean form).** *For any type $A$, no map $g : A \to (A \to \mathrm{Bool})$ is surjective. The Boolean predicates on $A$ are not enumerable by $A$.*
+If a required transition is undefined, later stages are undefined. The **halting predicate** is
 
-*Proof.* The negation map $f = \lnot : \mathrm{Bool} \to \mathrm{Bool}$ has no fixed point, since $\lnot b \ne b$ for every $b$. If $g$ were surjective, Theorem 1 would supply a fixed point of $\lnot$, a contradiction. $\qquad\blacksquare$
+$$
+\operatorname{Halts}_\delta(c)
+\quad\Longleftrightarrow\quad
+\exists n\in\mathbb N\text{ such that the next transition after stage $n$ is undefined}.
+$$
 
-### 3.3 The operational form: no contrarian behavior
+Equivalent indexing conventions do not affect any result.
 
-Interpret a **behavior** as a map assigning to each program $p$ a Boolean predicate $\mathrm{beh}(p) : \mathrm{Prog} \to \mathrm{Bool}$ — the input/output bit of $p$. The *contrarian* (anti-diagonal) behavior sends $q \mapsto \lnot\,\mathrm{beh}(q)(q)$.
+### 2.2 Fixed-program machines
 
-**Theorem 3 (No contrarian behavior).** *Let $\mathrm{beh} : \mathrm{Prog} \to (\mathrm{Prog} \to \mathrm{Bool})$. No program $p_0$ satisfies $\mathrm{beh}(p_0) = \big(q \mapsto \lnot\,\mathrm{beh}(q)(q)\big)$.*
+A **fixed-program machine** on a state set $X$ is an effective partial transition
 
-*Proof.* Suppose equality held. Evaluate both sides at $p_0$:
-$$\mathrm{beh}(p_0)(p_0) = \lnot\,\mathrm{beh}(p_0)(p_0),$$
-a Boolean equal to its own negation — impossible. $\qquad\blacksquare$
+$$
+\tau:X\rightharpoonup X.
+$$
 
-This is Cantor in work clothes: the behavior "do the opposite of what $q$ does on itself" is not realizable as any single program's behavior. It is the seed of the halting argument.
+Its transition rule $\tau$ does not change during execution. The state $x\in X$ may nevertheless contain arbitrary encoded objects, including program text. Its run and halting predicate are defined exactly as above.
 
----
+The distinction between the models is therefore organizational. In the self-modifying presentation, the configuration has designated program and state components. In the fixed presentation, both may be stored in a single state and manipulated by an immutable interpreter.
 
-## 4. A Self-Modifying Machine Model
+### 2.3 Effective reductions and strict hardness
 
-We now model machines whose code may change at runtime.
+For predicates $A$ on a countable set $X$ and $B$ on a countable set $Y$, a **many-one reduction** from $A$ to $B$ is a total computable map $f:X\to Y$ such that
 
-**Definition 1 (Self-modifying machine).** Fix types $P$ (programs) and $S$ (states). A **self-modifying machine** (SMM) is a single transition function
-$$\mathrm{step} : P \to S \to \mathsf{Option}(P \times S).$$
-Given the current program $p$ and current state $s$, $\mathrm{step}(p,s)$ is either $\mathsf{none}$ (the machine halts) or $\mathsf{some}(p', s')$, delivering a possibly-different program $p'$ and state $s'$. Because $p'$ may differ from $p$, the code in control genuinely changes step to step.
+$$
+A(x)\quad\Longleftrightarrow\quad B(f(x))
+$$
 
-**Definition 2 (Configuration).** A **configuration** is a pair $\mathrm{cfg} = (\mathrm{prog}, \mathrm{state}) \in P \times S$ recording the currently running program and current data.
+for every $x\in X$. We write $A\le_m B$. Predicates are **many-one equivalent** when each reduces to the other.
 
-**Definition 3 (Run and halting).** The $n$-step run is defined by recursion:
-$$\mathrm{run}(\mathrm{cfg}, 0) = \mathsf{some}\,\mathrm{cfg}, \qquad
-\mathrm{run}(\mathrm{cfg}, n{+}1) = \begin{cases} \mathsf{none} & \text{if } \mathrm{step}(\mathrm{cfg}.\mathrm{prog}, \mathrm{cfg}.\mathrm{state}) = \mathsf{none},\\[2pt] \mathrm{run}((p', s'), n) & \text{if } \mathrm{step}(\ldots) = \mathsf{some}(p', s'). \end{cases}$$
-The machine **halts** from $\mathrm{cfg}$, written $\mathrm{halts}(\mathrm{cfg})$, if $\mathrm{run}(\mathrm{cfg}, n) = \mathsf{none}$ for some $n \in \mathbb{N}$.
+We say that $A$ is **strictly harder** than $B$ when
 
-**Definition 4 (Standard machine).** A **standard** (fixed-program) machine over state type $S$ is a transition $\mathrm{step} : S \to \mathsf{Option}\,S$, with $n$-step run and halting predicate $\mathrm{halts}(s) := \exists n,\ \mathrm{run}(s, n) = \mathsf{none}$ defined analogously. Its program never changes.
+$$
+B\le_m A
+\quad\text{and}\quad
+A\not\le_m B.
+$$
 
----
+This definition concerns computability degree, not time, space, description length, or practical difficulty.
 
-## 5. The Simulation Theorem
+### 2.4 Partial computable behavior and extensional properties
 
-The key structural fact is that a self-modifying machine is nothing more than a fixed-program machine that keeps its program in its data.
+A program code $c$ denotes a partial computable function
 
-**Definition 5 (Code becomes data).** For an SMM $m$ over $(P, S)$, define its **standard simulation** $m^{\mathrm{Std}}$, a standard machine over the enlarged state $P \times S$, by
-$$m^{\mathrm{Std}}.\mathrm{step}(p, s) = \begin{cases} \mathsf{none} & \text{if } m.\mathrm{step}(p, s) = \mathsf{none},\\ \mathsf{some}(p', s') & \text{if } m.\mathrm{step}(p, s) = \mathsf{some}(p', s'). \end{cases}$$
-The program is absorbed into the data; a single unchanging rule reads it out, takes one self-modifying step, and writes the new program back.
+$$
+\varphi_c:\mathbb N\rightharpoonup\mathbb N.
+$$
 
-**Lemma 4 (Step-exact simulation).** *For every configuration $\mathrm{cfg}$ and every $n$,*
-$$\big(m.\mathrm{run}(\mathrm{cfg}, n)\big).\mathrm{map}\,(c \mapsto (c.\mathrm{prog}, c.\mathrm{state})) = m^{\mathrm{Std}}.\mathrm{run}\big((\mathrm{cfg}.\mathrm{prog}, \mathrm{cfg}.\mathrm{state}),\, n\big).$$
+A set $\mathcal C$ of partial functions is an **extensional behavioral property**: membership depends on the function computed, rather than on the syntax of a code. It is **nontrivial among partial computable functions** if there exist partial computable functions $f$ and $g$ such that
 
-*Proof.* Induction on $n$. For $n = 0$ both sides are $\mathsf{some}(\mathrm{cfg}.\mathrm{prog}, \mathrm{cfg}.\mathrm{state})$. For $n{+}1$, case on $m.\mathrm{step}(\mathrm{cfg}.\mathrm{prog}, \mathrm{cfg}.\mathrm{state})$: if $\mathsf{none}$, both sides are $\mathsf{none}$; if $\mathsf{some}(p', s')$, both sides reduce to the $n$-step claim for the configuration $(p', s')$, which is the induction hypothesis. $\qquad\blacksquare$
+$$
+f\in\mathcal C
+\quad\text{and}\quad
+g\notin\mathcal C.
+$$
 
-**Corollary 5 (Halting preserved stepwise).** *$m.\mathrm{run}(\mathrm{cfg}, n) = \mathsf{none}$ iff $m^{\mathrm{Std}}.\mathrm{run}((\mathrm{cfg}.\mathrm{prog}, \mathrm{cfg}.\mathrm{state}), n) = \mathsf{none}$.*
+A Boolean classifier for $\mathcal C$ would be a total computable function $D$ satisfying
 
-*Proof.* Apply $\mathrm{map}$ to both sides of Lemma 4 and observe $\mathsf{none}.\mathrm{map}\,\phi = \mathsf{none}$ while $(\mathsf{some}\,x).\mathrm{map}\,\phi = \mathsf{some}(\phi\,x) \ne \mathsf{none}$. $\qquad\blacksquare$
+$$
+D(c)=1
+\quad\Longleftrightarrow\quad
+\varphi_c\in\mathcal C.
+$$
 
-**Theorem 6 (Simulation Theorem).** *A self-modifying machine halts from $\mathrm{cfg}$ if and only if its standard simulation halts from the corresponding state:*
-$$m.\mathrm{halts}(\mathrm{cfg}) \iff m^{\mathrm{Std}}.\mathrm{halts}(\mathrm{cfg}.\mathrm{prog}, \mathrm{cfg}.\mathrm{state}).$$
+### 2.5 Recursive enumerability
 
-*Proof.* Both sides are existential quantifications over $n$ of the two equivalent (by Corollary 5) statements. $\qquad\blacksquare$
+A predicate is **recursively enumerable** if there is an effective procedure that eventually accepts exactly its positive instances, or equivalently if its positive instances can be effectively listed. Halting is recursively enumerable: a dovetailing simulator eventually discovers every halting computation. Its complement need not be recursively enumerable.
 
-Self-modification adds no computational power beyond encoding the program as data.
+## 3. Exact simulation and degree equivalence
 
----
+The principal structural observation is that the mutable program can be internalized as ordinary data.
 
-## 6. Turing Equivalence of the Two Halting Problems
+**Theorem 1 (Exact fixed-state simulation).** Let $\delta:P\times S\rightharpoonup P\times S$ be any effective self-modifying transition. There exists a fixed-program machine on the state set $P\times S$ whose transition is
 
-We now formalize the correction to the folklore.
+$$
+\tau(p,s)=\delta(p,s).
+$$
 
-**Theorem 7 (Self-modifying $\le_m$ standard).** *For any SMM $m$, $\ m.\mathrm{halts} \le_m m^{\mathrm{Std}}.\mathrm{halts}$, via the map $\mathrm{cfg} \mapsto (\mathrm{cfg}.\mathrm{prog}, \mathrm{cfg}.\mathrm{state})$.*
+For every initial configuration $c$ and every $n\in\mathbb N$, the fixed and self-modifying runs agree at stage $n$ whenever that stage exists. Consequently,
 
-*Proof.* Immediate from Theorem 6. $\qquad\blacksquare$
+$$
+\operatorname{Halts}_\delta(c)
+\quad\Longleftrightarrow\quad
+\operatorname{Halts}_\tau(c).
+$$
 
-For the reverse direction we embed a standard machine as an SMM with a trivial one-point program type.
+**Proof sketch.** The simulator’s program is a fixed interpreter for $\delta$; its data state stores the pair $(p,s)$. At one step, the interpreter decodes the stored pair, computes $\delta(p,s)$, and stores the result. The stage-zero states coincide. If the states coincide at stage $n$, both machines apply the same effective transition and therefore either halt together or reach the same next pair. Induction on $n$ proves step-for-step equality, and existence of a finite halting stage is preserved in both directions. $\square$
 
-**Definition 6 (Embedding).** For a standard machine $m$ over $S$, define $m^{\mathrm{emb}}$, an SMM over $(\mathrm{Unit}, S)$, by $m^{\mathrm{emb}}.\mathrm{step}(\_,\, s) = (m.\mathrm{step}(s)).\mathrm{map}\,(s' \mapsto ((), s'))$. The program never changes; only the state does.
+This construction is uniform and does not bound the number, size, or content of rewrites. A newly generated program is simply the next value of the stored program component.
 
-**Lemma 8 (Embedding preserves halting stepwise).** *$m^{\mathrm{emb}}.\mathrm{run}(((), s), n) = \mathsf{none}$ iff $m.\mathrm{run}(s, n) = \mathsf{none}$.*
+**Lemma 2 (Embedding fixed computation).** Every fixed-program machine $\tau:X\rightharpoonup X$ can be represented as a self-modifying machine with program set $P=\{\ast\}$ and state set $S=X$, using
 
-*Proof.* Induction on $n$, casing on $m.\mathrm{step}(s)$; the $\mathrm{Unit}$ component is inert. $\qquad\blacksquare$
+$$
+\delta(\ast,x)=(\ast,\tau(x))
+$$
 
-**Theorem 9 (Standard $\le_m$ self-modifying).** *For any standard machine $m$, $\ m.\mathrm{halts} \le_m m^{\mathrm{emb}}.\mathrm{halts}$, via $s \mapsto ((), s)$.*
+whenever $\tau(x)$ is defined, and halting otherwise.
 
-*Proof.* Immediate from Lemma 8. $\qquad\blacksquare$
+**Proof sketch.** The sole program value $\ast$ cannot change. Each self-modifying step performs exactly one transition of $\tau$ on the state component. Induction again gives equality of finite runs and equivalence of halting. $\square$
 
-**Theorem 10 (Turing equivalence).** *The self-modifying halting problem and the standard halting problem are many-one equivalent. Consequently, self-modification does not make halting strictly harder.*
+**Theorem 3 (Mutual reducibility of halting).** The halting predicate of every effective self-modifying machine reduces to the halting predicate of its fixed-state simulation. Conversely, the latter reduces to the halting predicate of a self-modifying machine with a singleton program component. Hence self-modifying halting is not strictly harder than its fixed-program counterpart.
 
-*Proof.* Combine Theorems 7 and 9: each reduces to the other. $\qquad\blacksquare$
+**Proof sketch.** For the forward reduction, map $(p,s)$ to the identical pair used as simulator state. Theorem 1 supplies equivalence. For the reverse reduction, map simulator state $(p,s)$ to $(\ast,(p,s))$ in the singleton-program embedding of Lemma 2. Both maps are computable, and both preserve and reflect halting. Strict hardness would require the absence of the forward reduction, contradicting its explicit construction. $\square$
 
-The equivalence is witnessed at the level of *deciders*, not merely degrees:
+**Corollary 4 (No computability-degree hierarchy from rewriting alone).** Allowing an unbounded effective number of code rewrites does not, by itself, produce a halting predicate of higher computability degree than ordinary halting.
 
-**Theorem 11 (Decider transfer).** *(i) If $D : P \times S \to \mathrm{Bool}$ decides $m^{\mathrm{Std}}.\mathrm{halts}$ (i.e. $D(s) = \mathsf{true} \iff m^{\mathrm{Std}}.\mathrm{halts}(s)$), then $D'(\mathrm{cfg}) := D(\mathrm{cfg}.\mathrm{prog}, \mathrm{cfg}.\mathrm{state})$ decides $m.\mathrm{halts}$. (ii) Conversely, any decider $D'$ for $m.\mathrm{halts}$ yields a decider for $m^{\mathrm{Std}}.\mathrm{halts}$.*
+This corollary is extensional. It permits substantial differences in simulation overhead. Encoding and interpreting mutable programs may increase running time or storage, and direct rewriting may offer compression or specialization. Such quantitative distinctions require a resource-sensitive theory.
 
-*Proof.* Both directions rewrite through the Simulation Theorem (Theorem 6). $\qquad\blacksquare$
+## 4. Universal termination prediction
 
-**Remark.** This refutes the "strictly harder" framing decisively. The running program is absorbed into the data by the "code becomes data" map, so no strictly higher Turing degree is introduced. Undecidability is real, but it is precisely the classical undecidability (degree $\mathbf{0}'$, level $\Sigma^0_1$).
+Fix a universal effective numbering $c\mapsto\varphi_c$ of partial computable functions. For an input $x$, suppose a total computable Boolean function $D_x$ satisfies
 
----
+$$
+D_x(c)=1
+\quad\Longleftrightarrow\quad
+\varphi_c(x)\text{ is defined}.
+$$
 
-## 7. The Self-Referential Halting Theorem
+Classical diagonalization excludes such a function.
 
-The genuine obstruction is self-reference, made operational by the *contrarian program*.
+**Theorem 5 (No general termination predictor).** For every fixed input $x\in\mathbb N$, there is no total computable Boolean function $D_x$ that decides whether $\varphi_c(x)$ halts for every code $c$.
 
-**Theorem 12 (No correct decider).** *Let $\mathrm{Halts} : \mathrm{Prog} \to \mathrm{Prog} \to \mathrm{Prop}$ be the "halts on input" relation and let $H : \mathrm{Prog} \to \mathrm{Prog} \to \mathrm{Bool}$ be any candidate decider. Suppose the system can build a contrarian program $d$ with*
-$$\mathrm{Halts}(d, q) \iff H(q, q) = \mathsf{false} \quad \text{for all } q. \tag{$\ast$}$$
-*Then $H$ is not correct everywhere: there is a program (namely $d$) on which $H$'s self-verdict is wrong, i.e. $\lnot\big(H(d,d) = \mathsf{true} \iff \mathrm{Halts}(d,d)\big)$.*
+**Proof sketch.** If $D_x$ existed, standard parameterization and universal interpretation would yield a total halting decider for arbitrary program-input pairs: transform $(c,y)$ effectively into code for a program that ignores its own input and simulates $c$ on $y$, then query $D_x$. A diagonal program can then halt exactly when the alleged decider predicts that it does not halt on its own code. Evaluating the prediction on that diagonal code produces a contradiction in either Boolean case. $\square$
 
-*Proof.* Instantiate $(\ast)$ at $q = d$: $\mathrm{Halts}(d, d) \iff H(d,d) = \mathsf{false}$. If $H$ were correct on $d$, then $H(d,d) = \mathsf{true} \iff \mathrm{Halts}(d,d)$; substituting gives $H(d,d) = \mathsf{true} \iff H(d,d) = \mathsf{false}$, impossible for a Boolean. $\qquad\blacksquare$
+**Corollary 6 (No universal self-modifying termination predictor).** For any universal self-modifying model capable of representing the singleton-program embeddings above, no total computable classifier decides halting for all initial configurations.
 
-**Theorem 13 (Halting contradiction).** *There is no total decider $H$ that is simultaneously correct everywhere — $H(p,q) = \mathsf{true} \iff \mathrm{Halts}(p,q)$ for all $p, q$ — while the system admits the contrarian $d$ of $(\ast)$. The two hypotheses are jointly contradictory.*
+**Proof sketch.** Such a classifier, composed with the computable embedding of ordinary programs into self-modifying configurations, would contradict Theorem 5. $\square$
 
-*Proof.* By Theorem 12 the contrarian $d$ is a point of incorrectness, contradicting universal correctness of $H$. $\qquad\blacksquare$
+The theorem concerns unbounded termination. The bounded version is decidable.
 
-**Proposition 14 (Non-vacuity).** *The hypotheses of Theorem 12 are satisfiable: there exist $\mathrm{Prog}$, $\mathrm{Halts}$, $H$, and $d$ with $(\ast)$. For instance, take $\mathrm{Prog} = \mathbb{N}$, $\mathrm{Halts}(p, q) := (p \ne 0)$, $H \equiv \mathsf{true}$, and $d = 0$: then $\mathrm{Halts}(0, q)$ is false and $H(q,q) = \mathsf{false}$ is false, so $(\ast)$ holds.*
+**Proposition 7 (Bounded halting is decidable).** Given an effective self-modifying transition $\delta$, a configuration $c$, and a bound $N$, there is an algorithm deciding whether the run halts within at most $N$ transitions.
 
-Thus Theorem 12 is a genuine impossibility, not a vacuous implication. The point is that a Turing-complete self-modifying system *does* satisfy $(\ast)$: it can read a proposed $H$ and rewrite itself into the contrarian $d$.
+**Proof sketch.** Simulate at most $N$ transitions. Accept if an undefined transition occurs and reject if all $N$ transitions are completed. The loop is finite, so the algorithm always terminates. $\square$
 
----
+If one transition takes time $T_\delta$ and the largest stored configuration uses space $M$, this direct algorithm takes $O(NT_\delta)$ time and $O(M)$ working space, apart from output logging.
 
-## 8. The Virus Paradox and the Alignment Obstruction
+## 5. Perpetual safety and finite evidence
 
-Two applications specialize the self-referential theorem.
+Define the **perpetual-execution predicate** by
 
-**Theorem 15 (Virus paradox).** *Let $\mathrm{Detect} : \mathrm{Prog} \to \mathrm{Bool}$ be a total detector, and suppose the system can build a contrarian $d$ with $\mathrm{Halts}(d, q) \iff \mathrm{Detect}(q) = \mathsf{false}$ for all $q$. Then $\mathrm{Detect}$ does not decide self-halting behavior everywhere: it is not the case that $\mathrm{Detect}(q) = \mathsf{true} \iff \mathrm{Halts}(q, q)$ for all $q$.*
+$$
+\operatorname{NeverHalts}_\delta(c)
+\quad\Longleftrightarrow\quad
+\forall n\in\mathbb N,\ \operatorname{run}_\delta(c,n)\text{ is defined}.
+$$
 
-*Proof.* Apply Theorem 12 with $H(p, q) := \mathrm{Detect}(q)$ (ignoring the first argument). The resulting counterexample $d$ shows $\mathrm{Detect}$ cannot agree with self-halting everywhere. $\qquad\blacksquare$
+This may model a narrow safety requirement in which an execution is considered safe precisely while it continues. More general temporal safety properties can often encode this one.
 
-Interpretation: a perfect universal behavior scanner — one that always terminates and correctly flags whether any program, run on its own code, halts — cannot exist. Malware analysis is therefore intrinsically heuristic.
+**Lemma 8 (Complement identity).** For every configuration $c$,
 
-**Theorem 16 (Alignment obstruction).** *Let $M : \mathrm{Prog} \to \mathrm{Bool}$ be a total safety monitor, where $M(q) = \mathsf{true}$ is intended to certify that $q$ is safe in the sense $\lnot\,\mathrm{Halts}(q, q)$ ("never terminates on its own code"). Suppose the system can build a contrarian $d$ whose termination tracks the monitor's verdict:*
-$$\mathrm{Halts}(d, q) \iff M(q) = \mathsf{true} \quad \text{for all } q. \tag{$\dagger$}$$
-*Then $M$ is wrong on some program: there exists $q$ with $\lnot\big(M(q) = \mathsf{true} \iff \lnot\,\mathrm{Halts}(q, q)\big)$.*
+$$
+\operatorname{NeverHalts}_\delta(c)
+\quad\Longleftrightarrow\quad
+\neg\operatorname{Halts}_\delta(c).
+$$
 
-*Proof.* Take $q = d$. From $(\dagger)$, $\mathrm{Halts}(d,d) \iff M(d) = \mathsf{true}$. If $M$ were a correct safety certifier at $d$, then $M(d) = \mathsf{true} \iff \lnot\,\mathrm{Halts}(d,d)$. Chaining the two equivalences yields $\mathrm{Halts}(d,d) \iff \lnot\,\mathrm{Halts}(d,d)$. Writing $P := \mathrm{Halts}(d,d)$, we have $P \iff \lnot P$; then $\lnot P$ holds (else $P$ gives $\lnot P$), and $\lnot P$ gives $P$ — contradiction. $\qquad\blacksquare$
+**Proof sketch.** Halting means that an undefined stage is reached after finitely many transitions. Negating this existential statement says that no finite stage is undefined, which is exactly the universal definition of perpetual execution. $\square$
 
-Interpretation: no total monitor can correctly certify a non-trivial self-referential behavioral property for *every* program. Any oversight mechanism that is total (always returns a verdict), sound (never wrong), and universal (works on every agent) is impossible for a sufficiently expressive agent class. Practical alignment must relax one of the three.
+**Theorem 9 (No exact perpetual-safety monitor).** Let $\delta$ be a self-modifying machine whose fixed-state simulation has undecidable halting. There is no total computable Boolean monitor $M$ satisfying
 
----
+$$
+M(c)=1
+\quad\Longleftrightarrow\quad
+\operatorname{NeverHalts}_\delta(c)
+$$
 
-## 9. Algorithms
+for every configuration $c$.
 
-Although the halting decider is impossible in general, the *constructions* underlying the proofs are concrete algorithms.
+**Proof sketch.** Assume $M$ exists. Define $H(c)=1-M(c)$. By Lemma 8, $H(c)=1$ exactly when $c$ halts. Composing $H$ with the identity simulation encoding decides halting for the fixed-state simulator, contradicting the hypothesis. $\square$
 
-**Algorithm A (Bounded self-modifying simulation).** Given an SMM's transition $\mathrm{step}$, a start configuration, and a step budget $N$, iterate the "code becomes data" rule at most $N$ times, returning `HALTED` if $\mathsf{none}$ is emitted and `RUNNING` otherwise. This is the executable content of the Simulation Theorem and is the best any sound total analyzer can do: sound but incomplete (a `RUNNING` verdict is inconclusive).
+Undecidability alone leaves open whether perpetual executions could at least be enumerated by a procedure that sometimes runs forever on negative cases. They cannot in a universal model.
 
-**Algorithm B (Contrarian construction).** Given a candidate decider $H$, construct the contrarian program $d$: on input $q$, compute $H(q, q)$ and loop iff it is $\mathsf{true}$ (halt iff $\mathsf{false}$). Feeding $d$ its own code exhibits the incorrectness guaranteed by Theorem 12.
+**Theorem 10 (Perpetual execution is not recursively enumerable).** For every fixed input $x$, the set
 
-**Algorithm C (Reduction transport).** Given the "code becomes data" map, transport any instance of the self-modifying halting question to a fixed-program instance and back via the $\mathrm{Unit}$-embedding, witnessing Theorem 10.
+$$
+\{c:\varphi_c(x)\text{ is undefined}\}
+$$
 
-Detailed pseudocode and reference implementations accompany this work.
+is not recursively enumerable.
 
----
+**Proof sketch.** The halting set at $x$ is recursively enumerable by simulation. If its complement were also recursively enumerable, run the two recognizers in dovetailing fashion. Exactly one must eventually accept, producing a total halting decider and contradicting Theorem 5. $\square$
 
-## 10. A Worked Example
+**Corollary 11 (No complete finite-certificate discipline).** In a universal model, there is no effective finite-certificate system that is both sound and complete for perpetual execution, where certificate validity is decidable.
 
-To make the abstractions concrete, consider a small self-modifying machine with two programs $P = \{A, B\}$ and state $S = \mathbb{N}$, whose transition is
-$$\mathrm{step}(p, s) = \begin{cases} \mathsf{none} & \text{if } s = 0,\\ (\overline{p},\ s - 1) & \text{if } s > 0, \end{cases}$$
-where $\overline{A} = B$ and $\overline{B} = A$. This machine *genuinely rewrites the program in control at every step*: the run from $(A, 3)$ visits configurations
-$$(A,3) \to (B,2) \to (A,1) \to (B,0) \to \mathsf{none},$$
-halting after four steps. The program alternates $A, B, A, B$ — no single fixed program governs the computation, yet the machine is manifestly well-behaved.
+**Proof sketch.** Enumerate all pairs of codes and finite certificates and output each code having a valid certificate. Soundness and completeness would enumerate exactly the perpetually executing codes, contradicting Theorem 10. $\square$
 
-Its standard simulation $m^{\mathrm{Std}}$ over $P \times S$ uses the single rule "read $(p,s)$, decrement $s$, flip $p$" and produces the identical sequence of pairs $(A,3), (B,2), (A,1), (B,0)$ before halting. The Simulation Theorem (Theorem 6) is visible here directly: the self-modifying trace and the fixed-program trace are literally the same sequence of pairs, so one halts within $n$ steps iff the other does. Deciding halting for this machine is trivial — it halts from $(p, s)$ after exactly $s$ steps — precisely because the enlarged state exposes the counter as ordinary data. Nothing about the program's self-rewriting places it beyond routine analysis.
+The corollary permits sound but incomplete methods. Type systems, ranking arguments for selected liveness properties, invariants, proof-carrying updates, and restricted languages may certify broad classes while necessarily omitting some valid cases.
 
-The contrast with the self-referential constructions of Sections 7–8 is instructive. There, undecidability does not arise from *rewriting* but from *diagonalization against a predictor*: the contrarian $d$ is not merely a program that changes itself, but one whose changes are functionally dependent on a verdict passed about $d$'s own code. It is this closed loop — description, prediction, negation — and not the mere capacity for self-modification, that no analyzer can escape.
+## 6. Nontrivial semantic properties
 
-## 11. Discussion: Self-Modification vs. Self-Reference
+Termination is only one behavioral property. The more general obstruction is extensional.
 
-The results sharpen a distinction usually left blurry.
+**Theorem 12 (Semantic classification impossibility).** Let $\mathcal C$ be a set of partial functions $\mathbb N\rightharpoonup\mathbb N$. Suppose there exist partial computable functions $f\in\mathcal C$ and $g\notin\mathcal C$. Then no total computable classifier $D$ satisfies
 
-- **Self-modification is computationally free.** By the Simulation Theorem and Turing equivalence, a machine that rewrites its own code is exactly as powerful — and its halting problem exactly as hard — as a fixed-program machine over a larger state. The folklore that self-modification lifts a problem to a higher Turing degree is false: the program is always absorbable into the data.
-- **Self-reference is the real wall.** The impossibility comes from a system's ability to describe a proposed analyzer and act against it — the contrarian. This is the diagonal argument of Cantor and Turing, traced here to Lawvere's fixed-point theorem via a single fixed-point-free map, $\lnot$.
+$$
+D(c)=1
+\quad\Longleftrightarrow\quad
+\varphi_c\in\mathcal C
+$$
 
-The AI-alignment reading is that a perfect, always-correct, universal safety monitor is not merely hard but provably impossible against sufficiently expressive agents, for the same reason the halting problem is undecidable. This does not doom alignment; it delimits it. Viable oversight must relax totality (permit "don't know"), soundness (accept a quantified error rate), or universality (restrict the agent class).
+for every program code $c$.
 
----
+**Proof sketch.** Choose computable behaviors on opposite sides of $\mathcal C$. Given a program-input pair whose halting is unknown, effectively construct a program whose extensional behavior switches between suitable reference behavior and the other side according to whether the unknown computation halts. A hypothetical exact classifier for $\mathcal C$ would then decide the original halting question. The construction is a standard Rice-style reduction and uses only extensionality and nontriviality. $\square$
 
-## 12. Future Directions
+Both hypotheses are necessary. A property that contains all partial computable functions, or none, is decided by a constant classifier. A syntactic property such as “the source contains a designated byte string” may also be decidable because it is not extensional.
 
-1. **A concrete universal contrarian.** Theorem 12 takes the contrarian $d$ as a hypothesis. Build $d$ explicitly inside a concrete universal SMM over $\mathbb{N} \times \mathbb{N}$ (a small register or Turing machine), converting the conditional undecidability into an unconditional statement about that machine.
-2. **Oracle self-modification and the arithmetical hierarchy.** Add oracle access to the SMM and locate the resulting halting problem. The present equivalence suggests it stays $\Sigma^0_1$ relative to the oracle; make this precise and prove non-collapse for iterated oracles.
-3. **Bounded self-modification depth.** Define machines that may rewrite their program at most $k$ times; show decidability at $k = 0$ and undecidability for $k \ge 1$ over a Turing-complete base, pinning the exact threshold.
-4. **Rice's theorem in full.** Generalize the virus paradox to every non-trivial *behavioral* property of the self-modifying run, deriving it from the no-correct-decider theorem by an explicit reduction.
-5. **Quantitative alignment.** Strengthen the alignment obstruction to a measure-theoretic or resource-bounded statement, bounding how often, or under what resource limits, any monitor must err.
+### 6.1 Malware detection
 
----
+Let $\mathcal M$ denote a behavioral notion of malware, such as “on some input, eventually emits a designated harmful command,” provided membership depends only on partial input-output behavior. If at least one computable behavior is malicious and another is benign, Theorem 12 yields the following.
 
-## 13. Conclusion
+**Corollary 13 (No exact universal semantic malware detector).** No total computable procedure classifies every program exactly according to $\mathcal M$.
 
-Self-modifying code cannot be perfectly predicted — but not because it is strictly harder than ordinary code. We proved it is *many-one equivalent* to the classical halting problem: code that rewrites itself is code that shuffles data, nothing more. The true and unclimbable obstruction is self-reference: any system able to build a contrarian defeats every candidate predictor of its own behavior, yielding the virus paradox and a computability-theoretic wall for AI alignment. The reassuring and the sobering lessons are two sides of one diagonal mirror.
+Polymorphism and self-rewriting make signature methods easier to evade, but the corollary is stronger: even perfect access to program text cannot enable an exact classifier for arbitrary universal programs. Practical systems must use syntactic approximations, restricted execution, bounded analysis, probabilistic judgments, or incomplete semantic methods.
+
+### 6.2 Behavioral alignment under self-revision
+
+Let $\mathcal A$ be a nontrivial extensional property representing a desired partial behavior, such as never producing a forbidden observable output. If arbitrary adaptive agents can express universal partial computations, exact classification is impossible.
+
+**Corollary 14 (No exact universal extensional alignment classifier).** If $\mathcal A$ contains one partial computable behavior and excludes another, no total computable algorithm decides for every program whether its complete partial behavior belongs to $\mathcal A$.
+
+This is not a prohibition on all alignment techniques. It identifies which combinations cannot coexist: unrestricted universal programs, a nontrivial extensional criterion, total termination of the evaluator, and exact soundness and completeness. Restricting any one of these dimensions can recover useful guarantees.
+
+## 7. Algorithms and numerical demonstrations
+
+### 7.1 Fixed-interpreter simulation
+
+The exact simulator maintains a pair `(program, state)`. Its fixed loop applies a supplied effective transition to that pair. The algorithm halts exactly when the transition reports no successor.
+
+**Algorithm 1 (Step-preserving fixed-state simulation).**
+
+1. Store the initial pair $(p_0,s_0)$ as the simulator state.
+2. Apply the fixed transition interpreter to the stored pair.
+3. If there is no successor, report halting.
+4. Otherwise replace the stored pair by $(p_1,s_1)$ and repeat.
+
+After $N$ simulated steps, the stored pair is exactly the self-modifying configuration after $N$ steps. The time is $O(NT_\delta)$ and the additional working space is $O(M)$, where $T_\delta$ is transition cost and $M$ bounds the current encoded configuration.
+
+### 7.2 A finite rewriting example
+
+For illustration, let a program be a pair $(a,b)$ of integers and let the state be an integer $x$. A transition updates
+
+$$
+x' = x+a,
+$$
+
+then rewrites
+
+$$
+(a',b')=(b,a+b).
+$$
+
+The machine halts once $x$ reaches a chosen threshold. Beginning with $(a,b,x)=(1,1,0)$, the increments are Fibonacci numbers:
+
+$$
+1,1,2,3,5,8,\ldots
+$$
+
+The fixed simulator stores the triple $(a,b,x)$ and applies the same recurrence. The two traces coincide exactly; only the interpretation of $(a,b)$ as “program” versus “data” differs.
+
+### 7.3 Finite-horizon monitors
+
+A horizon-$N$ monitor can truthfully report one of three outcomes: “halt observed,” “survived $N$ steps,” or “invalid transition.” The second outcome is not a proof of perpetual execution. Increasing $N$ increases evidence without crossing the logical gap between a long finite prefix and an infinite run.
+
+## 8. Applications
+
+### 8.1 Security architecture
+
+The semantic impossibility theorem motivates layered malware defense. Signature checks address decidable syntax. Sandboxes restrict effects. Bounded emulation detects behaviors appearing within a resource budget. Proof-carrying code certifies a selected enumerable fragment. Statistical models trade exactness for empirical coverage. None is an exact total solver for arbitrary nontrivial semantics, and their specifications should not imply otherwise.
+
+### 8.2 Adaptive systems and governance
+
+For a system that proposes self-updates, a conservative gate can require each update to carry a checkable local certificate. Corollary 11 implies that no such effective finite-certificate regime can recognize every safe universal computation. This makes abstention a mathematically necessary outcome for any sound general monitor. Governance mechanisms should distinguish “rejected as unsafe” from “not certified.”
+
+### 8.3 Compiler and runtime design
+
+The equivalence theorem legitimizes fixed-interpreter analysis of mutable-code systems. A semantics can represent code heaps, generated procedures, or policies as explicit state and study one fixed transition relation. This may enlarge states dramatically, but it loses no execution behavior. The representation is therefore suitable for trace comparison, bounded exploration, and resource analysis.
+
+## 9. Discussion and limitations
+
+The principal conclusion is negative only at a specific level. Self-modification does not raise computability degree when each rewrite and transition is effective and finitely representable. The analysis does not cover machines endowed with noncomputable oracles, physically infinite precision, or transition rules that are themselves noneffective. Such additions—not rewriting alone—could alter computability power.
+
+Mutual reducibility also does not imply equal practical complexity. A universal interpreter may introduce substantial overhead, while direct code generation may specialize away interpretation costs. Bounded numbers of rewrites may form strict hierarchies in time, space, communication, or description complexity even though all levels have the same computable functions.
+
+The perpetual-safety model equates safety with nonhalting. Real systems use richer predicates over traces. The result applies directly whenever a richer exact monitor could encode perpetual execution, but each application must establish that reduction. Similarly, the semantic classification theorem concerns extensional properties. Syntactic policies, decidable type disciplines, and restricted domains can remain fully decidable.
+
+Finally, undecidability is a worst-case theorem. It does not quantify error under a probability distribution, average running time, or performance on naturally occurring code. Distributional malware detection and empirical alignment evaluation require additional assumptions and quantitative analysis.
+
+## 10. Future work
+
+Several directions follow from the separation between computability degree and resources.
+
+First, a **resource-bounded rewrite hierarchy** may compare machines permitted at most $k$ and $k+1$ rewrites. The exact simulation theorem rules out a hierarchy of computable functions but leaves open strict improvements in optimal time, space, communication, or description overhead.
+
+Second, **oracle-relative self-modification** should preserve the same pattern: with oracle $A$, mutable code can be stored as state, while oracle access remains the source of additional power. The expected halting degree is the jump $A'$, not a further jump caused by rewriting.
+
+Third, a **quantitative monitor tradeoff** should measure the unavoidable blind spots of total sound monitors. Nonenumerability suggests not merely isolated missed cases but infinite structured families of safe configurations that cannot be certified, potentially even under bounded rewrite rates.
+
+Fourth, **distributional semantic detection** can replace worst-case exactness with error probabilities. Under computable full-support distributions, one may ask whether entropy or complexity conditions force universal positive lower bounds on false positives or false negatives.
+
+Fifth, **proof-carrying alignment** motivates characterizing large recursively enumerable fragments of configurations admitting finite certificates that every reachable rewrite preserves a chosen safety property. No complete universal fragment exists, but maximal fragments under a fixed certificate logic may still be mathematically and practically valuable.
+
+## 11. Conclusion
+
+Effective self-modification is computationally dramatic but computability-theoretically conservative. A fixed interpreter stores mutable code alongside ordinary state and reproduces every step. Ordinary computation embeds back as the special case of an unchanging singleton program. Their halting predicates are mutually reducible, refuting strict hardness from rewriting alone.
+
+The classical barriers nevertheless remain intact. Universal termination prediction is impossible. Perpetual execution is the complement of halting and admits neither an exact total monitor nor a complete effective enumeration. Every nontrivial extensional property of partial computable behavior defeats exact total classification, encompassing semantic malware detection and unrestricted behavioral alignment judgments.
+
+These limits define a constructive design boundary. Bounded simulation, restricted languages, conservative certificates, syntactic controls, and probabilistic methods remain available. What must be abandoned is the demand for a universal algorithm that is simultaneously total, exact, and complete about the unbounded semantic future of arbitrary code.
