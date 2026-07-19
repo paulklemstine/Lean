@@ -406,7 +406,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8797684d",
     "description": "Model mathematical theories as species in an ecosystem. Define a fitness function: f(theory) = (number of connections to other theories) * (proof density) / (axiom count). Conjecture: theories evolve toward the niche of maximum fitness, and the resulting ecosystem satisfies a mathematical analog of the competitive exclusion principle (no two theories occupy the same niche). Prove that ZFC + large cardinals has higher fitness than ZFC alone.",
     "domain_bridges": [],
     "domains": [
@@ -418,7 +418,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T23:30:38.615381+00:00",
     "title": "Speculative: Mathematics as an Evolving Ecosystem"
   },

@@ -186,7 +186,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "[Reset] Fresh approach in Shared"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b3f0d755",
     "description": "Construct a category where composition is not associative but satisfies a controlled failure: (f circ g) circ h and f circ (g circ h) are naturally isomorphic but not equal. Prove that such almost-categories are exactly the bicategories and that every coherent loop-tolerant algebraic structure forms a higher category.",
     "domains": [
       "Novelty",
@@ -196,7 +196,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T22:20:03.236691+00:00",
     "title": "Causal Loops in Category Theory: When Composition Loops Back"
   },
@@ -302,7 +302,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Topological Quantum Error Correction from Mathematical Structures"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8797684d",
     "description": "Model mathematical theories as species in an ecosystem. Define a fitness function: f(theory) = (number of connections to other theories) * (proof density) / (axiom count). Conjecture: theories evolve toward the niche of maximum fitness, and the resulting ecosystem satisfies a mathematical analog of the competitive exclusion principle (no two theories occupy the same niche). Prove that ZFC + large cardinals has higher fitness than ZFC alone.",
     "domains": [
       "Novelty"
@@ -311,7 +311,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T23:30:38.615381+00:00",
     "title": "Speculative: Mathematics as an Evolving Ecosystem"
   },
