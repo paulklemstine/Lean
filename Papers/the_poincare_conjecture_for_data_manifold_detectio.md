@@ -1,56 +1,27 @@
-# Computational Evidence — Poincaré Conjecture for Data
+# Computational Evidence
 
-All experiments were run inside Lean 4 (`#eval`) so the numbers below are reproducible
-and consistent with the formalized theorems in `Algebra/PoincareData*.lean`.
+## Small-case calculations
 
-## 1. The `n^{-1/d}` packing exponent (Chebyshev cube model)
+Consider the indexed two-point cloud `X(0)=0`, `X(1)=2` in the real line. At scale `1`, its Rips graph has no edge, so its flag complex consists of the empty simplex and two vertices: three simplices in total. At scale `2`, the edge appears and the flag complex is the full simplex on two vertices: four simplices. These two boundary claims are instantiated in `PoincareThresholdStability.lean`.
 
-We model a sampled `d`-dimensional object as the discrete cube `{0,…,m-1}^d` and a point
-cloud as a set `S` of samples; the scale is the ℓ^∞ (Chebyshev) radius `r`. A single ball of
-radius `r` covers at most `(2r+1)^d` grid points, so an `r`-cover needs
+For three collinear points at `0,1,2`, the edge counts at scales below `1`, from `1` to below `2`, and at least `2` are respectively `0`, `2`, and `3`. The corresponding clique counts are `4`, `6`, and `8`. This illustrates that edge and simplex thresholds are controlled by pair distances, while homology may appear and disappear at different scales.
 
-    n = |S| ≥ m^d / (2r+1)^d,     i.e.   (2r+1) ≥ m · n^{-1/d}.
+## OEIS search results
 
-Small cases (minimal number of radius-`r` balls to cover the `m=7` line, `d=1`):
+No sequence arose that would materially constrain the metric-stability theorems. Consequently no OEIS identification is asserted. The basic full-simplex count `2^n` is standard subset enumeration rather than evidence for the proposed sphere-detection scaling law.
 
-| radius r | 2r+1 | #balls = ⌈7/(2r+1)⌉ |
-|---------:|-----:|--------------------:|
-| 0        | 1    | 7                   |
-| 1        | 3    | 3                   |
-| 2        | 5    | 2                   |
-| 3        | 7    | 1                   |
+## Counterexample hunt
 
-The product `#balls · (2r+1)` stays `≥ 7 = m`, matching the lower bound
-`m ≤ n^{1/d}·(2r+1)` (`covering_radius_scaling`). When `(2r+1) ∣ m` the bound is *tight*:
-e.g. `m=6, r=1` needs exactly `2 = 6/3` balls, and in `d` dimensions exactly `t^d`
-(`exact_cover_exists` + `min_cover_card`). This pins the exponent at `-1/d`.
+The unguarded inference “sphere homology of one Rips complex implies geometric nearness to a sphere” is not supported by the finite combinatorial data considered here. Homology does not characterize general spaces, and a single-scale flag complex does not retain a unique Euclidean realization. The formal development therefore proves guarded metric and combinatorial statements only.
 
-## 2. The threshold is a STEP function (disproof of the exact power law)
+The proposed universal threshold `C sqrt(d) n^(-1/d)` also requires a sampling distribution and a precise threshold event. For uniform random coverage of a compact `d`-dimensional space, extreme gaps generally suggest a logarithmic correction, unlike typical nearest-neighbor spacing. This distinction motivates a separate probabilistic conjecture rather than an unconditional theorem.
 
-Minimal covering radius `r_⋆(n)` for `n` samples on the `m=7` line:
+## Table
 
-| n         | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
-|-----------|---|---|---|---|---|---|---|
-| r_⋆(n)    | 3 | 2 | 1 | 1 | 1 | 1 | 0 |
-
-`r_⋆` is **constant** on `{3,4,5,6}`. Any exact law `ε_⋆(n) = C·n^{-1/d}` (here `d=1`,
-so `C/n`) is strictly decreasing/injective, so it cannot reproduce `r_⋆(3)=r_⋆(4)=1`.
-This is exactly `no_exact_inverse_power_law`: `C/3 = C/4 = 1` forces `C=3` and `C=4`,
-a contradiction. Hence the conjecture holds only *up to constants* (as `≍`), never as an
-equality.
-
-## 3. Where the conjecture's `d^{1/2}` factor comes from
-
-The clean packing bound lives in the Chebyshev (ℓ^∞) metric, while the Vietoris–Rips
-scale and the sphere `S^d ⊂ ℝ^{d+1}` are measured in Euclidean (ℓ²) distance. The sharp
-comparison is `‖x‖_∞ ≤ ‖x‖_2 ≤ √d·‖x‖_∞`, with `√d` attained by the all-ones vector
-(`sqrt_d_is_sharp`). Converting an ℓ^∞ covering radius to Euclidean therefore introduces
-exactly the `d^{1/2}` prefactor — it is a *metric artifact*, not intrinsic topology.
-
-## 4. Counterexample hunt summary
-
-* The `n^{-1/d}` scaling survives every finite check (Section 1) and is proved as a
-  two-sided bound.
-* The exact-constant power law fails already at `m=7` (Section 2): a genuine disproof.
-* No OEIS sequence is relevant; the objects are covering/packing numbers, not an integer
-  sequence to identify.
+| Cloud | Scale | Edges | Flag-complex simplices | Full simplex? |
+|---|---:|---:|---:|---|
+| `{0,2}` | `1` | `0` | `3` | no |
+| `{0,2}` | `2` | `1` | `4` | yes |
+| `{0,1,2}` | `<1` | `0` | `4` | no |
+| `{0,1,2}` | `1` | `2` | `6` | no |
+| `{0,1,2}` | `2` | `3` | `8` | yes |

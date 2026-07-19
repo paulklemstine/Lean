@@ -1,0 +1,40 @@
+--- MetricFiltration.lean
++++ MetricFiltration.lean
+@@ -302,4 +302,37 @@
+     ripsGraph α ε₁ = ripsGraph α ε₂ := by
+   rw [ripsGraph_bot_of_neg h₁, ripsGraph_bot_of_neg h₂]
+ 
++#check coveringNumber_antitone
++#check sphere_perturbation_stability
++#check maximal_packing_is_cover
++
++/-
++-- !-- Lab Notes -- !--
++
++Hypothesis. Metric filtrations should expose three complementary controls needed
++for finite-data topology: monotonic graph growth, antitone covering complexity,
++and robustness of geometric sphere constraints under perturbation.
++
++Experiment. The Rips construction is monotone at every real scale and collapses
++to the empty graph at negative scales. Covering numbers decrease as the radius
++increases, while the packing-covering theorem turns a maximal separated sample
++into a cover. The concrete real-line examples exercise the scale boundaries.
++
++Analysis. These facts share an order-theoretic core: enlarging a scale weakens a
++distance predicate. The framework extends more broadly to arbitrary ordered index
++sets and to other monotone proximity graphs.
++
++Critique. The covering number is defined through finite covers and does not itself
++recover homology. In a pseudometric boundary case, distinct zero-distance points
++may create edges at scale zero, so the zero-scale emptiness theorem correctly
++requires a metric space. Maximal packing is used through an explicit maximality
++condition rather than inferred from packing alone.
++
++Synthesis. Metric filtration monotonicity, covering antitonicity, perturbation
++stability, and packing-covering duality form the geometric foundation for the
++subsequent finite Rips-complex stability results without asserting an unsupported
++sphere-recognition principle.
++-- !--
++-/
++
+ 
