@@ -118,21 +118,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Thermodynamics of Mathematical Proof"
   },
   {
-    "consumed_by_exp_id": "3dea732a",
-    "description": "Prove that Novikov's self-consistency principle follows from the Banach fixed-point theorem applied to the causal structure of spacetime. Formalize time-travel paradoxes as boundary value problems and prove existence of self-consistent solutions for polynomial causal maps.",
-    "domains": [
-      "Novelty",
-      "Physics"
-    ],
-    "id": "fd_0448",
-    "priority_score": 0.87,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T11:33:05.369080+00:00",
-    "title": "Time Travel Consistency: Novikov's Principle as a Fixed-Point Theorem"
-  },
-  {
     "consumed_by_exp_id": "e5c56bfa",
     "description": "Define a natural metric on the space of all mathematical statements and prove that the set of true statements has a fractal dimension. Show that this dimension is strictly between 0 and 1 (truth is sparse but not negligible). Connect to Chaitin's Omega and prove that the fractal dimension is uncomputable but approximable.",
     "domains": [
@@ -346,6 +331,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-19T19:49:57.145090+00:00",
     "title": "Fermat Near-Misses in the Twilight Zone"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize a game where one player (Mortal) has finite computation and the other (Eternity) has transfinite computation. Prove that Mortal can always force at least omega rounds before losing, and that with bounded nondeterminism, Mortal can force omega-squared rounds. Connect to Infinite Time Turing Machines.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0490",
+    "priority_score": 0.82,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-19T20:43:51.867187+00:00",
+    "title": "Infinite Games Against Death: Immortality Strategies"
   },
   {
     "consumed_by_exp_id": "",
@@ -3126,6 +3126,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Formalize Australian Aboriginal kinship systems (section and subsection systems) as finite groups acting on person-sets. Prove that the 4-section system is isomorphic to Z2 x Z2 and the 8-subsection system to Z2 x Z2 x Z2. Show that marriage rules correspond to coset restrictions and that the entire system forms a consistent group-theoretic structure.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0489",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-19T20:43:51.819026+00:00",
+    "title": "Aboriginal Kinship as Group Theory: Dreamtime Algebra"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle dcd7a4b2 (Q=0.750) proved 0 theorems in Tropical but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION \u2014 simulta",
     "domains": [
       "Tropical"
@@ -5174,6 +5189,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-19T20:26:28.580190+00:00",
     "title": "**Conjecture.** Every finite sequence of signed-literal revisions has a unique n"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Causal Consistency Beyond Global Contraction\n\n## 1. Local basin Novikov principle for polynomial feedback\n\n**Conjecture.** Let a real polynomial causal return map preserve a closed interval. If it has a fixed point whose derivative has absolute value below one, then every initial state in the immediate basin of that point generates a history converging to a unique self-consistent history within that basin. Basin boundaries are formed by critical or repelling periodic points.\n\nThe key insight is that global contraction is stronger than the causal mechanism requires; consistency may be selected locally by a dynamically invariant basin. **Why now?** The global theorem isolates contraction as the decisive ingredient, while the polynomial counterexample shows exactly why a domain-sensitive replacement is needed.\n\n## 2. Bifurcation classification of polynomial causal paradoxes\n\n**Conjecture.** In a generic one-parameter family of real polynomial return maps on a compact invariant interval, changes in the number of self-consistent histories occur only at parameters where the fixed-point polynomial has a multiple real root, and changes in dynamical stability occur only where the derivative at a fixed point has absolute value one.\n\nThe key insight is that algebraic multiplicity controls existence transitions while the derivative controls causal stability, giving two distinct discriminant loci. **Why now?** The affine family and the fixed-point-free quadratic example expose both sides of this proposed algebraic-dynamical classification.\n\n## 3. Robust consistency under causal-map perturbations\n\n**Conjecture.** For two return maps sharing a contraction factor below one on a complete metric state space, the distance between their unique self-consistent states is bounded sharply by the uniform distance between the maps divided by one minus the contraction factor.\n\nThe key insight is that the residual error estimate should extend from approximate states to approximate laws, turning Novikov consistency into a robust observable rather than a fragile equality. **Why now?** A quantitative a posteriori estimate is already available for one map, and the same geometry suggests a testable perturbation theorem.\n\n## 4. Stochastic Novikov consistency\n\n**Conjecture.** A Markovian causal return operator that is contractive in Wasserstein distance on a complete space of probability laws has a unique invariant law, and every initial boundary distribution converges to it at a geometric rate. Deterministic fixed points appear as the Dirac-measure special case.\n\nThe key insight is that a self-consistent history can be generalized from a single state to a stationary distribution when microscopic causal response is noisy. **Why now?** Deterministic contraction already yields existence, uniqueness, and attraction; transport contraction is the natural probabilistic extension of precisely those three conclusions.\n\n## 5. Coupled spacetime loops and spectral contraction\n\n**Conjecture.** For a finite network of interacting polynomial causal loops, a weighted product metric yields unique global consistency whenever the nonnegative matrix of componentwise Lipschitz influences has spectral radius below one. Conversely, linear networks with spectral radius at least one admit parameters exhibiting either nonuniqueness or instability.\n\nThe key insight is that network consistency should be governed by spectral gain around all feedback cycles, not by the largest local coupling in isolation. **Why now?** The one-loop theorem supplies the scalar base case, and causal networks provide a falsifiable bridge between fixed-point theory, matrix analysis, and polynomial dynamics.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0491",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "3dea732a",
+    "status": "available",
+    "timestamp": "2026-07-19T20:44:07.239986+00:00",
+    "title": "**Conjecture.** Let a real polynomial causal return map preserve a closed interv"
   },
   {
     "consumed_by_exp_id": "",

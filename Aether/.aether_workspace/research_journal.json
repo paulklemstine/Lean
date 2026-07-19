@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "6e1b10f7",
-      "domain": "Applications",
-      "key_insight": "# Future directions\n\nThe formal result in `Catalog/Bridges/GraphZetaPrimeCycle.lean` isolates one adjacency-eigenvalue factor of the Bass–Ihara determinant and proves three parts of the graph-zeta dic",
-      "quality_score": 0.74,
-      "sorry_count": 0,
-      "theorem_count": 46,
-      "timestamp": "2026-07-18T15:35:58",
-      "title": "The Zeta Function of a Graph: Number Theory on Networks"
-    },
-    {
       "cycle_id": "2170ccdf",
       "domain": "Algebra",
       "key_insight": "# Future directions\n\n1. **Full Frobenius factorization dictionary.** Formalize that an irreducible factor of\ndegree `d` corresponds to a `d`-cycle of Frobenius on the geometric roots, including\nmultip",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-19T20:26:37",
       "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
+    },
+    {
+      "cycle_id": "3dea732a",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Causal Consistency Beyond Global Contraction\n\n## 1. Local basin Novikov principle for polynomial feedback\n\n**Conjecture.** Let a real polynomial causal return map preserve a close",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-19T20:44:12",
+      "title": "Time Travel Consistency: Novikov's Principle as a Fixed-Point Theorem"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "8d2137d3",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions\n\n## Completion status\n\nAll Lean declarations delivered for this mission now have complete proof terms: the\nremaining mixed-radix bridge lemmas were proved, and an inherited Fibonac",
-      "quality_score": 0.7,
-      "sorry_count": 4,
-      "theorem_count": 0,
-      "timestamp": "2026-07-16T03:53:58",
-      "title": "The Library of Babel: Combinatorics of the Universal Library"
-    },
     {
       "cycle_id": "e2c77d51",
       "domain": "Algebra",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-19T20:26:37",
       "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
+    },
+    {
+      "cycle_id": "3dea732a",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Causal Consistency Beyond Global Contraction\n\n## 1. Local basin Novikov principle for polynomial feedback\n\n**Conjecture.** Let a real polynomial causal return map preserve a close",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-19T20:44:12",
+      "title": "Time Travel Consistency: Novikov's Principle as a Fixed-Point Theorem"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.73
     }
   ],
-  "last_updated": "2026-07-19T20:26:37",
+  "last_updated": "2026-07-19T20:44:12",
   "open_questions": [
     {
       "context": "",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "6d1b5339",
-        "quality": 0.79,
-        "theorems": 0,
-        "title": "Infinite-Dimensional Chess: Winning on the Hilbert Board"
-      },
-      {
         "cycle_id": "622eb97b",
         "quality": 0.69,
         "theorems": 0,
@@ -3141,6 +3135,12 @@
         "quality": 0.76,
         "theorems": 0,
         "title": "Aleph-1 Surface: Geometry Between Dimensions"
+      },
+      {
+        "cycle_id": "3dea732a",
+        "quality": 0.78,
+        "theorems": 0,
+        "title": "Time Travel Consistency: Novikov's Principle as a Fixed-Point Theorem"
       }
     ],
     "Bridges": [

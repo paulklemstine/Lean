@@ -1,201 +1,346 @@
-# Reflective Type Theory: A Semantic Core for Propositions About Their Own Provability
+# Reflective Type Theory and the Modal Fixed-Point Language
 
 ## Abstract
 
-We develop a semantic core for a *reflective* type theory — a system in which propositions may speak about their own provability. Adopting the propositions-as-types discipline in its possible-worlds form, we interpret a proposition as the set of *proof stages* (worlds) at which it holds, and we attach a provability modality $\Box$ ("is provable") to an accessibility relation $R$ encoding a single step of reasoning. Within this setting we establish three headline results. First, the self-referential proposition $\Box P \wedge \neg\,\Box\Box P$ — "provable but not provably provable" — is inhabited: we exhibit an explicit finite model realizing it, and we prove the matching boundary theorem that on any *transitive* frame the axiom $\Box P \to \Box\Box P$ holds, so the phenomenon is a genuine feature of non-transitive (reflective) provability rather than of classical Gödel–Löb provability. Second, the modality is *normal* — monotone, distributive over conjunction, validating the distribution axiom $K$ and the necessitation rule — yet provably distinct from the identity operator, so the reflective theory conservatively but *properly* extends its non-modal base. Third, viewing propositions as a complete lattice, $\Box$ is one monotone operator among all monotone operators; the Knaster–Tarski theorem supplies least and greatest fixed points uniformly, the modal duality $\Diamond P = \overline{\Box\overline{P}}$ holds, and on well-founded frames Löb's law $\Box(\Box P \to P) \to \Box P$ is validated. These facts identify the reflective proof-term language, structurally, as a modal $\mu$-calculus. We give explicit numerical demonstrations of every result over finite frames.
-
-**Keywords.** reflective type theory, provability modality, Kripke semantics, normal modal logic, axiom 4, Löb's theorem, modal $\mu$-calculus, least and greatest fixed points, Knaster–Tarski.
-
----
+We study a small reflective type theory in which propositions may refer to accessible evidence for propositions and may contain recursively bound variables. The non-reflective fragment consists of atoms, empty and unit types, products, and function types. Its reflective extension adds bound variables, a proof modality, and a fixed-point binder. We establish four complementary results. First, the canonical inclusion of the non-reflective fragment has a partial left inverse and is therefore injective, while a reflected atom lies outside its image; reflection is a proper syntactic extension. Second, reflective proposition codes are isomorphic, constructor for constructor, to formulas of the implicational-conjunctive modal $\mu$-calculus. The mutually inverse translations preserve arbitrary finite iteration of the proof modality. Third, under Kripke semantics there is a three-world non-transitive frame satisfying $\Box P\wedge\neg\Box\Box P$, whereas every transitive frame validates $\Box P\to\Box\Box P$. Fourth, any sound diagonal reflective theory containing a sentence true exactly when it is unprovable contains a true unprovable sentence. We distinguish these syntactic and frame-theoretic theorems from stronger semantic claims: unrestricted negative recursion need not determine a monotone operator, so least-fixed-point semantics requires a positivity condition. The results clarify the roles of syntax, accessibility, variance, and diagonalization in languages capable of reasoning about their own evidence.
 
 ## 1. Introduction
 
-Self-reference is simultaneously the source of logic's most famous limitations — the incompleteness phenomena of Gödel and the fixed-point theorem of Löb — and of some of its most powerful tools, the fixed-point logics that drive formal verification. A *reflective* type theory is one whose propositions are permitted to comment on their own provability: alongside statements like "$P$ holds" we admit statements like "$P$ is provable," "$P$ is provable but its provability is not provable," and so on.
+A reflective logic internalizes a notion of evidence. Alongside an ordinary proposition $A$, it admits a proposition $\Box A$, read as “$A$ is provable” or “evidence for $A$ is available at every state accessible from the present state.” Because $\Box A$ is itself a proposition, the operation can be iterated, producing $\Box\Box A$, $\Box^3A$, and so on. If the language also contains fixed points, propositions may describe recursive conditions involving their own bound variables.
 
-The immediate difficulty is that "provable" cannot be an absolute, self-applied predicate without inviting paradox. Our resolution is to relativize provability to *stages of knowledge*. A proposition is not a bare truth value but the set of stages at which it holds; provability at a stage is a promise about the stages reachable by one step of reasoning. This is precisely the possible-worlds (Kripke) reading of a necessity modality, and it lets us make the reflective vocabulary rigorous while keeping the whole development elementary and finite-model-checkable.
+Several distinct questions arise and should not be conflated. Is reflection genuinely new syntax, or merely a renaming of existing type constructors? Does reflective syntax coincide with a known modal language? Can $\Box A$ hold without $\Box\Box A$? What structural property controls that possibility? When can recursive syntax be assigned a least-fixed-point semantics? Finally, under what assumptions does self-reference force incompleteness?
 
-Three questions organize the paper.
+This paper answers these questions for a deliberately small but expressive language. The base fragment models the propositions-as-types interpretation of falsity, truth, conjunction, and implication. Reflection adds a proof former, and recursion adds de Bruijn-indexed bound variables and a fixed-point binder. The resulting grammar is exactly isomorphic to a corresponding fragment of the modal $\mu$-calculus.
 
-1. **Expressibility and inhabitation.** Can "provable but not provably provable" be written as a well-formed proposition, and is it ever true? (Section 3.)
-2. **Extension.** How does the reflective layer relate to the non-modal base — is it a genuine enrichment or a redundant re-description? (Section 4.)
-3. **Proof-term structure.** What is the algebraic character of the reflective connectives, and how do fixed points enter? (Section 5.)
+The semantic analysis uses Kripke frames. A proposition is a set of worlds, and $\Box P$ consists of worlds whose immediate successors all lie in $P$. A chain of three worlds, with edges $2\to1$ and $1\to0$ but no edge $2\to0$, supports the formula $\Box P\wedge\neg\Box\Box P$ when $P$ is true only at world $1$. Conversely, transitivity validates modal axiom $4$, namely $\Box P\to\Box\Box P$, and therefore excludes every such witness.
 
-Our answers are, respectively: yes and exactly on non-transitive frames; a proper (normal, non-trivial) extension; and a modal $\mu$-calculus, with Löb's law as its well-founded fixed-point principle.
+A separate abstract diagonal result identifies the incompleteness boundary. If a sound theory contains a sentence $D$ whose truth is equivalent to its own unprovability, then $D$ is true and unprovable. This conclusion requires neither a particular coding of syntax nor a particular proof calculus, but it does require the diagonal sentence as part of the hypotheses. Constructing such a sentence internally from fixed-point syntax remains a stronger problem.
 
----
+The central conceptual theme is variance. Transitivity governs how universal truth propagates through repeated accessibility. Positivity governs whether recursive formulas define monotone operations and therefore admit least fixed points. The exact grammar isomorphism is unconditional, but the intended fixed-point semantics is not.
 
-## 2. The reflective semantics
+## 2. The non-reflective and reflective grammars
 
-### 2.1 Frames and propositions
+Fix a set $\mathcal A$ of atomic propositions.
 
-**Definition 2.1 (Reflective frame).** A *reflective frame* on a type of worlds $W$ is a binary accessibility relation $R : W \to W \to \mathrm{Prop}$. We read $R\,w\,v$ as "from stage $w$, stage $v$ is one provability step ahead." A *proposition* is a subset $P \subseteq W$, understood as the set of stages at which it holds. Propositions ordered by inclusion form a complete Boolean lattice, with conjunction $P \cap Q$, disjunction $P \cup Q$, negation $\overline P = W \setminus P$, top $W$, and bottom $\varnothing$.
+**Definition 2.1 (Non-reflective type grammar).** The set $\mathsf{ML}(\mathcal A)$ is generated inductively by
 
-**Definition 2.2 (Reflective modalities).** For a frame $(W, R)$ and a proposition $P \subseteq W$ define
+$$
+A ::= p\mid 0\mid 1\mid A\times A\mid A\to A,
+$$
 
-$$\Box P = \{\, w \in W : \forall v,\ R\,w\,v \Rightarrow v \in P \,\}, \qquad \Diamond P = \{\, w \in W : \exists v,\ R\,w\,v \wedge v \in P \,\}.$$
+where $p\in\mathcal A$. Under the propositions-as-types reading, $0$ represents falsity, $1$ represents truth, $A\times B$ represents conjunction, and $A\to B$ represents implication.
 
-We read $w \in \Box P$ as "$P$ is provable at stage $w$": every stage one reasoning step ahead of $w$ satisfies $P$. Dually, $w \in \Diamond P$ reads "$P$ is consistent with provability at $w$."
+This grammar is a small non-dependent fragment of Martin-Löf-style type theory. No result below claims a complete metatheory for intensional dependent types; the fragment is chosen to isolate the contribution of reflection and fixed points.
 
-The membership rules are immediate from the definitions:
+**Definition 2.2 (Reflective type grammar).** The set $\mathsf{RT}(\mathcal A)$ is generated by
 
-$$w \in \Box P \iff (\forall v,\ R\,w\,v \Rightarrow v \in P), \qquad w \in \Diamond P \iff (\exists v,\ R\,w\,v \wedge v \in P).$$
+$$
+A ::= p\mid X_n\mid 0\mid 1\mid A\times A\mid A\to A\mid \Box A\mid \mu A,
+$$
 
-### 2.2 Duality
+where $p\in\mathcal A$ and $n\in\mathbb N$. The symbol $X_n$ is a de Bruijn-indexed bound variable; $\mu A$ binds the next variable in $A$; and $\Box A$ is the reflective proof type of $A$.
 
-**Proposition 2.3 (Modal duality).** For every frame and every proposition $P$,
-$$\Diamond P = \overline{\ \Box\,\overline{P}\ }.$$
+De Bruijn indices make binding syntactic and remove irrelevant choices of variable names. For example, $\mu(\Box X_0)$ is the closed recursive expression whose body asserts that its bound proposition is provable.
 
-*Proof sketch.* Unfolding, $w \notin \Box\overline P$ means it is not the case that every $R$-successor of $w$ lies in $\overline P$, i.e. some successor lies in $P$, i.e. $w \in \Diamond P$. Taking complements gives the claim. $\square$
+**Definition 2.3 (Canonical inclusion).** Define $i:\mathsf{ML}(\mathcal A)\to\mathsf{RT}(\mathcal A)$ recursively by preserving atoms, $0$, $1$, products, and arrows.
 
-This is the defining relationship between the two dual modalities of the $\mu$-calculus and confirms that $\Diamond$ carries no information beyond $\Box$ and Boolean negation.
+To show that this inclusion is faithful, we use a partial inverse rather than an informal constructor count.
 
----
+**Definition 2.4 (Partial decoding).** Define
 
-## 3. Provable but not provably provable
+$$
+d:\mathsf{RT}(\mathcal A)\to\mathsf{Option}(\mathsf{ML}(\mathcal A))
+$$
 
-### 3.1 The flagship model
+as follows. It returns the corresponding non-reflective expression on atoms, $0$, and $1$. On a product or arrow it recursively decodes both children and succeeds only if both decodings succeed. It fails on every bound variable, reflected expression, and fixed-point expression.
 
-We now show that the reflective vocabulary can express, and *inhabit*, the self-referential proposition $\Box P \wedge \neg\,\Box\Box P$.
+**Lemma 2.5 (Retraction law).** For every $A\in\mathsf{ML}(\mathcal A)$,
 
-**Definition 3.1 (The chain frame).** Let $W = \{0, 1, 2\}$ and let $R$ be the non-transitive, non-reflexive chain
-$$2 \longrightarrow 1 \longrightarrow 0,$$
-that is, $R\,a\,b$ holds iff $(a=2 \wedge b=1)$ or $(a=1 \wedge b=0)$. Let $P = \{1\}$, the proposition true exactly at the middle stage.
+$$
+d(i(A))=\mathsf{some}(A).
+$$
 
-**Theorem 3.2 (Inhabitation of "provable but not provably provable").** On the chain frame, at stage $2$,
-$$2 \in \Box P \qquad \text{and} \qquad 2 \notin \Box\Box P.$$
-Equivalently, the type $\Box P \wedge \neg\,\Box\Box P$ is inhabited in the reflective theory.
+*Proof sketch.* Proceed by structural induction on $A$. The atom, empty, and unit cases follow directly from the definitions. In the product case, apply the induction hypotheses to both factors; the decoder then succeeds on each factor and rebuilds their product. The arrow case is identical in shape. $\square$
 
-*Proof.* For the first claim, the unique $R$-successor of $2$ is $1$, and $1 \in P$; hence every successor of $2$ lies in $P$, so $2 \in \Box P$. For the second claim, suppose toward a contradiction that $2 \in \Box\Box P$. Then $\Box P$ must hold at every successor of $2$, in particular at $1$, so $1 \in \Box P$. But the unique successor of $1$ is $0$, and $0 \notin P = \{1\}$, so $1 \notin \Box P$ — a contradiction. Hence $2 \notin \Box\Box P$. $\square$
+**Theorem 2.6 (Faithful inclusion).** The canonical inclusion $i$ is injective.
 
-A direct computation over the finite frame corroborates the theorem: $\Box P = \{0, 2\}$ (stage $0$ vacuously, being a dead end; stage $2$ because its only successor is $1$) and $\Box\Box P = \{0, 1\}$, so stage $2$ lies in the first set but not the second.
+*Proof sketch.* Suppose $i(A)=i(B)$. Apply $d$ to both sides. By the retraction law, $\mathsf{some}(A)=\mathsf{some}(B)$, hence $A=B$. $\square$
 
-**Corollary 3.3 (Existential form).** There exist a frame $F$, a proposition $P$, and a world $w$ with $w \in \Box P$ and $w \notin \Box\Box P$.
+**Theorem 2.7 (Proper extension by reflection).** For every atom $p\in\mathcal A$, there is no $A\in\mathsf{ML}(\mathcal A)$ such that
 
-The essential structural feature is *near-sightedness*: stage $2$ sees one step (to $1$) but not two steps (to $0$) in a single glance. Provability has a horizon, and the self-referential sentence lives exactly at that horizon.
+$$
+i(A)=\Box p.
+$$
 
-### 3.2 The boundary theorem
+*Proof sketch.* If such an $A$ existed, applying $d$ would give $\mathsf{some}(A)$ on the left by Lemma 2.5 and failure on the right by Definition 2.4, a contradiction. $\square$
 
-The natural objection is that Theorem 3.2 might be an artifact of an impoverished notion of proof. The following result draws the exact line.
+Theorems 2.6 and 2.7 give the precise proper-extension claim: the old syntax embeds without identifications, and at least one new reflective expression lies outside its image. They do not by themselves establish normalization, canonicity, or semantic conservativity for a richer dependent calculus equipped with reduction rules for reflection.
 
-**Theorem 3.4 (Transitivity validates axiom 4).** If the frame is *transitive* — for all $a, b, c$, $R\,a\,b$ and $R\,b\,c$ imply $R\,a\,c$ — then for every proposition $P$,
-$$\Box P \subseteq \Box\Box P.$$
+## 3. Exact correspondence with modal fixed-point formulas
 
-*Proof.* Let $w \in \Box P$; we show $w \in \Box\Box P$. Take any $v$ with $R\,w\,v$ and any $u$ with $R\,v\,u$; we must show $u \in P$. By transitivity $R\,w\,u$, and since $w \in \Box P$ every $R$-successor of $w$ lies in $P$, so $u \in P$. Hence $v \in \Box P$ for every successor $v$ of $w$, i.e. $w \in \Box\Box P$. $\square$
+We now introduce a modal language independently and compare its syntax to the reflective grammar.
 
-Theorem 3.4 is the sharp boundary: the phenomenon of Theorem 3.2 requires a *non-transitive* provability step. The chain frame witnesses this because it is precisely not transitive — $R\,2\,1$ and $R\,1\,0$ hold, but $R\,2\,0$ fails. Adjoining the missing shortcut $R\,2\,0$ (the transitive closure) restores axiom 4 and destroys the witness; a finite check confirms that on the transitive closure $\Box P \subseteq \Box\Box P$ for *all* propositions, and stage $2$ is no longer in $\Box\Box P$'s complement.
+**Definition 3.1 (Modal fixed-point grammar).** Let $\mathsf{Mu}(\mathcal A)$ be generated by
 
-**Remark 3.5 (Non-classicality).** The classical provability logics behind Gödel's incompleteness theorems and Löb's theorem — the systems $K4$ and $GL$ — are built on transitive frames, where axiom 4 makes "provable" and "provably provable" coincide. Reflective type theory relaxes transitivity, and Theorem 3.2 is the reward: a strictly larger expressive range in which the distinction between provability and its own iteration becomes visible.
+$$
+\varphi ::= p\mid X_n\mid\bot\mid\top\mid
+(\varphi\wedge\varphi)\mid(\varphi\Rightarrow\varphi)\mid
+\Box\varphi\mid\mu\varphi.
+$$
 
----
+Again, $p\in\mathcal A$, $n\in\mathbb N$, and $\mu$ binds the next de Bruijn variable. This is an implicational-conjunctive modal fixed-point grammar. Standard presentations may take negation and disjunction as primitives or impose positivity conditions at grammar formation; neither alteration is needed for the syntactic theorem below.
 
-## 4. The reflective modality properly extends the base
+**Definition 3.2 (Forward translation).** Define $T:\mathsf{RT}(\mathcal A)\to\mathsf{Mu}(\mathcal A)$ by the constructor dictionary
 
-We now show that $\Box$ is a *normal* modality obeying all the standard structural laws, yet is not definable from the non-modal connectives — so the reflective theory is a proper extension of its Boolean base.
+$$
+\begin{aligned}
+T(p)&=p, & T(X_n)&=X_n,\\
+T(0)&=\bot, & T(1)&=\top,\\
+T(A\times B)&=T(A)\wedge T(B),
+& T(A\to B)&=T(A)\Rightarrow T(B),\\
+T(\Box A)&=\Box T(A),
+& T(\mu A)&=\mu T(A).
+\end{aligned}
+$$
 
-**Theorem 4.1 (Monotonicity).** If $P \subseteq Q$ then $\Box P \subseteq \Box Q$.
+**Definition 3.3 (Backward translation).** Define $S:\mathsf{Mu}(\mathcal A)\to\mathsf{RT}(\mathcal A)$ by reversing the same dictionary: $\bot$ becomes $0$, $\top$ becomes $1$, conjunction becomes product, implication becomes function type, modal necessity becomes reflective proof, and the modal fixed point becomes the reflective fixed point. Atoms and bound variables are preserved.
 
-*Proof.* If $w \in \Box P$ then every successor of $w$ lies in $P \subseteq Q$, so every successor lies in $Q$, i.e. $w \in \Box Q$. $\square$
+**Lemma 3.4 (Reflective round trip).** For every $A\in\mathsf{RT}(\mathcal A)$,
 
-**Theorem 4.2 (Distribution over conjunction).** For all $P, Q$,
-$$\Box(P \cap Q) = \Box P \cap \Box Q.$$
+$$
+S(T(A))=A.
+$$
 
-*Proof.* For any $w$: every successor lies in $P \cap Q$ iff every successor lies in $P$ and every successor lies in $Q$. $\square$
+*Proof sketch.* Structural induction on $A$. Every nullary constructor is preserved by direct calculation. For a binary constructor, apply the induction hypotheses to both children and rebuild the original product or arrow. For $\Box A$ and $\mu A$, apply the induction hypothesis to the unique body and rebuild the unary constructor. $\square$
 
-**Theorem 4.3 (Axiom $K$).** For all $P, Q$ and every world $w$, if $w \in \Box\{v : v \in P \Rightarrow v \in Q\}$ and $w \in \Box P$, then $w \in \Box Q$.
+**Lemma 3.5 (Modal round trip).** For every $\varphi\in\mathsf{Mu}(\mathcal A)$,
 
-*Proof.* Fix a successor $v$ of $w$. The first hypothesis gives $v \in P \Rightarrow v \in Q$, and the second gives $v \in P$; hence $v \in Q$. As $v$ was arbitrary, $w \in \Box Q$. $\square$
+$$
+T(S(\varphi))=\varphi.
+$$
 
-**Theorem 4.4 (Necessitation).** If $P = W$ (i.e. $P$ holds at every world), then $\Box P = W$.
+*Proof sketch.* The argument is the corresponding structural induction over modal formulas. $\square$
 
-*Proof.* Every successor of every world lies in $W = P$, so every world is in $\Box P$. $\square$
+**Theorem 3.6 (Translation Isomorphism Theorem).** The reflective grammar $\mathsf{RT}(\mathcal A)$ and modal fixed-point grammar $\mathsf{Mu}(\mathcal A)$ are isomorphic. The maps $T$ and $S$ are mutually inverse bijections.
 
-Theorems 4.1–4.4 say precisely that $\Box$ is a *normal* modality: it is monotone, commutes with conjunction, validates $K$, and is closed under necessitation. These are exactly the laws one demands of an honest notion of provability, so the reflective layer is well-behaved.
+*Proof sketch.* Lemmas 3.4 and 3.5 are exactly the two inverse laws. $\square$
 
-**Theorem 4.5 ($\Box$ is not the identity).** There is a frame $F$ on $\{0, 1\}$, a proposition $P$, and a world $w$ with $w \in \Box P \not\Leftrightarrow w \in P$; equivalently, $\Box P \neq P$ in general.
+The theorem is uniform in the atomic language. Atoms may stand for arithmetic statements, program assertions, state predicates, or context-indexed judgments without changing the argument.
 
-*Proof.* Take $R = \varnothing$ (no reasoning steps) and $P = \varnothing$. Then every world is vacuously in $\Box P$ (there are no successors to violate $P$), so $\Box P = W = \{0, 1\}$, while $P = \varnothing$. At $w = 0$ we have $0 \in \Box P$ but $0 \notin P$. $\square$
+**Theorem 3.7 (Preservation of iterated reflection).** Let $\Box^0A=A$ and $\Box^{n+1}A=\Box(\Box^nA)$. Then for every $n\in\mathbb N$ and every reflective expression $A$,
 
-**Corollary 4.6 (Proper extension).** The reflective modality is a normal operator that is not definable as the identity on the non-modal base. Consequently the reflective theory *properly* extends its non-modal fragment: it validates every structural law of provability while adding genuinely new propositions (those of the form $\Box P$ that disagree with $P$).
+$$
+T(\Box^nA)=\Box^nT(A).
+$$
 
-The intuition behind Theorem 4.5 is that a dead-end stage proves *everything* vacuously, decoupling provability from truth. More generally, provability and truth agree everywhere only under strong frame conditions (reflexivity forces $\Box P \subseteq P$; density and other constraints control the converse), so the modal layer carries information the Boolean base cannot.
+*Proof sketch.* Induct on $n$. The zero case is immediate. In the successor case, expose one additional reflective proof constructor, translate it to one modal box, and invoke the induction hypothesis on the remaining iteration. $\square$
 
----
+The isomorphism is syntactic. It neither asserts completeness of a proof calculus nor guarantees a least-fixed-point denotation for every body. In an implication $A\Rightarrow B$, occurrences in $A$ are contravariant. A recursively bound variable in such a negative position may make the semantic operator antitone rather than monotone. Consequently, unrestricted syntax must be separated from guarded or positive semantics.
 
-## 5. The proof-term language is a modal $\mu$-calculus
+## 4. Kripke semantics for reflective provability
 
-### 5.1 Monotone operators and fixed points
+**Definition 4.1 (Frame).** A frame is a pair $F=(W,R)$, where $W$ is a set of worlds and $R\subseteq W\times W$ is an accessibility relation. We write $wRv$ when $v$ is accessible from $w$ in one step.
 
-The decisive structural observation is that the semantics lives in a complete lattice.
+**Definition 4.2 (Proposition and box).** A proposition on $F$ is a subset $P\subseteq W$. Its boxed proposition is
 
-**Proposition 5.1 (Lattice of propositions).** The propositions $\mathcal{P}(W)$ ordered by $\subseteq$ form a complete lattice: every family of propositions has a least upper bound (union) and a greatest lower bound (intersection).
+$$
+\Box_F P=\{w\in W:\forall v\in W,\ wRv\Rightarrow v\in P\}.
+$$
 
-**Proposition 5.2 ($\Box$ is monotone).** By Theorem 4.1, $\Box : \mathcal{P}(W) \to \mathcal{P}(W)$ is a monotone operator on this lattice. So is $\Diamond$, and so is every operator built from $\Box$, $\Diamond$, $\cap$, $\cup$, and monotone parameters.
+Thus $w\in\Box_FP$ means that every immediate successor of $w$ satisfies $P$. No reflexivity, seriality, transitivity, or finiteness is assumed unless explicitly stated.
 
-**Theorem 5.3 (Knaster–Tarski fixed points).** Every monotone operator $f : \mathcal{P}(W) \to \mathcal{P}(W)$ has a least fixed point
-$$\mu f = \bigcap \{\, X : f(X) \subseteq X \,\}$$
-and a greatest fixed point
-$$\nu f = \bigcup \{\, X : X \subseteq f(X) \,\},$$
-each satisfying $f(\mu f) = \mu f$ and $f(\nu f) = \nu f$.
+**Definition 4.3 (Uniterated provability witness).** A world $w$ witnesses “$P$ is provable but not provably provable” when
 
-Because $\Box$ and $\Diamond$ are monotone, Theorem 5.3 applies to every operator in the reflective signature. This is exactly the ingredient that upgrades a modal logic to a modal *$\mu$-calculus*: the language of $\Box$, $\Diamond$, Boolean connectives, and the two fixed-point binders $\mu$ (least) and $\nu$ (greatest).
+$$
+w\in\Box_FP
+\quad\text{and}\quad
+w\notin\Box_F(\Box_FP).
+$$
 
-**Examples 5.4.** Over a frame:
-- $\mu X.\ (A \cup \Diamond X)$ is the set of stages from which $A$ is *eventually reachable* along the reasoning steps.
-- $\nu X.\ \Diamond X$ is the set of stages that begin an *infinite forward path* of reasoning steps.
+Equivalently, $w$ satisfies $\Box P\wedge\neg\Box\Box P$.
 
-On the finite acyclic line $0 \to 1 \to 2 \to 3$ with $A = \{3\}$, the least fixed point $\mu X.\ (A \cup \Diamond X)$ is the whole line $\{0,1,2,3\}$ (every stage eventually reaches $3$), while the greatest fixed point $\nu X.\ \Diamond X$ is empty (no stage begins an infinite path). Both values are computed exactly by iteration from $\varnothing$ and from $W$ respectively.
+### 4.1 A finite witness
 
-**Interpretation 5.5 (Proof terms as $\mu$-calculus formulas).** Under propositions-as-types, a proof term of a reflective proposition is a witness to membership in the corresponding set of stages. The connectives available for building such propositions are exactly the monotone lattice operators together with $\mu$ and $\nu$. Hence the reflective proof-term language *is*, structurally, a modal $\mu$-calculus: $\Box$ is one monotone operator among many, and Knaster–Tarski supplies the recursion uniformly.
+**Definition 4.4 (Three-state chain).** Let
 
-### 5.2 Löb's law: the well-founded fixed-point principle
+$$
+W=\{0,1,2\},\qquad R=\{(2,1),(1,0)\}.
+$$
 
-The characteristic fixed-point law of self-referential provability is Löb's theorem. It holds under a well-foundedness hypothesis on the reasoning steps.
+Let $P=\{1\}$, the proposition true only at the middle world.
 
-**Theorem 5.6 (Löb's law).** Suppose the frame is transitive and *converse well-founded*: there is no infinite sequence $w_0 \to w_1 \to w_2 \to \cdots$ of reasoning steps (equivalently, the relation is well-founded read backward, so every forward chain terminates). Then for every proposition $P$,
-$$\Box(\Box P \to P) \subseteq \Box P.$$
+**Theorem 4.5 (Three-State Witness Theorem).** In the frame of Definition 4.4, world $2$ satisfies
 
-*Proof sketch.* By well-founded induction on the step relation. Assume $w \in \Box(\Box P \to P)$; we show $w \in \Box P$, i.e. $P$ holds at every successor $v$ of $w$. Fix such a $v$. By transitivity, $v$ inherits $\Box(\Box P \to P)$, so by the induction hypothesis applied at $v$ (legitimate because $v$ is strictly ahead of $w$ in a terminating relation) we obtain $v \in \Box P$. The hypothesis at $w$ gives, at $v$, that $\Box P \to P$ holds; combined with $v \in \Box P$ this yields $v \in P$. As $v$ was arbitrary, $w \in \Box P$. $\square$
+$$
+\Box P\wedge\neg\Box\Box P.
+$$
 
-Read in plain language, Löb's law says: *if it is provable that "the provability of $P$ entails $P$," then $P$ is already provable.* It is the modal core of Gödel's second incompleteness theorem and the archetypal fixed-point law of self-reference; well-foundedness is precisely what makes the self-referential induction terminate. A finite check over the strict-order frame on $\{0,1,2,3\}$ (transitive and converse well-founded) confirms $\Box(\Box P \to P) \subseteq \Box P$ for every proposition $P$.
+*Proof sketch.* The sole successor of $2$ is $1$, and $1\in P$, so $2\in\Box P$. If $2\in\Box\Box P$, then its successor $1$ would belong to $\Box P$. But $1$ has successor $0$, and $0\notin P$. Hence $1\notin\Box P$, contradicting the assumed second box. Therefore $2\notin\Box\Box P$. $\square$
 
-**Remark 5.7.** Löb's law is exactly the statement that on well-founded transitive frames $\Box P$ is the *unique* fixed point of the operator $X \mapsto \Box(X \to P)$ — the $\mu$-calculus fixed-point law specialized to the provability modality. This closes the circle: fixed points are not an add-on to reflective provability but its native idiom.
+This witness is non-vacuous. The distinguished world has a successor, and the failure of the iterated box is exhibited by the composable path $2R1R0$. Terminal worlds require care because a universal condition over no successors is automatically true.
 
----
+**Lemma 4.6 (Failure of transitivity in the witness).** The relation in Definition 4.4 is not transitive.
 
-## 6. Algorithms
+*Proof sketch.* We have $2R1$ and $1R0$, but not $2R0$. $\square$
 
-The entire theory is finite-model-checkable, which makes the results directly executable. We record the two central algorithms.
+### 4.2 The transitivity boundary
 
-**Algorithm A (Modal evaluation).** Given a finite frame $(W, R)$ and a proposition $P \subseteq W$, compute $\Box P$ and $\Diamond P$ by, for each world $w$, inspecting its successor set $R(w) = \{v : R\,w\,v\}$: place $w$ in $\Box P$ iff $R(w) \subseteq P$, and in $\Diamond P$ iff $R(w) \cap P \neq \varnothing$. Complexity $O(|W| + |R|)$ per proposition. Iterating gives $\Box\Box P$ and hence a decision procedure for $\Box P \wedge \neg\,\Box\Box P$ at any world.
+**Definition 4.7 (Transitive frame).** A frame is transitive if, for all $a,b,c\in W$,
 
-**Algorithm B (Fixed-point iteration).** Given a monotone operator $f$ on the finite lattice $\mathcal{P}(W)$, compute $\mu f$ by iterating $X_0 = \varnothing$, $X_{n+1} = f(X_n)$ until $X_{n+1} = X_n$; compute $\nu f$ by iterating from $X_0 = W$. Monotonicity guarantees the chains are monotone and, in a finite lattice of height $|W|$, stabilize in at most $|W|$ steps. This evaluates any closed $\mu$-calculus formula (alternation handled by nesting the iterations).
+$$
+aRb\ \text{and}\ bRc\quad\Longrightarrow\quad aRc.
+$$
 
----
+**Theorem 4.8 (Modal Axiom $4$ on Transitive Frames).** If $F$ is transitive, then for every proposition $P\subseteq W$,
 
-## 7. Applications
+$$
+\Box_FP\subseteq\Box_F(\Box_FP).
+$$
 
-**Staged epistemics.** The distinction between $\Box P$ and $\Box\Box P$ models the difference between what a reasoner (a program, an agent) can guarantee *now* and what it can guarantee about its own *future* guarantees. Non-transitive frames capture bounded-horizon reasoning, where an agent secures the next step but not the step after.
+Equivalently, every transitive frame validates $\Box P\to\Box\Box P$.
 
-**Formal verification.** The modal $\mu$-calculus identified in Section 5 is the specification language of *model checking*. "Eventually reaches a good state" is a least fixed point $\mu X.\ (A \cup \Diamond X)$; "can run forever" or "avoids a bad state indefinitely" is a greatest fixed point. Algorithms A and B are precisely the core of a model checker.
+*Proof sketch.* Let $w\in\Box_FP$. To prove $w\in\Box_F(\Box_FP)$, choose a successor $v$ with $wRv$. We must show $v\in\Box_FP$. Choose any $u$ with $vRu$. By transitivity, $wRu$. Since $w\in\Box_FP$, it follows that $u\in P$. This holds for every successor $u$ of $v$, so $v\in\Box_FP$. Since $v$ was arbitrary, $w\in\Box_F(\Box_FP)$. $\square$
 
-**Foundations of self-reference.** The framework provides a controlled laboratory for the paradoxes and theorems of self-reference — the liar, Gödel incompleteness, Löb's theorem — locating the safe/explosive boundary at a single first-order frame condition (transitivity plus well-foundedness).
+**Corollary 4.9 (Transitive Obstruction Theorem).** No world of a transitive frame witnesses $\Box P\wedge\neg\Box\Box P$ for any proposition $P$.
 
----
+*Proof sketch.* The first conjunct and Theorem 4.8 imply $\Box\Box P$, contradicting the second conjunct. $\square$
 
-## 8. Discussion and future work
+The theorem is independent of finiteness. It applies to arbitrary sets of worlds and arbitrary transitive accessibility relations. The result identifies transitivity as a universal obstruction, while the three-state chain gives a minimal elementary mechanism for failure: a two-edge path whose composite edge is absent.
 
-Three structural findings orient the next questions: (i) "provable but not provably provable" is inhabited exactly when the provability step is non-transitive; (ii) the modality is normal yet provably not the identity, so it strictly enriches the non-modal base; (iii) least and greatest fixed points exist for every monotone operator, and on well-founded frames provability satisfies Löb's law.
+Transitivity is sufficient to forbid the witness on every valuation. For an individual non-transitive frame, the existence of a suitable valuation can depend on the local edge structure. A structural classification up to generated subframes or bounded morphisms is a natural next step.
 
-**Transitivity as the exact frontier.** We conjecture that $\Box P \wedge \neg\,\Box\Box P$ is satisfiable *iff* the step relation is non-transitive, and that $\Box$-definable predicates collapse onto the non-modal fragment precisely on transitive-and-dense frames — making axiom 4 equivalent to transitivity at the level of definable predicates.
+## 5. Fixed-point semantics and positivity
 
-**Completeness for the $\mu$-calculus.** We conjecture that every modal $\mu$-calculus formula is realized by a reflective proof term and conversely, via a compositional translation preserving alternation depth, since $\Box$ is one monotone operator among all and Knaster–Tarski supplies $\mu$/$\nu$ uniformly.
+The grammar isomorphism permits unrestricted fixed-point bodies, but standard least-fixed-point semantics operates on monotone maps.
 
-**Löb and normalization.** We conjecture that a reflective theory admits strong normalization of proof terms *iff* its provability step is transitive and converse well-founded — iff Löb's law holds globally — because converse well-foundedness both powers the induction behind Löb's theorem and forbids non-terminating self-referential proof terms.
+Let $L$ be a complete lattice, such as the powerset $\mathcal P(W)$ ordered by inclusion. A formula body $A(X)$ with one free variable induces, under an environment for its other atoms, an operation
 
-**Graded reflection.** Indexing the step relation by a natural-number grade yields a hierarchy $\Box_0 \subseteq \Box_1 \subseteq \cdots$ of provability strengths whose union is a genuine fixed point, stratifying reflective power.
+$$
+\Phi_A:L\to L.
+$$
 
----
+If $\Phi_A$ is monotone, meaning
 
-## 9. Conclusion
+$$
+X\le Y\quad\Longrightarrow\quad\Phi_A(X)\le\Phi_A(Y),
+$$
 
-Reflective type theory is normal modal logic over propositions-as-sets, situated properly above its non-modal base, with the modal $\mu$-calculus as its fixed-point completion and Löb's theorem as its well-founded fixed-point law. The self-referential proposition "provable but not provably provable" is not a paradox but a theorem-bearing citizen of the theory, inhabited exactly at the horizon of non-transitive provability and vanishing the instant provability becomes far-sighted enough to see its own consequences.
+then the Knaster–Tarski theorem supplies a least fixed point
+
+$$
+\mu\Phi_A=\bigwedge\{X\in L:\Phi_A(X)\le X\}.
+$$
+
+Positive occurrence is the usual syntactic discipline ensuring monotonicity. Products or conjunctions preserve variance in each argument. The box operator is monotone: $P\subseteq Q$ implies $\Box P\subseteq\Box Q$. Implication, however, reverses variance in its antecedent and preserves it in its consequent. Thus an occurrence of $X$ on the left of an odd number of implications is negative.
+
+For example, over truth values, the body $X\Rightarrow\bot$ behaves like negation. Increasing $X$ from false to true decreases the truth value of the body from true to false, so the induced map is not monotone. An unrestricted expression $\mu X.(X\Rightarrow\bot)$ therefore does not receive the intended least-fixed-point interpretation from the monotone fixed-point theorem.
+
+This does not compromise Theorem 3.6. Syntax can be translated regardless of variance. The boundary is semantic: positivity is needed when $\mu$ is interpreted as a least fixed point in a complete lattice or complete Heyting algebra.
+
+## 6. Diagonal reflection and incompleteness
+
+We isolate the minimal assumptions behind a diagonal incompleteness argument.
+
+**Definition 6.1 (Diagonal reflective theory).** A diagonal reflective theory consists of:
+
+1. a set $\mathcal S$ of sentences;
+2. a predicate $\mathsf{Prov}(s)$ meaning that $s$ is provable;
+3. a predicate $\mathsf{True}(s)$ meaning that $s$ is true;
+4. soundness, namely $\mathsf{Prov}(s)\Rightarrow\mathsf{True}(s)$ for every $s$;
+5. a distinguished sentence $D$ satisfying
+
+$$
+\mathsf{True}(D)\quad\Longleftrightarrow\quad\neg\mathsf{Prov}(D).
+$$
+
+**Theorem 6.2 (Diagonal Incompleteness Theorem).** In every diagonal reflective theory,
+
+$$
+\mathsf{True}(D)\wedge\neg\mathsf{Prov}(D).
+$$
+
+*Proof sketch.* Suppose $\mathsf{Prov}(D)$. Soundness gives $\mathsf{True}(D)$, and the diagonal specification then gives $\neg\mathsf{Prov}(D)$, a contradiction. Hence $\neg\mathsf{Prov}(D)$. Applying the reverse direction of the diagonal specification yields $\mathsf{True}(D)$. $\square$
+
+The theorem separates the endpoint of diagonal reasoning from the machinery used to construct $D$. It does not assert that every language with a $\mu$ constructor automatically represents syntax, substitution, truth, or its own proof relation. To derive the sentence internally, a reflective theory must express enough coding and substitution for a fixed-point or diagonal lemma. The fixed-point grammar indicates a route, but the representability hypotheses are substantive.
+
+## 7. Algorithms and computational illustrations
+
+Although the main results are structural, finite instances admit direct algorithms.
+
+### 7.1 Structural translation
+
+A reflective syntax tree can be translated to modal syntax by a depth-first traversal. At each node, replace its constructor according to Definition 3.2 and recursively translate its children. The backward translation reverses the dictionary.
+
+If a syntax tree has $N$ nodes and height $H$, each translation takes $O(N)$ time. A recursive implementation uses $O(H)$ call-stack space and $O(N)$ space for the output. Round-trip equality can be checked structurally in another $O(N)$ time. The inverse theorems show that this check succeeds for every well-formed tree, not merely tested examples.
+
+### 7.2 Finite-frame box evaluation
+
+For a finite frame represented by adjacency lists, compute $\Box P$ by examining every outgoing edge $wRv$ and checking whether $v\in P$. If the frame has $|W|$ worlds and $|R|$ edges, one box evaluation takes $O(|W|+|R|)$ time with constant-time set membership. Evaluating $\Box\Box P$ performs the operation twice and has the same asymptotic complexity.
+
+A transitivity checker examines whether every length-two path $aRbRc$ has the shortcut $aRc$. With adjacency sets, a direct implementation takes
+
+$$
+O\left(\sum_{b\in W}\deg^-(b)\deg^+(b)\right)
+$$
+
+time, bounded by $O(|W|^3)$ in dense graphs. For the three-state chain, it detects the missing edge $2R0$ and computes
+
+$$
+P=\{1\},\qquad \Box P=\{0,2\},\qquad \Box\Box P=\{0,1\}.
+$$
+
+Here $0$ belongs to both boxed sets vacuously because it has no successors, while $2$ lies in the first but not the second.
+
+### 7.3 Fixed-point iteration for positive formulas
+
+On a finite powerset lattice, a monotone operator $\Phi:\mathcal P(W)\to\mathcal P(W)$ has a least fixed point obtained by iteration from the empty set:
+
+$$
+X_0=\varnothing,\qquad X_{k+1}=\Phi(X_k).
+$$
+
+The ascending chain stabilizes after at most $|W|$ strict increases. If one evaluation of $\Phi$ costs $C$, the total cost is $O(|W|C)$. This algorithm illustrates why monotonicity matters: it guarantees $X_k\subseteq X_{k+1}$ and prevents oscillation. A negative body can alternate instead of converging; Boolean negation sends $\varnothing$ to $W$ and $W$ back to $\varnothing$.
+
+## 8. Applications
+
+### 8.1 Distributed knowledge
+
+In epistemic models, $\Box P$ can mean that every state compatible with an agent’s information satisfies $P$. The distinction between $\Box P$ and $\Box\Box P$ separates knowing a fact from knowing that the fact is known. Transitive accessibility corresponds to positive introspection. The three-state witness models an agent whose one-step information supports $P$ but whose accessible successor does not itself support certainty of $P$.
+
+### 8.2 Program transition systems
+
+Let worlds be program states and accessibility be one execution step. Then $\Box P$ means that all immediate next states satisfy $P$, whereas $\Box\Box P$ means that all states reachable in two steps satisfy $P$ through the nested universal condition. If the one-step relation is replaced by a transitively closed reachability relation, the first condition implies the second. Without transitive closure, the chain example is the smallest pattern in which a one-step guarantee fails at the next layer.
+
+### 8.3 Authorization and evidence chains
+
+A credential may authorize a claim at every directly trusted principal without ensuring that those principals can authorize the same claim to their successors. Transitivity of trust turns direct validity into iterated validity; non-transitivity allows a claim to be accepted without acceptance itself propagating.
+
+### 8.4 Recursive specifications
+
+The modal $\mu$-calculus expresses reachability, invariance, liveness, and recursively defined state properties. The grammar isomorphism allows these formulas to be read as reflective proposition codes. For example, a positive fixed point can describe the least collection of states closed under a proof rule. The positivity boundary warns that recursively placing a proposition in a contravariant position may destroy monotonicity and hence the least-solution interpretation.
+
+## 9. Discussion and limitations
+
+The proper-extension theorem is syntactic and exact. It proves that the old grammar embeds injectively and that reflection adds expressions outside the image. It does not establish conservativity for all judgments of a full dependent theory, because operational rules for reflection and fixed points might interact with normalization.
+
+The modal correspondence is likewise exact at the grammar level. Calling the proof-term language “the modal $\mu$-calculus” must be understood relative to the specified fragment and constructor dictionary. Standard semantic treatments restrict fixed-point variables to positive positions. The unrestricted grammar remains isomorphic before that restriction, while a semantic isomorphism should compare corresponding positive fragments and their interpretations.
+
+The three-state result is an existence theorem and the transitivity theorem is a universal impossibility result. Together they expose a sharp sufficient boundary. A complete classification of all finite pointed frames supporting $\Box P\wedge\neg\Box\Box P$ would additionally analyze generated subframes, seriality assumptions, and bounded morphic images.
+
+Finally, diagonal incompleteness assumes a sentence satisfying the diagonal specification. Producing such a sentence internally requires representable substitution and a suitable negative or guarded fixed point. This is precisely where the interaction among reflection, variance, and coding becomes most delicate.
+
+## 10. Future work
+
+A first objective is to prove that positivity is not only sufficient but necessary for monotonicity in every complete Heyting algebra, with non-positivity already witnessed by the two-element algebra. A second is to classify finite pointed models of $\Box P\wedge\neg\Box\Box P$ up to bounded morphism and to establish minimality under explicit seriality conditions.
+
+A third direction is metatheoretic: embed the construction into intensional dependent type theory, stratify computation so ordinary terms cannot inspect reflective evidence improperly, and prove canonicity for closed natural-number terms. A fourth is quantitative: compare modal fixed-point alternation depth with reflective proof depth and frame height on finite transitive converse-well-founded frames.
+
+The most direct incompleteness problem is to replace the externally specified diagonal sentence by one synthesized from internal fixed-point syntax once substitution is representable. Success would connect the grammar-level $\mu$ constructor to a fully internal diagonal lemma without obscuring the positivity and soundness assumptions.
+
+## 11. Conclusion
+
+Reflective type theory adds a controlled ability to discuss evidence within the proposition language. In the fragment studied here, its relationship with modal fixed-point logic is exact: the syntax trees correspond bijectively, and repeated reflection becomes repeated necessity. The extension over the non-reflective core is faithful and proper.
+
+Semantically, the formula $\Box P\wedge\neg\Box\Box P$ is realized by a concrete three-world non-transitive frame. Transitivity eliminates it universally by validating $\Box P\to\Box\Box P$. Recursion introduces a different boundary: positivity is required for monotone least-fixed-point semantics. Finally, sound diagonal self-reference yields a true unprovable sentence.
+
+These results organize reflective reasoning into four layers: syntactic extension, modal translation, geometric propagation of evidence, and diagonal incompleteness. Keeping the layers distinct makes their connections precise and their limitations visible.
