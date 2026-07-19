@@ -428,6 +428,26 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Develop a rigorous theory of negative-dimensional spaces using pro-spectra and formal dimension theory. Prove that Euler characteristic extends to negative dimensions and that chi(X) for dim X = -n satisfies chi = (-1)^n · |pi_0(X)|. Formalize the stabilization map from negative to positive dimensions.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Geometry"
+    ],
+    "id": "fd_0444",
+    "lineage_refs": [],
+    "priority_score": 0.83,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-19T10:41:15.077942+00:00",
+    "title": "Negative-Dimensional Topology: What Lives in Dimension -1?"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
     "consumed_by_exp_id": "a9bce66e",
     "description": "Formalize transreal arithmetic (Anderson's system: R ∪ {Phi, +inf, -inf} with Phi = 0/0). Prove the ring axioms fail but a wheel structure emerges. Determine which theorems of real analysis survive transreal extension and which collapse.",
     "domain_bridges": [],
@@ -4324,6 +4344,26 @@
     "status": "in_progress",
     "timestamp": "2026-07-19T08:40:11.361973+00:00",
     "title": "Infinite-Dimensional Chess: Winning on the Hilbert Board"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalize the mathematical conditions under which impossible figures (Penrose triangles, Escher stairs) can exist as manifolds. Prove that every non-orientable 3-manifold contains an embedded Penrose triangle as a smoothly immersed surface. Classify which impossible figures are realizable as developable surfaces.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Geometry"
+    ],
+    "id": "fd_0445",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-19T10:41:15.115361+00:00",
+    "title": "The Topology of Impossible Objects: Escher Stairs and Klein Bottles"
   },
   {
     "ambition_level": "extension",
