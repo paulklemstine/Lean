@@ -242,11 +242,11 @@
     // Static repulsion pushes nodes apart, gravity pulls them together, rocket thrust on collision pushes apart
     const SOFTENING = 200;             // Softening distance (larger = gentler at close range)
     const MIN_REPULSION_DIST = 2400;    // Bumper collision radius
-    const DAMPING = 0.998;              // Friction — reduced to keep graph energetic
+    const DAMPING = 0.85;              // High friction — keep graph elegant and slow
     const NODE_RADIUS = 22;
-    const MAX_VELOCITY = 100.0;        // Gentle cap scaled to large universe
-    const BOUNCE = 1.0;              // Elastic — conserves momentum AND kinetic energy
-    const THRUST_DURATION = 3.0;     // Seconds of visual rocket flame after collision
+    const MAX_VELOCITY = 10.0;        // Very gentle cap scaled to large universe
+    const BOUNCE = 0.0;              // Inelastic — smooth merges, no jittery bounces
+    const THRUST_DURATION = 0.0;     // Disable rocket flames to reduce visual noise
 
     // ─── Domain-clustered layout ───
     const DOMAIN_ORDER = ['Algebra', 'Tropical', 'Geometry', 'Cryptography', 'Physics',
@@ -776,7 +776,7 @@
 
             // Cap velocity to prevent ejections, and enforce minimum velocity
             let speed = Math.sqrt(n.vx * n.vx + n.vy * n.vy);
-            const MIN_VELOCITY = 25.0; // Increased to ensure nodes never look completely frozen
+            const MIN_VELOCITY = 0.5; // Very low minimum velocity for elegant floating
             if (speed < MIN_VELOCITY) {
                 if (speed === 0) {
                     const angle = Math.random() * Math.PI * 2;
