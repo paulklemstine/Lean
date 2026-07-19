@@ -231,26 +231,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "76d5023e",
-    "description": "The Alexander polynomial Delta_K(t) of a knot K is a Laurent polynomial that encodes topological information about the knot. Conjecture: for any knot K with n crossings, the Alexander polynomial Delta_K(t) can be expressed as the generating function of lattice paths in Z^2 that avoid a region determined by the knot diagram. Specifically, define the 'knot lattice' L_K as the set of lattice paths from (0,0) to (n,n) that avoid the 'forbidden region' R_K determined by the crossing structure of K. Then Delta_K(t) = sum_{p in L_K} t^{area(p)} where area(p) is the area under the path p. This conjecture follows from the state sum formula for the Alexander polynomial: Delta_K(t) = sum_{states s} (-1)^{w(s)} t^{a(s)} where w(s) is the writhe and a(s) is the area of the state. The area a(s) is exactly the area under a lattice path determined by the state. Conjecture: every Alexander polynomial arises as a lattice path generating function, and vice versa. This means the Alexander polynomial is not just a knot invariant — it is a combinatorial object that counts lattice paths. Test: compute the Alexander polynomials for the first 50 knots and verify that each can be expressed as a lattice path generating function. Impact: knot invariants are combinatorial. The Alexander polynomial counts lattice paths, connecting topology to combinatorics.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0368",
-    "lineage_refs": [],
-    "priority_score": 0.82,
-    "proof_strategy": "The Alexander polynomial Delta_K(t) is computed from the Alexander module H_1(X_K, Z[t, t^{-1}]) where X_K is the infinite cyclic cover of the knot complement. The presentation matrix (Alexander matrix) has entries that are Laurent polynomials. Delta_K(t) = det(M) where M is the (n-1) x (n-1) Alexander matrix after deleting one row and one column. Lattice path connection: the state sum for Delta_K(t) can be written as Delta_K(t) = sum_{s in states} t^{area(s)} * (-1)^{writhe(s)}. Each state s corresponds to a lattice path from (0,0) to (n,n) in Z^2, and area(s) is the area under this path. The forbidden region R_K is determined by the over/under crossings: at each crossing, the path must go either above or below the crossing, and the forbidden region is the set of paths that violate the knot's crossing constraints. More precisely: for a knot diagram with n crossings, each crossing is resolved as either A-type (horizontal pass) or B-type (vertical pass). The lattice path goes from (0,0) to (2,n) stepping right (A-type) or up (B-type) at each crossing. The area under the path is the sum of the vertical positions. Delta_K(t) = sum_{paths avoiding R_K} t^{area(path)}. Test: for the trefoil (3_1), compute the 8 lattice paths from (0,0) to (2,3), identify the 2 paths that avoid the forbidden region, and verify that the sum of t^{area} matches the Alexander polynomial Delta_{3_1}(t) = t - 1 + t^{-1}.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T00:43:47.706838+00:00",
-    "title": "Knots and Lattices: The Alexander Polynomial as a Lattice Path Count"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "The Riemann-Roch theorem for graphs (Baker-Norine, 2007) states that for a divisor D on a graph G, l(D) - l(K_G - D) = deg(D) + 1 - g(G) where l(D) is the rank of D, K_G is the canonical divisor, and g(G) is the genus (cyclomatic number). The chip-firing game is a combinatorial model: vertices hold chips, and 'firing' a vertex sends one chip along each incident edge. Conjecture: for the complete graph K_n, the canonical divisor K_{K_n} has rank (n-1)(n-2)/2 - 1, and the Riemann-Roch formula gives l(D) = deg(D) + 1 - (n-1)(n-2)/2 + l(K_{K_n} - D). For D = K_{K_n} (the canonical divisor itself): l(K_{K_n}) = (n-1)(n-2)/2 - 1 + 1 - (n-1)(n-2)/2 + l(0) = 0 + l(0). But l(0) = 0 (the empty divisor has rank 0). So l(K_{K_n}) = 0. Wait, this gives l(K_{K_n}) = 0, but the canonical divisor of K_n should have positive rank. Conjecture: the canonical divisor of K_n is K_{K_n} = sum_v (deg(v) - 1) * v = (n-2) * sum_v v, and l(K_{K_n}) = (n-1)(n-2)/2 - 1 (it achieves the genus minus 1). Test: compute the canonical divisor and verify the Riemann-Roch formula for K_n with n = 3, 4, 5, 6. Impact: chip-firing on complete graphs encodes the same information as the Riemann-Roch theorem on projective curves.",
     "domain_bridges": [],
@@ -5991,6 +5971,26 @@
     "status": "available",
     "timestamp": "2026-07-19T03:54:36.771701+00:00",
     "title": "**Conjecture.** Every scalar feed-forward ReLU network admits a depth-preserving"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Signed Lattice Models for Knot Polynomials\n\n## 1. Diagram-local signed path model\n\n**Conjecture.** Every oriented knot diagram with `n` crossings admits a canonically defined forbidden region and a local sign attached to each surviving path from `(0,0)` to `(n,n)` such that the resulting signed area generating function is its normalized Alexander polynomial. The construction should intertwine Reidemeister moves with explicit sign-preserving, weight-preserving cancellations or bijections.\n\nThe key insight is that positivity is the only universal obstruction detected by coefficient counting; the Alexander state sum already supplies exactly the missing cancellation data.\n\n**Why now?** The unsigned formulation is ruled out even under arbitrary path deletion, while finite signed state sums are universal. The remaining test is therefore structural rather than existential: signs and paths must be extracted locally and naturally from a diagram.\n\n## 2. Alternating knots and unsigned absolute coefficients\n\n**Conjecture.** For every reduced alternating knot diagram, the coefficientwise absolute value of its normalized Alexander polynomial is the area generating function of paths avoiding a diagrammatically defined Ferrers-type region, after an explicit grading shift.\n\nThe key insight is that alternating Alexander polynomials have a controlled sign pattern, suggesting that cancellation can be factored into a global alternating character while the remaining magnitudes are honest counts.\n\n**Why now?** The torus family shows precisely how an alternating sign pattern obstructs unsigned counting while leaving positive magnitudes. A geometric model for those magnitudes would recover a substantial and sharply delimited part of the original proposal.\n\n## 3. Reciprocity from path reflection\n\n**Conjecture.** In every diagram-local signed path model, Alexander reciprocity is induced by an involution on admissible paths that preserves sign and sends area `a` to `c-a` for a diagram-dependent constant `c`.\n\nThe key insight is that palindromicity of a signed generating function follows from an area-reversing, sign-preserving involution; this converts a polynomial identity into a concrete combinatorial symmetry.\n\n**Why now?** The abstract involution criterion is established, so the conjecture has a precise falsifiable target: construct the involution from crossing data and check compatibility with the forbidden region.\n\n## 4. Connected sum as concatenation of path ensembles\n\n**Conjecture.** A canonical signed path construction can be chosen so that connected sum of knot diagrams corresponds to concatenation or Cartesian product of their path ensembles, with additive area and multiplicative sign.\n\nThe key insight is that product state spaces produce Cauchy products of signed generating functions, exactly matching multiplicativity of the Alexander polynomial under connected sum.\n\n**Why now?** The algebraic product law already holds for arbitrary signed state families. What remains is to enforce geometric locality strongly enough that the product operation agrees with an explicit gluing of knot diagrams.\n\n## 5. Higher-rank path models for HOMFLY-type state sums\n\n**Conjecture.** The two-variable HOMFLY polynomial admits a signed generating-function model using paths in a higher-dimensional lattice, with separate geometric statistics recording the two gradings and local forbidden structures determined by crossings.\n\nThe key insight is that the signed-state mechanism is independent of the number of gradings; replacing scalar area by a vector of lattice statistics should encode multivariable state-sum weights.\n\n**Why now?** The one-variable analysis cleanly separates the unavoidable sign data from the grading statistic. This supplies a controlled template for testing whether richer knot polynomials require genuinely new geometry or only additional lattice coordinates.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0393",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "76d5023e",
+    "status": "available",
+    "timestamp": "2026-07-19T03:55:07.490722+00:00",
+    "title": "**Conjecture.** Every oriented knot diagram with `n` crossings admits a canonica"
   },
   {
     "ambition_level": "extension",
