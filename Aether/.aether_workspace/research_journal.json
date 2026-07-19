@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "d757b941",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions: Transform Uncertainty Beyond Fourier Duality\n\n## 1. Quantitative analytic-continuation uncertainty\n\n**Conjecture.** Let a normalized integral transform send compactly supported in",
-      "quality_score": 0.73,
-      "sorry_count": 0,
-      "theorem_count": 21,
-      "timestamp": "2026-07-18T19:24:50",
-      "title": "The Uncertainty Principle Is a Fourier Thing: Position-Momentum Duality"
-    },
-    {
       "cycle_id": "091f8315",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\n## 1. Quantified prediction from the angle-doubling coordinate\n\nFor every fixed bit-extraction rule with finitely many interval boundaries, determine\nwhether a polynomial-time pre",
@@ -499,19 +489,19 @@
       "theorem_count": 11,
       "timestamp": "2026-07-19T22:38:37",
       "title": "Zombies and Qualia: Mathematics of Subjective Experience"
+    },
+    {
+      "cycle_id": "ca6fc5a2",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Paradox-Tolerant Reflection\n\n## 1. A compositional truth language with three genuine diagonal sentences\n\nConstruct a recursively generated language with quotation, substitution, a",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 32,
+      "timestamp": "2026-07-19T23:31:17",
+      "title": "Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "352675e9",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\n## 1. Coherent levelwise classification\n\n**Conjecture.** Two coordinate-tree ray spaces are homeomorphic whenever their finite levels admit a coherent family of bijections preserv",
-      "quality_score": 0.71,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-07-16T05:31:09",
-      "title": "ArXiv paper: Ray and end spaces: characterizations and classification up to homeomorphism"
-    },
     {
       "cycle_id": "573ee086",
       "domain": "Algebra",
@@ -2501,27 +2491,19 @@
       "theorem_count": 14,
       "timestamp": "2026-07-19T23:31:08",
       "title": "Rainbow Arithmetic Progression Threshold Conjecture"
+    },
+    {
+      "cycle_id": "ca6fc5a2",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Paradox-Tolerant Reflection\n\n## 1. A compositional truth language with three genuine diagonal sentences\n\nConstruct a recursively generated language with quotation, substitution, a",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 32,
+      "timestamp": "2026-07-19T23:31:17",
+      "title": "Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "6e1376aa",
-      "domain": "Novelty",
-      "name": "logDeriv_continuous",
-      "quality": 0.8
-    },
-    {
-      "cycle_id": "6e1376aa",
-      "domain": "Novelty",
-      "name": "logDeriv_intervalIntegrable",
-      "quality": 0.8
-    },
-    {
-      "cycle_id": "6e1b10f7",
-      "domain": "Applications",
-      "name": "localFactor_factor",
-      "quality": 0.74
-    },
     {
       "cycle_id": "6e1b10f7",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "finite_memory_is_lossy",
       "quality": 0.73
+    },
+    {
+      "cycle_id": "ca6fc5a2",
+      "domain": "Applications",
+      "name": "of",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "ca6fc5a2",
+      "domain": "Applications",
+      "name": "identifies",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "ca6fc5a2",
+      "domain": "Applications",
+      "name": "identifies",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-19T23:31:08",
+  "last_updated": "2026-07-19T23:31:17",
   "open_questions": [
     {
       "context": "",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "32ad85ae",
-        "quality": 0.67,
-        "theorems": 28,
-        "title": "Anti-Mathematics: What If All Axioms Were Negated?"
-      },
-      {
         "cycle_id": "cf6c2cd9",
         "quality": 0.79,
         "theorems": 0,
@@ -3141,6 +3135,12 @@
         "quality": 0.67,
         "theorems": 25,
         "title": "The Oracle's Burden: How Much Knowledge Is Too Much?"
+      },
+      {
+        "cycle_id": "ca6fc5a2",
+        "quality": 0.72,
+        "theorems": 32,
+        "title": "Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
       }
     ],
     "Bridges": [
