@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "4b27af05",
-      "domain": "Tropical",
-      "key_insight": "# Future directions\n\n- Instantiate `graph_closure_inclusion_iff` with the Ehresmann rank definition of Bruhat order on `Equiv.Perm (Fin n)` and permutation inversion.\n- Connect `principalClosure` to t",
-      "quality_score": 0.88,
-      "sorry_count": 3,
-      "theorem_count": 3,
-      "timestamp": "2026-07-15T02:32:44",
-      "title": "Deepening: Bruhat Order Preserves Closure Relations for B-Orbits on Flag Variety Product"
-    },
-    {
       "cycle_id": "6097a507",
       "domain": "MachineLearning",
       "key_insight": "# Future directions\n\nThe present cycle refines the exact uniform coset exponent to exact finite-length first and second moments and their asymptotic prefactors.  Several natural extensions remain.\n\n1.",
@@ -2501,6 +2491,16 @@
       "theorem_count": 13,
       "timestamp": "2026-07-19T01:02:46",
       "title": "The Thermodynamics of Sorting: Entropy and Computational Work"
+    },
+    {
+      "cycle_id": "f017f3a3",
+      "domain": "Applications",
+      "key_insight": "# Future directions\n\n## What this phase establishes\n\nThe Lean development proves two foundational chains:\n\n1. `Sperner1D.lean` proves the parity form of one-dimensional Sperner, derives existence of a",
+      "quality_score": 0.63,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-19T02:06:49",
+      "title": "Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theory"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.78
     }
   ],
-  "last_updated": "2026-07-19T01:02:46",
+  "last_updated": "2026-07-19T02:06:49",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "5102d77c",
-        "quality": 0.67,
-        "theorems": 7,
-        "title": "The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
-      },
-      {
         "cycle_id": "9f14a31b",
         "quality": 0.6,
         "theorems": 13,
@@ -3141,6 +3135,12 @@
         "quality": 0.82,
         "theorems": 0,
         "title": "Deepening: Tropical Cryptocurrency: Mining on the Min-Plus Semiring"
+      },
+      {
+        "cycle_id": "f017f3a3",
+        "quality": 0.63,
+        "theorems": 0,
+        "title": "Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theo"
       }
     ],
     "Bridges": [
