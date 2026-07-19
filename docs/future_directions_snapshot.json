@@ -4188,7 +4188,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5b9ebbbb",
     "description": "A Sudoku puzzle is a constraint satisfaction problem on a 9x9 grid. The 'spectral gap' of a Sudoku puzzle is the gap between the two largest eigenvalues of the transition matrix of the Markov chain that randomly swaps two compatible entries. The spectral gap determines the mixing time: the number of swaps needed to generate a uniformly random solution. Conjecture: the spectral gap of a Sudoku puzzle undergoes a phase transition at the critical density d_c = 17/81 (the density of the minimal number of clues, 17, divided by 81). For puzzles with fewer than 17 clues, the spectral gap is large (the Markov chain mixes quickly, meaning there are many solutions). For puzzles with exactly 17 clues, the spectral gap is minimal (the chain mixes slowly, meaning solutions are hard to find). For puzzles with more than 30 clues, the spectral gap is zero (the chain is reducible, meaning the puzzle has a unique solution and no swaps are possible). Conjecture: the spectral gap lambda_1 - lambda_2 of the Sudoku Markov chain satisfies: lambda_1 - lambda_2 > epsilon for d < 17/81 (many solutions, fast mixing), lambda_1 - lambda_2 ~ 0 for d ~ 17/81 (critical point, slow mixing), and the chain is absorbing for d > 30/81 (unique solution, no mixing). Test: compute the spectral gap for Sudoku puzzles with varying numbers of clues and verify the phase transition. Impact: Sudoku has a spectral gap phase transition. The hardness of the puzzle is determined by the gap, not by the number of clues.",
     "domain_bridges": [],
     "domains": [
@@ -4201,7 +4201,7 @@
     "proof_strategy": "Define the Sudoku Markov chain M: state space = valid completions of the puzzle. Transitions: swap two compatible entries (entries in different rows, columns, and boxes). The transition matrix P has entries P(i,j) = probability of moving from state i to state j. The spectral gap is lambda_1 - lambda_2 where lambda_1 = 1 (the stationary distribution eigenvalue) and lambda_2 is the second-largest eigenvalue. For a connected state space (many solutions): lambda_1 - lambda_2 > 0, and the mixing time is O(1/(lambda_1 - lambda_2)). For a unique solution: the chain has only one state, so lambda_1 = lambda_2 = 1 (no gap). For critical puzzles (17 clues): the state space has many solutions but they are 'far apart' (connected only through long chains of swaps), so lambda_2 is close to 1 and the gap is small. Phase transition conjecture: as the number of clues k increases from 0 to 81, the spectral gap lambda_1 - lambda_2 transitions from large (many solutions, fast mixing) to small (few solutions, slow mixing) to zero (unique solution, no mixing). The critical point is k = 17 (the minimum number of clues for a unique solution). Test: generate Sudoku puzzles with k = 17, 20, 25, 30, 35, 40 clues, compute the transition matrix M for the swap Markov chain, find eigenvalues, measure spectral gap. For k >= 30 (unique solution), the chain has 1 state.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T03:03:23.727138+00:00",
     "title": "The Spectral Gap of Sudoku: When Puzzles Become Phase Transitions"
   },
