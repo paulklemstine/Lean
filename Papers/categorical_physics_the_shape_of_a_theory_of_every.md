@@ -1,0 +1,3 @@
+# Why numerical computational evidence was skipped
+
+The claims tested here are universal properties and structural impossibility statements, not numerical conjectures. Small-case tables cannot establish uniqueness of extensions, and no naturally associated integer sequence exists for an OEIS search. The relevant “counterexample hunt” is better made symbolically: the formal Lean theorem `positive_generator_has_no_dual` exhibits the one-generator free commutative monoid and proves that its generator has no inverse. Likewise, the computability issue is addressed structurally by a finite evaluation formula and an injective oracle encoding. Both are machine-checked in the accompanying Lean file and are stronger and more relevant than sampled calculations.
