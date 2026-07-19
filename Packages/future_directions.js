@@ -118,21 +118,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Time Travel Consistency: Novikov's Principle as a Fixed-Point Theorem"
   },
   {
-    "consumed_by_exp_id": "af530f4e",
-    "description": "Construct a rigorous model of hypercomputation that can solve the halting problem. Prove that any physical system implementing hypercomputation requires infinite energy density or infinite precision. Formalize the distinction between accidentally computable (physical oracles) and essentially computable (Turing machines).",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0461",
-    "priority_score": 0.87,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T15:32:52.351074+00:00",
-    "title": "Hypercomputation: Computing the Uncomputable"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle fff627f3 (Q=0.770), which proved 7 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Hilbert's Hotel has infinitely many rooms, each containing a prime number. Room n contains the n-th prime p_n. The manager can always accommodate a new guest (there are infinitely many primes). But what if the guests want to REARRANGE? Conjecture: For any permutation sigma of N, there exists a rearr",
     "domains": [
@@ -259,21 +244,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-17T13:45:52.051601+00:00",
     "title": "[Reset] Fresh approach in Shared"
-  },
-  {
-    "consumed_by_exp_id": "4c40ce69",
-    "description": "Construct an alternate number theory where primes are replaced by a random subset of N with density n/log n. Prove which theorems survive (Dirichlet, PNT) and which collapse (unique factorization). Determine whether RH holds almost surely in this counterfactual universe.",
-    "domains": [
-      "Novelty",
-      "NumberTheory"
-    ],
-    "id": "fd_0470",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T17:15:15.217270+00:00",
-    "title": "Counterfactual Number Theory: What If Primes Were Random?"
   },
   {
     "consumed_by_exp_id": "",
@@ -5144,6 +5114,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-19T19:32:44.018487+00:00",
     "title": "The literal research slogan cannot presently be proved as stated: \u201ctheory of eve"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe formal development establishes three robust conclusions for precise counterfactual models:\n\n1. the Cram\u00e9r density series diverges even on every fixed nonconstant arithmetic progression;\n2. independent events with these lower-bounded probabilities occur infinitely often almost surely, including along arithmetic progressions;\n3. replacing ordinary primes by irreducibles of the Hilbert monoid preserves infinitude but destroys unique factorization.\n\nA full prime-number-theorem analogue remains to be formalized. The natural next theorem is a concentration result for independent Bernoulli variables with probabilities `1 / log(n+2)`, showing that their counting function is asymptotic almost surely to its expectation, followed by an asymptotic evaluation of that expectation as `N / log N`.\n\nAn almost-sure Riemann-hypothesis statement requires a separate, explicit definition of the random Euler product or random Dirichlet series and its analytic continuation. The present event model alone does not canonically define zeros, so it cannot meaningfully settle an RH analogue. Future work should first choose the random zeta function, prove its convergence and continuation in a stated region, and only then formulate a zero-free or critical-line theorem. Care is also required because unique factorization already fails in the Hilbert model, so an Euler product cannot simply be assumed there.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0482",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "4c40ce69",
+    "status": "available",
+    "timestamp": "2026-07-19T20:08:27.519187+00:00",
+    "title": "The formal development establishes three robust conclusions for precise counterf"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Hypercomputation and Physical Information\n\n## 1. Quantitative energy\u2013precision tradeoff\n\n**Conjecture.** For every family of devices that exactly resolves the first `n` bits of an arbitrary oracle, any physical model with at most `E` energy and spatial volume `V` must satisfy a lower bound of the form `E/V \u00b7 log(1/\u03b5) \u2265 c n`, where `\u03b5` is its distinguishability scale and `c > 0` depends only on the model\u2019s noise law.\n\nThe key insight is that exact oracle loading is an injective encoding problem, so its qualitative cardinality obstruction should admit a metric packing refinement. **Why now?** The present infinite-capacity theorem identifies the correct injection; adding a physically justified packing bound would turn it into a falsifiable resource inequality.\n\n## 2. Robust hypercomputation under noisy queries\n\n**Conjecture.** An oracle evaluator whose independent answer error is bounded away from zero cannot decide the halting predicate with uniformly bounded error using finitely many repeated queries unless the oracle supplies a verifiable certificate relation unavailable to the base program table.\n\nThe key insight is that repeating an uncheckable semantic answer amplifies consistency but not correctness against systematic oracle corruption. **Why now?** The finite-transcript ambiguity theorem isolates exactly the missing information and suggests a sharp separation between stochastic noise and adversarially indistinguishable alternatives.\n\n## 3. Arithmetical hierarchy of iterated physical oracles\n\n**Conjecture.** A tower of `k` exact oracle loaders, where level `j+1` answers halting questions for machines equipped with level `j`, realizes the first `k` Turing jumps, and no lower level essentially computes the next level\u2019s anti-diagonal predicate.\n\nThe key insight is that the accidental-versus-essential distinction iterates: each external oracle becomes part of the next machine model, after which diagonalization applies again. **Why now?** The one-level separation is established in a form that can be recursively parameterized by oracle semantics.\n\n## 4. Topological precision obstruction\n\n**Conjecture.** If physical states form a compact metric space and every oracle bit is read by a continuous Boolean-valued observable, then no continuous loader from Cantor space can encode all binary oracles while maintaining a uniform positive readout margin at every coordinate.\n\nThe key insight is that cardinality alone does not exclude continuum-sized compact state spaces, whereas uniform robustness should force an impossible infinite packing. **Why now?** The current result pinpoints cardinality as too coarse for analog systems and identifies uniform distinguishability as the natural next hypothesis.\n\n## 5. Thermodynamic bridge for exact oracle erasure\n\n**Conjecture.** In any finite approximation storing `n` independent oracle bits with a uniform prior, resetting the loader state incurs entropy loss at least `n log 2`; consequently, any reversible realization must export at least `n` bits of side information.\n\nThe key insight is that oracle capacity and Landauer cost are two views of the same injective encoding: loading preserves distinctions, while erasure collapses them. **Why now?** Exact-loader injectivity can be combined directly with the existing deterministic entropy data-processing framework to obtain a quantitative thermodynamic bridge.\n",
+    "domains": [
+      "Computation",
+      "MachineLearning"
+    ],
+    "id": "fd_0483",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "af530f4e",
+    "status": "available",
+    "timestamp": "2026-07-19T20:08:38.889514+00:00",
+    "title": "**Conjecture.** For every family of devices that exactly resolves the first `n` "
   },
   {
     "consumed_by_exp_id": "",

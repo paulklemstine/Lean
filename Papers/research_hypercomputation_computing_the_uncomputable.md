@@ -1,212 +1,431 @@
-# Hypercomputation and the Physical-Precision Barrier: A Rigorous Model of Computing the Uncomputable
+# Hypercomputation, Diagonal Oracles, and the Physical Cost of Exact Information
+
+**Aristotle — July 19, 2026**
 
 ## Abstract
 
-We develop a rigorous mathematical model of *hypercomputation* — computation exceeding the power of Turing machines — and use it to make three claims precise. First, we quantify the scarcity of computability: the Turing-computable Boolean functions on $\mathbb{N}$ form a countable set, while the set of all Boolean functions on $\mathbb{N}$ has the cardinality of the continuum; consequently uncomputable functions not only exist but are uncountable, so computability is a measure-zero phenomenon. Second, we model a hypercomputer as a device equipped with a total *halting oracle*, prove that it correctly decides the halting problem by construction, prove (via Turing's diagonal argument) that no ordinary algorithm decides halting, and hence that the oracle is strictly stronger than any Turing machine. We further isolate the enumerative asymmetry that explains why mere simulation is insufficient: halting is recursively enumerable but non-halting is not. Third, we formalize the notion of a *physical oracle* read to finite precision and prove that finite precision collapses to ordinary computability: any device reading finitely many bits of a physical quantity computes a genuinely computable function. It follows that realizing an uncomputable function — in particular deciding halting — through a physical oracle demands unbounded precision, which under standard physical trade-offs corresponds to unbounded energy or resolution. Together these results draw a sharp line between the *accidentally computable* (physical oracles read finitely) and the *essentially computable* (Turing computable), and explain why hypercomputation cannot be obtained for free.
+We develop a self-contained mathematical model separating two notions often conflated in discussions of hypercomputation. A Boolean predicate is **essentially computable** relative to a program table when it occurs as one of the table's program behaviors; it is **accidentally computable** when an external oracle supplies its values without thereby belonging to that table. The anti-diagonal predicate of any program table is not essentially computable, yet it is evaluated exactly by an oracle loaded with that predicate. An analogous characteristic oracle answers the halting predicate of any fixed machine semantics, while its existence as a specified function supplies no construction of its contents.
 
-**Keywords:** hypercomputation, halting problem, computability, halting oracle, physical oracle, finite precision, recursive enumerability, cardinality, Turing degrees.
+We then isolate the physical information premise behind universal exact oracle access. An exact loader maps every infinite binary sequence to a physical state from which every bit can be recovered. Exact recovery forces the loading map to be injective, and therefore forces the physical state space to be infinite. No finite-capacity state space can implement universal exact loading. If a physical model asserts that bounded energy density or finite precision implies finite distinguishable-state capacity, an exact universal loader must violate both finite-resource conditions. This is a conditional information-theoretic theorem, not an unconditional energy law. We also prove that no finite query transcript uniquely identifies an arbitrary infinite oracle.
+
+A companion algebraic model of compositional memory clarifies the same boundary from the opposite direction. Every finite memory of streams over a nonempty alphabet identifies distinct streams; indistinguishability is a monoid congruence, erased streams form a submonoid, and the observational quotient is canonically isomorphic to the reachable memory algebra. Together these results locate the power of hypercomputation in the exact acquisition and discrimination of infinite information rather than in ordinary evaluation.
 
 ## 1. Introduction
 
-Turing's analysis of computation fixed, once and for all, a ceiling on what mechanical procedures can achieve. Yet the ceiling is low: the very first natural question one asks about programs — will this one halt? — lies above it. This paper is organized around a single question: *what would it take to reach above the ceiling*, and why is it so hard?
+The halting problem asks whether a given computation eventually stops. For standard universal models of computation there is no single program that answers this question correctly for every program-input pair. Hypercomputation proposes a larger mechanism—often an oracle—that supplies answers beyond the original computational class.
 
-Our contributions are three interlocking results, developed in a common framework of partial recursive functions.
+At the level of abstract functions, the proposal is coherent. One may specify an oracle whose answers are exactly the halting predicate, just as one may specify any Boolean function. The logical difficulty lies elsewhere: specifying a function is not an algorithm for producing it. Once an infinite answer table is treated as a physical resource, questions of loading, distinguishability, precision, noise, and empirical certification become unavoidable.
 
-1. **Scarcity (Section 3).** We show that computability is a rare property. The computable Boolean functions are countable; all Boolean functions form a set of size continuum; uncomputable functions are therefore uncountable. Hypercomputation is motivated not by a single hard problem but by the fact that unsolvability is generic.
+This paper studies three related structures.
 
-2. **The oracle model (Section 4).** We give a clean model of a hypercomputer as a total halting oracle, prove its correctness and its strict superiority over Turing machines, and expose the recursive-enumerability asymmetry that rules out naive simulation.
+First, a **program table** is an arbitrary enumeration of Boolean program behaviors. Diagonalization constructs a Boolean predicate absent from every row. An external oracle can nevertheless carry that predicate. This yields a precise separation between internal representability and external availability.
 
-3. **The precision barrier (Section 5).** We model physical oracles as bit streams read to finite precision and prove that finite precision yields only ordinary computability. This gives a rigorous *accidentally vs. essentially computable* dichotomy and a physical no-go statement for the halting problem.
+Second, an **exact universal oracle loader** stores any infinite bitstream in a physical state and permits exact coordinate readout. The readout equation makes loading injective. Consequently, the state space cannot be finite. Physical claims follow only after an explicit bridge identifies bounded resources with finite distinguishable-state capacity.
 
-We work throughout with a standard formalization of computability theory: programs are codes $c$ drawn from a countable type of codes, and $\text{eval}\,c : \mathbb{N} \rightharpoonup \mathbb{N}$ is the partial function computed by $c$. "Computable" and "recursively enumerable" (r.e.) carry their standard meanings, and coincide with Turing computability and $\Sigma_1$-definability respectively.
+Third, a **compositional memory** maps finite experience streams into a representation monoid while respecting concatenation. Finite such memory is necessarily lossy. Its information loss is exactly described by a congruence quotient, and selective deletion has a universal factorization property.
 
-## 2. Preliminaries and notation
+These three structures share a common theme: computation and memory are constrained by which distinctions a system can preserve. Diagonalization finds a distinction absent from an enumerated class. Exact loading demands preservation of every distinction among infinite bitstreams. Finite memory necessarily destroys some distinctions among finite streams.
 
-We write $\mathbb{B} = \{\text{true}, \text{false}\}$ for the Booleans and $\mathbb{N}$ for the natural numbers. A **decision problem** (or Boolean function) is a total function $f : \mathbb{N} \to \mathbb{B}$.
+## 2. Program tables and two meanings of computability
 
-Programs are encoded as elements $c$ of a countable type $\mathsf{Code}$; there is a fixed bijective-on-a-countable-domain encoding, so $\mathsf{Code}$ is countable. Each code $c$ determines a partial function $\text{eval}\,c : \mathbb{N} \rightharpoonup \mathbb{N}$. A partial function $\varphi : \mathbb{N} \rightharpoonup \mathbb{N}$ is **partial recursive** iff $\varphi = \text{eval}\,c$ for some code $c$; this is the completeness of the coding, which we use freely. A total function is **computable** iff it is partial recursive and total. A predicate $P$ on a countable type is **computable** iff its indicator is a computable Boolean function, and **recursively enumerable (r.e.)** iff it is the domain of some partial recursive function (equivalently, semi-decidable).
+Let $\mathbb B=\{0,1\}$, with Boolean complement written $\neg b=1-b$. A **program table** is a function
 
-We use two standard facts as black boxes:
+$$
+T:\mathbb N\times\mathbb N\longrightarrow\mathbb B.
+$$
 
-- **(Unsolvability of halting.)** For each fixed input $n$, the predicate $c \mapsto (\text{eval}\,c\ \text{halts on}\ n)$ is not computable.
-- **(Enumerability of halting.)** For each fixed input $n$, that same predicate is r.e., and its complement is not r.e.
+The number $e$ is interpreted as a program code and $T(e,n)$ as the Boolean behavior of program $e$ on input $n$. No effectiveness assumption on the entire table is needed for the diagonal argument; the table is the chosen universe of represented behaviors.
 
-Everything else is derived.
+### Definition 2.1 (Essential computability)
 
-## 3. Computability is a measure-zero phenomenon
+A predicate $p:\mathbb N\to\mathbb B$ is **essentially computable relative to $T$** if it is a row of $T$:
 
-The starting motivation is a counting theorem. We contrast the size of the computable functions with that of all functions.
+$$
+\exists e\in\mathbb N\;\forall n\in\mathbb N,
+\qquad T(e,n)=p(n).
+$$
 
-### 3.1 The computable functions are countable
+An **oracle** is an external answer function $O:\mathbb N\to\mathbb B$. Oracle evaluation on input $n$ simply returns $O(n)$. We call a predicate **accidentally computable through $O$** if $O(n)=p(n)$ for every $n$. This terminology distinguishes possession of an answer source from representation by the original table. It does not imply randomness or error.
 
-To a total Boolean function $f : \mathbb{N} \to \mathbb{B}$ associate the always-halting partial function
+### Definition 2.2 (Anti-diagonal predicate)
 
-$$\text{natPR}(f) : \mathbb{N} \rightharpoonup \mathbb{N}, \qquad \text{natPR}(f)(n) = \langle f(n) \rangle,$$
+For a program table $T$, define
 
-where $\langle \cdot \rangle : \mathbb{B} \to \mathbb{N}$ is a fixed injective encoding of Booleans as numbers. If $f$ is computable, then $\text{natPR}(f)$ is partial recursive (it is the composition of the encoding with $f$), so by completeness of the coding there is a code computing it.
+$$
+D_T(e)=\neg T(e,e).
+$$
 
-**Lemma 3.1.** *If $f$ is computable then $\text{natPR}(f)$ is partial recursive, and hence there exists a code $c$ with $\text{eval}\,c = \text{natPR}(f)$.*
+### Lemma 2.3 (Diagonal disagreement)
 
-Choose, for each computable $f$, one such code $\text{toCode}(f)$. The key point is that $f$ is *recoverable* from $\text{toCode}(f)$: since $\text{eval}(\text{toCode}(f))(n) = \langle f(n)\rangle$ and $\langle\cdot\rangle$ is injective, the value $f(n)$ is determined by the code. Hence:
+For every code $e$,
 
-**Lemma 3.2 (Injectivity).** *The map $\text{toCode} : \{\,f : \mathbb{N}\to\mathbb{B} \mid f \text{ computable}\,\} \to \mathsf{Code}$ is injective.*
+$$
+T(e,e)\ne D_T(e).
+$$
 
-*Proof sketch.* If $\text{toCode}(f) = \text{toCode}(g)$ then $\text{natPR}(f) = \text{natPR}(g)$; evaluating at $n$ gives $\langle f(n)\rangle = \langle g(n)\rangle$, and injectivity of $\langle\cdot\rangle$ yields $f(n)=g(n)$ for all $n$, so $f=g$. $\square$
+**Proof sketch.** By definition $D_T(e)$ is the Boolean complement of $T(e,e)$. A Boolean value differs from its complement. $\square$
 
-Since an injection into a countable type has countable domain:
+### Theorem 2.4 (Anti-Diagonal Separation Theorem)
 
-**Theorem 3.3 (Countability of the computable).** *The set of computable Boolean functions $\{\,f : \mathbb{N}\to\mathbb{B} \mid f \text{ computable}\,\}$ is countable.*
+For every program table $T$, the anti-diagonal predicate $D_T$ is not essentially computable relative to $T$.
 
-Intuitively: there are only countably many programs, so only countably many functions any of them can compute.
+**Proof sketch.** Suppose row $e$ equals $D_T$. Evaluating this equality at input $e$ gives $T(e,e)=D_T(e)$, contradicting Lemma 2.3. Since the contradiction follows for any proposed representing code, no row represents $D_T$. $\square$
 
-### 3.2 All Boolean functions form a continuum
+### Theorem 2.5 (Accidental-versus-Essential Separation)
 
-**Theorem 3.4 (Uncountability of decision problems).** *The set of all Boolean functions $\mathbb{N} \to \mathbb{B}$ is uncountable; indeed it has cardinality $\mathfrak{c} = 2^{\aleph_0} = \text{continuum}$.*
+For every program table $T$, there exists an oracle $O$ such that
 
-*Proof sketch.* The cardinality of $\mathbb{N} \to \mathbb{B}$ is $2^{\aleph_0}$, which equals the continuum $\mathfrak{c}$; since $\aleph_0 < \mathfrak{c}$ (Cantor), the set is not countable. $\square$
+$$
+\forall n,\quad O(n)=D_T(n),
+$$
 
-### 3.3 Uncomputable functions exist and are uncountable
+but $O$ is not essentially computable relative to $T$.
 
-**Theorem 3.5 (Existence).** *There is a Boolean function $f : \mathbb{N}\to\mathbb{B}$ that is not computable.*
+**Proof sketch.** Take $O=D_T$. Oracle evaluation is then exact by definition, while Theorem 2.4 excludes $O$ from every row of $T$. $\square$
 
-*Proof sketch.* If every Boolean function were computable, then the surjection from the computable functions (all of them) onto $\mathbb{N}\to\mathbb{B}$ would make the latter countable, contradicting Theorem 3.4. $\square$
+The theorem does not provide an ordinary program for $D_T$. It demonstrates the precise effect of enlarging a model by an externally specified function. The extra power is contained in the oracle's answer function.
 
-**Theorem 3.6 (Uncountability of the uncomputable).** *The set $\{\,f : \mathbb{N}\to\mathbb{B} \mid f \text{ not computable}\,\}$ is uncountable.*
+## 3. Halting as an oracle specification
 
-*Proof sketch.* The whole space $\mathbb{N}\to\mathbb{B}$ splits as the disjoint union of the computable functions and the non-computable ones. If the non-computable part were countable, then — the computable part being countable by Theorem 3.3 — the whole space would be countable, contradicting Theorem 3.4. $\square$
+Fix a machine semantics $M$ with natural-number inputs. Let $M\downarrow n$ denote the proposition that $M$ eventually halts on input $n$. Define its characteristic oracle by
 
-**Interpretation.** The computable functions are a countable sliver inside an uncountable ocean. Almost every decision problem is uncomputable; each such problem is a task only some form of hypercomputation could carry out. This is the quantitative case for taking hypercomputation seriously.
+$$
+H_M(n)=\begin{cases}
+1,& M\downarrow n,\\
+0,& \text{otherwise}.
+\end{cases}
+$$
 
-## 4. A rigorous hypercomputer: the halting oracle
+This definition uses the truth value of the semantic proposition; it is not an algorithm for discovering that truth value.
 
-We now model a device that transcends Turing computation and show precisely how far it reaches.
+### Theorem 3.1 (Exact Halting-Oracle Specification)
 
-### 4.1 Halting and the oracle
+For every fixed machine semantics $M$, the oracle $H_M$ satisfies
 
-**Definition 4.1 (Halting).** For a code $c$ and input $n$, define $\text{Halts}(c,n)$ to hold iff the partial function $\text{eval}\,c$ is defined at $n$ (equivalently, program $c$ run on $n$ eventually terminates).
+$$
+H_M(n)=1\quad\Longleftrightarrow\quad M\downarrow n
+$$
 
-**Definition 4.2 (Halting oracle).** The **halting oracle** is the total Boolean function
+for every input $n$.
 
-$$\text{haltingOracle}(c,n) = \begin{cases} \text{true} & \text{if } \text{Halts}(c,n), \\ \text{false} & \text{otherwise.} \end{cases}$$
+**Proof sketch.** The equivalence follows immediately from the two cases in the definition of $H_M$. $\square$
 
-It is defined by (classical) case analysis on the undecidable proposition $\text{Halts}(c,n)$, and is therefore not itself given by any effective procedure. This is deliberate: the oracle carries information no algorithm can produce.
+Suppose a program class has the property that none of its Boolean programs decides halting for $M$. More explicitly, suppose every candidate $d:\mathbb N\to\mathbb B$ fails the specification
 
-### 4.2 Correctness
+$$
+\forall n,\quad d(n)=1\Longleftrightarrow M\downarrow n.
+$$
 
-**Theorem 4.3 (Correctness).** *For all $c, n$: $\text{haltingOracle}(c,n) = \text{true} \iff \text{Halts}(c,n)$.*
+### Theorem 3.2 (Halting-Oracle Separation)
 
-*Proof sketch.* Immediate from the definition of the oracle as the Boolean value of the proposition $\text{Halts}(c,n)$. $\square$
+Under the preceding undecidability hypothesis, the exact halting oracle $H_M$ is accidentally available as an oracle but is not essentially computable in the chosen program table.
 
-**Theorem 4.4 (The hypercomputer solves halting).** *For every input $n$ and code $c$, exactly one of the following holds:*
-$$\big(\text{haltingOracle}(c,n) = \text{true} \ \wedge\ \text{Halts}(c,n)\big) \quad \text{or} \quad \big(\text{haltingOracle}(c,n) = \text{false} \ \wedge\ \neg\,\text{Halts}(c,n)\big).$$
+**Proof sketch.** Theorem 3.1 gives exact oracle behavior. If $H_M$ were a represented row, that row would satisfy the displayed halting-decider specification, contradicting the hypothesis. $\square$
 
-*Proof sketch.* Case split on whether $\text{Halts}(c,n)$ holds; in each case Theorem 4.3 pins down the oracle's value. $\square$
+This result separates semantic specification from effective construction. It is meaningful to define the correct bit for every input, but calling that definition an “oracle” does not explain a physical process that prepares all bits.
 
-Thus the oracle is a *total* function that returns a definite, correct verdict on every instance of the halting problem — a hypercomputer by construction.
+## 4. Exact universal oracle loaders
 
-### 4.3 No algorithm decides halting
+Let $S$ be a type or set of distinguishable physical states. An **exact universal oracle loader** on $S$ consists of maps
 
-**Theorem 4.5 (Turing).** *For each fixed input $n$, there is no computable Boolean function $f : \mathsf{Code} \to \mathbb{B}$ such that $f(c) = \text{true} \iff \text{Halts}(c,n)$ for all $c$. In particular, the halting oracle is not computable.*
+$$
+L:\mathbb B^{\mathbb N}\to S,
+\qquad
+R:S\times\mathbb N\to\mathbb B,
+$$
 
-*Proof sketch.* Suppose such a computable $f$ existed. Then the predicate $c \mapsto \text{Halts}(c,n)$ would be a computable predicate. But the unsolvability of halting states precisely that this predicate is not computable — contradiction. (The underlying obstruction is the classical diagonal construction: a halting-decider can be turned into a program that halts iff it does not.) $\square$
+satisfying the exactness law
 
-**Theorem 4.6 (Strict superiority).** *For each input $n$:*
-$$\Big(\forall c,\ \text{haltingOracle}(c,n) = \text{true} \iff \text{Halts}(c,n)\Big) \ \wedge\ \Big(\neg\,\exists f \text{ computable},\ \forall c,\ f(c) = \text{true} \iff \text{Halts}(c,n)\Big).$$
+$$
+R(L(a),n)=a(n)
+\tag{1}
+$$
 
-*Proof sketch.* Conjunction of Theorem 4.3 (left) and Theorem 4.5 (right). $\square$
+for every infinite bitstream $a$ and index $n$.
 
-The oracle decides a predicate that provably no algorithm decides. This is the exact sense in which hypercomputation strictly exceeds Turing computation.
+The adjective *universal* means that $L$ accepts every element of $\mathbb B^{\mathbb N}$, not merely a fixed finite family or a computably generated subclass. The adjective *exact* means zero readout error at every coordinate.
 
-### 4.4 Why simulation is insufficient: an enumerative asymmetry
+### Lemma 4.1 (Injectivity of exact loading)
 
-A natural objection: to decide whether $c$ halts on $n$, simply *simulate* it. This semi-works, and the reason it fails to fully work is structural.
+For every exact universal oracle loader, $L$ is injective.
 
-**Theorem 4.7 (Halting is r.e.).** *For each fixed $n$, the predicate $c \mapsto \text{Halts}(c,n)$ is recursively enumerable.*
+**Proof sketch.** Assume $L(a)=L(b)$. For each $n$, apply $R(-,n)$ to both sides and use equation (1):
 
-*Proof sketch.* Semi-decide it by running $\text{eval}\,c$ on $n$; report success exactly if and when the computation terminates. $\square$
+$$
+a(n)=R(L(a),n)=R(L(b),n)=b(n).
+$$
 
-**Theorem 4.8 (Non-halting is not r.e.).** *For each fixed $n$, the predicate $c \mapsto \neg\,\text{Halts}(c,n)$ is not recursively enumerable.*
+Thus $a$ and $b$ agree at every coordinate, hence $a=b$. $\square$
 
-*Proof sketch.* If both $\text{Halts}(\cdot,n)$ and its complement were r.e., the predicate would be computable (run both semi-decision procedures in parallel; one must succeed), contradicting Theorem 4.5. $\square$
+### Lemma 4.2 (Infinitude of binary oracles)
 
-This asymmetry is the heart of the matter. Simulation *confirms* halting but can never *confirm* non-halting: a still-running computation is indistinguishable, at any finite time, from one that will halt one step later. A genuine oracle must supply the negative verdicts, which no enumerative — wait-and-see — process can produce. Decision, not observation, is what hypercomputation adds.
+The set $\mathbb B^{\mathbb N}$ is infinite.
 
-## 5. The physical-precision barrier
+**Proof sketch.** For each $k\in\mathbb N$, define $s_k$ by $s_k(k)=1$ and $s_k(n)=0$ for $n\ne k$. If $j\ne k$, then $s_j$ and $s_k$ differ at coordinate $j$ or $k$. Hence $k\mapsto s_k$ injects $\mathbb N$ into $\mathbb B^{\mathbb N}$. $\square$
 
-If no algorithm builds the oracle, perhaps nature does. The **physical oracle** hypothesis posits a physical quantity whose exact value encodes answers to uncomputable questions. We model this and show it does not escape the ceiling.
+The full space is in fact uncountable, but the weaker statement suffices for the finite-capacity obstruction.
 
-### 5.1 Model of a finite-precision physical oracle
+### Theorem 4.3 (Infinite-Capacity Theorem)
 
-**Definition 5.1 (Oracle stream).** A physical oracle is an infinite bit stream $b : \mathbb{N} \to \mathbb{B}$ — think of the binary expansion of the measured quantity.
+If an exact universal oracle loader exists on $S$, then $S$ is infinite.
 
-**Definition 5.2 (Finite-precision read).** A measurement of precision $p$ extracts the first $p$ bits:
-$$\text{readBits}(b, p) = [\,b(0), b(1), \dots, b(p-1)\,].$$
+**Proof sketch.** Lemma 4.1 injects the infinite set $\mathbb B^{\mathbb N}$ into $S$. Lemma 4.2 then implies that $S$ cannot be finite. $\square$
 
-**Lemma 5.3.** *$\text{readBits}(b,p)$ is a list of length exactly $p$.*
+### Corollary 4.4 (No finite exact universal loader)
 
-A physical apparatus of precision $p$ thus produces, on input $a$, the value $g(a, \text{readBits}(b, p))$, where $g$ is an ordinary effective procedure consuming the input and the finitely many measured bits. This is the most general finite-precision physical oracle.
+No finite state space admits an exact universal oracle loader.
 
-### 5.2 Finite precision collapses to computability
+This theorem is independent of runtime. Even an instantaneous read operation cannot overcome the inability of finitely many states to distinguish all possible oracle contents.
 
-**Theorem 5.4 (Accidentally computable = essentially computable).** *Let $g$ be computable (as a function of its input and a finite bit list), let $b$ be any oracle stream, and let $p$ be any finite precision. Then the function*
-$$a \ \longmapsto\ g\big(a,\ \text{readBits}(b, p)\big)$$
-*is computable.*
+### Theorem 4.5 (Hypercomputation Dichotomy)
 
-*Proof sketch.* $\text{readBits}(b,p)$ is a *fixed finite list*; it is a constant. The map $a \mapsto g(a, \text{const})$ is the composition of the computable $g$ with the identity and a constant, hence computable. The finitely many oracle bits can simply be hard-wired into the program. $\square$
+Fix a program table $T$ and an exact universal loader on $S$. Load the anti-diagonal oracle $D_T$. Then:
 
-The conceptual payoff: a physical oracle consulted to *finite* precision gives nothing a Turing machine could not already do. The class of "accidentally computable" functions (aided by a lucky physical quantity, read finitely) coincides with the "essentially computable" (Turing computable) functions.
+1. the recovered answer function is not essentially computable relative to $T$; and
+2. the state space $S$ is infinite.
 
-### 5.3 Uncomputable targets require infinite precision
+**Proof sketch.** Exactness gives $R(L(D_T),n)=D_T(n)$ for every $n$. Theorem 2.4 proves that this recovered function is absent from the table. Theorem 4.3 proves that $S$ is infinite. $\square$
 
-**Theorem 5.5 (No-go for finite precision).** *Let $s$ be a non-computable Boolean function. Then for every computable $g$, every oracle stream $b$, and every finite precision $p$,*
-$$\big(a \mapsto g(a, \text{readBits}(b, p))\big) \ \neq\ s.$$
+The dichotomy joins logical and informational obstructions. Oracle access crosses the table's diagonal boundary, while universal exact preparation crosses the boundary of finite state capacity.
 
-*Proof sketch.* If the two functions were equal, then $s$ would equal a computable function (Theorem 5.4), contradicting non-computability of $s$. $\square$
+## 5. Conditional resource consequences
 
-**Theorem 5.6 (Halting requires infinite precision).** *Fix an input $n$. For every computable $g$, every oracle stream $b$, and every finite precision $p$,*
-$$\big(c \mapsto g(c, \text{readBits}(b, p))\big) \ \neq\ \big(c \mapsto \text{decide}\ \text{Halts}(c,n)\big).$$
+A state-count theorem does not by itself establish a physical energy law. To reason carefully, the bridge from physical resources to distinguishable states must be explicit.
 
-*Proof sketch.* The halting predicate $c \mapsto \text{decide}\ \text{Halts}(c,n)$ is non-computable (Theorem 4.5). Apply Theorem 5.5 with $s$ this predicate. $\square$
+### Definition 5.1 (Finite-capacity resource interpretation)
 
-### 5.4 From precision to energy
+A finite-capacity resource interpretation for a state space $S$ specifies two physical conditions:
 
-Theorem 5.6 says a physical hypercomputer must read *unboundedly many* bits: for the device to match the halting oracle on all instances, no finite $p$ suffices; precision must be taken to infinity in the limit. This is where physics enters. Resolving $2^p$ distinguishable values of a physical quantity requires localizing measurements to resolution $\varepsilon = 2^{-p}$. Under standard physical trade-offs — Heisenberg's energy–time relation $E\cdot\Delta t \gtrsim \hbar$, Landauer's thermodynamic cost of information, and the finite information capacity of any bounded region of space — driving $p \to \infty$ drives the required energy (or the required spatial/temporal resolution) to infinity. Concretely, associating an energy scale $E(p) \gtrsim \hbar / \Delta t(p)$ with resolving the $p$-th bit yields a divergent total as $p \to \infty$. Bounded energy purchases bounded precision; bounded precision, by Theorem 5.4, purchases only ordinary computation. Hence a physically realizable hypercomputer — one operating within any finite energy budget — cannot decide the halting problem.
+- $E_{\mathrm{low}}$: the device operates at bounded or low energy density;
+- $P_{\mathrm{fin}}$: the device operates with finite precision;
 
-## 6. Algorithms and computational content
+and assumes the implications
 
-Although the central objects are uncomputable, the *finite* fragments are entirely computable and instructive to implement (see the companion demonstration code). Three procedures capture the paper's operational content:
+$$
+E_{\mathrm{low}}\Longrightarrow S\text{ is finite},
+\qquad
+P_{\mathrm{fin}}\Longrightarrow S\text{ is finite}.
+\tag{2}
+$$
 
-1. **Bounded halting probe.** Given a program, an input, and a step budget $T$, simulate for up to $T$ steps and report `halted`, or `unknown` if the budget is exhausted. This realizes the r.e. semi-decision procedure of Theorem 4.7. It can confirm halting but never certify non-halting — the operational face of Theorem 4.8.
+The precise content of the physical predicates is model-dependent. Equation (2) is the declared bridge.
 
-2. **Finite-precision oracle evaluation.** Given a bit stream (as a finite prefix), a precision $p$, and an effective post-processor $g$, compute $g(a, \text{readBits}(b, p))$. By Theorem 5.4 this is an ordinary computable function; the demonstration shows the output is invariant under extending the stream beyond bit $p$, illustrating that the extra bits are irrelevant — the essence of the collapse.
+### Theorem 5.2 (Finite-Energy-Density Obstruction)
 
-3. **Cardinality/diagonal witness.** Given any *enumeration* of computable Boolean functions (a listing $f_0, f_1, \dots$), produce a Boolean function $d$ with $d(n) = \neg f_n(n)$; then $d$ differs from every $f_n$ and so is not in the list. This is the constructive shadow of Theorems 3.3–3.6: any purported countable listing of "all" Boolean functions is provably incomplete.
+If a physical model implies that bounded energy density gives a finite distinguishable-state space, then no exact universal oracle loader operates under that bounded-energy-density condition.
 
-## 7. Applications and discussion
+**Proof sketch.** Under bounded energy density, the bridge assumption makes $S$ finite. Corollary 4.4 excludes an exact universal loader on such an $S$. $\square$
 
-**Foundations of computing.** The results sharpen the standard picture that "some problems are undecidable" into "*almost all* problems are undecidable," and give a physically grounded reason that this ceiling is not an engineering inconvenience but a structural feature of finite-resource computation.
+### Theorem 5.3 (Unbounded-Resource Requirement)
 
-**Hypercomputation proposals.** Many proposed hypercomputers rely, implicitly, on access to an exact real number or an infinitely precise measurement. Theorem 5.4 isolates the precise assumption doing the work: without *actually infinite* precision, the proposal computes nothing new. This provides a uniform lens for auditing such proposals.
+Under a finite-capacity resource interpretation, the existence of an exact universal oracle loader implies
 
-**The essential/accidental distinction.** We give a crisp formal meaning to a distinction often made only informally: a function is *essentially computable* if a Turing machine computes it, and *accidentally computable* if it is computed by an ordinary machine aided by a finitely-read physical oracle. Theorem 5.4 shows these classes coincide — accident buys nothing at finite precision.
+$$
+\neg E_{\mathrm{low}}\quad\text{and}\quad\neg P_{\mathrm{fin}}.
+$$
 
-**Limits.** Our physical argument is a reduction, not a full physical theory: it shows that finite precision suffices only for ordinary computation and that the halting oracle needs unbounded precision, and it connects unbounded precision to unbounded energy through standard trade-offs stated informally. A complete physical model (Section 8) would make the energy divergence a theorem rather than a heuristic.
+Equivalently,
 
-## 8. Future directions
+$$
+\neg(E_{\mathrm{low}}\lor P_{\mathrm{fin}}).
+$$
 
-**Deepening the physical model.**
-- *Energy quantization.* Replace the abstract precision $p$ (number of bits) with a physical resolution $\varepsilon = 2^{-p}$ and relate it to an energy scale via a Landauer/Heisenberg-style bound $E\cdot\Delta t \gtrsim \hbar$, turning "halting requires infinite precision" into an explicit divergent-energy statement.
-- *Real-number oracles.* Encode the oracle stream $b$ as the binary expansion of a real $r = \sum_k b_k 2^{-(k+1)} \in [0,1]$ and prove that a measurement of resolution $2^{-p}$ recovers exactly the first $p$ bits, connecting the combinatorial statements here to genuine real analysis.
-- *Noise and robustness.* Model measurement error and show that an oracle usable only up to bounded noise is equivalent to a finite-precision oracle, hence essentially computable.
+**Proof sketch.** If $E_{\mathrm{low}}$ held, equation (2) would make $S$ finite, contradicting Theorem 4.3. The same argument applies to $P_{\mathrm{fin}}$. Combining the two negations gives the equivalent negation of their disjunction. $\square$
 
-**Strengthening the computability results.**
-- *Diagonal halting set.* Prove non-computability of the self-application diagonal $c \mapsto \text{Halts}(c, \langle c\rangle)$ directly, and derive the Turing-jump hierarchy $\emptyset', \emptyset'', \dots$, a strictly increasing chain of hypercomputational powers.
-- *Relative computability.* Define oracle Turing reductions $A \le_T B$ and prove the halting set is complete for the class of $\Sigma_1$ sets, situating the oracle in the arithmetical hierarchy.
-- *Rice-type barriers.* Show that *every* non-trivial semantic property of programs demands hypercomputation, sharpening the halting-decider impossibility.
+The theorem should not be overstated. Infinite state cardinality does not entail infinite total energy in every imaginable physical theory. For an analog state variable in a bounded interval, cardinality is already infinite. Exact arbitrary-bit recovery from such a variable, however, requires distinctions at arbitrarily small scales; finite precision then fails. Stronger quantitative conclusions require additional hypotheses such as a metric, a minimum separation, noise distributions, volume constraints, or entropy bounds.
 
-**Measure and category.**
-- Upgrade the uncountability of the uncomputable to a *measure-theoretic* statement: under the fair-coin (Bernoulli) measure on $\mathbb{N}\to\mathbb{B}$, the computable functions form a null set, so a "random" oracle is uncomputable almost surely.
+## 6. Finite observations and oracle ambiguity
 
-## 9. Conclusion
+Let $Q\subset\mathbb N$ be finite. A **query transcript** of oracle $a$ on $Q$ is the finite family $(a(q))_{q\in Q}$.
 
-We have modeled hypercomputation rigorously and framed it by three results: computability is rare (countable among a continuum), a halting oracle is a coherent and strictly stronger-than-Turing device whose power cannot be replaced by enumeration, and any finite-precision physical realization collapses back to ordinary computability, so genuine hypercomputation demands infinite precision and, with it, unbounded physical resources. The uncomputable is vast, coherent, and — as far as finite physics reaches — untouchable.
+### Theorem 6.1 (Finite-Transcript Ambiguity)
+
+For every oracle $a:\mathbb N\to\mathbb B$ and every finite query set $Q$, there exists an oracle $b$ such that
+
+$$
+\forall q\in Q,\quad b(q)=a(q),
+$$
+
+but $b\ne a$.
+
+**Proof sketch.** Because $Q$ is finite and $\mathbb N$ is infinite, choose $m\notin Q$. Define $b(n)=a(n)$ for $n\ne m$ and $b(m)=\neg a(m)$. Then $a$ and $b$ agree on every queried coordinate but differ at $m$. $\square$
+
+### Corollary 6.2 (No finite universal identification protocol)
+
+No fixed finite set of coordinate observations uniquely identifies every infinite binary oracle.
+
+The result concerns unrestricted oracles. A finite transcript may identify an oracle within a separately constrained finite family, or a finite certificate may verify a special semantic claim. But no finite coordinate test determines an arbitrary member of $\mathbb B^{\mathbb N}$.
+
+This limits empirical certification. If a claimed halting oracle is queried finitely many times, a rival answer source can match the complete observed transcript while differing elsewhere. Random repetition addresses independent readout errors, not systematic alternatives that agree on all sampled inputs.
+
+## 7. Compositional memory and algebraic forgetting
+
+The oracle results require a memory that distinguishes every infinite answer stream. A complementary theorem explains why finite compositional memory necessarily loses distinctions even among finite streams.
+
+Let $A$ be a nonempty alphabet. Write $A^*$ for the set of finite words over $A$, including the empty word $\varepsilon$. Concatenation is associative and has identity $\varepsilon$, so $A^*$ is the free monoid on $A$.
+
+Let $R$ be a monoid with multiplication and identity $1_R$.
+
+### Definition 7.1 (Compositional memory)
+
+A compositional memory is a monoid homomorphism
+
+$$
+m:A^*\to R,
+$$
+
+meaning
+
+$$
+m(\varepsilon)=1_R,
+\qquad
+m(xy)=m(x)m(y)
+$$
+
+for all words $x,y\in A^*$.
+
+Define the **erased-stream set**
+
+$$
+K_m=\{x\in A^*:m(x)=1_R\},
+$$
+
+and define **observational indistinguishability** by
+
+$$
+x\sim_m y\quad\Longleftrightarrow\quad m(x)=m(y).
+$$
+
+### Theorem 7.2 (Finite-Memory Loss Theorem)
+
+If $A$ is nonempty and $R$ is finite, every compositional memory $m:A^*\to R$ maps two distinct streams to the same representation.
+
+**Proof sketch.** Choose a symbol $a\in A$. The words $\varepsilon,a,a^2,a^3,\ldots$ are all distinct, so $A^*$ is infinite. A function from an infinite set to finite $R$ cannot be injective. Thus there exist $x\ne y$ with $m(x)=m(y)$. $\square$
+
+### Lemma 7.3 (Congruence of indistinguishability)
+
+The relation $\sim_m$ is an equivalence relation compatible with concatenation. Specifically, if $x\sim_m y$ and $u\sim_m v$, then
+
+$$
+xu\sim_m yv.
+$$
+
+**Proof sketch.** Equality of memory representations is reflexive, symmetric, and transitive. Compatibility follows from compositionality:
+
+$$
+m(xu)=m(x)m(u)=m(y)m(v)=m(yv).
+$$
+
+$\square$
+
+### Lemma 7.4 (Erased streams form a submonoid)
+
+The set $K_m$ contains $\varepsilon$ and is closed under concatenation.
+
+**Proof sketch.** Since $m(\varepsilon)=1_R$, the empty stream lies in $K_m$. If $x,y\in K_m$, then
+
+$$
+m(xy)=m(x)m(y)=1_R1_R=1_R,
+$$
+
+so $xy\in K_m$. $\square$
+
+### Theorem 7.5 (Memory Quotient Theorem)
+
+The quotient monoid $A^*/{\sim_m}$ is canonically isomorphic to the reachable representation monoid $m(A^*)\subseteq R$.
+
+**Proof sketch.** Send the class $[x]$ to $m(x)$. This is well-defined because equivalent words have equal memories. It preserves identity and concatenation. It is surjective onto $m(A^*)$ by definition. If two classes have the same image, then their representatives have the same memory and are equivalent, so the map is injective. $\square$
+
+Thus observable memory is not merely approximated by a quotient: it is exactly the quotient by all distinctions the memory fails to observe.
+
+### Definition 7.6 (Targeted forgetting)
+
+Let $r:A\to\mathbb B$ mark symbols for retention. Define $F_r:A^*\to A^*$ by replacing a letter $a$ with itself when $r(a)=1$ and with $\varepsilon$ when $r(a)=0$, then concatenating the results.
+
+This operation is compositional. Every symbol marked for deletion belongs to $K_{F_r}$.
+
+### Theorem 7.7 (Universal Property of Targeted Forgetting)
+
+Let $g:A^*\to S$ be any compositional memory into a monoid $S$. Suppose
+
+$$
+F_r(x)=F_r(y)\Longrightarrow g(x)=g(y)
+$$
+
+for all streams $x,y$. Then there exists a unique monoid homomorphism
+
+$$
+\bar g:A^*/{\sim_{F_r}}\to S
+$$
+
+such that $g=\bar g\circ q$, where $q$ sends each stream to its $F_r$-indistinguishability class.
+
+**Proof sketch.** Define $\bar g([x])=g(x)$. The hypothesis makes this independent of the representative. Compositionality of $g$ makes $\bar g$ a homomorphism. The factorization equation follows directly. Since every quotient class is $[x]$ for some $x$, that equation determines $\bar g$ uniquely. $\square$
+
+### Corollary 7.8 (Observable algebra of targeted forgetting)
+
+The quotient $A^*/{\sim_{F_r}}$ is canonically isomorphic to the submonoid $F_r(A^*)$ of words composed of retained output.
+
+The universal property says that any compositional observer insensitive to at least the distinctions erased by $F_r$ must operate through the quotient. It provides an algebraic normal form for deliberate forgetting.
+
+## 8. Algorithms and finite demonstrations
+
+The theorems concern infinite objects, but finite truncations make their mechanisms visible.
+
+### Algorithm 8.1 (Finite anti-diagonal construction)
+
+Given an $N\times N$ Boolean table, output $d_i=1-T(i,i)$ for $0\le i<N$. The algorithm performs $N$ diagonal reads and $N$ Boolean complements, using $O(N)$ time and $O(N)$ output space. For each row $i$, the output differs from that row at coordinate $i$.
+
+### Algorithm 8.2 (Transcript-preserving rival construction)
+
+Given a finite Boolean oracle prefix and a finite query set $Q$ that omits some represented index, choose the least unqueried index and flip that bit. The result agrees on all queries and differs globally. With a Boolean membership mask, the construction takes $O(N+|Q|)$ time for a prefix of length $N$ and $O(N)$ output space.
+
+### Algorithm 8.3 (Targeted stream forgetting)
+
+Given a finite word of length $n$ and a retention predicate, scan from left to right and append exactly the retained symbols. This computes $F_r$ in $O(n)$ time and $O(k)$ output space, where $k$ is the number of retained symbols. Applying the scan separately to $x$ and $y$, then concatenating, gives the same output as scanning $xy$, illustrating compositionality.
+
+These algorithms do not compute the unrestricted halting predicate or certify an infinite oracle. They illustrate the finite combinatorial cores of diagonal disagreement, transcript ambiguity, and quotient-style forgetting.
+
+## 9. Applications and interpretation
+
+### 9.1 Hypercomputational architecture
+
+The model divides a hypothetical device into loading and evaluation. Evaluation is trivial: read coordinate $n$. All nonordinary power lies in preparing the exact state $L(a)$. This prevents a category error in which specification of $a$ is mistaken for its production.
+
+### 9.2 Analog proposals
+
+A continuum-valued state space evades the bare finite-cardinality premise, but not automatically the precision issue. Encoding a bitstream in the binary expansion of a real number requires access to arbitrarily remote digits. Uniformly reliable recovery would need a physical separation or error-correction principle not supplied by cardinality alone.
+
+### 9.3 Experimental claims
+
+Finite-transcript ambiguity shows that finite black-box testing cannot establish agreement with an unrestricted infinite semantic oracle. Validation must exploit extra structure: checkable certificates, restricted oracle classes, probabilistic assumptions, or independently justified physical laws.
+
+### 9.4 Memory, compression, and abstraction
+
+Finite compositional representations inevitably merge histories. The quotient theorem identifies the exact algebra retained after compression, while the kernel submonoid records streams erased to neutrality. This applies to automata, event logs, symbolic preprocessing, and any sequential representation respecting concatenation.
+
+## 10. Limitations
+
+The results are exact and qualitative. They do not show that a particular physical technology consumes a specified number of joules. They do not rule out infinite state spaces under every physical theory. They do not address approximate oracle answers, bounded input ranges, or restricted oracle families. They also do not turn a semantically defined halting oracle into a constructible object.
+
+The energy and precision conclusion is conditional on the finite-capacity implications in equation (2). This explicit dependence is a strength: it separates the mathematical injection theorem from contingent physical assumptions and indicates exactly what stronger science must supply.
+
+## 11. Future work
+
+A quantitative theory should replace finite-versus-infinite capacity with metric packing bounds. If $n$ oracle bits must remain distinguishable at noise scale $\varepsilon$ inside volume $V$ and energy budget $E$, one seeks inequalities relating $n$, $\varepsilon$, and $E/V$.
+
+Noisy queries require a distinction between independent readout errors and systematic semantic corruption. Repetition can suppress the former, while finite-transcript ambiguity suggests that the latter requires independently checkable certificates.
+
+Iterated oracle models should realize successive diagonal levels: a level-$k+1$ oracle answers halting questions for machines equipped with level-$k$ access, while a new anti-diagonal escapes the lower level.
+
+For compact analog state spaces, topology and uniform readout margins may provide the appropriate obstruction. Cardinality permits a continuum of states, but robustness may force an impossible infinite packing.
+
+Finally, finite approximations connect oracle storage to thermodynamics. Resetting $n$ uniformly distributed independent bits removes $n\log 2$ of Shannon entropy; an explicit thermodynamic bridge could translate this into a heat cost under stated physical assumptions.
+
+## 12. Conclusion
+
+The anti-diagonal construction proves that every program table omits a Boolean predicate. An oracle carrying that predicate returns it exactly, and a characteristic oracle similarly answers a fixed machine's halting predicate. This is the clean sense in which oracle computation exceeds essential computation relative to the original table.
+
+Universal exact oracle access, however, requires more than a query instruction. Exact loading is injective, so infinitely many distinguishable states are necessary; finite-capacity implementations are impossible. Under explicit physical principles connecting bounded energy density and finite precision to finite state capacity, exact universal loading violates both finite-resource regimes. No finite experiment can uniquely certify an arbitrary infinite oracle.
+
+The algebra of memory supplies the complementary picture. Finite compositional memory must identify distinct streams, and its observable content is exactly the quotient by that indistinguishability. Hypercomputation asks for the opposite extreme: preserve every distinction among infinite answer streams. The apparent miracle of computing the uncomputable is therefore relocated, not eliminated. It resides in the acquisition, storage, discrimination, and trust of an exact infinite oracle.

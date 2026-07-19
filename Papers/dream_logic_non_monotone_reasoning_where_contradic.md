@@ -1,77 +1,42 @@
-# Computational Evidence — Dream Logic
+# Computational Evidence
 
-## 1. Four-valued truth tables (small-case verification)
+## Small-case calculations
 
-Values: `tt`, `ff`, `both` (glut), `neither` (gap). Negation fixes the glut and gap:
+For one atom `a`, a signed belief state has four possibilities:
 
-```
-neg:  tt↦ff   ff↦tt   both↦both   neither↦neither
-```
+| Initial state | revise by `a+` | revise by `a−` |
+|---|---|---|
+| `∅` | `{a+}` | `{a−}` |
+| `{a+}` | `{a+}` | `{a−}` |
+| `{a−}` | `{a+}` | `{a−}` |
+| `{a+, a−}` | `{a+}` | `{a−}` |
 
-Conjunction = meet, disjunction = join of the truth order `ff < {both,neither} < tt`:
+Thus revision selects the latest sign and retracts its contrary. In particular, the contradictory state is stable as information but is resolved by either revision.
 
-```
-conj | tt   ff   both  neither        disj | tt  ff       both  neither
------+---------------------------      -----+------------------------------
-tt   | tt   ff   both  neither         tt   | tt  tt       tt    tt
-ff   | ff   ff   ff    ff              ff   | tt  ff       both  neither
-both | both ff   both  ff              both | tt  both     both  tt
-nei  | nei  ff   ff    neither         nei  | tt  neither  tt    neither
-```
+For two atoms `a ≠ b`, the state `{a+, a−}` accepts a contradiction about `a` while omitting both `b+` and `b−`. This is the smallest non-explosive model: contradictory support does not force an unrelated assertion.
 
-Designated (accepted) values: `{tt, both}`.
+For finite-subset openness, the first partial unions of natural-number singleton states are:
 
-Contradiction column `conj a (neg a)`:
+| indices included | union | cardinality |
+|---|---|---:|
+| none | `∅` | 0 |
+| `0` | `{0}` | 1 |
+| `0,1` | `{0,1}` | 2 |
+| `0,1,2` | `{0,1,2}` | 3 |
+| `0,…,n−1` | `{0,…,n−1}` | `n` |
 
-```
-a        : tt  ff  both  neither
-conj a ¬a : ff  ff  both  ff
-designated:  0   0    1     0
-```
+Every finite stage remains finitary, while the union over all indices is `ℕ` and is not finite.
 
-So `both` makes a contradiction designated (LNC fails) while `ff` stays non-designated
-(explosion fails). Excluded middle `disj a (neg a)`:
+## Counterexample hunt
 
-```
-a        : tt  ff  both  neither
-disj a ¬a : tt  tt  both  neither
-designated:  1   1    1     0
-```
+The claim that finite subsets are the opens of an ordinary topology on an infinite type fails: the union of all singleton opens is the infinite whole space. The corrected structure is a **finitary topology**, requiring only finite unions. This distinction is reflected in the arbitrary-union obstruction theorem.
 
-`neither` breaks excluded middle (paracompleteness). These tables are reproduced exactly by
-the case-analysis proofs in `FourValued.lean`.
+The non-explosion statement also needs a boundary condition. With only one atom, every positive literal belongs to the contradictory pair for that atom, so an “unrelated conclusion” requires a second, distinct atom.
 
-## 2. Closed-set model over ℝ (representative computations)
+## Sequence-database searches
 
-Take `A = [0,1]`, negation `pneg A = closure(Aᶜ) = (-∞,0] ∪ [1,∞)`.
+No integer sequence is intrinsic to these structural claims, so an OEIS search is not applicable. LMFDB data likewise does not bear on signed-set revision or finite-union closure.
 
-- `A ∩ pneg A = {0,1}` — nonempty, so a contradiction coexists (boundary points).
-- `A ∪ pneg A = ℝ` — excluded middle survives.
-- These equal `frontier A = {0,1}`, matching the general "gluts are frontiers" identity.
+## Outcome
 
-Union-closure test: `⋃ₙ [1/(n+1), 1]`:
-
-```
-n : 0 → [1,1]         partial union up to n
-    1 → [1/2,1]
-    2 → [1/3,1]
-    ...
-limit                 (0,1]   — NOT closed (0 is a limit point, absent)
-```
-
-So arbitrary unions of closed sets need not be closed; this is the structural counterexample
-formalized in `closed_not_iUnion_closed`.
-
-## 3. Counterexample hunt
-
-- Searched for a designated value making explosion hold: none — `ff` and `neither` remain
-  non-designated regardless of the contradiction, so explosion has no witness. Confirmed by
-  the exhaustive four-case tables above.
-- Searched for a closed region with empty frontier but nonempty proper interior on ℝ: none
-  in a connected space other than `∅` and `ℝ`; consistent with "gluts = frontiers".
-
-## Note
-
-The evidence is intentionally brief: the claims are finite/exact and are discharged by exact
-case analysis and explicit topological witnesses in the accompanying proofs, so no
-large-scale numerical search is needed.
+The finite computations support three formal targets: contradiction without explosion, non-monotone order-sensitive revision, and finite-but-not-arbitrary union closure. They also identify the exact guards needed to avoid false formulations.

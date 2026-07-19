@@ -1,26 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "64b7f63b",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions\n\n1. **Variable branching alphabets.** Generalize binary profiles to a fixed `b`-ary alphabet and prove that normalization by `log b` again bounds dimension by `1` and realizes rati",
-      "quality_score": 0.73,
-      "sorry_count": 0,
-      "theorem_count": 65,
-      "timestamp": "2026-07-18T14:44:12",
-      "title": "Close Proofs: Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
-    },
-    {
-      "cycle_id": "c83ba873",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\n## 1. Adaptive-submodularity criterion for greedy posterior voting\n\n**Conjecture.** In a finite social-deduction game whose information states form a belief-state Markov process,",
-      "quality_score": 0.75,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-18T14:44:29",
-      "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
-    },
-    {
       "cycle_id": "fc5e97aa",
       "domain": "Bridges",
       "key_insight": "# Future Directions\n\n## 1. Stable exponents under dependency extraction\n\n**Conjecture.** For a fixed, versioned mathematical corpus, the tail exponent of theorem reuse remains within a narrow interval",
@@ -499,29 +479,29 @@
       "theorem_count": 21,
       "timestamp": "2026-07-19T18:41:13",
       "title": "Negative-Dimensional Topology: What Lives in Dimension -1?"
+    },
+    {
+      "cycle_id": "4c40ce69",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\nThe formal development establishes three robust conclusions for precise counterfactual models:\n\n1. the Cramér density series diverges even on every fixed nonconstant arithmetic pr",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-19T20:08:35",
+      "title": "Counterfactual Number Theory: What If Primes Were Random?"
+    },
+    {
+      "cycle_id": "af530f4e",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Hypercomputation and Physical Information\n\n## 1. Quantitative energy–precision tradeoff\n\n**Conjecture.** For every family of devices that exactly resolves the first `n` bits of an",
+      "quality_score": 0.77,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-19T20:08:39",
+      "title": "Hypercomputation: Computing the Uncomputable"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "e23ed960",
-      "domain": "Applications",
-      "key_insight": "# Future directions\n\nThe present development establishes the finite zero-forcing process, monotonicity and antisymmetry of forcing reachability, existence and certificate bounds for the zero forcing n",
-      "quality_score": 0.53,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-16T03:00:40",
-      "title": "ArXiv paper: Claw-free cubic graphs and zero forcing"
-    },
-    {
-      "cycle_id": "e23ed960",
-      "domain": "Applications",
-      "key_insight": "# Future directions\n\nThe present development establishes the finite zero-forcing process, monotonicity and antisymmetry of forcing reachability, existence and certificate bounds for the zero forcing n",
-      "quality_score": 0.53,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-16T03:01:43",
-      "title": "ArXiv paper: Claw-free cubic graphs and zero forcing"
-    },
     {
       "cycle_id": "57481379",
       "domain": "Physics",
@@ -2501,6 +2481,26 @@
       "theorem_count": 14,
       "timestamp": "2026-07-19T19:32:49",
       "title": "Categorical Physics: The Shape of a Theory of Everything"
+    },
+    {
+      "cycle_id": "4c40ce69",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\nThe formal development establishes three robust conclusions for precise counterfactual models:\n\n1. the Cramér density series diverges even on every fixed nonconstant arithmetic pr",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-19T20:08:35",
+      "title": "Counterfactual Number Theory: What If Primes Were Random?"
+    },
+    {
+      "cycle_id": "af530f4e",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Hypercomputation and Physical Information\n\n## 1. Quantitative energy–precision tradeoff\n\n**Conjecture.** For every family of devices that exactly resolves the first `n` bits of an",
+      "quality_score": 0.77,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-19T20:08:39",
+      "title": "Hypercomputation: Computing the Uncomputable"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.73
     }
   ],
-  "last_updated": "2026-07-19T19:32:49",
+  "last_updated": "2026-07-19T20:08:39",
   "open_questions": [
     {
       "context": "",
@@ -3579,18 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "08d3e2eb",
-        "quality": 0.75,
-        "theorems": 0,
-        "title": "Formalizing the Probabilistic Method: Erdos Meets Lean"
-      },
-      {
-        "cycle_id": "5b9ebbbb",
-        "quality": 0.58,
-        "theorems": 46,
-        "title": "The Spectral Gap of Sudoku: When Puzzles Become Phase Transitions"
-      },
-      {
         "cycle_id": "91c16818",
         "quality": 0.71,
         "theorems": 0,
@@ -3637,6 +3625,18 @@
         "quality": 0.73,
         "theorems": 21,
         "title": "Negative-Dimensional Topology: What Lives in Dimension -1?"
+      },
+      {
+        "cycle_id": "4c40ce69",
+        "quality": 0.7,
+        "theorems": 0,
+        "title": "Counterfactual Number Theory: What If Primes Were Random?"
+      },
+      {
+        "cycle_id": "af530f4e",
+        "quality": 0.77,
+        "theorems": 0,
+        "title": "Hypercomputation: Computing the Uncomputable"
       }
     ],
     "NumberTheory": [
