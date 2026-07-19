@@ -60,6 +60,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Prove that every classical mathematical theorem has a quantum proof that is shorter by at most a polynomial factor. Formalize quantum proof systems (QMA) and show that some classical theorems (e.g., pigeonhole principle) have exponentially shorter quantum proofs. Determine whether super-polynomial quantum advantage exists.",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_0485",
+    "priority_score": 0.89,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-19T20:25:40.553471+00:00",
+    "title": "Quantum Proofs of Classical Theorems"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 7881a56b (Q=0.790), which proved 16 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'Reproducing the k-copwin Algorithm: Theory vs. Implementation' and formalize its key results. Abstract: Cops and Robbers is a well-studied pursuit-evasion game that provides insights into graph theory and theoretical computing. A central question is determining the minim",
     "domains": [
       "Novelty"
@@ -116,6 +131,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-19T11:33:05.369080+00:00",
     "title": "Time Travel Consistency: Novikov's Principle as a Fixed-Point Theorem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Define a natural metric on the space of all mathematical statements and prove that the set of true statements has a fractal dimension. Show that this dimension is strictly between 0 and 1 (truth is sparse but not negligible). Connect to Chaitin's Omega and prove that the fractal dimension is uncomputable but approximable.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0484",
+    "priority_score": 0.87,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-19T20:25:40.511664+00:00",
+    "title": "The Fractal Dimension of Mathematical Truth"
   },
   {
     "consumed_by_exp_id": "",
@@ -346,21 +376,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-19T19:49:57.145090+00:00",
     "title": "Fermat Near-Misses in the Twilight Zone"
-  },
-  {
-    "consumed_by_exp_id": "238d5b60",
-    "description": "Construct a surface whose Hausdorff dimension is exactly aleph-1 (assuming CH). Prove that such a surface cannot be embedded in any finite-dimensional Euclidean space but can be embedded in the Hilbert cube. Formalize transfinite-dimensional manifolds and prove they have no finite triangulation.",
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0475",
-    "priority_score": 0.82,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T17:49:41.623934+00:00",
-    "title": "Aleph-1 Surface: Geometry Between Dimensions"
   },
   {
     "consumed_by_exp_id": "",
@@ -5144,6 +5159,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-19T20:08:38.889514+00:00",
     "title": "**Conjecture.** For every family of devices that exactly resolves the first `n` "
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## Scope of the completed formalization\n\n`AlephOneSurface.lean` formalizes the mathematically well-typed replacement for the phrase \u201cHausdorff dimension exactly aleph-one.\u201d In Mathlib, Hausdorff dimension has codomain `\u211d\u22650\u221e`, not the cardinals, so it cannot literally equal `\u2135\u2081`; the unique value beyond every finite real dimension is `\u22a4`. Consequently CH is neither needed nor applicable to this metric invariant.\n\nThe file proves a dependency chain culminating in `hilbert_cube_transfinite_surface`: real `\u2113\u00b2` has Hausdorff dimension `\u22a4`, admits no antilipschitz map to a finite-dimensional real normed space, embeds topologically in the Hilbert cube, and cannot be covered by finitely many subsets of finite Hausdorff dimension. The latter is the proved metric obstruction underlying the finite-triangulation slogan.\n\n## Natural extensions\n\n1. **Abstract triangulations.** Define a finite topological simplicial complex, its realization, and a triangulation homeomorphism. Prove that each realized simplex has finite Hausdorff dimension under a Lipschitz-compatible metric, then derive the no-triangulation theorem from `no_finite_finiteDim_cover`.\n2. **Metric dependence.** The Hilbert-cube map is a topological embedding, not a bi-Lipschitz embedding. Formalize explicit compatible Hilbert-cube metrics and determine distortion bounds on finite-dimensional stages.\n3. **Compact infinite-dimensional examples.** Construct the standard weighted Hilbert cube as a compact subset of `\u2113\u00b2` and prove directly that its Hausdorff dimension is `\u22a4` by embedding finite cubes with controlled metrics.\n4. **Transfinite topological dimension.** If ordinal-valued inductive dimensions are desired, define a separate transfinite dimension invariant. Such an invariant, unlike Hausdorff dimension, can meaningfully take ordinal values; comparisons with covering dimension and Hausdorff dimension would then require new theory.\n5. **Manifold notions.** Specify a concrete infinite- or transfinite-dimensional manifold category (Hilbert manifolds, Fr\u00e9chet manifolds, or ordinal-indexed local models). The present work does not call `\u2113\u00b2` a two-dimensional surface or formalize manifold charts, because those claims would not follow from infinite Hausdorff dimension alone.\n6. **Stronger embedding obstruction.** The current theorem excludes distance-expanding, hence isometric and bi-Lipschitz, embeddings into finite-dimensional spaces. A purely topological non-embedding theorem would require covering-dimension or cohomological-dimension machinery and is strictly stronger than the metric result proved here.\n",
+    "domains": [
+      "Geometry",
+      "Logic"
+    ],
+    "id": "fd_0486",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "238d5b60",
+    "status": "available",
+    "timestamp": "2026-07-19T20:25:50.319607+00:00",
+    "title": "`AlephOneSurface.lean` formalizes the mathematically well-typed replacement for "
   },
   {
     "consumed_by_exp_id": "",
