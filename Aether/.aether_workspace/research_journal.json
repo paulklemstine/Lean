@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "a7676cc9",
-      "domain": "Applications",
-      "key_insight": "# Future directions\n\n## What is formalized\n\n`Core.lean` gives a self-contained ordinal analysis of explicit countably branching winning game trees. It constructs:\n\n- `omegaGame`, with value exactly `ω",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-18T10:22:08",
-      "title": "Infinite Chess: Checkmate in Omega Moves"
-    },
-    {
       "cycle_id": "21c08839",
       "domain": "Cryptography",
       "key_insight": "# Future Directions: Self-Improving Cryptographic Certificates\n\n## 1. Confluence of audited certificate refinement\n\n**Conjecture.** For every certificate tree, augmenting redundant-restatement elimina",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-19T11:15:50",
       "title": "Stone Duality for Machine Learning: Neural Networks as Geometric Realizations"
+    },
+    {
+      "cycle_id": "198023c0",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Structural Equivalence and Meaning\n\n## 1. Orbit-complete observational languages\n\n**Conjecture.** For every finite relational signature and finite model, there is a finite modal l",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-19T11:16:18",
+      "title": "Isomorphisms of Meaning: When Structures Collide"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "9b262bd9",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions\n\n## 1. Closed predecessor-free membership criterion\n\n**Conjecture.** For every irrational `α > (3 + √5)/2` and positive iteration\ndepth `n`, membership of `x` in the `n`th iterated",
-      "quality_score": 0.69,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-15T20:42:38",
-      "title": "ArXiv paper: A Note on Iterated Beatty Sequences"
-    },
     {
       "cycle_id": "2152d45c",
       "domain": "Cryptography",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-19T11:15:50",
       "title": "Stone Duality for Machine Learning: Neural Networks as Geometric Realizations"
+    },
+    {
+      "cycle_id": "198023c0",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Structural Equivalence and Meaning\n\n## 1. Orbit-complete observational languages\n\n**Conjecture.** For every finite relational signature and finite model, there is a finite modal l",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-19T11:16:18",
+      "title": "Isomorphisms of Meaning: When Structures Collide"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-19T11:15:50",
+  "last_updated": "2026-07-19T11:16:18",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "115a4ee3",
-        "quality": 0.78,
-        "theorems": 11,
-        "title": "Deepening: Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
-      },
-      {
         "cycle_id": "c83ba873",
         "quality": 0.75,
         "theorems": 0,
@@ -3141,6 +3135,12 @@
         "quality": 0.67,
         "theorems": 58,
         "title": "Mind vs Gödel: Can Minds Outperform Algorithms?"
+      },
+      {
+        "cycle_id": "198023c0",
+        "quality": 0.72,
+        "theorems": 0,
+        "title": "Isomorphisms of Meaning: When Structures Collide"
       }
     ],
     "Bridges": [

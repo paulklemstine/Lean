@@ -202,21 +202,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "[Reset] Fresh approach in Shared"
   },
   {
-    "consumed_by_exp_id": "198023c0",
-    "description": "Prove that isomorphic mathematical structures can carry semantically different meanings that no formal system can distinguish. Formalize the concept of 'isomorphism of isomorphisms' and show that categorical equivalence preserves truth but not meaning. Connect to Hofstadter's Copycat architecture for analogical reasoning.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0416",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T07:38:39.222186+00:00",
-    "title": "Isomorphisms of Meaning: When Structures Collide"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Prove information-theoretic bounds on mind uploading: the minimum description length of a human mind exceeds any computable compression of its neural connectome. Formalize the Bekenstein bound applied to neural computation and show that the Kolmogorov complexity of consciousness is at least quadratic in synapse count.",
     "domains": [
@@ -4889,6 +4874,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-19T11:15:45.660193+00:00",
     "title": "For an arbitrary activation map `a : X \u2192 (Fin k \u2192 Bool)`, the correct finite sem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Structural Equivalence and Meaning\n\n## 1. Orbit-complete observational languages\n\n**Conjecture.** For every finite relational signature and finite model, there is a finite modal language with graded modalities whose theories classify pointed models exactly up to isomorphism; moreover, the least required modal depth is bounded by the number of worlds and is attained by an infinite family.\n\nThe key insight is that truth invariance supplies one direction automatically, while finite characteristic formulas may provide the converse and quantify the observational cost of recovering structure.\n\n**Why now?** The transport theorem isolates the exact induction principle that a characteristic-formula construction must reverse, and finite models make the depth bound falsifiable by exhaustive families.\n\n## 2. Coherent analogy networks and holonomy\n\n**Conjecture.** A finite network of structural analogies admits a globally consistent assignment of meanings precisely when its interpretation transport has trivial holonomy around every cycle; it suffices to test a cycle basis of the underlying graph.\n\nThe key insight is that conjugation turns analogies into groupoid arrows, so disagreement after traversing a loop is the natural obstruction to global semantic coherence.\n\n**Why now?** Coordinate transport and composition are established at the arrow level, leaving a sharply specified passage from individual analogies to network-level obstructions.\n\n## 3. Quantitative Copycat stability\n\n**Conjecture.** For finite probabilistic transition systems, an \u03b5-approximate structural analogy transports every modal formula of depth `d` with truth-probability error at most `d\u03b5`, and this linear bound is sharp.\n\nThe key insight is that the modal induction used for exact invariance should accumulate local correspondence defects once per nested transition observation.\n\n**Why now?** Exact transport identifies the proof architecture and the modal box as the sole error-propagating case, making both the bound and candidate extremal examples concrete.\n\n## 4. Definability boundary for external interpretations\n\n**Conjecture.** An external interpretation is recoverable from structural truth exactly when it is constant on automorphism orbits and definable in the invariant language; for finite models, orbit constancy alone is sufficient after adding bounded counting modalities.\n\nThe key insight is that the meaning-collision example fails precisely because the interpretation does not factor through structural equivalence, suggesting orbit descent as the necessary condition and definability as the sufficient one.\n\n**Why now?** The collision theorem provides the negative half of a classification problem, while finite orbit decompositions offer a direct route to testing the proposed converse.\n\n## 5. Bisimulation versus isomorphism as semantic resolution\n\n**Conjecture.** On image-finite transition systems, every interpretation invariant under all modal observations factors through bisimulation classes, but need not factor through isomorphism classes; the gap is characterized by multiplicity-sensitive observations.\n\nThe key insight is that different observational languages induce different notions of sameness, with ordinary modal truth naturally aligned to behavior rather than literal structural identity.\n\n**Why now?** Structural truth transport and existing depth-bounded behavioral equivalences can be compared within one framework, exposing a testable hierarchy from renaming invariance to bisimulation invariance.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0447",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "198023c0",
+    "status": "available",
+    "timestamp": "2026-07-19T11:15:54.327812+00:00",
+    "title": "**Conjecture.** For every finite relational signature and finite model, there is"
   },
   {
     "consumed_by_exp_id": "",
