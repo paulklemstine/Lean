@@ -1,69 +1,230 @@
-# Optimization Is Geometry: How Curved Spaces Make Learning Faster
+# Natural Gradient: When Optimization Learns the Shape of the Landscape
 
-*Why the shortest path through a statistical landscape changes everything about machine learning*
+## The difference between a direction and a journey
 
----
+Imagine hiking through a valley while carrying a map printed on rubber. In one direction the map has been stretched a thousandfold; in another it has been compressed. A step that looks short on the page may cross a mountain, while a large-looking displacement may barely move along the ground. Ordinary gradient descent trusts the printed coordinates. Natural gradient descent asks instead: what distance does the landscape itself assign to this move?
 
-## The Wrong Direction
+That question is central in information geometry. A family of probability distributions can be viewed as a curved space whose points are models and whose metric is the Fisher information matrix. Nearby parameters are close when the corresponding distributions are statistically hard to distinguish, not merely when their coordinate vectors have small Euclidean separation. If a loss function is $L(\theta)$ and the Fisher metric is $G(\theta)$, the natural-gradient direction is
 
-Imagine you're lost in a mountain range, trying to reach the lowest valley. The obvious strategy is to always walk downhill—follow the steepest slope beneath your feet. This is essentially what every machine learning algorithm does when it "trains" a neural network: it measures which direction reduces error the most and takes a step that way.
+$$
+-G(\theta)^{-1}\nabla L(\theta).
+$$
 
-But here's the catch. What looks like the steepest descent depends entirely on your map. If your map stretches some directions and compresses others—like a Mercator projection stretches Greenland to look bigger than Africa—then "steepest" on the map might not be steepest on the actual terrain. You could end up zigzagging back and forth across a narrow valley instead of walking straight down to the bottom.
+An Euler update with step size $\eta$ is therefore
 
-This isn't a hypothetical problem. It's the central bottleneck of modern machine learning. When training a neural network with millions of parameters, the error landscape is wildly distorted: some directions are steep cliffs while others are nearly flat plateaus. Standard gradient descent—the workhorse algorithm behind every AI system—sees these distortions and stumbles through them, sometimes taking thousands of extra steps to reach a solution that geometry says should be nearby.
+$$
+\theta^+=\theta-\eta G(\theta)^{-1}\nabla L(\theta).
+$$
 
-## The Geometry of Probability
+The inverse metric corrects for stretching in the coordinates. This makes natural gradient a principled form of preconditioning and explains its importance in statistics, machine learning, variational inference, and scientific models with strongly anisotropic parameters.
 
-In the 1980s, a Japanese mathematician named Shun-ichi Amari had a radical idea. Instead of treating the parameters of a statistical model as points in flat Euclidean space, he proposed treating them as points on a *curved surface*—a Riemannian manifold.
+But a seductive slogan often goes too far: “natural gradient follows geodesics.” A geodesic is an intrinsically straight path on a curved manifold. Natural gradient selects an intrinsically steep tangent direction at the current point. Those are related facts, but they are not identical. Choosing the correct compass bearing does not guarantee that a straight coordinate step traces the curved road.
 
-The curvature comes from the Fisher information matrix, a mathematical object that measures how sensitive a probability distribution is to changes in its parameters. If you're fitting a bell curve to data, the Fisher information tells you that changing the mean shifts the whole curve (high sensitivity), while changing the variance when it's already large barely changes anything (low sensitivity). These sensitivities define a natural "metric"—a way of measuring distances—on the space of all possible bell curves.
+The exact results below draw that boundary sharply. They identify a setting in which metric conditioning disappears completely, derive exact constant-step and harmonic-step rates, explain the role of orthogonal energy, and give a one-dimensional counterexample showing that an Euler natural-gradient update need not land at a geodesic midpoint.
 
-On this curved surface, the shortest path between two probability distributions isn't a straight line in parameter space. It's a *geodesic*—a curve that follows the curvature, like a great circle on the surface of Earth. And the direction of steepest descent isn't the ordinary gradient. It's the *natural gradient*: the ordinary gradient, corrected for the curvature of the statistical manifold.
+## Why the inverse metric is the right local direction
 
-## The Natural Gradient Revolution
+Start with a positive diagonal metric, represented by weights $w_1,\ldots,w_n>0$. Suppose the ordinary gradient at the current point is $g=(g_1,\ldots,g_n)$. For a proposed displacement $v$, consider the local model
 
-The natural gradient has a remarkable property: it's *invariant under reparametrization*. If you relabel your parameters—say, switching from means and variances to natural parameters of an exponential family—the natural gradient points in exactly the same direction on the manifold. The ordinary gradient does not. It changes direction every time you change coordinates, which means the "optimal" step depends on an arbitrary choice of how to write down your model.
+$$
+Q(v)=\sum_{i=1}^n\left(g_i v_i+\frac{w_i v_i^2}{2\eta}\right),
+$$
 
-This invariance isn't just aesthetically pleasing. It has profound computational consequences. When the parameter space is badly conditioned—when some directions are much steeper than others—ordinary gradient descent slows to a crawl. Its convergence rate depends on the *condition number* κ, the ratio of the steepest to the flattest direction. For modern neural networks, κ can be in the millions, meaning gradient descent wastes millions of steps zigzagging when a handful would suffice.
+where $\eta>0$. The first term predicts the loss change; the second charges for movement according to the metric. A direction with a large weight $w_i$ is expensive, while a direction with a small weight is cheap.
 
-The natural gradient eliminates this dependence entirely. By preconditioning each step with the inverse of the Fisher information matrix, it "straightens out" the curved landscape, making every direction equally easy to traverse. The convergence rate becomes independent of κ—it depends only on intrinsic geometric quantities like the diameter of the manifold and bounds on the gradient.
+**Local steepest-descent theorem.** For positive $w_i$ and $\eta$, the displacement minimizing $Q$ is
 
-## Mirror Descent: The Algebraic Engine
+$$
+v_i^*=-\eta\frac{g_i}{w_i}.
+$$
 
-The connection between natural gradient and geometry goes deeper than intuition. There's a precise mathematical equivalence between natural gradient descent and *mirror descent*, an optimization algorithm that replaces Euclidean distance with a more general notion of divergence.
+In matrix notation, $v^*=-\eta G^{-1}g$.
 
-The key object is the *Bregman divergence*, a measure of "distance" generated by a convex function. For the squared Euclidean norm, the Bregman divergence is just the squared distance. For the negative entropy function, it's the Kullback-Leibler divergence—the fundamental measure of difference between probability distributions. And for the log-partition function of an exponential family, mirror descent with KL divergence is exactly natural gradient descent.
+The proof is the familiar geometry of completing the square:
 
-The Bregman divergence satisfies a remarkable algebraic identity—the *three-point identity*—that generalizes the parallelogram law of Euclidean geometry:
+$$
+g_i v_i+\frac{w_i v_i^2}{2\eta}
+=
+\frac{w_i}{2\eta}\left(v_i+\eta\frac{g_i}{w_i}\right)^2
+-rac{\eta g_i^2}{2w_i}.
+$$
 
-> D(x, z) = D(x, y) + D(y, z) + ⟨∇φ(y) − ∇φ(z), x − y⟩
+Every squared term is nonnegative and vanishes exactly at $v_i^*$. Natural gradient is therefore not an arbitrary rescaling. It is the unique optimizer of the metric-aware quadratic model.
 
-This identity is the engine that drives convergence proofs. It decomposes the "progress" of each optimization step into three interpretable pieces: how far you are from the optimum, how far the step takes you, and a correction term that accounts for the curvature. Using this identity, one can prove that mirror descent (and hence natural gradient) converges at a rate of O(1/√T) for convex problems, completely independent of the condition number.
+This theorem is local. It says which tangent vector best balances immediate improvement and intrinsic movement cost. It does not yet say how that vector should be transported across a manifold whose metric changes from point to point.
 
-## The Dual Geometry of Statistics
+## The matched landscape where conditioning vanishes
 
-Amari's framework reveals an even deeper structure. Every statistical manifold carries not one but a whole family of connections—the *α-connections*—parametrized by a real number α. At α = 1, you get the *exponential connection*, natural for exponential families. At α = −1, you get the *mixture connection*, natural for mixture models. At α = 0, you get the Levi-Civita connection, the standard connection of Riemannian geometry.
+The cleanest exact model uses the quadratic energy
 
-The exponential and mixture connections are *dual* to each other with respect to the Fisher metric. This duality is the geometric expression of conjugate duality in convex analysis and Legendre transforms in thermodynamics. It means that every statistical manifold is simultaneously flat in two different ways—one for exponentials, one for mixtures—and the interplay between these two flat structures is the source of the manifold's richness.
+$$
+E_w(x)=\frac12\sum_{i=1}^n w_i x_i^2.
+$$
 
-For exponential families, this duality has a concrete consequence: the maximum likelihood estimator follows a straight line in natural parameters. The geodesic from any initial estimate to the MLE is perfectly linear—no curvature at all in the exponential coordinate system. This is why natural gradient descent on exponential families converges so efficiently: it's literally walking in a straight line through a flat space.
+Its Hessian is the diagonal matrix $G=\operatorname{diag}(w_1,\ldots,w_n)$, exactly matching the metric. The Euclidean gradient is $Gx$. Multiplying by $G^{-1}$ cancels every weight:
 
-## Why This Matters Now
+$$
+G^{-1}\nabla E_w(x)=G^{-1}Gx=x.
+$$
 
-The practical impact of information geometry is already being felt. Google's K-FAC (Kronecker-Factored Approximate Curvature) algorithm approximates the natural gradient for deep neural networks and achieves dramatically faster training than standard gradient descent. Meta's LARS and LAMB optimizers use similar geometric insights for large-batch training. And the Adam optimizer, the default choice for training most neural networks today, can be understood as a diagonal approximation to the natural gradient.
+Thus one natural-gradient Euler step is simply
 
-But the theoretical implications go further. Information geometry suggests that the difficulty of an optimization problem isn't measured by the condition number—it's measured by the *geometric complexity* of the statistical manifold. A problem with terrible conditioning but simple geometry (like a rotated quadratic) should be easy; a problem with perfect conditioning but complex geometry (like a manifold with many saddle points) should be hard.
+$$
+x^+=(1-\eta)x.
+$$
 
-This perspective reframes the entire field of optimization. Instead of asking "how can we make gradient descent faster?", we should ask "what is the natural geometry of the problem, and how can we exploit it?" The answer, more often than not, involves the Fisher information matrix and its generalizations.
+The largest weight might be a trillion times the smallest, yet the parameter update is the same scalar contraction in every coordinate.
 
-## The Road Ahead
+**Exact one-step energy theorem.** For every real $\eta$,
 
-Several deep questions remain open. Can we efficiently compute or approximate the natural gradient for architectures with billions of parameters? The Fisher information matrix is enormous—for GPT-4 class models, it would have roughly 10^{24} entries—and even storing it is impossible. Current approaches use structured approximations (diagonal, block-diagonal, Kronecker-factored), but the quality of these approximations varies wildly.
+$$
+E_w(x^+)=(1-\eta)^2E_w(x).
+$$
 
-More fundamentally, what happens when the statistical manifold has singularities—points where the Fisher information matrix becomes degenerate? These singularities correspond to phase transitions in the model, points where the model's behavior changes qualitatively. Understanding the geometry near these singularities could explain many puzzling phenomena in deep learning, from the "double descent" curve to the emergence of sharp transitions during training.
+This follows by substituting $(1-\eta)x_i$ into each squared coordinate. Most importantly, the contraction factor contains no condition number $\kappa=\max_i w_i/\min_i w_i$.
 
-The marriage of differential geometry and optimization is still young, but the first results are striking. Optimization is geometry, and the natural gradient is the geodesic—the shortest path through the landscape of probability. Every step that ignores this geometry is, in a precise mathematical sense, a step in the wrong direction.
+Iterating gives an equally exact statement.
 
----
+**Constant-step orbit theorem.** If $x_0$ is the initial point and
 
-*The mathematical framework described here connects Riemannian geometry, information theory, and convex optimization. Key contributions include the three-point Bregman identity linking mirror descent to geodesic structure, convergence bounds independent of condition number, and the reparametrization invariance of the natural gradient. These results build on the foundational work of Amari (1998) on information geometry and its connections to modern optimization theory.*
+$$
+x_{k+1}=(1-\eta)x_k,
+$$
+
+then
+
+$$
+x_k=(1-\eta)^k x_0
+$$
+
+and
+
+$$
+E_w(x_k)=\bigl((1-\eta)^2\bigr)^kE_w(x_0).
+$$
+
+When $0<\eta<1$, the factor $(1-\eta)^2$ lies strictly between zero and one, so the energy tends geometrically to zero. This is a genuine condition-number-free convergence law—but it depends on genuine matching. The objective curvature and the metric are the same matrix. The result does not justify a universal rate for arbitrary losses and arbitrary varying Fisher metrics.
+
+For comparison, ordinary gradient descent on the same energy uses
+
+$$
+x_{k+1}=(I-\alpha G)x_k.
+$$
+
+A single step size $\alpha$ must accommodate all eigenvalues. With the conventional stable choice $\alpha=1/\max_i w_i$, the slowest coordinate contracts by $1-1/\kappa$. As $\kappa$ grows, that mode becomes painfully slow. Natural gradient cancels the anisotropy because the metric supplies exactly the missing scale.
+
+This is optimization as geometry in its most transparent form: not a magical escape from all difficulty, but exact removal of coordinate distortion in a matched model.
+
+## Harmonic steps: exact polynomial decay
+
+Suppose the step size shrinks over time. At transition $k\to k+1$, choose
+
+$$
+\eta_k=\frac{1}{k+2}.
+$$
+
+The recurrence becomes
+
+$$
+x_{k+1}=\left(1-\frac{1}{k+2}\right)x_k
+=\frac{k+1}{k+2}x_k.
+$$
+
+The factors telescope.
+
+**Harmonic parameter theorem.** For every nonnegative integer $k$,
+
+$$
+x_k=\frac{x_0}{k+1}.
+$$
+
+Indeed, multiplying the transition factors gives
+
+$$
+\prod_{j=0}^{k-1}\frac{j+1}{j+2}=\frac{1}{k+1}.
+$$
+
+Because energy is quadratic, the objective decays with the square of the parameter scale.
+
+**Harmonic energy theorem.** For every $k\ge 0$,
+
+$$
+E_w(x_k)=\frac{E_w(x_0)}{(k+1)^2}.
+$$
+
+This is stronger than a generic $O(1/k)$ upper bound, but it is polynomial rather than exponential. That distinction matters. Even a strongly convex quadratic does not yield exponential decay in iteration count when the step sizes themselves vanish harmonically. Strong convexity cannot undo a schedule whose cumulative action grows only logarithmically.
+
+The lesson is not that harmonic steps are poor; they may be desirable under noise or uncertainty. The lesson is that convergence claims must name the schedule. Geometry, curvature, and step size work together.
+
+## Pythagoras in the optimizer
+
+There is also a coordinate-free way to see why independent modes contract cleanly. Let $x$ and $y$ be orthogonal vectors in a real inner-product space, so $\langle x,y\rangle=0$. Pythagoras gives
+
+$$
+\|x+y\|^2=\|x\|^2+\|y\|^2.
+$$
+
+Scaling both modes by $1-\eta$ yields the exact identity
+
+$$
+\|(1-\eta)(x+y)\|^2
+=(1-\eta)^2\bigl(\|x\|^2+\|y\|^2\bigr).
+$$
+
+**Orthogonal-mode contraction theorem.** Every orthogonal component obeys the same scalar energy contraction, and their energies add without cross terms.
+
+This Pythagorean viewpoint clarifies the spectral picture. In the matched constant metric, natural gradient turns all modes into equally scaled directions. The condition number disappears because no mode is privileged after measuring distance in the correct geometry.
+
+## The geodesic trap
+
+Now for the crucial limitation. Consider a positive one-dimensional region with metric
+
+$$
+ds^2=4x^2\,dx^2.
+$$
+
+The coordinate
+
+$$
+\Phi(x)=x^2
+$$
+
+flattens this metric because $d\Phi=2x\,dx$, hence $ds^2=d\Phi^2$. Geodesics are straight lines in the $\Phi$ coordinate. Therefore, the geodesic midpoint between $x=2$ and $x=1$ must satisfy
+
+$$
+\Phi(x_{\mathrm{mid}})=\frac{\Phi(2)+\Phi(1)}{2}=\frac{4+1}{2}=\frac52.
+$$
+
+Thus $x_{\mathrm{mid}}=\sqrt{5/2}$, approximately $1.5811$.
+
+Now take a natural-gradient Euler step from $2$ with inverse metric $1/16$ at the start, loss derivative $8$, and unit step multiplier. Its endpoint is
+
+$$
+x_{\mathrm{Euler}}=2-\frac{1}{16}\cdot 8=\frac32.
+$$
+
+But
+
+$$
+\left(\frac32\right)^2=\frac94\ne\frac52.
+$$
+
+**Euler–geodesic separation theorem.** In this variable metric, the natural-gradient Euler endpoint is not the geodesic midpoint.
+
+The example is deliberately one-dimensional: no high-dimensional complication can be blamed. Natural gradient chooses the metric-correct tangent direction at the start. Euler’s method then adds that tangent vector in the coordinate chart. An exact geodesic step would instead use the manifold’s exponential map—or a retraction designed to approximate it. When the metric varies, these operations differ.
+
+## What survives—and what does not
+
+The strongest defensible message is precise.
+
+Natural gradient is intrinsic steepest descent for a local metric model. When a constant Fisher metric exactly matches a quadratic objective’s curvature, it removes spectral conditioning: constant steps give an exact geometric energy law, while the harmonic schedule $1/(k+2)$ gives the exact law $E_w(x_k)=E_w(x_0)/(k+1)^2$. Orthogonal modes contract according to the same Pythagorean scaling.
+
+What does not survive is the unrestricted claim that every natural-gradient Euler update follows a geodesic, or that shortest-path language alone guarantees universal condition-number-free rates. Global convergence on a statistical manifold also depends on convexity, smoothness, completeness, curvature, injectivity radius, metric variation, and the update map used to move from the tangent space back to the manifold.
+
+That sharper perspective is more useful than the slogan. It tells practitioners when natural gradient can be expected to neutralize ill-conditioning, what exact rate a schedule produces, and why replacing a coordinate Euler step by an exponential-map or controlled-retraction step may matter.
+
+The same distinction guides numerical experiments. A meaningful benchmark should not merely show that one method descends faster on one dataset. It should vary the metric anisotropy while holding the intrinsic matched problem fixed, verify the predicted energy ratio at every iterate, and separately compare coordinate endpoints with intrinsic ones. In the constant model, changing the weights from nearly equal to wildly unequal leaves the natural-gradient contraction unchanged. Under harmonic steps, plotting energy against $k+1$ on logarithmic axes reveals the exact slope $-2$. In the curved one-dimensional model, plotting the flattening coordinate $\Phi(x)=x^2$ makes the missed midpoint visible: the Euler point lies below the required intrinsic halfway level.
+
+These are small models, but that is their strength. Each strips away distractions and turns a broad geometric intuition into a statement that can be checked exactly. They serve as calibration cases for larger statistical systems: if an implementation advertised as natural gradient does not reproduce the matched cancellation, something is wrong; if a finite Euler step is described as geodesic without a retraction analysis, something is missing.
+
+Optimization really is geometry—but geometry includes not only a metric and a direction, but also curvature and the rule by which a local direction becomes a global journey.
