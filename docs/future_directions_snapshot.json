@@ -177,7 +177,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e5c56bfa",
     "description": "Define a natural metric on the space of all mathematical statements and prove that the set of true statements has a fractal dimension. Show that this dimension is strictly between 0 and 1 (truth is sparse but not negligible). Connect to Chaitin's Omega and prove that the fractal dimension is uncomputable but approximable.",
     "domain_bridges": [],
     "domains": [
@@ -190,7 +190,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T20:25:40.511664+00:00",
     "title": "The Fractal Dimension of Mathematical Truth"
   },
@@ -447,7 +447,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "14bbfbeb",
     "description": "Study near-misses to Fermat's Last Theorem: triples (a,b,c) where |a^n + b^n - c^n| is small. Prove that such near-misses exist for every n and characterize their distribution. Show that the density of near-misses decreases super-exponentially and connect to the ABC conjecture's effective version.",
     "domain_bridges": [],
     "domains": [
@@ -460,7 +460,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T19:49:57.145090+00:00",
     "title": "Fermat Near-Misses in the Twilight Zone"
   },
@@ -2074,7 +2074,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "93551ae8",
     "description": "Investigate the ArXiv paper 'On strongly regular signed graphs of higher girth' and formalize its key results. Abstract: Strongly regular signed graphs are an extension of strongly regular graphs to the realm of signed graphs, that is, graphs where each edge is positive or negative. Unlike with ordinary strongly regular graphs, most kinds of signed counterparts with girth 4 or higher are describable in terms of known structures. We prove that those with girth 4 that are bipartite are classified by designs of two kinds: weighing matrix designs and symmetric block designs. Those of girth 5 are few and readily described. There are none of higher girth. Those with girth 4 that are not bipartite are unsolved.",
     "domain_bridges": [],
     "domains": [
@@ -2086,7 +2086,7 @@
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
     "source_exp_id": "2607.12131v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T06:51:57.150644+00:00",
     "title": "ArXiv paper: On strongly regular signed graphs of higher girth"
   },
