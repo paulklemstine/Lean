@@ -1,237 +1,179 @@
-"""
-Knots and Lattices: numerical demonstrations.
+#!/usr/bin/env python3
+"""Numerical demonstrations for signed lattice-state Alexander models.
 
-Self-contained Python illustrating the main results:
-
-  1. The unsigned area generating function has non-negative coefficients,
-     so it can never equal the trefoil polynomial t - 1 + t^{-1}
-     (its t^0 coefficient is -1).  [Refutation]
-  2. The signed state sum reproduces the trefoil polynomial from three
-     states of areas (1, 0, -1) and signs (+1, -1, +1).  [Rescue]
-  3. An area-negating, sign-preserving involution makes a signed state
-     sum palindromic, i.e. Delta(t) = Delta(t^{-1}).  [Reciprocity]
-  4. Monotone lattice paths from (0,0) to (n,n) are the n-subsets of a
-     2n-set; there are C(2n,n) of them, and a family's shadow obeys the
-     Kruskal-Katona bound.  [Substrate]
-
-No external dependencies.
+The script uses only the Python standard library. It enumerates balanced
+monotone paths, constructs the T(2, 2k+1) Alexander coefficient family,
+builds universal unit-sign state models, and checks product convolution,
+reciprocity, normalization, determinant evaluation, and positivity.
 """
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from collections import Counter
 from itertools import combinations
-from math import comb
-from typing import Callable, Dict, Iterable, List, Sequence, Tuple
+from typing import Callable, Dict, Iterable, Iterator, List, Mapping, Sequence, Tuple
 
-# ---------------------------------------------------------------------------
-# Coefficient functions (Laurent polynomials as dict: exponent -> coefficient)
-# ---------------------------------------------------------------------------
-
-Coeffs = Dict[int, int]
+CoefficientMap = Dict[int, int]
+Path = Tuple[str, ...]
+SignedState = Tuple[int, int]  # (area, sign)
 
 
-def is_nonneg(c: Coeffs) -> bool:
-    """A coefficient map is non-negative if every coefficient is >= 0."""
-    return all(v >= 0 for v in c.values())
+def balanced_paths(n: int) -> Iterator[Path]:
+    """Yield every word with n east and n north steps."""
+    if n < 0:
+        raise ValueError("n must be nonnegative")
+    length = 2 * n
+    for north_positions in combinations(range(length), n):
+        north = set(north_positions)
+        yield tuple("N" if i in north else "E" for i in range(length))
 
 
-def is_palindromic(c: Coeffs) -> bool:
-    """Palindromic: coefficient of t^k equals coefficient of t^{-k}."""
-    keys = set(c) | {-k for k in c}
-    return all(c.get(k, 0) == c.get(-k, 0) for k in keys)
+def east_before_north_area(path: Sequence[str]) -> int:
+    """Count ordered east-before-north step pairs in a balanced path."""
+    east_seen = 0
+    area = 0
+    for step in path:
+        if step == "E":
+            east_seen += 1
+        elif step == "N":
+            area += east_seen
+        else:
+            raise ValueError("path steps must be 'E' or 'N'")
+    return area
 
 
-def poly_str(c: Coeffs) -> str:
-    """Render a coefficient map as a readable Laurent polynomial."""
-    terms: List[str] = []
-    for k in sorted(c, reverse=True):
-        v = c[k]
-        if v == 0:
-            continue
-        power = "1" if k == 0 else (f"t^{{{k}}}")
-        terms.append(f"{v:+d}*{power}")
-    return " ".join(terms) if terms else "0"
+def path_area_distribution(
+    n: int, forbidden: Callable[[Path], bool] | None = None
+) -> CoefficientMap:
+    """Count allowed balanced paths by area."""
+    reject = forbidden if forbidden is not None else (lambda _path: False)
+    counts: Counter[int] = Counter()
+    for path in balanced_paths(n):
+        if not reject(path):
+            counts[east_before_north_area(path)] += 1
+    return dict(sorted(counts.items()))
 
 
-# ---------------------------------------------------------------------------
-# The trefoil polynomial  t - 1 + t^{-1}
-# ---------------------------------------------------------------------------
-
-TREFOIL: Coeffs = {1: 1, 0: -1, -1: 1}
-
-
-# ---------------------------------------------------------------------------
-# Enumeration models
-# ---------------------------------------------------------------------------
-
-@dataclass(frozen=True)
-class State:
-    """An abstract state with an integer area and a +/-1 sign."""
-    label: int
-    area: int
-    sign: int  # +1 or -1
+def torus_alexander(k: int) -> CoefficientMap:
+    """Return coefficients of the symmetric Alexander polynomial of T(2,2k+1)."""
+    if k < 0:
+        raise ValueError("k must be nonnegative")
+    return {degree: 1 if (degree + k) % 2 == 0 else -1
+            for degree in range(-k, k + 1)}
 
 
-def area_gf(states: Sequence[State]) -> Coeffs:
-    """Unsigned area generating function: count of states of each area."""
-    out: Coeffs = {}
-    for s in states:
-        out[s.area] = out.get(s.area, 0) + 1
-    return out
+def evaluate(coefficients: Mapping[int, int], t: int) -> int:
+    """Evaluate a Laurent polynomial at a nonzero integer t."""
+    if t == 0 and any(degree < 0 for degree in coefficients):
+        raise ValueError("cannot evaluate negative powers at zero")
+    total = 0
+    for degree, coefficient in coefficients.items():
+        if degree >= 0:
+            total += coefficient * (t ** degree)
+        else:
+            # The demonstrations evaluate negative degrees only at ±1.
+            numerator = coefficient
+            denominator = t ** (-degree)
+            if numerator % denominator != 0:
+                raise ValueError("evaluation is not integral")
+            total += numerator // denominator
+    return total
 
 
-def signed_gf(states: Sequence[State]) -> Coeffs:
-    """Signed state sum: sum of signs of states of each area."""
-    out: Coeffs = {}
-    for s in states:
-        out[s.area] = out.get(s.area, 0) + s.sign
-    return {k: v for k, v in out.items()}
-
-
-# ---------------------------------------------------------------------------
-# Result 1 & 2: refutation and rescue
-# ---------------------------------------------------------------------------
-
-def demo_refutation_and_rescue() -> None:
-    print("=" * 70)
-    print("Results 1 & 2: Refutation of the unsigned model, signed rescue")
-    print("=" * 70)
-    print(f"Trefoil polynomial:            {poly_str(TREFOIL)}")
-    print(f"  coefficient of t^0:          {TREFOIL.get(0, 0)}")
-    print(f"  is non-negative?             {is_nonneg(TREFOIL)}")
-    print()
-    print("Any unsigned area generating function has non-negative coefficients,")
-    print("so it can NEVER equal the trefoil polynomial (t^0 coeff = -1).")
-    print()
-
-    # The three-state signed model of the rescue theorem.
-    states = [
-        State(label=0, area=1, sign=+1),
-        State(label=1, area=0, sign=-1),
-        State(label=2, area=-1, sign=+1),
-    ]
-    unsigned = area_gf(states)
-    signed = signed_gf(states)
-    print(f"Three states (area, sign): "
-          f"{[(s.area, s.sign) for s in states]}")
-    print(f"  unsigned area GF:            {poly_str(unsigned)}"
-          f"   (non-neg={is_nonneg(unsigned)}, != trefoil)")
-    print(f"  signed state sum:            {poly_str(signed)}")
-    print(f"  signed sum == trefoil?       {signed == TREFOIL}")
-    print()
-
-
-# ---------------------------------------------------------------------------
-# Result 3: reciprocity from an involution
-# ---------------------------------------------------------------------------
-
-def demo_reciprocity() -> None:
-    print("=" * 70)
-    print("Result 3: Reciprocity from an area-negating, sign-preserving")
-    print("          involution  =>  palindromic signed state sum")
-    print("=" * 70)
-    states = [
-        State(label=0, area=1, sign=+1),
-        State(label=1, area=0, sign=-1),
-        State(label=2, area=-1, sign=+1),
-    ]
-    # phi: swap the two outer states, fix the central one.
-    phi: Dict[int, int] = {0: 2, 1: 1, 2: 0}
-    by_label = {s.label: s for s in states}
-
-    involution = all(phi[phi[s.label]] == s.label for s in states)
-    area_neg = all(by_label[phi[s.label]].area == -s.area for s in states)
-    sign_pres = all(by_label[phi[s.label]].sign == s.sign for s in states)
-    signed = signed_gf(states)
-
-    print(f"  phi is an involution?        {involution}")
-    print(f"  phi negates area?            {area_neg}")
-    print(f"  phi preserves sign?          {sign_pres}")
-    print(f"  signed state sum:            {poly_str(signed)}")
-    print(f"  is palindromic?              {is_palindromic(signed)}")
-    print()
-
-
-# ---------------------------------------------------------------------------
-# Result 4: lattice-path substrate and Kruskal-Katona shadow
-# ---------------------------------------------------------------------------
-
-def lattice_paths(n: int) -> List[Tuple[int, ...]]:
-    """Monotone paths (0,0)->(n,n) as n-subsets of {0,...,2n-1}."""
-    return [tuple(c) for c in combinations(range(2 * n), n)]
-
-
-def shadow(family: Iterable[Tuple[int, ...]]) -> List[Tuple[int, ...]]:
-    """The shadow: all (n-1)-subsets obtained by deleting one element."""
-    out = set()
-    for s in family:
-        for i in range(len(s)):
-            out.add(s[:i] + s[i + 1:])
-    return sorted(out)
-
-
-def demo_lattice_paths() -> None:
-    print("=" * 70)
-    print("Result 4: Lattice paths, the count C(2n,n), and Kruskal-Katona")
-    print("=" * 70)
-    for n in range(1, 6):
-        paths = lattice_paths(n)
-        print(f"  n={n}: #paths = {len(paths):5d}   C(2n,n) = {comb(2 * n, n):5d}"
-              f"   match={len(paths) == comb(2 * n, n)}")
-    print()
-
-    # Kruskal-Katona: a family of size >= C(k,n) has shadow >= C(k,n-1).
-    n, k = 3, 4
-    all_paths = lattice_paths(n)
-    family = all_paths[: comb(k, n)]  # take exactly C(k,n) paths
-    sh = shadow(family)
-    print(f"  n={n}, k={k}: family size = {len(family)} = C(k,n) = {comb(k, n)}")
-    print(f"    shadow size = {len(sh)},  bound C(k,n-1) = {comb(k, n - 1)}")
-    print(f"    Kruskal-Katona bound holds? {len(sh) >= comb(k, n - 1)}")
-    print()
-
-
-# ---------------------------------------------------------------------------
-# A tiny "signed realization" algorithm: build states for any target poly
-# ---------------------------------------------------------------------------
-
-def realize_as_signed_states(target: Coeffs) -> List[State]:
-    """Emit |c_k| states of area k with sign(c_k) for each exponent k."""
-    states: List[State] = []
-    label = 0
-    for k in sorted(target, reverse=True):
-        v = target[k]
-        s = 1 if v > 0 else -1
-        for _ in range(abs(v)):
-            states.append(State(label=label, area=k, sign=s))
-            label += 1
+def universal_signed_states(coefficients: Mapping[int, int]) -> List[SignedState]:
+    """Construct |c_m| unit-sign states of area m for every coefficient c_m."""
+    states: List[SignedState] = []
+    for degree, coefficient in sorted(coefficients.items()):
+        sign = (coefficient > 0) - (coefficient < 0)
+        states.extend((degree, sign) for _ in range(abs(coefficient)))
     return states
 
 
-def demo_signed_realization() -> None:
-    print("=" * 70)
-    print("Algorithm: realize an arbitrary Laurent polynomial as a signed sum")
-    print("=" * 70)
-    targets: List[Coeffs] = [
-        TREFOIL,
-        {2: 1, 1: -3, 0: 5, -1: -3, -2: 1},  # a palindromic example
-    ]
-    for t in targets:
-        st = realize_as_signed_states(t)
-        rebuilt = signed_gf(st)
-        print(f"  target:   {poly_str(t)}")
-        print(f"  #states:  {len(st)}   rebuilt == target? {rebuilt == t}")
-        print(f"  palindromic target? {is_palindromic(t)}")
-        print()
+def signed_coefficients(states: Iterable[SignedState]) -> CoefficientMap:
+    """Aggregate unit-sign states into a coefficient dictionary."""
+    result: Counter[int] = Counter()
+    for area, sign in states:
+        result[area] += sign
+    return {degree: value for degree, value in sorted(result.items()) if value != 0}
 
 
-def main() -> None:
-    demo_refutation_and_rescue()
-    demo_reciprocity()
-    demo_lattice_paths()
-    demo_signed_realization()
+def convolve(left: Mapping[int, int], right: Mapping[int, int]) -> CoefficientMap:
+    """Compute sparse Cauchy convolution of two Laurent coefficient maps."""
+    result: Counter[int] = Counter()
+    for left_degree, left_value in left.items():
+        for right_degree, right_value in right.items():
+            result[left_degree + right_degree] += left_value * right_value
+    return {degree: value for degree, value in sorted(result.items()) if value != 0}
+
+
+def product_states(left: Iterable[SignedState], right: Iterable[SignedState]) -> List[SignedState]:
+    """Form Cartesian product states with additive area and multiplicative sign."""
+    left_list = list(left)
+    right_list = list(right)
+    return [(a + b, sign_a * sign_b)
+            for a, sign_a in left_list for b, sign_b in right_list]
+
+
+def is_palindromic(coefficients: Mapping[int, int]) -> bool:
+    """Test c_m = c_-m on the reflected support."""
+    degrees = set(coefficients) | {-degree for degree in coefficients}
+    return all(coefficients.get(d, 0) == coefficients.get(-d, 0) for d in degrees)
+
+
+def format_laurent(coefficients: Mapping[int, int]) -> str:
+    """Format a sparse Laurent coefficient map in descending degree."""
+    terms: List[str] = []
+    for degree in sorted(coefficients, reverse=True):
+        coefficient = coefficients[degree]
+        if coefficient == 0:
+            continue
+        magnitude = abs(coefficient)
+        if degree == 0:
+            body = str(magnitude)
+        elif degree == 1:
+            body = "t" if magnitude == 1 else f"{magnitude}t"
+        else:
+            body = f"t^{degree}" if magnitude == 1 else f"{magnitude}t^{degree}"
+        if not terms:
+            terms.append(body if coefficient > 0 else f"-{body}")
+        else:
+            terms.append((" + " if coefficient > 0 else " - ") + body)
+    return "".join(terms) or "0"
+
+
+def run_demonstrations() -> None:
+    """Print and assert the principal numerical examples."""
+    print("UNSIGNED MONOTONE-PATH AREA DISTRIBUTIONS")
+    for n in range(1, 5):
+        distribution = path_area_distribution(n)
+        assert all(value >= 0 for value in distribution.values())
+        print(f"n={n}: {distribution}")
+
+    print("\nTORUS-KNOT ALEXANDER FAMILY")
+    for k in range(0, 7):
+        coefficients = torus_alexander(k)
+        states = universal_signed_states(coefficients)
+        assert signed_coefficients(states) == coefficients
+        assert is_palindromic(coefficients)
+        assert evaluate(coefficients, 1) == 1
+        assert evaluate(coefficients, -1) == ((-1) ** k) * (2 * k + 1)
+        if k >= 1:
+            assert coefficients[k - 1] == -1
+        print(
+            f"k={k}, T(2,{2*k+1}): {format_laurent(coefficients)}; "
+            f"Delta(1)=1, Delta(-1)={evaluate(coefficients, -1)}"
+        )
+
+    print("\nPRODUCT-STATE / CAUCHY-CONVOLUTION CHECK")
+    trefoil = torus_alexander(1)
+    trefoil_states = universal_signed_states(trefoil)
+    via_coefficients = convolve(trefoil, trefoil)
+    via_states = signed_coefficients(product_states(trefoil_states, trefoil_states))
+    assert via_states == via_coefficients
+    print(f"({format_laurent(trefoil)})^2 = {format_laurent(via_coefficients)}")
+
+    print("\nAll positivity, signed reconstruction, reciprocity, evaluation, and product checks passed.")
 
 
 if __name__ == "__main__":
-    main()
+    run_demonstrations()
