@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-19T22:03:15.029786+00:00",
+  "last_updated": "2026-07-19T22:20:34.020814+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -30011,6 +30011,7 @@
       "outcome_quality": 0.65,
       "phase": "A_only",
       "phase_a_prompt_version": "v24",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v24",
@@ -30053,6 +30054,7 @@
       "outcome_quality": 0.69,
       "phase": "A_only",
       "phase_a_prompt_version": "v19",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v19",
@@ -30124,6 +30126,48 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-19T22:03:14.969948+00:00",
       "title": "Self-Modifying Code That Cannot Be Stopped"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 61,
+      "domain": "Novelty",
+      "duration_seconds": 2080.0242760181427,
+      "end_time": 1784499607.0905268,
+      "files_integrated": 3,
+      "job_id": "14bbfbeb",
+      "outcome_quality": 0.62,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v24",
+      "phase_b_skip_reason": "low_quality_near_miss",
+      "phase_b_skipped": true,
+      "prompt_version": "v24",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.55,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.7,
+        "composite": 0.4745,
+        "cross_domain": 0.5,
+        "grade": "partial",
+        "importance": 0.53,
+        "novelty": 0.58,
+        "proof_depth": 0.64,
+        "usefulness": 0.72
+      },
+      "quality_score": 0.62,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1784497527.0662508,
+      "strategy_count": 0,
+      "theorem_count": 16,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 14,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-19T22:20:33.956597+00:00",
+      "title": "Fermat Near-Misses in the Twilight Zone"
     }
   ]
 }

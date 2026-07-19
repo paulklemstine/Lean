@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "4665f966",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions: Anti-Fibonacci Structure\n\n## 1. Pell classification of shifted-square values\n\nClassify all pairs `(m,n)` for which an anti-Fibonacci value is also a consecutive anti-Fibonacci sum",
-      "quality_score": 0.71,
-      "sorry_count": 0,
-      "theorem_count": 7,
-      "timestamp": "2026-07-16T04:27:07",
-      "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
-    },
-    {
       "cycle_id": "5543d24b",
       "domain": "Combinatorics",
       "key_insight": "# Future Directions\n\n## Results established\n\nThe formalization distinguishes circular *syntax* from valid derivability.\n\n1. **Finite observations do have limits.** Proof-tree observations are sets of",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-19T22:03:14",
       "title": "Self-Modifying Code That Cannot Be Stopped"
+    },
+    {
+      "cycle_id": "14bbfbeb",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n- Impose primitivity and strict ordering on all three entries, then count near-misses in height boxes rather than counting a parametrized cancellation family.\n- Formalize a densit",
+      "quality_score": 0.62,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-07-19T22:20:27",
+      "title": "Fermat Near-Misses in the Twilight Zone"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.73
     }
   ],
-  "last_updated": "2026-07-19T22:03:14",
+  "last_updated": "2026-07-19T22:20:27",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "5f462d59",
-        "quality": 0.78,
-        "theorems": 0,
-        "title": "Surveillance Networks: Information-Theoretic Undetectability"
-      },
-      {
         "cycle_id": "f0066f11",
         "quality": 0.67,
         "theorems": 10,
@@ -3637,6 +3631,12 @@
         "quality": 0.8,
         "theorems": 0,
         "title": "Self-Modifying Code That Cannot Be Stopped"
+      },
+      {
+        "cycle_id": "14bbfbeb",
+        "quality": 0.62,
+        "theorems": 16,
+        "title": "Fermat Near-Misses in the Twilight Zone"
       }
     ],
     "NumberTheory": [

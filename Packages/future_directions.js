@@ -217,6 +217,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Construct a category where composition is not associative but satisfies a controlled failure: (f circ g) circ h and f circ (g circ h) are naturally isomorphic but not equal. Prove that such almost-categories are exactly the bicategories and that every coherent loop-tolerant algebraic structure forms a higher category.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0498",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-19T22:20:03.236691+00:00",
+    "title": "Causal Loops in Category Theory: When Composition Loops Back"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 717f7483 (Q=0.750), which proved 19 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Godel's incompleteness theorem says there are true statements that cannot be proved. But what if we turn incompleteness into a GAME? Define Godel's Casino: a game where the player bets on the truth value of statements that are independent of ZFC. The house deals cards representing arithmetic stateme",
     "domains": [
       "NumberTheory"
@@ -302,21 +317,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Zombies and Qualia: Mathematics of Subjective Experience"
   },
   {
-    "consumed_by_exp_id": "14bbfbeb",
-    "description": "Study near-misses to Fermat's Last Theorem: triples (a,b,c) where |a^n + b^n - c^n| is small. Prove that such near-misses exist for every n and characterize their distribution. Show that the density of near-misses decreases super-exponentially and connect to the ABC conjecture's effective version.",
-    "domains": [
-      "Novelty",
-      "NumberTheory"
-    ],
-    "id": "fd_0481",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T19:49:57.145090+00:00",
-    "title": "Fermat Near-Misses in the Twilight Zone"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Construct a single algebraic object whose projections give S^0, S^1, S^2, ... simultaneously. Prove it exists as an inverse limit in the category of spheres. Show that its homology groups encode the Bernoulli numbers and that its cohomology ring is the polynomial ring on Stiefel-Whitney classes.",
     "domains": [
@@ -347,7 +347,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Infinite Games Against Death: Immortality Strategies"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "65e81f6c",
     "description": "Compute the topological type of the Library of Babel: a space of all possible 410-page books. Prove that it is connected, totally disconnected under the Hamming metric, and has covering dimension 0. Determine the Kolmogorov complexity of a random book and prove that almost all books are incompressible.",
     "domains": [
       "Novelty",
@@ -357,7 +357,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.81,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T17:49:41.587633+00:00",
     "title": "Borges' Library of Babel: Combinatorics of Everything"
   },
@@ -5248,6 +5248,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-19T22:02:57.144410+00:00",
     "title": "For every positive integer `k`, there exists a natural machine model in which pe"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n- Impose primitivity and strict ordering on all three entries, then count near-misses in height boxes rather than counting a parametrized cancellation family.\n- Formalize a density function such as the number of triples `1 \u2264 a < b < c \u2264 H` with error at most `c^(n-1)`, and derive upper and lower asymptotic bounds.\n- Strengthen the adjacent-family estimate by proving matching lower bounds for `(t,1,t+1)` when `n \u2265 2`.\n- Add the natural-number radical and abc-quality infrastructure needed to turn `deficit_identity` into a conditional effective bound from a precisely stated effective abc hypothesis.\n- Investigate nonparametric examples such as the cubic near-miss `(6,8,9)` and machine-check finite searches for record-quality triples at higher exponents.\n- Separate decay in exponent from decay in height: the present normalization identity is exponential in `n`, but no super-exponential density theorem is claimed.\n",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0499",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "14bbfbeb",
+    "status": "available",
+    "timestamp": "2026-07-19T22:20:20.550541+00:00",
+    "title": "Future directions from cycle 14bbfbeb"
   },
   {
     "consumed_by_exp_id": "",

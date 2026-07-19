@@ -1,16 +1,14 @@
 --- Basic.lean
 +++ Basic.lean
-@@ -1,136 +1,107 @@
+@@ -1,121 +1,107 @@
  import Mathlib
  
  /-!
--# Two-dimensional Newtonian gravity
+-# Fermat Near-Misses
 +# The Anti-Fibonacci Sequence — Foundations
  
--This file formalizes the radial calculus behind planar Newtonian gravity.  It also
--records an important correction to the motivating claim: the logarithmic force
--law does have stable circular orbits.  What fails is Bertrand closure: the
--linearized radial and angular frequencies have irrational ratio `√2`.
+-Elementary existence, optimality, counting, and quantitative error bounds for
+-`|a^n + b^n - c^n|`.
 +The Fibonacci sequence `F (n+1) = F n + F (n-1)` is the paradigm of *addition-driven*
 +growth: consecutive ratios converge to the golden ratio and terms grow exponentially.
 +
@@ -59,27 +57,31 @@
 +-- !-- Lab Notes -- !--
  -/
  
--open Real
+-namespace FermatNearMisses
 +namespace AntiFibonacci
  
--namespace FlatlandGravity
+-/-- The nonnegative integral error in a Fermat-type equation. -/
+-def error (a b c n : ℕ) : ℕ :=
+-  ((a : ℤ) ^ n + (b : ℤ) ^ n - (c : ℤ) ^ n).natAbs
 +/-- The anti-Fibonacci sequence: `antiFib 0 = 1` and `antiFib (n+1) = antiFib n + n`.
 +Its terms are `1, 1, 2, 4, 7, 11, 16, 22, 29, 37, …`. -/
 +def antiFib : ℕ → ℕ
 +  | 0 => 1
 +  | (n + 1) => antiFib n + n
  
--/-- The potential energy per test body for attractive planar Newtonian gravity. -/
--noncomputable def potential (k r : ℝ) : ℝ := k * Real.log r
+-/-- A triple is a near-miss at tolerance `B` when its integral error is at most `B`. -/
+-def IsNearMiss (B a b c n : ℕ) : Prop := error a b c n ≤ B
 +@[simp] theorem antiFib_zero : antiFib 0 = 1 := rfl
  
--/-- The radial force associated with the planar potential. -/
--noncomputable def radialForce (k r : ℝ) : ℝ := -k / r
+-/-- In the cancellation family `(t,s,t)`, the Fermat error is exactly `s^n`. -/
+-theorem cancellation_family_exact_error (t s n : ℕ) : error t s t n = s ^ n := by
+-  unfold error
+-  norm_num
 +theorem antiFib_succ (n : ℕ) : antiFib (n + 1) = antiFib n + n := rfl
  
--/-- The effective radial potential, including the centrifugal term. -/
--noncomputable def effectivePotential (k m ell r : ℝ) : ℝ :=
--  potential k r + ell ^ 2 / (2 * m * r ^ 2)
+-/-- Every exponent has an unbounded family of integral near-misses with error one. -/
+-theorem adjacent_family_exact_error (t n : ℕ) : error t 1 t n = 1 := by
+-  simpa using cancellation_family_exact_error t 1 n
 +/-- Subtraction-free closed form: `2 * antiFib n + n = n² + 2`.
 +This is the workhorse identity from which every other result is derived. -/
 +theorem antiFib_closed (n : ℕ) : 2 * antiFib n + n = n * n + 2 := by
@@ -89,12 +91,13 @@
 +      show 2 * (antiFib k + k) + (k + 1) = (k + 1) * (k + 1) + 2
 +      nlinarith [ih]
  
--/-
--The logarithmic potential has derivative `k/r`, hence force `-k/r`.
---/
--theorem hasDerivAt_potential {k r : ℝ} (hr : r ≠ 0) :
--    HasDerivAt (potential k) (k / r) r := by
--  convert HasDerivAt.const_mul k ( Real.hasDerivAt_log hr ) using 1
+-/-- Every exponent admits a positive error-one triple whose two scalable entries
+-exceed any prescribed cutoff. -/
+-theorem arbitrarily_large_optimal_near_misses (n cutoff : ℕ) :
+-    ∃ a b c : ℕ, cutoff < a ∧ 0 < b ∧ cutoff < c ∧ error a b c n = 1 := by
+-  use cutoff + 1, 1, cutoff + 1
+-  exact ⟨Nat.lt_succ_self _, by decide, Nat.lt_succ_self _,
+-    adjacent_family_exact_error _ _⟩
 +/-- Real-valued closed form: `antiFib n = (n² - n + 2) / 2`. -/
 +theorem antiFib_real (n : ℕ) : (antiFib n : ℝ) = ((n : ℝ) ^ 2 - n + 2) / 2 := by
 +  have h := antiFib_closed n
@@ -102,28 +105,20 @@
 +  push_cast at h2
 +  nlinarith [h2]
  
--/-
--The force is the negative derivative of the logarithmic potential.
---/
--theorem force_eq_neg_potential_deriv {k r : ℝ} (hr : r ≠ 0) :
--    HasDerivAt (potential k) (-radialForce k r) r := by
--  convert hasDerivAt_potential hr using 1 ; unfold radialForce ; ring
+-/-- The distinct positive triple `(6,8,9)` is an optimal cubic near-miss:
+-`6^3 + 8^3 = 9^3 - 1`. -/
+-theorem optimal_cubic_near_miss :
+-    error 6 8 9 3 = 1 ∧ 0 < 6 ∧ 6 < 8 ∧ 8 < 9 := by
+-  norm_num [error]
 +/-- Every anti-Fibonacci term is positive. -/
 +theorem antiFib_pos (n : ℕ) : 0 < antiFib n := by
 +  have h := antiFib_closed n
 +  nlinarith [h]
  
--/-
--First derivative of the effective radial potential.
---/
--theorem hasDerivAt_effectivePotential {k m ell r : ℝ} (hm : m ≠ 0) (hr : r ≠ 0) :
--    HasDerivAt (effectivePotential k m ell)
--      (k / r - ell ^ 2 / (m * r ^ 3)) r := by
--  convert HasDerivAt.add ( hasDerivAt_potential hr ) ( HasDerivAt.div ( hasDerivAt_const _ _ ) ( HasDerivAt.mul ( hasDerivAt_const _ _ ) ( hasDerivAt_pow 2 r ) ) _ ) using 1 <;> ring ; norm_num [ hm, hr ];
--  · -- By simplifying, we can see that the two expressions are equal.
--    field_simp
--    ring;
--  · norm_num [ hm, hr ]
+-/-- On the diagonal `(t,t,t)`, the absolute Fermat error is exactly `t^n`. -/
+-theorem diagonal_error (t n : ℕ) : error t t t n = t ^ n := by
+-  unfold error
+-  norm_num
 +/-- **Main result (anti-addition).** From index `6` onwards a term is *strictly less*
 +than the sum of its two predecessors, so it can never equal that sum: the sequence
 +systematically "avoids addition". -/
@@ -134,96 +129,86 @@
 +  have h4 := antiFib_closed (n + 4)
 +  nlinarith [h6, h5, h4]
  
--/-
--Algebraic characterization of a circular orbit (a critical point of the
-- effective potential).
---/
--theorem circular_critical_iff {k m ell r : ℝ}
--    (hm : m ≠ 0) (hr : r ≠ 0) :
--    k / r - ell ^ 2 / (m * r ^ 3) = 0 ↔ ell ^ 2 = m * k * r ^ 2 := by
--  grind
+-/-- The diagonal error satisfies an exact quadratic-scale normalization identity. -/
+-theorem diagonal_relative_error_identity (t n : ℕ) :
+-    error t t t n * t ^ n = t ^ (2 * n) := by
+-  rw [diagonal_error, pow_mul']
+-  ring
 +/-- Consequence: no term (from index `6`) equals the sum of the two before it. -/
 +theorem antiFib_ne_sum (n : ℕ) :
 +    antiFib (n + 6) ≠ antiFib (n + 5) + antiFib (n + 4) :=
 +  Nat.ne_of_lt (antiFib_avoids_sum n)
  
--/-- Second derivative expression for the effective potential. -/
--noncomputable def effectiveSecondDeriv (k m ell r : ℝ) : ℝ :=
--  -k / r ^ 2 + 3 * ell ^ 2 / (m * r ^ 4)
+-/-- At base two, the quadratic-scale normalized diagonal error decays exponentially,
+-expressed here without division. -/
+-theorem binary_diagonal_exponential_decay (n : ℕ) :
+-    error 2 2 2 n * 2 ^ n = 2 ^ (2 * n) := by
+-  convert diagonal_relative_error_identity 2 n using 1
 +/-- **Sharpness.** The avoidance property fails at index `5`:
 +`antiFib 5 = antiFib 4 + antiFib 3` (i.e. `11 = 7 + 4`).  Together with
 +`antiFib_avoids_sum` this pins the threshold exactly at `6`. -/
 +theorem antiFib_boundary : antiFib 5 = antiFib 4 + antiFib 3 := by decide
  
--/-
--At a circular orbit, the effective second derivative is `2k/r²`.
---/
--theorem effectiveSecondDeriv_at_circular {k m ell r : ℝ}
--    (hm : m ≠ 0) (hr : r ≠ 0) (hcirc : ell ^ 2 = m * k * r ^ 2) :
--    effectiveSecondDeriv k m ell r = 2 * k / r ^ 2 := by
--  unfold effectiveSecondDeriv; ring;
+-/-- For fixed exponent, there are exactly `N` members of the error-one
+-cancellation family indexed by `t < N`. -/
+-theorem count_exact_near_miss_family (n N : ℕ) :
+-    ((Finset.range N).filter fun t => error t 1 t n = 1).card = N := by
+-  rw [Finset.filter_true_of_mem]
+-  · exact Finset.card_range N
+-  · exact fun t _ => adjacent_family_exact_error t n
+-
+-/-- Any nonzero integral Fermat error is at least one, so the cancellation family
+-attains the least possible positive error. -/
+-theorem one_le_error_of_ne_zero {a b c n : ℕ} (h : error a b c n ≠ 0) :
+-    1 ≤ error a b c n := by
+-  exact Nat.pos_of_ne_zero h
+-
+-/-- Changing a nonnegative integral base from `b` to `a` changes its `n`th power
+-by at most `n |a-b| max(a,b)^(n-1)`. -/
+-theorem power_gap_bound (a b n : ℕ) :
+-    |(a : ℤ) ^ n - (b : ℤ) ^ n| ≤
+-      |(a : ℤ) - (b : ℤ)| * (n : ℤ) * (max a b : ℤ) ^ (n - 1) := by
+-  have h := abs_pow_sub_pow_le (a : ℤ) (b : ℤ) n
+-  convert h using 1; norm_num [abs_of_nonneg]
+-
+-/-- If the sum of powers lies below `c^n`, adding the error produces an exact
+-additive equation. This is the elementary bridge from near-misses to abc-type
+-triples. -/
+-theorem deficit_identity {a b c n : ℕ} (h : a ^ n + b ^ n ≤ c ^ n) :
+-    a ^ n + b ^ n + error a b c n = c ^ n := by
+-  unfold error;
 -  grind
 -
--/-
--Contrary to the motivating “no stable circular orbit” claim, every circular
--orbit with positive coupling and positive radius is linearly stable.
---/
--theorem circular_orbit_stable {k m ell r : ℝ}
--    (hk : 0 < k) (hm : m ≠ 0) (hr : 0 < r)
--    (hcirc : ell ^ 2 = m * k * r ^ 2) :
--    0 < effectiveSecondDeriv k m ell r := by
--  convert div_pos ( mul_pos zero_lt_two hk ) ( sq_pos_of_pos hr ) using 1 ; rw [ effectiveSecondDeriv_at_circular ] <;> aesop
+-/-- The genuinely ordered family `(t,1,t+1)` has error at most the first-order
+-power-gap bound plus one. Thus for fixed exponent its error is `O(t^(n-1))`,
+-one degree smaller than the scale of the entries' `n`th powers. -/
+-theorem ordered_adjacent_error_bound (t n : ℕ) :
+-    error t 1 (t + 1) n ≤ n * (t + 1) ^ (n - 1) + 1 := by
+-  set x : ℤ := (t + 1 : ℤ) ^ n - t ^ n
+-  have hx_nonneg : x ≥ 0 := by
+-    exact sub_nonneg_of_le <| mod_cast Nat.pow_le_pow_left (Nat.le_succ _) _
+-  have h_abs : Int.natAbs (1 - x) ≤ n * (t + 1) ^ (n - 1) + 1 := by
+-    have h_power_gap : Int.natAbs x ≤ n * (t + 1) ^ (n - 1) := by
+-      have h := power_gap_bound (t + 1) t n
+-      simp_all +decide [abs_of_nonneg]
+-      linarith [abs_of_nonneg hx_nonneg]
+-    omega
+-  convert h_abs using 1
+-  norm_num [error]
+-  ring_nf!
 -
--/-- Linearized radial frequency squared at a circular orbit. -/
--noncomputable def radialFrequencySq (k m r : ℝ) : ℝ := 2 * k / (m * r ^ 2)
+-/-- Exact small cases for the ordered family, recording the numerical evidence
+-behind its polynomial growth pattern. -/
+-theorem ordered_small_cases :
+-    error 1 1 2 2 = 2 ∧ error 2 1 3 2 = 4 ∧ error 3 1 4 2 = 6 ∧
+-    error 1 1 2 3 = 6 ∧ error 2 1 3 3 = 18 ∧ error 3 1 4 3 = 36 ∧
+-    error 1 1 2 4 = 14 ∧ error 2 1 3 4 = 64 ∧ error 3 1 4 4 = 174 := by
+-  norm_num [error]
 -
--/-- Angular frequency squared at a circular orbit. -/
--noncomputable def angularFrequencySq (k m r : ℝ) : ℝ := k / (m * r ^ 2)
--
--/-
--The radial epicyclic frequency squared is twice the angular frequency squared.
---/
--theorem radialFrequencySq_eq_two_mul_angular (k m r : ℝ) :
--    radialFrequencySq k m r = 2 * angularFrequencySq k m r := by
--  exact show 2 * k / ( m * r ^ 2 ) = 2 * ( k / ( m * r ^ 2 ) ) by ring;
--
--/-
--The positive frequencies therefore have ratio `√2`.
---/
--theorem radialFrequency_eq_sqrtTwo_mul_angular {omegaR omegaTheta : ℝ}
--    (hTheta : 0 < omegaTheta)
--    (hR : 0 ≤ omegaR)
--    (hsq : omegaR ^ 2 = 2 * omegaTheta ^ 2) :
--    omegaR = Real.sqrt 2 * omegaTheta := by
--  rw [ ← sq_eq_sq₀ ?_ ?_ ] <;> first | positivity | rw [ hsq, mul_pow, Real.sq_sqrt ] ; linarith;
--
--/-
--Irrationality of `√2` prevents exact commensurability of the two positive
--frequencies.  This is the linearized Bertrand-closure obstruction.
---/
--theorem no_frequency_commensurability {omegaR omegaTheta : ℝ}
--    (hTheta : 0 < omegaTheta)
--    (hR : 0 ≤ omegaR)
--    (hsq : omegaR ^ 2 = 2 * omegaTheta ^ 2) :
--    ¬ ∃ p q : ℕ, 0 < p ∧ 0 < q ∧ (p : ℝ) * omegaR = (q : ℝ) * omegaTheta := by
--  -- By assumption, we have omegaR = sqrt(2) * omegaTheta.
--  have h_ratio : omegaR = Real.sqrt 2 * omegaTheta := by
--    rw [ ← sq_eq_sq₀ ?_ ?_ ] <;> first | positivity | rw [ hsq, mul_pow, Real.sq_sqrt ] ; linarith;
--  simp_all +decide [mul_comm, mul_left_comm]
--  exact fun x hx y hy => ⟨ fun h => irrational_sqrt_two <| ⟨ y / x, by push_cast; rw [ ← h, mul_div_cancel_left₀ _ <| by positivity ] ⟩, hTheta.ne' ⟩
--
--/-
--Combined diagnosis: planar gravity has stable circular motion, but its
--linearized radial and angular oscillations cannot share an integer period.
---/
--theorem flatland_diagnosis {k m ell r omegaR omegaTheta : ℝ}
--    (hk : 0 < k) (hm : m ≠ 0) (hr : 0 < r)
--    (hcirc : ell ^ 2 = m * k * r ^ 2)
--    (hTheta : 0 < omegaTheta) (hR : 0 ≤ omegaR)
--    (hsq : omegaR ^ 2 = 2 * omegaTheta ^ 2) :
--    0 < effectiveSecondDeriv k m ell r ∧
--      ¬ ∃ p q : ℕ, 0 < p ∧ 0 < q ∧ (p : ℝ) * omegaR = (q : ℝ) * omegaTheta := by
--  convert circular_orbit_stable hk hm hr hcirc using 1;
--  exact ⟨ fun h => h.1, fun h => ⟨ h, no_frequency_commensurability hTheta hR hsq ⟩ ⟩
+-/-- The ordered near-miss family is nondegenerate: both smaller entries are
+-positive and strictly below the largest whenever `t` is positive. -/
+-theorem ordered_adjacent_nondegenerate {t : ℕ} (ht : 0 < t) :
+-    0 < t ∧ 0 < 1 ∧ t < t + 1 ∧ 1 < t + 1 := by
+-  omega
 -
  
