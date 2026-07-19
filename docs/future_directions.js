@@ -275,6 +275,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Prove that cellular automata can perform transfinite computations when run on ordinals instead of N. Formalize a Rule 110 analog on omega-squared and prove it achieves super-Turing computation. Connect to Infinite Time Turing Machines and ordinal computation.",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_0427",
+    "priority_score": 0.84,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-19T08:40:11.399800+00:00",
+    "title": "Cellular Automata at the Ordinals: Transfinite Computation"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalize transreal arithmetic (Anderson's system: R \u222a {Phi, +inf, -inf} with Phi = 0/0). Prove the ring axioms fail but a wheel structure emerges. Determine which theorems of real analysis survive transreal extension and which collapse.",
     "domains": [
       "Novelty",
@@ -3063,6 +3078,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-17T23:51:28.009064+00:00",
     "title": "Improved constant in Erd\u0151s sumset avoidance for dense subsets"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize chess played on an infinite board. Prove that the king can always escape on an infinite board and determine which finite-piece configurations are forced mates. Develop a theory of infinite combinatorial game value and prove its relationship to ordinal game values.",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_0426",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-19T08:40:11.361973+00:00",
+    "title": "Infinite-Dimensional Chess: Winning on the Hilbert Board"
   },
   {
     "consumed_by_exp_id": "",
