@@ -1,194 +1,394 @@
-# The Algebraic Geometry of Neural Decision Boundaries: A Tropical Framework
+# Tropical Dequantization and Decision Stability in Max-Affine Neural Networks
 
-**Author:** Aristotle
-**Date:** 2026-07-10
+**Aristotle**  
+**July 19, 2026**
 
 ## Abstract
 
-A feed-forward neural network with rectified-linear (ReLU) activations computes a piecewise linear function $f : \mathbb{R}^n \to \mathbb{R}^m$. For a binary classifier $f : \mathbb{R}^n \to \mathbb{R}$, the decision boundary $\{x : f(x) = 0\}$ is a piecewise linear hypersurface. We show that this boundary is precisely a *tropical hypersurface* — the piecewise linear skeleton of an algebraic variety in the max-plus semiring — and we identify the exact algebraic laws that control its complexity. Our central objects are *tropical polynomials* (pointwise maxima of affine monomials) and *tropical rational functions* (their differences). We prove that a tropical polynomial is always convex, continuous, and piecewise linear; that the pointwise maximum of two tropical polynomials is a tropical polynomial whose monomial family is the *disjoint union* of the two (so monomial counts **add**); and that their pointwise sum is a tropical polynomial whose monomial family is the *Cartesian product* of the two (so monomial counts **multiply**). We derive the pointwise ReLU identity $\max(p-q,0) = \max(p,q) - q$, which shows that each rectifying layer at most doubles the numerator monomial count of the tropical rational function computed by the network. Two combinatorial consequences follow: the algebraic degree of the boundary is bounded by $2^L$ for a network of depth $L$, and the number of linear regions is bounded by $2^L \prod_i w_i$ for layer widths $w_i$. We further characterize the decision boundary as the closed equalizer set $\{x : p(x) = q(x)\}$, describe its singular locus as a multiplicity-of-argmax condition, and outline curvature-free robustness certificates that follow from convexity.
-
-**Keywords:** ReLU networks, tropical geometry, decision boundaries, max-plus algebra, piecewise linear functions, tropical hypersurface, linear regions, VC dimension.
-
----
+Max-affine expressions form the convex piecewise-linear sector of rectified neural computation and, simultaneously, finite binary tropical polynomials with affine leaves. This paper develops a self-contained comparison between their tropical evaluation and the smooth evaluation obtained by replacing every binary maximum with log-sum-exp. For an expression of depth $d$ and inverse temperature $\beta>0$, the smooth value lies above the tropical value by at most $d\log(2)/\beta$, uniformly over the input space. Consequently, binary classification is unchanged at every input whose tropical score has absolute value greater than this explicit error. The bound depends on computational depth rather than leaf count. We also solve the algebraic recurrence underlying the proposed budget $2^L\prod_i w_i$ and distinguish this identity from a universal geometric region theorem. Finally, two minimal counterexamples delimit broader claims: the zero set of scalar ReLU contains an open half-line, so arbitrary ReLU zero sets need not be hypersurfaces, and a width-one ReLU has a kink although the pair count $\binom{1}{2}$ vanishes. These results identify a rigorous tropical-to-analytic bridge for convex neural models while motivating tropical-rational representations, margin-stable topology, active-set singularity bounds, and arrangement-sensitive region estimates for broader architectures.
 
 ## 1. Introduction
 
-Neural networks with rectified-linear activations are, mathematically, compositions of affine maps and coordinatewise maxima with zero. Such compositions are piecewise linear, and a substantial literature studies the number of *linear regions* they induce as a proxy for expressive power. Separately, *tropical geometry* studies the combinatorial "shadows" of algebraic varieties obtained by replacing ordinary addition and multiplication with maximum and addition, respectively. The two subjects meet at a single observation: a piecewise linear convex function is exactly a tropical polynomial, and a general ReLU-computable function is a difference of two such — a tropical rational function.
+A scalar neural classifier assigns a real score $F(x)$ to an input $x$ and places its decision threshold at zero. Its geometry is therefore governed by the score’s level sets, especially the zero set and the interface between positive and nonpositive predictions. Networks with rectified linear activation are piecewise affine, suggesting connections to polyhedral and tropical geometry. However, several distinct assertions are often compressed into this suggestion: that the score is tropical, that its raw zero set is a hypersurface, that architectural width directly controls the number of regions or singularities, and that a smooth approximation preserves the same decisions or topology. These assertions require separate hypotheses and separate proofs.
 
-This paper develops the algebraic structure underlying that correspondence and proves the growth laws that govern the complexity of a classifier's decision boundary. The results are stated for tropical polynomials over an arbitrary nonempty finite index set of monomials, so they apply uniformly to any layer width and depth.
+This paper isolates a setting in which the tropical description is exact. A **max-affine expression** is a finite binary tree whose leaves are real-valued affine functions and whose internal nodes compute maximum. Such an expression is a tropical polynomial written with binary bracketing. It also describes the convex sector of rectified neural computation: a ReLU gate is simply the maximum of zero and its input. The expression evaluates to a convex piecewise-affine function, the upper envelope of its affine leaves.
 
-Our contributions are:
+The main question is quantitative. Replace each hard maximum by the smooth log-sum-exp operation
 
-1. **Structural regularity.** Every tropical polynomial is a convex, continuous, piecewise linear function, with each monomial lying below it and the maximum attained by some monomial (Section 3).
-2. **The addition law.** The pointwise maximum of two tropical polynomials is a tropical polynomial whose monomial index set is the disjoint union of the two; monomial counts add (Section 4).
-3. **The multiplication law.** The pointwise sum of two tropical polynomials is a tropical polynomial whose monomial index set is the Cartesian product of the two; monomial counts multiply (Section 4).
-4. **The ReLU identity and layerwise doubling.** The identity $\max(p-q,0) = \max(p,q)-q$ shows a ReLU maps the tropical rational $p \ominus q$ to $\max(p,q) \ominus q$, at most doubling the numerator monomial count, yielding the $2^L$ degree bound and the $2^L\prod_i w_i$ region bound (Section 5).
-5. **Boundary geometry.** The decision boundary is the closed set $\{p = q\}$; its sign is governed by the dominant monomial family, and its singular locus is a multiplicity-of-argmax stratum (Section 6).
+$$
+\operatorname{LSE}_\beta(a,b)
+=
+\frac{1}{\beta}\log\left(e^{\beta a}+e^{\beta b}\right),
+\qquad \beta>0.
+$$
 
----
+How far can the resulting smooth function move from the original tropical function? The local error of one binary replacement is at most $\log(2)/\beta$. For a nested computation, a naive estimate might scale with the total number of gates or leaves. Instead, the exact compositional argument yields a bound proportional only to the deepest chain of maxima. If $d$ is the expression depth, then
 
-## 2. The tropical semiring and tropical polynomials
+$$
+0\leq F_\beta(x)-F(x)\leq\frac{d\log 2}{\beta}
+$$
 
-### 2.1 The max-plus semiring
+for every input $x$. This produces a classification certificate: if $|F(x)|>d\log(2)/\beta$, hard and smooth evaluations have the same strict-positive label.
 
-The *max-plus (tropical) semiring* is $(\mathbb{R} \cup \{-\infty\}, \oplus, \odot)$ with
-$$a \oplus b := \max(a, b), \qquad a \odot b := a + b.$$
-Tropical addition is idempotent ($a \oplus a = a$), tropical multiplication distributes over it, $-\infty$ is the additive identity, and $0$ is the multiplicative identity. A *tropical monomial* in variables $x = (x_1,\dots,x_n)$ with integer (or, here, real) exponent vector $w \in \mathbb{R}^n$ and coefficient $a \in \mathbb{R}$ evaluates, in ordinary arithmetic, to the affine function
-$$a \odot x_1^{\odot w_1} \odot \cdots \odot x_n^{\odot w_n} = a + \langle w, x\rangle.$$
+The distinction between depth and size is practically relevant. A balanced tree of depth $d$ may contain as many as $2^d$ leaves, yet the bound remains linear in $d$. The result is also independent of input dimension and of the coefficients of the affine leaves.
 
-### 2.2 Tropical polynomials
+The second purpose of the paper is diagnostic. An exact algebraic identity shows that the recurrence multiplying a budget by $2w_i$ at layer $i$ unfolds to $2^L\prod_i w_i$. This does not establish that the recurrence is a valid universal count of realized linear regions. Geometry depends on arrangement rank and degeneracy. Two one-dimensional examples further show why unrestricted formulations fail: the raw zero set of ReLU has interior, and the narrowest possible ReLU network exhibits a kink invisible to a product of within-layer pair counts.
 
-**Definition 2.1 (Tropical polynomial).** Let $n \in \mathbb{N}$ and let $\mathcal{I}$ be a nonempty finite index set. Given coefficients $a : \mathcal{I} \to \mathbb{R}$ and exponent (weight) vectors $w : \mathcal{I} \to \mathbb{R}^n$, the associated *tropical polynomial* is the function $p : \mathbb{R}^n \to \mathbb{R}$,
-$$p(x) = \bigoplus_{i \in \mathcal{I}} \Big( a_i \odot \prod_j x_j^{\odot w_{ij}} \Big) = \max_{i \in \mathcal{I}} \Big( a_i + \sum_{j=1}^n w_{ij}\, x_j \Big).$$
+The resulting picture is disciplined. Max-affine neural functions are tropical objects; their log-sum-exp dequantizations are uniformly close with a sharp depth-dependent compositional estimate; and classifications are stable outside an explicit uncertainty band. Arbitrary signed ReLU networks and universal claims about hypersurfaces, regions, or singularities require richer invariants.
 
-Each summand $m_i(x) = a_i + \langle w_i, x\rangle$ is an affine *monomial*. The polynomial is the upper envelope of finitely many affine functions.
+## 2. Max-affine expressions
 
-**Definition 2.2 (Tropical rational function).** A *tropical rational function* is a difference $f = p \ominus q := p - q$ of two tropical polynomials $p$ and $q$. We call $p$ the *numerator* and $q$ the *denominator*.
+Let $X$ be any set. In applications $X$ is typically $\mathbb{R}^n$, but the approximation theorem requires no vector-space structure beyond that needed to define the leaf functions.
 
-**Definition 2.3 (Tropical hypersurface).** The *tropical hypersurface* of a tropical polynomial $p$ is the set of points where the maximum defining $p$ is attained by at least two distinct monomials — the non-smooth locus of $p$. For a tropical rational $f = p \ominus q$, the associated *variety* is the equalizer $\{x : p(x) = q(x)\} = \{x : f(x) = 0\}$.
+**Definition 2.1 (Max-affine expression).** A max-affine expression on $X$ is defined recursively:
 
----
+1. Every function $g:X\to\mathbb{R}$ designated as an affine leaf is a max-affine expression.
+2. If $P$ and $Q$ are max-affine expressions, then $\max(P,Q)$ is a max-affine expression.
 
-## 3. Structural regularity of tropical polynomials
+When $X=\mathbb{R}^n$, an affine leaf has the form
 
-Throughout, fix $n \in \mathbb{N}$ and a nonempty finite index set $\mathcal{I}$, with data $a : \mathcal{I} \to \mathbb{R}$ and $w : \mathcal{I} \to \mathbb{R}^n$, and write $p(x) = \max_{i} (a_i + \langle w_i, x\rangle)$.
+$$
+g(x)=a\cdot x+b
+$$
 
-**Lemma 3.1 (Monomial lower bound).** For every $x$ and every $i \in \mathcal{I}$,
-$$a_i + \langle w_i, x\rangle \le p(x).$$
+for $a\in\mathbb{R}^n$ and $b\in\mathbb{R}$.
 
-*Proof.* Immediate from the definition of the maximum: each element of a finite family is at most its supremum. $\square$
+**Definition 2.2 (Tropical evaluation).** The tropical evaluation $F_P:X\to\mathbb{R}$ of an expression $P$ is given by
 
-**Lemma 3.2 (Attainment).** For every $x$ there exists $i \in \mathcal{I}$ with $p(x) = a_i + \langle w_i, x\rangle$.
+$$
+F_g(x)=g(x)
+$$
 
-*Proof.* The family $\{a_i + \langle w_i, x\rangle\}_{i \in \mathcal{I}}$ is finite and nonempty, hence attains its maximum at some index. $\square$
+at a leaf and
 
-**Theorem 3.3 (Convexity).** $p$ is convex on $\mathbb{R}^n$.
+$$
+F_{\max(P,Q)}(x)=\max(F_P(x),F_Q(x))
+$$
 
-*Proof.* Each monomial $m_i(x) = a_i + \langle w_i, x\rangle$ is affine, hence convex. For $x, y \in \mathbb{R}^n$ and weights $\alpha, \beta \ge 0$ with $\alpha + \beta = 1$, fix any index $i$. By affineness, $m_i(\alpha x + \beta y) = \alpha\, m_i(x) + \beta\, m_i(y) \le \alpha\, p(x) + \beta\, p(y)$ using Lemma 3.1. Taking the maximum over $i$ on the left gives $p(\alpha x + \beta y) \le \alpha p(x) + \beta p(y)$. $\square$
+at an internal node.
 
-**Theorem 3.4 (Continuity).** $p$ is continuous.
+Thus $F_P$ is the upper envelope of all affine leaves occurring in $P$. Repeated leaves and binary bracketing can alter the expression tree without altering that hard evaluation, although they can affect the chosen dequantization because log-sum-exp counts multiplicity.
 
-*Proof.* $p$ is the pointwise maximum of finitely many affine (hence continuous) functions. A finite maximum of continuous functions is continuous: at any point $x$, one may check the two one-sided order conditions. For a threshold $y < p(x)$, pick a maximizing index $i$ (Lemma 3.2); the affine function $m_i$ exceeds $y$ on an open neighborhood, and $p \ge m_i$ there. For a threshold $y > p(x)$, every $m_i(x) < y$, and each affine $m_i$ stays below $y$ on a neighborhood; the finite intersection of these neighborhoods keeps $p < y$. $\square$
+**Definition 2.3 (Depth).** The depth $d(P)$ counts the greatest number of maximum nodes on a path from the root to a leaf:
 
-Together, Theorems 3.3 and 3.4 establish that a tropical polynomial is a convex, continuous, piecewise linear function — the geometry of an upper envelope of hyperplanes.
+$$
+d(g)=0,
+\qquad
+d(\max(P,Q))=1+\max(d(P),d(Q)).
+$$
 
----
+**Definition 2.4 (ReLU expression).** Given a max-affine expression $P$, its rectification is
 
-## 4. The two growth laws
+$$
+\operatorname{ReLU}(P)=\max(0,P),
+$$
 
-The complexity of a ReLU network's boundary is governed by how the number of monomials evolves under two operations: pointwise maximum (produced by rectification) and pointwise sum (produced by composing independent contributions).
+where $0$ denotes the constant zero affine function.
 
-Let $\mathcal{I}, \mathcal{J}$ be nonempty finite index sets with tropical-polynomial data $(a_1, w_1)$ over $\mathcal{I}$ and $(a_2, w_2)$ over $\mathcal{J}$, defining $p_1(x) = \max_{i\in\mathcal I}(a_1(i) + \langle w_1(i), x\rangle)$ and $p_2(x) = \max_{k\in\mathcal J}(a_2(k) + \langle w_2(k), x\rangle)$.
+**Proposition 2.5 (Exact ReLU evaluation).** For every input $x$,
 
-**Theorem 4.1 (Addition law — tropical addition / ReLU law).** The pointwise maximum of two tropical polynomials is a tropical polynomial whose monomial family is the disjoint union of the two:
-$$\max\big(p_1(x), p_2(x)\big) = \max_{k \in \mathcal{I} \sqcup \mathcal{J}} \big( \tilde a_k + \langle \tilde w_k, x\rangle\big),$$
-where $(\tilde a, \tilde w)$ restricts to $(a_1, w_1)$ on the $\mathcal{I}$-summand and to $(a_2, w_2)$ on the $\mathcal{J}$-summand. In particular the monomial count of the maximum is $|\mathcal{I}| + |\mathcal{J}|$.
+$$
+F_{\operatorname{ReLU}(P)}(x)=\max(0,F_P(x)).
+$$
 
-*Proof.* ($\le$) $\max(p_1,p_2)$ equals whichever of $p_1, p_2$ is larger; by Lemma 3.2 that value is attained by some monomial of the corresponding family, which is one of the monomials of the disjoint union. ($\ge$) Every monomial of the disjoint union is a monomial of either $p_1$ or $p_2$, hence bounded above by $p_1$ or $p_2$ respectively (Lemma 3.1), hence by $\max(p_1,p_2)$; taking the maximum over the disjoint union preserves the inequality. $\square$
+**Proof sketch.** This is immediate from the recursive definition: rectification introduces a maximum node with children equal to the zero function and $P$. $\square$
 
-**Theorem 4.2 (Multiplication law — tropical multiplication).** The pointwise sum of two tropical polynomials is a tropical polynomial whose monomial family is the Cartesian product of the two:
-$$p_1(x) + p_2(x) = \max_{(i,k) \in \mathcal{I}\times\mathcal{J}} \Big( \big(a_1(i) + a_2(k)\big) + \big\langle w_1(i) + w_2(k),\, x\big\rangle \Big).$$
-In particular the monomial count of the sum is $|\mathcal{I}| \cdot |\mathcal{J}|$.
+When the leaves are affine, $F_P$ is convex and piecewise affine. The regions on which a single leaf dominates are polyhedral. Ties between active leaves form the tropical corner locus. This corner locus should not be confused with the zero level set $\{x:F_P(x)=0\}$: one records nondifferentiability of an upper envelope, while the other records a chosen score threshold.
 
-*Proof.* ($\le$) Choose maximizing indices $i^\star$ for $p_1(x)$ and $k^\star$ for $p_2(x)$ (Lemma 3.2). Then $p_1(x) + p_2(x)$ equals the $(i^\star, k^\star)$ monomial of the product family, which is at most the maximum over the product. ($\ge$) For any $(i,k)$, the product monomial equals $m^{(1)}_i(x) + m^{(2)}_k(x) \le p_1(x) + p_2(x)$ by Lemma 3.1 applied to each factor; taking the maximum over $(i,k)$ preserves the bound. $\square$
+## 3. Log-sum-exp dequantization
 
-These two theorems are the arithmetic core: **rectification (max) adds monomial counts; composition (sum) multiplies them.** Both identities are exact and independent of the numerical weights.
+**Definition 3.1 (Smooth evaluation).** Fix $\beta>0$. The dequantized or smooth evaluation $S_{P,\beta}:X\to\mathbb{R}$ is defined recursively by
 
----
+$$
+S_{g,\beta}(x)=g(x)
+$$
 
-## 5. ReLU on tropical rational functions and layerwise doubling
+and
 
-A ReLU network computes a tropical rational function $f = p \ominus q$. The following pointwise identity is the algebraic engine of layerwise complexity growth.
+$$
+S_{\max(P,Q),\beta}(x)
+=
+\frac{1}{\beta}
+\log\left(
+ e^{\beta S_{P,\beta}(x)}+e^{\beta S_{Q,\beta}(x)}
+\right).
+$$
 
-**Lemma 5.1 (ReLU identity).** For all real $p, q$,
-$$\max(p - q,\, 0) = \max(p, q) - q.$$
+The parameter $\beta$ is the inverse temperature. Increasing $\beta$ sharpens the smooth maximum.
 
-*Proof.* If $p \ge q$ then the left side is $p - q \ge 0$ and the right side is $p - q$. If $p < q$ then the left side is $0$ and the right side is $q - q = 0$. $\square$
+The analysis starts with a standard two-variable estimate, included here for completeness.
 
-**Corollary 5.2 (ReLU on tropical rationals).** Let $f = p \ominus q$ be a tropical rational function. Then
-$$\mathrm{ReLU}(f) = \max(f, 0) = \max(p, q) \ominus q.$$
-By the addition law (Theorem 4.1), the new numerator $\max(p,q)$ has monomial family the disjoint union of the numerator and denominator families of $f$. Thus if $f$ has numerator count $m$ and denominator count $d$, then $\mathrm{ReLU}(f)$ has numerator count $m + d \le 2\max(m,d)$ and denominator count $d$.
+**Lemma 3.2 (Binary log-sum-exp bounds).** For all $a,b\in\mathbb{R}$ and $\beta>0$,
 
-*Proof.* Substitute $p \mapsto p(x)$, $q \mapsto q(x)$ in Lemma 5.1 and apply Corollary of Theorem 4.1 to $\max(p,q)$. $\square$
+$$
+\max(a,b)
+\leq
+\frac{1}{\beta}\log(e^{\beta a}+e^{\beta b})
+\leq
+\max(a,b)+\frac{\log 2}{\beta}.
+$$
 
-**Corollary 5.3 (Depth $\Rightarrow$ degree $\le 2^L$).** Consider a scalar quantity $m_0 = 1$ evolving under $L$ rectifying stages, each obeying $m_{k+1} \le 2\, m_k$. Then $m_L \le 2^L$. Consequently the algebraic degree of the tropical hypersurface computed by a depth-$L$ rectifier network is at most $2^L$.
+**Proof sketch.** Put $m=\max(a,b)$. Factoring out $e^{\beta m}$ gives
 
-*Proof.* An immediate induction: $m_{k+1} \le 2 m_k$ and $m_0 = 1$ give $m_k \le 2^k$. $\square$
+$$
+\frac{1}{\beta}\log(e^{\beta a}+e^{\beta b})
+=
+m+rac{1}{\beta}
+\log\left(e^{\beta(a-m)}+e^{\beta(b-m)}\right).
+$$
 
-**Corollary 5.4 (Width $\Rightarrow$ region count $\prod w_i$).** A tropical product (pointwise sum) over $L$ factors, where factor $i$ has $w_i$ monomials, has exactly $\prod_{i=1}^L w_i$ monomials.
+At least one exponent in parentheses is $1$, so the logarithmic correction is nonnegative. Both are at most $1$, so their sum is at most $2$. The correction therefore lies between $0$ and $\log(2)/\beta$. $\square$
 
-*Proof.* Iterate Theorem 4.2: $|\mathcal{I}_1 \times \cdots \times \mathcal{I}_L| = \prod_i |\mathcal{I}_i| = \prod_i w_i$. $\square$
+The lower half of the global estimate follows by monotonicity.
 
-Combining Corollaries 5.3 and 5.4, the number of linear regions of the piecewise linear function computed by a depth-$L$ network with widths $w_1, \dots, w_L$ is bounded by $2^L \prod_i w_i$, matching classical region-counting bounds.
+**Lemma 3.3 (Dequantization dominates tropical evaluation).** For every max-affine expression $P$, every $x\in X$, and every $\beta>0$,
 
----
+$$
+F_P(x)\leq S_{P,\beta}(x).
+$$
 
-## 6. Geometry of the decision boundary
+**Proof sketch.** Induct on the expression. Equality holds at a leaf. At an internal node, the induction hypotheses place both smooth child values above their tropical counterparts. Monotonicity of maximum and the lower binary log-sum-exp bound then place the smooth parent above the tropical parent. $\square$
 
-Let $f = p \ominus q$ be the tropical rational function of a binary classifier, with $p, q$ tropical polynomials.
+The upper estimate requires tracking depth.
 
-**Proposition 6.1 (The boundary is the equalizer).** The decision boundary satisfies
-$$\{x : f(x) = 0\} = \{x : p(x) = q(x)\}.$$
+**Theorem 3.4 (Depth-controlled upper approximation).** For every max-affine expression $P$, every $x\in X$, and every $\beta>0$,
 
-*Proof.* $f(x) = p(x) - q(x) = 0 \iff p(x) = q(x)$. $\square$
+$$
+S_{P,\beta}(x)
+\leq
+F_P(x)+\frac{d(P)\log 2}{\beta}.
+$$
 
-**Proposition 6.2 (Closedness).** The decision boundary is closed.
+**Proof sketch.** Proceed by structural induction. At a leaf, $d(P)=0$ and the evaluations coincide. Suppose $P=\max(Q,R)$. By induction,
 
-*Proof.* $p$ and $q$ are continuous (Theorem 3.4), so $f = p - q$ is continuous, and $\{x : f(x) = 0\} = f^{-1}(\{0\})$ is the preimage of a closed set. $\square$
+$$
+S_{Q,\beta}(x)
+\leq F_Q(x)+\frac{d(Q)\log 2}{\beta},
+$$
 
-**Proposition 6.3 (Sign is governed by the dominant family).** For $x$ off the boundary, $\mathrm{sign}(f(x))$ equals $+1$ when the maximizing monomial belongs to the numerator family $p$ (i.e. $p(x) > q(x)$) and $-1$ when it belongs to the denominator family $q$ (i.e. $q(x) > p(x)$). Thus the classification label at $x$ is determined by which tropical polynomial dominates there.
+and similarly for $R$. Let $D=\max(d(Q),d(R))$. Both smooth child values are then bounded above by their hard values plus $D\log(2)/\beta$. Translation equivariance and monotonicity of log-sum-exp imply
 
-*Proof.* Immediate from $f = p - q$ and Lemma 3.2 applied to $\max(p, q)$. $\square$
+$$
+S_{P,\beta}(x)
+\leq
+\operatorname{LSE}_\beta(F_Q(x),F_R(x))
++rac{D\log 2}{\beta}.
+$$
 
-**Singular locus (multiplicity of argmax).** A boundary point $x$ is *smooth* if the maximum defining the local dominant tropical polynomial is attained by a unique monomial; it is *singular* when three or more affine pieces meet (the argmax has multiplicity $\ge 3$). This is a codimension-two incidence condition of the same combinatorial type that governs vertices of tropical curves. The number of such singular strata is bounded by counting the ways monomial families can pairwise tie within each layer, giving a bound of the form $\prod_i \binom{w_i}{2}$.
+Applying the binary upper bound adds one more $\log(2)/\beta$ and replaces the log-sum-exp of hard children by their maximum. Since $d(P)=D+1$, the result follows. $\square$
 
----
+Combining the preceding lemmas gives the principal estimate.
+
+**Theorem 3.5 (Two-sided dequantization error).** Let $P$ have depth $d$. For every $x\in X$ and $\beta>0$,
+
+$$
+0\leq S_{P,\beta}(x)-F_P(x)
+\leq
+\frac{d\log 2}{\beta}.
+$$
+
+This estimate is uniform in $x$. It does not depend on the dimension of $X$, the coefficients of the affine leaves, or the number of leaves. Its dependence on binary depth reflects compositional structure. For a balanced tree with $N$ leaves, $d$ may be of order $\log_2 N$; for a completely unbalanced tree it may be of order $N$.
+
+**Corollary 3.6 (Uniform soft-ReLU bound).** For every $x\in\mathbb{R}$ and $\beta>0$,
+
+$$
+\max(0,x)
+\leq
+\frac{1}{\beta}\log(1+e^{\beta x})
+\leq
+\max(0,x)+\frac{\log 2}{\beta}.
+$$
+
+**Proof sketch.** Use the binary estimate with $a=0$ and $b=x$. Equivalently, apply Theorem 3.5 to a depth-one rectification expression. $\square$
+
+### 3.1 Sharpness and representation dependence
+
+At a single tie $a=b$, the binary error is exactly $\log(2)/\beta$, so the one-node constant cannot be improved uniformly. Along a nested expression, simultaneous ties can accumulate one unit of error at each level for suitable repeated or balanced values. Thus depth is a natural worst-case parameter for the chosen binary representation.
+
+There is also a useful distinction between an expression and the function it represents. The hard maximum is associative and idempotent, whereas finite-temperature log-sum-exp is associative under an unnormalized sum over all leaves but is not idempotent with respect to repeated entries. Different trees representing the same tropical function can therefore lead to different smooth surrogates and different depth bounds. In algorithm design, balancing the tree can reduce the certified error budget for a given $\beta$.
+
+## 4. Classification stability
+
+Define the hard binary classifier
+
+$$
+C_P(x)=
+\begin{cases}
+1,&F_P(x)>0,\\
+0,&F_P(x)\leq 0,
+\end{cases}
+$$
+
+and its dequantized counterpart $C_{P,\beta}$ by replacing $F_P$ with $S_{P,\beta}$.
+
+**Theorem 4.1 (Margin stability).** Let $P$ have depth $d$, let $\beta>0$, and let $x\in X$. If
+
+$$
+\frac{d\log 2}{\beta}<|F_P(x)|,
+$$
+
+then
+
+$$
+S_{P,\beta}(x)>0
+\quad\Longleftrightarrow\quad
+F_P(x)>0.
+$$
+
+**Proof sketch.** If $F_P(x)>0$, Lemma 3.3 gives $S_{P,\beta}(x)\geq F_P(x)>0$. If $F_P(x)<0$, the margin condition says
+
+$$
+F_P(x)+\frac{d\log 2}{\beta}<0.
+$$
+
+Theorem 3.4 then gives $S_{P,\beta}(x)<0$. The strict margin excludes $F_P(x)=0$. $\square$
+
+**Corollary 4.2 (Temperature selection from a target margin).** If a collection $A\subseteq X$ satisfies $|F_P(x)|\geq m$ for every $x\in A$, where $m>0$, then hard and smooth classifications agree throughout $A$ whenever
+
+$$
+\beta>\frac{d\log 2}{m}.
+$$
+
+The theorem controls labels, not necessarily the topology of the zero sets. Uniformly close functions may have zero sets with different numbers of components if critical behavior occurs near zero. To infer ambient isotopy or another topological equivalence, one needs a transversality or critical-value exclusion hypothesis in the uncertainty band.
+
+## 5. A layerwise budget identity
+
+Consider a finite width sequence $w_1,\dots,w_L$ of nonnegative integers. Define a recursively generated budget by
+
+$$
+R([])=1
+$$
+
+and
+
+$$
+R([w_1,w_2,\dots,w_L])
+=2w_1R([w_2,\dots,w_L]).
+$$
+
+**Theorem 5.1 (Closed form of the proposed recurrence).** For every finite width sequence,
+
+$$
+R([w_1,\dots,w_L])
+=2^L\prod_{i=1}^{L}w_i.
+$$
+
+**Proof sketch.** Induct on $L$. The empty product is $1$, matching the base case. For a nonempty sequence, apply the recurrence and the induction hypothesis to obtain
+
+$$
+R=2w_1\left(2^{L-1}\prod_{i=2}^{L}w_i\right)
+=2^L\prod_{i=1}^{L}w_i.
+$$
+
+$\square$
+
+The theorem is an algebraic identity conditional on the recurrence. It should not be interpreted as a universal theorem that a ReLU network has exactly, or always at most, this many realized linear regions. A valid geometric recurrence must establish how many new regions each layer can cut from each incoming region. Raw width alone does not encode arrangement rank, input dimension, coincident hyperplanes, inactive units, or bottlenecks. The appropriate future bound is expected to involve arrangement growth functions evaluated at realized ranks.
+
+## 6. Limitations of unrestricted hypersurface and singularity claims
+
+### 6.1 The raw zero set may have interior
+
+Define scalar ReLU by
+
+$$
+r(x)=\max(0,x).
+$$
+
+**Theorem 6.1 (Interior in a ReLU zero set).** The open negative half-line lies in the zero set of scalar ReLU:
+
+$$
+(-\infty,0)\subseteq\{x\in\mathbb{R}:r(x)=0\}.
+$$
+
+Indeed, the complete zero set is $(-\infty,0]$.
+
+**Proof sketch.** If $x<0$, then $0>x$, so $\max(0,x)=0$. At $x=0$ the same equality holds; for $x>0$, $r(x)=x>0$. $\square$
+
+A hypersurface in one dimension is expected to be zero-dimensional under standard nondegeneracy assumptions, whereas $(-\infty,0]$ contains an open interval. Thus the raw zero set of an arbitrary ReLU score need not be a piecewise-linear hypersurface. One can recover a boundary-like object by considering the topological boundary between strict label regions, or by imposing sign-changing and regularity assumptions on the zero level.
+
+### 6.2 Pair counts can miss width-one kinks
+
+The simplest within-layer pair count vanishes at width one:
+
+$$
+\binom{1}{2}=0.
+$$
+
+Nevertheless, scalar ReLU is nonsmooth at zero.
+
+**Theorem 6.2 (Width-one singularity obstruction).** For every $\varepsilon>0$,
+
+$$
+r(-\varepsilon)=0,
+\qquad
+r(\varepsilon)=\varepsilon,
+$$
+
+while $\binom{1}{2}=0$.
+
+**Proof sketch.** The two evaluations follow immediately from the sign of $\varepsilon$. On the negative side the slope is $0$; on the positive side it is $1$, so the origin is a genuine kink. The binomial coefficient is zero because no pair can be selected from a singleton. $\square$
+
+Therefore an unguarded product such as $\prod_i\binom{w_i}{2}$ cannot serve as a universal detector or upper-bound mechanism for all relevant singular behavior: it vanishes whenever any $w_i=1$, even though such a layer may introduce a kink. A more faithful invariant must inspect active affine ties and their incidence in the realized upper envelope.
 
 ## 7. Algorithms
 
-### 7.1 Extracting the tropical rational representation of a ReLU network
+### 7.1 Recursive tropical and smooth evaluation
 
-Given a trained ReLU network, one propagates a symbolic tropical-rational representation $(p, q)$ layer by layer using Theorems 4.1, 4.2 and Corollary 5.2: an affine layer applies the multiplication/addition laws to update $(p,q)$; a ReLU layer applies $\max(p,q) \ominus q$. The monomial families are tracked as finite sets of $(a, w)$ pairs. This yields an exact piecewise linear description whose region count is bounded by $2^L\prod_i w_i$.
+A max-affine expression can be evaluated by postorder traversal. At each leaf, compute $a\cdot x+b$. At each internal node, compute both children and then either their maximum or a numerically stable log-sum-exp. The latter should use
 
-### 7.2 Region enumeration and boundary sampling
+$$
+\operatorname{LSE}_\beta(a,b)
+=m+\frac{1}{\beta}\log\left(e^{\beta(a-m)}+e^{\beta(b-m)}\right),
+$$
 
-To visualize the boundary $\{p = q\}$, one samples a grid, evaluates $f = p - q$ by taking maxima over monomial families, and extracts the zero level set. The dominant monomial index at each point provides the region label; boundaries between regions where three or more indices tie are flagged as singular.
+where $m=\max(a,b)$, to avoid overflow.
 
-### 7.3 Curvature-free robustness certification
+If the tree has $N$ nodes and the input has dimension $n$, evaluation costs $O(Nn)$ when every leaf dot product is computed directly, and $O(N)$ additional scalar operations. The recursion stack uses $O(d)$ memory, where $d$ is depth.
 
-At a correctly classified point $x_0$ with margin $|f(x_0)|$, the local Lipschitz constant of $f$ is realized by the active affine pieces of $p$ and $q$. The certified robustness radius is $|f(x_0)| / (\|w^{(p)}_\star\| + \|w^{(q)}_\star\|)$, where $w^{(p)}_\star, w^{(q)}_\star$ are the dominant monomial slopes at $x_0$ — with no dependence on any second-order term, because convexity forces a single affine piece to realize the local slope.
+### 7.2 Certification of stable labels
 
----
+Given a hard score $F_P(x)$, compute
+
+$$
+E=\frac{d(P)\log 2}{\beta}.
+$$
+
+If $|F_P(x)|>E$, return the hard label together with a stability certificate. Otherwise report the point as unresolved by this bound. This is a sufficient test, not a necessary one: classifications may agree inside the uncertainty band, but the theorem alone does not guarantee it.
+
+### 7.3 Grid extraction of decision geometry
+
+For visualization in two dimensions, evaluate $F_P$ and $S_{P,\beta}$ on a rectangular grid. Approximate zero contours by detecting sign changes along cell edges and interpolating crossing locations. Overlay the contours and color points according to whether $|F_P(x)|$ exceeds the certified error. With an $M\times M$ grid and an $N$-node tree, direct evaluation costs $O(M^2N)$ scalar tree operations, plus leaf-coordinate costs.
+
+Grid extraction illustrates rather than proves topology. Resolution can miss small components, and the value theorem does not itself imply isotopy of contours.
 
 ## 8. Applications
 
-- **Expressivity accounting.** The exact laws give architecture-dependent bounds on linear-region count ($2^L\prod_i w_i$), clarifying the classical trade-off between depth (exponential) and width (multiplicative).
-- **Robustness.** Curvature-free certificates (Section 7.3) provide margins that are cheap to compute and provably tight for the active facet.
-- **Interpretability.** The dominant-monomial index labels each input region with the affine rule the network applies there, turning a black box into a piecewise affine lookup.
-- **Model comparison.** Two networks can be compared by the combinatorial structure (monomial families, singular strata) of their tropical rational functions rather than by opaque parameter counts.
+The estimate applies wherever hard max-affine models are replaced by differentiable surrogates. In neural optimization, it calibrates softplus or nested log-sum-exp approximations. In energy-based models, $\beta$ acts as inverse temperature and the theorem bounds the gap between a zero-temperature tropical energy and its finite-temperature free-energy analogue. In robust classification, the margin theorem separates inputs whose labels are certified under smoothing from those near the decision level. In numerical continuation, the smooth family indexed by $\beta$ provides a controlled route toward a nonsmooth limit.
 
----
+The depth dependence suggests architectural interventions. If a hard maximum over many leaves is implemented as a balanced tree, the certified compositional error can be much smaller than for a chain. Conversely, if the desired smooth semantics is the log of a sum over all leaf exponentials, tree structure and multiplicities should be chosen deliberately.
 
-## 9. Discussion
+The counterexamples also affect data analysis. Plotting the raw zero set of a ReLU score may display filled regions rather than a boundary. A meaningful classifier boundary may instead be the boundary of the positive decision region. Similarly, singularity statistics should be measured from realized active sets and local slope changes, not inferred solely from nominal widths.
 
-The correspondence "ReLU network $=$ tropical rational function" is exact, not asymptotic. It reduces expressivity questions to combinatorics of monomial families and reduces geometric questions about the boundary to incidence conditions among affine pieces. The convexity of tropical polynomials (Theorem 3.3) is especially consequential: it removes curvature from robustness analysis and guarantees that the boundary is a well-behaved piecewise linear hypersurface rather than an arbitrary level set.
+## 9. Discussion and future work
 
-A limitation is that the raw monomial families can be exponentially large; the bounds $2^L$ and $2^L\prod_i w_i$ are worst-case, and practical networks realize far fewer *active* regions. Understanding the typical (not worst-case) monomial count for trained weights is an important open direction.
+The present results establish a rigorous bridge for convex max-affine models but do not identify every ReLU classifier with a single tropical polynomial. Signed output weights and affine combinations can destroy convexity. A natural conjecture is that scalar feed-forward ReLU networks admit controlled representations as differences of two max-affine expressions. Their decision sets would then be equality loci of two tropical polynomials, a tropical-rational geometry.
 
----
+A second direction is topological stability. The explicit band $d\log(2)/\beta$ controls values and labels away from zero. If a compact-domain classifier has no critical value in this band, one may expect the hard and smooth decision sets to be ambient isotopic. Establishing this requires geometric regularity beyond uniform approximation.
 
-## 10. Future directions
+Third, singularity bounds should be arrangement-sensitive. In general position in $\mathbb{R}^n$, higher-order singular strata arise when several active affine leaves tie. Counting intersecting active $(n+1)$-subsets is more closely tied to the upper envelope than multiplying pair counts across layers.
 
-We highlight three testable conjectures distilled from the two arithmetic laws.
+Fourth, region recurrences should replace nominal width by the rank of the hyperplane arrangement induced on each inherited region. Products of arrangement growth functions could account for bottlenecks and degeneracy while retaining a layerwise interpretation.
 
-1. **Exact monomial-count recursion.** For a depth-$L$ network with widths $w_1,\dots,w_L$, the numerator monomial count obeys the exact recursion $m_{k+1} = m_k + d_k$ (with $d_k$ the current denominator count), hence is bounded by $2^L\prod_i w_i$, with the bound attained on an open set of weights. The mechanism is Corollary 5.2: rectification takes the disjoint union of numerator and denominator families.
+Finally, capacity bounds may emerge from active-set compression. If a signed classifier can be represented as a difference of controlled max-affine expressions, the number and arrangement of active leaves may provide a geometric route to bounds on shattering and classification complexity.
 
-2. **Codimension-two singular locus.** The non-smooth points of the boundary — where three or more affine pieces meet — form a codimension-two tropical stratum whose count is bounded by $\prod_i \binom{w_i}{2}$. The mechanism is that singularity is a multiplicity-$\ge 3$ argmax condition, of the same combinatorial type as vertices of tropical curves.
+## 10. Conclusion
 
-3. **Curvature-free certified robustness.** The certified robustness radius at a correctly classified point equals the margin divided by twice the sum of the two dominant monomial slopes, with no second-order term, because convexity forces the local Lipschitz constant to be realized by a single affine piece.
+Max-affine neural expressions admit an exact tropical interpretation and a quantitatively controlled smooth dequantization. For depth $d$ and inverse temperature $\beta>0$, the log-sum-exp evaluation differs from the tropical evaluation by a quantity in
 
----
+$$
+\left[0,\frac{d\log 2}{\beta}\right].
+$$
 
-## 11. Conclusion
+Every point with hard-score magnitude exceeding this bound retains its binary classification. The estimate is uniform and scales with depth rather than leaf count. The recurrence multiplying by $2w_i$ has the closed form $2^L\prod_iw_i$, but converting that algebraic budget into a geometric region theorem requires additional arrangement hypotheses. Scalar ReLU supplies two decisive cautions: its zero set has interior, and its width-one kink survives despite a zero pair count. Together, these results replace an unrestricted slogan with a precise program: use tropical geometry exactly where max-affine structure is present, use explicit margin bounds to control smoothing, and use active arrangements rather than raw architecture to study regions and singularities.
 
-We have shown that the decision boundary of a rectified-linear classifier is a tropical hypersurface, and that its algebraic complexity is governed by two exact arithmetic laws of the max-plus algebra: monomial counts **add** under rectification and **multiply** under composition. From these follow the degree bound $2^L$, the region bound $2^L\prod_i w_i$, the closedness and equalizer description of the boundary, and curvature-free robustness certificates. The architecture of a network — its depth and its widths — thus directly determines the algebraic complexity of the frontier it draws between classes.
+The separation of analytic, combinatorial, and topological claims is essential. The dequantization estimate is unconditional within the max-affine class; the region identity is conditional on its stated recurrence; hypersurface and singularity interpretations need further geometric assumptions. Maintaining these distinctions provides a stable basis for extending the theory without attributing to architecture alone properties that depend on realized coefficients and active configurations.
