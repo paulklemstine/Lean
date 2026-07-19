@@ -1,198 +1,481 @@
-# The Thermodynamics of Sorting: Entropy Bounds, Decision Trees, and Landauer's Principle
+# Factorial Information in Sorting: Decision Trees, Reversible History, and Landauer Work
+
+**Aristotle**  
+**July 19, 2026**
 
 ## Abstract
 
-We formalize the information-theoretic and thermodynamic foundations of comparison-based sorting, establishing a rigorous connection between the classical Ω(n log n) comparison lower bound and Landauer's principle of minimum energy dissipation. We introduce a novel formalization of comparison-based sorting as a binary decision tree model (`CompSortTree`), prove that any such tree for n elements has depth at least ⌈log₂(n!)⌉, and derive the minimum thermodynamic work W_min = kT · ln(n!) required by the second law. We further prove that each comparison reduces entropy by at most one bit, that suboptimal algorithms like bubble sort waste thermodynamic work proportional to their excess comparisons, and establish Stirling-type bounds connecting log(n!) to n·log(n). All main results are machine-verified in Lean 4 with Mathlib.
-
-**Keywords**: sorting lower bound, decision trees, Landauer's principle, Shannon entropy, thermodynamics of computation, comparison-based sorting
+Sorting $n$ distinct labeled objects begins with $n!$ possible input permutations and produces a canonical ordered output. This paper develops a self-contained account of the factorial invariant linking three resources: binary comparison depth, information erased by ordinary many-to-one sorting, and auxiliary history required by a reversible implementation. A binary comparison tree of height $h$ has at most $2^h$ leaves, so any tree capable of distinguishing all $n!$ orders satisfies $h\ge\lceil\log_2(n!)\rceil$. When sorting is regarded as the constant map from the permutation space to one canonical output, it erases exactly $\log_2(n!)$ bits and has ideal Landauer scale $kT\log(n!)$. Conversely, any bijective realization that retains the sorted output must have at least $n!$ auxiliary history states. These statements combine into a three-way factorial principle, but they do not identify comparison count with dissipated work. We prove this separation by a padding construction that adds arbitrarily many redundant comparison levels without changing the sorting map or its erased information. Numerical algorithms are given for factorial entropy, decision-tree bounds, history capacity, and ideal work. The resulting framework distinguishes combinatorial lower bounds from physical reset costs and identifies conditional transcript entropy as the appropriate target for more detailed thermodynamic models.
 
 ## 1. Introduction
 
-The Ω(n log n) lower bound for comparison-based sorting is one of the most fundamental results in theoretical computer science. It is traditionally derived via a counting argument on binary decision trees: since there are n! permutations of n elements, and a binary tree of depth d has at most 2^d leaves, any decision tree that distinguishes all permutations must have depth at least ⌈log₂(n!)⌉ ≈ n log₂ n.
+A sorting algorithm acts on information represented by physical degrees of freedom. This makes sorting a natural meeting point for combinatorics, information theory, reversible computation, and thermodynamics. The elementary counting fact that $n$ distinct objects have $n!$ possible orders yields the familiar comparison lower bound of order $n\log n$. The same count also measures how much information is absent from the ordinary sorted output, and how much history must be retained if the computation is to remain reversible.
 
-Independently, Landauer (1961) showed that erasing one bit of information in a computational device must dissipate at least kT · ln(2) joules of energy, where k is Boltzmann's constant and T is the absolute temperature. This result, confirmed experimentally by Bérut et al. (2012), establishes a fundamental link between information processing and thermodynamics.
+These parallels can encourage an overstrong conclusion: that every comparison necessarily dissipates the energy associated with erasing one bit, so an algorithm making $C(n)$ comparisons has work proportional to $C(n)kT$. That conclusion does not follow. A comparison outcome can be retained rather than erased; repeated outcomes can be correlated; temporary records can be reversibly uncomputed; and redundant comparisons can be added without changing the computed input-output map. A physically meaningful work statement must identify the logical information that is reset and specify the implementation of that reset.
 
-In this work, we make the connection between these two results explicit and rigorous. We show that:
+The purpose of this paper is to state precisely what can be concluded from the finite combinatorics alone. The principal conclusions are:
 
-1. Sorting reduces the entropy of a uniform distribution over n! permutations from log(n!) bits to 0 bits.
-2. Each comparison in a sorting algorithm is an irreversible measurement that reduces entropy by at most 1 bit.
-3. The minimum number of such measurements is ⌈log₂(n!)⌉, by the binary tree bound.
-4. By Landauer's principle, the minimum thermodynamic work is W_min = kT · ln(n!).
-5. Suboptimal algorithms (e.g., bubble sort with n²/2 comparisons) waste thermodynamic work proportional to their excess comparisons.
+1. an adequate binary comparison tree has worst-case depth at least $\lceil\log_2(n!)\rceil$;
+2. ordinary sorting, modeled as forgetting the input permutation after producing the canonical order, erases exactly $\log_2(n!)$ bits;
+3. a reversible realization with the same visible output requires at least $n!$ history states;
+4. the corresponding ideal Landauer baseline is $kT\log(n!)$;
+5. comparison count can be increased arbitrarily while this logical-erasure baseline remains unchanged.
 
-## 2. Definitions and Framework
+The paper is organized as follows. Section 2 introduces finite information loss and reversible witnesses. Section 3 develops the binary-tree counting argument. Section 4 applies the definitions to sorting. Section 5 combines the results and proves the padding separation. Section 6 gives computational algorithms and examples. Sections 7 and 8 discuss applications, limitations, and future directions.
 
-### 2.1 Binary Decision Trees
+## 2. Finite information loss and reversible realization
 
-**Definition (BinTree).** A binary tree over a type α is defined inductively:
-- `leaf(v)` for v : α is a tree with one leaf;
-- `branch(l, r)` for binary trees l, r is a tree with children l and r.
+### 2.1. Input spaces, images, and fibers
 
-**Definition (depth).** The depth of a binary tree is:
-- depth(leaf(v)) = 0
-- depth(branch(l, r)) = 1 + max(depth(l), depth(r))
+Let $A$ and $B$ be finite sets and let $f:A\to B$ be a function. Its image is
 
-**Definition (leafCount).** The leaf count is:
-- leafCount(leaf(v)) = 1
-- leafCount(branch(l, r)) = leafCount(l) + leafCount(r)
+$$
+\operatorname{im}(f)=\{f(a):a\in A\}.
+$$
 
-### 2.2 Comparison Sort Model
+For each $b\in B$, the fiber over $b$ is
 
-**Definition (CompSortTree).** A comparison sort tree for n elements consists of:
-- A binary tree `tree : BinTree(Perm(Fin n))` whose leaves are labeled by permutations;
-- A completeness condition: `n! ≤ leafCount(tree)`, ensuring the tree distinguishes all permutations.
+$$
+f^{-1}(b)=\{a\in A:f(a)=b\}.
+$$
 
-This structure captures the essential property of comparison-based sorting: each internal node represents a binary comparison, and the algorithm must produce a correct permutation for every possible input ordering.
+The nonempty fibers partition $A$, and therefore
 
-### 2.3 Thermodynamic Quantities
+$$
+\sum_{b\in B}|f^{-1}(b)|=|A|.
+$$
 
-**Definition (thermoWork).** The thermodynamic work of an algorithm making C comparisons (in units of kT):
-thermoWork(C) = C · ln(2)
+This identity is the basic counting law behind reversible history. If several inputs share one output, additional information is needed to identify which member of the fiber occurred.
 
-**Definition (entropyGap).** The entropy gap (wasted work) of a sorting algorithm:
-entropyGap(n, C) = thermoWork(C) − ln(n!)
+### Definition 2.1 (Finite-set erased information)
 
-**Definition (Shannon entropy).** For a probability distribution p on Fin(n):
-H(p) = −∑ᵢ pᵢ · log(pᵢ)
+For a function $f:A\to B$ between finite sets, define the information erased by $f$, in bits, as
 
-**Definition (uniformDist).** The uniform distribution on Fin(n): p(i) = 1/n for all i.
+$$
+I_{\mathrm{erase}}(f)=\log_2|A|-\log_2|\operatorname{im}(f)|.
+$$
 
-## 3. Main Results
+This cardinality-based definition corresponds to uniform uncertainty over the input space and counts the contraction in the number of possible logical states. It is not a distribution-sensitive conditional entropy. If $f$ is a bijection from $A$ to itself, its image has size $|A|$ and the erased information is zero. If $f$ is constant and $A$ is nonempty, the image has size one and the erased information is $\log_2|A|$.
 
-### 3.1 Binary Tree Leaf Bound
+### Proposition 2.2 (Nonnegativity of finite-set erasure)
 
-**Theorem 3.1** (leaves_le_two_pow_depth). *For any binary tree t, leafCount(t) ≤ 2^depth(t).*
+For every function $f:A\to B$ between finite sets,
 
-*Proof.* By structural induction. The base case is immediate: a leaf has 1 leaf and 2⁰ = 1. For a branch with children l and r, leafCount = leafCount(l) + leafCount(r) ≤ 2^depth(l) + 2^depth(r) ≤ 2^max(depth(l), depth(r)) + 2^max(depth(l), depth(r)) = 2^(1 + max(depth(l), depth(r))) = 2^depth(branch(l,r)). □
+$$
+I_{\mathrm{erase}}(f)\ge 0.
+$$
 
-### 3.2 Logarithmic Lower Bound
+**Proof sketch.** The image of a function contains no more elements than its domain, so $|\operatorname{im}(f)|\le |A|$. Monotonicity of $\log_2$ gives the result. If the domain is empty, both cardinalities relevant to the realized map are zero and the convention can be handled separately; the sorting application below has a one-element permutation space even when $n=0$.
 
-**Theorem 3.2** (depth_ge_log_leaves). *If L ≤ leafCount(t), then ⌊log₂(L)⌋ ≤ depth(t).*
+### 2.2. Reversible witnesses and fiber labels
 
-*Proof.* By Theorem 3.1, L ≤ leafCount(t) ≤ 2^depth(t). Since log₂ is monotone and log₂(2^d) = d, the result follows. □
+A logically reversible computation is one-to-one on its complete logical state. A function $f:A\to B$ that is not injective can be embedded in a reversible transformation by appending auxiliary history.
 
-### 3.3 Sorting Comparison Lower Bound
+### Definition 2.3 (Reversible realization)
 
-**Theorem 3.3** (sorting_depth_ge_log_factorial). *For any CompSortTree for n elements, ⌊log₂(n!)⌋ ≤ depth(tree).*
+A reversible realization of $f:A\to B$ consists of a finite auxiliary set $H$ and a bijection
 
-*Proof.* Immediate from Theorem 3.2 with L = n!, using the completeness condition n! ≤ leafCount(tree). □
+$$
+E:A\longrightarrow B\times H
+$$
 
-### 3.4 Landauer's Bound for Sorting
+such that the first component of $E(a)$ equals $f(a)$ for every $a\in A$.
 
-**Theorem 3.4** (landauer_sorting_work). *For n ≥ 2 and any CompSortTree cst for n elements:*
-ln(n!) ≤ thermoWork(depth(cst.tree))
+The product form requires the cardinalities to fit exactly. A universally available, output-dependent form instead maps $A$ bijectively to the disjoint union
 
-*Proof.* By completeness, n! ≤ leafCount ≤ 2^depth (Theorem 3.1). Taking logarithms: ln(n!) ≤ ln(2^depth) = depth · ln(2) = thermoWork(depth). □
+$$
+\bigsqcup_{b\in B}\{b\}\times f^{-1}(b).
+$$
 
-### 3.5 Non-negativity of Entropy Gap
+The mapping sends $a$ to $(f(a),a)$, where $a$ is viewed as a labeled member of its fiber. This is bijective because the output and fiber member together recover the input.
 
-**Theorem 3.5** (entropyGap_nonneg). *For n ≥ 2, the entropy gap of any comparison sort is non-negative.*
+### Theorem 2.4 (Fiber-history lower bound)
 
-*Proof.* Immediate from Theorem 3.4. □
+If $E:A\to B\times H$ is a reversible realization of $f$, then
 
-### 3.6 Entropy of Uniform Distribution
+$$
+\max_{b\in B}|f^{-1}(b)|\le |H|.
+$$
 
-**Theorem 3.6** (entropy_uniform_eq_log). *For n > 1, the Shannon entropy of the uniform distribution on n outcomes is log(n).*
+**Proof sketch.** Fix an output $b$. For every $a\in f^{-1}(b)$, write $E(a)=(b,h_a)$. If two members of the fiber had the same history value, their complete encoded outputs would coincide, contradicting injectivity of $E$. Thus $a\mapsto h_a$ is an injection from the fiber into $H$. Taking the largest fiber proves the bound.
 
-*Proof.* Direct calculation: H = −∑ᵢ (1/n) · log(1/n) = −n · (1/n) · (−log(n)) = log(n). □
+This theorem captures the operational meaning of a history register: it labels alternatives that the visible output alone cannot distinguish.
 
-### 3.7 Comparison Entropy Reduction
+### Proposition 2.5 (Composition of reversible histories)
 
-**Theorem 3.7** (comparison_entropy_reduction). *For positive integers m, n:*
-log(m + n) ≤ log(m) + log(n) + log(2)
+Suppose $f:A\to B$ has a reversible realization with history set $H_f$, and $g:B\to C$ has one with history set $H_g$. Then $g\circ f$ has a reversible realization with history set $H_f\times H_g$, whose cardinality is
 
-*Proof.* For m, n ≥ 1, we have m + n ≤ 2mn (since (2m−1)(2n−1) ≥ 1 implies 4mn ≥ 2(m+n)). Therefore log(m+n) ≤ log(2mn) = log(2) + log(m) + log(n). □
+$$
+|H_f\times H_g|=|H_f||H_g|.
+$$
 
-This theorem captures the key physical insight: a single binary comparison, which splits a block of m+n elements into blocks of m and n, can reduce entropy by at most log(2) = 1 bit.
+**Proof sketch.** Encode the input under the realization of $f$, then encode its visible $B$ component under the realization of $g$. Retain both histories. Decoding reverses these steps in the opposite order. The product rule follows from finite cardinality.
 
-### 3.8 Stirling-Type Bounds
+## 3. Binary comparison trees
 
-**Theorem 3.8** (factorial_log_lower_bound). *For n ≥ 2:*
-n · log(n) − n ≤ log(n!)
+### 3.1. Tree model
 
-*Proof.* By induction on n, using the inequality log(1 + 1/k) ≤ 1/k (a consequence of log(x) ≤ x − 1). □
+A binary comparison tree is recursively either a leaf or a branch with a left and right subtree. Each branch represents a comparison with two possible outcomes.
 
-**Theorem 3.9** (stirling_ratio_bound). *For n ≥ 3:*
-log(n!) ≤ n · log(n)
+### Definition 3.1 (Leaves and height)
 
-*Proof.* Since each factor k ≤ n in the product n! = 1·2·...·n, we have n! ≤ n^n, so log(n!) ≤ n · log(n). □
+The number of leaves $L(T)$ and the height $H(T)$ are defined recursively by
 
-Together, Theorems 3.8 and 3.9 establish: n·log(n) − n ≤ log(n!) ≤ n·log(n), confirming the Stirling approximation log(n!) ~ n·log(n).
+$$
+L(\text{leaf})=1,\qquad H(\text{leaf})=0,
+$$
 
-### 3.10 Bubble Sort Waste
+and
 
-**Theorem 3.10** (bubble_sort_waste_positive). *For n ≥ 4:*
-log(n!) < n(n−1)/2 · log(2)
+$$
+L(\operatorname{branch}(T_0,T_1))=L(T_0)+L(T_1),
+$$
 
-*Proof.* It suffices to show n! < 2^(n(n−1)/2). Base case: 4! = 24 < 64 = 2^6. Inductive step: (n+1)! = (n+1) · n! < (n+1) · 2^(n(n−1)/2) ≤ 2^n · 2^(n(n−1)/2) = 2^(n(n+1)/2), using n+1 ≤ 2^n for n ≥ 1. □
+$$
+H(\operatorname{branch}(T_0,T_1))=1+\max\{H(T_0),H(T_1)\}.
+$$
 
-This quantifies the thermodynamic waste of bubble sort: it performs n(n−1)/2 comparisons, while only log₂(n!) ≈ n·log₂(n) are information-theoretically necessary.
+The height is the worst-case number of binary comparisons along any execution path. The leaves count possible terminal transcripts in the tree shape.
 
-## 4. The Thermodynamic Framework
+### Lemma 3.2 (Binary leaf bound)
 
-### 4.1 Landauer's Principle
+Every binary comparison tree satisfies
 
-Landauer's principle states that erasing one bit of information in a computational system at temperature T requires dissipating at least kT · ln(2) joules of energy. This has been experimentally verified (Bérut et al., 2012; Jun et al., 2014).
+$$
+L(T)\le 2^{H(T)}.
+$$
 
-### 4.2 Sorting as Information Erasure
+**Proof sketch.** Proceed by structural induction. A leaf has $1=2^0$ leaf. For a branch, apply the induction hypotheses to the two subtrees. If their heights are $h_0$ and $h_1$, then
 
-A comparison-based sorting algorithm starts with log₂(n!) bits of uncertainty about the input permutation. After sorting, this uncertainty is reduced to 0 bits. Each comparison is an irreversible measurement: it reveals one bit of information about the relative ordering, discarding the complementary possibility.
+$$
+L(T)\le 2^{h_0}+2^{h_1}\le 2^{m}+2^{m}=2^{m+1},
+$$
 
-The total information erased is log₂(n!) bits, requiring minimum work:
+where $m=\max\{h_0,h_1\}$. Since the branch has height $m+1$, the result follows.
 
-W_min = kT · log₂(n!) · ln(2) = kT · ln(n!)
+### Definition 3.3 (Transcript capacity for sorting)
 
-### 4.3 Thermodynamic Efficiency
+A tree has enough transcript capacity to distinguish all orderings of $n$ distinct objects if
 
-We define the thermodynamic efficiency of a sorting algorithm as:
+$$
+n!\le L(T).
+$$
 
-η = ln(n!) / (C · ln(2))
+This is a necessary capacity condition for comparison sorting. It abstracts away the semantics of which pair is compared at each branch. Consequently, it establishes a lower bound for every correct comparison sorter but does not assert that every tree satisfying the inequality implements a sorter.
 
-where C is the number of comparisons. An optimal algorithm (C = ⌈log₂(n!)⌉) achieves η ≈ 1. Bubble sort (C = n(n−1)/2) achieves η ≈ 2·log(n)/n → 0 as n → ∞.
+### Theorem 3.4 (Exact binary comparison lower bound)
 
-## 5. Discussion
+If a binary comparison tree has enough transcript capacity for all orderings of $n$ distinct objects, then
 
-### 5.1 Physical Implications
+$$
+H(T)\ge \left\lceil\log_2(n!)\right\rceil.
+$$
 
-The connection between sorting and thermodynamics is not merely an analogy. If one were to build a physical sorting machine—a device that takes n objects in random order and outputs them sorted—the second law of thermodynamics would impose a lower bound on the energy consumption of kT · ln(n!) ≈ kT · n · ln(n).
+Equivalently, if $\operatorname{clog}_2(m)$ denotes the least integer $h$ such that $m\le 2^h$, then
 
-At room temperature (T ≈ 300K), this gives approximately 4 × 10⁻²¹ · n · ln(n) joules. For n = 10⁹ (sorting a billion records), the thermodynamic minimum is about 10⁻¹⁰ joules—far less than the actual energy consumed by modern computers, but a fundamental floor that cannot be breached.
+$$
+\operatorname{clog}_2(n!)\le H(T).
+$$
 
-### 5.2 Reversible Sorting
+**Proof sketch.** Capacity and Lemma 3.2 give
 
-If we require sorting to be *reversible*—recording enough information to reconstruct the original permutation—then no information is erased, and the thermodynamic cost can in principle be reduced to zero (at the cost of additional memory). Reversible sorting algorithms exist but require O(n log n) bits of auxiliary memory to record the comparison outcomes.
+$$
+n!\le L(T)\le 2^{H(T)}.
+$$
 
-### 5.3 Beyond Comparisons
+By the definition of the ceiling logarithm, the least exponent sufficient to reach $n!$ cannot exceed $H(T)$.
 
-Non-comparison-based sorting algorithms (radix sort, counting sort) can sort in O(n) time. Do they violate the thermodynamic bound? No—they assume additional structure (bounded integer keys) that reduces the initial entropy below log₂(n!) bits. Radix sort on k-bit integers starts with k·n bits of uncertainty, not log₂(n!) bits.
+### 3.2. Asymptotic interpretation
 
-## 6. Novel Contributions
+Stirling’s formula states
 
-1. **CompSortTree formalization**: A novel mathematical structure capturing comparison-based sorting as a decision tree, with a completeness condition ensuring all permutations are distinguished.
+$$
+n!=\sqrt{2\pi n}\left(\frac{n}{e}\right)^n(1+o(1)).
+$$
 
-2. **Thermodynamic work definition**: A formal definition of computational work in terms of comparison count, bridging discrete algorithms and continuous thermodynamics.
+Taking logarithms gives
 
-3. **Entropy gap concept**: Formalization of the "wasted work" of suboptimal sorting algorithms as a non-negative entropy gap.
+$$
+\log(n!)=n\log n-n+\frac12\log(2\pi n)+o(1),
+$$
 
-4. **Comparison entropy reduction bound**: A proof that each comparison reduces entropy by at most 1 bit, via the inequality m + n ≤ 2mn for positive integers.
+and hence
 
-5. **Machine-verified Stirling bounds**: Both directions of the Stirling approximation for log(n!) formalized and verified.
+$$
+\log_2(n!)=n\log_2n-(\log_2e)n+\frac12\log_2(2\pi n)+o(1).
+$$
 
-## 7. Falsifiable Conjecture
+The comparison lower bound is therefore $\Omega(n\log n)$. Algorithms with worst-case comparison count $O(n\log n)$ match the leading asymptotic order, though they need not use exactly $\lceil\log_2(n!)\rceil$ comparisons for every $n$ or every input.
 
-**Conjecture**: For all n ≥ 2, the thermodynamic efficiency ratio converges:
+## 4. Sorting entropy and reversible history
 
-lim_{n→∞} log(n!) / (n · log(n)) = 1
+### 4.1. Sorting as a map on permutations
 
-More precisely, for n ≥ 3: 1 − 1/log(n) ≤ log(n!) / (n·log(n)) ≤ 1.
+Let $S_n$ be the set of permutations of $n$ labeled positions. Its cardinality is
 
-**Test**: Compute the ratio for n = 10, 100, 1000, 10000 and verify convergence to 1. We have proved the upper bound (Theorem 3.9). The lower bound with the precise 1 − 1/log(n) form remains a conjecture whose proof requires more refined Stirling estimates.
+$$
+|S_n|=n!.
+$$
 
-## 8. References
+To isolate loss of order information, model ordinary sorting by the map
 
-1. Landauer, R. (1961). "Irreversibility and heat generation in the computing process." *IBM Journal of Research and Development*, 5(3), 183-191.
-2. Bennett, C.H. (1973). "Logical reversibility of computation." *IBM Journal of Research and Development*, 17(6), 525-532.
-3. Bérut, A., et al. (2012). "Experimental verification of Landauer's principle linking information and thermodynamics." *Nature*, 483(7388), 187-189.
-4. Knuth, D.E. (1998). *The Art of Computer Programming*, Vol. 3: Sorting and Searching. Addison-Wesley.
-5. Cover, T.M. & Thomas, J.A. (2006). *Elements of Information Theory*. Wiley.
-6. Jun, Y., et al. (2014). "High-precision test of Landauer's principle in a feedback trap." *Physical Review Letters*, 113(19), 190601.
+$$
+s_n:S_n\to\{\star\},
+$$
+
+which sends every input permutation to the unique canonical sorted output $\star$. This model assumes distinct keys and treats the multiset of values as fixed; the only unknown information is their initial order.
+
+### Theorem 4.1 (Exact information erased by sorting)
+
+For every nonnegative integer $n$,
+
+$$
+I_{\mathrm{erase}}(s_n)=\log_2(n!).
+$$
+
+**Proof sketch.** The domain has cardinality $n!$, while the image of the constant sorting map has cardinality $1$. Substitution into Definition 2.1 gives
+
+$$
+I_{\mathrm{erase}}(s_n)=\log_2(n!)-\log_2 1=\log_2(n!).
+$$
+
+The formula includes $n=0$ because $0!=1$, so there is one permutation of the empty set and no erased information.
+
+### Theorem 4.2 (Sorting history lower bound)
+
+Let $H$ be the history set of any reversible realization
+
+$$
+E:S_n\longrightarrow\{\star\}\times H
+$$
+
+whose visible component is ordinary sorting. Then
+
+$$
+|H|\ge n!.
+$$
+
+**Proof sketch.** The sorting map has a single fiber, namely all of $S_n$, of size $n!$. Apply the fiber-history lower bound. Equivalently, because the visible component is constant, injectivity of $E$ forces the history components of all permutations to be distinct.
+
+The bound is tight at the level of state counting: choose $H=S_n$ and retain the original permutation as history. Thus reversible sorting exchanges logical erasure for storage. The minimum number of equiprobable history bits is at least $\log_2(n!)$.
+
+### 4.2. Landauer scale
+
+Let $k$ be Boltzmann’s constant, $T$ the absolute temperature, and abbreviate their product by $kT$. Landauer’s principle assigns the ideal quasistatic work scale
+
+$$
+W=kT\log 2\, I
+$$
+
+to erasure of $I$ bits of unbiased logical information.
+
+### Theorem 4.3 (Exact Landauer scale for irreversible sorting)
+
+If the unknown input permutation is discarded by ordinary sorting, its ideal logical-erasure work is
+
+$$
+W_{\mathrm{sort}}=kT\log(n!).
+$$
+
+**Proof sketch.** By Theorem 4.1 the erased information is $\log_2(n!)$ bits. Change of base gives
+
+$$
+kT\log 2\,\log_2(n!)=kT\log(n!).
+$$
+
+For positive temperature this quantity is nonnegative because $n!\ge1$.
+
+The theorem identifies a baseline associated with the logical map. It is not a prediction that a practical machine consumes exactly this work. Finite-time operation, error correction, friction, leakage, communication, and reset of unrelated workspace can all increase dissipation.
+
+## 5. The factorial synthesis and the failure of per-comparison accounting
+
+### Theorem 5.1 (Three-way factorial principle)
+
+For any binary comparison tree with enough leaves to distinguish all $n!$ input permutations, and for any reversible realization of ordinary sorting with finite history set $H$, the following hold simultaneously:
+
+$$
+\left\lceil\log_2(n!)\right\rceil\le H(T),
+$$
+
+$$
+I_{\mathrm{erase}}(s_n)=\log_2(n!),
+$$
+
+and
+
+$$
+n!\le |H|.
+$$
+
+**Proof sketch.** The first statement is Theorem 3.4, the second is Theorem 4.1, and the third is Theorem 4.2. Their common source is the cardinality $|S_n|=n!$, but their meanings differ: decision depth, lost information, and retained auxiliary capacity.
+
+### 5.1. Redundant padding
+
+To distinguish comparison count from logical erasure, define a padding operation on binary trees. Given a tree $T$, create one redundant level by making a new root whose two subtrees are identical copies of $T$. Repeat this operation $r$ times to obtain $P_r(T)$.
+
+### Lemma 5.2 (Padding height)
+
+For every nonnegative integer $r$,
+
+$$
+H(P_r(T))=r+H(T).
+$$
+
+**Proof sketch.** Induct on $r$. The statement is immediate for $r=0$. One more padded branch adds one to the maximum of two equal subtree heights.
+
+### Lemma 5.3 (Padding preserves transcript capacity)
+
+For every nonnegative integer $r$,
+
+$$
+L(T)\le L(P_r(T)).
+$$
+
+In fact, the recursive construction gives $L(P_r(T))=2^rL(T)$.
+
+**Proof sketch.** Each padding step duplicates the complete set of leaves, so leaf count doubles. The stated inequality follows immediately.
+
+### Theorem 5.4 (Redundant comparisons preserve sorting capacity)
+
+If $T$ has enough transcript capacity for all $n!$ orderings, then $P_r(T)$ also has enough capacity, and
+
+$$
+H(P_r(T))=r+H(T).
+$$
+
+**Proof sketch.** Capacity is preserved by Lemma 5.3, and the height identity is Lemma 5.2.
+
+### Corollary 5.5 (Comparison count does not determine Landauer work)
+
+There exist tree-shaped computations with arbitrarily different worst-case comparison counts that realize the same ordinary sorting map and therefore have the same erased information $\log_2(n!)$ and the same ideal Landauer scale $kT\log(n!)$.
+
+**Proof sketch.** Begin with any adequate tree and pad it by an arbitrary $r$. The height increases by $r$, while the input-output sorting map remains $s_n$. Since erased information depends on the map’s domain and image, it is unchanged.
+
+This corollary refutes the unconditional law “one comparison equals one erased bit.” Such a law can become meaningful only after adding a physical model in which a comparison writes to a designated register and a specified protocol later resets that register. Even then, the relevant quantity is the entropy actually erased. Repeated or logically dependent outcomes need not carry independent bits.
+
+## 6. Algorithms and numerical demonstrations
+
+### 6.1. Exact factorial entropy
+
+For moderate $n$, one may compute $n!$ as an integer and then evaluate $\log_2(n!)$. For large $n$, direct factorial conversion to floating point overflows. The stable identity
+
+$$
+\log(n!)=\log\Gamma(n+1)
+$$
+
+provides a robust implementation through a log-gamma routine.
+
+**Algorithm A: Stable factorial-information evaluation**
+
+1. Require $n\ge0$.
+2. Compute $\ell=\log\Gamma(n+1)$.
+3. Return $\ell/\log2$ as the erased bits.
+4. Return $\ell$ as the dimensionless natural-log work $W/(kT)$.
+5. Return $\lceil\ell/\log2\rceil$ as the comparison-depth lower bound.
+
+The arithmetic cost of the wrapper is constant, assuming a library implementation of $\log\Gamma$. Exact integer factorial computation instead has growing bit complexity because the output contains $\Theta(n\log n)$ bits.
+
+### 6.2. History-state audit
+
+A reversible implementation advertising $m$ auxiliary states passes the necessary capacity test exactly when
+
+$$
+m\ge n!.
+$$
+
+Its bit capacity is $\log_2m$. The deficit relative to sorting is
+
+$$
+\max\{0,\log_2(n!)-\log_2m\}.
+$$
+
+This audit is necessary, not sufficient: enough states do not by themselves guarantee a correct bijective encoding.
+
+### 6.3. Padding experiment
+
+A numerical padding demonstration begins with an abstract adequate tree of height $h$ and records the family of heights $h+r$. The logical quantities remain
+
+$$
+I_{\mathrm{erase}}=\log_2(n!),\qquad \frac{W}{kT}=\log(n!)
+$$
+
+for every $r$. The experiment does not simulate physical heat. It demonstrates the mathematical non-identifiability of logical-erasure work from raw depth.
+
+### 6.4. Sample values
+
+The first several values illustrate the gap between factorial entropy and simple expressions such as $n\log_2n$:
+
+| $n$ | $n!$ | $\log_2(n!)$ bits | $\lceil\log_2(n!)\rceil$ |
+|---:|---:|---:|---:|
+| $0$ | $1$ | $0$ | $0$ |
+| $1$ | $1$ | $0$ | $0$ |
+| $2$ | $2$ | $1$ | $1$ |
+| $3$ | $6$ | $2.585$ | $3$ |
+| $4$ | $24$ | $4.585$ | $5$ |
+| $5$ | $120$ | $6.907$ | $7$ |
+| $8$ | $40{,}320$ | $15.299$ | $16$ |
+| $10$ | $3{,}628{,}800$ | $21.791$ | $22$ |
+
+At $n=10$, a binary decision tree needs worst-case depth at least $22$. An irreversible map that reports only the canonical sorted order loses approximately $21.791$ bits, while a reversible realization needs at least $3{,}628{,}800$ distinct histories.
+
+## 7. Applications and interpretation
+
+### 7.1. Reversible algorithm design
+
+A reversible sorting protocol may compute comparison outcomes, use them to route data, copy the desired sorted result to a protected output, and run its internal operations backward to clear temporary workspace. If the final protocol also discards the original permutation, that information must eventually be erased somewhere. If it retains a sufficient history, the complete transformation can remain one-to-one.
+
+The history lower bound quantifies the unavoidable logical alternative: a constant visible output cannot coexist with reversibility unless at least $n!$ complete states remain distinguishable in auxiliary degrees of freedom.
+
+### 7.2. Comparator networks and register resets
+
+In a physical comparator network, each comparator may write an outcome register. Transcript length is then an upper bound on the number of raw binary storage locations used, but not necessarily on independent entropy. The correct reset cost depends on the joint distribution of these registers conditioned on outputs and retained data. If outcomes are correlated, reversible compression can in principle reduce the number of bits that must be reset.
+
+This suggests replacing “number of comparisons” with a conditional entropy such as
+
+$$
+H(\text{transcript}\mid\text{sorted output},\text{retained history}).
+$$
+
+A complete physical theorem would also specify the reset protocol and thermodynamic regime.
+
+### 7.3. Nonuniform input distributions
+
+The cardinality measure $\log_2(n!)$ assumes a uniform prior over permutations. For a distribution $P$ on $S_n$, the Shannon entropy is
+
+$$
+H(P)=-\sum_{\sigma\in S_n}P(\sigma)\log_2P(\sigma).
+$$
+
+When the prior is biased, $H(P)$ can be much smaller than $\log_2(n!)$. Distribution-sensitive comparison trees can assign short paths to likely permutations, analogous to prefix coding. Reversible histories can also be compressed on average. The worst-case factorial bounds remain valid as capacity statements when every permutation must be supported.
+
+### 7.4. Multiway queries
+
+If each query has at most $q$ outcomes, a depth-$h$ tree has at most $q^h$ leaves. The same counting proof yields
+
+$$
+h\ge\left\lceil\log_q(n!)\right\rceil.
+$$
+
+If a fully unknown $q$-state query register is erased at ideal cost $kT\log q$, then multiplying depth by per-register cost suggests the same ideal scale $kT\log(n!)$. As in the binary case, equality requires assumptions about independence, saturation of branching capacity, and actual reset operations.
+
+## 8. Limitations and future work
+
+The tree-capacity condition is necessary but not sufficient for sorting correctness because it does not encode comparison semantics. The Landauer formula is a quasistatic logical baseline, not a complete model of runtime energy. The cardinality definition of erased information is tailored to uniform finite spaces and should be replaced by Shannon or conditional entropy for nonuniform ensembles. Finally, the padding theorem establishes that comparison count alone is insufficient; it does not claim redundant physical operations are free. They may dissipate substantial energy for implementation-specific reasons.
+
+Several research directions follow.
+
+First, comparator networks should be equipped with explicit reversible gates, transcript registers, and reset protocols. The expected minimum work should be governed by the conditional entropy of the transcript given the sorted output and any retained history, rather than transcript length.
+
+Second, entropy-sensitive sorting under nonuniform priors should connect expected decision depth, compressible reversible history, and dissipated work. A natural target is an expected comparison count within an additive term linear in $n$ of the Shannon entropy.
+
+Third, independent sorting tasks suggest a direct-sum theorem. Entropies should add, while minimum history cardinalities multiply as products of block factorials. Equality should characterize implementations without cross-block garbage.
+
+Fourth, finite-time stochastic implementations should exhibit a fluctuation penalty above $kT\log(n!)$. A quantitative excess may be expressible through a divergence between forward and reverse trajectories.
+
+Fifth, multiway comparisons invite optimization over radix. The decision depth decreases as $q$ grows, while the ideal erasure cost of a fully unknown query register grows as $kT\log q$. Their ideal product remains controlled by $\log(n!)$, but realistic devices may have a nontrivial optimal radix.
+
+## 9. Conclusion
+
+Sorting exposes a clean factorial architecture. The $n!$ possible input permutations force a binary decision depth of at least $\lceil\log_2(n!)\rceil$. If the original permutation is discarded, the sorting map erases exactly $\log_2(n!)$ bits and has ideal Landauer scale $kT\log(n!)$. If the computation is made reversible while retaining only one visible sorted result, at least $n!$ history states are required.
+
+These are three manifestations of one cardinality, but they are not the same resource. The padding construction makes the distinction decisive: comparison depth can be increased arbitrarily without changing logical erasure. Thermodynamic analysis must therefore follow the fate of information—what is retained, correlated, compressed, uncomputed, and reset—rather than assign a universal energy price to each comparison. The factorial tells us how many alternatives sorting must confront; the physical protocol determines how, and whether, those alternatives are finally forgotten.
