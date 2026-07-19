@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "f243395d",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions: Stable-Core Rank for Tropical Analogies\n\n## 1. A semiring-valued rank functor for adjoint analogies\n\n**Conjecture.** Stable-core cardinality extends from finite posets to a rank f",
-      "quality_score": 0.91,
-      "sorry_count": 4,
-      "theorem_count": 33,
-      "timestamp": "2026-07-15T03:10:55",
-      "title": "This cycle recast analogy-making between two ordered structures as the taking of"
-    },
-    {
       "cycle_id": "7ea29a05",
       "domain": "Shared",
       "key_insight": "# Future Directions — Thresholds, defects, and toughness\n\n## 1. Stability of complete-host induced containment\n\nFor each finite pattern graph \\(H\\), determine the least edge deficit \\(d(H)\\) such that",
@@ -2501,6 +2491,16 @@
       "theorem_count": 10,
       "timestamp": "2026-07-19T02:07:43",
       "title": "The Borsuk-Ulam Theorem Implies Arrow's Impossibility: Social Choice Is Topology"
+    },
+    {
+      "cycle_id": "20c9506b",
+      "domain": "Physics",
+      "key_insight": "# Future Directions\n\n## Status of the proposed claim\n\nNo known theorem establishes that the ordinary Collatz conjecture is independent of Peano Arithmetic, equivalent to `Con(PA)`, or that its stoppin",
+      "quality_score": 0.69,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-19T02:08:05",
+      "title": "The Collatz Conjecture Is Undecidable: What If 3n+1 Can't Be Proved?"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.78
     }
   ],
-  "last_updated": "2026-07-19T02:07:43",
+  "last_updated": "2026-07-19T02:08:05",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "3c80004e",
-        "quality": 0.9,
-        "theorems": 46,
-        "title": "Constructive, lower-bound half of the co-index theory"
-      },
-      {
         "cycle_id": "a373adc5",
         "quality": 0.68,
         "theorems": 11,
@@ -3761,6 +3755,12 @@
         "quality": 0.65,
         "theorems": 13,
         "title": "ArXiv paper: Clique spectral extremal problem on disjoint color-critical graphs"
+      },
+      {
+        "cycle_id": "20c9506b",
+        "quality": 0.69,
+        "theorems": 14,
+        "title": "The Collatz Conjecture Is Undecidable: What If 3n+1 Can't Be Proved?"
       }
     ],
     "Probability": [
