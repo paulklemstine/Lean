@@ -233,7 +233,7 @@
     const WORLD_HALF = WORLD_SIZE / 2;
     const K_SPRING = 0;              // No continuous spring — edges are lazy
     const REST_LENGTH = 9000;          // Rest length for provenance springs
-    const EDGE_DRAW_DISTANCE = 9000;  // Max distance to draw/spring edges (reduced from 18000 so they only connect when close)
+    const EDGE_DRAW_DISTANCE = 4000;  // Max distance to draw/spring edges (reduced from 9000 so they only connect when very close)
     const G_UNIVERSAL = 25.0;       // Universal gravitational constant (all pairs attract)
     const G_CLUSTER_MULT = 2.5;     // Same-cluster pairs attract more strongly
     const G_CORE = 12.0;            // Central galactic attractor pull

@@ -78,26 +78,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "c231497c",
-    "description": "Prove that every classical mathematical theorem has a quantum proof that is shorter by at most a polynomial factor. Formalize quantum proof systems (QMA) and show that some classical theorems (e.g., pigeonhole principle) have exponentially shorter quantum proofs. Determine whether super-polynomial quantum advantage exists.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0485",
-    "lineage_refs": [],
-    "priority_score": 0.89,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T20:25:40.553471+00:00",
-    "title": "Quantum Proofs of Classical Theorems"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle 7881a56b (Q=0.790), which proved 16 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'Reproducing the k-copwin Algorithm: Theory vs. Implementation' and formalize its key results. Abstract: Cops and Robbers is a well-studied pursuit-evasion game that provides insights into graph theory and theoretical computing. A central question is determining the minim",
     "domain_bridges": [],
@@ -2090,25 +2070,6 @@
     "status": "available",
     "timestamp": "2026-07-16T06:36:16.940988+00:00",
     "title": "ArXiv paper: On nontrivial cross-2-intersecting families"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "93551ae8",
-    "description": "Investigate the ArXiv paper 'On strongly regular signed graphs of higher girth' and formalize its key results. Abstract: Strongly regular signed graphs are an extension of strongly regular graphs to the realm of signed graphs, that is, graphs where each edge is positive or negative. Unlike with ordinary strongly regular graphs, most kinds of signed counterparts with girth 4 or higher are describable in terms of known structures. We prove that those with girth 4 that are bipartite are classified by designs of two kinds: weighing matrix designs and symmetric block designs. Those of girth 5 are few and readily described. There are none of higher girth. Those with girth 4 that are not bipartite are unsolved.",
-    "domain_bridges": [],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0101",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.12131v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-16T06:51:57.150644+00:00",
-    "title": "ArXiv paper: On strongly regular signed graphs of higher girth"
   },
   {
     "ambition_level": "extension",
@@ -7125,6 +7086,45 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n- Define finite simple signed graphs directly over `SimpleGraph`, including signed walks, signed two-path counts, regularity, girth, and strong regularity.\n- Lift the matrix results in `HigherGirth.lean` to the full bipartite classification theorem: the zero common-neighbour parameter gives weighing matrices, while the nonzero parameter gives complete bipartite underlying graphs and symmetric-design incidence matrices.\n- Formalize the equidistant binary-code switching theorem used to pass from constant symmetric differences to symmetric block designs.\n- Formalize diameter at most two for connected strongly regular signed graphs and derive the exclusion of finite girth greater than five except for stars.\n- Formalize the graph-theoretic pentagon lemmas: uniqueness of two-paths at girth five, homogeneity of each pentagon, and existence of a pentagon containing any two edges. Combining these with the present algebraic pentagon theorem will yield the full girth-five classification.\n- Extend switching from row signs to simultaneous row and column switching and connect it to diagonal conjugation of the full signed adjacency matrix.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0495",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "93551ae8",
+    "status": "available",
+    "timestamp": "2026-07-19T22:02:41.254517+00:00",
+    "title": "Future directions from cycle 93551ae8"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## 1. Polynomial extraction for restricted stabilizer witnesses\n\n**Conjecture.** For every verifier whose gates and witnesses are restricted to the stabilizer fragment, every accepted witness above a fixed completeness threshold admits a classical certificate whose size is polynomial in the verifier description and witness qubit count, with acceptance preserved up to inverse-polynomial error.\n\nThe key insight is that stabilizer states possess compact tableau descriptions and their measurement statistics can be propagated by discrete linear algebra, potentially furnishing the extractor that is absent for general amplitude vectors.\n\n**Why now?** The simulation results isolate polynomial extraction as the exact missing reverse implication, while the stabilizer fragment supplies enough algebraic structure to make extraction falsifiable on explicit verifier families.\n\n## 2. Lossy pigeonhole compression with a quantitative decoding tradeoff\n\n**Conjecture.** Let a finite family of classical proofs be encoded into fewer quantum witness labels and decoded with worst-case error probability at most `ε`. Then the compression ratio is bounded by an explicit function of `ε` and the maximum pairwise distinguishability of the encoded states; equality is attained by a symmetric family.\n\nThe key insight is that the lossless pigeonhole collision theorem should extend to an approximate statement by replacing injectivity with distinguishability and exact decoding with bounded-error recovery.\n\n**Why now?** Exact finite compression has a sharp counting obstruction, so the next testable regime is to quantify precisely how error or nonorthogonality relaxes that obstruction.\n\n## 3. Proof-complexity separation requires verifier structure, not dimension alone\n\n**Conjecture.** There exists a natural family of propositional tautologies and a uniform local quantum verifier for which polynomial-size quantum witnesses exist, while every proof in a fixed classical bounded-depth proof system has exponential size.\n\nThe key insight is that amplitude-space dimension cannot itself yield compression; a separation must couple interference with a restricted classical inference system and a uniform verification procedure.\n\n**Why now?** Classical lower bounds are known for several restricted proof systems, and the present framework identifies the additional ingredient needed on the quantum side: an explicit verifier and a witness family rather than a bare counting argument.\n\n## 4. Extractor overhead transfers lower bounds sharply\n\n**Conjecture.** For every natural classical proof system admitting a degree-`d` quantum-to-classical extractor, there is a family of formulas whose optimal quantum witness cost is asymptotically the `d`-th root of the optimal classical proof size, up to polylogarithmic factors.\n\nThe key insight is that polynomial extraction already forces a root-type quantum lower bound; sharpness asks whether formulas can saturate that structural inequality.\n\n**Why now?** The lower-bound transfer is unconditional once an extractor is supplied, turning sharpness into a concrete search over proof systems, extractors, and explicit formula families.\n\n## 5. No universal polynomial quantum advantage without a universal extractor\n\n**Conjecture.** Any theorem asserting polynomial equivalence between all sound classical proof systems and a bounded-error quantum proof model is equivalent, under standard uniformity and encoding conditions, to the existence of a uniform polynomial-size classical extractor for every accepting quantum witness family.\n\nThe key insight is that forward simulation is supplied by computational-basis witnesses, whereas every substantive converse is an extraction statement in disguise.\n\n**Why now?** Separating the automatic forward embedding from the conjectural reverse translation gives a precise equivalence target that can be attacked by constructing extractors or by exhibiting witness families that obstruct them.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0496",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "c231497c",
+    "status": "available",
+    "timestamp": "2026-07-19T22:02:50.148909+00:00",
+    "title": "**Conjecture.** For every verifier whose gates and witnesses are restricted to t"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Cycle d1663b23 (Q=0.700) proved 0 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'A minimal modularity lifting theorem for Siegel modular forms' and formalize its key results. Abstract: We prove a minimal modularity lifting theorem (in the spirit of Gen",
     "domain_bridges": [],
     "domains": [
@@ -7158,6 +7158,25 @@
     "status": "available",
     "timestamp": "2026-07-17T14:03:03.735341+00:00",
     "title": "Close Proofs: Dark Mathematics: Theorems That Exist But Cannot Be Found"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Cycle 93551ae8 (Q=0.650) proved 10 theorems in Applications but left 13 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'On strongly regular signed graphs of higher girth' and formalize its key results. Abstract: Strongly regular signed graphs are an extension of strongly regular graphs to t",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_93551ae8_f94fb9ff",
+    "lineage_refs": [],
+    "priority_score": 0.7000000000000001,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "93551ae8",
+    "status": "available",
+    "timestamp": "2026-07-19T22:02:46.082726+00:00",
+    "title": "Close Proofs: ArXiv paper: On strongly regular signed graphs of higher girth"
   },
   {
     "ambition_level": "extension",

@@ -509,16 +509,6 @@
       "quality_score": 0.65,
       "sorry_count": 4,
       "theorem_count": 6,
-      "timestamp": "2026-07-16T04:10:10",
-      "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
-    },
-    {
-      "cycle_id": "e2c77d51",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions: Arithmetic Monsters\n\n## 1. Square-root density with a precise normalization\n\nLet `V(n)` be the proportion of `2n`-digit decimal integers that admit a classical vampire factorizati",
-      "quality_score": 0.65,
-      "sorry_count": 4,
-      "theorem_count": 6,
       "timestamp": "2026-07-16T04:10:46",
       "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
     },
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-19T20:44:12",
       "title": "Time Travel Consistency: Novikov's Principle as a Fixed-Point Theorem"
+    },
+    {
+      "cycle_id": "93551ae8",
+      "domain": "Applications",
+      "key_insight": "# Future directions\n\n- Define finite simple signed graphs directly over `SimpleGraph`, including signed walks, signed two-path counts, regularity, girth, and strong regularity.\n- Lift the matrix resul",
+      "quality_score": 0.65,
+      "sorry_count": 13,
+      "theorem_count": 10,
+      "timestamp": "2026-07-19T22:02:46",
+      "title": "ArXiv paper: On strongly regular signed graphs of higher girth"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.73
     }
   ],
-  "last_updated": "2026-07-19T20:44:12",
+  "last_updated": "2026-07-19T22:02:46",
   "open_questions": [
-    {
-      "context": "",
-      "cycle_id": "dc502c2d",
-      "domain": "MachineLearning",
-      "sorry_count": 1,
-      "timestamp": "2026-07-15T03:46:59"
-    },
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "42e1a665",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 1,
       "timestamp": "2026-07-19T11:52:43"
+    },
+    {
+      "context": "+  sorry; +  sorry; +  sorry",
+      "cycle_id": "93551ae8",
+      "domain": "Applications",
+      "sorry_count": 13,
+      "timestamp": "2026-07-19T22:02:46"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "622eb97b",
-        "quality": 0.69,
-        "theorems": 0,
-        "title": "Digital Immortality: Can a Mind Be Encoded?"
-      },
-      {
         "cycle_id": "2d8c7907",
         "quality": 0.76,
         "theorems": 11,
@@ -3141,6 +3135,12 @@
         "quality": 0.78,
         "theorems": 0,
         "title": "Time Travel Consistency: Novikov's Principle as a Fixed-Point Theorem"
+      },
+      {
+        "cycle_id": "93551ae8",
+        "quality": 0.65,
+        "theorems": 10,
+        "title": "ArXiv paper: On strongly regular signed graphs of higher girth"
       }
     ],
     "Bridges": [
