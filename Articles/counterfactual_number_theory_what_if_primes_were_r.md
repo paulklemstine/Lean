@@ -1,85 +1,149 @@
-# What If the Primes Were Different?
+# Counterfactual Number Theory: What If Primes Were Random?
 
-## A counterfactual arithmetic, and the one law that breaks
+*By Aristotle — July 19, 2026*
 
-Every child who learns multiplication eventually meets the primes: $2, 3, 5, 7, 11, \dots$, the numbers that refuse to be broken apart. And every student of number theory eventually meets the theorem that makes those primes the load-bearing wall of all arithmetic — the **Fundamental Theorem of Arithmetic**. It promises that each whole number bigger than $1$ can be written as a product of primes in exactly one way. The number $60$ is $2 \cdot 2 \cdot 3 \cdot 5$, and there is no rival factorization hiding somewhere; that list of primes is $60$'s fingerprint, unique to it forever.
+Prime numbers look as though they were scattered by chance. Walk along the number line and they become rarer, irregularly interrupting long stretches of composite numbers: $2,3,5,7,11,13,17,\ldots$. Yet this apparent disorder is produced by an exact rule. An integer is prime precisely when it has no positive divisors other than $1$ and itself. Every prime is therefore tied to every possible division test, and the primes collectively support one of arithmetic’s central laws: each positive integer has a unique factorization into primes, apart from the order of the factors.
 
-This uniqueness feels less like a theorem and more like a law of nature. It is so deeply woven into how we think about numbers that it is easy to forget it was ever in doubt. But here is a mischievous question: *how much of number theory actually depends on it?* If we reached into the machinery of arithmetic and quietly swapped out the primes for a different set of "unbreakable" numbers, what would still work — and what would shatter?
+What would remain if we separated the primes’ statistical appearance from their multiplicative meaning?
 
-This article follows exactly that experiment. We build a **counterfactual number theory**: same whole numbers, same multiplication, but a deformed notion of *which numbers count as prime*. Then we watch, theorem by theorem, what survives.
+This question leads to two complementary counterfactual worlds. In the first, an integer is selected independently with probability roughly equal to the observed local frequency of primes. In the second, the allowed integers are changed, and “prime” means irreducible relative to that smaller multiplicative universe. The first world preserves striking infinitude phenomena. The second keeps infinitely many irreducibles but breaks unique factorization. Together they reveal that the familiar package called “prime number theory” contains logically distinct ingredients: frequency, independence, divisibility, and algebraic structure.
 
-## Remembering only one thing about a number
+## A lottery with prime-like odds
 
-Here is the trick that generates our alternate universe. Take an ordinary whole number and remember exactly one fact about it: its remainder when divided by $4$. Now keep only the numbers whose remainder is $1$:
+For every nonnegative integer $n$, imagine an event $E_n$: the integer $n+2$ is declared a counterfactual prime. Its benchmark mass is
 
-$$H = \{\,1,\ 5,\ 9,\ 13,\ 17,\ 21,\ 25,\ 29,\ 33,\ 37,\ 41,\ 45,\ 49,\ \dots\,\}.$$
+$$
+p_n=\frac{1}{\log(n+2)}.
+$$
 
-These are the numbers of the form $4k+1$. We will call this collection the **Hilbert monoid**, after David Hilbert, who used it as a teaching example a century ago. It is a small, clean world — a thin slice of the integers — but it is a world with its own arithmetic.
+The shift by $2$ ensures that the logarithm is positive. Because $p_0>1$, an actual Bernoulli experiment uses $\min(1,p_n)$, or simply starts after that single exceptional index. Changing finitely many initial terms has no effect on any divergence or infinite-occurrence conclusion below. The probabilities decrease slowly: large candidates are less likely to be selected, just as genuine primes thin out. If the events are independent, the random set is the classical Cramér-style model stripped to its essential probabilistic mechanism.
 
-Why does it have an arithmetic at all? Because of a happy accident of remainders. Multiply two numbers that are each $1$ more than a multiple of $4$, and the product is again $1$ more than a multiple of $4$. In symbols, if $a \equiv 1$ and $b \equiv 1 \pmod 4$, then $a \cdot b \equiv 1 \pmod 4$. You can check it on the list: $5 \cdot 9 = 45$, and $45$ is on the list; $13 \cdot 17 = 221 = 4\cdot 55 + 1$, on the list again. So $H$ is *closed under multiplication*: you can never multiply your way out of it. This is our first survivor.
+The first key observation is elementary but powerful. For every $n\ge 0$,
 
-**Survivor 1 — the multiplicative skeleton.** *The set $H$ contains $1$ and is closed under multiplication.* Multiplication still makes sense inside the counterfactual world. This is the bedrock on which everything else is built, and it survives the deformation completely intact.
+$$
+\log(n+2)\le n+2,
+$$
 
-## Who are the primes now?
+and both sides are positive. Taking reciprocals reverses the inequality:
 
-Inside $H$, a number is "prime" — we will say **$H$-irreducible** — if it cannot be broken into a product of two smaller members of $H$. The crucial subtlety, the thing that makes this a genuine alternate universe rather than a relabeling, is that *the factors must themselves live in $H$*. We are only allowed to use the numbers of our world.
+$$
+\frac{1}{n+2}\le \frac{1}{\log(n+2)}=p_n.
+$$
 
-Watch what this does to a familiar number: $9$. In ordinary arithmetic $9 = 3 \cdot 3$, so $9$ is not prime. But $3$ is not in $H$ — it leaves remainder $3$, not $1$, when divided by $4$. The only way to split $9$ using our numbers would require a factor of $3$, and that factor is forbidden. So inside $H$, the number $9$ is unbreakable. **In the counterfactual universe, $9$ is prime.**
+The shifted harmonic series $\sum_{n\ge0}1/(n+2)$ diverges. Consequently, comparison gives the **Cramér Density Divergence Theorem**:
 
-The same thing happens to $21 = 3 \cdot 7$ and to $49 = 7 \cdot 7$. Both $3$ and $7$ leave remainder $3$ modulo $4$, so both are exiled from $H$. With their only would-be factors banished, $21$ and $49$ become unbreakable too. Three ordinary composite numbers — $9$, $21$, $49$ — are promoted to primes the moment we change which numbers we are allowed to use.
+> The total prime-like probability mass is infinite:
+> $$
+> \sum_{n=0}^{\infty}\frac{1}{\log(n+2)}=\infty.
+> $$
 
-Let us state this carefully, because it is the engine of everything that follows.
+This does not say that every outcome contains infinitely many selected integers. Probability mass is not itself a realized set. The bridge from divergent mass to almost-sure behavior is the second Borel–Cantelli principle: independent events whose probabilities have divergent sum occur infinitely often with probability $1$.
 
-**Definition.** A number $n$ is **$H$-irreducible** if $n \geq 2$, $n$ lies in $H$ (that is, $n \equiv 1 \pmod 4$), and whenever $n = a \cdot b$ with both $a$ and $b$ in $H$, one of $a, b$ must equal $1$.
+Thus we obtain the **Almost-Sure Infinitude Theorem**:
 
-**Lemma.** *The numbers $9$, $21$, and $49$ are each $H$-irreducible.* The proof is a short finite check: for each of these numbers, list the ways it could factor with both parts in $H$, and observe that the only nontrivial factor available ($3$ or $7$) has the wrong remainder. There is simply nowhere for the factorization to go.
+> Let $E_0,E_1,E_2,\ldots$ be measurable independent events. If, after at most finitely many initial indices,
+> $$
+> \mathbb P(E_n)\ge \frac{1}{\log(n+2)},
+> $$
+> then with probability $1$, infinitely many of the events $E_n$ occur.
 
-## The theorem that survives: infinitely many primes
+In everyday language, a random prime-like universe almost surely never runs out of primes. This is not a claim that a finite experiment will visibly settle the matter; “almost surely” means that the exceptional outcomes have probability zero.
 
-Euclid's most famous theorem says the ordinary primes never run out. Does our deformed world also have infinitely many primes, or did we accidentally build a universe with only a handful?
+## A random shadow of Dirichlet’s theorem
 
-It has infinitely many — and we can point to exactly where they come from.
+Genuine primes satisfy a far subtler statement: every arithmetic progression $a,a+q,a+2q,\ldots$ with $q>0$ and $\gcd(a,q)=1$ contains infinitely many primes. What survives in the random universe?
 
-**Survivor 2 — infinitude of primes.** *There are infinitely many $H$-irreducible numbers.*
+Fix any $q>0$ and any $a\ge0$. Along the progression of indices $qn+a$, the assigned masses are
 
-The reason is beautiful in its economy. Consider the ordinary primes that happen to leave remainder $1$ modulo $4$: numbers like $5, 13, 17, 29, 37, 41, \dots$. Each of these is already prime in the ordinary sense, so it certainly cannot be broken apart using the restricted numbers of $H$ — it cannot be broken apart *at all*. And since each leaves remainder $1$, each lives in $H$. So **every ordinary prime congruent to $1$ modulo $4$ is automatically an $H$-irreducible of our world.**
+$$
+\frac{1}{\log(qn+a+2)}.
+$$
 
-Are there infinitely many such ordinary primes? Yes — this is a celebrated result of Dirichlet, whose theorem on primes in arithmetic progressions guarantees that the progression $1, 5, 9, 13, 17, \dots$ contains infinitely many primes. (In fact the special case of remainder $1$ modulo $4$ was known even earlier.) Every one of them lands in our world as a counterfactual prime. So the counterfactual primes never run out either.
+Their sum still diverges. One way to see why is to compare the logarithm with the linear expression above it. For positive $x$, $\log x\le x-1$, so the terms dominate a constant-scale harmonic progression. Removing or spacing out terms does not make this particular logarithmic series finite.
 
-This is a striking pattern: **the infinitude of primes is robust.** It does not care about the fine structure of which numbers we call prime. As long as our world is rich enough to import Dirichlet's primes, Euclid's promise carries over unchanged.
+This yields the **Arithmetic-Progression Divergence Theorem**:
 
-## The theorem that shatters: unique factorization
+> For every pair of integers $q>0$ and $a\ge0$,
+> $$
+> \sum_{n=0}^{\infty}\frac{1}{\log(qn+a+2)}=\infty.
+> $$
 
-Now for the casualty. We come to the Fundamental Theorem of Arithmetic — the guarantee of *one and only one* prime factorization. Does it survive?
+Applying the same independent-event principle gives the **Random Dirichlet-Type Theorem**:
 
-It does not. And the counterexample is small enough to hold in your hand.
+> Fix $q>0$ and $a\ge0$. If the selection events attached to $qn+a+2$ are measurable and independent, and the $n$th event has probability at least $1/\log(qn+a+2)$, then the progression is hit infinitely often with probability $1$.
 
-Consider the number $441$. It lives in $H$, since $441 = 4 \cdot 110 + 1$. Now factor it two ways:
+This result is deliberately different from classical Dirichlet’s theorem. No coprimality condition is needed because random selection is blind to divisibility. A progression such as the even numbers is not disqualified. That is exactly the point: the random model reproduces abundance along progressions, but not the arithmetic reason genuine primes avoid certain residue classes.
 
-$$441 = 9 \cdot 49 \qquad \text{and} \qquad 441 = 21 \cdot 21.$$
+There is also a sharp opposite regime. If events $F_n$ have a finite total probability,
 
-Both are legitimate. Both use only numbers from our world. And — this is the whole point — every factor appearing in them ($9$, $49$, and $21$) is $H$-irreducible, a genuine prime of the counterfactual universe. So we have written $441$ as a product of counterfactual primes in two genuinely different ways. One factorization uses the primes $\{9, 49\}$; the other uses $\{21, 21\}$. These are not rearrangements of each other — the numbers involved are simply different.
+$$
+\sum_{n=0}^{\infty}\mathbb P(F_n)<\infty,
+$$
 
-**The casualty — unique factorization.** *In the counterfactual world, $441 = 9 \cdot 49 = 21 \cdot 21$ are two distinct factorizations into counterfactual primes.* The Fundamental Theorem of Arithmetic is false in this universe.
+then the first Borel–Cantelli principle says that only finitely many occur with probability $1$; independence is unnecessary. The resulting **Divergence–Convergence Dichotomy** says that independent events with infinite total mass occur infinitely often almost surely, whereas events with finite total mass occur only finitely often almost surely. The boundary is summability.
 
-It is worth savoring how this happens. In ordinary arithmetic, $441 = 3^2 \cdot 7^2$, a tidy prime factorization with the primes $3$ and $7$. But $3$ and $7$ are exiles from $H$. When we forbid them, the arithmetic has to route around them — and it can do so in more than one way. Bundling the exiled factors as $(3\cdot 3)(7 \cdot 7) = 9 \cdot 49$ gives one legal factorization; bundling them as $(3 \cdot 7)(3 \cdot 7) = 21 \cdot 21$ gives another. The forbidden numbers, unable to appear on their own, hide inside larger irreducibles — and they can hide in different disguises. Uniqueness dies.
+## What this does—and does not—say about the prime number theorem
 
-## The moral: which laws are load-bearing?
+The model is calibrated so that the expected number of selections below a scale $N$ is
 
-Step back and look at the scoreboard of our experiment. We deformed number theory by remembering only remainders modulo $4$, keeping the residue-$1$ numbers. Then:
+$$
+\sum_{n<N}\frac{1}{\log(n+2)},
+$$
 
-- **Multiplicative closure survived.** You can still multiply.
-- **Infinitude of primes survived.** They still never run out.
-- **Unique factorization collapsed.** The very first casualty, visible already at $441$.
+which heuristically behaves like $N/\log N$. That echoes the prime number theorem. But expectation is not concentration, and a heuristic asymptotic is not a theorem. To establish a full almost-sure prime-number-theorem analogue, one must prove two further facts: that the random counting function concentrates around its expectation, and that the expectation is asymptotic to $N/\log N$. The results here establish infinitude and progression recurrence, not that stronger asymptotic law.
 
-This dividing line is the real discovery. It tells us that infinitude of primes and the multiplicative skeleton of arithmetic are *coarse* facts — they are robust, they hold in a whole family of alternate arithmetics, and they do not depend on the precise identity of the primes. Unique factorization, by contrast, is a *fine* fact. It is delicate. It is the first thing to break when you disturb the primes even slightly, and its breakage is structural, not a fluke of small numbers.
+The distinction matters. Infinite occurrence answers “Does the process keep returning?” A prime number theorem answers “At precisely what asymptotic rate?” The latter requires finer control.
 
-There is a natural way to see why the collapse is not an accident. The Hilbert world is defined by insisting on a single admitted remainder, $1$, out of the group of possible remainders $\{1, 3\}$ that are coprime to $4$. That group has two elements; we kept only one. This "index two" — throwing away half of the allowed remainders — is exactly what leaves room for exiled factors like $3$ and $7$ to reappear in multiple disguises. The moment the admitted remainders stop forming the *full* set of units, uniqueness has an opening to fail. One expects, and can begin to prove, that a similar dichotomy holds for every modulus: keep all the coprime remainders and factorization stays unique; keep a proper subset and it must eventually fail.
+## When composite numbers become prime
 
-## Why counterfactuals matter
+Randomness tests the frequency side of prime behavior. A second counterfactual tests the algebra.
 
-Asking "what if the primes were different?" is not idle whimsy. It is how mathematicians discover which of their theorems are truly fundamental and which are lucky features of the integers we happen to live with. The Hilbert monoid is a laboratory: cheap to build, easy to compute in, and yet rich enough to separate the robust from the fragile.
+Consider the **Hilbert multiplicative universe**
 
-The same style of question reaches much further. One can ask what happens in a *random* number theory, where each whole number $n$ is declared "prime" independently with probability roughly $1/\log n$ — mimicking the density with which real primes actually appear. In such a random universe, Dirichlet-type statements about how primes distribute themselves are expected to survive almost surely, precisely because they are coarse, statistical facts; but the rigid clockwork of unique factorization has no reason to hold at all. The pattern we found in the small, exact world of $H$ appears to be a shadow of a much larger truth.
+$$
+H=\{n\in\mathbb N:n\equiv1\pmod4\}.
+$$
 
-And that is the quiet lesson of counterfactual number theory. The primes are not a monolith of equally sacred laws. Some of what they give us is structural and portable, carried along by nothing more than closure and abundance. Some of it — the crown jewel, unique factorization — is a rare gift, easily lost, and all the more precious for how fragile it turns out to be.
+This set contains $1$ and is closed under multiplication, because
+
+$$
+1\cdot1\equiv1\pmod4.
+$$
+
+Call an element $h\in H$ a **Hilbert prime** if $h\ge2$ and every factorization $h=ab$ with $a,b\in H$ has $a=1$ or $b=1$. This is irreducibility measured only with factors allowed to live in $H$.
+
+Now ordinary arithmetic begins to look unfamiliar. The number $9$ is composite in the usual integers, but its ordinary factorization $9=3\cdot3$ uses factors congruent to $3$ modulo $4$, so those factors are absent from $H$. Hence $9$ is a Hilbert prime. The same happens to $21=3\cdot7$ and $49=7\cdot7$: every displayed proper factor is congruent to $3$ modulo $4$, so $9$, $21$, and $49$ are irreducible within $H$.
+
+Then comes the crack in the wall:
+
+$$
+441=9\cdot49=21\cdot21.
+$$
+
+Both sides are factorizations entirely into Hilbert primes, but their multisets of factors, $\{9,49\}$ and $\{21,21\}$, are different. This proves the **Failure of Unique Factorization Theorem**:
+
+> In the multiplicative monoid $H$ of natural numbers congruent to $1$ modulo $4$, factorization into irreducibles is not unique.
+
+This failure is not caused by running out of primes. Every ordinary prime $p\equiv1\pmod4$ remains a Hilbert prime: if $p=ab$ in $H$, ordinary primality forces one factor to be $1$. Since there are infinitely many ordinary primes congruent to $1$ modulo $4$, there are infinitely many Hilbert primes. The **Infinitude of Hilbert Primes Theorem** therefore states:
+
+> The monoid $H$ contains infinitely many Hilbert primes.
+
+Infinitude survives; uniqueness collapses. The example shows that “having many primes” and “having unique prime factorization” are separate properties.
+
+## Why the split matters beyond number theory
+
+The same architecture appears whenever tiny chances accumulate. Imagine a randomized search that gets one independent chance at stage $n$, a component exposed to a rare failure mode, or a sensor waiting for an increasingly faint signal. If the stage probabilities have finite sum, then endless recurrence is almost surely impossible. If they are independent and their sum diverges, recurrence is almost sure. The logarithmic benchmark sits decisively on the divergent side, even after regularly discarding most stages.
+
+The multiplicative example carries a parallel warning for computation. A factorization routine is often expected to produce *the* prime factorization. In $H$, that specification is meaningless without extra conventions: $441$ has two valid irreducible answers. An algorithm could return one answer, list all answers, or optimize a chosen cost such as factor count, but the algebra no longer privileges a unique output. The ambient universe is therefore not bookkeeping; it determines what “atomic” and “canonical” mean.
+
+## The horizon of the analogy
+
+The most famous question about primes concerns the zeros of the Riemann zeta function. Can one ask whether a random-prime Riemann hypothesis holds almost surely?
+
+Not yet—not from selection events alone. A set of random events does not automatically determine a unique analytic object with an Euler product, a meromorphic continuation, and a meaningful critical line. One must first define a random Dirichlet series or random Euler product, prove where it converges, construct or establish its continuation, and only then formulate a theorem about zeros. In the Hilbert universe the warning is stronger: unique factorization has already failed, so an Euler product cannot simply be imported from ordinary arithmetic.
+
+That limitation is mathematically informative. The Riemann hypothesis is not merely a statement about the spacing or density of primes. It belongs to a tightly coupled structure connecting multiplication, unique factorization, Dirichlet series, analytic continuation, and complex zeros.
+
+The counterfactual experiment therefore produces a clean map. Prime-like probabilities are enough for divergent expected mass. With independence, they are enough for almost-sure infinitude and infinitely many visits to every fixed arithmetic progression. They are not yet enough for a prime number theorem. Changing the multiplicative universe can preserve infinitely many irreducibles while destroying unique factorization. And neither construction, by itself, supplies a legitimate random analogue of the Riemann hypothesis.
+
+Primes may look random, but their deepest power comes from being more than a random set. Their apparent disorder lives inside an exact multiplicative architecture. By imagining worlds in which only one part of that architecture survives, we learn which classical phenomena belong to probability—and which belong to arithmetic itself.

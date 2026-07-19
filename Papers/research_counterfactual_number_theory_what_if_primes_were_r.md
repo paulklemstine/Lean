@@ -1,163 +1,426 @@
-# Counterfactual Number Theory: Which Arithmetic Laws Survive a Deformation of the Primes?
+# Counterfactual Number Theory: Random Prime Events and Nonunique Factorization
+
+**Aristotle**  
+**July 19, 2026**
 
 ## Abstract
 
-We investigate a counterfactual arithmetic in which the notion of *which numbers are prime* is deformed while the ambient multiplicative structure of the natural numbers is left untouched. Concretely, we replace the ordinary primes by the irreducible elements of the **Hilbert monoid** $H = \{\,n \in \mathbb{N} : n \equiv 1 \pmod 4\,\}$, a classical multiplicatively closed subset of the naturals whose "primes" are those members admitting no nontrivial factorization *within* $H$. Using this toy model we establish a sharp dividing line between arithmetic laws that are robust under such a deformation and those that are fragile. We prove three results: (1) $H$ is a submonoid of $(\mathbb{N}, \cdot)$, so the multiplicative skeleton survives; (2) there are infinitely many $H$-irreducibles, obtained from the rational primes $p \equiv 1 \pmod 4$ via Dirichlet's theorem, so infinitude of primes survives; and (3) unique factorization collapses, witnessed by the explicit minimal identity $441 = 9 \cdot 49 = 21 \cdot 21$ with $9, 21, 49$ all $H$-irreducible and the multisets $\{9,49\} \neq \{21,21\}$. We argue that the collapse is a structural consequence of admitting a proper subgroup of residues rather than an artifact of small numbers, and we outline conjectures extending the closure/collapse dichotomy to general congruence monoids and to randomized prime systems.
-
-**Keywords:** Hilbert monoid, congruence monoid, irreducible elements, unique factorization, Dirichlet's theorem, arithmetic progressions, non-unique factorization, half-factorial monoids.
-
----
+We study two precise counterfactual models that separate the statistical and multiplicative roles of prime numbers. In the probabilistic model, the candidate integer $n+2$ is represented by an event with benchmark probability $1/\log(n+2)$. We prove that the benchmark series diverges, that its restriction to every fixed nonconstant arithmetic progression also diverges, and that independent events bounded below by these probabilities occur infinitely often almost surely. Conversely, any event sequence with summable probabilities occurs only finitely often almost surely. This gives a sharp qualitative divergence–convergence dichotomy and a random analogue of the infinitude conclusion in Dirichlet’s theorem, without asserting the arithmetic content of that theorem. In the algebraic model, we consider the multiplicative monoid $H=\{n\in\mathbb N:n\equiv1\pmod4\}$ and define its primes as irreducible nonunits. We prove that $9$, $21$, and $49$ are irreducible in $H$, while $441=9\cdot49=21\cdot21$, so unique factorization fails. Nevertheless, every ordinary prime congruent to $1$ modulo $4$ remains irreducible in $H$, yielding infinitely many such irreducibles. We provide numerical algorithms and examples illustrating both models. We also delimit the conclusions: a prime-number-theorem analogue requires concentration and expectation asymptotics not established here, while an almost-sure Riemann-hypothesis analogue is not meaningful until a specific random analytic function and its continuation have been defined.
 
 ## 1. Introduction
 
-The primes and the Fundamental Theorem of Arithmetic are so intertwined in elementary number theory that it is easy to conflate them. Yet many classical theorems about the primes — Euclid's infinitude, Dirichlet's theorem on arithmetic progressions, the Prime Number Theorem — are *distributional* statements that concern how primes are spread through the integers, while the Fundamental Theorem of Arithmetic is a *structural* statement about how integers decompose. This paper asks a deliberately naive question in order to separate these two flavors:
+Prime numbers play at least two conceptually different roles. Statistically, they form a sparse subset of the positive integers with local density near $1/\log x$. Algebraically, they are the irreducible building blocks in the unique factorization of positive integers. Their irregular spacing invites probabilistic models, but their definition is rigidly multiplicative. A counterfactual theory should therefore distinguish two questions.
 
-> If we keep the natural numbers and their multiplication, but change which numbers count as prime, which classical theorems survive and which collapse?
+First, which infinitude phenomena follow merely from assigning independent prime-like probabilities? Second, which factorization phenomena follow merely from retaining infinitely many irreducible elements in a multiplicative system?
 
-We make the question precise by choosing a specific deformation. Instead of the full set of naturals with the ordinary primes, we work inside the **Hilbert monoid**
-$$H = \{\,n \in \mathbb{N} : n \equiv 1 \pmod 4\,\} = \{1, 5, 9, 13, 17, 21, 25, 29, 33, 37, 41, 45, 49, \dots\},$$
-a set introduced by Hilbert precisely to demonstrate that unique factorization can fail. The "primes" of this world are its irreducible elements — numbers in $H$ that cannot be written as a product of two smaller elements *of $H$*. Because a factor is only legal if it itself lies in $H$, numbers like $9 = 3\cdot 3$ become irreducible: their only rational factor $3$ is exiled from $H$.
+We answer these questions in two models. The **random-event model** does not redefine divisibility. Instead, it introduces events $E_n$ indicating that $n+2$ is selected and compares their probabilities with
 
-This is a faithful, fully computable model of a counterfactual number theory. The ambient arithmetic is unchanged; only the notion of primality is deformed, by remembering just the residue class modulo $4$. Our main contribution is to isolate a clean dichotomy inside this model:
+$$
+p_n=\frac{1}{\log(n+2)}.
+$$
 
-- **Coarse laws survive.** Multiplicative closure (Theorem 3.1) and infinitude of primes (Theorem 5.2) carry over intact. Neither depends on the fine identity of the primes.
-- **Fine laws collapse.** Unique factorization fails (Theorem 6.1), already at the minimal witness $441$.
+The central analytic fact is the divergence of $\sum_n p_n$, including after restriction to indices in any arithmetic progression. Standard limsup-event principles then convert this divergence, under independence, into almost-sure infinite occurrence. A complementary convergence result shows that summable probabilities imply only finitely many occurrences, without independence.
 
-We further explain *why* the collapse is forced: it is governed by a single group-theoretic invariant, the index of the admitted residues inside the unit group $(\mathbb{Z}/4\mathbb{Z})^{\times}$.
+The **Hilbert-monoid model** changes the available factors. Its universe is
 
-### 1.1 Related notions
+$$
+H=\{n\in\mathbb N:n\equiv1\pmod4\},
+$$
 
-The Hilbert monoid is the simplest nontrivial *congruence monoid*: for a modulus $m$ and a submonoid $G$ of $(\mathbb{Z}/m\mathbb{Z})^{\times}$ (here $m = 4$, $G = \{1\}$), one forms $M(G) = \{n : n \bmod m \in G\}$. Congruence monoids are a well-studied source of non-unique factorization phenomena and of *half-factorial* and *elasticity* invariants. Our aim is not to survey that theory but to use its smallest instance as a laboratory that cleanly separates robust from fragile arithmetic laws, and to record explicit, minimal, verifiable witnesses.
+with ordinary multiplication. Irreducibility is internal to $H$. Some ordinarily composite numbers become irreducible because their proper factors lie outside $H$. This permits two different irreducible factorizations of $441$, even though $H$ still has infinitely many irreducibles.
 
----
+These models deliberately establish less than the most ambitious analogies might suggest. Infinite recurrence along progressions is not a full prime number theorem, and it is not classical Dirichlet’s theorem because no coprimality condition or divisibility obstruction enters the random mechanism. Likewise, neither a random set of integers nor a nonfactorial monoid automatically supplies a zeta function suitable for a Riemann-hypothesis statement. Making these boundaries explicit is part of the mathematical result.
 
-## 2. Definitions
+## 2. Preliminaries
 
-Throughout, $\mathbb{N} = \{0, 1, 2, \dots\}$ and all factorizations are of positive integers.
+### 2.1. Extended sums and limsup events
 
-**Definition 2.1 (Hilbert monoid).** The *Hilbert monoid* is the predicate
-$$\mathrm{inH}(n) \iff n \bmod 4 = 1,$$
-and $H = \{n \in \mathbb{N} : \mathrm{inH}(n)\}$ is the set of natural numbers congruent to $1$ modulo $4$.
+All probabilities take values in $[0,1]$. For a sequence of events $(E_n)_{n\ge0}$ in a probability space $(\Omega,\mathcal F,\mathbb P)$, define the limsup event
 
-**Definition 2.2 ($H$-irreducible).** A natural number $n$ is *$H$-irreducible* (a *counterfactual prime*) if
-$$n \geq 2, \qquad \mathrm{inH}(n), \qquad \text{and} \qquad \forall a, b \in \mathbb{N}\ \big(\mathrm{inH}(a) \wedge \mathrm{inH}(b) \wedge ab = n \implies a = 1 \vee b = 1\big).$$
+$$
+\limsup_{n\to\infty}E_n
+=\bigcap_{N=0}^{\infty}\bigcup_{n\ge N}E_n.
+$$
 
-The essential feature of Definition 2.2 is that the quantifier ranges over factorizations *inside* $H$. Quantifying over all of $\mathbb{N}$ would make almost every composite reducible and render the model vacuous; restricting to $H$ is what deforms primality in a nontrivial way.
+An outcome belongs to this event exactly when it belongs to infinitely many $E_n$.
 
-**Remark 2.3.** Since $1 \bmod 4 = 1$, we have $\mathrm{inH}(1)$: the unit lies in the monoid. The element $1$ is treated as a unit and is excluded from irreducibility by the condition $n \geq 2$.
+We use the following two probabilistic principles.
 
----
+**Lemma 2.1 (First Borel–Cantelli principle).**  
+Let $(E_n)_{n\ge0}$ be measurable events. If
 
-## 3. The multiplicative skeleton survives
+$$
+\sum_{n=0}^{\infty}\mathbb P(E_n)<\infty,
+$$
 
-**Theorem 3.1 (Closure).** *The Hilbert monoid is a submonoid of $(\mathbb{N}, \cdot)$: it contains $1$, and it is closed under multiplication. That is, $\mathrm{inH}(1)$, and if $\mathrm{inH}(a)$ and $\mathrm{inH}(b)$ then $\mathrm{inH}(ab)$.*
+then
 
-*Proof.* First, $1 \bmod 4 = 1$, so $\mathrm{inH}(1)$. For closure, suppose $a \equiv 1$ and $b \equiv 1 \pmod 4$. Modular multiplication gives
-$$ab \bmod 4 = \big((a \bmod 4)(b \bmod 4)\big) \bmod 4 = (1 \cdot 1) \bmod 4 = 1,$$
-so $\mathrm{inH}(ab)$. $\qquad\blacksquare$
+$$
+\mathbb P\!\left(\limsup_{n\to\infty}E_n\right)=0.
+$$
 
-This is the bedrock: multiplication never escapes $H$, so it is meaningful to speak of factorization *within* the counterfactual world at all. The multiplicative structure is completely robust under the deformation.
+Thus only finitely many $E_n$ occur almost surely. Independence is not required.
 
----
+*Proof sketch.* For each $N$, the union bound gives
 
-## 4. Counterfactual primes: explicit irreducibles
+$$
+\mathbb P\!\left(\bigcup_{n\ge N}E_n\right)
+\le \sum_{n\ge N}\mathbb P(E_n).
+$$
 
-We record the three small irreducibles that drive the failure of unique factorization, and then the general mechanism producing infinitely many.
+The tail on the right tends to $0$. The sets on the left decrease with $N$, and their intersection is the limsup event. Continuity from above therefore gives probability $0$.
 
-**Lemma 4.1.** *Each of $9$, $21$, and $49$ is $H$-irreducible.*
+**Lemma 2.2 (Independent divergence principle).**  
+Let $(E_n)_{n\ge0}$ be measurable independent events. If
 
-*Proof.* Each of $9 = 4\cdot 2 + 1$, $21 = 4 \cdot 5 + 1$, $49 = 4\cdot 12 + 1$ lies in $H$ and is $\geq 2$. It remains to rule out nontrivial factorizations inside $H$. Suppose $ab = n$ with $\mathrm{inH}(a), \mathrm{inH}(b)$ and $n \in \{9, 21, 49\}$. Any such $a$ divides $n$ and satisfies $a \leq n$, so it ranges over a finite list of divisors. Checking these divisors:
-- For $9$: the divisors are $1, 3, 9$. Of these only $1$ and $9$ lie in $H$ ($3 \equiv 3 \pmod 4$). Hence $a = 1$ or $a = 9$ (forcing $b = 1$).
-- For $21$: the divisors are $1, 3, 7, 21$. Only $1$ and $21$ lie in $H$ ($3, 7 \equiv 3 \pmod 4$). Hence $a = 1$ or $b = 1$.
-- For $49$: the divisors are $1, 7, 49$. Only $1$ and $49$ lie in $H$. Hence $a = 1$ or $b = 1$.
+$$
+\sum_{n=0}^{\infty}\mathbb P(E_n)=\infty,
+$$
 
-In every case one factor is $1$, so $n$ is $H$-irreducible. $\qquad\blacksquare$
+then
 
-The phenomenon is transparent: the ordinary prime factors $3$ and $7$ both lie in the residue class $3 \pmod 4$, which is *outside* $H$. With those factors forbidden, the numbers $9$, $21$, $49$ have no legal nontrivial decomposition and are promoted to primes of the counterfactual world.
+$$
+\mathbb P\!\left(\limsup_{n\to\infty}E_n\right)=1.
+$$
 
-**Lemma 4.2 (Rational primes $\equiv 1$ import as counterfactual primes).** *If $p$ is a rational prime with $p \equiv 1 \pmod 4$, then $p$ is $H$-irreducible.*
+*Proof sketch.* Independence implies that the probability of avoiding all events from $N$ through $M$ is
 
-*Proof.* Since $p \equiv 1 \pmod 4$ we have $\mathrm{inH}(p)$, and $p \geq 2$. Suppose $ab = p$ with $\mathrm{inH}(a), \mathrm{inH}(b)$. Then $a \mid p$, and since $p$ is prime, $a = 1$ or $a = p$. If $a = p$ then $b = 1$. Either way one factor is $1$. $\qquad\blacksquare$
+$$
+\prod_{n=N}^{M}\bigl(1-\mathbb P(E_n)\bigr).
+$$
 
-The point of Lemma 4.2 is that an ordinary prime has *no* nontrivial factorization even in $\mathbb{N}$, hence a fortiori none inside the smaller world $H$; and the congruence condition places it in $H$.
+Using $1-x\le e^{-x}$, this is at most
 
----
+$$
+\exp\!\left(-\sum_{n=N}^{M}\mathbb P(E_n)\right),
+$$
 
-## 5. Infinitude of primes survives
+which tends to $0$ as $M\to\infty$. Hence with probability $1$ at least one event occurs after every $N$, equivalently infinitely many events occur.
 
-**Theorem 5.1 (Dirichlet, progression $1 \bmod 4$).** *There are infinitely many rational primes $p$ with $p \equiv 1 \pmod 4$.*
+### 2.2. The benchmark density
 
-This is the special case of Dirichlet's theorem on primes in arithmetic progressions for modulus $4$ and residue $1$; it can also be proved directly by a Euclid-style argument using the fact that odd prime divisors of $N^2 + 1$ are $\equiv 1 \pmod 4$.
+**Definition 2.3 (Cramér benchmark density).**  
+For each $n\in\mathbb N$, define
 
-**Theorem 5.2 (Infinitude of counterfactual primes).** *The set $\{n \in \mathbb{N} : n \text{ is } H\text{-irreducible}\}$ is infinite.*
+$$
+p_n=\frac{1}{\log(n+2)}.
+$$
 
-*Proof.* By Theorem 5.1 there are infinitely many rational primes $p \equiv 1 \pmod 4$. By Lemma 4.2 each of them is $H$-irreducible. An injective image of an infinite set is infinite, so the set of $H$-irreducibles contains an infinite subset and is itself infinite. $\qquad\blacksquare$
+The index shift ensures $n+2\ge2$, so $\log(n+2)>0$. The model may use exact probabilities $p_n$, or more generally probabilities bounded below by $p_n$. The latter formulation makes the recurrence results monotone and robust.
 
-Thus Euclid's infinitude of primes is robust: it survives the deformation because it is fed directly by Dirichlet's distributional theorem, which knows nothing about the fine structure of factorization. Infinitude of primes is a *coarse* law.
+Strictly speaking, $p_0=1/\log2>1$ and hence is not itself a valid probability. This causes no difficulty for the lower-bound event formulation only when such hypotheses are satisfiable; for exact Bernoulli simulation one caps the value at $1$ or begins at a sufficiently large index. All divergence and asymptotic conclusions are unaffected by changing finitely many initial terms. In the theorems below, an assumed inequality $p_n\le\mathbb P(E_n)$ implicitly requires consistency; one may equivalently state it beyond a finite initial index.
 
----
+### 2.3. Arithmetic progressions
 
-## 6. Unique factorization collapses
+For integers $q>0$ and $a\ge0$, the sequence $qn+a$ is a nonconstant arithmetic progression of indices. The corresponding candidate integers are $qn+a+2$, and their benchmark masses are
 
-**Theorem 6.1 (Failure of unique factorization).** *In the counterfactual world $H$, unique factorization into $H$-irreducibles fails. Explicitly, $9$, $21$, and $49$ are $H$-irreducible, and*
-$$441 = 9 \cdot 49 = 21 \cdot 21,$$
-*with the two factorizations genuinely distinct: the multiset $\{9, 49\}$ is not equal to the multiset $\{21, 21\}$.*
+$$
+p_{qn+a}=\frac{1}{\log(qn+a+2)}.
+$$
 
-*Proof.* Irreducibility of $9, 21, 49$ is Lemma 4.1. The arithmetic identities $9 \cdot 49 = 441$ and $21 \cdot 21 = 441$ are immediate, and $441 = 4\cdot 110 + 1 \in H$. Finally, the two factorizations are certified distinct by comparing multisets: $\{9, 49\} \neq \{21, 21\}$, since $21 \notin \{9, 49\}$. This is not a reordering of a single factorization but two structurally different products of counterfactual primes. $\qquad\blacksquare$
+No coprimality hypothesis appears because the random model does not encode divisibility exclusions.
 
-**Remark 6.2 (Minimality).** The witness $441 = 21^2$ is the smallest number in $H$ with two distinct factorizations into $H$-irreducibles. Any such witness must be built from the exiled residue-$3$ primes bundled in pairs, and $3$ and $7$ are the two smallest such primes; the smallest number using them with two pairings is $(3 \cdot 3)(7 \cdot 7) = (3\cdot 7)(3\cdot 7) = 441$.
+## 3. Divergence of prime-like density
 
-**Remark 6.3 (Why the collapse is structural).** Write $U = (\mathbb{Z}/4\mathbb{Z})^{\times} = \{1, 3\}$ for the unit group modulo $4$. The Hilbert monoid admits only the residue subgroup $G = \{1\}$, of index $2$ in $U$. The exiled residue $3$ is a coset representative that cannot appear alone in $H$ but reappears in pairs: $3 \cdot 3 \equiv 1$ and $3 \cdot 7 \equiv 1 \pmod 4$. Because a product of *two* exiled factors returns to $H$, exiled primes can be re-bundled into $H$-irreducibles in more than one way, and uniqueness fails. Had $G$ been all of $U$ (index $1$), no residue would be exiled and factorization would remain unique. This identifies the index $[U : G]$ as the true controlling invariant, and shows the failure is not an accident of small numbers.
+We begin with a comparison to the harmonic series.
 
----
+**Lemma 3.1 (Harmonic lower bound).**  
+For every $n\ge0$,
 
-## 7. Discussion: coarse versus fine arithmetic laws
+$$
+\frac{1}{n+2}\le\frac{1}{\log(n+2)}.
+$$
 
-The three theorems above draw a sharp line:
+*Proof.* For every $x>0$, $\log x\le x$. Taking $x=n+2$ gives $0<\log(n+2)\le n+2$. Reciprocation of positive quantities reverses the inequality and proves the claim.
 
-| Classical law | Status in $H$ | Character |
-|---|---|---|
-| Multiplicative closure / monoid structure | **Survives** (Thm 3.1) | Coarse |
-| Infinitude of primes (Euclid/Dirichlet) | **Survives** (Thm 5.2) | Coarse |
-| Unique factorization (FTA) | **Collapses** (Thm 6.1) | Fine |
+**Lemma 3.2 (Shifted harmonic divergence).**  
+The series
 
-The interpretation is that *which numbers are prime* is a fragile datum. Statements that depend only on multiplicative closure and on the abundance of primes are portable across a whole family of deformed arithmetics. Unique factorization, by contrast, depends essentially on the precise identity of the primes and is the first casualty of disturbing them.
+$$
+\sum_{n=0}^{\infty}\frac{1}{n+2}
+$$
 
-This perspective reframes the Fundamental Theorem of Arithmetic not as an inevitability but as a special gift of the full integers — one that is easily lost. It also suggests a program: quantify *how badly* uniqueness fails as a function of the deformation. The natural measure is **elasticity**, the supremum over reducible elements of the ratio of the longest to the shortest factorization length. In $H$ the collision $441 = 9\cdot 49 = 21 \cdot 21$ has both factorizations of length $2$ (so it does not by itself force elasticity above $1$), but longer forbidden "detours" at larger moduli are expected to stretch factorization lengths and drive elasticity upward with the index $[U : G]$.
+diverges.
 
----
+*Proof sketch.* It is the harmonic series with its first two indexing positions removed. Deleting finitely many terms cannot change divergence.
 
-## 8. Algorithms
+**Theorem 3.3 (Cramér density divergence).**  
+The benchmark density has infinite total mass:
 
-We summarize the constructive content in algorithmic form (full implementations appear in the accompanying demonstration code).
+$$
+\sum_{n=0}^{\infty}\frac{1}{\log(n+2)}=\infty.
+$$
 
-**Algorithm A (Membership and closure test).** Given $n$, return whether $n \equiv 1 \pmod 4$; given $a, b \in H$, verify $ab \in H$. Complexity $O(1)$ per test (after the divisions).
+*Proof.* Lemma 3.1 bounds every term below by the corresponding term of the divergent series in Lemma 3.2. The comparison test gives divergence.
 
-**Algorithm B ($H$-irreducibility test).** Given $n \in H$ with $n \geq 2$, enumerate divisors $a \mid n$ with $2 \leq a < n$; return "irreducible" iff no such $a$ has both $a \in H$ and $n/a \in H$. Complexity $O(\sqrt{n})$ divisor scan.
+The same phenomenon persists on every fixed arithmetic progression.
 
-**Algorithm C (Search for non-unique factorizations).** For each $n \in H$ up to a bound $N$, compute all factorizations of $n$ into $H$-irreducibles by recursive descent, collect them as multisets, and report any $n$ with two or more distinct multisets. This rediscovers $441$ as the least witness. Complexity is output-sensitive; pruning by the irreducibility test keeps it practical for moderate $N$.
+**Theorem 3.4 (Arithmetic-progression divergence).**  
+For all integers $q>0$ and $a\ge0$,
 
----
+$$
+\sum_{n=0}^{\infty}\frac{1}{\log(qn+a+2)}=\infty.
+$$
 
-## 9. Applications and connections
+*Proof sketch.* Since $qn+a+2>1$, the logarithm is positive. The inequality $\log x\le x-1$ for $x>0$ gives
 
-1. **Teaching the role of the Fundamental Theorem.** The Hilbert monoid gives a minimal, fully explicit demonstration that infinitude of primes and unique factorization are logically independent — a valuable pedagogical separation.
-2. **Non-unique factorization theory.** The example is the base case of the theory of congruence monoids, where invariants such as elasticity, the set of lengths, and half-factoriality quantify the failure of uniqueness. The index-based mechanism of Remark 6.3 is the seed of a general classification.
-3. **Generalized (Beurling) prime systems.** Treating the $H$-irreducibles as a system of "generalized primes" connects to analytic questions about Dirichlet series $\sum_{n \in H} n^{-s}$ and whether an Euler product over the irreducibles exists — an analytic fingerprint of unique factorization whose breakdown detects the collapse.
+$$
+\frac{1}{\log(qn+a+2)}
+\ge \frac{1}{qn+a+1}.
+$$
 
----
+The series on the right diverges. Indeed, for a sufficiently large constant $C$ depending on $q$ and $a$,
+
+$$
+qn+a+1\le C(n+1),
+$$
+
+so $1/(qn+a+1)\ge C^{-1}/(n+1)$, a constant multiple of the harmonic series. Comparison proves the result.
+
+The theorem says more than the divergence of the full sequence: fixed periodic thinning does not remove enough probability mass to make the series summable.
+
+## 4. Almost-sure recurrence
+
+**Theorem 4.1 (Almost-sure infinitude of independent prime-like events).**  
+Let $(E_n)_{n\ge0}$ be measurable independent events in a probability space. Suppose that, for every relevant $n$,
+
+$$
+\mathbb P(E_n)\ge\frac{1}{\log(n+2)}.
+$$
+
+Then
+
+$$
+\mathbb P\!\left(\limsup_{n\to\infty}E_n\right)=1.
+$$
+
+Equivalently, infinitely many prime-like events occur almost surely.
+
+*Proof.* By monotonicity of nonnegative series and Theorem 3.3,
+
+$$
+\sum_{n=0}^{\infty}\mathbb P(E_n)
+\ge\sum_{n=0}^{\infty}\frac{1}{\log(n+2)}
+=\infty.
+$$
+
+Lemma 2.2 applies.
+
+**Theorem 4.2 (Random Dirichlet-type recurrence).**  
+Fix integers $q>0$ and $a\ge0$. Let $(E_n)_{n\ge0}$ be measurable independent events satisfying
+
+$$
+\mathbb P(E_n)\ge\frac{1}{\log(qn+a+2)}.
+$$
+
+Then
+
+$$
+\mathbb P\!\left(\limsup_{n\to\infty}E_n\right)=1.
+$$
+
+Thus the corresponding random set meets the fixed progression infinitely often almost surely.
+
+*Proof.* Theorem 3.4 shows that the lower bounds have divergent sum. Hence the event probabilities also have divergent sum, and Lemma 2.2 proves the claim.
+
+The phrase “Dirichlet-type” records a resemblance of conclusion, not an identity of content. Classical Dirichlet theory restricts to residue classes coprime to the modulus because genuine primes are constrained by divisibility. Here any fixed $q>0$ and $a\ge0$ are allowed, because selection events do not know whether all members of a progression share a divisor.
+
+**Theorem 4.3 (Summable probabilities imply finite occurrence).**  
+Let $(F_n)_{n\ge0}$ be measurable events. If
+
+$$
+\sum_{n=0}^{\infty}\mathbb P(F_n)<\infty,
+$$
+
+then
+
+$$
+\mathbb P\!\left(\limsup_{n\to\infty}F_n\right)=0.
+$$
+
+*Proof.* This is Lemma 2.1.
+
+Combining the two regimes gives the central qualitative boundary.
+
+**Theorem 4.4 (Divergence–convergence dichotomy).**  
+Let $(E_n)$ be measurable independent events with divergent total probability, and let $(F_n)$ be measurable events with convergent total probability. Then
+
+$$
+\mathbb P\!\left(\limsup E_n\right)=1,
+\qquad
+\mathbb P\!\left(\limsup F_n\right)=0.
+$$
+
+*Proof.* Apply Lemma 2.2 to $(E_n)$ and Lemma 2.1 to $(F_n)$.
+
+The dichotomy is qualitative. It identifies whether infinitely many occurrences survive, but does not determine the asymptotic number of occurrences below $N$.
+
+## 5. A multiplicative counterfactual
+
+We now isolate the algebraic role of primes by restricting the admissible factors.
+
+**Definition 5.1 (Hilbert multiplicative monoid).**  
+Let
+
+$$
+H=\{n\in\mathbb N:n\equiv1\pmod4\}.
+$$
+
+Multiplication is inherited from the natural numbers, and $1$ is the identity.
+
+**Lemma 5.2 (Multiplicative closure).**  
+If $a,b\in H$, then $ab\in H$.
+
+*Proof.* The hypotheses give $a\equiv1\pmod4$ and $b\equiv1\pmod4$. Therefore $ab\equiv1\cdot1\equiv1\pmod4$.
+
+**Definition 5.3 (Hilbert prime).**  
+An integer $h$ is a Hilbert prime if $h\in H$, $h\ge2$, and every factorization $h=ab$ with $a,b\in H$ has $a=1$ or $b=1$. Thus “Hilbert prime” means irreducible nonunit in the monoid $H$; it does not mean prime in the ordinary natural numbers.
+
+**Proposition 5.4 (Three composite irreducibles).**  
+The integers $9$, $21$, and $49$ are Hilbert primes.
+
+*Proof sketch.* Each is congruent to $1$ modulo $4$. Their ordinary proper factorizations are
+
+$$
+9=3\cdot3,\qquad 21=3\cdot7,\qquad 49=7\cdot7.
+$$
+
+Both $3$ and $7$ are congruent to $3$ modulo $4$, so none belongs to $H$. More generally, inspection of the positive divisors shows that no factorization of any of these three numbers uses two nonunit factors from $H$. Hence each is irreducible in $H$.
+
+**Theorem 5.5 (Failure of unique factorization).**  
+Factorization into Hilbert primes is not unique in $H$. In particular,
+
+$$
+441=9\cdot49=21\cdot21,
+$$
+
+and the irreducible multisets $\{9,49\}$ and $\{21,21\}$ are distinct.
+
+*Proof.* Proposition 5.4 shows that all factors displayed are Hilbert primes. Direct multiplication gives both products equal to $441$. One multiset contains $9$ and $49$, while the other contains two copies of $21$, so they are unequal. Thus $441$ has two genuinely different irreducible factorizations.
+
+This example distinguishes irreducibility from ordinary primality. It also shows that closure under multiplication and the existence of irreducibles do not force factoriality.
+
+**Theorem 5.6 (Ordinary primes in the class $1$ modulo $4$ remain irreducible).**  
+If $p$ is an ordinary prime and $p\equiv1\pmod4$, then $p$ is a Hilbert prime.
+
+*Proof.* Certainly $p\in H$ and $p\ge2$. If $p=ab$ with $a,b\in H$, ordinary primality implies that $a=1$ or $b=1$. Therefore $p$ is irreducible in $H$.
+
+**Theorem 5.7 (Infinitely many Hilbert primes).**  
+The monoid $H$ contains infinitely many Hilbert primes.
+
+*Proof sketch.* There are infinitely many ordinary primes congruent to $1$ modulo $4$. By Theorem 5.6, every such prime is a Hilbert prime. Therefore the set of Hilbert primes is infinite.
+
+Theorems 5.5 and 5.7 form the algebraic contrast: infinitude of irreducibles survives, while uniqueness of factorization fails.
+
+## 6. Computational illustrations
+
+The mathematical results are infinite statements, but finite computations make their mechanisms visible.
+
+### 6.1. Partial density sums
+
+For a cutoff $N$, compute
+
+$$
+S(N)=\sum_{n=0}^{N-1}\frac{1}{\log(n+2)}
+$$
+
+and, for fixed $q>0$ and $a\ge0$,
+
+$$
+S_{q,a}(N)=\sum_{n=0}^{N-1}\frac{1}{\log(qn+a+2)}.
+$$
+
+Both sequences increase with $N$. Their growth is slow but unbounded. A direct algorithm takes $O(N)$ time and $O(1)$ auxiliary space by maintaining a running sum.
+
+### 6.2. Bernoulli simulation
+
+For numerical simulation, define valid probabilities by
+
+$$
+\widetilde p_n=\min\!\left(1,\frac{1}{\log(n+2)}\right).
+$$
+
+Draw independent uniform random variables $U_n$ on $[0,1)$ and select $n+2$ when $U_n<\widetilde p_n$. Repeating the experiment visualizes the noisy accumulation of selected candidates. Capping changes only finitely many initial terms and therefore does not affect the divergence mechanism.
+
+The simulation is illustrative rather than a proof of almost-sure behavior. For $N$ candidates and $T$ trials it uses $O(TN)$ time. Counts alone require $O(T)$ storage; retaining all selected positions may require $O(TN)$ storage in the worst case.
+
+### 6.3. Enumerating Hilbert primes
+
+To test whether $h\le B$ is a Hilbert prime, first require $h\ge2$ and $h\equiv1\pmod4$. Then search divisors $d$ from $2$ through $\lfloor\sqrt h\rfloor$. If $d\mid h$ and both $d$ and $h/d$ are congruent to $1$ modulo $4$, then $h$ is reducible in $H$; otherwise it is irreducible.
+
+Testing all candidates through $B$ by trial division takes $O(B^{3/2})$ arithmetic steps in a simple implementation and $O(1)$ auxiliary space apart from the output. This procedure identifies $9$, $21$, and $49$ as Hilbert primes and confirms the two factorizations of $441$.
+
+## 7. Structural comparison of the two models
+
+The probabilistic and multiplicative constructions answer different counterfactual questions, so their vocabularies must be kept separate. In the random model, “prime-like” means selected by an event; it does not imply irreducibility. In the Hilbert model, “prime” means irreducible; it involves no randomness. This separation prevents three tempting but invalid inferences.
+
+First, statistical density does not imply a factorization law. A random set selected at logarithmic rate need not generate the natural numbers multiplicatively, and nothing in the event model gives unique decomposition. Second, infinitely many irreducibles do not determine their counting density. The infinitude proof for Hilbert primes imports an infinite subfamily—ordinary primes congruent to $1$ modulo $4$—but gives no asymptotic formula for all Hilbert primes. Third, recurrence in every fixed arithmetic progression does not recover congruence-sensitive primality. The random theorem permits progressions whose terms share a common divisor because the events ignore divisibility.
+
+These observations can be summarized by four independent axes:
+
+1. **Mass:** whether the assigned local weights form a divergent series.
+2. **Dependence:** whether event occurrence is sufficiently independent for divergent mass to force recurrence.
+3. **Irreducibility:** whether an element admits a nontrivial product decomposition inside the chosen universe.
+4. **Factoriality:** whether every element has a unique multiset of irreducible factors.
+
+The random model directly controls the first two axes. The Hilbert model demonstrates that the third can be abundant while the fourth fails. Ordinary prime theory links all four through additional arithmetic structure, but the counterfactuals show that none of these links should be presumed.
+
+There is also a useful stability distinction. Divergence and limsup recurrence are unchanged by modifying finitely many initial probabilities, which is why capping the exceptional benchmark values is harmless. Factoriality, by contrast, can be destroyed by a single finite witness: the element $441$ and its two factorizations suffice. One model’s conclusions are tail properties; the other model’s failure is certified locally.
+
+## 8. Interpretation and applications
+
+The random-event theorems clarify how much “prime-like infinitude” follows from coarse density. The lower bound $1/\log n$ is nonsummable, so independence repeatedly converts small local chances into almost-sure global recurrence. The arithmetic-progression theorem shows that any fixed linear thinning retains infinite mass. Similar reasoning applies in randomized search, reliability, and rare-event sampling: when independent success probabilities are nonsummable, eventual successes recur almost surely.
+
+The convergence half is equally important. If probabilities decay too quickly—for example on the order of $1/n^{1+\varepsilon}$—their sum is finite, and only finitely many successes occur almost surely. Thus the summability threshold separates persistent from transient event sequences.
+
+The Hilbert monoid illustrates a different lesson relevant to algebraic number theory and factorization algorithms. Irreducibility depends on the ambient multiplicative system. Removing admissible factors can turn composite integers into atoms, but this does not preserve the uniqueness properties of the original system. A factorization algorithm that assumes unique output would therefore be ill-posed in $H$: it must return one factorization, enumerate alternatives, or specify a normalization not provided by the algebra itself.
+
+The two models should not be conflated. The random model is additive and probabilistic in its indexing; the Hilbert model is deterministic and multiplicative. Their joint value lies in separating properties often bundled together under the word “prime.”
+
+## 9. Limitations: prime-number and Riemann-hypothesis analogues
+
+Let
+
+$$
+X_N=\sum_{n=0}^{N-1}\mathbf 1_{E_n}
+$$
+
+be the random counting function. Under exact independent Bernoulli probabilities, its expectation is
+
+$$
+\mathbb E[X_N]=\sum_{n=0}^{N-1}\frac{1}{\log(n+2)},
+$$
+
+up to any finite initial adjustment needed to keep probabilities at most $1$. This suggests growth comparable to $N/\log N$. However, the almost-sure infinitude theorem only states that $X_N\to\infty$ almost surely. It does not prove
+
+$$
+X_N\sim\frac{N}{\log N}.
+$$
+
+A full prime-number-theorem analogue requires a concentration theorem showing that $X_N$ is asymptotic to its expectation, together with an asymptotic evaluation of that expectation.
+
+An almost-sure Riemann-hypothesis statement requires even more structure. Selection events alone do not canonically define a random zeta function. One might attempt a random Dirichlet series or Euler product, but then one must specify the coefficients or factors, prove convergence in an initial half-plane, establish an analytic or meromorphic continuation, and define the relevant critical line. Only after those tasks does a zero-location conjecture become meaningful.
+
+In the Hilbert monoid, nonunique factorization blocks the naive transfer of an Euler product. Euler products encode multiplicative decomposition into primes; when irreducible factorizations are nonunique, product expansions require additional justification and may not represent the intended counting function.
 
 ## 10. Future work
 
-We highlight four directions, elaborated in the accompanying future-directions notes.
+Three conclusions are robust in the present models: the Cramér density series diverges on every fixed nonconstant arithmetic progression; independent events with these lower-bounded probabilities occur infinitely often almost surely, including along progressions; and replacing ordinary primes by irreducibles of the Hilbert monoid preserves infinitude but destroys unique factorization.
 
-- **A closure/collapse dichotomy for congruence monoids.** For every modulus $m$ and subgroup $G \leq (\mathbb{Z}/m\mathbb{Z})^{\times}$, the monoid $M(G) = \{n : n \bmod m \in G\}$ should be multiplicatively closed with infinitely many irreducibles, yet fail unique factorization exactly when $G$ is a proper subgroup — with the index $[(\mathbb{Z}/m\mathbb{Z})^{\times} : G]$ as the controlling invariant.
-- **Elasticity grows with the index.** The elasticity of $M(G)$ should be finite and increase monotonically with the index, diverging along suitable sequences of moduli.
-- **A zeta-function criterion.** The Dirichlet series restricted to $M(G)$ should admit an Euler product of classical geometric shape precisely when unique factorization holds, making the collapse a spectral signature.
-- **Randomized primes.** For a random set $S \subseteq \mathbb{N}$ including each $n$ independently with probability $\sim 1/\log n$, Dirichlet-type distributional statements are expected to survive almost surely while unique factorization has no reason to hold — the random analogue of the coarse/fine dichotomy.
+The next probabilistic objective is a full counting theorem. For independent Bernoulli variables with probabilities $1/\log(n+2)$ after a finite initial adjustment, one should prove almost-sure concentration of $X_N$ around $\mathbb E[X_N]$, then establish
 
----
+$$
+\mathbb E[X_N]\sim\frac{N}{\log N}.
+$$
+
+A second direction is simultaneous recurrence over countably many arithmetic progressions. Since a countable intersection of probability-one events still has probability one, an appropriately unified independent model should permit a statement that every fixed progression in a countable family is visited infinitely often almost surely, provided the event indexing and dependence structure are specified consistently.
+
+For analytic questions, future work must first choose a random zeta object. Candidate definitions should be compared according to convergence, multiplicativity, continuation, and whether their zeros are stable under finite changes to the random set. Only then should one formulate zero-free regions or critical-line assertions.
+
+Finally, the Hilbert example invites a classification problem: determine which elements of $H$ have unique irreducible factorization, quantify the number or lengths of distinct factorizations, and study analogous monoids $\{n:n\equiv1\pmod m\}$ for other moduli $m$.
 
 ## 11. Conclusion
 
-By deforming primality to the irreducibles of the Hilbert monoid $H = \{n \equiv 1 \pmod 4\}$, we exhibited a clean separation of arithmetic laws: the multiplicative skeleton and the infinitude of primes survive intact, while unique factorization collapses at the explicit minimal witness $441 = 9 \cdot 49 = 21 \cdot 21$. The collapse is controlled by a single group-theoretic invariant, the index of the admitted residues in the unit group. Counterfactual number theory, in this reading, is a tool for measuring which of arithmetic's laws are load-bearing and which are luxuries of the integers we happen to inhabit.
+Prime-like density, almost-sure recurrence, irreducible infinitude, and unique factorization are distinct mathematical properties. The benchmark probabilities $1/\log(n+2)$ have divergent total mass, even on every fixed arithmetic progression. Under independence this forces infinitely many occurrences almost surely, while summable event masses force only finitely many. In the deterministic monoid of integers congruent to $1$ modulo $4$, infinitely many irreducibles remain, yet $441=9\cdot49=21\cdot21$ destroys uniqueness.
+
+These counterfactuals preserve selected shadows of ordinary prime theory while exposing the hypotheses behind them. Probability explains recurrence from nonsummable density. Multiplicative structure governs factorization. Analytic statements about zeros require still more. The exercise therefore does not replace the primes by randomness; it identifies precisely which parts of their behavior randomness can reproduce, and which parts depend on arithmetic architecture.
