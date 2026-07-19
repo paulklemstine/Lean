@@ -97,7 +97,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "08d3e2eb",
     "description": "The probabilistic method proves existence by showing that a random structure has the desired property with positive probability. Key results: (1) Erdos's lower bound on Ramsey numbers: R(k,k) > 2^{k/2}. (2) The Lovasz local lemma: if bad events A_1, ..., A_n satisfy P(A_i) <= p and each A_i is independent of all but d others, and e*p*(d+1) <= 1, then P(AND not A_i) > 0. (3) Turan's theorem: the maximum number of edges in a K_{r+1}-free graph on n vertices is (1 - 1/r) * n^2/2. Conjecture: all three results can be formalized in Lean 4 without axiom of choice. The key is to replace non-constructive existence proofs with explicit constructions: (1) The probabilistic proof of R(k,k) > 2^{k/2} uses the expectation argument, which is constructive (compute the expected number of monochromatic K_k and show it's less than 1). (2) The Lovasz local lemma can be made constructive via Moser-Tardos algorithm. (3) Turan's theorem has an explicit construction (the Turan graph). Conjecture: the Moser-Tardos algorithm runs in expected time O(n*d*log(1/p)) and produces a satisfying assignment with probability 1 (constructive LLL). Test: formalize all three results in Lean 4 and verify the proofs compile. Impact: the probabilistic method is constructive. Erdos's existence proofs are algorithms in disguise.",
     "domain_bridges": [],
     "domains": [
@@ -110,7 +110,7 @@
     "proof_strategy": "Erdos lower bound on R(k,k): color the edges of K_n randomly with 2 colors. P(monochromatic K_k) < 2 * C(n,k) * 2^{-C(k,2)} < 1 when n < 2^{k/2}. This proves R(k,k) > 2^{k/2}. Constructive version: derandomize using the method of conditional expectations. Define f(c) = E[number of monochromatic K_k | coloring c] for a partial coloring c. At each step, choose the color that minimizes f. This is deterministic and produces a coloring with no monochromatic K_k. Lovasz Local Lemma (constructive - Moser-Tardos): given events A_1, ..., A_n with dependency graph G where each A_i is independent of events not adjacent in G, and P(A_i) <= p and e*p*(d+1) <= 1 (where d is the max degree in G), the Moser-Tardos algorithm: (1) Sample all variables. (2) While some A_i occurs: resample the variables in A_i. (3) Return the assignment. Expected running time: O(n*d*log(1/p)). Turan's theorem: the Turan graph T(n,r) has n vertices partitioned into r parts of sizes ceil(n/r) or floor(n/r), with edges between vertices in different parts. |E(T(n,r))| = (1 - 1/r) * n^2/2 (approximately). T(n,r) is K_{r+1}-free. Any K_{r+1}-free graph has at most this many edges. Proof: induction on n, with the key lemma that adding an edge to a K_{r+1}-free graph either creates a K_{r+1} or reduces the number of edges by at least 1. Test: formalize all three proofs in Lean 4.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T03:37:04.481611+00:00",
     "title": "Formalizing the Probabilistic Method: Erdos Meets Lean"
   },
@@ -231,7 +231,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8280a2b4",
     "description": "The Riemann-Roch theorem for graphs (Baker-Norine, 2007) states that for a divisor D on a graph G, l(D) - l(K_G - D) = deg(D) + 1 - g(G) where l(D) is the rank of D, K_G is the canonical divisor, and g(G) is the genus (cyclomatic number). The chip-firing game is a combinatorial model: vertices hold chips, and 'firing' a vertex sends one chip along each incident edge. Conjecture: for the complete graph K_n, the canonical divisor K_{K_n} has rank (n-1)(n-2)/2 - 1, and the Riemann-Roch formula gives l(D) = deg(D) + 1 - (n-1)(n-2)/2 + l(K_{K_n} - D). For D = K_{K_n} (the canonical divisor itself): l(K_{K_n}) = (n-1)(n-2)/2 - 1 + 1 - (n-1)(n-2)/2 + l(0) = 0 + l(0). But l(0) = 0 (the empty divisor has rank 0). So l(K_{K_n}) = 0. Wait, this gives l(K_{K_n}) = 0, but the canonical divisor of K_n should have positive rank. Conjecture: the canonical divisor of K_n is K_{K_n} = sum_v (deg(v) - 1) * v = (n-2) * sum_v v, and l(K_{K_n}) = (n-1)(n-2)/2 - 1 (it achieves the genus minus 1). Test: compute the canonical divisor and verify the Riemann-Roch formula for K_n with n = 3, 4, 5, 6. Impact: chip-firing on complete graphs encodes the same information as the Riemann-Roch theorem on projective curves.",
     "domain_bridges": [],
     "domains": [
@@ -244,7 +244,7 @@
     "proof_strategy": "Define the divisor group Div(G) = Z^{V(G)} (formal sums of vertices). The canonical divisor K_G = sum_v (deg(v) - 2) * v. For K_n: deg(v) = n-1 for all v, so K_{K_n} = (n-3) * sum_v v (since deg(v) - 2 = n-3 for each v). Wait, the canonical divisor is K_G = sum_v (deg(v) - 2) * v? No, Baker-Norine define K_G differently. The canonical divisor in Baker-Norine is K_G = sum_v (deg(v) - 2) * v = (n-3) * sum_v v for K_n. The genus g(K_n) = |E| - |V| + 1 = n(n-1)/2 - n + 1 = (n-1)(n-2)/2. Riemann-Roch: l(D) - l(K_G - D) = deg(D) + 1 - g(G). For D = K_G = (n-3) * sum_v v: l(K_G) - l(0) = deg(K_G) + 1 - g(K_n). deg(K_G) = n(n-3). g(K_n) = (n-1)(n-2)/2. l(0) = 0 (empty divisor). So l(K_G) = n(n-3) + 1 - (n-1)(n-2)/2 = n^2 - 3n + 1 - (n^2 - 3n + 2)/2 = (2n^2 - 6n + 2 - n^2 + 3n - 2)/2 = (n^2 - 3n)/2 = n(n-3)/2. For n=3: l(K_G) = 0. For n=4: l(K_G) = 2. For n=5: l(K_G) = 5. Test: verify by chip-firing on K_3, K_4, K_5, K_6.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T03:37:04.439365+00:00",
     "title": "The Riemann-Roch Theorem for Graphs: Chip-Firing and the Canonical Divisor"
   },

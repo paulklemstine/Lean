@@ -231,7 +231,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8280a2b4",
     "description": "The Riemann-Roch theorem for graphs (Baker-Norine, 2007) states that for a divisor D on a graph G, l(D) - l(K_G - D) = deg(D) + 1 - g(G) where l(D) is the rank of D, K_G is the canonical divisor, and g(G) is the genus (cyclomatic number). The chip-firing game is a combinatorial model: vertices hold chips, and 'firing' a vertex sends one chip along each incident edge. Conjecture: for the complete graph K_n, the canonical divisor K_{K_n} has rank (n-1)(n-2)/2 - 1, and the Riemann-Roch formula gives l(D) = deg(D) + 1 - (n-1)(n-2)/2 + l(K_{K_n} - D). For D = K_{K_n} (the canonical divisor itself): l(K_{K_n}) = (n-1)(n-2)/2 - 1 + 1 - (n-1)(n-2)/2 + l(0) = 0 + l(0). But l(0) = 0 (the empty divisor has rank 0). So l(K_{K_n}) = 0. Wait, this gives l(K_{K_n}) = 0, but the canonical divisor of K_n should have positive rank. Conjecture: the canonical divisor of K_n is K_{K_n} = sum_v (deg(v) - 1) * v = (n-2) * sum_v v, and l(K_{K_n}) = (n-1)(n-2)/2 - 1 (it achieves the genus minus 1). Test: compute the canonical divisor and verify the Riemann-Roch formula for K_n with n = 3, 4, 5, 6. Impact: chip-firing on complete graphs encodes the same information as the Riemann-Roch theorem on projective curves.",
     "domain_bridges": [],
     "domains": [
@@ -244,7 +244,7 @@
     "proof_strategy": "Define the divisor group Div(G) = Z^{V(G)} (formal sums of vertices). The canonical divisor K_G = sum_v (deg(v) - 2) * v. For K_n: deg(v) = n-1 for all v, so K_{K_n} = (n-3) * sum_v v (since deg(v) - 2 = n-3 for each v). Wait, the canonical divisor is K_G = sum_v (deg(v) - 2) * v? No, Baker-Norine define K_G differently. The canonical divisor in Baker-Norine is K_G = sum_v (deg(v) - 2) * v = (n-3) * sum_v v for K_n. The genus g(K_n) = |E| - |V| + 1 = n(n-1)/2 - n + 1 = (n-1)(n-2)/2. Riemann-Roch: l(D) - l(K_G - D) = deg(D) + 1 - g(G). For D = K_G = (n-3) * sum_v v: l(K_G) - l(0) = deg(K_G) + 1 - g(K_n). deg(K_G) = n(n-3). g(K_n) = (n-1)(n-2)/2. l(0) = 0 (empty divisor). So l(K_G) = n(n-3) + 1 - (n-1)(n-2)/2 = n^2 - 3n + 1 - (n^2 - 3n + 2)/2 = (2n^2 - 6n + 2 - n^2 + 3n - 2)/2 = (n^2 - 3n)/2 = n(n-3)/2. For n=3: l(K_G) = 0. For n=4: l(K_G) = 2. For n=5: l(K_G) = 5. Test: verify by chip-firing on K_3, K_4, K_5, K_6.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T03:37:04.439365+00:00",
     "title": "The Riemann-Roch Theorem for Graphs: Chip-Firing and the Canonical Divisor"
   },
