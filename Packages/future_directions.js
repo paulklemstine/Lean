@@ -59,7 +59,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "dd6a308e",
     "description": "Building on cycle 7881a56b (Q=0.790), which proved 16 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'Reproducing the k-copwin Algorithm: Theory vs. Implementation' and formalize its key results. Abstract: Cops and Robbers is a well-studied pursuit-evasion game that provides insights into graph theory and theoretical computing. A central question is determining the minim",
     "domains": [
       "Novelty"
@@ -68,7 +68,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.89,
     "research_mode": "team",
     "source_exp_id": "7881a56b",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T17:15:41.451394+00:00",
     "title": "Deepening: ArXiv paper: Reproducing the k-copwin Algorithm: Theory vs. Implementation"
   },
@@ -101,21 +101,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-19T21:02:27.020806+00:00",
     "title": "The Oracle's Burden: How Much Knowledge Is Too Much?"
-  },
-  {
-    "consumed_by_exp_id": "e5c56bfa",
-    "description": "Define a natural metric on the space of all mathematical statements and prove that the set of true statements has a fractal dimension. Show that this dimension is strictly between 0 and 1 (truth is sparse but not negligible). Connect to Chaitin's Omega and prove that the fractal dimension is uncomputable but approximable.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0484",
-    "priority_score": 0.87,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T20:25:40.511664+00:00",
-    "title": "The Fractal Dimension of Mathematical Truth"
   },
   {
     "consumed_by_exp_id": "",
@@ -5276,6 +5261,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-19T22:38:27.256880+00:00",
     "title": "**Conjecture.** There is a category of functional profiles and profile-preservin"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## What is formalized\n\n`Bridges/TruthFractal.lean` separates three claims that are often conflated:\n\n1. **A natural prefix geometry.** Infinite Boolean streams represent formal truth assignments. The weighted Hamming/prefix distance is proved nonnegative, symmetric, separating, and triangular.\n2. **A rigorous half-dimensional symbolic model.** In `pairedTruth`, one bit of each pair is fixed and one is free. At every even scale, the square of the admissible-prefix count equals the ambient-prefix count. This gives exact symbolic dimension `1/2`, with a separate proof that `0 < 1/2 < 1`.\n3. **Binary-real approximation and undecidability.** Every stream's binary real has finite lower approximations with error at most `2\u207b\u1d3a`; agreement on `N` bits implies the same modulus of closeness. Separately, the truth predicate for halting statements is proved noncomputable but recursively enumerable.\n\n`Bridges/TruthFractalEvidence.lean` kernel-checks the first six finite scales and an exhaustive bounded counterexample statement.\n\n## Important limitation\n\nThere is no canonical effective enumeration of *all mathematical statements* independent of a syntax, semantics, foundational theory, and coding. Likewise, \u201cthe fractal dimension of mathematical truth\u201d is not an invariant until those choices and a precise dimension notion are fixed. The formal result therefore uses an explicit toy truth language and **symbolic prefix-counting dimension**, rather than claiming that the actual set of all true mathematical sentences canonically has dimension `1/2`.\n\nThe Chaitin-style component is also deliberately split into valid statements. The geometric approximation theorem applies to every Boolean stream. The uncomputability theorem applies to halting truth. The project does not identify the half-free language's binary real with Chaitin's Omega, nor claim that its elementary dimension is uncomputable.\n\n## Next formal targets\n\n1. Package `prefixDistance` as a `MetricSpace Theory` instance and prove that it induces the product topology on Cantor space.\n2. Define cylinder covers and formalize upper/lower box-counting dimension, then derive the dimension `1/2` theorem from the exact cardinality identity.\n3. Define a prefix-free machine and its halting probability. Prove Kraft boundedness, monotone computable rational approximation, and the relation between sufficiently precise approximations and finite halting information.\n4. Study effective Hausdorff dimension of individual streams via prefix-free Kolmogorov complexity. This is the mathematically standard setting in which fractal dimension, algorithmic randomness, and Chaitin-style reals genuinely meet.\n5. Parameterize the paired construction by a periodic mask with `a` free positions in every block of length `b`, and prove exact symbolic dimension `a/b`.\n6. Formalize coding-invariance results under bi-Lipschitz recodings, clarifying which dimension statements survive a change in statement enumeration.\n",
+    "domains": [
+      "Computation",
+      "Geometry"
+    ],
+    "id": "fd_0502",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "e5c56bfa",
+    "status": "available",
+    "timestamp": "2026-07-19T22:38:44.288036+00:00",
+    "title": "`Bridges/TruthFractal.lean` separates three claims that are often conflated:"
   },
   {
     "consumed_by_exp_id": "",
