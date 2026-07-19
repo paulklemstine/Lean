@@ -104,7 +104,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Time Travel Consistency: Novikov's Principle as a Fixed-Point Theorem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "af530f4e",
     "description": "Construct a rigorous model of hypercomputation that can solve the halting problem. Prove that any physical system implementing hypercomputation requires infinite energy density or infinite precision. Formalize the distinction between accidentally computable (physical oracles) and essentially computable (Turing machines).",
     "domains": [
       "Novelty",
@@ -114,7 +114,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T15:32:52.351074+00:00",
     "title": "Hypercomputation: Computing the Uncomputable"
   },
@@ -289,7 +289,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Quantum Entanglement as Algebraic Topology: The Linking Number Is Entanglement"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7286e7be",
     "description": "Formalize a logic where contradictions do not explode and beliefs can be retracted. Prove that paraconsistent logics can model dream-like reasoning where impossible objects coexist. Show that such logics correspond to topological spaces where open sets are not closed under arbitrary union.",
     "domains": [
       "Novelty",
@@ -299,7 +299,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T11:51:31.534494+00:00",
     "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
   },
