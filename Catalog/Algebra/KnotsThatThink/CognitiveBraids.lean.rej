@@ -1,91 +1,91 @@
 --- CognitiveBraids.lean
 +++ CognitiveBraids.lean
-@@ -52,20 +52,6 @@
+@@ -52,6 +52,20 @@
      eisensteinMul omega (eisensteinMul omega omega) = (1, 0) := by
    rfl
  
--/-- Iterated multiplication in Eisenstein coordinates. -/
--def eisensteinPow (x : Eisenstein) : ℕ → Eisenstein
--  | 0 => (1, 0)
--  | k + 1 => eisensteinMul x (eisensteinPow x k)
--
--/-- The cyclotomic squared norm grows multiplicatively under iteration. -/
--theorem eisensteinNormSq_pow (x : Eisenstein) (k : ℕ) :
--    eisensteinNormSq (eisensteinPow x k) = eisensteinNormSq x ^ k := by
--  induction k with
--  | zero => norm_num [eisensteinPow, eisensteinNormSq]
--  | succ k ih =>
--      rw [eisensteinPow, eisensteinNormSq_mul, ih]
--      ring
--
++/-- Iterated multiplication in Eisenstein coordinates. -/
++def eisensteinPow (x : Eisenstein) : ℕ → Eisenstein
++  | 0 => (1, 0)
++  | k + 1 => eisensteinMul x (eisensteinPow x k)
++
++/-- The cyclotomic squared norm grows multiplicatively under iteration. -/
++theorem eisensteinNormSq_pow (x : Eisenstein) (k : ℕ) :
++    eisensteinNormSq (eisensteinPow x k) = eisensteinNormSq x ^ k := by
++  induction k with
++  | zero => norm_num [eisensteinPow, eisensteinNormSq]
++  | succ k ih =>
++      rw [eisensteinPow, eisensteinNormSq_mul, ih]
++      ring
++
  /-- The three proposed signatures, in ascending-degree coefficient order. -/
  def linearPolynomial : List ℤ := [1]
  
-@@ -110,16 +96,6 @@
+@@ -96,6 +110,16 @@
    exact fun h' => h <| h'.symm ▸ rfl
  
  /-
--Distinct natural powers of any Artin generator remain distinct.  Thus the writhe
--map exhibits an infinite cyclic family inside every braid group having a generator.
---/
--theorem sigma_pow_injective {n : ℕ} (i : Fin n) :
--    Function.Injective (fun k : ℕ => sigma i ^ k) := by
--  intro a b hab;
--  apply_fun writhe n at hab;
--  simp_all +decide [ BraidGroup.writhe_sigma ]
--
--/-
++Distinct natural powers of any Artin generator remain distinct.  Thus the writhe
++map exhibits an infinite cyclic family inside every braid group having a generator.
++-/
++theorem sigma_pow_injective {n : ℕ} (i : Fin n) :
++    Function.Injective (fun k : ℕ => sigma i ^ k) := by
++  intro a b hab;
++  apply_fun writhe n at hab;
++  simp_all +decide [ BraidGroup.writhe_sigma ]
++
++/-
  The two-strand braid whose closure is the standard trefoil representative is not the
  identity braid.  This is a statement about the braid itself, independent of closure conventions.
  -/
-@@ -149,37 +125,27 @@
+@@ -125,27 +149,37 @@
  
  -- !-- Lab Notes -- !--
  /-
--Hypothesis.  Seven candidate claims were separated before testing: cube-root evaluation
--separates all three signatures; it at least separates the creative signature; Eisenstein norm is
--multiplicative; repeated signatures have exponential squared norm; the trefoil braid word is
--nonidentity; every generator has distinct natural powers; and writhe classifies balanced words.
--The proposed isotopy and cognitive interpretations were ranked highest in scope but require
--structures and observations not supplied by the braid presentation.
-+Hypothesis.  Cube-root evaluation might separate the three suggested signatures, while writhe
-+might certify nontriviality of the trefoil braid representative.
+-Hypothesis.  Cube-root evaluation might separate the three suggested signatures, while writhe
+-might certify nontriviality of the trefoil braid representative.
++Hypothesis.  Seven candidate claims were separated before testing: cube-root evaluation
++separates all three signatures; it at least separates the creative signature; Eisenstein norm is
++multiplicative; repeated signatures have exponential squared norm; the trefoil braid word is
++nonidentity; every generator has distinct natural powers; and writhe classifies balanced words.
++The proposed isotopy and cognitive interpretations were ranked highest in scope but require
++structures and observations not supplied by the braid presentation.
  
  Experiment.  Horner evaluation in the Eisenstein lattice gives respectively `(1,0)`, `(2,2)`,
--and `(-1,-1)`.  Their squared norms are `1`, `4`, and `1`.  Symbolic expansion establishes norm
--multiplicativity, and induction gives the power law.  Independently, the catalogued writhe
--homomorphism sends every generator to one, proving injectivity on its natural powers and sending
--the cube of the sole two-strand generator to exponent sum three.
-+and `(-1,-1)`.  Their squared norms are `1`, `4`, and `1`.  Independently, the catalogued writhe
-+homomorphism sends the cube of the sole two-strand generator to exponent sum three.
+-and `(-1,-1)`.  Their squared norms are `1`, `4`, and `1`.  Independently, the catalogued writhe
+-homomorphism sends the cube of the sole two-strand generator to exponent sum three.
++and `(-1,-1)`.  Their squared norms are `1`, `4`, and `1`.  Symbolic expansion establishes norm
++multiplicativity, and induction gives the power law.  Independently, the catalogued writhe
++homomorphism sends every generator to one, proving injectivity on its natural powers and sending
++the cube of the sole two-strand generator to exponent sum three.
  
--Analysis.  The claim of three-way separation fails: linear and confused signatures collide at
--squared norm one.  Creative separation, norm multiplicativity, exponential iteration, and braid
--nontriviality survive.  Classification by writhe fails because every balanced generator-inverse
--word has zero writhe.  Diagram isotopy invariance is true only after an invariant and the correct
--move relation have been constructed; as posed here it needs a different definition.
-+Analysis.  The cyclotomic statistic separates the proposed creative polynomial from both
-+comparators, but it does not separate the proposed linear and confused signatures.  Thus it
-+cannot by itself rank all three examples.  Writhe detects some nontrivial braids but loses all
-+balanced words.
+-Analysis.  The cyclotomic statistic separates the proposed creative polynomial from both
+-comparators, but it does not separate the proposed linear and confused signatures.  Thus it
+-cannot by itself rank all three examples.  Writhe detects some nontrivial braids but loses all
+-balanced words.
++Analysis.  The claim of three-way separation fails: linear and confused signatures collide at
++squared norm one.  Creative separation, norm multiplicativity, exponential iteration, and braid
++nontriviality survive.  Classification by writhe fails because every balanced generator-inverse
++word has zero writhe.  Diagram isotopy invariance is true only after an invariant and the correct
++move relation have been constructed; as posed here it needs a different definition.
  
  Critique.  Reidemeister equivalence applies to link diagrams, whereas equality in an Artin braid
  group is generated by braid relations; closure equivalence additionally involves Markov moves.
  Moreover, `V = 1` does not logically imply that a knot is trivial without a separate detection
--theorem.  The figure-eight and trivial examples already defeat a total ranking based solely on
--the proposed cube-root modulus.  No empirical claim about cognition follows from these algebraic
--calculations.
-+theorem.  No empirical claim about cognition follows from these algebraic calculations.
+-theorem.  No empirical claim about cognition follows from these algebraic calculations.
++theorem.  The figure-eight and trivial examples already defeat a total ranking based solely on
++the proposed cube-root modulus.  No empirical claim about cognition follows from these algebraic
++calculations.
  
--Synthesis.  The surviving cross-domain bridge joins the catalogued Artin writhe to an Eisenstein
--cyclotomic statistic: writhe supplies an infinite family and a trefoil-word nontriviality
--certificate, while the quadratic norm supplies exact multiplicativity and an iteration law.
--Claims of closure invariance, knot detection, and cognitive interpretation remain distinct,
--falsifiable hypotheses requiring independent topology and data.
-+Synthesis.  The surviving result is a guarded cross-domain bridge: Artin writhe supplies a
-+nontriviality certificate for the trefoil braid representative, and Eisenstein norm computes the
-+cube-root statistic exactly.  Claims of isotopy invariance and cognitive interpretation remain
-+separate hypotheses requiring independent evidence.
+-Synthesis.  The surviving result is a guarded cross-domain bridge: Artin writhe supplies a
+-nontriviality certificate for the trefoil braid representative, and Eisenstein norm computes the
+-cube-root statistic exactly.  Claims of isotopy invariance and cognitive interpretation remain
+-separate hypotheses requiring independent evidence.
++Synthesis.  The surviving cross-domain bridge joins the catalogued Artin writhe to an Eisenstein
++cyclotomic statistic: writhe supplies an infinite family and a trefoil-word nontriviality
++certificate, while the quadratic norm supplies exact multiplicativity and an iteration law.
++Claims of closure invariance, knot detection, and cognitive interpretation remain distinct,
++falsifiable hypotheses requiring independent topology and data.
  -/
  
  

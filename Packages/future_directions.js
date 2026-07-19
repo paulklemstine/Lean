@@ -159,6 +159,36 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Error Correction from Homological Algebra: CSS Codes as Cohomology"
   },
   {
+    "consumed_by_exp_id": "",
+    "description": "The Riemann zeta function zeta(s) has non-trivial zeros at s = 1/2 + i*gamma_n on the critical line (assuming RH). These zeros encode deep arithmetic information. Conjecture: the zeros gamma_n are the spectrum of a self-adjoint operator on a Hilbert space, and this operator is the Casimir element of a quantum group G_q. Specifically, define the 'zeta quantum group' G_q as the q-deformation of SU(2) where q = e^{2*pi*i*gamma_1} (using the first zero gamma_1 ~ 14.13). The Casimir element C_q of G_q has eigenvalues that are quadratic functions of the representation labels, and the spectrum of C_q is {n(n+1) : n in N}. Conjecture: the Riemann zeros gamma_n are related to the spectrum of C_q by gamma_n = f(spectrum(C_q)) for some function f. If f is linear, this would mean the zeros are evenly spaced, which is false (the zeros have Poisson-like spacings). If f is logarithmic, gamma_n ~ pi*n/log(n) which matches the average spacing. Conjecture: the spectral statistics of C_q match the GUE random matrix statistics of the Riemann zeros (Montgomery's pair correlation conjecture). Test: compute the spectrum of C_q for G_q with q = e^{2*pi*i*gamma_1} and compare the spectral statistics with the Riemann zeros. Impact: the Riemann hypothesis is a representation-theoretic statement about quantum groups.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0369",
+    "priority_score": 0.83,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-19T00:43:47.756962+00:00",
+    "title": "Quantum Groups from Number Theory: The Riemann Hypothesis as a Representation Problem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Alexander polynomial Delta_K(t) of a knot K is a Laurent polynomial that encodes topological information about the knot. Conjecture: for any knot K with n crossings, the Alexander polynomial Delta_K(t) can be expressed as the generating function of lattice paths in Z^2 that avoid a region determined by the knot diagram. Specifically, define the 'knot lattice' L_K as the set of lattice paths from (0,0) to (n,n) that avoid the 'forbidden region' R_K determined by the crossing structure of K. Then Delta_K(t) = sum_{p in L_K} t^{area(p)} where area(p) is the area under the path p. This conjecture follows from the state sum formula for the Alexander polynomial: Delta_K(t) = sum_{states s} (-1)^{w(s)} t^{a(s)} where w(s) is the writhe and a(s) is the area of the state. The area a(s) is exactly the area under a lattice path determined by the state. Conjecture: every Alexander polynomial arises as a lattice path generating function, and vice versa. This means the Alexander polynomial is not just a knot invariant \u2014 it is a combinatorial object that counts lattice paths. Test: compute the Alexander polynomials for the first 50 knots and verify that each can be expressed as a lattice path generating function. Impact: knot invariants are combinatorial. The Alexander polynomial counts lattice paths, connecting topology to combinatorics.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0368",
+    "priority_score": 0.82,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-19T00:43:47.706838+00:00",
+    "title": "Knots and Lattices: The Alexander Polynomial as a Lattice Path Count"
+  },
+  {
     "consumed_by_exp_id": "eb62b00a",
     "description": "The Robertson-Seymour theorem states that the set of finite graphs is well-quasi-ordered by the minor relation: any infinite sequence of graphs contains two where one is a minor of the other. This implies that any minor-closed graph property is characterized by a finite set of forbidden minors. Conjecture: the same theorem holds for representable matroids over any finite field. Specifically, for any finite field F_q, the set of F_q-representable matroids is well-quasi-ordered by the matroid minor relation. This would generalize the Robertson-Seymour theorem from graphs (F_2-representable matroids) to all finite fields. The conjecture is known to fail for general matroids (by the existence of infinite antichains of non-representable matroids), but for F_q-representable matroids with q <= 3, it is open. Conjecture: for F_3 (ternary matroids), the set of excluded minors for representability is finite. The current known excluded minors for F_3 are: the Fano matroid F_7, its dual F_7*, and the non-Pappus matroid. Test: enumerate ternary matroids of rank 3 on 9 elements, verify that all but the known excluded minors are F_3-representable. Impact: Robertson-Seymour for matroids would unify graph minor theory and matroid theory under a single well-quasi-ordering theorem.",
     "domains": [
@@ -2964,21 +2994,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Improved constant in Erd\u0151s sumset avoidance for dense subsets"
   },
   {
-    "consumed_by_exp_id": "cf69678e",
-    "description": "Conway's surreal numbers No form a proper class containing all real numbers, all ordinal numbers, and all infinitesimals. Every real number r has a surreal representation r = {r - 1 | r + 1}. Every ordinal alpha has a surreal representation alpha = {alpha |}. Every infinitesimal epsilon = {0 | 1, 1/2, 1/4, ...}. The surreal numbers form a field (in fact, a real-closed field). Conjecture: the subfield of surreals born by day omega (the set of surreals with finite birthdays) is isomorphic to the field of real algebraic numbers extended with all dyadic rationals. More precisely: No_{omega} = Q[2^{-n} : n in N] (the rationals extended with all dyadic rationals). The subfield born by day omega^2 contains all real numbers that are algebraic over the dyadic rationals, plus all infinitesimals that are algebraic over the reals. Conjecture: No_{omega^2} = R(x) where x is the smallest positive infinitesimal. Test: compute the field structure of surreals born by day omega and verify the isomorphism with the dyadic rationals. Impact: the surreal number hierarchy encodes the constructive hierarchy of real number fields \u2014 each birthday level adds exactly the algebraic closures needed.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0344",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T15:52:15.001366+00:00",
-    "title": "The Arithmetic of Games: Surreal Numbers as Number Fields"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Cycle dcd7a4b2 (Q=0.750) proved 0 theorems in Tropical but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION \u2014 simulta",
     "domains": [
@@ -4188,6 +4203,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-18T23:29:17.614598+00:00",
     "title": "1. **Exact fiber cardinality.** Upgrade the explicit injection of `2^n` seeds to"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## What was established\n\n`Algebra/SurrealDyadic.lean` formalizes the canonical dyadic part of the surreal hierarchy.\n\n* The canonical pre-game for `2\u207b\u207f` has birthday exactly `n + 1`.\n* The surreal values `2\u207b\u207f` are positive and strictly decrease with `n`.\n* An integer multiple `m \u00b7 2\u207b\u207f` is zero exactly when `m = 0`.\n* The existing canonical additive map `\u2124[1/2] \u2192 No` is injective. Hence its image, the dyadic surreal numbers, is canonically equivalent as a type to `\u2124[1/2]`.\n* Equality of canonical values `m\u2081/2\u207f\u00b9` and `m\u2082/2\u207f\u00b2` is equivalent to the cross-product identity\n  `m\u2081 2\u207f\u00b2 = m\u2082 2\u207f\u00b9`.\n* `3` has no inverse in `\u2124[1/2]`, so the dyadic rationals are not a field.\n\nThe last point corrects an important issue in the research prompt: the finite-birthday surreal numbers are expected to form the dyadic **subring**, not a subfield. Closing under inverses would already require `1/3`, which is not dyadic and is not born on a finite day.\n\n## Next formal targets\n\n1. **Classify every finite-birthday surreal.** Prove both directions of the precise statement: a surreal has a representative of finite birthday iff it lies in `Surreal.dyadic`. The forward direction should induct on a numeric pre-game's birthday and identify the simplest dyadic strictly between its finite sets of dyadic options. This requires a formal \u201csimplest dyadic in an interval\u201d theorem.\n\n2. **Upgrade the image equivalence algebraically.** The current Mathlib surreal development supplies addition but not a full ring structure on `Surreal`; consequently the proved equivalence is a plain equivalence induced by an injective additive map. Once surreal multiplication and its laws are available, prove that `dyadicMap` is multiplicative and package its range as an ordered subring isomorphic to `\u2124[1/2]`.\n\n3. **Canonical birthday formula for general dyadics.** For a reduced noninteger dyadic `m/2\u207f` with odd `m`, determine and prove the exact birthday. The answer depends on the integer part as well as the denominator exponent; the theorem for `2\u207b\u207f` in this project is the basic case.\n\n4. **Separate birthday cutoffs from algebraic closure.** Birthday-bounded classes need not be subfields or even subrings at a fixed bound, since arithmetic can increase birthdays. Future statements should explicitly distinguish (a) numbers born before an ordinal, (b) the ring generated by those numbers, and (c) the field generated by them.\n\n5. **Reassess the proposed `No_{\u03c9\u00b2} = \u211d(x)` claim.** Before formalization, specify whether the cutoff is `< \u03c9\u00b2` and what closure operation is intended. Also, there is no smallest positive surreal infinitesimal: if `x > 0` is infinitesimal, then `x/2` is a smaller positive infinitesimal once field arithmetic is available. Thus the phrase \u201cthe smallest positive infinitesimal\u201d must be replaced, for example by the particular monomial `\u03c9\u207b\u00b9`; even then equality with `\u211d(\u03c9\u207b\u00b9)` requires substantial correction because bounded-birthday classes and generated rational-function fields are different constructions.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0370",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "cf69678e",
+    "status": "available",
+    "timestamp": "2026-07-19T00:44:37.165434+00:00",
+    "title": "`Algebra/SurrealDyadic.lean` formalizes the canonical dyadic part of the surreal"
   },
   {
     "consumed_by_exp_id": "",

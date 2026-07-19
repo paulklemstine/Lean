@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "322b88bd",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions\n\n1. Generalize the Boolean challenge space to a finite field and prove the corresponding special-soundness extractor and exact knowledge error.\n2. Replace multiset equality by equa",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-17T08:36:16",
-      "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
-    },
-    {
       "cycle_id": "47f9b94d",
       "domain": "Computation",
       "key_insight": "# Future directions\n\n## Conclusions established in Lean\n\nThe proposed phenomenon splits into one valid structural statement and several claims that fail as stated.\n\n1. `Escher.EscherStaircase R`, defi",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-18T23:29:22",
       "title": "Deepening: Cryptography from Chaos: Encrypting with the Logistic Map"
+    },
+    {
+      "cycle_id": "cf69678e",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions\n\n## What was established\n\n`Algebra/SurrealDyadic.lean` formalizes the canonical dyadic part of the surreal hierarchy.\n\n* The canonical pre-game for `2⁻ⁿ` has birthday exactly `n +",
+      "quality_score": 0.75,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-19T00:44:51",
+      "title": "The Arithmetic of Games: Surreal Numbers as Number Fields"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "37f1d216",
-      "domain": "Computation",
-      "key_insight": "# Future directions — Boolean-cube increments and witness complexity\n\nThis cycle proves the local mechanism behind the linear face complexity of\nrecursive simplicial `k`-trees.  A fresh vertex attache",
-      "quality_score": 0.91,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-07-15T02:11:45",
-      "title": "Two-parameter picture of *witness complexity* for the"
-    },
     {
       "cycle_id": "9243b8b5",
       "domain": "Shared",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-18T23:29:22",
       "title": "Deepening: Cryptography from Chaos: Encrypting with the Logistic Map"
+    },
+    {
+      "cycle_id": "cf69678e",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions\n\n## What was established\n\n`Algebra/SurrealDyadic.lean` formalizes the canonical dyadic part of the surreal hierarchy.\n\n* The canonical pre-game for `2⁻ⁿ` has birthday exactly `n +",
+      "quality_score": 0.75,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-19T00:44:51",
+      "title": "The Arithmetic of Games: Surreal Numbers as Number Fields"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8
     }
   ],
-  "last_updated": "2026-07-18T23:29:22",
+  "last_updated": "2026-07-19T00:44:51",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3213,12 +3213,6 @@
         "title": "The Library of Babel: Combinatorics of the Universal Library"
       },
       {
-        "cycle_id": "8d2137d3",
-        "quality": 0.7,
-        "theorems": 0,
-        "title": "The Library of Babel: Combinatorics of the Universal Library"
-      },
-      {
         "cycle_id": "4665f966",
         "quality": 0.71,
         "theorems": 7,
@@ -3265,6 +3259,12 @@
         "quality": 0.67,
         "theorems": 55,
         "title": "The Fourier Transform of the Riemann Zeta: Hearing the Primes"
+      },
+      {
+        "cycle_id": "cf69678e",
+        "quality": 0.75,
+        "theorems": 0,
+        "title": "The Arithmetic of Games: Surreal Numbers as Number Fields"
       }
     ],
     "Computation": [

@@ -213,6 +213,46 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "The Riemann zeta function zeta(s) has non-trivial zeros at s = 1/2 + i*gamma_n on the critical line (assuming RH). These zeros encode deep arithmetic information. Conjecture: the zeros gamma_n are the spectrum of a self-adjoint operator on a Hilbert space, and this operator is the Casimir element of a quantum group G_q. Specifically, define the 'zeta quantum group' G_q as the q-deformation of SU(2) where q = e^{2*pi*i*gamma_1} (using the first zero gamma_1 ~ 14.13). The Casimir element C_q of G_q has eigenvalues that are quadratic functions of the representation labels, and the spectrum of C_q is {n(n+1) : n in N}. Conjecture: the Riemann zeros gamma_n are related to the spectrum of C_q by gamma_n = f(spectrum(C_q)) for some function f. If f is linear, this would mean the zeros are evenly spaced, which is false (the zeros have Poisson-like spacings). If f is logarithmic, gamma_n ~ pi*n/log(n) which matches the average spacing. Conjecture: the spectral statistics of C_q match the GUE random matrix statistics of the Riemann zeros (Montgomery's pair correlation conjecture). Test: compute the spectrum of C_q for G_q with q = e^{2*pi*i*gamma_1} and compare the spectral statistics with the Riemann zeros. Impact: the Riemann hypothesis is a representation-theoretic statement about quantum groups.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0369",
+    "lineage_refs": [],
+    "priority_score": 0.83,
+    "proof_strategy": "Define the quantum group SU_q(2) with q = e^{2*pi*i*gamma_1} where gamma_1 ~ 14.13 is the first Riemann zero. The representation theory: irreducible representations V_n of dimension n+1 for n = 0, 1, 2, .... The Casimir element C_q acts on V_n with eigenvalue [n]_q * [n+1]_q where [m]_q = (q^m - q^{-m})/(q - q^{-1}) is the q-integer. For q = e^{2*pi*i*gamma_1}: [m]_q = sin(m * pi * gamma_1) / sin(pi * gamma_1). The eigenvalues of C_q on V_n are: lambda_n = [n]_q * [n+1]_q = sin(n*pi*gamma_1) * sin((n+1)*pi*gamma_1) / sin(pi*gamma_1)^2. Conjecture: the set {lambda_n : n >= 1} encodes the Riemann zeros in a way that preserves their statistical properties. Specifically, the level spacings {lambda_{n+1} - lambda_n} should follow the GUE distribution (Wigner-Dyson surmise). Test: compute lambda_n for n = 1..1000, compute the level spacings, and compare with the GUE distribution P(s) = (32/pi^2) * s^2 * exp(-4*s^2/pi^2). Also compare with the Riemann zero spacings. This requires numerical computation of q-deformed representations.",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-19T00:43:47.756962+00:00",
+    "title": "Quantum Groups from Number Theory: The Riemann Hypothesis as a Representation Problem"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "The Alexander polynomial Delta_K(t) of a knot K is a Laurent polynomial that encodes topological information about the knot. Conjecture: for any knot K with n crossings, the Alexander polynomial Delta_K(t) can be expressed as the generating function of lattice paths in Z^2 that avoid a region determined by the knot diagram. Specifically, define the 'knot lattice' L_K as the set of lattice paths from (0,0) to (n,n) that avoid the 'forbidden region' R_K determined by the crossing structure of K. Then Delta_K(t) = sum_{p in L_K} t^{area(p)} where area(p) is the area under the path p. This conjecture follows from the state sum formula for the Alexander polynomial: Delta_K(t) = sum_{states s} (-1)^{w(s)} t^{a(s)} where w(s) is the writhe and a(s) is the area of the state. The area a(s) is exactly the area under a lattice path determined by the state. Conjecture: every Alexander polynomial arises as a lattice path generating function, and vice versa. This means the Alexander polynomial is not just a knot invariant — it is a combinatorial object that counts lattice paths. Test: compute the Alexander polynomials for the first 50 knots and verify that each can be expressed as a lattice path generating function. Impact: knot invariants are combinatorial. The Alexander polynomial counts lattice paths, connecting topology to combinatorics.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0368",
+    "lineage_refs": [],
+    "priority_score": 0.82,
+    "proof_strategy": "The Alexander polynomial Delta_K(t) is computed from the Alexander module H_1(X_K, Z[t, t^{-1}]) where X_K is the infinite cyclic cover of the knot complement. The presentation matrix (Alexander matrix) has entries that are Laurent polynomials. Delta_K(t) = det(M) where M is the (n-1) x (n-1) Alexander matrix after deleting one row and one column. Lattice path connection: the state sum for Delta_K(t) can be written as Delta_K(t) = sum_{s in states} t^{area(s)} * (-1)^{writhe(s)}. Each state s corresponds to a lattice path from (0,0) to (n,n) in Z^2, and area(s) is the area under this path. The forbidden region R_K is determined by the over/under crossings: at each crossing, the path must go either above or below the crossing, and the forbidden region is the set of paths that violate the knot's crossing constraints. More precisely: for a knot diagram with n crossings, each crossing is resolved as either A-type (horizontal pass) or B-type (vertical pass). The lattice path goes from (0,0) to (2,n) stepping right (A-type) or up (B-type) at each crossing. The area under the path is the sum of the vertical positions. Delta_K(t) = sum_{paths avoiding R_K} t^{area(path)}. Test: for the trefoil (3_1), compute the 8 lattice paths from (0,0) to (2,3), identify the 2 paths that avoid the forbidden region, and verify that the sum of t^{area} matches the Alexander polynomial Delta_{3_1}(t) = t - 1 + t^{-1}.",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-19T00:43:47.706838+00:00",
+    "title": "Knots and Lattices: The Alexander Polynomial as a Lattice Path Count"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
     "consumed_by_exp_id": "eb62b00a",
     "description": "The Robertson-Seymour theorem states that the set of finite graphs is well-quasi-ordered by the minor relation: any infinite sequence of graphs contains two where one is a minor of the other. This implies that any minor-closed graph property is characterized by a finite set of forbidden minors. Conjecture: the same theorem holds for representable matroids over any finite field. Specifically, for any finite field F_q, the set of F_q-representable matroids is well-quasi-ordered by the matroid minor relation. This would generalize the Robertson-Seymour theorem from graphs (F_2-representable matroids) to all finite fields. The conjecture is known to fail for general matroids (by the existence of infinite antichains of non-representable matroids), but for F_q-representable matroids with q <= 3, it is open. Conjecture: for F_3 (ternary matroids), the set of excluded minors for representability is finite. The current known excluded minors for F_3 are: the Fano matroid F_7, its dual F_7*, and the non-Pappus matroid. Test: enumerate ternary matroids of rank 3 on 9 elements, verify that all but the known excluded minors are F_3-representable. Impact: Robertson-Seymour for matroids would unify graph minor theory and matroid theory under a single well-quasi-ordering theorem.",
     "domain_bridges": [],
@@ -4101,26 +4141,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "cf69678e",
-    "description": "Conway's surreal numbers No form a proper class containing all real numbers, all ordinal numbers, and all infinitesimals. Every real number r has a surreal representation r = {r - 1 | r + 1}. Every ordinal alpha has a surreal representation alpha = {alpha |}. Every infinitesimal epsilon = {0 | 1, 1/2, 1/4, ...}. The surreal numbers form a field (in fact, a real-closed field). Conjecture: the subfield of surreals born by day omega (the set of surreals with finite birthdays) is isomorphic to the field of real algebraic numbers extended with all dyadic rationals. More precisely: No_{omega} = Q[2^{-n} : n in N] (the rationals extended with all dyadic rationals). The subfield born by day omega^2 contains all real numbers that are algebraic over the dyadic rationals, plus all infinitesimals that are algebraic over the reals. Conjecture: No_{omega^2} = R(x) where x is the smallest positive infinitesimal. Test: compute the field structure of surreals born by day omega and verify the isomorphism with the dyadic rationals. Impact: the surreal number hierarchy encodes the constructive hierarchy of real number fields — each birthday level adds exactly the algebraic closures needed.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0344",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Define No_alpha = {surreals with birthday < alpha}. No_0 = empty. No_1 = {0} = {{|}}. No_2 = {-1, 0, 1} (three surreals). No_3 = {-2, -1/2, -1, -1/4, 0, 1/4, 1/2, 1, 2} (but actually No_3 has 7 surreals). By day omega: No_omega = all dyadic rationals m/2^n for m in Z, n in N. This is a field: the dyadic rationals are closed under +, -, *, / (for nonzero). Proof: m/2^n + k/2^l = (m*2^l + k*2^n)/2^{n+l} which is dyadic. Product: (m/2^n)(k/2^l) = mk/2^{n+l}. Reciprocal: 1/(m/2^n) = 2^n/m which is rational (not always dyadic). Wait: 1/3 is not dyadic. So No_omega is not closed under reciprocals of odd denominators. Correction: No_omega is the ring of dyadic rationals, not a field. The field of fractions is Q (all rationals). Conjecture revised: the field of fractions of No_omega is Q, the rationals. No_{omega^2} includes all real numbers that can be constructed by day omega^2, which includes all real algebraic numbers (since each algebraic number has a finite Dedekind cut representation). Test: enumerate surreals by birthday and verify field closure.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T15:52:15.001366+00:00",
-    "title": "The Arithmetic of Games: Surreal Numbers as Number Fields"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Cycle dcd7a4b2 (Q=0.750) proved 0 theorems in Tropical but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION — simulta",
     "domain_bridges": [],
@@ -5733,6 +5753,46 @@
     "status": "available",
     "timestamp": "2026-07-18T23:29:17.614598+00:00",
     "title": "1. **Exact fiber cardinality.** Upgrade the explicit injection of `2^n` seeds to"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## What was established\n\n`Algebra/SurrealDyadic.lean` formalizes the canonical dyadic part of the surreal hierarchy.\n\n* The canonical pre-game for `2⁻ⁿ` has birthday exactly `n + 1`.\n* The surreal values `2⁻ⁿ` are positive and strictly decrease with `n`.\n* An integer multiple `m · 2⁻ⁿ` is zero exactly when `m = 0`.\n* The existing canonical additive map `ℤ[1/2] → No` is injective. Hence its image, the dyadic surreal numbers, is canonically equivalent as a type to `ℤ[1/2]`.\n* Equality of canonical values `m₁/2ⁿ¹` and `m₂/2ⁿ²` is equivalent to the cross-product identity\n  `m₁ 2ⁿ² = m₂ 2ⁿ¹`.\n* `3` has no inverse in `ℤ[1/2]`, so the dyadic rationals are not a field.\n\nThe last point corrects an important issue in the research prompt: the finite-birthday surreal numbers are expected to form the dyadic **subring**, not a subfield. Closing under inverses would already require `1/3`, which is not dyadic and is not born on a finite day.\n\n## Next formal targets\n\n1. **Classify every finite-birthday surreal.** Prove both directions of the precise statement: a surreal has a representative of finite birthday iff it lies in `Surreal.dyadic`. The forward direction should induct on a numeric pre-game's birthday and identify the simplest dyadic strictly between its finite sets of dyadic options. This requires a formal “simplest dyadic in an interval” theorem.\n\n2. **Upgrade the image equivalence algebraically.** The current Mathlib surreal development supplies addition but not a full ring structure on `Surreal`; consequently the proved equivalence is a plain equivalence induced by an injective additive map. Once surreal multiplication and its laws are available, prove that `dyadicMap` is multiplicative and package its range as an ordered subring isomorphic to `ℤ[1/2]`.\n\n3. **Canonical birthday formula for general dyadics.** For a reduced noninteger dyadic `m/2ⁿ` with odd `m`, determine and prove the exact birthday. The answer depends on the integer part as well as the denominator exponent; the theorem for `2⁻ⁿ` in this project is the basic case.\n\n4. **Separate birthday cutoffs from algebraic closure.** Birthday-bounded classes need not be subfields or even subrings at a fixed bound, since arithmetic can increase birthdays. Future statements should explicitly distinguish (a) numbers born before an ordinal, (b) the ring generated by those numbers, and (c) the field generated by them.\n\n5. **Reassess the proposed `No_{ω²} = ℝ(x)` claim.** Before formalization, specify whether the cutoff is `< ω²` and what closure operation is intended. Also, there is no smallest positive surreal infinitesimal: if `x > 0` is infinitesimal, then `x/2` is a smaller positive infinitesimal once field arithmetic is available. Thus the phrase “the smallest positive infinitesimal” must be replaced, for example by the particular monomial `ω⁻¹`; even then equality with `ℝ(ω⁻¹)` requires substantial correction because bounded-birthday classes and generated rational-function fields are different constructions.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0370",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "cf69678e",
+    "status": "available",
+    "timestamp": "2026-07-19T00:44:37.165434+00:00",
+    "title": "`Algebra/SurrealDyadic.lean` formalizes the canonical dyadic part of the surreal"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Boolean-Poset Avoidance Through Linear Closure\n\n## 1. A finite, explicit improvement over three middle layers\n\n**Conjecture.** There are explicit integers `q`, `n₀`, and a rational constant `c > 3` such that for every `n ≥ n₀`, a labeling into a finite vector space produces a weakly `D₆`-free family in `2^[n]` of cardinality at least `c` times the largest middle-layer cardinality.\n\nThe key insight is that interval exclusion is deterministic; only the lower bound on the number of selected sets requires probabilistic rank estimates. Replacing asymptotic error terms by explicit Gaussian-binomial inequalities should therefore yield a finite threshold.\n\nWhy now? The closure obstruction and positivity of the gain numerator have been isolated, leaving a sharply defined quantitative counting problem.\n\n## 2. Matroidal generalization of the four-layer construction\n\n**Conjecture.** Let `M` be a representable matroid of sufficiently large rank whose random restrictions have the same three relevant corank probabilities as a projective geometry up to an error tending to zero. Then the four-layer family selected by the rank function of `M` is weakly `D₆`-free and exceeds three middle layers by a positive asymptotic proportion.\n\nThe key insight is that the exclusion argument uses closure and rank monotonicity rather than coordinates, field arithmetic, or a particular basis.\n\nWhy now? The deterministic proof already has a matroid-closure interpretation, suggesting that representability is needed for enumeration but not for forbidden-poset avoidance.\n\n## 3. Stability for large weakly `D₆`-free families\n\n**Conjecture.** For every positive `η` there is a positive `δ` such that every weakly `D₆`-free family of subsets of `[n]` with size within `δ` middle layers of the optimum differs, on at most `η` middle layers, from a four-layer family governed by a closure operator of bounded local complexity.\n\nThe key insight is that six distinct intermediate sets between bottom and top nearly saturate the proper part of a three-dimensional Boolean interval, so near-extremality should force a coherent local closure rule.\n\nWhy now? The interval obstruction identifies the local configuration that must be suppressed, making a local-to-global stability program testable.\n\n## 4. The unresolved five-element-width diamond threshold\n\n**Conjecture.** There exists a positive constant `ε₅` such that the largest weakly `D₅`-free family in `2^[n]` has size at least `(3 + ε₅)` times the largest middle-layer cardinality for all sufficiently large `n`.\n\nThe key insight is that forbidding five, rather than six, intermediate elements requires the top layer to detect two exceptional rank values; a successful construction must recover the resulting density loss through a second correlated invariant.\n\nWhy now? The four-layer rank construction explains exactly why the direct one-invariant modification loses density, narrowing the search to coupled rank, nullity, or quotient-space statistics.\n\n## 5. An entropy characterization of the optimal field size\n\n**Conjecture.** Among prime powers, the field size maximizing the asymptotic gain of the four-layer construction is characterized uniquely by a balance equation between the corank-two probabilities below the middle layer and the full-rank deficit above it.\n\nThe key insight is that the gain is a signed combination of limiting random-matrix rank probabilities, and its optimizer should arise where the marginal entropy cost of the two exceptional coranks balances.\n\nWhy now? The gain has an explicit positive rational factor multiplied by the convergent product `Δ_q`, so the conjecture can be tested numerically and attacked by monotonicity estimates for Euler products.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0371",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "ae36b246",
+    "status": "available",
+    "timestamp": "2026-07-19T00:44:56.744069+00:00",
+    "title": "**Conjecture.** There are explicit integers `q`, `n₀`, and a rational constant `"
   },
   {
     "ambition_level": "extension",
