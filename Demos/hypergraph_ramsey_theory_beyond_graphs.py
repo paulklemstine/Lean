@@ -1,157 +1,124 @@
-"""
-Hypergraph Ramsey Theory: Numerical Demonstrations
-==================================================
-
-Self-contained numerical illustrations of the key results in the accompanying
-paper on r-uniform hypergraph Ramsey numbers:
-
-  * the first-moment (probabilistic) lower bound
-        2 * C(n, k) < 2 ** C(k, r)   =>   R_r(k, k) > n,
-  * the tower function and the tower-type upper bound produced by iterating
-    the Erdos-Rado stepping-up recursion,
-  * the single- vs. double-exponential gap for R_3(k, k).
-
-Everything is written with the standard library only (the `math` module), with
-type hints, and every helper inlined so the file runs as-is:
-
-    python3 demo.py
-"""
+#!/usr/bin/env python3
+"""Numerical demonstrations for the Property-B view of hypergraph Ramsey avoidance."""
 
 from __future__ import annotations
 
-from math import comb, log2
+from dataclasses import dataclass
+from itertools import combinations
+from math import comb
+from random import Random
+from typing import Dict, Iterable, Iterator, Sequence, Tuple
+
+Subset = Tuple[int, ...]
+Coloring = Dict[Subset, int]
 
 
-# ---------------------------------------------------------------------------
-# 1. The tower function  tower(h, N)
-# ---------------------------------------------------------------------------
-
-def tower(h: int, N: int) -> int:
-    """Iterated base-2 exponential: tower(0, N) = N, tower(h+1, N) = 2 ** tower(h, N).
-
-    So tower(1, N) = 2**N and tower(2, N) = 2**(2**N).  Grows so fast that only
-    tiny arguments are representable; used here for small illustrative values.
-    """
-    value: int = N
-    for _ in range(h):
-        value = 2 ** value
-    return value
+@dataclass(frozen=True)
+class ThresholdReport:
+    n: int
+    r: int
+    k: int
+    variables: int
+    constraints: int
+    edge_size: int
+    threshold: int
+    expected_bad_sets: float
+    certified_avoidable: bool
 
 
-# ---------------------------------------------------------------------------
-# 2. The first-moment lower-bound certificate
-# ---------------------------------------------------------------------------
-
-def first_moment_no_mono(n: int, r: int, k: int) -> bool:
-    """Return True if the counting inequality 2*C(n,k) < 2**C(k,r) holds.
-
-    When True, there exists an r-uniform 2-coloring of an n-set with no
-    monochromatic k-clique, hence R_r(k, k) > n.
-    """
-    if not (r <= k <= n):
-        return False
-    return 2 * comb(n, k) < 2 ** comb(k, r)
+def subsets(n: int, size: int) -> Iterator[Subset]:
+    """Yield all subsets of range(n) of a fixed size as sorted tuples."""
+    yield from combinations(range(n), size)
 
 
-def best_lower_bound(r: int, k: int, n_max: int = 20000) -> int:
-    """Largest n <= n_max for which the first-moment inequality certifies R_r(k,k) > n.
-
-    Returns the largest such n (so R_r(k, k) >= n + 1), or 0 if none found.
-    """
-    best: int = 0
-    for n in range(k, n_max + 1):
-        if first_moment_no_mono(n, r, k):
-            best = n
-    return best
-
-
-# ---------------------------------------------------------------------------
-# 3. Growth-rate comparisons for R_3(k, k)
-# ---------------------------------------------------------------------------
-
-def log2_lower_bound_exponent(k: int) -> float:
-    """log2 of the largest n certified by the first moment for r = 3 (single exp)."""
-    n = best_lower_bound(3, k)
-    return log2(n) if n > 0 else float("nan")
-
-
-def double_exp_upper_scale(k: int) -> float:
-    """A schematic double-exponential upper scale log2(log2(R_3)) ~ c * k.
-
-    Illustrative only: uses the stepping-up-derived shape 2 ** (2 ** (c*k)).
-    """
-    c: float = 0.5
-    return c * k
+def threshold_report(n: int, r: int, k: int) -> ThresholdReport:
+    """Compute the exact incidence counts and first-moment certificate."""
+    if not (0 <= r <= k <= n):
+        raise ValueError("expected 0 <= r <= k <= n")
+    variables = comb(n, r)
+    constraints = comb(n, k)
+    edge_size = comb(k, r)
+    threshold = 2 ** (edge_size - 1)
+    return ThresholdReport(
+        n=n,
+        r=r,
+        k=k,
+        variables=variables,
+        constraints=constraints,
+        edge_size=edge_size,
+        threshold=threshold,
+        expected_bad_sets=constraints / threshold,
+        certified_avoidable=constraints < threshold,
+    )
 
 
-# ---------------------------------------------------------------------------
-# Demonstrations
-# ---------------------------------------------------------------------------
-
-def demo_boundary_values() -> None:
-    print("== Boundary values R_r(r, l) = l ==")
-    for r, l in [(2, 2), (3, 3), (3, 5), (4, 7)]:
-        print(f"  R_{r}({r},{l}) = {l}")
-    print()
+def random_coloring(n: int, r: int, rng: Random) -> Coloring:
+    """Color every r-subset independently with a uniformly random bit."""
+    return {edge: rng.randrange(2) for edge in subsets(n, r)}
 
 
-def demo_concrete_lower_bound() -> None:
-    print("== Concrete small-case lower bound (r = 3, k = 5) ==")
-    n, r, k = 11, 3, 5
-    lhs = 2 * comb(n, k)
-    rhs = 2 ** comb(k, r)
-    print(f"  C(5,3) = {comb(k, r)},  C(11,5) = {comb(n, k)}")
-    print(f"  2*C(11,5) = {lhs}  <  2^C(5,3) = {rhs}  ->  {lhs < rhs}")
-    print(f"  Therefore R_3(5,5) > {n}  (no mono 5-clique on 11 vertices).")
-    print()
+def monochromatic_k_sets(
+    n: int, r: int, k: int, coloring: Coloring
+) -> list[Subset]:
+    """Return all k-sets whose internal r-subsets have a common color."""
+    bad: list[Subset] = []
+    for candidate in subsets(n, k):
+        colors = {
+            coloring[tuple(edge)] for edge in combinations(candidate, r)
+        }
+        if len(colors) <= 1:
+            bad.append(candidate)
+    return bad
 
 
-def demo_lower_bound_growth() -> None:
-    print("== First-moment lower bound R_3(k,k) > n_max(k) ==")
-    print("   k |  best n  | log2(n)")
-    for k in range(4, 12):
-        n = best_lower_bound(3, k)
-        lg = f"{log2(n):6.2f}" if n > 0 else "  n/a"
-        print(f"  {k:2d} | {n:7d}  | {lg}")
-    print("  (log2(n) grows ~ quadratically in k: single-exponential 2^(c k^2))")
-    print()
+def monte_carlo(
+    n: int, r: int, k: int, trials: int, seed: int = 20260719
+) -> tuple[float, int]:
+    """Estimate the average bad-set count and return the observed minimum."""
+    if trials <= 0:
+        raise ValueError("trials must be positive")
+    rng = Random(seed)
+    counts = [
+        len(monochromatic_k_sets(n, r, k, random_coloring(n, r, rng)))
+        for _ in range(trials)
+    ]
+    return sum(counts) / trials, min(counts)
 
 
-def demo_tower_function() -> None:
-    print("== The tower function tower(h, N) ==")
-    for h in range(0, 4):
-        print(f"  tower({h}, 2) = {tower(h, 2)}")
-    print("  tower(4, 2) = 2^65536 (a ~20000-digit number, omitted)")
-    print("  tower(1,N)=2^N, tower(2,N)=2^(2^N); each level adds one exponential.")
-    print()
+def incidence_overlap(r: int, first: Sequence[int], second: Sequence[int]) -> int:
+    """Count shared r-subsets of two candidate sets."""
+    intersection_size = len(set(first).intersection(second))
+    return comb(intersection_size, r)
 
 
-def demo_tower_dominates() -> None:
-    print("== Tower of height 2 dominates 4^k  (4^k < 2^(2^k) for k >= 5) ==")
-    print("   k |     4^k     |  log2(tower(2,k)) = 2^k")
-    for k in range(3, 9):
-        print(f"  {k:2d} | {4 ** k:11d} | {2 ** k}")
-    print()
-
-
-def demo_gap() -> None:
-    print("== The single- vs double-exponential gap for R_3(k,k) ==")
-    print("   lower bound  2^(c k^2)   <=  R_3(k,k)  <=  2^(2^(c' k))  upper bound")
-    print("   k | log2(lower) | log2(log2(upper)) ~ c'*k")
-    for k in range(4, 12):
-        low = log2_lower_bound_exponent(k)
-        up = double_exp_upper_scale(k)
-        print(f"  {k:2d} |  {low:8.2f}   |   {up:6.2f}")
-    print()
+def print_report(report: ThresholdReport) -> None:
+    verdict = "YES" if report.certified_avoidable else "NO"
+    print(f"Parameters (n,r,k) = ({report.n},{report.r},{report.k})")
+    print(f"  colored r-subsets:       {report.variables}")
+    print(f"  candidate k-sets:        {report.constraints}")
+    print(f"  r-subsets per candidate: {report.edge_size}")
+    print(f"  Property-B threshold:    {report.threshold}")
+    print(f"  expected bad k-sets:     {report.expected_bad_sets:.6f}")
+    print(f"  first-moment certificate: {verdict}")
 
 
 def main() -> None:
-    demo_boundary_values()
-    demo_concrete_lower_bound()
-    demo_lower_bound_growth()
-    demo_tower_function()
-    demo_tower_dominates()
-    demo_gap()
+    print("PROPERTY-B RAMSEY AVOIDANCE THRESHOLDS")
+    for n, r, k in [(5, 2, 3), (11, 3, 5), (12, 3, 5), (13, 3, 4)]:
+        print_report(threshold_report(n, r, k))
+        print()
+
+    average, minimum = monte_carlo(11, 3, 5, trials=250)
+    theory = threshold_report(11, 3, 5).expected_bad_sets
+    print("MONTE CARLO: triples on 11 vertices, candidate 5-sets")
+    print(f"  theoretical expected bad sets: {theory:.6f}")
+    print(f"  sample average over 250 trials: {average:.6f}")
+    print(f"  smallest observed count:        {minimum}")
+
+    first = (0, 1, 2, 3, 4)
+    second = (0, 1, 2, 5, 6)
+    print("\nINCIDENCE OVERLAP")
+    print(f"  {first} and {second} share {incidence_overlap(3, first, second)} triple(s)")
 
 
 if __name__ == "__main__":
