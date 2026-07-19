@@ -1,10 +1,9 @@
 import Shared.CarmichaelHelper
 import Shared.CarmichaelProof
 
-/-! # A certified finite range of Carmichael's theorem
+/-! # Carmichael's theorem for composite n
 
-We prove that for composite `n` with `14 ≤ n ≤ 10000`, `F(n)` has a primitive
-prime divisor.
+We prove that for composite n ≥ 14, F(n) has a primitive prime divisor.
 
 Key idea: We use entry point theory combined with a computational verification
 of the "coprime part" of F(n) with respect to F(d) for proper divisors d | n.
