@@ -18,6 +18,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Prove that any sufficiently powerful formal system necessarily contains strange loops: statements that refer to their own unprovability. Formalize G\u00f6del's first incompleteness theorem as a fixed-point in the lattice of provability predicates. Explore whether consciousness arises from tangled hierarchies of self-referential symbols.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0413",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-19T06:47:24.925714+00:00",
+    "title": "Strange Loops: Self-Reference and G\u00f6del's Incompleteness"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 4920904c (Q=0.800), which proved 46 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Erdos-Renyi random graph G(n, p) has n vertices where each edge appears independently with probability p. At p = log(n)/n, G(n,p) becomes connected. But what if p is COMPLEX? Define G(n, z) where z is a complex number: each edge (i,j) appears with 'probability' z, meaning the edge weight is z in",
     "domains": [
       "Logic"
