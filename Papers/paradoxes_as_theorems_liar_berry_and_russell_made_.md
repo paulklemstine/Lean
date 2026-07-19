@@ -1,55 +1,38 @@
-# Computational Evidence — Paradoxes as Theorems
+# Computational Evidence
 
-## 1. The negation-fixed-point census
+## Small-case calculations
 
-Belnap negation `neg` acts on the four values as `T↦F, F↦T, B↦B, N↦N`.
-Enumerating all values and testing `neg v = v`:
+The finite semantics uses the support pairs `(positive, negative)`:
 
-| value | neg value | fixed? | designated (`isTrue`)? |
-|-------|-----------|--------|------------------------|
-| T     | F         | no     | yes                    |
-| F     | T         | no     | no                     |
-| B     | B         | **yes**| **yes**                |
-| N     | N         | yes    | no                     |
+| Sentence | Value | Designated | Negation value | Glut |
+|---|---:|---:|---:|---:|
+| Liar | `(true, true)` | yes | `(true, true)` | yes |
+| Russell | `(true, true)` | yes | `(true, true)` | yes |
+| Berry | `(true, true)` | yes | `(true, true)` | yes |
+| ordinary truth | `(true, false)` | yes | `(false, true)` | no |
+| false witness | `(false, true)` | no | `(true, false)` | no |
+| gap witness | `(false, false)` | no | `(false, false)` | no |
+| soundness certificate | `(true, true)` | yes | `(true, true)` | yes |
 
-There is exactly **one designated fixed point of negation: the glut `B`.**
-For Boolean negation the same census gives `true↦false, false↦true` — **zero**
-fixed points. This single table is the whole reason the paradoxes need
-paraconsistency, and is exactly what `isTrue_neg_fixpoint` and
-`bool_no_neg_fixpoint` encode.
+Exhausting the four support pairs confirms that negation swaps the bits and is involutive. Its fixed points are exactly `(true, true)` and `(false, false)`; only the first is designated.
 
-## 2. The six-sentence model, evaluated
+## OEIS search results
 
-```
-truth  = [B, B, B, T, F, N]   -- indices 0..5
-sentNeg= [0, 1, 2, 4, 3, 5]
-```
+No integer sequence drives the conjecture, so an OEIS search is not applicable. The finite evidence concerns a four-element truth algebra and a seven-element sentence language rather than an enumerative sequence.
 
-Coherence check `truth (sentNeg i) = neg (truth i)` for every `i`:
+## Counterexample hunt
 
-| i | sentNeg i | truth (sentNeg i) | neg (truth i) | match |
-|---|-----------|-------------------|---------------|-------|
-| 0 | 0 | B | neg B = B | ✓ |
-| 1 | 1 | B | neg B = B | ✓ |
-| 2 | 2 | B | neg B = B | ✓ |
-| 3 | 4 | F | neg T = F | ✓ |
-| 4 | 3 | T | neg F = T | ✓ |
-| 5 | 5 | N | neg N = N | ✓ |
+The universal classical claim was tested structurally rather than numerically: a complement fixed point `xᶜ = x` forces both `x = ⊥` and `x = ⊤`, hence collapse. The four-valued value `(true, true)` is a direct counterexample to extending that claim beyond Boolean complementation.
 
-## 3. Soundness / non-explosion checks
+For explosion, the Liar is both derivable and its own syntactic negation, while the false witness has no derivation. Thus the representative contradiction fails to derive the chosen arbitrary false sentence.
 
-- Provable set `{0,1,2,3}` designated values: `B,B,B,T` — all designated ⇒ **sound**.
-- Falsehood `4` has value `F` (undesignated) and is **not** provable ⇒ explosion
-  fails (a glut does not designate everything).
-- Number of gluts = `#{0,1,2}` = **3** ⇒ inconsistency degree 3.
+## Boundary table
 
-## 4. Counterexample hunt
+| Property | Boolean nontrivial semantics | Four-valued witness |
+|---|---:|---:|
+| designated negation fixed point | impossible | exists |
+| three distinct theorem gluts | impossible under fixed-point reading | exists |
+| explicit non-designated sentence | possible | exists |
+| explosion from a glut | classical contradiction collapses consequence | refuted by false witness |
 
-We searched for a *two-valued* (Boolean) coherent assignment making a
-self-negating sentence designated. Enumerating both Boolean values against
-`truth (sentNeg s) = ! truth s` with `sentNeg s = s` forces `b = !b`, which has
-**no solution**. This confirms the classical impossibility (`classical_no_sound_liar`)
-rather than refuting the four-valued construction.
-
-All the finite facts above are discharged by exhaustive evaluation in the formal
-development; no unverified numerical claim is relied upon.
+These calculations are certificates for the finite construction; they do not test unrestricted natural-language truth, comprehension, or description syntax.
