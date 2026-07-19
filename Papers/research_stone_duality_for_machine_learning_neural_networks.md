@@ -1,376 +1,346 @@
-# Stone Duality for Neural Networks: Activation Patterns as a Finite Boolean Algebra
+# Finite Stone Semantics for Neural Activation Patterns
 
-**Author:** Aristotle
-**Date:** 2026-07-10
+**Aristotle**  
+**July 19, 2026**
 
 ## Abstract
 
-We develop, from first principles, the finite–Boolean–algebra core of *Stone
-duality* for a single fully-connected (ReLU-type) neural-network layer evaluated
-on a finite sample of inputs. Evaluating a layer of $n$ neurons at a point and
-recording which neurons are active yields an *activation pattern*, an element of
-the finite Boolean algebra $\{0,1\}^n$ — the *syntax*. The realized patterns are
-the layer's *linear regions*, and every set of patterns determines a *decision
-region*; the collection of decision regions forms the *decision algebra* — the
-*semantics*. Our main theorem is an exact Stone-duality count: **if a layer
-realizes $r$ linear regions on a sample, its decision algebra has exactly $2^r$
-elements**, and the atoms of that algebra are precisely the linear regions. We
-prove that the pattern-to-region map is a Boolean-algebra homomorphism, that
-decision regions depend only on realized patterns, that the homomorphism is
-injective on realized patterns, and we derive the region bounds
-$\#\text{regions} \le \min(2^n, m)$ together with a VC-style capacity bound: a
-layer of $n$ neurons shatters at most $2^n$ points. We also correct a natural
-but false conjecture equating VC dimension with the number of linear regions.
-All results are stated for an abstract activation map and then specialized to a
-concrete real-weight ReLU layer. We include worked numerical examples,
-algorithms for computing the decision algebra, and a discussion of extensions to
-multilayer networks and hyperplane arrangements.
-
----
+A neural system with $k$ binary gates determines an activation map from its input space into the Boolean cube $\{0,1\}^k$. The correct finite semantic space is not generally the entire cube, but the range of this map: the set of feasible activation patterns. This paper develops a self-contained finite Stone-style representation of activation-invariant classifiers and decision regions. The feasible space has at most $2^k$ points, with equality exactly when every formal pattern is realizable. Every classifier constant on activation fibres factors uniquely through the feasible space. Pullback along the activation map embeds its powerset Boolean algebra into the input-space regions, preserving Boolean operations, and its image consists exactly of activation-invariant regions. The atoms of this algebra are singleton feasible patterns. Consequently, their number equals the feasible-pattern count and is at most $2^k$. Finally, the full powerset concept family on the feasible space has VC dimension exactly equal to its cardinality, whereas one fixed concept cannot shatter a nonempty set. These results distinguish formal patterns from feasible patterns, atoms from Boolean-algebra elements, hypothesis families from fixed classifiers, and activation patterns from geometric linear regions. Algorithms for enumerating finite feasible spaces, descending classifiers, constructing invariant regions, and measuring the resulting capacity are presented together with examples and applications.
 
 ## 1. Introduction
 
-Piecewise-linear neural networks — those built from rectified linear units
-(ReLU) — partition their input space into convex cells, the *linear regions*, on
-each of which the network is affine. The number of linear regions is a widely
-used measure of a network's expressive power. This paper places that geometry
-inside a classical algebraic frame: **Stone duality**.
-
-Stone's representation theorem asserts that every Boolean algebra $B$ is
-isomorphic to the algebra of clopen subsets of a topological space $S(B)$, its
-*Stone space*. Abstract propositions (syntax) become concrete clopen regions
-(semantics); *and*, *or*, *not* become intersection, union, complement. In the
-*finite* case the statement is elementary and sharp: a finite Boolean algebra
-with $r$ atoms is isomorphic to the powerset of an $r$-element set, hence has
-$2^r$ elements, and its Stone space is the discrete space on those $r$ atoms.
-
-We show that a single neural-network layer, evaluated on a finite sample,
-carries exactly such a finite Boolean algebra. Its atoms are the linear regions;
-its elements are the decision regions; and the finite Stone-duality count
-applies verbatim. This gives a precise dictionary between the *syntax* of
-activation patterns and the *semantics* of decision regions, and yields honest
-capacity bounds while refuting an overreaching conjecture.
-
-### Contributions
-
-1. A clean formal model of a neural layer as an *activation-pattern map* into a
-   finite Boolean algebra (Section 3).
-2. Two complementary bounds on the number of linear regions, and their minimum
-   (Section 4).
-3. A proof that the pattern-to-region map is a Boolean-algebra homomorphism, and
-   that it depends only on — and is injective on — the realized patterns
-   (Sections 5–6).
-4. The exact Stone-duality count $|B(f)| = 2^r$ and the identification of the
-   atoms with the linear regions (Section 7).
-5. Capacity consequences: $|B(f)| \le 2^m$ and the shattering bound $m \le 2^n$;
-   plus an explicit refutation of the "VC dimension = number of linear regions"
-   conjecture (Section 8).
-6. Specialization to an explicit real-weight ReLU layer (Section 9).
-
----
-
-## 2. Background: finite Stone duality
-
-Let $B$ be a Boolean algebra with operations $\vee$ (join), $\wedge$ (meet), and
-$\neg$ (complement), bottom $0$, and top $1$. An **atom** is a minimal nonzero
-element. When $B$ is finite, every element is the join of the atoms below it, and
-distinct sets of atoms yield distinct elements. Consequently:
-
-> **Finite Stone duality.** A finite Boolean algebra with atom set $A$ is
-> isomorphic to the powerset $\mathcal{P}(A)$; in particular it has exactly
-> $2^{|A|}$ elements. Its Stone space is the finite discrete space on $A$, and
-> its clopen subsets are all subsets of $A$.
-
-Our task is to exhibit, for a neural layer, a natural finite Boolean algebra
-whose atoms are the linear regions, so that this counting theorem applies.
-
----
-
-## 3. Model and definitions
-
-Fix a finite input sample $X$ (a finite type with decidable equality) and a
-layer of $n$ neurons.
-
-**Definition 3.1 (Activation-pattern map).** An *activation-pattern map* is a
-function
-$$\mathrm{act} : X \to (\,\{1,\dots,n\} \to \mathbb{B}\,), \qquad \mathbb{B} = \{\text{false},\text{true}\},$$
-assigning to each input point the Boolean vector of which neurons are active
-(pre-activation $>0$). The codomain $\mathbb{B}^n$ is a finite Boolean algebra
-with $2^n$ elements — the **pattern space** (the *syntax*).
-
-**Definition 3.2 (Linear regions).** The **linear regions** realized by
-$\mathrm{act}$ are the distinct patterns that occur:
-$$\mathrm{linearRegions}(\mathrm{act}) = \{\, \mathrm{act}(x) : x \in X \,\} = \mathrm{image}(\mathrm{act}).$$
-Its cardinality is the number of distinct cells cut on the sample.
-
-**Definition 3.3 (Decision region).** For a set $S$ of patterns, the
-**decision region** it selects is
-$$\mathrm{region}(S) = \{\, x \in X : \mathrm{act}(x) \in S \,\}.$$
-This is the *semantic* counterpart (a subset of $X$) of the *syntactic* object
-$S$.
-
-**Definition 3.4 (Decision algebra).** The **decision algebra** of the layer is
-the family of all decision regions,
-$$B(f) = \mathrm{decisionAlgebra}(\mathrm{act}) = \{\, \mathrm{region}(S) : S \subseteq \mathbb{B}^n \,\}.$$
-
-**Definition 3.5 (Shattering).** The layer **shatters** $X$ if every subset of
-$X$ is a decision region, i.e. $B(f) = \mathcal{P}(X)$.
-
----
-
-## 4. Bounds on the number of linear regions
-
-**Theorem 4.1 (Syntactic bound).**
-$\;\#\mathrm{linearRegions}(\mathrm{act}) \le 2^n.$
-
-*Proof sketch.* The realized patterns are a subset of the pattern space
-$\mathbb{B}^n$, which has exactly $2^n$ elements; cardinality is monotone under
-subsets. $\qquad\blacksquare$
-
-**Theorem 4.2 (Sample bound).**
-$\;\#\mathrm{linearRegions}(\mathrm{act}) \le |X|.$
-
-*Proof sketch.* The linear regions are the image of $\mathrm{act}$, and the
-image of a function has at most as many elements as its finite domain
-$X$. $\qquad\blacksquare$
-
-**Theorem 4.3 (Combined bound).**
-$\;\#\mathrm{linearRegions}(\mathrm{act}) \le \min(2^n,\, |X|).$
-
-*Proof sketch.* Immediate from Theorems 4.1 and 4.2: a quantity below two
-ceilings is below their minimum. $\qquad\blacksquare$
-
-The two bounds capture the tension between *expressivity* (the syntax can host
-up to $2^n$ regions) and *observability* (a finite sample of size $|X|$ can
-reveal at most $|X|$ of them).
-
----
+Rectified and thresholded neural networks combine continuous computation with discrete switching. Each gate records one of two states, and the simultaneous gate states form a binary activation pattern. It is tempting to identify a network with the entire Boolean cube of such patterns and to infer that $k$ gates always produce $2^k$ semantic states. It is equally tempting to identify activation states with linear regions and then equate either count with a VC dimension. These conclusions fail without qualifications.
 
-## 5. The pattern-to-region map is a Boolean homomorphism
-
-We show $\mathrm{region}(\cdot)$ translates the Boolean structure of the syntax
-into set operations on the semantics — the operative half of Stone duality.
+The obstruction is feasibility. An input can realize only patterns lying in the range of the activation map. Gate correlations, duplicate neurons, geometric incompatibility, and degeneracy may exclude much of the formal cube. The resulting range is nevertheless rich enough to support a complete representation theorem. Any output that is insensitive to distinctions within an activation fibre descends to this finite range. Likewise, every decision region insensitive to such distinctions is the pullback of a unique subset of the range.
 
-**Theorem 5.1 (Homomorphism).** For all pattern sets $S, T$:
-$$\mathrm{region}(S \cup T) = \mathrm{region}(S) \cup \mathrm{region}(T), \qquad
-\mathrm{region}(S \cap T) = \mathrm{region}(S) \cap \mathrm{region}(T),$$
-$$\mathrm{region}(\varnothing) = \varnothing, \qquad
-\mathrm{region}(\mathbb{B}^n) = X,$$
-and $S \subseteq T \implies \mathrm{region}(S) \subseteq \mathrm{region}(T)$.
-Together with $\mathrm{region}(\mathbb{B}^n) = X$, these give
-$\mathrm{region}(\neg S) = X \setminus \mathrm{region}(S)$ where $\neg S$ is the
-complement within pattern space.
+This construction is naturally interpreted through finite Stone duality. For a finite set $F$, the powerset $\mathcal P(F)$ is a Boolean algebra. Endowed with the discrete topology, $F$ is a Stone space: compact, Hausdorff, and totally disconnected, with every subset clopen. The points of $F$ correspond to the atoms of $\mathcal P(F)$, while arbitrary clopen sets correspond to Boolean combinations of atoms. In the neural setting, $F$ is the feasible activation space, and pullback translates clopen pattern sets into activation-invariant regions of the original input space.
 
-*Proof sketch.* Each identity is proved pointwise. For a point $x$, membership
-$x \in \mathrm{region}(S)$ is by definition $\mathrm{act}(x) \in S$. Then
-$x \in \mathrm{region}(S \cup T) \iff \mathrm{act}(x) \in S \cup T \iff
-\mathrm{act}(x)\in S \text{ or } \mathrm{act}(x)\in T \iff x \in \mathrm{region}(S)\cup\mathrm{region}(T)$,
-and similarly for the other operations. Emptiness and universality are the
-$S=\varnothing$ and $S=\mathbb{B}^n$ cases; monotonicity follows from
-membership preservation. $\qquad\blacksquare$
-
-Thus $S \mapsto \mathrm{region}(S)$ is a homomorphism of Boolean algebras from
-$\mathcal{P}(\mathbb{B}^n)$ into $\mathcal{P}(X)$: syntax to semantics.
-
----
-
-## 6. Decision regions see only the realized patterns
-
-The homomorphism of Section 5 is not injective on all of
-$\mathcal{P}(\mathbb{B}^n)$ — unrealized patterns are invisible. We localize to
-the realized patterns.
-
-**Theorem 6.1 (Locality).** For every pattern set $S$,
-$$\mathrm{region}\big(S \cap \mathrm{linearRegions}(\mathrm{act})\big) = \mathrm{region}(S).$$
+The theory developed here is deliberately agnostic about the nature of the input space. It may be finite or infinite, Euclidean or combinatorial. Finiteness of the gate set ensures that the semantic quotient is finite. When cardinality is discussed, it suffices that the range itself be finite, which follows automatically from its inclusion in $\{0,1\}^k$. For elementary enumeration algorithms we assume a finite sample domain or an external feasibility oracle.
 
-*Proof sketch.* A point $x$ contributes only via its own pattern
-$\mathrm{act}(x)$, which is always a realized pattern; intersecting $S$ with the
-realized patterns therefore cannot change whether $\mathrm{act}(x) \in S$.
-$\qquad\blacksquare$
-
-**Theorem 6.2 (Reduction to realized patterns).** The decision algebra is the
-image, under $\mathrm{region}$, of the powerset of the linear regions:
-$$B(f) = \{\, \mathrm{region}(S) : S \subseteq \mathrm{linearRegions}(\mathrm{act}) \,\}.$$
-
-*Proof sketch.* ($\supseteq$) Every $S \subseteq \mathrm{linearRegions}$ is in
-particular a subset of $\mathbb{B}^n$, so its region is a decision region.
-($\subseteq$) Given any decision region $\mathrm{region}(S)$, Theorem 6.1
-rewrites it as $\mathrm{region}(S \cap \mathrm{linearRegions})$, and
-$S \cap \mathrm{linearRegions}$ is a subset of the linear regions.
-$\qquad\blacksquare$
+The principal conclusions are:
 
-**Theorem 6.3 (Faithfulness on realized patterns).** The map
-$\mathrm{region}(\cdot)$ is injective on subsets of
-$\mathrm{linearRegions}(\mathrm{act})$: if $S, T \subseteq \mathrm{linearRegions}$
-and $\mathrm{region}(S) = \mathrm{region}(T)$, then $S = T$.
+1. the feasible activation space has at most $2^k$ points, with equality precisely under surjectivity;
+2. activation-invariant classifiers factor uniquely through this space;
+3. its powerset realizes exactly the activation-invariant input regions and preserves Boolean structure;
+4. its atoms are singleton feasible patterns;
+5. the full family of subsets has VC dimension equal to the feasible-pattern count;
+6. a singleton concept family cannot shatter any nonempty set.
 
-*Proof sketch.* Suppose $S \ne T$; without loss of generality some realized
-pattern $p$ lies in $S \setminus T$. Because $p$ is realized, there is a sample
-point $x$ with $\mathrm{act}(x) = p$. Then $x \in \mathrm{region}(S)$ (since
-$p \in S$) but $x \notin \mathrm{region}(T)$ (since $p \notin T$), so the regions
-differ — contradiction. Hence $S = T$. $\qquad\blacksquare$
+These results establish an exact syntax–semantics bridge while locating the assumptions required for stronger geometric claims.
 
-Theorem 6.3 says the atoms of $B(f)$ are exactly the (nonempty) fibers
-$\{x : \mathrm{act}(x) = p\}$ over realized patterns $p$: distinct realized
-patterns produce distinct, indivisible cells.
+## 2. Definitions and basic setting
 
----
+Let $X$ be a nonempty or empty input set, let $k\ge 0$ be an integer, and write
 
-## 7. Stone duality: the exact count
+$$
+Q_k=\{0,1\}^k
+$$
 
-Combining reduction (6.2) with faithfulness (6.3) yields the main theorem.
+for the Boolean activation cube. An element $p\in Q_k$ is a function from the $k$ gate indices to $\{0,1\}$, equivalently a binary word of length $k$. The cube contains exactly
 
-**Theorem 7.1 (Stone-duality count).** Let
-$r = \#\mathrm{linearRegions}(\mathrm{act})$. Then
-$$|B(f)| = 2^{\,r}.$$
+$$
+|Q_k|=2^k
+$$
 
-*Proof sketch.* By Theorem 6.2, $B(f)$ is the image of
-$\mathcal{P}(\mathrm{linearRegions})$ under $\mathrm{region}$. By Theorem 6.3
-this map is injective, so the image has the same cardinality as the domain. The
-powerset of an $r$-element set has $2^r$ elements. Hence
-$|B(f)| = 2^r$. $\qquad\blacksquare$
+patterns, including one empty pattern when $k=0$.
 
-**Interpretation.** $B(f)$ is a finite Boolean algebra with $r$ atoms — the
-linear regions. By finite Stone duality (Section 2) it is isomorphic to
-$\mathcal{P}(\{\text{linear regions}\})$, its Stone space is the discrete space
-on the $r$ linear regions, and its clopen subsets are exactly the decision
-regions. The continuous geometry of the layer's decision surface on the sample
-is thus captured, up to the Boolean structure of decisions, by the single
-integer $r$.
+**Definition 2.1 (Activation map).** An activation map is a function
 
----
+$$
+a:X\longrightarrow Q_k.
+$$
 
-## 8. Capacity consequences
+For a neural network, $a(x)$ records the active or inactive status of each selected gate at input $x$.
 
-**Theorem 8.1 (Algebra size bound).**
-$\;|B(f)| \le 2^{|X|}.$
+**Definition 2.2 (Feasible activation space).** The feasible activation space is the range
 
-*Proof sketch.* By Theorem 7.1, $|B(f)| = 2^r$, and by Theorem 4.2,
-$r \le |X|$; monotonicity of $t \mapsto 2^t$ finishes it. (Equivalently, $B(f)$
-embeds into $\mathcal{P}(X)$.) $\qquad\blacksquare$
+$$
+F_a=a(X)=\{p\in Q_k:\exists x\in X,\ a(x)=p\}.
+$$
 
-**Theorem 8.2 (Shattering bound).** If the layer shatters $X$, then
-$$|X| \le 2^n.$$
+The canonical projection is the same rule with restricted codomain,
 
-*Proof sketch.* Shattering means $B(f) = \mathcal{P}(X)$, so
-$|B(f)| = 2^{|X|}$. By Theorem 7.1 this equals $2^r$, hence $r = |X|$: every
-sample point has its own realized pattern. But by Theorem 4.1 the number of
-realized patterns is at most $2^n$, so $|X| = r \le 2^n$. $\qquad\blacksquare$
-
-This is the correct VC-style statement: **a layer of $n$ neurons can shatter a
-sample of at most $2^n$ points.**
-
-### 8.1 A false conjecture, corrected
-
-It is tempting to conjecture that the VC dimension of a network equals its
-number of atoms, i.e. its number of linear regions. **This equality is false in
-general.** A single affine neuron on $\mathbb{R}^d$ realizes a *half-space*
-classifier; the VC dimension of half-spaces in $\mathbb{R}^d$ is $d+1$, governed
-by the dimension of the ambient geometry, not by any count of regions (a single
-neuron cuts the space into just two regions, yet its VC dimension grows linearly
-with $d$). We therefore do **not** assert "VC dimension = number of linear
-regions." What we prove are the correct structural facts: the atoms of the
-decision algebra are the linear regions (Theorem 6.3), the algebra has exactly
-$2^r$ elements (Theorem 7.1), and shattering $m$ points requires $m \le 2^n$
-(Theorem 8.2).
-
----
-
-## 9. A concrete ReLU layer
-
-All results above are stated for an abstract $\mathrm{act}$; here we instantiate
-it with explicit real weights.
-
-**Definition 9.1 (Neuron activation).** For weight rows
-$W : \{1,\dots,n\} \to \mathbb{R}^d$, biases $b : \{1,\dots,n\} \to \mathbb{R}$,
-and input $x \in \mathbb{R}^d$, define
-$$\mathrm{neuronActivation}(W,b,x)_i = [\, \langle W_i, x\rangle + b_i > 0 \,],$$
-where $[\cdot]$ is the Iverson bracket (true iff the pre-activation is positive).
-
-**Definition 9.2 (Sample activation).** For a sample $\mathrm{pts} : X \to \mathbb{R}^d$,
-$$\mathrm{sampleActivation}(W,b,\mathrm{pts})(x) = \mathrm{neuronActivation}(W,b,\mathrm{pts}(x)).$$
-
-Every abstract theorem specializes. In particular:
-
-**Corollary 9.3.** A ReLU layer of $n$ neurons realizes at most
-$\min(2^n, |X|)$ linear regions on any finite sample (from Theorem 4.3).
-
-**Corollary 9.4.** Its decision algebra has exactly $2^{r}$ elements, where $r$
-is the number of linear regions it realizes on the sample (from Theorem 7.1).
-
-The boundary between two adjacent linear regions is a subset of the hyperplane
-$\{x : \langle W_i, x\rangle + b_i = 0\}$ of the neuron whose activation flips
-across it — recovering the familiar picture of a ReLU decision surface as an
-arrangement of $n$ hyperplanes.
-
----
-
-## 10. Algorithms
-
-**Algorithm A (Decision-algebra construction).** Given weights, biases, and a
-sample, compute the activation patterns; take their distinct values (the linear
-regions $R$, $|R| = r$); enumerate the $2^r$ subsets of $R$; map each subset to
-its decision region. By Theorems 6.2–6.3 this enumerates $B(f)$ exactly once
-each. Complexity: $O(|X|\,n\,d)$ for the patterns plus $O(2^r \cdot r)$ for the
-enumeration; the exponential factor is intrinsic — $|B(f)| = 2^r$.
-
-**Algorithm B (Region counting and bound verification).** Compute
-$r = |R|$ and check $r \le \min(2^n, |X|)$; report $|B(f)| = 2^r$.
-
-**Algorithm C (Shattering test).** The layer shatters $X$ iff the $|X|$
-patterns are pairwise distinct (equivalently $r = |X|$); this both tests
-shattering and certifies the necessary condition $|X| \le 2^n$.
-
-Pseudocode and reference implementations accompany this paper.
-
----
-
-## 11. Related ideas and discussion
-
-The count of linear regions is a classical proxy for the expressive power of
-piecewise-linear networks, and single-layer region counts are governed by
-hyperplane-arrangement combinatorics. Our contribution is to recast this count
-*algebraically*: the linear regions are the atoms of a finite Boolean algebra,
-the decision regions are its elements, and finite Stone duality supplies the
-exact count $2^r$. This reframing connects region counting to the toolkit of
-logic and combinatorics — atoms, homomorphisms, shattering, and growth
-functions — and cleanly separates the two ceilings on region count (the
-syntactic $2^n$ and the observational $|X|$).
-
-The refutation in Section 8.1 is a cautionary note: expressivity measured by
-*region count* and capacity measured by *VC dimension* are genuinely different
-invariants. Stone duality relates region count to the *size of the decision
-algebra*, not to VC dimension; the honest capacity statement is the shattering
-bound $m \le 2^n$.
-
----
-
-## 12. Future directions
-
-- **Stone space as a topological object.** Package the decision algebra as a
-  concrete Boolean algebra and build its Stone space via profinite / Boolean-
-  spectrum machinery, proving it is the finite discrete space on the linear
-  regions and that clopen sets correspond to decision regions.
-- **Multilayer composition.** Extend the activation map to $L$ layers with
-  widths $w_1,\dots,w_L$; show the layerwise pattern map factors and bound the
-  total regions by $2^{w_1+\cdots+w_L}$.
-- **Sauer–Shelah / growth function.** Relate the size of the decision algebra
-  restricted to subsamples to the growth function and derive the true VC bound
-  for halfspace-based classes.
-- **Geometric linear regions.** Replace the finite sample by an arrangement of
-  hyperplanes in $\mathbb{R}^d$ and connect the region count to Zaslavsky's
-  region-counting formula.
-
----
-
-## 13. Conclusion
-
-A single neural-network layer, evaluated on a finite sample, carries a finite
-Boolean algebra whose atoms are its linear regions and whose elements are its
-decision regions. The pattern-to-region map is a Boolean homomorphism, faithful
-on realized patterns, giving an exact Stone-duality count: a layer with $r$
-linear regions has a decision algebra of size $2^r$. From this follow honest
-capacity bounds — including the shattering bound $m \le 2^n$ — and a correction
-to the tempting but false identification of VC dimension with region count.
-Syntax (activation patterns) and semantics (decision regions) are two faces of
-one finite Boolean algebra, exactly as Stone duality predicts.
+$$
+\pi_a:X\longrightarrow F_a,\qquad \pi_a(x)=a(x).
+$$
+
+By the definition of a range, $\pi_a$ is surjective.
+
+**Definition 2.3 (Activation fibre).** For $p\in F_a$, the activation fibre over $p$ is
+
+$$
+a^{-1}(p)=\{x\in X:a(x)=p\}.
+$$
+
+The fibres partition $X$. The quotient of $X$ by the equivalence relation $x\sim_a y$ if and only if $a(x)=a(y)$ is canonically identified with $F_a$.
+
+**Definition 2.4 (Activation-invariant classifier).** A function $f:X\to Y$ is activation-invariant with respect to $a$ if
+
+$$
+a(x)=a(y)\Longrightarrow f(x)=f(y)
+$$
+
+for every $x,y\in X$.
+
+**Definition 2.5 (Realization of a pattern region).** For $U\subseteq F_a$, its realization in input space is
+
+$$
+\mathcal R_a(U)=\pi_a^{-1}(U)=\{x\in X:a(x)\in U\}.
+$$
+
+**Definition 2.6 (Activation-invariant region).** A set $R\subseteq X$ is activation-invariant if membership is constant on activation fibres:
+
+$$
+a(x)=a(y)\Longrightarrow (x\in R\Longleftrightarrow y\in R).
+$$
+
+**Definition 2.7 (Atom).** In a powerset Boolean algebra, a set $A\subseteq F_a$ is an atom if it is nonempty and every nonempty subset $B\subseteq A$ satisfies $B=A$.
+
+**Definition 2.8 (Shattering).** Let $\mathcal C\subseteq\mathcal P(Z)$ be a concept family. It shatters $S\subseteq Z$ if for every $T\subseteq S$ there is $C\in\mathcal C$ such that
+
+$$
+C\cap S=T.
+$$
+
+For finite $Z$, the VC dimension of $\mathcal C$ is the largest cardinality of a shattered subset, when such a largest cardinality exists.
+
+## 3. Cardinality of the semantic space
+
+The first theorem replaces an often-assumed equality by a sharp inequality and an exact equality criterion.
+
+**Theorem 3.1 (Feasible-pattern bound).** For every activation map $a:X\to Q_k$,
+
+$$
+|F_a|\le 2^k.
+$$
+
+Equality holds if and only if $a$ is surjective onto $Q_k$.
+
+**Proof sketch.** The set $F_a$ is a subset of $Q_k$, which has $2^k$ elements, proving the inequality. If $a$ is surjective, then $F_a=Q_k$ and equality follows. Conversely, a subset of a finite set having the same cardinality as the ambient set must be the entire set. Thus $|F_a|=|Q_k|$ implies $F_a=Q_k$, which is surjectivity. $\square$
+
+This result is valid even when $X$ is infinite because the range lies in a finite cube. If $X$ is empty, then $F_a$ is empty, so equality can occur only in no ordinary finite cube; indeed $Q_k$ is always nonempty.
+
+**Example 3.2 (Nested thresholds).** Let $X=\mathbb R$, $k=2$, and
+
+$$
+a(x)=\bigl(\mathbf 1[x>0],\mathbf 1[x>1]\bigr).
+$$
+
+Then
+
+$$
+F_a=\{(0,0),(1,0),(1,1)\}.
+$$
+
+The pattern $(0,1)$ is infeasible because $x>1$ implies $x>0$. Hence $|F_a|=3<4$.
+
+**Example 3.3 (Independent signs).** Let $X=\mathbb R^k$ and define $a_i(x)=\mathbf 1[x_i>0]$. Every pattern is realized by choosing coordinate signs, so $F_a=Q_k$ and $|F_a|=2^k$.
+
+**Example 3.4 (Duplicate gates).** If every gate repeats the same Boolean function $b:X\to\{0,1\}$, then at most the all-zero and all-one patterns occur. For $k$ large, the formal cube grows exponentially while the feasible space remains of size at most two.
+
+## 4. Universal factorization through feasible patterns
+
+The finite semantic space is characterized not only by counting but also by a universal property.
+
+**Theorem 4.1 (Classifier factorization).** Let $f:X\to Y$ be activation-invariant. There exists a unique map $\bar f:F_a\to Y$ such that
+
+$$
+f=\bar f\circ\pi_a.
+$$
+
+**Proof sketch.** For $p\in F_a$, choose $x\in X$ with $a(x)=p$ and set $\bar f(p)=f(x)$. If $y$ is another witness, then $a(x)=a(y)$, and activation invariance yields $f(x)=f(y)$. Hence $\bar f$ is well-defined. The defining equation follows by choosing $x$ itself as a witness for $a(x)$. If $g:F_a\to Y$ also satisfies $f=g\circ\pi_a$, then for each $p$ choose a witness $x$; surjectivity gives $g(p)=g(\pi_a(x))=f(x)=\bar f(p)$. Therefore $g=\bar f$. $\square$
+
+The theorem says that $F_a$ is a lossless compression for every activation-invariant observable. It is also the quotient universal property: maps constant on equivalence classes descend uniquely to the quotient.
+
+**Corollary 4.2 (Binary labels).** If $f:X\to\{0,1\}$ is activation-invariant, then its positive decision region is a union of activation fibres. Equivalently, there is a unique $U\subseteq F_a$ such that
+
+$$
+f(x)=1\Longleftrightarrow a(x)\in U.
+$$
+
+**Proof sketch.** Apply Theorem 4.1 and take $U=\bar f^{-1}(\{1\})$. Uniqueness also follows from the surjectivity of $\pi_a$. $\square$
+
+## 5. Boolean representation of invariant regions
+
+The powerset $\mathcal P(F_a)$ carries the standard Boolean operations: intersection, union, and complement relative to $F_a$. The realization map transports these operations to input space.
+
+**Theorem 5.1 (Boolean preservation and faithfulness).** For all $U,V\subseteq F_a$,
+
+$$
+\mathcal R_a(F_a\setminus U)=X\setminus\mathcal R_a(U),
+$$
+
+$$
+\mathcal R_a(U\cap V)=\mathcal R_a(U)\cap\mathcal R_a(V),
+$$
+
+and consequently
+
+$$
+\mathcal R_a(U\cup V)=\mathcal R_a(U)\cup\mathcal R_a(V).
+$$
+
+Moreover, $\mathcal R_a$ is injective.
+
+**Proof sketch.** Preimages preserve complements, intersections, and unions. For injectivity, suppose $U\ne V$. Some feasible pattern $p$ belongs to exactly one of them. Since $p$ is feasible, choose $x$ with $a(x)=p$. Then $x$ belongs to exactly one of $\mathcal R_a(U)$ and $\mathcal R_a(V)$, so the realized regions differ. $\square$
+
+Thus $\mathcal R_a$ is an embedding of Boolean algebras from $\mathcal P(F_a)$ into $\mathcal P(X)$.
+
+**Theorem 5.2 (Exact region representation).** A set $R\subseteq X$ is activation-invariant if and only if there exists a unique $U\subseteq F_a$ such that
+
+$$
+\mathcal R_a(U)=R.
+$$
+
+**Proof sketch.** If $R$ is invariant, define
+
+$$
+U=\{p\in F_a:\text{some }x\in a^{-1}(p)\text{ lies in }R\}.
+$$
+
+Invariance makes “some” equivalent to “every,” so the definition is independent of the witness. Then $x\in R$ exactly when $a(x)\in U$, proving $R=\mathcal R_a(U)$. Uniqueness follows from injectivity in Theorem 5.1. Conversely, if $R=\mathcal R_a(U)$ and $a(x)=a(y)$, then $a(x)\in U$ exactly when $a(y)\in U$, so membership in $R$ agrees. $\square$
+
+This theorem identifies the image of the Boolean embedding exactly. No activation-invariant region is omitted, and no region that splits a fibre is included.
+
+## 6. Finite Stone interpretation and atoms
+
+Give $F_a$ the discrete topology. Because it is finite, it is compact and Hausdorff; every subset is both open and closed. Hence its clopen algebra is precisely $\mathcal P(F_a)$. This is the finite Stone space associated with the activation algebra.
+
+The word “Stone” here records a precise syntax–semantics correspondence. Boolean expressions determine clopen subsets of feasible patterns. Their geometric meanings are obtained by realization in $X$. Feasible points are semantic states, and Boolean regions are propositions about those states.
+
+**Theorem 6.1 (Atoms are singleton patterns).** A subset $A\subseteq F_a$ is an atom of $\mathcal P(F_a)$ if and only if there exists $p\in F_a$ such that
+
+$$
+A=\{p\}.
+$$
+
+**Proof sketch.** Every singleton is nonempty and has no proper nonempty subset. Conversely, if $A$ is an atom, choose $p\in A$. Then $\{p\}$ is a nonempty subset of $A$, so atomicity forces $A=\{p\}$. $\square$
+
+**Corollary 6.2 (Atom count).** The number of atoms is
+
+$$
+|F_a|\le 2^k.
+$$
+
+**Proof sketch.** The map $p\mapsto\{p\}$ is a bijection from feasible patterns to atoms. Apply Theorem 3.1. $\square$
+
+If $r=|F_a|$, the distinction between atoms and algebra elements is essential:
+
+$$
+\#\text{atoms}=r,
+\qquad
+|\mathcal P(F_a)|=2^r.
+$$
+
+The atoms are elementary states, while an arbitrary element is a union of elementary states.
+
+## 7. VC dimension of the full region algebra
+
+Let
+
+$$
+\mathcal C_a=\mathcal P(F_a)
+$$
+
+be the full concept family on the feasible space.
+
+**Lemma 7.1 (Powersets shatter every subset).** For every $S\subseteq F_a$, the family $\mathcal C_a$ shatters $S$.
+
+**Proof sketch.** Given $T\subseteq S$, choose the concept $C=T$. Then $C\cap S=T$. $\square$
+
+**Theorem 7.2 (Exact VC dimension).** If $F_a$ is finite, then
+
+$$
+\operatorname{VCdim}(\mathcal C_a)=|F_a|.
+$$
+
+**Proof sketch.** By Lemma 7.1, $F_a$ itself is shattered, giving the lower bound $|F_a|$. Every shattered set is a subset of $F_a$, so its cardinality is at most $|F_a|$. The bounds coincide. $\square$
+
+Combining earlier results gives the exact chain
+
+$$
+\operatorname{VCdim}(\mathcal C_a)
+=\#\operatorname{Atoms}(\mathcal P(F_a))
+=|F_a|
+\le 2^k.
+$$
+
+The leftmost equality concerns the full powerset family, not one frozen network output.
+
+**Theorem 7.3 (A fixed concept has no positive shattering capacity).** Let $R\subseteq Z$. The singleton family $\{R\}$ does not shatter any nonempty set $S\subseteq Z$.
+
+**Proof sketch.** Choose $x\in S$. Shattering would require concepts whose traces on $S$ are both $\varnothing$ and $\{x\}$. The sole concept $R$ has only one trace $R\cap S$, so it cannot equal both distinct sets. $\square$
+
+Thus VC dimension is a property of a hypothesis family. To discuss the capacity of neural classifiers, one must specify which parameters vary or which output labelings are allowed.
+
+## 8. Algorithms
+
+### 8.1 Enumeration on a finite domain
+
+Suppose $X=\{x_1,\ldots,x_N\}$ is finite and $a(x)$ can be evaluated in $O(k)$ time. The feasible set can be found by hashing each pattern.
+
+**Algorithm 8.1 (Feasible-pattern enumeration).** Initialize an empty set $F$. For each $x_i$, compute $a(x_i)$ and insert it into $F$. Return $F$.
+
+The running time is $O(Nk)$ expected with hashing, and storage is $O(rk)$ bits for $r=|F|$. The result immediately supplies the atom count, the full-family VC dimension $r$, and the number $2^r$ of invariant regions.
+
+### 8.2 Descent of an invariant classifier
+
+Given labels $f(x)$ on a finite domain, maintain a dictionary from patterns to labels. For each input, either assign its pattern the observed label or compare against the existing label. A mismatch is a certificate that $f$ is not activation-invariant. If no mismatch occurs, the dictionary is the descended classifier $\bar f$.
+
+This takes $O(Nk)$ expected time and $O(r(k+\ell))$ storage, where $\ell$ is the label representation size.
+
+### 8.3 Realization of a Boolean pattern region
+
+Given a subset $U\subseteq F_a$, classify an input $x$ as positive exactly when $a(x)\in U$. With a hash table for $U$, each query takes the activation-evaluation cost plus expected $O(1)$ membership time. Boolean combinations can be performed either on pattern sets before realization or on the resulting predicates; Theorem 5.1 guarantees identical results.
+
+### 8.4 Feasibility beyond finite enumeration
+
+For affine threshold gates on $\mathbb R^n$, a candidate pattern specifies a system of linear weak and strict inequalities. Feasibility becomes a linear-inequality question, with care required for strict constraints. Enumerating all $2^k$ candidates gives an exponential worst-case procedure, but arrangement methods can exploit dimension and shared structure. For deep ReLU networks, fixing a complete activation pattern makes each layer affine on that candidate cell; feasibility can then be checked through recursively induced linear constraints, although degeneracy and boundary conventions must be handled explicitly.
+
+## 9. Applications
+
+**Semantic compression.** If all downstream labels are activation-invariant, retaining one representative per feasible pattern loses no relevant information. The factorization theorem precisely states the condition under which this compression is sound.
+
+**Testing and coverage.** Raw gate count suggests $2^k$ possible tests, but infeasible patterns should not be treated as missing coverage. The feasible space provides the correct target universe. Enumeration or feasibility solving can separate unreachable states from untested reachable ones.
+
+**Redundancy detection.** A surprisingly small $|F_a|$ can reveal duplicated, correlated, or constrained gates. Comparing $|F_a|$ with $2^k$ gives a coarse utilization ratio
+
+$$
+\rho(a)=\frac{|F_a|}{2^k},
+$$
+
+with $0\le\rho(a)\le 1$ and $\rho(a)=1$ exactly under surjectivity.
+
+**Rule extraction.** A binary activation-invariant classifier corresponds to a subset $U\subseteq F_a$. It can therefore be represented as a Boolean union of singleton atoms or simplified using ordinary Boolean minimization. The resulting rule is exact on the feasible space, even if its extension to infeasible bit strings is chosen arbitrarily.
+
+**Capacity accounting.** The full family of invariant regions has VC dimension $|F_a|$, not necessarily $2^k$. Restricted parameterized output families may have smaller VC dimension. The feasible count supplies an immediate upper bound whenever every permitted concept is activation-invariant.
+
+**Interpretability.** Each atom describes an equivalence class of inputs that the selected activation map cannot distinguish. Explanations formulated at the atom level expose precisely what information has been retained and discarded.
+
+## 10. Limits of the correspondence
+
+First, a deep network with $k$ neurons does not generally define merely $k$ global input hyperplanes. A neuron in a later layer applies an affine function to earlier piecewise-affine outputs; as a function of the original input, its preactivation is usually piecewise affine. The resulting cells cannot be counted by treating all neurons as one ordinary global hyperplane arrangement.
+
+Second, activation patterns need not coincide with maximal linear regions. Distinct feasible patterns may induce the same affine map because of zero weights or cancellation. Boundary conventions may split or merge descriptions. Conversely, a notion of linear region based on connected maximal domains carries geometric information not contained in a bare pattern set. Equality requires explicit genericity and nondegeneracy assumptions.
+
+Third, the theorem on VC dimension applies to $\mathcal P(F_a)$, the family of every possible labeling of feasible patterns. A practical output layer may realize only a restricted subfamily. Its VC dimension is then at most $|F_a|$ but need not attain the bound.
+
+Fourth, the finite semantic space depends on the chosen activation map. Selecting only some gates produces a coarser quotient; adding gates may refine it. This dependence can be useful for multiscale analysis but should be made explicit.
+
+## 11. Discussion and future work
+
+The finite theory supplies a rigorous foundation for a broader program connecting neural activation geometry, Boolean algebras, and Stone spaces. The next topological step is to state the finite discrete topology explicitly and identify its clopen algebra, then formulate realization as a Boolean-algebra embedding. Although this is immediate at the finite level, it prepares comparison with classical Stone spectra and ultrafilters.
+
+For one-layer affine threshold or ReLU systems, feasibility should be related directly to nonempty systems of linear inequalities. This opens the door to hyperplane-arrangement bounds such as dimension-sensitive estimates smaller than $2^k$. One can then state genericity hypotheses under which nonempty activation cells correspond to geometric linear regions.
+
+For deep networks, the natural program is inductive: fix a candidate pattern, derive the affine formula within that cell layer by layer, and prove that satisfying the accumulated constraints is equivalent to realizing the pattern. This would connect the abstract quotient developed here to polyhedral computation.
+
+On the learning-theoretic side, parameterized output families on a fixed feasible complex deserve separate study. The universal upper bound $|F_a|$ follows from containment in the powerset, while equality requires the ability to assign arbitrary labels to all atoms. Intermediate families may be analyzed through growth functions, algebraic restrictions, margin conditions, or output-layer geometry.
+
+Finally, replacing the explicit powerset with the Stone spectrum of a finite Boolean algebra would provide a coordinate-free presentation. Ultrafilters would correspond to atoms, and an explicit homeomorphism would recover the feasible points. Such a formulation may extend naturally when activation propositions are quotiented by logical relations or when infinite families of predicates are considered.
+
+## 12. Conclusion
+
+A network’s binary gates define a finite semantic quotient of its input space. The quotient consists of feasible activation patterns, has at most $2^k$ points, and reaches that bound exactly when every formal pattern occurs. Activation-invariant classifiers descend uniquely to it. Its powerset embeds faithfully into input-space regions and represents exactly the regions constant on activation fibres. The atoms are singleton feasible patterns, and the full family of pattern subsets has VC dimension equal to their number.
+
+These facts provide a precise finite Stone-style duality: feasible patterns are points, Boolean subsets are clopen propositions, and pullback supplies their geometric meaning. The formulation also enforces crucial distinctions. Formal patterns may be infeasible; atoms are not all algebra elements; one fixed decision region is not a hypothesis class; and activation patterns are not automatically linear regions. With those distinctions in place, Boolean syntax and neural geometry fit together in an exact and reusable mathematical framework.

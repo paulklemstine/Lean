@@ -1,220 +1,154 @@
-# The Hidden Logic Inside a Neural Network
+# The Hidden Boolean World Inside a Neural Network
 
-## A machine that draws lines
+A neural network is usually pictured as a river of numbers. Inputs enter, matrices multiply them, nonlinearities bend them, and a prediction emerges. Yet beneath that continuous flow lies a sharply discrete world: every rectified linear unit is either active or inactive. If a network has $k$ such gates, each input produces a binary string of length $k$.
 
-Picture the simplest interesting decision a machine can make: *yes* or *no*.
-Is this photo a cat? Is this transaction fraud? Is this tumor malignant? A
-neural network answers such questions by carving the space of all possible
-inputs into regions and painting each region with an answer. Inside one region
-the machine says *yes*; step across a boundary and it says *no*.
+That observation suggests a striking change of viewpoint. Instead of asking only what numerical value the network computes, we can ask which on–off pattern it occupies. The resulting collection of patterns is a finite semantic space for the network. It is a place where Boolean logic, geometry, and statistical learning meet.
 
-For the workhorse networks of modern machine learning — those built from the
-humble *rectified linear unit*, or ReLU — these boundaries are not smooth,
-mysterious curves. They are made of perfectly straight pieces: flat walls,
-creases, and folds. Each artificial neuron computes a weighted sum of its
-inputs and then "switches on" only when that sum crosses zero. The set of
-points where a neuron sits exactly at its threshold is a flat hyperplane, and
-the network's entire decision surface is assembled from these flat pieces.
+The central lesson is both elegant and cautionary. A network with $k$ gates has at most $2^k$ feasible activation patterns, but it need not have all of them. Its activation-invariant decision regions form a Boolean algebra whose indivisible pieces are precisely the feasible patterns. Every classifier that depends only on those patterns factors uniquely through this finite space. And if one allows every possible labeling of the feasible patterns, the resulting concept family has VC dimension exactly equal to the number of feasible patterns.
 
-This is a familiar picture to anyone who has studied deep learning. What is
-far less familiar — and genuinely surprising — is that this geometric picture
-has an exact *algebraic twin*. Every such network secretly carries around a
-piece of pure logic: a **Boolean algebra**, the same kind of algebra that
-governs *and*, *or*, and *not*. The geometry you can see (the regions and their
-boundaries) and the logic you cannot (the algebra of yes/no combinations) turn
-out to be two faces of a single object. The bridge between them is a classical
-and beautiful theorem called **Stone duality**.
+These statements make a precise Stone-style duality for neural activations—without confusing possible bit strings with realizable ones, or a single classifier with an entire hypothesis class.
 
-This article is about that bridge, and about a clean, fully rigorous account of
-how it applies to a layer of a neural network.
+## From inputs to patterns
 
-## Two languages for one idea
+Let $X$ be an input space and suppose a system contains $k$ binary gates. Its activation map is a function
 
-In the 1930s, the mathematician Marshall Stone proved something that still
-feels like a magic trick. On one side he placed **Boolean algebras** — abstract
-systems of propositions closed under *and*, *or*, and *not*, obeying the laws
-of ordinary logic. On the other side he placed certain **topological spaces**,
-geometric objects made of points and neighborhoods. Stone showed that these two
-worlds are *the same world*, seen from two angles.
+$$
+a:X\longrightarrow\{0,1\}^k.
+$$
 
-More precisely, **every Boolean algebra is exactly the algebra of "clopen"
-(simultaneously closed and open) sets of an associated space**, its *Stone
-space*. The abstract propositions become concrete regions; logical *and*
-becomes intersection, *or* becomes union, *not* becomes complement. Syntax — the
-rules for manipulating symbols — becomes semantics — the actual shapes those
-symbols describe. You can compute in whichever language is more convenient and
-translate the answer back.
+For each input $x$, the vector $a(x)$ records which gates are on. The full cube $\{0,1\}^k$ contains $2^k$ formal patterns, but only some may actually occur. We therefore define the **feasible activation space**
 
-Stone duality is one of the great unifying results of twentieth-century
-mathematics, quietly underlying logic, topology, and theoretical computer
-science. The claim of this article is that it also lives, concretely and
-usefully, inside a neural network.
+$$
+F_a=\{a(x):x\in X\}.
+$$
 
-## The syntax: patterns of firing neurons
+This range, rather than the whole Boolean cube, is the correct finite model of the network’s realized behavior.
 
-Take a single layer of a network: $n$ neurons, each looking at the same input.
-Feed the layer an input point $x$. Each neuron either fires or stays silent, so
-the layer's response is a string of $n$ bits — an **activation pattern**. We
-write it as a function
-$$\mathrm{act}(x) : \{1, \dots, n\} \to \{\text{off}, \text{on}\},$$
-recording, for each neuron, whether it is on or off at $x$.
+Why can patterns fail to occur? Two neurons may always switch together. One gate may duplicate another. Geometric constraints may make a combination of signs impossible. In a simple one-dimensional example, take two threshold gates
 
-There are exactly $2^n$ conceivable patterns — every combination of on/off
-across $n$ neurons. This complete collection of $2^n$ possible patterns is our
-**syntax**. Crucially, it is already a Boolean algebra: patterns can be
-combined with *and*, *or*, and *not* bit by bit, exactly like propositions.
-Nothing about the network is needed to see this; it is pure combinatorics of
-bit strings.
+$$
+a_1(x)=\mathbf 1[x>0],\qquad a_2(x)=\mathbf 1[x>1].
+$$
 
-But a given network, on a given collection of inputs, does not usually realize
-all $2^n$ patterns. Some combinations of firing neurons are geometrically
-impossible. The patterns that *do* occur are precisely the network's **linear
-regions** — the flat cells into which the layer partitions its inputs. Two
-inputs land in the same region exactly when every neuron treats them alike.
+As $x$ moves along the line, the realized patterns are $00$, $10$, and $11$. The pattern $01$ is impossible: one cannot have $x>1$ while also having $x\le 0$. Thus two gates produce three feasible states, not four.
 
-How many linear regions can there be? Our first results pin this down with two
-complementary ceilings. First, since every region corresponds to a distinct
-pattern, and there are only $2^n$ patterns, there can be **at most $2^n$
-regions**. This is a bound imposed by the *syntax*: the algebra of bit strings
-is only so big. Second, if we only ever test the layer on a finite sample of
-$m$ input points, then obviously there can be **at most $m$ regions** — you
-cannot have more cells than points to put in them. Combining these gives the
-clean statement:
+This gives the first counting theorem.
 
-> **Region bound.** A layer of $n$ neurons, evaluated on a sample of $m$
-> points, realizes at most $\min(2^n,\, m)$ linear regions.
+**Feasible-Pattern Bound.** For any activation map with $k$ binary gates, the number of feasible patterns satisfies
 
-## The semantics: decision regions
+$$
+|F_a|\le 2^k.
+$$
 
-Now flip the picture around. A working classifier does not care about a single
-pattern; it cares about *sets* of patterns. "Say *cat* whenever the pattern is
-one of these; say *dog* otherwise." So fix any set $S$ of activation patterns
-and collect all the input points whose pattern belongs to $S$:
-$$\mathrm{region}(S) = \{\, x : \mathrm{act}(x) \in S \,\}.$$
-This is a **decision region** — a genuine subset of the input space, the *shape*
-that the abstract set of patterns $S$ carves out in reality. As $S$ ranges over
-all possible sets of patterns, the decision regions form a family we call the
-**decision algebra** of the layer. This is our **semantics**.
+Moreover, equality holds exactly when the activation map is onto $\{0,1\}^k$, meaning that every formal pattern is realized by at least one input.
 
-Here is the first half of the duality, made precise. The map that sends a set
-of patterns $S$ to its decision region is a perfect **dictionary** between the
-two languages:
+The equality condition matters. The familiar number $2^k$ is a capacity ceiling, not an automatic count.
 
-> **The pattern-to-region map is a Boolean homomorphism.** The empty set of
-> patterns maps to the empty region; the full set maps to the whole space;
-> and for any sets $S$ and $T$,
-> $$\mathrm{region}(S \cup T) = \mathrm{region}(S) \cup \mathrm{region}(T),\quad
-> \mathrm{region}(S \cap T) = \mathrm{region}(S) \cap \mathrm{region}(T),$$
-> with complements matching complements. Logical *or*, *and*, *not* on the
-> syntax become union, intersection, complement on the geometry.
+## Compressing a classifier without losing information
 
-This is exactly the translation Stone promised: manipulate the symbols, or
-manipulate the shapes; the answer is the same.
+Suppose a classifier $f:X\to Y$ gives the same label whenever two inputs have the same activation pattern. In symbols,
 
-## The atoms: where geometry and logic meet
+$$
+a(x)=a(y)\quad\Longrightarrow\quad f(x)=f(y).
+$$
 
-A Boolean algebra is built from its **atoms** — its smallest nonzero pieces,
-the indivisible propositions from which everything else is assembled by *or*.
-What are the atoms of a network's decision algebra?
+Call such a classifier **activation-invariant**. It cannot distinguish inputs lying in the same activation fibre. Therefore it can be compressed to a function on the finite feasible space.
 
-The answer is as clean as one could hope: **the atoms are exactly the linear
-regions.** Each individual pattern that actually occurs picks out one
-indivisible cell of input space, and every decision region is a union of these
-cells. Two different collections of realized patterns always produce two
-different decision regions — no information is lost in translation, and nothing
-collapses. In the language of the theory, the pattern-to-region dictionary is
-*faithful*: distinct sets of realized patterns give distinct regions.
+**Factorization Theorem.** If $f$ is activation-invariant, then there is a unique function $\bar f:F_a\to Y$ such that
 
-Two subtle points make this precise and honest. First, patterns that never
-actually occur are simply invisible to the geometry — a decision region depends
-only on the *realized* patterns, so we lose nothing by throwing the impossible
-patterns away. Second, once we restrict to realized patterns, the dictionary
-becomes not just a homomorphism but a genuine one-to-one correspondence.
+$$
+f=\bar f\circ a.
+$$
 
-Putting these together yields the centerpiece.
+The proof is conceptually simple. For a feasible pattern $p$, choose any input $x$ with $a(x)=p$ and define $\bar f(p)=f(x)$. Activation invariance guarantees that a different representative gives the same answer. Since every feasible pattern has an input witness, no alternative definition of $\bar f$ can satisfy the same factorization.
 
-## Stone duality, counted exactly
+This theorem turns the activation pattern into a sufficient statistic for any activation-invariant output. Potentially enormous or continuous input spaces are compressed to a finite set without changing the classifier.
 
-Here is the punchline, a precise counting law that ties the whole story
-together:
+## A Boolean algebra of decision regions
 
-> **Stone Duality Theorem for a Neural Layer.** If a layer realizes exactly $r$
-> linear regions on a sample, then its decision algebra contains exactly $2^r$
-> decision regions.
+Now label not just individual patterns but sets of patterns. For a subset $U\subseteq F_a$, define its realized input region by pulling it back:
 
-Read it slowly, because it says something remarkable. The messy, continuous,
-high-dimensional geometry of a neural network's decision surface — all its
-folds and creases on a given dataset — is completely captured by a single
-integer $r$, the number of linear regions. And the full Boolean algebra of
-decisions the layer can express is then, on the nose, the algebra of *all
-subsets* of those $r$ regions: a finite Boolean algebra with $2^r$ elements.
-This is precisely the finite case of Stone duality: a finite Boolean algebra
-with $r$ atoms is the algebra of clopen subsets of the $r$-point discrete
-space. Here that $r$-point space *is* the set of linear regions, and its clopen
-subsets *are* the decision regions. Syntax and semantics, counted and matched.
+$$
+R_U=\{x\in X:a(x)\in U\}.
+$$
 
-## Capacity, honestly
+This operation translates Boolean syntax on patterns into geometry on inputs. Complementing $U$ complements $R_U$, and intersecting two pattern sets intersects their realized regions:
 
-This structural picture immediately says something about *learning*. A central
-question in machine learning is **capacity**: how complex a set of labelings
-can a model express? The gold-standard measure is the *VC dimension* — the
-largest number of points the model can *shatter*, meaning label in every one of
-the $2^m$ possible yes/no ways.
+$$
+R_{F_a\setminus U}=X\setminus R_U,
+\qquad
+R_{U\cap V}=R_U\cap R_V.
+$$
 
-The counting law gives a genuine capacity ceiling. To shatter a sample of $m$
-points, a layer must realize a distinct pattern for every point (otherwise two
-points share a fate and cannot be separated), and there are only $2^n$ patterns
-to go around. Hence:
+Unions follow from these operations. Distinct subsets of $F_a$ also give distinct input regions, because each feasible pattern has at least one witnessing input. Thus the entire powerset $\mathcal P(F_a)$ embeds faithfully into the collection of regions of $X$.
 
-> **Capacity bound.** A layer of $n$ neurons can shatter a sample of at most
-> $2^n$ points.
+Which regions appear this way? Exactly those that do not split an activation fibre.
 
-It is worth being candid about a tempting but *false* conjecture that this work
-corrects. One might guess that the VC dimension of a network simply equals its
-number of linear regions. It does not. A single affine neuron acting on
-$d$-dimensional inputs has VC dimension $d+1$ — a number governed by the
-*geometry of half-spaces*, not by any count of regions. The honest, provable
-statements are the ones above: the atoms of the decision algebra are the linear
-regions, the algebra has $2^r$ elements, and shattering $m$ points requires
-$m \le 2^n$. Precision here matters more than a tidy slogan.
+**Region Representation Theorem.** A region $R\subseteq X$ is constant on activation fibres—that is,
 
-## From abstraction to real weights
+$$
+a(x)=a(y)\quad\Longrightarrow\quad(x\in R\Longleftrightarrow y\in R)
+$$
 
-None of this is confined to the abstract. A concrete ReLU layer is specified by
-a matrix of weights $W$ and a vector of biases $b$: neuron $i$ fires at input
-$x$ exactly when its pre-activation
-$$\langle W_i, x\rangle + b_i$$
-is positive. Plugging these explicit formulas into the activation-pattern map
-turns every abstract theorem above into a statement about an actual network. In
-particular, a real ReLU layer of $n$ neurons realizes at most $\min(2^n, m)$
-linear regions on any sample of $m$ inputs, and its decision algebra has
-exactly $2^r$ members where $r$ is the number of regions it actually cuts. The
-accompanying numerical experiments confirm every one of these counts on small
-networks, down to the last region.
+—if and only if there is a unique subset $U\subseteq F_a$ for which $R=R_U$.
 
-## Why this is worth caring about
+So the finite Boolean algebra $\mathcal P(F_a)$ is neither an arbitrary abstraction nor merely an approximation. It is exactly the algebra of all activation-invariant regions in input space.
 
-The romance of the result is the unification. Deep learning is usually told as
-a story about geometry and optimization — surfaces, gradients, landscapes. Logic
-and topology feel like a different subject entirely. Stone duality says they are
-not. Inside every ReLU layer there is a Boolean algebra, and its geometric
-realization is the decision surface you were looking at all along. The
-activation patterns are the *syntax*; the decision regions are the *semantics*;
-and a two-century-old thread of pure mathematics stitches them together
-exactly.
+This is the Stone-style heart of the picture. In finite Stone duality, a Boolean algebra can be understood through its points, while clopen sets encode Boolean propositions. Here the points are feasible activation patterns. Because $F_a$ is finite and discrete, every subset is clopen. A subset says which patterns receive a positive label; its pullback is the corresponding decision region in the original input geometry.
 
-There is also a practical undertone. Counting linear regions is a standard proxy
-for a network's expressive power, and framing that count as *the number of atoms
-of a Boolean algebra* connects it to the mature toolkit of logic and
-combinatorics: growth functions, shattering, and the exact bookkeeping of Stone
-duality. It suggests that questions about what a network *can express* might be
-answered not only with calculus, but with the algebra of *and*, *or*, and
-*not*.
+## The atoms: indivisible semantic states
 
-The next steps write themselves. Assemble the decision algebra into an honest
-topological Stone space and watch the linear regions become its points.
-Stack many layers and track how the algebra grows. Trade the finite sample for
-a full arrangement of hyperplanes in space and connect the region count to the
-classical formulas of combinatorial geometry. Each is a bridge waiting to be
-crossed — and each starts from the same quiet observation: a machine that draws
-lines is also, secretly, doing logic.
+Every finite Boolean algebra has atoms: nonempty elements containing no smaller nonempty element. In a powerset algebra, these are exactly the singleton sets.
+
+**Atom Theorem.** The atoms of $\mathcal P(F_a)$ are precisely the sets $\{p\}$ with $p\in F_a$. Consequently,
+
+$$
+\#\text{atoms}=|F_a|\le 2^k.
+$$
+
+It is important not to confuse atoms with all Boolean elements. If there are $r=|F_a|$ feasible patterns, then the algebra has $r$ atoms but $2^r$ elements. The atoms are elementary activation states; arbitrary decision regions are unions of those states.
+
+For the two-threshold example, the three feasible states $00$, $10$, and $11$ are the three atoms. There are $2^3=8$ activation-invariant regions, ranging from the empty region to the whole line.
+
+## What VC dimension really counts
+
+VC dimension belongs to a family of concepts, not to a single fixed decision region. A concept family shatters a finite set $S$ if every subset of $S$ can be obtained by intersecting $S$ with some concept in the family.
+
+Take the richest possible family on $F_a$: all subsets $\mathcal P(F_a)$. It can realize every labeling of every set of feasible patterns.
+
+**Exact VC-Dimension Theorem.** If $F_a$ is finite, then the full powerset concept family has VC dimension
+
+$$
+\operatorname{VCdim}(\mathcal P(F_a))=|F_a|.
+$$
+
+Indeed, the whole feasible space is shattered: for any desired labeling, choose exactly the positively labeled patterns. No subset larger than $F_a$ exists, so the bound is sharp.
+
+By contrast, a family containing only one fixed region cannot shatter any nonempty set. Pick a point in such a set. Shattering would require both labeling it positive and labeling it negative, but a single region supplies only one trace. This resolves a common category error: one may study the VC dimension of a parameterized family of networks or of all activation-invariant regions, but not meaningfully assign a positive VC dimension to one frozen classifier viewed alone.
+
+Combining the results yields
+
+$$
+\operatorname{VCdim}(\mathcal P(F_a))
+=\#\text{atoms}
+=|F_a|
+\le 2^k.
+$$
+
+This equality is exact for the full Boolean family on feasible patterns. It is not automatically an equality with the number of linear regions of an arbitrary neural network.
+
+## Geometry still matters
+
+Activation patterns and geometric linear regions often travel together, especially in ReLU networks, but they are not interchangeable without assumptions. Degenerate weights can make different patterns describe the same affine behavior. Conversely, subtleties at gate boundaries can make region conventions differ. In deep networks, later preactivations are generally piecewise affine functions of the original input, not a single global arrangement of one hyperplane per neuron.
+
+The finite semantic model therefore clarifies what is universal and what requires extra geometry. Universally, patterns form a finite quotient; invariant classifiers factor through it; invariant regions form a powerset algebra; and its atoms and full-family VC dimension are counted exactly. Relating those atoms to connected polyhedral cells or maximal affine regions requires nondegeneracy and feasibility hypotheses.
+
+That distinction is productive rather than disappointing. It separates combinatorial capacity from geometric realizability. The number $2^k$ describes the size of the formal Boolean cube. The smaller number $|F_a|$ records what the network can actually experience. Hyperplane-arrangement theory, optimization, and data geometry can then be used to estimate or compute the gap.
+
+## A new map of network behavior
+
+The Stone-style viewpoint offers a clean three-level story. Inputs live in a potentially continuous geometric world. The activation map sends them to a finite space of feasible patterns. Boolean subsets of that space encode all activation-invariant decisions, and pulling them back restores regions in the original input space.
+
+This perspective has practical echoes. Feasible patterns can support compressed explanations: two inputs with the same pattern are indistinguishable to every activation-invariant classifier. They can organize test coverage, because unreachable bit strings should not be counted as observed behaviors. They can expose redundancy, since correlated gates shrink the feasible space. And they suggest capacity bounds based on realized semantic states rather than raw neuron count.
+
+The deepest message is a disciplined version of duality. Syntax consists of Boolean combinations of feasible activation states. Semantics consists of the input regions those combinations describe. The bridge between them is exact, faithful, and finite. A neural network does have a Stone-like shadow—but its points are the patterns the network can realize, not every pattern we can write down.
