@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "e0f3150d",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions\n\n## 1. Oriented-matroid magnitude ranks are controlled by bounded-complex face data\n\n**Conjecture.** For every finite realizable oriented matroid, each diagonal magnitude-homology",
-      "quality_score": 0.67,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-07-15T21:19:26",
-      "title": "ArXiv paper: Magnitude homology of tope graphs"
-    },
-    {
       "cycle_id": "7c4372de",
       "domain": "Applications",
       "key_insight": "# Future directions\n\nThe formalization now provides a finite-set model of zero forcing, proves that the minimum is attained, establishes the general bound `Z(G) ≤ |V| - 1` for graphs without isolated",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-19T11:52:48",
       "title": "Surveillance Networks: Information-Theoretic Undetectability"
+    },
+    {
+      "cycle_id": "3603d4d1",
+      "domain": "Geometry",
+      "key_insight": "",
+      "quality_score": 0.5663199999999999,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-19T12:11:39",
+      "title": "Transfinite Game Theory: Games That Last Forever"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-19T11:52:48",
+  "last_updated": "2026-07-19T12:11:39",
   "open_questions": [
     {
       "context": "",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "d4584015",
-        "quality": 0.82,
-        "theorems": 0,
-        "title": "ArXiv paper: Adjoint Bloch--Kato Selmer groups of regular algebraic automorphic "
-      },
-      {
         "cycle_id": "f6b1d920",
         "quality": 0.76,
         "theorems": 6,
@@ -3451,6 +3445,12 @@
         "quality": 0.69,
         "theorems": 20,
         "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
+      },
+      {
+        "cycle_id": "3603d4d1",
+        "quality": 0.5663199999999999,
+        "theorems": 0,
+        "title": "Transfinite Game Theory: Games That Last Forever"
       }
     ],
     "Logic": [
