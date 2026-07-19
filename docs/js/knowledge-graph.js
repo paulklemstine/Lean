@@ -393,7 +393,8 @@
             const a = nodeMap[e.source], b = nodeMap[e.target];
             if (!a || !b) return;
             const mi = minImageDelta(a.x, a.y, b.x, b.y);
-            if (mi.d2 <= EDGE_DRAW_DISTANCE * EDGE_DRAW_DISTANCE) union(e.source, e.target);
+            if (mi.d2 <= EDGE_DRAW_DISTANCE * EDGE_DRAW_DISTANCE) e.locked = true;
+            if (e.locked || mi.d2 <= EDGE_DRAW_DISTANCE * EDGE_DRAW_DISTANCE) union(e.source, e.target);
         });
         const components = new Map();
         graphNodes.forEach(n => {
@@ -491,7 +492,8 @@
             if (!a || !b) return;
             if (a === dragNode || b === dragNode) return;
             const mi = minImageDelta(a.x, a.y, b.x, b.y);
-            if (mi.d2 > EDGE_DRAW_DISTANCE * EDGE_DRAW_DISTANCE) return; // only when close enough to light up
+            if (mi.d2 <= EDGE_DRAW_DISTANCE * EDGE_DRAW_DISTANCE) e.locked = true;
+            if (!e.locked && mi.d2 > EDGE_DRAW_DISTANCE * EDGE_DRAW_DISTANCE) return; // only when close enough to light up
             const d = Math.sqrt(mi.d2) || 1;
             const f = EDGE_SPRING_K * (d - EDGE_SPRING_REST) / d;
             const fx = mi.dx * f;
@@ -1307,7 +1309,8 @@
             if (!a || !b) return;
             const miAB = minImageDelta(a.x, a.y, b.x, b.y, _miResult);
             const miBA = minImageDelta(b.x, b.y, a.x, a.y, _miResult2);
-            if (miAB.d2 > EDGE_DRAW_DISTANCE * EDGE_DRAW_DISTANCE) return;
+            if (miAB.d2 <= EDGE_DRAW_DISTANCE * EDGE_DRAW_DISTANCE) e.locked = true;
+            if (!e.locked && miAB.d2 > EDGE_DRAW_DISTANCE * EDGE_DRAW_DISTANCE) return;
 
             const colA = nodeColor(a), colB = nodeColor(b);
             const strength = e.strength || 1.0;
@@ -1350,7 +1353,8 @@
             if (!a || !b) return;
             const miAB = minImageDelta(a.x, a.y, b.x, b.y);
             const dist = Math.sqrt(miAB.d2);
-            if (dist > EDGE_DRAW_DISTANCE) return;
+            if (dist <= EDGE_DRAW_DISTANCE) p.edge.locked = true;
+            if (!p.edge.locked && dist > EDGE_DRAW_DISTANCE) return;
 
             const isActiveClusterEdge = typeof activeComponent !== 'undefined' && activeComponent !== 'undefined' && activeComponent.some(ce => ce.source === p.edge.source && ce.target === p.edge.target);
             const speedMultiplier = isActiveClusterEdge ? 3.0 : 1.0;
