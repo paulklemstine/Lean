@@ -1,310 +1,210 @@
 #!/usr/bin/env python3
-"""
-Novikov Self-Consistency Principle: Numerical Demonstrations
+"""Numerical demonstrations of contractive causal consistency.
 
-Demonstrates the key theorems from the Lean formalization:
-1. Affine causal maps converge to unique fixed points
-2. Composition of causal loops preserves consistency
-3. Exponential convergence rate matches theoretical bound K^n
-4. Stability under perturbation
+The examples illustrate affine convergence, a posteriori error certificates,
+a nonlinear polynomial contraction on an invariant interval, and two
+fixed-point-free paradox maps. Only the Python standard library is required.
 """
 
-import math
+from __future__ import annotations
+
+from dataclasses import dataclass
+from math import isclose
+from typing import Callable, Generic, Hashable, Iterable, TypeVar
+
+State = TypeVar("State")
+FiniteState = TypeVar("FiniteState", bound=Hashable)
 
 
-def affine_causal_demo():
-    """Demonstrate self-consistency for affine causal map F(x) = ax + b."""
-    print("=" * 60)
-    print("DEMO 1: Affine Causal Map Self-Consistency")
-    print("=" * 60)
+@dataclass(frozen=True)
+class IterationRecord:
+    """One scalar fixed-point iteration and its certified error bound."""
 
-    a, b = 0.3, 700.0
-    fixed_point = b / (1 - a)
-    print(f"\nCausal map: F(x) = {a}*x + {b}")
-    print(f"Theoretical fixed point: x* = {b}/(1-{a}) = {fixed_point}")
-    print(f"Verification: F(x*) = {a}*{fixed_point} + {b} = {a * fixed_point + b}")
-
-    # Iterate from arbitrary starting point
-    x = 0.0
-    print(f"\nIterating from x₀ = {x}:")
-    for n in range(15):
-        x_new = a * x + b
-        error = abs(x - fixed_point)
-        theoretical_error = abs(a) ** n * abs(0.0 - fixed_point)
-        print(f"  n={n:2d}: x = {x:12.6f}, |x - x*| = {error:.2e}, "
-              f"K^n * |x₀ - x*| = {theoretical_error:.2e}")
-        x = x_new
-
-    print(f"\nFinal: x = {x:.10f} (fixed point = {fixed_point:.10f})")
+    step: int
+    value: float
+    residual: float
+    certified_error: float
 
 
-def composition_demo():
-    """Demonstrate self-consistency for composed causal loops."""
-    print("\n" + "=" * 60)
-    print("DEMO 2: Composition of Two Causal Loops")
-    print("=" * 60)
+def iterate_contraction(
+    return_map: Callable[[float], float],
+    contraction_factor: float,
+    initial_state: float,
+    tolerance: float = 1e-10,
+    max_steps: int = 100,
+) -> list[IterationRecord]:
+    """Iterate a scalar contraction until its residual certificate is small.
 
-    # Loop 1: F₁(x) = 0.6x + 200, K₁ = 0.6
-    # Loop 2: F₂(x) = 0.5x + 100, K₂ = 0.5
-    # Composed: F₂∘F₁(x) = 0.5*(0.6x + 200) + 100 = 0.3x + 200
-    # K₁ * K₂ = 0.3 < 1 ✓
-    a1, b1, K1 = 0.6, 200.0, 0.6
-    a2, b2, K2 = 0.5, 100.0, 0.5
+    If ``K`` is the contraction factor, the returned certificate is
+    ``abs(x - F(x)) / (1 - K)``, an upper bound on distance to the fixed point.
+    """
+    if not 0.0 <= contraction_factor < 1.0:
+        raise ValueError("contraction_factor must lie in [0, 1)")
+    if tolerance <= 0.0:
+        raise ValueError("tolerance must be positive")
+    if max_steps < 0:
+        raise ValueError("max_steps must be nonnegative")
 
-    print(f"\nLoop 1: F₁(x) = {a1}x + {b1}, K₁ = {K1}")
-    print(f"Loop 2: F₂(x) = {a2}x + {b2}, K₂ = {K2}")
-    print(f"K₁ × K₂ = {K1 * K2} < 1 ✓")
-
-    # Composed map
-    a_comp = a1 * a2
-    b_comp = a2 * b1 + b2
-    fixed_composed = b_comp / (1 - a_comp)
-    print(f"\nComposed: (F₂∘F₁)(x) = {a_comp}x + {b_comp}")
-    print(f"Fixed point: x* = {b_comp}/(1-{a_comp}) = {fixed_composed:.6f}")
-
-    x = 5000.0
-    print(f"\nIterating composed map from x₀ = {x}:")
-    for n in range(20):
-        x_new = a2 * (a1 * x + b1) + b2
-        error = abs(x - fixed_composed)
-        print(f"  n={n:2d}: x = {x:12.4f}, |x - x*| = {error:.2e}")
-        x = x_new
-
-    print(f"\nConverged to: {x:.10f} (exact: {fixed_composed:.10f})")
+    records: list[IterationRecord] = []
+    x = float(initial_state)
+    for step in range(max_steps + 1):
+        residual = abs(x - return_map(x))
+        certificate = residual / (1.0 - contraction_factor)
+        records.append(IterationRecord(step, x, residual, certificate))
+        if certificate <= tolerance:
+            break
+        x = return_map(x)
+    return records
 
 
-def convergence_rate_demo():
-    """Verify that convergence rate matches K^n bound."""
-    print("\n" + "=" * 60)
-    print("DEMO 3: Convergence Rate Verification")
-    print("=" * 60)
+def affine_return_map(a: float, b: float) -> Callable[[float], float]:
+    """Return the affine causal law F(x) = a*x + b."""
+    return lambda x: a * x + b
 
-    test_cases = [
-        (0.1, 50.0, "Strong contraction (K=0.1)"),
-        (0.5, 50.0, "Moderate contraction (K=0.5)"),
-        (0.9, 50.0, "Weak contraction (K=0.9)"),
-        (0.99, 50.0, "Very weak contraction (K=0.99)"),
-    ]
 
-    for a, b, label in test_cases:
-        fixed = b / (1 - a)
-        x = 0.0
-        iters_to_converge = 0
-        while abs(x - fixed) > 1e-10:
-            x = a * x + b
-            iters_to_converge += 1
-            if iters_to_converge > 10000:
-                break
+def affine_fixed_point(a: float, b: float) -> float:
+    """Compute the unique affine fixed point when abs(a) < 1."""
+    if abs(a) >= 1.0:
+        raise ValueError("the affine consistency theorem requires abs(a) < 1")
+    return b / (1.0 - a)
 
-        # Theoretical bound: K^n * |x0 - x*| < eps
-        # n > log(eps / |x0 - x*|) / log(K)
-        theoretical = math.ceil(
-            math.log(1e-10 / abs(0 - fixed)) / math.log(a)
+
+def polynomial_value(coefficients: list[float], x: float) -> float:
+    """Evaluate coefficients in ascending order by Horner's method."""
+    value = 0.0
+    for coefficient in reversed(coefficients):
+        value = value * x + coefficient
+    return value
+
+
+def sample_interval_conditions(
+    coefficients: list[float],
+    lower: float,
+    upper: float,
+    samples: int = 1001,
+) -> tuple[bool, float]:
+    """Sample invariance and a derivative bound on an interval.
+
+    This is a numerical illustration, not a proof of global interval bounds.
+    The derivative is evaluated analytically at an evenly spaced grid.
+    """
+    if lower > upper:
+        raise ValueError("lower must not exceed upper")
+    if samples < 2:
+        raise ValueError("samples must be at least two")
+    derivative = [i * coefficients[i] for i in range(1, len(coefficients))]
+    invariant = True
+    max_derivative = 0.0
+    for i in range(samples):
+        x = lower + (upper - lower) * i / (samples - 1)
+        y = polynomial_value(coefficients, x)
+        invariant = invariant and lower <= y <= upper
+        max_derivative = max(
+            max_derivative, abs(polynomial_value(derivative, x))
+        )
+    return invariant, max_derivative
+
+
+def find_finite_fixed_points(
+    states: Iterable[FiniteState],
+    return_map: Callable[[FiniteState], FiniteState],
+) -> list[FiniteState]:
+    """Enumerate all fixed points of a finite table-defined return map."""
+    return [state for state in states if return_map(state) == state]
+
+
+def trace_finite_orbit(
+    return_map: Callable[[FiniteState], FiniteState],
+    initial_state: FiniteState,
+) -> tuple[list[FiniteState], list[FiniteState]]:
+    """Trace a finite orbit and return its transient prefix and eventual cycle."""
+    first_seen: dict[FiniteState, int] = {}
+    orbit: list[FiniteState] = []
+    state = initial_state
+    while state not in first_seen:
+        first_seen[state] = len(orbit)
+        orbit.append(state)
+        state = return_map(state)
+    cycle_start = first_seen[state]
+    return orbit[:cycle_start], orbit[cycle_start:]
+
+
+def print_records(title: str, records: list[IterationRecord], exact: float) -> None:
+    """Print selected rows from an iteration table."""
+    print(f"\n{title}")
+    print("step        value         residual       certificate     actual error")
+    selected = records[:8]
+    if len(records) > 9:
+        selected += [records[-1]]
+    for record in selected:
+        print(
+            f"{record.step:4d}  {record.value:13.9f}  "
+            f"{record.residual:13.6e}  {record.certified_error:13.6e}  "
+            f"{abs(record.value - exact):13.6e}"
         )
 
-        print(f"\n{label}:")
-        print(f"  Iterations needed: {iters_to_converge}")
-        print(f"  Theoretical bound: {theoretical}")
-        print(f"  Ratio: {iters_to_converge / theoretical:.2f}")
+
+def demonstrate_affine_consistency() -> None:
+    """Show global convergence to the fixed point of x -> x/2 + 3."""
+    a, b = 0.5, 3.0
+    return_map = affine_return_map(a, b)
+    exact = affine_fixed_point(a, b)
+    for initial in (0.0, 20.0):
+        records = iterate_contraction(return_map, abs(a), initial, 1e-9, 100)
+        print_records(f"Affine loop from x0={initial:g}; fixed point={exact:g}", records, exact)
+        assert all(
+            abs(record.value - exact) <= record.certified_error + 1e-12
+            for record in records
+        )
 
 
-def stability_demo():
-    """Demonstrate perturbation stability."""
-    print("\n" + "=" * 60)
-    print("DEMO 4: Perturbation Stability")
-    print("=" * 60)
-
-    a, b = 0.4, 300.0
-    fixed = b / (1 - a)
-
-    x1, x2 = 100.0, 100.5  # Two nearby initial states
-    initial_dist = abs(x1 - x2)
-
-    print(f"\nCausal map: F(x) = {a}x + {b}, K = {a}")
-    print(f"Initial states: x₁ = {x1}, x₂ = {x2}")
-    print(f"Initial distance: {initial_dist}")
-    print(f"\nEvolution:")
-
-    for n in range(20):
-        actual_dist = abs(x1 - x2)
-        bound = a ** n * initial_dist
-        print(f"  n={n:2d}: dist = {actual_dist:.2e}, "
-              f"bound K^n·d₀ = {bound:.2e}, "
-              f"ratio = {actual_dist / bound if bound > 0 else 0:.4f}")
-        x1 = a * x1 + b
-        x2 = a * x2 + b
-
-    print(f"\nBoth converge to x* = {fixed}")
+def demonstrate_polynomial_domain() -> None:
+    """Show a nonlinear polynomial contraction on the invariant interval [-1, 1]."""
+    # p(x) = 0.2*x^2 + 0.3*x + 0.1. On [-1,1],
+    # p([-1,1]) is contained in [-1,1] and |p'(x)| = |0.4*x+0.3| <= 0.7.
+    coefficients = [0.1, 0.3, 0.2]
+    return_map = lambda x: polynomial_value(coefficients, x)
+    invariant, sampled_derivative_bound = sample_interval_conditions(
+        coefficients, -1.0, 1.0
+    )
+    contraction_factor = 0.7
+    records = iterate_contraction(return_map, contraction_factor, -1.0, 1e-10, 100)
+    approximate_fixed_point = records[-1].value
+    print("\nNonlinear polynomial loop on [-1, 1]")
+    print(f"sampled interval invariance: {invariant}")
+    print(f"sampled max |p'(x)|: {sampled_derivative_bound:.6f}")
+    print(f"fixed-point approximation: {approximate_fixed_point:.12f}")
+    print(f"certified error bound: {records[-1].certified_error:.3e}")
+    assert invariant
+    assert sampled_derivative_bound <= contraction_factor + 1e-12
+    assert abs(return_map(approximate_fixed_point) - approximate_fixed_point) <= 1e-10
 
 
-def polynomial_causal_demo():
-    """Demonstrate self-consistency for a polynomial causal map."""
-    print("\n" + "=" * 60)
-    print("DEMO 5: Polynomial Causal Map")
-    print("=" * 60)
+def demonstrate_paradoxes() -> None:
+    """Display algebraic and finite failures outside the contraction hypotheses."""
+    # x^2 + 1 = x has discriminant -3, hence no real fixed point.
+    discriminant = (-1.0) ** 2 - 4.0
+    print("\nQuadratic map F(x)=x^2+1")
+    print(f"fixed-point discriminant: {discriminant:g} (negative: no real solution)")
+    assert discriminant < 0.0
 
-    # F(x) = 0.1x² - 0.3x + 2 on [-1, 3]
-    # F'(x) = 0.2x - 0.3, max |F'| on [-1,3] = max(0.5, 0.3) = 0.5 < 1
-    def F(x):
-        return 0.1 * x ** 2 - 0.3 * x + 2
-
-    def Fprime(x):
-        return 0.2 * x - 0.3
-
-    print("\nCausal map: F(x) = 0.1x² - 0.3x + 2")
-    print(f"Max |F'(x)| on [-1, 3] = {max(abs(Fprime(-1)), abs(Fprime(3)))}")
-    print("Contraction on [-1, 3]: ✓ (K = 0.5)")
-
-    x = 0.0
-    print(f"\nIterating from x₀ = {x}:")
-    prev_x = x
-    for n in range(25):
-        x_new = F(x)
-        if n > 0:
-            change = abs(x - prev_x)
-            print(f"  n={n:2d}: x = {x:12.8f}, |Δx| = {change:.2e}")
-        else:
-            print(f"  n={n:2d}: x = {x:12.8f}")
-        prev_x = x
-        x = x_new
-
-    # Verify: solve 0.1x² - 0.3x + 2 = x → 0.1x² - 1.3x + 2 = 0
-    # x = (1.3 ± sqrt(1.69 - 0.8)) / 0.2 = (1.3 ± sqrt(0.89)) / 0.2
-    disc = 1.69 - 0.8
-    x_sol1 = (1.3 - math.sqrt(disc)) / 0.2
-    x_sol2 = (1.3 + math.sqrt(disc)) / 0.2
-    print(f"\nExact fixed points: {x_sol1:.8f} and {x_sol2:.8f}")
-    print(f"Iteration converged to: {x:.8f} (attracting fixed point)")
-    print(f"Verification: F({x:.8f}) = {F(x):.8f}")
+    negate = lambda value: not value
+    fixed_points = find_finite_fixed_points([False, True], negate)
+    transient, cycle = trace_finite_orbit(negate, False)
+    print("\nBoolean negation")
+    print(f"fixed points: {fixed_points}")
+    print(f"transient prefix: {transient}; eventual cycle: {cycle}")
+    assert fixed_points == []
+    assert cycle == [False, True]
 
 
-if __name__ == "__main__":
-    affine_causal_demo()
-    composition_demo()
-    convergence_rate_demo()
-    stability_demo()
-    polynomial_causal_demo()
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Convergence of Banach Iteration for Causal Maps
-
-Plots the cobweb diagram and convergence trajectory for affine and
-polynomial causal maps, demonstrating the Novikov self-consistency principle.
-"""
-
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
-import math
-
-
-def plot_cobweb(ax, f, x0, n_iter, x_range, label, color='blue'):
-    """Plot cobweb diagram for iteration x_{n+1} = f(x_n)."""
-    xs = np.linspace(x_range[0], x_range[1], 500)
-    ys = [f(x) for x in xs]
-
-    ax.plot(xs, ys, color=color, linewidth=2, label=f'F(x) = {label}')
-    ax.plot(xs, xs, 'k--', linewidth=1, label='y = x')
-
-    # Cobweb
-    x = x0
-    for i in range(n_iter):
-        y = f(x)
-        ax.plot([x, x], [x if i == 0 else f_prev, y],
-                color='red', linewidth=0.8, alpha=0.6)
-        ax.plot([x, y], [y, y],
-                color='red', linewidth=0.8, alpha=0.6)
-        f_prev = y
-        x = y
-
-
-def main():
-    fig, axes = plt.subplots(2, 2, figsize=(14, 12))
-
-    # Panel 1: Affine map cobweb
-    ax = axes[0, 0]
-    a, b = 0.4, 300
-    f = lambda x: a * x + b
-    fixed = b / (1 - a)
-    plot_cobweb(ax, f, 0, 20, (-100, 800), f'{a}x + {b}', 'royalblue')
-    ax.axhline(y=fixed, color='green', linestyle=':', alpha=0.5)
-    ax.axvline(x=fixed, color='green', linestyle=':', alpha=0.5)
-    ax.scatter([fixed], [fixed], color='green', s=100, zorder=5,
-               label=f'x* = {fixed:.0f}')
-    ax.set_title('Affine Causal Map: Cobweb Diagram', fontsize=13)
-    ax.set_xlabel('x')
-    ax.set_ylabel('F(x)')
-    ax.legend(fontsize=9)
-    ax.grid(True, alpha=0.3)
-
-    # Panel 2: Convergence rate comparison
-    ax = axes[0, 1]
-    K_values = [0.1, 0.3, 0.5, 0.7, 0.9]
-    colors = plt.cm.viridis(np.linspace(0, 0.9, len(K_values)))
-    for K, col in zip(K_values, colors):
-        f_k = lambda x, k=K: k * x + 50
-        fixed_k = 50 / (1 - K)
-        errors = []
-        x = 0.0
-        for n in range(50):
-            errors.append(abs(x - fixed_k))
-            x = K * x + 50
-        ax.semilogy(range(50), errors, color=col, linewidth=2,
-                     label=f'K = {K}')
-
-    ax.set_title('Convergence Rate vs Contraction Constant', fontsize=13)
-    ax.set_xlabel('Iteration n')
-    ax.set_ylabel('|x_n - x*|')
-    ax.legend(fontsize=9)
-    ax.grid(True, alpha=0.3)
-    ax.set_ylim(1e-15, 1e3)
-
-    # Panel 3: Polynomial causal map cobweb
-    ax = axes[1, 0]
-    fp = lambda x: 0.1 * x**2 - 0.3 * x + 2
-    plot_cobweb(ax, fp, 0, 25, (-0.5, 4), '0.1x² - 0.3x + 2', 'darkorange')
-    # Exact fixed points
-    disc = 1.69 - 0.8
-    x1 = (1.3 - math.sqrt(disc)) / 0.2
-    x2 = (1.3 + math.sqrt(disc)) / 0.2
-    ax.scatter([x1, x2], [x1, x2], color='green', s=100, zorder=5,
-               label=f'Fixed points: {x1:.2f}, {x2:.2f}')
-    ax.set_title('Polynomial Causal Map: Cobweb Diagram', fontsize=13)
-    ax.set_xlabel('x')
-    ax.set_ylabel('F(x)')
-    ax.legend(fontsize=9)
-    ax.grid(True, alpha=0.3)
-
-    # Panel 4: Stability demonstration
-    ax = axes[1, 1]
-    a, b = 0.5, 100
-    fixed_s = b / (1 - a)
-    perturbations = [0.01, 0.1, 1.0, 10.0, 100.0]
-    colors_s = plt.cm.plasma(np.linspace(0.1, 0.9, len(perturbations)))
-    for eps, col in zip(perturbations, colors_s):
-        x = fixed_s + eps
-        trajectory = []
-        for n in range(30):
-            trajectory.append(x - fixed_s)
-            x = a * x + b
-        ax.plot(range(30), trajectory, color=col, linewidth=2,
-                label=f'ε = {eps}')
-
-    ax.axhline(y=0, color='black', linewidth=0.5)
-    ax.set_title('Stability: Perturbation Decay', fontsize=13)
-    ax.set_xlabel('Iteration n')
-    ax.set_ylabel('x_n - x*')
-    ax.legend(fontsize=9)
-    ax.grid(True, alpha=0.3)
-
-    fig.suptitle('Novikov Self-Consistency via Banach Fixed-Point Theorem',
-                 fontsize=15, fontweight='bold', y=1.02)
-    plt.tight_layout()
-    plt.savefig('novikov_convergence.png', dpi=150, bbox_inches='tight')
-    print("Saved novikov_convergence.png")
+def main() -> None:
+    """Run all demonstrations and internal numerical checks."""
+    demonstrate_affine_consistency()
+    demonstrate_polynomial_domain()
+    demonstrate_paradoxes()
+    assert isclose(affine_fixed_point(0.5, 3.0), 6.0)
+    print("\nAll demonstrations completed successfully.")
 
 
 if __name__ == "__main__":

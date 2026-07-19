@@ -1,180 +1,461 @@
-# Novikov's Self-Consistency Principle as a Fixed-Point Theorem: A Formal Treatment
+# Time Travel Consistency: Novikov’s Principle as a Fixed-Point Theorem
+
+**Aristotle**  
+**July 19, 2026**
 
 ## Abstract
 
-We present a rigorous formalization of Novikov's self-consistency principle for time travel using the Banach contraction mapping theorem. We model closed timelike curves (CTCs) as causal evolution maps on metric spaces and prove that contracting causal dynamics guarantee the existence and uniqueness of self-consistent histories. We formalize time-travel paradoxes as boundary value problems, establish self-consistency for affine causal maps with explicit solutions, prove stability under composition of multiple CTCs, and demonstrate exponential convergence of iterative schemes to the self-consistent solution. All results are machine-verified in Lean 4 using the Mathlib library.
-
-**Keywords:** Novikov self-consistency, Banach fixed-point theorem, closed timelike curves, causal structure, boundary value problems, formal verification
-
----
+A closed causal circuit converts the usual initial-value description of dynamics into a boundary-value problem: the state returning from one circuit must equal the state entering it. This paper formulates that requirement as a fixed-point equation and gives a precise sufficient mechanism for Novikov self-consistency. If the one-circuit return map is a contraction on a nonempty complete metric state space, then a unique self-consistent boundary state exists. Every iterated traversal converges to that state, and the one-step consistency defect yields an explicit a posteriori error bound. The construction is specialized to real polynomial return maps on complete invariant domains and to affine feedback, for which the consistent state is explicit. A finite-state analogue is also established. Counterexamples—real quadratic feedback $x\mapsto x^2+1$ and Boolean negation—show that neither polynomiality nor the mere existence of a causal rule guarantees consistency. The results distinguish algebraic solvability, dynamical stability, and physical domain invariance, and provide a quantitative framework for interpreting causal consistency as stable feedback.
 
 ## 1. Introduction
 
-The possibility of closed timelike curves (CTCs) in general relativity, first identified by Gödel [1] and later studied in the context of traversable wormholes by Morris, Thorne, and Yurtsever [2], raises fundamental questions about the logical consistency of physics. The most famous manifestation of this problem is the grandfather paradox: a time traveler prevents the events leading to their own birth, creating a logical contradiction.
+Discussions of time travel often present consistency as a prohibition: events on a closed causal curve must somehow be prevented from contradicting themselves. A mathematical model permits a more economical formulation. Cut a closed causal circuit at a chosen hypersurface, record the state $x$ crossing the cut, evolve it once around the circuit, and compare the returning state with the original one. If the complete round-trip evolution is $F$, then the boundary data are consistent exactly when
 
-Novikov's self-consistency principle [3] asserts that the only physically realizable histories in a spacetime containing CTCs are those that are globally self-consistent. While this principle has been studied extensively in the physics literature, often through specific examples (billiard ball problems, electromagnetic fields in CTC backgrounds), a general mathematical framework for proving self-consistency has been less thoroughly developed.
+$$
+F(x)=x.
+$$
 
-In this work, we observe that the self-consistency condition for a CTC is precisely the fixed-point condition for the causal evolution map, and that the Banach contraction mapping theorem provides a natural and powerful sufficient condition for self-consistency. This observation leads to:
+The consistency question is therefore a fixed-point problem. The reformulation is elementary, but it exposes the hypotheses needed for a rigorous existence theorem. A general self-map can have no fixed point, one fixed point, or many. Consequently, no unrestricted conclusion follows merely from calling $F$ a causal law. Even requiring $F$ to be polynomial is insufficient over the real numbers.
 
-1. A proof that **any** contracting causal evolution on a complete metric space is Novikov-consistent (Theorem 3.1).
-2. A proof that the self-consistent solution is **unique** under contraction (Theorem 3.2).
-3. Explicit solutions for affine causal maps (Theorem 4.1).
-4. A composition theorem for multiple CTCs (Theorem 5.1).
-5. Exponential convergence of iterative schemes (Theorem 6.1).
-6. Stability bounds under perturbation (Theorem 6.2).
+The central structural condition studied here is strict contraction. If the state space has a metric and one traversal reduces all pairwise distances by a uniform factor $K<1$, repeated traversal progressively erases dependence on the initial boundary proposal. On a complete space, the resulting sequence converges; contraction then forces the limit to close the loop. The same geometry proves uniqueness and supplies an operational error estimate.
 
-All results have been formally verified in the Lean 4 proof assistant using the Mathlib mathematical library, ensuring the highest possible standard of mathematical rigor.
+The paper makes five principal claims. First, Novikov consistency is exactly fixed-point existence for the one-circuit map. Second, contraction on a nonempty complete metric space gives a unique consistent state. Third, this state globally attracts all iterates. Fourth, the observable residual $d(x,F(x))$ bounds the unknown error $d(x,x_\ast)$. Fifth, a polynomial return law inherits these conclusions on any nonempty complete invariant domain where its restriction is contractive. An explicit affine family and two counterexamples delineate the result.
 
-## 2. Mathematical Framework
+These theorems are conditional mathematical statements. They do not assert the physical existence of closed timelike curves, prescribe a spacetime metric, or derive a return map from field equations. Rather, they identify a transparent mechanism by which a modeled causal loop is self-consistent and dynamically stable.
 
-### 2.1 Causal Loops
+## 2. Causal boundary-value problems
 
-**Definition 2.1** (Causal Loop). A *causal loop* on a metric space $(X, d)$ is a triple $(F, K, h)$ where:
-- $F: X \to X$ is the *causal evolution map*, representing how the state of the universe transforms as it traverses the CTC;
-- $K \in [0, 1)$ is a non-negative real number;
-- $h$ is a proof that $F$ is a contraction with Lipschitz constant $K$, i.e., $d(F(x), F(y)) \leq K \cdot d(x, y)$ for all $x, y \in X$, with $K < 1$.
+### 2.1 One-circuit dynamics
 
-The contraction condition models *dissipative dynamics*: the evolution through the CTC reduces the distinguishability of different initial states. This is physically natural for systems with friction, radiation, or any form of energy loss.
+Let $X$ be a set of admissible boundary states. A **causal boundary-value problem** on $X$ consists of a return map
 
-**Definition 2.2** (Novikov Consistency). A causal loop $(F, K, h)$ on $(X, d)$ is *Novikov-consistent* if there exists a fixed point of $F$:
-$$\exists x \in X : F(x) = x.$$
+$$
+F:X\to X,
+$$
 
-### 2.2 Boundary Value Problem Formulation
+where $F(x)$ is the state obtained after the boundary state $x$ completes one full causal circuit. The state may encode any data needed to make the round-trip evolution deterministic: particle positions and momenta, field data, memory registers, control settings, or a coarse-grained observable.
 
-**Definition 2.3** (Time-Travel BVP). Given a complete, nonempty metric space $(X, d)$ and a causal loop $(F, K, h)$, the *time-travel boundary value problem* is:
+A state $x\in X$ is a **self-consistent boundary state** if
 
-> Find $x \in X$ such that $F(x) = x$.
+$$
+F(x)=x.
+$$
 
-This formulation makes explicit the analogy with classical boundary value problems in differential equations. The "boundary condition" is imposed by the topology of the CTC: the state at the departure event must match the state at the arrival event.
+The boundary-value problem is **Novikov-consistent** if at least one self-consistent boundary state exists.
 
-### 2.3 Affine Causal Maps
+This terminology immediately gives the first proposition.
 
-**Definition 2.4** (Affine Causal Map). An *affine causal map* is a function $F: \mathbb{R} \to \mathbb{R}$ of the form $F(x) = ax + b$ where $|a| < 1$. The parameter $a$ represents the *feedback coefficient* (how strongly the traveler's actions in the past affect the future) and $b$ represents the *external input* (the state of the universe independent of the time loop).
+**Proposition 2.1 (Fixed-point characterization).** A causal boundary-value problem with return map $F:X\to X$ is Novikov-consistent if and only if $F$ has a fixed point.
 
-### 2.4 Composed Causal Loops
+**Proof sketch.** By definition, Novikov consistency means that some $x\in X$ returns with exactly the same boundary value, which is the equation $F(x)=x$. This is precisely the definition of a fixed point. No additional dynamical or physical assumption is hidden in the equivalence. $\square$
 
-**Definition 2.5** (Composed Causal Loop). Given two causal loops $(F_1, K_1, h_1)$ and $(F_2, K_2, h_2)$ on the same metric space with $K_1 \cdot K_2 < 1$, the *composed causal loop* is the causal loop with evolution map $F_2 \circ F_1$ and contraction constant $K_1 \cdot K_2$.
+The proposition is definitional, but it is conceptually useful. It separates the semantic interpretation of consistency from the mathematical task of proving fixed-point existence.
 
-## 3. Main Results: Existence and Uniqueness
+### 2.2 Metric structure and contraction
 
-### 3.1 The Novikov–Banach Theorem
+To compare candidate histories, suppose $X$ is equipped with a metric $d$. A map $F:X\to X$ is a **contraction with factor $K$** if $0\le K<1$ and
 
-**Theorem 3.1** (Novikov from Banach). *Let $(X, d)$ be a complete, nonempty metric space and let $(F, K, h)$ be a causal loop on $X$. Then the causal loop is Novikov-consistent: there exists $x^* \in X$ with $F(x^*) = x^*$.*
+$$
+d(F(x),F(y))\le Kd(x,y)
+$$
 
-*Proof.* By the Banach contraction mapping theorem, since $F$ is a contraction on a complete metric space, the map has a unique fixed point $x^* = \lim_{n\to\infty} F^n(x_0)$ for any $x_0 \in X$. This fixed point satisfies $F(x^*) = x^*$, which is precisely the Novikov consistency condition. $\square$
+for all $x,y\in X$.
 
-**Theorem 3.2** (Uniqueness). *Under the hypotheses of Theorem 3.1, the self-consistent history is unique: if $F(x) = x$ and $F(y) = y$, then $x = y$.*
+The condition is global and uniform. It says that one complete traversal reduces every discrepancy by at least the same fractional amount. Induction gives
 
-*Proof.* From the contraction property, $d(x, y) = d(F(x), F(y)) \leq K \cdot d(x, y)$. Since $K < 1$, this implies $d(x, y) = 0$, hence $x = y$. $\square$
+$$
+d(F^n(x),F^n(y))\le K^n d(x,y),
+$$
 
-### 3.2 Physical Interpretation
+where $F^n$ denotes $n$ successive traversals.
 
-Theorem 3.1 establishes that dissipative causal dynamics automatically resolve time-travel paradoxes. The physical content is:
+A metric space is **complete** if every Cauchy sequence converges to a point of that space. Completeness is indispensable when the consistent state is constructed as a limit: it ensures that progressively compatible boundary proposals do not converge to a missing, inadmissible state.
 
-1. **Existence**: There is always at least one self-consistent history.
-2. **Uniqueness**: Physics determines a single consistent outcome—there is no "choice" of which consistent history to realize.
-3. **Constructivity**: The fixed point can be computed by iteration from any starting state.
+## 3. The Novikov–Banach consistency theorem
 
-The uniqueness result is particularly significant. It means that in a universe with contracting CTCs, the past is not "up for grabs"—it is uniquely determined by the dynamics.
+**Theorem 3.1 (Existence and uniqueness under contraction).** Let $(X,d)$ be a nonempty complete metric space. Let $F:X\to X$ be a contraction with factor $K$, where $0\le K<1$. Then there exists exactly one $x_\ast\in X$ such that
 
-## 4. Affine Causal Maps
+$$
+F(x_\ast)=x_\ast.
+$$
 
-**Theorem 4.1** (Affine Self-Consistency). *Let $F(x) = ax + b$ with $|a| < 1$. Then $F$ has a unique fixed point at $x^* = b/(1-a)$.*
+Equivalently, the associated causal boundary-value problem has exactly one self-consistent history.
 
-*Proof.* The equation $F(x) = x$ becomes $ax + b = x$, yielding $x(1-a) = b$. Since $|a| < 1$, we have $1-a \neq 0$, giving $x = b/(1-a)$.
+**Proof sketch.** Choose any $x_0\in X$ and define $x_{n+1}=F(x_n)$. Contraction yields
 
-For uniqueness, note that $|F(x) - F(y)| = |a| \cdot |x-y|$ with $|a| < 1$, so $F$ is a contraction. $\square$
+$$
+d(x_{n+1},x_n)\le K^n d(x_1,x_0).
+$$
 
-**Corollary 4.2.** *The affine causal map $F(x) = ax + b$ with $|a| < 1$ forms a causal loop on $\mathbb{R}$ with contraction constant $|a|$.*
+For $m>n$, the triangle inequality and the geometric series give
 
-### 4.1 Physical Example
+$$
+d(x_m,x_n)
+\le \sum_{j=n}^{m-1}d(x_{j+1},x_j)
+\le \frac{K^n}{1-K}d(x_1,x_0).
+$$
 
-Consider a time traveler who goes back and deposits money in a bank account. The account balance evolves as $F(x) = 0.5x + 500$ (the traveler always deposits \$500, and the bank's response to the changed timeline scales the balance by 0.5). The self-consistent balance is $x^* = 500/(1-0.5) = 1000$. The balance was always \$1000.
+The right-hand side tends to zero, so $(x_n)$ is Cauchy. Completeness gives a limit $x_\ast\in X$. Since every contraction is Lipschitz continuous,
 
-## 5. Composition of CTCs
+$$
+F(x_\ast)=F\left(\lim_{n\to\infty}x_n\right)
+=\lim_{n\to\infty}F(x_n)
+=\lim_{n\to\infty}x_{n+1}=x_\ast.
+$$
 
-**Theorem 5.1** (Composed Consistency). *Let $(F_1, K_1, h_1)$ and $(F_2, K_2, h_2)$ be causal loops on a complete nonempty metric space with $K_1 \cdot K_2 < 1$. Then the composed evolution $F_2 \circ F_1$ admits a unique fixed point.*
+For uniqueness, suppose $x_\ast$ and $y_\ast$ are fixed. Then
 
-*Proof.* We first establish that $F_2 \circ F_1$ is Lipschitz with constant $K_1 \cdot K_2$:
-$$d(F_2(F_1(x)), F_2(F_1(y))) \leq K_2 \cdot d(F_1(x), F_1(y)) \leq K_2 K_1 \cdot d(x, y).$$
-Since $K_1 K_2 < 1$, the composition is a contraction, and Theorem 3.1 applies. $\square$
+$$
+d(x_\ast,y_\ast)
+=d(F(x_\ast),F(y_\ast))
+\le Kd(x_\ast,y_\ast).
+$$
 
-**Remark 5.2.** The condition $K_1 K_2 < 1$ is weaker than requiring both $K_1 < 1$ and $K_2 < 1$. In particular, one of the individual loops could be non-contracting (say $K_1 = 1.5$) as long as the other is sufficiently contracting ($K_2 < 1/1.5$). This allows one CTC to amplify perturbations as long as another damps them sufficiently.
+Because $K<1$, this forces $d(x_\ast,y_\ast)=0$, hence $x_\ast=y_\ast$. $\square$
 
-## 6. Convergence and Stability
+The theorem upgrades a consistency postulate into a consequence of dissipative round-trip dynamics. Each traversal reduces sensitivity to the proposed boundary history, while completeness ensures that the limiting proposal remains admissible.
 
-### 6.1 Iterative Convergence
+### 3.1 Global attraction
 
-**Theorem 6.1** (Convergence of Iterates). *Let $(F, K, h)$ be a causal loop on a complete nonempty metric space. For any initial state $x_0$, the sequence $F^n(x_0)$ converges to the unique fixed point $x^*$.*
+The construction in the proof already contains a dynamical conclusion.
 
-This result has a compelling physical interpretation: the universe "settles into" self-consistency. If we imagine spacetime iteratively "negotiating" the state at the CTC junction, convergence is exponentially fast.
+**Theorem 3.2 (Global attraction).** Under the hypotheses of Theorem 3.1, for every initial boundary state $x_0\in X$,
 
-### 6.2 Perturbation Stability
+$$
+\lim_{n\to\infty}F^n(x_0)=x_\ast,
+$$
 
-**Theorem 6.2** (Stability). *Let $(F, K, h)$ be a causal loop. For any states $x, y$ and any $n \in \mathbb{N}$:*
-$$d(F^n(x), F^n(y)) \leq K^n \cdot d(x, y).$$
+where $x_\ast$ is the unique self-consistent state.
 
-*Proof.* By induction on $n$. The base case $n = 0$ is trivial. For the inductive step:
-$$d(F^{n+1}(x), F^{n+1}(y)) = d(F(F^n(x)), F(F^n(y))) \leq K \cdot d(F^n(x), F^n(y)) \leq K \cdot K^n \cdot d(x, y) = K^{n+1} \cdot d(x, y). \square$$
+**Proof sketch.** Since $F(x_\ast)=x_\ast$, repeated application of the contraction inequality gives
 
-**Corollary 6.3.** *The fixed point $x^*$ is Lyapunov stable: for any $\varepsilon > 0$, if $d(x_0, x^*) < \varepsilon$, then $d(F^n(x_0), x^*) < K^n \varepsilon \to 0$.*
+$$
+d(F^n(x_0),x_\ast)
+=d(F^n(x_0),F^n(x_\ast))
+\le K^n d(x_0,x_\ast).
+$$
 
-## 7. Discussion
+As $K^n\to0$, the iterates converge to $x_\ast$. $\square$
 
-### 7.1 Scope and Limitations
+Thus consistency is not merely solvability of an isolated equation. It is asymptotically selected from every initial proposal. The factor $K$ controls the worst-case geometric convergence rate.
 
-The Banach framework requires the contraction property, which corresponds to dissipative dynamics. For conservative (Hamiltonian) systems, volume is preserved in phase space, precluding contraction. In such cases, alternative fixed-point theorems may apply:
+### 3.2 A posteriori certification
 
-- **Brouwer's theorem**: guarantees fixed points for continuous maps on compact convex sets (existence but not uniqueness).
-- **Schauder's theorem**: extends Brouwer to infinite-dimensional spaces.
-- **Kakutani's theorem**: handles set-valued maps, relevant for non-deterministic dynamics.
+In applications, the exact fixed point may be unknown. A proposed state can nevertheless be tested by comparing it with the state returned after one circuit.
 
-These extensions sacrifice uniqueness but preserve existence, suggesting that self-consistent solutions may exist even for non-dissipative dynamics.
+Define the **consistency defect** or **residual** of $x$ by
 
-### 7.2 Connections to Other Mathematical Frameworks
+$$
+r(x)=d(x,F(x)).
+$$
 
-The causal loop structure has natural connections to:
+**Theorem 3.3 (A posteriori consistency error).** Under the hypotheses of Theorem 3.1, every $x\in X$ satisfies
 
-- **Category theory**: A CTC is an endomorphism in the category of spacetime states, and self-consistency is a fixed point of that endomorphism.
-- **Domain theory**: In denotational semantics, recursive definitions are given meaning via fixed points of continuous operators on domains—a direct analogue of CTC self-consistency.
-- **Dynamical systems**: The fixed point of a contraction is a globally attracting fixed point, connecting to stability theory.
+$$
+d(x,x_\ast)\le \frac{d(x,F(x))}{1-K}.
+$$
 
-### 7.3 Polynomial and Nonlinear Extensions
+**Proof sketch.** Insert $F(x)$ between $x$ and $x_\ast$ and use $F(x_\ast)=x_\ast$:
 
-While we have formally verified the affine case, the framework extends to any causal map satisfying the contraction condition. For polynomial maps $F(x) = \sum_{k=0}^n a_k x^k$ restricted to a bounded domain $[-R, R]$, sufficient conditions for contraction can be derived from bounds on $|F'(x)|$:
-$$\sup_{x \in [-R,R]} |F'(x)| < 1 \implies F \text{ is a contraction on } [-R, R].$$
+$$
+\begin{aligned}
+d(x,x_\ast)
+&\le d(x,F(x))+d(F(x),x_\ast)\\
+&=d(x,F(x))+d(F(x),F(x_\ast))\\
+&\le d(x,F(x))+Kd(x,x_\ast).
+\end{aligned}
+$$
 
-This provides a practical criterion for checking self-consistency of polynomial causal dynamics.
+Move the final term to the left and divide by $1-K>0$. $\square$
 
-## 8. Conjectures and Open Problems
+This estimate turns an exact but potentially inaccessible equality into a quantitative observable. If a one-circuit experiment returns a state within $\varepsilon$ of the input, then the input lies within $\varepsilon/(1-K)$ of the unique consistent history. The estimate also explains ill-conditioning near $K=1$: weak contraction amplifies residual uncertainty.
 
-**Conjecture 8.1** (Polynomial Novikov). *For any polynomial $p$ of degree $d \geq 2$ with $\|p'\|_\infty < 1$ on a bounded interval $I$ with $p(I) \subseteq I$, the unique fixed point of $p$ in $I$ can be computed in $O(d \cdot \log(1/\varepsilon))$ arithmetic operations to precision $\varepsilon$.*
+A related forward estimate follows from the proof of Theorem 3.1:
 
-**Test:** Implement the iteration $x_{n+1} = p(x_n)$ for random degree-5 polynomials satisfying the conditions and measure convergence rate vs. the bound $K^n$.
+$$
+d(F^n(x_0),x_\ast)
+\le \frac{K^n}{1-K}d(x_0,F(x_0)).
+$$
 
-**Conjecture 8.2** (Hamiltonian CTC Consistency). *Every continuous causal map on a compact convex subset of $\mathbb{R}^n$ admits a self-consistent solution, even without the contraction condition.*
+It permits a stopping rule using only the initial or current one-step defect.
 
-**Test:** This follows from Brouwer's fixed-point theorem if the causal map preserves a compact convex set. The conjecture is that physically reasonable Hamiltonian dynamics always preserve such a set in the CTC context.
+## 4. Polynomial return maps on physical domains
 
-## 9. Formalization Details
+### 4.1 Why the domain is part of the model
 
-All definitions and theorems in this paper have been formally verified in Lean 4 (version 4.28.0) using the Mathlib library. The formalization consists of approximately 200 lines of Lean code organized in two files:
+Let $p\in\mathbb R[t]$ be a real polynomial. It defines a return law $F(x)=p(x)$, but the physically admissible states may occupy only a subset $S\subseteq\mathbb R$. The restriction to $S$ is meaningful as a closed causal evolution only when
 
-- `Logic/NovikovConsistency/Defs.lean`: Core definitions (CausalLoop, NovikovConsistent, AffineCausalMap, TimeTravelBVP, ComposedCausalLoop)
-- `Logic/NovikovConsistency/Theorems.lean`: All 13 theorems with complete proofs
+$$
+p(S)\subseteq S.
+$$
 
-The proofs rely on Mathlib's `ContractingWith` API, which provides a verified implementation of the Banach contraction mapping theorem, including fixed point existence, uniqueness, and convergence of iterates.
+Such an $S$ is called an **invariant domain**. Without invariance, iteration may leave the state space after one circuit. If $S$ is complete under the inherited Euclidean metric—for example, if $S$ is a closed subset of $\mathbb R$—limits of admissible Cauchy sequences remain admissible.
 
-## References
+**Theorem 4.1 (Polynomial consistency on a complete invariant domain).** Let $p$ be a real polynomial and let $S\subseteq\mathbb R$ be nonempty and complete under the Euclidean metric. Assume that $p(S)\subseteq S$ and that there is a constant $K$ with $0\le K<1$ such that
 
-[1] K. Gödel, "An example of a new type of cosmological solutions of Einstein's field equations of gravitation," *Reviews of Modern Physics*, 21(3):447, 1949.
+$$
+|p(x)-p(y)|\le K|x-y|
+$$
 
-[2] M.S. Morris, K.S. Thorne, U. Yurtsever, "Wormholes, time machines, and the weak energy condition," *Physical Review Letters*, 61(13):1446, 1988.
+for all $x,y\in S$. Then there exists exactly one $x_\ast\in S$ satisfying
 
-[3] I.D. Novikov, "An analysis of the operation of a time machine," *Soviet Physics JETP*, 68(3):439-443, 1989.
+$$
+p(x_\ast)=x_\ast.
+$$
 
-[4] S. Banach, "Sur les opérations dans les ensembles abstraits et leur application aux équations intégrales," *Fundamenta Mathematicae*, 3:133-181, 1922.
+Moreover, every iteration $x_{n+1}=p(x_n)$ begun in $S$ converges to $x_\ast$, and
 
-[5] J. Friedman, M.S. Morris, I.D. Novikov, F. Echeverria, G. Klinkhammer, K.S. Thorne, U. Yurtsever, "Cauchy problem in spacetimes with closed timelike curves," *Physical Review D*, 42(6):1915, 1990.
+$$
+|x-x_\ast|\le \frac{|x-p(x)|}{1-K}
+$$
 
-[6] F. Echeverria, G. Klinkhammer, K.S. Thorne, "Billiard balls in wormhole spacetimes with closed timelike curves: Classical theory," *Physical Review D*, 44(4):1077, 1991.
+for every $x\in S$.
+
+**Proof sketch.** Regard $p$ as a self-map of the metric space $S$. Invariance makes the restriction well-defined, completeness and nonemptiness provide the geometric setting, and the displayed inequality makes the restriction a contraction. Theorems 3.1–3.3 apply directly. $\square$
+
+Polynomiality is therefore not the source of consistency; it is a modeling class within which invariance and contraction can be checked. A common sufficient condition on a closed interval $S=[L,U]$ is
+
+$$
+p([L,U])\subseteq[L,U]
+\quad\text{and}\quad
+\sup_{x\in[L,U]}|p'(x)|\le K<1.
+$$
+
+The mean value theorem then yields the required Lipschitz inequality. This derivative criterion is sufficient, not necessary, and it must hold on the proposed invariant domain.
+
+### 4.2 Affine feedback
+
+The simplest polynomial case is the affine map
+
+$$
+F(x)=ax+b.
+$$
+
+**Theorem 4.2 (Explicit affine consistency).** If $a,b\in\mathbb R$ and $|a|<1$, then the affine causal return law $F(x)=ax+b$ has exactly one self-consistent state, namely
+
+$$
+x_\ast=\frac{b}{1-a}.
+$$
+
+For every $x_0\in\mathbb R$, its iterates satisfy
+
+$$
+F^n(x_0)=x_\ast+a^n(x_0-x_\ast),
+$$
+
+and therefore converge geometrically to $x_\ast$.
+
+**Proof sketch.** The identity
+
+$$
+|F(x)-F(y)|=|a|\,|x-y|
+$$
+
+shows that $F$ is a contraction with factor $|a|$. Solving $ax+b=x$ gives $x_\ast=b/(1-a)$; the denominator is nonzero because $|a|<1$. Subtracting the fixed-point equation from the recurrence gives $x_{n+1}-x_\ast=a(x_n-x_\ast)$, and induction produces the iteration formula. $\square$
+
+**Example 4.3.** For
+
+$$
+F(x)=\frac12x+3,
+$$
+
+the unique consistent state is $x_\ast=6$. Starting at $x_0=0$ gives
+
+$$
+0,\ 3,\ 4.5,\ 5.25,\ 5.625,\ldots,
+$$
+
+while starting at $x_0=20$ gives
+
+$$
+20,\ 13,\ 9.5,\ 7.75,\ 6.875,\ldots.
+$$
+
+In both cases the distance to $6$ is halved on every circuit. At the trial state $x=5.625$, the residual is
+
+$$
+|x-F(x)|=|5.625-5.8125|=0.1875.
+$$
+
+The a posteriori theorem gives
+
+$$
+|x-6|\le \frac{0.1875}{1-0.5}=0.375,
+$$
+
+which is exact in this example.
+
+## 5. Finite state spaces
+
+Not every causal model is continuous. A message may be encoded by a finite alphabet, or a coarse-grained system may have finitely many states.
+
+**Theorem 5.1 (Finite strict-contraction consistency).** Let $(X,d)$ be a nonempty finite metric space and let $F:X\to X$ satisfy
+
+$$
+d(F(x),F(y))\le Kd(x,y)
+$$
+
+for all $x,y\in X$, where $K<1$. Then $F$ has exactly one fixed point.
+
+**Proof sketch.** Begin from any $x_0$. Because $X$ is finite, the orbit $x_0,F(x_0),F^2(x_0),\ldots$ eventually repeats and hence enters a periodic cycle. If the cycle had length greater than one, choose two distinct corresponding points on it. Repeated traversal around the cycle would return that pair to itself while strict contraction would reduce their positive distance by a factor strictly below one, a contradiction. Thus the eventual cycle is a fixed point. If two fixed points existed, their positive distance would likewise be strictly reduced while remaining unchanged. $\square$
+
+Finiteness supplies completeness automatically, but the elementary orbit argument makes the mechanism transparent. Strict contraction excludes every nontrivial recurrent pattern.
+
+## 6. Counterexamples and sharp boundaries
+
+### 6.1 A polynomial without a real consistent state
+
+**Proposition 6.1 (Quadratic inconsistency).** The polynomial return law
+
+$$
+F(x)=x^2+1
+$$
+
+has no self-consistent state in $\mathbb R$.
+
+**Proof.** A fixed point would satisfy
+
+$$
+x^2+1=x,
+$$
+
+or $x^2-x+1=0$. Completing the square gives
+
+$$
+\left(x-\frac12\right)^2+\frac34=0,
+$$
+
+whose left-hand side is strictly positive for every real $x$. Equivalently, the discriminant is $-3$. $\square$
+
+This example disproves the unrestricted assertion that polynomial causal maps always admit consistent real histories. It also illustrates why an invariant contractive domain cannot exist for this map: such a domain would force a fixed point by Theorem 4.1.
+
+### 6.2 Boolean negation
+
+Let $X=\{\mathrm{false},\mathrm{true}\}$ and define $F(b)=\neg b$.
+
+**Proposition 6.2 (Boolean grandfather paradox).** Boolean negation has no self-consistent state.
+
+**Proof.** Negation sends false to true and true to false, so neither state satisfies $F(b)=b$. $\square$
+
+With the discrete metric, the two distinct states have distance $1$, and negation preserves that distance. Its best Lipschitz factor is $1$, not a number below $1$. The example therefore lies exactly outside the strict-contraction regime and forms a two-cycle rather than a fixed point.
+
+### 6.3 What each hypothesis contributes
+
+The examples distinguish several logically separate requirements:
+
+1. **A return law is not enough.** Boolean negation is deterministic but inconsistent.
+2. **Polynomiality is not enough.** The map $x\mapsto x^2+1$ has no real fixed point.
+3. **Nonemptiness is necessary.** An empty admissible domain contains no history.
+4. **Invariance is necessary for restricted dynamics.** If $F(S)\nsubseteq S$, repeated traversal does not define a self-map of the proposed physical domain.
+5. **Completeness retains limits.** A contraction on an incomplete space may converge toward a missing boundary point.
+6. **Strict contraction supplies uniqueness and attraction.** Without it, a map may have several fixed points, neutral cycles, or no fixed point.
+
+Strict contraction is sufficient rather than necessary. The identity map has fixed points but contraction factor $1$; other maps may possess stable fixed points only on local basins. The present theorem identifies a robust global regime, not the full taxonomy of consistent causal laws.
+
+## 7. Algorithms and numerical certification
+
+### 7.1 Fixed-point iteration
+
+Given a return map $F$, a known contraction factor $K<1$, and an initial state $x_0$, compute
+
+$$
+x_{n+1}=F(x_n).
+$$
+
+Stop when
+
+$$
+\frac{d(x_n,F(x_n))}{1-K}\le \varepsilon.
+$$
+
+Theorem 3.3 then certifies that $d(x_n,x_\ast)\le\varepsilon$. Each iteration requires one evaluation of $F$ and one distance computation. If these cost $C_F$ and $C_d$, respectively, then $n$ steps cost $O(n(C_F+C_d))$ and require $O(1)$ state storage when only the current iterate is retained.
+
+For an a priori iteration count, Theorem 3.2 gives
+
+$$
+K^n d(x_0,x_\ast)\le\varepsilon.
+$$
+
+Because $x_\ast$ is usually unknown, the residual form is more practical. Using the initial residual yields
+
+$$
+d(x_n,x_\ast)
+\le \frac{K^n}{1-K}d(x_0,F(x_0)).
+$$
+
+Thus it suffices, for $0<K<1$, to choose
+
+$$
+n\ge
+\frac{\log\!\left(\varepsilon(1-K)/d(x_0,F(x_0))\right)}{\log K},
+$$
+
+with the inequality interpreted carefully because $\log K<0$.
+
+### 7.2 Polynomial-domain screening
+
+For a polynomial on an interval $[L,U]$, a computational pipeline can check sufficient conditions:
+
+1. bound $p([L,U])$ and verify it lies in $[L,U]$;
+2. bound $|p'(x)|$ on the interval by $K<1$;
+3. run fixed-point iteration from any $x_0\in[L,U]$;
+4. report both the approximation and the certificate $|x_n-p(x_n)|/(1-K)$.
+
+Exact verification of polynomial range and derivative bounds can use critical points, interval arithmetic, or certified optimization. Sampling alone illustrates behavior but cannot establish the global hypotheses. Once valid bounds are available, the convergence and error conclusions follow independently of the starting point.
+
+### 7.3 Paradox detection in finite models
+
+For a finite map represented as a table, fixed points can be found by scanning all states and testing $F(x)=x$, with $O(|X|)$ map evaluations. Orbit tracing additionally reveals cycles. Under a known strict contraction, Theorem 5.1 guarantees that the scan will find exactly one fixed point; without contraction, a fixed-point-free cycle such as Boolean negation is possible.
+
+## 8. Applications and interpretation
+
+### 8.1 Boundary conditions on closed causal circuits
+
+The return-map abstraction compresses all local dynamics into one Poincaré-like map across a chosen cut. A fixed point is boundary data compatible with an entire closed history. In a detailed physical model, constructing $F$ would require solving local evolution equations around the loop; the present results then apply to the induced map if its metric properties can be established.
+
+### 8.2 Control and iterative correction
+
+The same equations describe ordinary feedback systems. A controller maps an incoming error state to the next-cycle error. If the closed-loop map contracts, a unique equilibrium exists and globally attracts trajectories. The residual theorem becomes a stopping criterion or calibration certificate. The causal-loop vocabulary emphasizes boundary closure, while control theory emphasizes stabilization; mathematically, both use the same fixed-point geometry.
+
+### 8.3 Recurrent computation and networks
+
+Recurrent models, equilibrium networks, and mutually dependent agents often seek states satisfying $F(x)=x$. Contractivity prevents multiple incompatible equilibria and makes naive iteration reliable. In this broader setting, the “consistent history” is an equilibrium representation rather than a literal trip through time.
+
+### 8.4 Robustness and observability
+
+The a posteriori estimate is especially important because exact consistency is an equality and therefore appears fragile. Under contraction, it is not fragile: a small residual guarantees a nearby exact solution. The factor $(1-K)^{-1}$ is the condition number of this guarantee. Strongly contractive loops are robustly interpretable; nearly neutral loops require finer measurements.
+
+## 9. Discussion
+
+The fixed-point framing resolves one version of the consistency problem while clarifying its limits. The Novikov principle becomes a theorem only after dynamical assumptions are supplied. Global contraction is a particularly strong and intelligible assumption because it yields four conclusions simultaneously: existence, uniqueness, global attraction, and quantitative certification.
+
+The polynomial theorem demonstrates the importance of domain-sensitive statements. A polynomial formula by itself says little about fixed-point existence. The relevant object is a polynomial self-map of a nonempty complete invariant domain, together with a contraction estimate on that domain. This distinction parallels standard modeling practice: physical constraints are part of the system, not an afterthought.
+
+The counterexamples are not pathologies. The quadratic map exhibits algebraic nonexistence over the reals, while Boolean negation exhibits a finite, perfectly deterministic two-cycle. Together they show that causal determinism and causal consistency are distinct. They also reveal two ways the global theorem can fail: an equation may have no root, or iteration may perpetually alternate rather than damp differences.
+
+Several cautions remain. First, a return map assumes deterministic one-circuit evolution; noisy or set-valued dynamics require invariant distributions or multivalued fixed-point methods. Second, the choice of metric matters because contractivity is metric-dependent. Third, global contraction can be much stronger than physical stability near a particular fixed point. Local derivative conditions may select a consistent history within one basin while other basins support different histories. Finally, an abstract boundary map does not replace spacetime dynamics; it is an interface through which those dynamics can be analyzed.
+
+## 10. Future work
+
+A natural next step is a local-basin principle for polynomial feedback. If a polynomial preserves a closed interval and has a fixed point with derivative magnitude below one, the immediate basin should support convergence to that locally unique consistent history even when the map is not globally contractive. Critical and repelling periodic points may organize basin boundaries.
+
+One-parameter polynomial families invite a bifurcation classification. Changes in the number of fixed points should occur where $p(x)-x$ has a multiple real root, whereas changes in stability occur where $|p'(x)|=1$ at a fixed point. These are related but distinct discriminant loci.
+
+Robustness under perturbation of the return law is another direct extension. If $F$ and $G$ have a shared contraction factor $K<1$ and unique fixed points $x_F$ and $x_G$, one expects a bound of the form
+
+$$
+d(x_F,x_G)\le
+\frac{\sup_x d(F(x),G(x))}{1-K}.
+$$
+
+This would convert uncertainty in the causal law into uncertainty in the selected history.
+
+For stochastic loops, a state should be replaced by a probability law and the return map by a Markov operator. Contraction in Wasserstein distance is expected to yield a unique invariant law and geometric convergence of every initial distribution, with deterministic fixed points appearing as Dirac measures.
+
+Finally, coupled causal loops lead to product-state return maps. Spectral or block-contraction criteria could relate the strength of each local feedback channel to global consistency, allowing weakly coupled networks of loops to be treated without requiring every component to contract independently.
+
+## 11. Conclusion
+
+A causal loop is consistent when its one-circuit return map reproduces its boundary state. On a nonempty complete metric state space, strict contraction guarantees exactly one such state. It also guarantees that all iterated boundary proposals converge to it and that the measurable one-step defect bounds the distance to exact consistency by the factor $(1-K)^{-1}$. Real polynomial maps inherit the result on complete invariant domains where they contract, and affine maps with $|a|<1$ provide an explicit family with fixed point $b/(1-a)$. Finite strict contractions satisfy the same uniqueness principle.
+
+The hypotheses mark a genuine boundary. The polynomial $x\mapsto x^2+1$ has no real fixed point, and Boolean negation has no fixed state. Thus neither a causal rule nor a polynomial causal rule entails consistency by itself. What converts the Novikov principle from a narrative demand into a mathematical consequence is stable feedback: a geometry in which each circuit shrinks disagreement until one closed history remains.
