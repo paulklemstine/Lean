@@ -200,21 +200,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Quantum Entanglement as Algebraic Topology: The Linking Number Is Entanglement"
   },
   {
-    "consumed_by_exp_id": "d67581f7",
-    "description": "Tropical arithmetic (min-plus algebra) replaces + with min and * with +. A tropical matrix A over Z union {infinity} acts on vectors by tropical matrix multiplication: (A tropimes v)_i = min_j (A_{ij} + v_j). Tropical matrices have eigenvalues in the max-plus sense: lambda is a tropical eigenvalue if A tropimes v = lambda + v for some v. Conjecture: tropical matrix multiplication is a one-way function suitable for cryptography. Specifically, the 'tropical discrete logarithm problem' (TDLP) is: given a tropical matrix A and B = A^{otimes k} (tropical matrix power), find k. The tropical matrix power A^{otimes k} is computed in O(n^3 * log(k)) time (by repeated squaring), but recovering k from (A, A^{otimes k}) is hard because the tropical eigenvalues satisfy lambda(A^{otimes k}) = k * lambda(A) (tropical eigenvalues are additive under power), so k = lambda(A^{otimes k}) / lambda(A). But this only works if lambda(A) != 0 (in the tropical sense, lambda(A) != infinity). Conjecture: the tropical Diffie-Hellman key exchange is secure: Alice sends A^{otimes a}, Bob sends A^{otimes b}, and the shared key is A^{otimes ab}. Breaking this requires solving the TDLP, which is believed to be hard for random tropical matrices of size n >= 10. Test: implement the tropical DH key exchange and measure the key generation time vs matrix size. Attempt to break it with known attacks (tropical eigenvalue computation, shortest path algorithms). Impact: tropical arithmetic provides a new foundation for post-quantum cryptography.",
-    "domains": [
-      "Novelty",
-      "Cryptography"
-    ],
-    "id": "fd_0395",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T04:12:06.569515+00:00",
-    "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
-  },
-  {
     "consumed_by_exp_id": "77a52651",
     "description": "A quantum random walk on a group G is defined by a unitary operator U = sum_{g in S} |g><0| (where S is a generating set) acting on the Hilbert space l^2(G). The walk is periodic if U^k = I for some k, and mixing if the probability distribution P_n(g) = |<g|U^n|0>|^2 converges to the uniform distribution on G. Conjecture: for the Cayley graph Cay(G, S) where G is a finite group and S is a symmetric generating set, the quantum walk mixes in O(sqrt(|G|) * log(|G|)) steps, which is quadratically faster than the classical random walk (which takes O(|G|^2) steps for the spectral gap to kick in). The mixing time is determined by the spectral gap of U: tau_mix ~ 1/gap where gap = 1 - |lambda_2| and lambda_2 is the second-largest eigenvalue of U. Conjecture: for Cay(G, S) with S = the set of transpositions in S_n, the spectral gap of U is Omega(1/n), giving a mixing time of O(n * log(n)). This matches the known classical mixing time of O(n * log(n)) for the random transposition walk on S_n. The quantum advantage comes from the quadratically faster convergence of the probability distribution, not from the spectral gap. Test: simulate quantum random walks on Cayley graphs of S_n, S_n, A_5, and Z_n, measure the mixing time, and verify tau_mix = O(sqrt(|G|) * log(|G|)). Impact: quantum random walks mix quadratically faster than classical random walks on Cayley graphs. The quadratic speedup is universal.",
     "domains": [
@@ -4545,6 +4530,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-19T06:30:52.446847+00:00",
     "title": "**Conjecture.** Every divisor class on the complete graph `K_n` has a unique red"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## Formal consequences established\n\n`Catalog/Pythagorean/TropicalCryptography/EigenvalueLeakage.lean` proves the exact power law for a min-plus eigenpair:\n\n- if `A \u2297 v = \u03bb + v`, then `A^[k] \u2297 v = (k+1)\u03bb + v` for the positive-power convention `A^[0] = A`;\n- when `\u03bb \u2260 0`, positive powers of `A` are injective in the exponent;\n- a collision between distinct positive powers forces every represented eigenvalue to be zero;\n- observing the eigenvalue of a public power on the same eigenvector determines its exponent scaling exactly;\n- uniformly shifting matrix entries by `c` changes `\u03bb` to `c+\u03bb`, so every shift except `c=-\u03bb` has injective positive powers.\n\nThese are mathematical identifiability results, not an implementation of an eigenvalue algorithm and not a complexity or security proof. They show that the proposed eigenvalue relation is a potential leakage channel rather than evidence for one-wayness.\n\n## Next formal targets\n\n1. Connect `IsEigenpair` to the minimum cycle mean and formalize a certified cycle-mean algorithm over rational or integer weights.\n2. Prove that every finite irreducible min-plus matrix admits an eigenpair, including the extended value `\u221e` needed for sparse graphs.\n3. Define binary exponentiation and prove that it computes `positivePower`, with an explicit count of min-plus products.\n4. Formalize exponent recovery from two certified nonzero eigenvalues, including divisibility and uniqueness over integer/rational weights.\n5. Characterize the zero-eigenvalue case: eventual periodicity, collisions, and what auxiliary normalizations still reveal the exponent.\n6. Model the proposed key exchange carefully. In any single-base power semigroup, `(A^[a])^[b] = A^[(a+1)(b+1)-1]`; this exponent convention and associativity should be proved before making protocol claims.\n7. Implement small certified examples and benchmark only after proving correspondence between executable arrays and the matrix definitions used here.\n8. Study masking schemes and whether conjugation, scalar normalization, or projectivization actually removes cycle-mean leakage.\n\nNo claim of post-quantum security follows from the present algebraic results. A security statement would require a precise distribution, adversarial model, parameterization, and reduction or attack analysis.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0414",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "d67581f7",
+    "status": "available",
+    "timestamp": "2026-07-19T07:21:25.546625+00:00",
+    "title": "`Catalog/Pythagorean/TropicalCryptography/EigenvalueLeakage.lean` proves the exa"
   },
   {
     "consumed_by_exp_id": "",

@@ -1,0 +1,11 @@
+--- RegisterGraphColoring.lean
++++ RegisterGraphColoring.lean
+@@ -132,7 +132,7 @@
+     [DecidableRel G.Adj] (peo : PerfectEliminationOrdering G) (i : Fin n) :
+     registerPressure G peo i = (localClique G peo i).card := by
+   rw [ localClique, Finset.card_union_of_disjoint ];
+-  · unfold registerPressure; simp +decide [ Finset.Nonempty ] ;
++  · unfold registerPressure; simp +decide ;
+     rw [ add_comm, laterNeighbors ];
+ 
+ 

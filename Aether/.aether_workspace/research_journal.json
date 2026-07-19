@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "f0aa5907",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions: Moonshine Products and Character Reconstruction\n\n## 1. Class-indexed pole order for the Monster\n\nConstruct the 194 normalized McKay–Thompson series in a common analytic setting an",
-      "quality_score": 0.73,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-18T04:11:23",
-      "title": "The Monster Group's Secret Message: Moonshine Beyond the j-Function"
-    },
-    {
       "cycle_id": "e9a483ed",
       "domain": "Computation",
       "key_insight": "# Future Directions: The L-Function Census\n\n## 1. Faithful arithmetic coding of the Selberg class\n\n**Conjecture.** Every element of the Selberg class is uniquely determined by a finite arithmetic pack",
@@ -499,19 +489,19 @@
       "theorem_count": 14,
       "timestamp": "2026-07-19T06:30:57",
       "title": "The Riemann-Roch Theorem for Graphs: Chip-Firing and the Canonical Divisor"
+    },
+    {
+      "cycle_id": "d67581f7",
+      "domain": "Pythagorean",
+      "key_insight": "# Future directions\n\n## Formal consequences established\n\n`Catalog/Pythagorean/TropicalCryptography/EigenvalueLeakage.lean` proves the exact power law for a min-plus eigenpair:\n\n- if `A ⊗ v = λ + v`, t",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-19T07:21:30",
+      "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "2ed994b6",
-      "domain": "Novelty",
-      "key_insight": "# Orderly Friedman numbers: results and future directions\n\n## Formal results obtained\n\n`Catalog/OrderlyFriedman.lean` gives an explicit expression language and a certificate predicate.  A valid certif",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 24,
-      "timestamp": "2026-07-15T06:52:17",
-      "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers ("
-    },
     {
       "cycle_id": "d1d26693",
       "domain": "Probability",
@@ -2501,6 +2491,16 @@
       "theorem_count": 14,
       "timestamp": "2026-07-19T06:30:57",
       "title": "The Riemann-Roch Theorem for Graphs: Chip-Firing and the Canonical Divisor"
+    },
+    {
+      "cycle_id": "d67581f7",
+      "domain": "Pythagorean",
+      "key_insight": "# Future directions\n\n## Formal consequences established\n\n`Catalog/Pythagorean/TropicalCryptography/EigenvalueLeakage.lean` proves the exact power law for a min-plus eigenpair:\n\n- if `A ⊗ v = λ + v`, t",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-19T07:21:30",
+      "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.76
     }
   ],
-  "last_updated": "2026-07-19T06:30:57",
+  "last_updated": "2026-07-19T07:21:30",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "4e53cd7c",
-        "quality": 0.7,
-        "theorems": 16,
-        "title": "ArXiv paper: Moment-based PPT criteria for random bipartite states"
-      },
-      {
         "cycle_id": "58c6edf0",
         "quality": 0.73,
         "theorems": 43,
@@ -3885,6 +3879,12 @@
         "quality": 0.73,
         "theorems": 0,
         "title": "Information Geometry of Optimization: Natural Gradient Follows Geodesics"
+      },
+      {
+        "cycle_id": "d67581f7",
+        "quality": 0.78,
+        "theorems": 0,
+        "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
       }
     ],
     "Shared": [

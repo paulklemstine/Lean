@@ -1,284 +1,344 @@
-# The Maximum-Overlap Law for Register Allocation: An Exact Chromatic Formula on Interval Interference Graphs
+# Structural Register Allocation: Chordal Coloring, Degree Bounds, and Clique Spill Certificates
 
-**Author:** Aristotle
-**Date:** 2026-07-10
+**Author:** Aristotle  
+**Date:** July 19, 2026
 
 ## Abstract
 
-Register allocation — the assignment of program variables to a fixed bank of processor
-registers — is classically modeled as coloring the *interference graph* $G$, whose vertices
-are variables and whose edges connect variables that are simultaneously live. In this
-generality, computing the chromatic number $\chi(G)$ is NP-hard, and a natural conjectured
-formula $\chi(G) = \max(\Delta(G)+1,\ \omega(G))$ — relating the chromatic number to the
-maximum degree $\Delta$ and the clique number $\omega$ — is *false* (the Petersen graph is a
-counterexample: $\Delta+1 = 4$, $\omega = 2$, but $\chi = 3$). We show that the interference
-graphs arising from the standard linear-scan compilation pipeline, in which every variable
-occupies a single contiguous live range, are *interval graphs* and hence *perfect*, and on
-this class an exact and efficiently computable law holds. Writing $D$ for the **maximum
-overlap** — the largest number of variables simultaneously live at any single program point —
-we prove
-$$\chi(G) = \omega(G) = D.$$
-The engine of the proof is the one-dimensional case of Helly's theorem: any set of pairwise
-overlapping intervals shares a common point, namely the maximum of their left endpoints. This
-converts each clique into a concrete "deep" program point, identifying the abstract clique
-number with the linearly computable maximum overlap. We further show $D \le \Delta + 1$,
-exhibiting the overlap law as a strict sharpening of the classical greedy degree bound
-$\chi \le \Delta+1$, and we derive the optimality of linear-scan register allocation: $D$
-registers always suffice, via a greedy coloring in a latest-start-first perfect elimination
-order, and $D$ registers are necessary. We discuss the geometric reformulation of spilling and
-outline extensions to spill minimization, degree-based spill approximation, and SSA
-destruction.
+Register allocation assigns simultaneously live program variables to a finite bank of processor registers. Modeling variables as vertices and simultaneous liveness as adjacency turns allocation into graph coloring, while spilling becomes vertex deletion before coloring. This paper separates three notions that are often conflated: maximum degree, clique number, and chromatic number. For every finite interference graph, a palette strictly larger than the maximum degree is sufficient, but this bound need not be exact. The three-vertex path already requires only two colors although its maximum degree plus one is three. Exactness is recovered under an explicit structural hypothesis: if the interference graph admits a perfect elimination ordering, then it is colorable with $k$ registers if and only if every clique has size at most $k$. Thus its chromatic number equals its clique number. We also establish a spill certificate: with $k$ available registers, a clique of size $m>k$ forces at least $m-k$ spills from that clique. These results support elimination-based allocation and clique-aware spill analysis while ruling out universal claims that maximum degree determines register demand or that spilling a maximum-degree vertex is always optimal.
 
 ## 1. Introduction
 
-A processor executes arithmetic on a small set of registers — sixteen to thirty-two on typical
-architectures — while programs routinely manipulate hundreds or thousands of variables. The
-compiler's *register allocator* decides which variables reside in registers, which must be
-kept in slower memory (*spilled*), and how registers are time-shared among variables whose
-lifetimes do not conflict. This is one of the most performance-critical phases of compilation.
+A processor register is a scarce, fast storage location. During compilation, each temporary value has a *live range*: the portion of execution during which its current value may still be needed. Two values whose live ranges overlap cannot safely occupy the same register. The register allocator must exploit non-overlap to reuse registers while preserving all required values.
 
-The dominant abstraction, due to Chaitin and refined by many, is **graph coloring**. Build a
-graph $G$ with one vertex per variable, joining two vertices when the corresponding variables
-*interfere* — that is, when both are simultaneously *live* at some program point. A legal
-register assignment using $k$ registers is exactly a proper $k$-coloring of $G$: interfering
-variables (adjacent vertices) receive distinct registers (colors). The minimum number of
-registers needed without spilling is the chromatic number $\chi(G)$.
+The standard combinatorial model is an interference graph. Its vertices are variables or temporaries, and an edge joins two vertices when the associated values are simultaneously live. Registers become colors, and a valid allocation is a proper vertex coloring. If the processor offers fewer colors than the graph requires, selected values are *spilled* to memory; graph-theoretically, their vertices are deleted before coloring the remainder.
 
-For general graphs $\chi(G)$ is NP-hard to compute, and one is tempted to seek a closed-form
-proxy. Two classical bounds frame the answer:
+This model naturally suggests numerical summaries. The maximum degree measures the largest number of direct conflicts incident to one variable. The clique number measures the largest family of pairwise conflicting variables. The chromatic number measures the exact number of interchangeable registers required. These quantities satisfy general inequalities, but they are not interchangeable.
 
-- **Greedy upper bound.** $\chi(G) \le \Delta(G) + 1$, where $\Delta(G)$ is the maximum
-  degree, because a one-at-a-time coloring never faces more than $\Delta$ forbidden colors.
-- **Clique lower bound.** $\chi(G) \ge \omega(G)$, where $\omega(G)$ is the size of the largest
-  set of pairwise-adjacent vertices, since a clique needs one color per vertex.
+A particularly attractive but incorrect prediction is that the register requirement should equal the maximum degree plus one, perhaps modified by a clique term. The universal greedy bound does show that maximum degree plus one registers suffice. It does not show necessity. The distinction can be seen in the path on three vertices, where the middle vertex has two neighbors but the two endpoints can share a color. This graph requires two colors rather than three.
 
-A seductive conjecture unifies these into $\chi(G) = \max(\Delta(G)+1,\ \omega(G))$. **This is
-false in general.** The Petersen graph is $3$-regular ($\Delta + 1 = 4$) and triangle-free
-($\omega = 2$), yet $3$-colorable ($\chi = 3$); the formula predicts $4$. No degree-and-clique
-formula captures $\chi$ on arbitrary graphs.
+The constructive positive result comes from chordal structure. A perfect elimination ordering ensures that each local set of later conflicts forms a clique. Reverse greedy coloring then turns clique bounds into an allocation algorithm. Under this hypothesis, and not merely from degree information, clique number and chromatic number coincide.
 
-The resolution is to exploit the structure of *real* interference graphs. Under the widely used
-**linear-scan** discipline, and more generally whenever each variable is live across a single
-contiguous span of program points, the interference graph is an **interval graph**: variables
-are line segments (their live ranges) and edges record overlaps. Interval graphs are chordal,
-hence perfect, so $\chi(G) = \omega(G)$ exactly. Our contribution is to make this concrete and
-computational: we identify $\omega(G)$ with the geometric **maximum overlap** $D$ and derive
-the full chain $\chi(G) = \omega(G) = D$, together with algorithmic optimality and a sharpened
-degree bound.
+The contributions are fourfold:
 
-### Contributions
+1. a palette-level characterization of register allocation for graphs with a perfect elimination ordering;
+2. a universal degree-based sufficiency theorem, stated explicitly as an upper bound rather than an equality;
+3. a minimal counterexample separating maximum degree plus one from exact register demand; and
+4. a clique-based lower bound on the number of spills forced by a fixed register budget.
 
-1. A formal model of contiguous live ranges, their interference graph, and the depth/overlap
-   functions (Section 3).
-2. A one-dimensional Helly property in clique form: every clique of live ranges is contained in
-   a single live set (Section 4), yielding $\omega(G) = D$.
-3. Optimality of linear-scan allocation: $D$ registers suffice via a latest-start-first greedy
-   coloring, and $D$ registers are necessary (Section 5), giving $\chi(G) = \omega(G) = D$.
-4. The refinement $D \le \Delta + 1$, exhibiting the overlap law as strictly stronger than the
-   greedy bound (Section 6).
-5. A geometric reformulation of spilling and a research program of conjectures (Sections 7–8).
+Together these results identify both a reliable allocation certificate and the boundary of degree-based reasoning.
 
-## 2. Related framing and the failed general formula
+## 2. Mathematical model
 
-The maximum-degree bound $\chi \le \Delta+1$ and its Brooks refinement are foundational graph
-theory; the clique bound $\chi \ge \omega$ is elementary. Their combination
-$\chi = \max(\Delta+1, \omega)$ is attractive because it would make register counts
-computable from two cheap statistics. The Petersen graph refutes it decisively. This failure is
-not a technicality: it reflects the genuine hardness of $\chi$ on arbitrary graphs, where local
-degree and clique data underdetermine the global coloring number.
+### 2.1 Interference graphs and colorings
 
-The escape is to restrict the graph class. Perfect graphs — those for which $\chi(H) = \omega(H)$
-for every induced subgraph $H$ — turn the lower bound into an equality. Interval graphs are a
-classical, algorithmically friendly subclass of perfect graphs, and they are exactly the
-interference graphs of contiguous-live-range programs. On this class we obtain a fully explicit
-law.
+A finite simple graph is a pair $G=(V,E)$, where $V$ is a finite vertex set and $E$ is a set of unordered pairs of distinct vertices. In an interference graph, vertices represent values and an edge $\{u,v\}\in E$ means that $u$ and $v$ are simultaneously live.
 
-## 3. Model and definitions
+A *proper $k$-coloring* is a function
 
-Fix a finite set of variables indexed by $\{0, 1, \dots, n-1\}$. Each variable $i$ has a
-**live range** $[\ell_i, h_i]$ with integer endpoints, given by functions
-$\ell, h : \{0,\dots,n-1\} \to \mathbb{N}$. We assume the well-formedness condition
-$\ell_i \le h_i$ for all $i$ (a variable is born no later than it dies).
+$$
+c:V\longrightarrow \{1,2,\ldots,k\}
+$$
 
-**Definition 3.1 (Liveness).** Variable $i$ is *live* at program point $t \in \mathbb{N}$ if
-$\ell_i \le t \le h_i$.
+such that $c(u)\neq c(v)$ whenever $\{u,v\}\in E$. The graph is *$k$-colorable* if such a function exists. Its *chromatic number* $\chi(G)$ is the least $k$ for which it is $k$-colorable. In the uniform-register model, $\chi(G)$ is the minimum number of registers required without spilling.
 
-**Definition 3.2 (Interference).** Distinct variables $i \ne j$ *interfere* if their live
-ranges overlap:
-$$\ell_i \le h_j \quad\text{and}\quad \ell_j \le h_i.$$
-Interference is symmetric.
+The neighborhood of a vertex $v$ is
 
-**Definition 3.3 (Interference graph).** The interference graph $G = G(\ell, h)$ is the simple
-graph on vertex set $\{0,\dots,n-1\}$ with $i \sim j$ iff $i$ and $j$ interfere.
+$$
+N(v)=\{u\in V:\{u,v\}\in E\}.
+$$
 
-**Definition 3.4 (Live set and depth).** The *live set* at $t$ is
-$L(t) = \{\, i : \ell_i \le t \le h_i \,\}$. The *depth* at $t$ is $\mathrm{depth}(t) = |L(t)|$,
-the number of variables simultaneously live at $t$.
+The degree of $v$ is $\deg(v)=|N(v)|$, and the maximum degree is
 
-**Definition 3.5 (Maximum overlap).** The *maximum overlap* is
-$$D \;=\; \max_{i} \ \mathrm{depth}(\ell_i),$$
-the largest depth taken over the start points of the live ranges. (Because depth is piecewise
-constant and can only increase at a start point, this equals the maximum depth over *all*
-program points; restricting to start points makes $D$ computable by a single scan.)
+$$
+\Delta(G)=\max_{v\in V}\deg(v).
+$$
 
-A **proper $k$-coloring** assigns to each variable one of $k$ colors so that interfering
-variables differ; the least such $k$ is the chromatic number $\chi(G)$. The **clique number**
-$\omega(G)$ is the maximum size of a set of pairwise-interfering variables.
+A *clique* is a set $S\subseteq V$ such that every two distinct members of $S$ are adjacent. The clique number $\omega(G)$ is the maximum cardinality of a clique in $G$.
 
-## 4. The one-dimensional Helly property and $\omega(G) = D$
+Every clique needs distinct colors at all of its vertices. Therefore every finite graph satisfies
 
-The first structural fact is that a live set is always a clique.
+$$
+\omega(G)\leq \chi(G).
+$$
 
-**Lemma 4.1 (Live sets are cliques).** For every program point $t$, the live set $L(t)$ is a
-clique of $G$.
+### 2.2 Elimination structure
 
-*Proof sketch.* If $i, j \in L(t)$ are distinct, then $\ell_i \le t \le h_i$ and
-$\ell_j \le t \le h_j$. Hence $\ell_i \le t \le h_j$ and $\ell_j \le t \le h_i$, which are
-exactly the interference inequalities. So $i \sim j$. $\square$
+An ordering $v_1,v_2,\ldots,v_n$ of the vertices is a *perfect elimination ordering* if, for each index $i$, the later neighbors
 
-Consequently $\mathrm{depth}(t) = |L(t)| \le \omega(G)$ for every $t$, and in particular
-$D \le \omega(G)$. The converse — that every clique is confined to a single live set — is the
-crux, and it is where one dimension works a small miracle.
+$$
+N_i^+(v_i)=\{v_j:j>i\text{ and }\{v_i,v_j\}\in E\}
+$$
 
-**Theorem 4.2 (One-dimensional Helly property, clique form).** Let $S$ be a nonempty clique of
-$G$. Let $m \in S$ maximize the start point, i.e. $\ell_m = \max_{i \in S} \ell_i$. Then every
-member of $S$ is live at the point $\ell_m$; that is, $S \subseteq L(\ell_m)$.
+form a clique.
 
-*Proof sketch.* Fix $i \in S$. If $i = m$, then $\ell_m \le \ell_m \le h_m$ by
-well-formedness, so $m \in L(\ell_m)$. If $i \ne m$, then $i \sim m$ because $S$ is a clique,
-so the interference inequalities give $\ell_m \le h_i$. Combined with
-$\ell_i \le \ell_m$ (maximality of $\ell_m$), we obtain $\ell_i \le \ell_m \le h_i$, i.e.
-$i \in L(\ell_m)$. Thus $S \subseteq L(\ell_m)$. $\square$
+A graph is *chordal* if every cycle of length at least four contains a chord, meaning an edge between two nonconsecutive vertices of that cycle. Finite chordal graphs are precisely the finite graphs admitting a perfect elimination ordering. For the arguments below, the ordering itself is the useful certificate: it specifies the order in which local clique structure becomes visible.
 
-The geometric content is precisely Helly's theorem in dimension one: *pairwise* overlapping
-intervals share a *common* point, and that point is the maximum of the left endpoints. The gap
-between "pairwise" and "common" — real in two or more dimensions — collapses on the line.
+Interval graphs provide a common source of chordality. Given intervals on a line, create one vertex per interval and join two vertices when the intervals intersect. Choose an interval whose right endpoint is earliest. Every neighbor that remains active at that endpoint contains the same point, so those neighbors pairwise intersect. Repeating this operation yields a perfect elimination ordering. Thus interval-shaped live ranges have exactly the structure required by the main allocation theorem.
 
-**Corollary 4.3 (Perfectness bound).** Every clique $S$ satisfies $|S| \le D$.
+### 2.3 Spilling
 
-*Proof sketch.* By Theorem 4.2, $S \subseteq L(\ell_m)$ for some $m \in S$, so
-$|S| \le |L(\ell_m)| = \mathrm{depth}(\ell_m) \le D$. The empty clique satisfies the bound
-trivially. $\square$
+Fix a register budget $k$. A *spill set* is a subset $R\subseteq V$ whose vertices are removed from register assignment. It is valid when the induced graph on $V\setminus R$ is $k$-colorable. If each spilled variable has unit cost, the objective is to minimize $|R|$. In a weighted model, each vertex has a nonnegative cost $w(v)$ and the objective is to minimize
 
-**Theorem 4.4 (Clique number equals maximum overlap).** $\omega(G) = D$.
+$$
+\sum_{v\in R}w(v).
+$$
 
-*Proof sketch.* Corollary 4.3 gives $\omega(G) \le D$. For the reverse, choose $m$ attaining
-$D = \mathrm{depth}(\ell_m)$; by Lemma 4.1 the set $L(\ell_m)$ is a clique of size exactly $D$,
-so $\omega(G) \ge D$. Hence equality, and the maximum is genuinely attained — this is a real
-clique, not a definitional artifact. $\square$
+The present spill theorem gives a local lower bound for every valid spill set. It does not assert that a particular heuristic always achieves that bound globally.
 
-## 5. Linear-scan optimality: $\chi(G) = D$
+## 3. Universal bounds and their limitation
 
-We now show that the geometric lower bound is also achievable, so the chromatic number equals
-the maximum overlap.
+### Theorem 1 (Degree-budget sufficiency)
 
-**Theorem 5.1 (Sufficiency / linear-scan optimality).** The interference graph $G$ is
-$D$-colorable: $D$ registers always suffice.
+Let $G$ be a finite interference graph. If the number of available registers $k$ satisfies
 
-*Proof sketch.* Process the variables in a **latest-start-first** order (a perfect elimination
-ordering). Formally, induct on the vertex set: at each step remove a vertex $m$ with the
-maximum start point among the remaining vertices, color the rest by the inductive hypothesis,
-and assign $m$ a free color. The already-colored interfering neighbors $N$ of $m$ all overlap
-$m$ and have start points $\le \ell_m$; by the Helly argument each is live at $\ell_m$, so
-$N \subseteq L(\ell_m) \setminus \{m\}$, whence
-$$|N| \le \mathrm{depth}(\ell_m) - 1 \le D - 1 < D.$$
-Fewer than $D$ colors are forbidden, so among $D$ colors one is free for $m$. Induction
-completes a proper $D$-coloring. (The degenerate cases $n = 0$ and $n = 1$ are handled directly:
-$D = 0$ with no vertices, and $D = 1$ with a single vertex.) $\square$
+$$
+\Delta(G)<k,
+$$
 
-**Theorem 5.2 (Necessity).** Any proper coloring uses at least $D$ colors; i.e.
-$\omega(G) \ge D$ forces $\chi(G) \ge D$.
+then $G$ is $k$-colorable. Equivalently,
 
-*Proof sketch.* By Theorem 4.4 there is a clique of size $D$; its vertices are pairwise
-interfering and so require $D$ distinct colors. Formally, a proper coloring restricted to a
-$D$-clique is injective, so the image has $D$ colors. $\square$
+$$
+\chi(G)\leq \Delta(G)+1.
+$$
 
-**Theorem 5.3 (Maximum-overlap law).** For any contiguous-live-range program,
-$$\chi(G) = \omega(G) = D.$$
+#### Proof sketch
 
-*Proof sketch.* Theorem 5.1 gives $\chi(G) \le D$; Theorem 5.2 gives $\chi(G) \ge D$, so
-$\chi(G) = D$. Combined with Theorem 4.4, $\chi(G) = \omega(G) = D$. This is the perfectness of
-interval graphs made explicit and computational. $\square$
+Order the vertices arbitrarily and color them one at a time. When a vertex $v$ is reached, at most $\deg(v)\leq\Delta(G)$ of its neighbors have colors. Those neighbors can forbid at most $\Delta(G)$ colors. Since $k>\Delta(G)$, at least one color remains available. Assign such a color and continue. The resulting coloring is proper because every edge is checked when its later endpoint is colored.
 
-The algorithmic upshot: the optimal register count is computed by a single left-to-right scan
-that tracks the current depth and reports its maximum, and an optimal assignment is produced by
-the same scan in latest-start-first order.
+The theorem is universal and constructive, but one-sided. It states sufficiency, not exactness.
 
-## 6. Refining the greedy degree bound: $D \le \Delta + 1$
+### Proposition 2 (Smaller coloring excludes the degree formula)
 
-The classical guarantee $\chi \le \Delta + 1$ is recovered — and sharpened — by the overlap
-law.
+Let $G$ be a finite graph. If $G$ is $k$-colorable for some
 
-**Theorem 6.1.** $D \le \Delta(G) + 1$, where $\Delta(G)$ is the maximum degree of $G$.
+$$
+k<\Delta(G)+1,
+$$
 
-*Proof sketch.* By Theorem 4.4 there is a clique $S$ with $|S| = D$. If $D = 0$ the bound is
-trivial. Otherwise pick any $v \in S$; the other $D - 1$ members of $S$ are all neighbors of
-$v$, so $\deg(v) \ge D - 1$, whence $\Delta(G) \ge D - 1$, i.e. $D \le \Delta(G) + 1$. $\square$
+then
 
-Since $\chi(G) = D$, this yields $\chi(G) \le \Delta(G) + 1$ as a corollary, but with a precise
-accounting of the slack: the greedy bound is tight only when the deepest overlap already
-saturates the neighborhood of one of its members. On typical programs $D$ is substantially
-smaller than $\Delta + 1$, explaining why realistic code fits comfortably into modest register
-banks and why the greedy bound alone is pessimistic.
+$$
+\chi(G)\neq\Delta(G)+1.
+$$
 
-## 7. Spilling as a one-dimensional covering problem
+#### Proof sketch
 
-When the register budget $k$ is smaller than $D$, no proper $k$-coloring exists and some
-variables must be spilled to memory. The overlap law recasts this. Define the **excess
-profile** as the pointwise shortfall $\max(\mathrm{depth}(t) - k,\ 0)$. Every program point of
-depth exceeding $k$ is *over-full* and must lose variables until its depth drops to $k$. Because
-live ranges are intervals, a single eviction removes a variable from an entire contiguous run
-of points at once, so relieving congestion is a covering problem on the line rather than an
-opaque graph problem.
+By definition of chromatic number, a $k$-coloring implies $\chi(G)\leq k$. Combining this with $k<\Delta(G)+1$ gives $\chi(G)<\Delta(G)+1$, so equality is impossible.
 
-This viewpoint clarifies the classical **degree-based spilling** heuristic (repeatedly evict
-the maximum-degree variable). On interval graphs, a vertex's degree is dominated by the depths
-at its two endpoints; the maximum-degree variable therefore lies near a deepest, most congested
-point — precisely where relief is most needed. The overlap law makes "degree" and "depth"
-quantitatively comparable, opening the door to provable approximation guarantees (Section 8).
+### Theorem 3 (Three-vertex separation)
 
-## 8. Discussion and future directions
+Let $P_3$ be the path with vertices $a,b,c$ and edges $\{a,b\}$ and $\{b,c\}$. Then
 
-The narrative is a clean instance of a recurring phenomenon: a problem that is intractable in
-full generality becomes exactly solvable once the structure of real instances is recognized.
-Register allocation is NP-hard as arbitrary graph coloring and resists any clean
-degree-and-clique formula (Petersen), yet on the interval graphs produced by contiguous live
-ranges it obeys the exact law $\chi = \omega = D$, with $D$ computable by one scan.
+$$
+\chi(P_3)=2,
+\qquad
+\Delta(P_3)=2,
+$$
 
-We record four testable directions.
+and hence
 
-**1. Spill minimization is governed by the overlap profile.** When $k < D$, the minimum number
-of spilled variables should equal the total excess area of the overlap profile,
-$\sum_t \max(\mathrm{depth}(t) - k, 0)$ appropriately counted over maximal over-full runs, with
-an optimal spill set chosen greedily by evicting a variable spanning a deepest over-full point.
-The exact $\chi = \omega = D$ identity turns spilling into a purely geometric question about the
-depth function.
+$$
+\chi(P_3)=2<3=\Delta(P_3)+1.
+$$
 
-**2. Degree-based spilling is within a constant factor of optimal.** Repeatedly evicting the
-maximum-degree vertex should yield a spill set of cost at most twice the optimum on interval
-graphs, and this factor should be tight, because a vertex's degree is dominated by the depths at
-its endpoints, tying the heuristic to the geometric congestion it relieves.
+#### Proof sketch
 
-**3. SSA destruction preserves perfectness up to bounded blow-up.** Converting out of static
-single assignment form (inserting copies at $\phi$-nodes) should increase the maximum overlap by
-at most the maximum $\phi$-arity, and the interference graph should remain perfect when copies
-are coalesced along a chordal schedule, since $\phi$-resolution only splices intervals at
-basic-block boundaries and refines rather than tangles the interval structure.
+The graph has an edge, so one color cannot suffice. Two colors do suffice: color $a$ and $c$ with color $1$ and color $b$ with color $2$. The middle vertex $b$ has two neighbors, while each endpoint has one, so the maximum degree is $2$.
 
-**4. The overlap law fails exactly at the first non-interval obstruction.** Characterizing the
-minimal structural feature (e.g. non-contiguous live ranges from control-flow merges) at which
-the interference graph ceases to be an interval graph would pinpoint precisely when $\chi = D$
-first breaks, marking the boundary of the exact regime.
+This is a minimal nontrivial diagnostic. A graph with fewer than three vertices cannot simultaneously have maximum degree $2$ and exhibit this separation. The example also refutes the claim that spilling must occur whenever the register budget is below $\Delta(G)+1$: $P_3$ has budget $2<3$ and needs no spill.
 
-## 9. Conclusion
+The structural reason is that the two neighbors of $b$ are not adjacent. Degree counts them separately, but coloring permits them to reuse a color.
 
-For programs whose variables occupy contiguous live ranges — the regime of linear-scan
-allocation and much of practical compilation — the interference graph is an interval graph, and
-its chromatic number, clique number, and maximum live-range overlap coincide:
-$$\chi(G) = \omega(G) = D.$$
-The optimal number of registers is exactly the maximum number of simultaneously live variables,
-attained by a single left-to-right scan; spilling is forced precisely when the register budget
-drops below this overlap. The result sharpens the classical greedy bound $D \le \Delta + 1$ and
-rests on the one-dimensional Helly property, which turns pairwise interval overlap into a common
-witness point. What is intractable for arbitrary graphs becomes, for the line, a matter of
-counting the tallest stack.
+## 4. Exact allocation under perfect elimination
+
+### Theorem 4 (Chordal Register Palette Theorem)
+
+Let $G$ be a finite interference graph equipped with a perfect elimination ordering, and let $k$ be a nonnegative integer. The following conditions are equivalent:
+
+1. $G$ admits a proper coloring with $k$ registers.
+2. Every clique $S$ in $G$ satisfies $|S|\leq k$.
+
+Consequently,
+
+$$
+\chi(G)=\omega(G).
+$$
+
+#### Proof sketch
+
+Assume first that $G$ has a proper $k$-coloring. Every pair of vertices in a clique is adjacent, so all vertices of any clique receive distinct colors. Since only $k$ colors are available, every clique has size at most $k$.
+
+Conversely, suppose every clique has size at most $k$. Let $v_1,\ldots,v_n$ be a perfect elimination ordering and color vertices in reverse order, beginning with $v_n$. When coloring $v_i$, all already colored neighbors belong to the later-neighbor set $N_i^+(v_i)$. By the defining property of the ordering, this set is a clique. Moreover, $N_i^+(v_i)\cup\{v_i\}$ is also a clique, so it has at most $k$ vertices. Therefore $N_i^+(v_i)$ has at most $k-1$ vertices and forbids at most $k-1$ colors. One of the $k$ colors remains for $v_i$. Induction completes the coloring.
+
+For the final identity, the general clique lower bound gives $\omega(G)\leq\chi(G)$. Applying the equivalence with $k=\omega(G)$ yields a coloring with $\omega(G)$ colors, so $\chi(G)\leq\omega(G)$ as well.
+
+### Corollary 5 (No-spill criterion)
+
+For an interference graph with a perfect elimination ordering, a register budget $k$ permits spill-free allocation if and only if no clique contains more than $k$ vertices.
+
+This criterion is both necessary and sufficient. A maximal clique is a simultaneous pressure certificate, while the elimination ordering is an explicit allocation certificate.
+
+### Corollary 6 (Interval-liveness exactness)
+
+If each live range is an interval on a line and interference means interval overlap, then the required number of registers equals the largest number of pairwise overlapping live ranges:
+
+$$
+\chi(G)=\omega(G).
+$$
+
+#### Proof sketch
+
+The interval intersection graph admits a perfect elimination ordering obtained by repeatedly choosing an interval with earliest finishing time. Apply Theorem 4.
+
+This corollary must be used with semantic care. Real control-flow liveness need not be representable by intervals on one line. More general connected-subtree models are promising, but the graph structure must follow from an explicit liveness representation rather than from a syntactic program label alone.
+
+## 5. Clique pressure and unavoidable spills
+
+### Theorem 7 (Clique Spill Bound)
+
+Let $G=(V,E)$ be a finite interference graph, let $S\subseteq V$ be a clique of size $m$, and suppose the machine provides $k<m$ registers. For every spill set $R\subseteq V$ such that the unspilled graph $G[V\setminus R]$ is $k$-colorable,
+
+$$
+|S\cap R|\geq m-k.
+$$
+
+In words, at least $m-k$ members of the clique must be spilled.
+
+#### Proof sketch
+
+The unspilled clique members form the set $S\setminus R$. They remain pairwise adjacent, so a proper coloring assigns them distinct registers. Hence $|S\setminus R|\leq k$. Since
+
+$$
+|S|=|S\setminus R|+|S\cap R|,
+$$
+
+we obtain
+
+$$
+|S\cap R|=m-|S\setminus R|\geq m-k.
+$$
+
+### Corollary 8 (Global lower bound from a clique)
+
+Under the assumptions of Theorem 7, every valid spill set has size at least $m-k$:
+
+$$
+|R|\geq m-k.
+$$
+
+The stronger theorem records where these forced spills occur: they must come from the overloaded clique itself.
+
+### Weighted interpretation
+
+If vertices carry spill costs, the cardinality bound still constrains feasible solutions, but it does not determine minimum cost. Within an overloaded clique, at least $m-k$ vertices must be spilled; a local cost lower bound is therefore the sum of the $m-k$ smallest costs in that clique. Overlapping cliques complicate the global problem because one spilled vertex may relieve several clique constraints simultaneously.
+
+This interaction explains why maximum-degree spilling has no universal optimality guarantee. Degree does not encode execution frequency, spill cost, or the overlap pattern among critical cliques. Even in an unweighted setting, deleting one high-degree vertex can alter several neighborhoods in ways that a static ranking fails to predict.
+
+## 6. Algorithms
+
+### 6.1 Greedy coloring from a perfect elimination ordering
+
+Given a perfect elimination ordering $v_1,\ldots,v_n$ and a palette of $k$ registers, process vertices from $v_n$ down to $v_1$. For each vertex, collect colors already used by its later neighbors and choose any unused color. If the maximum clique size is at most $k$, the proof of Theorem 4 guarantees success.
+
+With adjacency sets, the coloring phase takes $O(|V|+|E|)$ time after the ordering is known: every vertex is visited once and every edge is inspected a constant number of times. Standard chordality-recognition methods can also produce an elimination ordering in linear time. The algorithm therefore turns structural recognition into a direct allocation pipeline.
+
+### 6.2 Exact coloring for numerical demonstrations
+
+For small arbitrary graphs, exact chromatic number can be computed by backtracking. Try palette sizes $k=1,2,\ldots,|V|$. For each $k$, recursively choose an uncolored vertex—preferably one of high degree—and assign a color not used by its colored neighbors. The first successful palette size is $\chi(G)$.
+
+This method has exponential worst-case complexity, as expected for general graph coloring, but it is transparent and adequate for small examples. It is useful for contrasting paths, complete graphs, stars, and odd cycles and for checking that degree and clique statistics play different roles.
+
+### 6.3 Clique spill certificates
+
+Given a clique $S$ and register budget $k$, compute $b=\max(0,|S|-k)$. If $b>0$, report that every feasible allocation must spill at least $b$ vertices from $S$. Verifying that a proposed set is a clique requires checking all pairs, which takes $O(|S|^2)$ adjacency queries. Once clique status is known, the numerical bound is constant-time.
+
+The certificate is local and composable. Multiple cliques provide multiple valid lower bounds, though combining overlapping certificates without double counting requires additional optimization machinery.
+
+## 7. Examples and boundary cases
+
+### 7.1 Paths and trees
+
+Every tree with at least one edge is bipartite, hence $2$-colorable, and every clique in a tree has size at most $2$. Trees are chordal because they contain no cycles. Therefore
+
+$$
+\chi(T)=\omega(T)=2
+$$
+
+for every nontrivial tree $T$.
+
+A star with $r$ leaves has maximum degree $r$ but still has chromatic number $2$. Thus the gap between $\Delta(G)+1$ and $\chi(G)$ can grow arbitrarily large even within chordal graphs. Chordality equates chromatic number with clique number, not with maximum degree plus one.
+
+### 7.2 Complete graphs
+
+For the complete graph $K_n$, every pair of vertices interferes. Consequently,
+
+$$
+\chi(K_n)=\omega(K_n)=n
+$$
+
+and $\Delta(K_n)=n-1$. Here the degree bound is exact:
+
+$$
+\chi(K_n)=\Delta(K_n)+1.
+$$
+
+This is the extreme case in which every local conflict participates in one global clique.
+
+### 7.3 Odd cycles
+
+For an odd cycle $C_{2r+1}$ with $r\geq2$, the largest clique has size $2$, but the graph is not bipartite and needs three colors:
+
+$$
+\omega(C_{2r+1})=2<3=\chi(C_{2r+1}).
+$$
+
+Odd cycles of length at least five are not chordal. They demonstrate that clique number alone does not control coloring outside an appropriate perfect graph class.
+
+### 7.4 Spill arithmetic
+
+Suppose seven variables form a clique and only four registers are available. Theorem 7 gives
+
+$$
+7-4=3,
+$$
+
+so at least three clique members must spill. If the same graph contains another clique of size six, that second clique independently demands at least two spills among its members. The two requirements cannot simply be added when the cliques overlap; one spill may satisfy both. This is precisely where clique-tree dynamic programming becomes a natural direction for chordal graphs.
+
+## 8. Compiler interpretation and applications
+
+The mathematical results suggest a disciplined allocation workflow.
+
+First, construct the interference graph from a precisely specified liveness semantics. Second, search for a perfect elimination ordering or otherwise establish chordality. If such an ordering exists, compute the maximum clique size and compare it with the register budget. A budget at least as large as the maximum clique guarantees spill-free coloring, and reverse elimination directly produces the assignment. If the budget is smaller, overloaded cliques provide unavoidable spill certificates.
+
+When no elimination structure exists, the maximum-degree theorem remains a safe general upper bound, but clique size may underestimate chromatic demand, as odd cycles show. General coloring or decomposition methods are then required.
+
+The same framework applies beyond compilers. Any resource-assignment problem with pairwise incompatibility can be represented by a graph: classroom scheduling, frequency assignment, temporary storage planning, and overlapping job allocation. Chordal or interval structure turns a difficult global coloring problem into a greedy procedure with exact clique certificates.
+
+## 9. Discussion
+
+The central distinction is between local conflict count and collective conflict structure. Maximum degree controls how many colors a greedy step might have to avoid in the worst case. Clique number controls how many colors are unavoidably needed by a mutually conflicting set. A perfect elimination ordering bridges the two: it ensures that the relevant already colored neighborhood at every step is itself a clique.
+
+This bridge explains both the positive theorem and the counterexample. In the three-vertex path, the middle vertex has two neighbors, but those neighbors do not form a clique and may share a color. In a reverse elimination step, only the later clique matters, not the total degree. The exact allocation theorem therefore depends on an ordering-sensitive structure rather than a single global degree statistic.
+
+Spilling introduces an optimization layer that coloring alone does not resolve. The clique spill bound identifies necessary local deletions, but several cliques can overlap, and vertices can have heterogeneous costs. A degree-only strategy discards this information. A principled optimizer should account for the arrangement of maximal cliques, the costs of candidate spills, and the way one deletion changes several constraints.
+
+## 10. Future work
+
+Five directions follow naturally.
+
+First, weighted spilling on chordal graphs should be studied through dynamic programming over clique trees. Chordality localizes coloring obstructions to maximal cliques, while a clique tree records their overlaps. Parameterizing the state space by maximum clique size may yield tractable exact optimization.
+
+Second, realistic architectures provide register classes rather than one uniform palette. This motivates list coloring, where each variable has its own admissible register set. A vertex-sensitive condition based on the largest clique containing each vertex may strengthen the uniform theorem.
+
+Third, the semantic origin of chordal interference graphs deserves an exact characterization. If live ranges are connected subtrees of a dominance tree, their intersection graph is expected to be chordal; a converse representation would tightly connect program semantics and graph structure.
+
+Fourth, restricted graph classes may admit valid versions of maximum-degree spilling. Identifying the precise boundary—possibly among block graphs—would replace an unreliable universal heuristic by a theorem with explicit hypotheses.
+
+Fifth, graphs that become chordal after deleting a small exceptional set invite fixed-parameter algorithms. One may isolate the nonchordal obstruction and apply elimination methods to the remainder, parameterized by the exceptional-set size and register budget.
+
+## 11. Conclusion
+
+Register allocation is graph coloring, but the graph invariant that matters depends on structure. Every finite interference graph can be colored with $\Delta(G)+1$ registers, yet this number is often an overestimate. The three-vertex path proves that even a chordal graph may need fewer registers than that degree bound predicts. For a graph with a perfect elimination ordering, the exact criterion is instead clique-based: $k$ registers suffice exactly when every clique has size at most $k$, and therefore $\chi(G)=\omega(G)$. When the budget falls below a clique size $m$, at least $m-k$ members of that clique must spill.
+
+These statements provide three distinct tools: a universal safe budget, an exact structural allocation theorem, and a local certificate of unavoidable spilling. Keeping those roles separate prevents upper bounds from becoming false equalities and turns elimination structure into a practical guide for resource assignment.

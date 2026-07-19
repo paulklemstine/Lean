@@ -1,192 +1,117 @@
-# How Many Registers Does a Program Really Need? A Geometry of Overlap
+# When Variables Compete: The Hidden Geometry of Register Allocation
 
-Deep inside every compiler, a small drama plays out billions of times a day. A processor has
-only a handful of *registers* — the fastest scratchpads it owns, the places where arithmetic
-actually happens. A modern chip might have sixteen or thirty-two of them. Yet a program can
-mention hundreds or thousands of variables. Somebody has to decide which variable lives in
-which register, and when two variables must take turns. Get it right and code flies. Get it
-wrong and the processor spends its life shuttling values to and from slow memory — the dreaded
-*spill*.
+A processor can perform billions of operations per second, but its fastest workspace is remarkably small. At any instant, a program may have many intermediate values waiting to be used, while the processor offers only a limited number of registers in which to keep them. The compiler must decide which values may share a register and which must remain separate. A poor decision causes a *spill*: a value is moved to slower memory and later loaded again. Enough spills can turn elegant source code into a traffic jam of memory operations.
 
-This decision is called **register allocation**, and for decades it has been understood
-through a beautiful and slightly intimidating lens: **graph coloring**. This article tells the
-story of that lens, of a tempting conjecture about it that turns out to be *false*, and of the
-sharper, simpler truth that survives — a truth that replaces an abstract graph invariant with
-a quantity you can read off with a single sweep of your finger across a page.
+This practical problem has a clean combinatorial heart. Draw one vertex for every program variable. Join two vertices when the corresponding values are simultaneously live—that is, when both values must still be available at the same moment. The resulting *interference graph* records exactly which variables cannot occupy the same register. Assigning registers is then the same as coloring the vertices so that adjacent vertices receive different colors. A palette of $k$ colors represents $k$ registers.
 
-## Variables that cannot share a room
+This translation is powerful, but it also warns us against an appealing mistake. The most connected variable does not, by itself, determine the number of registers required. The right answer depends not merely on how many conflicts each variable has, but on how those conflicts fit together.
 
-Picture a variable's life inside a program. It is *born* the moment it is first assigned a
-value, and it *dies* at the last instant its value is used. Between those two moments it is
-**live**: the compiler must keep it somewhere. Two variables **interfere** if their lifetimes
-overlap — if there is a moment when both are alive at once. Interfering variables cannot share
-a register, for the same reason two guests cannot share a hotel room on the same night.
+## Three measures of pressure
 
-Turn this into a picture. Draw one dot for each variable, and connect two dots with a line
-whenever the corresponding variables interfere. The result is the **interference graph** $G$.
-A *legal* assignment of variables to registers is then exactly a way to color the dots so that
-no two connected dots share a color. The number of colors is the number of registers. The
-smallest number of colors that works is a famous graph invariant, the **chromatic number**
-$\chi(G)$. So the question "how many registers does this program need?" becomes "what is
-$\chi(G)$?"
+Three numbers organize the story.
 
-That reformulation is elegant, but it comes with bad news attached: for *general* graphs,
-computing the chromatic number is one of the hardest problems in computer science. If register
-allocation really were graph coloring in full generality, compilers would be doomed to
-heuristics forever.
+The *chromatic number* $\chi(G)$ is the smallest number of colors needed for a proper coloring of a graph $G$. In compiler language, it is the optimal register requirement when all registers are interchangeable.
 
-## A tempting formula — and why it breaks
+The *maximum degree* $\Delta(G)$ is the largest number of neighbors of any vertex. It measures the worst local congestion: one variable may conflict with $\Delta(G)$ others.
 
-Two easy quantities bracket the chromatic number from above and below.
+The *clique number* $\omega(G)$ is the largest size of a clique, a set of vertices every pair of which is adjacent. A clique of size $m$ represents $m$ variables that are pairwise in conflict. They must occupy $m$ distinct registers, so
 
-From above sits the classical greedy bound. Let $\Delta$ be the **maximum degree** of the
-graph — the largest number of neighbors any single dot has. If you color the vertices one at a
-time, each vertex has at most $\Delta$ already-colored neighbors, so among $\Delta+1$ colors
-one is always free. Hence $\chi(G) \le \Delta + 1$. (Brooks' theorem refines this slightly,
-but the spirit is the same.)
+$$
+\omega(G) \leq \chi(G).
+$$
 
-From below sits the **clique number** $\omega(G)$: the size of the largest set of dots that are
-*all* mutually connected. A group of $\omega$ pairwise-interfering variables obviously needs
-$\omega$ distinct registers, so $\chi(G) \ge \omega(G)$.
+Maximum degree gives pressure of a different kind. If every vertex has at most $\Delta(G)$ neighbors, then a greedy procedure can color the graph using $\Delta(G)+1$ colors: when a vertex is colored, its neighbors can forbid at most $\Delta(G)$ colors. Thus
 
-It is tempting to guess that these two bounds pinch the truth into a clean formula:
-$$\chi(G) = \max(\Delta + 1,\ \omega(G)).$$
-The guess says: you need $\Delta+1$ colors, *unless* the graph is actually less crowded than
-its worst vertex suggests, in which case a big clique is the only thing forcing extra colors.
+$$
+\chi(G) \leq \Delta(G)+1.
+$$
 
-It is a lovely conjecture. It is also **false**. The cleanest witness is the *Petersen graph*,
-a famously symmetric network of ten vertices in which every vertex has exactly three
-neighbors, so $\Delta + 1 = 4$. It contains no triangle at all, so its clique number is merely
-$\omega = 2$. The formula predicts $\max(4, 2) = 4$ colors. But the Petersen graph can in fact
-be colored with just **three**. The formula overshoots. Whatever governs the chromatic number,
-it is *not* this tidy maximum — not for arbitrary graphs.
+It is tempting to turn this upper bound into an equality. That temptation must be resisted.
 
-So we have a choice. We can mourn the formula, or we can ask a sharper question: *the
-interference graphs that real compilers actually produce are not arbitrary graphs.* Do they
-have special structure that rescues an exact law?
+## The three-vertex warning
 
-They do.
+Consider the smallest path with three vertices:
 
-## Enter the interval graph
+$$
+A \;—\; B \;—\; C.
+$$
 
-Modern compilers, especially those using the fast and popular **linear-scan** allocator,
-arrange a program so that each variable is live throughout one *contiguous* stretch of the
-program's timeline. A variable's life is not a scattered set of moments; it is a single
-unbroken segment — a **live range** $[\ell_i, h_i]$ running from its start point $\ell_i$ to
-its end point $h_i$.
+The middle vertex $B$ has degree $2$, so $\Delta(G)+1=3$. Yet two colors suffice: give $A$ and $C$ the same color and give $B$ the other. Consequently,
 
-Once every variable is an interval on a line, the interference graph stops being arbitrary and
-becomes something with a name and a personality: an **interval graph**. Two variables
-interfere exactly when their segments overlap, and overlap of intervals on a line is an
-extraordinarily well-behaved relation. Interval graphs are *chordal*, and chordal graphs are
-*perfect* — a technical word with a spectacular consequence: for perfect graphs the chromatic
-number and the clique number are always equal, $\chi(G) = \omega(G)$, with no slack. The
-lower bound and the true answer coincide.
+$$
+\chi(G)=2<3=\Delta(G)+1.
+$$
 
-And for intervals the clique number has a wonderfully physical meaning. Define the **depth**
-at a program point $t$ to be the number of live ranges covering $t$ — the number of variables
-simultaneously alive at that instant. The **maximum overlap** $D$ is the largest depth over
-all points: the single most crowded moment in the program's life. Our main result is that this
-homely, hand-countable quantity *is* the answer.
+This tiny graph overturns two broad claims at once. First, the maximum degree plus one is not an exact formula for register demand. Second, a program with fewer than $\Delta(G)+1$ registers need not spill. The path needs only two registers even though the degree bound offers three.
 
-> **The Maximum-Overlap Law.** For any program whose variables occupy contiguous live ranges,
-> the interference graph satisfies
-> $$\chi(G) = \omega(G) = D,$$
-> where $D$ is the maximum number of variables simultaneously live at any single program point.
-> Consequently the optimal number of registers is exactly $D$, and no allocation scheme,
-> however clever, can do better.
+The lesson is conceptual. Degree counts how many separate conflicts touch one variable. A clique records simultaneous mutual conflict. In the path, $B$ conflicts with both $A$ and $C$, but $A$ and $C$ do not conflict with each other. They can therefore reuse a register. Local congestion is not the same as collective congestion.
 
-The abstract, NP-hard-in-general chromatic number has collapsed into a number you compute by
-scanning the timeline and asking, "what is the largest pile-up?"
+## The structure that makes cliques decisive
 
-## The one-dimensional miracle: Helly's property
+There is, however, an important family of graphs for which clique pressure tells the whole story. A graph is *chordal* if every cycle of length at least four has a chord—an edge joining two nonconsecutive vertices of the cycle. Chordal graphs can also be recognized through a *perfect elimination ordering*.
 
-Why does the clique number equal the maximum overlap? A clique is a set of variables that
-*pairwise* interfere — every two of them overlap. Maximum overlap requires something stronger:
-that they *all* overlap at *one common* point. In two dimensions these are genuinely
-different. Three long, thin rectangles can pairwise cross while sharing no common point, like
-three swords crossed in a fencing salute. Pairwise agreement need not imply universal
-agreement.
+A perfect elimination ordering lists the vertices so that, for every vertex, all of its neighbors appearing later in the list form a clique. Imagine repeatedly removing a vertex whose remaining neighbors already know one another. This produces a remarkably useful coloring certificate.
 
-On a *line*, this gap vanishes. This is the one-dimensional case of **Helly's theorem**, and
-it is the geometric heart of the whole story:
+The central result is the following.
 
-> **One-Dimensional Helly Property.** If a collection of intervals overlaps pairwise, then all
-> of them share a common point.
+**Chordal Register Palette Theorem.** Suppose an interference graph has a perfect elimination ordering. Then it can be allocated using $k$ registers if and only if every clique in the graph has at most $k$ vertices.
 
-The proof is a single vivid observation. Take the interval whose *start* point $\ell_m$ is the
-latest — the last one to open. Every other interval in the clique overlaps this last-opener,
-which (since it opened even earlier) means every other interval must still be open at the
-moment $\ell_m$. So the point $\ell_m$ lies inside all of them at once. Pairwise overlap, on a
-line, forces a *common witness point*, and that point is simply the maximum of the left
-endpoints.
+One direction is unavoidable: if a clique contains more than $k$ variables, pairwise interference forces more than $k$ distinct registers. The other direction is the structural gift of the elimination ordering. Process the vertices in reverse elimination order. When a vertex is reached, its already colored neighbors form a clique. By assumption that clique has at most $k$ vertices; because the current vertex itself joins that clique, at most $k-1$ colors can be forbidden. At least one of the $k$ registers remains available.
 
-This little lemma does all the heavy lifting. It says that any clique of $k$ mutually
-interfering variables is really $k$ variables all alive at one instant — a depth-$k$ pile-up.
-So the largest clique is exactly the deepest pile-up: $\omega(G) = D$. Combine that with
-perfection's $\chi = \omega$ and the law falls out. The very same maximizing point $\ell_m$
-also *exhibits* a clique of size exactly $D$, so the bound is genuinely achieved — this is not
-a definitional accident but a real, attained equality.
+Taking the smallest possible $k$ gives the exact identity
 
-## Coloring by scanning: why linear-scan is optimal
+$$
+\chi(G)=\omega(G)
+$$
 
-An exact count is satisfying, but a compiler needs an actual assignment. Here the same idea
-delivers a concrete, blazingly fast algorithm. Sort the variables by their start points and
-color them **earliest-start-first**. When it is variable $v$'s turn, look at its already-placed
-interfering neighbors. Each of them overlaps $v$ and started *no later* than $v$ — so, by the
-Helly observation, each of them is still alive at $v$'s own start point $\ell_v$. That means
-all of $v$'s already-scheduled conflicts are part of the pile-up at $\ell_v$, of which there
-are fewer than $D$ (counting $v$ itself brings the pile to at most $D$). Fewer than $D$ colors
-are forbidden, so among $D$ registers one is always free.
+for every graph with a perfect elimination ordering. Here maximum degree remains a safe engineering bound, but clique size becomes the exact mathematical demand.
 
-This is precisely why the **linear-scan** allocator — a single left-to-right sweep — is not
-just fast but *optimal* for contiguous live ranges. It never needs more than $D$ registers,
-and $D$ registers are provably necessary. Reversing this sweep gives the "latest start first"
-ordering that graph theorists call a *perfect elimination ordering*, the structural signature
-of chordal graphs, here made completely concrete.
+This distinction matters for compiler design. A degree-based allocator asks, “How many conflicts touch this variable?” An elimination-based allocator asks, “Which conflicts must coexist at this stage, and do they form a clique?” The latter question sees register reuse that the former can miss.
 
-## The refinement of the greedy bound
+## Why interval lifetimes often help
 
-Where does the old degree bound $\chi \le \Delta + 1$ fit? It is still true, but the overlap
-law reveals it as a loose shadow of a sharper fact:
-$$D \le \Delta + 1.$$
-The reasoning is immediate. The deepest pile-up is a clique of $D$ mutually interfering
-variables; pick any one of them, and its other $D-1$ clique-mates are all its neighbors, so it
-has degree at least $D-1$, giving $\Delta \ge D - 1$. Thus $D \le \Delta + 1$, and since
-$\chi = D$, the classical greedy guarantee is recovered — but now we know *exactly* how much
-slack it carries. The greedy bound is tight only when the deepest pile-up already saturates
-the busiest variable's neighborhood. In real programs the maximum overlap is typically far
-below $\Delta + 1$, which is precisely why practical allocators comfortably fit realistic code
-into modest register banks.
+Many scheduling problems describe each resource by an interval of time. Two jobs conflict when their intervals overlap. Their intersection graph is an *interval graph*, and interval graphs are chordal. The geometric reason is intuitive: among a collection of intervals, choose one that ends first. Every later-overlapping interval contains that earliest endpoint, so those neighbors all overlap one another and form a clique. Repeating the argument yields a perfect elimination ordering.
 
-## Spilling, made geometric
+When variable live ranges truly behave like intervals, the largest number of mutually overlapping ranges gives the exact register requirement. More elaborate program control flow may produce tree-like rather than linear lifetimes, and additional semantic work is needed before chordality may be assumed. Merely labeling a program as being in a particular intermediate representation does not automatically prove that its interference graph has the required structure. The liveness model must justify it.
 
-What happens when a program's maximum overlap exceeds the number of registers you actually
-have? Then no coloring exists, and some variable must be *spilled* — evicted to memory for
-part of its life. The overlap law reframes this too. With only $k < D$ registers, every
-program point of depth greater than $k$ is "over-full" and must shed variables. Because live
-ranges are intervals, a single well-chosen eviction can relieve an entire contiguous congested
-region at once. Spilling becomes a one-dimensional covering problem about the *depth profile*
-— the graph of depth versus program point — rather than an opaque question about an abstract
-network. This geometric view is what makes classic heuristics like "spill the
-highest-degree variable" intelligible: on interval graphs, a variable's degree is controlled
-by the depths at its two endpoints, so the busiest variable is always sitting near a deepest,
-most congested point — exactly the place relief is needed.
+## Spilling as deletion
 
-## The moral
+If only $k$ registers are available and the graph is not $k$-colorable, the allocator removes some vertices from the coloring problem. Operationally, those variables are spilled to memory. The graph asks: which vertices should be deleted so that the remainder can be colored with $k$ colors?
 
-There is a satisfying arc here. Register allocation begins as graph coloring, an NP-hard
-problem in its full generality. A tempting universal formula for the chromatic number,
-$\max(\Delta+1, \omega)$, dazzles briefly and then shatters on the Petersen graph. But the
-graphs that compilers *actually* build are not adversarial; they are interval graphs, born of
-the simple fact that a variable lives across one contiguous stretch of time. On that restricted
-but ubiquitous class, an exact and computable law emerges from a one-line geometric truth about
-intervals on a line:
+Cliques immediately impose a quantitative lower bound.
 
-$$\text{registers needed} \;=\; \chi(G) \;=\; \omega(G) \;=\; D \;=\; \text{maximum simultaneous overlap.}$$
+**Clique Spill Bound.** Let $S$ be a clique of size $m$, and suppose only $k<m$ registers are available. Every valid allocation must spill at least $m-k$ vertices of $S$.
 
-The lesson generalizes far beyond compilers. Hard problems often become easy the moment we
-notice the structure the real world imposes on their instances. Here, the structure is the
-humble line segment, and the payoff is that one of the busiest computations on Earth reduces to
-counting the tallest stack of overlapping intervals — something you can do, quite literally, by
-sweeping a finger across the timeline and watching for the crowd.
+The proof is a counting argument. Any unspilled members of $S$ remain pairwise adjacent, so at most $k$ of them can receive the $k$ available colors. Of the original $m$ clique members, at least $m-k$ must therefore be removed.
+
+For example, a clique of size $7$ facing a budget of $4$ registers forces at least $3$ spills from that clique, regardless of what happens elsewhere in the program. This is not merely a heuristic warning; it is a certificate of unavoidable cost.
+
+The bound also clarifies what a useful spilling algorithm must do. It must respond to overlapping clique constraints, not just rank vertices by degree. A high-degree vertex may touch many conflicts without belonging to the most expensive bottleneck. Conversely, a modest-degree vertex may lie in several critical cliques or may be cheap to spill. If variables have different execution frequencies or memory costs, degree alone ignores precisely the information that defines the objective.
+
+## A small numerical laboratory
+
+These principles can be tested on familiar graph families.
+
+For a path with $n\geq 2$ vertices, the chromatic number is $2$, the clique number is $2$, and the maximum degree is $2$ once $n\geq 3$. The equality $\chi=\omega$ holds, while $\chi=\Delta+1$ fails.
+
+For a complete graph on $n$ vertices, every variable conflicts with every other, so
+
+$$
+\chi(G)=\omega(G)=n=\Delta(G)+1.
+$$
+
+Here the degree bound is exact because local and collective congestion coincide.
+
+For a tree with at least one edge, two colors always suffice, and its largest clique has size $2$. A star with many leaves may have enormous maximum degree, yet it still needs only two registers: all leaves may reuse one register while the center uses another. This dramatic separation shows why degree is a ceiling, not a demand forecast.
+
+Finally, odd cycles expose the boundary of clique reasoning. A cycle of odd length at least five has no triangle, so $\omega(G)=2$, but it requires three colors. Such a cycle is not chordal. Without an elimination structure, pairwise clique pressure no longer captures every coloring obstruction.
+
+## From rule of thumb to structural certificate
+
+The best outcome is not a universal slogan such as “maximum degree tells us the answer.” It is a hierarchy of statements, each used where it belongs.
+
+For every finite interference graph, $\Delta(G)+1$ registers are sufficient. For graphs with a perfect elimination ordering, $\omega(G)$ registers are necessary and sufficient. If the budget is smaller than a clique of size $m$, at least $m-k$ members of that clique must spill. And no degree-only rule can generally promise optimal spilling, especially when costs differ.
+
+This hierarchy turns graph structure into actionable compiler knowledge. A perfect elimination ordering is more than a proof that coloring will work: it is an explicit schedule for assigning registers. A large clique is more than evidence of difficulty: it is a certificate of how many registers or spills are unavoidable. A counterexample as small as a three-vertex path is more than a curiosity: it prevents an upper bound from being mistaken for an exact law.
+
+Behind the compiler’s rapid choices lies a broader principle of combinatorics. Counting neighbors measures local pressure. Understanding their arrangement reveals global possibility. The difference between those two views is exactly where efficient reuse lives.
