@@ -74,6 +74,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "Self-Modifying Code That Cannot Be Stopped"
   },
   {
+    "consumed_by_exp_id": "",
+    "description": "Formalize a Landauer-like principle for mathematical reasoning: every bit of information destroyed in a proof step costs at least kT ln 2 of entropy. Prove that there exist theorems whose shortest proof requires exponentially more erasure than creation, and connect to Kolmogorov complexity and the thermodynamic cost of verification.",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_0458",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-19T12:28:35.662011+00:00",
+    "title": "Thermodynamics of Mathematical Proof"
+  },
+  {
     "consumed_by_exp_id": "8d3b0867",
     "description": "Building on cycle 7bc47166 (Q=0.780), which proved 13 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Sorting a list of n elements reduces the entropy from log(n!) bits to 0 bits, doing thermodynamic work W = kT * log(n!) in the process. But this is only true if sorting is irreversible \u2014 if the sorted list uniquely determines the input, then sorting is reversible and does no thermodynamic work. The ",
     "domains": [
@@ -215,6 +230,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-19T10:06:16.705726+00:00",
     "title": "Digital Immortality: Can a Mind Be Encoded?"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Systematically negate the ZFC axioms and study the resulting anti-mathematics. Prove that not-Extensionality yields a theory of indistinguishable sets, not-Infinity yields hereditarily finite set theory, and not-Choice yields universes where every set is measurable. Determine which anti-axioms are consistent with each other.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0457",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-19T12:28:35.623432+00:00",
+    "title": "Anti-Mathematics: What If All Axioms Were Negated?"
   },
   {
     "consumed_by_exp_id": "",
