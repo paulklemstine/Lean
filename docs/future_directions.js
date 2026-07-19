@@ -73,21 +73,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
   },
   {
-    "consumed_by_exp_id": "08d3e2eb",
-    "description": "The probabilistic method proves existence by showing that a random structure has the desired property with positive probability. Key results: (1) Erdos's lower bound on Ramsey numbers: R(k,k) > 2^{k/2}. (2) The Lovasz local lemma: if bad events A_1, ..., A_n satisfy P(A_i) <= p and each A_i is independent of all but d others, and e*p*(d+1) <= 1, then P(AND not A_i) > 0. (3) Turan's theorem: the maximum number of edges in a K_{r+1}-free graph on n vertices is (1 - 1/r) * n^2/2. Conjecture: all three results can be formalized in Lean 4 without axiom of choice. The key is to replace non-constructive existence proofs with explicit constructions: (1) The probabilistic proof of R(k,k) > 2^{k/2} uses the expectation argument, which is constructive (compute the expected number of monochromatic K_k and show it's less than 1). (2) The Lovasz local lemma can be made constructive via Moser-Tardos algorithm. (3) Turan's theorem has an explicit construction (the Turan graph). Conjecture: the Moser-Tardos algorithm runs in expected time O(n*d*log(1/p)) and produces a satisfying assignment with probability 1 (constructive LLL). Test: formalize all three results in Lean 4 and verify the proofs compile. Impact: the probabilistic method is constructive. Erdos's existence proofs are algorithms in disguise.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0391",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T03:37:04.481611+00:00",
-    "title": "Formalizing the Probabilistic Method: Erdos Meets Lean"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle e9a483ed (Q=0.760), which proved 8 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: L-functions are the DNA of mathematics \u2014 each one encodes deep arithmetic information. But how many L-functions ARE there? The L-function universe is vast: (1) The Riemann zeta function (1 L-function), (2) Dirichlet L-functions (countably many), (3) L-functions of elliptic curves (uncountably many, ",
     "domains": [
@@ -4441,6 +4426,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-19T05:39:19.230565+00:00",
     "title": "The four files in `MachineLearning/HodgeCycles/` give a complete finite-dimensio"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## 1. The symmetric local lemma from finite survivor ratios\n\n**Conjecture.** For a finite family of bad events with dependency degree at most `d`, uniform probability at most `p`, and `e p (d+1) \u2264 1`, every finite survivor set retains a positive fraction after one more constraint; consequently the full survivor set is nonempty.\n\nThe key insight is that the local lemma\u2019s analytic inequality should be isolated as a lower bound on a sequence of finite cardinality ratios, after which conditional avoidance follows by induction.\n\n**Why now?** The finite conditional-avoidance theorem identifies the exact interface that the dependency calculation must satisfy, separating probabilistic estimates from the combinatorial existence mechanism.\n\n## 2. Witness-tree bounds for deterministic resampling\n\n**Conjecture.** Under the standard variable model and the symmetric local-lemma criterion, the number of resamplings charged to any bad event is bounded in expectation by the total weight of its proper witness trees, and this series is at most `1/d` when `d > 0` under the canonical parameter choice.\n\nThe key insight is that each resampling log admits an injective encoding by a rooted dependency tree, turning runtime analysis into a convergent combinatorial generating function.\n\n**Why now?** The survivor formulation clarifies existence but not search; witness trees are the natural next structure for converting that existence argument into an explicit terminating procedure.\n\n## 3. A quantitative Ramsey lower bound at the classical exponential scale\n\n**Conjecture.** For all sufficiently large `k`, there is a red-blue coloring of the edges of `K_{\u230a2^{k/2}\u230b}` with no monochromatic `K_k`.\n\nThe key insight is that the exact Boolean-lattice event count already contains the probabilistic argument; the remaining obstacle is a sufficiently sharp uniform estimate for the binomial coefficient in the first-moment inequality.\n\n**Why now?** Exact finite counting is established, so asymptotic arithmetic\u2014not graph encoding or probability theory\u2014is the sole remaining step toward the stated exponential scale.\n\n## 4. A common entropy inequality for Ramsey avoidance and Tur\u00e1n extremality\n\n**Conjecture.** There is a finite entropy functional on edge-color distributions whose sublevel estimates imply the Ramsey first-moment bound, while its constrained maximizers over clique-free graphs are balanced Tur\u00e1n partitions.\n\nThe key insight is that random avoidance and deterministic extremality are dual counting problems: one controls the volume of forbidden coloring cylinders, while the other maximizes edge support under a forbidden-subgraph constraint.\n\n**Why now?** The two theories have been placed in a shared finite framework with exact cardinality statements, making an entropy-level bridge both precise and falsifiable.\n\n## 5. Sharp stability for near-extremal triangle-free graphs\n\n**Conjecture.** For every positive `\u03b5` there is a positive `\u03b4` such that every triangle-free graph with at least `(1/4-\u03b4)n\u00b2` edges differs from a complete bipartite graph in at most `\u03b5n\u00b2` edge edits.\n\nThe key insight is that equality in the balanced Tur\u00e1n calculation forces a two-part structure, and near-equality should quantitatively constrain the variance of part sizes and the number of missing cross edges.\n\n**Why now?** Exact sharpness is available as a rigid endpoint; stability is the next test of whether the extremal proof retains enough quantitative information to control approximate optimizers.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0403",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "08d3e2eb",
+    "status": "available",
+    "timestamp": "2026-07-19T05:39:29.139889+00:00",
+    "title": "**Conjecture.** For a finite family of bad events with dependency degree at most"
   },
   {
     "consumed_by_exp_id": "",
