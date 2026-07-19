@@ -1,192 +1,139 @@
-"""Numerical demonstrations for *Dyadic Surreal Numbers and Finite Birthdays*.
+#!/usr/bin/env python3
+"""Exact numerical demonstrations for canonical dyadic surreal arithmetic.
 
-This self-contained script models the finite-birthday layer of Conway's
-surreal numbers.  Every surreal number appearing here is a dyadic rational
-``m / 2**n``; we model such a value by the exact fraction together with the
-data needed to recover the surreal facts of the paper:
-
-  * the birthday of the power of one half ``2**-n`` is exactly ``n + 1``;
-  * the powers of one half are positive, strictly decreasing and distinct;
-  * ``2**n * 2**-n = 1``   (rescaling law);
-  * ``2**-m * 2**-n = 2**-(m+n)``   (exponent law);
-  * the canonical map  ``m / 2**n  ->  m * 2**-n``  is an injective ring
-    homomorphism onto the dyadic surreals.
-
-Everything is checked with exact rational arithmetic, so the demonstrations
-are mathematically faithful rather than floating-point approximations.
+A pair (m, n) denotes the value m / 2**n.  The program uses integers only:
+there is no floating-point arithmetic in equality or ring operations.
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass
-from fractions import Fraction
 from math import gcd
+from typing import Iterable
 
 
-# --------------------------------------------------------------------------- #
-#  Powers of one half and their birthdays
-# --------------------------------------------------------------------------- #
-def pow_half(n: int) -> Fraction:
-    """Return the dyadic value of the surreal power of one half ``2**-n``."""
-    if n < 0:
-        raise ValueError("n must be a natural number")
-    return Fraction(1, 2 ** n)
-
-
-def birthday_pow_half(n: int) -> int:
-    """Birthday of ``2**-n`` in Conway's construction, which equals ``n + 1``.
-
-    Base case ``2**0 = 1 = {0 | }`` is born on day 1; each midpoint
-    ``2**-(n+1) = {0 | 2**-n}`` costs exactly one additional day.
-    """
-    if n < 0:
-        raise ValueError("n must be a natural number")
-    return n + 1
-
-
-def is_finite_birthday(n: int) -> bool:
-    """Every power of one half is born strictly before day omega."""
-    return birthday_pow_half(n) < float("inf")  # always True; n + 1 is finite
-
-
-# --------------------------------------------------------------------------- #
-#  Dyadic rationals and the canonical embedding
-# --------------------------------------------------------------------------- #
-@dataclass(frozen=True)
+@dataclass(frozen=True, order=False)
 class Dyadic:
-    """A dyadic rational ``m / 2**n`` kept in lowest terms."""
+    """A normalized dyadic rational m / 2**n with n nonnegative."""
 
-    numerator: int   # the odd part times sign, once reduced
-    exponent: int    # non-negative power of two in the denominator
+    numerator: int
+    exponent: int
 
-    @staticmethod
-    def of_fraction(q: Fraction) -> "Dyadic":
-        """Build a Dyadic from a Fraction; raise if the value is not dyadic."""
-        den = q.denominator
-        exp = 0
-        while den % 2 == 0:
-            den //= 2
-            exp += 1
-        if den != 1:
-            raise ValueError(f"{q} is not a dyadic rational")
-        return Dyadic(q.numerator, exp)
+    def __post_init__(self) -> None:
+        if self.exponent < 0:
+            raise ValueError("the denominator exponent must be nonnegative")
+        m, n = normalize_pair(self.numerator, self.exponent)
+        object.__setattr__(self, "numerator", m)
+        object.__setattr__(self, "exponent", n)
 
-    def value(self) -> Fraction:
-        """The rational value ``numerator / 2**exponent``."""
-        return Fraction(self.numerator, 2 ** self.exponent)
+    def __str__(self) -> str:
+        return f"{self.numerator}/2^{self.exponent}"
 
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, Dyadic):
+            return NotImplemented
+        return cross_multiply_equal(
+            self.numerator, self.exponent, other.numerator, other.exponent
+        )
 
-def dyadic_map(d: Dyadic) -> Fraction:
-    """Canonical map  ``m / 2**n  ->  m * 2**-n``  into the surreals.
+    def __hash__(self) -> int:
+        return hash((self.numerator, self.exponent))
 
-    Because our surreals-in-the-finite-layer are exactly dyadic rationals,
-    the surreal value coincides with the ordinary rational value.
-    """
-    return d.numerator * pow_half(d.exponent)
+    def __add__(self, other: Dyadic) -> Dyadic:
+        scale = max(self.exponent, other.exponent)
+        total = (self.numerator << (scale - self.exponent)) + (
+            other.numerator << (scale - other.exponent)
+        )
+        return Dyadic(total, scale)
 
+    def __mul__(self, other: Dyadic) -> Dyadic:
+        return Dyadic(
+            self.numerator * other.numerator,
+            self.exponent + other.exponent,
+        )
 
-def denominator_height(q: Fraction) -> int:
-    """The exponent n such that q = m / 2**n in lowest dyadic form."""
-    return Dyadic.of_fraction(q).exponent
+    def reciprocal_if_dyadic(self) -> Dyadic | None:
+        """Return the reciprocal when it remains dyadic, otherwise None."""
+        if self.numerator == 0:
+            return None
+        m, n = normalize_pair(self.numerator, self.exponent)
+        if abs(m) != 1:
+            return None
+        return Dyadic((1 if m > 0 else -1) << n, 0)
 
-
-# --------------------------------------------------------------------------- #
-#  Demonstrations
-# --------------------------------------------------------------------------- #
-def demo_birthdays(max_n: int = 8) -> None:
-    print("== Birthdays of the powers of one half (birth(2^-n) = n + 1) ==")
-    for n in range(max_n + 1):
-        v = pow_half(n)
-        print(f"  2^-{n:<2} = {str(v):>9}   birthday = {birthday_pow_half(n)}"
-              f"   (< omega: {is_finite_birthday(n)})")
-    print()
-
-
-def demo_order(max_n: int = 6) -> None:
-    print("== The half-powers are positive, strictly decreasing, distinct ==")
-    values = [pow_half(n) for n in range(max_n + 1)]
-    print("  sequence:", "  >  ".join(str(v) for v in values))
-    assert all(v > 0 for v in values), "positivity failed"
-    assert all(values[i + 1] < values[i] for i in range(len(values) - 1)), \
-        "strict decrease failed"
-    assert len(set(values)) == len(values), "distinctness failed"
-    print("  positivity, strict decrease, and distinctness all verified.\n")
+    def decimal(self, digits: int = 8) -> str:
+        return f"{self.numerator / (1 << self.exponent):.{digits}f}"
 
 
-def demo_rescaling(max_n: int = 8) -> None:
-    print("== Rescaling law:  2^n * 2^-n = 1 ==")
-    for n in range(max_n + 1):
-        lhs = (2 ** n) * pow_half(n)
-        assert lhs == 1, f"rescaling failed at n={n}"
-        print(f"  2^{n} * 2^-{n} = {lhs}")
-    print()
+def normalize_pair(numerator: int, exponent: int) -> tuple[int, int]:
+    """Remove common factors of two and return the unique reduced pair."""
+    if exponent < 0:
+        raise ValueError("the denominator exponent must be nonnegative")
+    if numerator == 0:
+        return (0, 0)
+    while exponent > 0 and numerator % 2 == 0:
+        numerator //= 2
+        exponent -= 1
+    return (numerator, exponent)
 
 
-def demo_exponent_law(max_m: int = 4, max_n: int = 4) -> None:
-    print("== Exponent law:  2^-m * 2^-n = 2^-(m+n) ==")
-    for m in range(max_m + 1):
-        for n in range(max_n + 1):
-            lhs = pow_half(m) * pow_half(n)
-            rhs = pow_half(m + n)
-            assert lhs == rhs, f"exponent law failed at (m,n)=({m},{n})"
-    print(f"  verified for all 0 <= m <= {max_m}, 0 <= n <= {max_n}.")
-    print(f"  e.g. 2^-2 * 2^-3 = {pow_half(2) * pow_half(3)} = 2^-5 "
-          f"= {pow_half(5)}\n")
+def cross_multiply_equal(m1: int, n1: int, m2: int, n2: int) -> bool:
+    """Test m1/2**n1 = m2/2**n2 by the proved integer criterion."""
+    if n1 < 0 or n2 < 0:
+        raise ValueError("exponents must be nonnegative")
+    return (m1 << n2) == (m2 << n1)
 
 
-def demo_ring_homomorphism() -> None:
-    print("== The dyadic map is a unital, additive, multiplicative injection ==")
-    samples = [Fraction(3, 8), Fraction(-5, 16), Fraction(7, 4),
-               Fraction(1, 1), Fraction(-1, 2), Fraction(11, 32)]
-    ds = [Dyadic.of_fraction(q) for q in samples]
-
-    # unitality
-    assert dyadic_map(Dyadic.of_fraction(Fraction(1))) == 1
-    print("  unital:            Phi(1) = 1")
-
-    # additivity and multiplicativity
-    for a in ds:
-        for b in ds:
-            sum_ab = Dyadic.of_fraction(a.value() + b.value())
-            prod_ab = Dyadic.of_fraction(a.value() * b.value())
-            assert dyadic_map(sum_ab) == dyadic_map(a) + dyadic_map(b)
-            assert dyadic_map(prod_ab) == dyadic_map(a) * dyadic_map(b)
-    print("  additive:          Phi(x + y) = Phi(x) + Phi(y)  (all pairs)")
-    print("  multiplicative:    Phi(x * y) = Phi(x) * Phi(y)  (all pairs)")
-
-    # injectivity: distinct dyadics map to distinct surreals
-    images = [dyadic_map(d) for d in ds]
-    assert len(set(images)) == len(set(q for q in samples))
-    print("  injective:         distinct dyadics -> distinct surreals\n")
+def canonical_unit_birthday(exponent: int) -> int:
+    """Birthday of the canonical representative of 2**(-exponent)."""
+    if exponent < 0:
+        raise ValueError("the exponent must be nonnegative")
+    return exponent + 1
 
 
-def demo_thirds_have_no_finite_birthday(depth: int = 6) -> None:
-    print("== 1/3 is NOT dyadic: it has no finite birthday ==")
-    try:
-        Dyadic.of_fraction(Fraction(1, 3))
-    except ValueError:
-        print("  1/3 cannot be written as m / 2^n; it is born only at day omega.")
-    # show the binary approximations closing in from both sides
-    lower, upper = Fraction(0), Fraction(1)
-    print("  simplest-midpoint approximations to 1/3:")
-    for _ in range(depth):
-        mid = (lower + upper) / 2
-        if mid < Fraction(1, 3):
-            lower = mid
-        else:
-            upper = mid
-    print(f"    after {depth} bisections:  {lower}  <  1/3  <  {upper}\n")
+def inverse_obstruction(odd_integer: int, max_exponent: int) -> list[tuple[int, int]]:
+    """Return (n, 2**n mod odd_integer), exposing failed divisibility."""
+    if odd_integer <= 1 or odd_integer % 2 == 0:
+        raise ValueError("choose an odd integer greater than one")
+    return [(n, pow(2, n, odd_integer)) for n in range(max_exponent + 1)]
+
+
+def binary_grid(level: int) -> Iterable[Dyadic]:
+    """Generate the dyadic subdivision of [0, 1] at a selected level."""
+    if level < 0:
+        raise ValueError("the level must be nonnegative")
+    return (Dyadic(k, level) for k in range((1 << level) + 1))
 
 
 def main() -> None:
-    print(__doc__)
-    demo_birthdays()
-    demo_order()
-    demo_rescaling()
-    demo_exponent_law()
-    demo_ring_homomorphism()
-    demo_thirds_have_no_finite_birthday()
-    print("All demonstrations completed successfully.")
+    print("CANONICAL UNITS AND BIRTHDAYS")
+    for n in range(8):
+        unit = Dyadic(1, n)
+        print(f"2^-{n:<2} = {unit.decimal(8):>10}; birthday = {canonical_unit_birthday(n)}")
+
+    print("\nCROSS-MULTIPLICATION EQUALITY")
+    examples = [(6, 4, 3, 3), (5, 3, 3, 2), (-10, 4, -5, 3)]
+    for m1, n1, m2, n2 in examples:
+        left = m1 << n2
+        right = m2 << n1
+        relation = "=" if left == right else "≠"
+        print(f"{m1}/2^{n1} and {m2}/2^{n2}: {left} {relation} {right}")
+
+    print("\nEXACT RING ARITHMETIC")
+    x, y = Dyadic(3, 3), Dyadic(5, 4)
+    print(f"{x} + {y} = {x + y}")
+    print(f"{x} × {y} = {x * y}")
+    print(f"normalizing 12/2^5 gives {Dyadic(12, 5)}")
+
+    print("\nWHY THREE HAS NO DYADIC INVERSE")
+    residues = inverse_obstruction(3, 12)
+    print("residues 2^n mod 3:", [residue for _, residue in residues])
+    print("No residue is 0, so no equation 3m = 2^n can hold.")
+    print("reciprocal of 3 in dyadics:", Dyadic(3, 0).reciprocal_if_dyadic())
+    print("reciprocal of 1/8 in dyadics:", Dyadic(1, 3).reciprocal_if_dyadic())
+
+    print("\nLEVEL-3 BINARY GRID")
+    print(", ".join(str(value) for value in binary_grid(3)))
 
 
 if __name__ == "__main__":

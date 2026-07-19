@@ -1,183 +1,184 @@
-# The Arithmetic of Games: How Numbers Are Born
+# The Arithmetic of Games: How Finite Surreal Numbers Become Dyadic
 
-Imagine a universe of numbers so vast that it contains not only every
-ordinary number you have ever met—$0$, $1$, $-\tfrac{1}{2}$, $\pi$—but also
-numbers *larger than infinity*, numbers *smaller than every positive
-fraction yet still greater than zero*, and endless gradations in between.
-This is the world of the **surreal numbers**, discovered by the
-mathematician John Horton Conway in the 1970s while he was thinking about
-the endgames of the board game Go. What began as a way to measure who is
-winning in a game turned out to be one of the largest and most elegant
-number systems ever conceived.
+## A number born from a choice
 
-The surreal numbers have a remarkable feature that ordinary numbers lack:
-they have **birthdays**. Every surreal number is *created* on a particular
-day, built out of numbers that were created earlier. This article is about
-what gets born on the *finite* days—the first day, the second, the
-third—and about the beautiful, exact answer to the question *"which numbers
-are these?"*
+Most number systems begin with objects and then add rules. The surreal numbers reverse that order. A surreal number is born from a choice between two collections of earlier numbers. It is written
 
-## How to build a number out of nothing
+$$
+\{L\mid R\},
+$$
 
-Conway's construction is astonishingly simple. A surreal number is nothing
-more than a pair of sets of *earlier* surreal numbers: a **left set** $L$
-and a **right set** $R$, written
-$$x = \{\, L \mid R \,\},$$
-subject to one rule—no member of $L$ may be greater than or equal to any
-member of $R$. Intuitively, $x$ is the "simplest" number lying strictly
-between everything on its left and everything on its right.
+where every member of the left set $L$ is smaller than every member of the right set $R$. The new number is the simplest number lying strictly between those options. This construction turns arithmetic into a family tree: each number has a birthday recording the stage at which its description first becomes available.
 
-On **day $0$** we have nothing to work with, so the only number we can form
-is
-$$0 = \{\ \mid\ \},$$
-the empty-left, empty-right number. It is squeezed between *no*
-constraints, so it sits at the origin.
+The first day is almost empty. With no options on either side, one obtains
 
-On **day $1$**, we may use $0$. Putting it on the left gives
-$$1 = \{\, 0 \mid\ \},$$
-the simplest number greater than $0$. Putting it on the right gives
-$$-1 = \{\ \mid 0 \,\}.$$
+$$
+0=\{\,\mid\,\}.
+$$
 
-On **day $2$**, new numbers appear: the number $\{\,0 \mid 1\,\}$, the
-simplest number strictly between $0$ and $1$, turns out to be exactly
-$\tfrac12$. Its mirror image is $-\tfrac12$, while $\{\,1\mid\,\}$ becomes
-$2$ and $\{\ \mid -1\}$ becomes $-2$.
+Once zero exists, the next stage produces
 
-Continue in this way, and each finite day introduces the numbers whose
-"complexity" matches that day. A pattern emerges immediately: the numbers
-appearing on the finite days are precisely the **dyadic rationals**—the
-fractions whose denominators are powers of two:
-$$\ldots,\ -\tfrac34,\ -\tfrac12,\ -\tfrac14,\ 0,\ \tfrac14,\ \tfrac12,\
-\tfrac34,\ \ldots$$
-Halving intervals is exactly what the left–right construction does, so
-powers of two are baked into the very fabric of the surreal hierarchy.
+$$
+1=\{0\mid\},\qquad -1=\{\mid 0\}.
+$$
 
-## The powers of one half
+Then the gap between $0$ and $1$ yields
 
-The engine driving this entire story is a single infinite family of
-numbers: the **powers of one half**. Write $\tfrac{1}{2^n}$ for the surreal
-number obtained by repeatedly taking simplest midpoints:
-$$\tfrac{1}{2^0}=1,\qquad
-\tfrac{1}{2^{n+1}}=\Bigl\{\,0 \ \Big|\ \tfrac{1}{2^{n}}\,\Bigr\}.$$
-Each one is the simplest number between $0$ and the previous one.
+$$
+\frac12=\{0\mid 1\}.
+$$
 
-These numbers behave *exactly* as their names promise, and we can make each
-claim precise.
+The next rounds create halves of halves, odd numerators between neighboring fractions, and ever larger integers. This simple game of choosing a left and a right boundary eventually generates an enormous ordered number system containing the familiar real numbers, ordinal numbers, infinitely large quantities, and infinitesimals.
 
-**They are genuinely positive.** Every power of one half satisfies
-$\tfrac{1}{2^n} > 0$. None of them is an elaborate disguise for zero.
+But the finite opening of this universe has a strikingly rigid arithmetic shape. It is governed not by arbitrary fractions, but by the **dyadic rationals**: numbers of the form
 
-**They shrink, forever.** They form a strictly decreasing sequence,
-$$1 > \tfrac12 > \tfrac14 > \tfrac18 > \cdots,$$
-and consequently they are all *distinct*: the assignment $n \mapsto
-\tfrac{1}{2^n}$ never repeats a value. Infinitely many different dyadic
-values are realized, one for each natural number.
+$$
+\frac{m}{2^n},
+$$
 
-**They rescale to one.** Multiplying by the corresponding power of two
-recovers the unit exactly:
-$$2^{n}\cdot \tfrac{1}{2^{n}} = 1.$$
-This is the sense in which $\tfrac{1}{2^n}$ truly *is* the reciprocal of
-$2^n$—not merely a number that looks small, but the honest multiplicative
-inverse.
+where $m$ is an integer and $n$ is a nonnegative integer. The arithmetic developed here explains why the powers of two are not an accident, why their canonical surreal representatives are distinct, and why this finite-birthday world is a ring rather than a field.
 
-**They multiply by adding exponents.** The most important arithmetic fact
-of all is that these numbers obey the law of exponents,
-$$\tfrac{1}{2^{m}}\cdot \tfrac{1}{2^{n}} = \tfrac{1}{2^{m+n}}.$$
-This single identity is the seed from which the entire *multiplicative*
-structure of the dyadic surreals grows. The proof is a little jewel:
-multiply both sides by $2^{m+n}$, watch each factor collapse to $1$ via the
-rescaling law above, and cancel—legal because the surreal numbers form a
-genuine field in which nonzero elements can be divided out.
+## The binary staircase
 
-## When is a number born?
+Begin with the canonical game for $1$ and repeatedly take the simplest number between $0$ and the preceding value. This creates
 
-Here the birthday story becomes quantitative. We can pin down *exactly*
-which day each power of one half arrives:
-$$\text{the birthday of } \tfrac{1}{2^n} \text{ is } n+1.$$
-So $1$ is born on day $1$, $\tfrac12$ on day $2$, $\tfrac14$ on day $3$, and
-in general the "denominator height" of $\tfrac{1}{2^n}$ is mirrored
-perfectly by its birthday. The proof is a clean induction: the base case
-$1=\{\,0\mid\,\}$ is born the day after $0$, and each new midpoint
-$\tfrac{1}{2^{n+1}} = \{\,0\mid \tfrac{1}{2^n}\,\}$ costs exactly one
-additional day beyond its predecessor.
+$$
+1,\quad \frac12,\quad \frac14,\quad \frac18,\quad \ldots.
+$$
 
-The immediate payoff: since $n+1$ is always a finite number, **every power
-of one half is born before the first infinite day**, traditionally called
-day $\omega$. In the surreal cosmology, day $\omega$ is where truly infinite
-and infinitesimal numbers first appear; everything born strictly earlier is
-"finite-birthday". The powers of one half are a concrete, infinite supply of
-finite-birthday numbers realizing the values $2^{-n}$.
+The key birthday theorem says that the canonical representative of $2^{-n}$ has birthday exactly $n+1$. Thus $1=2^0$ appears at birthday $1$, $1/2$ at birthday $2$, $1/4$ at birthday $3$, and so on.
 
-## The dyadic rationals live inside the games
+This result says two things at once. First, every inverse power of two appears after finitely many stages. Second, no fixed finite stage contains them all: their birthdays are unbounded among the natural numbers. The approach to zero is therefore also a journey deeper into the construction.
 
-Individually interesting as they are, the powers of one half combine into a
-much bigger structure. Take integer combinations of them—numbers of the
-form $m \cdot \tfrac{1}{2^n}$—and you obtain exactly the **dyadic
-rationals**, the ring
-$$\mathbb{Z}\!\left[\tfrac12\right] = \left\{\, \tfrac{m}{2^n} : m \in
-\mathbb{Z},\ n \in \mathbb{N} \,\right\}.$$
-There is a natural map sending each abstract dyadic fraction $\tfrac{m}{2^n}$
-to its surreal incarnation $m\cdot \tfrac{1}{2^n}$. The central result of
-this work is that **this map is faithful**: distinct dyadic fractions land
-on distinct surreal numbers. In technical language, the map is *injective*.
+These values behave exactly as their ordinary fractional notation suggests. Every $2^{-n}$ is positive, and the sequence is strictly decreasing:
 
-Why is faithfulness true, and why does it matter? The map respects
-addition, so proving it never collapses two different inputs reduces to a
-single question: which inputs get sent to $0$? Suppose $m\cdot
-\tfrac{1}{2^n} = 0$. Since $\tfrac{1}{2^n}$ is strictly positive and the
-surreals have *no zero divisors*—a product is zero only when a factor
-is—we conclude $m=0$, so the input was already the trivial fraction. Nothing
-but zero maps to zero, and faithfulness follows.
+$$
+2^{-(n+1)}<2^{-n}.
+$$
 
-This resolves a subtle point that is easy to take for granted. The surreal
-numbers are built by a strange, recursive, set-theoretic recipe; there is no
-*a priori* guarantee that two different-looking dyadic fractions won't turn
-out to be secretly equal once translated into games. Faithfulness certifies
-that they never do. The countable, familiar number system
-$\mathbb{Z}[\tfrac12]$ sits **perfectly and without distortion** inside the
-enormous, proper-class universe of surreal numbers.
+Consequently, two canonical inverse powers of two are equal if and only if their exponents agree. The hierarchy does not accidentally collapse $1/4$ and $1/8$, for example; order keeps every rung of the binary staircase separate.
 
-Packaged together, these facts say something clean and strong: the dyadic
-surreals form a self-contained algebraic world—closed under addition,
-subtraction, and multiplication—that is a **faithful mirror** of the dyadic
-rationals. Not merely an additive copy: the multiplication matches too,
-thanks to the law of exponents. The abstract ring $\mathbb{Z}[\tfrac12]$ and
-its surreal image are *ring-isomorphic*—the same arithmetic object wearing
-two different costumes.
+There is another essential cancellation fact. If $m$ is an integer, then
 
-## A hierarchy of number systems, one day at a time
+$$
+m\,2^{-n}=0
+$$
 
-Step back and the philosophical picture is striking. Conway's surreal line
-is not a single, static set of numbers; it is a *process*, a cosmos that
-unfolds in stages. Each birthday level contributes exactly the numbers that
-its degree of complexity permits, and the finite levels contribute exactly
-the dyadic rationals—no more, no less.
+holds if and only if $m=0$. A nonzero integer cannot annihilate a positive inverse power of two. This elementary-looking statement is the hinge on which uniqueness turns.
 
-It is tempting to guess that the finite-birthday numbers might include *all*
-rational numbers. They do not. A number like $\tfrac13$ has no finite
-birthday at all; it requires an infinite process of nested approximations
-(from below by $\tfrac14, \tfrac{5}{16}, \ldots$ and from above by $\tfrac12,
-\tfrac38, \ldots$) and is not born until day $\omega$. The dyadic rationals
-are special precisely because binary halving—not thirds, not fifths—is the
-native language of the left–right construction.
+## Fractions that cannot disguise themselves
 
-And the story is only beginning. Beyond day $\omega$ live the reals that are
-*not* dyadic, the infinite numbers larger than every integer, and the
-infinitesimals—positive numbers smaller than $\tfrac{1}{2^n}$ for *every*
-$n$. The smallest positive infinitesimal, $\varepsilon = \{\,0 \mid 1,
-\tfrac12, \tfrac14, \ldots\,\}$, is squeezed beneath the entire sequence of
-half-powers and first appears on day $\omega$ itself. From there, the
-hierarchy climbs through days $\omega\cdot 2$, $\omega^2$, and beyond,
-eventually encompassing the real numbers, the ordinals, and a dense thicket
-of infinitesimals, all inside one ordered field.
+A dyadic number can have more than one written form. For instance,
 
-What the finite-birthday layer teaches us is a blueprint for the whole:
-**the surreal hierarchy encodes the constructive growth of number systems**.
-Start with nothing. Each day, insert the simplest number missing from each
-gap. The finite days build the dyadic scaffolding; the infinite days pour in
-the reals and the infinities. It is a creation myth for mathematics itself—
-numbers, quite literally, being born from the empty set, one day at a time,
-in exactly the order their complexity demands.
+$$
+\frac12=\frac24=\frac48.
+$$
 
-That such a grand edifice grows from the humble question "who is winning this
-game?" is perhaps the most surreal fact of all.
+So the right uniqueness statement cannot require identical numerators and denominators. Instead, it uses the familiar rule of cross multiplication.
+
+For integers $m_1,m_2$ and nonnegative integers $n_1,n_2$, the corresponding surreal dyadics satisfy
+
+$$
+m_1 2^{-n_1}=m_2 2^{-n_2}
+$$
+
+if and only if
+
+$$
+m_1 2^{n_2}=m_2 2^{n_1}.
+$$
+
+This is the **Cross-Multiplication Theorem for Dyadic Surreals**. It provides a complete test for equality using integer arithmetic alone. As an example,
+
+$$
+\frac{6}{2^4}=\frac{3}{2^3}
+$$
+
+because $6\cdot 2^3=3\cdot 2^4=48$. By contrast,
+
+$$
+\frac{5}{2^3}\ne\frac{3}{2^2}
+$$
+
+because $5\cdot 2^2=20$ while $3\cdot 2^3=24$.
+
+This criterion proves that the canonical map from the localized ring $\mathbb Z[1/2]$ into the surreal numbers is injective. Here $\mathbb Z[1/2]$ means the integers with powers of two made invertible; concretely, it is precisely the set of fractions $m/2^n$. Injectivity means that no two genuinely different dyadic rationals become the same surreal number. The image is therefore a faithful copy of dyadic arithmetic inside the surreal universe.
+
+There is a practical lesson here. Equality in a recursively generated world may look like a question about game trees, but for this entire family it reduces to a single multiplication test in the integers. The elaborate genealogy of a number and its ordinary arithmetic value agree perfectly.
+
+## A ring, not a field
+
+It is tempting to call every rich collection of numbers a field. The dyadic rationals are closed under addition, subtraction, and multiplication:
+
+$$
+\frac{a}{2^m}+\frac{b}{2^n}
+ =\frac{a2^n+b2^m}{2^{m+n}},
+$$
+
+and
+
+$$
+\frac{a}{2^m}\frac{b}{2^n}=\frac{ab}{2^{m+n}}.
+$$
+
+They also contain $0$ and $1$. These properties make them a commutative ring. Yet division exposes a boundary. The number $3$ has no multiplicative inverse in $\mathbb Z[1/2]$.
+
+Suppose, for contradiction, that some dyadic $m/2^n$ were an inverse of $3$. Then
+
+$$
+3\frac{m}{2^n}=1,
+$$
+
+so
+
+$$
+3m=2^n.
+$$
+
+The left side is divisible by $3$, whereas no power of $2$ is divisible by $3$. This is impossible. Hence $1/3$ is not dyadic.
+
+This obstruction corrects a subtle but important misconception about birthdays. The numbers born at finite stages are naturally associated with the dyadic **subring**, not a subfield. Closing that collection under multiplicative inverses would immediately force the inclusion of $1/3$, which does not have a finite birthday in the canonical surreal hierarchy.
+
+The distinction matters far beyond terminology. A birthday cutoff describes when objects are constructed. A ring closure describes which objects arithmetic operations generate. A field closure additionally demands every nonzero inverse. These are different processes, and they need not preserve the same boundary.
+
+## Why powers of two rule the finite days
+
+The appearance of dyadics reflects a universal fact about repeatedly selecting simplest midpoints. Given neighboring dyadic boundaries, the simplest point inserted between them refines the denominator by a factor of two. Binary subdivision is built into the construction:
+
+$$
+0,1
+\quad\longrightarrow\quad
+0,\frac12,1
+\quad\longrightarrow\quad
+0,\frac14,\frac12,\frac34,1.
+$$
+
+This is the same geometry behind binary search, bisection algorithms, digital fixed-point arithmetic, and subdivision meshes in computer graphics. A finite binary word records a finite route through successive left-right choices. Correspondingly, a dyadic fraction is exactly a rational number with a terminating binary expansion.
+
+For example,
+
+$$
+\frac{13}{16}=0.1101_2.
+$$
+
+Its denominator records four levels of binary resolution. Surreal birthdays add a genealogical interpretation: denominator depth measures part of the history required to isolate the number, though for general dyadics the exact birthday also depends on the integer part and reduction of the fraction.
+
+This makes dyadic surreals useful as a conceptual bridge. In numerical computation, dyadic fractions are the exactly representable finite binary values. In harmonic analysis, dyadic intervals organize functions by scale. In combinatorial game theory, birthdays organize numbers by constructive complexity. The same powers of two describe precision, scale, and ancestry.
+
+## The horizon at day $\omega$
+
+All finite birthdays lie before the first infinite ordinal $\omega$. The sequence $2^{-n}$ demonstrates what happens near that horizon: each term is born finitely, but there is no final finite day on which the entire sequence appears. The union of all finite stages contains every dyadic fraction, while remaining arithmetically incomplete as a field.
+
+That observation prevents an easy but false leap from “all finite constructions” to “a closed number field.” The finite-birthday collection can support addition and multiplication of dyadic values, yet inversion can leave it. In particular, $3$ is present, but $1/3$ is not.
+
+The next classification challenge is to prove the converse in full generality: not only does every canonical dyadic arise at a finite birthday, but every surreal with a finite-birthday representative is dyadic. The natural strategy is to inspect the finite left and right option sets and identify the simplest dyadic lying between them. Such a theorem would convert the vivid binary picture into a complete characterization of the finite region.
+
+Beyond that boundary, one must proceed carefully. There is no smallest positive infinitesimal: given a positive infinitesimal $x$, the number $x/2$ is smaller and still positive. Thus any theory built around “the smallest positive infinitesimal” must instead choose a specific distinguished infinitesimal, such as $\omega^{-1}$. Likewise, a birthday-bounded class should never be silently identified with the ring or field it generates.
+
+## The moral of the game
+
+The surreal numbers show how a vast arithmetic universe can grow from an austere rule: choose earlier values on the left and right, then create the simplest number between them. In the finite stages, this rule speaks binary. The canonical units $2^{-n}$ appear on precisely scheduled birthdays, remain positive and strictly ordered, and admit no unexpected additive collapse. Integer multiples of these units give a faithful copy of $\mathbb Z[1/2]$, with equality decided exactly by cross multiplication.
+
+And the first obstruction is just as illuminating as the successes: $3$ has no dyadic inverse. The finite world is not deficient because of an accident in notation. Its limitation is structural. Birthdays measure construction, while field operations demand closure, and those two ideas diverge as soon as one asks for $1/3$.
+
+That is the arithmetic of games in miniature: a family tree that becomes a number line, a binary genealogy that becomes a ring, and a missing inverse that marks the boundary between finite construction and the larger surreal cosmos.
