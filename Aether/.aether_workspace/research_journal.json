@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "9b262bd9",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions\n\n## 1. Closed predecessor-free membership criterion\n\n**Conjecture.** For every irrational `α > (3 + √5)/2` and positive iteration\ndepth `n`, membership of `x` in the `n`th iterated",
-      "quality_score": 0.69,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-15T20:45:28",
-      "title": "ArXiv paper: A Note on Iterated Beatty Sequences"
-    },
-    {
       "cycle_id": "e0f3150d",
       "domain": "Geometry",
       "key_insight": "# Future Directions\n\n## 1. Oriented-matroid magnitude ranks are controlled by bounded-complex face data\n\n**Conjecture.** For every finite realizable oriented matroid, each diagonal magnitude-homology",
@@ -2501,6 +2491,16 @@
       "theorem_count": 9,
       "timestamp": "2026-07-19T11:34:25",
       "title": "Social Credit Scores as Topological Invariants"
+    },
+    {
+      "cycle_id": "a9bce66e",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Transreal Arithmetic\n\n## 1. Signed-zero completion and genuine wheel involution\n\n**Conjecture.** Adjoining distinct positive and negative zeros to the transreal carrier admits a c",
+      "quality_score": 0.63,
+      "sorry_count": 0,
+      "theorem_count": 28,
+      "timestamp": "2026-07-19T11:52:17",
+      "title": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-19T11:34:25",
+  "last_updated": "2026-07-19T11:52:17",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "6e1b10f7",
-        "quality": 0.74,
-        "theorems": 46,
-        "title": "The Zeta Function of a Graph: Number Theory on Networks"
-      },
-      {
         "cycle_id": "57f5aa5e",
         "quality": 0.82,
         "theorems": 0,
@@ -3141,6 +3135,12 @@
         "quality": 0.67,
         "theorems": 9,
         "title": "Social Credit Scores as Topological Invariants"
+      },
+      {
+        "cycle_id": "a9bce66e",
+        "quality": 0.63,
+        "theorems": 28,
+        "title": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
       }
     ],
     "Bridges": [
