@@ -177,7 +177,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Computational Complexity of Alien Civilizations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "53d02dfc",
     "description": "Formalize a type theory where types can refer to their own provability. Prove that such a system can express 'this proposition is provable but not provably provable' as a well-typed term. Show that reflective type theory properly extends Martin-Lof type theory and that its proof term language is exactly the modal mu-calculus.",
     "domains": [
       "Novelty",
@@ -187,7 +187,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T18:06:44.969236+00:00",
     "title": "Reflective Type Theory: Proving Things About Proving Things"
   },
