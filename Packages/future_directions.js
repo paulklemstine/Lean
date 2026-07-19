@@ -1545,7 +1545,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: On nontrivial cross-2-intersecting families"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "93551ae8",
     "description": "Investigate the ArXiv paper 'On strongly regular signed graphs of higher girth' and formalize its key results. Abstract: Strongly regular signed graphs are an extension of strongly regular graphs to the realm of signed graphs, that is, graphs where each edge is positive or negative. Unlike with ordinary strongly regular graphs, most kinds of signed counterparts with girth 4 or higher are describable in terms of known structures. We prove that those with girth 4 that are bipartite are classified by designs of two kinds: weighing matrix designs and symmetric block designs. Those of girth 5 are few and readily described. There are none of higher girth. Those with girth 4 that are not bipartite are unsolved.",
     "domains": [
       "Bridges"
@@ -1554,7 +1554,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12131v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T06:51:57.150644+00:00",
     "title": "ArXiv paper: On strongly regular signed graphs of higher girth"
   },
