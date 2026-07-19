@@ -32,6 +32,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 4c2c71e5 (Q=0.800), which proved 46 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Collatz map T: N -> N defined by T(n) = n/2 if n even, 3n+1 if n odd, is conjectured to always reach 1. The Collatz conjecture is equivalent to: the orbit of every n under T eventually reaches the cycle {1, 4, 2, 1}. Define the Collatz Fourier transform: F_T(omega) = sum_{n=1}^{N} e^{2*pi*i*omeg",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "push_4c2c71e5_cba22d99",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "4c2c71e5",
+    "status": "available",
+    "timestamp": "2026-07-19T02:44:51.313246+00:00",
+    "title": "Deepening: The Fourier Analysis of Collatz: Spectral Gaps in the 3n+1 Map"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 7bc47166 (Q=0.780), which proved 13 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Sorting a list of n elements reduces the entropy from log(n!) bits to 0 bits, doing thermodynamic work W = kT * log(n!) in the process. But this is only true if sorting is irreversible \u2014 if the sorted list uniquely determines the input, then sorting is reversible and does no thermodynamic work. The ",
     "domains": [
       "Shared"
@@ -2979,6 +2993,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The natural gradient algorithm updates parameters theta in the direction of steepest descent on the Fisher information manifold: theta_{t+1} = theta_t - eta * G^{-1}(theta_t) * gradient L(theta_t) where G is the Fisher information matrix. This is equivalent to following the geodesic on the statistical manifold (the Riemannian manifold with metric G). Conjecture: for any optimization problem with loss function L, the natural gradient descent converges to the minimum in O(1/t) iterations, regardless of the condition number of G. This is because the natural gradient follows the geodesic, which is the shortest path on the manifold, and the path length is O(1) (bounded by the diameter of the manifold). In contrast, standard gradient descent takes O(kappa) iterations where kappa is the condition number of G. Conjecture: natural gradient descent with step size eta = 1/t achieves L(theta_t) - L(theta*) = O(1/t) for convex losses, and L(theta_t) - L(theta*) = O(exp(-t/d)) for strongly convex losses, where d is the dimension. Test: compare natural gradient descent and standard gradient descent on logistic regression with varying condition numbers, verify the convergence rates. Impact: optimization is geometry. The natural gradient is the geodesic on the Fisher manifold, and geodesics are the shortest paths.",
+    "domains": [
+      "Novelty",
+      "MachineLearning"
+    ],
+    "id": "fd_0383",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-19T02:43:52.611669+00:00",
+    "title": "Information Geometry of Optimization: Natural Gradient Follows Geodesics"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle dcd7a4b2 (Q=0.750) proved 0 theorems in Tropical but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION \u2014 simulta",
     "domains": [
       "Tropical"
@@ -2992,22 +3021,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Quantum Surreal Numbers: Superposition of All Real Numbers"
   },
   {
-    "consumed_by_exp_id": "4c2c71e5",
-    "description": "The Collatz map T: N -> N defined by T(n) = n/2 if n even, 3n+1 if n odd, is conjectured to always reach 1. The Collatz conjecture is equivalent to: the orbit of every n under T eventually reaches the cycle {1, 4, 2, 1}. Define the Collatz Fourier transform: F_T(omega) = sum_{n=1}^{N} e^{2*pi*i*omega*T(n)/n} for N large. Conjecture: F_T has a spectral gap: |F_T(omega)| < C for all irrational omega, where C < sqrt(N). This would mean that the Collatz map does not concentrate energy at any irrational frequency \u2014 it is 'mixing' in the Fourier sense. Moreover, the spectral gap is related to the convergence rate: the wider the gap, the faster the orbit reaches 1. Conjecture: for the orbit of n, the number of steps to reach 1 is O(log(n)), which is equivalent to F_T having a spectral gap of width Omega(1/log(n)). Test: compute F_T for n up to 10^6 and measure the spectral gap. Compare with the spectral gaps of related maps (5n+1, 7n+1) which do NOT always converge. Impact: the Collatz conjecture is a spectral gap problem. Convergence to 1 means the Fourier transform has no resonances at irrational frequencies.",
-    "domains": [
-      "Novelty",
-      "NumberTheory"
-    ],
-    "id": "fd_0353",
-    "priority_score": 0.79,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T19:29:43.481814+00:00",
-    "title": "The Fourier Analysis of Collatz: Spectral Gaps in the 3n+1 Map"
-  },
-  {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8201cdaf",
     "description": "An automatic sequence is one generated by a deterministic finite automaton (DFA). The Thue-Morse sequence 01101001... is 2-automatic. The Rudin-Shapiro sequence is 2-automatic. The paperfolding sequence is 2-automatic. Conjecture: a sequence (a_n) is k-automatic iff its generating function G(x) = sum a_n x^n is algebraic over Q(x) of degree at most k. This is known (Christol's theorem): a formal power series over F_k is algebraic iff its coefficient sequence is k-automatic. But Christol's theorem only works over finite fields. For sequences over Z (or Q), the conjecture is: a sequence (a_n) over Z is k-automatic iff it satisfies a linear recurrence with polynomial coefficients of degree at most k-1 in n. Conjecture: the halting problem for k-automatic sequences is decidable: given a DFA that generates (a_n), it is decidable whether there exists n such that a_n = 0 (the 'zero in sequence' problem). This is TRUE for k-automatic sequences (by the pumping lemma: if the DFA accepts any string, it accepts an infinite number, so a_n = 0 infinitely often). But for morphic sequences (generalizations of automatic sequences), the problem is open. Conjecture: the zero-in-sequence problem for morphic sequences is decidable. Test: implement the decidability algorithm for k-automatic sequences and verify on 100 test sequences. Impact: automatic sequences have decidable halting problems. The boundary between decidability and undecidability in sequence theory is the boundary between automatic and morphic.",
     "domains": [
       "Novelty",
@@ -3017,7 +3031,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.79,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T02:26:08.592076+00:00",
     "title": "Automatic Sequences and the Halting Problem: When Is a Sequence Computable?"
   },
@@ -3048,21 +3062,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-17T18:03:33.034163+00:00",
     "title": "Close Proofs: Holographic Primes: The Prime Number AdS/CFT Correspondence"
-  },
-  {
-    "consumed_by_exp_id": "f59cf451",
-    "description": "Bach's chorales are the gold standard of Western harmony. But what if we could MEASURE the harmonic complexity using topology? Encode each chord as a point in a 12-dimensional space (one dimension per pitch class). A sequence of chords traces a path in this space. Compute the persistent homology of the point cloud of all chords in a Bach chorale. Conjecture: Bach's chorales have persistent H_1 (1-dimensional cycles) that survive across a wide range of scales, indicating circular harmonic motion (the circle of fifths). In contrast, random chord sequences have H_1 bars that die quickly. The longest H_1 bar in a Bach chorale corresponds to the circle of fifths \u2014 the fundamental harmonic cycle. Pop music has shorter H_1 bars (less complex harmonic cycles). Atonal music has no persistent H_1 (no harmonic cycles). Test: compute persistent homology barcodes for 100 Bach chorales, 100 pop songs, and 100 atonal pieces. Verify: Bach has H_1 bars of length > 0.5 (in normalized pitch-class space), pop has bars of length 0.2-0.5, atonal has no persistent H_1. Impact: the topology of music IS its harmonic structure. Bach's genius is literally topological \u2014 his music has longer harmonic cycles.",
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0334",
-    "priority_score": 0.76,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T15:00:46.000861+00:00",
-    "title": "Persistent Homology of Musical Harmony: The Topology of Bach"
   },
   {
     "consumed_by_exp_id": "",
@@ -4292,6 +4291,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-19T02:26:28.864803+00:00",
     "title": "Future directions from cycle eb62b00a"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n1. **Represent whole chords, not individual pitch classes.** Use 12-dimensional binary or\n   duration-weighted chroma vectors. Distances between these vectors are not all equal, so a\n   nontrivial filtration can arise.\n2. **Retain temporal information.** Compare unordered chord clouds with delay embeddings,\n   directed transition complexes, path homology, or witness constructions whose vertices are\n   chord occurrences rather than unique chord labels. The order-blindness theorems show why\n   this distinction is necessary.\n3. **Formalize simplicial homology.** Extend the proved Rips-simplex dichotomy to chain groups\n   and prove explicitly that reduced homology vanishes in positive dimensions in both regimes.\n4. **Model the circle of fifths explicitly.** Define the permutation `x \u21a6 x + 7` on `Fin 12`,\n   prove it is a 12-cycle, and choose a metric or transition construction for which adjacent\n   fifths appear before diagonals. Then identify the resulting degree-one class.\n5. **Specify the empirical protocol before testing genre claims.** Fix chord extraction,\n   transposition normalization, treatment of repetitions, metric, filtration convention,\n   coefficient field, aggregation statistic, train/test separation, and uncertainty estimates.\n6. **Use matched null models.** Random controls should preserve song length, chord vocabulary,\n   marginal frequencies, and possibly first-order transitions; otherwise persistence differences\n   can be explained by elementary confounders.\n7. **Replace hard-coded thresholds with preregistered statistical hypotheses.** The proposed\n   values `> 0.5`, `0.2\u20130.5`, and zero depend on normalization. Estimate effect sizes and\n   confidence intervals, and test robustness under alternate encodings and metrics.\n8. **Avoid interpreting an H1 bar by length alone.** To claim that a bar corresponds to the\n   circle of fifths, recover a representative cycle and compare its vertices and transitions\n   against the fifths ordering.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0384",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "f59cf451",
+    "status": "available",
+    "timestamp": "2026-07-19T02:44:36.203621+00:00",
+    "title": "1. **Represent whole chords, not individual pitch classes.** Use 12-dimensional "
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n- Replace the impossible global condition over all irrational frequencies by a condition excluding a fixed neighborhood of the integer resonances. Continuity forces values near the zero-frequency peak to remain near the cutoff `N`.\n- Study normalized transforms `F_N(\u03c9) / N` on compact frequency sets bounded away from integers, and seek quantitative cancellation estimates uniform in `N`.\n- Separate the even and odd summands. For the stated phase `T(n)/n`, the even branch contributes the constant phase `1/2`, while the odd branch has phase `3 + 1/n`; this explicit decomposition should support sharper asymptotic estimates.\n- Formulate averaged statements, such as `L\u00b2` bounds over a period or bounds outside an exceptional set of small measure. Such claims are compatible with isolated resonant peaks in a way that a pointwise bound over all irrationals is not.\n- Compare the corrected normalized or averaged statistics for the `3n+1`, `5n+1`, and `7n+1` maps. Any useful discriminator must depend on more than continuity near frequency zero.\n- Investigate orbit-dependent transforms separately from the one-step cutoff sum. A rigorous implication between an orbit hitting-time estimate and a spectral estimate would require precise definitions and directional proofs; it should not be treated as an automatic equivalence.\n",
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_0385",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "4c2c71e5",
+    "status": "available",
+    "timestamp": "2026-07-19T02:44:45.166880+00:00",
+    "title": "Future directions from cycle 4c2c71e5"
   },
   {
     "consumed_by_exp_id": "",

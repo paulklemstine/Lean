@@ -2245,7 +2245,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'On Transformer Dynamics' and formalize its key results. Abstract: We develop a geometric framework in which the token dynamics of a transformer are modeled by a system of interacting particles on a Riemannian manifold $\\mathcal M$, the attention mechanism being encoded by a time-independent two-body interaction law, that is, a section of the pullback bundle $π_2^{*}(T\\mathcal M)$ over $\\mathcal M\\times\\mathcal M$. Within this framework we isolate two features that a family of interaction laws must possess in order to model language: it must realize generic nonlocal and nonreciprocal forces, and it must parametrize vector fields on a high-dimensional manifold efficiently. We show that both features are achieved simultaneously in a transformer model. Our main theorem produces a finitely parametrized family of interaction laws, independent of the manifold and of its dimension, that is universal: it realizes an arbitrary prescribed attention digraph. Moreover, we show that the cost of realizing a given attention digraph is governed not by $\\dim\\mathcal M",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Geometry",
         "MachineLearning"
@@ -4964,7 +4964,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Generalizations of nets and Latin squares' and formalize its key results. Abstract: We examine combinatorial structures which generalize $(k,n)$-nets, orthogonal arrays, and mutually orthogonal Latin squares. By a reticulation we mean of a point set and two collections (types) of families of lines such that two lines of different types meet in exactly one point and each family of lines partitions the point set. The number of points incident with any line depends only upon the type of the line, and every point is incident with the same number of lines of a given type. Each choice of one line family of each type leads to an arrangement of the points into a rectangular grid. Recording the line containing a given point in the corresponding position of an array gives to a generalization of sets of mutually orthogonal Latin squares, dubbed a cooperative system. A cooperative system consists of a collection of column-Latin matrices and a collection of row-Latin matrices such that each column-Latin matrix is orthogonal to each row-Latin matrix. Recording lines which contain a",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Algebra",
         "MachineLearning"
@@ -6516,7 +6516,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Semitotal domination in unit disk graphs' and formalize its key results. Abstract: A set $S \\subseteq V$ is called a {\\em semitotal dominating set} of $G=(V,E)$ if every vertex in $V \\setminus S$ is adjacent to at least one vertex in $S$, and every vertex in $S$ is within distance 2 of another vertex in $S$. The corresponding decision problem is NP-complete even for unit disk graphs. In this paper, we present a 5-factor approximation algorithm for the Minimum Semitotal Domination problem on unit disk graphs in the graph-based input model. The algorithm processes the layers of a Breadth-First-Search tree and constructs a maximal independent set whose vertices satisfy the semitotal condition. For a graph with $n$ vertices and $m$ edges, the algorithm runs in $O(n + m)$ time, and hence in $O(n^2)$ time in the worst case. This improves the previously known 5.75-approximation algorithm with $O(n^3)$ running time.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Computation",
         "MachineLearning"
@@ -6639,7 +6639,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Generalization of Ramanujan's Continued Fractions for Even Order' and formalize its key results. Abstract: In this paper, we derive three generalized continued fractions of any even order $k$ with the aid of a general continued fraction identity of Ramanujan and we establish general theta function identities for these continued fractions. As an application of continued fraction of order seventy-six, we obtain partition theoretic identities and some vanishing coefficient results.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Algebra",
         "MachineLearning"
@@ -8061,7 +8061,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Measures and generalizations of dual Littlewood identities' and formalize its key results. Abstract: We introduce three families of vectors $|\\underlineλ^{so}\\rangle$, $|\\underlineλ^{sp}\\rangle$ and $|\\underlineλ^{o}\\rangle$ parametrized by partitions in the Fock space by using products of adjoint vertex operators. We show that the quotient space of the dual vacuum vector is spanned by the partition vectors indexed by a special family of partitions. The partition-indexed vectors also help us to derive the dual Littlewood identities of types B, C, and D in a new manner associated to the special family of partitions. As an application, we obtain a new free fermionic construction to show that the measures related to dual Littlewood identities introduced by Rains \\cite[Section 7]{Rai2000} and Betea \\cite[Section 3]{Be2020} are determinantal with repect to some explicit correlation kernels. Furthermore we establish a number of generalized Littlewood identities summed over certain restricted partitions by computing the inner products with elements indexed by one-column partitions {or genera",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Algebra",
         "MachineLearning"
@@ -14699,7 +14699,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\n## What is now rigorous\n\n`Catalog/MachineLearning/PrimeRipsTopology.lean` proves a reusable deterministic core for every strictly increasing real point sequence:\n\n1. Rips edges and connectedness persist with increasing scale.\n2. An edge crossing an intermediate ordered point forces the two shorter edges.\n3. A consecutive gap above the scale separates graph components.\n4. Two ordered points are connected exactly when every intervening consecutive gap is at most the scale.\n5. Hence the endpoint connection threshold is exactly the largest intervening consecutive gap (stated pointwise, avoiding an artificial maximum construction).\n6. For the first six primes, the endpoint connection threshold is exactly 4.\n\nThis identifies the finite `H₀` barcode with consecutive-gap data. It also disproves the suggested three-point source of persistent `H₁`: the Rips flag complex fills that triangle as soon as its long edge appears.\n\n## Corrections needed in the research conjecture\n\n* “Same barcode as a Poisson point process” should be replaced by a precise asymptotic statement. Prime gaps are arithmetically constrained and discrete; a continuous exponential law cannot hold literally.\n* The intensity `1/log(x)` varies with location, so the comparison should use local windows `[X, X+H]` and gaps normalized by `log X`.\n* A goodness-of-fit claim needs a specified statistic, treatment of parameter fitting, and an asymptotic null distribution.\n* Twin primes produce short edges, not holes, in a one-dimensional Rips point cloud. Any proposed topological encoding of twin primes must use a different construction.\n\n## Natural next formal results\n\n1. Define a finite ordered cloud indexed by `Fin n` and prove that its finite `H₀` death multiset equals its multiset of consecutive gaps.\n2. Define the clique complex of the interval graph and formalize a dismantling/collapse proof showing that every connected component is contractible. This would yield vanishing reduced homology in all positive dimensions, not merely the triangle obstruction proved here.\n3. Specialize the generic ordered-cloud theorem to a formally defined increasing enumeration of primes.\n4. Formalize parity support: after the initial gap, all prime gaps are even, giving an exact obstruction to equality with a continuous exponential distribution.\n5. Develop a corrected statistical target for local normalized prime gaps, clearly separated from the deterministic persistent-homology theorem.\n\n## Alternative constructions that may carry arithmetic topology\n\nTo obtain nontrivial higher-dimensional persistence, enrich or alter the geometry. Candidates include delay-coordinate embeddings of the gap sequence, residue-class feature vectors, weighted complexes with non-flag filling rules, or witness complexes built from arithmetic relations. Such constructions require new definitions and should not be conflated with the ordinary Rips complex of points embedded in `ℝ`.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -15673,11 +15673,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "8201cdaf",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -15690,7 +15690,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0380",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-19T02:47:00.275978+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -15705,7 +15705,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-19T02:26:08.592076+00:00",
       "title": "Automatic Sequences and the Halting Problem: When Is a Sequence Computable?"
@@ -15806,7 +15806,7 @@
       "depth_estimate": 3,
       "description": "The natural gradient algorithm updates parameters theta in the direction of steepest descent on the Fisher information manifold: theta_{t+1} = theta_t - eta * G^{-1}(theta_t) * gradient L(theta_t) where G is the Fisher information matrix. This is equivalent to following the geodesic on the statistical manifold (the Riemannian manifold with metric G). Conjecture: for any optimization problem with loss function L, the natural gradient descent converges to the minimum in O(1/t) iterations, regardless of the condition number of G. This is because the natural gradient follows the geodesic, which is the shortest path on the manifold, and the path length is O(1) (bounded by the diameter of the manifold). In contrast, standard gradient descent takes O(kappa) iterations where kappa is the condition number of G. Conjecture: natural gradient descent with step size eta = 1/t achieves L(theta_t) - L(theta*) = O(1/t) for convex losses, and L(theta_t) - L(theta*) = O(exp(-t/d)) for strongly convex losses, where d is the dimension. Test: compare natural gradient descent and standard gradient descent on logistic regression with varying condition numbers, verify the convergence rates. Impact: optimization is geometry. The natural gradient is the geodesic on the Fisher manifold, and geodesics are the shortest paths.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Novelty",
         "MachineLearning"
@@ -16034,6 +16034,46 @@
       "thread_id": "",
       "timestamp": "2026-07-18T12:32:18.786765+00:00",
       "title": "Deepening: Erdos-Renyi on Acid: Random Graphs That Hallucinate"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Building on cycle 4c2c71e5 (Q=0.800), which proved 46 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Collatz map T: N -> N defined by T(n) = n/2 if n even, 3n+1 if n odd, is conjectured to always reach 1. The Collatz conjecture is equivalent to: the orbit of every n under T eventually reaches the cycle {1, 4, 2, 1}. Define the Collatz Fourier transform: F_T(omega) = sum_{n=1}^{N} e^{2*pi*i*omeg",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "MachineLearning"
+      ],
+      "github_issue": 0,
+      "id": "push_4c2c71e5_cba22d99",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.9,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "4c2c71e5",
+      "source_path": "The Fourier Analysis of Collatz: Spectral Gaps in the 3n+1 Map",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-19T02:44:51.313246+00:00",
+      "title": "Deepening: The Fourier Analysis of Collatz: Spectral Gaps in the 3n+1 Map"
     },
     {
       "ambition_level": "extension",
@@ -16329,7 +16369,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle ee626e30 (Q=0.760), which proved 14 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The shadowing lemma says that near an approximate orbit of a chaotic system, there exists a true orbit. In other words, every 'almost correct' trajectory of a chaotic map has a 'truly correct' trajectory nearby. This means that numerical errors in chaotic simulations are not bugs — they are SHADOWS ",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "MachineLearning"
       ],

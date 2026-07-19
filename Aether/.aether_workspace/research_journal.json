@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "ad5825e2",
-      "domain": "MachineLearning",
-      "key_insight": "# Future directions\n\n## What the formal result establishes\n\n`Catalog/MachineLearning/FiniteGroupPeriodicLaw.lean` proves an infinite counterexample family to prediction from coarse “periodic-table coo",
-      "quality_score": 0.71,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-17T12:07:43",
-      "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
-    },
-    {
       "cycle_id": "d1663b23",
       "domain": "Applications",
       "key_insight": "# Future Directions: Minimal Modularity Lifting for Genus Two\n\n## 1. Integral stable-Yoshida modularity lifting\n\nLet a four-dimensional residual symplectic representation arise by automorphic inductio",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-19T02:26:34",
       "title": "Matroid Minors and the Graph Theorem: Robertson-Seymour for Matroids"
+    },
+    {
+      "cycle_id": "4c2c71e5",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions\n\n- Replace the impossible global condition over all irrational frequencies by a condition excluding a fixed neighborhood of the integer resonances. Continuity forces values near th",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 46,
+      "timestamp": "2026-07-19T02:44:51",
+      "title": "The Fourier Analysis of Collatz: Spectral Gaps in the 3n+1 Map"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "42e1a665",
-      "domain": "Shared",
-      "key_insight": "# Future Directions\n\n## 1. The unbounded composite-index theorem\n\nFor every composite integer `n ≥ 13`, the Fibonacci number `F(n)` has a prime divisor that divides no earlier positive-index Fibonacci",
-      "quality_score": 0.88,
-      "sorry_count": 4,
-      "theorem_count": 0,
-      "timestamp": "2026-07-15T04:08:36",
-      "title": "Close Proofs: Bypassed"
-    },
     {
       "cycle_id": "ca1c3afc",
       "domain": "Novelty",
@@ -2501,21 +2491,19 @@
       "theorem_count": 16,
       "timestamp": "2026-07-19T02:44:40",
       "title": "Persistent Homology of Musical Harmony: The Topology of Bach"
+    },
+    {
+      "cycle_id": "4c2c71e5",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions\n\n- Replace the impossible global condition over all irrational frequencies by a condition excluding a fixed neighborhood of the integer resonances. Continuity forces values near th",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 46,
+      "timestamp": "2026-07-19T02:44:51",
+      "title": "The Fourier Analysis of Collatz: Spectral Gaps in the 3n+1 Map"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "e456357e",
-      "domain": "Shared",
-      "name": "shows",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "e456357e",
-      "domain": "Shared",
-      "name": "leastPositiveAvoidingSum_spec",
-      "quality": 0.7
-    },
     {
       "cycle_id": "e456357e",
       "domain": "Shared",
@@ -2803,9 +2791,21 @@
       "domain": "Shared",
       "name": "periodic_search_benchmark",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "4c2c71e5",
+      "domain": "MachineLearning",
+      "name": "eisensteinNormSq_pow",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "4c2c71e5",
+      "domain": "MachineLearning",
+      "name": "sigma_pow_injective",
+      "quality": 0.8
     }
   ],
-  "last_updated": "2026-07-19T02:44:40",
+  "last_updated": "2026-07-19T02:44:51",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "e72af703",
-        "quality": 0.91,
-        "theorems": 13,
-        "title": "Close Proofs: For every natural number `k`, the factorial-code space of length `"
-      },
-      {
         "cycle_id": "f4980b02",
         "quality": 0.74,
         "theorems": 18,
@@ -3575,6 +3569,12 @@
         "quality": 0.74,
         "theorems": 0,
         "title": "Persistent Homology of Prime Numbers: The Topology of Arithmetic"
+      },
+      {
+        "cycle_id": "4c2c71e5",
+        "quality": 0.8,
+        "theorems": 46,
+        "title": "The Fourier Analysis of Collatz: Spectral Gaps in the 3n+1 Map"
       }
     ],
     "Novelty": [
