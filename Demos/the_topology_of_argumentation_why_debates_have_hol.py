@@ -1,177 +1,184 @@
+#!/usr/bin/env python3
+"""Numerical experiments for preferred-generated argumentation complexes.
+
+The script uses only the Python standard library.  It enumerates admissible,
+preferred, complete, and grounded extensions; constructs the downward closure
+of preferred extensions; and computes simplicial Betti numbers over F_2.
 """
-The Topology of Argumentation --- numerical demonstrations.
-
-This self-contained script implements Dung's abstract argumentation semantics
-and the conflict-free simplicial complex K(AF), and numerically demonstrates the
-main results of the accompanying paper:
-
-  * conflict-free / admissible / preferred / complete / grounded extensions,
-  * downward closure of conflict-free sets (K(AF) is a simplicial complex),
-  * the (unreduced) Euler characteristic of K(AF),
-  * the full simplex has Euler characteristic 1 (contractible),
-  * refutation of the conjecture  chi(K) = #preferred - |grounded|,
-  * the corrected correspondence for symmetric irreflexive frameworks
-    (preferred extensions = maximal independent sets = facets of K(AF)).
-
-An argumentation framework is a pair (A, R):
-    A : the arguments, encoded as range(n),
-    R : the attack relation, a set of ordered pairs (a, b) meaning "a attacks b".
-
-No third-party dependencies are required.
-"""
-
 from __future__ import annotations
 
-from itertools import combinations, chain
-from typing import FrozenSet, Iterable, List, Set, Tuple
+from dataclasses import dataclass
+from itertools import combinations
+from typing import Dict, FrozenSet, Iterable, List, Optional, Sequence, Set, Tuple
 
-Arg = int
-Attack = Tuple[Arg, Arg]
-Relation = Set[Attack]
-Extension = FrozenSet[Arg]
+Face = FrozenSet[int]
+Attack = Tuple[int, int]
 
 
-# --------------------------------------------------------------------------- #
-# Core Dung semantics
-# --------------------------------------------------------------------------- #
-def powerset(args: Iterable[Arg]) -> List[Extension]:
-    """All subsets of `args`, returned as frozensets."""
-    items = list(args)
+@dataclass(frozen=True)
+class Framework:
+    """A finite directed argumentation framework on vertices 0,...,n-1."""
+
+    n: int
+    attacks: FrozenSet[Attack]
+
+    def subsets(self) -> Iterable[Face]:
+        vertices = range(self.n)
+        for size in range(self.n + 1):
+            for subset in combinations(vertices, size):
+                yield frozenset(subset)
+
+    def conflict_free(self, subset: Face) -> bool:
+        return all((a, b) not in self.attacks for a in subset for b in subset)
+
+    def defends(self, subset: Face, argument: int) -> bool:
+        attackers = (b for b in range(self.n) if (b, argument) in self.attacks)
+        return all(any((c, b) in self.attacks for c in subset) for b in attackers)
+
+    def admissible(self, subset: Face) -> bool:
+        return self.conflict_free(subset) and all(
+            self.defends(subset, a) for a in subset
+        )
+
+    def complete(self, subset: Face) -> bool:
+        return self.conflict_free(subset) and all(
+            (a in subset) == self.defends(subset, a) for a in range(self.n)
+        )
+
+    def preferred_extensions(self) -> List[Face]:
+        admissible = [s for s in self.subsets() if self.admissible(s)]
+        return sorted(
+            [s for s in admissible if not any(s < t for t in admissible)],
+            key=lambda s: (len(s), tuple(s)),
+        )
+
+    def complete_extensions(self) -> List[Face]:
+        return [s for s in self.subsets() if self.complete(s)]
+
+    def grounded_extension(self) -> Optional[Face]:
+        complete = self.complete_extensions()
+        least = [s for s in complete if all(s <= t for t in complete)]
+        return least[0] if len(least) == 1 else None
+
+
+def downward_closure(facets: Sequence[Face]) -> Set[Face]:
+    """Return every subset of every facet."""
+    faces: Set[Face] = set()
+    for facet in facets:
+        ordered = sorted(facet)
+        for size in range(len(ordered) + 1):
+            faces.update(frozenset(s) for s in combinations(ordered, size))
+    return faces
+
+
+def rank_mod2(rows: Sequence[int]) -> int:
+    """Rank of a binary matrix represented by integer bit rows."""
+    basis: Dict[int, int] = {}
+    for row in rows:
+        value = row
+        while value:
+            pivot = value.bit_length() - 1
+            if pivot in basis:
+                value ^= basis[pivot]
+            else:
+                basis[pivot] = value
+                break
+    return len(basis)
+
+
+def boundary_rank(faces_k: Sequence[Face], faces_lower: Sequence[Face]) -> int:
+    """Rank over F_2 of the simplicial boundary from k-faces downward."""
+    if not faces_k or not faces_lower:
+        return 0
+    column_index = {face: i for i, face in enumerate(faces_k)}
+    rows: List[int] = []
+    for lower in faces_lower:
+        row = 0
+        for vertex in range(max((max(f) if f else -1 for f in faces_k), default=-1) + 1):
+            coface = lower | {vertex}
+            if len(coface) == len(lower) + 1 and coface in column_index:
+                row |= 1 << column_index[coface]
+        rows.append(row)
+    return rank_mod2(rows)
+
+
+def betti_numbers(faces: Set[Face]) -> List[int]:
+    """Compute ordinary simplicial Betti numbers over F_2."""
+    nonempty = [face for face in faces if face]
+    if not nonempty:
+        return []
+    max_dim = max(len(face) - 1 for face in nonempty)
+    by_dim: List[List[Face]] = [
+        sorted((f for f in nonempty if len(f) == dim + 1), key=lambda f: tuple(f))
+        for dim in range(max_dim + 1)
+    ]
+    ranks = [0] * (max_dim + 2)
+    for dim in range(1, max_dim + 1):
+        ranks[dim] = boundary_rank(by_dim[dim], by_dim[dim - 1])
+    return [len(by_dim[d]) - ranks[d] - ranks[d + 1] for d in range(max_dim + 1)]
+
+
+def face_vector(faces: Set[Face]) -> List[int]:
+    nonempty = [f for f in faces if f]
+    if not nonempty:
+        return []
     return [
-        frozenset(c)
-        for c in chain.from_iterable(combinations(items, k) for k in range(len(items) + 1))
+        sum(len(f) == dimension + 1 for f in nonempty)
+        for dimension in range(max(map(len, nonempty)))
     ]
 
 
-def is_conflict_free(s: Extension, r: Relation) -> bool:
-    """No member of s attacks another member of s."""
-    return not any((a, b) in r for a in s for b in s)
+def euler_characteristic(faces: Set[Face]) -> int:
+    return sum((-1) ** dimension * count for dimension, count in enumerate(face_vector(faces)))
 
 
-def defends(s: Extension, a: Arg, r: Relation) -> bool:
-    """s defends a: every attacker b of a is counter-attacked by some c in s."""
-    attackers = [b for (b, target) in r if target == a]
-    return all(any((c, b) in r for c in s) for b in attackers)
+def proposed_sides(framework: Framework, betti: Sequence[int]) -> Tuple[int, int]:
+    preferred = framework.preferred_extensions()
+    grounded = framework.grounded_extension()
+    if grounded is None:
+        raise ValueError("The exhaustive semantics did not find a unique grounded extension")
+    higher_term = sum((-1) ** n * betti[n] for n in range(2, len(betti)))
+    left = framework.n - len(framework.attacks) + higher_term
+    right = len(preferred) - len(grounded)
+    return left, right
 
 
-def defense_operator(s: Extension, args: Iterable[Arg], r: Relation) -> Extension:
-    """F(s): the set of all arguments defended by s."""
-    return frozenset(a for a in args if defends(s, a, r))
+def format_sets(sets: Sequence[Face]) -> str:
+    return "[" + ", ".join("{" + ", ".join(map(str, sorted(s))) + "}" for s in sets) + "]"
 
 
-def is_admissible(s: Extension, r: Relation) -> bool:
-    """Conflict-free and defends each of its members (s subset of F(s))."""
-    return is_conflict_free(s, r) and all(defends(s, a, r) for a in s)
-
-
-def is_complete(s: Extension, args: Iterable[Arg], r: Relation) -> bool:
-    """Admissible and closed under defense: F(s) subset of s."""
-    return is_admissible(s, r) and defense_operator(s, args, r) <= s
-
-
-def preferred_extensions(args: Iterable[Arg], r: Relation) -> List[Extension]:
-    """Maximal admissible sets."""
-    args = list(args)
-    adm = [s for s in powerset(args) if is_admissible(s, r)]
-    return [s for s in adm if not any(s < t for t in adm)]
-
-
-def grounded_extension(args: Iterable[Arg], r: Relation) -> Extension:
-    """Least fixed point of the defense operator, via Kleene iteration from empty."""
-    args = list(args)
-    current: Extension = frozenset()
-    while True:
-        nxt = defense_operator(current, args, r)
-        # The grounded extension is the least fixed point reached from below;
-        # iterate the monotone operator until stabilization.
-        if nxt == current:
-            return current
-        current = nxt if current <= nxt else current | nxt
-
-
-# --------------------------------------------------------------------------- #
-# The conflict-free complex K(AF) and its Euler characteristic
-# --------------------------------------------------------------------------- #
-def conflict_free_complex(args: Iterable[Arg], r: Relation) -> List[Extension]:
-    """The faces of K(AF): all conflict-free subsets of the arguments."""
-    return [s for s in powerset(args) if is_conflict_free(s, r)]
-
-
-def is_downward_closed(faces: List[Extension]) -> bool:
-    """Verify the defining axiom of a simplicial complex: subsets of faces are faces."""
-    face_set = set(faces)
-    return all(frozenset(sub) in face_set for f in faces for sub in powerset(f))
-
-
-def euler_characteristic(faces: List[Extension]) -> int:
-    """Unreduced Euler characteristic: sum over nonempty faces of (-1)^(|s|-1)."""
-    return sum((-1) ** (len(s) - 1) for s in faces if len(s) > 0)
-
-
-# --------------------------------------------------------------------------- #
-# Demonstrations
-# --------------------------------------------------------------------------- #
-def describe(name: str, args: List[Arg], r: Relation) -> None:
-    faces = conflict_free_complex(args, r)
-    chi = euler_characteristic(faces)
-    pref = preferred_extensions(args, r)
-    grnd = grounded_extension(args, r)
-    print(f"=== {name} ===")
-    print(f"  arguments : {args}")
-    print(f"  attacks   : {sorted(r)}")
-    print(f"  K(AF) is downward closed (a simplicial complex): {is_downward_closed(faces)}")
-    print(f"  #faces of K(AF)          : {len(faces)}")
-    print(f"  Euler characteristic chi : {chi}")
-    print(f"  preferred extensions     : {[sorted(p) for p in pref]}  (count {len(pref)})")
-    print(f"  grounded extension       : {sorted(grnd)}  (size {len(grnd)})")
-    rhs = len(pref) - len(grnd)
-    print(f"  conjecture RHS #pref-|grnd| : {rhs}   ->  chi == RHS ? {chi == rhs}")
-    print()
+def report(name: str, framework: Framework) -> None:
+    preferred = framework.preferred_extensions()
+    grounded = framework.grounded_extension()
+    faces = downward_closure(preferred)
+    betti = betti_numbers(faces)
+    left, right = proposed_sides(framework, betti)
+    print(f"\n{name}")
+    print("-" * len(name))
+    print(f"arguments: {framework.n}; attacks: {len(framework.attacks)}")
+    print(f"preferred extensions: {format_sets(preferred)}")
+    print(f"grounded extension: {format_sets([grounded]) if grounded is not None else 'none'}")
+    print(f"face vector (f_0, f_1, ...): {face_vector(faces)}")
+    print(f"Betti numbers over F_2: {betti}")
+    print(f"Euler characteristic: {euler_characteristic(faces)}")
+    print(f"proposed identity: left = {left}, right = {right}, equal = {left == right}")
 
 
 def main() -> None:
-    # 1. The refuting witness: a single argument attacking nothing.
-    describe("R0: single argument, no attacks (REFUTES the conjecture)", [0], set())
+    mutual = Framework(2, frozenset({(0, 1), (1, 0)}))
+    isolated = Framework(2, frozenset())
+    directed_three_cycle = Framework(3, frozenset({(0, 1), (1, 2), (2, 0)}))
 
-    # 2. Two mutually attacking arguments  0 <-> 1  (symmetric, irreflexive).
-    describe("Two-cycle 0<->1 (symmetric)", [0, 1], {(0, 1), (1, 0)})
+    report("Two mutually attacking arguments", mutual)
+    report("Two isolated arguments", isolated)
+    report("Directed three-cycle", directed_three_cycle)
 
-    # 3. Three-cycle  0->1->2->0  (a 'circular disagreement').
-    describe("Odd cycle 0->1->2->0", [0, 1, 2], {(0, 1), (1, 2), (2, 0)})
-
-    # 4. A defended argument: 0 attacks 1, 2 attacks 0  (grounded = {1,2}).
-    describe("Chain 2->0->1", [0, 1, 2], {(0, 1), (2, 0)})
-
-    # 5. Complete conflict graph on n vertices (symmetric): chi = n = #preferred.
-    for n in (2, 3, 4):
-        args = list(range(n))
-        r = {(a, b) for a in args for b in args if a != b}
-        faces = conflict_free_complex(args, r)
-        chi = euler_characteristic(faces)
-        pref = preferred_extensions(args, r)
-        assert chi == n == len(pref), (n, chi, len(pref))
-        print(f"Complete conflict graph K_{n}: chi = {chi} = #preferred = {len(pref)}  (verified)")
-    print()
-
-    # 6. Full simplex (no attacks at all) on n vertices: chi = 1 (contractible).
-    for n in (1, 2, 3, 4, 5):
-        args = list(range(n))
-        faces = conflict_free_complex(args, set())
-        chi = euler_characteristic(faces)
-        assert chi == 1, (n, chi)
-        print(f"Attack-free framework on {n} arguments: full simplex, chi = {chi}  (verified)")
-    print()
-
-    # 7. Symmetric correspondence: preferred = maximal independent sets = facets.
-    args = [0, 1, 2, 3]
-    r = {(0, 1), (1, 0), (1, 2), (2, 1), (2, 3), (3, 2)}  # path graph 0-1-2-3
-    faces = conflict_free_complex(args, r)
-    pref = {frozenset(p) for p in preferred_extensions(args, r)}
-    facets = {f for f in faces if not any(f < g for g in faces)}
-    print("Path graph 0-1-2-3 (symmetric):")
-    print(f"  preferred extensions : {sorted(sorted(p) for p in pref)}")
-    print(f"  facets of K(AF)      : {sorted(sorted(f) for f in facets)}")
-    print(f"  preferred == facets  : {pref == facets}")
+    assert mutual.preferred_extensions() == [frozenset({0}), frozenset({1})]
+    assert face_vector(downward_closure(mutual.preferred_extensions())) == [2]
+    assert isolated.preferred_extensions() == [frozenset({0, 1})]
+    assert isolated.grounded_extension() == frozenset({0, 1})
+    assert proposed_sides(isolated, [1, 0]) == (2, -1)
+    print("\nAll stated boundary-case checks passed.")
 
 
 if __name__ == "__main__":

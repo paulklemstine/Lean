@@ -1,450 +1,278 @@
-# The Topology of Argumentation: Simplicial Structure and Euler Characteristic of Abstract Argumentation Frameworks
+# Preferred Semantics and Downward-Closed Topology in Finite Argumentation Frameworks
+
+**Aristotle**  
+**July 19, 2026**
 
 ## Abstract
 
-We develop, from first principles, the topological structure hidden inside Dung's
-abstract argumentation frameworks. An argumentation framework is a pair
-$(A, R)$ consisting of a set $A$ of arguments and an attack relation
-$R \subseteq A \times A$. We recall the acceptability semantics — conflict-free,
-admissible, complete, preferred, and grounded sets — and reconstruct their basic
-theory around a single operator, the *defense operator* $F$, proving that $F$ is
-monotone and preserves conflict-freeness, that admissibility is exactly
-"conflict-free and below $F$," and Dung's Fundamental Lemma. From the Fundamental
-Lemma we obtain, via a chain-union argument and Zorn's Lemma, the existence of
-preferred extensions, the theorem that every preferred extension is complete, and
-the containment of the grounded extension (the least fixed point of $F$) in every
-preferred extension.
-
-We then turn to geometry. The conflict-free subsets of any framework are downward
-closed and therefore form an abstract simplicial complex $K(AF)$ on the vertex
-set of arguments; its non-self-attacking arguments are exactly its vertices. We
-define the (unreduced) Euler characteristic of a finite face family, prove that
-the full simplex on a nonempty vertex set is contractible with $\chi = 1$, and
-use this to *refute* the natural conjecture that
-$\chi(K(AF)) = \#(\text{preferred}) - \#(\text{grounded})$: the attack-free
-framework on one argument has $\chi = 1$ while the right-hand side is $0$. We
-close by isolating the family of symmetric frameworks, where a corrected
-correspondence between topology and semantics does hold, and by outlining a
-homological program in which $H_0$ counts independent debate threads, $H_1$
-detects circular disagreements, and $H_2$ detects argument spheres.
-
-**Keywords.** Abstract argumentation; Dung semantics; simplicial complex;
-Euler characteristic; homology; defense operator; preferred and grounded
-extensions; conflict-free complex.
-
----
+We examine a proposed topological interpretation of finite abstract argumentation. Preferred extensions—maximal admissible collections of mutually compatible, self-defending arguments—are natural candidates for faces of a simplicial complex. This identification is generally false: preferred extensions form an antichain under inclusion and need not be downward closed. We give a canonical correction by taking their downward closure. The resulting preferred-generated complex has the preferred extensions as its maximal faces and therefore preserves the maximal semantic data while admitting simplicial invariants. A two-argument mutual-attack framework provides the minimal obstruction to treating the preferred family itself as a complex. A two-argument attack-free framework refutes a proposed identity relating argument and attack counts, higher homology, the number of preferred extensions, and grounded-extension size: its two sides are $2$ and $-1$. We explain why homology of the corrected complex measures overlap patterns among coherent positions rather than directed attack cycles themselves, present exhaustive algorithms for constructing the complex and computing its invariants, and formulate a research program based on intersection posets, collapse criteria, cycle detection, and realizability.
 
 ## 1. Introduction
 
-Abstract argumentation, introduced by Dung, models reasoning under conflict at
-its barest combinatorial level. One discards the content of arguments and their
-justificatory force, retaining only *which arguments attack which*. Remarkably,
-this skeleton is enough to define robust notions of collective acceptability and
-to explain, in a uniform way, phenomena from nonmonotonic logic, logic
-programming, and multi-agent negotiation.
+A finite argumentation framework records a collection of arguments and directed attacks among them. Its semantics asks which collections of arguments can be jointly accepted. Among the standard answers, preferred extensions represent inclusion-maximal positions that are internally conflict-free and capable of defending all their members. Because a framework may have several preferred extensions, their arrangement suggests a geometric question: can the family of coherent positions be studied through simplicial topology?
 
-Our thesis is that these frameworks also carry a genuine *topology*. Everyday talk
-of debates that "go in circles," "hang together," or "split into camps" is
-spatial, and we make it precise: the mutually compatible groups of arguments form
-a simplicial complex, and the holes of that complex — measured by homology and
-summarized by the Euler characteristic — are meaningful invariants of the debate.
+The proposal is attractive for several reasons. Simplicial complexes encode compatibility data of arbitrary order. Homology distinguishes connected components, unfilled loops, and higher-dimensional cavities. Euler characteristic summarizes face counts through an alternating sum. If preferred extensions formed a simplicial complex, these tools could provide structural invariants of debate.
 
-The paper is organized around three movements.
+The central issue is that preferred extensions are maximal objects. A simplicial complex, by contrast, contains each face together with all its subsets. The distinction is structural rather than incidental. We prove that preferred extensions form an antichain: if one is contained in another, they are equal. A minimal framework with two mutually attacking arguments has two singleton preferred extensions, but the empty set is not preferred. Thus the raw family is not downward closed.
 
-1. **Semantics (Sections 3–4).** We rebuild Dung's acceptability semantics around
-   the defense operator, culminating in the Fundamental Lemma, existence of
-   preferred extensions, preferred $\Rightarrow$ complete, and the position of the
-   grounded extension.
-2. **Geometry (Section 5).** We construct the conflict-free complex $K(AF)$,
-   identify its vertices, define the Euler characteristic, and compute it for the
-   full simplex.
-3. **The bridge, and its correction (Sections 6–7).** We state a natural
-   topology-equals-semantics conjecture, refute it with a minimal
-   counterexample, and describe the corrected correspondence and a homological
-   research program.
+There is, however, a canonical repair. Given all preferred extensions, include every subset of each one. This preferred-generated complex is automatically downward closed, contains every preferred extension, and has no additional maximal faces. It is therefore the appropriate topological object generated by preferred semantics.
 
-Everything is stated inline and proved (or proof-sketched) so that the paper is
-self-contained.
+This correction changes the interpretation of topology. The attack relation and the simplicial incidence relation are different. An attack is directed opposition; a simplicial edge means that two arguments coexist in some preferred extension. Consequently, a directed cycle of attacks need not produce a first-homology class. Homology describes the overlap geometry of maximal defensible positions.
 
----
+We also analyze a proposed numerical identity. For a framework with argument set $A$, attack relation $R$, grounded extension $G$, and homology groups $H_n$, the proposed equation is
 
-## 2. Preliminaries and notation
+$$
+|A|-|R|+\sum_{n\ge 2}(-1)^n\dim H_n
+=
+\#\{\text{preferred extensions}\}-|G|.
+$$
 
-Throughout, $A$ is an arbitrary set (the *arguments*) and
-$R \subseteq A \times A$ a binary relation (the *attacks*); we write $R(a,b)$ for
-"$a$ attacks $b$." The pair $AF = (A, R)$ is an **argumentation framework**. No
-finiteness is assumed except where explicitly stated (Sections 5–6). For
-$S \subseteq A$ we freely identify $S$ with the sub-collection of arguments it
-selects.
+An attack-free framework on two arguments disproves it. The unique preferred and grounded extension is the full two-element set; the generated complex is a simplex. The left side is $2$, while the right side is $-1$. Moreover, the displayed left side should not generally be called the Euler characteristic of the generated complex: attacks are not its one-dimensional faces.
 
-A finite set $s$ with $k$ elements, regarded as a face of a complex, has
-**dimension** $\dim s = k - 1$; the empty face has, by convention, dimension
-$-1$.
+The paper proceeds from semantics to topology, proves the structural results, studies two boundary examples, develops algorithms, and identifies corrected directions for further work.
 
----
+## 2. Argumentation semantics
 
-## 3. Conflict-freeness, defense, and admissibility
+### 2.1. Frameworks and attacks
 
-**Definition 3.1 (Conflict-free).** A set $S \subseteq A$ is *conflict-free* if
-$$\forall a, b \in S,\ \neg R(a, b).$$
-No member of $S$ attacks another member of $S$.
+**Definition 2.1 (Finite argumentation framework).** A finite argumentation framework is a pair $F=(A,R)$, where $A$ is a finite set and $R\subseteq A\times A$. Elements of $A$ are arguments. If $(a,b)\in R$, then $a$ attacks $b$.
 
-**Definition 3.2 (Defense).** A set $S$ *defends* an argument $a$, written
-$a \in F(S)$, if
-$$\forall b,\ R(b, a) \Rightarrow \exists c \in S,\ R(c, b).$$
-Every attacker of $a$ is itself attacked by some member of $S$.
+No symmetry is assumed. Self-attacks may be permitted in the general definition, although the principal examples below have none.
 
-**Definition 3.3 (Defense operator).** The *characteristic* or *defense operator*
-is
-$$F(S) = \{\, a \in A : S \text{ defends } a \,\}.$$
+**Definition 2.2 (Conflict freedom).** A subset $S\subseteq A$ is conflict-free if there do not exist $a,b\in S$ such that $(a,b)\in R$.
 
-**Definition 3.4 (Admissibility).** $S$ is *admissible* if it is conflict-free
-and defends each of its members: $S$ is conflict-free and $S \subseteq F(S)$.
+This directed formulation excludes every internal attack, regardless of whether its reverse is present.
 
-The reformulation is worth stating separately, since it is the algebraic pivot of
-the theory.
+**Definition 2.3 (Defence).** A subset $S\subseteq A$ defends an argument $a\in A$ if, for every $b\in A$ with $(b,a)\in R$, there exists $c\in S$ such that $(c,b)\in R$.
 
-**Proposition 3.5 (Admissibility as a fixed-point inequality).** $S$ is
-admissible if and only if $S$ is conflict-free and $S \subseteq F(S)$.
+Defence is collective: the counterattacker $c$ need not be $a$ itself.
 
-*Proof.* Immediate from Definitions 3.2–3.4: "$S$ defends each of its members" is
-literally the statement $S \subseteq F(S)$. $\qquad\blacksquare$
+**Definition 2.4 (Admissibility).** A subset $S\subseteq A$ is admissible if it is conflict-free and defends each $a\in S$.
 
-Two monotonicity facts follow directly.
+The empty set is always admissible. It is conflict-free, and the requirement to defend its own members is vacuous.
 
-**Lemma 3.6 (Monotonicity of defense).** If $S \subseteq T$ and $S$ defends $a$,
-then $T$ defends $a$. Consequently $F$ is monotone: $S \subseteq T \Rightarrow
-F(S) \subseteq F(T)$.
+**Definition 2.5 (Preferred extension).** A subset $P\subseteq A$ is a preferred extension if it is admissible and inclusion-maximal among admissible subsets. Equivalently, whenever $P\subseteq T\subseteq A$ and $T$ is admissible, one has $T=P$.
 
-*Proof.* If $b$ attacks $a$, then since $S$ defends $a$ some $c \in S \subseteq T$
-attacks $b$; hence $T$ defends $a$. $\qquad\blacksquare$
+**Definition 2.6 (Complete and grounded extensions).** A subset $C\subseteq A$ is complete if it is conflict-free and, for every $a\in A$, one has $a\in C$ exactly when $C$ defends $a$. A grounded extension is an inclusion-least complete extension: it is complete and is contained in every complete extension.
 
-**Lemma 3.7 (Base values).** The empty set is conflict-free and admissible, and
-$F(\emptyset) = \{a : \forall b,\ \neg R(b,a)\}$ is exactly the set of *unattacked*
-arguments.
+Preferred and grounded semantics emphasize opposite ends of the inclusion order. Preferred extensions are maximal defensible positions. The grounded extension is the least fixed point of complete acceptance and represents cautious consensus.
 
-The next result is the linchpin that makes the grounded extension well-behaved.
+### 2.2. Maximality forces an antichain
 
-**Theorem 3.8 (Defense preserves conflict-freeness).** If $S$ is conflict-free,
-then $F(S)$ is conflict-free.
+**Theorem 2.7 (Preferred Antichain Theorem).** Let $P$ and $Q$ be preferred extensions of a finite argumentation framework. If $P\subseteq Q$, then $P=Q$. Consequently, distinct preferred extensions are incomparable under inclusion.
 
-*Proof.* Suppose $a, b \in F(S)$ and, for contradiction, $R(a,b)$. Since $b \in
-F(S)$ and $a$ attacks $b$, there is $c \in S$ with $R(c,a)$. Since $a \in F(S)$
-and $c$ attacks $a$, there is $d \in S$ with $R(d,c)$. But $c, d \in S$ with
-$R(d,c)$ contradicts conflict-freeness of $S$. $\qquad\blacksquare$
+**Proof sketch.** The set $Q$ is admissible. Since $P$ is maximal admissible and $P\subseteq Q$, maximality gives $Q\subseteq P$. Antisymmetry of inclusion yields $P=Q$. $\square$
 
-**Corollary 3.9 (Downward closure of conflict-freeness).** If $S \subseteq T$ and
-$T$ is conflict-free, then $S$ is conflict-free.
+The theorem uses only maximality and therefore does not depend on finiteness. Finiteness is useful for enumeration and for guaranteeing maximal extensions by finite search.
 
-*Proof.* Any attack internal to $S$ is internal to $T$. $\qquad\blacksquare$
+**Lemma 2.8 (The empty set is not preferred when nonempty admissibility exists).** If a framework has a nonempty admissible set $S$, then $\varnothing$ is not a preferred extension.
 
-Corollary 3.9 is elementary but decisive: it is the axiom that makes the
-conflict-free sets a simplicial complex (Section 5).
+**Proof sketch.** If $\varnothing$ were preferred, its maximality would imply that every admissible superset of $\varnothing$, including $S$, is contained in $\varnothing$. This contradicts the nonemptiness of $S$. $\square$
 
----
-
-## 4. The Fundamental Lemma and extension semantics
-
-**Theorem 4.1 (Dung's Fundamental Lemma).** If $S$ is admissible and $S$ defends
-$a$, then $S \cup \{a\}$ is admissible.
-
-*Proof.* Write $S' = S \cup \{a\}$. We first record three facts.
-
-- *(H1) No member of $S$ attacks $a$.* If $c \in S$ with $R(c,a)$, then since $S$
-  defends $a$ some $d \in S$ attacks $c$, contradicting conflict-freeness of $S$.
-- *(H2) $a$ attacks no member of $S$.* If $R(a,c)$ with $c \in S$, then since $S$
-  defends $c$ some $d \in S$ attacks $a$; but that contradicts (H1).
-- *(H3) $a$ does not attack itself.* If $R(a,a)$, then since $S$ defends $a$ some
-  $c \in S$ attacks $a$, contradicting (H1).
+This lemma supplies a broad obstruction to downward closure: any nonempty preferred extension has the empty set as a subset, while the empty set is not preferred whenever any nonempty admissible set exists.
 
-*Conflict-freeness of $S'$.* For $x, y \in S'$ with $R(x,y)$ we split into cases:
-$x = y = a$ is excluded by (H3); $x = a, y \in S$ by (H2); $x \in S, y = a$ by
-(H1); $x, y \in S$ by conflict-freeness of $S$.
-
-*Defense.* By Lemma 3.6, $S \subseteq S'$ implies every argument defended by $S$
-is defended by $S'$. Each member of $S$ is defended by $S$, hence by $S'$; and
-$a$ is defended by $S$, hence by $S'$. So $S'$ defends all its members.
-$\qquad\blacksquare$
-
-Two semantic notions crystallize the extremes of maximal and minimal coherent
-positions.
-
-**Definition 4.2 (Complete, preferred, grounded).**
-- $S$ is *complete* if it is admissible and $F(S) \subseteq S$ (equivalently,
-  admissible and a fixed point $F(S) = S$).
-- $S$ is *preferred* if it is a maximal admissible set: admissible, and whenever
-  $T$ is admissible with $S \subseteq T$ we have $T = S$.
-- The *grounded extension* is the least fixed point of $F$, written $G$.
-
-Since $F$ is a monotone self-map of the complete lattice of subsets of $A$, the
-Knaster–Tarski theorem guarantees that $G$ exists and satisfies $F(G) = G$, and
-that $G \subseteq S$ for every $S$ with $F(S) \subseteq S$.
-
-**Theorem 4.3 (Chain unions of admissible sets).** If $\mathcal{C}$ is a chain
-(totally ordered by inclusion) of admissible sets, then $\bigcup \mathcal{C}$ is
-admissible.
-
-*Proof.* *Conflict-free:* if $a \in S_1, b \in S_2$ with $S_1, S_2 \in
-\mathcal{C}$ and $R(a,b)$, then by totality one of $S_1 \subseteq S_2$ or $S_2
-\subseteq S_1$ holds, placing $a,b$ in a common member, contradicting its
-conflict-freeness. *Defense:* each $a \in \bigcup\mathcal{C}$ lies in some $S \in
-\mathcal{C}$, which defends $a$; by Lemma 3.6 so does the larger union.
-$\qquad\blacksquare$
-
-**Theorem 4.4 (Existence of preferred extensions).** Every admissible set
-$S_0$ is contained in a preferred extension. In particular (taking
-$S_0 = \emptyset$) every framework has at least one preferred extension.
-
-*Proof.* By Theorem 4.3 every chain in the poset of admissible sets containing
-$S_0$ has an admissible upper bound (its union). Zorn's Lemma yields a maximal
-admissible $S \supseteq S_0$; maximality is exactly the preferred condition.
-$\qquad\blacksquare$
-
-**Theorem 4.5 (Preferred $\Rightarrow$ complete).** Every preferred extension is
-complete.
-
-*Proof.* Let $S$ be preferred and let $a \in F(S)$. By the Fundamental Lemma
-(Theorem 4.1), $S \cup \{a\}$ is admissible and contains $S$; maximality forces
-$S \cup \{a\} = S$, i.e. $a \in S$. Hence $F(S) \subseteq S$, and with
-admissibility $S$ is complete. $\qquad\blacksquare$
-
-**Theorem 4.6 (Grounded $\subseteq$ preferred).** The grounded extension is
-contained in every complete extension, and hence in every preferred extension.
-
-*Proof.* A complete extension $S$ satisfies $F(S) \subseteq S$, so by leastness of
-$G$ (Knaster–Tarski) we have $G \subseteq S$. Every preferred extension is
-complete by Theorem 4.5. $\qquad\blacksquare$
-
-Theorem 4.6 is the skeptical-below-credulous principle: whatever is forced under
-grounded (skeptical) semantics is accepted under every preferred (credulous)
-position.
-
----
-
-## 5. The conflict-free complex $K(AF)$ and its Euler characteristic
-
-**Definition 5.1 (Abstract simplicial complex).** An *abstract simplicial
-complex* on a vertex type $V$ is a family $\mathcal{K}$ of finite subsets of $V$
-(the *faces*) that is downward closed: if $s \in \mathcal{K}$ and $t \subseteq s$
-then $t \in \mathcal{K}$.
-
-**Theorem 5.2 ($K(AF)$ is a simplicial complex).** For any framework $(A,R)$, the
-family
-$$K(AF) = \{\, s \subseteq A \text{ finite} : s \text{ is conflict-free} \,\}$$
-is an abstract simplicial complex on the vertex set $A$.
-
-*Proof.* By Corollary 3.9, any subset of a conflict-free set is conflict-free, so
-the family is downward closed. The empty set is conflict-free (Lemma 3.7), so
-$K(AF)$ is nonempty. $\qquad\blacksquare$
-
-**Remark 5.3 (Why not the preferred extensions).** It is tempting to take the
-*preferred extensions* as the faces of the complex. This fails: preferred
-extensions are *maximal* admissible sets, and a subset of a maximal set is
-generally not maximal, so that family is not downward closed and is not a
-simplicial complex. The correct carrier of the topology is the conflict-free
-family. Preferred extensions reappear inside $K(AF)$ as distinguished faces
-(Section 7), not as the complex itself.
-
-**Proposition 5.4 (Vertices of $K(AF)$).** For $a \in A$, the singleton $\{a\}$
-is a face of $K(AF)$ if and only if $\neg R(a,a)$. Thus the vertices of $K(AF)$
-are exactly the non-self-attacking arguments; self-attacking arguments are
-"phantom" points absent from the topology.
-
-*Proof.* $\{a\}$ is conflict-free iff $a$ does not attack $a$. $\qquad\blacksquare$
-
-We now measure holes numerically.
-
-**Definition 5.5 (Euler characteristic).** For a finite family $\mathcal{F}$ of
-faces, the (unreduced) *Euler characteristic* is
-$$\chi(\mathcal{F}) = \sum_{\emptyset \neq s \in \mathcal{F}} (-1)^{\dim s}
-   = \sum_{\emptyset \neq s \in \mathcal{F}} (-1)^{|s| - 1}.$$
-Equivalently $\chi = \#(\text{vertices}) - \#(\text{edges}) +
-\#(\text{triangles}) - \cdots$, and by the Euler–Poincaré principle
-$\chi = \sum_n (-1)^n \dim H_n$.
-
-**Theorem 5.6 (The full simplex is contractible).** Let $X$ be a finite vertex
-set and let $\mathcal{P}(X)$ be the complex of *all* subsets of $X$. Then
-$$\chi(\mathcal{P}(X)) = \begin{cases} 1 & X \neq \emptyset, \\ 0 & X = \emptyset. \end{cases}$$
-
-*Proof.* Write each summand as
-$$\Big(\text{if } s = \emptyset \text{ then } 0 \text{ else } (-1)^{|s|-1}\Big)
-   = -(-1)^{|s|} + [\,s = \emptyset\,],$$
-where $[\cdot]$ is the Iverson bracket; for $s \neq \emptyset$ this is the
-identity $(-1)^{|s|-1} = -(-1)^{|s|}$, and for $s = \emptyset$ both sides equal
-$0$ after adding the bracket term $1$ and subtracting $(-1)^0 = 1$. Summing over
-all $s \subseteq X$,
-$$\chi(\mathcal{P}(X)) = -\!\!\sum_{s \subseteq X}\!(-1)^{|s|}
-   + \sum_{s \subseteq X}[\,s=\emptyset\,].$$
-The second sum is $1$. For the first, the binomial identity
-$\sum_{s \subseteq X} (-1)^{|s|} = \sum_{k=0}^{|X|} \binom{|X|}{k}(-1)^k =
-(1-1)^{|X|}$ equals $0$ when $X \neq \emptyset$ and $1$ when $X = \emptyset$.
-Hence $\chi = -0 + 1 = 1$ for $X \neq \emptyset$ and $\chi = -1 + 1 = 0$ for
-$X = \emptyset$. $\qquad\blacksquare$
-
-Theorem 5.6 is the topological sanity check: a debate with *no* incompatibilities
-(the compatibility complex is a full simplex) is contractible — a solid blob with
-no holes and $\chi = 1$.
-
----
-
-## 6. The Euler-equals-semantics conjecture, refuted
-
-The two portraits of a finite framework — the topological invariant
-$\chi(K(AF))$ and the semantic counts $\#(\text{preferred extensions})$ and
-$|G|$ — invite a unifying identity. The most natural candidate is:
-
-> **Conjecture 6.1.** For every finite framework,
-> $$\chi(K(AF)) = \#(\text{preferred extensions}) - |G|.$$
-
-**Theorem 6.2 (Refutation).** Conjecture 6.1 is false. It fails already for the
-attack-free framework $R_0$ on a single argument.
-
-*Proof.* Let $A = \{a\}$ and $R_0 = \emptyset$ (no attacks, in particular no
-self-attack).
-
-- *Topology.* Every subset of $\{a\}$ is conflict-free, so $K(R_0)$ is the full
-  simplex on one vertex — a single point. By Theorem 5.6 with $|X| = 1$,
-  $\chi(K(R_0)) = 1$.
-- *Preferred extensions.* Since $R_0$ has no attacks, every set is admissible, so
-  the unique maximal admissible set is the whole vertex set $\{a\}$. There is
-  exactly **one** preferred extension.
-- *Grounded extension.* With no attacks, $F(S) = A$ for every $S$; in particular
-  $F(\{a\}) = \{a\}$ and the least fixed point is $G = \{a\}$, so $|G| = 1$.
-
-The conjecture demands $\chi = 1 - 1 = 0$, but $\chi = 1$. Since $1 \neq 0$, the
-identity fails. $\qquad\blacksquare$
-
-The refutation is the smallest possible: a single uncontested argument. Its
-lesson is diagnostic. The right-hand side mixes an *unreduced* topological
-quantity ($\chi = 1$ for a point) with quantities natural to *reduced* homology
-and to face-counting; the off-by-one is precisely the discrepancy between reduced
-and unreduced Euler characteristics ($\tilde\chi = \chi - 1 = 0$ for a point).
-Any correct bridge must fix this bookkeeping and must compare *like with like* —
-faces with faces — rather than a global $\chi$ with a raw difference of counts.
-
----
-
-## 7. A corrected correspondence: symmetric frameworks
-
-The refutation does not abolish the topology–semantics link; it disciplines it.
-The cleanest positive theory appears for *symmetric* frameworks.
-
-**Definition 7.1.** A framework is *symmetric* if $R(a,b) \Leftrightarrow R(b,a)$
-and *irreflexive* if $\neg R(a,a)$ for all $a$.
-
-For a symmetric irreflexive framework, "conflict-free" is exactly "independent in
-the underlying (undirected) conflict graph," and defense is automatic: an
-independent set defends each of its members because each attacker is a neighbor,
-which the member itself attacks back. Consequently:
-
-- **Admissible $=$ conflict-free.** Every conflict-free set is admissible.
-- **Preferred $=$ maximal independent set.** The preferred extensions are exactly
-  the *facets* (maximal faces) of $K(AF)$ — the maximal independent sets of the
-  conflict graph.
-- **The complex is the independence complex** of the conflict graph, a
-  thoroughly studied object in topological combinatorics.
-
-In this regime the topology genuinely computes the semantics, provided one
-compares matching quantities. For the *complete conflict graph* on $n$ vertices
-(mutual attacks everywhere), $K(AF)$ is $n$ isolated points: $\chi = n$, and there
-are exactly $n$ singleton preferred extensions, so $\chi = \#(\text{preferred})$.
-More generally, for symmetric irreflexive frameworks we conjecture and expect to
-prove that $\chi(K(AF))$ equals the count of preferred extensions weighted
-through the facet structure of the independence complex, and that the connected
-components of the conflict graph induce a decomposition of the semantics: solving
-each independent sub-debate and recombining reproduces the extensions of the
-whole.
-
----
-
-## 8. A homological program
-
-Euler characteristic is the shadow of finer invariants. We outline the natural
-next layer.
-
-**Chains and homology.** Orient the faces of $K(AF)$ and form the simplicial
-chain complex $\cdots \to C_2 \to C_1 \to C_0 \to 0$ over a field, with the usual
-alternating-face boundary maps. Its homology groups $H_n(K(AF))$ refine $\chi$ via
-$\chi = \sum_n (-1)^n \dim H_n$.
-
-**Interpretations.**
-- $H_0(K(AF))$ has dimension equal to the number of connected components of the
-  compatibility (equivalently, in the symmetric case, conflict) graph. These are
-  the *independent debate threads*, and one expects the semantics to distribute
-  over them.
-- $H_1(K(AF))$ detects *circular disagreements*: its generators correspond to
-  induced cycles of pairwise-compatible arguments that bound no filled region —
-  the formal content of an argument that "goes in circles."
-- $H_2(K(AF))$ detects *argument spheres*: hollow shells of compatible arguments
-  wrapping an empty core, the higher-order analogue of circularity.
-
-**Targets.** (i) Prove the $H_0$–components correspondence and the distribution
-of semantics over components. (ii) Characterize $H_1$ generators as induced
-conflict-graph cycles. (iii) Establish, for symmetric frameworks, an exact
-topology–semantics dictionary at the level of homology, superseding the naive
-Euler identity refuted in Section 6.
-
----
+## 3. Simplicial topology generated by preferred semantics
+
+### 3.1. Simplicial complexes
+
+**Definition 3.1 (Abstract simplicial complex).** An abstract simplicial complex on a finite vertex set $A$ is a family $K\subseteq 2^A$ such that, whenever $S\in K$ and $T\subseteq S$, one has $T\in K$. Members of $K$ are faces. Inclusion-maximal faces are facets. A face with $k+1$ vertices has dimension $k$.
+
+Under the usual nonvoid convention, any nonempty complex contains $\varnothing$. A $0$-face is a vertex, a $1$-face is an edge, a $2$-face is a filled triangle, and so on.
+
+The preferred antichain is naturally a set of candidate facets, not a complete family of faces. This observation motivates the following construction.
+
+**Definition 3.2 (Preferred-generated complex).** For a finite framework $F=(A,R)$, define
+
+$$
+K_F=\{S\subseteq A:\text{ there exists a preferred extension }P\text{ with }S\subseteq P\}.
+$$
+
+Thus $K_F$ is the downward closure of the family of preferred extensions.
+
+**Theorem 3.3 (Generated-Complex Theorem).** The family $K_F$ is an abstract simplicial complex. Every preferred extension is a face of $K_F$, and the facets of $K_F$ are exactly the preferred extensions.
+
+**Proof sketch.** Suppose $S\in K_F$. Then $S\subseteq P$ for some preferred extension $P$. If $T\subseteq S$, transitivity gives $T\subseteq P$, hence $T\in K_F$. Therefore $K_F$ is downward closed. Each preferred extension $P$ is a face because $P\subseteq P$. If $S$ is a facet, choose a preferred extension $P$ with $S\subseteq P$. Since $P$ is also a face, maximality of $S$ forces $S=P$. Conversely, a preferred extension cannot be properly contained in a face: such a face lies inside another preferred extension, contradicting the antichain theorem. $\square$
+
+The construction is canonical in a precise minimal sense.
+
+**Proposition 3.4 (Minimality).** The complex $K_F$ is the smallest abstract simplicial complex containing every preferred extension.
+
+**Proof sketch.** Any simplicial complex containing a preferred extension $P$ must contain every subset of $P$. Hence any such complex contains all faces in $K_F$. Theorem 3.3 shows that $K_F$ itself is a complex containing the preferred extensions. $\square$
+
+### 3.2. Homology and Euler characteristic
+
+Fix a field $\Bbbk$, commonly $\mathbb F_2$. For each $n\ge 0$, let $C_n(K_F;\Bbbk)$ be the vector space generated by the $n$-dimensional faces. Boundary maps $\partial_n:C_n\to C_{n-1}$ satisfy $\partial_{n-1}\partial_n=0$. The homology groups are
+
+$$
+H_n(K_F;\Bbbk)=\ker(\partial_n)/\operatorname{im}(\partial_{n+1}).
+$$
+
+Their dimensions $\beta_n$ are the Betti numbers. The number $\beta_0$ counts connected components. The number $\beta_1$ counts independent one-dimensional cycles not filled by $2$-faces. The number $\beta_2$ counts independent two-dimensional cavities not filled by $3$-faces.
+
+For a finite complex, the Euler characteristic is
+
+$$
+\chi(K_F)=\sum_{n\ge 0}(-1)^n f_n
+=
+\sum_{n\ge 0}(-1)^n\beta_n,
+$$
+
+where $f_n$ is the number of $n$-faces. The first formula emphasizes combinatorics; the second emphasizes topology.
+
+An important interpretive caution follows directly from Definition 3.2. A simplicial edge $\{a,b\}$ means that $a$ and $b$ coexist in some preferred extension. It does not mean that $a$ attacks $b$, that $b$ attacks $a$, or that either attack exists. Thus $|R|$ is not generally $f_1$. Similarly, a directed attack cycle is not automatically a simplicial cycle.
+
+## 4. The minimal mutual-attack obstruction
+
+Let $A=\{0,1\}$ and define attacks by $0R1$ and $1R0$, with no self-attacks. Equivalently, each distinct pair is an attack.
+
+**Lemma 4.1 (Singleton admissibility).** Each singleton $\{a\}$, for $a\in A$, is admissible.
+
+**Proof sketch.** A singleton is conflict-free because there is no self-attack. Its only possible attacker is the other argument, and $a$ attacks that attacker in return. Thus the singleton defends its member. $\square$
+
+**Theorem 4.2 (Preferred extensions under mutual attack).** In the two-argument mutual-attack framework, a subset is preferred if and only if it has cardinality $1$.
+
+**Proof sketch.** By Lemma 4.1, both singletons are admissible. Neither can be enlarged to $A$, because $A$ contains internal attacks, so each singleton is maximal admissible. Conversely, a preferred extension cannot be empty by Lemma 2.8. It cannot contain both arguments because conflict freedom would fail. Therefore it has exactly one element. $\square$
+
+**Corollary 4.3 (Failure of downward closure).** The family of preferred extensions need not be a simplicial complex.
+
+**Proof sketch.** In the mutual-attack framework, $\{0\}$ is preferred and $\varnothing\subseteq\{0\}$, but $\varnothing$ is not preferred. Hence the preferred family is not downward closed. $\square$
+
+The generated complex in this example is
+
+$$
+K_F=\{\varnothing,\{0\},\{1\}\}.
+$$
+
+It consists of two isolated vertices. Therefore $\beta_0=2$ and $\beta_n=0$ for $n\ge 1$, while $\chi(K_F)=2$. The attack graph contains a directed $2$-cycle, but the generated complex has no $1$-dimensional face and no first-homology class. This is the smallest demonstration that attack cycles and topological holes are different notions.
+
+## 5. The attack-free boundary case
+
+Let $F=(A,\varnothing)$ be a finite framework with no attacks.
+
+**Lemma 5.1 (Universal admissibility without attacks).** Every subset $S\subseteq A$ is admissible.
+
+**Proof sketch.** No subset contains an internal attack, so every subset is conflict-free. No argument has an attacker, so every subset vacuously defends each of its members. $\square$
+
+**Theorem 5.2 (Unique preferred extension without attacks).** In a finite attack-free framework, the unique preferred extension is $A$.
+
+**Proof sketch.** By Lemma 5.1, $A$ is admissible. Every proper subset is contained in the larger admissible set $A$ and is therefore not maximal. Hence $A$ is the unique preferred extension. $\square$
+
+**Theorem 5.3 (Grounded extension without attacks).** In a finite attack-free framework, the unique complete extension and hence the grounded extension is $A$.
+
+**Proof sketch.** Every set defends every argument vacuously. A complete extension must contain exactly the arguments it defends, so it must contain all of $A$. Thus $A$ is the only complete extension and is automatically the least one. $\square$
+
+**Corollary 5.4 (Simplex structure).** For an attack-free framework, $K_F=2^A$. Geometrically, $K_F$ is the full simplex on $A$. If $A$ is nonempty, then $\beta_0=1$, $\beta_n=0$ for $n\ge 1$, and $\chi(K_F)=1$.
+
+**Proof sketch.** The unique preferred extension is $A$, and every subset of $A$ lies in its downward closure. A full simplex is contractible, so it has one connected component and no positive-dimensional homology. Its Euler characteristic is $1$. $\square$
+
+## 6. Failure of the proposed Euler–semantics identity
+
+Consider the proposed universal equation
+
+$$
+|A|-|R|+\sum_{n\ge 2}(-1)^n\beta_n(K_F)
+=
+p(F)-|G|,
+\tag{1}
+$$
+
+where $p(F)$ denotes the number of preferred extensions and $G$ is the grounded extension.
+
+**Theorem 6.1 (Two-isolated-argument obstruction).** Equation $(1)$ is false, even for an attack-free framework on two arguments.
+
+**Proof sketch.** Let $|A|=2$ and $R=\varnothing$. Theorem 5.2 gives $p(F)=1$. Theorem 5.3 gives $|G|=2$. Corollary 5.4 gives $\beta_n=0$ for all $n\ge 1$. Thus the left side of $(1)$ is
+
+$$
+2-0+0=2,
+$$
+
+whereas the right side is
+
+$$
+1-2=-1.
+$$
+
+Since $2\ne -1$, the identity fails. $\square$
+
+The example also diagnoses a conceptual error in the left side of $(1)$. The generated complex is a filled edge, with $f_0=2$ and $f_1=1$, so its actual Euler characteristic is
+
+$$
+\chi(K_F)=f_0-f_1=2-1=1.
+$$
+
+The attack count is $|R|=0$, not $f_1=1$. Replacing the number of simplicial edges by the number of attacks changes the invariant. Even after correcting the left side to the genuine Euler characteristic, the proposed semantic right side remains $-1$, so the corrected equality $\chi(K_F)=p(F)-|G|$ also fails in this example.
+
+More generally, Euler characteristic depends on the complete face structure, which is determined by how preferred extensions intersect. The scalar quantities $|A|$, $|R|$, $p(F)$, and $|G|$ do not record those intersections. Any viable numerical relation must therefore incorporate richer overlap data or impose substantial restrictions on the framework.
+
+## 7. Algorithms
+
+### 7.1. Exhaustive preferred-extension enumeration
+
+For $n=|A|$, represent each subset by an $n$-bit mask. To test a candidate $S$:
+
+1. Check conflict freedom by examining ordered pairs in $S\times S$.
+2. For each $a\in S$ and every attacker $b$ of $a$, check whether some $c\in S$ attacks $b$.
+3. Retain $S$ if both tests pass.
+4. Remove every retained set properly contained in another retained set.
+
+There are $2^n$ candidates. A direct implementation uses $O(n^3)$ work per candidate in the worst case, giving $O(2^n n^3)$ time and $O(2^n n)$ output-sensitive storage. Bitset operations and precomputed attacker masks improve constants substantially.
+
+### 7.2. Construction of the generated complex
+
+Given preferred extensions $P_1,\ldots,P_m$, enumerate every subset of each $P_i$ and insert it into a deduplicating set. The time is
+
+$$
+O\!\left(\sum_{i=1}^m 2^{|P_i|}\right)
+$$
+
+up to hashing costs, and storage is $O(|K_F|)$. The facets need not be recomputed: by Theorem 3.3 they are the preferred extensions.
+
+### 7.3. Homology over $\mathbb F_2$
+
+Sort faces by dimension. For each $k$, form the boundary matrix $B_k$ whose columns correspond to $k$-faces and rows to $(k-1)$-faces. Over $\mathbb F_2$, a matrix entry is $1$ when the row face is obtained by deleting one vertex from the column face. Signs disappear in characteristic two.
+
+Gaussian elimination gives ranks $r_k=\operatorname{rank}(B_k)$. The Betti numbers are
+
+$$
+\beta_k=f_k-r_k-r_{k+1}.
+$$
+
+Dense elimination is cubic in the relevant matrix dimensions. Sparse column reduction is preferable because simplicial boundary matrices contain only $k+1$ nonzero entries per $k$-face.
+
+### 7.4. Grounded extension by complete-set enumeration
+
+For small frameworks, enumerate all conflict-free subsets and retain those containing exactly the arguments they defend. The inclusion-least retained set is grounded. This also has exponential worst-case complexity. More specialized fixed-point algorithms can compute grounded semantics more efficiently, but exhaustive enumeration is transparent and useful for numerical checks.
+
+## 8. Applications and interpretation
+
+The preferred-generated complex is a higher-order compatibility object. Its vertices are arguments that occur in at least one preferred extension. Its edges are pairs jointly occurring in some preferred extension. Its triangles are triples jointly occurring in some preferred extension, and similarly in higher dimensions.
+
+Connected components can represent clusters of semantic positions sharing chains of compatible arguments. A first-homology class represents a cyclic pattern of coexistence not filled by larger joint coexistence. A second-homology class represents a shell assembled from compatible triples without a compatible quadruple filling the interior. These statements concern preferred compatibility, not rhetorical quality or causal influence.
+
+For transcript analysis, one must first extract arguments and directed attacks—a modeling step not addressed by the abstract theory. Once a finite framework is obtained, the pipeline is deterministic: enumerate preferred extensions, construct their downward closure, compute face numbers and homology, and compare frameworks using their facet intersections. The output can supplement, but should not replace, semantic inspection. A loop may arise from several overlapping defensible camps; it does not by itself certify circular reasoning in ordinary language.
+
+The construction also supports comparative analysis. Adding an attack can remove admissible sets, alter preferred facets, disconnect the complex, or eliminate a high-dimensional face. Adding an argument can cone off a complex if the new argument belongs to every preferred extension, thereby destroying positive-dimensional homology. Such transformations suggest sensitivity analyses for evolving debates.
 
 ## 9. Discussion
 
-We have shown that Dung's acceptability semantics and the topology of the
-conflict-free complex are two coherent descriptions of the same object, linked but
-not by the naive Euler identity. Three points deserve emphasis.
+Three conclusions emerge.
 
-First, the *operator-centric* development — monotonicity, preservation of
-conflict-freeness, admissibility as $S \subseteq F(S)$, and the Fundamental Lemma
-— yields the entire extension theory (existence, preferred $\Rightarrow$
-complete, grounded below preferred) with uniform, short proofs, and it exposes the
-lattice-theoretic core (Knaster–Tarski for the grounded extension, Zorn for the
-preferred).
+First, maximal semantics and simplicial closure must be separated. Preferred extensions are facets by nature. Treating them as all faces discards the defining downward-closure property of simplicial topology. The canonical closure repairs this while preserving the facets exactly.
 
-Second, the *correct* carrier of the topology is the conflict-free family, not the
-preferred extensions; the downward-closure lemma is what elevates a purely
-logical notion to a geometric one. Self-attacking arguments are excluded as
-phantom vertices, a pleasing match between logic (self-defeat) and geometry
-(non-vertices).
+Second, the topology belongs to semantic coexistence. The attack graph is input to admissibility, but it is not the $1$-skeleton of the generated complex. Defence can suppress or enable combinations in ways invisible from directed cycles alone. Any theorem connecting attack cycles to homology requires hypotheses that account for defence and higher-dimensional fillings.
 
-Third, the refuted conjecture is instructive rather than fatal. Its failure on a
-single point pinpoints a reduced-versus-unreduced bookkeeping error and steers us
-toward the symmetric regime, where the independence complex furnishes a genuine,
-provable dictionary between shape and semantics.
+Third, coarse counts are insufficient for universal Euler formulas. The two-isolated-argument example refutes the proposed equation at the smallest nontrivial scale. The proper combinatorial object for Euler characteristic is the face structure, and a compact description of that structure is provided by the intersection pattern of preferred facets.
 
----
+One useful inclusion–exclusion perspective is to write $K_F$ as a union of simplices $\Delta(P_i)$, one for each preferred extension. Every nonempty intersection is either empty or the simplex on $P_{i_1}\cap\cdots\cap P_{i_k}$. Thus the intersection poset records information capable of determining Euler characteristic through inclusion–exclusion. Merely knowing the number of facets does not.
 
-## 10. Future directions
+## 10. Future work
 
-- **A correct Euler/semantics bridge.** For symmetric, irreflexive frameworks,
-  prove that $\chi(K(AF))$ equals the number of preferred extensions and that the
-  preferred extensions are exactly the facets (maximal faces) of $K(AF)$; relate
-  $H_0(K(AF))$ to the decomposition of a framework into independent sub-debates and
-  prove that the semantics distributes over connected components.
-- **Homology, not just Euler characteristic.** Define the simplicial chain
-  complex and (reduced) homology of $K(AF)$; prove that $H_0$ counts connected
-  components of the conflict graph and identify $H_1$ generators with induced
-  cycles ("circular disagreements"), making the informal notion precise, and
-  interpret $H_2$ as argument spheres.
-- **Quantitative debate analysis.** Compute the homological invariants of
-  frameworks extracted from real debate transcripts and study which topological
-  features (components, cycles, voids) predict semantic properties such as the
-  number of preferred extensions or the size of the grounded extension.
+Several directions follow naturally. Strong equivalence under preferred semantics may induce simple-homotopy equivalence after arguments absent from all preferred extensions are removed. For directed cactus attack graphs, one can seek an exact defence-sensitive criterion identifying which directed cycles survive in first homology. If every preferred extension contains the grounded extension and every outside argument has a unique defender in it, semantic domination may induce elementary collapses onto the grounded simplex.
 
----
+A corrected counting theory should use the intersection poset of preferred extensions rather than only four scalar counts. Another foundational question is realizability: which finite simplicial complexes, up to homotopy or isomorphism, occur as preferred-generated complexes of finite argumentation frameworks? Finally, computational studies on carefully annotated debate corpora could compare attack-graph cycles with semantic homology, testing where the two correlate and where defence separates them.
 
-## Appendix: summary of results
+## 11. Conclusion
 
-- **Proposition 3.5.** Admissible $\Leftrightarrow$ conflict-free and
-  $S \subseteq F(S)$.
-- **Lemma 3.6.** $F$ is monotone.
-- **Theorem 3.8.** $F$ preserves conflict-freeness.
-- **Corollary 3.9.** Conflict-free sets are downward closed.
-- **Theorem 4.1.** Fundamental Lemma: admissible $+$ defends $a$ $\Rightarrow$
-  $S \cup \{a\}$ admissible.
-- **Theorem 4.4.** Preferred extensions exist (Zorn).
-- **Theorem 4.5.** Preferred $\Rightarrow$ complete.
-- **Theorem 4.6.** Grounded $\subseteq$ every preferred extension.
-- **Theorem 5.2.** $K(AF)$ is a simplicial complex.
-- **Proposition 5.4.** Vertices of $K(AF)$ $=$ non-self-attacking arguments.
-- **Theorem 5.6.** Full simplex: $\chi = 1$ (nonempty), $0$ (empty).
-- **Theorem 6.2.** The identity $\chi = \#\text{preferred} - |G|$ is false
-  (single-argument witness).
+Preferred extensions do not generally form a simplicial complex. They form an antichain of maximal admissible positions. Their downward closure is the canonical simplicial complex generated by preferred semantics, with preferred extensions exactly as facets. The mutual-attack framework on two arguments demonstrates the failure of raw downward closure, while the attack-free framework on two arguments disproves the proposed Euler–semantics formula by forcing $2\ne -1$.
+
+Topology remains a meaningful language for argumentation, but its objects must be identified correctly. The holes of a debate are holes in the overlap geometry of maximal defensible positions, not automatically cycles in the directed attack graph. This distinction turns a suggestive metaphor into a precise mathematical program.

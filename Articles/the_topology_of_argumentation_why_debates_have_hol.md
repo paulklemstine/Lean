@@ -1,247 +1,109 @@
-# The Topology of Argumentation: Why Debates Have Holes
+# The Topology of Argumentation: Why Debates May Have Holes—and Why the Obvious Theory Fails
 
-## An argument is a shape
+Arguments do not merely line up. They collide, form alliances, defend one another, and sometimes organize themselves into structures that look less like a chain of reasoning than a landscape. A claim may survive because another claim answers every objection to it. Two claims may be individually defensible but impossible to accept together. Several coherent positions may overlap along a shared core while diverging at their edges.
 
-Picture a heated debate. Someone makes a claim; someone else attacks it; a third
-person attacks the attacker, rescuing the original point; a fourth revives the
-objection. Around and around it goes. We speak, almost without thinking, of
-debates that "go in circles," of positions that "hang together," of a discussion
-that "splits into two camps." This everyday language is spatial. It suggests
-that an argument is not just a list of statements but a *structure* — something
-with a shape.
+That geometric language is tempting. Could a debate literally have a shape? Could circular reasoning become a loop, rival camps become disconnected components, and higher-dimensional patterns become cavities?
 
-This article takes that intuition literally. It turns out that the disagreements
-inside a debate carve out a genuine geometric object, and that object can be
-studied with the same tools mathematicians use to tell a doughnut from a sphere:
-the theory of *holes*. A circular argument, it turns out, is a hole in a precise,
-measurable sense. And the number and kind of holes in a debate is a *topological
-invariant* — a feature that survives no matter how you rephrase, reorder, or
-redraw the discussion.
+The answer is yes—but only after one makes a crucial correction. The most natural semantic objects in abstract argumentation, called *preferred extensions*, do not themselves form a simplicial complex. They are maximal positions, and maximal positions are not generally closed under deleting claims. The right topological object is instead the collection of all subsets of preferred extensions. This downward closure is a genuine simplicial complex. It gives argumentation a topology without confusing maximal semantic positions with all their partial fragments.
 
-Along the way we will meet a tempting, elegant conjecture connecting the *shape*
-of a debate to its *logic* — and we will see it fall to a single, one-line
-counterexample. That failure is not a disappointment. It is the point where the
-mathematics gets honest, and where the real structure comes into focus.
+That correction also exposes a second lesson: topology is sensitive to how coherent positions overlap. It cannot generally be recovered from a few coarse counts such as the number of arguments, attacks, preferred positions, or grounded claims.
 
-## The rules of the game: attack and survival
+## A debate as a directed network
 
-The starting point is a wonderfully austere model of reasoning introduced by the
-computer scientist Phan Minh Dung in 1995. Strip away *what* the arguments say,
-strip away *why* one refutes another, and keep only the bare combinatorial
-skeleton: a set $A$ of arguments and a relation $R$ recording who attacks whom.
-We write $R(a,b)$ to mean "argument $a$ attacks argument $b$." That's it. This
-pair $(A, R)$ is called an **argumentation framework**. It is nothing more than a
-directed graph whose nodes are arguments and whose arrows are attacks.
+An *argumentation framework* is a pair $(A,R)$, where $A$ is a finite set of arguments and $R\subseteq A\times A$ is an attack relation. If $(a,b)\in R$, argument $a$ attacks argument $b$. Direction matters: an objection to a claim need not be answered by an objection in the reverse direction.
 
-The magic is that from these two ingredients alone one can define what it means
-for a *collection* of arguments to be a coherent, defensible position. Three
-ideas do all the work.
+A set $S\subseteq A$ is *conflict-free* if no argument in $S$ attacks another argument in $S$. It is not enough, however, for a position to avoid internal conflict. It must also withstand external criticism.
 
-First, a set of arguments $S$ is **conflict-free** if it contains no internal
-fight: there are no two members $a, b \in S$ with $a$ attacking $b$. A coherent
-position cannot attack itself.
+The set $S$ *defends* an argument $a$ if every attacker $b$ of $a$ is itself attacked by some argument $c\in S$. In symbols, for every $b$ with $(b,a)\in R$, there is a $c\in S$ with $(c,b)\in R$. A set is *admissible* if it is conflict-free and defends each of its own members.
 
-Second, we say $S$ **defends** an argument $a$ if $S$ has an answer to every
-objection: for every attacker $b$ of $a$, some member $c \in S$ attacks $b$
-back. Your position defends a claim if, whenever someone objects, you have a
-counter-objection ready.
+A *preferred extension* is an admissible set maximal under inclusion. It represents a coherent, self-defending position that cannot be enlarged without losing coherence or self-defence. A *complete extension* is a conflict-free set containing exactly the arguments it defends. A *grounded extension* is a least complete extension under inclusion. Preferred semantics searches for maximal defensible positions; grounded semantics searches for the cautious core accepted by every complete position.
 
-Third — and this is the keystone — a set $S$ is **admissible** if it is both
-conflict-free *and* defends every one of its own members. An admissible set is a
-position that is internally consistent and can withstand every attack launched
-against any of its parts. It is a debating stance you can actually hold.
+These definitions turn debate into combinatorics. But topology requires one more ingredient.
 
-These definitions have real teeth. Consider the tidy machine that manufactures
-admissible positions: the **defense operator** $F$. Given a set $S$, define
-$F(S)$ to be the set of *all* arguments that $S$ defends. Two facts about $F$
-turn out to drive the entire theory.
+## Why maximal positions are not a simplicial complex
 
-**$F$ is monotone.** If you adopt more arguments, you can defend at least as many
-as before: whenever $S \subseteq T$, we have $F(S) \subseteq F(T)$. More allies,
-more protection.
+A simplicial complex on $A$ is a family $K$ of finite subsets of $A$, called faces, with one defining property: whenever $S$ is a face and $T\subseteq S$, then $T$ is also a face. A filled triangle, for example, cannot exist without its edges and vertices. This downward-closure rule is the combinatorial expression of the idea that every geometric piece contains all its boundaries.
 
-**$F$ preserves conflict-freeness.** If $S$ is a coherent, in-fighting-free
-position, then the set $F(S)$ of everything $S$ defends is *also* conflict-free.
-This is not obvious, and its short proof is a small gem. Suppose two arguments
-$a$ and $b$ are both defended by $S$, and suppose $a$ attacks $b$. Because $b$ is
-defended and $a$ attacks it, some $c \in S$ attacks $a$. But $a$ is also
-defended, so, because $c$ attacks $a$, some $d \in S$ attacks $c$. Now $c$ and
-$d$ both live in the conflict-free set $S$, yet $d$ attacks $c$ — a
-contradiction. So no defended argument can attack another. Coherence propagates.
+Preferred extensions obey almost the opposite organizational principle.
 
-## Dung's Fundamental Lemma: coherence grows
+**Preferred Antichain Theorem.** If $S$ and $T$ are preferred extensions and $S\subseteq T$, then $S=T$.
 
-The single most important structural fact in the whole subject is deceptively
-modest.
+The reason is immediate but fundamental. Since $S$ is inclusion-maximal among admissible sets and $T$ is admissible, $S\subseteq T$ forces $T\subseteq S$. Thus distinct preferred extensions are incomparable. They form an antichain: a family of maximal positions rather than a hierarchy of faces.
 
-> **Fundamental Lemma.** If $S$ is an admissible position and $S$ defends an
-> argument $a$, then adding $a$ to $S$ yields an admissible position again.
+A two-argument debate makes the failure of downward closure unmistakable. Let $A=\{0,1\}$, and let each argument attack the other. Both singleton positions $\{0\}$ and $\{1\}$ are admissible: each contains no internal attack, and its sole member counterattacks its only attacker. Each singleton is maximal admissible, so the preferred extensions are exactly the one-element sets.
 
-In other words, you can always safely absorb into your stance any claim your
-stance already protects — and the enlarged stance remains coherent and
-self-defending. Coherence is not fragile; it grows. The proof is a careful little
-dance showing that no new conflicts can appear: nothing in $S$ attacks the
-newcomer $a$ (otherwise $a$ wouldn't be defended without $S$ attacking itself),
-$a$ attacks nothing in $S$, and $a$ does not attack itself.
+But the empty set is a subset of $\{0\}$ and is not preferred. It is admissible, yet it is not maximal because it can be enlarged to $\{0\}$. Therefore the preferred family is not downward closed. More generally, whenever a nonempty admissible set exists, the empty set cannot be preferred. Since every simplicial complex contains the empty face, the raw preferred family usually fails at the first test.
 
-This lemma is the engine behind two central notions.
+This is not a technical nuisance. It distinguishes two kinds of information. Preferred semantics records fully developed defensible positions. A simplicial complex records those positions together with every partial position lying inside them.
 
-A **preferred extension** is a *maximal* admissible position — a stance so
-complete that no further argument can be consistently added. These are the bold,
-credulous conclusions of a debate: the largest defensible worldviews. Using the
-Fundamental Lemma together with a standard maximality principle (every chain of
-admissible sets has an admissible union, so a maximal one exists), one proves
-that **every argumentation framework has at least one preferred extension**. No
-debate is so tangled that it admits no coherent maximal stance.
+## The canonical repair
 
-Moreover, the Fundamental Lemma delivers a clean bonus. Call a position
-**complete** if it is admissible and already contains *every* argument it
-defends — a fixed point of the defense operator. Then:
+The correction is natural. Define the *preferred-generated complex* $K(A,R)$ by declaring $S\subseteq A$ to be a face precisely when there exists a preferred extension $P$ such that $S\subseteq P$:
 
-> **Every preferred extension is complete.**
+$$
+K(A,R)=\{S\subseteq A: \text{there is a preferred extension }P\text{ with }S\subseteq P\}.
+$$
 
-Why? If a maximal admissible $S$ defended some argument $a$ it did not already
-contain, the Fundamental Lemma would let us add $a$ and stay admissible,
-contradicting maximality. So a maximal stance leaves nothing on the table: it
-holds everything it can defend.
+This is the downward closure of the preferred extensions.
 
-At the opposite, cautious pole sits the **grounded extension**: the *smallest*
-fixed point of the defense operator, built up from the arguments nobody attacks,
-then the arguments those defend, and so on. It captures the *skeptical*
-conclusions — the claims forced on every reasonable participant. And here the
-two poles meet in a satisfying inequality: **the grounded extension is contained
-in every preferred extension**. Everything you are *forced* to accept is
-accepted in every bold worldview. Skeptical reasoning is a floor beneath all
-credulous reasoning.
+**Generated-Complex Theorem.** The family $K(A,R)$ is a simplicial complex, and every preferred extension is a face. Moreover, its maximal faces are exactly the preferred extensions.
 
-## From logic to geometry: the conflict-free complex
+Indeed, if $S\subseteq P$ and $T\subseteq S$, then $T\subseteq P$, so $T$ is again a face. Every preferred extension $P$ belongs because $P\subseteq P$. Conversely, any maximal face lies inside some preferred extension and therefore must equal it.
 
-Now for the shape. A **simplicial complex** is the mathematician's model of a
-space built from vertices, edges, triangles, tetrahedra, and their
-higher-dimensional cousins, glued along shared faces. The one rule such a family
-of "faces" must obey is downward closure: *every subset of a face is again a
-face.* If a triangle is in the complex, so are its three edges and its three
-corners.
+The theorem gives a clean division of labor. Semantics supplies the maximal faces. Downward closure supplies the topology. No semantic information about maximal positions is lost, but enough lower-dimensional structure is added to make geometric questions meaningful.
 
-Here is the observation that fuses argumentation with topology. Recall that a set
-is conflict-free if it harbors no internal attack. Now ask: if I remove some
-arguments from a conflict-free set, can I create a conflict? Of course not —
-removing arguments can only remove fights. So:
+In the mutual-attack example, the complex consists of the empty face and two isolated vertices. Its zeroth homology detects two connected components: two incompatible positions with no common nonempty subposition. That is a valid topological observation. Yet it should not be confused with saying that every directed attack cycle becomes a topological loop. The two attacks form a directed cycle of length two in the attack graph, while the preferred-generated complex has no one-dimensional loop at all.
 
-> **The conflict-free subsets of any argumentation framework are downward
-> closed.**
+## What holes actually mean
 
-That single sentence means the conflict-free sets form a genuine simplicial
-complex. We call it $K(AF)$. Its vertices are the arguments (more precisely, the
-non-self-attacking arguments — an argument $a$ is a vertex exactly when it does
-*not* attack itself, so self-refuting arguments are automatically excluded as
-"phantom" points). Its edges are the compatible pairs, its triangles the
-compatible triples, and so on. The geometry of the debate is precisely the
-geometry of *mutual compatibility*.
+Once $K(A,R)$ is built, ordinary simplicial homology applies. The group $H_0(K)$ measures connected components. The group $H_1(K)$ measures one-dimensional holes: cycles of edges not filled by triangles. The group $H_2(K)$ measures two-dimensional cavities enclosed by triangular faces but not filled by tetrahedra.
 
-A crucial correction lurks here. One's first instinct — and the original
-conjecture that launched this investigation — is that the *preferred extensions*
-should be the faces of the complex. But preferred extensions are the *maximal*
-admissible sets, and maximal sets are emphatically *not* downward closed: a
-subset of a maximal position is generally not maximal. So the preferred
-extensions cannot be the faces of a simplicial complex. The correct carrier of
-the topology is the conflict-free family. The preferred extensions reappear
-inside the geometry not as the complex itself but as certain distinguished
-*faces* — a subtlety we return to below.
+These holes belong to the *overlap pattern of admissible maximal positions*, not directly to the attack graph. An edge $\{a,b\}$ appears when some preferred extension contains both $a$ and $b$. A triangle appears when some preferred extension contains three arguments simultaneously. Thus a topological loop describes a cyclic pattern of pairwise semantic compatibility that is not completed by larger joint compatibility. A directed attack cycle may influence this pattern, but defence and maximality decide whether the trace survives.
 
-## Counting holes
+This distinction matters in practical debate analysis. A network diagram of attacks shows criticism. The preferred-generated complex shows which collections can coexist inside at least one maximal defensible stance. The former is a directed graph of opposition; the latter is a higher-order geometry of coexistence.
 
-Once a debate is a geometric space, we can ask topology's favorite question: how
-many holes does it have, and of what dimension? Holes are counted by *homology
-groups* $H_0, H_1, H_2, \dots$, and their sizes carry vivid meaning here:
+## A proposed counting law meets a two-argument test
 
-- $H_0$ counts **connected components** — the independent debate threads. If the
-  arguments split into two camps that never engage, $H_0$ registers two pieces.
-- $H_1$ counts **one-dimensional holes** — loops that cannot be filled in. These
-  are the *circular disagreements*: chains of arguments where each is compatible
-  with its neighbors around a ring, yet no single coherent stance ties the whole
-  ring together. A circular argument is, quite literally, a $1$-hole.
-- $H_2$ counts **two-dimensional holes** — hollow spherical shells of arguments,
-  higher-order voids where compatibility wraps around an empty center.
+A seductive conjecture proposed connecting topology and semantics through the expression
 
-A single number packages all of this: the **Euler characteristic**. For a finite
-complex it is the alternating sum
-$$\chi(K) = \#(\text{vertices}) - \#(\text{edges}) + \#(\text{triangles}) - \cdots,$$
-equivalently $\sum_{\emptyset \neq s} (-1)^{\dim s}$, where a face with $k$
-vertices has dimension $k-1$. The Euler characteristic is a topological
-invariant: reshape the space however you like, and $\chi$ does not budge. It also
-equals the alternating sum of the numbers of holes,
-$\chi = \dim H_0 - \dim H_1 + \dim H_2 - \cdots$, so it is a compact ledger of a
-debate's entire hole-structure.
+$$
+|A|-|R|+\sum_{n\ge 2}(-1)^n\dim H_n
+$$
 
-A basic sanity check anchors the definition. If a set of arguments is *totally*
-compatible — every subset conflict-free, so the complex is the full simplex on
-$n$ vertices — then the space is a solid, filled-in blob with no holes at all. It
-should be *contractible*, shrinkable to a point, with Euler characteristic $1$.
-And indeed one can prove exactly this:
+and claiming that it equals
 
-> **The full simplex on a nonempty vertex set has Euler characteristic $1$**
-> (and the empty complex has Euler characteristic $0$).
+$$
+\#\{\text{preferred extensions}\}-|G|,
+$$
 
-The proof is a clean piece of alternating-sum combinatorics: writing each face's
-contribution $(-1)^{\dim s}$ as $-\left((-1)^{|s|}\right)$ plus a correction for
-the empty set, the powerset sum $\sum_s (-1)^{|s|}$ collapses to zero, leaving
-exactly $1$. A debate with no incompatibilities has no holes. As it should be.
+where $G$ is the grounded extension. The idea is attractive: perhaps a handful of semantic and graph-theoretic counts determines a topological invariant.
 
-## The beautiful conjecture that isn't true
+The smallest attack-free debate refutes it.
 
-Now the drama. Two very different descriptions of a debate are on the table. On
-the *topological* side sits $\chi(K(AF))$, the hole-ledger of the compatibility
-complex. On the *logical* side sit the semantic counts: the number of preferred
-extensions (bold worldviews) and the size of the grounded extension (forced
-conclusions). It is irresistible to conjecture that these two faces of a debate
-are secretly the same number. The cleanest guess:
-$$\chi(K(AF)) \;\overset{?}{=}\; \#(\text{preferred extensions}) - \#(\text{grounded extension}).$$
-Topology on the left, semantics on the right. If true, it would say the *shape*
-of a debate computes its *logic*.
+Take two arguments and no attacks. Every subset is admissible, because there are neither internal conflicts nor attackers to answer. The unique maximal admissible set is the full set $A$, so there is exactly one preferred extension, of size $2$. Every argument is vacuously defended by every set, and the only complete extension is again $A$. Hence the grounded extension also has size $2$.
 
-It is false. And the counterexample is as small as a counterexample can be. Take
-a single argument that attacks nothing — not even itself. Call the framework
-$R_0$ on one argument.
+The proposed left-hand expression is
 
-- Its compatibility complex is a single point. A point is contractible, so
-  $\chi(K(R_0)) = 1$.
-- The lone argument is unassailable, so the only maximal coherent stance is
-  "accept it." There is exactly **one** preferred extension.
-- That same argument is forced on everyone, so the grounded extension has size
-  **one**.
+$$
+2-0+0=2,
+$$
 
-The conjecture demands $\chi = 1 - 1 = 0$. The truth is $\chi = 1$. Since
-$1 \neq 0$, the identity collapses on the simplest debate imaginable — a single
-uncontested point.
+because the generated complex is a filled edge and has no homology in dimensions $2$ or above. The semantic right-hand side is
 
-## Why the failure is the discovery
+$$
+1-2=-1.
+$$
 
-A one-line refutation of a beautiful formula might feel like a dead end. It is
-the opposite. The counterexample tells us *exactly* what a correct bridge between
-shape and logic must respect, and it points to where the true theorem hides.
+Thus the conjecture demands $2=-1$.
 
-The mismatch is a bookkeeping mismatch between the *reduced* and *unreduced* ways
-of counting, and between "number of extensions" and "which faces are extensions."
-When you restrict attention to the natural, well-behaved families of frameworks,
-crisp correspondences reappear. In a debate where every disagreement is mutual —
-a *symmetric* framework, the combinatorial heart of many real arguments — the
-compatibility complex is exactly the complex of mutually-compatible groups, its
-top-dimensional faces are precisely the preferred extensions, and the Euler
-characteristic lines up with the count of those maximal stances. The connected
-components $H_0$ genuinely decompose the debate into independent sub-debates, and
-the semantics respects that decomposition: solve each thread separately, then
-recombine.
+There is an additional warning hidden here. The genuine Euler characteristic of the filled edge is $2-1=1$, counting its two vertices and one edge with alternating signs. The proposed expression $|A|-|R|+\cdots$ is not generally the Euler characteristic of the preferred-generated complex, because attacks are not simplicial edges and higher face counts cannot be replaced by attack counts. In the example, the actual Euler characteristic $1$ also differs from $-1$.
 
-So the moral survives, sharper than before. Arguments really do have topology.
-Circular arguments really are one-dimensional holes; spheres of arguments really
-are two-dimensional holes; independent debate threads really are connected
-components. The naive dictionary between shape and logic needed correcting — the
-faces are the conflict-free sets, not the preferred extensions, and the crude
-Euler identity fails on a point — but the corrected picture is richer and truer.
-The shape of a debate is a real invariant, and the tools of topology are exactly
-the right instruments for reading it.
+## The shape of disagreement
 
-Next time a discussion goes in circles, you are not speaking metaphorically. You
-are reporting the presence of nontrivial first homology. The hole is really
-there.
+The failed formula does not diminish the topological program; it clarifies it. Euler characteristic depends on the intersections among maximal faces. Two debates can have the same numbers of arguments, attacks, preferred extensions, and grounded arguments while their preferred extensions overlap in different ways. Those overlap patterns create or fill holes.
+
+For computation, one can enumerate all subsets of a finite argument set, test conflict freedom and defence, retain the inclusion-maximal admissible sets, and then add every subset of each retained set. Boundary matrices over a field such as $\mathbb F_2$ yield Betti numbers and Euler characteristic. The procedure is exponential in the number of arguments, as the semantics itself may require exploring exponentially many candidate positions, but it is practical for small frameworks and can be improved with graph-based search.
+
+The broad picture is now precise. Preferred extensions do not themselves form a space; they form the facets of a space. Their downward closure is the canonical simplicial complex. Its components and holes summarize higher-order compatibility among maximal defensible positions. Directed cycles of attack are not automatically topological cycles, and coarse counting formulas cannot ignore how preferred positions intersect.
+
+Arguments can indeed have topology. But their holes are not drawn directly by arrows of attack. They are carved by the more subtle geometry of which claims can survive together.
