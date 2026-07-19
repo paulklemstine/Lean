@@ -4727,6 +4727,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## 1. Localization under heterogeneous valley positions\n\n**Conjecture.** Let each respondent's confidence profile be strictly convex on a common ordered grid, with minimum position lying within distance `d` of a central level. If the discrete second differences have a common positive lower bound, then the aggregate profile has a unique minimum within distance `d` of that level.\n\nThe key insight is that curvature may replace the unrealistic requirement that every respondent have exactly the same minimum.\n\n**Why now?** Common-location aggregation and margin stability identify precisely which parts of the argument survive summation; discrete curvature is the next quantitative invariant capable of controlling displaced minima.\n\n## 2. Statistical recovery at the half-margin threshold\n\n**Conjecture.** For bounded independent survey responses whose population mean has minimum margin `\u03b4` over `m` tested rigor levels, empirical averaging identifies the true minimum with probability at least `1-\u03b7` once the sample size is on the order of `\u03b4\u207b\u00b2 log(m/\u03b7)`, and this dependence is optimal up to constants.\n\nThe key insight is that deterministic stability below error `\u03b4/2` converts any uniform concentration inequality directly into a sample-complexity theorem.\n\n**Why now?** The sharp deterministic boundary is known, so the remaining question is an experimentally testable concentration problem with explicit parameters.\n\n## 3. Variation as an empirical valley-strength statistic\n\n**Conjecture.** Among profiles with fixed endpoints and fixed minimum value, strictly single-valley profiles uniquely minimize total variation; every additional reversal incurs a variation penalty equal to twice the total height of the added excursions.\n\nThe key insight is that the exact descent-plus-recovery identity turns visual \u201cwiggles\u201d into an additive combinatorial penalty.\n\n**Why now?** The single-valley variation law provides the baseline needed to define and test an excess-variation statistic on survey data.\n\n## 4. Semantic invariance and confidence recovery\n\n**Conjecture.** In controlled experiments where successive revisions preserve a proof's stated conclusion while reducing independently measured structural complexity, confidence recovery is governed more strongly by removal of unresolved dependencies than by raw length reduction.\n\nThe key insight is that semantic content and structural complexity are distinct coordinates; refinement can hold the first fixed while changing the second.\n\n**Why now?** A precise complexity-decreasing refinement model makes it possible to design paired stimuli that isolate dependency structure from conclusion and topic.\n\n## 5. Multidimensional rigor landscapes\n\n**Conjecture.** When rigor is decomposed into independent coordinates\u2014logical completeness, source transparency, and computational reproducibility\u2014the low-confidence region is generically a ridge rather than a point, and coordinatewise margins determine its robustness under measurement noise.\n\nThe key insight is that a one-dimensional uncanny valley may be a projection of a higher-dimensional order-convex region.\n\n**Why now?** The order-theoretic formulation does not depend on numerical spacing and can be extended from chains to finite product orders, yielding falsifiable predictions about factorial survey designs.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0428",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "735120d5",
+    "status": "available",
+    "timestamp": "2026-07-19T08:57:25.181083+00:00",
+    "title": "**Conjecture.** Let each respondent's confidence profile be strictly convex on a"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle d1663b23 (Q=0.700) proved 0 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'A minimal modularity lifting theorem for Siegel modular forms' and formalize its key results. Abstract: We prove a minimal modularity lifting theorem (in the spirit of Gen",
     "domains": [
       "Applications"
@@ -4795,20 +4810,5 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-18T00:42:35.429117+00:00",
     "title": "Close Proofs: The Sound of Pi: Musical Structure in Transcendental Constants"
-  },
-  {
-    "consumed_by_exp_id": "735120d5",
-    "description": "The 'uncanny valley' in robotics states that as a robot becomes more human-like, acceptance increases until it looks almost human, then drops sharply before recovering. Conjecture: the same phenomenon exists in mathematics. As a proof becomes more rigorous, acceptance increases until it is 'almost rigorous' (a proof that is correct in spirit but has small gaps), then drops sharply (because mathematicians are suspicious of proofs that look correct but might have subtle errors), before recovering for fully rigorous proofs. The 'mathematical uncanny valley' function U(r) where r in [0,1] is the rigor level: U(0) = high (informal intuition is accepted), U(0.8) = low (almost rigorous but with gaps \u2014 very suspicious), U(1.0) = high (fully rigorous proof, formally verified). Conjecture: U(r) has a unique minimum at r = 1 - epsilon where epsilon is the 'gap size' that triggers the most suspicion. For Lean 4 proofs: U(1) = 1 (compiles), U(0.99) = 0.1 (almost compiles but has a 'sorry'), U(0.5) = 0.5 (sketch proof, accepted as intuition). Test: survey 100 mathematicians on their confidence in proofs at varying rigor levels and fit the uncanny valley curve. Impact: almost-right proofs are less trusted than informal intuitions. Formal verification escapes the uncanny valley.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0399",
-    "priority_score": 0.63,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T04:48:19.196698+00:00",
-    "title": "The Uncanny Valley of Mathematics: When Proofs Are Almost Right"
   }
 ];
