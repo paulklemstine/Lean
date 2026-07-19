@@ -132,7 +132,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e5cc823f",
     "description": "Formalize the hypothesis that consciousness is a fixed point of a self-modeling function: a system that models itself modeling itself. Prove that such fixed points exist in sufficiently rich Cartesian closed categories and that they exhibit strange-loop topology. Connect to the Yoneda lemma and self-reference in type theory.",
     "domains": [
       "Novelty",
@@ -142,7 +142,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T08:00:24.893031+00:00",
     "title": "Consciousness as Emergent Fixed Point"
   },
