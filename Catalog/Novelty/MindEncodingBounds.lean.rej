@@ -1,0 +1,18 @@
+--- MindEncodingBounds.lean
++++ MindEncodingBounds.lean
+@@ -173,15 +137,8 @@
+ -- A cortical-column-scale example: 5 neurons admit `C(5,2)=10` synapse slots.
+ example : synapseSlots 5 = 10 := by decide
+ 
+-#eval synapseSlots 5      -- 10
+-#eval synapseSlots 1000   -- 499500  (quadratic blow-up)
+-
+ -- There are `2^10 = 1024` distinct 5-neuron connectomes.
+ example : Fintype.card (Connectome 5) = 1024 := by
+   rw [card_connectome]; decide
+ 
+-#check @card_connectome
+-#check @mdl_bitlength
+-#check @uploading_energy_radius_quadratic
+-
+ 

@@ -217,22 +217,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "[Reset] Fresh approach in Shared"
   },
   {
-    "consumed_by_exp_id": "622eb97b",
-    "description": "Prove information-theoretic bounds on mind uploading: the minimum description length of a human mind exceeds any computable compression of its neural connectome. Formalize the Bekenstein bound applied to neural computation and show that the Kolmogorov complexity of consciousness is at least quadratic in synapse count.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0437",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T10:06:16.705726+00:00",
-    "title": "Digital Immortality: Can a Mind Be Encoded?"
-  },
-  {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "32ad85ae",
     "description": "Systematically negate the ZFC axioms and study the resulting anti-mathematics. Prove that not-Extensionality yields a theory of indistinguishable sets, not-Infinity yields hereditarily finite set theory, and not-Choice yields universes where every set is measurable. Determine which anti-axioms are consistent with each other.",
     "domains": [
       "Novelty",
@@ -242,7 +227,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T12:28:35.623432+00:00",
     "title": "Anti-Mathematics: What If All Axioms Were Negated?"
   },
@@ -319,7 +304,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Negative-Dimensional Topology: What Lives in Dimension -1?"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d23a186f",
     "description": "Prove a meta-theorem: for any approximately correct physical theory T, there exists a class of phenomena for which T makes predictions closer to truth than any known correct theory. Formalize using perturbation theory on theory-space and prove that the wrongness of T forms a convergent series toward truth.",
     "domains": [
       "Novelty",
@@ -329,7 +314,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T12:10:24.196488+00:00",
     "title": "The Unreasonable Effectiveness of Wrong Theories"
   },
@@ -3154,21 +3139,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Quantum Surreal Numbers: Superposition of All Real Numbers"
   },
   {
-    "consumed_by_exp_id": "f0066f11",
-    "description": "Prove that 2-dimensional Newtonian gravity is mathematically pathological: orbits don't close, there's no stable circular orbit, and gravitational potential is logarithmic. Formalize the Bertrand-Darboux theorem failure in 2D and prove that stable planetary systems cannot exist in Flatland.",
-    "domains": [
-      "Novelty",
-      "Physics"
-    ],
-    "id": "fd_0449",
-    "priority_score": 0.79,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T11:33:06.388564+00:00",
-    "title": "Flatland Catastrophe: When 2D Physics Breaks"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Cycle 1003d095 (Q=0.740) proved 0 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in ",
     "domains": [
@@ -4949,6 +4919,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-19T12:11:40.865284+00:00",
     "title": "**Conjecture.** Every countable ordinal is the game value of a winning position "
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions: two-dimensional Newtonian gravity\n\n## What is now formalized\n\n`Basic.lean` gives a complete, sorry-free chain for the standard attractive planar force law\n\n\\[\nV(r)=k\\log r,\\qquad F_r(r)=-k/r.\n\\]\n\nIt proves the derivative of the logarithmic potential, derives the first derivative of the effective potential\n\n\\[\nV_{\\rm eff}(r)=k\\log r+\\frac{\\ell^2}{2mr^2},\n\\]\n\ncharacterizes circular critical points, and evaluates the effective second derivative there as `2k/r\u00b2`. Consequently, for positive coupling and radius, such a circular orbit is linearly stable. The file then proves that the squared radial epicyclic frequency is twice the squared angular frequency. Positive frequencies therefore have ratio `\u221a2`, and irrationality of `\u221a2` rules out an integer commensurability of the linearized oscillations.\n\n## Correction to the research premise\n\nThe proposed claim that two-dimensional logarithmic gravity has **no stable circular orbit** is false in this model. The formal result proves the opposite: every circular critical point satisfying the stated positivity conditions has positive effective second derivative. Thus the stronger requested conclusion that stable planetary systems cannot exist cannot be obtained merely from local circular-orbit stability.\n\nThe rigorous pathology established here is instead a **linearized closure obstruction**: nearby radial oscillations and angular motion have incommensurable frequencies. This supports non-closure of generic sufficiently small perturbations, but it is not by itself a global theorem that every noncircular bounded orbit is nonclosed.\n\n## Natural next formalization steps\n\n1. **Derive the reduced equations from planar mechanics.** Define trajectories in `EuclideanSpace \u211d (Fin 2)`, angular momentum, and the central-force ODE. Prove conservation of energy and angular momentum, then derive the effective radial equation rather than taking it as the starting model.\n\n2. **Construct the circular trajectory explicitly.** Under positive mass, coupling, and radius, define the uniform circular solution and verify the vector ODE. This would turn the algebraic critical-point result into an existence theorem for an actual trajectory.\n\n3. **Formalize linear stability dynamically.** Introduce the first-order radial system, compute its Jacobian at equilibrium, and prove oscillatory linearized solutions with frequency squared `2k/(mr\u00b2)`. The present theorem uses positivity of the effective second derivative as the standard energetic stability criterion.\n\n4. **Prove local apsidal precession.** Connect the irrational frequency ratio to the apsidal angle `\u03c0/\u221a2`, and prove that the linearized orbit cannot close. A perturbation theorem would then transfer this calculation to nearby nonlinear trajectories with controlled error.\n\n5. **Study global bounded orbits.** Establish existence and uniqueness for the logarithmic central-force ODE away from the origin, classify turning radii using the effective potential, and determine which exceptional energy-angular-momentum pairs, if any, yield closed noncircular trajectories.\n\n6. **State a precise Bertrand-theorem comparison.** Formalize the relevant hypotheses for central potentials and distinguish: all bounded orbits closed, one closed orbit, local stability of a circular orbit, and commensurability of linearized frequencies. These are different claims, and the logarithmic potential separates them sharply.\n\n7. **Generalize to power-law forces.** For `V(r)=c r^\u03b1` (with the logarithm as the `\u03b1 \u2192 0` limit), compute the epicyclic ratio and characterize rational ratios. This would place the planar logarithmic case in a reusable central-force framework.\n",
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_0459",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "f0066f11",
+    "status": "available",
+    "timestamp": "2026-07-19T15:15:46.946566+00:00",
+    "title": "`Basic.lean` gives a complete, sorry-free chain for the standard attractive plan"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n1. **Prefix-free Kolmogorov complexity.** Replace natural-number code size by a formal model of prefix-free programs for a fixed universal machine. Prove the standard counting theorem that fewer than `2^k` objects can have programs shorter than `k`, then instantiate it for connectomes. The present results establish the machine-independent finite counting core, but do not identify connectome complexity with the complexity of consciousness.\n\n2. **Weighted and directed connectomes.** Combine the weighted-state count with directed slots and derive worst-case description bounds of `directedSlots N * log\u2082 w` bits. A convenient exact version should first take `w = 2^b`, avoiding rounding until a later theorem.\n\n3. **Sparse biological constraints.** Model connectomes with exactly `m` active synapses, whose state count is `choose (synapseSlots N) m`, and derive entropy bounds for their minimum description length. This would distinguish dense worst-case connectomes from biologically sparse families.\n\n4. **Physical units and constants.** Refine `bekensteinBits` using a dimensional-quantity library, so radius, energy, action, and velocity cannot be mixed incorrectly. Concrete bounds could then be derived from explicitly stated empirical assumptions.\n\n5. **Approximate and lossy reconstruction.** Replace injective encodings by bounded-distortion codes and prove covering-number lower bounds. This is the appropriate framework when an upload need only preserve selected functional observables rather than every synaptic bit.\n\n6. **Dynamics beyond static connectivity.** Add neuron states, update rules, and time-indexed trajectories. Counting arguments could then bound descriptions of dynamical neural systems while separating static topology from initial state and transition law.\n\n7. **Semantic assumptions.** Any theorem about consciousness itself requires a precise formal map from physical neural states to conscious states and assumptions on that map. The current development deliberately proves claims about distinguishable connectomes; it does not assume that every connectome is a distinct mind or that a connectome fully determines consciousness.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0460",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "622eb97b",
+    "status": "available",
+    "timestamp": "2026-07-19T15:15:54.840240+00:00",
+    "title": "1. **Prefix-free Kolmogorov complexity.** Replace natural-number code size by a "
   },
   {
     "consumed_by_exp_id": "",

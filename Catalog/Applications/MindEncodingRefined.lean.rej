@@ -1,0 +1,11 @@
+--- MindEncodingRefined.lean
++++ MindEncodingRefined.lean
+@@ -192,8 +192,4 @@
+ -- Directed connectomes on 4 neurons: `2^12 = (2^6)^2 = 4096`.
+ example : 2 ^ directedSlots 4 = (2 ^ synapseSlots 4) ^ 2 := by decide
+ 
+-#check @synapseSlots_add
+-#check @most_incompressible
+-#check @neuron_count_sqrt_bound
+-
+ 

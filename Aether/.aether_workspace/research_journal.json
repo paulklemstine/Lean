@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "7a91e930",
-      "domain": "Geometry",
-      "key_insight": "# Future directions\n\nThe formal development proves the classical affine construction inside the quantum definition: over every finite field, the nonzero slopes index `|K| - 1` pairwise orthogonal quan",
-      "quality_score": 0.68,
-      "sorry_count": 0,
-      "theorem_count": 18,
-      "timestamp": "2026-07-15T21:19:55",
-      "title": "ArXiv paper: Large sets of mutually orthogonal quantum Latin squares"
-    },
-    {
       "cycle_id": "4dee9bd5",
       "domain": "Tropical",
       "key_insight": "# Future directions\n\n1. **Lower chromatic bound for 3-stability.** The present development proves the\n   constructive upper bound. The central next target is the paper's lower bound\n   for `s=3`, requ",
@@ -2501,6 +2491,16 @@
       "theorem_count": 10,
       "timestamp": "2026-07-19T15:15:51",
       "title": "Flatland Catastrophe: When 2D Physics Breaks"
+    },
+    {
+      "cycle_id": "622eb97b",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n1. **Prefix-free Kolmogorov complexity.** Replace natural-number code size by a formal model of prefix-free programs for a fixed universal machine. Prove the standard counting the",
+      "quality_score": 0.69,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-19T15:15:59",
+      "title": "Digital Immortality: Can a Mind Be Encoded?"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-19T15:15:51",
+  "last_updated": "2026-07-19T15:15:59",
   "open_questions": [
     {
       "context": "",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "19a1a7a8",
-        "quality": 0.76,
-        "theorems": 0,
-        "title": "The Poincare Conjecture for Data: Manifold Detection via Persistent Homology"
-      },
-      {
         "cycle_id": "2d0916f9",
         "quality": 0.55,
         "theorems": 13,
@@ -3141,6 +3135,12 @@
         "quality": 0.79,
         "theorems": 0,
         "title": "Infinite-Dimensional Chess: Winning on the Hilbert Board"
+      },
+      {
+        "cycle_id": "622eb97b",
+        "quality": 0.69,
+        "theorems": 0,
+        "title": "Digital Immortality: Can a Mind Be Encoded?"
       }
     ],
     "Bridges": [
