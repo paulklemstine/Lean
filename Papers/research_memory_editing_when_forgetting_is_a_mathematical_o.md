@@ -1,191 +1,435 @@
-# Memory Algebra: Forgetting as a Structured Mathematical Operation
+# Memory Editing as Algebraic Quotienting
 
 ## Abstract
 
-We formalize memory as a monoid homomorphism from an experience monoid to a finite state monoid and prove three foundational results. First, the **Lossy Memory Theorem**: any such homomorphism from an infinite experience space to a finite state space must be non-injective. Second, the **Kernel Submonoid Theorem**: the set of experiences that leave no trace in memory (the kernel) forms a submonoid, establishing that forgetting is algebraically closed under composition. Third, the **Forgetting-as-Quotient Theorem**: targeted forgetting—the deliberate erasure of distinctions—corresponds to a quotient construction in the category of memory algebras, with kernel monotonicity under coarsening. These results are fully formalized and machine-verified. We also prove quantitative bounds on memory resolution via the fiber partition bound and establish that memory systems form a preorder under refinement. A falsifiable conjecture on optimal forgetting rates is stated and a weaker version proved.
-
-**Keywords**: monoid homomorphism, memory algebra, information loss, quotient construction, kernel submonoid, formal verification
+We develop an algebraic model of compositional memory in which finite experience streams form a free monoid and a memory mechanism is a monoid homomorphism into a representation monoid. This framework separates three forms of information loss: collisions between distinct streams, complete erasure to the neutral representation, and the global congruence of observational indistinguishability. We prove that every finite-state memory over a nonempty alphabet is lossy; that completely erased streams form a submonoid; and that the observable memory algebra is isomorphic to the quotient of the stream monoid by indistinguishability. We then study targeted forgetting, a symbolwise policy that deletes rejected experiences while retaining the order of accepted ones. Rejected symbols are erased, the quotient induced by the policy is isomorphic to its observable range, and every compositional map that respects the policy’s identifications factors uniquely through that quotient. These results provide a unified account of bounded memory, filtering, redaction, and downstream compatibility, with applications to privacy, automata, event processing, and finite-state summarization.
 
 ## 1. Introduction
 
-Memory, whether biological or computational, faces a fundamental constraint: finite storage must represent potentially unbounded experience. While information theory quantifies this tension through entropy and channel capacity, we propose a complementary algebraic perspective that captures the *structural* properties of memory and forgetting.
+A memory mechanism receives a sequence of experiences and produces a representation. The representation may be an internal state of a finite automaton, a rolling database summary, a filtered event log, or a compressed feature vector. In many such systems, sequential composition is fundamental: processing one stream after another should correspond to combining their representations.
 
-Our approach models memory as a monoid homomorphism φ: E → S, where E is the monoid of experience streams (under concatenation) and S is a finite monoid of memory states (under state combination). This formulation captures three essential features of memory:
+This paper takes that compositional principle as its starting point. The domain of histories is the free monoid on an alphabet, and a memory is a monoid homomorphism. The model is intentionally abstract. It does not prescribe whether representations are strings, matrices, transformations, counters, or finite machine states. It requires only an associative combination law, a neutral representation, and compatibility between concatenation and representation.
 
-1. **Compositionality**: Processing experience A followed by B yields the same state as combining the individual results of A and B.
-2. **Finite capacity**: The state space S is finite.
-3. **Determinism**: Each experience stream maps to a unique memory state.
+The abstraction exposes a precise relation between forgetting and quotienting. A memory map determines an equivalence relation on streams: two streams are equivalent when they produce the same representation. Because the map respects multiplication, this relation is a monoid congruence. Collapsing each equivalence class to one point yields a quotient monoid, and the first isomorphism principle identifies that quotient with the reachable part of the representation space. Thus the observable memory is exactly the algebra of histories after all unobservable distinctions have been removed.
 
-From these axioms alone, we derive strong impossibility results and structural theorems about the nature of forgetting.
+Several consequences follow. First, if the alphabet is nonempty, the stream monoid is infinite. A finite representation space therefore cannot distinguish all streams. Second, streams mapped to the neutral representation form a submonoid, giving complete erasure a closure law. Third, a symbolwise deletion policy is not merely an informal filter; it induces a quotient characterized by a universal property. Every compatible downstream homomorphism factors uniquely through the edited memory.
 
-### 1.1 Related Work
+The presentation is self-contained. Section 2 introduces monoids, streams, memory maps, images, kernels, congruences, and quotients. Section 3 proves unavoidable loss for finite memories. Section 4 studies completely erased streams. Section 5 establishes the quotient description of observable memory. Sections 6 and 7 develop targeted forgetting and its universal property. Section 8 gives algorithms and finite experiments, while Sections 9–11 discuss applications, limitations, and future directions.
 
-The algebraic study of automata as monoid homomorphisms dates to the Krohn-Rhodes theorem (1965), which decomposes finite automata into cascades of simple groups and flip-flops. Our work extends this tradition by focusing not on the computational power of automata but on the *information-theoretic* constraints imposed by finiteness of the state space.
+## 2. Algebraic framework
 
-The kernel of a monoid homomorphism is a classical construction in abstract algebra. Our contribution is to interpret this construction in the context of memory systems, proving that the set of "invisible" experiences forms a submonoid, and connecting this to targeted forgetting through quotient constructions.
+### 2.1 Monoids and experience streams
 
-## 2. Definitions
+A **monoid** is a set $M$ equipped with an associative binary operation, written multiplicatively, and an identity element $1_M$. Thus, for all $x,y,z\in M$,
 
-### 2.1 Memory System
+$$
+(xy)z=x(yz), \qquad 1_Mx=x=x1_M.
+$$
 
-**Definition 1** (Memory System). A *memory system* over experience monoid E and state monoid S (with S finite) is a structure consisting of a monoid homomorphism `encode : E →* S`.
+Let $\alpha$ be an alphabet of elementary experiences. An **experience stream** is a finite word over $\alpha$. The empty word is denoted by $\varepsilon$, and the product of two words is their concatenation. The set $\alpha^*$ of all finite words is a monoid, called the **free monoid** on $\alpha$. Its identity is $\varepsilon$.
 
-This captures the idea that memory is a structure-preserving compression from experiences to states.
+The word “free” expresses a universal property: any assignment of alphabet symbols to a monoid $R$ extends uniquely to a monoid homomorphism from $\alpha^*$ to $R$. Concretely, once the memory of each elementary experience is chosen, the memory of a stream is forced to be the ordered product of the symbol memories.
 
-### 2.2 Memory Kernel
+### 2.2 Compositional memory
 
-**Definition 2** (Memory Kernel). The *kernel* of a memory system (E, S, encode) is the set
+Let $R$ be a representation monoid. A **compositional memory map** is a function
 
-    ker(encode) = { e ∈ E | encode(e) = 1_S }
+$$
+m:\alpha^*\to R
+$$
 
-These are the experiences that leave no trace—they map to the identity state.
+satisfying
 
-### 2.3 Memory Congruence
+$$
+m(\varepsilon)=1_R, \qquad m(xy)=m(x)m(y)
+$$
 
-**Definition 3** (Memory Congruence). The *congruence* induced by a memory system is the equivalence relation on E defined by
+for all streams $x,y\in\alpha^*$. Equivalently, $m$ is a monoid homomorphism.
 
-    a ~ b ⟺ encode(a) = encode(b)
+This definition permits several interpretations. If $R$ is a transformation monoid, each stream determines a state update. If $R$ is finite, $m$ records a bounded machine state. If $R$ is another free monoid, $m$ may be a stream filter. If $R$ is commutative, ordering information may be partially or entirely discarded.
 
-Two experience streams are congruent when they produce identical memory states—they are indistinguishable from memory's perspective.
+The **observable range** of $m$ is
 
-### 2.4 Forgetting Map
+$$
+\operatorname{im}(m)=\{m(x):x\in\alpha^*\}.
+$$
 
-**Definition 4** (Forgetting Map). A *forgetting map* between state spaces S and T is a surjective monoid homomorphism `forget : S →* T`.
+It is a submonoid of $R$: it contains $1_R=m(\varepsilon)$, and $m(x)m(y)=m(xy)$ lies in the image whenever both factors do. The distinction between $R$ and $\operatorname{im}(m)$ is essential because some nominal representation states may be unreachable.
 
-Surjectivity ensures that every coarse state is reachable—forgetting doesn't create phantom states.
+### 2.3 Erasure and indistinguishability
 
-### 2.5 Memory Refinement
+The **erased-stream set** of $m$ is the inverse image of the neutral representation:
 
-**Definition 5** (Memory Refinement). A *memory refinement* from a fine system (E, S, encode_S) to a coarse system (E, T, encode_T) consists of a monoid homomorphism `bridge : S →* T` such that for all e ∈ E:
+$$
+E_m=\{x\in\alpha^*:m(x)=1_R\}.
+$$
 
-    bridge(encode_S(e)) = encode_T(e)
+A stream in $E_m$ leaves exactly the same memory as the empty stream.
 
-This commutative diagram expresses that the coarse system factors through the fine system.
+Define **observational indistinguishability** by
 
-## 3. Main Results
+$$
+x\sim_m y \quad\Longleftrightarrow\quad m(x)=m(y).
+$$
 
-### 3.1 Lossy Memory Theorem
+The relation $\sim_m$ is an equivalence relation. It is also compatible with multiplication. If $x\sim_m y$ and $u\sim_m v$, then
 
-**Theorem 1** (Lossy Memory). Let E be an infinite monoid and S a finite monoid. For any memory system (E, S, encode), the homomorphism encode is not injective.
+$$
+m(xu)=m(x)m(u)=m(y)m(v)=m(yv),
+$$
 
-*Proof sketch*. By the pigeonhole principle, no function from an infinite set to a finite set can be injective. The monoid homomorphism property does not circumvent this combinatorial obstruction. □
+hence $xu\sim_m yv$. An equivalence relation with this compatibility is called a **monoid congruence**.
 
-**Remark**. The strength of this result lies in its universality. No algebraic trick, clever encoding, or exotic monoid structure can achieve lossless compression of infinite experience into finite memory. The result holds for all monoid structures on E and S.
+The erased-stream set is precisely the equivalence class of the empty stream:
 
-### 3.2 Kernel Submonoid Theorem
+$$
+E_m=[\varepsilon]_{\sim_m}.
+$$
 
-**Theorem 2** (Kernel Submonoid). Let (E, S, encode) be a memory system. Then:
+It captures complete erasure, whereas $\sim_m$ captures all lost distinctions.
 
-(a) 1_E ∈ ker(encode)
+### 2.4 Quotient memory algebra
 
-(b) If a, b ∈ ker(encode), then ab ∈ ker(encode)
+Given a congruence $\sim$ on a monoid $M$, the **quotient monoid** $M/{\sim}$ consists of equivalence classes $[x]$. Multiplication is defined by
 
-Consequently, ker(encode) is a submonoid of E.
+$$
+[x][y]=[xy].
+$$
 
-*Proof sketch*. Part (a): encode(1_E) = 1_S by the homomorphism property (map_one). Part (b): If encode(a) = 1_S and encode(b) = 1_S, then encode(ab) = encode(a) · encode(b) = 1_S · 1_S = 1_S by the homomorphism property (map_mul). □
+Compatibility of the congruence makes this definition independent of the selected representatives. The canonical quotient map is
 
-**Interpretation**. Forgettable experiences compose to form forgettable experiences. If watching a sunset leaves no trace, and hearing a song leaves no trace, then experiencing both in sequence also leaves no trace. The forgotten world is algebraically self-consistent.
+$$
+q:M\to M/{\sim}, \qquad q(x)=[x].
+$$
 
-### 3.3 Forgetting as Quotient
+It is a surjective monoid homomorphism. For a memory map $m$, the quotient $\alpha^*/{\sim_m}$ is the **quotient memory algebra**.
 
-**Theorem 3** (Congruence Refinement). Let (fine, coarse, bridge) be a memory refinement. If two experiences are identified by the fine system (fine.encode(a) = fine.encode(b)), then they are also identified by the coarse system (coarse.encode(a) = coarse.encode(b)).
+## 3. Finite memory necessarily loses information
 
-Equivalently, fine.toCon ≤ coarse.toCon in the lattice of monoid congruences.
+The first result is a capacity theorem independent of the internal multiplication in $R$.
 
-*Proof sketch*. Given fine.encode(a) = fine.encode(b), apply bridge to both sides: bridge(fine.encode(a)) = bridge(fine.encode(b)). By the commutation property, coarse.encode(a) = coarse.encode(b). □
+### Theorem 1 (Finite-Memory Loss)
 
-**Theorem 4** (Kernel Monotonicity). Under a memory refinement with bridge(1) = 1, the fine kernel is contained in the coarse kernel: ker(fine.encode) ⊆ ker(coarse.encode).
+Let $\alpha$ be a nonempty alphabet, let $R$ be a finite monoid, and let $m:\alpha^*\to R$ be a compositional memory map. Then there exist distinct streams $x,y\in\alpha^*$ such that
 
-*Proof sketch*. If fine.encode(e) = 1, then coarse.encode(e) = bridge(fine.encode(e)) = bridge(1) = 1. □
+$$
+x\ne y \quad\text{and}\quad m(x)=m(y).
+$$
 
-**Interpretation**. Targeted forgetting = taking a quotient. More forgetting = coarser quotient. The kernel grows monotonically: once an experience is forgotten, further forgetting cannot recover it.
+#### Proof sketch
 
-### 3.4 Fiber Partition Bound
+Choose a symbol $a\in\alpha$. The words
 
-**Theorem 5** (Fiber Bound). Let (E, S, encode) be a memory system with |S| = n. For any finite set of experiences on which encode is injective, the set has at most n elements.
+$$
+\varepsilon,a,a^2,a^3,\ldots
+$$
 
-*Proof sketch*. An injective function from a finite set to S embeds the set into S, so its cardinality is at most |S|. □
+are pairwise distinct, so $\alpha^*$ is infinite. The finite set $R$ cannot receive an injective map from an infinite domain. By the pigeonhole principle, two distinct streams have the same image under $m$.
 
-### 3.5 Composed Forgetting
+The theorem needs only that $\alpha$ be inhabited and $R$ finite. It does not require commutativity, cancellation, or any assumption about the distribution of memory states.
 
-**Theorem 6** (Composition). The composition of two forgetting maps is a forgetting map. Memory refinement is transitive.
+### Corollary 2 (Nontrivial Indistinguishability)
 
-*Proof sketch*. Composition of surjections is surjective; composition of monoid homomorphisms is a monoid homomorphism. □
+Under the assumptions of Theorem 1, the congruence $\sim_m$ is nontrivial: at least one equivalence class contains two distinct streams.
 
-### 3.6 Congruence Lattice Structure
+#### Proof sketch
 
-**Theorem 7** (Congruence Ordering). The monoid congruence induced by a memory system, viewed as a `Con` (multiplicative congruence), satisfies: if the coarse system factors through the fine system via a bridge homomorphism, then the fine congruence is a refinement of the coarse congruence.
+The collision $m(x)=m(y)$ furnished by Theorem 1 is exactly the statement $x\sim_m y$, with $x\ne y$.
 
-This establishes a partial order on memory systems by information content, forming the basis of a lattice of memory algebras.
+This corollary distinguishes unavoidable collision from complete erasure. The colliding streams need not map to $1_R$; they may meet at any reachable state. Consequently, a finite memory can have a trivial erased-stream set and still be highly lossy.
 
-### 3.7 Pigeonhole Loss Bound
+### A quantitative finite-horizon observation
 
-**Theorem 8** (Minimum Loss). For any function f : Fin(k^n) → Fin(n) with k > 1 and n > 0, there exists a fiber of size at least n.
+Although the theorem concerns arbitrarily long streams, a finite calculation illustrates the onset of collisions. If $\alpha$ has $k$ symbols, then the number of words of length at most $n$ is
 
-*Proof sketch*. The sum of fiber sizes equals k^n. If all fibers had size < n, the total would be < n · n = n². But k^n ≥ n² for k ≥ 2 and n ≥ 1 (proved by induction), yielding a contradiction. □
+$$
+N(k,n)=\sum_{j=0}^{n}k^j.
+$$
 
-This quantifies the minimum "crowding" in any finite memory system: some memory state must be overloaded by at least a factor of n.
+For $k>1$ this equals
 
-## 4. The Category of Memory Algebras
+$$
+N(k,n)=\frac{k^{n+1}-1}{k-1},
+$$
 
-The results naturally organize into a categorical framework:
+while $N(1,n)=n+1$. If $R$ has $s$ states and $N(k,n)>s$, some two words of length at most $n$ collide under every map into $R$, whether or not that map is compositional. The compositional structure becomes decisive when interpreting all collisions coherently as a congruence.
 
-- **Objects**: Memory systems (E, S, encode) for a fixed experience monoid E.
-- **Morphisms**: Forgetting maps (bridge homomorphisms) between state spaces that make the encoding diagram commute.
-- **Composition**: Theorem 6 shows morphisms compose.
-- **Identity**: The identity homomorphism serves as the identity morphism.
-- **Ordering**: Theorem 7 equips the objects with a partial order by information content.
+## 4. Completely erased streams form a submonoid
 
-Targeted forgetting is precisely the act of choosing a morphism in this category. The quotient of E by the memory congruence gives the "essential" state space—the minimal representation that distinguishes exactly what the memory system distinguishes.
+### Theorem 3 (Erasure Closure)
 
-## 5. Algorithms
+For any alphabet $\alpha$, any monoid $R$, and any compositional memory map $m:\alpha^*\to R$, the erased-stream set $E_m$ is a submonoid of $\alpha^*$. Explicitly,
 
-### 5.1 Memory Simulation Algorithm
+$$
+\varepsilon\in E_m,
+$$
 
-Given a finite monoid (represented as multiplication tables) and a homomorphism (represented as a lookup table), we can:
+and for all $x,y\in\alpha^*$,
 
-1. **Compute the kernel**: Filter all elements e where encode(e) = 1.
-2. **Compute congruence classes**: Partition the experience space by encode values.
-3. **Compute the quotient**: Collapse congruence classes to form the quotient monoid.
-4. **Compose forgetting maps**: Given two bridges, compute their composition.
+$$
+x\in E_m \ \text{and}\ y\in E_m \quad\Longrightarrow\quad xy\in E_m.
+$$
 
-### 5.2 Optimal Forgetting Search
+#### Proof sketch
 
-Given a memory budget n, enumerate all possible quotients of the experience monoid with at most n classes, and evaluate each by an information-theoretic criterion (e.g., mutual information with a target variable).
+Because $m$ preserves identities, $m(\varepsilon)=1_R$, so $\varepsilon\in E_m$. If $x,y\in E_m$, then $m(x)=m(y)=1_R$. Homomorphicity gives
 
-## 6. Falsifiable Conjecture
+$$
+m(xy)=m(x)m(y)=1_R1_R=1_R,
+$$
 
-**Conjecture** (Optimal Forgetting Rate). For a memory system with state space of size n processing streams from a free monoid on k generators, the minimum average information loss per step (measured as log of the average fiber size) is at least log(k) - log(n)/L, where L is stream length.
+hence $xy\in E_m$.
 
-**Test**: For k = 2, n = 4, L = 10, compute the fiber size distribution for all 2^10 = 1024 binary strings under all possible homomorphisms to a monoid of size 4. Verify that the average fiber size is at least 2^10 / 4 = 256, with a maximum achievable mutual information of log₂(4) = 2 bits.
+The theorem assigns compositional structure to total information loss. It does not state that inserting an erased stream into an arbitrary context is always invisible. Indeed, from $m(e)=1_R$ one obtains
 
-**Partial validation**: Theorem 8 proves a weaker version: some fiber must have size ≥ n, establishing that information loss is unavoidable and quantifiable.
+$$
+m(xey)=m(x)m(e)m(y)=m(x)m(y)=m(xy),
+$$
 
-## 7. Discussion
+so insertion or deletion of an erased stream *is* invisible in every two-sided context. This follows directly from the homomorphism law and explains why the identity class belongs naturally to the full congruence.
 
-### 7.1 Connections to Automata Theory
+The converse implication must be treated carefully. If $m(xy)=1_R$, it need not follow in an arbitrary monoid that $m(x)=1_R$ and $m(y)=1_R$. Cancellation or positivity assumptions would be needed. Thus $E_m$ is closed under concatenation but need not be factor-closed.
 
-Our memory systems are precisely deterministic automata without output, viewed algebraically. The Krohn-Rhodes theorem tells us that any finite memory system decomposes into a cascade of simple components. Our results complement this by characterizing the *information loss* properties that any such system must exhibit.
+## 5. Observable memory is a quotient
 
-### 7.2 Connections to Neural Networks
+### Theorem 4 (Observable Quotient Theorem)
 
-Recurrent neural networks with fixed hidden dimension implement exactly our framework: the hidden state is the memory state, and the update function (combining old state with new input) defines the monoid homomorphism. Our Lossy Memory Theorem proves that any fixed-width RNN must conflate distinct input sequences—a result with implications for the design of memory-augmented architectures.
+Let $m:\alpha^*\to R$ be a compositional memory map. Then the quotient monoid by observational indistinguishability is isomorphic to the observable range:
 
-### 7.3 The Lattice of Forgetting
+$$
+\alpha^*/{\sim_m}\cong \operatorname{im}(m).
+$$
 
-The partial order on memory congruences suggests a rich combinatorial structure. For a free monoid on k generators with state space of size n, the number of possible memory systems is bounded by the number of monoid homomorphisms from the free monoid to monoids of size n—a quantity related to the number of n-element monoids that can be generated by k elements.
+The isomorphism sends the class $[x]$ to $m(x)$.
 
-## 8. Future Work
+#### Proof sketch
 
-1. **Characterize the congruence lattice** for specific experience monoids (free monoids, cyclic groups).
-2. **Quantify optimal forgetting** using entropy-theoretic measures.
-3. **Connect to tropical semirings**: explore whether tropical algebra provides natural "soft" memory operations.
-4. **Formalize the category of memory algebras** as a concrete category in Lean 4 / Mathlib.
-5. **Biological memory models**: investigate whether neural forgetting curves (Ebbinghaus) arise from algebraic constraints on memory homomorphisms.
+Define
 
-## References
+$$
+\Phi:\alpha^*/{\sim_m}\to\operatorname{im}(m),\qquad \Phi([x])=m(x).
+$$
 
-1. Krohn, K., & Rhodes, J. (1965). Algebraic theory of machines. I. *Trans. Amer. Math. Soc.*, 116, 450-464.
-2. Eilenberg, S. (1976). *Automata, Languages, and Machines*, Vol. B. Academic Press.
-3. Pin, J.-É. (1986). *Varieties of Formal Languages*. Plenum.
-4. Mac Lane, S. (1998). *Categories for the Working Mathematician*. Springer.
+If $[x]=[y]$, then $x\sim_m y$, hence $m(x)=m(y)$; therefore $\Phi$ is well-defined. It preserves multiplication because
+
+$$
+\Phi([x][y])=\Phi([xy])=m(xy)=m(x)m(y)=\Phi([x])\Phi([y]).
+$$
+
+It is surjective by the definition of the image. If $\Phi([x])=\Phi([y])$, then $m(x)=m(y)$, so $x\sim_m y$ and $[x]=[y]$; thus it is injective. Therefore $\Phi$ is a monoid isomorphism.
+
+The theorem makes “forgetting is quotienting” exact. A representation remembers precisely an equivalence class of streams. No information relevant to the output is lost by replacing a stream with its quotient class, and no distinction between members of one class can be recovered from the output.
+
+### Theorem 5 (Finite Memory: Loss, Erasure Structure, and Quotient)
+
+Let $\alpha$ be nonempty, let $R$ be a finite monoid, and let $m:\alpha^*\to R$ be compositional. Then all of the following hold:
+
+1. There are distinct streams $x$ and $y$ with $m(x)=m(y)$.
+2. The set $E_m$ contains $\varepsilon$ and is closed under concatenation.
+3. The quotient $\alpha^*/{\sim_m}$ is isomorphic to $\operatorname{im}(m)$.
+
+#### Proof sketch
+
+Apply Theorem 1 for the collision, Theorem 3 for erasure closure, and Theorem 4 for the quotient isomorphism. The three conclusions concern different aspects of one map and require no additional compatibility argument.
+
+## 6. Targeted forgetting
+
+Let a retention policy be a function
+
+$$
+r:\alpha\to\{0,1\},
+$$
+
+where $r(a)=1$ means that symbol $a$ is retained and $r(a)=0$ means that it is erased.
+
+### Definition 6 (Targeted-Forgetting Map)
+
+The targeted-forgetting map $T_r:\alpha^*\to\alpha^*$ is defined on symbols by
+
+$$
+T_r(a)=
+\begin{cases}
+a,&r(a)=1,\\
+\varepsilon,&r(a)=0,
+\end{cases}
+$$
+
+and extended to words by concatenation. Equivalently, $T_r$ deletes every rejected symbol and preserves the order and multiplicity of retained symbols.
+
+For a word $w=a_1a_2\cdots a_n$,
+
+$$
+T_r(w)=T_r(a_1)T_r(a_2)\cdots T_r(a_n).
+$$
+
+Therefore $T_r(uv)=T_r(u)T_r(v)$ and $T_r(\varepsilon)=\varepsilon$, so $T_r$ is a monoid homomorphism.
+
+### Proposition 7 (Rejected Symbols Are Erased)
+
+If $r(a)=0$, then the one-letter stream $a$ belongs to the erased-stream submonoid of $T_r$:
+
+$$
+T_r(a)=\varepsilon.
+$$
+
+#### Proof sketch
+
+This is the rejected branch of Definition 6. Since the erased-stream set is a submonoid, every finite concatenation of rejected symbols is erased as well.
+
+A useful concrete characterization follows directly from the definition:
+
+$$
+T_r(x)=T_r(y)
+$$
+
+exactly when deleting all rejected symbols from $x$ and $y$ yields the same retained word. Thus targeted forgetting may identify streams that differ in the number, identities, and locations of rejected symbols, while preserving the retained subsequence exactly.
+
+### Corollary 8 (Targeted Forgetting as a Quotient)
+
+For every retention policy $r$,
+
+$$
+\alpha^*/{\sim_{T_r}}\cong\operatorname{im}(T_r).
+$$
+
+#### Proof sketch
+
+Apply the Observable Quotient Theorem to the homomorphism $T_r$.
+
+The image consists exactly of words containing only retained symbols. One inclusion is immediate because deletion cannot output a rejected symbol. Conversely, any word made solely of retained symbols is fixed by $T_r$ and therefore lies in the image. Hence the quotient can be viewed concretely as the free monoid on the retained alphabet, embedded in $\alpha^*$.
+
+## 7. Universal property of targeted forgetting
+
+The quotient is characterized not only by its elements but also by the maps out of it.
+
+### Theorem 9 (Universal Targeted-Forgetting Theorem)
+
+Let $r$ be a retention policy on $\alpha$, let $S$ be a monoid, and let $g:\alpha^*\to S$ be a monoid homomorphism. Assume that $g$ respects every identification made by targeted forgetting:
+
+$$
+T_r(x)=T_r(y)\quad\Longrightarrow\quad g(x)=g(y)
+$$
+
+for all streams $x,y\in\alpha^*$. Then there exists a unique monoid homomorphism
+
+$$
+\bar g:\alpha^*/{\sim_{T_r}}\to S
+$$
+
+such that
+
+$$
+g=\bar g\circ q,
+$$
+
+where $q(x)=[x]$ is the quotient map.
+
+#### Proof sketch
+
+Define $\bar g([x])=g(x)$. To show this is well-defined, suppose $[x]=[y]$. Then $T_r(x)=T_r(y)$, and the hypothesis gives $g(x)=g(y)$. The homomorphism law follows from
+
+$$
+\bar g([x][y])=\bar g([xy])=g(xy)=g(x)g(y)=\bar g([x])\bar g([y]).
+$$
+
+For every $x$,
+
+$$
+(\bar g\circ q)(x)=\bar g([x])=g(x),
+$$
+
+so the factorization exists. If $h$ is any other map with $g=h\circ q$, then every quotient element has the form $[x]$, and
+
+$$
+h([x])=h(q(x))=g(x)=\bar g([x]).
+$$
+
+Thus $h=\bar g$, proving uniqueness.
+
+The theorem supplies a precise compatibility test. A downstream compositional computation can be performed entirely after targeted forgetting if and only if it is constant on the policy’s indistinguishability classes. The “only if” direction is immediate for any factorization through $q$; the theorem supplies the “if” direction and uniqueness.
+
+### Example 10 (Counting retained events)
+
+Let $S=(\mathbb{N},+,0)$ and define $g(w)$ to be the number of retained symbols in $w$. Then $g(x)$ depends only on $T_r(x)$, so it factors uniquely through the quotient. The induced map sends an observable retained word to its length.
+
+### Example 11 (Incompatible downstream computation)
+
+Suppose $g(w)$ counts rejected symbols. Two words can have the same retained output but different numbers of rejected symbols. Therefore $g$ does not respect $\sim_{T_r}$ and cannot factor through the quotient. Once rejected symbols are deleted, this statistic is genuinely unavailable.
+
+## 8. Algorithms and numerical experiments
+
+### 8.1 Targeted deletion algorithm
+
+Given a finite word $w=a_1\cdots a_n$ and a Boolean policy $r$, scan from left to right and append $a_i$ exactly when $r(a_i)=1$. The algorithm takes $O(n)$ policy queries and $O(n)$ output space in the worst case. With buffered output, its running time is $O(n)$ under constant-time symbol handling.
+
+The key invariant after processing the first $i$ symbols is that the output equals $T_r(a_1\cdots a_i)$. Initialization holds for the empty prefix. Each step either appends a retained symbol or leaves the output unchanged for a rejected symbol. At termination, the output is $T_r(w)$.
+
+### 8.2 Finite collision search
+
+For an explicitly given finite-state memory, enumerate words up to a chosen length, compute their states, and store the first word seen for each state. When a state repeats, the stored word and current word form a collision. If $s$ states exist, any enumeration of more than $s$ distinct words guarantees success.
+
+The cost is $O(N)$ memory evaluations and $O(\min(N,s))$ stored representatives for $N$ enumerated words, apart from the cost of constructing words. The procedure illustrates Theorem 1 but cannot prove injectivity over an infinite domain by finite testing.
+
+### 8.3 Quotient-class enumeration on a finite horizon
+
+To inspect indistinguishability classes among words of length at most $n$, group words by their memory values. If $N=N(k,n)$ words are enumerated and memory states are hashable, expected running time is $O(N)$ plus evaluation cost, with $O(N)$ total storage for members. For targeted forgetting, grouping by the retained subsequence gives a concrete finite window into the quotient.
+
+For example, over $\{a,b,c\}$ with only $a$ and $c$ retained, all of
+
+$$
+ac,\quad abc,\quad abbc,\quad bacb
+$$
+
+map to $ac$. They therefore occupy one observable class, even though their raw lengths and rejected-symbol patterns differ.
+
+## 9. Applications
+
+### 9.1 Privacy-preserving event processing
+
+A redaction policy can be represented by targeted forgetting when sensitive event types are removed wholesale. The quotient contains exactly what remains observable. The universal property then gives a rigorous criterion for downstream safety: an analysis can be computed after redaction precisely when it gives the same result to any two raw histories with identical redacted outputs.
+
+This criterion concerns functional dependence rather than implementation. It does not itself establish statistical privacy, resistance to side channels, or protection against auxiliary information. It does identify which exact stream distinctions a deterministic pipeline has discarded.
+
+### 9.2 Finite-state controllers and automata
+
+A deterministic finite-state system induces a map from input words to state transformations, or from words to reached states after fixing an initial state. When represented homomorphically in a finite transformation monoid, Theorem 1 guarantees collisions. The congruence viewpoint relates state-based indistinguishability to algebraic language theory: streams in one class have the same observable algebraic action.
+
+### 9.3 Event sourcing and audit summaries
+
+Systems often retain a compact current state while discarding the full event history. The finite-memory theorem shows that no bounded state can uniquely determine every arbitrarily long history. The quotient identifies histories compatible with the same summary. The erased submonoid captures event batches that have neutral aggregate effect, though domain-specific semantics are needed before treating such batches as safe to discard from an audit record.
+
+### 9.4 Feature extraction and sequence models
+
+A compositional feature extractor maps concatenated inputs to combined features. Its kernel congruence expresses representational invariance. If the implementation has finitely many possible states, collisions are inevitable. Even with an infinite mathematical codomain, quantization or bounded digital storage can induce a finite effective range. The framework clarifies the distinction between a collision forced by capacity and an invariance deliberately built into a feature map.
+
+## 10. Discussion and limitations
+
+The model uses exact equality. Two representations are either identical or distinct, and two streams are either perfectly indistinguishable or not. Probabilistic memory, noisy recall, and approximate similarity require richer notions, such as distributions, metrics, divergences, or Markov kernels.
+
+The homomorphism law is also strong. Many practical memories update by an action $s\mapsto F(s,a)$ from a chosen initial state rather than by a direct homomorphism into the state set. Such systems can often be represented through a transformation monoid, where each word acts as a state transition. The appropriate codomain is then the monoid of transformations, not necessarily the set of states itself.
+
+Finiteness is a qualitative capacity assumption. It proves existence of collisions but provides no bound on the size of the largest class unless the relevant set of input words is counted. Quantitative bounds require a finite horizon or a probability distribution over streams.
+
+Finally, targeted forgetting is symbolwise. More expressive policies might erase patterns, summarize blocks, or depend on context. Any compositional policy still induces a congruence and quotient, but a context-dependent transducer may require an enlarged state space or a different algebraic category.
+
+## 11. Future research
+
+A quantitative theory should restrict attention to streams of length at most $n$, count them over a finite alphabet, and derive lower bounds on the largest indistinguishability class from the number of available memory states.
+
+The finite-index congruences arising from finite memories invite comparison with Myhill–Nerode theory, syntactic monoids, and minimal deterministic automata. This would connect compositional memory directly to formal-language recognition.
+
+For targeted forgetting, the abstract quotient can be developed into a normalization theorem: two streams are equivalent exactly when deletion produces the same retained stream, and the range is the free monoid on the retained subtype.
+
+Successive policies should correspond to intersection of retained alphabets. This suggests a lattice of forgetting policies, with refinement represented contravariantly by quotient maps.
+
+Probabilistic extensions could replace deterministic monoid maps by distributional or kernel-valued composition and study approximate indistinguishability, entropy contraction, and data-processing inequalities.
+
+Representations with group, ring, or module structure lead respectively to normal-subgroup, ideal, or submodule quotients. Comparing these settings may reveal which kinds of loss each composition law can express.
+
+At a categorical level, the universal property should be expressible through coequalizers or regular epimorphisms in categories of algebraic structures. Such a formulation would make forgetting functorial and clarify its behavior under products and iterated quotients.
+
+## 12. Conclusion
+
+Compositional memory turns finite streams into algebraic representations. When the representation space is finite and the alphabet is nonempty, some distinct histories must collide. Streams erased to the neutral state form a submonoid, and all observational collisions assemble into a congruence. The quotient by that congruence is not an auxiliary construction: it is isomorphic to the reachable memory algebra itself.
+
+For symbolwise targeted forgetting, rejected symbols map to the empty stream, observable histories form the retained output monoid, and every compatible downstream homomorphism factors uniquely through the quotient. These facts provide a compact mathematical foundation for treating forgetting as a deliberate, compositional transformation of information rather than merely as failed storage.
