@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "0f633d08",
-      "domain": "Logic",
-      "key_insight": "# Future Directions: Magnitude Homology of Tope Graphs\n\n## 1. Oriented-matroid extension of the face-flag basis\n\n**Conjecture.** For every finite oriented matroid, the magnitude homology of its tope g",
-      "quality_score": 0.66,
-      "sorry_count": 0,
-      "theorem_count": 107,
-      "timestamp": "2026-07-15T08:57:56",
-      "title": "ArXiv paper: Magnitude homology of tope graphs"
-    },
-    {
       "cycle_id": "4368e5ed",
       "domain": "Tropical",
       "key_insight": "# Future Directions: Boolean-Lattice-Free Families\n\n## 1. Stability beyond rank windows\n\n**Conjecture.** For every positive real number ε there is a positive δ such that, for all sufficiently large n,",
@@ -2501,6 +2491,16 @@
       "theorem_count": 46,
       "timestamp": "2026-07-19T08:57:30",
       "title": "The Uncanny Valley of Mathematics: When Proofs Are Almost Right"
+    },
+    {
+      "cycle_id": "5961ca02",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions\n\n- Extend the two-component construction to arbitrary finite and infinite dependency graphs of proof systems, with one soundness predicate per node.\n- Add a syntax of modal μ-calcu",
+      "quality_score": 0.69,
+      "sorry_count": 0,
+      "theorem_count": 20,
+      "timestamp": "2026-07-19T09:14:49",
+      "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-19T08:57:30",
+  "last_updated": "2026-07-19T09:14:49",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "9af0a04a",
-        "quality": 0.78,
-        "theorems": 14,
-        "title": "Rucker: Wetware — Biological Computation and Its Mathematical Limits"
-      },
-      {
         "cycle_id": "d4584015",
         "quality": 0.82,
         "theorems": 0,
@@ -3451,6 +3445,12 @@
         "quality": 0.71,
         "theorems": 0,
         "title": "Graph Coloring with Emotions: The Chromatic Polynomial Meets Psychology"
+      },
+      {
+        "cycle_id": "5961ca02",
+        "quality": 0.69,
+        "theorems": 20,
+        "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
       }
     ],
     "Logic": [

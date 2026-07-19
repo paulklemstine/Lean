@@ -1,273 +1,410 @@
-# Proof Channel Theory: Information-Theoretic Limits of Proof Search
+# Information-Theoretic Limits of Finite Derivation Search
+
+**Aristotle**  
+**July 19, 2026**
 
 ## Abstract
 
-We introduce the **Proof Channel**, a mathematical structure that reframes proof search as a channel coding problem. A theorem is a message, a proof is a codeword, and the proof system is the channel. This perspective yields five main results, all formally verified in Lean 4 with Mathlib:
-
-1. **Search-Capacity Duality**: If valid proofs occupy at most b^k of a b^n search space, finding one requires examining ≥ b^(n-k-1) candidates.
-2. **Composition Theorem**: Independent proof obligations multiply search costs — there are no economies of scale.
-3. **Multiplicity-Capacity Tradeoff**: Increasing proof redundancy (m proofs per theorem) decreases the number of encodable theorems as T ≤ b^n/m.
-4. **Incompressibility Barrier**: At least (1 - 1/b) of all proofs of a given length are incompressible.
-5. **Hierarchical Separation**: Proof search difficulty forms a strict, unbounded hierarchy with b^k < b^(k+1) at every level.
-
-We also prove subsidiary results on composition algebras, average-case complexity, and the monoid structure of search costs, and state a falsifiable conjecture about proof-to-statement length ratios.
+We develop a finite combinatorial model that separates three quantities often conflated in discussions of derivation search: candidate count, logarithmic description information, and worst-case oracle-query cost. A depth-$L$ derivation over an alphabet of size $q$ is modeled as a word, giving exactly $q^L$ candidates and logarithmic information $L\log_2 q$. Consequently, the scale $n\log_2 n$ holds exactly in the explicit model with $n$ choices at each of $n$ positions, but it is not distribution-free or universal: fixed branching gives linear information. We prove a sharp finite incompressibility result by counting all binary descriptions shorter than $n$, whose number is $2^n-1$, and comparing them with the $2^n$ binary objects of length $n$. We also establish an adversarial query boundary: for an unstructured verifier, every proper set of queried candidates is compatible both with no success and with a unique success at an unqueried location. Hence a family of $q^L$ candidates requires as many as $q^L=2^{L\log_2 q}$ deterministic queries in the worst case. Cartesian composition multiplies candidate populations and adds logarithmic information. For fixed branching, logarithmic candidate counts are additive and therefore subadditive, connecting the finite model to asymptotic growth-rate methods. We give exact algorithms, numerical examples, applications, and clear boundaries on what these results imply about concrete search systems.
 
 ## 1. Introduction
 
-The fundamental question in proof complexity is: how hard is it to find a proof of a given theorem? This question has been studied extensively from the perspectives of computational complexity (Cook-Reckhow proof systems), logic (proof theory), and combinatorics (propositional proof complexity). We contribute a new perspective: **information theory**.
+A verifier and a search procedure solve fundamentally different problems. A verifier receives both a statement and a proposed derivation and determines whether the derivation is valid. A search procedure receives only the statement and must locate a valid derivation, if one exists. Even when individual candidates can be checked efficiently, the candidate space can be enormous.
 
-Our key observation is that a proof system can be modeled as a communication channel in Shannon's sense. The "sender" selects a theorem T from a set of T possible theorems. The "channel" is the proof system, which maps each theorem to a set of valid proofs. The "receiver" (i.e., the prover) must search through the space of all possible proof strings to find one that is valid for T.
+To study this gap without importing assumptions from a particular logical language, we use the smallest model that exposes the combinatorics. A candidate derivation is a finite sequence of choices. If there are $q$ choices at each of $L$ steps, then the candidates are words of length $L$ over a $q$-symbol alphabet. This model admits exact answers:
 
-This analogy is not merely heuristic — it yields precise, quantitative bounds on the difficulty of proof search that match and extend known results in proof complexity.
+$$
+\text{candidate count}=q^L,
+\qquad
+\text{logarithmic information}=\log_2(q^L)=L\log_2q.
+$$
 
-### 1.1 The ProofChannel Structure
+These formulas are elementary, but their interpretation requires care. Candidate count describes the size of a finite family. Its logarithm is the number of bits required to index uniformly among its members, up to integer rounding. Query complexity depends on what an attempted candidate reveals. If a verifier is an unstructured membership oracle with a unique hidden success, then negative answers eliminate only the candidates actually queried; in the worst case, every candidate may need to be tested. If the verifier reveals algebraic or semantic structure, the conclusion can change dramatically.
 
-We define a `ProofChannel` as a quadruple (b, n, T, m) where:
-- **b ≥ 2**: the alphabet size (number of distinct symbols in the proof language)
-- **n**: the maximum proof length
-- **T ≥ 1**: the number of distinct theorems encodable by the system
-- **m ≥ 1**: the maximum number of distinct proofs per theorem (multiplicity)
+This paper makes four contributions. First, it states and proves exact counting and logarithmic laws for finite derivation words. Second, it derives a finite incompressibility theorem from the strict deficit between $2^n$ objects and $2^n-1$ shorter descriptions. Third, it proves a sharp adversarial lower bound for deterministic unstructured query search. Fourth, it develops composition and subadditivity laws that place these finite identities in a framework suitable for nonuniform and asymptotic generalizations.
 
-The fundamental constraint is the **capacity bound**: T · m ≤ b^n. This states that the total number of theorem-proof pairs cannot exceed the size of the search space.
+The results provide a conditional realization of the often-proposed $n\log n$ information scale. If statement size $n$ induces depth $n$ and effective branching $n$, then the scale is exact. But the same calculation reveals its boundary: if effective branching remains bounded, logarithmic information is only linear. Thus $n\log n$ is a statement about the geometry of the candidate space, not a theorem that follows from statement length alone.
 
-### 1.2 Related Work
+## 2. The finite derivation model
 
-Our work connects to several established lines of research:
+### 2.1 Candidate words
 
-- **Proof complexity** (Cook & Reckhow, 1979): We reformulate proof length lower bounds as channel capacity constraints.
-- **Kolmogorov complexity**: Our incompressibility results parallel the counting arguments in algorithmic information theory.
-- **Shannon's channel coding theorem** (1948): The capacity bound T·m ≤ b^n is the discrete analog of Shannon's noisy channel coding theorem.
-- **Computational complexity**: The search-verification gap is the proof complexity analog of the P vs NP question.
+Let $q,L$ be nonnegative integers. Write
 
-## 2. Definitions
+$$
+[q]=\{0,1,\ldots,q-1\}.
+$$
 
-### 2.1 Proof Channel
+A **candidate derivation of depth $L$ over $q$ symbols** is a function
 
-```
-structure ProofChannel where
-  b : ℕ           -- alphabet size
-  n : ℕ           -- max proof length
-  T : ℕ           -- number of theorems
-  m : ℕ           -- max proofs per theorem
-  hb : 2 ≤ b
-  hm : 1 ≤ m
-  hT : 1 ≤ T
-  capacity_bound : T * m ≤ b ^ n
-```
+$$
+w:\{0,1,\ldots,L-1\}\to[q].
+$$
 
-### 2.2 Derived Quantities
+Equivalently, it is a word $w=(w_1,\ldots,w_L)$ with each $w_i\in[q]$. Denote the family of all such words by $W(q,L)$.
 
-- **Space size**: `spaceSize(C) = b^n` (total number of candidate proofs)
-- **Total valid proofs**: `totalValidProofs(C) = T · m`
-- **Search difficulty**: `searchDifficulty(C) = spaceSize / totalValidProofs`
-- **Information content**: `informationContent(C) = log₂(searchDifficulty + 1)`
+This definition includes the usual boundary cases. There is exactly one empty word when $L=0$, so $|W(q,0)|=1=q^0$. If $q=0$ and $L>0$, there are no words, agreeing with $0^L=0$.
 
-### 2.3 Channel Composition
+### 2.2 Candidate information
 
-Given channels C₁ = (b, n₁, T₁, m₁) and C₂ = (b, n₂, T₂, m₂) with the same alphabet, their composition is:
+For a nonempty finite family $S$, define its **uniform logarithmic information** by
 
-```
-compose(C₁, C₂) = (b, n₁ + n₂, T₁ · T₂, m₁ · m₂)
-```
+$$
+I(S)=\log_2|S|.
+$$
 
-This represents the proof search problem of proving two independent theorems simultaneously.
+This is an indexing quantity. If candidates are uniformly distributed, each has probability $1/|S|$, and its self-information is
 
-## 3. Main Results
+$$
+-\log_2\left(\frac1{|S|}\right)=\log_2|S|.
+$$
 
-### 3.1 Theorem 1: Search-Capacity Duality
+When $|S|$ is not a power of two, a fixed-length binary index requires $\lceil\log_2|S|\rceil$ bits, while $\log_2|S|$ remains the natural real-valued information scale.
 
-**Theorem.** For b ≥ 2, k+1 ≤ n, 1 ≤ V, and V ≤ b^k:
-```
-b^(n - k - 1) ≤ b^n / V
-```
+Cardinality alone does not define a probability distribution. For a specified distribution $p$ on $S$, the self-information of $s\in S$ is $-\log_2 p(s)$ and the Shannon entropy is
 
-**Proof sketch.** By the division bound, it suffices to show b^(n-k-1) · V ≤ b^n. Since V ≤ b^k, we have b^(n-k-1) · V ≤ b^(n-k-1) · b^k = b^(n-1) ≤ b^n.
+$$
+H(p)=-\sum_{s\in S}p(s)\log_2p(s).
+$$
 
-**Example (PEGB-E).** Take b=2, n=10, k=3, V=8. Then b^(n-k-1) = 2^6 = 64. And b^n/V = 1024/8 = 128. Indeed 64 ≤ 128. ✓
+The exact results below concern cardinality and its logarithm. Probabilistic interpretations are uniform unless another distribution is explicitly supplied.
 
-**Generalization (PEGB-G).** The result holds for any b ≥ 2, not just binary. The proof is uniform in the alphabet size.
+### 2.3 Short binary descriptions
 
-**Boundary (PEGB-B).** When k = n-1, the bound gives b^0 = 1, which is trivially true. When k = 0 (extremely sparse proofs), the bound gives b^(n-2), showing that even a single valid proof requires exponential search.
+For $n\ge0$, let $B_{<n}$ be the set of all binary strings whose lengths are strictly less than $n$:
 
-### 3.2 Theorem 2: Composition Theorem
+$$
+B_{<n}=\bigcup_{k=0}^{n-1}\{0,1\}^k.
+$$
 
-**Theorem.** For channels C₁, C₂ with the same alphabet:
-```
-compose(C₁, C₂).spaceSize = C₁.spaceSize · C₂.spaceSize
-```
+The union is disjoint because strings of different lengths are distinct. This family is the target of any scheme that purports to encode every $n$-bit object using fewer than $n$ bits.
 
-Moreover, if both channels are non-trivial (n₁ ≥ 1, n₂ ≥ 1):
-```
-C₁.spaceSize < compose(C₁, C₂).spaceSize
-```
+### 2.4 Unstructured query search
 
-**Proof sketch.** By `pow_add`: b^(n₁ + n₂) = b^n₁ · b^n₂. Strict growth follows from b^n₂ > 1 when n₂ ≥ 1 and b ≥ 2.
+Let $S$ be a finite candidate family. A success set is a subset $A\subseteq S$, and an oracle answers a query $x\in S$ by returning whether $x\in A$. The lower bound considered here distinguishes two cases:
 
-**Significance.** This is not merely a restatement of exponentiation laws. It has a deep consequence: the monoid (ℕ, ·, 1) acts on search costs, and this action has **no nontrivial idempotents** (we prove a² = a → a ≤ 1). This means search effort cannot be "recycled" — every independent proof obligation demands fresh work.
+- the **empty case**, $A=\varnothing$;
+- the **unique-success case**, $A=\{s\}$ for an unknown $s\in S$.
 
-**Example (PEGB-E).** Two 2^5 = 32 subproblems compose to 2^10 = 1024. Total effort is 32 × 32 = 1024, not 32 + 32 = 64.
+The oracle is **unstructured** because the answer to one candidate gives no relation among other candidates. A deterministic algorithm may choose later queries based on earlier answers, but along an all-negative transcript its knowledge consists only of the queried set.
 
-**Boundary (PEGB-B).** If one component is trivial (n=0, space size 1), composition leaves the other unchanged: N · 1 = N.
+## 3. Exact enumeration and information scaling
 
-### 3.3 Theorem 3: Multiplicity-Capacity Tradeoff
+### Theorem 1 (Exact candidate count)
 
-**Theorem.** If T · m ≤ b^n and m ≥ 1, then T ≤ b^n / m.
+For all nonnegative integers $q$ and $L$,
 
-**Corollary (Maximum multiplicity).** If T · b^n ≤ b^n, then T = 1.
+$$
+|W(q,L)|=q^L.
+$$
 
-**Corollary (Minimum multiplicity).** With m = 1, we can achieve T = b^n (full capacity).
+**Proof sketch.** At each of the $L$ positions there are $q$ independent choices. The multiplication principle gives a product of $L$ copies of $q$, namely $q^L$. Equivalently, the cardinality of a finite Cartesian product is the product of the cardinalities of its factors. The boundary cases agree with the standard conventions described above. $\square$
 
-**Proof sketch.** Direct from the capacity bound by integer division.
+### Corollary 2 (Uniform logarithmic information)
 
-**Example (PEGB-E).** b=2, n=8: with m=1, T ≤ 256 (256 theorems). With m=4, T ≤ 64. With m=256, T ≤ 1.
+For $q>0$,
 
-**Boundary (PEGB-B).** m = b^n forces T = 1: if every theorem has maximally many proofs, only one theorem fits in the space.
+$$
+I(W(q,L))=L\log_2q.
+$$
 
-### 3.4 Theorem 4: Incompressibility Barrier
+**Proof sketch.** Apply the base-two logarithm to Theorem 1 and use $\log_2(q^L)=L\log_2q$. $\square$
 
-**Theorem.** For b ≥ 2 and n ≥ 1:
-```
-b^n - b^(n-1) = b^(n-1) · (b - 1)
-```
+### Theorem 3 (Exact $n\log n$ law under $n$-by-$n$ branching)
 
-**Corollary.** b^(n-1) ≤ b^n - b^(n-1): at least b^(n-1) strings of length n are incompressible.
+For every positive integer $n$, a depth-$n$ derivation model with $n$ symbols available at every position has $n^n$ candidates and uniform logarithmic information
 
-**Corollary (Binary).** 2^(n-1) = 2^n - 2^(n-1): exactly half of binary strings are incompressible.
+$$
+I(W(n,n))=n\log_2n.
+$$
 
-**Proof sketch.** Algebraic: b^n = b · b^(n-1), so b^n - b^(n-1) = (b-1) · b^(n-1). Since b ≥ 2, the factor (b-1) ≥ 1.
+**Proof sketch.** Substitute $q=L=n$ into Theorem 1 and Corollary 2. $\square$
 
-**Example (PEGB-E).** b=2, n=8: 2^8 - 2^7 = 256 - 128 = 128 = 2^7. Exactly 128 of 256 binary strings are incompressible. ✓
+The theorem is exact, not asymptotic. It also identifies the assumption responsible for the scale: the effective alphabet grows with $n$. If $q$ is fixed, Corollary 2 instead gives
 
-**Generalization (PEGB-G).** For b=256 (byte alphabet), n=100: 256^99 · 255 strings are incompressible — over 99.6% of all strings.
+$$
+I(W(q,n))=n\log_2q=\Theta(n).
+$$
 
-**Boundary (PEGB-B).** n=1: b - 1 of b symbols are incompressible (only one can map to the empty string). n=0: trivially 0, as there's only one string (the empty string).
+More generally, if depth is $L(n)$ and branching is $q(n)$, then
 
-### 3.5 Theorem 5: Hierarchical Separation
+$$
+I(n)=L(n)\log_2q(n).
+$$
 
-**Theorem.** For b ≥ 2 and all k: b^k < b^(k+1).
+If $L(n)=\Theta(n)$ and $q(n)=\Theta(n^\alpha)$ for a constant $\alpha>0$, then
 
-**Theorem (Existence).** For every k, there exists a ProofChannel with search difficulty ≥ b^k.
+$$
+I(n)=\Theta(n\log n),
+$$
 
-**Theorem (Unboundedness).** For every d, there exists k with d < b^k.
+with leading logarithmic factor governed by $\alpha$. If $q(n)$ is bounded above and below by positive constants greater than one, then $I(n)=\Theta(n)$.
 
-**Proof sketch.** For existence: construct a channel with n = k+1, T = 1, m = 1. Then spaceSize = b^(k+1), totalValidProofs = 1, searchDifficulty = b^(k+1) ≥ b^k. Unboundedness follows from exponential growth dominating linear.
+## 4. Finite incompressibility
 
-**Example (PEGB-E).** b=2, k=3: the channel (2, 4, 1, 1) has difficulty 2^4 / 1 = 16 ≥ 8 = 2^3.
+### Lemma 4 (Count of shorter binary descriptions)
 
-**Boundary (PEGB-B).** k=0: difficulty ≥ 1 (trivially achievable). This is the lowest non-trivial level of the hierarchy.
+For every nonnegative integer $n$,
 
-## 4. Additional Results
+$$
+|B_{<n}|=2^n-1.
+$$
 
-### 4.1 Average-Case Complexity
+**Proof sketch.** There are $2^k$ binary strings of length $k$. Summing over $0\le k<n$ gives the finite geometric series
 
-**Theorem.** If P ≤ b^(s-1) statements of length s are provable, then at least b^(s-1) · (b-1) are unprovable.
+$$
+|B_{<n}|=\sum_{k=0}^{n-1}2^k=\frac{2^n-1}{2-1}=2^n-1.
+$$
 
-This shows that as statement length grows, the fraction of provable statements vanishes. For b=2, at least half of all statements are unprovable.
+For $n=0$, both sides are zero. $\square$
 
-### 4.2 Monoid Structure
+### Theorem 5 (No uniform strict compression)
 
-The natural numbers under multiplication form the "search cost monoid." We prove this monoid has **no nontrivial idempotents**: if a² = a then a ≤ 1. This algebraic fact has a proof-theoretic interpretation: search effort always accumulates under composition, and cannot be "reused."
+For every nonnegative integer $n$, there is no injective map from the set of all $n$-bit strings into $B_{<n}$. Equivalently, no lossless binary description scheme assigns every $n$-bit object a code of length strictly less than $n$.
 
-### 4.3 Falsifiable Conjecture
+**Proof sketch.** The source contains $2^n$ objects by Theorem 1 with $q=2$ and $L=n$. The target contains only $2^n-1$ descriptions by Lemma 4. An injective map from a larger finite set to a smaller one is impossible by the pigeonhole principle. $\square$
 
-**Conjecture (Log-Factor Growth).** The minimum proof length for a theorem of statement length s grows as Θ(s · log₂ s).
+The quantifiers are important. The theorem does not claim that every $n$-bit string is incompressible under every scheme. It claims that for each lossless scheme, at least one $n$-bit object fails to receive a strictly shorter description. Many particular strings can be compressed, provided other strings consume enough of the available code space.
 
-**Testable consequence (proved).** For s ≥ 4, s < s · log₂ s. Moreover, log₂ s ≥ 2 for s ≥ 4.
+The result is also independent of computational resources: even an arbitrarily expensive encoder cannot create additional short binary strings. The obstruction is purely cardinal.
 
-**Computational test.** Measure statement length s and proof length p for 1000 formal theorems. The conjecture predicts p/(s · log₂ s) ∈ [0.1, 10] with variance decreasing as sample size grows.
+## 5. The adversarial query boundary
 
-## 5. Algorithms
+### Lemma 6 (Unqueried witness)
 
-### 5.1 Brute-Force Search
+Let $S$ be a finite set and let $Q\subset S$ be a proper subset. Then there exists $s\in S\setminus Q$ such that every $x\in Q$ satisfies $x\ne s$.
 
-Given a ProofChannel C, the brute-force search algorithm enumerates all b^n candidate proofs and checks each one:
+**Proof sketch.** Properness means precisely that $S\setminus Q$ is nonempty. Choose $s$ in the complement. Membership in the complement gives both $s\notin Q$ and $x\ne s$ for every $x\in Q$. $\square$
 
-```
-BruteForce(C):
-  for each string s of length n over alphabet b:
-    if verify(s, theorem):
-      return s
-  return FAIL
-```
+Though elementary, this lemma is the adversarial core of the search lower bound.
 
-Time complexity: O(b^n · V) where V is verification cost. Space: O(n).
+### Theorem 7 (Sharp deterministic oracle lower bound)
 
-### 5.2 Stratified Search
+Let $S$ be a finite candidate family of size $N$. Any deterministic algorithm that must distinguish the empty success set from every singleton success set using only membership queries has worst-case query complexity $N$. More explicitly, after any transcript containing fewer than $N$ distinct negative queries, there remains a candidate $s$ such that the transcript is consistent both with $A=\varnothing$ and with $A=\{s\}$.
 
-When proof structure is available, search can be stratified by proof length:
+**Proof sketch.** Let $Q$ be the set of candidates queried along an all-negative transcript. If $|Q|<N$, then $Q$ is proper. By Lemma 6, choose $s\notin Q$. In the empty case, every query in $Q$ returns negative. In the singleton case $A=\{s\}$, every query in $Q$ also returns negative because none equals $s$. Thus the transcript cannot distinguish the two cases. To guarantee a decision, an algorithm may have to query all $N$ candidates. Conversely, querying all candidates suffices, so the bound is sharp. $\square$
 
-```
-StratifiedSearch(C, max_len):
-  for len = 1 to max_len:
-    for each string s of length len over alphabet b:
-      if verify(s, theorem):
-        return s
-  return FAIL
-```
+### Corollary 8 (Exponential boundary for derivation words)
 
-This finds shorter proofs first but has the same worst-case complexity.
+For depth-$L$ words over $q$ symbols, distinguishing no successful derivation from a unique successful derivation may require
 
-### 5.3 Channel-Optimal Search
+$$
+q^L
+$$
 
-Using the Multiplicity-Capacity Tradeoff, we can derive the optimal balance between theorem coverage and proof redundancy:
+queries in the worst case. If $q>0$ and $I=L\log_2q$, this is
 
-```
-OptimalChannel(b, n, target_T):
-  m_max = b^n / target_T
-  return ProofChannel(b, n, target_T, m_max)
-```
+$$
+q^L=2^I.
+$$
 
-## 6. Discussion
+**Proof sketch.** Apply Theorem 7 to $S=W(q,L)$ and substitute the cardinality from Theorem 1. The logarithmic form follows from Corollary 2. $\square$
 
-### 6.1 Connection to P vs NP
+The theorem concerns deterministic exact search. Randomization changes the form but not the basic scale when the unique secret is uniformly distributed: without structure, a random ordering needs $(N+1)/2$ queries on average to find it, and high-confidence success still requires querying a constant fraction of the space. Such randomized claims are useful extensions but are not needed for the exact deterministic result.
 
-The Search-Capacity Duality is the proof complexity analog of the P ≠ NP conjecture. While P vs NP concerns decision problems, our results concern search problems over proof spaces. The exponential gap we establish is unconditional — it does not depend on any unproven complexity-theoretic assumption.
+The lower bound does not apply when a query reveals more than membership. A constraint solver may infer that one failure eliminates many candidates; a group-theoretic invariant may divide the space into classes; a compositional verifier may expose a failing subgoal. These are not counterexamples. They are structured search models with richer information channels.
 
-### 6.2 Implications for Automated Reasoning
+## 6. Composition laws
 
-Our results quantify the inherent limits of automated theorem proving:
-- No prover can escape the exponential search bound without exploiting problem-specific structure.
-- The Composition Theorem shows that decomposition strategies (splitting into independent subgoals) face multiplicative rather than additive costs.
-- The Incompressibility Barrier limits the effectiveness of proof compression.
+### Theorem 9 (Multiplicative composition of candidate families)
 
-### 6.3 The Channel-Theoretic Perspective
+Let one derivation component have alphabet size $q_1$ and depth $L_1$, and another have alphabet size $q_2$ and depth $L_2$. The family of ordered pairs of component derivations has cardinality
 
-Viewing proof systems as channels opens several directions:
-- **Error-correcting proofs**: Proofs with redundancy (m > 1) are more robust to search errors.
-- **Capacity optimization**: Balancing T and m maximizes the "information throughput" of a proof system.
-- **Channel composition**: The compose operation provides an algebraic framework for analyzing modular proofs.
+$$
+|W(q_1,L_1)\times W(q_2,L_2)|=q_1^{L_1}q_2^{L_2}.
+$$
 
-## 7. Future Work
+**Proof sketch.** The cardinality of a Cartesian product is the product of the cardinalities of its factors. Apply Theorem 1 to each factor. $\square$
 
-1. **Noisy channels**: Extend the framework to proof systems with verification errors.
-2. **Continuous channels**: Define real-valued analogs using Shannon entropy.
-3. **Category-theoretic formulation**: Express channel composition as a monoidal structure.
-4. **Empirical validation**: Test the log-factor growth conjecture on large formal proof corpora.
-5. **Proof compression bounds**: Derive tighter bounds using the channel perspective.
+### Theorem 10 (Additive logarithmic information)
 
-## 8. References
+If $q_1,q_2>0$, then
 
-1. Shannon, C.E. (1948). "A mathematical theory of communication." Bell System Technical Journal.
-2. Cook, S.A. & Reckhow, R.A. (1979). "The relative efficiency of propositional proof systems." Journal of Symbolic Logic.
-3. Kolmogorov, A.N. (1965). "Three approaches to the quantitative definition of information." Problems of Information Transmission.
-4. Krajíček, J. (1995). *Bounded Arithmetic, Propositional Logic, and Complexity Theory*. Cambridge University Press.
-5. Pudlák, P. (1998). "The lengths of proofs." Handbook of Proof Theory.
+$$
+\log |W(q_1,L_1)\times W(q_2,L_2)|
+=L_1\log q_1+L_2\log q_2,
+$$
 
-## Appendix: Formal Verification
+where the same logarithm base is used throughout.
 
-All theorems in this paper have been formally verified in Lean 4 (version 4.28.0) with Mathlib. The proofs use only standard axioms (propext, Classical.choice, Quot.sound, Lean.ofReduceBool, Lean.trustCompiler) and contain no `sorry` statements.
+**Proof sketch.** Use Theorem 9, then apply $\log(ab)=\log a+\log b$ and $\log(q^L)=L\log q$. Positivity ensures the logarithms are defined. $\square$
 
-The verified theorems and their axiom dependencies:
-- `channel_capacity_bound`: [propext, Classical.choice, Quot.sound]
-- `search_capacity_duality`: [propext, Classical.choice, Quot.sound]
-- `search_composition_multiplicative`: [propext]
-- `compose_space_size`: [propext]
-- `incompressibility_identity`: [propext]
-- `incompressible_count`: [propext, Classical.choice, Quot.sound]
-- `binary_incompressibility`: [propext]
-- `hierarchy_strict_separation`: [propext, Classical.choice, Quot.sound]
-- `hierarchy_witness`: [propext, Classical.choice, Quot.sound]
-- `no_nontrivial_idempotent`: [propext]
-- `log_factor_growth_testable`: [propext, Classical.choice, Lean.ofReduceBool, Lean.trustCompiler, Quot.sound]
+This is the combinatorial origin of additive information. Independent possibilities compose multiplicatively, while logarithms convert their product into a sum.
 
-Source file: `Novelty/ProofChannelTheory.lean`
+## 7. Subadditivity and asymptotic rates
+
+Fix $q\ge0$ and define the natural-logarithmic candidate count
+
+$$
+A_q(n)=\log|W(q,n)|=\log(q^n).
+$$
+
+For $q>0$, this is simply
+
+$$
+A_q(n)=n\log q.
+$$
+
+At $q=0$, the expression at positive depth involves the logarithm of zero and should not be interpreted as finite information; asymptotic information statements therefore assume positive branching.
+
+### Theorem 11 (Additivity and subadditivity at fixed branching)
+
+For $q>0$ and all nonnegative integers $n,m$,
+
+$$
+A_q(n+m)=A_q(n)+A_q(m).
+$$
+
+Consequently,
+
+$$
+A_q(n+m)\le A_q(n)+A_q(m),
+$$
+
+so $A_q$ is subadditive.
+
+**Proof sketch.** From $A_q(k)=k\log q$,
+
+$$
+A_q(n+m)=(n+m)\log q=n\log q+m\log q.
+$$
+
+Equality immediately implies the subadditive inequality. $\square$
+
+### Corollary 12 (Doubled-depth information bound)
+
+For $q>0$ and every nonnegative integer $n$,
+
+$$
+A_q(2n)\le2A_q(n).
+$$
+
+In the word model, equality holds.
+
+**Proof sketch.** Apply Theorem 11 with $m=n$. $\square$
+
+The importance of subadditivity is broader than this exact model. Suppose a sequence of candidate families $S_n$ satisfies a submultiplicative estimate
+
+$$
+|S_{n+m}|\le|S_n||S_m|.
+$$
+
+Taking logarithms gives
+
+$$
+\log|S_{n+m}|\le\log|S_n|+\log|S_m|.
+$$
+
+Thus logarithmic counts are subadditive even when exact factorization fails. Standard subadditive arguments can then identify a limiting exponential growth rate through normalized quantities such as $\log|S_n|/n$, provided the relevant finiteness conditions hold. The exact word model is the sharp additive baseline for that broader analysis.
+
+## 8. Algorithms and computational examples
+
+The principal quantities can be computed exactly with integer arithmetic before taking logarithms.
+
+### Algorithm 1: uniform candidate analysis
+
+Given $q$ and $L$:
+
+1. Validate that $q,L\ge0$.
+2. Compute $N=q^L$ by integer exponentiation.
+3. If $N>0$, compute $I=\log_2N$; otherwise report that finite logarithmic information is undefined.
+4. Report $N$ as the sharp deterministic oracle-query boundary.
+
+Exponentiation by squaring uses $O(\log L)$ integer multiplications. Because the output $q^L$ has $\Theta(L\log q)$ bits for $q\ge2$, bit complexity necessarily depends on output size.
+
+### Algorithm 2: shorter-description enumeration
+
+Given $n\ge0$:
+
+1. Compute the object count $2^n$.
+2. Compute the number of shorter descriptions as $2^n-1$.
+3. Compare the counts; the deficit is exactly one.
+4. Conclude that an injection from all $n$-bit objects into shorter descriptions is impossible.
+
+Again, the arithmetic uses exponentiation by squaring and subtraction. The conceptual certificate is the strict inequality $2^n-1<2^n$.
+
+### Algorithm 3: variable-branching analysis
+
+For branching factors $b_1,\ldots,b_L$:
+
+1. Initialize $N=1$ and $I=0$.
+2. For each level $i$, multiply $N$ by $b_i$.
+3. If every $b_i>0$, add $\log_2b_i$ to $I$.
+4. Return
+
+$$
+N=\prod_{i=1}^L b_i,
+\qquad
+I=\sum_{i=1}^L\log_2b_i=\log_2N.
+$$
+
+This generalization exposes the additive geometry of nonuniform trees. Its running time is linear in the number of levels, apart from the growing cost of big-integer multiplication.
+
+### Numerical checks
+
+Several small cases illustrate all three mechanisms:
+
+- $|W(2,5)|=2^5=32$.
+- $|W(4,3)|=4^3=64$.
+- $|W(3,3)|=3^3=27$.
+- $|B_{<5}|=2^5-1=31$, so $32$ five-bit objects cannot all receive distinct descriptions shorter than five bits.
+- Combining $W(2,5)$ and $W(4,3)$ gives $32\cdot64=2048$ candidates and information $5+6=11$ bits.
+- In the $n$-by-$n$ model with $n=10$, there are $10^{10}$ candidates and information $10\log_2 10\approx33.219$ bits.
+
+## 9. Applications
+
+### 9.1 Certificate and derivation search
+
+Whenever a certificate consists of a bounded sequence of discrete choices, the word model gives a first candidate-count estimate. If each of $L$ stages admits at most $q$ options, then $q^L$ is an upper bound on the naïve search space. When all choices are genuinely independent and admissible, it is exact. The oracle lower bound then describes the worst case if validation provides no information beyond acceptance or rejection.
+
+### 9.2 Passwords and exhaustive key search
+
+A length-$L$ password over an alphabet of size $q$ has $q^L$ possibilities and $L\log_2q$ bits of uniform search information. A checker that reveals only exact equality realizes the same hidden-singleton model. Rate limits and side channels affect practical search, but the finite combinatorics are identical.
+
+### 9.3 Test generation and configuration spaces
+
+A system with $L$ independent parameters, each taking $q$ values, has $q^L$ complete configurations. Exhaustive testing can therefore be exponential in the number of parameters even when a single test is cheap. Structure-aware methods such as covering arrays escape exhaustive enumeration by changing the objective: they guarantee selected interaction coverage rather than identification of an arbitrary unique failing configuration.
+
+### 9.4 Compression and representation design
+
+The incompressibility theorem constrains universal promises. Domain-specific encodings succeed by assigning short descriptions to common or structured objects, not by shortening every object. To discuss expected compression, one must add a source distribution; to discuss prefix-free variable-length codes, one must add Kraft-type constraints. The finite theorem is the distribution-free endpoint from which those refinements begin.
+
+### 9.5 Modular problem solving
+
+The composition theorem quantifies the cost of independent subproblems. If two modules have information scales $I_1$ and $I_2$, their Cartesian combination has $I_1+I_2$. This supports modular accounting, but not automatically modular search: an algorithm benefits only if it can solve or constrain the components separately rather than enumerate their full product.
+
+## 10. Scope and limitations
+
+The results are intentionally exact and conditional. Several stronger-sounding claims do not follow from them alone.
+
+**No distribution-free self-information.** An expression such as $-\log_2p(P)$ requires a specified probability $p(P)$. Cardinality supplies a uniform model but does not privilege it for empirical derivations.
+
+**No universal $n\log n$ theorem.** The exact scale follows from $n$ choices at each of $n$ positions. Statement length by itself does not determine depth, branching, admissibility constraints, or redundancy.
+
+**No automatic complexity-class lower bound.** Establishing hardness for a concrete search problem requires a formal input encoding and reductions from a known hard problem. The oracle theorem is a black-box query lower bound, not a time-complexity classification for a structured derivation system.
+
+**No average-case theorem for random statements.** Average-case analysis requires a distribution over statements and a policy for handling instances with no derivation. The fact that many syntactic strings may fail to express solvable tasks does not itself determine the conditional cost of finding derivations for solvable instances.
+
+**Structure can defeat enumeration.** Algebraic constraints, dynamic programming, symmetry reduction, semantic guidance, and learned ranking may collapse the effective search space. Their success should be measured by the information each operation reveals or by the reduction in effective branching.
+
+**Verification cost remains separate.** If one verification takes time $V(n)$, exhaustive worst-case running time is approximately $q^L V(n)$, not merely $q^L$. The present analysis isolates the number of candidate queries.
+
+These limitations sharpen rather than weaken the contribution. They identify exactly which assumptions must be justified before finite counting can support a claim about practical proof or certificate search.
+
+## 11. Future research
+
+A natural first extension replaces uniform branching by a sequence $b_1,b_2,\ldots$. The candidate count becomes $\prod_i b_i$ and logarithmic information becomes $\sum_i\log_2b_i$. If the Cesàro mean of $\log_2b_i$ converges, normalized information should converge to the same rate.
+
+A second direction develops quantitative prefix-free incompressibility. For a uniform family of size $N$, counting and Kraft's inequality suggest that, for every $c\ge0$, all but at most a fraction $2^{-c}$ of objects require descriptions of length at least approximately $\log_2N-c$. Weighted versions should replace cardinality with source entropy and uniform mass with a specified distribution.
+
+A third direction seeks explicit structure-sensitive separations: natural finite derivation systems in which candidate verification is efficient, black-box search is exponential, yet a semantic invariant supports polynomial-time construction. Such examples would quantify precisely what the oracle model omits.
+
+A fourth direction classifies $n\log n$ behavior by effective branching. Linear depth and geometric-mean branching asymptotic to $n^\alpha$ should yield $\alpha n\log_2n$ at leading order, while bounded geometric-mean branching yields linear information.
+
+Finally, entropy must be paired with a search policy. Two candidate families can have equal cardinality and equal uniform information while possessing radically different algorithms. A mature theory should therefore combine source information, query informativeness, computational structure, and the cost of verification.
+
+## 12. Conclusion
+
+Finite derivation search has a simple exact baseline. Depth-$L$ words over $q$ symbols form a family of size $q^L$ and carry $L\log_2q$ bits of uniform indexing information. The $n\log_2n$ scale is exact when depth and branching are both $n$, but fixed branching gives only linear information. There are exactly $2^n-1$ binary descriptions shorter than $n$, so no lossless code strictly compresses every $n$-bit object. An unstructured verifier can hide a unique success at any unqueried candidate, forcing $q^L=2^I$ deterministic queries in the worst case. Independent candidate spaces multiply, their logarithmic information adds, and fixed-branching logarithmic counts are additive and hence subadditive.
+
+Together these results explain the fundamental gap between checking a chosen candidate and locating one without guidance. They also locate the boundary of the argument: cardinality is not probability, oracle search is not structured computation, and $n\log n$ reflects growing branching rather than a universal property of statements. Any practical theory of derivation search must begin with these counts and then measure the structure that allows algorithms to do better.
