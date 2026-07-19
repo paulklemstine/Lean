@@ -3079,21 +3079,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Holographic Primes: The Prime Number AdS/CFT Correspondence"
   },
   {
-    "consumed_by_exp_id": "c58345ac",
-    "description": "The Hodge conjecture states that every rational cohomology class on a projective variety is a rational linear combination of algebraic cycles. For a ReLU neural network f: R^n -> R, the decision surface V(f) = {x : f(x) = 0} is a piecewise linear hypersurface. Conjecture: every rational homology class in H_{n-2}(V(f), Q) is represented by an algebraic cycle (a subvariety of V(f) of codimension 1). Since V(f) is piecewise linear, its homology groups are finitely generated and every cycle is a formal sum of linear pieces. Each linear piece is an algebraic cycle (a hyperplane section). Conjecture: the piecewise linear Hodge conjecture holds \u2014 every homology class in V(f) is a sum of hyperplane sections. This is TRUE for piecewise linear varieties because every face of a polyhedron is cut out by a linear equation. The deeper conjecture: for a ReLU network with L layers and widths (n, w_1, ..., w_L, 1), the Hodge numbers h^{p,q}(V(f)) satisfy h^{p,q} <= (w_1 choose p) * (w_L choose q) * prod_{i=2}^{L-1} w_i. Test: compute H_{n-2}(V(f)) for small ReLU networks and verify that every class is represented by hyperplane sections. Impact: the Hodge conjecture is trivially true for neural network decision surfaces. The non-trivial content is the BOUND on Hodge numbers.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0376",
-    "priority_score": 0.76,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T02:05:56.009530+00:00",
-    "title": "The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision Surfaces"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "# Future directions\n\nThis development formalizes the finite coordinate core of Curtin's *Generalizations of nets and Latin squares* (arXiv:2607.10890v1): column- and row-Latin matrices, orthogonality, cooperative pairs and systems, coordinate reticulations, svelte arrays, unique cross-line intersections, the grid-coordinate characterizations of Lemma 7.5, and the `m*n` cardinality consequence of Theorem 3.1.\n\nNatural next steps are:\n\n1. **Partition-level incidence structures.** Connect the coordinate-fibre representation here to a literal structure whose lines are finite sets and whose families are `Set.PairwiseDisjoint` covers. Prove both representations equivalent, including all seven clauses of Theorem 3.1.\n2. **Full inverse correspondence.** Package the maps between ordered reticulations, svelte semi-orthogonal arrays, and normalized cooperative systems as equivalences, proving Theorems 6.2, 6.3, 7.7, and 7.8 at structure level rather than only the forward encodings established here.\n3. **Multiplicity and foundations.** Model multisets of line families, then formalize repetition-free reticulations and Proposition 4.1.\n4. **Parastrophy and isotopy.** Define the permutation actions from Sections 9 and 10 and prove that they preserve the cooperative and reticulation axioms.\n5. **Constructions.** Formalize prolongation, splicing, and direct products from Sections 12\u201314, with formulas for their parameters.\n6. **Classical specializations.** Build translations from nets, mixed orthogonal arrays, mutually orthogonal Latin squares, and bireversible Mealy automata, recovering Propositions 3.6 and 6.6 and Theorem 7.3.\n7. **Finite search.** Add executable enumeration of small repetition-free systems up to isotopy, together with kernel-checked certificates for any reported counts.\n",
     "domains": [
@@ -4441,6 +4426,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-19T04:49:01.534045+00:00",
     "title": "**Conjecture.** For every integer `k \u2265 5`, there is a threshold `N\u2080(k)` such tha"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## What is proved\n\nThe four files in `MachineLearning/HodgeCycles/` give a complete finite-dimensional theory for a three-term cellular chain complex over any field. In the middle degree, if `d\u2081 \u2218 d\u2082 = 0`, then\n\n`\u03b2\u2081 + rank(d\u2081) + rank(d\u2082) = dim(C\u2081)`.\n\nThey derive exact criteria for nonzero, vanishing, and maximal middle homology; prove that every quotient class lifts to a cellular cycle; count activation patterns; and establish monotone cell-count bounds. The Euler\u2013Poincar\u00e9 development additionally proves\n\n`dim(H\u2080) - dim(H\u2081) + dim(H\u2082) = dim(C\u2080) - dim(C\u2081) + dim(C\u2082)`,\n\nshows that this integer is independent of the differentials once the chain-group dimensions are fixed, and bounds its absolute value by the total chain dimension. Under a common activation-pattern bound `P` on all three chain dimensions, it obtains `|\u03c7| \u2264 3P`. Taking the field to be `\u211a` gives the rational cellular statements relevant to finite polyhedral decision surfaces.\n\n## Mathematical correction to the motivating conjecture\n\nA general ReLU zero set is a real, usually noncompact, piecewise-linear set. It is not automatically a smooth complex projective variety, so classical Hodge numbers `h^{p,q}` are not canonically defined for it. Moreover, a polyhedral face is contained in an affine hyperplane but is generally not itself an algebraic subvariety or a global hyperplane section. Thus the classical Hodge conjecture cannot literally be declared trivial for neural-network decision surfaces.\n\nThe theorem proved here is the rigorous replacement that is available without extra geometric hypotheses: cellular homology classes are represented by cellular cycles, and their dimensions obey an exact rank formula. Calling these cellular generators \u201calgebraic cycles\u201d requires an additional, separately formalized realization map and should not be inferred merely from linear containment of each face.\n\n## Next formal targets\n\n1. **Finite polyhedral complexes.** Define a finite rational polyhedral complex and its cellular boundary maps, then instantiate the abstract theorem in every degree.\n2. **ReLU-to-complex construction.** Formalize affine ReLU networks, activation regions, and a finite polyhedral complex for a compact truncation of the zero set. Prove the boundary-square-zero law.\n3. **Locally finite or compactly supported theories.** Unbounded decision surfaces need locally finite homology, compactly supported cohomology, or a specified compactification; ordinary finite cellular homology is not enough.\n4. **Realization map.** Define an explicit cycle class map from rational polyhedral cycles into a chosen geometric cohomology theory. Only then can surjectivity be called a Hodge-type representability theorem.\n5. **Architecture bounds.** Prove bounds on the number of cells in each dimension from network architecture. The activation-pattern count `2^(sum widths)` is valid as a coarse combinatorial ceiling, but a proposed binomial bigrading needs a definition of the bigraded invariant before it is a meaningful theorem.\n6. **Sharp examples.** Construct network families whose cellular boundary ranks are computable and compare actual Betti numbers with cell-count bounds. The exact criterion in this development reduces this to determining two adjacent differential ranks.\n7. **Stability.** Study how the rank criterion changes under perturbations of weights and biases, especially across parameter values where activation complexes change combinatorial type.\n",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_0402",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "c58345ac",
+    "status": "available",
+    "timestamp": "2026-07-19T05:39:19.230565+00:00",
+    "title": "The four files in `MachineLearning/HodgeCycles/` give a complete finite-dimensio"
   },
   {
     "consumed_by_exp_id": "",

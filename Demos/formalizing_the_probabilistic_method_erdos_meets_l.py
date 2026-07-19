@@ -1,232 +1,163 @@
-"""
-Numerical demonstrations for the constructive core of the probabilistic method.
+#!/usr/bin/env python3
+"""Numerical demonstrations of finite avoidance and Turán sharpness.
 
-This self-contained script illustrates three landmark results:
-
-  1. Erdos's Ramsey lower bound  R(k,k) > 2^{k/2}, via the finite union-bound
-     count  2 * C(n,k) < 2^{C(k,2)}.
-  2. The Lovasz Local Lemma:
-       - the first-moment / union-bound principle,
-       - the independent-case product formula  P(no bad event) = prod (1 - p_i),
-       - the Moser-Tardos resampling algorithm (constructive LLL).
-  3. Turan's theorem: a K_{r+1}-free graph on n vertices has at most
-     (1 - 1/r) n^2 / 2 edges, attained by the explicit Turan graph.
-
-Everything is pure standard-library Python with type hints.
+The script uses only the Python standard library. It computes Ramsey union-bound
+ratios, searches small complete graphs for colorings without monochromatic
+cliques, demonstrates conditional survivor filtering, and constructs balanced
+complete bipartite graphs while checking triangle-freeness and edge counts.
 """
 
 from __future__ import annotations
 
-import math
-import random
 from itertools import combinations
-from typing import Callable, Dict, List, Tuple
+from math import comb
+from typing import Callable, Dict, FrozenSet, Iterable, List, Optional, Sequence, Set, Tuple, TypeVar
+
+Vertex = int
+Edge = Tuple[Vertex, Vertex]
+Outcome = TypeVar("Outcome")
 
 
-# ---------------------------------------------------------------------------
-# 1. Erdos's Ramsey lower bound by finite counting
-# ---------------------------------------------------------------------------
+def complete_graph_edges(n: int) -> List[Edge]:
+    """Return the lexicographically ordered edges of K_n."""
+    if n < 0:
+        raise ValueError("n must be nonnegative")
+    return list(combinations(range(n), 2))
 
-def erdos_counting_holds(n: int, k: int) -> bool:
-    """Return True iff the Erdos counting hypothesis 2*C(n,k) < 2^{C(k,2)} holds.
 
-    When True, there exists a red/blue edge-coloring of K_n with no
-    monochromatic K_k, i.e. R(k,k) > n.
+def ramsey_union_ratio(n: int, k: int) -> float:
+    """Return 2*C(n,k)/2^C(k,2), the exact union-bound ratio."""
+    if not 0 <= k <= n:
+        raise ValueError("require 0 <= k <= n")
+    return (2 * comb(n, k)) / (2 ** comb(k, 2))
+
+
+def ramsey_power_ratio(n: int, k: int) -> float:
+    """Return 2*n^k/2^C(k,2), the ratio in the simpler power criterion."""
+    if n < 0 or k < 0:
+        raise ValueError("n and k must be nonnegative")
+    return (2 * n**k) / (2 ** comb(k, 2))
+
+
+def is_ramsey_avoiding(mask: int, n: int, k: int, edges: Sequence[Edge]) -> bool:
+    """Test whether a bit-encoded coloring of K_n has no monochromatic K_k."""
+    edge_index: Dict[Edge, int] = {edge: idx for idx, edge in enumerate(edges)}
+    for vertices in combinations(range(n), k):
+        colors = {
+            (mask >> edge_index[tuple(sorted(edge))]) & 1
+            for edge in combinations(vertices, 2)
+        }
+        if len(colors) == 1:
+            return False
+    return True
+
+
+def find_ramsey_avoiding_coloring(n: int, k: int) -> Optional[Set[Edge]]:
+    """Exhaustively find red edges of a coloring of K_n with no monochromatic K_k.
+
+    This is intended only for small numerical examples: the search has 2^C(n,2)
+    candidates in the worst case.
     """
-    return 2 * math.comb(n, k) < 2 ** math.comb(k, 2)
+    if not 2 <= k <= n:
+        raise ValueError("require 2 <= k <= n")
+    edges = complete_graph_edges(n)
+    for mask in range(1 << len(edges)):
+        if is_ramsey_avoiding(mask, n, k, edges):
+            return {edge for idx, edge in enumerate(edges) if (mask >> idx) & 1}
+    return None
 
 
-def expected_mono_cliques(n: int, k: int) -> float:
-    """Expected number of monochromatic K_k under a uniform random coloring of K_n.
-
-    Equal to 2 * C(n,k) * 2^{-C(k,2)}.  When < 1, a clique-free coloring exists.
-    """
-    return 2.0 * math.comb(n, k) * 2.0 ** (-math.comb(k, 2))
-
-
-def erdos_lower_bound(k: int) -> int:
-    """Largest n we can certify with n = 2^{floor(k/2)} giving R(k,k) > n."""
-    return 2 ** (k // 2)
-
-
-def demo_ramsey() -> None:
-    print("=" * 70)
-    print("1. ERDOS RAMSEY LOWER BOUND  R(k,k) > 2^{k/2}")
-    print("=" * 70)
-    print(f"{'k':>3} {'n=2^floor(k/2)':>16} {'E[#mono cliques]':>20} {'R(k,k)>n?':>12}")
-    for k in range(3, 12):
-        n = erdos_lower_bound(k)
-        exp = expected_mono_cliques(n, k)
-        ok = erdos_counting_holds(n, k)
-        print(f"{k:>3} {n:>16} {exp:>20.6f} {str(ok):>12}")
-
-    print("\nConcrete small cases certified by counting:")
-    for n, k in [(5, 4), (8, 6)]:
-        lhs, rhs = 2 * math.comb(n, k), 2 ** math.comb(k, 2)
-        print(f"  R({k},{k}) > {n}:  2*C({n},{k}) = {lhs} < 2^C({k},2) = {rhs}"
-              f"  -> {lhs < rhs}")
+def filter_survivors(
+    outcomes: Iterable[Outcome],
+    bad_predicates: Sequence[Callable[[Outcome], bool]],
+) -> List[Set[Outcome]]:
+    """Return the survivor set after each successive bad predicate."""
+    current = set(outcomes)
+    history: List[Set[Outcome]] = [set(current)]
+    for is_bad in bad_predicates:
+        current = {outcome for outcome in current if not is_bad(outcome)}
+        history.append(set(current))
+    return history
 
 
-# ---------------------------------------------------------------------------
-# 2a. First-moment / union-bound principle
-# ---------------------------------------------------------------------------
-
-def union_bound_positive(probs: List[float]) -> Tuple[bool, float]:
-    """First-moment principle.
-
-    If sum(probs) < 1 then P(no bad event) >= 1 - sum(probs) > 0.
-    Returns (guarantee_holds, lower_bound_on_prob_all_good).
-    """
-    s = sum(probs)
-    return (s < 1.0, max(0.0, 1.0 - s))
+def balanced_turan_graph(m: int) -> Tuple[Set[Vertex], Set[Edge]]:
+    """Construct the balanced complete bipartite graph on 2m vertices."""
+    if m < 0:
+        raise ValueError("m must be nonnegative")
+    left = set(range(m))
+    right = set(range(m, 2 * m))
+    vertices = left | right
+    edges = {(u, v) for u in left for v in right}
+    return vertices, edges
 
 
-# ---------------------------------------------------------------------------
-# 2b. Independent Lovasz Local Lemma: exact product formula
-# ---------------------------------------------------------------------------
-
-def independent_all_good(probs: List[float]) -> float:
-    """For mutually independent bad events, P(no bad event) = prod (1 - p_i)."""
-    out = 1.0
-    for p in probs:
-        out *= (1.0 - p)
-    return out
-
-
-def demo_lll_principles() -> None:
-    print("\n" + "=" * 70)
-    print("2. LOVASZ LOCAL LEMMA PRINCIPLES")
-    print("=" * 70)
-
-    probs = [0.1, 0.2, 0.15, 0.05]
-    ok, lb = union_bound_positive(probs)
-    print(f"Union bound: p = {probs}, sum = {sum(probs):.3f}")
-    print(f"  guarantee P(all good) > 0 ? {ok};  lower bound = {lb:.3f}")
-
-    many = [0.3] * 5  # sum = 1.5 > 1, union bound FAILS...
-    ok2, _ = union_bound_positive(many)
-    exact = independent_all_good(many)
-    print(f"\nIndependent case: p = {many}, sum = {sum(many):.3f}")
-    print(f"  union bound guarantee? {ok2}  (fails: sum >= 1)")
-    print(f"  but if independent, exact P(all good) = prod(1-p_i) = {exact:.5f} > 0")
+def has_triangle(vertices: Iterable[Vertex], edges: Set[Edge]) -> bool:
+    """Return whether an undirected edge set contains a triangle."""
+    normalized: FrozenSet[Edge] = frozenset(tuple(sorted(edge)) for edge in edges)
+    return any(
+        tuple(sorted((a, b))) in normalized
+        and tuple(sorted((a, c))) in normalized
+        and tuple(sorted((b, c))) in normalized
+        for a, b, c in combinations(vertices, 3)
+    )
 
 
-# ---------------------------------------------------------------------------
-# 2c. Moser-Tardos constructive LLL on a k-SAT instance
-# ---------------------------------------------------------------------------
-
-Clause = List[Tuple[int, bool]]  # list of (variable_index, required_polarity)
-
-
-def clause_satisfied(clause: Clause, assign: Dict[int, bool]) -> bool:
-    """A clause is satisfied if at least one literal matches the assignment."""
-    return any(assign[v] == polarity for v, polarity in clause)
-
-
-def moser_tardos(
-    num_vars: int,
-    clauses: List[Clause],
-    rng: random.Random,
-    max_steps: int = 100_000,
-) -> Tuple[Dict[int, bool], int]:
-    """Moser-Tardos resampling algorithm for the constructive LLL.
-
-    Sample all variables; while some clause is violated, pick one and resample
-    exactly the variables it depends on.  Under e*p*(d+1) <= 1 this terminates
-    in expected O(#clauses) resamplings.  Returns (assignment, #resamplings).
-    """
-    assign: Dict[int, bool] = {v: rng.random() < 0.5 for v in range(num_vars)}
-    steps = 0
-    while steps < max_steps:
-        violated = [c for c in clauses if not clause_satisfied(c, assign)]
-        if not violated:
-            return assign, steps
-        c = rng.choice(violated)
-        for v, _ in c:                      # resample the clause's variables
-            assign[v] = rng.random() < 0.5
-        steps += 1
-    return assign, steps
+def demo_ramsey_bounds() -> None:
+    """Print exact and power-criterion data, including (n,k)=(16,10)."""
+    print("Ramsey counting ratios")
+    for n, k in [(5, 3), (8, 4), (16, 10)]:
+        exact = ramsey_union_ratio(n, k)
+        power = ramsey_power_ratio(n, k)
+        print(
+            f"  n={n:2d}, k={k:2d}: exact ratio={exact:.8g}, "
+            f"power ratio={power:.8g}, criterion holds={exact < 1}"
+        )
+    print("  For (16,10), the power ratio is 1/16, so R(10,10) > 16.")
 
 
-def demo_moser_tardos() -> None:
-    print("\n" + "=" * 70)
-    print("2c. MOSER-TARDOS CONSTRUCTIVE LLL (random k-SAT)")
-    print("=" * 70)
-    rng = random.Random(2026)
-    num_vars, k, num_clauses = 40, 5, 60   # sparse => LLL condition holds
-    clauses: List[Clause] = []
-    for _ in range(num_clauses):
-        vs = rng.sample(range(num_vars), k)
-        clauses.append([(v, rng.random() < 0.5) for v in vs])
-
-    total_steps = 0
-    trials = 20
-    for _ in range(trials):
-        assign, steps = moser_tardos(num_vars, clauses, rng)
-        assert all(clause_satisfied(c, assign) for c in clauses)
-        total_steps += steps
-    print(f"vars={num_vars}, clause width k={k}, clauses={num_clauses}")
-    print(f"  all {trials} runs found a satisfying assignment")
-    print(f"  average resamplings until success: {total_steps / trials:.1f}")
+def demo_small_search() -> None:
+    """Find a small coloring of K_5 with no monochromatic triangle."""
+    red = find_ramsey_avoiding_coloring(5, 3)
+    assert red is not None
+    print("\nSmall exhaustive Ramsey search")
+    print(f"  Red edges in a K_5 coloring with no monochromatic K_3: {sorted(red)}")
+    print(f"  Blue edges: {sorted(set(complete_graph_edges(5)) - red)}")
 
 
-# ---------------------------------------------------------------------------
-# 3. Turan's theorem and the explicit Turan graph
-# ---------------------------------------------------------------------------
-
-def turan_graph_edges(n: int, r: int) -> int:
-    """Number of edges of the Turan graph T(n, r): complete r-partite, balanced."""
-    sizes = [n // r + (1 if i < n % r else 0) for i in range(r)]
-    total = n * (n - 1) // 2
-    within = sum(s * (s - 1) // 2 for s in sizes)   # non-edges (inside parts)
-    return total - within
-
-
-def turan_bound(n: int, r: int) -> float:
-    """Turan's upper bound (1 - 1/r) * n^2 / 2 on edges of a K_{r+1}-free graph."""
-    return (1.0 - 1.0 / r) * n * n / 2.0
+def demo_conditional_avoidance() -> None:
+    """Filter integers by three constraints that leave a common survivor."""
+    outcomes = range(1, 31)
+    constraints: List[Callable[[int], bool]] = [
+        lambda x: x % 2 == 0,
+        lambda x: x % 3 == 0,
+        lambda x: x % 5 == 0,
+    ]
+    history = filter_survivors(outcomes, constraints)
+    print("\nConditional survivor filtering")
+    for index, surviving in enumerate(history):
+        print(f"  after {index} constraint(s): {len(surviving):2d} survivors")
+    print(f"  common survivors: {sorted(history[-1])}")
 
 
-def max_clique_size(n: int, adj: List[List[bool]]) -> int:
-    """Brute-force maximum clique size (small n only), to verify K_{r+1}-freeness."""
-    best = 0
-    verts = list(range(n))
-    for size in range(n, 0, -1):
-        if size <= best:
-            break
-        for combo in combinations(verts, size):
-            if all(adj[a][b] for a, b in combinations(combo, 2)):
-                return size
-    return best
+def demo_turan_graphs() -> None:
+    """Verify triangle-freeness and the m^2 edge identity numerically."""
+    print("\nBalanced Turán graphs")
+    for m in range(1, 7):
+        vertices, edges = balanced_turan_graph(m)
+        triangle_free = not has_triangle(vertices, edges)
+        identity = 4 * len(edges) == (2 * m) ** 2
+        print(
+            f"  m={m}: vertices={2*m:2d}, edges={len(edges):2d}, "
+            f"triangle-free={triangle_free}, 4|E|=(2m)^2={identity}"
+        )
 
-
-def demo_turan() -> None:
-    print("\n" + "=" * 70)
-    print("3. TURAN'S THEOREM  |E| <= (1 - 1/r) n^2 / 2")
-    print("=" * 70)
-    print(f"{'n':>4} {'r':>3} {'T(n,r) edges':>14} {'bound':>12} {'<= bound?':>10}")
-    for n, r in [(6, 2), (9, 3), (10, 3), (12, 4), (15, 5)]:
-        e = turan_graph_edges(n, r)
-        b = turan_bound(n, r)
-        print(f"{n:>4} {r:>3} {e:>14} {b:>12.2f} {str(e <= b + 1e-9):>10}")
-
-    # verify the Turan graph is actually K_{r+1}-free for a small case
-    n, r = 9, 3
-    parts = [i % r for i in range(n)]
-    adj = [[parts[i] != parts[j] and i != j for j in range(n)] for i in range(n)]
-    omega = max_clique_size(n, adj)
-    print(f"\nT({n},{r}) largest clique = {omega} (must be <= r = {r}, "
-          f"so K_{{{r+1}}}-free: {omega <= r})")
-
-
-# ---------------------------------------------------------------------------
 
 def main() -> None:
-    demo_ramsey()
-    demo_lll_principles()
-    demo_moser_tardos()
-    demo_turan()
-    print("\nAll demonstrations complete.")
+    """Run all demonstrations."""
+    demo_ramsey_bounds()
+    demo_small_search()
+    demo_conditional_avoidance()
+    demo_turan_graphs()
 
 
 if __name__ == "__main__":
