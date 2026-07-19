@@ -1,247 +1,165 @@
-"""
-Quantum Error Correction from Homological Algebra: CSS Codes as Cohomology
-==========================================================================
+#!/usr/bin/env python3
+"""Numerical demonstrations for CSS homology and hypercube graph codes.
 
-Numerical demonstrations of the correspondence between CSS quantum
-error-correcting codes and the homology of chain complexes.
-
-Central dictionary
-------------------
-A CSS code is a length-two chain complex  A --d2--> B --d1--> C  with
-d1 . d2 = 0.  The physical qubits are a basis of B; the logical qubits are the
-middle homology  H = ker(d1) / im(d2).  The two structural identities are:
-
-    (Dimension formula)  k + rank(d1) + rank(d2) = dim(B)
-    (Euler identity)     beta0 + dim(B) = dim(ker d1) + dim(C)
-
-For a graph complex (d2 = 0) the logical count is the first Betti number
-(circuit rank):  k = E - V + beta0.  For the connected hypercube Q_n this
-gives the closed form  beta1(Q_n) = 2^(n-1) * (n - 2) + 1.
-
-This file is self-contained: every routine is inlined and uses only the
-standard library.  Arithmetic over F_2 is done with 0/1 integers modulo 2.
+The script uses only Python's standard library.  It computes ranks over GF(2),
+checks a length-two chain complex, evaluates its logical dimension, constructs
+small hypercube graphs, and confirms the requested Q4, Q6, and Q8 parameters.
 """
 
 from __future__ import annotations
 
-from itertools import product
-from typing import List, Tuple
+from collections import deque
+from dataclasses import dataclass
+from typing import Iterable, Sequence
 
-Matrix = List[List[int]]  # a matrix over F_2, entries in {0, 1}
+BinaryMatrix = list[list[int]]
 
 
-# ---------------------------------------------------------------------------
-# Linear algebra over F_2
-# ---------------------------------------------------------------------------
-def rank_f2(matrix: Matrix) -> int:
-    """Rank of a 0/1 matrix over the field F_2 via Gaussian elimination."""
-    if not matrix or not matrix[0]:
+@dataclass(frozen=True)
+class HypercubeParameters:
+    dimension: int
+    vertices: int
+    edges: int
+    logical_qubits: int
+    girth: int | None
+
+
+def gf2_rank(matrix: Sequence[Sequence[int]]) -> int:
+    """Return the rank of a rectangular binary matrix over GF(2)."""
+    if not matrix:
         return 0
-    rows = [row[:] for row in matrix]
-    n_rows, n_cols = len(rows), len(rows[0])
-    rank = 0
-    pivot_col = 0
-    for pivot_col in range(n_cols):
-        pivot_row = None
-        for r in range(rank, n_rows):
-            if rows[r][pivot_col] == 1:
-                pivot_row = r
-                break
-        if pivot_row is None:
+    width = len(matrix[0])
+    if any(len(row) != width for row in matrix):
+        raise ValueError("matrix must be rectangular")
+    rows = [[entry & 1 for entry in row] for row in matrix]
+    pivot_row = 0
+    for column in range(width):
+        pivot = next(
+            (row for row in range(pivot_row, len(rows)) if rows[row][column]),
+            None,
+        )
+        if pivot is None:
             continue
-        rows[rank], rows[pivot_row] = rows[pivot_row], rows[rank]
-        for r in range(n_rows):
-            if r != rank and rows[r][pivot_col] == 1:
-                rows[r] = [(a ^ b) for a, b in zip(rows[r], rows[rank])]
-        rank += 1
-        if rank == n_rows:
+        rows[pivot_row], rows[pivot] = rows[pivot], rows[pivot_row]
+        for row in range(len(rows)):
+            if row != pivot_row and rows[row][column]:
+                rows[row] = [a ^ b for a, b in zip(rows[row], rows[pivot_row])]
+        pivot_row += 1
+        if pivot_row == len(rows):
             break
-    return rank
+    return pivot_row
 
 
-def nullity_f2(matrix: Matrix, n_cols: int) -> int:
-    """Dimension of the kernel of an F_2 matrix with `n_cols` columns."""
-    return n_cols - rank_f2(matrix)
+def gf2_product(left: Sequence[Sequence[int]], right: Sequence[Sequence[int]]) -> BinaryMatrix:
+    """Multiply two matrices over GF(2)."""
+    if not left:
+        return []
+    inner = len(left[0])
+    if any(len(row) != inner for row in left):
+        raise ValueError("left matrix must be rectangular")
+    if len(right) != inner:
+        raise ValueError("incompatible matrix dimensions")
+    width = len(right[0]) if right else 0
+    if any(len(row) != width for row in right):
+        raise ValueError("right matrix must be rectangular")
+    return [
+        [sum(left[i][t] * right[t][j] for t in range(inner)) & 1 for j in range(width)]
+        for i in range(len(left))
+    ]
 
 
-# ---------------------------------------------------------------------------
-# CSS logical-qubit count from parity-check data (Theorem: dimension formula)
-# ---------------------------------------------------------------------------
-def num_logical_qubits(d1: Matrix, d2: Matrix, dim_B: int) -> int:
-    """
-    Number of logical qubits k = dim(B) - rank(d1) - rank(d2), where
-    d1 : B -> C is the X-type check and d2 : A -> B has image = boundaries.
-    Requires the chain condition d1 . d2 = 0 (checked by the caller).
-    """
-    return dim_B - rank_f2(d1) - rank_f2(d2)
+def css_logical_dimension(d1: Sequence[Sequence[int]], d2: Sequence[Sequence[int]]) -> int:
+    """Compute k = dim(B) - rank(d1) - rank(d2), checking d1*d2 = 0."""
+    if d1:
+        middle_dimension = len(d1[0])
+        if any(len(row) != middle_dimension for row in d1):
+            raise ValueError("d1 must be rectangular")
+    else:
+        middle_dimension = len(d2)
+    if len(d2) != middle_dimension:
+        raise ValueError("d2 must have one row per basis element of the middle space")
+    if any(any(entry for entry in row) for row in gf2_product(d1, d2)):
+        raise ValueError("the chain condition d1*d2 = 0 fails")
+    logical = middle_dimension - gf2_rank(d1) - gf2_rank(d2)
+    if logical < 0:
+        raise ArithmeticError("invalid negative logical dimension")
+    return logical
 
 
-def chain_condition_holds(d1: Matrix, d2: Matrix) -> bool:
-    """Check d1 . d2 = 0 over F_2 (d1 is C-by-B, d2 is B-by-A)."""
-    if not d2 or not d2[0]:
-        return True  # d2 = 0
-    n_c, n_b = len(d1), len(d1[0])
-    n_b2, n_a = len(d2), len(d2[0])
-    if n_b != n_b2:
-        raise ValueError("d1 columns must match d2 rows")
-    for i in range(n_c):
-        for j in range(n_a):
-            s = 0
-            for m in range(n_b):
-                s ^= (d1[i][m] & d2[m][j])
-            if s != 0:
-                return False
-    return True
+def hypercube_parameters(n: int) -> HypercubeParameters:
+    """Return exact graph-homological parameters of Q_n without enumeration."""
+    if n < 1:
+        raise ValueError("n must be positive")
+    vertices = 1 << n
+    edges = n * (1 << (n - 1))
+    logical = edges - vertices + 1
+    return HypercubeParameters(n, vertices, edges, logical, 4 if n >= 2 else None)
 
 
-# ---------------------------------------------------------------------------
-# Graph -> incidence matrix -> homological code (HQECC)
-# ---------------------------------------------------------------------------
-def incidence_matrix_f2(n_vertices: int, edges: List[Tuple[int, int]]) -> Matrix:
-    """
-    F_2 incidence matrix d1 of a graph: rows = vertices, columns = edges.
-    Column e = (u, v) has 1 in rows u and v.
-    """
-    d1 = [[0] * len(edges) for _ in range(n_vertices)]
-    for j, (u, v) in enumerate(edges):
-        d1[u][j] ^= 1
-        d1[v][j] ^= 1
-    return d1
+def hypercube_adjacency(n: int) -> list[list[int]]:
+    """Construct the adjacency lists of Q_n using integer bit-vectors."""
+    if n < 0:
+        raise ValueError("n must be nonnegative")
+    return [[vertex ^ (1 << bit) for bit in range(n)] for vertex in range(1 << n)]
 
 
-def connected_components(n_vertices: int, edges: List[Tuple[int, int]]) -> int:
-    """Number of connected components (beta0) via union-find."""
-    parent = list(range(n_vertices))
-
-    def find(x: int) -> int:
-        while parent[x] != x:
-            parent[x] = parent[parent[x]]
-            x = parent[x]
-        return x
-
-    for u, v in edges:
-        ru, rv = find(u), find(v)
-        if ru != rv:
-            parent[ru] = rv
-    return len({find(x) for x in range(n_vertices)})
-
-
-def graph_code_logical(n_vertices: int, edges: List[Tuple[int, int]]) -> int:
-    """
-    Logical qubits of the homological code of a graph (d2 = 0):
-    k = E - V + beta0 = first Betti number (circuit rank).
-    """
-    beta0 = connected_components(n_vertices, edges)
-    return len(edges) - n_vertices + beta0
+def graph_girth(adjacency: Sequence[Sequence[int]]) -> int | None:
+    """Compute undirected graph girth by breadth-first search from every vertex."""
+    best: int | None = None
+    for source in range(len(adjacency)):
+        distance = [-1] * len(adjacency)
+        parent = [-1] * len(adjacency)
+        distance[source] = 0
+        queue: deque[int] = deque([source])
+        while queue:
+            vertex = queue.popleft()
+            for neighbor in adjacency[vertex]:
+                if distance[neighbor] == -1:
+                    distance[neighbor] = distance[vertex] + 1
+                    parent[neighbor] = vertex
+                    queue.append(neighbor)
+                elif parent[vertex] != neighbor:
+                    cycle_length = distance[vertex] + distance[neighbor] + 1
+                    best = cycle_length if best is None else min(best, cycle_length)
+    return best
 
 
-# ---------------------------------------------------------------------------
-# Hypercube Q_n
-# ---------------------------------------------------------------------------
-def hypercube_edges(n: int) -> Tuple[int, List[Tuple[int, int]]]:
-    """Vertices 0..2^n-1 (binary strings); edges join Hamming-distance-1 pairs."""
-    n_vertices = 1 << n
-    edges: List[Tuple[int, int]] = []
-    for v in range(n_vertices):
-        for bit in range(n):
-            w = v ^ (1 << bit)
-            if v < w:
-                edges.append((v, w))
-    return n_vertices, edges
+def cycle_incidence_matrix(vertex_count: int, edges: Iterable[tuple[int, int]]) -> BinaryMatrix:
+    """Build the vertex-by-edge incidence matrix of a binary graph complex."""
+    edge_list = list(edges)
+    matrix = [[0] * len(edge_list) for _ in range(vertex_count)]
+    for column, (u, v) in enumerate(edge_list):
+        matrix[u][column] = 1
+        matrix[v][column] = 1
+    return matrix
 
 
-def betti1_hypercube_closed(n: int) -> int:
-    """Closed form beta1(Q_n) = 2^(n-1) * (n - 2) + 1 for n >= 1."""
-    return (1 << (n - 1)) * (n - 2) + 1
+def run_demo() -> None:
+    """Run three demonstrations and assert all advertised identities."""
+    print("CSS homology: dimension, hypercube counts, and graph girth\n")
 
+    # A square graph: four edge qubits, connected incidence rank three, k = 1.
+    square_edges = [(0, 1), (1, 2), (2, 3), (3, 0)]
+    square_d1 = cycle_incidence_matrix(4, square_edges)
+    square_d2 = [[] for _ in range(4)]
+    square_k = css_logical_dimension(square_d1, square_d2)
+    print(f"Square graph: rank(d1)={gf2_rank(square_d1)}, rank(d2)=0, k={square_k}")
+    assert square_k == 1
 
-# ---------------------------------------------------------------------------
-# Demonstrations
-# ---------------------------------------------------------------------------
-def demo_dimension_formula() -> None:
-    """Verify k = dim(B) - rank(d1) - rank(d2) on the repetition-type check."""
-    print("=" * 68)
-    print("DEMO 1  CSS dimension formula on a small explicit complex")
-    print("=" * 68)
-    # B = F_2^2, C = F_2 with d1(x, y) = x + y, and d2 = 0.
-    d1 = [[1, 1]]          # C-by-B : maps (x,y) -> x+y
-    d2 = [[0], [0]]        # B-by-A : the zero map (no 2-cells)
-    dim_B = 2
-    assert chain_condition_holds(d1, d2)
-    k = num_logical_qubits(d1, d2, dim_B)
-    print(f"  d1 = {d1}, d2 = 0, dim B = {dim_B}")
-    print(f"  rank(d1) = {rank_f2(d1)}, rank(d2) = {rank_f2(d2)}")
-    print(f"  logical qubits k = dim B - rank(d1) - rank(d2) = {k}")
-    print(f"  (cycle space ker(d1) has dimension {nullity_f2(d1, dim_B)})")
-    assert k == 1
-    print("  OK: encodes 1 logical qubit, matching ker(d1).\n")
+    print("\nHypercube graph parameters:")
+    for n in (2, 4, 6, 8):
+        p = hypercube_parameters(n)
+        print(f"Q_{n}: V={p.vertices:4d}, E={p.edges:4d}, k={p.logical_qubits:4d}, girth={p.girth}")
+    assert [hypercube_parameters(n).logical_qubits for n in (4, 6, 8)] == [17, 129, 769]
 
+    print("\nIndependent breadth-first girth checks:")
+    for n in range(2, 7):
+        measured = graph_girth(hypercube_adjacency(n))
+        print(f"Q_{n}: computed girth={measured}")
+        assert measured == 4
 
-def demo_euler_identity() -> None:
-    """Check beta0 + E = beta1 + V on several small graphs."""
-    print("=" * 68)
-    print("DEMO 2  Euler identity  V - E = beta0 - beta1  for graph codes")
-    print("=" * 68)
-    graphs = {
-        "triangle (3-cycle)": (3, [(0, 1), (1, 2), (2, 0)]),
-        "square (4-cycle)": (4, [(0, 1), (1, 2), (2, 3), (3, 0)]),
-        "path P4 (tree)": (4, [(0, 1), (1, 2), (2, 3)]),
-        "theta graph": (2, [(0, 1), (0, 1), (0, 1)]),  # 3 parallel edges
-    }
-    for name, (V, edges) in graphs.items():
-        E = len(edges)
-        beta0 = connected_components(V, edges)
-        beta1 = graph_code_logical(V, edges)
-        lhs, rhs = V - E, beta0 - beta1
-        print(f"  {name:20s}: V={V}, E={E}, beta0={beta0}, "
-              f"beta1(=k)={beta1}, V-E={lhs}, beta0-beta1={rhs}")
-        assert lhs == rhs
-    print("  OK: Euler identity holds in every case.\n")
-
-
-def demo_hypercube_counts() -> None:
-    """Compute HQECC(Q_n) logical qubits directly and via the closed form."""
-    print("=" * 68)
-    print("DEMO 3  Hypercube homological code HQECC(Q_n): the '1 qubit' myth")
-    print("=" * 68)
-    print(f"  {'n':>3} | {'V=2^n':>7} | {'E=n2^{n-1}':>10} | "
-          f"{'direct k':>9} | {'closed form':>11}")
-    print("  " + "-" * 52)
-    for n in range(1, 9):
-        V, edges = hypercube_edges(n)
-        E = len(edges)
-        k_direct = graph_code_logical(V, edges)
-        k_closed = betti1_hypercube_closed(n)
-        assert k_direct == k_closed
-        print(f"  {n:>3} | {V:>7} | {E:>10} | {k_direct:>9} | {k_closed:>11}")
-    print()
-    print("  The '1 logical qubit' law holds ONLY at n = 2 (the 4-cycle).")
-    for n, expected in ((4, 17), (6, 129), (8, 769)):
-        assert betti1_hypercube_closed(n) == expected
-    print("  Test cases: beta1(Q4)=17, beta1(Q6)=129, beta1(Q8)=769.  OK\n")
-
-
-def demo_rate_formula() -> None:
-    """Illustrate the combinatorial rate k/n = 1 - (V - beta0)/E."""
-    print("=" * 68)
-    print("DEMO 4  Code rate k/E = 1 - (V - beta0)/E for graph codes")
-    print("=" * 68)
-    for n in range(2, 9):
-        V, edges = hypercube_edges(n)
-        E = len(edges)
-        beta0 = connected_components(V, edges)
-        k = graph_code_logical(V, edges)
-        rate = k / E
-        pred = 1 - (V - beta0) / E
-        assert abs(rate - pred) < 1e-12
-        print(f"  Q_{n}: k={k:>4}, E={E:>5}, rate=k/E={rate:.4f} "
-              f"= 1-(V-beta0)/E={pred:.4f}")
-    print("  OK: rate matches the Euler-characteristic formula.\n")
+    print("\nAll identities and numerical test cases passed.")
 
 
 if __name__ == "__main__":
-    demo_dimension_formula()
-    demo_euler_identity()
-    demo_hypercube_counts()
-    demo_rate_formula()
-    print("All demonstrations completed successfully.")
+    run_demo()

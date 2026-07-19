@@ -144,21 +144,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
   },
   {
-    "consumed_by_exp_id": "cf73743c",
-    "description": "The Calderbank-Shor-Steane (CSS) quantum error-correcting codes are constructed from classical linear codes C_1, C_2 with C_2 perp subset C_1. The CSS code encodes dim(C_1) - dim(C_2) logical qubits. This is exactly the definition of a cohomology group: H^1(C_1, C_2) = C_1 / C_2. Conjecture: every CSS code is equivalent to a cohomology computation on a simplicial complex, and vice versa. Specifically, given a simplicial complex K, the CSS code with C_1 = Z_1(K, F_2) (1-cycles) and C_2 = B_1(K, F_2) (1-boundaries) encodes dim(H_1(K, F_2)) logical qubits with distance d = min(length of shortest non-trivial cycle, length of shortest non-trivial cocycle). This is the homological quantum error-correcting code HQECC(K). The distance d equals the systole of K (the length of the shortest non-contractible cycle). Conjecture: for the hypercube Q_n (n-dimensional cube graph), the HQECC encodes 1 qubit with distance d = 2^{n/2} (achieving the quantum Singleton bound). Test: construct HQECC for Q_4, Q_6, Q_8 and verify the parameters. Impact: quantum error correction is cohomology. Every simplicial complex gives a quantum code, and the code parameters are topological invariants.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0345",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T15:52:15.059123+00:00",
-    "title": "Quantum Error Correction from Homological Algebra: CSS Codes as Cohomology"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The Riemann zeta function zeta(s) has non-trivial zeros at s = 1/2 + i*gamma_n on the critical line (assuming RH). These zeros encode deep arithmetic information. Conjecture: the zeros gamma_n are the spectrum of a self-adjoint operator on a Hilbert space, and this operator is the Casimir element of a quantum group G_q. Specifically, define the 'zeta quantum group' G_q as the q-deformation of SU(2) where q = e^{2*pi*i*gamma_1} (using the first zero gamma_1 ~ 14.13). The Casimir element C_q of G_q has eigenvalues that are quadratic functions of the representation labels, and the spectrum of C_q is {n(n+1) : n in N}. Conjecture: the Riemann zeros gamma_n are related to the spectrum of C_q by gamma_n = f(spectrum(C_q)) for some function f. If f is linear, this would mean the zeros are evenly spaced, which is false (the zeros have Poisson-like spacings). If f is logarithmic, gamma_n ~ pi*n/log(n) which matches the average spacing. Conjecture: the spectral statistics of C_q match the GUE random matrix statistics of the Riemann zeros (Montgomery's pair correlation conjecture). Test: compute the spectrum of C_q for G_q with q = e^{2*pi*i*gamma_1} and compare the spectral statistics with the Riemann zeros. Impact: the Riemann hypothesis is a representation-theoretic statement about quantum groups.",
     "domains": [
@@ -4218,6 +4203,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-19T00:44:37.165434+00:00",
     "title": "`Algebra/SurrealDyadic.lean` formalizes the canonical dyadic part of the surreal"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Boolean-Poset Avoidance Through Linear Closure\n\n## 1. A finite, explicit improvement over three middle layers\n\n**Conjecture.** There are explicit integers `q`, `n\u2080`, and a rational constant `c > 3` such that for every `n \u2265 n\u2080`, a labeling into a finite vector space produces a weakly `D\u2086`-free family in `2^[n]` of cardinality at least `c` times the largest middle-layer cardinality.\n\nThe key insight is that interval exclusion is deterministic; only the lower bound on the number of selected sets requires probabilistic rank estimates. Replacing asymptotic error terms by explicit Gaussian-binomial inequalities should therefore yield a finite threshold.\n\nWhy now? The closure obstruction and positivity of the gain numerator have been isolated, leaving a sharply defined quantitative counting problem.\n\n## 2. Matroidal generalization of the four-layer construction\n\n**Conjecture.** Let `M` be a representable matroid of sufficiently large rank whose random restrictions have the same three relevant corank probabilities as a projective geometry up to an error tending to zero. Then the four-layer family selected by the rank function of `M` is weakly `D\u2086`-free and exceeds three middle layers by a positive asymptotic proportion.\n\nThe key insight is that the exclusion argument uses closure and rank monotonicity rather than coordinates, field arithmetic, or a particular basis.\n\nWhy now? The deterministic proof already has a matroid-closure interpretation, suggesting that representability is needed for enumeration but not for forbidden-poset avoidance.\n\n## 3. Stability for large weakly `D\u2086`-free families\n\n**Conjecture.** For every positive `\u03b7` there is a positive `\u03b4` such that every weakly `D\u2086`-free family of subsets of `[n]` with size within `\u03b4` middle layers of the optimum differs, on at most `\u03b7` middle layers, from a four-layer family governed by a closure operator of bounded local complexity.\n\nThe key insight is that six distinct intermediate sets between bottom and top nearly saturate the proper part of a three-dimensional Boolean interval, so near-extremality should force a coherent local closure rule.\n\nWhy now? The interval obstruction identifies the local configuration that must be suppressed, making a local-to-global stability program testable.\n\n## 4. The unresolved five-element-width diamond threshold\n\n**Conjecture.** There exists a positive constant `\u03b5\u2085` such that the largest weakly `D\u2085`-free family in `2^[n]` has size at least `(3 + \u03b5\u2085)` times the largest middle-layer cardinality for all sufficiently large `n`.\n\nThe key insight is that forbidding five, rather than six, intermediate elements requires the top layer to detect two exceptional rank values; a successful construction must recover the resulting density loss through a second correlated invariant.\n\nWhy now? The four-layer rank construction explains exactly why the direct one-invariant modification loses density, narrowing the search to coupled rank, nullity, or quotient-space statistics.\n\n## 5. An entropy characterization of the optimal field size\n\n**Conjecture.** Among prime powers, the field size maximizing the asymptotic gain of the four-layer construction is characterized uniquely by a balance equation between the corank-two probabilities below the middle layer and the full-rank deficit above it.\n\nThe key insight is that the gain is a signed combination of limiting random-matrix rank probabilities, and its optimizer should arise where the marginal entropy cost of the two exceptional coranks balances.\n\nWhy now? The gain has an explicit positive rational factor multiplied by the convergent product `\u0394_q`, so the conjecture can be tested numerically and attacked by monotonicity estimates for Euler products.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0371",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "ae36b246",
+    "status": "available",
+    "timestamp": "2026-07-19T00:44:56.744069+00:00",
+    "title": "**Conjecture.** There are explicit integers `q`, `n\u2080`, and a rational constant `"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n1. **State the CSS dictionary with two classical codes precisely.**  The mission's\n   expression `C\u2081/C\u2082` requires `C\u2082 \u2286 C\u2081`, while the usual CSS commutation condition\n   is formulated using orthogonal complements.  A future development should give\n   the exact equivalence between parity-check matrices, a length-two chain complex,\n   and the resulting stabilizer group.\n\n2. **Separate simplicial, cellular, and graph models.**  The present formalization\n   proves the chain-complex dimension theorem over any field.  Realizing every\n   binary CSS chain complex by a *simplicial complex with its standard incidence\n   maps* is a substantially stronger representability claim and should not be\n   conflated with merely viewing matrices as abstract differentials.  Determine\n   necessary and sufficient representability conditions, or produce a minimal\n   counterexample.\n\n3. **Formalize CSS distance, not only graph girth.**  Introduce Hamming weight on\n   finite binary cochains and define primal and dual logical distances as minima\n   over nonzero homology and cohomology classes.  Prove the standard\n   `min(systole, cosystole)` theorem under explicit finiteness and nondegeneracy\n   assumptions.  This will prevent the primal girth from being mistaken for the\n   complete quantum distance.\n\n4. **Construct the actual hypercube incidence complex.**  The bridge theorem in\n   `HypercubeCounterexample.lean` is parameterized by dimensions, connectedness,\n   and a zero 2-boundary.  Define oriented edges and the boundary matrix over\n   `ZMod 2`, prove its rank is `2^n-1`, and instantiate the theorem directly.\n\n5. **Test other meanings of \u201chypercube complex.\u201d**  The cube graph, the filled\n   cubical `n`-ball, its boundary sphere, and periodic cubical tori have different\n   homology.  Formalizing all four would isolate which object, if any, could have\n   motivated a one-logical-qubit assertion.\n\n6. **Add quantum-code bounds with the correct block length.**  Compare the proved\n   parameters against the quantum Singleton bound using the number of physical\n   edge qubits `N=n\u00b72^(n-1)`, rather than using the cube dimension `n` as though it\n   were block length.\n",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_0372",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "cf73743c",
+    "status": "available",
+    "timestamp": "2026-07-19T00:45:01.733642+00:00",
+    "title": "1. **State the CSS dictionary with two classical codes precisely.**  The mission"
   },
   {
     "consumed_by_exp_id": "",

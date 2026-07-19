@@ -1,26 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "47f9b94d",
-      "domain": "Computation",
-      "key_insight": "# Future directions\n\n## Conclusions established in Lean\n\nThe proposed phenomenon splits into one valid structural statement and several claims that fail as stated.\n\n1. `Escher.EscherStaircase R`, defi",
-      "quality_score": 0.78,
-      "sorry_count": 3,
-      "theorem_count": 4,
-      "timestamp": "2026-07-17T09:24:10",
-      "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
-    },
-    {
-      "cycle_id": "bcfc30de",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions: Guarded Circular Proofs\n\n## 1. Algebraic-domain completion of finite proof approximants\n\nFor a finitary sequent calculus, order partial proof trees by information content, with an",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-07-17T09:40:03",
-      "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
-    },
-    {
       "cycle_id": "408bb225",
       "domain": "Tropical",
       "key_insight": "# Future Directions\n\n## 1. Measure-calibrated recurrence incidence\n\nFix a distribution of logistic parameters, an absolutely continuous distribution of initial states, a finite observation horizon, an",
@@ -499,29 +479,29 @@
       "theorem_count": 0,
       "timestamp": "2026-07-19T00:44:51",
       "title": "The Arithmetic of Games: Surreal Numbers as Number Fields"
+    },
+    {
+      "cycle_id": "ae36b246",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Boolean-Poset Avoidance Through Linear Closure\n\n## 1. A finite, explicit improvement over three middle layers\n\n**Conjecture.** There are explicit integers `q`, `n₀`, and a rationa",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-19T00:44:57",
+      "title": "ArXiv paper: On the maximum size of $B_3$-free families"
+    },
+    {
+      "cycle_id": "cf73743c",
+      "domain": "Shared",
+      "key_insight": "# Future directions\n\n1. **State the CSS dictionary with two classical codes precisely.**  The mission's\n   expression `C₁/C₂` requires `C₂ ⊆ C₁`, while the usual CSS commutation condition\n   is formul",
+      "quality_score": 0.75,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-19T00:45:02",
+      "title": "Quantum Error Correction from Homological Algebra: CSS Codes as Cohomology"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "9243b8b5",
-      "domain": "Shared",
-      "key_insight": "# Future Directions\n\n## Result\n\n`Catalog/Shared/EdgeProbabilityThreshold.lean` formalizes the elementary consequences of the ratio\n\n\\[\n\\frac{\\binom n2}{m}\n\\]\n\nfor a finite simple graph with `m` edges",
-      "quality_score": 0.92,
-      "sorry_count": 0,
-      "theorem_count": 3,
-      "timestamp": "2026-07-15T02:32:03",
-      "title": "Close Proofs: The mission asked to interrogate the claim:"
-    },
-    {
-      "cycle_id": "ef5b75b5",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions — Logarithmic Lifts and Optical Charge\n\n## 1. Homotopy classification by logarithmic endpoint defect\n\n**Conjecture.** For smooth non-vanishing closed beam loops, the endpoint defec",
-      "quality_score": 0.91,
-      "sorry_count": 0,
-      "theorem_count": 3,
-      "timestamp": "2026-07-15T02:32:26",
-      "title": "Topological charge of an orbital-angular-momentum bea"
-    },
     {
       "cycle_id": "da85fe77",
       "domain": "Computation",
@@ -2501,6 +2481,26 @@
       "theorem_count": 0,
       "timestamp": "2026-07-19T00:44:51",
       "title": "The Arithmetic of Games: Surreal Numbers as Number Fields"
+    },
+    {
+      "cycle_id": "ae36b246",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Boolean-Poset Avoidance Through Linear Closure\n\n## 1. A finite, explicit improvement over three middle layers\n\n**Conjecture.** There are explicit integers `q`, `n₀`, and a rationa",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-19T00:44:57",
+      "title": "ArXiv paper: On the maximum size of $B_3$-free families"
+    },
+    {
+      "cycle_id": "cf73743c",
+      "domain": "Shared",
+      "key_insight": "# Future directions\n\n1. **State the CSS dictionary with two classical codes precisely.**  The mission's\n   expression `C₁/C₂` requires `C₂ ⊆ C₁`, while the usual CSS commutation condition\n   is formul",
+      "quality_score": 0.75,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-19T00:45:02",
+      "title": "Quantum Error Correction from Homological Algebra: CSS Codes as Cohomology"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8
     }
   ],
-  "last_updated": "2026-07-19T00:44:51",
+  "last_updated": "2026-07-19T00:45:02",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "0f8a1331",
-        "quality": 0.67,
-        "theorems": 7,
-        "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk"
-      },
-      {
         "cycle_id": "e1956901",
         "quality": 0.61,
         "theorems": 18,
@@ -3637,6 +3631,12 @@
         "quality": 0.69,
         "theorems": 15,
         "title": "Galois Theory of Cellular Automata: Which Rules Have Reversible Dynamics?"
+      },
+      {
+        "cycle_id": "ae36b246",
+        "quality": 0.7,
+        "theorems": 0,
+        "title": "ArXiv paper: On the maximum size of $B_3$-free families"
       }
     ],
     "NumberTheory": [
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "42e1a665",
-        "quality": 0.88,
-        "theorems": 0,
-        "title": "Close Proofs: Bypassed"
-      },
-      {
         "cycle_id": "80f7c124",
         "quality": 0.73,
         "theorems": 10,
@@ -3947,6 +3941,12 @@
         "quality": 0.74,
         "theorems": 19,
         "title": "The Mathematics of Jigsaw Puzzles: NP-Completeness and Topology"
+      },
+      {
+        "cycle_id": "cf73743c",
+        "quality": 0.75,
+        "theorems": 0,
+        "title": "Quantum Error Correction from Homological Algebra: CSS Codes as Cohomology"
       }
     ],
     "Tropical": [

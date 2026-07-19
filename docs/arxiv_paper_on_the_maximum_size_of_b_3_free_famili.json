@@ -47,19 +47,22 @@
       "name": "Horner Evaluation in Eisenstein Coordinates",
       "description": "Evaluates an integer polynomial at a primitive cube root using the relation ω²+ω+1=0, retaining only two integer coordinates. It takes O(m) ring steps for degree m and O(1) coordinate storage; bit costs depend on coefficient growth.",
       "pseudocode": "INPUT coefficients c[0..m] in ascending order\nSET z ← (0,0)\nFOR j from m down to 0:\n  SET z ← EisensteinMultiply(z,(0,1))\n  SET z ← (z.first+c[j],z.second)\nRETURN z and z.first²-z.first·z.second+z.second²",
-      "code": "from typing import Iterable\nEisenstein = tuple[int, int]\ndef mul(x: Eisenstein, y: Eisenstein) -> Eisenstein:\n    a, b = x; c, d = y\n    return a*c-b*d, a*d+b*c-b*d\ndef norm(x: Eisenstein) -> int:\n    a, b = x\n    return a*a-a*b+b*b\ndef evaluate(coefficients: Iterable[int]) -> tuple[Eisenstein, int]:\n    z = (0, 0)\n    for c in reversed(list(coefficients)):\n        z = mul(z, (0, 1))\n        z = (z[0] + c, z[1])\n    return z, norm(z)\n"
+      "code": "from typing import Iterable\nEisenstein = tuple[int, int]\ndef mul(x: Eisenstein, y: Eisenstein) -> Eisenstein:\n    a, b = x; c, d = y\n    return a*c-b*d, a*d+b*c-b*d\ndef norm(x: Eisenstein) -> int:\n    a, b = x\n    return a*a-a*b+b*b\ndef evaluate(coefficients: Iterable[int]) -> tuple[Eisenstein, int]:\n    z = (0, 0)\n    for c in reversed(list(coefficients)):\n        z = mul(z, (0, 1))\n        z = (z[0] + c, z[1])\n    return z, norm(z)\n",
+      "code_file": "visualizations/arxiv_paper_on_the_maximum_size_of_b_3_free_famili_horner_evaluation_in_eisenstein_coordina.py"
     },
     {
       "name": "Signed Exponent-Sum Writhe Certificate",
       "description": "Scans a signed Artin-generator word and adds +1 for each positive letter and −1 for each inverse. It runs in O(L) time for word length L and O(1) auxiliary space. A nonzero result certifies nonidentity, while zero is inconclusive.",
       "pseudocode": "INPUT nonzero signed generator list word\nSET total ← 0\nFOR letter in word:\n  IF letter > 0 THEN total ← total+1\n  ELSE total ← total-1\nRETURN total",
-      "code": "from typing import Iterable\ndef writhe(word: Iterable[int]) -> int:\n    \"\"\"Positive i means sigma_i; negative i means its inverse.\"\"\"\n    total = 0\n    for letter in word:\n        if letter == 0:\n            raise ValueError(\"zero is not a signed generator\")\n        total += 1 if letter > 0 else -1\n    return total\n"
+      "code": "from typing import Iterable\ndef writhe(word: Iterable[int]) -> int:\n    \"\"\"Positive i means sigma_i; negative i means its inverse.\"\"\"\n    total = 0\n    for letter in word:\n        if letter == 0:\n            raise ValueError(\"zero is not a signed generator\")\n        total += 1 if letter > 0 else -1\n    return total\n",
+      "code_file": "visualizations/arxiv_paper_on_the_maximum_size_of_b_3_free_famili_signed_exponent_sum_writhe_certificate.py"
     },
     {
       "name": "First-Occurrence Search for Primitive Fibonacci Divisors",
       "description": "Computes F_n, extracts its distinct prime factors, and tests each factor by iterating Fibonacci residues modulo that prime until the first zero. With trial division, factorization is O(√F_n) divisions; each first-occurrence test uses O(n) modular additions and O(1) state.",
       "pseudocode": "INPUT n\nCOMPUTE F_n\nFACTOR F_n into distinct primes P\nSET result ← empty list\nFOR p in P:\n  ITERATE Fibonacci residues modulo p from index 1\n  IF the first zero is at n THEN append p\nRETURN result",
-      "code": "from math import isqrt\ndef fibonacci(n: int) -> int:\n    a, b = 0, 1\n    for _ in range(n): a, b = b, a + b\n    return a\ndef factors(n: int) -> list[int]:\n    out: list[int] = []; d = 2\n    while d <= isqrt(n):\n        if n % d == 0:\n            out.append(d)\n            while n % d == 0: n //= d\n        d = 3 if d == 2 else d + 2\n    return out + ([n] if n > 1 else [])\ndef first_zero(p: int, limit: int) -> int | None:\n    a, b = 0, 1\n    for k in range(1, limit + 1):\n        a, b = b, (a + b) % p\n        if a == 0: return k\n    return None\ndef primitive_divisors(n: int) -> list[int]:\n    return [p for p in factors(fibonacci(n)) if first_zero(p, n) == n]\n"
+      "code": "from math import isqrt\ndef fibonacci(n: int) -> int:\n    a, b = 0, 1\n    for _ in range(n): a, b = b, a + b\n    return a\ndef factors(n: int) -> list[int]:\n    out: list[int] = []; d = 2\n    while d <= isqrt(n):\n        if n % d == 0:\n            out.append(d)\n            while n % d == 0: n //= d\n        d = 3 if d == 2 else d + 2\n    return out + ([n] if n > 1 else [])\ndef first_zero(p: int, limit: int) -> int | None:\n    a, b = 0, 1\n    for k in range(1, limit + 1):\n        a, b = b, (a + b) % p\n        if a == 0: return k\n    return None\ndef primitive_divisors(n: int) -> list[int]:\n    return [p for p in factors(fibonacci(n)) if first_zero(p, n) == n]\n",
+      "code_file": "visualizations/arxiv_paper_on_the_maximum_size_of_b_3_free_famili_first_occurrence_search_for_primitive_fi.py"
     }
   ],
   "visualizations": [
