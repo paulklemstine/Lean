@@ -1,208 +1,105 @@
-# Dream Logic: A Mathematics Where Contradictions Are Allowed to Coexist
+# Dream Logic: How Contradictions Can Coexist Without Taking Over
 
-Every night, for a few hours, your mind runs on a different operating system. In
-a dream you can be walking down a hallway that is also your childhood kitchen; a
-person can be simultaneously a stranger and your best friend; a door can be both
-locked and open. When you wake, the spell breaks and the old rule snaps back into
-place: a thing cannot be both true and false. That rule — the *law of
-non-contradiction* — has been the load-bearing wall of Western logic since
-Aristotle. Contradiction, we are taught, is the end of thought. Accept one, and
-everything collapses.
+A dream can hold two incompatible pictures at once. A familiar room is both childhood home and railway station. A person is absent and standing beside you. The scene does not collapse into total nonsense; instead, the contradiction remains local. Other facts—there is rain at the window, a red suitcase on the floor—retain their own status.
 
-And yet, mathematically, that collapse is a *choice*, not a law of nature. There
-is a coherent, rigorous, well-behaved logic in which contradictions are permitted
-to exist locally without setting the entire universe of statements on fire. This
-article is about that logic — a "dream logic" — and about a beautiful and
-surprising fact: it is secretly a piece of **topology**, the mathematics of
-shape, space, and boundary. In dream logic, a true contradiction is not a
-paradox to be exorcised. It is a *place*. Specifically, it lives on the
-**boundary** of a region.
+Classical logic treats contradiction very differently. If a theory accepts both a statement $p$ and its negation $\neg p$, then the principle of explosion permits every conclusion $q$. That rule is invaluable when “acceptance” means truth in a consistent mathematical theory. It is less suitable when acceptance means that a database, witness record, evolving model, or human memory currently carries a piece of evidence. Real information systems can contain conflicts without thereby containing everything.
 
-## The problem with contradictions
+A compact mathematical model captures this dream-like behavior. It also reveals three structures beneath it: a paraconsistent semantics in which contradiction stays local, a non-monotone dynamics in which new evidence can retract old evidence, and a finitary geometry whose admissible regions survive finite unions but not arbitrary ones. A parallel algebraic model explains selective forgetting as quotienting streams of experience.
 
-Classical logic has a doomsday device built into it, and it has a name:
-**explosion**, or in Latin, *ex contradictione quodlibet* — "from a
-contradiction, anything." The argument is short and deadly. Suppose you accept
-some statement $P$ and its negation $\neg P$ at the same time. From $P$ you may
-conclude "$P$ or $Q$" for literally any statement $Q$ — say, "the moon is made of
-cheese." But you also have $\neg P$, which rules out $P$; so from "$P$ or $Q$"
-you are forced into $Q$. Cheese moon. And Q could have been anything at all.
+## Signed information
 
-The consequence is stark: in classical logic a single contradiction anywhere
-makes *every* statement provable. The system doesn't just get one thing wrong; it
-loses the ability to distinguish truth from falsehood entirely. This is why
-mathematicians treat inconsistency as catastrophe.
+Let $A$ be any set of atoms: propositions such as “the door is open” or “the train arrived.” A **literal** is a pair $(a,s)$ with $a\in A$ and $s\in\{+,-\}$. The opposite of $(a,+)$ is $(a,-)$, and conversely. A **belief state** $B$ is simply a set of literals. It entails a literal exactly when that literal belongs to $B$.
 
-But real reasoning — human, legal, dreaming, and increasingly artificial —
-tolerates local contradictions all the time. A large database scraped from the
-web will list a person's birth year as both 1970 and 1971. A legal code will
-contain two statutes that, in some rare case, conflict. A dreamer holds
-impossible objects in mind and keeps right on reasoning. None of these thinkers
-concludes that the moon is cheese. Somehow they *quarantine* the contradiction.
-Logics that can do this are called **paraconsistent**: literally, "beside the
-consistent."
+An atom $a$ is contradictory in $B$ when both $(a,+)$ and $(a,-)$ lie in $B$. This definition allows four statuses for each atom: unsupported, positive only, negative only, or contradictory. The fourth status is not a disaster; it is data.
 
-The question this work answers is: what is the *geometry* of such a logic? What
-does a contradiction actually look like, if it isn't an explosion?
+The first central result is **Contradiction Without Explosion**. If $a$ and $b$ are distinct atoms, then the state
 
-## Propositions as regions of space
+$$
+B=\{(a,+),(a,-)\}
+$$
 
-Here is the key move. Instead of thinking of a proposition as a naked
-true-or-false token, think of it as a **region** — a set of points in some space
-$X$. A point of $X$ is a "possible situation," and a proposition is the set of
-situations in which it holds. "It is raining" is the set of rainy worlds. This
-picture, that propositions are regions and logic is the algebra of regions, is
-old and fruitful; it is how topology and logic first shook hands.
+is contradictory about $a$ but does not entail $(b,+)$. The proof is almost visual: $B$ contains exactly two literals, both concerning $a$, while $(b,+)$ concerns a different atom. Contradiction has been represented, but no rule manufactures unrelated information.
 
-Now we add a twist that comes from topology. Not every region is equally
-well-behaved. Some regions are **open**: every point sits comfortably in the
-interior, with a little breathing room around it entirely inside the region — an
-open interval $(0,1)$ on the number line, with no endpoints. Some regions are
-**closed**: they contain their own edge — the closed interval $[0,1]$, endpoints
-included. And every region has a **boundary** (or *frontier*): the razor-thin set
-of points that are neither safely inside nor safely outside, the shoreline
-between a region and its complement. For $[0,1]$ the boundary is just the two
-points $\{0, 1\}$.
+This tiny model matters because it separates inconsistency from triviality. Conflicting medical reports about one measurement need not license an arbitrary diagnosis. Two sensors disagreeing about one valve need not imply that every alarm is active. A narrative can be impossible in one respect without becoming indiscriminate in all respects.
 
-Formally, for a region $A$ in a space $X$, the boundary is
-$$\partial A = \overline{A} \cap \overline{X \setminus A},$$
-the overlap between the closure of $A$ and the closure of everything outside $A$.
-It is exactly the set of points you cannot cleanly assign to "inside" or
-"outside."
+## Revision as local surgery
 
-Dream logic is what you get when you build your logic out of the **closed
-regions** and define negation the natural topological way.
+Static coexistence is only half the story. Beliefs change. Define revision by a literal $\ell$ as
 
-## Negation as "the closure of the opposite"
+$$
+R_\ell(B)=\{\ell\}\cup\bigl(B\setminus\{\bar\ell\}\bigr),
+$$
 
-If a proposition is a closed region $A$, what should "not $A$" be? The naive
-answer, the plain complement $X \setminus A$, doesn't work: the complement of a
-closed set is open, so it's the wrong *kind* of region. To stay in the world of
-closed regions we take the **closure** of the complement:
-$$\neg A = \overline{X \setminus A}.$$
-In words: "not $A$" is everything outside $A$, together with its edge. Because we
-closed it up, this is again a bona fide closed region, and we can keep reasoning.
+where $\bar\ell$ denotes the opposite literal. Revision inserts the new literal and removes precisely its contrary. Everything else is untouched.
 
-This one honest adjustment — closing up the complement so it stays the right
-shape — is the entire source of dream logic's strange and wonderful behavior.
-Watch what happens when we ask the forbidden question: where do $A$ and $\neg A$
-*both* hold?
+The **Acceptance-and-Retraction Theorem** says that $R_\ell(B)$ always entails $\ell$ and never entails $\bar\ell$. This follows directly from the construction: the target is inserted, while its opposite is deleted. Revision is therefore a “last write wins” update on one atom.
 
-## The punchline: contradictions are boundaries
+This operation is genuinely non-monotone. In monotone reasoning, accepted information can only accumulate: one expects $B\subseteq R_\ell(B)$. But if $B=\{\ell,\bar\ell\}$, then revising by $\ell$ removes $\bar\ell$, so $B\nsubseteq R_\ell(B)$. The **Non-Monotonicity Theorem** states exactly this failure. Retraction is not a bug; it is what permits correction.
 
-Take a closed region $A$ and intersect it with its negation. A short computation
-in topology gives an exact, clean answer:
-$$A \wedge \neg A \;=\; A \cap \overline{X \setminus A} \;=\; \partial A.$$
-The set of situations where $A$ and "not $A$" hold *simultaneously* is precisely
-the **boundary of $A$**.
+Order matters as well. Revising first by $\ell$ and then by $\bar\ell$ yields a state containing $\bar\ell$ but not $\ell$. Reversing the order yields one containing $\ell$ but not $\bar\ell$. Thus the **Order-Sensitivity Theorem** states
 
-Read that again, because it is the heart of the matter. In dream logic, a "true
-contradiction" is not a logical malfunction. It is a geometric location: the
-shoreline of a proposition. A statement can be both true and false exactly on its
-edge — at the very points where inside and outside meet and blur, like the
-dream-hallway that is also the kitchen because you are standing in the doorway
-between them.
+$$
+R_{\bar\ell}(R_\ell(B))\ne R_\ell(R_{\bar\ell}(B)).
+$$
 
-This immediately tells us *which* propositions can carry a contradiction and
-which cannot. A closed region has an empty boundary exactly when it is also open
-— a so-called **clopen** set, a region that is all interior with no shoreline at
-all. So:
+The latest sign wins. This is familiar in editable documents, replicated registers, preference changes, and memory reconsolidation: updates at the same location need not commute.
 
-> A proposition admits a genuine, coexisting contradiction **if and only if** its
-> region is not open — that is, if and only if it has a nonempty boundary.
+## Consistency as a conflict-free geometry
 
-Contradiction is not a property of the *symbols* in a sentence. It is a property
-of the *shape* of what the sentence describes. The more boundary a proposition
-has, the more contradiction it can hold. A perfectly crisp, boundaryless
-proposition behaves classically. A proposition with a fat, jagged frontier is
-deeply, richly paraconsistent.
+There is a second way to view the same states. Build a graph whose vertices are literals and whose only attacks connect each literal to its opposite. A set of vertices is **conflict-free** if it contains no attacking pair. Meanwhile, call a belief state **consistent** if no atom appears with both signs.
 
-## Why the moon stays rocky: no explosion
+The **Consistency–Conflict-Freedom Theorem** says these conditions are equivalent. If a state contains both signs of some atom, it contains an attacking pair. Conversely, every attacking pair consists of two opposite signs of one atom and therefore witnesses inconsistency.
 
-We can now see, geometrically, exactly why dream logic refuses to explode.
-Explosion demanded that a contradiction entail *everything* — in region language,
-that $A \wedge \neg A$ be contained in every other region, which forces it to be
-the **empty region** (the only thing inside everything is nothing). But we just
-computed $A \wedge \neg A = \partial A$, and on any interesting space, boundaries
-are not empty. The interval $[0,1]$ on the real line has boundary $\{0,1\}$ — two
-perfectly real points. The contradiction "lives" there, at those two points, and
-*nowhere else*. It does not leak. It does not license the cheese moon. It is
-contained, quarantined, exactly on the frontier where it was born.
+This equivalence turns belief states into faces of a combinatorial complex. Each atom contributes a pair of incompatible choices; a consistent state chooses at most one. Revision becomes movement through that geometry.
 
-So paraconsistency — the safe coexistence of contradictions — is not an exotic
-axiom we bolted on. It is the topological fact that **regions have edges**.
+Even better, revision preserves consistency. Suppose $B$ is consistent. To revise by $\ell$, remove $\bar\ell$ and insert $\ell$. The only literal that could conflict with $\ell$ has already been removed, and all other pairs retain their former consistency. The **Consistency Preservation Theorem** therefore gives
 
-## The deep reason: unions of closed sets can fail to be closed
+$$
+B\text{ consistent}\quad\Longrightarrow\quad R_\ell(B)\text{ consistent}.
+$$
 
-There is a still deeper way to see what is going on, and it explains *when* dream
-logic is genuinely paraconsistent and when it quietly collapses back into
-classical logic.
+The theorem identifies a safe update rule: every step stays inside the conflict-free region.
 
-The whole phenomenon rests on one asymmetry in topology. If you take *two* closed
-regions and union them, you get a closed region. But if you union *infinitely
-many* closed regions, the result can spill outside the closed world. The classic
-witness lives on the number line: each single point $\{x\}$ for $x$ strictly
-between $0$ and $1$ is a closed region, but their infinite union is the *open*
-interval $(0,1)$, which is not closed. Closing it back up drags in the two
-boundary points $0$ and $1$ — and those two points are exactly the contradiction
-$\partial[0,1]$ from before.
+## A topology with a boundary
 
-The non-closure of infinite unions and the non-explosion of contradictions are
-**the same fact seen from two sides.** Where infinite unions of closed sets stay
-closed, boundaries vanish, contradictions become empty, and the logic explodes
-back into ordinary classical reasoning. Where they escape — as they must on the
-real line and on any infinite continuum — boundaries appear, contradictions find
-a home, and the logic becomes a true dream logic.
+Now restrict attention to finite information states. For any space $X$, call a subset **finitarily open** when it is finite. The empty set is finitarily open. Intersections and unions of two finitarily open sets are finitarily open, and, more generally, the union of any finite family of them is finite.
 
-This gives a striking dividing line. On a **finite** space every union is a
-finite union, so closed sets are always closed under union, boundaries can be
-made to vanish, and paraconsistency has no room to breathe. It is precisely the
-**infinite**, the continuous, the spatially rich, that makes contradiction
-survivable. Dreams need room.
+This resembles topology, but only up to a sharp boundary. Ordinary topologies require arbitrary unions of open sets to be open. Finitary openness does not.
 
-## Two logics, one space: the waking/dreaming duality
+The **Arbitrary-Union Obstruction** supplies the cleanest example. Every singleton $\{n\}$ is a finite subset of the natural numbers, but
 
-Finally, there is a gorgeous symmetry. We built dream logic out of *closed*
-regions and defined negation as the closure of the complement. Suppose instead we
-build a logic out of *open* regions, and define negation as the *interior* of the
-complement, $\sim A = \mathrm{int}(X \setminus A)$. This is not some new
-invention: it is the well-known **intuitionistic logic**, the logic of
-constructive mathematics, where a statement is "true" only where you can plant it
-with breathing room.
+$$
+\bigcup_{n\in\mathbb N}\{n\}=\mathbb N,
+$$
 
-These two logics are perfect mirror images — **De Morgan duals** — living on the
-very same space, related by swapping "inside" for "outside," open for closed,
-interior for closure.
+and $\mathbb N$ is infinite. Hence the countable union is not finitarily open. These sets form a finite lattice of information fragments, not an ordinary topology on an infinite carrier.
 
-- In open (intuitionistic) logic, the **law of excluded middle** fails: $A$ and
-  "not $A$" can leave a *gap*, a sliver of the space — again the boundary — where
-  neither holds. Intuitionistic logic is **paracomplete**: it tolerates gaps.
-- In closed (dream) logic, the **law of non-contradiction** fails: $A$ and "not
-  $A$" *overlap* on the boundary, a *glut* where both hold. Dream logic is
-  **paraconsistent**: it tolerates gluts.
+That distinction is conceptually useful. Any finite observation can be combined with finitely many others. Yet an unbounded accumulation of observations may leave the realm of finite cognitive or computational resources. The failure of arbitrary union marks the gap between locally manageable fragments and a completed global state.
 
-The same boundary that intuitionistic logic leaves *empty* (a gap of "neither"),
-dream logic fills *twice over* (a glut of "both"). Consistency and completeness
-turn out not to be absolute virtues but **dual resources**, traded against one
-another by a single choice: do you carve your propositions from the open regions
-or the closed ones? Waking logic and dream logic are the two faces of one
-geometry.
+Revision respects this resource boundary. If $B$ is finite, then deleting at most one literal and adding one literal leaves a finite set. Combining this with consistency preservation gives the **Revision Bridge Theorem**: if $B$ is finite and consistent, then $R_\ell(B)$ is again finite and conflict-free. One operation simultaneously respects semantics, combinatorial compatibility, and finite information capacity.
 
-## Why this matters
+## Forgetting entire histories
 
-This is more than a curiosity for logicians. Reasoning systems that must operate
-on messy, contradictory information — merging conflicting databases, reconciling
-inconsistent legal or medical records, running artificial agents that ingest the
-open web — need exactly this: a principled way to hold a contradiction without
-melting down. Dream logic tells them where to put it. A contradiction is not a
-bug to be crushed but a **boundary** to be located, measured, and worked around.
-The amount of inconsistency a claim can safely carry is quantified by the size of
-its frontier.
+Belief revision acts on sets, but experiences arrive in order. Let $\Sigma$ be an alphabet of experience symbols. A finite stream is a word in $\Sigma^*$, including the empty word $\varepsilon$, with concatenation as multiplication. A **compositional memory** is a map
 
-And there is something humane in the picture, too. The dreaming mind that holds
-impossible objects, the poet who writes a truth that is also a lie, the judge who
-finds two laws in genuine conflict — none of them is malfunctioning. They are
-standing on a boundary, in that thin bright shoreline where inside meets outside,
-where a thing can be, for a moment, both true and not. Mathematics, it turns out,
-has a precise and generous name for that place. It calls it the frontier — and it
-says you are allowed to stand there.
+$$
+M:\Sigma^*\longrightarrow R
+$$
+
+into a monoid $R$ such that $M(uv)=M(u)M(v)$ and $M(\varepsilon)=1$. Two streams are observationally indistinguishable when $M(u)=M(v)$.
+
+If $\Sigma$ is nonempty and $R$ is finite, the **Finite-Memory Loss Theorem** says that distinct streams $u\ne v$ must have the same memory value. There are infinitely many words but only finitely many representations, so the pigeonhole principle forces a collision. Finite memory cannot preserve every history.
+
+The streams erased completely, those satisfying $M(u)=1$, have algebraic structure. They include $\varepsilon$, and if $M(u)=M(v)=1$, then $M(uv)=1$. Thus the **Erased-Stream Theorem** says completely forgotten streams form a submonoid.
+
+Most importantly, forgetting is exactly a quotient. Equality of memory values is compatible with concatenation, so one may identify indistinguishable streams. The **Observable-Quotient Theorem** states that the resulting quotient monoid is isomorphic to the image $M(\Sigma^*)$: classes of histories correspond exactly to observable memory states.
+
+Selective forgetting gives a concrete example. Choose which symbols to retain, delete every unretained symbol, and preserve order among the rest. Every deleted symbol maps to the empty word. Moreover, any other compositional summary that already identifies all streams made equal by this deletion factors uniquely through the quotient. Selective forgetting is therefore not an ad hoc eraser; it is the canonical compression compatible with those identifications.
+
+## The larger picture
+
+Dream logic is not a claim that contradictions are secretly true. It is a disciplined account of information that may be partial, conflicting, revised, bounded, and compressed. Contradiction remains local because entailment is membership. Revision is non-monotone because correction removes a contrary sign. Consistency becomes conflict-freedom in a graph of complementary literals. Finite states form a robust finitary geometry, but countable accumulation exposes the boundary of that geometry. Ordered histories, finally, become observable only up to the equivalence imposed by memory.
+
+Together these results suggest a mathematics of limited minds and limited machines. They also offer a design principle: isolate conflicts by coordinate, make correction explicit, expose resource bounds, and describe compression by the distinctions it erases. The same principle can guide a medical record, a sensor network, a redacted event log, or a fictional world whose impossible details remain intelligible.
+
+We do not need every inconsistency to detonate, every update to preserve the past, or every history to remain distinguishable. We need precise rules for what coexists, what is retracted, what remains finite, and what becomes the same after forgetting. That is the sober structure beneath dream logic.

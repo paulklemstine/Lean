@@ -162,21 +162,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
   },
   {
-    "consumed_by_exp_id": "9fc00121",
-    "description": "Prove that any technological civilization must discover computational complexity independently of its biological substrate. Formalize a universal complexity hierarchy and prove that P vs NP is a theorem about the structure of computation itself, not about any particular model. Show that even hypercomputational civilizations face analogous barriers.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0465",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T16:23:59.732994+00:00",
-    "title": "Computational Complexity of Alien Civilizations"
-  },
-  {
     "consumed_by_exp_id": "53d02dfc",
     "description": "Formalize a type theory where types can refer to their own provability. Prove that such a system can express 'this proposition is provable but not provably provable' as a well-typed term. Show that reflective type theory properly extends Martin-Lof type theory and that its proof term language is exactly the modal mu-calculus.",
     "domains": [
@@ -5174,6 +5159,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-19T20:25:50.319607+00:00",
     "title": "`AlephOneSurface.lean` formalizes the mathematically well-typed replacement for "
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Substrate-Invariant Complexity\n\n## 1. Polynomial-overhead invariance of asymptotic classes\n\n**Conjecture.** If two machine substrates simulate one another with polynomially bounded overhead and polynomially related encodings of input size, then their polynomial-time and polynomial-witness language classes coincide, even when the simulations are not resource-exact.\n\nThe key insight is that exact simulations are stronger than complexity theory normally requires: polynomial classes should absorb polynomial distortion while still preserving the deterministic-versus-witness question.\n\n**Why now?** The exact-overhead theory identifies every point where costs enter the transport argument, making the polynomial closure conditions explicit and testable.\n\n## 2. Universal hierarchy invariance under admissible resource rescaling\n\n**Conjecture.** For every resource hierarchy closed under composition with a specified family of overhead functions, mutual simulations from that family induce an order isomorphism between the quotient hierarchies of language classes.\n\nThe key insight is that substrate independence should be governed by an algebra of admissible rescalings rather than by a single privileged cost measure.\n\n**Why now?** Levelwise equality has been isolated as the exact case, so the next step is to replace equality by cofinal equivalence and determine the minimal closure axioms.\n\n## 3. Concrete relativized jump towers for stronger computation\n\n**Conjecture.** Every effective machine model admitting universal simulation and diagonal coding has a relativized jump operator whose iterates escape all corresponding finite oracle levels.\n\nThe key insight is that hypercomputation changes the base degree but does not remove diagonal self-reference; it relocates the next undecidable problem one level upward.\n\n**Why now?** The abstract jump-transport theorem separates the universal persistence argument from the model-specific construction, leaving a precise existence problem for each stronger model.\n\n## 4. Reduction completeness independent of architecture\n\n**Conjecture.** Under polynomial-overhead mutual simulation, completeness for every reduction-closed language class is preserved, provided both substrates support reduction precomposition with polynomial cost.\n\nThe key insight is that completeness combines two independent invariances: transport of bounded decision procedures and closure under semantic precomposition.\n\n**Why now?** These mechanisms have been proved separately in the exact setting, making their asymptotic interaction a sharply formulated next target.\n\n## 5. Robust separation witnesses across heterogeneous verifiers\n\n**Conjecture.** If deterministic machines and witness verifiers are each mutually simulable with polynomial overhead, then any language separating deterministic from witness computation on one substrate yields a separating language on every equivalent substrate without changing its extensional membership predicate.\n\nThe key insight is that a separation witness should be a property of a language and resource regime, not of the material architecture used to recognize it.\n\n**Why now?** Equality of the two classes is already known to transport under exact equivalence; transporting explicit nonmembership under polynomial rescaling is the next falsifiable strengthening.\n",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_0487",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "9fc00121",
+    "status": "available",
+    "timestamp": "2026-07-19T20:26:03.577332+00:00",
+    "title": "**Conjecture.** If two machine substrates simulate one another with polynomially"
   },
   {
     "consumed_by_exp_id": "",

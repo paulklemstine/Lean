@@ -1,424 +1,403 @@
-# Dream Logic: Coexisting Contradictions and the Topology of the Boundary
+# Dream Logic, Finitary Information Geometry, and Algebraic Forgetting
+
+**Aristotle**  
+**19 July 2026**
 
 ## Abstract
 
-We develop a semantics for a *paraconsistent* logic — a logic in which a
-contradiction does not entail every proposition — and show that it is, in a
-precise sense, a fragment of point-set topology. Interpreting propositions as the
-**closed sets** of a topological space $X$, with conjunction as intersection,
-disjunction as (finite) union, and negation as the closure of the set-theoretic
-complement, we prove that the conjunction of any proposition with its own
-negation is *exactly the topological boundary* of that proposition:
-$A \wedge \neg A = \partial A$. Consequently a proposition can carry a genuine,
-coexisting contradiction precisely when its underlying set is not open, i.e. has
-nonempty frontier. We show that the logic is **non-explosive** — no contradiction
-entails the whole space — precisely because boundaries are, in general, nonempty;
-and we trace this to the single topological asymmetry that *arbitrary* unions of
-closed sets need not be closed. This yields a finiteness criterion: on a finite
-space the closed-set logic degenerates to a classical (explosive) one, whereas on
-any space admitting a closed set with nonempty boundary the logic is properly
-paraconsistent. Finally we exhibit an exact **De Morgan duality** between this
-"dream logic" (built from closed sets) and the intuitionistic "waking logic"
-(built from open sets): the former tolerates *gluts* (violations of
-non-contradiction) exactly where the latter tolerates *gaps* (violations of
-excluded middle), the two meeting on the shared boundary. We interpret the
-four-valued Belnap–Dunn algebra of "impossible objects" — True, False, Both,
-Neither — as the algebra of boundary status of a point relative to a region, and
-discuss applications to reasoning over inconsistent information.
+We develop a self-contained model of reasoning with signed literals in which contradictory evidence can coexist without entailing unrelated claims. Belief revision inserts a literal and retracts its opposite, producing a local, non-monotone, and order-sensitive dynamics. Semantic consistency is shown to coincide exactly with conflict-freedom in the graph of complementary literals, and revision preserves this invariant. Finite belief states are interpreted as finitarily open subsets: they are closed under finite unions and intersections but fail the arbitrary-union axiom of ordinary topology. The countable union of singleton subsets of $\mathbb N$ provides the decisive obstruction. The semantic and finitary views combine in a bridge theorem asserting that revision carries finite consistent states to finite conflict-free states.
 
-**Keywords:** paraconsistent logic, closed-set logic, topological boundary,
-frontier, non-explosion, De Morgan duality, intuitionistic logic, Belnap–Dunn
-four-valued logic, dream logic, glut.
-
----
+We then extend the perspective from unordered belief states to ordered experience streams. A compositional memory is a monoid homomorphism from the free monoid of streams to a representation monoid. Every finite-state memory over a nonempty alphabet is necessarily lossy; completely erased streams form a submonoid; and the observable memory algebra is canonically isomorphic to the quotient of streams by observational indistinguishability. Targeted symbol deletion realizes a universal quotient: every compatible compositional summary factors uniquely through it. Algorithms and finite examples illustrate revision, conflict detection, finitary-union obstruction, selective forgetting, and memory collisions.
 
 ## 1. Introduction
 
-The **principle of explosion**, *ex contradictione quodlibet*, states that from a
-contradiction every proposition follows. In a Boolean algebra this is the fact
-that the meet $a \wedge \neg a$ equals the bottom element $\bot$, and $\bot \le b$
-for every $b$. Classical and intuitionistic logics both validate explosion; a
-single inconsistency renders the entire theory trivial. **Paraconsistent** logics
-reject explosion: they permit a proposition and its negation to hold together
-("a glut") without collapse.
-
-Paraconsistency is not merely a philosophical stance. It is a practical necessity
-for any inference system operating on data that is inconsistent in the small but
-useful in the large: merged knowledge bases with conflicting records,
-non-monotone belief revision where earlier conclusions are retracted, legal and
-normative reasoning with clashing rules, and — evocatively — *dream cognition*,
-in which impossible objects are held in mind and reasoned about without global
-breakdown.
-
-This paper gives such a logic a transparent **topological** semantics and, more
-importantly, extracts from that semantics a geometric account of *what a
-contradiction is*. The central discovery is that in the natural closed-set
-semantics, the coexistence region of a proposition and its negation is exactly
-the **topological boundary** (frontier) of the proposition. Contradiction is thus
-a spatial, not a syntactic, phenomenon: it lives on shorelines. Non-explosion
-becomes the observation that shorelines are, in general, nonempty; and the reason
-they are nonempty is the failure of arbitrary unions of closed sets to be closed.
-
-### Contributions
-
-1. **Boundary characterisation of contradiction** (Theorem 1):
-   $A \wedge \neg A = \partial A$ for every closed $A$; hence a proposition
-   carries a coexisting contradiction iff its set is not open.
-2. **Non-explosion from geometry** (Theorem 2): the closed-set logic is
-   non-explosive iff there exists a closed set with nonempty boundary, and
-   trivially classical otherwise.
-3. **Union-closure / finiteness criterion** (Theorem 3): the logic is explosive
-   iff closed sets are closed under arbitrary union; this always holds on finite
-   spaces, so paraconsistency requires infinitely many points.
-4. **Open/closed De Morgan duality** (Theorem 4): the closed-set (dream) logic
-   and the open-set (intuitionistic) logic are exact duals under set complement;
-   gluts of one correspond to gaps of the other on the shared boundary.
-5. **Four-valued interpretation** (Section 7): the Belnap–Dunn values
-   $\{\mathbf{T}, \mathbf{F}, \mathbf{B}, \mathbf{N}\}$ realised as the boundary
-   status of a point relative to a region.
-
----
-
-## 2. Preliminaries: spaces, closures, boundaries
-
-Throughout, $(X, \tau)$ is a topological space; $\tau$ is the family of **open**
-sets. The **closed** sets are the complements of open sets; write
-$\mathcal{C}(X)$ for the lattice of closed sets. For $S \subseteq X$:
-
-- $\overline{S}$ denotes the **closure** of $S$ (the smallest closed set
-  containing $S$);
-- $\mathrm{int}(S)$ denotes the **interior** (the largest open set inside $S$);
-- $S^c = X \setminus S$ denotes the complement.
-
-The two operators are dual: $\overline{S} = (\mathrm{int}(S^c))^c$ and
-$\mathrm{int}(S) = (\overline{S^c})^c$.
-
-**Definition 2.1 (Boundary / frontier).** The *boundary* of $S \subseteq X$ is
-$$\partial S \;=\; \overline{S} \cap \overline{S^c}.$$
-
-Two standard facts we use repeatedly:
-
-- For **any** $S$, $\partial S = \overline{S} \setminus \mathrm{int}(S)$.
-- For a **closed** set $A$ (so $\overline{A} = A$),
-  $\partial A = A \setminus \mathrm{int}(A)$, and $\partial A = \emptyset$ iff
-  $A$ is open (hence clopen).
-
-We recall the lattice structure of $\mathcal{C}(X)$: it is closed under **finite**
-unions and **arbitrary** intersections, contains $\emptyset$ and $X$, and is
-partially ordered by inclusion. It is **not** in general closed under arbitrary
-unions — the pivotal asymmetry exploited below.
-
----
-
-## 3. The closed-set (dream) logic
-
-**Definition 3.1 (Closed-set logic).** Fix a space $(X,\tau)$. The
-*closed-set logic* $\mathsf{CL}(X)$ has:
-
-- **Propositions:** closed sets $A \in \mathcal{C}(X)$.
-- **Entailment / order:** $A \vdash B$ iff $A \subseteq B$.
-- **Conjunction:** $A \wedge B = A \cap B$ (closed, being an intersection).
-- **Disjunction:** $A \vee B = A \cup B$ (closed, being a *finite* union).
-- **Verum / falsum:** $\top = X$, $\bot = \emptyset$.
-- **Negation:** $\neg A = \overline{A^c} = X \setminus \mathrm{int}(A)$.
-
-Every operation lands back in $\mathcal{C}(X)$, so $\mathsf{CL}(X)$ is
-well-defined. The negation is the *closed-set* analogue of complementation: since
-$A^c$ is open (hence generally not a legal proposition), we take its closure.
-
-**Remark 3.2.** $(\mathcal{C}(X), \cap, \cup, \neg, \emptyset, X)$ is a bounded
-distributive lattice with a De Morgan-style negation; it is a **co-Heyting
-(Brouwerian) algebra**, the order-dual of the Heyting algebra of open sets. Its
-distinguishing feature is a *difference* (co-implication) operation rather than an
-implication, and it is precisely this dual orientation that makes negation
-paraconsistent rather than intuitionistic.
-
-**Definition 3.3 (Glut).** A proposition $A$ *carries a coexisting contradiction*
-(a **glut**) if $A \wedge \neg A \neq \bot$, i.e. $A \cap \overline{A^c} \neq
-\emptyset$.
-
-**Definition 3.4 (Explosion).** $\mathsf{CL}(X)$ is *explosive* if for all
-$A, B \in \mathcal{C}(X)$ we have $A \wedge \neg A \vdash B$; equivalently (taking
-$B = \bot$), if $A \wedge \neg A = \bot$ for every $A$. It is *paraconsistent* if
-it is not explosive.
-
----
-
-## 4. Contradictions are boundaries
-
-**Theorem 1 (Boundary characterisation of contradiction).**
-For every closed set $A \in \mathcal{C}(X)$,
-$$A \wedge \neg A \;=\; \partial A.$$
-Consequently $A$ carries a glut iff $\partial A \neq \emptyset$ iff $A$ is not
-open.
-
-*Proof.* Since $A$ is closed, $\neg A = \overline{A^c} = X \setminus
-\mathrm{int}(A)$. Therefore
-$$A \wedge \neg A = A \cap (X \setminus \mathrm{int}(A)) = A \setminus
-\mathrm{int}(A).$$
-For a closed set, $\overline{A} = A$, so $\partial A = \overline{A} \setminus
-\mathrm{int}(A) = A \setminus \mathrm{int}(A)$. Hence $A \wedge \neg A =
-\partial A$. The final clause is immediate: $\partial A = \emptyset$ iff
-$A = \mathrm{int}(A)$ iff $A$ is open. $\qquad\blacksquare$
-
-Theorem 1 is the conceptual core. It relocates contradiction from syntax to
-geometry: the region where "$A$ and not-$A$" both hold is the *frontier* of $A$,
-neither a defect of the symbols nor an artefact of the proof system, but the
-shoreline separating $A$ from its complement. The quantity of contradiction a
-proposition sustains is measured by the size of $\partial A$.
-
-**Corollary 1.1 (Failure of non-contradiction).** The law of non-contradiction
-$A \wedge \neg A = \bot$ holds in $\mathsf{CL}(X)$ *only* for clopen $A$. On any
-space possessing a non-open closed set, non-contradiction fails.
-
-**Example 1.2 (The real line).** In $X = \mathbb{R}$ with the standard topology,
-let $A = [0,1]$. Then $\mathrm{int}(A) = (0,1)$ and $A \wedge \neg A = \partial A
-= \{0,1\}$. The contradiction is real, located, and confined to two points.
-
----
-
-## 5. Non-explosion is geometric
-
-**Theorem 2 (Non-explosion).** $\mathsf{CL}(X)$ is paraconsistent if and only if
-there exists a closed set with nonempty boundary; equivalently, iff not every
-closed set is open. If every closed set is open (equivalently every open set is
-closed), then $\mathsf{CL}(X)$ is explosive and coincides with a classical
-(Boolean) logic on clopen sets.
-
-*Proof.* By Definition 3.4, explosion is equivalent to $A \wedge \neg A = \bot$
-for all $A$, which by Theorem 1 is equivalent to $\partial A = \emptyset$ for all
-closed $A$, i.e. every closed set is open. Negating: $\mathsf{CL}(X)$ is
-paraconsistent iff some closed $A$ has $\partial A \neq \emptyset$. In the
-explosive case, every set that is a proposition is clopen; complement then maps
-$\mathcal{C}(X)$ to itself, and $\neg A = \overline{A^c} = A^c$, recovering
-Boolean complementation with $A \wedge \neg A = \emptyset$. $\qquad\blacksquare$
-
-Thus explosion is not a logical axiom one adopts but a *geometric accident* of
-spaces all of whose closed sets happen to be open. The witness to
-paraconsistency is any single closed set with a nonempty frontier — e.g.
-$[0,1] \subset \mathbb{R}$ (Example 1.2). Non-explosion says the contradiction
-$\partial A = \{0,1\}$ is *not* contained in every proposition (it is not
-contained in $\emptyset$, nor in $\{5\}$, etc.), so it does not license arbitrary
-conclusions.
-
----
-
-## 6. The engine: non-closure of arbitrary unions
-
-Why do nonempty boundaries exist at all? Because closed sets, closed under finite
-union, can fail to be closed under **arbitrary** union — and the "missing" points
-of such a union are precisely boundary points.
-
-**Lemma 3 (Union witness).** In $\mathbb{R}$, the family $\{\{x\} : x \in (0,1)\}$
-consists of closed singletons, yet
-$$\bigcup_{x \in (0,1)} \{x\} = (0,1)$$
-is not closed; its closure adds exactly the boundary $\{0,1\} = \partial[0,1]$.
-
-*Proof.* Each singleton in a $T_1$ space is closed. The union is the open interval
-$(0,1)$, whose closure is $[0,1]$; the added points are $\{0,1\}$. $\square$
-
-**Theorem 3 (Union-closure / finiteness criterion).** Let $(X,\tau)$ be a
-topological space. If $\mathcal{C}(X)$ is closed under arbitrary unions, then
-$\mathsf{CL}(X)$ is explosive. In particular, if $X$ is **finite** then every
-union is finite, $\mathcal{C}(X)$ is closed under all unions, and $\mathsf{CL}(X)$
-is explosive; equivalently, *properly paraconsistent* closed-set logics require
-$X$ to be infinite.
-
-*Proof.* If $\mathcal{C}(X)$ is closed under arbitrary unions then it is closed
-under complementation of complements in the following sense: for any closed $A$,
-$\mathrm{int}(A) = \big(\overline{A^c}\big)^c$; but $\overline{A^c}$ is the
-closure of the open set $A^c$, and closure under arbitrary unions makes every
-open set (an arbitrary union of the closed... ) — more directly: a space in which
-arbitrary unions of closed sets are closed is exactly a space in which arbitrary
-intersections of open sets are open, i.e. an **Alexandrov** space with the
-additional property that closed = open. Every open set $U = \bigcup_{x \in U}
-\overline{\{x\}}$-type minimal-neighbourhood argument makes each open set closed;
-hence closed = open, every closed set is clopen, $\partial A = \emptyset$ for all
-$A$, and by Theorem 2 the logic is explosive. The finite case is immediate since
-all unions are finite. $\qquad\blacksquare$
-
-**Interpretation.** Non-closure of infinite unions of closed sets and
-non-explosion of contradictions are two faces of one phenomenon. Where infinite
-unions stay closed, boundaries vanish and the logic is classical; where they
-escape — as on any $T_1$ space with a limit point, in particular any nontrivial
-continuum — boundaries appear and paraconsistency is genuine. The "degree" of
-paraconsistency of a space is naturally measured by the supremum of boundary
-cardinalities of its closed sets, $\sup_{A \in \mathcal{C}(X)} |\partial A|$,
-which is $0$ exactly in the explosive case.
-
----
-
-## 7. Four-valued semantics: the algebra of impossible objects
-
-The Belnap–Dunn logic **FOUR** equips reasoning with four truth values —
-$\mathbf{T}$ (true only), $\mathbf{F}$ (false only), $\mathbf{B}$ (both, a glut),
-and $\mathbf{N}$ (neither, a gap) — arranged in the *information (knowledge)
-order* $\mathbf{N} \le \mathbf{T},\mathbf{F} \le \mathbf{B}$ and the *truth order*
-$\mathbf{F} \le \mathbf{N},\mathbf{B} \le \mathbf{T}$, with negation fixing
-$\mathbf{N}$ and $\mathbf{B}$ and swapping $\mathbf{T} \leftrightarrow
-\mathbf{F}$. FOUR is the canonical algebra for "impossible objects": entities that
-may be simultaneously asserted and denied.
-
-The topological semantics realises these four values as the **boundary status** of
-a point $p \in X$ relative to a region $A$. Track a point through *both* the
-closed-set negation (which produces gluts) and its dual open-set negation (which
-produces gaps, Section 8), and each point falls into exactly one of four classes:
-
-| Belnap value | Boundary status of $p$ w.r.t. $A$ | Condition |
-|---|---|---|
-| $\mathbf{T}$ (true) | interior of $A$ | $p \in \mathrm{int}(A)$ |
-| $\mathbf{F}$ (false) | interior of the complement | $p \in \mathrm{int}(A^c)$ |
-| $\mathbf{B}$ (both / glut) | in $A$'s frontier, on the closed side | $p \in \partial A \cap A$ |
-| $\mathbf{N}$ (neither / gap) | in $A$'s frontier, on the open side | $p \in \partial A \setminus A$ |
-
-Meet and join in the truth order correspond to $\cap$ and $\cup$ of regions;
-Belnap negation corresponds to interchanging the roles of $A$ and $A^c$ (which
-swaps $\mathbf{T} \leftrightarrow \mathbf{F}$ while fixing the two frontier
-classes $\mathbf{B}$ and $\mathbf{N}$, exactly as required). The glut value
-$\mathbf{B}$ is inhabited precisely when $\partial A \neq \emptyset$, recovering
-Theorem 1 pointwise: **impossible objects live on frontiers**. In the finite /
-explosive regime (Theorem 3) no frontier points exist, $\mathbf{B}$ and
-$\mathbf{N}$ are uninhabited, and FOUR collapses to classical
-$\{\mathbf{T},\mathbf{F}\}$.
-
----
-
-## 8. Waking and dreaming: the open/closed duality
-
-Dual to the closed-set logic is the **open-set logic** $\mathsf{OL}(X)$, the
-standard topological model of **intuitionistic** logic. Its propositions are open
-sets, conjunction is $\cap$, disjunction is $\cup$, and negation is the *interior
-of the complement*,
-$$\sim A = \mathrm{int}(A^c) = X \setminus \overline{A}.$$
-
-**Theorem 4 (Open/closed De Morgan duality).** The map $c : S \mapsto X \setminus
-S$ is an order-reversing bijection between the open sets and the closed sets that
-interchanges the two logics:
-$$c(\mathrm{int}(A^c)) = \overline{(A^c)^c}\big|_{\text{closed}}, \qquad
-\text{i.e.}\quad c(\sim A) = \neg\, c(A),$$
-and it interchanges $\cap \leftrightarrow \cup$, $\top \leftrightarrow \bot$.
-Under this duality:
-
-- **Excluded middle** $A \vee \sim A = \top$ in $\mathsf{OL}(X)$ fails exactly on
-  the boundary $\partial A$ (the "gap"), while it *holds* in $\mathsf{CL}(X)$.
-- **Non-contradiction** $A \wedge \neg A = \bot$ in $\mathsf{CL}(X)$ fails exactly
-  on the boundary $\partial A$ (the "glut"), while it *holds* in $\mathsf{OL}(X)$.
-
-Hence a point is a *gap* of the intuitionistic negation iff the complementary
-point is a *glut* of the dream negation; the two logics fail on the **same
-frontier**, from opposite sides.
-
-*Proof.* The complement map is an order-reversing bijection between $\tau$ and
-$\mathcal{C}(X)$ by definition of closed sets, and De Morgan's laws give $c(A \cap
-B) = c(A) \cup c(B)$, $c(A \cup B) = c(A) \cap c(B)$, $c(\emptyset) = X$,
-$c(X) = \emptyset$. For an open $A$, $\sim A = X \setminus \overline{A}$, so
-$A \vee \sim A = A \cup (X \setminus \overline{A}) = X \setminus (\overline{A}
-\setminus A) = X \setminus \partial A$; thus excluded middle fails exactly on
-$\partial A$. Dually, for closed $A$, Theorem 1 gives $A \wedge \neg A =
-\partial A$, so non-contradiction fails exactly on $\partial A$. Applying $c$ to
-one negation yields the other by the closure/interior duality
-$\overline{S} = (\mathrm{int}(S^c))^c$. $\qquad\blacksquare$
-
-**Corollary 4.1 (Traded resources).** Consistency and completeness are dual
-resources on a fixed space. Choosing open carriers yields a **paracomplete**
-logic (gaps, excluded middle fails, non-contradiction holds); choosing closed
-carriers yields a **paraconsistent** logic (gluts, non-contradiction fails,
-excluded middle holds). Neither is definable from the other by a truth-functional
-translation unless the space is discrete (in which case both are classical). The
-reasoner selects paracompleteness or paraconsistency simply by reorienting from
-open to closed.
-
----
-
-## 9. Algorithms
-
-We summarise the constructive content as algorithms over **finite** topological
-spaces (given by an explicit family of open sets), which suffice to compute all
-operations and to certify paraconsistency witnesses on any finite subspace or
-finite model.
-
-**Algorithm A (Boundary / glut computation).** Given a finite space $X$ (as a set
-with its open family $\tau$) and a closed set $A$, compute $\mathrm{int}(A)$ as
-the union of all opens contained in $A$, then return $\partial A = A \setminus
-\mathrm{int}(A)$. $A$ is a glut-carrier iff the result is nonempty. Complexity
-$O(|\tau|\cdot|X|)$.
-
-**Algorithm B (Explosion test).** For each closed set $A$, compute $\partial A$ by
-Algorithm A; the logic on $X$ is paraconsistent iff some $\partial A \neq
-\emptyset$, explosive otherwise. On a finite space this always returns
-"explosive" unless the topology is non-Alexandrov — impossible for finite spaces
-— confirming Theorem 3 computationally for finite models and requiring an
-explicit infinite witness (e.g. an interval on $\mathbb{R}$) for genuine
-paraconsistency.
-
-**Algorithm C (Duality check).** Given open $A$, compute intuitionistic
-$\sim A = X \setminus \overline{A}$ and closed-set $\neg(X\setminus A)$; verify
-$X \setminus (\sim A) = \neg(X \setminus A)$ and that both negations fail on the
-same $\partial A$.
-
----
-
-## 10. Applications
-
-1. **Inconsistency-tolerant knowledge bases.** Model each atomic fact as a
-   region; merging sources unions the regions. Conflicts localise to boundaries;
-   downstream queries remain sound because non-explosion prevents a single
-   conflict from making every query true. The "conflict mass" of a merged base is
-   $\sum |\partial A_i|$.
-2. **Non-monotone belief revision.** Because negation is the *closure* of the
-   complement rather than a hard complement, retracting a belief shrinks a region
-   to its interior rather than deleting it; boundary beliefs persist as gluts,
-   modelling the graceful, non-catastrophic revision characteristic of human and
-   dream cognition.
-3. **Normative / legal reasoning.** Two statutes in genuine conflict correspond
-   to overlapping closed regions whose intersection is a boundary glut; dream
-   logic isolates the conflict to the precise cases on that boundary without
-   trivialising the code.
-4. **Robust artificial agents.** Agents ingesting the open web can adopt closed
-   carriers to survive contradictory inputs, using boundary size as a calibrated
-   measure of local uncertainty.
-
----
-
-## 11. Discussion and future work
-
-The results recast three classically distinct notions — a *true contradiction*, a
-*topological boundary*, and the *failure of arbitrary unions of closed sets to be
-closed* — as one phenomenon viewed from three angles. This suggests several
-directions.
-
-- **Gluts are exactly boundaries — a dimension-free law.** We conjecture that in
-  *every* topological space, under the closed-set negation, the coexistence set of
-  a region and its negation equals its frontier, so a region admits a coexisting
-  contradiction iff its frontier is nonempty. The finite and real-line cases
-  coincide exactly; the general statement needs only frontier calculus valid on
-  arbitrary spaces.
-- **Paraconsistency calibrated by union-failure.** We conjecture that a closed-set
-  logic is explosive iff its space is finite (equivalently, closed sets are closed
-  under arbitrary union); every infinite space is properly paraconsistent, with
-  degree growing as the supremum of frontier cardinalities. Non-explosion and the
-  non-closure of infinite unions are then a single, compactness-flavoured fact.
-- **Dual pairs on one space.** We conjecture that for any space the open-set
-  (intuitionistic) and closed-set (dream) logics are exact De Morgan duals:
-  excluded middle holds in one exactly where non-contradiction holds in the other,
-  and fixed points of the two negations correspond under complement; neither is
-  truth-functionally definable from the other unless the space is discrete.
-
-The overarching theme is that consistency and completeness are not absolute
-virtues but **dual, tradeable resources**, selected by orienting one's
-propositions toward the open or the closed. A reasoner facing contradictory
-information is not obliged to choose collapse; it may choose a boundary.
-
----
-
-## References (indicative)
-
-- S. Jaśkowski, *Propositional calculus for contradictory deductive systems*
-  (1948).
-- N. da Costa, *On the theory of inconsistent formal systems* (1974).
-- N. Belnap, *A useful four-valued logic* (1977); J. M. Dunn, *Intuitive
-  semantics for first-degree entailments* (1976).
-- C. Mortensen, *Inconsistent Mathematics* (1995); *Topological separation
-  principles and logical theories* (2000).
-- G. Priest, *In Contradiction* (2006).
-- W. James & C. Mortensen, closed-set logic and topological duality (various).
+Information encountered in practice need not be globally consistent. Databases merge reports from fallible sources, sensors disagree, narratives admit incompatible descriptions, and memory is revised after later experience. Classical consequence is designed for truth-preserving deduction from consistent premises; in its usual form, accepting both $p$ and $\neg p$ allows any conclusion. This principle of explosion is unsuitable when acceptance records currently held evidence rather than settled truth.
+
+The aim here is not to weaken reasoning indiscriminately, but to isolate a small mathematical structure in which four phenomena can be studied precisely:
+
+1. contradictory evidence remains local rather than explosive;
+2. revision can retract beliefs and depends on temporal order;
+3. finite information fragments support finite set operations but not arbitrary accumulation;
+4. finite or selective memory identifies histories through an algebraic quotient.
+
+The first three phenomena are represented using signed sets. Every atom has a positive and a negative literal. A state is an arbitrary set of literals, so it may support neither sign, one sign, or both. Consequence is intentionally minimal: a state entails exactly the literals it contains. Revision by one literal removes its complement and inserts the new literal.
+
+A complementary-attack graph then connects the semantics to abstract argumentation. Its only edges join opposite signs of the same atom. Consequently, consistency is exactly conflict-freedom. When states are finite, they can also be regarded as elements of the family of finite subsets of the literal space. This family behaves like an open-set system for finite operations, but it is not generally a topology because arbitrary unions can be infinite. We call its members finitarily open to emphasize the distinction.
+
+The final part studies ordered histories rather than sets. Streams form a free monoid under concatenation, and a compositional memory is a monoid homomorphism. Its kernel congruence identifies histories with the same observable representation. Standard counting and quotient principles then produce a unified description of information loss.
+
+A recurring theme is locality. Contradiction concerns one atom. Revision edits one complementary pair. Conflict-freedom checks complementary pairs. Finiteness bounds the current support. Memory quotienting identifies only what observation cannot distinguish. These local mechanisms yield global invariants without forcing either consistency or perfect recall.
+
+## 2. Signed states and paraconsistent consequence
+
+### 2.1 Literals, opposites, and entailment
+
+Let $A$ be a set of atoms. Define the literal space by
+
+$$
+L(A)=A\times\{+,-\}.
+$$
+
+For $\ell=(a,s)$, its **opposite** $\bar\ell$ has the same atom and the other sign. Thus
+
+$$
+\overline{(a,+)}=(a,-),\qquad \overline{(a,-)}=(a,+).
+$$
+
+The opposite operation preserves the underlying atom, has no fixed points, and is involutive:
+
+$$
+\operatorname{atom}(\bar\ell)=\operatorname{atom}(\ell),\qquad
+\bar\ell\ne\ell,\qquad
+\overline{\bar\ell}=\ell.
+$$
+
+A **belief state** is any subset $B\subseteq L(A)$. We define the consequence relation by membership:
+
+$$
+B\models\ell\quad\Longleftrightarrow\quad \ell\in B.
+$$
+
+An atom $a$ is **contradictory in $B$** if both signs occur:
+
+$$
+(a,+)\in B\quad\text{and}\quad(a,-)\in B.
+$$
+
+A state is **consistent** when no atom is contradictory. Notice that consistency is a property, not a prerequisite for being a state.
+
+### 2.2 Non-explosion
+
+**Theorem 2.1 (Contradiction without explosion).** Let $a,b\in A$ with $a\ne b$, and set
+
+$$
+B_a=\{(a,+),(a,-)\}.
+$$
+
+Then $a$ is contradictory in $B_a$, while $B_a\not\models(b,+)$.
+
+**Proof sketch.** Both signed literals over $a$ occur by construction. The only members of $B_a$ have underlying atom $a$, whereas $(b,+)$ has underlying atom $b\ne a$. Hence $(b,+)\notin B_a$. $\square$
+
+This is paraconsistency in its most direct form. The state records a conflict but remains nontrivial. The hypothesis $a\ne b$ is essential: without it, the allegedly unrelated conclusion could be one of the two literals already present.
+
+The theorem does not propose a general deductive calculus. Rather, it gives a semantic base layer suitable for evidence stores: unsupported literals remain unsupported even when another atom is contradictory. Richer rules may be added if they preserve the desired locality.
+
+## 3. Non-monotone revision
+
+### 3.1 Definition and immediate behavior
+
+For a state $B$ and literal $\ell$, define **revision by $\ell$** as
+
+$$
+R_\ell(B)=\{\ell\}\cup\left(B\setminus\{\bar\ell\}\right).
+$$
+
+This is a local overwrite. It removes the unique complementary literal and inserts the requested one; every literal over every other atom is unchanged.
+
+**Theorem 3.1 (Acceptance and retraction).** For every state $B$ and literal $\ell$,
+
+$$
+R_\ell(B)\models\ell
+\qquad\text{and}\qquad
+R_\ell(B)\not\models\bar\ell.
+$$
+
+**Proof sketch.** The first assertion follows because $\ell$ is explicitly inserted. For the second, $\bar\ell$ is deleted from $B$, and it cannot equal the inserted literal because the opposite operation has no fixed point. $\square$
+
+Two useful consequences follow. Revision is idempotent at a fixed literal,
+
+$$
+R_\ell(R_\ell(B))=R_\ell(B),
+$$
+
+and it changes no literal whose underlying atom differs from that of $\ell$. These observations follow directly from the set formula and motivate the future study of revision histories.
+
+### 3.2 Failure of monotonicity
+
+A state transformer $T$ is inflationary if $B\subseteq T(B)$ for every $B$. Revision is not inflationary.
+
+**Theorem 3.2 (Genuine non-monotonicity).** For every literal $\ell$, if
+
+$$
+C_\ell=\{\ell,\bar\ell\},
+$$
+
+then
+
+$$
+C_\ell\nsubseteq R_\ell(C_\ell).
+$$
+
+**Proof sketch.** The old state contains $\bar\ell$. By Theorem 3.1, the revised state does not. Therefore at least one former member has been lost. $\square$
+
+Retraction distinguishes revision from mere expansion. This is the appropriate behavior when later information replaces a contrary earlier commitment.
+
+### 3.3 Order sensitivity
+
+Updates at the same atom also fail to commute.
+
+**Theorem 3.3 (Contrary revisions do not commute).** For every state $B$ and literal $\ell$,
+
+$$
+R_{\bar\ell}(R_\ell(B))\ne R_\ell(R_{\bar\ell}(B)).
+$$
+
+**Proof sketch.** By Theorem 3.1, the left side contains $\bar\ell$ and excludes $\ell$. The right side contains $\ell$ and excludes $\bar\ell$. Since $\ell\ne\bar\ell$, the states differ. $\square$
+
+Thus contrary revision obeys a last-write-wins law. Revisions at different atoms, by contrast, affect disjoint complementary pairs and therefore commute. This contrast suggests normal forms based on the last occurrence of each revised atom.
+
+## 4. Complementary attack and consistency
+
+### 4.1 The attack graph
+
+Define the **complementary attack relation** on $L(A)$ by
+
+$$
+\ell\rightsquigarrow k
+\quad\Longleftrightarrow\quad
+k=\bar\ell.
+$$
+
+A set $B\subseteq L(A)$ is **conflict-free** when it contains no pair $\ell,k\in B$ with $\ell\rightsquigarrow k$. Since opposition is symmetric, this relation may be pictured as a graph consisting of one edge between $(a,+)$ and $(a,-)$ for each atom $a$.
+
+**Theorem 4.1 (Consistency equals conflict-freedom).** A belief state $B$ is consistent if and only if it is conflict-free under complementary attack.
+
+**Proof sketch.** If $B$ is inconsistent, some atom $a$ contributes both $(a,+)$ and $(a,-)$; these literals attack one another, so $B$ is not conflict-free. Conversely, an attack within $B$ consists of a literal and its opposite. They share an atom and carry opposite signs, so that atom is contradictory. $\square$
+
+This exact equivalence is specific to complementary attack. It does not identify consistency with conflict-freedom for an arbitrary argumentation relation.
+
+### 4.2 Revision preserves consistency
+
+**Theorem 4.2 (Consistency preservation).** If $B$ is consistent, then $R_\ell(B)$ is consistent for every literal $\ell$.
+
+**Proof sketch.** Let $a$ be the atom underlying $\ell$. Revision deletes $\bar\ell$ before inserting $\ell$, so the revised state cannot contain both signs over $a$. For any atom $b\ne a$, revision changes neither signed literal over $b$; a contradiction there would already have existed in $B$. Therefore no atom is contradictory after revision. $\square$
+
+Combining Theorems 4.1 and 4.2 shows that revision maps conflict-free states to conflict-free states whenever conflict is defined by opposition.
+
+For a finite atom set of size $n$, the consistent states form a simplicial complex. Each atom offers three consistent local statuses—absent, positive, or negative—so there are $3^n$ consistent states. The maximal states choose exactly one sign for every atom and number $2^n$. Revision moves between faces by fixing one coordinate to a chosen sign.
+
+## 5. Finitary openness
+
+### 5.1 Finite subsets as information regions
+
+Let $X$ be any set. A subset $U\subseteq X$ is **finitarily open** if $U$ is finite. We use this term to express finite accessibility while avoiding the false claim that these sets always form an ordinary topology.
+
+The elementary closure laws are as follows.
+
+**Proposition 5.1 (Finite lattice laws).** The empty subset of $X$ is finitarily open. If $U$ and $V$ are finitarily open, then $U\cap V$ and $U\cup V$ are finitarily open. More generally, if $\mathcal U$ is a finite family of finite subsets of $X$, then
+
+$$
+\bigcup\mathcal U
+$$
+
+is finite.
+
+**Proof sketch.** The empty set has cardinality zero. Subsets of finite sets are finite, giving the intersection claim. Cardinalities satisfy $|U\cup V|\le |U|+|V|$. Induction on the size of $\mathcal U$ proves the finite-family statement. $\square$
+
+Singletons are therefore finitarily open. On a finite carrier, every subset is finite and the construction coincides with the discrete topology. The distinction appears on infinite carriers.
+
+### 5.2 The arbitrary-union boundary
+
+**Theorem 5.2 (Union of natural-number singletons).**
+
+$$
+\bigcup_{n\in\mathbb N}\{n\}=\mathbb N.
+$$
+
+**Proof sketch.** Every element of the union belongs to some singleton $\{n\}$ and is therefore a natural number. Conversely, each $m\in\mathbb N$ belongs to the singleton indexed by $m$. $\square$
+
+**Theorem 5.3 (Arbitrary-union obstruction).** Every singleton $\{n\}\subseteq\mathbb N$ is finitarily open, but their countable union is not finitarily open.
+
+**Proof sketch.** Each singleton is finite. By Theorem 5.2 their union is $\mathbb N$, which is infinite. $\square$
+
+Ordinary topologies must contain the whole carrier and must be closed under arbitrary unions. Consequently, on an infinite $X$, the family of finite subsets is not a topology: it omits $X$ and fails arbitrary-union closure. The accurate structure is a finitary lattice or pretopological information system.
+
+### 5.3 Revision remains finitary
+
+**Theorem 5.4 (Finiteness preservation).** If $B$ is a finite belief state, then $R_\ell(B)$ is finite.
+
+**Proof sketch.** The set $B\setminus\{\bar\ell\}$ is a subset of the finite set $B$, and adjoining one element preserves finiteness. $\square$
+
+**Theorem 5.5 (Revision bridge).** Let $B$ be a finite consistent belief state. For every literal $\ell$, the revised state $R_\ell(B)$ is finite and conflict-free under complementary attack.
+
+**Proof sketch.** Finiteness follows from Theorem 5.4. Consistency follows from Theorem 4.2, and Theorem 4.1 converts consistency into conflict-freedom. $\square$
+
+This theorem joins three readings of the same operation. Semantically, revision remains consistent. Combinatorially, it remains in the conflict-free complex. Resource-theoretically, it remains a finite information fragment.
+
+## 6. Ordered experience and algebraic memory
+
+### 6.1 Streams and compositional memories
+
+Let $\Sigma$ be an alphabet of experience symbols. The set $\Sigma^*$ of finite words, including the empty word $\varepsilon$, is the **free monoid** on $\Sigma$ under concatenation. A **compositional memory** with representation monoid $(R,\cdot,1)$ is a map
+
+$$
+M:\Sigma^*\to R
+$$
+
+satisfying
+
+$$
+M(uv)=M(u)\cdot M(v),\qquad M(\varepsilon)=1.
+$$
+
+Define the set of **completely erased streams** by
+
+$$
+K_M=\{u\in\Sigma^*:M(u)=1\}.
+$$
+
+Define **observational indistinguishability** by
+
+$$
+u\sim_M v\quad\Longleftrightarrow\quad M(u)=M(v).
+$$
+
+Because $M$ respects concatenation, $\sim_M$ is a monoid congruence: if $u\sim_M u'$ and $v\sim_M v'$, then $uv\sim_M u'v'$.
+
+### 6.2 Finite memory is necessarily lossy
+
+**Theorem 6.1 (Finite-memory loss).** Suppose $\Sigma$ is nonempty and $R$ is finite. For every compositional memory $M:\Sigma^*\to R$, there exist distinct streams $u\ne v$ such that
+
+$$
+M(u)=M(v).
+$$
+
+**Proof sketch.** Choose a symbol $a\in\Sigma$. The words $\varepsilon,a,a^2,a^3,\ldots$ are all distinct, so $\Sigma^*$ is infinite. A function from an infinite set to finite $R$ cannot be injective. Therefore two distinct streams share a representation. $\square$
+
+Equivalently, the indistinguishability congruence has a non-singleton class. The result uses only finiteness and a nonempty alphabet; no special memory architecture is required.
+
+**Theorem 6.2 (Erased streams form a submonoid).** For every compositional memory $M$, the set $K_M$ contains $\varepsilon$ and is closed under concatenation.
+
+**Proof sketch.** Since $M(\varepsilon)=1$, the empty stream lies in $K_M$. If $u,v\in K_M$, then
+
+$$
+M(uv)=M(u)M(v)=1\cdot1=1,
+$$
+
+so $uv\in K_M$. $\square$
+
+The set $K_M$ records complete erasure, whereas the full congruence $\sim_M$ records every observational collision. In general monoids, the latter contains more information than the former.
+
+### 6.3 Observable memory as a quotient
+
+Let $\Sigma^*/{\sim_M}$ denote the monoid of equivalence classes under observational indistinguishability, and let $\operatorname{im}(M)=\{M(u):u\in\Sigma^*\}$.
+
+**Theorem 6.3 (Observable-quotient theorem).** The map
+
+$$
+\Phi:\Sigma^*/{\sim_M}\longrightarrow\operatorname{im}(M),
+\qquad
+\Phi([u])=M(u),
+$$
+
+is a monoid isomorphism.
+
+**Proof sketch.** The definition is independent of the representative because $[u]=[v]$ means $M(u)=M(v)$. It preserves multiplication by compositionality. It is surjective by the definition of the image. If $\Phi([u])=\Phi([v])$, then $M(u)=M(v)$, hence $u\sim_M v$ and $[u]=[v]$; thus it is injective. $\square$
+
+Combined with Theorems 6.1 and 6.2, this yields a three-part connector: finite memory forces collisions, complete erasures form a submonoid, and observable states are exactly quotient classes of streams.
+
+## 7. Targeted forgetting and universality
+
+Choose a retention predicate $\rho:\Sigma\to\{0,1\}$. Define targeted forgetting $F_\rho:\Sigma^*\to\Sigma^*$ on symbols by
+
+$$
+F_\rho(a)=
+\begin{cases}
+a,&\rho(a)=1,\\
+\varepsilon,&\rho(a)=0,
+\end{cases}
+$$
+
+and extend it compositionally to words. Operationally, $F_\rho$ scans a stream from left to right, deletes unretained symbols, and preserves the retained symbols in their original order.
+
+**Proposition 7.1 (Marked symbols are erased).** If $\rho(a)=0$, then $F_\rho(a)=\varepsilon$, so the one-symbol stream $a$ belongs to the erased-stream submonoid of $F_\rho$.
+
+**Proof sketch.** This is the deleting branch of the definition. $\square$
+
+The quotient by equality of filtered outputs is isomorphic to the submonoid of streams consisting solely of retained output. More strongly, targeted forgetting has a universal property.
+
+**Theorem 7.2 (Universal property of targeted forgetting).** Let $G:\Sigma^*\to S$ be a compositional map into a monoid $S$. Assume that whenever $F_\rho(u)=F_\rho(v)$, one also has $G(u)=G(v)$. Then there exists a unique monoid homomorphism
+
+$$
+\overline G:\Sigma^*/{\sim_{F_\rho}}\to S
+$$
+
+such that
+
+$$
+G=\overline G\circ q,
+$$
+
+where $q(u)=[u]$ is the quotient map.
+
+**Proof sketch.** Define $\overline G([u])=G(u)$. The compatibility assumption ensures that this does not depend on the representative. Multiplicativity follows from that of $G$. Every quotient class has a representative, so the factorization determines $\overline G$ uniquely. $\square$
+
+Thus the quotient is the most economical compositional domain on which every summary compatible with the chosen deletions can operate.
+
+## 8. Algorithms and complexity
+
+### 8.1 Local literal revision
+
+Represent a literal as a pair $(a,s)$ and a finite state as a hash set. To revise by $(a,s)$, remove $(a,-s)$ if present and insert $(a,s)$. Expected running time is $O(1)$ with hashing and worst-case additional space is $O(1)$ beyond the state. With a balanced tree, time is $O(\log |B|)$.
+
+For a history of $m$ revisions, sequential application costs expected $O(m)$. A normal-form implementation can keep one final sign per mentioned atom; this also costs expected $O(m)$ time and $O(k)$ space for $k$ distinct atoms, although a general uniqueness theorem for revision histories remains future work.
+
+### 8.2 Consistency and conflict checks
+
+Scan all literals while recording the signs seen for each atom. Encountering both signs reports a contradiction and, equivalently, an attack within the state. For $n=|B|$, hash-based time is expected $O(n)$ and storage is $O(n)$. This algorithm simultaneously tests semantic consistency and complementary conflict-freedom by Theorem 4.1.
+
+### 8.3 Selective stream filtering
+
+Scan a word of length $m$, append a symbol precisely when $\rho(a)=1$, and preserve order. Time is $O(m)$ and output space is $O(r)$, where $r\le m$ is the number of retained symbols. Comparing filtered outputs decides observational indistinguishability for targeted forgetting in $O(m+n)$ time for inputs of lengths $m$ and $n$.
+
+### 8.4 Finite collision search
+
+Given a finite-state memory evaluator and a finite enumeration of candidate streams, store the first stream observed at each representation. When a representation repeats, return the two distinct streams. If $N$ streams are examined and representation evaluation costs $T$, the search costs expected $O(NT)$ time and $O(\min(N,|R|))$ stored entries. Theorem 6.1 guarantees a collision when the enumeration eventually covers sufficiently many distinct streams and $R$ is finite.
+
+## 9. Examples and applications
+
+For atoms $a$ and $b$, the state $\{(a,+),(a,-)\}$ is contradictory but says nothing about either sign of $b$. Revising by $(a,+)$ yields $\{(a,+)\}$; revising next by $(a,-)$ yields $\{(a,-)\}$. If the initial state also contains $(b,+)$, that unrelated literal survives both revisions.
+
+For finitary openness, the first $N$ singleton subsets of $\mathbb N$ have union $\{0,\ldots,N-1\}$ and cardinality $N$. Every finite stage remains admissible. The limiting family indexed by all natural numbers has infinite union, demonstrating that the obstruction is genuinely infinitary rather than visible at any fixed finite stage.
+
+For targeted forgetting, let the alphabet be $\{\texttt{red},\texttt{noise},\texttt{blue}\}$ and retain only colors. The streams
+
+$$
+(\texttt{red},\texttt{noise},\texttt{blue})
+\quad\text{and}\quad
+(\texttt{red},\texttt{blue})
+$$
+
+have identical filtered memories. Their difference is real at the stream level but invisible to this observer.
+
+A simple finite compositional memory counts word length modulo $k$. It maps concatenation to addition modulo $k$. The empty stream and any stream of length $k$ collide, making the finite-memory theorem concrete. Streams whose lengths are multiples of $k$ form the erased submonoid.
+
+These constructions apply naturally to inconsistent databases, editable knowledge bases, event logs with redaction, finite-state summaries, and local conflict analysis. The mathematical claims are modest enough to remain transparent while separating several notions often conflated: inconsistency versus triviality, revision versus accumulation, finite closure versus topology, and erasure versus general indistinguishability.
+
+## 10. Discussion
+
+The signed-state model is deliberately extensional. It says what is currently accepted, not why. This simplicity makes non-explosion immediate and revision local. More expressive consequence relations could add rules between atoms, but then non-explosion would require conditions ensuring that contradictory support does not propagate indiscriminately.
+
+The topological language requires care. Finite subsets of an infinite carrier are not the open sets of a topology. They do satisfy empty-set, finite-intersection, and finite-union laws, and they accurately represent finite information fragments. The arbitrary-union obstruction should therefore be read as a boundary theorem: it identifies exactly why ideal or domain-theoretic completion is needed to accommodate infinite states.
+
+The algebraic memory model complements rather than duplicates belief revision. Revision chooses the current sign at a coordinate; memory maps ordered histories into representations. A current state may forget the order and multiplicity of previous updates, while a stream quotient describes precisely which histories become observationally equal. The universal property of targeted forgetting ensures that compatible downstream summaries depend only on the retained quotient class.
+
+## 11. Future work
+
+A first direction is a last-occurrence normal-form theorem: every finite revision history should reduce uniquely to the final sign assigned to each mentioned atom, while untouched atoms preserve their initial status. Distinct-atom revisions commute, and same-atom revisions obey last-write-wins, providing the expected rewriting laws.
+
+Second, for finite atom sets, consistent states and one-atom revisions should form an oriented cubical or cross-polytopal geometry. Strongly connected components may be classified by which atoms have acquired a sign, depending on whether deletion-only moves are admitted.
+
+Third, the ideal completion of finite signed states should recover arbitrary signed states under a Scott-style topology. Every arbitrary state is the directed union of its finite fragments, suggesting a canonical repair of arbitrary-union failure.
+
+Fourth, non-explosion should persist under irrelevant revision histories: if a literal over atom $b$ is absent and no update mentions $b$, then its absence should remain invariant even when another atom is repeatedly revised through contradictory states.
+
+Finally, one may ask how much structure can be reconstructed from the conflict-free complex and its oriented revision dynamics. Maximal faces encode total consistent assignments, while directed local overwrites may determine the partition of literals into complementary pairs up to relabeling.
+
+## 12. Conclusion
+
+Signed belief states provide a minimal model in which contradiction coexists without explosion. Local revision accepts new evidence, retracts its opposite, fails monotonicity, and records temporal order. Complementary attack translates consistency exactly into conflict-freedom, while revision preserves the resulting combinatorial invariant. Finite states support robust finite operations but encounter a precise arbitrary-union obstruction on infinite carriers.
+
+For ordered experience streams, compositional memory inevitably loses distinctions when its representation is finite. Complete erasures form a submonoid, all observational collisions form a congruence, and the quotient by that congruence is exactly the observable memory algebra. Selective deletion realizes this quotient universally.
+
+The combined framework gives precise answers to four questions: how can conflict remain local, how can beliefs be corrected, where does finite information cease to behave topologically, and what algebra remains after histories are forgotten? The answers are respectively paraconsistent membership semantics, opposite-retracting revision, failure of arbitrary-union closure, and quotient monoids of observational indistinguishability.

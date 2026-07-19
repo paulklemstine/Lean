@@ -1,26 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "44b2da31",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions: Chromatic Thresholds and Social-Network Palettes\n\n## 1. Clique minors as chromatic vanishing certificates\n\n**Conjecture.** If a finite graph contains a complete graph on `t` verti",
-      "quality_score": 0.71,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-18T15:18:15",
-      "title": "Graph Coloring with Emotions: The Chromatic Polynomial Meets Psychology"
-    },
-    {
-      "cycle_id": "6e1376aa",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\n1. **Finite multimode superpositions.** Extend `winding_mul_zpow` from two modes to a `Finset`-indexed product, proving that the winding is the integer-weighted sum of all compone",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-18T15:35:26",
-      "title": "Deepening: The Topology of Knotted Light: How Laser Beams Get Tangled"
-    },
-    {
       "cycle_id": "6e1b10f7",
       "domain": "Applications",
       "key_insight": "# Future directions\n\nThe formal result in `Catalog/Bridges/GraphZetaPrimeCycle.lean` isolates one adjacency-eigenvalue factor of the Bass–Ihara determinant and proves three parts of the graph-zeta dic",
@@ -499,29 +479,29 @@
       "theorem_count": 0,
       "timestamp": "2026-07-19T20:25:54",
       "title": "Aleph-1 Surface: Geometry Between Dimensions"
+    },
+    {
+      "cycle_id": "9fc00121",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Substrate-Invariant Complexity\n\n## 1. Polynomial-overhead invariance of asymptotic classes\n\n**Conjecture.** If two machine substrates simulate one another with polynomially bounde",
+      "quality_score": 0.77,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-19T20:26:22",
+      "title": "Computational Complexity of Alien Civilizations"
+    },
+    {
+      "cycle_id": "7286e7be",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n## 1. Last-occurrence normal forms for revision histories\n\n**Conjecture.** Every finite sequence of signed-literal revisions has a unique normal form containing, for each atom men",
+      "quality_score": 0.74,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-19T20:26:37",
+      "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "57481379",
-      "domain": "Physics",
-      "key_insight": "# Future Directions\n\n## 1. A complete phase-invariant certificate for the order-six cardinality-19 matrix\n\nConjecture: the eighth-root Butson matrix underlying the cardinality-19 construction has exac",
-      "quality_score": 0.75,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-07-16T03:36:30",
-      "title": "ArXiv paper: Quantum Latin Squares of Order Six with Cardinalities Nineteen, Twenty-One, and Twenty-"
-    },
-    {
-      "cycle_id": "8d2137d3",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions\n\n## Completion status\n\nAll Lean declarations delivered for this mission now have complete proof terms: the\nremaining mixed-radix bridge lemmas were proved, and an inherited Fibonac",
-      "quality_score": 0.7,
-      "sorry_count": 4,
-      "theorem_count": 0,
-      "timestamp": "2026-07-16T03:53:22",
-      "title": "The Library of Babel: Combinatorics of the Universal Library"
-    },
     {
       "cycle_id": "8d2137d3",
       "domain": "Combinatorics",
@@ -2501,6 +2481,26 @@
       "theorem_count": 0,
       "timestamp": "2026-07-19T20:25:54",
       "title": "Aleph-1 Surface: Geometry Between Dimensions"
+    },
+    {
+      "cycle_id": "9fc00121",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Substrate-Invariant Complexity\n\n## 1. Polynomial-overhead invariance of asymptotic classes\n\n**Conjecture.** If two machine substrates simulate one another with polynomially bounde",
+      "quality_score": 0.77,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-19T20:26:22",
+      "title": "Computational Complexity of Alien Civilizations"
+    },
+    {
+      "cycle_id": "7286e7be",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n## 1. Last-occurrence normal forms for revision histories\n\n**Conjecture.** Every finite sequence of signed-literal revisions has a unique normal form containing, for each atom men",
+      "quality_score": 0.74,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-19T20:26:37",
+      "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.73
     }
   ],
-  "last_updated": "2026-07-19T20:25:54",
+  "last_updated": "2026-07-19T20:26:37",
   "open_questions": [
     {
       "context": "",
@@ -3579,18 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "91c16818",
-        "quality": 0.71,
-        "theorems": 0,
-        "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
-      },
-      {
-        "cycle_id": "8b838f97",
-        "quality": 0.79,
-        "theorems": 0,
-        "title": "Hypergraph Ramsey Theory: Beyond Graphs"
-      },
-      {
         "cycle_id": "86896469",
         "quality": 0.76,
         "theorems": 0,
@@ -3637,6 +3625,18 @@
         "quality": 0.77,
         "theorems": 0,
         "title": "Hypercomputation: Computing the Uncomputable"
+      },
+      {
+        "cycle_id": "9fc00121",
+        "quality": 0.77,
+        "theorems": 0,
+        "title": "Computational Complexity of Alien Civilizations"
+      },
+      {
+        "cycle_id": "7286e7be",
+        "quality": 0.74,
+        "theorems": 0,
+        "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
       }
     ],
     "NumberTheory": [
