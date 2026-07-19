@@ -17,21 +17,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
   },
   {
-    "consumed_by_exp_id": "2d0916f9",
-    "description": "Prove that any sufficiently powerful formal system necessarily contains strange loops: statements that refer to their own unprovability. Formalize G\u00f6del's first incompleteness theorem as a fixed-point in the lattice of provability predicates. Explore whether consciousness arises from tangled hierarchies of self-referential symbols.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0413",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T06:47:24.925714+00:00",
-    "title": "Strange Loops: Self-Reference and G\u00f6del's Incompleteness"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 4920904c (Q=0.800), which proved 46 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Erdos-Renyi random graph G(n, p) has n vertices where each edge appears independently with probability p. At p = log(n)/n, G(n,p) becomes connected. But what if p is COMPLEX? Define G(n, z) where z is a complex number: each edge (i,j) appears with 'probability' z, meaning the edge weight is z in",
     "domains": [
@@ -130,21 +115,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-18T12:16:03.050816+00:00",
     "title": "Deepening: Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
-  },
-  {
-    "consumed_by_exp_id": "e5cc823f",
-    "description": "Formalize the hypothesis that consciousness is a fixed point of a self-modeling function: a system that models itself modeling itself. Prove that such fixed points exist in sufficiently rich Cartesian closed categories and that they exhibit strange-loop topology. Connect to the Yoneda lemma and self-reference in type theory.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0420",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T08:00:24.893031+00:00",
-    "title": "Consciousness as Emergent Fixed Point"
   },
   {
     "consumed_by_exp_id": "5f462d59",
@@ -248,6 +218,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Prove information-theoretic bounds on mind uploading: the minimum description length of a human mind exceeds any computable compression of its neural connectome. Formalize the Bekenstein bound applied to neural computation and show that the Kolmogorov complexity of consciousness is at least quadratic in synapse count.",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_0437",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-19T10:06:16.705726+00:00",
+    "title": "Digital Immortality: Can a Mind Be Encoded?"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 717f7483 (Q=0.750), which proved 19 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Godel's incompleteness theorem says there are true statements that cannot be proved. But what if we turn incompleteness into a GAME? Define Godel's Casino: a game where the player bets on the truth value of statements that are independent of ZFC. The house deals cards representing arithmetic stateme",
     "domains": [
       "NumberTheory"
@@ -304,7 +289,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Cellular Automata at the Ordinals: Transfinite Computation"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e170790e",
     "description": "Formalize social credit systems as continuous maps from a population to a totally ordered set. Prove that any such map creates fixed-point attractors in the social graph topology. Show that under reasonable assumptions, credit scores converge to a Cantor set attractor where small perturbations cause phase transitions.",
     "domains": [
       "Novelty",
@@ -314,7 +299,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T09:31:58.000559+00:00",
     "title": "Social Credit Scores as Topological Invariants"
   },
@@ -332,6 +317,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-19T08:17:32.947136+00:00",
     "title": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize memory as a monoid homomorphism from experience streams to compressed representations. Prove that any such homomorphism satisfying a finite-memory bound must be lossy and that the information loss forms a submonoid. Show that targeted forgetting is equivalent to a quotient construction in the category of memory algebras.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0436",
+    "priority_score": 0.81,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-19T10:06:16.668972+00:00",
+    "title": "Memory Editing: When Forgetting Is a Mathematical Operation"
   },
   {
     "consumed_by_exp_id": "",
@@ -3110,7 +3110,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Improved constant in Erd\u0151s sumset avoidance for dense subsets"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6d1b5339",
     "description": "Formalize chess played on an infinite board. Prove that the king can always escape on an infinite board and determine which finite-piece configurations are forced mates. Develop a theory of infinite combinatorial game value and prove its relationship to ordinal game values.",
     "domains": [
       "Novelty",
@@ -3120,7 +3120,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T08:40:11.361973+00:00",
     "title": "Infinite-Dimensional Chess: Winning on the Hilbert Board"
   },
@@ -4784,6 +4784,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-19T09:49:31.671083+00:00",
     "title": "Let a compact smooth submanifold have reach at least `\u03c4`, and let a finite sampl"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe completed Lean development isolates a precise abstract diagonal argument, but it intentionally stops short of claiming a full arithmetized G\u00f6del theorem for a concrete theory. Natural next steps are:\n\n1. **Arithmetize syntax.** Define formulas, substitutions, derivations, and G\u00f6del codes for a recursively axiomatized arithmetic theory.\n2. **Prove the diagonal lemma internally.** Replace the abstract `diag` field by a construction on coded one-variable formulas and prove its representability.\n3. **Separate consistency assumptions.** Derive one-sided unprovability from consistency or 1-consistency under standard derivability hypotheses, and identify the precise stronger hypothesis needed for unprovability of the negation.\n4. **Connect syntax and semantics.** Instantiate `DiagonalSystem` from an arithmetized sound theory, making explicit which fragment of semantic soundness is used.\n5. **Develop L\u00f6b conditions.** Add Hilbert\u2013Bernays derivability conditions, prove L\u00f6b's theorem, and derive the second incompleteness theorem.\n6. **Order-theoretic formulation.** Study monotone provability/closure operators on complete lattices. Ordinary Knaster\u2013Tarski fixed points should be kept conceptually distinct from the diagonal fixed point `G \u2194 \u00acProv(G)` formalized here.\n7. **Mechanized metatheory.** Connect the abstract result to an existing Lean encoding of first-order logic, recursive functions, and representability rather than postulating those components.\n8. **Consciousness claims.** No mathematical implication from self-reference to consciousness has been established here. A future formal treatment would first require an independently specified, testable mathematical model of consciousness and a theorem statement linking it to self-referential structure.\n",
+    "domains": [
+      "Logic",
+      "Pythagorean"
+    ],
+    "id": "fd_0438",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "2d0916f9",
+    "status": "available",
+    "timestamp": "2026-07-19T10:06:46.041462+00:00",
+    "title": "The completed Lean development isolates a precise abstract diagonal argument, bu"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n1. **Internal Cartesian-closed formulation.** Generalize the type-level Lawvere theorem to an arbitrary locally small Cartesian closed category using global elements and a categorical notion of point-surjectivity. This would distinguish carefully between ordinary epimorphisms and the stronger hypothesis needed by diagonal evaluation.\n\n2. **Synthetic domain theory.** Replace the imported complete-lattice fixed-point theorem with an account of recursive types and Scott-continuous maps. The target is an approximation theorem showing that the least emergent fixed point is the supremum of finite stages from bottom.\n\n3. **A genuine topology of strange loops.** The present formalization proves the algebraic closure equation for self-observation. A stronger development should define a directed simplicial set or graph of modeling levels, construct the diagonal cycle, and calculate a nontrivial invariant (for example, a fundamental-group or homology class). Calling the current equation \u201ctopology\u201d is only an interpretation, not yet a topological theorem.\n\n4. **Restricted self-models.** Complete Boolean self-models are impossible by Cantor diagonalization. Investigate partial, computable, modal, or stratified self-models and characterize exactly which classes of observations can be represented without contradiction.\n\n5. **Yoneda\u2013Lawvere bridge.** Formalize the naturality of diagonal evaluation and derive Lawvere's theorem directly from exponentials, evaluation, and the Yoneda correspondence, rather than presenting the two results as complementary theorems in one file.\n\n6. **Uniqueness and dynamics.** Add contractive or order-theoretic hypotheses under which the emergent fixed point is unique, and prove convergence of iterative self-model updates to that point.\n\n7. **Intensional type theory.** Study guarded recursion, later modalities, and recursive types, where self-reference is controlled by time or modality. Compare their consistent fixed points with the extensional completeness obstruction proved here.\n\n8. **Empirical modeling boundary.** Any application to biological consciousness requires a separately specified state space, observation type, and measurable dynamics. The current results establish abstract mathematical constraints only; they do not identify a physical or cognitive system satisfying the hypotheses.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0439",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "e5cc823f",
+    "status": "available",
+    "timestamp": "2026-07-19T10:06:53.358179+00:00",
+    "title": "1. **Internal Cartesian-closed formulation.** Generalize the type-level Lawvere "
   },
   {
     "consumed_by_exp_id": "",
