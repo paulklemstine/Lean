@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-20T01:15:45.025490+00:00",
+  "last_updated": "2026-07-20T01:33:03.132390+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -30486,6 +30486,7 @@
       "outcome_quality": 0.0,
       "phase": "A",
       "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.0,
       "phase_b_skipped": false,
       "prompt_version": "v19c",
       "quality_score": 0.0,
@@ -30500,6 +30501,36 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-20T01:15:44.969225+00:00",
       "title": "Aboriginal Kinship as Group Theory: Dreamtime Algebra"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 57,
+      "domain": "Novelty",
+      "duration_seconds": 0.0,
+      "end_time": 0.0,
+      "error_message": "Zombie no progress (4.0h)",
+      "failed": true,
+      "files_integrated": 0,
+      "job_id": "1deb463e",
+      "outcome_quality": 0.0,
+      "phase": "A",
+      "phase_a_prompt_version": "v19c",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_score": 0.0,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1784494955.5642838,
+      "strategy_count": 0,
+      "theorem_count": 0,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-20T01:33:03.085148+00:00",
+      "title": "Thermodynamics of Mathematical Proof"
     }
   ]
 }

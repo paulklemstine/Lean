@@ -87,7 +87,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: ArXiv paper: Reproducing the k-copwin Algorithm: Theory vs. Implementation"
   },
   {
-    "consumed_by_exp_id": "1deb463e",
+    "consumed_by_exp_id": "fbb9076c",
     "description": "Formalize a Landauer-like principle for mathematical reasoning: every bit of information destroyed in a proof step costs at least kT ln 2 of entropy. Prove that there exist theorems whose shortest proof requires exponentially more erasure than creation, and connect to Kolmogorov complexity and the thermodynamic cost of verification.",
     "domains": [
       "Novelty",
