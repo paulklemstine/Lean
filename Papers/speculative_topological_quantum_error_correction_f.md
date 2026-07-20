@@ -1,46 +1,41 @@
-# Computational Evidence: Homological Quantum Codes
+# Computational Evidence
 
-Before formalization, we checked the central numerical claims on small cases.
+## Small-case calculations
 
-## 1. Logical qubits = first Betti number
+For the standard square cellulation of a torus with linear size `n`, the edge count is
+`2n²` and the shortest essential cycle has length `n`. The resulting parameters are:
 
-For the minimal cell structure of a closed orientable genus-`g` surface
-(one 0-cell, `2g` 1-cells, one 2-cell) both boundary maps vanish over `𝔽₂`,
-so `dim H₁ = 2g`. Small cases:
+| `n` | edges | shortest essential cycle | squared distance |
+|---:|---:|---:|---:|
+| 1 | 2 | 1 | 1 |
+| 2 | 8 | 2 | 4 |
+| 3 | 18 | 3 | 9 |
+| 4 | 32 | 4 | 16 |
+| 5 | 50 | 5 | 25 |
+| 6 | 72 | 6 | 36 |
+| 8 | 128 | 8 | 64 |
+| 10 | 200 | 10 | 100 |
 
-| genus `g` | `n` (edges) | `dim H₁ = k` | Euler char `2 - 2g` |
-|-----------|-------------|--------------|---------------------|
-| 0 (sphere)| 0           | 0            | 2                   |
-| 1 (torus) | 2           | 2            | 0                   |
-| 2         | 4           | 4            | -2                  |
-| 3         | 6           | 6            | -4                  |
+In every case, `2 · distance² = edges`. The identity is established for arbitrary
+natural `n` by `square_torus_distance_area`.
 
-This matches the well-known ranks of `H₁` of surfaces (OEIS A005843, the even
-numbers `2g`), and the toric-code count of `2` logical qubits at `g = 1`.
+## Sequence search
 
-## 2. CSS dimension identity
+The edge counts `2, 8, 18, 32, 50, 72, 98, 128, …` are twice the positive squares.
+No external sequence identifier is needed for the argument: the closed form `2n²` is
+the complete description used by the proof.
 
-For any length-three `𝔽₂` chain complex we tested `k + rank ∂₁ + rank ∂₂ = n`
-on random small incidence matrices (sizes up to `6×6`) by direct rank
-computation; the identity held in every trial, consistent with rank–nullity.
+## Counterexample hunt
 
-## 3. Triangle code `C₃` (nonzero boundary map)
+The unqualified prediction that distance is bounded solely by genus fails already at
+genus one. Refining the square torus cellulation leaves genus fixed while the shortest
+essential edge cycle has length `n`, which is unbounded. The theorem
+`no_genus_only_distance_bound` records the numerical obstruction for every proposed
+bound. This forced the surviving genus statement to include an area normalization and
+a systolic inequality.
 
-Incidence matrix `∂₁ = !![1,0,1; 1,1,0; 0,1,1]`, `∂₂ = 0`.
+## Structural conclusion
 
-- `rank ∂₁ = 2`, so `k = 3 - 2 - 0 = 1` logical qubit.
-- Kernel of `∂₁` is spanned by `(1,1,1)` — the fundamental loop of the triangle.
-- All nonzero kernel elements over `𝔽₂` equal `(1,1,1)`, of Hamming weight `3`;
-  hence the systole (distance) is exactly `3`, giving a `[[3,1,3]]` code.
-
-## 4. Systole / distance scaling (counterexample hunt for "O(√g)")
-
-We tested the prediction that genus-`g` surface codes achieve distance `O(√g)`.
-On square `L×L` toric layouts the standard code is `[[2L², 2, L]]`: with a single
-handle (`g = 1`) distance grows like `√n`, not with `g`. Stacking `g` independent
-`L×L` tori gives `k = 2g`, `n = 2gL²`, distance `L = √(n/(2g))`. Thus at fixed
-physical size `n`, distance *decreases* as `1/√g`, contradicting a naive
-"distance grows like `√g`" reading. The honest surviving statement is the
-Bravyi–Poulin–Terhal-type trade-off `k · d² ≤ c · n`, recorded as a conjecture in
-`FUTURE_DIRECTIONS.md`. This pivot is why the formalization proves the exact
-dimension law and the systolic distance framework rather than the `O(√g)` claim.
+The computations support square-root growth in the number of edges, not in genus alone.
+They therefore distinguish two claims: exact distance–systole equality survives, while
+an `O(√g)` assertion requires geometric restrictions that tie area to genus.

@@ -18,20 +18,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 27f58424 (Q=0.820), which proved 11 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Cycle cb3d5d14 (Q=0.800) proved 0 theorems in Novelty but left 13 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Prove that any Turing-complete system with self-modification capabilities has no general algorithm for predicting its own term",
-    "domains": [
-      "Cryptography"
-    ],
-    "id": "push_27f58424_d5c1bce4",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "27f58424",
-    "status": "available",
-    "timestamp": "2026-07-20T00:23:30.749135+00:00",
-    "title": "Deepening: Self-Modifying Code That Cannot Be Stopped"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 4920904c (Q=0.800), which proved 46 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Erdos-Renyi random graph G(n, p) has n vertices where each edge appears independently with probability p. At p = log(n)/n, G(n,p) becomes connected. But what if p is COMPLEX? Define G(n, z) where z is a complex number: each edge (i,j) appears with 'probability' z, meaning the edge weight is z in",
     "domains": [
       "Logic"
@@ -103,6 +89,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Prove that adding an oracle for the halting problem to PA yields a theory that proves its own consistency but cannot decide its own soundness. Formalize the hierarchy: PA < PA^H < PA^{H^H} < ... and prove that each jump genuinely increases theorem-proving power. Show that the oracle hierarchy is isomorphic to the Turing jump hierarchy.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0494",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-19T21:02:27.020806+00:00",
+    "title": "The Oracle's Burden: How Much Knowledge Is Too Much?"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Define a natural metric on the space of all mathematical statements and prove that the set of true statements has a fractal dimension. Show that this dimension is strictly between 0 and 1 (truth is sparse but not negligible). Connect to Chaitin's Omega and prove that the fractal dimension is uncomputable but approximable.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0484",
+    "priority_score": 0.87,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-19T20:25:40.511664+00:00",
+    "title": "The Fractal Dimension of Mathematical Truth"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle fff627f3 (Q=0.770), which proved 7 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Hilbert's Hotel has infinitely many rooms, each containing a prime number. Room n contains the n-th prime p_n. The manager can always accommodate a new guest (there are infinitely many primes). But what if the guests want to REARRANGE? Conjecture: For any permutation sigma of N, there exists a rearr",
     "domains": [
       "Pythagorean"
@@ -114,21 +130,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-18T12:16:03.050816+00:00",
     "title": "Deepening: Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Many of Ramanujan's identities were discovered without proof and later verified. Define a 'Ramanujan oracle' R that maps statements to {true, false, unknown} with accuracy \u2265 95% on number-theoretic statements of length \u2264 100. Prove: such an oracle cannot be computable (by a counting argument). Conjecture: the 'intuitive leap' in mathematical discovery corresponds to a specific non-computable operation related to the jump operator in computability theory.",
-    "domains": [
-      "Novelty",
-      "Pythagorean"
-    ],
-    "id": "fd_0525",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-20T02:26:28.799869+00:00",
-    "title": "Speculative: Ramanujan-Style Intuition as Formalizable Meta-Reasoning"
   },
   {
     "consumed_by_exp_id": "",
@@ -244,20 +245,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle b3f0d755 (Q=0.750), which proved 26 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Construct a category where composition is not associative but satisfies a controlled failure: (f circ g) circ h and f circ (g circ h) are naturally isomorphic but not equal. Prove that such almost-categories are exactly the bicategories and that every coherent loop-tolerant algebraic structure forms",
-    "domains": [
-      "Cryptography"
-    ],
-    "id": "push_b3f0d755_7327937a",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "b3f0d755",
-    "status": "available",
-    "timestamp": "2026-07-20T02:08:12.126638+00:00",
-    "title": "Deepening: Causal Loops in Category Theory: When Composition Loops Back"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle b596d3d1 (Q=0.750), which proved 21 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Two quantum particles are entangled if measuring one instantly affects the other. But entanglement is also a topological property: if you represent the state of two qubits as a curve in R^3, entanglement IS the linking number. Conjecture: For any pure state of two qubits |psi> in C^2 tensor C^2, the",
     "domains": [
       "Pythagorean"
@@ -272,152 +259,63 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Cycle 65e81f6c (Q=0.800) proved 0 theorems in Geometry but left 13 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Compute the topological type of the Library of Babel: a space of all possible 410-page books. Prove that it is connected, totally disconnected under the Hamming metric, and has covering dimension 0. D",
+    "description": "Formalize the hard problem of consciousness as a theorem about the gap between functional descriptions and subjective experience. Prove that any system satisfying the functional definition of consciousness can have a zombie twin that is functionally identical but experientially void. Show this gap is isomorphic to G\u00f6del's incompleteness gap.",
     "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0479",
+    "priority_score": 0.84,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-19T18:58:00.688995+00:00",
+    "title": "Zombies and Qualia: Mathematics of Subjective Experience"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Construct a single algebraic object whose projections give S^0, S^1, S^2, ... simultaneously. Prove it exists as an inverse limit in the category of spheres. Show that its homology groups encode the Bernoulli numbers and that its cohomology ring is the polynomial ring on Stiefel-Whitney classes.",
+    "domains": [
+      "Novelty",
       "Geometry"
     ],
-    "id": "sorry_fill_65e81f6c_233addae",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "65e81f6c",
-    "status": "available",
-    "timestamp": "2026-07-20T00:23:27.016370+00:00",
-    "title": "Close Proofs: Borges' Library of Babel: Combinatorics of Everything"
-  },
-  {
-    "consumed_by_exp_id": "e3542946",
-    "description": "Conjecture that P != NP has a physical interpretation: the universe's computational capacity is bounded by the polynomial hierarchy. Formalize this: any physical process that runs in polynomial time can be simulated by a polynomial-time Turing machine (Extended Church-Turing thesis). Show that if P = NP, then the second law of thermodynamics would be violated because Maxwell's demon could be implemented efficiently.",
-    "domains": [
-      "Novelty",
-      "Physics"
-    ],
-    "id": "fd_0503",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T22:56:07.280279+00:00",
-    "title": "Speculative: Computational Complexity as Physical Law"
-  },
-  {
-    "consumed_by_exp_id": "50f62832",
-    "description": "Map prime numbers to harmonic overtones using the Riemann zeta function's non-trivial zeros. Define: the 'harmonic' of a number n is the sum of 1/\u03c1 for each zero \u03c1 with |Im(\u03c1)| \u2264 n. Prove: the harmonic of n grows as O(log n / log log n). Conjecture: perfect intervals (octaves, fifths, fourths) correspond to numbers whose harmonic is rational. Show: the harmonic of 2 is exactly 1 (the octave), while the harmonic of 3 is transcendental (the fifth).",
-    "domains": [
-      "Novelty",
-      "Pythagorean"
-    ],
-    "id": "fd_0514",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-20T00:40:37.672107+00:00",
-    "title": "Speculative: Number Theory as Music Theory"
-  },
-  {
-    "consumed_by_exp_id": "79f58a3a",
-    "description": "Every mathematical structure is a category, and every theorem is a natural transformation. Define the 'genome' of a mathematical theory as its category of models. Prove: two theories are Morita-equivalent iff their model categories are equivalent. Show: the 'mutation' of a theory (changing one axiom) corresponds to an adjunction between model categories. Conjecture: every 'evolutionary path' between theories can be decomposed into a sequence of adjunctions and quotients.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0520",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-20T02:07:41.903948+00:00",
-    "title": "Speculative: Category Theory as the DNA of Mathematics"
-  },
-  {
-    "consumed_by_exp_id": "ea7d1cf2",
-    "description": "Conjecture that topological quantum error correcting codes can be derived from the homology of algebraic varieties. Formalize: the surface code is H_1 of the torus, the color code is H_1 of a 2-complex. Show that the distance of the code equals the systole of the underlying manifold. Predict: codes from higher-genus surfaces achieve distance O(sqrt(g)) where g is the genus.",
-    "domains": [
-      "Novelty",
-      "Cryptography"
-    ],
-    "id": "fd_0504",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T22:56:07.334764+00:00",
-    "title": "Speculative: Topological Quantum Error Correction from Mathematical Structures"
-  },
-  {
-    "consumed_by_exp_id": "d14aad94",
-    "description": "Every proof has a thermodynamic cost proportional to its Kolmogorov complexity. Define: cost(\u03c0) = K(\u03c0) * T * ln(2), where K is Kolmogorov complexity and T is temperature. Prove: shorter proofs have lower cost. Conjecture: there exist statements whose shortest proof has cost exceeding any computable bound (proof-theoretic analog of Chaitin's theorem). Show: the average cost of proving a random true statement of length n is \u0398(2^n).",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0517",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-20T00:58:06.284653+00:00",
-    "title": "Speculative: Proof Complexity and Thermodynamic Cost"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Define the 'gravitational weight' of a theorem T as the number of other theorems that depend on T. Define 'anti-gravity' theorems as those with high weight but short proofs. Conjecture: anti-gravity theorems exist in every branch of mathematics (e.g., the fundamental theorem of algebra has weight O(n^2) but proof length O(1) in complex analysis). Prove: the set of anti-gravity theorems is dense in the space of all theorems (in a suitable topology). Predict: 10% of theorems in any formal library are anti-gravity.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0526",
+    "id": "fd_0493",
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-07-20T02:26:28.851188+00:00",
-    "title": "Speculative: Anti-Gravity Mathematics \u2014 Theorems That Resist Proof"
+    "timestamp": "2026-07-19T21:02:26.975866+00:00",
+    "title": "The Mega-Sphere: All Dimensions at Once"
   },
   {
-    "consumed_by_exp_id": "b44b7357",
-    "description": "Formalize a notion of 'self-referential types' in dependent type theory where a type can quantify over itself. Define: a conscious type T satisfies T \u2248 \u03a0(x:T), P(x) for some predicate P. Prove: any such type must be undecidable (G\u00f6del-style). Show: the fixed points of the type-forming operations correspond to a hierarchy analogous to the arithmetical hierarchy. Conjecture: the cardinality of self-referential types is exactly \u2135_1^CK (the Church-Kleene ordinal).",
+    "consumed_by_exp_id": "",
+    "description": "Formalize a game where one player (Mortal) has finite computation and the other (Eternity) has transfinite computation. Prove that Mortal can always force at least omega rounds before losing, and that with bounded nondeterminism, Mortal can force omega-squared rounds. Connect to Infinite Time Turing Machines.",
     "domains": [
       "Novelty",
       "Logic"
     ],
-    "id": "fd_0510",
+    "id": "fd_0490",
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T23:48:18.405185+00:00",
-    "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
-  },
-  {
-    "consumed_by_exp_id": "e3b4f2fe",
-    "description": "Construct a simplicial complex from the citation graph of mathematical theorems: vertices are theorems, edges connect co-cited theorems, triangles connect tri-cited theorems, etc. Compute the persistent homology of this complex. Conjecture: H_1 reveals 'schools of mathematics' (connected research communities) and H_2 reveals 'paradigm shifts' (structural changes in the network). Prove: the Betti numbers grow as \u03b2_k \u2248 n^(k+1) where n is the number of theorems.",
-    "domains": [
-      "Novelty",
-      "MachineLearning"
-    ],
-    "id": "fd_0521",
-    "priority_score": 0.82,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-20T02:07:41.956075+00:00",
-    "title": "Speculative: Topological Data Analysis of Theorem Networks"
+    "status": "available",
+    "timestamp": "2026-07-19T20:43:51.867187+00:00",
+    "title": "Infinite Games Against Death: Immortality Strategies"
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Conjecture: the laws of physics are the fixed point of a computation that simulates itself. Formalize: define a universal physical simulator U that maps (initial_conditions, laws) \u2192 (next_state). The fixed point equation is U(L, L) = L, where L is the 'law of physics'. Prove: the solution exists (by the Kleene fixed point theorem). Show: the solution is unique up to computational equivalence. Predict: the fine structure constant \u03b1 satisfies \u03b1 = 1/(137.036...) because it's the simplest fixed point.",
+    "description": "Compute the topological type of the Library of Babel: a space of all possible 410-page books. Prove that it is connected, totally disconnected under the Hamming metric, and has covering dimension 0. Determine the Kolmogorov complexity of a random book and prove that almost all books are incompressible.",
     "domains": [
       "Novelty",
-      "Physics"
+      "Combinatorics"
     ],
-    "id": "fd_0515",
+    "id": "fd_0474",
     "priority_score": 0.81,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-07-20T00:40:37.718376+00:00",
-    "title": "Speculative: The Universe Computes Its Own Existence (Physics = Computation)"
+    "timestamp": "2026-07-19T17:49:41.587633+00:00",
+    "title": "Borges' Library of Babel: Combinatorics of Everything"
   },
   {
     "consumed_by_exp_id": "",
@@ -1279,6 +1177,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-16T11:09:11.992989+00:00",
     "title": "ArXiv paper: Proximity Measures for Classes of Phylogenetic Networks"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'On Small Doubling in Right-Ordered Groups and Baumslag-Solitar Groups-II' and formalize its key results. Abstract: Recently, Mohan et al. [Results Math. 80 (2025), No. 4, 122] answered Freiman's $3k-4$ conjecture in right-ordered groups under certain restrictions. In this paper, we take a step further by investigating the structure of nonempty subsets $S$ of a right-ordered group satisfying the small doubling condition $|S^2| = 3|S|-3$. Moreover, we provide a complete characterization of all nonempty finite subsets $S$ of the Baumslag-Solitar group $\\mathrm{BS}(1,q)$ (with $q \\in \\mathbb{Z}$ and $q \\neq -1$) for which $|S^2| = 3|S|-3$ and the identity element is the minimum of $S$.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0076",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.11194v1",
+    "status": "available",
+    "timestamp": "2026-07-16T11:25:22.149755+00:00",
+    "title": "ArXiv paper: On Small Doubling in Right-Ordered Groups and Baumslag-Solitar Groups-II"
   },
   {
     "consumed_by_exp_id": "",
@@ -2543,6 +2456,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Efficient Hamilton covers and linear arboricity of random graphs' and formalize its key results. Abstract: A Hamilton cover of a graph is a collection of Hamilton cycles whose union contains all edges. Since each Hamilton cycle covers two edges at every vertex, every Hamilton cover has size at least $\\lceil \u0394(G)/2\\rceil$. We prove that this lower bound is tight for binomial random graphs $G(n,p)$ throughout the widest possible range of edge probabilities: if $\u03c9(n)\\to\\infty$ and \\[ \\frac{\\log n+\\log\\log n+\u03c9(n)}{n} \\le p=p(n) \\le 1-\\frac{\u03c9(n)}{n^{2}}, \\] then $G\\sim G(n,p)$ with high probability has a Hamilton cover of size $\\left\\lceil \\frac{\u0394(G)}{2}\\right\\rceil. $ The main new contribution is the sparse regime near the Hamiltonicity threshold, where we prove a conjecture of Dragani\u0107, Glock, Munh\u00e1 Correia and Sudakov. Our proof develops constructive tools for decomposing such graphs into controlled forest systems and extending them, using reserved pseudorandom structure, into Hamilton cycles. We also prove the corresponding hitting-time result for the random graph process, answering a questi",
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "fd_0183",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.14881v1",
+    "status": "available",
+    "timestamp": "2026-07-17T06:29:52.184186+00:00",
+    "title": "ArXiv paper: Efficient Hamilton covers and linear arboricity of random graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Alternating adjacent-sum polytopes: transfer matrices and Ehrhart series' and formalize its key results. Abstract: We study a period-two family of adjacent-sum lattice polytopes whose consecutive-coordinate bounds alternate between $s$ and $s+1$. This provides a simple non-uniform deformation of the classical uniform model while retaining an explicit transfer-matrix structure. The lattice-point counts exhibit a parity split: the odd- and even-dimensional sequences have distinct rational generating functions with a common denominator. The odd-dimensional series satisfies a M\u00f6bius recurrence and admits an arctangent closed form, whereas the even-dimensional series obeys a coupled recurrence. Their common dominant pole determines the exponential growth in both parity classes. For the cyclic model obtained by adding a constraint between the first and last coordinates, the count becomes a matrix trace. The two cyclic parity classes again have rational generating functions with the same denominator; the even-dimensional numerator has a Jacobi-derivative form, while the odd-dimensional one is given by an ",
     "domains": [
       "Cryptography"
@@ -2980,6 +2908,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The exact asymptotic growth of T_k = \u0398(k\u00b2 log k) with computable constants. Specifically, there exist positive constants c\u2081, c\u2082 such that lim inf (T_k / (k\u00b2 log k)) \u2265 c\u2081 and lim sup (T_k / (k\u00b2 log k)) \u2264 c\u2082, and the optimal values satisfy 0.1 \u2264 c\u2081 \u2264 c\u2082 \u2264 10.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0219",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.15116v1",
+    "status": "available",
+    "timestamp": "2026-07-17T12:55:09.512961+00:00",
+    "title": "Rainbow Arithmetic Progression Threshold Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For any integer t \u2265 2 and any fixed \u03b4 \u2208 (0,1), there exists a constant C = C(t,\u03b4) > 0 such that for all sufficiently large n, there exists a subset S \u2286 [n] with |S| \u2265 \u03b4n such that for all A\u2081, \u2026, A_t \u2286 \u2115 satisfying min_i |A_i| \u2265 C (log n / log(1/\u03b4))^{1/(t-1)}, the t-fold sumset A\u2081 + \u22ef + A_t is not contained in S. This generalizes the main result of the paper (which proves the t=2 case with C \u2248 3) to higher-order sumsets.",
     "domains": [
       "Bridges"
@@ -3125,18 +3067,32 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Formalize Australian Aboriginal kinship systems (section and subsection systems) as finite groups acting on person-sets. Prove that the 4-section system is isomorphic to Z2 x Z2 and the 8-subsection system to Z2 x Z2 x Z2. Show that marriage rules correspond to coset restrictions and that the entire system forms a consistent group-theoretic structure.",
+    "description": "Investigate the ArXiv paper 'The Endpoint Cardinality of Discrete Cube Skeleta' and formalize its key results. Abstract: We determine the minimum order of a finite lattice set that contains a filled axis-parallel cube skeleton about every point of some $N$-point set of centers. For fixed integers $0\\leq k<n$, the answer for $N$ centers is $N^{1-(n-k)/(2n^2)}$, up to constants depending on $n$ and $k$. Thornton proved every smaller exponent and gave a construction of this order; the endpoint lower bound was left open when $k\\geq1$. Our proof combines a midpoint estimate, a labelled form of Shearer's projection inequality, and a strong induction that balances large and small radii without a dyadic pigeonhole loss. In particular, a lattice set containing a square boundary about each of $N$ centers has at least a constant times $N^{7/8}$ points.",
     "domains": [
-      "Novelty",
-      "Algebra"
+      "Cryptography",
+      "Logic"
     ],
-    "id": "fd_0489",
+    "id": "fd_0495",
     "priority_score": 0.8,
     "research_mode": "team",
-    "source_exp_id": "seed",
+    "source_exp_id": "2607.15502v1",
     "status": "available",
-    "timestamp": "2026-07-19T20:43:51.819026+00:00",
-    "title": "Aboriginal Kinship as Group Theory: Dreamtime Algebra"
+    "timestamp": "2026-07-20T03:19:42.598123+00:00",
+    "title": "ArXiv paper: The Endpoint Cardinality of Discrete Cube Skeleta"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'On Generalized von Neumann Inverse Graphs of Finite Commutative Regular Rings' and formalize its key results. Abstract: Let $R$ be a ring with identity. The generalized von Neumann inverse graph of $R$, denoted by $\u0393_{Reg}(R)$, is defined as the graph whose vertex set is $Reg(R)$, where two distinct vertices $a,b \\in R$ are adjacent if and only if $aba=a$ or $bab=b$. In this work, we consider the reduced graph $\u0393'_{Reg}(R)$ obtained by restricting the vertex set to $Reg(R)\\setminus{0_R}$, so that $\u0393_{Reg}(R) \\cong K_1 + \u0393'_{Reg}(R)$, allowing the analysis to focus on its nontrivial structure. We investigate the structure of $\u0393'_{Reg}(R)$ for finite commutative von Neumann regular rings and establish several results describing its graph-theoretic properties in relation to the algebraic structure of $R$. In particular, we derive conditions that characterize connectivity, acyclicity, and planarity, and examine structural features such as vertex degrees, girth, and the existence of pendant vertices, along with their algebraic implications. We also identify circumstances under which $\u0393'_{Reg}(R)$ exhibits sp",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0496",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.15568v1",
+    "status": "available",
+    "timestamp": "2026-07-20T03:19:45.992757+00:00",
+    "title": "ArXiv paper: On Generalized von Neumann Inverse Graphs of Finite Commutative Regular Rings"
   },
   {
     "consumed_by_exp_id": "",
@@ -3168,20 +3124,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Cycle c1b3f8da (Q=0.740) proved 11 theorems in Pythagorean but left 13 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'On Small Doubling in Right-Ordered Groups and Baumslag-Solitar Groups-II' and formalize its key results. Abstract: Recently, Mohan et al. [Results Math. 80 (2025), No. 4, ",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "sorry_fill_c1b3f8da_5cb76478",
-    "priority_score": 0.79,
-    "research_mode": "team",
-    "source_exp_id": "c1b3f8da",
-    "status": "available",
-    "timestamp": "2026-07-20T02:08:19.156620+00:00",
-    "title": "Close Proofs: ArXiv paper: On Small Doubling in Right-Ordered Groups and Baumslag-So"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Cycle 0daa61af (Q=0.720) proved 18 theorems in Tropical but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The AdS/CFT correspondence says that a gravitational theory in the bulk of anti-de Sitter space is equivalent to a conformal field theory on the boundary. What if prime numbers have a holographic dual",
     "domains": [
       "Tropical"
@@ -3193,20 +3135,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-17T18:03:33.034163+00:00",
     "title": "Close Proofs: Holographic Primes: The Prime Number AdS/CFT Correspondence"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Cycle c930e14b (Q=0.710) proved 0 theorems in Algebra but left 13 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize a game where one player (Mortal) has finite computation and the other (Eternity) has transfinite computation. Prove that Mortal can always force at least omega rounds before losing, and that",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "sorry_fill_c930e14b_3ec25391",
-    "priority_score": 0.76,
-    "research_mode": "team",
-    "source_exp_id": "c930e14b",
-    "status": "available",
-    "timestamp": "2026-07-20T00:41:04.989659+00:00",
-    "title": "Close Proofs: Infinite Games Against Death: Immortality Strategies"
   },
   {
     "consumed_by_exp_id": "",
@@ -5249,289 +5177,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future directions\n\n- Define finite simple signed graphs directly over `SimpleGraph`, including signed walks, signed two-path counts, regularity, girth, and strong regularity.\n- Lift the matrix results in `HigherGirth.lean` to the full bipartite classification theorem: the zero common-neighbour parameter gives weighing matrices, while the nonzero parameter gives complete bipartite underlying graphs and symmetric-design incidence matrices.\n- Formalize the equidistant binary-code switching theorem used to pass from constant symmetric differences to symmetric block designs.\n- Formalize diameter at most two for connected strongly regular signed graphs and derive the exclusion of finite girth greater than five except for stars.\n- Formalize the graph-theoretic pentagon lemmas: uniqueness of two-paths at girth five, homogeneity of each pentagon, and existence of a pentagon containing any two edges. Combining these with the present algebraic pentagon theorem will yield the full girth-five classification.\n- Extend switching from row signs to simultaneous row and column switching and connect it to diagonal conjugation of the full signed adjacency matrix.\n",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "fd_0495",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "93551ae8",
-    "status": "available",
-    "timestamp": "2026-07-19T22:02:41.254517+00:00",
-    "title": "Future directions from cycle 93551ae8"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\n## 1. Polynomial extraction for restricted stabilizer witnesses\n\n**Conjecture.** For every verifier whose gates and witnesses are restricted to the stabilizer fragment, every accepted witness above a fixed completeness threshold admits a classical certificate whose size is polynomial in the verifier description and witness qubit count, with acceptance preserved up to inverse-polynomial error.\n\nThe key insight is that stabilizer states possess compact tableau descriptions and their measurement statistics can be propagated by discrete linear algebra, potentially furnishing the extractor that is absent for general amplitude vectors.\n\n**Why now?** The simulation results isolate polynomial extraction as the exact missing reverse implication, while the stabilizer fragment supplies enough algebraic structure to make extraction falsifiable on explicit verifier families.\n\n## 2. Lossy pigeonhole compression with a quantitative decoding tradeoff\n\n**Conjecture.** Let a finite family of classical proofs be encoded into fewer quantum witness labels and decoded with worst-case error probability at most `\u03b5`. Then the compression ratio is bounded by an explicit function of `\u03b5` and the maximum pairwise distinguishability of the encoded states; equality is attained by a symmetric family.\n\nThe key insight is that the lossless pigeonhole collision theorem should extend to an approximate statement by replacing injectivity with distinguishability and exact decoding with bounded-error recovery.\n\n**Why now?** Exact finite compression has a sharp counting obstruction, so the next testable regime is to quantify precisely how error or nonorthogonality relaxes that obstruction.\n\n## 3. Proof-complexity separation requires verifier structure, not dimension alone\n\n**Conjecture.** There exists a natural family of propositional tautologies and a uniform local quantum verifier for which polynomial-size quantum witnesses exist, while every proof in a fixed classical bounded-depth proof system has exponential size.\n\nThe key insight is that amplitude-space dimension cannot itself yield compression; a separation must couple interference with a restricted classical inference system and a uniform verification procedure.\n\n**Why now?** Classical lower bounds are known for several restricted proof systems, and the present framework identifies the additional ingredient needed on the quantum side: an explicit verifier and a witness family rather than a bare counting argument.\n\n## 4. Extractor overhead transfers lower bounds sharply\n\n**Conjecture.** For every natural classical proof system admitting a degree-`d` quantum-to-classical extractor, there is a family of formulas whose optimal quantum witness cost is asymptotically the `d`-th root of the optimal classical proof size, up to polylogarithmic factors.\n\nThe key insight is that polynomial extraction already forces a root-type quantum lower bound; sharpness asks whether formulas can saturate that structural inequality.\n\n**Why now?** The lower-bound transfer is unconditional once an extractor is supplied, turning sharpness into a concrete search over proof systems, extractors, and explicit formula families.\n\n## 5. No universal polynomial quantum advantage without a universal extractor\n\n**Conjecture.** Any theorem asserting polynomial equivalence between all sound classical proof systems and a bounded-error quantum proof model is equivalent, under standard uniformity and encoding conditions, to the existence of a uniform polynomial-size classical extractor for every accepting quantum witness family.\n\nThe key insight is that forward simulation is supplied by computational-basis witnesses, whereas every substantive converse is an extraction statement in disguise.\n\n**Why now?** Separating the automatic forward embedding from the conjectural reverse translation gives a precise equivalence target that can be attacked by constructing extractors or by exhibiting witness families that obstruct them.\n",
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_0496",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "c231497c",
-    "status": "available",
-    "timestamp": "2026-07-19T22:02:50.148909+00:00",
-    "title": "**Conjecture.** For every verifier whose gates and witnesses are restricted to t"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions: Self-Modifying Computation\n\n## 1. Resource-Bounded Rewrite Hierarchy\n\nFor every positive integer `k`, there exists a natural machine model in which permitting at most `k + 1` code rewrites yields a strict reduction in optimal simulation overhead compared with permitting at most `k` rewrites, even though all levels have the same computability degree.\n\nThe key insight is that code-as-data collapses extensional computability but need not preserve time, space, communication, or description complexity.\n\nWhy now? The exact simulation theorem identifies the invariant that prevents a computability hierarchy, making resource overhead the next falsifiable place to seek strictness.\n\n## 2. Oracle-Relative Self-Modification\n\nFor every oracle `A`, effective self-modifying machines with read access to `A` have a halting problem of exactly the Turing degree of the jump `A\u2032`; allowing code rewriting alone does not add a further jump.\n\nThe key insight is that the mutable program can again be moved into ordinary state, while oracle access remains the sole source of additional computability power.\n\nWhy now? The non-oracle equivalence supplies the base case and suggests a uniform relativized simulation whose failure would pinpoint a genuinely stronger form of reflection.\n\n## 3. Quantitative Monitor Tradeoff\n\nFor every universal self-modifying machine and every total sound monitor for perpetual safety, there is an infinite computable family of safe configurations on which the monitor never certifies safety; moreover, the family can be chosen with bounded rewrite rate.\n\nThe key insight is that complement non-enumerability should force not merely one missed safe execution but a structured, infinite blind spot for every sound finite-evidence monitor.\n\nWhy now? Exact monitoring has been ruled out, so the next testable question is how large and regular the unavoidable incompleteness must be.\n\n## 4. Semantic Malware Detection Under Distributional Promises\n\nThere exists a computable probability distribution with full support on program codes such that every computable malware classifier for a fixed nontrivial extensional behavior has either positive false-positive probability or positive false-negative probability; determine whether a universal positive lower bound can hold under natural entropy constraints.\n\nThe key insight is that Rice-style impossibility is worst-case, while practical detection and alignment evaluation are distributional; full support prevents undecidable cases from being assigned zero probability.\n\nWhy now? The extensional classifier obstruction identifies precisely which behaviors cannot be classified exactly and provides a foundation for quantitative error lower bounds.\n\n## 5. Proof-Carrying Alignment as a Maximal Enumerable Fragment\n\nFor a universal self-modifying machine, characterize the largest recursively enumerable class of configurations admitting finite certificates that every reachable rewrite preserves a specified safety invariant, and determine conditions under which this class is extensionally maximal among all sound certifying monitors.\n\nThe key insight is that exact perpetual-safety classification is impossible, but finite proof objects may define a maximal sound fragment whose incompleteness is mathematically controlled.\n\nWhy now? The separation between finite confirmation of halting and non-enumerability of perpetual execution suggests certificate systems as the natural boundary between attainable assurance and impossible prediction.\n",
-    "domains": [
-      "Computation",
-      "Logic"
-    ],
-    "id": "fd_0497",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "cb3d5d14",
-    "status": "available",
-    "timestamp": "2026-07-19T22:02:57.144410+00:00",
-    "title": "For every positive integer `k`, there exists a natural machine model in which pe"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\n- Impose primitivity and strict ordering on all three entries, then count near-misses in height boxes rather than counting a parametrized cancellation family.\n- Formalize a density function such as the number of triples `1 \u2264 a < b < c \u2264 H` with error at most `c^(n-1)`, and derive upper and lower asymptotic bounds.\n- Strengthen the adjacent-family estimate by proving matching lower bounds for `(t,1,t+1)` when `n \u2265 2`.\n- Add the natural-number radical and abc-quality infrastructure needed to turn `deficit_identity` into a conditional effective bound from a precisely stated effective abc hypothesis.\n- Investigate nonparametric examples such as the cubic near-miss `(6,8,9)` and machine-check finite searches for record-quality triples at higher exponents.\n- Separate decay in exponent from decay in height: the present normalization identity is exponential in `n`, but no super-exponential density theorem is claimed.\n",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "fd_0499",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "14bbfbeb",
-    "status": "available",
-    "timestamp": "2026-07-19T22:20:20.550541+00:00",
-    "title": "Future directions from cycle 14bbfbeb"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions: Functional Fibers, Experience, and Semantic Gaps\n\n## 1. Naturality of the zombie\u2013semantic gap correspondence\n\n**Conjecture.** There is a category of functional profiles and profile-preserving maps in which both the canonical zombie-witness construction and the canonical semantic-gap construction are functors, and the established profile-indexed equivalence extends to a natural isomorphism between those functors.\n\nThe key insight is that both witness spaces are classified by the same hidden Boolean fiber, suggesting that their agreement should persist under every coherent change of functional vocabulary rather than only object by object.\n\n**Why now?** The pointwise equivalence and its explicit inverse are known; the next test is whether composition and identity laws preserve the correspondence without additional choices.\n\n## 2. Classification of finite hidden-experience extensions\n\n**Conjecture.** For every finite set of functional profiles, experience models whose behavioral fibers contain exactly one conscious state and one void state are classified, up to behavior- and void-preserving isomorphism, by the canonical two-sheeted model.\n\nThe key insight is that uniqueness within each fiber should turn local conscious/void labels into a global normal form, while any failure of uniqueness records additional qualitative multiplicity invisible to function.\n\n**Why now?** The canonical model already proves existence and classifies its witness type; finite-fiber classification would determine precisely which hypotheses make that construction universal.\n\n## 3. Quantitative underdetermination from fiber entropy\n\n**Conjecture.** For finite models with a probability distribution on worlds, the conditional entropy of experience given functional profile vanishes exactly when experience factors through behavior; positive conditional entropy yields a quantitative lower bound on the number of functionally indistinguishable experiential alternatives.\n\nThe key insight is that the present Boolean fiber is the smallest nontrivial case of conditional uncertainty, so the qualitative existence gap should admit an information-theoretic refinement.\n\n**Why now?** The structural separation between behavior and experience has been isolated; adding finite probability measures can test whether the separation has a robust numerical invariant rather than merely a witness.\n\n## 4. Independence of integrated information from hidden experiential fibers\n\n**Conjecture.** For every finite functional system with a minimum-information partition and every positive integer `k`, there is a conservative experiential extension with exactly `k` mutually distinct experiential sheets over each functional state, all sharing the same integrated-information landscape.\n\nThe key insight is that minimum-information partitions depend on the functional cut data, whereas sheet multiplicity lies entirely in fibers forgotten by that data.\n\n**Why now?** Coexistence of a minimum-information partition with a two-sheeted experiential gap is established; arbitrary finite sheet multiplicity is the decisive test of whether integrated information alone constrains experiential multiplicity.\n\n## 5. Guarded diagonalization for observer-relative experience reports\n\n**Conjecture.** Any sound, self-referential reporting system that can encode both its own acceptance predicate and the presence of a hidden experiential sheet contains a report that is semantically true, unaccepted, and invariant under functional duplication.\n\nThe key insight is that diagonal unacceptability and functional invisibility may be combined only when the coding map respects both self-reference and the forgetful behavioral projection.\n\n**Why now?** Canonical G\u00f6delian codes already correspond to canonical zombie witnesses, but the current construction stipulates the coding. A guarded diagonal theorem would identify the exact structural assumptions under which the correspondence survives genuine self-reference.\n",
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_0501",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "606f7bdd",
-    "status": "available",
-    "timestamp": "2026-07-19T22:38:27.256880+00:00",
-    "title": "**Conjecture.** There is a category of functional profiles and profile-preservin"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future directions\n\n## What is formalized\n\n`Bridges/TruthFractal.lean` separates three claims that are often conflated:\n\n1. **A natural prefix geometry.** Infinite Boolean streams represent formal truth assignments. The weighted Hamming/prefix distance is proved nonnegative, symmetric, separating, and triangular.\n2. **A rigorous half-dimensional symbolic model.** In `pairedTruth`, one bit of each pair is fixed and one is free. At every even scale, the square of the admissible-prefix count equals the ambient-prefix count. This gives exact symbolic dimension `1/2`, with a separate proof that `0 < 1/2 < 1`.\n3. **Binary-real approximation and undecidability.** Every stream's binary real has finite lower approximations with error at most `2\u207b\u1d3a`; agreement on `N` bits implies the same modulus of closeness. Separately, the truth predicate for halting statements is proved noncomputable but recursively enumerable.\n\n`Bridges/TruthFractalEvidence.lean` kernel-checks the first six finite scales and an exhaustive bounded counterexample statement.\n\n## Important limitation\n\nThere is no canonical effective enumeration of *all mathematical statements* independent of a syntax, semantics, foundational theory, and coding. Likewise, \u201cthe fractal dimension of mathematical truth\u201d is not an invariant until those choices and a precise dimension notion are fixed. The formal result therefore uses an explicit toy truth language and **symbolic prefix-counting dimension**, rather than claiming that the actual set of all true mathematical sentences canonically has dimension `1/2`.\n\nThe Chaitin-style component is also deliberately split into valid statements. The geometric approximation theorem applies to every Boolean stream. The uncomputability theorem applies to halting truth. The project does not identify the half-free language's binary real with Chaitin's Omega, nor claim that its elementary dimension is uncomputable.\n\n## Next formal targets\n\n1. Package `prefixDistance` as a `MetricSpace Theory` instance and prove that it induces the product topology on Cantor space.\n2. Define cylinder covers and formalize upper/lower box-counting dimension, then derive the dimension `1/2` theorem from the exact cardinality identity.\n3. Define a prefix-free machine and its halting probability. Prove Kraft boundedness, monotone computable rational approximation, and the relation between sufficiently precise approximations and finite halting information.\n4. Study effective Hausdorff dimension of individual streams via prefix-free Kolmogorov complexity. This is the mathematically standard setting in which fractal dimension, algorithmic randomness, and Chaitin-style reals genuinely meet.\n5. Parameterize the paired construction by a periodic mask with `a` free positions in every block of length `b`, and prove exact symbolic dimension `a/b`.\n6. Formalize coding-invariance results under bi-Lipschitz recodings, clarifying which dimension statements survive a change in statement enumeration.\n",
-    "domains": [
-      "Computation",
-      "Geometry"
-    ],
-    "id": "fd_0502",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "e5c56bfa",
-    "status": "available",
-    "timestamp": "2026-07-19T22:38:44.288036+00:00",
-    "title": "`Bridges/TruthFractal.lean` separates three claims that are often conflated:"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future directions\n\nThe formal development establishes the order-theoretic and relative-computability skeleton of an oracle hierarchy, but it deliberately does **not** claim a full arithmetization of Peano Arithmetic.\n\n1. **Construct the concrete relativized jump.** Define a universal oracle machine and the diagonal halting set `Jump A`, then prove `A \u2264\u1d40 Jump A` and `\u00ac Jump A \u2264\u1d40 A`. This would supply a concrete instance of `IsJump`, rather than taking those two characteristic facts as structure fields.\n2. **Connect theories to oracle computation.** Define recursively axiomatized theories extending PA, formalized provability, consistency, and arithmetical soundness. Relate adjoining a halting oracle to the corresponding Turing jump.\n3. **Separate consistency from soundness carefully.** The slogan that an oracle extension \u201cproves consistency below but cannot decide its own soundness\u201d needs explicit representation and soundness hypotheses. Formal versions should distinguish `Con(T)`, reflection principles, and complete truth predicates.\n4. **Prove the concrete hierarchy theorem.** Once `Jump` is constructed, instantiate `IsJump.hierarchyEmbedding` to obtain an order isomorphism between `\u2115` and the range of `n \u21a6 deg(Jump^[n] A)`.\n5. **Relate theorem sets and degrees.** Encode theorem sets as subsets of `\u2115`, prove upper and lower Turing-reducibility bounds, and identify exactly which oracle degree each theory realizes.\n6. **Extend beyond finite jumps.** Define effective joins at limit notations and investigate the hyperarithmetical hierarchy through computable ordinals.\n7. **Strengthen degree structure.** Develop joins directly at the quotient level and prove consequences such as strictness above arbitrary finite joins and nonexistence of maximal degrees for the concrete jump.\n",
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_0505",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "671e7568",
-    "status": "available",
-    "timestamp": "2026-07-19T23:13:38.982345+00:00",
-    "title": "The formal development establishes the order-theoretic and relative-computabilit"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions: Rainbow Arithmetic-Progression Thresholds\n\n## 1. Sharp threshold after model identification\n\nFix a product-colouring model and define `T_k` as the least interval length at which the\nspecified rainbow-progression event has probability at least one half.  Conjecture that there\nis a constant `C > 0` such that\n\n\\[\nT_k = (C+o(1))k^2\\log k.\n\\]\n\nThis is falsifiable by computing the median threshold for increasing `k` and comparing\n`T_k/(k^2\\log k)` across model sizes. **The key insight is** that a sharp constant can only be\ndiscussed after the random experiment, progression length, and threshold event are fixed.\n**Why now?** The exact local law shows that the proposed quadratic scale is not a one-event\nphenomenon, sharply narrowing where the constant can originate.\n\n## 2. Overlap-kernel determination of the leading constant\n\nConjecture that, in any product model exhibiting the quadratic-logarithmic scale, the leading\nconstant is determined by the spectral radius of a finite overlap kernel classifying pairs of\narithmetic progressions by their intersection pattern.  In particular, deleting all but the\ndominant overlap classes should preserve the limiting value of `T_k/(k^2\\log k)`.\n\nThis is testable by enumerating overlap types, forming the corresponding covariance matrix,\nand comparing thresholds in the full and truncated dependency models. **The key insight is**\nthat the local collision probability has order `1/k`, so an additional factor of `k` must be\nencoded in the geometry of dependencies or coverage. **Why now?** The disjoint-block packing\nprovides a zero-overlap baseline against which each overlap class can be measured.\n\n## 3. Extreme-value limit for the first rainbow obstruction\n\nConjecture that the centered and scaled first-occurrence statistic for the dominant rainbow\nobstruction converges to a Gumbel distribution.  More precisely, after the correct model is\nfixed, there should exist centering constants `a_k` of order `k\u00b2 log k` and scale constants\n`b_k` of order `k\u00b2` such that `(T_k-a_k)/b_k` has a nondegenerate Gumbel limit.\n\nThe conjecture is falsifiable through high-precision simulations and factorial-moment tests\nfor exceedance counts. **The key insight is** that a logarithmic threshold correction often\nsignals the last uncovered or last colliding configuration in an extreme-value regime.\n**Why now?** Exact finite probabilities and explicit disjoint progressions make Poisson and\nChen\u2013Stein approximations accessible without first resolving every dependency.\n\n## 4. Container transfer from packed to complete progression families\n\nConjecture that a hypergraph-container decomposition transfers exponential tail bounds from\nmaximal vertex-disjoint families of three-term progressions to the complete family, losing\nonly a constant factor in the threshold location.  The conjecture should fail or require a\nnew exponent if dense clusters of overlapping progressions dominate.\n\nThis can be tested on finite intervals by comparing the logarithms of avoidance probabilities\nfor packed families and for all progressions. **The key insight is** that the canonical\npacking isolates truly independent constraints, while containers quantify precisely how much\nis lost upon restoring overlaps. **Why now?** A concrete independent baseline and exact local\ncollision formula are available, so the transfer loss can be measured rather than guessed.\n\n## 5. Universality beyond arithmetic progressions\n\nConjecture that the same normalized threshold constant occurs for every translation-invariant\nthree-uniform linear equation whose solution hypergraph has the same limiting overlap kernel\nas `x+z=2y`.  Candidate comparisons include Schur triples `x+y=z` under matched boundary and\ndensity conventions.\n\nThis is falsifiable by computing the overlap kernels and threshold ratios for several equations.\n**The key insight is** that universality should depend on intersection geometry rather than the\nparticular coefficients of the equation. **Why now?** The finite progression packing and the\nfalling-factorial colour law separate geometric data from colour data, making cross-equation\ncomparisons structurally clean.\n",
-    "domains": [
-      "Computation",
-      "Pythagorean"
-    ],
-    "id": "fd_0507",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "00cf3210",
-    "status": "available",
-    "timestamp": "2026-07-19T23:31:03.653040+00:00",
-    "title": "Fix a product-colouring model and define `T_k` as the least interval length at w"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions: Paradox-Tolerant Reflection\n\n## 1. A compositional truth language with three genuine diagonal sentences\n\nConstruct a recursively generated language with quotation, substitution, a truth predicate, bounded description, and restricted comprehension. Conjecture that its least four-valued fixed-point model contains distinct Liar, Berry, and Russell sentences as designated gluts while preserving a non-designated arithmetic fragment.\n\nThe key insight is that the present finite support-pair semantics should extend from named constants to a monotone operator on valuations, whose least information fixed point supplies compositional meaning.\n\nWhy now? The finite calculus isolates the exact algebraic resource\u2014designated negation fixed points\u2014and the Boolean obstruction identifies what a successful compositional extension must avoid.\n\n## 2. Conservativity of the classical fragment\n\nLet a paraconsistent theory extend a classical base language by a transparent truth predicate and restricted comprehension. Conjecture that every theorem in the truth-free, comprehension-free fragment is already a theorem of the classical base, even though the extension proves contradictory Liar, Berry, and Russell sentences.\n\nThe key insight is to stratify support propagation so that gluts introduced by reflection cannot cross the syntactic boundary into the classical fragment.\n\nWhy now? Explicit non-explosion has been established for a finite witness; conservativity is the sharp test of whether the same isolation mechanism survives an expressive language.\n\n## 3. Internal soundness without arithmetic collapse\n\nConstruct a recursively axiomatized paraconsistent theory with a formula expressing semantic designation of its derivations. Conjecture that the theory proves this internal soundness formula, remains nontrivial, and does not prove every sentence of its classical arithmetic fragment.\n\nThe key insight is that G\u00f6delian obstruction targets classical consistency and sufficiently strong derivability conditions, whereas an inconsistency-tolerant designation predicate may validate a different reflection principle.\n\nWhy now? Finite reflection distinguishes an object-level soundness certificate from its external metatheorem; the next falsifiable step is to close that gap in an effectively presented infinite system.\n\n## 4. A minimality theorem for independent paradox gluts\n\nFor every natural number `n`, consider a negation-coherent finite four-valued theory with `n` pairwise distinct self-negating theorem codes and at least one non-designated code. Conjecture that it needs at least `n + 1` sentence codes, and that this bound is attained; under the additional requirement of separate true-only and gap witnesses, conjecture that the sharp bound is `n + 3`.\n\nThe key insight is that each distinct self-negating theorem consumes a distinct glut code, while nontriviality and semantic separation force additional codes of different support profiles.\n\nWhy now? The seven-sentence construction provides the first concrete upper bound for three paradoxes and exposes the combinatorial parameters needed for a sharp classification.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0508",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "ca6fc5a2",
-    "status": "available",
-    "timestamp": "2026-07-19T23:31:12.387460+00:00",
-    "title": "Construct a recursively generated language with quotation, substitution, a truth"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future directions\n\n1. **Finite theorem graphs.** Replace the scalar control variable with a finite simple graph\n   whose vertices are theorems and whose edges encode explicitly defined mathematical\n   dependencies or cross-field correspondences. Define coherence from the largest connected\n   component, normalized by vertex count.\n\n2. **Random-graph transition.** Formalize an Erd\u0151s\u2013R\u00e9nyi-style family and prove finite-size\n   monotonicity of expected largest-component size. An asymptotic threshold theorem would\n   require substantially more probability and random-graph infrastructure.\n\n3. **Susceptibility and critical exponents.** Add fluctuation/susceptibility observables and\n   distinguish continuity of the order parameter from differentiability. In the current\n   mean-field model, the square-root law proves exponent `1/2`; a precise theorem about the\n   divergent right derivative would sharpen the second-order-transition interpretation.\n\n4. **Empirical semantics.** Specify what counts as a Langlands\u2013arithmetic-geometry edge,\n   deduplicate theorem statements, define time windows, and publish a reproducible graph.\n   Only then can the proposed 10,000-edge threshold be calibrated or tested. The present\n   formalization treats 10,000 solely as a parameter.\n\n5. **Statistical model comparison.** Compare threshold, logistic, and smooth power-law models\n   using held-out historical data. Quantify uncertainty in both edge extraction and the\n   inferred critical point rather than presenting a point estimate alone.\n\n6. **Universality tests.** Apply the same graph observable to several mathematical domains and\n   test whether fitted exponents are stable under reasonable changes in ontology and edge\n   definition.\n",
-    "domains": [
-      "Computation",
-      "Bridges"
-    ],
-    "id": "fd_0511",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "28042806",
-    "status": "available",
-    "timestamp": "2026-07-20T00:23:09.716580+00:00",
-    "title": "1. **Finite theorem graphs.** Replace the scalar control variable with a finite "
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\n1. **Infinite-page limit.** Replace fixed-length books by streams `\u2115 \u2192 Fin A` with the product topology. The resulting Cantor-like space remains totally disconnected but is no longer discrete; cylinder sets should supply a clopen basis.\n\n2. **Prefix-free complexity.** Introduce a concrete prefix-free machine and sharpen the current finite counting theorem from fixed-length program spaces to the Kraft-inequality bound for all programs below a length threshold.\n\n3. **Probability formulation.** Put the uniform probability measure on finite libraries and restate `many_incompressible_books` as a lower bound on the probability that complexity exceeds `k`, namely at least `1 - 2^k / 2^L` in the binary case.\n\n4. **Covering dimension API.** The formal result currently gives the clopen singleton basis that characterizes dimension zero for finite metrizable spaces. A reusable Lean definition of Lebesgue covering dimension would permit stating the numerical equality directly.\n\n5. **Disconnected latent models.** Quantify the number of connected components required of a parameter space admitting a continuous surjection onto all books. The present connector shows one connected component can reach at most one book.\n\n6. **Error-correcting geometry.** Combine incompressibility counting with Hamming-ball volume bounds to show that most books are simultaneously algorithmically incompressible and far from every member of a small structured catalog.\n",
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_0512",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "65e81f6c",
-    "status": "available",
-    "timestamp": "2026-07-20T00:23:21.787154+00:00",
-    "title": "1. **Infinite-page limit.** Replace fixed-length books by streams `\u2115 \u2192 Fin A` wi"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\n1. **Oracle-relative rewriting.** Extend `SelfModMachine` with oracle queries and prove that storing the current program in the ordinary state still preserves the oracle-relative computability degree. Then compare halting across successive Turing jumps.\n\n2. **Resource-sensitive self-modification.** The present simulation preserves termination, but not necessarily time or space overhead. Define an explicit cost semantics and obtain quantitative bounds for interpreting rewritten code as data.\n\n3. **A direct executable universal transition system.** `diagMachine` uses Mathlib's universal partial-recursive evaluator. A next step is to expose an instruction-level machine and prove its compiler correct, transporting the same undecidability theorem to concrete bytecode.\n\n4. **Bounded rewriting.** Track the number of actual program changes separately from execution steps. Determine which bounded classes retain universal computation, and prove decidability for genuinely finite-state restrictions.\n\n5. **Semantic malware properties.** Generalize the halting construction to a full Rice theorem stated directly for self-modifying configurations, with extensional properties expressed through observable traces.\n\n6. **Topological classification.** Equip program behavior with a prefix topology and formalize that halting is effectively open, while perpetual execution is not recursively enumerable for the universal machine.\n\n7. **Fixed-point strengthening.** Refine `selfmod_behavior_fixed_point` from equality of partial functions to an explicit quine construction, including a verified source-to-source rewrite whose fixed point reproduces its own code.\n",
-    "domains": [
-      "Computation",
-      "Algebra"
-    ],
-    "id": "fd_0513",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "27f58424",
-    "status": "available",
-    "timestamp": "2026-07-20T00:23:29.768312+00:00",
-    "title": "1. **Oracle-relative rewriting.** Extend `SelfModMachine` with oracle queries an"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions: Transfinite Survival Clocks\n\n## 1. Finite-depth clocks realize every finite power of omega\n\nFor each positive integer d, define a d-level survival clock by lexicographically nesting d finite counters, with the outer counters contributing successive ordinal blocks. The conjecture is that the supremum of all clock readings is exactly \u03c9^d, while every reading remains strictly below \u03c9^d.\n\nThe key insight is that the verified passage from finite delays to \u03c9, and from finite block budgets with finite tails to \u03c9\u00b2, should iterate through ordinal multiplication.\n\nWhy now? The one-level and two-level cases expose the induction invariant: each new finite choice layer takes the supremum of finite right multiples of the preceding clock.\n\n## 2. Operational infinite-time machines realize the same two-level clock\n\nConsider an infinite-time register machine with a specified limit-stage update rule and a Mortal controller choosing finite delay bounds at successor stages. The conjecture is that there is a concrete program/game pair whose attainable halting times are cofinal in \u03c9\u00b2 and whose rank agrees with the two-parameter block clock.\n\nThe key insight is that a first limit stage can reset a finite tail counter while preserving a finite count of completed \u03c9-blocks.\n\nWhy now? The ordinal calculation is exact, so the remaining test is semantic: construct transitions and prove that their operational ranks coincide with the algebraic clock rather than merely being bounded by it.\n\n## 3. Finitely branching survival trees separate height from branches\n\nThere exists a finitely branching, well-founded survival tree of rank \u03c9\u00b2 such that every branch is finite, and every fixed finite branching budget determines a subtree of rank strictly below \u03c9\u00b2. More generally, characterize which countable ordinals occur as ranks of trees generated by nested locally finite budgets.\n\nThe key insight is that cofinal survival is a property of the whole strategy tree, not the length of any individual play.\n\nWhy now? The verified boundary\u2014every fixed clock reading lies below \u03c9\u00b2 although their supremum equals \u03c9\u00b2\u2014gives a precise specification against which a tree model can be tested.\n\n## 4. Birthday spectra transfer ordinal clocks beyond dyadic units\n\nFor canonical short-game families built by iterated left/right option formation, the conjecture is that finite-depth constructors can realize birthday spectra cofinal in \u03c9^d for each finite d, while preserving an arithmetic interpretation analogous to dyadic surreal units.\n\nThe key insight is that the dyadic identity `birthday(2\u207b\u207f) = n + 1` converts arithmetic syntax directly into a cofinal ordinal clock; nested constructors should encode higher block structure.\n\nWhy now? The first birthday clock and its \u03c9-weighted lift are exact, providing both a base family and a falsifiable target for the first genuinely higher-depth construction.\n\n## 5. Global bounds destroy the omega-squared phenomenon\n\nIf a single natural number B globally bounds the outer nondeterministic budget, then the supremum of all finite-tail plays is conjectured to be exactly \u03c9\u00b7B + \u03c9 and therefore strictly below \u03c9\u00b2; conversely, any family cofinal in \u03c9\u00b2 must have unbounded outer budgets.\n\nThe key insight is that \u201cfinitely bounded at each choice\u201d and \u201cuniformly bounded over the strategy\u201d are mathematically different hypotheses.\n\nWhy now? The fixed-budget exact formula identifies the candidate supremum, while the two-parameter exact theorem identifies unboundedness as the mechanism producing the second limit level.\n",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0516",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "c930e14b",
-    "status": "available",
-    "timestamp": "2026-07-20T00:41:00.008251+00:00",
-    "title": "For each positive integer d, define a d-level survival clock by lexicographicall"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\n## 1. Profinite Boolean sphere and Cantor geometry\n\n**Conjecture.** Equip each finite Boolean stage with the discrete topology and the coherent limit with the inverse-limit topology. The resulting compact topological group is homeomorphic to Cantor space, and every continuous map from it to a finite discrete space factors through a finite-stage projection.\n\nThe key insight is that coherence converts finite coordinate deletion into the cylinder-set basis of a profinite topology.\n\n**Why now?** The algebraic equivalence with the countable Boolean product identifies the underlying points and isolates continuity and finite factorization as the next testable layer.\n\n## 2. Completed characteristic-class algebra\n\n**Conjecture.** The completion of the polynomial Stiefel\u2013Whitney model along its positive-degree ideal is canonically the formal power-series ring, and this completion is the inverse limit of the finite truncations `\ud835\udd3d\u2082[w]/(w^(n+1))` as a topological ring.\n\nThe key insight is that the same coordinate-by-coordinate reconstruction used for Boolean stages should lift from additive products to compatible truncated polynomials.\n\n**Why now?** Nonvanishing in every polynomial degree and invertibility of the total class after completion are already established, leaving the universal topological-ring identification as a precise bridge.\n\n## 3. Bernoulli coefficients from compatible truncations\n\n**Conjecture.** The Bernoulli power series is uniquely determined by its compatible finite truncations together with the equation `B(X)(exp(X)-1)=X`; at every truncation level, the next coefficient is forced by the preceding coefficients.\n\nThe key insight is that the generating identity is triangular in degree, so inverse-limit compatibility should turn the Bernoulli recurrence into a uniqueness theorem for a coherent tower.\n\n**Why now?** The full generating identity is available, while the inverse-limit reconstruction theorem supplies the structural language needed to separate existence, compatibility, and uniqueness.\n\n## 4. Surjective towers and derived obstruction groups\n\n**Conjecture.** For towers of finite modules with surjective bonding maps, degreewise inverse limits preserve short exact sequences; when surjectivity is removed, the failure is measured by an explicit first derived-limit obstruction.\n\nThe key insight is that finite-stage lifting recursively builds coherent representatives, whereas non-surjective maps can trap incompatible residues that survive only as obstruction classes.\n\n**Why now?** The coordinate tower gives a transparent positive model, while known collapsing towers provide concrete negative controls against which an obstruction theory can be tested.\n\n## 5. A guarded all-spheres construction\n\n**Conjecture.** After choosing explicit suspension-loop adjunction data, a spectrum-level object can encode the stable homotopy information of all spheres through structure maps, but no analogous canonical inverse tower of the unstable spaces `S^n` exists without additional choices.\n\nThe key insight is that \u201call dimensions at once\u201d is naturally stable and spectrum-valued rather than an unqualified inverse limit of changing-dimensional spaces.\n\n**Why now?** The Boolean coordinate model demonstrates exactly which bonding data make an inverse-limit claim meaningful, providing a rigorous diagnostic for the stronger topological proposal.\n",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_0518",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "e3086657",
-    "status": "available",
-    "timestamp": "2026-07-20T01:50:14.412994+00:00",
-    "title": "**Conjecture.** Equip each finite Boolean stage with the discrete topology and t"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions: Threshold Geometry of Deductive Languages\n\n## 1. Natural monotonicity after renormalization\n\n**Conjecture.** For every finitely presented, sound deductive system with a prefix-free syntax, there is a canonical exponential renormalization of cumulative theorem counts whose derivability density is eventually antitone.\n\nThe key insight is that raw cumulative density can oscillate when new syntactic forms appear, whereas normalization by the ambient entropy may isolate a stable scarcity law. **Why now?** The exact critical-index theorem shows that eventual antitonicity is precisely the missing structural input needed to turn asymptotic sparsity into finite, testable thresholds.\n\n## 2. Universal finite-size scaling window\n\n**Conjecture.** In recursively generated families of deductive systems whose derivation grammars have a common strongly connected dependency graph, the rescaled density profile near its critical index converges to a universal sigmoid determined only by the dominant and subdominant growth rates.\n\nThe key insight is that Perron\u2013Frobenius spectral gaps should control not only exponential counting but also the width of a threshold window. **Why now?** The entropy-density limit identifies the two dominant rates, while the finite crossing law provides a canonical center around which a scaling window can be measured.\n\n## 3. Dimension deficit controls threshold displacement\n\n**Conjecture.** Let `log k` be ambient entropy and `log a` the exponential growth rate of derivable statements. Across a regular family of systems, the critical length at level `\u03b5` is asymptotic to `log(C/\u03b5) / (log k - log a)`, with a bounded correction characterized by periodicities of the syntax automaton.\n\nThe key insight is that the difference of the two dimensions, rather than either dimension alone, governs how rapidly derivability density collapses. **Why now?** The verified joint limit gives the dimension deficit a direct observable meaning, and the least-crossing construction turns the proposed asymptotic into a concrete integer-valued prediction.\n\n## 4. Heavy tails require mixtures of proof entropies\n\n**Conjecture.** A genuine power-law theorem-length distribution cannot arise from a single finite-state grammar with one fixed entropy rate, but can arise from a scale mixture of geometric length laws whose entropy parameter has regularly varying mass near zero.\n\nThe key insight is that a fixed entropy produces a constant successive ratio and hence exponential decay; heavy tails require heterogeneity across proof regimes. **Why now?** The exact successor-ratio identity rules out the simplest power-law interpretation and points to entropy mixtures as a falsifiable replacement.\n\n## 5. Independence onset versus density threshold\n\n**Conjecture.** For arithmetically adequate, sound systems equipped with a fixed encoding, the shortest independent sentence and the first fixed-level density crossing need not coincide, but their separation is bounded in systems whose self-reference operator has uniformly bounded description overhead.\n\nThe key insight is that logical independence is a local witness while density collapse is a global counting event; bounded self-reference overhead may nevertheless couple their scales. **Why now?** The present threshold theory cleanly distinguishes local crossing assumptions from global incompleteness claims, making the proposed bounded-separation principle precise enough to test on explicit syntactic families.\n",
-    "domains": [
-      "Logic",
-      "Pythagorean"
-    ],
-    "id": "fd_0519",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "0cd9c194",
-    "status": "available",
-    "timestamp": "2026-07-20T01:50:24.672837+00:00",
-    "title": "**Conjecture.** For every finitely presented, sound deductive system with a pref"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future directions\n\n## Replace illustrative measurements with audited data\n\nThe formal comparison theorem reduces every fitness claim to a cross-product inequality. A substantive empirical continuation should specify reproducible counting conventions for connections, proof density, and axiom cost, then import an audited census. The current concrete ZFC profiles are explicitly illustrative and should not be mistaken for metamathematical measurements.\n\n## Sensitivity and uncertainty\n\nRepresent each measured field by a rational interval and prove robust ordering: every admissible profile for one theory has greater fitness than every admissible profile for another. This would separate stable conclusions from artifacts of a chosen normalization.\n\n## Richer cost models\n\nAxiom count treats every axiom as equally costly. Alternatives include weighted axiom schemas, description length, consistency-strength strata, or ordinal-valued cost. One can investigate which fitness-comparison results survive monotone reparameterization.\n\n## Endogenous evolution\n\nThe present landscape assumes a Lyapunov distance and characterizes fixed points as global maxima. A stronger model would derive these properties from a concrete update rule, such as best-response movement on a finite niche graph. Potential results include convergence rates, basin decomposition, and perturbation stability.\n\n## Competitive exclusion from interactions\n\nThe allocation model enforces unique occupancy by representation. A deeper theorem would begin with an interaction matrix or resource constraints and derive exclusion dynamically. Equal scalar fitness profiles in the Lean development show why fitness alone cannot imply this principle; additional interaction hypotheses are mathematically necessary.\n\n## Diversity and coexistence\n\nExplore conditions under which different niches permit stable coexistence, and quantify the tradeoff between ecosystem-wide diversity and maximal individual fitness. Pareto frontiers may be more faithful than a single scalar objective.\n\n## Infinite ecosystems\n\nGeneralize finite-time natural-valued descent to well-founded ordinal ranks. This would permit transfinite evolutionary trajectories while retaining a convergence theorem.",
-    "domains": [
-      "Algebra",
-      "Logic"
-    ],
-    "id": "fd_0522",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "8797684d",
-    "status": "available",
-    "timestamp": "2026-07-20T02:07:55.985813+00:00",
-    "title": "The formal comparison theorem reduces every fitness claim to a cross-product ine"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions: Coherent Composition Loops\n\n## 1. Faithful non-thin causal-loop bicategories\n\n**Conjecture.** There is a finite one-object bicategory whose 1-cell composition is not associative as equality, whose associator is non-identity, and whose parallel 2-cells are not all equal; moreover, its associator pentagon can be witnessed by a finite rewriting system with decidable normalization.\n\nThe key insight is that the indiscrete locally thin example separates equality from coherent equivalence but erases the higher-dimensional information carried by distinct coherence paths. A finite non-thin model would preserve that information while remaining completely testable.\n\n**Why now?** The strict quotient and reassociation semantics isolate exactly which part of the present construction uses local thinness, so the missing coherence data can be introduced one layer at a time.\n\n## 2. Quantitative coherence leakage\n\n**Conjecture.** For every finite non-thin bicategory equipped with a subadditive real cost on 2-cells, the maximum observational drift between two parenthesizations equals the minimum total cost of a 2-cell path between them, and this distance is invariant under the pentagon and triangle relations.\n\nThe key insight is that a hybrid argument treats each associator as a local experiment transition; replacing a uniform bound by shortest-path cost should turn coherence into a quantitative security metric.\n\n**Why now?** The established reassociation hybrid bound already proves one inequality for uniform edge costs. Weighted associators and path minimization are the next falsifiable refinement.\n\n## 3. Collision resistance under weak composition\n\n**Conjecture.** Let generators act by 1-cells in a locally finite bicategory, and suppose bounded left and right principal-ideal traces separate generator words. Then quotienting by coherent reassociation preserves bounded collision resistance if and only if no nontrivial generator word is connected to a distinct word by a unit-preserving 2-cell.\n\nThe key insight is that principal-ideal traces detect strict syntax, whereas 2-cells detect semantic identifications; secure weak composition requires these two equivalence mechanisms to intersect only on intended reassociations.\n\n**Why now?** Bounded trace rigidity has been transported to atomic composition expressions, while strictification exhibits precisely how additional collisions can appear after quotienting.\n\n## 4. Associahedral normalization with certified diameter\n\n**Conjecture.** Any two binary parenthesizations of a word of length `n` are connected by at most `2n - 6` directed associator moves for `n \u2265 11`, and there are families attaining this bound after orientation-independent normalization.\n\nThe key insight is that reassociation syntax is the edge relation of the associahedron, so sharp rotation-distance bounds directly control the longest hybrid chain needed to compare coherent evaluations.\n\n**Why now?** Structural reassociation and its sound interpretation are available; adding leaf-preserving normal forms would convert a geometric diameter question into an explicit bound on observational drift.\n\n## 5. Higher coherence from terminating polygraphs\n\n**Conjecture.** Every finitely presented loop-tolerant algebra whose generating 2-dimensional rewrites form a terminating and confluent polygraph extends canonically to a weak higher category in which all higher coherence cells are generated by critical-pair fillers.\n\nThe key insight is that \u201cevery coherent loop-tolerant structure forms a higher category\u201d is too broad without a precise coherence mechanism; termination, confluence, and critical-pair fillers provide falsifiable conditions that may generate that mechanism dimension by dimension.\n\n**Why now?** The locally thin case shows that uniqueness of parallel cells is one sufficient mechanism. Convergent polygraphs offer a substantially broader replacement in which uniqueness follows from normalization rather than proof irrelevance.\n",
-    "domains": [
-      "Algebra",
-      "Logic"
-    ],
-    "id": "fd_0523",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "b3f0d755",
-    "status": "available",
-    "timestamp": "2026-07-20T02:08:07.796790+00:00",
-    "title": "**Conjecture.** There is a finite one-object bicategory whose 1-cell composition"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions: Small Doubling in Ordered and Metabelian Groups\n\n## 1. Stability from near-minimal collision surplus\n\n**Conjecture.** Let `S` be a finite nonempty subset of a right-ordered group. If `|S\u00b2| = 3|S| - 3`, then all but a bounded number of the excess representations counted by `|S|\u00b2 - |S\u00b2|` are supported on a bounded union of translates of a single cyclic or metabelian progression, with an absolute bound independent of `|S|`.\n\nThe key insight is that the exact quadratic collision surplus and the linear excess above the ordered Cauchy\u2013Davenport floor constrain two different moments of the representation distribution.\n\n**Why now?** The two exact identities are available simultaneously, making it possible to seek a stability argument that combines support size with fiber multiplicity rather than relying on cardinality alone.\n\n## 2. Quotient-sensitive `3k-3` inverse theorem\n\n**Conjecture.** If a finite nonempty set `S` in a right-ordered group is covered by `r` cosets of a normal subgroup `H` and satisfies `|S\u00b2| = 3|S| - 3`, then the image of `S` in `G/H` is contained in a geometric progression of length at most `2r-1`; equality forces uniform intersection sizes across the occupied cosets.\n\nThe key insight is that normal product covering confines `S\u00b2` to at most `r\u00b2` quotient cells, while the collision identity measures how representations concentrate inside those cells.\n\n**Why now?** Product support and representation mass can now be tracked in the same statement, supplying the two inputs needed for a quotient-level inverse theorem.\n\n## 3. Baumslag\u2013Solitar normal-form classification\n\n**Conjecture.** For every integer `q \u2260 -1`, a finite nonempty subset `S \u2282 BS(1,q)` with minimum equal to the identity and `|S\u00b2| = 3|S| - 3` admits a unique description, up to the evident normal-form symmetries, as a union of at most three affine fibers in `\u2124[1/q] \u22ca \u2124`, each fiber being an arithmetic progression whose common differences are related by multiplication by `q`.\n\nThe key insight is that conjugation in `BS(1,q)` rescales the abelian normal subgroup, so multiplicative collisions become affine additive-energy constraints between fibers at different heights.\n\n**Why now?** The representation-surplus formulation identifies precisely which cross-height affine equations must account for the threshold, while normal-coset covering organizes those equations by height.\n\n## 4. Entropy rigidity of the representation distribution\n\n**Conjecture.** Among right-ordered-group sets of fixed cardinality `k` satisfying `|S\u00b2| = 3k-3`, the Shannon entropy of the normalized representation function is maximized by a rank-one progression model and minimized by a bounded-height metabelian model; both extremizers are unique up to Freiman isomorphism.\n\nThe key insight is that the support has fixed size and the total mass is fixed at `k\u00b2`, so structural information may be extracted from how the exact collision surplus is distributed rather than merely from its total.\n\n**Why now?** The fiberwise conservation law gives a canonical probability distribution on `S\u00b2`, opening a quantitative bridge between inverse product-set theory and information-theoretic rigidity.\n\n## 5. Hecke-weighted small-doubling principle\n\n**Conjecture.** For a finite subset covered by cosets of a nonnormal subgroup, the `3k-3` condition forces a sharp upper bound on the average Hecke multiplicity of the occupied double cosets; equality characterizes sets supported on a single commensurator orbit.\n\nThe key insight is that normal covers correspond to Hecke multiplicity one, suggesting that the correct nonnormal replacement weights quotient cells by conjugation indices rather than counting them uniformly.\n\n**Why now?** The normal-cover theorem provides the multiplicity-one base case, and the exact collision surplus supplies the mass constraint needed to formulate a weighted extension.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0524",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "c1b3f8da",
-    "status": "available",
-    "timestamp": "2026-07-20T02:08:15.605912+00:00",
-    "title": "**Conjecture.** Let `S` be a finite nonempty subset of a right-ordered group. If"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future directions\n\n## Scope achieved\n\n`HamiltonCoverLinearArboricityBridge.lean` formalizes a deterministic connector underlying the paper's probabilistic results. A cover by two-regular layers is interpreted as a constant-weight incidence code at each vertex, yielding the sharp local lower bound\n\n\\[\n\\left\\lceil \\deg(v)/2\\right\\rceil \\le |I|.\n\\]\n\nThe same family can be punctured by deleting one selected edge from each layer; the punctured layers still cover every target edge outside the selected transversal. When the layers are Hamilton cycles, each punctured layer is a Hamilton path, hence a linear forest. This connects Hamilton-cover counting, coding-theoretic Hamming weight, and linear arboricity.\n\n## Natural extensions\n\n1. **Graph-specialized interface.** Instantiate the abstract edge/incidence formulation with `SimpleGraph.edgeFinset` and Mathlib's walk/path API. Prove formally that deleting an edge from a Hamilton cycle produces a spanning path.\n2. **Linear arboricity corollary.** Package finite families of pairwise edge-disjoint linear forests as a linear-arboricity witness. The present puncturing theorem is a cover statement; obtaining a partition requires assigning multiply covered edges to one layer and proving that taking subgraphs preserves linear-forest structure.\n3. **Maximum-degree formulation.** For finite vertex sets, maximize `incidenceDegree` over vertices and derive `\u2308\u0394/2\u2309 \u2264 |I|` directly from the vertexwise theorem.\n4. **Odd-degree refinement.** Track endpoint parity after puncturing. A path contributes odd degree exactly at its endpoints, which links Hamilton-path decompositions to parity constraints and can sharpen lower bounds.\n5. **Random graph layer.** Define the binomial random graph measure and a measurable event asserting existence of an optimal Hamilton cover. Formalizing the paper's high-probability theorem would then require substantial pseudorandom-expansion and Hamilton-extension infrastructure not developed here.\n6. **Hitting-time layer.** Formalize the random graph process and stopping times for minimum degree two and optimal Hamilton cover. This would expose the deterministic extension lemmas as reusable interfaces between the process and graph structure.\n7. **Constructive extraction.** Replace existential cover witnesses by algorithms that construct forest systems and extend them using reserved edges, then prove their correctness and complexity.\n\n## Computational evidence\n\nNo separate computational-evidence artifact is included because the connector is a symbolic theorem about arbitrary finite types and arbitrary cover data, rather than a numerical conjecture. Its complete kernel-checked proof subsumes finite-instance testing; no OEIS sequence or empirical probability estimate is asserted.\n",
-    "domains": [
-      "Computation",
-      "Algebra"
-    ],
-    "id": "fd_0527",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "d4bc25af",
-    "status": "available",
-    "timestamp": "2026-07-20T03:02:02.254765+00:00",
-    "title": "`HamiltonCoverLinearArboricityBridge.lean` formalizes a deterministic connector "
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Cycle d1663b23 (Q=0.700) proved 0 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'A minimal modularity lifting theorem for Siegel modular forms' and formalize its key results. Abstract: We prove a minimal modularity lifting theorem (in the spirit of Gen",
     "domains": [
       "Applications"
@@ -5546,20 +5191,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Cycle 0cd9c194 (Q=0.690) proved 5 theorems in Combinatorics but left 13 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conjecture that major theorems (G\u00f6del's incompleteness, Fermat's Last Theorem, ABC conjecture) correspond to phase transitions in proof space. Define an order parameter: the ratio of provable to unpro",
-    "domains": [
-      "Combinatorics"
-    ],
-    "id": "sorry_fill_0cd9c194_df8311be",
-    "priority_score": 0.74,
-    "research_mode": "team",
-    "source_exp_id": "0cd9c194",
-    "status": "available",
-    "timestamp": "2026-07-20T01:50:29.206474+00:00",
-    "title": "Close Proofs: Speculative: Theorems as Phase Transitions in Proof Space"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Cycle 186c9eac (Q=0.680) proved 0 theorems in Shared but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: There are mathematical objects whose existence we can prove but whose specific properties are unknowable \u2014 theorems that cast shadows without being visible. Define a dark theorem as a statement T such",
     "domains": [
       "Shared"
@@ -5571,62 +5202,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-17T14:03:03.735341+00:00",
     "title": "Close Proofs: Dark Mathematics: Theorems That Exist But Cannot Be Found"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Cycle 671e7568 (Q=0.670) proved 25 theorems in Applications but left 13 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Prove that adding an oracle for the halting problem to PA yields a theory that proves its own consistency but cannot decide its own soundness. Formalize the hierarchy: PA < PA^H < PA^{H^H} < ... and p",
-    "domains": [
-      "Applications"
-    ],
-    "id": "sorry_fill_671e7568_6e8366b8",
-    "priority_score": 0.7200000000000001,
-    "research_mode": "team",
-    "source_exp_id": "671e7568",
-    "status": "available",
-    "timestamp": "2026-07-19T23:13:43.623458+00:00",
-    "title": "Close Proofs: The Oracle's Burden: How Much Knowledge Is Too Much?"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Cycle 8797684d (Q=0.670) proved 20 theorems in MachineLearning but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Model mathematical theories as species in an ecosystem. Define a fitness function: f(theory) = (number of connections to other theories) * (proof density) / (axiom count). Conjecture: theories evolve ",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "sorry_fill_8797684d_26f0c260",
-    "priority_score": 0.7200000000000001,
-    "research_mode": "team",
-    "source_exp_id": "8797684d",
-    "status": "available",
-    "timestamp": "2026-07-20T02:08:03.703672+00:00",
-    "title": "Close Proofs: Speculative: Mathematics as an Evolving Ecosystem"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Cycle 93551ae8 (Q=0.650) proved 10 theorems in Applications but left 13 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'On strongly regular signed graphs of higher girth' and formalize its key results. Abstract: Strongly regular signed graphs are an extension of strongly regular graphs to t",
-    "domains": [
-      "Applications"
-    ],
-    "id": "sorry_fill_93551ae8_f94fb9ff",
-    "priority_score": 0.7000000000000001,
-    "research_mode": "team",
-    "source_exp_id": "93551ae8",
-    "status": "available",
-    "timestamp": "2026-07-19T22:02:46.082726+00:00",
-    "title": "Close Proofs: ArXiv paper: On strongly regular signed graphs of higher girth"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Cycle d4bc25af (Q=0.650) proved 9 theorems in Logic but left 13 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'Efficient Hamilton covers and linear arboricity of random graphs' and formalize its key results. Abstract: A Hamilton cover of a graph is a collection of Hamilton cycles w",
-    "domains": [
-      "Logic"
-    ],
-    "id": "sorry_fill_d4bc25af_73718ebb",
-    "priority_score": 0.7000000000000001,
-    "research_mode": "team",
-    "source_exp_id": "d4bc25af",
-    "status": "available",
-    "timestamp": "2026-07-20T03:02:07.517169+00:00",
-    "title": "Close Proofs: ArXiv paper: Efficient Hamilton covers and linear arboricity of random"
   },
   {
     "consumed_by_exp_id": "",

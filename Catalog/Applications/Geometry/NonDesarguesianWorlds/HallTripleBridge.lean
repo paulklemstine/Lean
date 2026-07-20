@@ -1,5 +1,5 @@
-import Geometry.NonDesarguesianPlanes
-import Bridges.FiniteFieldBridge
+import Catalog.Geometry.NonDesarguesianPlanes
+import Catalog.Bridges.FiniteFieldBridge
 
 /-!
 # Hall Triple Structures from the Order-Nine Hall Multiplication
@@ -51,83 +51,119 @@ namespace NonDesarguesianWorlds
 /-- The third-point operation attached to an additive Steiner triple geometry. -/
 def steinerThird {A : Type*} [AddCommGroup A] (x y : A) : A := -(x + y)
 
-/-- Completion is symmetric in its two given points. -/
+/-
+Completion is symmetric in its two given points.
+-/
 theorem steinerThird_comm {A : Type*} [AddCommGroup A] (x y : A) :
     steinerThird x y = steinerThird y x := by
-  sorry
+  unfold steinerThird; rw [ add_comm ] ;
 
-/-- In an exponent-three group, completing twice recovers the omitted point. -/
-theorem steinerThird_left_involutive {A : Type*} [AddCommGroup A]
-    (hexp : ∀ t : A, t + t + t = 0) (x y : A) :
+/-
+Completing twice with the same first point recovers the omitted point.
+-/
+theorem steinerThird_left_involutive {A : Type*} [AddCommGroup A] (x y : A) :
     steinerThird x (steinerThird x y) = y := by
-  sorry
+  simp [steinerThird]
 
-/-- Distinct points have a third point distinct from the first. -/
+/-
+Distinct points have a third point distinct from the first.
+-/
 theorem steinerThird_ne_left {A : Type*} [AddCommGroup A]
     (hexp : ∀ t : A, t + t + t = 0) {x y : A} (hxy : x ≠ y) :
     steinerThird x y ≠ x := by
-  sorry
+  intro h
+  have := steinerThird_left_involutive x y
+  simp_all +decide [ steinerThird ];
+  grind +suggestions
 
-/-- Translation preserves additive Steiner triples in exponent three. -/
+/-
+Translation preserves additive Steiner triples in exponent three.
+-/
 theorem steinerThird_translate {A : Type*} [AddCommGroup A]
     (hexp : ∀ t : A, t + t + t = 0) (x y t : A) :
     steinerThird (x + t) (y + t) = steinerThird x y + t := by
-  sorry
+  have h_inv : -(x + t + (y + t)) = -(x + y) + t := by
+    have h_inv : -(x + t + (y + t)) = -(x + y) - 2 • t := by
+      abel_nf
+    have h_inv' : -(x + y) - 2 • t = -(x + y) + t := by
+      simp +decide [ two_smul, sub_eq_add_neg ];
+      grind
+    rw [h_inv, h_inv'];
+  exact h_inv
 
-/-- Any zero-preserving additive map preserves third-point completion. -/
+/-
+Any zero-preserving additive map preserves third-point completion.
+-/
 theorem additive_map_preserves_steinerThird
     {A B : Type*} [AddCommGroup A] [AddCommGroup B]
     (f : A → B) (hzero : f 0 = 0) (hadd : ∀ x y, f (x + y) = f x + f y)
     (x y : A) :
     f (steinerThird x y) = steinerThird (f x) (f y) := by
-  sorry
+  unfold steinerThird;
+  have h_neg : f (-(x + y)) = -f (x + y) := by
+    exact eq_neg_of_add_eq_zero_left ( by rw [ ← hadd, neg_add_cancel, hzero ] );
+  rw [ h_neg, hadd ]
 
 abbrev HallPoint := ZMod 3 × ZMod 3
 
-/-- The additive group of the Hall coordinates has exponent three. -/
+/-
+The additive group of the Hall coordinates has exponent three.
+-/
 theorem hallPoint_exponent_three (x : HallPoint) : x + x + x = 0 := by
-  sorry
+  native_decide +revert
 
-/-- Every pair has a unique additive Steiner completion. -/
+/-
+Every pair has a unique additive Steiner completion.
+-/
 theorem hall_triple_unique_completion (x y : HallPoint) :
     ∃! z : HallPoint, z = steinerThird x y := by
-  sorry
+  exact ⟨ _, rfl, fun z hz => hz.symm ▸ rfl ⟩
 
-/-- For distinct Hall points, all three entries of the completed triple are distinct. -/
+/-
+For distinct Hall points, all three entries of the completed triple are distinct.
+-/
 theorem hall_triple_pairwise_distinct {x y : HallPoint} (hxy : x ≠ y) :
     x ≠ steinerThird x y ∧ y ≠ steinerThird x y := by
-  sorry
+  decide +revert
 
-/-- Right multiplication in the Hall algebra preserves additive Steiner triples. -/
+/-
+Right multiplication in the Hall algebra preserves additive Steiner triples.
+-/
 theorem hallMul_preserves_steinerThird (x y c : HallPoint) :
     hallMul (steinerThird x y) c =
       steinerThird (hallMul x c) (hallMul y c) := by
-  sorry
+  decide +revert
 
 /-- The set of elements associating on the left under Hall multiplication. -/
 def HallLeftNucleus : Set HallPoint :=
   {a | ∀ b c, hallMul a (hallMul b c) = hallMul (hallMul a b) c}
 
-/-- The Hall left nucleus is proper; this packages the associativity defect as a
-geometrically meaningful distinguished subset of the coordinate algebra. -/
+/-
+The Hall left nucleus is proper; this packages the associativity defect as a
+geometrically meaningful distinguished subset of the coordinate algebra.
+-/
 theorem hallLeftNucleus_proper : HallLeftNucleus ≠ Set.univ := by
-  sorry
+  simp +decide [ Set.ext_iff, HallLeftNucleus ]
 
-/-- The valid Hall-family comparison combines strict symmetry loss with a
-polynomial lower bound on the ratio to the projective-linear benchmark. -/
+/-
+The valid Hall-family comparison combines strict symmetry loss with a
+polynomial lower bound on the ratio to the projective-linear benchmark.
+-/
 theorem hall_symmetry_gap (q : ℕ) (hq : 3 ≤ q) :
     hallCollineationOrder q < pglOrder (q ^ 2) ∧
       q ^ 4 ≤ pglOrder (q ^ 2) / (hallCollineationOrder q + 1) := by
-  sorry
+  exact ⟨ hall_collineation_lt_pgl q hq, symmetry_ratio_growth q hq ⟩
 
-/-- The order-nine Hall algebra exhibits both sides of the bridge: every right
+/-
+The order-nine Hall algebra exhibits both sides of the bridge: every right
 multiplication preserves the additive triple completion, while its associativity
-nucleus is a proper subset. -/
+nucleus is a proper subset.
+-/
 theorem hall_triple_nonassociative_bridge :
     (∀ x y c : HallPoint,
       hallMul (steinerThird x y) c =
         steinerThird (hallMul x c) (hallMul y c)) ∧
     HallLeftNucleus ≠ Set.univ := by
-  sorry
+  exact ⟨ fun x y c => hallMul_preserves_steinerThird x y c, hallLeftNucleus_proper ⟩
 
 end NonDesarguesianWorlds
