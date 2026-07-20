@@ -53,8 +53,8 @@ and homological results in `FINAL.Topology` and `FINAL.Homology`; nothing depend
 the classification theorem itself.
 -/
 import Mathlib
-import Catalog.Novelty.Topology
-import Catalog.Novelty.Homology
+import FINAL.Topology
+import FINAL.Homology
 
 open scoped ContinuousMap unitInterval
 open Metric CategoryTheory
