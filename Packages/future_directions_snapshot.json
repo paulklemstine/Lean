@@ -289,26 +289,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "0cd9c194",
-    "description": "Conjecture that major theorems (Gödel's incompleteness, Fermat's Last Theorem, ABC conjecture) correspond to phase transitions in proof space. Define an order parameter: the ratio of provable to unprovable statements of length ≤ n. Prove that this ratio undergoes a sharp transition at some critical n_c (the Gödel threshold). Predict: the distribution of theorem lengths follows a power law with exponent related to the Hausdorff dimension of proof space.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0509",
-    "lineage_refs": [],
-    "priority_score": 0.85,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T23:48:18.325000+00:00",
-    "title": "Speculative: Theorems as Phase Transitions in Proof Space"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle 717f7483 (Q=0.750), which proved 19 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Godel's incompleteness theorem says there are true statements that cannot be proved. But what if we turn incompleteness into a GAME? Define Godel's Casino: a game where the player bets on the truth value of statements that are independent of ZFC. The house deals cards representing arithmetic stateme",
     "domain_bridges": [],
@@ -385,7 +365,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e3542946",
     "description": "Conjecture that P != NP has a physical interpretation: the universe's computational capacity is bounded by the polynomial hierarchy. Formalize this: any physical process that runs in polynomial time can be simulated by a polynomial-time Turing machine (Extended Church-Turing thesis). Show that if P = NP, then the second law of thermodynamics would be violated because Maxwell's demon could be implemented efficiently.",
     "domain_bridges": [],
     "domains": [
@@ -398,7 +378,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T22:56:07.280279+00:00",
     "title": "Speculative: Computational Complexity as Physical Law"
   },
@@ -421,26 +401,6 @@
     "status": "available",
     "timestamp": "2026-07-20T00:40:37.672107+00:00",
     "title": "Speculative: Number Theory as Music Theory"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "e3086657",
-    "description": "Construct a single algebraic object whose projections give S^0, S^1, S^2, ... simultaneously. Prove it exists as an inverse limit in the category of spheres. Show that its homology groups encode the Bernoulli numbers and that its cohomology ring is the polynomial ring on Stiefel-Whitney classes.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0493",
-    "lineage_refs": [],
-    "priority_score": 0.83,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T21:02:26.975866+00:00",
-    "title": "The Mega-Sphere: All Dimensions at Once"
   },
   {
     "ambition_level": "extension",
@@ -484,7 +444,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d14aad94",
     "description": "Every proof has a thermodynamic cost proportional to its Kolmogorov complexity. Define: cost(π) = K(π) * T * ln(2), where K is Kolmogorov complexity and T is temperature. Prove: shorter proofs have lower cost. Conjecture: there exist statements whose shortest proof has cost exceeding any computable bound (proof-theoretic analog of Chaitin's theorem). Show: the average cost of proving a random true statement of length n is Θ(2^n).",
     "domain_bridges": [],
     "domains": [
@@ -497,7 +457,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-20T00:58:06.284653+00:00",
     "title": "Speculative: Proof Complexity and Thermodynamic Cost"
   },
@@ -7391,6 +7351,46 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## 1. Profinite Boolean sphere and Cantor geometry\n\n**Conjecture.** Equip each finite Boolean stage with the discrete topology and the coherent limit with the inverse-limit topology. The resulting compact topological group is homeomorphic to Cantor space, and every continuous map from it to a finite discrete space factors through a finite-stage projection.\n\nThe key insight is that coherence converts finite coordinate deletion into the cylinder-set basis of a profinite topology.\n\n**Why now?** The algebraic equivalence with the countable Boolean product identifies the underlying points and isolates continuity and finite factorization as the next testable layer.\n\n## 2. Completed characteristic-class algebra\n\n**Conjecture.** The completion of the polynomial Stiefel–Whitney model along its positive-degree ideal is canonically the formal power-series ring, and this completion is the inverse limit of the finite truncations `𝔽₂[w]/(w^(n+1))` as a topological ring.\n\nThe key insight is that the same coordinate-by-coordinate reconstruction used for Boolean stages should lift from additive products to compatible truncated polynomials.\n\n**Why now?** Nonvanishing in every polynomial degree and invertibility of the total class after completion are already established, leaving the universal topological-ring identification as a precise bridge.\n\n## 3. Bernoulli coefficients from compatible truncations\n\n**Conjecture.** The Bernoulli power series is uniquely determined by its compatible finite truncations together with the equation `B(X)(exp(X)-1)=X`; at every truncation level, the next coefficient is forced by the preceding coefficients.\n\nThe key insight is that the generating identity is triangular in degree, so inverse-limit compatibility should turn the Bernoulli recurrence into a uniqueness theorem for a coherent tower.\n\n**Why now?** The full generating identity is available, while the inverse-limit reconstruction theorem supplies the structural language needed to separate existence, compatibility, and uniqueness.\n\n## 4. Surjective towers and derived obstruction groups\n\n**Conjecture.** For towers of finite modules with surjective bonding maps, degreewise inverse limits preserve short exact sequences; when surjectivity is removed, the failure is measured by an explicit first derived-limit obstruction.\n\nThe key insight is that finite-stage lifting recursively builds coherent representatives, whereas non-surjective maps can trap incompatible residues that survive only as obstruction classes.\n\n**Why now?** The coordinate tower gives a transparent positive model, while known collapsing towers provide concrete negative controls against which an obstruction theory can be tested.\n\n## 5. A guarded all-spheres construction\n\n**Conjecture.** After choosing explicit suspension-loop adjunction data, a spectrum-level object can encode the stable homotopy information of all spheres through structure maps, but no analogous canonical inverse tower of the unstable spaces `S^n` exists without additional choices.\n\nThe key insight is that “all dimensions at once” is naturally stable and spectrum-valued rather than an unqualified inverse limit of changing-dimensional spaces.\n\n**Why now?** The Boolean coordinate model demonstrates exactly which bonding data make an inverse-limit claim meaningful, providing a rigorous diagnostic for the stronger topological proposal.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0518",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "e3086657",
+    "status": "available",
+    "timestamp": "2026-07-20T01:50:14.412994+00:00",
+    "title": "**Conjecture.** Equip each finite Boolean stage with the discrete topology and t"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Threshold Geometry of Deductive Languages\n\n## 1. Natural monotonicity after renormalization\n\n**Conjecture.** For every finitely presented, sound deductive system with a prefix-free syntax, there is a canonical exponential renormalization of cumulative theorem counts whose derivability density is eventually antitone.\n\nThe key insight is that raw cumulative density can oscillate when new syntactic forms appear, whereas normalization by the ambient entropy may isolate a stable scarcity law. **Why now?** The exact critical-index theorem shows that eventual antitonicity is precisely the missing structural input needed to turn asymptotic sparsity into finite, testable thresholds.\n\n## 2. Universal finite-size scaling window\n\n**Conjecture.** In recursively generated families of deductive systems whose derivation grammars have a common strongly connected dependency graph, the rescaled density profile near its critical index converges to a universal sigmoid determined only by the dominant and subdominant growth rates.\n\nThe key insight is that Perron–Frobenius spectral gaps should control not only exponential counting but also the width of a threshold window. **Why now?** The entropy-density limit identifies the two dominant rates, while the finite crossing law provides a canonical center around which a scaling window can be measured.\n\n## 3. Dimension deficit controls threshold displacement\n\n**Conjecture.** Let `log k` be ambient entropy and `log a` the exponential growth rate of derivable statements. Across a regular family of systems, the critical length at level `ε` is asymptotic to `log(C/ε) / (log k - log a)`, with a bounded correction characterized by periodicities of the syntax automaton.\n\nThe key insight is that the difference of the two dimensions, rather than either dimension alone, governs how rapidly derivability density collapses. **Why now?** The verified joint limit gives the dimension deficit a direct observable meaning, and the least-crossing construction turns the proposed asymptotic into a concrete integer-valued prediction.\n\n## 4. Heavy tails require mixtures of proof entropies\n\n**Conjecture.** A genuine power-law theorem-length distribution cannot arise from a single finite-state grammar with one fixed entropy rate, but can arise from a scale mixture of geometric length laws whose entropy parameter has regularly varying mass near zero.\n\nThe key insight is that a fixed entropy produces a constant successive ratio and hence exponential decay; heavy tails require heterogeneity across proof regimes. **Why now?** The exact successor-ratio identity rules out the simplest power-law interpretation and points to entropy mixtures as a falsifiable replacement.\n\n## 5. Independence onset versus density threshold\n\n**Conjecture.** For arithmetically adequate, sound systems equipped with a fixed encoding, the shortest independent sentence and the first fixed-level density crossing need not coincide, but their separation is bounded in systems whose self-reference operator has uniformly bounded description overhead.\n\nThe key insight is that logical independence is a local witness while density collapse is a global counting event; bounded self-reference overhead may nevertheless couple their scales. **Why now?** The present threshold theory cleanly distinguishes local crossing assumptions from global incompleteness claims, making the proposed bounded-separation principle precise enough to test on explicit syntactic families.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Logic",
+      "Pythagorean"
+    ],
+    "id": "fd_0519",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "0cd9c194",
+    "status": "available",
+    "timestamp": "2026-07-20T01:50:24.672837+00:00",
+    "title": "**Conjecture.** For every finitely presented, sound deductive system with a pref"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Cycle d1663b23 (Q=0.700) proved 0 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'A minimal modularity lifting theorem for Siegel modular forms' and formalize its key results. Abstract: We prove a minimal modularity lifting theorem (in the spirit of Gen",
     "domain_bridges": [],
     "domains": [
@@ -7405,6 +7405,25 @@
     "status": "available",
     "timestamp": "2026-07-17T13:29:16.297936+00:00",
     "title": "Close Proofs: ArXiv paper: A minimal modularity lifting theorem for Siegel modular f"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Cycle 0cd9c194 (Q=0.690) proved 5 theorems in Combinatorics but left 13 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conjecture that major theorems (Gödel's incompleteness, Fermat's Last Theorem, ABC conjecture) correspond to phase transitions in proof space. Define an order parameter: the ratio of provable to unpro",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "sorry_fill_0cd9c194_df8311be",
+    "lineage_refs": [],
+    "priority_score": 0.74,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "0cd9c194",
+    "status": "available",
+    "timestamp": "2026-07-20T01:50:29.206474+00:00",
+    "title": "Close Proofs: Speculative: Theorems as Phase Transitions in Proof Space"
   },
   {
     "ambition_level": "extension",

@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "58c6edf0",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions for Stable Kneser Graphs\n\n## 1. Full Meunier equality for odd stability\n\n**Conjecture.** For all integers `s ≥ 3`, `k ≥ 1`, and `n ≥ sk`, the Kneser graph on cyclically `s`-stable",
-      "quality_score": 0.73,
-      "sorry_count": 4,
-      "theorem_count": 43,
-      "timestamp": "2026-07-16T05:48:35",
-      "title": "ArXiv paper: The chromatic number of 3-stable Kneser graphs"
-    },
-    {
       "cycle_id": "4e53cd7c",
       "domain": "Pythagorean",
       "key_insight": "# Future Directions: Moment Thresholds for Random Bipartite States\n\n## 1. Exact fixed-level induced-state threshold\n\nFor every fixed hierarchy level `m ≥ 2`, there is a unique constant `λ_m > 0` such",
@@ -2501,6 +2491,16 @@
       "theorem_count": 12,
       "timestamp": "2026-07-20T01:50:18",
       "title": "The Mega-Sphere: All Dimensions at Once"
+    },
+    {
+      "cycle_id": "0cd9c194",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions: Threshold Geometry of Deductive Languages\n\n## 1. Natural monotonicity after renormalization\n\n**Conjecture.** For every finitely presented, sound deductive system with a prefix-fre",
+      "quality_score": 0.69,
+      "sorry_count": 13,
+      "theorem_count": 5,
+      "timestamp": "2026-07-20T01:50:29",
+      "title": "Speculative: Theorems as Phase Transitions in Proof Space"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-20T01:50:18",
+  "last_updated": "2026-07-20T01:50:29",
   "open_questions": [
-    {
-      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "cf605784",
-      "domain": "NumberTheory",
-      "sorry_count": 4,
-      "timestamp": "2026-07-15T08:21:46"
-    },
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "5dadc373",
@@ -3016,6 +3009,13 @@
       "domain": "Algebra",
       "sorry_count": 13,
       "timestamp": "2026-07-20T00:41:04"
+    },
+    {
+      "context": "-  sorry; -  sorry; -  sorry",
+      "cycle_id": "0cd9c194",
+      "domain": "Combinatorics",
+      "sorry_count": 13,
+      "timestamp": "2026-07-20T01:50:29"
     }
   ],
   "research_threads": {
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "5543d24b",
-        "quality": 0.64,
-        "theorems": 24,
-        "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
-      },
-      {
         "cycle_id": "3c755fa4",
         "quality": 0.73,
         "theorems": 10,
@@ -3265,6 +3259,12 @@
         "quality": 0.71,
         "theorems": 0,
         "title": "Information-Theoretic Limits of Proof Search: How Hard Is It to Find a Lean Proo"
+      },
+      {
+        "cycle_id": "0cd9c194",
+        "quality": 0.69,
+        "theorems": 5,
+        "title": "Speculative: Theorems as Phase Transitions in Proof Space"
       }
     ],
     "Computation": [
