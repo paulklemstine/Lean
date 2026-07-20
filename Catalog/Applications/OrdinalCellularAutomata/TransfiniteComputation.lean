@@ -119,11 +119,19 @@ theorem no_predicate_enumeration (enumerate : ℕ → (ℕ → Bool)) :
       by_contra! h_surj;
       exact h_surj ( fun n => if enumerate n n = Bool.true then Bool.false else Bool.true ) |> fun ⟨ k, hk ⟩ => by have := congr_fun hk k; by_cases h : enumerate k k <;> simp +decide [ h ] at this;
 
-/-- Consequently the space of transfinite Rule 110 histories is not enumerable:
-every Boolean predicate occurs as the boundary trace of one such history. -/
+/-
+Consequently the space of transfinite Rule 110 histories is not enumerable:
+every Boolean predicate occurs as the boundary trace of one such history.
+-/
 theorem no_history_enumeration (initial : Tape)
     (enumerate : ℕ → (ℕ → ℕ → Tape)) :
-    ¬ Function.Surjective enumerate := by sorry
+    ¬ Function.Surjective enumerate := by
+      intro h_surj;
+      -- Compose every enumerated history with boundaryTrace to enumerate all predicates.
+      have h_composed : Function.Surjective (fun k => boundaryTrace (enumerate k)) := by
+        intro P;
+        obtain ⟨ k, hk ⟩ := h_surj ( scheduledOmegaRun P initial ) ; use k; aesop;
+      exact no_predicate_enumeration _ h_composed
 
 /-
 Concrete successor example: the all-zero tape is fixed by Rule 110.
