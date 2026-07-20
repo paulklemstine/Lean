@@ -3110,11 +3110,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Cycle lengths and chords under chromatic and degree constraints' and formalize its key results. Abstract: We mainly consider three problems on cycle lengths and cycles with chords in graphs: (a) Gao, Huo, and Ma \\cite[Question~1.5]{GaoHuoMa2021} asked whether, for every fixed $k\\ge3$, there is a function $f_k(n)\\to\\infty$ such that every $n$-vertex $(k+1)$-critical graph contains $f_k(n)$ consecutive cycle lengths. (b) Let $g_k(n)$ be the maximum integer $t$ such that every $n$-vertex $k$-critical graph with $k\\ge4$ contains an odd cycle with at least $t$ chords. Voss conjectured (see \\cite[pp.~168]{VossBook}) that $g_k(n)\\to\\infty$ as $n\\to\\infty$ for each $k\\ge4$, which extends a 1976 conjecture of Erd\u0151s (see also Erd\u0151s Problem~1091 \\cite{Bloom1091}). (c) K\u00e1ra and Kr\u00e1l \\cite{KaraKral2003} conjectured that every graph on $31$ vertices with minimum degree at least $8$ contains a cycle with at least $31$ chords. We answer question (a) in the negative for $k=3$, and disprove conjecture (b) for all $k\\ge5$. We point out the work of Alexeev-Putterman-Sawhney-Sellke-Valiant (2026) on Erd\u0151s Prob",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0498",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.15501v1",
+    "status": "available",
+    "timestamp": "2026-07-20T04:07:05.637385+00:00",
+    "title": "ArXiv paper: Cycle lengths and chords under chromatic and degree constraints"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'On Generalized von Neumann Inverse Graphs of Finite Commutative Regular Rings' and formalize its key results. Abstract: Let $R$ be a ring with identity. The generalized von Neumann inverse graph of $R$, denoted by $\u0393_{Reg}(R)$, is defined as the graph whose vertex set is $Reg(R)$, where two distinct vertices $a,b \\in R$ are adjacent if and only if $aba=a$ or $bab=b$. In this work, we consider the reduced graph $\u0393'_{Reg}(R)$ obtained by restricting the vertex set to $Reg(R)\\setminus{0_R}$, so that $\u0393_{Reg}(R) \\cong K_1 + \u0393'_{Reg}(R)$, allowing the analysis to focus on its nontrivial structure. We investigate the structure of $\u0393'_{Reg}(R)$ for finite commutative von Neumann regular rings and establish several results describing its graph-theoretic properties in relation to the algebraic structure of $R$. In particular, we derive conditions that characterize connectivity, acyclicity, and planarity, and examine structural features such as vertex degrees, girth, and the existence of pendant vertices, along with their algebraic implications. We also identify circumstances under which $\u0393'_{Reg}(R)$ exhibits sp",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0498",
+    "id": "fd_0499",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.15568v1",
@@ -3129,7 +3143,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0499",
+    "id": "fd_0500",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.15522v1",
@@ -3144,13 +3158,28 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Cryptography"
     ],
-    "id": "fd_0500",
+    "id": "fd_0501",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.15503v1",
     "status": "available",
     "timestamp": "2026-07-20T03:51:29.578870+00:00",
     "title": "ArXiv paper: Lattice slices, Ehrhart polynomials, and magic positivity of generalized parking-function polytopes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Hitting all maximal independent sets in $c$-hollow graphs' and formalize its key results. Abstract: Fix a constant $c$ with $0<c<1$. We say a graph $G$ on $n$ vertices is $c$-hollow if every maximal independent set of $G$ has size at least $cn$. Denote by $\u03c4(G)$ the size of a smallest set of vertices $T\\subseteq V(G)$ such that every maximal independent set in $G$ intersects $T$, i.e., $T$ is a transversal for the family of maximal independent sets. In 1991, Bollob\u00e1s, Erd\u0151s, and Tuza conjectured that if $G$ is $c$-hollow, then $\u03c4(G)=o(n)$. Using a random construction, we show there exist $c$-hollow graphs with $\u03c4(G)=\u03a9\\left(\\frac{n^{1/3}}{\\log n }\\right)$, establishing the first nontrivial lower bound constraining the conjecture and complementing a closely related lower bound due to Alon for maximum independent sets. We also show the conjecture holds in a strong form for the class of cographs and split graphs.",
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_0502",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.15486v1",
+    "status": "available",
+    "timestamp": "2026-07-20T04:07:09.129499+00:00",
+    "title": "ArXiv paper: Hitting all maximal independent sets in $c$-hollow graphs"
   },
   {
     "consumed_by_exp_id": "",
