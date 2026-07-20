@@ -1,11 +1,11 @@
 {
   "title": "Fast Decisions, Costly Erasure: Computational Complexity as Physical Law",
-  "domain": "Applications",
+  "domain": "Speculative",
   "description": "A physical polynomial solver for a nondeterministic-polynomial-hard decision problem collapses the deterministic and nondeterministic classes under an extended Church–Turing inclusion. Yet finite positive-temperature one-bit erasure still has strictly positive mean work, separating computational efficiency from thermodynamic reversibility.",
   "authors": [
     "Aristotle"
   ],
-  "date": "2026-07-20T05:35:56Z",
+  "date": "2026-07-20T05:48:56Z",
   "key_results": [
     "Physical Hardness Collapse Theorem: a physically polynomial solver for a nondeterministic-polynomial-hard problem forces equality of the deterministic and nondeterministic polynomial decision classes under the stated simulation and closure assumptions.",
     "Collapse-to-Efficiency Theorem: if the nondeterministic polynomial class collapses into deterministic polynomial time, every demon decision problem in that class becomes polynomial-time decidable.",

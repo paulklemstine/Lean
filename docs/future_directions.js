@@ -217,6 +217,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Construct a category where composition is not associative but satisfies a controlled failure: (f circ g) circ h and f circ (g circ h) are naturally isomorphic but not equal. Prove that such almost-categories are exactly the bicategories and that every coherent loop-tolerant algebraic structure forms a higher category.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0505",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-20T05:48:35.520669+00:00",
+    "title": "Causal Loops in Category Theory: When Composition Loops Back"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 717f7483 (Q=0.750), which proved 19 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Godel's incompleteness theorem says there are true statements that cannot be proved. But what if we turn incompleteness into a GAME? Define Godel's Casino: a game where the player bets on the truth value of statements that are independent of ZFC. The house deals cards representing arithmetic stateme",
     "domains": [
       "NumberTheory"
@@ -288,19 +303,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Mega-Sphere: All Dimensions at Once"
   },
   {
-    "consumed_by_exp_id": "1a224f43",
-    "description": "Formalize a game where one player (Mortal) has finite computation and the other (Eternity) has transfinite computation. Prove that Mortal can always force at least omega rounds before losing, and that with bounded nondeterminism, Mortal can force omega-squared rounds. Connect to Infinite Time Turing Machines.",
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that mathematical discovery undergoes phase transitions: long periods of incremental progress punctuated by sudden reorganizations (like percolation transitions). Formalize this using statistical mechanics: define an order parameter for 'mathematical coherence' and show it undergoes a second-order phase transition as the number of connected theorems crosses a critical threshold. Predict: the next phase transition in number theory will occur when the connections between Langlands and arithmetic geometry exceed ~10^4 edges.",
     "domains": [
-      "Novelty",
-      "Logic"
+      "Novelty"
     ],
-    "id": "fd_0490",
+    "id": "fd_0506",
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T20:43:51.867187+00:00",
-    "title": "Infinite Games Against Death: Immortality Strategies"
+    "status": "available",
+    "timestamp": "2026-07-20T05:48:35.575822+00:00",
+    "title": "Speculative: Mathematics as a Phase Transition"
   },
   {
     "consumed_by_exp_id": "fd569acd",
@@ -5291,6 +5305,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-19T20:44:15.853692+00:00",
     "title": "**Conjecture.** A reflective fixed-point code admits a monotone interpretation i"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## 1. Quantitative Complexity\u2013Dissipation Tradeoff\n\n**Conjecture.** For a family of finite decision processes with bounded error, any\nimplementation whose expected running time is polynomial but whose workspace is\nreused across instances must dissipate at least a constant times the conditional\nentropy of the discarded computation history. A matching reversible construction\nshould attain the bound up to polylogarithmic overhead.\n\nThe key insight is that time complexity and dissipation become coupled only after\none specifies which intermediate information is irreversibly discarded, rather\nthan merely classifying the final decision problem. **Why now?** The finite\npushforward entropy inequality and the positive one-bit work bound isolate exactly\nthe local information-loss quantity that a family-level theorem must aggregate.\n\n## 2. Reversible Simulation Boundary for NP Search\n\n**Conjecture.** If every polynomially balanced NP search relation admits a\npolynomial-time decision algorithm, then every successful search computation has a\nlogically reversible implementation with polynomial time and space overhead, but\nnot necessarily with zero thermodynamic work when its output or history is reset.\n\nThe key insight is to separate reversible evaluation from irreversible cleanup:\na collapse may simplify the former while Landauer cost remains attached to the\nlatter. **Why now?** The surviving bridge theorem shows that efficient decidability\nalone cannot remove erasure cost, making reversible cleanup the precise missing\nmechanism.\n\n## 3. Physical Polynomial-Hierarchy Collapse Criterion\n\n**Conjecture.** In a physical complexity model closed under composition,\ncomplementation, and polynomially bounded oracle access, an efficiently realizable\ncomplete process for any fixed level of the polynomial hierarchy collapses every\nhigher physically realizable level to that level.\n\nThe key insight is that the extended Church\u2013Turing inclusion should interact with\nhierarchy stability through closure under oracle simulation, not through an\nunqualified assertion about all physical processes. **Why now?** The present\ncomplexity transfer identifies the first-level collapse mechanism; the next test is\nwhether it persists under alternating oracle structure.\n\n## 4. Fluctuation-Robust Demon Impossibility\n\n**Conjecture.** For finite-memory demons obeying a Crooks-type fluctuation relation,\nthe probability of observing total work below the Landauer threshold decays\nexponentially in the number of independently erased bits, uniformly over every\npolynomial-time control strategy.\n\nThe key insight is that rare negative-work trajectories need not contradict the\nsecond law; the physically testable obstruction is an exponential concentration\nbound on repeated erasure. **Why now?** The expectation-level Jarzynski argument\nalready supplies the correct threshold, while repeated finite systems provide a\nconcrete setting in which to seek sharp tail estimates.\n\n## 5. Zero-Temperature Boundary Classification\n\n**Conjecture.** Every apparent zero-work erasing demon obtained as temperature tends\nto zero falls into one of two classes: either its expected running time diverges\nsuperpolynomially, or the finite Jarzynski model loses uniform integrability and the\nlimiting process is not a valid finite-resource realization.\n\nThe key insight is that strict positivity fails algebraically at zero temperature,\nso the obstruction must reappear as a resource divergence or a singular limit.\n**Why now?** Boundary analysis pinpoints `T = 0` as the main escape hatch from the\npositive-work theorem and turns that loophole into a precise asymptotic research\nquestion.\n",
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "fd_0507",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "e3542946",
+    "status": "available",
+    "timestamp": "2026-07-20T05:48:58.813652+00:00",
+    "title": "**Conjecture.** For a family of finite decision processes with bounded error, an"
   },
   {
     "consumed_by_exp_id": "",

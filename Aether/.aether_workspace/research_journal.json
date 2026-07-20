@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "7bc47166",
-      "domain": "Shared",
-      "key_insight": "# Future Directions\n\n## 1. Physical comparison gates with explicit reset registers\n\n**Conjecture.** For a comparator network implemented by reversible gates with a designated\nreset protocol, the minim",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-07-19T01:02:46",
-      "title": "The Thermodynamics of Sorting: Entropy and Computational Work"
-    },
-    {
       "cycle_id": "eb62b00a",
       "domain": "Bridges",
       "key_insight": "# Future Directions\n\n- Formalize matrix representability of finite matroids over `ZMod 3` and prove that it is preserved by deletion and contraction.\n- Connect the abstract theorem `matroid_wqo_gives_",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-20T05:36:00",
       "title": "Speculative: Computational Complexity as Physical Law"
+    },
+    {
+      "cycle_id": "e3542946",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions\n\n## 1. Quantitative Complexity–Dissipation Tradeoff\n\n**Conjecture.** For a family of finite decision processes with bounded error, any\nimplementation whose expected running time is",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-20T05:49:00",
+      "title": "Speculative: Computational Complexity as Physical Law"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "d1e62d74",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\n1. **Recover the source definition.** Obtain the precise definitions of “good manifold” and\n   “n-nice polytope,” including the indexing convention. Without them, no theorem conne",
-      "quality_score": 0.47,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-16T07:39:22",
-      "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
-    },
     {
       "cycle_id": "d8f04178",
       "domain": "Novelty",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-20T05:36:00",
       "title": "Speculative: Computational Complexity as Physical Law"
+    },
+    {
+      "cycle_id": "e3542946",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions\n\n## 1. Quantitative Complexity–Dissipation Tradeoff\n\n**Conjecture.** For a family of finite decision processes with bounded error, any\nimplementation whose expected running time is",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-20T05:49:00",
+      "title": "Speculative: Computational Complexity as Physical Law"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.74
     }
   ],
-  "last_updated": "2026-07-20T05:36:00",
+  "last_updated": "2026-07-20T05:49:00",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "ad5825e2",
-        "quality": 0.71,
-        "theorems": 0,
-        "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
-      },
-      {
         "cycle_id": "8b90ccda",
         "quality": 0.69,
         "theorems": 25,
@@ -3569,6 +3563,12 @@
         "quality": 0.67,
         "theorems": 20,
         "title": "Speculative: Mathematics as an Evolving Ecosystem"
+      },
+      {
+        "cycle_id": "e3542946",
+        "quality": 0.78,
+        "theorems": 0,
+        "title": "Speculative: Computational Complexity as Physical Law"
       },
       {
         "cycle_id": "e3542946",
