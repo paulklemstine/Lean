@@ -347,6 +347,25 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Cycle 65e81f6c (Q=0.800) proved 0 theorems in Geometry but left 13 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Compute the topological type of the Library of Babel: a space of all possible 410-page books. Prove that it is connected, totally disconnected under the Hamming metric, and has covering dimension 0. D",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry"
+    ],
+    "id": "sorry_fill_65e81f6c_233addae",
+    "lineage_refs": [],
+    "priority_score": 0.85,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "65e81f6c",
+    "status": "available",
+    "timestamp": "2026-07-20T00:23:27.016370+00:00",
+    "title": "Close Proofs: Borges' Library of Babel: Combinatorics of Everything"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
     "consumed_by_exp_id": "27f58424",
     "description": "Cycle cb3d5d14 (Q=0.800) proved 0 theorems in Novelty but left 13 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Prove that any Turing-complete system with self-modification capabilities has no general algorithm for predicting its own termination. Formalize the halting problem for programs that can rewrite their",
     "domain_bridges": [],
@@ -465,25 +484,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "28042806",
-    "description": "Conjecture that mathematical discovery undergoes phase transitions: long periods of incremental progress punctuated by sudden reorganizations (like percolation transitions). Formalize this using statistical mechanics: define an order parameter for 'mathematical coherence' and show it undergoes a second-order phase transition as the number of connected theorems crosses a critical threshold. Predict: the next phase transition in number theory will occur when the connections between Langlands and arithmetic geometry exceed ~10^4 edges.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_0500",
-    "lineage_refs": [],
-    "priority_score": 0.82,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T22:37:59.429001+00:00",
-    "title": "Speculative: Mathematics as a Phase Transition"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Formalize a notion of 'self-referential types' in dependent type theory where a type can quantify over itself. Define: a conscious type T satisfies T ≈ Π(x:T), P(x) for some predicate P. Prove: any such type must be undecidable (Gödel-style). Show: the fixed points of the type-forming operations correspond to a hierarchy analogous to the arithmetical hierarchy. Conjecture: the cardinality of self-referential types is exactly ℵ_1^CK (the Church-Kleene ordinal).",
     "domain_bridges": [],
@@ -500,26 +500,6 @@
     "status": "available",
     "timestamp": "2026-07-19T23:48:18.405185+00:00",
     "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "65e81f6c",
-    "description": "Compute the topological type of the Library of Babel: a space of all possible 410-page books. Prove that it is connected, totally disconnected under the Hamming metric, and has covering dimension 0. Determine the Kolmogorov complexity of a random book and prove that almost all books are incompressible.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Combinatorics"
-    ],
-    "id": "fd_0474",
-    "lineage_refs": [],
-    "priority_score": 0.81,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T17:49:41.587633+00:00",
-    "title": "Borges' Library of Babel: Combinatorics of Everything"
   },
   {
     "ambition_level": "extension",
@@ -7267,6 +7247,46 @@
     "status": "available",
     "timestamp": "2026-07-19T23:31:12.387460+00:00",
     "title": "Construct a recursively generated language with quotation, substitution, a truth"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n1. **Finite theorem graphs.** Replace the scalar control variable with a finite simple graph\n   whose vertices are theorems and whose edges encode explicitly defined mathematical\n   dependencies or cross-field correspondences. Define coherence from the largest connected\n   component, normalized by vertex count.\n\n2. **Random-graph transition.** Formalize an Erdős–Rényi-style family and prove finite-size\n   monotonicity of expected largest-component size. An asymptotic threshold theorem would\n   require substantially more probability and random-graph infrastructure.\n\n3. **Susceptibility and critical exponents.** Add fluctuation/susceptibility observables and\n   distinguish continuity of the order parameter from differentiability. In the current\n   mean-field model, the square-root law proves exponent `1/2`; a precise theorem about the\n   divergent right derivative would sharpen the second-order-transition interpretation.\n\n4. **Empirical semantics.** Specify what counts as a Langlands–arithmetic-geometry edge,\n   deduplicate theorem statements, define time windows, and publish a reproducible graph.\n   Only then can the proposed 10,000-edge threshold be calibrated or tested. The present\n   formalization treats 10,000 solely as a parameter.\n\n5. **Statistical model comparison.** Compare threshold, logistic, and smooth power-law models\n   using held-out historical data. Quantify uncertainty in both edge extraction and the\n   inferred critical point rather than presenting a point estimate alone.\n\n6. **Universality tests.** Apply the same graph observable to several mathematical domains and\n   test whether fitted exponents are stable under reasonable changes in ontology and edge\n   definition.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Computation",
+      "Bridges"
+    ],
+    "id": "fd_0511",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "28042806",
+    "status": "available",
+    "timestamp": "2026-07-20T00:23:09.716580+00:00",
+    "title": "1. **Finite theorem graphs.** Replace the scalar control variable with a finite "
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n1. **Infinite-page limit.** Replace fixed-length books by streams `ℕ → Fin A` with the product topology. The resulting Cantor-like space remains totally disconnected but is no longer discrete; cylinder sets should supply a clopen basis.\n\n2. **Prefix-free complexity.** Introduce a concrete prefix-free machine and sharpen the current finite counting theorem from fixed-length program spaces to the Kraft-inequality bound for all programs below a length threshold.\n\n3. **Probability formulation.** Put the uniform probability measure on finite libraries and restate `many_incompressible_books` as a lower bound on the probability that complexity exceeds `k`, namely at least `1 - 2^k / 2^L` in the binary case.\n\n4. **Covering dimension API.** The formal result currently gives the clopen singleton basis that characterizes dimension zero for finite metrizable spaces. A reusable Lean definition of Lebesgue covering dimension would permit stating the numerical equality directly.\n\n5. **Disconnected latent models.** Quantify the number of connected components required of a parameter space admitting a continuous surjection onto all books. The present connector shows one connected component can reach at most one book.\n\n6. **Error-correcting geometry.** Combine incompressibility counting with Hamming-ball volume bounds to show that most books are simultaneously algorithmically incompressible and far from every member of a small structured catalog.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0512",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "65e81f6c",
+    "status": "available",
+    "timestamp": "2026-07-20T00:23:21.787154+00:00",
+    "title": "1. **Infinite-page limit.** Replace fixed-length books by streams `ℕ → Fin A` wi"
   },
   {
     "ambition_level": "extension",
