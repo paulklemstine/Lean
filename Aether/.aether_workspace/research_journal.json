@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "cdb5c1e4",
-      "domain": "Shared",
-      "key_insight": "# Future directions\n\nThe current development establishes the Vandermonde/symmetric-power construction underlying one direction of the paper: a diagonal symmetric-power action produces a rational-norma",
-      "quality_score": 0.61,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-16T08:27:23",
-      "title": "ArXiv paper: Cyclic Projective Orbits on Rational Normal Curves and MDS Codes"
-    },
-    {
       "cycle_id": "7d82c497",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\n## 1. Additive-energy amplification beyond the cardinality threshold\n\n**Conjecture.** Let two subsets of the depth-$n$ residue tree over $\\mathbb{F}_p$ omit a fixed positive propo",
@@ -2501,6 +2491,16 @@
       "theorem_count": 11,
       "timestamp": "2026-07-20T09:41:43",
       "title": "Speculative: Number Theory as Music Theory"
+    },
+    {
+      "cycle_id": "955187b3",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\n## What was formalized\n\n`AllDimensions.lean` defines the algebraic sphere\n\n\\[\nS^n_{\\mathrm{alg}}=\\{x:\\operatorname{Fin}(n+1)\\to\\mathbb R\\mid \\sum_i x_i^2=1\\}\n\\]\n\nand the mega-sphe",
+      "quality_score": 0.68,
+      "sorry_count": 13,
+      "theorem_count": 20,
+      "timestamp": "2026-07-20T09:41:49",
+      "title": "The Mega-Sphere: All Dimensions at Once"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.74
     }
   ],
-  "last_updated": "2026-07-20T09:41:43",
+  "last_updated": "2026-07-20T09:41:49",
   "open_questions": [
-    {
-      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "e2c77d51",
-      "domain": "Algebra",
-      "sorry_count": 4,
-      "timestamp": "2026-07-16T04:10:46"
-    },
     {
       "context": "sorry; depend on the catalog uniqueness proof.  (`#print axioms` shows no `sorryAx`.); MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
       "cycle_id": "58c6edf0",
@@ -3016,6 +3009,13 @@
       "domain": "Bridges",
       "sorry_count": 13,
       "timestamp": "2026-07-20T09:41:43"
+    },
+    {
+      "context": "-  sorry; -  sorry; -  sorry",
+      "cycle_id": "955187b3",
+      "domain": "Novelty",
+      "sorry_count": 13,
+      "timestamp": "2026-07-20T09:41:49"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "d23a186f",
-        "quality": 0.69,
-        "theorems": 8,
-        "title": "The Unreasonable Effectiveness of Wrong Theories"
-      },
-      {
         "cycle_id": "7881a56b",
         "quality": 0.79,
         "theorems": 16,
@@ -3637,6 +3631,12 @@
         "quality": 0.75,
         "theorems": 0,
         "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
+      },
+      {
+        "cycle_id": "955187b3",
+        "quality": 0.68,
+        "theorems": 20,
+        "title": "The Mega-Sphere: All Dimensions at Once"
       }
     ],
     "NumberTheory": [
