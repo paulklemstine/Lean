@@ -2,7 +2,7 @@ name: Aether Research Loop
 
 on:
   schedule:
-    - cron: '17 0,6,12,18 * * *'
+    - cron: '17 * * * *'
   workflow_dispatch:
     inputs:
       maxinflight:
