@@ -22,6 +22,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 27f58424 (Q=0.820), which proved 11 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Cycle cb3d5d14 (Q=0.800) proved 0 theorems in Novelty but left 13 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Prove that any Turing-complete system with self-modification capabilities has no general algorithm for predicting its own term",
+    "domain_bridges": [],
+    "domains": [
+      "Cryptography"
+    ],
+    "id": "push_27f58424_d5c1bce4",
+    "lineage_refs": [],
+    "priority_score": 0.9199999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "27f58424",
+    "status": "available",
+    "timestamp": "2026-07-20T00:23:30.749135+00:00",
+    "title": "Deepening: Self-Modifying Code That Cannot Be Stopped"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 4920904c (Q=0.800), which proved 46 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Erdos-Renyi random graph G(n, p) has n vertices where each edge appears independently with probability p. At p = log(n)/n, G(n,p) becomes connected. But what if p is COMPLEX? Define G(n, z) where z is a complex number: each edge (i,j) appears with 'probability' z, meaning the edge weight is z in",
     "domain_bridges": [],
     "domains": [
@@ -362,25 +381,6 @@
     "status": "available",
     "timestamp": "2026-07-20T00:23:27.016370+00:00",
     "title": "Close Proofs: Borges' Library of Babel: Combinatorics of Everything"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "27f58424",
-    "description": "Cycle cb3d5d14 (Q=0.800) proved 0 theorems in Novelty but left 13 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Prove that any Turing-complete system with self-modification capabilities has no general algorithm for predicting its own termination. Formalize the halting problem for programs that can rewrite their",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "sorry_fill_cb3d5d14_ba296296",
-    "lineage_refs": [],
-    "priority_score": 0.85,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "cb3d5d14",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T22:03:14.459215+00:00",
-    "title": "Close Proofs: Self-Modifying Code That Cannot Be Stopped"
   },
   {
     "ambition_level": "extension",
@@ -7287,6 +7287,26 @@
     "status": "available",
     "timestamp": "2026-07-20T00:23:21.787154+00:00",
     "title": "1. **Infinite-page limit.** Replace fixed-length books by streams `ℕ → Fin A` wi"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n1. **Oracle-relative rewriting.** Extend `SelfModMachine` with oracle queries and prove that storing the current program in the ordinary state still preserves the oracle-relative computability degree. Then compare halting across successive Turing jumps.\n\n2. **Resource-sensitive self-modification.** The present simulation preserves termination, but not necessarily time or space overhead. Define an explicit cost semantics and obtain quantitative bounds for interpreting rewritten code as data.\n\n3. **A direct executable universal transition system.** `diagMachine` uses Mathlib's universal partial-recursive evaluator. A next step is to expose an instruction-level machine and prove its compiler correct, transporting the same undecidability theorem to concrete bytecode.\n\n4. **Bounded rewriting.** Track the number of actual program changes separately from execution steps. Determine which bounded classes retain universal computation, and prove decidability for genuinely finite-state restrictions.\n\n5. **Semantic malware properties.** Generalize the halting construction to a full Rice theorem stated directly for self-modifying configurations, with extensional properties expressed through observable traces.\n\n6. **Topological classification.** Equip program behavior with a prefix topology and formalize that halting is effectively open, while perpetual execution is not recursively enumerable for the universal machine.\n\n7. **Fixed-point strengthening.** Refine `selfmod_behavior_fixed_point` from equality of partial functions to an explicit quine construction, including a verified source-to-source rewrite whose fixed point reproduces its own code.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "fd_0513",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "27f58424",
+    "status": "available",
+    "timestamp": "2026-07-20T00:23:29.768312+00:00",
+    "title": "1. **Oracle-relative rewriting.** Extend `SelfModMachine` with oracle queries an"
   },
   {
     "ambition_level": "extension",
