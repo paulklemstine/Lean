@@ -7481,11 +7481,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "decbe545",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -7498,7 +7498,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0183",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-20T20:48:54.059991+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Bypassed",
       "lineage_refs": [],
@@ -7513,7 +7513,7 @@
       "source": "",
       "source_exp_id": "2607.14881v1",
       "source_path": "http://arxiv.org/abs/2607.14881v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-17T06:29:52.184186+00:00",
       "title": "ArXiv paper: Efficient Hamilton covers and linear arboricity of random graphs"
@@ -23125,6 +23125,7 @@
   "selection_log": [
     "famous_subtask",
     "famous_subtask",
+    "cross_domain_bridge",
     "cross_domain_bridge"
   ]
 }
