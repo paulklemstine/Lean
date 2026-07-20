@@ -1,139 +1,145 @@
-# Fast Is Not Free: What Maxwell’s Demon Teaches Us About Computational Complexity
+# Complexity Is Not Heat: What Maxwell’s Demon Really Learns from $P$ versus $NP$
 
-## A seductive shortcut
+A locked door separates two rooms of gas. A tiny creature watches molecules approach and opens the door only for the fast ones moving one way and the slow ones moving the other. Soon one room is hotter than the other, apparently without expenditure. A heat engine can exploit the difference. Has Maxwell’s demon outwitted the second law of thermodynamics?
 
-Imagine a tiny gatekeeper stationed between two chambers of gas. It watches molecules approach a trapdoor, admits fast molecules to one side and slow molecules to the other, and thereby creates a temperature difference without apparently doing work. The gatekeeper is Maxwell’s demon, the most famous troublemaker in thermodynamics. If the demon could repeat its sorting forever for free, it could turn random thermal motion into useful work and defeat the second law.
+The modern answer begins not with the door but with the demon’s memory. To sort molecules, the demon must record observations, use them, and eventually clear space for new observations. Clearing an unknown bit is a many-to-one operation: both $0$ and $1$ are sent to the same blank state. Information disappears from the logical description, and that loss has a thermodynamic price.
 
-Now add a modern temptation. Many tasks are easy to check but appear hard to solve. Complexity theory calls the efficiently solvable decision problems $\mathsf{P}$ and the efficiently checkable ones $\mathsf{NP}$. What if $\mathsf{P}=\mathsf{NP}$? Would every clever search the demon needs suddenly become efficient? And if the demon became efficient, would thermodynamics collapse with complexity theory?
+Now add a very different mystery. The class $P$ contains decision problems solvable in a number of computational steps bounded by a polynomial in the input length. The class $NP$ contains problems for which a proposed solution can be checked in polynomial time. Whether $P=NP$ is unknown. If equality held, enormous families of search and optimization problems would become efficiently decidable in the asymptotic sense.
 
-The answer developed here is sharp but perhaps unexpected. Under an extended Church–Turing assumption, an efficiently realizable physical solution to an $\mathsf{NP}$-hard problem would indeed force $\mathsf{P}=\mathsf{NP}$. Conversely, if $\mathsf{P}=\mathsf{NP}$, every $\mathsf{NP}$ decision task available to a demon becomes polynomial-time decidable. But this does **not** make the demon’s memory free to erase. At positive temperature, a one-bit erasure obeying the Jarzynski equality still requires strictly positive average work. Computational speed and thermodynamic cost measure different things.
+It is tempting to splice these stories together: perhaps hard computation is what protects the second law, and perhaps $P=NP$ would create an efficient Maxwell demon that turns heat wholly into useful work. That narrative is vivid—and wrong without additional premises. Computational time and thermodynamic work are different resources. The central result developed here makes the separation exact.
 
-That separation rescues the second law from a popular but faulty inference: fast is not the same as reversible, and efficient is not the same as free.
+## Three kinds of efficiency
 
-## Two currencies
+Fix a universe of possible inputs. A *decision problem* is a set of inputs: membership means “yes.” We distinguish three collections of such problems.
 
-Complexity theory measures how resources grow with input size. A polynomial-time algorithm uses at most a quantity such as $n^c$ steps for some fixed constant $c$. This can still be a large number, but its growth is controlled. The distinction between $\mathsf{P}$ and $\mathsf{NP}$ concerns whether efficiently checkable yes-certificates can always be replaced by efficient decision procedures.
+1. The class $P_{\mathrm{phys}}$ consists of problems realized by physical processes using resources bounded polynomially in input size.
+2. The class $P_{\mathrm{TM}}$ consists of problems decided by deterministic machines in polynomial time.
+3. The class $NP_{\mathrm{TM}}$ consists of problems decided nondeterministically in polynomial time.
 
-Thermodynamics uses another currency. It asks how much energy is transferred, how much entropy is produced, and which microscopic distinctions a process destroys. A memory reset sends both logical inputs to the same output:
-
-$$
-0\longmapsto 0,\qquad 1\longmapsto 0.
-$$
-
-This map is not injective. Looking only at the output, one cannot reconstruct whether the input was $0$ or $1$. The operation has discarded information. Its logical irreversibility is a structural fact, independent of whether the reset takes one step, a million steps, or polynomially many steps.
-
-Landauer’s principle attaches a physical price to that loss. Erasing one uniformly unknown bit at absolute temperature $T>0$ has the characteristic free-energy scale
+We assume two familiar inclusions. The extended Church–Turing simulation principle says
 
 $$
-\Delta F=kT\ln 2,
+P_{\mathrm{phys}}\subseteq P_{\mathrm{TM}},
 $$
 
-where $k>0$ is Boltzmann’s constant. At room temperature, about $300\,\mathrm{K}$, this is roughly $2.87\times 10^{-21}\,\mathrm{J}$ per bit. The number is tiny, but it is positive. Repeated over many bits or at enormous computational scales, it becomes a genuine accounting term.
-
-## The physical-complexity model
-
-To say exactly what follows from a hypothetical complexity collapse, consider a family of decision problems on some input space. Distinguish three classes:
-
-1. $\mathcal{F}$, the problems physically realizable within a polynomial resource bound;
-2. $\mathcal{P}$, the problems decidable by polynomial-time deterministic machines;
-3. $\mathcal{N}$, the problems decidable with polynomially checkable nondeterministic evidence.
-
-The model assumes three principles. First, the extended Church–Turing inclusion says
+meaning that every polynomially bounded physical decision process can be simulated by a polynomial-time machine. Ordinary deterministic simulation gives
 
 $$
-\mathcal{F}\subseteq\mathcal{P}.
+P_{\mathrm{TM}}\subseteq NP_{\mathrm{TM}}.
 $$
 
-Second, deterministic computation is a special case of nondeterministic computation, so
+Finally, $P_{\mathrm{TM}}$ is assumed closed under polynomial-time many-one reductions. If problem $A$ reduces efficiently to problem $B$, and $B$ lies in $P_{\mathrm{TM}}$, then so does $A$.
+
+Call a demon problem $D$ *$NP$-hard* when every problem in $NP_{\mathrm{TM}}$ reduces efficiently to $D$. This definition captures a demon whose computational task is at least as difficult as every problem in $NP$.
+
+These simple ingredients yield the first result.
+
+**Physical $NP$-Hardness Collapse Theorem.** If an $NP$-hard demon problem $D$ belongs to $P_{\mathrm{phys}}$, then
 
 $$
-\mathcal{P}\subseteq\mathcal{N}.
+NP_{\mathrm{TM}}\subseteq P_{\mathrm{TM}}.
 $$
 
-Third, $\mathcal{P}$ is closed under polynomial-time many-one reductions: if one problem can be efficiently translated into another problem already in $\mathcal{P}$, then the first problem is also in $\mathcal{P}$.
+Because the reverse inclusion always holds, the two classes are equal.
 
-A problem $D$ is $\mathcal{N}$-hard when every problem in $\mathcal{N}$ reduces efficiently to $D$. Think of $D$ as the decision task at the heart of a proposed demon: perhaps identifying which microscopic intervention yields a desired macroscopic effect.
+The reasoning is short. Physical realizability and the simulation principle place $D$ in $P_{\mathrm{TM}}$. Every $NP$ problem reduces to $D$. Closure under reductions therefore places every $NP$ problem in $P_{\mathrm{TM}}$.
 
-These definitions give the **Physical Hardness Collapse Theorem**: if an $\mathcal{N}$-hard problem $D$ belongs to $\mathcal{F}$, then $\mathcal{N}\subseteq\mathcal{P}$, and hence $\mathcal{P}=\mathcal{N}$.
+This theorem says something strong but conditional. It does not establish that an $NP$-hard physical solver exists, nor does it derive the extended Church–Turing principle from mechanics. It explains what follows if both assumptions hold.
 
-The proof is short enough to see in one glance. Physical polynomial realizability places $D$ in $\mathcal{P}$ by the extended Church–Turing inclusion. Every problem in $\mathcal{N}$ reduces to $D$ because $D$ is hard. Closure under reductions then puts every such problem in $\mathcal{P}$. The reverse inclusion was already assumed.
+## The bit that will not vanish for free
 
-This theorem says something consequential about physical claims. A genuinely polynomial physical device for a complete search problem would not merely be a fast gadget; under the stated simulation thesis, it would settle the deterministic–nondeterministic class equality inside the model.
-
-The converse transfer is equally direct. Under the collapse hypothesis $\mathcal{N}\subseteq\mathcal{P}$, any demon problem $D\in\mathcal{N}$ lies in $\mathcal{P}$. Thus a collapse makes the demon’s **decision problem** efficient. Nothing in this argument mentions heat, work, entropy, or erasure.
-
-## Where the second law enters
-
-For the thermodynamic half, take a finite set $\Omega$ of possible microscopic trajectories. Let $p(\omega)\geq 0$ be their probabilities, with
+Complexity theory alone does not specify the demon’s microscopic implementation. To discuss heat and work, consider a finite set $\Omega$ of possible thermodynamic trajectories. Let $p(\omega)\ge 0$ be the probability of trajectory $\omega$, with
 
 $$
 \sum_{\omega\in\Omega}p(\omega)=1,
 $$
 
-and let $W(\omega)$ be the work performed along trajectory $\omega$. The expected work is
+and let $W(\omega)$ be the work performed along that trajectory. The mean work is
 
 $$
-\mathbb{E}[W]=\sum_{\omega\in\Omega}p(\omega)W(\omega).
+\langle W\rangle=\sum_{\omega\in\Omega}p(\omega)W(\omega).
 $$
 
-Set the inverse thermal energy to $\beta=(kT)^{-1}$ and the one-bit free-energy change to $\Delta F=kT\ln 2$. The finite Jarzynski condition is
+For an isothermal one-bit erasure, the free-energy cost is
 
 $$
-\sum_{\omega\in\Omega}p(\omega)e^{-\beta W(\omega)}=e^{-\beta\Delta F}.
+\Delta F=kT\log 2,
 $$
 
-Because the exponential is convex, Jensen’s inequality gives
+where $k>0$ is Boltzmann’s constant and $T>0$ is temperature. Assume the finite Jarzynski equality
 
 $$
-e^{-\beta\mathbb{E}[W]}
-\leq
-\sum_{\omega\in\Omega}p(\omega)e^{-\beta W(\omega)}
-=
-e^{-\beta\Delta F}.
+\sum_{\omega\in\Omega}p(\omega)e^{-W(\omega)/(kT)}
+=e^{-\Delta F/(kT)}.
 $$
 
-Since $\beta>0$, the exponential is decreasing in the work variable after multiplication by $-\beta$, so
+Convexity of the exponential, equivalently Jensen’s inequality, implies
 
 $$
-\mathbb{E}[W]\geq\Delta F=kT\ln 2>0.
+\langle W\rangle\ge \Delta F=kT\log 2>0.
 $$
 
-This is the crucial thermodynamic conclusion. Individual trajectories may fluctuate below the bound, and some may even involve negative work, but the average cannot vanish under these assumptions.
-
-We can now state the **Complexity–Thermodynamics Separation Theorem**. Suppose $\mathcal{N}\subseteq\mathcal{P}$ and a demon’s decision problem belongs to $\mathcal{N}$. Suppose further that its implementation resets a uniformly unknown bit, has a finite normalized trajectory distribution, operates with $k>0$ and $T>0$, and satisfies the Jarzynski condition with $\Delta F=kT\ln 2$. Then three conclusions hold simultaneously:
-
-- the demon’s decision problem belongs to $\mathcal{P}$;
-- the reset map is logically irreversible;
-- the mean erasure work satisfies $\mathbb{E}[W]>0$.
-
-The proof simply joins two independent arguments. Class inclusion gives efficient decidability. The two-to-one reset map gives non-injectivity. Jensen’s inequality gives positive average work. No premise allows “polynomial time” to be exchanged for “zero dissipation.”
-
-A direct corollary is the **No-Zero-Work Demon Theorem**: under the same assumptions, it is impossible for the demon to be polynomial-time decidable while its mean erasure work is exactly zero. The contradiction is numerical, not rhetorical: zero cannot be at least the strictly positive number $kT\ln 2$.
-
-## A room-temperature ledger
-
-The scale becomes concrete with a simple calculation. For $N$ independently erased unbiased bits, the lower-bound scale adds:
+The logical erasure map itself sends both Boolean values to one blank value:
 
 $$
-W_{\min}=NkT\ln 2.
+E(0)=0,\qquad E(1)=0.
 $$
 
-At $T=300\,\mathrm{K}$, one bit costs at least about $2.87\times10^{-21}\,\mathrm{J}$ on average under the model. A billion bits cost about $2.87\times10^{-12}\,\mathrm{J}$. A trillion bits cost about $2.87\times10^{-9}\,\mathrm{J}$. These energies are modest by everyday standards, yet none is zero.
+It is not injective, because distinct inputs have the same output. That is the precise logical irreversibility being priced.
 
-The key point is not that all computers currently operate near this limit; they do not. Nor is it that every algorithm must erase one bit per step. Reversible circuits can retain history and, in principle, avoid dissipation during idealized logical evolution. The point is conditional and precise: when a process actually merges two possible logical states into one and later reuses the memory, that cleanup has an information-loss cost. A faster solution can reduce elapsed time without removing the distinction that the reset destroys.
+**Positive-Work Erasing-Demon Theorem.** Suppose $P_{\mathrm{TM}}=NP_{\mathrm{TM}}$ and a demon’s decision problem belongs to $NP_{\mathrm{TM}}$. Then the problem is polynomial-time decidable. If an implementation also erases one uniformly unknown bit, evolves over finitely many trajectories satisfying the Jarzynski equality, and operates with $k>0$ and $T>0$, then its erasure is logically irreversible and its mean work is strictly positive.
 
-## What the result does—and does not—say
+Notice the conjunction. A complexity collapse settles the computational membership. The fluctuation relation settles the work bound. Neither conclusion substitutes for the other.
 
-The argument does not prove $\mathsf{P}\neq\mathsf{NP}$. It does not prove the extended Church–Turing thesis. It does not claim that every physical process is polynomially simulable, or that every decision algorithm necessarily erases a bit. It also does not deny fluctuations: the Jarzynski relation is an equality about an exponential average, from which the ordinary mean-work bound follows.
+An immediate corollary is a no-go statement.
 
-What it does establish is a disciplined bridge between two subjects. If a physically polynomial device solves a hard enough problem, complexity consequences follow by reduction. If a device erases information under finite positive-temperature Jarzynski dynamics, thermodynamic consequences follow by convexity. The bridges coexist, but they are not interchangeable.
+**No-Zero-Work Corollary.** Under the same hypotheses, it is impossible for the demon to be polynomial-time and simultaneously have zero mean erasure work.
 
-This distinction matters beyond Maxwell’s demon. Machine-learning systems routinely separate inference from training, and both from data deletion. Cryptographic devices distinguish evaluating a function from clearing secret state. Reversible computing distinguishes carrying out a calculation from uncomputing its temporary workspace. In each case, computational difficulty describes the growth of an evaluation task, while thermodynamic cost depends on what information is ultimately discarded.
+The contradiction is quantitative, not rhetorical: zero cannot be at least the strictly positive number $kT\log 2$.
 
-## The moral of the demon
+## One demon, two conclusions
 
-Maxwell’s demon is valuable because it forces hidden bookkeeping into view. Its intelligence was never the whole story. The demon must remember observations, condition actions on them, and eventually restore its memory if the cycle is to repeat. That final restoration is where logical many-to-one behavior meets physical work.
+The strongest bridge combines the two sides without assuming $P=NP$ independently.
 
-A collapse of complexity classes would be an intellectual earthquake. It could transform which decisions are efficiently reachable. Yet even such an earthquake would not repeal the arithmetic of information loss. Under the finite positive-temperature assumptions above, a demon may become fast, but its erasure remains irreversible and its average work remains positive.
+**Integrated Collapse-and-Cost Theorem.** Suppose an $NP$-hard demon problem is physically realizable with polynomial resources. Assume the extended Church–Turing simulation principle and closure of deterministic polynomial time under reductions. If this demon is implemented by one-bit erasure at positive temperature and its finite trajectory ensemble satisfies the Jarzynski equality with $\Delta F=kT\log 2$, then all four conclusions hold:
 
-The universe may constrain computation in ways that complexity theory captures. Thermodynamics supplies another constraint. Their laws can speak to each other, but they keep separate accounts.
+1. $P_{\mathrm{TM}}=NP_{\mathrm{TM}}$;
+2. the demon problem lies in $P_{\mathrm{TM}}$;
+3. its erasure map is noninjective;
+4. its mean work is strictly positive.
+
+This is the crucial correction to the popular speculation. The hypothetical physical solver really would collapse the complexity classes under the stated simulation assumptions. Yet the very same demon, when required to erase a bit through finite-temperature Jarzynski dynamics, cannot erase for zero mean work. Computational power does not cancel thermodynamic bookkeeping.
+
+## A ladder of complexity
+
+The argument extends beyond the first $P$–$NP$ boundary. Consider a hierarchy of problem classes
+
+$$
+H_0\subseteq H_1\subseteq H_2\subseteq\cdots.
+$$
+
+Suppose adjacent equality at some level $k$ is stable upward: whenever $H_m=H_{m+1}$, it follows that $H_{m+1}=H_{m+2}$. If $H_k=H_{k+1}$, induction gives
+
+$$
+H_j=H_k\qquad\text{for every }j\ge k.
+$$
+
+Now suppose every problem in $H_k$ has a polynomially bounded physical realization. The physical simulation principle puts $H_k$ inside $P_{\mathrm{TM}}$. Since every higher level equals $H_k$, we obtain the following.
+
+**Stable-Hierarchy Simulation Theorem.** If a nested complexity hierarchy collapses at level $k$, adjacent collapse propagates upward, and every problem at level $k$ is polynomially physically realizable, then every problem at every level $j\ge k$ has a polynomial-time machine simulation.
+
+The result is extensional: it concerns membership of problems in classes. It does not yet supply a single uniform compiler or a common polynomial exponent for all levels. That quantitative strengthening remains a natural research target.
+
+## What the second law is—and is not—waiting for
+
+The second law is not guarded by the presumed inequality $P\ne NP$ in this model. It is guarded, at the one-bit scale, by the energetic cost of discarding information under specified thermodynamic dynamics. Even if an answer becomes easy to compute, resetting the memory that held intermediate or final information remains a separate physical act.
+
+This distinction suggests better engineering. Reversible computation attempts to retain enough information that each logical step can be inverted. It may reduce dissipation associated with intermediate erasures, though a final reset can still discard information and incur a cost. The right question is therefore not merely, “How long does the algorithm run?” It is also, “Which distinctions among physical states does the implementation destroy?”
+
+The present results have sharp boundaries. They concern finite trajectory spaces, normalized probabilities, positive temperature, and a Jarzynski equality tailored to one-bit erasure. They do not claim that every computation erases a bit. They do not derive a universal time–energy tradeoff. They also do not establish that every polynomial-time algorithm has a reversible implementation with any particular overhead.
+
+What they do establish is cleaner: reductions transfer efficient solvability; stable class equalities transfer simulation through a hierarchy; and information loss, under the stated fluctuation relation, transfers into positive work. These are three monotone mechanisms living in different mathematical currencies.
+
+There is also a practical moral for claims about exotic hardware. Quantum devices, analog machines, biological networks, and future physical substrates may alter constants, architectures, or even accepted complexity assumptions. Any claim that one of them defeats a thermodynamic limit must nevertheless name the operation, the ensemble, and the energy accounting. A faster route to a decision is not automatically a cheaper reset. Conversely, a dissipative implementation does not prove that the underlying decision problem is computationally hard. Experiments and algorithms answer related but distinct questions. Good physical-complexity claims must therefore report both ledgers rather than folding one into the other.
+
+Maxwell’s demon may one day receive a spectacular algorithmic upgrade. It may sort, search, and decide with resources once thought impossible. But when it crushes two possible memory states into one, the ledger does not disappear. The universe may permit astonishing computation. It does not follow that forgetting is free. That final distinction turns a seductive paradox into a disciplined research program: classify what can be computed, describe what information is destroyed, and measure what the destruction costs.
