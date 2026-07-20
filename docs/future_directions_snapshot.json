@@ -1680,26 +1680,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "c1b3f8da",
-    "description": "Investigate the ArXiv paper 'On Small Doubling in Right-Ordered Groups and Baumslag-Solitar Groups-II' and formalize its key results. Abstract: Recently, Mohan et al. [Results Math. 80 (2025), No. 4, 122] answered Freiman's $3k-4$ conjecture in right-ordered groups under certain restrictions. In this paper, we take a step further by investigating the structure of nonempty subsets $S$ of a right-ordered group satisfying the small doubling condition $|S^2| = 3|S|-3$. Moreover, we provide a complete characterization of all nonempty finite subsets $S$ of the Baumslag-Solitar group $\\mathrm{BS}(1,q)$ (with $q \\in \\mathbb{Z}$ and $q \\neq -1$) for which $|S^2| = 3|S|-3$ and the identity element is the minimum of $S$.",
-    "domain_bridges": [],
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0076",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.11194v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-16T11:25:22.149755+00:00",
-    "title": "ArXiv paper: On Small Doubling in Right-Ordered Groups and Baumslag-Solitar Groups-II"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Optimal chain density, entropy, and space-time tradeoffs for the TSP' and formalize its key results. Abstract: We nearly settle a natural extremal question about set systems over $[n]$: the tradeoff between the {size} (number of sets) and the number of {full chains}. This question was initially raised by Johnson, Leader, and Russell [Combin.~Probab.~Comp., 2015] as a counterpart to Sperner-type results in combinatorics. Recently, a framework introduced by Ameli, Nederlof, and Wang, and independently by Dallant and Kozma [FOCS 2026] linked this question to the space- and time-complexity of Bellman-Held-Karp-style dynamic programming algorithms for permutation problems such as the traveling salesman (TSP). Precisely, they showed that a space-time product $γ^{n+o(n)}$ is feasible for the TSP, whenever a set system of (normalized) size $S$ and chain density $D$ exists, with $ γ= S^2/D$. In this paper we show an essentially {optimal} bound of $γ\\approx 3.1819$ for this quantity, closing the gap between the previous best lower and upper bounds of $γ\\geq 3.015$ and $ γ\\leq 3.572$ respectively. This im",
     "domain_bridges": [],
@@ -3391,7 +3371,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d4bc25af",
     "description": "Investigate the ArXiv paper 'Efficient Hamilton covers and linear arboricity of random graphs' and formalize its key results. Abstract: A Hamilton cover of a graph is a collection of Hamilton cycles whose union contains all edges. Since each Hamilton cycle covers two edges at every vertex, every Hamilton cover has size at least $\\lceil Δ(G)/2\\rceil$. We prove that this lower bound is tight for binomial random graphs $G(n,p)$ throughout the widest possible range of edge probabilities: if $ω(n)\\to\\infty$ and \\[ \\frac{\\log n+\\log\\log n+ω(n)}{n} \\le p=p(n) \\le 1-\\frac{ω(n)}{n^{2}}, \\] then $G\\sim G(n,p)$ with high probability has a Hamilton cover of size $\\left\\lceil \\frac{Δ(G)}{2}\\right\\rceil. $ The main new contribution is the sparse regime near the Hamiltonicity threshold, where we prove a conjecture of Draganić, Glock, Munhá Correia and Sudakov. Our proof develops constructive tools for decomposing such graphs into controlled forest systems and extending them, using reserved pseudorandom structure, into Hamilton cycles. We also prove the corresponding hitting-time result for the random graph process, answering a questi",
     "domain_bridges": [],
     "domains": [
@@ -3404,7 +3384,7 @@
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
     "source_exp_id": "2607.14881v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-17T06:29:52.184186+00:00",
     "title": "ArXiv paper: Efficient Hamilton covers and linear arboricity of random graphs"
   },
@@ -4351,6 +4331,25 @@
     "status": "available",
     "timestamp": "2026-07-17T18:04:18.998094+00:00",
     "title": "Close Proofs: Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem With"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Cycle c1b3f8da (Q=0.740) proved 11 theorems in Pythagorean but left 13 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'On Small Doubling in Right-Ordered Groups and Baumslag-Solitar Groups-II' and formalize its key results. Abstract: Recently, Mohan et al. [Results Math. 80 (2025), No. 4, ",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "sorry_fill_c1b3f8da_5cb76478",
+    "lineage_refs": [],
+    "priority_score": 0.79,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "c1b3f8da",
+    "status": "available",
+    "timestamp": "2026-07-20T02:08:19.156620+00:00",
+    "title": "Close Proofs: ArXiv paper: On Small Doubling in Right-Ordered Groups and Baumslag-So"
   },
   {
     "ambition_level": "extension",
@@ -7446,6 +7445,26 @@
     "status": "available",
     "timestamp": "2026-07-20T02:08:07.796790+00:00",
     "title": "**Conjecture.** There is a finite one-object bicategory whose 1-cell composition"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Small Doubling in Ordered and Metabelian Groups\n\n## 1. Stability from near-minimal collision surplus\n\n**Conjecture.** Let `S` be a finite nonempty subset of a right-ordered group. If `|S²| = 3|S| - 3`, then all but a bounded number of the excess representations counted by `|S|² - |S²|` are supported on a bounded union of translates of a single cyclic or metabelian progression, with an absolute bound independent of `|S|`.\n\nThe key insight is that the exact quadratic collision surplus and the linear excess above the ordered Cauchy–Davenport floor constrain two different moments of the representation distribution.\n\n**Why now?** The two exact identities are available simultaneously, making it possible to seek a stability argument that combines support size with fiber multiplicity rather than relying on cardinality alone.\n\n## 2. Quotient-sensitive `3k-3` inverse theorem\n\n**Conjecture.** If a finite nonempty set `S` in a right-ordered group is covered by `r` cosets of a normal subgroup `H` and satisfies `|S²| = 3|S| - 3`, then the image of `S` in `G/H` is contained in a geometric progression of length at most `2r-1`; equality forces uniform intersection sizes across the occupied cosets.\n\nThe key insight is that normal product covering confines `S²` to at most `r²` quotient cells, while the collision identity measures how representations concentrate inside those cells.\n\n**Why now?** Product support and representation mass can now be tracked in the same statement, supplying the two inputs needed for a quotient-level inverse theorem.\n\n## 3. Baumslag–Solitar normal-form classification\n\n**Conjecture.** For every integer `q ≠ -1`, a finite nonempty subset `S ⊂ BS(1,q)` with minimum equal to the identity and `|S²| = 3|S| - 3` admits a unique description, up to the evident normal-form symmetries, as a union of at most three affine fibers in `ℤ[1/q] ⋊ ℤ`, each fiber being an arithmetic progression whose common differences are related by multiplication by `q`.\n\nThe key insight is that conjugation in `BS(1,q)` rescales the abelian normal subgroup, so multiplicative collisions become affine additive-energy constraints between fibers at different heights.\n\n**Why now?** The representation-surplus formulation identifies precisely which cross-height affine equations must account for the threshold, while normal-coset covering organizes those equations by height.\n\n## 4. Entropy rigidity of the representation distribution\n\n**Conjecture.** Among right-ordered-group sets of fixed cardinality `k` satisfying `|S²| = 3k-3`, the Shannon entropy of the normalized representation function is maximized by a rank-one progression model and minimized by a bounded-height metabelian model; both extremizers are unique up to Freiman isomorphism.\n\nThe key insight is that the support has fixed size and the total mass is fixed at `k²`, so structural information may be extracted from how the exact collision surplus is distributed rather than merely from its total.\n\n**Why now?** The fiberwise conservation law gives a canonical probability distribution on `S²`, opening a quantitative bridge between inverse product-set theory and information-theoretic rigidity.\n\n## 5. Hecke-weighted small-doubling principle\n\n**Conjecture.** For a finite subset covered by cosets of a nonnormal subgroup, the `3k-3` condition forces a sharp upper bound on the average Hecke multiplicity of the occupied double cosets; equality characterizes sets supported on a single commensurator orbit.\n\nThe key insight is that normal covers correspond to Hecke multiplicity one, suggesting that the correct nonnormal replacement weights quotient cells by conjugation indices rather than counting them uniformly.\n\n**Why now?** The normal-cover theorem provides the multiplicity-one base case, and the exact collision surplus supplies the mass constraint needed to formulate a weighted extension.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0524",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "c1b3f8da",
+    "status": "available",
+    "timestamp": "2026-07-20T02:08:15.605912+00:00",
+    "title": "**Conjecture.** Let `S` be a finite nonempty subset of a right-ordered group. If"
   },
   {
     "ambition_level": "extension",
