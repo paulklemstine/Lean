@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "bcb31ca6",
-      "domain": "Bridges",
-      "key_insight": "# Future directions\n\n1. **Exact fiber cardinality.** Upgrade the explicit injection of `2^n` seeds to an equality characterizing the entire fiber `{x ∈ (0,1) | f^[n] x = y}`. This requires proving eve",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-18T23:29:22",
-      "title": "Deepening: Cryptography from Chaos: Encrypting with the Logistic Map"
-    },
-    {
       "cycle_id": "cf69678e",
       "domain": "Combinatorics",
       "key_insight": "# Future directions\n\n## What was established\n\n`Algebra/SurrealDyadic.lean` formalizes the canonical dyadic part of the surreal hierarchy.\n\n* The canonical pre-game for `2⁻ⁿ` has birthday exactly `n +",
@@ -499,19 +489,19 @@
       "theorem_count": 26,
       "timestamp": "2026-07-20T02:08:12",
       "title": "Causal Loops in Category Theory: When Composition Loops Back"
+    },
+    {
+      "cycle_id": "c1b3f8da",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions: Small Doubling in Ordered and Metabelian Groups\n\n## 1. Stability from near-minimal collision surplus\n\n**Conjecture.** Let `S` be a finite nonempty subset of a right-ordered group.",
+      "quality_score": 0.74,
+      "sorry_count": 13,
+      "theorem_count": 11,
+      "timestamp": "2026-07-20T02:08:19",
+      "title": "ArXiv paper: On Small Doubling in Right-Ordered Groups and Baumslag-Solitar Groups-II"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "cca295e6",
-      "domain": "Shared",
-      "key_insight": "# Future directions\n\n## Completed formalization\n\n`Construction.lean` is a self-contained finite-set formalization of the\npair-star 3-uniform hypergraph from the paper. All declarations have complete\np",
-      "quality_score": 0.71,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-07-16T07:07:10",
-      "title": "ArXiv paper: Hypergraph Turan with bounded matching number"
-    },
     {
       "cycle_id": "aa7167bb",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 26,
       "timestamp": "2026-07-20T02:08:12",
       "title": "Causal Loops in Category Theory: When Composition Loops Back"
+    },
+    {
+      "cycle_id": "c1b3f8da",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions: Small Doubling in Ordered and Metabelian Groups\n\n## 1. Stability from near-minimal collision surplus\n\n**Conjecture.** Let `S` be a finite nonempty subset of a right-ordered group.",
+      "quality_score": 0.74,
+      "sorry_count": 13,
+      "theorem_count": 11,
+      "timestamp": "2026-07-20T02:08:19",
+      "title": "ArXiv paper: On Small Doubling in Right-Ordered Groups and Baumslag-Solitar Groups-II"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "7bc47166",
-      "domain": "Shared",
-      "name": "sorting_info_erased",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "7bc47166",
-      "domain": "Shared",
-      "name": "sorting_info_erased",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "7bc47166",
-      "domain": "Shared",
-      "name": "periodic_search_benchmark",
-      "quality": 0.78
-    },
     {
       "cycle_id": "4c2c71e5",
       "domain": "MachineLearning",
@@ -2803,17 +2785,28 @@
       "domain": "Cryptography",
       "name": "reassoc_sound",
       "quality": 0.75
+    },
+    {
+      "cycle_id": "c1b3f8da",
+      "domain": "Pythagorean",
+      "name": "joins",
+      "quality": 0.74
+    },
+    {
+      "cycle_id": "c1b3f8da",
+      "domain": "Pythagorean",
+      "name": "for",
+      "quality": 0.74
+    },
+    {
+      "cycle_id": "c1b3f8da",
+      "domain": "Pythagorean",
+      "name": "finite_memory_is_lossy",
+      "quality": 0.74
     }
   ],
-  "last_updated": "2026-07-20T02:08:12",
+  "last_updated": "2026-07-20T02:08:19",
   "open_questions": [
-    {
-      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "8d2137d3",
-      "domain": "Combinatorics",
-      "sorry_count": 4,
-      "timestamp": "2026-07-16T03:53:22"
-    },
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "8d2137d3",
@@ -3016,6 +3009,13 @@
       "domain": "MachineLearning",
       "sorry_count": 1,
       "timestamp": "2026-07-20T02:08:03"
+    },
+    {
+      "context": "+  sorry; +  sorry; +  sorry",
+      "cycle_id": "c1b3f8da",
+      "domain": "Pythagorean",
+      "sorry_count": 13,
+      "timestamp": "2026-07-20T02:08:19"
     }
   ],
   "research_threads": {
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "58c6edf0",
-        "quality": 0.73,
-        "theorems": 43,
-        "title": "ArXiv paper: The chromatic number of 3-stable Kneser graphs"
-      },
-      {
         "cycle_id": "4e53cd7c",
         "quality": 0.7,
         "theorems": 16,
@@ -3885,6 +3879,12 @@
         "quality": 0.78,
         "theorems": 0,
         "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
+      },
+      {
+        "cycle_id": "c1b3f8da",
+        "quality": 0.74,
+        "theorems": 11,
+        "title": "ArXiv paper: On Small Doubling in Right-Ordered Groups and Baumslag-Solitar Grou"
       }
     ],
     "Shared": [
