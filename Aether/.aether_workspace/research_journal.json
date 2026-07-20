@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "d8f04178",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\n## Scope achieved\n\n`Speculative/EulerSystemsSymmetricSquare.lean` formalizes three reusable algebraic layers motivated by the paper:\n\n1. An abstract Euler system as a family of mo",
-      "quality_score": 0.52,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-16T08:27:16",
-      "title": "ArXiv paper: Euler systems and the symmetric square of a Hida family"
-    },
-    {
       "cycle_id": "cdb5c1e4",
       "domain": "Shared",
       "key_insight": "# Future directions\n\nThe current development establishes the Vandermonde/symmetric-power construction underlying one direction of the paper: a diagonal symmetric-power action produces a rational-norma",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-20T05:49:00",
       "title": "Speculative: Computational Complexity as Physical Law"
+    },
+    {
+      "cycle_id": "50f62832",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions: Reciprocal-Zero Harmonics\n\n## 1. Certified low-height window theorem\n\nConstruct a proof-quality zero-counting certificate showing that the nontrivial zeros of the Riemann zeta fun",
+      "quality_score": 0.68,
+      "sorry_count": 13,
+      "theorem_count": 11,
+      "timestamp": "2026-07-20T09:41:43",
+      "title": "Speculative: Number Theory as Music Theory"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.74
     }
   ],
-  "last_updated": "2026-07-20T05:49:00",
+  "last_updated": "2026-07-20T09:41:43",
   "open_questions": [
-    {
-      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "e2c77d51",
-      "domain": "Algebra",
-      "sorry_count": 4,
-      "timestamp": "2026-07-16T04:10:10"
-    },
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "e2c77d51",
@@ -3016,6 +3009,13 @@
       "domain": "Logic",
       "sorry_count": 13,
       "timestamp": "2026-07-20T03:02:07"
+    },
+    {
+      "context": "+  sorry; +  sorry; +  sorry",
+      "cycle_id": "50f62832",
+      "domain": "Bridges",
+      "sorry_count": 13,
+      "timestamp": "2026-07-20T09:41:43"
     }
   ],
   "research_threads": {
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "98ba1a43",
-        "quality": 0.92,
-        "theorems": 0,
-        "title": "The file `TangledSoundness.lean` develops the semantic core of self-referential"
-      },
-      {
         "cycle_id": "b1453a16",
         "quality": 0.93,
         "theorems": 20,
@@ -3203,6 +3197,12 @@
         "quality": 0.7,
         "theorems": 0,
         "title": "Matroid Minors and the Graph Theorem: Robertson-Seymour for Matroids"
+      },
+      {
+        "cycle_id": "50f62832",
+        "quality": 0.68,
+        "theorems": 11,
+        "title": "Speculative: Number Theory as Music Theory"
       }
     ],
     "Combinatorics": [
