@@ -1,149 +1,143 @@
-# Causal Loops in Composition: When Order Matters but Coherence Survives
+# When Composition Loops Back
 
-Mathematics often hides its power in rules so familiar that we stop noticing them. One of those rules is associativity. When three actions are composed, we ordinarily assume that it does not matter which pair is combined first:
+## A concrete world where order matters, yet coherence survives
 
-$$
-(x\circ y)\circ z=x\circ(y\circ z).
-$$
+Mathematics often teaches us to ignore parentheses. When adding three numbers, it does not matter whether we calculate $(a+b)+c$ or $a+(b+c)$. The same is true for multiplication. This familiar rule, associativity, is so deeply embedded in ordinary calculation that its absence can feel like a defect.
 
-Addition obeys this law. Matrix multiplication obeys it. The composition of ordinary functions obeys it. Associativity is what lets us write a long chain without drowning in parentheses.
+Category theory offers a subtler possibility. Two ways of composing may fail to be literally equal while remaining connected by a reversible transformation. Parentheses then carry information, but changing them does not destroy meaning. This is the central idea behind a bicategory: associativity is not imposed as equality; it is witnessed by a specified invertible two-dimensional arrow called an associator.
 
-But many layered systems do care about intermediate grouping. A cryptographic protocol may replace one experiment at a time; a distributed computation may package messages in different batches; a parser may build different binary trees from the same string. Two executions can therefore be literally different while still carrying the same operational meaning. Insisting that they be equal erases useful structure. Allowing them to differ arbitrarily destroys predictability.
+A small numerical construction makes that distinction visible. It gives a one-object mathematical world in which the two bracketings of three identical arrows evaluate to $5$ and $7$. They are unmistakably unequal. Nevertheless, a unique reversible higher arrow connects them, and every possible rebracketing is coherent. The example is not merely an associative system written in elaborate notation: no strict bicategory structure can preserve its chosen composition.
 
-There is a third option: let the two composites differ, but require a reversible witness that relates them. This is **coherent composition**. It turns a troublesome loop in the order of operations into a controlled path through a higher-dimensional space.
+## The twisted arithmetic of arrows
 
-## Equality is not the only kind of sameness
-
-Consider a collection $M$ of arrows or operations. We equip it with a binary composition $x\circ y$, a unit $e$, and an equivalence relation $x\sim y$. Think of $x\sim y$ as saying that there is an invertible transformation from $x$ to $y$. A controlled composition has four requirements:
-
-1. equivalent inputs have equivalent composites;
-2. $(x\circ y)\circ z\sim x\circ(y\circ z)$;
-3. $e\circ x\sim x$;
-4. $x\circ e\sim x$.
-
-The second condition is weak associativity. It does not identify the two parenthesizations as arrows; it supplies an **associator** between them. The last two conditions similarly supply left and right **unitors**.
-
-The special setting studied here is locally thin: between any fixed source and target, there is at most one transformation. This modest condition has a dramatic consequence. Every diagram made from associators and unitors commutes automatically, because any two parallel transformation paths must be the same. In particular, the famous five-edge associator diagram—the pentagon—cannot fail. This is precisely the one-object, locally thin fragment of bicategorical composition. It is not a claim that arbitrary nonassociative systems are higher categories; the equivalence relation, compatibility, associators, unitors, and coherence are essential.
-
-## Three arrows are enough
-
-The distinction between equality and coherent equivalence already appears in a tiny multiplication table. Take three arrows $e$, $a$, and $b$. Let $e$ be a two-sided unit, and define the remaining products by
+Take the natural numbers as arrows from a single object back to itself. Designate $0$ as the identity arrow, and define a composition operation $igstar$ by
 
 $$
-\begin{array}{c|ccc}
-\circ & e & a & b\\ \hline
-e & e & a & b\\
-a & a & b & a\\
-b & b & e & b
-\end{array}
+a\mathbin{\bigstar}b=
+\begin{cases}
+b, & a=0,\\
+a, & b=0,\\
+a+2b, & a\ne 0\text{ and }b\ne 0.
+\end{cases}
 $$
 
-Now compose three copies of $a$. Grouping on the left gives
+The exceptional clauses ensure that $0$ behaves as a genuine two-sided identity:
 
 $$
-(a\circ a)\circ a=b\circ a=e,
+0\mathbin{\bigstar}a=a,
+\qquad
+a\mathbin{\bigstar}0=a.
 $$
 
-while grouping on the right gives
+Away from the identity, composition is deliberately asymmetric. The second input receives twice the weight of the first. This makes the placement of parentheses matter.
+
+Let $u=1$ be a distinguished nonidentity arrow. First compute
 
 $$
-a\circ(a\circ a)=a\circ b=a.
+u\mathbin{\bigstar}u=1+2\cdot 1=3.
 $$
 
-Since $e\ne a$, composition is genuinely nonassociative. This is not a typographical artifact or a philosophical distinction: the two table entries are different.
-
-Next declare every pair of arrows equivalent. This indiscrete relation is intentionally simple. It gives an invertible transformation between $e$ and $a$, and therefore between the two triple composites. Because transformations are proposition-valued—there is at most one between fixed endpoints—all coherence diagrams commute.
-
-**Three-Arrow Separation Theorem.** There exists a unital three-element composition system in which $(a\circ a)\circ a\ne a\circ(a\circ a)$, yet the two sides are connected by an invertible associator and all parallel coherence paths agree.
-
-The example separates two ideas that ordinary algebra merges: strict equality of results and coherent sameness of results. Its simplicity is also a warning. Since every pair is equivalent, it reveals no competition among distinct higher transformations. Richer models must eventually replace this thin relation with genuine families of transformations.
-
-## Parentheses as a landscape
-
-A long composite is best pictured as a binary tree. Atoms label the leaves; every internal fork means “compose the values below.” For four atoms, for example, $((a\circ b)\circ c)\circ d$ and $a\circ(b\circ(c\circ d))$ are different trees.
-
-A single reassociation rotates one local branch:
+If the left pair is composed first, the result is
 
 $$
-((x\circ y)\circ z)\longleftrightarrow x\circ(y\circ z).
+(u\mathbin{\bigstar}u)\mathbin{\bigstar}u
+=3\mathbin{\bigstar}1
+=3+2\cdot 1
+=5.
 $$
 
-We also allow rotations inside the left or right side of a larger expression, reverse moves, and chains of moves. The resulting network is the skeleton of an associahedron, a geometric object whose vertices are parenthesizations and whose edges are elementary rotations.
-
-**Reassociation Soundness Theorem.** If one parenthesized expression can be transformed into another by a finite chain of elementary reassociations, reversals, transitive combinations, or reassociations inside a larger context, then their evaluations are coherently equivalent.
-
-The proof follows the syntax of the chain. A stationary step uses reflexivity; a reversed step inverts its transformation; two consecutive chains compose vertically; a move inside a context uses compatibility of composition; and a basic rotation uses the associator. Thus every legal syntactic route has semantic meaning.
-
-## Strictification: forgetting the route
-
-Sometimes the route matters; sometimes only the destination class matters. We can collapse coherently equivalent arrows into equivalence classes $[x]$. Define
+If the right pair is composed first, the result is
 
 $$
-[x]\star[y]=[x\circ y].
+u\mathbin{\bigstar}(u\mathbin{\bigstar}u)
+=1\mathbin{\bigstar}3
+=1+2\cdot 3
+=7.
 $$
 
-Compatibility ensures that this definition does not depend on the chosen representatives. Weak laws then become strict laws.
-
-**Strict Quotient Theorem.** The operation $\star$ on equivalence classes is associative, and $[e]$ is a strict two-sided identity:
+Thus
 
 $$
-([x]\star[y])\star[z]=[x]\star([y]\star[z]),
+(u\mathbin{\bigstar}u)\mathbin{\bigstar}u
+\ne
+u\mathbin{\bigstar}(u\mathbin{\bigstar}u).
 $$
 
-$$
-[e]\star[x]=[x]=[x]\star[e].
-$$
+This is the construction’s first theorem: the chosen arrow composition is genuinely nonassociative. The values $5$ and $7$ are not symbols for equivalent calculations; they are different natural numbers.
 
-The reason is direct. The associator says that the representatives $(x\circ y)\circ z$ and $x\circ(y\circ z)$ lie in the same class. The unitors do the same for $e\circ x$, $x\circ e$, and $x$. In the three-arrow example, the unequal outputs $e$ and $a$ become equal after quotienting.
+## Adding a second dimension
 
-Strictification is therefore not a repair of a broken operation. It is a change of resolution. At high resolution, one sees different arrows and transformations between them. At low resolution, one sees only equivalence classes, where ordinary associativity returns.
+How can a category-like theory survive this failure? The answer is to add arrows between arrows.
 
-## Fingerprints from bounded continuations
+Ordinary categories contain objects and arrows. Bicategories add another layer: objects, one-dimensional arrows between objects, and two-dimensional arrows between one-dimensional arrows. In the present example there is only one object, the natural numbers are its one-dimensional endomorphisms, and between every ordered pair of natural numbers $m$ and $n$ there is exactly one two-dimensional arrow.
 
-Weak composition raises a security-flavored question: can two words be distinguished before we collapse them? For a finite word $w$ and a length bound $R$, define its bounded right trace by
+This last condition is called codiscreteness. It is the opposite of forbidding communication between distinct arrows: every arrow can be compared with every other arrow, and there is only one possible comparison. Because there is exactly one two-dimensional arrow from $m$ to $n$ and exactly one from $n$ to $m$, the two are automatically inverse to each other. Composing either way produces the unique two-dimensional identity available at the endpoint.
 
-$$
-T_R(w)=\{z:\ |z|\le R\text{ and }z=w\,t\text{ for some word }t\}.
-$$
-
-This trace records all bounded words that begin with $w$. If $|w|\le R$, then $w$ itself lies in $T_R(w)$ by choosing the empty continuation.
-
-**Bounded Trace Separation Theorem.** If $|w|\le R$, $|w'|\le R$, and $T_R(w)=T_R(w')$, then $w=w'$. Consequently, embedding the letters of the words as atomic composition expressions also gives identical atomic lists.
-
-Indeed, equality of traces places $w$ in the trace of $w'$, so $w'$ is a prefix of $w$. Reversing the roles shows that $w$ is a prefix of $w'$. Two finite words that are prefixes of one another are equal. The result gives a complete bounded fingerprint for atomic syntax.
-
-This matters cryptographically because quotienting can introduce collisions: distinct strict words may become semantically equivalent. Bounded traces distinguish the strict syntax first, while coherent transformations describe which distinctions are intentionally forgotten.
-
-## The hybrid argument hidden inside coherence
-
-Cryptographic security proofs often compare two experiments through a sequence of hybrids. If each adjacent pair is difficult to distinguish, then the endpoints are difficult to distinguish. Coherent reassociation has exactly this shape.
-
-Let $E_0,E_1,\ldots,E_{k+1}$ be parenthesized expressions, with each $E_i$ related to $E_{i+1}$ by reassociation. Let $s$ assign a real-valued score to each evaluated arrow. Suppose coherent equivalents change the score by at most $\delta$:
+Consequently, the unequal composites $5$ and $7$ are joined by an invertible two-dimensional arrow:
 
 $$
-|s(x)-s(y)|\le\delta\qquad\text{whenever }x\sim y.
+5\;\Longrightarrow\;7.
 $$
 
-**Reassociation Hybrid Theorem.** The endpoint drift is bounded by
+The symbol does not assert $5=7$. Instead, it says that the two distinct one-dimensional composites are coherently interchangeable at the higher level. This distinction—equality below, equivalence above—is the heart of weak higher-dimensional algebra.
+
+The same argument works for every triple $f,g,h$ of natural-number arrows. Whether or not their two bracketings agree numerically, there is an invertible associator
 
 $$
-|s(E_0)-s(E_{k+1})|\le(k+1)\delta.
+\alpha_{f,g,h}:
+(f\mathbin{\bigstar}g)\mathbin{\bigstar}h
+\Longrightarrow
+f\mathbin{\bigstar}(g\mathbin{\bigstar}h).
 $$
 
-The proof is the triangle inequality written as a telescope:
+The identity laws are treated similarly. Since $0$ is already a strict two-sided identity for $igstar$, the source and target of each unitor agree numerically, but the bicategorical structure still supplies the required reversible two-dimensional arrows.
+
+## Why coherence is the real challenge
+
+Supplying an associator for each triple is not enough. With four arrows, there are several ways to move parentheses. Starting from $((f\bigstar g)\bigstar h)\bigstar i$ and ending at $f\bigstar(g\bigstar(h\bigstar i))$, one may apply associators in different orders. A credible theory must ensure that all prescribed routes agree.
+
+The principal condition is the pentagon law. Its name comes from the five bracketings of four composable arrows, arranged as vertices of a pentagon. The two standard paths around this diagram must yield the same two-dimensional arrow. There is also a triangle law ensuring that associators and the left and right identity transformations cooperate.
+
+In the codiscrete setting, these laws become inevitable. Any two parallel two-dimensional arrows have the same source and target. But there is exactly one such arrow, so the two composites must coincide. Therefore the pentagon commutes, the triangle commutes, and every larger diagram assembled from the same structural transformations commutes for the same reason.
+
+This yields the Hinge-and-Coherence Theorem: the natural numbers with identity $0$, twisted composition $igstar$, and one unique two-dimensional arrow between every pair form a bicategory. For every triple, the associator reversibly connects the two bracketings; for every quadruple, the pentagon law holds; and the unitors satisfy the triangle law.
+
+The proof has two ingredients. First, the arithmetic clauses verify the strict left and right identity rules. Second, codiscreteness supplies every required higher arrow and makes every coherence equation automatic. The construction separates the algebraic defect from its coherent repair with unusual clarity.
+
+## Why this is not strictness in disguise
+
+One might suspect that the abundance of two-dimensional arrows merely decorates an ordinary strict system. The obstruction theorem rules this out.
+
+A strict bicategory on these fixed objects, arrows, identities, and composition would require literal associativity of one-dimensional composition. Applied to the distinguished arrow $u=1$, strict associativity would force
 
 $$
-|p_0-p_{k+1}|\le\sum_{i=0}^{k}|p_i-p_{i+1}|,
+(u\mathbin{\bigstar}u)\mathbin{\bigstar}u
+=
+u\mathbin{\bigstar}(u\mathbin{\bigstar}u).
 $$
 
-where $p_i$ is the score of the evaluation of $E_i$. Reassociation soundness makes each adjacent pair coherently equivalent, and local stability bounds every summand by $\delta$.
+Yet the left side is $5$ and the right side is $7$. Since $5\ne 7$, no strict bicategory structure can exist on the fixed composition. The associator is therefore essential rather than cosmetic.
 
-This theorem turns coherence into a quantitative resource. Each rotation spends at most $\delta$ units of observational drift. A shorter path through the associahedron yields a tighter security estimate. In future weighted models, different associators could carry different costs, making shortest coherent paths into measures of leakage.
+This statement must be read carefully. It rules out strictness while retaining exactly the given one-dimensional data. It does not rule out replacing the whole system by a suitably equivalent strict model. In higher category theory, equivalence and equality are deliberately different standards. A future strictification theorem would concern replacement up to biequivalence, not conversion of $5$ into $7$ within the present arithmetic.
 
-## What loops teach us
+## From scheduling to geometry
 
-The same viewpoint changes how one designs systems. Instead of demanding that every implementation erase its history, one can specify which histories count as equivalent, require composition to preserve that judgment, and budget the cost of moving between them. The strict quotient then supplies a clean public semantics, while the unreduced structure remains available for auditing, optimization, or security analysis. This two-level architecture is useful whenever an interface should look associative even though its execution traces are not.
+Why care about such a tiny example? Because nonassociative-looking composition appears whenever composition carries choices of timing, grouping, or interface.
 
-The central lesson is not that associativity should be abandoned. It is that equality can be too rigid for systems with meaningful intermediate structure. Controlled composition keeps the distinctions while governing them with reversible transformations. Local thinness makes every higher ambiguity harmless; reassociation gives a complete syntax of movement; quotienting recovers strict algebra; traces preserve strict fingerprints; and the hybrid bound translates local coherence into global observational control.
+Imagine three processes. Executing the first two as a module and then attaching the third need not produce the same internal schedule as attaching the last two first. In distributed systems, message timing can preserve the difference. In programming languages, parenthesized composition may change evaluation plans. In geometry, gluing three regions in different stages can produce constructions that are not literally identical, even when a canonical reversible comparison exists. In physics, composing transformations with gauge choices can similarly yield objects related by structured equivalence rather than equality.
 
-A causal loop, in this sense, is not paradoxical. It is a path whose endpoints may differ as concrete arrows but agree at the appropriate semantic scale. The parentheses do not disappear. They become geometry—and that geometry can be used to reason about composition, algorithms, and security.
+The bicategorical viewpoint says that these differences need not be erased. Instead, one records a translation between bracketings and imposes laws on translations. Coherence then guarantees that large calculations do not depend ambiguously on the route chosen through a maze of local regroupings.
+
+Four arrows already reveal why that guarantee matters. There are five complete ways to parenthesize them, from $((f\bigstar g)\bigstar h)\bigstar i$ to $f\bigstar(g\bigstar(h\bigstar i))$. These five arrangements form the vertices of the associator pentagon. In the numerical example, four copies of $1$ produce vertex values $7$, $9$, $9$, $11$, and $15$. The repeated value $9$ is an accident of arithmetic; most vertices remain unequal. Yet the two standard routes from the fully left-associated expression to the fully right-associated one determine the same higher arrow. The pentagon law is therefore a consistency rule for changing perspective, not a claim that all intermediate calculations have the same numerical value.
+
+This distinction resembles converting between coordinate systems. Two coordinate descriptions need not be identical strings of numbers, but translations between them must compose consistently. If one chain of legitimate conversions gave a different answer from another chain with the same endpoints, the language of description would be unreliable. Bicategorical coherence prevents precisely that kind of path dependence.
+
+The numerical example is intentionally extreme: it installs exactly one comparison between any pair. That makes coherence transparent but also collapses all interesting higher symmetries. If there were several two-dimensional automorphisms, the pentagon would become a genuine equation with content, closely related in one-object settings to a three-cocycle condition. Here, uniqueness is a microscope: it removes distractions so that the distinction between strict equality and coherent equivalence can be seen directly.
+
+## The lesson of $5$ and $7$
+
+The construction establishes four concrete facts. The twisted operation has a two-sided identity. It is nonassociative, witnessed by the values $5$ and $7$. Unique invertible higher arrows control every reassociation and satisfy the pentagon and triangle laws. Finally, no strict structure can retain the same composition.
+
+Together these facts overturn a common intuition. Consistency does not require every compositional loop to close by equality. It can close one dimension higher.
+
+That principle is one of the organizing ideas of modern mathematics. Equations remain important, but they are no longer the only way to express sameness. Sometimes the correct record of a calculation is not that two outcomes coincide, but that a canonical reversible bridge connects them—and that every network of such bridges fits together. In this small world, $5$ stays $5$, $7$ stays $7$, and mathematics remains coherent precisely because it refuses to pretend otherwise.

@@ -509,16 +509,6 @@
       "quality_score": 0.68,
       "sorry_count": 0,
       "theorem_count": 4,
-      "timestamp": "2026-07-16T09:32:56",
-      "title": "ArXiv paper: A few remarks on the Baez-Duarte Criterion"
-    },
-    {
-      "cycle_id": "851ec568",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\n1. **Normalize to the paper's `Q_k`.** Extend scalars from `ℤ` to `ℝ` and define\n   `Q_k = k⁻¹ P_k`. The proved cumulative identity immediately yields the exact\n   Cesàro formula",
-      "quality_score": 0.68,
-      "sorry_count": 0,
-      "theorem_count": 4,
       "timestamp": "2026-07-16T09:33:32",
       "title": "ArXiv paper: A few remarks on the Baez-Duarte Criterion"
     },
@@ -2501,6 +2491,16 @@
       "theorem_count": 20,
       "timestamp": "2026-07-20T22:25:32",
       "title": "Speculative: Mathematics as an Evolving Ecosystem"
+    },
+    {
+      "cycle_id": "fc320765",
+      "domain": "Probability",
+      "key_insight": "# Future Directions\n\n## Results established\n\nThe accompanying Lean development proves the finite algebraic core of homological quantum error correction over `𝔽₂`.\n\n1. **Cellular CSS codes are chain co",
+      "quality_score": 0.69,
+      "sorry_count": 0,
+      "theorem_count": 24,
+      "timestamp": "2026-07-20T23:22:20",
+      "title": "Speculative: Topological Quantum Error Correction from Mathematical Structures"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-20T22:25:32",
+  "last_updated": "2026-07-20T23:22:20",
   "open_questions": [
     {
       "context": "",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "4b34e974",
-        "quality": 0.82,
-        "theorems": 16,
-        "title": "Moonshot: Dyson Sphere Mathematics — Energy Collection Optimization"
-      },
-      {
         "cycle_id": "4b281557",
         "quality": 0.82,
         "theorems": 19,
@@ -3823,6 +3817,12 @@
         "quality": 0.6,
         "theorems": 14,
         "title": "Rainbow Arithmetic Progression Threshold Conjecture"
+      },
+      {
+        "cycle_id": "fc320765",
+        "quality": 0.69,
+        "theorems": 24,
+        "title": "Speculative: Topological Quantum Error Correction from Mathematical Structures"
       }
     ],
     "Pythagorean": [

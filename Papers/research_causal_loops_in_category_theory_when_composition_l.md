@@ -1,380 +1,377 @@
-# Coherent Composition Loops: Strictification, Reassociation, and Hybrid Bounds
+# Causal Loops in Category Theory: A Concrete Genuinely Non-Strict Bicategory
 
 **Aristotle**  
 **20 July 2026**
 
 ## Abstract
 
-We study a minimal algebraic model in which composition is not associative as equality but is associative up to a specified proposition-valued invertible transformation. A controlled composition consists of a setoid of arrows, a binary operation, a weak unit, compatibility with the equivalence relation, an associator, and left and right unitors. Because transformations are proposition-valued, the model is locally thin: parallel transformations are unique, so the pentagon, triangle, and all higher coherence diagrams commute automatically. This identifies the construction as the locally thin, one-object fragment of bicategory theory, rather than as an unrestricted characterization of bicategories.
+We construct an explicit one-object bicategory whose one-dimensional composition is unital but genuinely nonassociative. The one-dimensional arrows are the natural numbers, the identity is $0$, and composition is the twisted operation
 
-We prove soundness of a structural reassociation calculus, construct the strict quotient and prove strict associativity and strict unit laws there, and exhibit an explicit three-arrow unital operation whose two triple composites are unequal but coherently equivalent. We also prove that bounded right-continuation traces separate bounded atomic words. Finally, we connect coherent reassociation to the cryptographic hybrid method: if an observer changes by at most $\delta$ across each coherent step, then a chain of $k+1$ steps changes its endpoint score by at most $(k+1)\delta$. Together, these results separate strict syntax from coherent semantics and quantify the observational cost of moving between parenthesizations.
+$$
+a\mathbin{\bigstar}b=
+\begin{cases}
+b,&a=0,\\
+a,&b=0,\\
+a+2b,&a,b>0.
+\end{cases}
+$$
+
+Between every pair of one-dimensional arrows there is exactly one two-dimensional arrow. These codiscrete hom-categories supply invertible associators and unitors, while uniqueness of parallel two-dimensional arrows forces the pentagon and triangle coherence equations. For the distinguished arrow $u=1$, the two bracketings of a triple are $(u\bigstar u)\bigstar u=5$ and $u\bigstar(u\bigstar u)=7$. Thus composition is not associative as an equality, although the two composites are linked by an invertible associator. We prove that no strict bicategory structure can preserve this fixed one-dimensional composition. We also give algorithms for evaluating composites, enumerating bracketings, and auditing coherence diagrams. The construction isolates a basic principle of higher-dimensional algebra: a failure of equality can be controlled by coherent equivalence.
 
 ## 1. Introduction
 
-Associativity permits an unambiguous reading of an iterated product. In a monoid, category, or algebra of functions, the equality
+Associativity permits parentheses to be suppressed. In a semigroup, $(ab)c=a(bc)$; in an ordinary category, the two composites of three compatible arrows are equal. Many mathematical and computational constructions, however, are naturally associative only up to a reversible comparison. Tensor products, spans, gluing operations, transformations with auxiliary choices, and staged process composition frequently behave this way. Bicategories capture this phenomenon by replacing the associativity equation with an invertible two-dimensional arrow and requiring these arrows to satisfy coherence laws.
+
+The purpose of this paper is to exhibit the distinction in a minimal, fully explicit example. We use a single object, natural numbers as one-dimensional arrows, and a composition law whose nonassociativity can be read from the elementary calculation $5\ne 7$. We then make each hom-category codiscrete: between any two one-dimensional arrows there is precisely one two-dimensional arrow. The associator therefore exists even when its endpoints are unequal, and all coherence diagrams commute because parallel two-dimensional arrows are unique.
+
+This example has three useful features. First, the defect of associativity is arithmetically visible. Second, the repair occurs strictly at the next categorical dimension: it never identifies distinct natural numbers. Third, the example cannot be made strict without changing the specified composition. It is therefore a genuinely non-strict bicategory on its fixed data, rather than a strict example equipped with redundant notation.
+
+The construction does not establish that every vaguely “loop-tolerant” algebraic structure is automatically a higher category. Such a statement requires specified dimensions, comparison cells, composition operations, and coherence axioms. What the example does establish is a precise local paradigm: an arbitrary associativity defect can be absorbed by invertible two-cells when the hom-categories provide suitable comparisons, and codiscreteness makes all required coherence automatic.
+
+## 2. Bicategorical preliminaries
+
+### 2.1. Bicategories
+
+A **bicategory** consists of the following data.
+
+1. A collection of objects $A,B,C,\ldots$.
+2. For every pair $(A,B)$, a category $\mathcal B(A,B)$. Its objects are called **one-cells** $f:A\to B$, and its morphisms are called **two-cells** $\eta:f\Rightarrow g$.
+3. For every triple of objects, a composition functor
 
 $$
-(x\circ y)\circ z=x\circ(y\circ z)
+\circ:\mathcal B(B,C)\times\mathcal B(A,B)\longrightarrow\mathcal B(A,C).
 $$
 
-allows parentheses to be omitted. Yet equality is often stronger than the intended semantics. Different evaluation trees can retain different operational histories while being interchangeable through a reversible comparison. Examples arise in staged protocols, transformations of computation graphs, compositional semantics, and cryptographic hybrid proofs.
-
-The appropriate weakening is not arbitrary nonassociativity. One asks instead for an invertible transformation
-
-$$
-\alpha_{x,y,z}:(x\circ y)\circ z\Longrightarrow x\circ(y\circ z),
-$$
-
-together with weak unit laws and coherence among all such transformations. In full bicategory theory, transformations between arrows form categories, and the pentagon and triangle equations are substantive axioms. Here we isolate a tractable boundary case: the transformation relation is proposition-valued. There is at most one transformation between fixed endpoints. This **local thinness** makes every pair of parallel coherence paths equal.
-
-The resulting model retains a genuine distinction between equality and coherent equivalence. It also supports two complementary views. The high-resolution view remembers arrows, parentheses, and transformations. The low-resolution view identifies coherently equivalent arrows; its induced composition is an ordinary associative unital operation. This quotient is a strictification at the level of equivalence classes.
-
-A second theme is observational. Parenthesizations form vertices of the associahedron, and elementary associator moves form its edges. A real-valued observer on evaluated arrows can be compared along an edge path. The triangle inequality then becomes a hybrid argument: local stability accumulates linearly along a chain. This supplies a precise bridge to cryptographic game hopping.
-
-The paper makes five contributions. First, it defines controlled composition and explains its bicategorical scope. Second, it proves structural reassociation soundness and automatic coherence. Third, it constructs and analyzes a minimal three-arrow witness of strict nonassociativity. Fourth, it proves strictification and bounded trace separation. Fifth, it derives a quantitative endpoint bound for coherent hybrid chains.
-
-## 2. Controlled composition
-
-### 2.1. Basic definition
-
-A **setoid** is a set $M$ equipped with an equivalence relation $\sim$. A **controlled composition** on $(M,\sim)$ consists of:
-
-- a binary operation $\circ:M\times M\to M$;
-- a distinguished element $e\in M$;
-- compatibility of composition with equivalence: if $a\sim a'$ and $b\sim b'$, then $a\circ b\sim a'\circ b'$;
-- for every $a,b,c\in M$, an associator relation
+4. For each object $A$, an identity one-cell $1_A:A\to A$.
+5. For composable one-cells $f,g,h$, a natural invertible two-cell, the **associator**,
 
 $$
-(a\circ b)\circ c\sim a\circ(b\circ c);
+\alpha_{f,g,h}:(f\circ g)\circ h\Rightarrow f\circ(g\circ h).
 $$
 
-- for every $a\in M$, left and right unitor relations
+6. For each one-cell $f:A\to B$, invertible left and right unitors
 
 $$
-e\circ a\sim a,
+\lambda_f:1_B\circ f\Rightarrow f,
 \qquad
-a\circ e\sim a.
+\rho_f:f\circ 1_A\Rightarrow f.
 $$
 
-A **2-cell** from $a$ to $b$ is a witness of $a\sim b$. Since this assertion is proposition-valued, any two 2-cells with the same source and target coincide. Reflexivity gives identity 2-cells, symmetry gives inverses, and transitivity gives vertical composition. Compatibility of $\circ$ gives horizontal composition.
+The associator and unitors must satisfy the pentagon and triangle equations. We use a left-to-right notation $igstar$ for the concrete one-cell composition below; the role of source and target is harmless because the example has one object.
 
-This definition deliberately distinguishes equality $=$ from equivalence $\sim$. The former records strict identity of arrows. The latter records invertible semantic comparison.
-
-### 2.2. Scope and bicategorical interpretation
-
-A controlled composition is the one-object, locally thin shadow of a bicategory. Its elements behave as 1-cells of the single object, and its equivalence witnesses behave as invertible 2-cells. The associator and unitors provide the expected weak structural laws. Local thinness supplies coherence.
-
-It is important not to overstate this conclusion. Merely specifying a binary operation that is associative “up to some isomorphism” does not produce a bicategory. In a non-thin setting one must provide typed 2-cells, functorial horizontal composition, natural associators and unitors, and explicit pentagon and triangle laws. The present model packages exactly the thin case, in which those diagrams commute because their parallel sides cannot be distinct.
-
-### 2.3. Automatic coherence
-
-**Theorem 2.1 (Uniqueness of parallel 2-cells).** For any $a,b\in M$, any two 2-cells from $a$ to $b$ are equal.
-
-**Proof sketch.** A 2-cell is a proof of the proposition $a\sim b$. Proposition-valued witnesses are subsingletons, so two witnesses of the same proposition coincide. $\square$
-
-**Theorem 2.2 (Associator pentagon).** Let $a,b,c,d\in M$. Any two composite 2-cells from
+For four composable one-cells $f,g,h,i$, the **pentagon equation** says that the two canonical composites of associators from $((f\bigstar g)\bigstar h)\bigstar i$ to $f\bigstar(g\bigstar(h\bigstar i))$ are equal. Suppressing whiskering notation, its structural form is
 
 $$
-(((a\circ b)\circ c)\circ d)
+(\alpha_{f,g,h}\bigstar 1_i)\,;
+\alpha_{f,g\bigstar h,i}\,;
+(1_f\bigstar\alpha_{g,h,i})
+=
+\alpha_{f\bigstar g,h,i}\,;
+\alpha_{f,g,h\bigstar i}.
 $$
 
-to
+The **triangle equation** compares reassociation past an identity with the two unitors. In structural notation it is
 
 $$
-a\circ(b\circ(c\circ d))
+\alpha_{f,1,g}\,;(1_f\bigstar\lambda_g)
+=
+\rho_f\bigstar 1_g.
 $$
 
-are equal. In particular, the upper and lower routes around the associator pentagon agree.
+These equations guarantee that repeated reassociation and removal of identities do not introduce path-dependent ambiguity.
 
-**Proof sketch.** Both routes are parallel 2-cells with the displayed source and target. Theorem 2.1 identifies them. The same argument applies to triangle diagrams and all higher pasting diagrams whose boundary 2-cells are parallel. $\square$
+### 2.2. Strict bicategories
 
-The proof is short because the structural restriction is strong. It does not make coherence unimportant; it makes coherence a consequence of local thinness.
-
-## 3. A calculus of parenthesized expressions
-
-### 3.1. Expressions and evaluation
-
-A **composition expression** over $M$ is a finite binary tree defined recursively. An atom $[a]$ is an expression for every $a\in M$. If $x$ and $y$ are expressions, then $(x\,y)$ is an expression. Its evaluation is
+A bicategory is **strict** when the associativity and identity laws hold as literal equalities of one-cells and the structural comparisons are identities. In particular, strictness forces
 
 $$
-\operatorname{ev}([a])=a,
+(f\bigstar g)\bigstar h=f\bigstar(g\bigstar h)
 $$
 
-$$
-\operatorname{ev}((x\,y))=\operatorname{ev}(x)\circ\operatorname{ev}(y).
-$$
+for every composable triple. A non-strict bicategory permits unequal endpoints connected by an invertible associator.
 
-This syntax retains parentheses explicitly. Different binary trees with the same ordered leaves can evaluate to unequal arrows.
+### 2.3. Codiscrete categories
 
-### 3.2. Structural reassociation
+A category is **codiscrete** if for every ordered pair of objects $x,y$ there is exactly one morphism $x\to y$. The unique morphisms $x\to y$ and $y\to x$ are mutually inverse: their composites are endomorphisms, and each endpoint has only one endomorphism, necessarily its identity.
 
-Define a relation $x\rightsquigarrow y$, called **structural reassociation**, as the least relation generated by the following rules:
+**Lemma 2.1 (Codiscrete invertibility).** In a codiscrete category, every morphism is an isomorphism.
 
-1. **Reflexivity:** $x\rightsquigarrow x$.
-2. **Symmetry:** if $x\rightsquigarrow y$, then $y\rightsquigarrow x$.
-3. **Transitivity:** if $x\rightsquigarrow y$ and $y\rightsquigarrow z$, then $x\rightsquigarrow z$.
-4. **Left context:** if $x\rightsquigarrow y$, then $(x\,z)\rightsquigarrow(y\,z)$.
-5. **Right context:** if $y\rightsquigarrow z$, then $(x\,y)\rightsquigarrow(x\,z)$.
-6. **Associator move:** $((x\,y)\,z)\rightsquigarrow(x\,(y\,z))$.
+**Proof sketch.** Let $p:x\to y$ be the unique morphism and let $q:y\to x$ be the unique reverse morphism. Both $q\circ p$ and $1_x$ are morphisms $x\to x$, hence they agree. Similarly, $p\circ q=1_y$. Thus $q$ is the inverse of $p$. $\square$
 
-Rules 4 and 5 are often called whiskering or contextual closure. They allow a local tree rotation at any depth.
+**Lemma 2.2 (Uniqueness of parallel two-cells).** If a hom-category is codiscrete, then any two two-cells $\eta,\theta:f\Rightarrow g$ are equal.
 
-**Theorem 3.1 (Reassociation soundness).** If $x\rightsquigarrow y$, then
+**Proof sketch.** Codiscreteness asserts that the morphism set from $f$ to $g$ has one element. $\square$
 
-$$
-\operatorname{ev}(x)\sim\operatorname{ev}(y).
-$$
+The second lemma is the engine of coherence in our example. Every side of a coherence equation is a two-cell with the same source and target, so the two sides agree.
 
-**Proof sketch.** Induct on the derivation of $x\rightsquigarrow y$. Reflexivity uses reflexivity of $\sim$. Symmetry inverts a 2-cell. Transitivity vertically composes two 2-cells. Left and right contextual rules use compatibility of $\circ$ with $\sim$, pairing the inductive 2-cell with an identity 2-cell on the unchanged argument. The generating rotation uses the associator. These cases exhaust the construction. $\square$
+## 3. The twisted unital magma
 
-The theorem gives every syntactic path through the associahedron a semantic interpretation. In the locally thin setting, any two paths with common endpoints yield the same 2-cell.
-
-### 3.3. Associahedral geometry
-
-For a fixed ordered word of $n$ atoms, binary parenthesizations are vertices of the $(n-2)$-dimensional associahedron. Elementary rotations are edges. The soundness theorem says that evaluation maps every edge to an invertible 2-cell. The pentagon for four atoms is the two-dimensional face expressing agreement of alternative reassociation paths.
-
-This geometric view is useful computationally. A reassociation algorithm is a path-search procedure on a finite graph. Its path length controls both runtime and, under an observational stability hypothesis, cumulative drift.
-
-## 4. A finite nonassociative witness
-
-### 4.1. The composition table
-
-Let
+Let $M=\mathbb N$. Define $igstar:M\times M\to M$ by
 
 $$
-L=\{e,a,b\}
+a\mathbin{\bigstar}b=
+\begin{cases}
+b,&a=0,\\
+a,&a\ne0\text{ and }b=0,\\
+a+2b,&a\ne0\text{ and }b\ne0.
+\end{cases}
+\tag{3.1}
 $$
 
-and define composition by the table
+The first clause takes priority when both arguments vanish, although both identity requirements give the same result.
+
+**Proposition 3.1 (Two-sided unit).** The element $0$ is a two-sided identity for $igstar$. For every $a\in\mathbb N$,
 
 $$
-\begin{array}{c|ccc}
-\circ & e & a & b\\ \hline
-e & e & a & b\\
-a & a & b & a\\
-b & b & e & b
-\end{array}.
-$$
-
-The first row and first column show that $e$ is a strict two-sided identity. The remaining equations are
-
-$$
-a\circ a=b,\qquad a\circ b=a,
-$$
-
-$$
-b\circ a=e,\qquad b\circ b=b.
-$$
-
-Equip $L$ with the indiscrete equivalence relation: $x\sim y$ for all $x,y\in L$. It is an equivalence relation, composition respects it, and every required associator and unitor exists. Since each relation is proposition-valued, parallel 2-cells are unique.
-
-**Theorem 4.1 (Strict nonassociativity with coherent comparison).** In the preceding controlled composition,
-
-$$
-(a\circ a)\circ a=e,
-$$
-
-while
-
-$$
-a\circ(a\circ a)=a.
-$$
-
-Hence $(a\circ a)\circ a\ne a\circ(a\circ a)$, but an invertible 2-cell relates the two composites.
-
-**Proof sketch.** The table gives $a\circ a=b$. Therefore the left-associated result is $b\circ a=e$, whereas the right-associated result is $a\circ b=a$. The symbols $e$ and $a$ are distinct. The indiscrete relation nevertheless gives $e\sim a$, and that witness is the associator for this triple. $\square$
-
-This example proves that coherent associativity need not collapse into strict associativity. Three arrows suffice for the separation exhibited here. The example is intentionally maximally thin: it witnesses unequal 1-cells but not distinct parallel 2-cells.
-
-## 5. Strictification by quotient
-
-Let $M/{\sim}$ denote the set of equivalence classes, and write $[x]$ for the class of $x$. Define
-
-$$
-[x]\star[y]=[x\circ y].
-$$
-
-**Lemma 5.1 (Well-defined quotient composition).** The operation $\star$ does not depend on the choice of representatives.
-
-**Proof sketch.** If $x\sim x'$ and $y\sim y'$, compatibility gives $x\circ y\sim x'\circ y'$. Thus the two composites determine the same equivalence class. $\square$
-
-**Theorem 5.2 (Strict Quotient Theorem).** For all $[x],[y],[z]\in M/{\sim}$,
-
-$$
-([x]\star[y])\star[z]=[x]\star([y]\star[z]).
-$$
-
-Moreover, $[e]$ is a strict two-sided identity:
-
-$$
-[e]\star[x]=[x],
+0\mathbin{\bigstar}a=a,
 \qquad
-[x]\star[e]=[x].
+a\mathbin{\bigstar}0=a.
 $$
 
-**Proof sketch.** The left side of associativity is the class of $(x\circ y)\circ z$ and the right side is the class of $x\circ(y\circ z)$. The associator places these representatives in the same class. The left and right unitor relations similarly identify $e\circ x$ and $x\circ e$ with $x$. $\square$
+**Proof.** The first equality is the first clause of (3.1). For the second, if $a=0$, the first clause yields $0\bigstar0=0$; if $a\ne0$, the second clause yields $a\bigstar0=a$. $\square$
 
-**Corollary 5.3 (Strictification of the three-arrow witness).** In the quotient of the three-arrow example,
+Thus $(\mathbb N,\bigstar,0)$ is a unital magma. It is not a monoid.
 
-$$
-[(a\circ a)\circ a]=[a\circ(a\circ a)].
-$$
-
-**Proof sketch.** Theorem 4.1 supplies the equivalence between the representatives, so their classes agree. In fact, the indiscrete relation makes this particular quotient a singleton. $\square$
-
-The quotient theorem precisely locates the obstruction to strictness. Before quotienting, the operation can remember implementation-level distinctions. After quotienting, associators and unitors become equality.
-
-## 6. Bounded traces as strict fingerprints
-
-Let $A$ be any alphabet and let $A^*$ be its finite words. For a radius $R\in\mathbb N$ and a word $w\in A^*$, define the **bounded right-continuation trace**
+**Proposition 3.2 (Explicit associativity defect).** With $u=1$,
 
 $$
-T_R(w)=\{z\in A^*: |z|\le R\text{ and }z=w\,t\text{ for some }t\in A^*\}.
+(u\mathbin{\bigstar}u)\mathbin{\bigstar}u=5,
+\qquad
+u\mathbin{\bigstar}(u\mathbin{\bigstar}u)=7.
 $$
 
-Thus $T_R(w)$ is the portion, within the length bound $R$, of the principal right ideal generated by $w$. It records every admissible continuation of $w$.
+In particular, $igstar$ is not associative.
 
-**Lemma 6.1 (Self-membership).** If $|w|\le R$, then $w\in T_R(w)$.
-
-**Proof sketch.** Choose the continuation $t$ to be the empty word. Then $w=w\,t$, and the length condition holds by assumption. $\square$
-
-**Theorem 6.2 (Bounded Trace Separation).** Let $w,w'\in A^*$ satisfy $|w|\le R$ and $|w'|\le R$. If
+**Proof.** Since all entries are positive,
 
 $$
-T_R(w)=T_R(w'),
+u\bigstar u=1+2=3.
 $$
 
-then $w=w'$.
-
-**Proof sketch.** By Lemma 6.1, $w\in T_R(w)$; equality of traces gives $w\in T_R(w')$, so $w=w't$ for some $t$. Hence $w'$ is a prefix of $w$. Symmetrically, $w'$ lies in $T_R(w)$, so $w$ is a prefix of $w'$. Finite words that are mutual prefixes are equal. $\square$
-
-**Corollary 6.3 (Atomic-expression separation).** Under the hypotheses of Theorem 6.2, replacing every letter of $w$ and $w'$ by the corresponding atomic composition expression produces equal lists of atoms.
-
-This result concerns strict words, not quotient classes. It therefore complements strictification. The trace recognizes the exact generator sequence within the bound, while coherent equivalence determines which evaluated expressions may later be identified. In cryptographic language, the trace behaves as a complete bounded fingerprint for atomic syntax.
-
-## 7. Coherent reassociation as a hybrid argument
-
-### 7.1. The real telescope
-
-The numerical engine is a standard consequence of the triangle inequality.
-
-**Lemma 7.1 (Finite Hybrid Telescope).** Let $k\in\mathbb N$ and let
+Therefore
 
 $$
-p_0,p_1,\ldots,p_{k+1}\in\mathbb R.
+(u\bigstar u)\bigstar u=3\bigstar1=3+2=5,
 $$
 
-Then
+whereas
 
 $$
-|p_0-p_{k+1}|\le\sum_{i=0}^{k}|p_i-p_{i+1}|.
+u\bigstar(u\bigstar u)=1\bigstar3=1+6=7.
 $$
 
-**Proof sketch.** Write
+The natural numbers $5$ and $7$ are unequal. $\square$
+
+The defect is not isolated. For positive $a,b,c$, direct expansion gives
 
 $$
-p_0-p_{k+1}=(p_0-p_1)+(p_1-p_2)+\cdots+(p_k-p_{k+1}).
+(a\bigstar b)\bigstar c=a+2b+2c,
 $$
 
-Repeated application of $|u+v|\le |u|+|v|$ yields the result. Equivalently, proceed by induction on $k$, splitting off the last segment. $\square$
-
-### 7.2. Observer stability
-
-Let $s:M\to\mathbb R$ be an observer or score. Fix $\delta\in\mathbb R$. Say that $s$ is **$\delta$-stable under coherent equivalence** if
+and
 
 $$
-x\sim y\quad\Longrightarrow\quad |s(x)-s(y)|\le\delta.
+a\bigstar(b\bigstar c)=a+2b+4c.
 $$
 
-In applications, $s(x)$ may be an acceptance probability, a statistical score, a cost, or another real observable. The hypothesis is meaningful only when such local comparisons are available. If coherent equivalence preserves the observer exactly, one may take $\delta=0$.
+Hence the right-associated result exceeds the left-associated result by $2c$ whenever $c>0$. The unit clauses create special cases containing $0$, but the positive region displays systematic nonassociativity.
 
-### 7.3. Endpoint bound
-
-**Theorem 7.2 (Reassociation Hybrid Bound).** Let
+**Proposition 3.3 (Positive triple defect formula).** For $a,b,c>0$,
 
 $$
-E_0,E_1,\ldots,E_{k+1}
+a\bigstar(b\bigstar c)-((a\bigstar b)\bigstar c)=2c.
 $$
 
-be composition expressions such that $E_i\rightsquigarrow E_{i+1}$ for every $0\le i\le k$. If $s$ is $\delta$-stable under coherent equivalence, then
+**Proof.** Under positivity every composition uses the third clause of (3.1). Expanding both sides as above and subtracting gives $2c$. $\square$
+
+## 4. Construction of the bicategory
+
+Define a structure $\mathcal L$ as follows.
+
+- There is one object, denoted $\ast$.
+- The one-cells $\ast\to\ast$ are the natural numbers.
+- The identity one-cell is $0$.
+- The composite of one-cells $a$ and $b$ is $a\bigstar b$.
+- For every pair of one-cells $m,n$, there is exactly one two-cell $m\Rightarrow n$.
+- Vertical composition, horizontal composition, and whiskering are the unique two-cells with the required boundaries.
+- The associator $\alpha_{a,b,c}$ is the unique two-cell
 
 $$
-\left|s(\operatorname{ev}(E_0))-s(\operatorname{ev}(E_{k+1}))\right|
-\le(k+1)\delta.
+(a\bigstar b)\bigstar c\Rightarrow a\bigstar(b\bigstar c).
 $$
 
-**Proof sketch.** Define
+- The left and right unitors are the unique two-cells with the required unit boundaries.
+
+Because $0$ is a strict unit for the underlying magma, the unitor endpoints are already equal as natural numbers. This is convenient but not essential to the codiscrete method: unique isomorphisms could also bridge unequal unit composites.
+
+**Theorem 4.1 (Codiscrete bicategory construction).** The data above define a bicategory.
+
+**Proof sketch.** For the unique object, the hom-category has natural numbers as objects and a singleton morphism set between every pair. Identity and vertical composition are forced by uniqueness and satisfy the category axioms. The operation $igstar$ specifies one-cell composition. On two-cells, the composition functor and whiskering operations are again forced, because each relevant target hom-set is a singleton.
+
+For each triple, the required associator exists and is invertible by Lemma 2.1. The left and right unitors exist and are invertible for the same reason. Naturality conditions compare parallel two-cells and therefore follow from Lemma 2.2. Finally, each side of the pentagon equation is a two-cell between the same two bracketed composites, so the sides are equal. The same argument proves the triangle equation. Hence all bicategory axioms hold. $\square$
+
+**Corollary 4.2 (Controlled reassociation).** For every $f,g,h\in\mathbb N$, there is an invertible two-cell
 
 $$
-p_i=s(\operatorname{ev}(E_i)).
+\alpha_{f,g,h}:
+(f\bigstar g)\bigstar h
+\Longrightarrow
+f\bigstar(g\bigstar h).
 $$
 
-By Theorem 3.1, each adjacent reassociation gives
+**Proof.** This is the associator supplied by Theorem 4.1. Its inverse is the unique two-cell in the reverse direction. $\square$
+
+**Corollary 4.3 (The $5$–$7$ associator).** There is an invertible two-cell $5\Rightarrow7$ connecting the two composites of three copies of $u=1$.
+
+**Proof.** Proposition 3.2 identifies the source and target of $\alpha_{1,1,1}$ as $5$ and $7$. $\square$
+
+It is important that Corollary 4.3 does not imply $5=7$. Natural-number equality concerns equality of one-cells. The associator is instead a morphism inside the hom-category, hence a two-cell of the bicategory.
+
+## 5. Coherence
+
+### 5.1. The pentagon
+
+For four one-cells, there are five full binary bracketings. Associators connect adjacent rebracketings, producing the classical pentagon. In a general bicategory, proving the equality of the two routes is substantive. Here, both routes are parallel two-cells.
+
+**Theorem 5.1 (Pentagon coherence).** For all $f,g,h,i\in\mathbb N$, the two canonical composites of associators from $((f\bigstar g)\bigstar h)\bigstar i$ to $f\bigstar(g\bigstar(h\bigstar i))$ are equal.
+
+**Proof.** Both routes have the same source and target. The relevant two-cell set is a singleton, so Lemma 2.2 identifies them. $\square$
+
+### 5.2. The triangle
+
+**Theorem 5.2 (Triangle coherence).** For all $f,g\in\mathbb N$, the reassociation route involving $f\bigstar0\bigstar g$ agrees with the route using the right unitor of $f$ and the left unitor of $g$.
+
+**Proof.** The two routes are parallel two-cells. Codiscrete uniqueness forces equality. $\square$
+
+### 5.3. General diagrammatic coherence in the example
+
+**Theorem 5.3 (Parallel-cell coherence).** Every pair of parallel two-cells in $\mathcal L$ is equal. Consequently, every diagram of two-cells whose paths share endpoints commutes.
+
+**Proof.** Every two-cell hom-set is a singleton. Any two path composites with common endpoints belong to that singleton. $\square$
+
+This theorem is stronger than the individual pentagon and triangle equations for this particular example. It explains why no additional higher ambiguity remains: the space of comparisons has been made contractible in the strongest elementary sense, with one arrow between any two one-cells.
+
+## 6. Genuine non-strictness
+
+The existence of coherent associators does not make the chosen one-cell composition associative. Indeed, it records precisely how the two bracketings differ.
+
+**Theorem 6.1 (No strict structure on the fixed composition).** There is no strict bicategory having the same sole object, the same natural-number one-cells, identity $0$, and composition $igstar$.
+
+**Proof.** Suppose such a strict structure existed. Strict associativity, applied to $u=1$, would imply
 
 $$
-\operatorname{ev}(E_i)\sim\operatorname{ev}(E_{i+1}).
+(u\bigstar u)\bigstar u=u\bigstar(u\bigstar u).
 $$
 
-Stability therefore yields $|p_i-p_{i+1}|\le\delta$. Apply Lemma 7.1 and bound the sum of $k+1$ terms by $(k+1)\delta$. $\square$
+By Proposition 3.2, the left side is $5$ and the right side is $7$. This would give $5=7$, a contradiction. $\square$
 
-The theorem is the familiar hybrid method expressed in coherence language. An elementary reassociation is one game hop. The endpoint distinguishing gap is no larger than the sum of local gaps.
+The qualifier “on the fixed composition” is essential. The theorem is an obstruction to strictness as equality without altering the underlying one-cell data. It does not deny the possibility of a different strict two-category biequivalent to $\mathcal L$. Strictification up to biequivalence changes the standard of sameness and may replace the original one-cells by more elaborate representatives.
 
-A small numerical illustration uses scores
+## 7. Algorithms and computational exploration
+
+Although the coherence proof is structural, finite calculations illuminate the construction.
+
+### 7.1. Twisted composition evaluation
+
+Given $a,b\in\mathbb N$, evaluate (3.1) by testing for the identity cases and otherwise returning $a+2b$. This takes constant time in a unit-cost arithmetic model and bit complexity linear in the output bit length under standard integer arithmetic.
+
+For a parenthesized expression, recursively evaluate the left and right subexpressions and apply $igstar$. An expression with $n$ leaves requires exactly $n-1$ composition calls, so its structural running time is $O(n)$, apart from integer bit costs.
+
+### 7.2. Enumeration of bracketings
+
+All full parenthesizations of $n$ inputs can be generated recursively. Split the input after position $k$, generate every bracketing of the left and right blocks, and combine every pair. The number of outputs is the Catalan number
 
 $$
-0.12,\ 0.15,\ 0.19,\ 0.18,\ 0.22.
+C_{n-1}=\frac{1}{n}\binom{2n-2}{n-1}.
 $$
 
-The four local drifts are $0.03$, $0.04$, $0.01$, and $0.04$, whose sum is $0.12$. The endpoint drift is $0.10$, so the telescope holds. With the uniform local bound $\delta=0.04$, Theorem 7.2 gives the slightly looser estimate $0.16$.
+Any complete enumeration therefore requires $\Omega(C_{n-1})$ output operations. Memoizing subintervals avoids repeated generation work, though materializing all trees still has Catalan-scale space usage.
 
-### 7.4. Algorithmic form
-
-Given an explicit path $E_0,\ldots,E_n$ and computed scores $p_0,\ldots,p_n$, one can audit the bound in one pass. Compute every local drift $d_i=|p_i-p_{i+1}|$, their sum $D=\sum_i d_i$, the maximum $\delta=\max_i d_i$, and the endpoint gap $G=|p_0-p_n|$. Then
+For four copies of $1$, the five bracketings evaluate as follows:
 
 $$
-G\le D\le n\delta.
+((1\bigstar1)\bigstar1)\bigstar1=7,
 $$
 
-The procedure takes $O(n)$ time and $O(1)$ auxiliary space if the local values are streamed. Finding a shortest reassociation path is a separate graph problem on parenthesizations. For a fixed word length, breadth-first search gives an unweighted shortest path in time linear in the explored associahedron graph, though the number of vertices is the corresponding Catalan number.
+$$
+(1\bigstar(1\bigstar1))\bigstar1=9,
+$$
 
-## 8. Applications
+$$
+(1\bigstar1)\bigstar(1\bigstar1)=9,
+$$
 
-### 8.1. Cryptographic game hopping
+$$
+1\bigstar((1\bigstar1)\bigstar1)=11,
+$$
 
-A security proof often replaces a real experiment by an ideal one through intermediate games. If each replacement changes an adversary's success probability by at most $\delta_i$, then the total distinguishing advantage is at most $\sum_i\delta_i$. Theorem 7.2 shows that changes of parenthesization can be treated in exactly this way whenever each coherent transformation has a local observational guarantee.
+$$
+1\bigstar(1\bigstar(1\bigstar1))=15.
+$$
 
-This perspective is especially useful when composition order records protocol structure. Strictification says the endpoint semantics is associative after quotienting; the hybrid bound says how much a non-invariant observer may drift before that quotient is taken.
+These unequal values are the vertices connected by the associator pentagon. The coherence theorem concerns equality of the two-dimensional path composites, not equality of these vertex labels.
 
-### 8.2. Computation trees and batching
+### 7.3. Coherence auditing
 
-Parallel reductions and compiler rewrites routinely alter binary evaluation trees. Exact arithmetic may make these changes invisible, while floating-point arithmetic, resource accounting, or side-channel observables may not. A controlled composition separates semantic interchangeability from literal execution identity. A weighted extension could attach costs to tree rotations and optimize a reassociation schedule.
+A finite coherence audit can represent a bracketing as a binary tree and an elementary associator as the local rotation
 
-### 8.3. Collision analysis
+$$
+((X\bigstar Y)\bigstar Z)\longleftrightarrow
+(X\bigstar(Y\bigstar Z)).
+$$
 
-Bounded traces distinguish strict generator words. Quotienting by coherence may identify their evaluations. Secure composition therefore requires a disciplined relationship between syntactic fingerprints and semantic equivalence. The present results identify the two mechanisms cleanly but do not yet prove a general collision-resistance theorem for non-thin bicategories.
+One can enumerate rotation paths between two trees. In the present bicategory, every such path denotes the unique two-cell between the evaluated endpoints. Thus the semantic comparison of paths is constant-time once common endpoints have been checked. In a non-codiscrete extension, path labels would need to be multiplied and compared, making the pentagon a genuine algebraic constraint.
 
-## 9. Limitations and discussion
+## 8. Applications and interpretation
 
-The locally thin hypothesis is both the source of clarity and the main limitation. It collapses all parallel 2-cells, so the pentagon is automatic. Consequently, the three-arrow model cannot display a nontrivial choice between distinct coherence witnesses. A faithful higher-dimensional model must retain multiple 2-cells and verify coherence relations explicitly.
+### 8.1. Staged computation
 
-The indiscrete equivalence relation is also extreme. It is ideal for separating strict inequality from coherent equivalence, but its quotient forgets everything. More selective relations would preserve nontrivial quotient structure and make observer stability more informative.
+A composite process may retain scheduling information. Grouping $f$ with $g$ before attaching $h$ can produce a different execution object from attaching $g$ to $h$ first. A reversible scheduler transformation may connect the results without making them identical. Associators encode these transformations, while the pentagon says that reorganizing a four-stage process by two standard routes gives the same global translation.
 
-The hybrid estimate is worst-case and path-dependent. The factor $(k+1)\delta$ ignores cancellation and treats all edges uniformly. The sharper telescope $\sum_i\delta_i$ is available when edge-specific bounds are known. A shortest-path formulation with nonnegative edge costs suggests a quantitative geometry of coherence.
+### 8.2. Gluing and geometry
 
-Finally, bounded traces classify words only under the explicit length hypotheses. If $|w|>R$, the trace may be empty and cannot identify $w$. The radius is therefore part of the fingerprinting specification, not an incidental parameter.
+Geometric objects assembled in stages often depend on choices of representatives, collars, coordinates, or pullbacks. Two bracketings of a gluing operation may be canonically isomorphic rather than equal. Bicategorical language preserves this distinction. The codiscrete model strips away geometry but retains the logical pattern: unequal composites, invertible comparison, coherent rebracketing.
 
-## 10. Future work
+### 8.3. Semantics and interfaces
 
-A first direction is a finite non-thin one-object bicategory with genuinely distinct parallel 2-cells, a nonidentity associator, and a decidable rewriting presentation of the pentagon. Such an example would preserve higher-dimensional information erased by local thinness.
+In compositional semantics, equality can be too rigid when intermediate interfaces differ. A two-cell may represent a refactoring, protocol adapter, or semantic equivalence. Coherence ensures that nested refactorings have a stable meaning independent of local reassociation choices.
 
-A second direction is **quantitative coherence leakage**. Assign a nonnegative subadditive cost to each 2-cell. One may then ask whether the maximal observational drift between parenthesizations equals the minimum path cost and whether this distance descends through pentagon and triangle relations.
+### 8.4. Causal-loop metaphor
 
-A third direction concerns collision resistance under weak composition. If bounded left and right principal-ideal traces separate words, one expects quotient collision resistance precisely when unit-preserving 2-cells introduce no unintended identifications between distinct generator words.
+The phrase “causal loop” is useful if interpreted structurally rather than temporally. Repeated composition can return to comparable descriptions through different parenthesized routes. The loop closes not because all intermediate one-cells become equal, but because the higher comparisons around the loop agree. The pentagon is the first nontrivial global test of this closure.
 
-A fourth direction uses sharp rotation-distance bounds in associahedra. If two parenthesizations of a word of length $n$ can always be joined by a controlled number of rotations, then the same diameter estimate bounds the length of the necessary hybrid chain. For sufficiently large $n$, the proposed target is $2n-6$ moves.
+## 9. Limitations and scope
+
+Codiscreteness is both the strength and limitation of the construction. It makes every required comparison available and every coherence equation automatic. As a result, the example demonstrates genuine non-strictness at the one-cell level but has no nontrivial choice among two-cells. It cannot model competing higher transformations or detect a failure of the pentagon, because parallel two-cells are never distinct.
+
+The phrase “almost-category” should therefore be used with care. A nonassociative composition alone does not determine a bicategory. One must add hom-categories, functorial horizontal composition, invertible associators and unitors, naturality, and coherence. Our construction succeeds because all these data are explicitly provided. Likewise, the broad claim that every coherent loop-tolerant algebra forms a higher category becomes meaningful only after the dimensions and coherence axioms are specified.
+
+The example is one-object and hence algebraic. Multiple objects would introduce typing restrictions on composition and could encode networks of processes or geometric correspondences. Nontrivial two-cell automorphism groups would transform the coherence laws from tautologies into equations with genuine content.
+
+## 10. Future directions
+
+A first generalization replaces the particular twisted magma by an arbitrary unital magma. Giving its elements as one-cells of a one-object structure and making the hom-category codiscrete should turn every associativity and unit defect into a unique invertible two-cell. This would isolate the exact minimal data needed for functorial horizontal composition.
+
+A second direction replaces singleton two-cell sets by a nontrivial automorphism group. Associators could then carry labels, and the pentagon would become a cocycle equation rather than a consequence of uniqueness. For skeletal one-object bicategories, this leads naturally toward normalized group-cohomological three-cocycles and obstruction theory.
+
+A third direction compares strictness on fixed data with strictification up to biequivalence. Theorem 6.1 forbids literal strictness for the specified operation, but does not preclude replacement by an equivalent strict two-category. Making that contrast explicit would clarify precisely which data strictification preserves.
+
+A fourth direction moves to tricategories, where transformations between associators are themselves related by invertible three-cells. This is the appropriate setting for iterated coherence in which loops among two-dimensional comparisons close one level higher.
+
+Finally, finite unital magmas can be enumerated and classified by their associativity defects. Computation can measure how many triples are nonassociative, build rebracketing graphs, and test candidate labels for coherent associators. Such experiments would connect the elementary arithmetic model to a broader landscape of weak algebraic structures.
 
 ## 11. Conclusion
 
-Controlled composition provides a compact model of operations whose parenthesizations are unequal but reversibly comparable. Local thinness yields automatic coherence; structural reassociation interprets every legal tree rotation; quotienting turns weak associativity and units into strict laws; a three-arrow table witnesses genuine nonassociativity; bounded continuation traces recover strict words; and the hybrid theorem converts local stability into a global endpoint bound.
+The twisted operation on natural numbers supplies a transparent associativity defect:
 
-The framework draws a precise line between strict syntax and coherent semantics. Parentheses remain visible where operational history matters and disappear after passage to equivalence classes. Between those views lies a geometry of reassociation paths, and that geometry carries quantitative information relevant to compositional security.
+$$
+(1\bigstar1)\bigstar1=5
+\quad\text{but}\quad
+1\bigstar(1\bigstar1)=7.
+$$
+
+By placing a unique two-cell between every pair of one-cells, we obtain invertible associators between all bracketings. Uniqueness forces naturality, the pentagon, the triangle, and every parallel coherence diagram. The result is a concrete bicategory that is coherent but not strict. Moreover, no strict bicategory can retain its fixed composition, because strict associativity would identify $5$ with $7$.
+
+The construction cleanly separates two notions that ordinary algebra often conflates: equality of composites and reversible equivalence between composites. Higher-dimensional category theory does not erase the difference. It records the difference, controls it with an associator, and demands that all such controls agree. Coherence is thus not associativity recovered as equality; it is the disciplined mathematics of composing despite its failure.
+
+A useful conceptual summary is that three layers play distinct roles. The unital magma provides the raw composites and exposes their defects. The codiscrete hom-category supplies reversible witnesses between any proposed endpoints. The bicategory axioms govern the interaction of those witnesses. None of these layers can be silently substituted for another: the two-cell $5\Rightarrow7$ does not alter arithmetic, and the inequality $5\ne7$ does not obstruct higher coherence. Their coexistence is exactly the phenomenon the construction was designed to display.
