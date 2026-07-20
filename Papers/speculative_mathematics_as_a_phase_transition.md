@@ -1,69 +1,46 @@
-# Computational Evidence
+# Computational evidence
 
-Two exactly-solvable statistical-mechanics models are formalized, each exhibiting
-a phase transition in an order parameter as a coupling crosses a critical value.
-Below is numerical evidence gathered by fixed-point iteration before the Lean
-proofs were written. All formalized inequalities are confirmed.
+The formal development studies the explicit mean-field model
 
-## 1. Mean-field Ising / Curie–Weiss ferromagnet: `m = tanh(β m)`
+\[
+C_\kappa(x;c)=\sqrt{\kappa\max(x-c,0)}.
+\]
 
-Order parameter `m` (spontaneous magnetization), critical inverse temperature
-`β_c = 1`. Fixed point obtained by iterating `m ↦ tanh(β m)`.
+This evidence checks examples of the model; it does **not** provide empirical evidence that
+mathematical history follows the model or that 10,000 is a data-derived threshold.
 
-| β    | m*        | lower bound `√(3(β−1)/β³)` |
-|------|-----------|----------------------------|
-| 0.50 | 0.000000  | –                          |
-| 0.90 | 0.000000  | –                          |
-| 1.00 | 0.0 (→0)  | 0.000000                   |
-| 1.01 | 0.173194  | 0.170639                   |
-| 1.10 | 0.502941  | 0.474757                   |
-| 1.50 | 0.858560  | 0.666667                   |
-| 2.00 | 0.957504  | 0.612372                   |
-| 3.00 | 0.994902  | 0.471405                   |
+## Small cases
 
-* For `β ≤ 1` the iteration collapses to `m = 0`
-  (`magnetization_eq_zero_of_subcritical`).
-* For `β > 1` a positive fixed point appears
-  (`exists_pos_magnetization_of_supercritical`).
-* The lower bound `√(3(β−1)/β³) ≤ m*` holds in every supercritical row
-  (`magnetization_sq_ge_of_supercritical`), and near `β = 1` the ratio
-  `m* / √(3(β−1)/β³) → 1`, confirming the mean-field critical exponent `1/2`.
-* Near criticality (`β = 1.00`) convergence is slow (marginal fixed point); the
-  limit is `0`, consistent with the subcritical/critical theory.
+For `κ = 1` and `c = 4`, exact values of `C²` are:
 
-## 2. Erdős–Rényi / Poisson-branching percolation: `ρ = 1 − exp(−λ ρ)`
+| connections `x` | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 8 | 13 |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| `C(x)²` | 0 | 0 | 0 | 0 | 0 | 1 | 2 | 4 | 9 |
+| `C(x)` | 0 | 0 | 0 | 0 | 0 | 1 | √2 | 2 | 3 |
 
-Order parameter `ρ` (survival probability / giant-component fraction), critical
-connectivity `λ_c = 1`. Fixed point obtained by iterating `ρ ↦ 1 − exp(−λ ρ)`.
+For the stated model threshold `c = 10000` and `κ = 1`:
 
-| λ    | ρ*        | lower bound `2(λ−1)/λ²` |
-|------|-----------|-------------------------|
-| 0.50 | 0.000000  | –                       |
-| 0.90 | 0.000000  | –                       |
-| 1.00 | 0.0 (→0)  | 0.000000                |
-| 1.01 | 0.019867  | 0.019606                |
-| 1.10 | 0.176134  | 0.165289                |
-| 1.50 | 0.582812  | 0.444444                |
-| 2.00 | 0.796812  | 0.500000                |
-| 3.00 | 0.940480  | 0.444444                |
+| edges | 9999 | 10000 | 10001 | 10004 | 10100 |
+|---:|---:|---:|---:|---:|---:|
+| `C²` | 0 | 0 | 1 | 4 | 100 |
+| `C` | 0 | 0 | 1 | 2 | 10 |
 
-* For `λ ≤ 1` only `ρ = 0` survives
-  (`survivalProb_eq_zero_of_subcritical`).
-* For `λ > 1` a positive `ρ ∈ (0,1)` emerges
-  (`exists_pos_survivalProb_of_supercritical`).
-* The lower bound `2(λ−1)/λ² ≤ ρ*` holds in every supercritical row
-  (`survivalProb_ge_of_supercritical`), and near `λ = 1` the ratio
-  `ρ* / (2(λ−1)/λ²) → 1`, confirming the mean-field percolation exponent `1`
-  (linear onset), contrasting the `1/2` exponent of model 1.
+## Sequence search
+
+No OEIS search is applicable: after squaring, the integer samples are simply the positive
+part of a shifted linear sequence; this is a model definition rather than a newly observed
+integer sequence.
 
 ## Counterexample hunt
 
-No counterexample to the formalized statements was found. The only subtlety is
-the *critical point* `β = λ = 1` itself, where the fixed-point iteration converges
-only marginally to `0`; this is fully consistent with the proved subcritical
-uniqueness (which includes the boundary `β ≤ 1`, `λ ≤ 1`).
+The formal claims reduce to standard identities and inequalities for `sqrt` and `max`.
+Boundary checks at `x=c`, zero coupling, and positive coupling below/above threshold agree
+with the statements. Negative coupling was intentionally excluded from square-law and
+monotonicity claims; without that assumption the radicand need not represent the intended
+order parameter.
 
-## OEIS
+## Interpretation
 
-No integer sequence arises; the objects are transcendental fixed points, so an
-OEIS search is not applicable.
+The table displays continuous onset and square-root growth. It cannot validate the empirical
+premise, estimate a real critical edge count, or establish that theorem networks undergo a
+physical phase transition. Those require a specified dataset and statistical model.
