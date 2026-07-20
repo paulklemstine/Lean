@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "573ee086",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions\n\n## 1. Robust local encodings of arithmetic derivations\n\n**Conjecture.** There is an explicit encoding of every finite Peano-arithmetic derivation into a locally testable object su",
-      "quality_score": 0.73,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-07-16T05:31:57",
-      "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
-    },
-    {
       "cycle_id": "352675e9",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\n## 1. Coherent levelwise classification\n\n**Conjecture.** Two coordinate-tree ray spaces are homeomorphic whenever their finite levels admit a coherent family of bijections preserv",
@@ -2501,6 +2491,16 @@
       "theorem_count": 32,
       "timestamp": "2026-07-19T23:31:17",
       "title": "Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
+    },
+    {
+      "cycle_id": "28042806",
+      "domain": "Physics",
+      "key_insight": "# Future directions\n\n1. **Finite theorem graphs.** Replace the scalar control variable with a finite simple graph\n   whose vertices are theorems and whose edges encode explicitly defined mathematical",
+      "quality_score": 0.56,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-07-20T00:23:14",
+      "title": "Speculative: Mathematics as a Phase Transition"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-19T23:31:17",
+  "last_updated": "2026-07-20T00:23:14",
   "open_questions": [
     {
       "context": "",
@@ -3709,12 +3709,6 @@
         "title": "ArXiv paper: Quantum Latin Squares of Order Six with Cardinalities Nineteen, Twe"
       },
       {
-        "cycle_id": "57481379",
-        "quality": 0.75,
-        "theorems": 19,
-        "title": "ArXiv paper: Quantum Latin Squares of Order Six with Cardinalities Nineteen, Twe"
-      },
-      {
         "cycle_id": "18617733",
         "quality": 0.73,
         "theorems": 0,
@@ -3761,6 +3755,12 @@
         "quality": 0.78,
         "theorems": 0,
         "title": "Knots and Lattices: The Alexander Polynomial as a Lattice Path Count"
+      },
+      {
+        "cycle_id": "28042806",
+        "quality": 0.56,
+        "theorems": 13,
+        "title": "Speculative: Mathematics as a Phase Transition"
       }
     ],
     "Probability": [
