@@ -1,28 +1,21 @@
 --- HallTripleBridge.lean
 +++ HallTripleBridge.lean
-@@ -59,12 +59,11 @@
-   unfold steinerThird; rw [ add_comm ] ;
- 
- /-
--In an exponent-three group, completing twice recovers the omitted point.
-+Completing twice with the same first point recovers the omitted point.
+@@ -63,8 +63,7 @@
  -/
--theorem steinerThird_left_involutive {A : Type*} [AddCommGroup A]
--    (hexp : ∀ t : A, t + t + t = 0) (x y : A) :
-+theorem steinerThird_left_involutive {A : Type*} [AddCommGroup A] (x y : A) :
+ theorem steinerThird_left_involutive {A : Type*} [AddCommGroup A] (x y : A) :
      steinerThird x (steinerThird x y) = y := by
--  simp +decide [ steinerThird, ← eq_sub_iff_add_eq' ]
+-  unfold steinerThird
+-  simp [← add_assoc]
 +  simp [steinerThird]
  
  /-
  Distinct points have a third point distinct from the first.
-@@ -72,9 +71,10 @@
+@@ -72,8 +71,10 @@
  theorem steinerThird_ne_left {A : Type*} [AddCommGroup A]
      (hexp : ∀ t : A, t + t + t = 0) {x y : A} (hxy : x ≠ y) :
      steinerThird x y ≠ x := by
--  contrapose! hxy; simp_all +decide [ add_eq_zero_iff_eq_neg ] ;
--  unfold steinerThird at hxy;
--  grind
+-  unfold steinerThird; intro h; have := hexp ( -x + -y ) ; simp_all +decide [ ← add_assoc ] ;
+-  grind +qlia
 +  intro h
 +  have := steinerThird_left_involutive x y
 +  simp_all +decide [ steinerThird ];
@@ -30,12 +23,13 @@
  
  /-
  Translation preserves additive Steiner triples in exponent three.
-@@ -82,8 +82,14 @@
+@@ -81,9 +82,14 @@
  theorem steinerThird_translate {A : Type*} [AddCommGroup A]
      (hexp : ∀ t : A, t + t + t = 0) (x y t : A) :
      steinerThird (x + t) (y + t) = steinerThird x y + t := by
--  simp +decide [ add_assoc, add_left_comm, add_comm, steinerThird ];
--  grind
+-  unfold steinerThird;
+-  rw [ neg_eq_iff_add_eq_zero ];
+-  convert hexp t using 1 ; abel_nf
 +  have h_inv : -(x + t + (y + t)) = -(x + y) + t := by
 +    have h_inv : -(x + t + (y + t)) = -(x + y) - 2 • t := by
 +      abel_nf
@@ -47,27 +41,23 @@
  
  /-
  Any zero-preserving additive map preserves third-point completion.
-@@ -93,11 +99,10 @@
-     (f : A → B) (hzero : f 0 = 0) (hadd : ∀ x y, f (x + y) = f x + f y)
+@@ -94,9 +100,8 @@
      (x y : A) :
      f (steinerThird x y) = steinerThird (f x) (f y) := by
--  -- By definition of $f$, we know that $f(-x) = -f(x)$.
--  have h_neg : ∀ x : A, f (-x) = -f x := by
--    intro x; exact eq_neg_of_add_eq_zero_left (by
+   unfold steinerThird;
+-  have h_neg : ∀ t : A, f (-t) = -f t := by
+-    intro t; exact eq_neg_of_add_eq_zero_left (by
 -    rw [ ← hadd, neg_add_cancel, hzero ]);
--  unfold steinerThird; aesop;
-+  unfold steinerThird;
 +  have h_neg : f (-(x + y)) = -f (x + y) := by
 +    exact eq_neg_of_add_eq_zero_left ( by rw [ ← hadd, neg_add_cancel, hzero ] );
-+  rw [ h_neg, hadd ]
+   rw [ h_neg, hadd ]
  
  abbrev HallPoint := ZMod 3 × ZMod 3
- 
 @@ -112,14 +117,14 @@
  -/
  theorem hall_triple_unique_completion (x y : HallPoint) :
      ∃! z : HallPoint, z = steinerThird x y := by
--  exact ⟨ _, rfl, fun z hz => hz ▸ rfl ⟩
+-  exact ⟨ _, rfl, fun z hz => hz ⟩
 +  exact ⟨ _, rfl, fun z hz => hz.symm ▸ rfl ⟩
  
  /-
@@ -79,4 +69,4 @@
 +  decide +revert
  
  /-
- Right multiplication in the Hall algebra preserves additive Steiner triples.
+ 

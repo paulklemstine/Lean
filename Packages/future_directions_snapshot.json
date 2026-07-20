@@ -59,26 +59,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "4505be0f",
-    "description": "Building on cycle 77a52651 (Q=0.800), which proved 6 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: A quantum random walk on a group G is defined by a unitary operator U = sum_{g in S} |g><0| (where S is a generating set) acting on the Hilbert space l^2(G). The walk is periodic if U^k = I for some k, and mixing if the probability distribution P_n(g) = |<g|U^n|0>|^2 converges to the uniform distrib",
-    "domain_bridges": [],
-    "domains": [
-      "Combinatorics"
-    ],
-    "id": "push_77a52651_1dafc39d",
-    "lineage_refs": [],
-    "priority_score": 0.9,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "77a52651",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T08:00:50.933822+00:00",
-    "title": "Deepening: Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "fbb9076c",
+    "consumed_by_exp_id": "",
     "description": "Formalize a Landauer-like principle for mathematical reasoning: every bit of information destroyed in a proof step costs at least kT ln 2 of entropy. Prove that there exist theorems whose shortest proof requires exponentially more erasure than creation, and connect to Kolmogorov complexity and the thermodynamic cost of verification.",
     "domain_bridges": [],
     "domains": [
@@ -91,7 +72,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-19T12:28:35.662011+00:00",
     "title": "Thermodynamics of Mathematical Proof"
   },
@@ -287,25 +268,6 @@
     "status": "available",
     "timestamp": "2026-07-20T15:28:30.564786+00:00",
     "title": "Speculative: Theorems as Phase Transitions in Proof Space"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "d0cb2642",
-    "description": "Building on cycle 717f7483 (Q=0.750), which proved 19 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Godel's incompleteness theorem says there are true statements that cannot be proved. But what if we turn incompleteness into a GAME? Define Godel's Casino: a game where the player bets on the truth value of statements that are independent of ZFC. The house deals cards representing arithmetic stateme",
-    "domain_bridges": [],
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "push_717f7483_9c5c3f5d",
-    "lineage_refs": [],
-    "priority_score": 0.85,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "717f7483",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T06:56:52.638461+00:00",
-    "title": "Deepening: Godel's Casino: Incomplete but Winnable Games"
   },
   {
     "ambition_level": "extension",
@@ -7455,6 +7417,46 @@
     "status": "available",
     "timestamp": "2026-07-20T15:09:39.187871+00:00",
     "title": "The finite Hamming Library of length `L` over `A` symbols has exactly `A^L` poin"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n1. **Joint distributions and correlated cards.**  The expected payoff of additive unit bets depends only on marginals.  Formalize a finite probability space and prove this marginal-sufficiency theorem from expectation linearity, without assuming card independence.\n\n2. **Proper scoring rules.**  Replace Boolean unit bets by reported probabilities and logarithmic or Brier scores.  Characterize truthful reporting and exact regret (a divergence) in a finite rational model.\n\n3. **Sequential information.**  Model a filtration in which proofs or refutations are revealed between rounds.  Prove that conditional Bayes bets form the optimal adapted strategy and investigate optional-stopping hypotheses.\n\n4. **Abstention and transaction costs.**  Add a third action that pays zero and a fixed cost per wager.  The optimal threshold should become `|2q-1| > cost`; prove the exact deck value and uniqueness away from threshold ties.\n\n5. **Formal-theory interface.**  Connect cards to an explicitly encoded recursively axiomatized arithmetic theory.  Keep semantic truth, provability, and subjective probability separate; then state precisely which incompleteness assumptions produce undecidable cards and which additional calibration assumptions, if any, produce a betting edge.\n\n6. **Full finite minimax equality.**  Define probability simplices for both players and worlds and prove that the zero guaranteed value is attained by the uniform distribution on complementary world pairs.  The present no-free-lunch theorem already proves the difficult upper-bound obstruction without normalization assumptions.\n\n7. **Infinite decks.**  Extend the exact value and regret formulas to summable countable bias sequences, making convergence and integrability explicit.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "fd_0522",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "d0cb2642",
+    "status": "available",
+    "timestamp": "2026-07-20T20:48:19.904765+00:00",
+    "title": "1. **Joint distributions and correlated cards.**  The expected payoff of additiv"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## 1. Sharp remainder bounds for arbitrary observation windows\n\n**Conjecture.** Let a periodic Born-probability sequence have period `k`. For every observation length `N`, its Cesàro mean differs from its one-period mean by at most `2k/N` in total variation distance, and the optimal universal constant can be characterized from the extremal mass profile within one period.\n\nThe key insight is that division of `N` by `k` separates exact complete blocks from a single bounded remainder.\n\n**Why now?** The complete-block identity isolates the only possible source of error, making a sharp finite-time mixing estimate the natural next step.\n\n## 2. Spectral characterization of uniform time-averaged mixing on finite Cayley graphs\n\n**Conjecture.** For a translation-invariant coined quantum walk on a finite abelian Cayley graph, uniform Cesàro mixing from a localized state occurs exactly when every repeated eigenphase has character coefficients whose aggregate off-diagonal contribution vanishes at each vertex.\n\nThe key insight is that time averaging kills interactions between distinct eigenphases but preserves interference inside degenerate eigenspaces.\n\n**Why now?** Exact periodic averaging reduces the dynamical question to one finite orbit, while Fourier characters offer an algebraic description of the surviving degeneracies.\n\n## 3. Quantitative stability under weak decoherence\n\n**Conjecture.** If a finite-order quantum evolution is followed at each step by depolarization of strength `ε > 0`, then its instantaneous Born distribution converges exponentially to the uniform distribution whenever the associated classical support graph is connected, with relaxation time bounded by a function of `ε` and the classical spectral gap.\n\nThe key insight is that decoherence contracts the nonconstant spectral modes that pure periodic evolution merely rotates.\n\n**Why now?** The contrast between impossible instantaneous mixing and exact averaged mixing identifies decoherence as the minimal mechanism capable of converting recurrence into genuine convergence.\n\n## 4. Nonabelian representation-theoretic obstruction\n\n**Conjecture.** For finite nonabelian Cayley walks, failure of uniform Cesàro mixing is equivalent to a nonzero matrix-coefficient obstruction supported on repeated irreducible eigenphases; the obstruction decomposes canonically over isotypic components of the regular representation.\n\nThe key insight is that the abelian character criterion should persist with scalar characters replaced by matrix coefficients and multiplicity spaces.\n\n**Why now?** The periodic block theorem is representation-independent, so the remaining difficulty is entirely spectral and can be attacked one irreducible component at a time.\n\n## 5. Period bounds from cyclotomic spectra\n\n**Conjecture.** A finite-dimensional translation-invariant quantum walk is periodic if and only if all ratios of eigenvalues are roots of unity; when its transition amplitudes lie in a fixed number field, its least period admits an explicit bound in terms of the field degree and state-space dimension.\n\nThe key insight is that global phase is invisible to Born probabilities, so probability-periodicity is governed by eigenvalue ratios rather than individual eigenvalues.\n\n**Why now?** The averaging results assume finite order; a cyclotomic criterion would turn that dynamical hypothesis into an arithmetic condition that can be checked from the spectrum.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0523",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "4505be0f",
+    "status": "available",
+    "timestamp": "2026-07-20T20:48:24.691279+00:00",
+    "title": "**Conjecture.** Let a periodic Born-probability sequence have period `k`. For ev"
   },
   {
     "ambition_level": "extension",

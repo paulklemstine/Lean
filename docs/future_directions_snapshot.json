@@ -78,7 +78,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "fbb9076c",
+    "consumed_by_exp_id": "",
     "description": "Formalize a Landauer-like principle for mathematical reasoning: every bit of information destroyed in a proof step costs at least kT ln 2 of entropy. Prove that there exist theorems whose shortest proof requires exponentially more erasure than creation, and connect to Kolmogorov complexity and the thermodynamic cost of verification.",
     "domain_bridges": [],
     "domains": [
@@ -91,7 +91,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-19T12:28:35.662011+00:00",
     "title": "Thermodynamics of Mathematical Proof"
   },
@@ -287,25 +287,6 @@
     "status": "available",
     "timestamp": "2026-07-20T15:28:30.564786+00:00",
     "title": "Speculative: Theorems as Phase Transitions in Proof Space"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "d0cb2642",
-    "description": "Building on cycle 717f7483 (Q=0.750), which proved 19 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Godel's incompleteness theorem says there are true statements that cannot be proved. But what if we turn incompleteness into a GAME? Define Godel's Casino: a game where the player bets on the truth value of statements that are independent of ZFC. The house deals cards representing arithmetic stateme",
-    "domain_bridges": [],
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "push_717f7483_9c5c3f5d",
-    "lineage_refs": [],
-    "priority_score": 0.85,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "717f7483",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T06:56:52.638461+00:00",
-    "title": "Deepening: Godel's Casino: Incomplete but Winnable Games"
   },
   {
     "ambition_level": "extension",
@@ -7455,6 +7436,26 @@
     "status": "available",
     "timestamp": "2026-07-20T15:09:39.187871+00:00",
     "title": "The finite Hamming Library of length `L` over `A` symbols has exactly `A^L` poin"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n1. **Joint distributions and correlated cards.**  The expected payoff of additive unit bets depends only on marginals.  Formalize a finite probability space and prove this marginal-sufficiency theorem from expectation linearity, without assuming card independence.\n\n2. **Proper scoring rules.**  Replace Boolean unit bets by reported probabilities and logarithmic or Brier scores.  Characterize truthful reporting and exact regret (a divergence) in a finite rational model.\n\n3. **Sequential information.**  Model a filtration in which proofs or refutations are revealed between rounds.  Prove that conditional Bayes bets form the optimal adapted strategy and investigate optional-stopping hypotheses.\n\n4. **Abstention and transaction costs.**  Add a third action that pays zero and a fixed cost per wager.  The optimal threshold should become `|2q-1| > cost`; prove the exact deck value and uniqueness away from threshold ties.\n\n5. **Formal-theory interface.**  Connect cards to an explicitly encoded recursively axiomatized arithmetic theory.  Keep semantic truth, provability, and subjective probability separate; then state precisely which incompleteness assumptions produce undecidable cards and which additional calibration assumptions, if any, produce a betting edge.\n\n6. **Full finite minimax equality.**  Define probability simplices for both players and worlds and prove that the zero guaranteed value is attained by the uniform distribution on complementary world pairs.  The present no-free-lunch theorem already proves the difficult upper-bound obstruction without normalization assumptions.\n\n7. **Infinite decks.**  Extend the exact value and regret formulas to summable countable bias sequences, making convergence and integrability explicit.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "fd_0522",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "d0cb2642",
+    "status": "available",
+    "timestamp": "2026-07-20T20:48:19.904765+00:00",
+    "title": "1. **Joint distributions and correlated cards.**  The expected payoff of additiv"
   },
   {
     "ambition_level": "extension",

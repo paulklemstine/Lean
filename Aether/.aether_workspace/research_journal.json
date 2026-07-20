@@ -1,26 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "fa73eeee",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions\n\n## 1. Locally uniform joint removal of prime and occupation cutoffs\n\n**Conjecture.** On every compact subset of the half-plane `Re(s) > 1`, finite\nprime occupation products conver",
-      "quality_score": 0.76,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-19T04:29:12",
-      "title": "**Conjecture.** There is a natural joint scaling of the prime cutoff `x`, occupa"
-    },
-    {
-      "cycle_id": "8201cdaf",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\n- Formalize canonical base-`k` numeral encodings and quotient away leading zeros, connecting the word-indexed DFAO model to sequences indexed by `ℕ`.\n- Extract a fully executable",
-      "quality_score": 0.79,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-19T04:29:37",
-      "title": "Automatic Sequences and the Halting Problem: When Is a Sequence Computable?"
-    },
-    {
       "cycle_id": "c58345ac",
       "domain": "Probability",
       "key_insight": "# Future Directions\n\n## What is proved\n\nThe four files in `MachineLearning/HodgeCycles/` give a complete finite-dimensional theory for a three-term cellular chain complex over any field. In the middle",
@@ -499,29 +479,29 @@
       "theorem_count": 0,
       "timestamp": "2026-07-20T15:09:40",
       "title": "Borges' Library of Babel: Combinatorics of Everything"
+    },
+    {
+      "cycle_id": "d0cb2642",
+      "domain": "NumberTheory",
+      "key_insight": "# Future directions\n\n1. **Joint distributions and correlated cards.**  The expected payoff of additive unit bets depends only on marginals.  Formalize a finite probability space and prove this margina",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 20,
+      "timestamp": "2026-07-20T20:48:21",
+      "title": "Deepening: Godel's Casino: Incomplete but Winnable Games"
+    },
+    {
+      "cycle_id": "4505be0f",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions\n\n## 1. Sharp remainder bounds for arbitrary observation windows\n\n**Conjecture.** Let a periodic Born-probability sequence have period `k`. For every observation length `N`, its Ces",
+      "quality_score": 0.77,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-07-20T20:48:25",
+      "title": "Deepening: Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "19cecd78",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Far-Apart Packing and Thickened Transversals\n\n## 1. Multiscale anchor theorem for long cycles\n\n**Conjecture.** For every finite graph and every length threshold ℓ, the family of c",
-      "quality_score": 0.69,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-07-16T09:15:56",
-      "title": "ArXiv paper: Far-apart Erdős--Pósa property of long cycles"
-    },
-    {
-      "cycle_id": "557a7f03",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Local Flag Algebras\n\n## 1. Sharp triangle-free pentagon certificate\n\n**Conjecture.** The optimal upper bound for the number of pentagons in a finite triangle-free graph, expressed",
-      "quality_score": 0.66,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-07-16T09:16:04",
-      "title": "ArXiv paper: Local flag algebras"
-    },
     {
       "cycle_id": "d1e62d74",
       "domain": "Novelty",
@@ -2501,45 +2481,29 @@
       "theorem_count": 0,
       "timestamp": "2026-07-20T15:09:40",
       "title": "Borges' Library of Babel: Combinatorics of Everything"
+    },
+    {
+      "cycle_id": "d0cb2642",
+      "domain": "NumberTheory",
+      "key_insight": "# Future directions\n\n1. **Joint distributions and correlated cards.**  The expected payoff of additive unit bets depends only on marginals.  Formalize a finite probability space and prove this margina",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 20,
+      "timestamp": "2026-07-20T20:48:21",
+      "title": "Deepening: Godel's Casino: Incomplete but Winnable Games"
+    },
+    {
+      "cycle_id": "4505be0f",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions\n\n## 1. Sharp remainder bounds for arbitrary observation windows\n\n**Conjecture.** Let a periodic Born-probability sequence have period `k`. For every observation length `N`, its Ces",
+      "quality_score": 0.77,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-07-20T20:48:25",
+      "title": "Deepening: Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "ef699512",
-      "domain": "Applications",
-      "name": "quotient_extension_unique",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "ef699512",
-      "domain": "Applications",
-      "name": "card_eq_two_pow_quotient_card",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "fa73eeee",
-      "domain": "Algebra",
-      "name": "one_sub_prod_one_sub_le_sum",
-      "quality": 0.76
-    },
-    {
-      "cycle_id": "fa73eeee",
-      "domain": "Algebra",
-      "name": "truncatedProduct_eq_completed_mul_defect",
-      "quality": 0.76
-    },
-    {
-      "cycle_id": "fa73eeee",
-      "domain": "Algebra",
-      "name": "completedProduct_nonneg",
-      "quality": 0.76
-    },
-    {
-      "cycle_id": "cc0903e0",
-      "domain": "Tropical",
-      "name": "sorting_info_erased",
-      "quality": 0.74
-    },
     {
       "cycle_id": "cc0903e0",
       "domain": "Tropical",
@@ -2803,9 +2767,45 @@
       "domain": "Pythagorean",
       "name": "finite_memory_is_lossy",
       "quality": 0.79
+    },
+    {
+      "cycle_id": "d0cb2642",
+      "domain": "NumberTheory",
+      "name": "steinerThird_left_involutive",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "d0cb2642",
+      "domain": "NumberTheory",
+      "name": "steinerThird_ne_left",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "d0cb2642",
+      "domain": "NumberTheory",
+      "name": "steinerThird_translate",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "4505be0f",
+      "domain": "Combinatorics",
+      "name": "periodic_sum_complete_blocks",
+      "quality": 0.77
+    },
+    {
+      "cycle_id": "4505be0f",
+      "domain": "Combinatorics",
+      "name": "periodic_cesaro_complete_blocks",
+      "quality": 0.77
+    },
+    {
+      "cycle_id": "4505be0f",
+      "domain": "Combinatorics",
+      "name": "bornProbability_cesaro_complete_blocks",
+      "quality": 0.77
     }
   ],
-  "last_updated": "2026-07-20T15:09:40",
+  "last_updated": "2026-07-20T20:48:25",
   "open_questions": [
     {
       "context": "",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "3c755fa4",
-        "quality": 0.73,
-        "theorems": 10,
-        "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk"
-      },
-      {
         "cycle_id": "f8479bcf",
         "quality": 0.59,
         "theorems": 0,
@@ -3265,6 +3259,12 @@
         "quality": 0.69,
         "theorems": 5,
         "title": "Speculative: Theorems as Phase Transitions in Proof Space"
+      },
+      {
+        "cycle_id": "4505be0f",
+        "quality": 0.77,
+        "theorems": 5,
+        "title": "Deepening: Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
       }
     ],
     "Computation": [
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "a8d24466",
-        "quality": 0.73,
-        "theorems": 8,
-        "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk"
-      },
-      {
         "cycle_id": "192aef6c",
         "quality": 0.55,
         "theorems": 0,
@@ -3699,6 +3693,12 @@
         "quality": 0.71,
         "theorems": 0,
         "title": "Speculative: Topological Quantum Error Correction from Mathematical Structures"
+      },
+      {
+        "cycle_id": "d0cb2642",
+        "quality": 0.78,
+        "theorems": 20,
+        "title": "Deepening: Godel's Casino: Incomplete but Winnable Games"
       }
     ],
     "Physics": [
