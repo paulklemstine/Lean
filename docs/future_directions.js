@@ -59,7 +59,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
   },
   {
-    "consumed_by_exp_id": "dd6a308e",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 7881a56b (Q=0.790), which proved 16 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'Reproducing the k-copwin Algorithm: Theory vs. Implementation' and formalize its key results. Abstract: Cops and Robbers is a well-studied pursuit-evasion game that provides insights into graph theory and theoretical computing. A central question is determining the minim",
     "domains": [
       "Novelty"
@@ -68,24 +68,9 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.89,
     "research_mode": "team",
     "source_exp_id": "7881a56b",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-19T17:15:41.451394+00:00",
     "title": "Deepening: ArXiv paper: Reproducing the k-copwin Algorithm: Theory vs. Implementation"
-  },
-  {
-    "consumed_by_exp_id": "fbb9076c",
-    "description": "Formalize a Landauer-like principle for mathematical reasoning: every bit of information destroyed in a proof step costs at least kT ln 2 of entropy. Prove that there exist theorems whose shortest proof requires exponentially more erasure than creation, and connect to Kolmogorov complexity and the thermodynamic cost of verification.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0458",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T12:28:35.662011+00:00",
-    "title": "Thermodynamics of Mathematical Proof"
   },
   {
     "consumed_by_exp_id": "",
@@ -3082,17 +3067,46 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Alternative Entropy Bounds for Perfect Matchings in Bipartite Graphs' and formalize its key results. Abstract: We refine Radhakrishnan's entropy proof of the Br\u00e9gman-Minc bound by introducing a terminal-set framework in which selected vertices are revealed last. This gives new degree-sensitive upper bounds for the number of perfect matchings in bipartite graphs and an explicit formula for single-vertex terminal sets. The bounds recover the standard Br\u00e9gman equality family and improve the estimate for certain nonuniform degree sequences. We also obtain a $C_4$-free refinement complementary to the edge-count bound of Araujo, Balogh and Wang.",
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_0496",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.15549v1",
+    "status": "available",
+    "timestamp": "2026-07-20T03:35:22.412664+00:00",
+    "title": "ArXiv paper: Alternative Entropy Bounds for Perfect Matchings in Bipartite Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'On Generalized von Neumann Inverse Graphs of Finite Commutative Regular Rings' and formalize its key results. Abstract: Let $R$ be a ring with identity. The generalized von Neumann inverse graph of $R$, denoted by $\u0393_{Reg}(R)$, is defined as the graph whose vertex set is $Reg(R)$, where two distinct vertices $a,b \\in R$ are adjacent if and only if $aba=a$ or $bab=b$. In this work, we consider the reduced graph $\u0393'_{Reg}(R)$ obtained by restricting the vertex set to $Reg(R)\\setminus{0_R}$, so that $\u0393_{Reg}(R) \\cong K_1 + \u0393'_{Reg}(R)$, allowing the analysis to focus on its nontrivial structure. We investigate the structure of $\u0393'_{Reg}(R)$ for finite commutative von Neumann regular rings and establish several results describing its graph-theoretic properties in relation to the algebraic structure of $R$. In particular, we derive conditions that characterize connectivity, acyclicity, and planarity, and examine structural features such as vertex degrees, girth, and the existence of pendant vertices, along with their algebraic implications. We also identify circumstances under which $\u0393'_{Reg}(R)$ exhibits sp",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0496",
+    "id": "fd_0497",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.15568v1",
     "status": "available",
     "timestamp": "2026-07-20T03:19:45.992757+00:00",
     "title": "ArXiv paper: On Generalized von Neumann Inverse Graphs of Finite Commutative Regular Rings"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Nonnegative Bakry--\u00c9mery Curvature on Bounded-Degree Graphs Implies Volume Doubling and Poincar\u00e9 Inequalities' and formalize its key results. Abstract: We prove that every connected simple graph of bounded degree satisfying the classical dimension-free Bakry--\u00c9mery condition $\\mathrm{CD}(0,\\infty)$ for the unnormalised Laplacian is volume doubling and supports, at all integer graph scales, a scale-invariant $L^2$-Poincar\u00e9 inequality with dilation two, with constants depending only on the maximum degree. This settles the polynomial-growth conjecture of Cushing, Liu, and Peyerimhoff in a stronger form. The main novelty is a dimension-free adaptation of the graph-theoretic modified nonlinear heat-flow method introduced by M\u00fcnch and extended to infinite weighted graphs by Pajot and Russ: point-mass consequences of $\u0393_2\\geq0$ and positive-resolvent smoothing replace any global $\\mathrm{CD}(0,n)$ reduction, while diffusive exit-time control and finite-volume localisation yield the Poincar\u00e9 inequality.",
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_0498",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.15522v1",
+    "status": "available",
+    "timestamp": "2026-07-20T03:35:25.814685+00:00",
+    "title": "ArXiv paper: Nonnegative Bakry--\u00c9mery Curvature on Bounded-Degree Graphs Implies Volume Doubling and Poincar\u00e9 Inequalities"
   },
   {
     "consumed_by_exp_id": "",
@@ -5174,21 +5188,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-19T20:44:15.853692+00:00",
     "title": "**Conjecture.** A reflective fixed-point code admits a monotone interpretation i"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions: Recursive Types and Diagonal Hierarchies\n\n## 1. Positive Recursive Types and Transfinite Closure\n\n**Conjecture.** For reflective codes in which the self-bound variable occurs only positively, the semantic closure ordinal is computable; moreover, every computable ordinal is realized as the closure ordinal of a finitely presented positive code over a suitable effective base.\n\nThe key insight is that positivity turns unrestricted self-reference into a monotone operator, so transfinite iteration becomes meaningful without introducing the liar contradiction.\n\n**Why now?** The finite rank filtration and its rank-preserving duality isolate exactly the syntactic information that a transfinite semantics must extend, while the diagonal boundary identifies the negative occurrences that must be excluded.\n\n## 2. Strict Alternation Hierarchy for Effective Self-Models\n\n**Conjecture.** In an effective semantics of reflective codes over natural numbers, each additional alternation between universal and existential layers defines a strictly larger class of predicates, even when a positive self-binder is permitted at every level.\n\nThe key insight is that syntactic rank is already unbounded and duality preserves it; strictness should follow by combining levelwise diagonalization with an effective universal predicate at each finite stage.\n\n**Why now?** Canonical witnesses exist at every finite rank, so the remaining test is semantic separation rather than construction of the hierarchy itself.\n\n## 3. Parametric Recursive Presentations versus Semantic Completeness\n\n**Conjecture.** A recursive presentation `T \u2243 \u03a0(x:T), P(x)` cannot induce a complete predicate self-model when the induced inspection map is natural under all automorphisms of `T`, even if arbitrary non-natural inspection maps are admitted externally.\n\nThe key insight is that the one-element countermodel shows recursive presentation alone is too weak, while diagonal omission shows completeness is too strong; naturality is a testable intermediate principle connecting the two.\n\n**Why now?** Both endpoints of the proposed implication have been sharply separated, making it possible to search for the weakest structural bridge rather than conflating presentation with self-knowledge.\n\n## 4. Computable Closure Ordinals below Church\u2013Kleene\n\n**Conjecture.** Closure ordinals of finitely generated, positive, effective reflective codes are cofinal in the Church\u2013Kleene ordinal but never attain it.\n\nThe key insight is that the Church\u2013Kleene ordinal should enter as a supremum of effective iterative constructions, not as the cardinality of a universe-dependent collection of types.\n\n**Why now?** Recasting the original cardinality claim as a cofinality claim resolves the category mismatch between ordinals and classes of types while retaining a precise, falsifiable connection to recursive type formation.\n\n## 5. Fixed-Point-Free Observations Classify Self-Knowledge Obstructions\n\n**Conjecture.** For every effective observation algebra, complete internal naming fails exactly when the algebra admits a computable fixed-point-free endomorphism; when no such endomorphism exists, the obstruction is equivalent to a weaker effective failure of point-surjectivity.\n\nThe key insight is that Lawvere diagonalization converts fixed-point-free transformations directly into blind spots, suggesting an algebraic classification beyond Boolean and propositional negation.\n\n**Why now?** The general fixed-point theorem already applies to arbitrary observation types, so concrete finite algebras can be classified first and used to test the proposed equivalence.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0497",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "b44b7357",
-    "status": "available",
-    "timestamp": "2026-07-20T03:35:09.295643+00:00",
-    "title": "**Conjecture.** For reflective codes in which the self-bound variable occurs onl"
   },
   {
     "consumed_by_exp_id": "",
