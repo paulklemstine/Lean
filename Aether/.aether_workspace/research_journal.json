@@ -1,26 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "4b7e775f",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions: Information Geometry of Optimization\n\n## 1. Curvature-controlled exponential-map descent\n\n**Conjecture.** On a geodesically complete statistical manifold with sectional curvature",
-      "quality_score": 0.73,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-19T06:13:17",
-      "title": "Information Geometry of Optimization: Natural Gradient Follows Geodesics"
-    },
-    {
-      "cycle_id": "8280a2b4",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions: Complete-Graph Divisors and Chip-Firing\n\n## 1. Parking-function proof of complete-graph Riemann–Roch\n\n**Conjecture.** Every divisor class on the complete graph `K_n` has a unique",
-      "quality_score": 0.76,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-19T06:30:57",
-      "title": "The Riemann-Roch Theorem for Graphs: Chip-Firing and the Canonical Divisor"
-    },
-    {
       "cycle_id": "d67581f7",
       "domain": "Pythagorean",
       "key_insight": "# Future directions\n\n## Formal consequences established\n\n`Catalog/Pythagorean/TropicalCryptography/EigenvalueLeakage.lean` proves the exact power law for a min-plus eigenpair:\n\n- if `A ⊗ v = λ + v`, t",
@@ -499,29 +479,29 @@
       "theorem_count": 0,
       "timestamp": "2026-07-20T20:48:41",
       "title": "Speculative: Computational Complexity as Physical Law"
+    },
+    {
+      "cycle_id": "3d25b5ad",
+      "domain": "Pythagorean",
+      "key_insight": "# Future directions\n\nThe formal development establishes a concrete genuinely non-strict bicategory: its chosen 1-cell composition has bracketings equal to `5` and `7`, while an invertible associator c",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-07-20T23:22:27",
+      "title": "Causal Loops in Category Theory: When Composition Loops Back"
+    },
+    {
+      "cycle_id": "82c8c57a",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions: Coherent All-Stage Objects\n\n## 1. Coordinate-deletion limits over arbitrary coefficient objects\n\nLet `A` be an abelian group and let the `n`th stage be `A^{n+1}`, with bonding map",
+      "quality_score": 0.71,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-20T23:22:31",
+      "title": "Close Proofs: The Mega-Sphere: All Dimensions at Once"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "851ec568",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\n1. **Normalize to the paper's `Q_k`.** Extend scalars from `ℤ` to `ℝ` and define\n   `Q_k = k⁻¹ P_k`. The proved cumulative identity immediately yields the exact\n   Cesàro formula",
-      "quality_score": 0.68,
-      "sorry_count": 0,
-      "theorem_count": 4,
-      "timestamp": "2026-07-16T09:33:32",
-      "title": "ArXiv paper: A few remarks on the Baez-Duarte Criterion"
-    },
-    {
-      "cycle_id": "08676759",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\n## 1. Parameter-only complexity for constant-term evaluation\n\n**Conjecture.** For structured coefficients `aᵢ=pᵢM+rᵢN` with coprime positive\n`M,N`, the denumerant can be evaluated",
-      "quality_score": 0.69,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-07-16T10:21:12",
-      "title": "ArXiv paper: Polynomial-Time Evaluation of Aardal-Lenstra Denumerants via Constant Term Method"
-    },
     {
       "cycle_id": "5759ba2d",
       "domain": "Novelty",
@@ -2501,27 +2481,29 @@
       "theorem_count": 24,
       "timestamp": "2026-07-20T23:22:20",
       "title": "Speculative: Topological Quantum Error Correction from Mathematical Structures"
+    },
+    {
+      "cycle_id": "3d25b5ad",
+      "domain": "Pythagorean",
+      "key_insight": "# Future directions\n\nThe formal development establishes a concrete genuinely non-strict bicategory: its chosen 1-cell composition has bracketings equal to `5` and `7`, while an invertible associator c",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-07-20T23:22:27",
+      "title": "Causal Loops in Category Theory: When Composition Loops Back"
+    },
+    {
+      "cycle_id": "82c8c57a",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions: Coherent All-Stage Objects\n\n## 1. Coordinate-deletion limits over arbitrary coefficient objects\n\nLet `A` be an abelian group and let the `n`th stage be `A^{n+1}`, with bonding map",
+      "quality_score": 0.71,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-20T23:22:31",
+      "title": "Close Proofs: The Mega-Sphere: All Dimensions at Once"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "77a52651",
-      "domain": "Combinatorics",
-      "name": "says",
-      "quality": 0.8
-    },
-    {
-      "cycle_id": "77a52651",
-      "domain": "Combinatorics",
-      "name": "periodic_tendsto_eq_initial",
-      "quality": 0.8
-    },
-    {
-      "cycle_id": "77a52651",
-      "domain": "Combinatorics",
-      "name": "bornProbability_periodic",
-      "quality": 0.8
-    },
     {
       "cycle_id": "6fa68166",
       "domain": "Algebra",
@@ -2803,9 +2785,27 @@
       "domain": "Combinatorics",
       "name": "card_truthWords_rec",
       "quality": 0.7
+    },
+    {
+      "cycle_id": "3d25b5ad",
+      "domain": "Pythagorean",
+      "name": "steinerThird_left_involutive",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "3d25b5ad",
+      "domain": "Pythagorean",
+      "name": "steinerThird_ne_left",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "3d25b5ad",
+      "domain": "Pythagorean",
+      "name": "steinerThird_translate",
+      "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-20T23:22:20",
+  "last_updated": "2026-07-20T23:22:31",
   "open_questions": [
     {
       "context": "",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "5dadc373",
-        "quality": 0.68,
-        "theorems": 101,
-        "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
-      },
-      {
         "cycle_id": "d2c19f81",
         "quality": 0.67,
         "theorems": 14,
@@ -3699,6 +3693,12 @@
         "quality": 0.76,
         "theorems": 0,
         "title": "Speculative: Computational Complexity as Physical Law"
+      },
+      {
+        "cycle_id": "82c8c57a",
+        "quality": 0.71,
+        "theorems": 0,
+        "title": "Close Proofs: The Mega-Sphere: All Dimensions at Once"
       }
     ],
     "Physics": [
@@ -3833,12 +3833,6 @@
         "title": "ArXiv paper: From roots to paths: graphs simultaneously irregular with respect t"
       },
       {
-        "cycle_id": "b71e4678",
-        "quality": 0.67,
-        "theorems": 20,
-        "title": "ArXiv paper: From roots to paths: graphs simultaneously irregular with respect t"
-      },
-      {
         "cycle_id": "406a341d",
         "quality": 0.63,
         "theorems": 10,
@@ -3885,6 +3879,12 @@
         "quality": 0.79,
         "theorems": 11,
         "title": "Deepening: ArXiv paper: Reproducing the k-copwin Algorithm: Theory vs. Implement"
+      },
+      {
+        "cycle_id": "3d25b5ad",
+        "quality": 0.7,
+        "theorems": 19,
+        "title": "Causal Loops in Category Theory: When Composition Loops Back"
       }
     ],
     "Shared": [

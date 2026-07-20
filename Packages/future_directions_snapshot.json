@@ -59,7 +59,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "fbb9076c",
+    "consumed_by_exp_id": "",
     "description": "Formalize a Landauer-like principle for mathematical reasoning: every bit of information destroyed in a proof step costs at least kT ln 2 of entropy. Prove that there exist theorems whose shortest proof requires exponentially more erasure than creation, and connect to Kolmogorov complexity and the thermodynamic cost of verification.",
     "domain_bridges": [],
     "domains": [
@@ -72,7 +72,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-19T12:28:35.662011+00:00",
     "title": "Thermodynamics of Mathematical Proof"
   },
@@ -212,26 +212,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "3d25b5ad",
-    "description": "Construct a category where composition is not associative but satisfies a controlled failure: (f circ g) circ h and f circ (g circ h) are naturally isomorphic but not equal. Prove that such almost-categories are exactly the bicategories and that every coherent loop-tolerant algebraic structure forms a higher category.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0505",
-    "lineage_refs": [],
-    "priority_score": 0.85,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-20T05:48:35.520669+00:00",
-    "title": "Causal Loops in Category Theory: When Composition Loops Back"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Conjecture that major theorems (Gödel's incompleteness, Fermat's Last Theorem, ABC conjecture) correspond to phase transitions in proof space. Define an order parameter: the ratio of provable to unprovable statements of length ≤ n. Prove that this ratio undergoes a sharp transition at some critical n_c (the Gödel threshold). Predict: the distribution of theorem lengths follows a power law with exponent related to the Hausdorff dimension of proof space.",
     "domain_bridges": [],
@@ -349,22 +329,22 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "fc320765",
-    "description": "Conjecture that topological quantum error correcting codes can be derived from the homology of algebraic varieties. Formalize: the surface code is H_1 of the torus, the color code is H_1 of a 2-complex. Show that the distance of the code equals the systole of the underlying manifold. Predict: codes from higher-genus surfaces achieve distance O(sqrt(g)) where g is the genus.",
+    "consumed_by_exp_id": "",
+    "description": "Every mathematical structure is a category, and every theorem is a natural transformation. Define the 'genome' of a mathematical theory as its category of models. Prove: two theories are Morita-equivalent iff their model categories are equivalent. Show: the 'mutation' of a theory (changing one axiom) corresponds to an adjunction between model categories. Conjecture: every 'evolutionary path' between theories can be decomposed into a sequence of adjunctions and quotients.",
     "domain_bridges": [],
     "domains": [
       "Novelty",
-      "Cryptography"
+      "Algebra"
     ],
-    "id": "fd_0514",
+    "id": "fd_0530",
     "lineage_refs": [],
-    "priority_score": 0.83,
+    "priority_score": 0.84,
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-20T12:32:18.020792+00:00",
-    "title": "Speculative: Topological Quantum Error Correction from Mathematical Structures"
+    "status": "available",
+    "timestamp": "2026-07-20T23:21:55.457337+00:00",
+    "title": "Speculative: Category Theory as the DNA of Mathematics"
   },
   {
     "ambition_level": "extension",
@@ -7504,6 +7484,66 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## Results established\n\nThe accompanying Lean development proves the finite algebraic core of homological quantum error correction over `𝔽₂`.\n\n1. **Cellular CSS codes are chain complexes.** For `C₂ → C₁ → C₀`, boundaries lie in cycles, so nonzero classes in `ker d₁ / im d₂` represent logical operators.\n2. **Distance equals the combinatorial one-systole.** The operational spectrum of undetectable non-stabilizer errors is proved extensionally equal to the spectrum of non-boundary cellular cycles. Their infima are therefore equal. If first homology is nonzero, the minimum is attained and strictly positive.\n3. **Surface homology.** The minimal cellular model of a closed orientable genus-`g` surface has binary first-homology rank `2g`; the torus specialization has rank two.\n4. **A contrarian disproof.** Abstract homology rank does not determine distance. For every positive genus and every proposed bound, a positive weight model on the same rank-`2g` binary homology can have larger distance; the same rank also admits distance one. Consequently an `O(√g)` distance statement cannot follow from genus or abstract `H₁` alone. A metric, cellulation, bounded local geometry, and a relation between genus and block length are indispensable.\n\nThe disproof is deliberately scoped: its weighted-homology models satisfy positivity and zero-weight axioms, but are not claimed to arise from bounded-degree local cellulations. It refutes only a deduction from homology rank alone, not geometric systolic bounds under additional hypotheses.\n\n## Concise evidence and counterexample hunt\n\nThe formal family gives stronger evidence than a finite sample: for every `g > 0`, the minimal model has rank `2g` and distance `1`, while the uniform model has distance any prescribed `d > 0`. Representative instances are:\n\n| genus `g` | homology rank `2g` | minimal-model distance | alternative allowed distances |\n|---:|---:|---:|---:|\n| 1 | 2 | 1 | every positive `d` |\n| 2 | 4 | 1 | every positive `d` |\n| 3 | 6 | 1 | every positive `d` |\n| 4 | 8 | 1 | every positive `d` |\n| 5 | 10 | 1 | every positive `d` |\n\nThus the universal genus-only prediction already fails at fixed genus: two models with identical homology rank can have distances `1` and `d` for arbitrary `d > 1`. No OEIS search is applicable because the construction realizes an arbitrary prescribed positive sequence rather than selecting a canonical integer sequence. A plot would likewise be misleading: at each positive genus the attainable abstract weights are unbounded vertically.\n\n## Next formal targets\n\n1. **Geometric cellulations.** Add finite 2-dimensional CW or simplicial complexes, incidence maps, edge lengths, bounded face size, and bounded vertex degree. Prove that the present `CellularCode` is induced by their cellular chain complex.\n2. **Primal and dual distances.** A quantum CSS code has both `Z` and `X` distances. Define the dual cochain complex and prove total code distance is the minimum of primal and dual systoles.\n3. **Toric grids.** Formalize the `L × L` square torus and prove parameters `[[2L², 2, L]]`, including a lower bound showing every nontrivial primal or dual cycle uses at least `L` edges.\n4. **Color codes.** Represent a 3-colorable 2-complex and identify the relevant logical spaces. Ordinary `H₁` alone may not capture all color-code structure; formalization should determine the exact additional coloring data.\n5. **Algebraic varieties.** Define codes from dual graphs, incidence complexes, or étale/cohomological data of varieties. The present development does not yet connect arbitrary algebraic varieties to physical local stabilizer codes.\n6. **Correct asymptotic variables.** Replace the unsupported genus-only `O(√g)` claim by bounds involving block length `n`, area, injectivity radius, and bounded local geometry. Determine hypotheses under which `d = O(√n)` or hyperbolic-surface tradeoffs can be proved.\n7. **Probability layer.** Add independent Pauli noise, syndrome distributions, decoders, and logical failure probability. Prove threshold statements only after fixing a concrete growing family and decoder.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_0531",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "fc320765",
+    "status": "available",
+    "timestamp": "2026-07-20T23:22:19.709040+00:00",
+    "title": "The accompanying Lean development proves the finite algebraic core of homologica"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe formal development establishes a concrete genuinely non-strict bicategory: its chosen 1-cell composition has bracketings equal to `5` and `7`, while an invertible associator connects them, and the pentagon and triangle coherence laws hold. It also proves that no `Bicategory.Strict` structure can exist for this fixed composition.\n\nNatural continuations include:\n\n1. **General codiscrete construction.** Package the construction for every unital magma, proving that codiscrete hom-categories turn arbitrary unit and associativity defects into coherent invertible 2-cells.\n2. **Nontrivial 2-cell coherence.** Replace `PUnit` 2-cells by a nontrivial group of automorphisms. Then the pentagon becomes an actual cocycle equation rather than following from subsingleton elimination.\n3. **Skeletal obstruction.** Formalize the relationship between associators in one-object bicategories and normalized group-cohomological 3-cocycles, including the criterion for strictification without changing the underlying 1-cells.\n4. **Biequivalence versus equality.** Prove a strictification result at the level of biequivalence, contrasting it with `no_strict_structure`, which rules out strictness on the fixed data but not replacement by an equivalent strict 2-category.\n5. **Higher coherence.** Develop tricategorical analogues where coherence between associators is itself witnessed by invertible 3-cells. This is the appropriate formal setting for the broader “every coherent loop-tolerant structure forms a higher category” direction; that sweeping claim requires precise dimensions and coherence axioms before it is a theorem.\n6. **Computational exploration.** Enumerate small finite unital magmas and classify their associativity defects. For the present infinite example, the relevant small calculation is already kernel-checked in `left_bracketing_value` and `right_bracketing_value`, so a separate empirical evidence stage would add no confidence to the proved claim.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "fd_0532",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "3d25b5ad",
+    "status": "available",
+    "timestamp": "2026-07-20T23:22:24.198252+00:00",
+    "title": "The formal development establishes a concrete genuinely non-strict bicategory: i"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Coherent All-Stage Objects\n\n## 1. Coordinate-deletion limits over arbitrary coefficient objects\n\nLet `A` be an abelian group and let the `n`th stage be `A^{n+1}`, with bonding maps deleting the last coordinate. The resulting inverse limit should be naturally isomorphic to `A^ℕ`, functorially in `A`, and this isomorphism should intertwine every coordinate projection.\n\nThe key insight is that coherence transports each finite coordinate to a unique diagonal coordinate, independently of finiteness or field structure.\n\nWhy now? The Boolean case isolates the exact reconstruction argument, so the remaining task is to express and test its full functorial naturality.\n\n## 2. A sharp collapse criterion for integral scalar towers\n\nFor a sequence of nonzero integers `(d_n)`, consider the tower whose `n`th bonding map is multiplication by `d_n` on `ℤ`. Its inverse limit should be trivial exactly when the absolute values of the partial products are unbounded.\n\nThe key insight is that a coherent bottom coordinate must be divisible by every partial product, while bounded partial products can occur only when all but finitely many multipliers are units.\n\nWhy now? Coordinate-deletion and constant towers survive, whereas uniformly expanding multiplication towers collapse; variable multipliers are the natural test of the boundary between these regimes.\n\n## 3. Completion as the universal home of invertible total classes\n\nFor a graded connected algebra over `𝔽₂`, every total characteristic class with constant coefficient one should become invertible in its degree completion, and its inverse coefficients should satisfy a universal convolution recurrence.\n\nThe key insight is that completion converts a degree-positive obstruction to polynomial invertibility into a convergent formal geometric recursion.\n\nWhy now? The universal class `1+w` already exhibits the polynomial-versus-series dichotomy, making a general filtered-algebra criterion both concrete and falsifiable.\n\n## 4. Naturality of all-index generating packages\n\nSuppose an inverse system of coefficient rings admits compatible Bernoulli-type exponential series at every stage. Under suitable completeness hypotheses, the stagewise series should assemble uniquely into a series over the inverse-limit ring, and coefficient extraction should commute with every projection.\n\nThe key insight is that an all-index numerical identity and an inverse-limit universal property can interact only through continuity of coefficientwise operations.\n\nWhy now? The present results establish both packages separately and identify the precise missing bridge: compatible coefficient rings and a topology supporting infinite series.\n\n## 5. A homological replacement for the literal tower of spheres\n\nThere should exist a canonical inverse system built from truncations of a single connective spectrum whose degree-`n` homotopy or homology recovers the stable contribution associated with `S^n`, while its homotopy limit records all stages without requiring nonexistent canonical maps `S^{n+1} → S^n`.\n\nThe key insight is that the obstruction belongs to unstable spaces and bonding maps, whereas stabilization and Postnikov truncation provide canonical transition morphisms.\n\nWhy now? The Boolean model proves that coherence is the essential algebraic mechanism, and the failure of literal sphere bonding maps sharply identifies stabilization as the next testable geometric setting.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0533",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "82c8c57a",
+    "status": "available",
+    "timestamp": "2026-07-20T23:22:30.536841+00:00",
+    "title": "Let `A` be an abelian group and let the `n`th stage be `A^{n+1}`, with bonding m"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Cycle 1a27f9f3 (Q=0.700) proved 15 theorems in Combinatorics but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Define a natural metric on the space of all mathematical statements and prove that the set of true statements has a fractal dimension. Show that this dimension is strictly between 0 and 1 (truth is sp",
     "domain_bridges": [],
     "domains": [
@@ -7594,25 +7634,6 @@
     "status": "available",
     "timestamp": "2026-07-20T09:41:43.432388+00:00",
     "title": "Close Proofs: Speculative: Number Theory as Music Theory"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "82c8c57a",
-    "description": "Cycle 955187b3 (Q=0.680) proved 20 theorems in Novelty but left 13 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Construct a single algebraic object whose projections give S^0, S^1, S^2, ... simultaneously. Prove it exists as an inverse limit in the category of spheres. Show that its homology groups encode the B",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "sorry_fill_955187b3_4bf5505e",
-    "lineage_refs": [],
-    "priority_score": 0.7300000000000001,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "955187b3",
-    "status": "in_progress",
-    "timestamp": "2026-07-20T09:41:49.628881+00:00",
-    "title": "Close Proofs: The Mega-Sphere: All Dimensions at Once"
   },
   {
     "ambition_level": "extension",

@@ -1,54 +1,21 @@
-# Computational Evidence — Thermodynamics of Mathematical Proof
+# Computational Evidence
 
-We model a proof/computation step as a function `f : α → β` between finite state spaces and
-define the **erased information**
+The finite model has closed-form counts, so small cases can be tabulated exactly.
 
-```
-erasedBits f = log₂(card α) − log₂(|image f|).
-```
+| Derivation depth `n` | candidates `2^n` | erased alternatives `2^n - 1` | created choices `n` |
+|---:|---:|---:|---:|
+| 0 | 1 | 0 | 0 |
+| 1 | 2 | 1 | 1 |
+| 2 | 4 | 3 | 2 |
+| 3 | 8 | 7 | 3 |
+| 4 | 16 | 15 | 4 |
+| 5 | 32 | 31 | 5 |
+| 6 | 64 | 63 | 6 |
+| 8 | 256 | 255 | 8 |
+| 10 | 1024 | 1023 | 10 |
 
-The Landauer cost of the step is `erasedBits f · k_B · T · ln 2`.
+The recurrence `E(n+1) = 2 E(n) + 1` holds throughout the table. The strict inequality `2n < E(n)` first holds at `n = 4` and persists thereafter. The universal compression claim was checked against the cardinality of all binary descriptions shorter than `n`, namely `2^n - 1`, which is one less than the `2^n` derivations.
 
-## 1. Small-case calculations
+No OEIS lookup is needed: the sequence `2^n - 1` is the elementary Mersenne-number sequence, and the argument uses its closed form rather than an empirical identification.
 
-| step `f`                         | card α | \|image\| | erasedBits           | reversible? |
-|----------------------------------|:------:|:---------:|:--------------------:|:-----------:|
-| `id : Bool → Bool`               |   2    |    2      | `log₂2 − log₂2 = 0`  |   yes       |
-| `not : Bool → Bool`              |   2    |    2      | `0`                  |   yes       |
-| `AND : Bool² → Bool`             |   4    |    2      | `log₂4 − log₂2 = 1`  |   no        |
-| `OR  : Bool² → Bool`             |   4    |    2      | `1`                  |   no        |
-| `const : Fin 2 → Fin 2`          |   2    |    1      | `log₂2 − log₂1 = 1`  |   no        |
-| `collapse n : Fin(2ⁿ) → Fin 1`   |  2ⁿ    |    1      | `n`                  |   no        |
-| `bigCollapse m : Fin(2^(2ᵐ))→Fin1`| 2^(2ᵐ)|    1      | `2ᵐ`                 |   no        |
-| Bennett `x ↦ (x, f x)`           | card α | card α    | `0`                  |   yes       |
-
-These are exactly the values proved in the Lean files (`erasedBits_andGate = 1`,
-`erasedBits_collapse n = n`, `erasedBits_bigCollapse m = 2^m`, `erasedBits_bennett = 0`).
-
-## 2. Sequences
-
-* `erasedBits (collapse n) = n`: the identity sequence `0,1,2,3,…` — linear erasure.
-* `erasedBits (bigCollapse m) = 2^m`: `1,2,4,8,16,…` (OEIS A000079, powers of two) — the
-  erasure of the doubly-exponential state space is exponential in the size parameter `m`,
-  while its *description* is just the number `m`.  This is the exponential creation/erasure gap.
-* Number of programs of length `< n` over a binary alphabet: `2ⁿ − 1` = `0,1,3,7,15,…`
-  (OEIS A000225, Mersenne numbers).  Since there are `2ⁿ` Boolean predicates on `n` bits and
-  only `2ⁿ − 1` shorter descriptions, some predicate is incompressible — the pigeonhole
-  behind `incompressible`.
-
-## 3. Counterexample hunt
-
-We probed two tempting universal claims and found both **false**:
-
-* *"Every non-identity step erases information."*  Counterexample: `not` (bijection, erases
-  `0`).  Formalized as `exists_reversible_nontrivial_step`.
-* *"Erasure is additive under composition,
-  `erasedBits (g∘f) = erasedBits f + erasedBits g`."*  Counterexample: two constant maps on
-  `Fin 2`, giving `1 ≠ 1 + 1`.  Formalized as `erasedBits_not_additive`.  The true statement
-  is monotonicity `erasedBits f ≤ erasedBits (g∘f)` (`erasedBits_mono_comp`).
-
-## 4. Sanity checks
-
-All numeric erasure values above are confirmed inside Lean by `decide` on the finite image
-cardinalities plus exact `logb` evaluation, so the table is machine-verified rather than
-hand-computed.
+The counterexample hunt exposed an important boundary. Exponential candidate coverage is not a universal semantic verification lower bound: a structured verifier may recognize a proof without querying candidates as an unstructured oracle. Accordingly, the result is stated only for adversarial candidate coverage. Likewise, assigning one Landauer unit to each discarded alternative assumes those alternatives are stored as independent bits; compressed storage is governed instead by entropy and the incompressibility boundary.
