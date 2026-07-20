@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-20T20:48:41.742337+00:00",
+  "last_updated": "2026-07-20T22:25:32.792960+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -31521,6 +31521,48 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-20T20:48:41.652804+00:00",
       "title": "Speculative: Computational Complexity as Physical Law"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 4,
+      "domain": "Bridges",
+      "duration_seconds": 5749.116844415665,
+      "end_time": 1784586309.0735295,
+      "files_integrated": 18,
+      "job_id": "f2b328a7",
+      "outcome_quality": 0.64,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v24",
+      "phase_b_skip_reason": "low_quality_near_miss",
+      "phase_b_skipped": true,
+      "prompt_version": "v24",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.55,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.86,
+        "composite": 0.478,
+        "cross_domain": 0.5,
+        "grade": "partial",
+        "importance": 0.48,
+        "novelty": 0.58,
+        "proof_depth": 0.66,
+        "usefulness": 0.72
+      },
+      "quality_score": 0.64,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1784580559.956685,
+      "strategy_count": 0,
+      "theorem_count": 20,
+      "theorem_novelty_disproof": 1,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 11,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-20T22:25:32.692927+00:00",
+      "title": "Speculative: Mathematics as an Evolving Ecosystem"
     }
   ]
 }

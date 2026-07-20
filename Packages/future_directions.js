@@ -230,7 +230,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: ArXiv paper: Reproducing the k-copwin Algorithm: Theory vs. Implementa"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d5fe8eb3",
     "description": "Formalize the hard problem of consciousness as a theorem about the gap between functional descriptions and subjective experience. Prove that any system satisfying the functional definition of consciousness can have a zombie twin that is functionally identical but experientially void. Show this gap is isomorphic to G\u00f6del's incompleteness gap.",
     "domains": [
       "Novelty",
@@ -240,7 +240,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T18:58:00.688995+00:00",
     "title": "Zombies and Qualia: Mathematics of Subjective Experience"
   },
@@ -275,18 +275,19 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Topological Quantum Error Correction from Mathematical Structures"
   },
   {
-    "consumed_by_exp_id": "f2b328a7",
-    "description": "Model mathematical theories as species in an ecosystem. Define a fitness function: f(theory) = (number of connections to other theories) * (proof density) / (axiom count). Conjecture: theories evolve toward the niche of maximum fitness, and the resulting ecosystem satisfies a mathematical analog of the competitive exclusion principle (no two theories occupy the same niche). Prove that ZFC + large cardinals has higher fitness than ZFC alone.",
+    "consumed_by_exp_id": "",
+    "description": "Every proof has a thermodynamic cost proportional to its Kolmogorov complexity. Define: cost(\u03c0) = K(\u03c0) * T * ln(2), where K is Kolmogorov complexity and T is temperature. Prove: shorter proofs have lower cost. Conjecture: there exist statements whose shortest proof has cost exceeding any computable bound (proof-theoretic analog of Chaitin's theorem). Show: the average cost of proving a random true statement of length n is \u0398(2^n).",
     "domains": [
-      "Novelty"
+      "Novelty",
+      "Computation"
     ],
-    "id": "fd_0515",
+    "id": "fd_0528",
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-20T12:32:18.095289+00:00",
-    "title": "Speculative: Mathematics as an Evolving Ecosystem"
+    "status": "available",
+    "timestamp": "2026-07-20T22:20:22.701465+00:00",
+    "title": "Speculative: Proof Complexity and Thermodynamic Cost"
   },
   {
     "consumed_by_exp_id": "cd0075c8",
@@ -302,6 +303,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-20T15:28:30.627383+00:00",
     "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: the laws of physics are the fixed point of a computation that simulates itself. Formalize: define a universal physical simulator U that maps (initial_conditions, laws) \u2192 (next_state). The fixed point equation is U(L, L) = L, where L is the 'law of physics'. Prove: the solution exists (by the Kleene fixed point theorem). Show: the solution is unique up to computational equivalence. Predict: the fine structure constant \u03b1 satisfies \u03b1 = 1/(137.036...) because it's the simplest fixed point.",
+    "domains": [
+      "Novelty",
+      "Physics"
+    ],
+    "id": "fd_0527",
+    "priority_score": 0.81,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-20T22:20:22.643947+00:00",
+    "title": "Speculative: The Universe Computes Its Own Existence (Physics = Computation)"
   },
   {
     "consumed_by_exp_id": "",
@@ -5487,6 +5503,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-20T20:48:39.660968+00:00",
     "title": "**Conjecture.** Let a family of decision procedures on inputs of length `n` irre"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n- Replace the illustrative rational census by an audited dataset and use `fitness_lt_iff_cross_product` as the exact validation criterion. In particular, the labels \u201cZFC\u201d and \u201cZFC plus large cardinals\u201d do not determine connection counts or proof density without an explicit measurement protocol.\n- Generalize fitness from one scalar to a partially ordered vector of explanatory reach, theorem production, consistency strength, and axiom cost. This would distinguish profiles that the scalar product identifies.\n- Derive competitive exclusion from an explicit resource model rather than encoding unique occupancy in `NicheAllocation`. A useful next model would assign resource-demand vectors and prove exclusion under strict scarcity and equilibrium assumptions.\n- Study stochastic evolution with a supermartingale Lyapunov function, replacing deterministic bounded stabilization by almost-sure convergence.\n- Connect theory profiles to a finite graph whose edges are interpretation, conservativity, or transfer theorems, so that `connections` is computed from formal data rather than supplied as a field.\n- Investigate coexistence: the formal counterexample shows that equal scalar fitness need not imply equal profiles, so a richer niche definition may support stable polymorphic equilibria rather than exclusion.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0529",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "f2b328a7",
+    "status": "available",
+    "timestamp": "2026-07-20T22:25:31.211833+00:00",
+    "title": "Future directions from cycle f2b328a7"
   },
   {
     "consumed_by_exp_id": "",

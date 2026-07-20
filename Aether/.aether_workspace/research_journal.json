@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "d1e62d74",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\n1. **Formalize the underlying objects.** Supply precise definitions of an `n`-nice polytope, a “good” manifold, equivalence of manifolds for counting purposes, and the maximum bei",
-      "quality_score": 0.6,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-16T09:17:35",
-      "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
-    },
-    {
       "cycle_id": "851ec568",
       "domain": "Novelty",
       "key_insight": "# Future directions\n\n1. **Normalize to the paper's `Q_k`.** Extend scalars from `ℤ` to `ℝ` and define\n   `Q_k = k⁻¹ P_k`. The proved cumulative identity immediately yields the exact\n   Cesàro formula",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-20T20:48:41",
       "title": "Speculative: Computational Complexity as Physical Law"
+    },
+    {
+      "cycle_id": "f2b328a7",
+      "domain": "Bridges",
+      "key_insight": "# Future directions\n\n- Replace the illustrative rational census by an audited dataset and use `fitness_lt_iff_cross_product` as the exact validation criterion. In particular, the labels “ZFC” and “ZFC",
+      "quality_score": 0.64,
+      "sorry_count": 0,
+      "theorem_count": 20,
+      "timestamp": "2026-07-20T22:25:32",
+      "title": "Speculative: Mathematics as an Evolving Ecosystem"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-20T20:48:41",
+  "last_updated": "2026-07-20T22:25:32",
   "open_questions": [
     {
       "context": "",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "e93835e7",
-        "quality": 0.68,
-        "theorems": 8,
-        "title": "ArXiv paper: Improving Upper Bounds for the Maximum Clique Problem using Reducti"
-      },
-      {
         "cycle_id": "a6705a36",
         "quality": 0.78,
         "theorems": 19,
@@ -3203,6 +3197,12 @@
         "quality": 0.76,
         "theorems": 0,
         "title": "Borges' Library of Babel: Combinatorics of Everything"
+      },
+      {
+        "cycle_id": "f2b328a7",
+        "quality": 0.64,
+        "theorems": 20,
+        "title": "Speculative: Mathematics as an Evolving Ecosystem"
       }
     ],
     "Combinatorics": [
