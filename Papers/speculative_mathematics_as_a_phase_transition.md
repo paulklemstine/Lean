@@ -1,46 +1,41 @@
-# Computational evidence
+# Computational Evidence
 
-The formal development studies the explicit mean-field model
+## Small-case calculations
 
-\[
-C_\kappa(x;c)=\sqrt{\kappa\max(x-c,0)}.
-\]
+For prime conductor `p`, cyclotomic reciprocity gives exactly `p - 1` one-dimensional complex Galois representations. Thus the proposed ten-thousand-edge condition becomes `10000 < p - 1`.
 
-This evidence checks examples of the model; it does **not** provide empirical evidence that
-mathematical history follows the model or that 10,000 is a data-derived threshold.
+| prime conductor `p` | connection count `p - 1` | modeled phase |
+|---:|---:|:---|
+| 2 | 1 | inactive |
+| 3 | 2 | inactive |
+| 5 | 4 | inactive |
+| 101 | 100 | inactive |
+| 9973 | 9972 | inactive |
+| 10009 | 10008 | active |
+| 10037 | 10036 | active |
 
-## Small cases
+The boundary calculation is exact: activation is equivalent to `10001 < p`. Since `10001 = 73 × 137` is composite, no prime conductor occurs exactly at the first integer above the edge threshold; `10009` is the first active prime conductor.
 
-For `κ = 1` and `c = 4`, exact values of `C²` are:
+## Sequence identification
 
-| connections `x` | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 8 | 13 |
-|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| `C(x)²` | 0 | 0 | 0 | 0 | 0 | 1 | 2 | 4 | 9 |
-| `C(x)` | 0 | 0 | 0 | 0 | 0 | 1 | √2 | 2 | 3 |
+Along prime conductors, the connection counts begin
 
-For the stated model threshold `c = 10000` and `κ = 1`:
+`1, 2, 4, 6, 10, 12, 16, 18, 22, 28, ...`,
 
-| edges | 9999 | 10000 | 10001 | 10004 | 10100 |
-|---:|---:|---:|---:|---:|---:|
-| `C²` | 0 | 0 | 1 | 4 | 100 |
-| `C` | 0 | 0 | 1 | 2 | 10 |
-
-## Sequence search
-
-No OEIS search is applicable: after squaring, the integer samples are simply the positive
-part of a shifted linear sequence; this is a model definition rather than a newly observed
-integer sequence.
+namely one less than each prime. No OEIS identifier is needed for the argument: the sequence is explicitly characterized by the prime sequence itself.
 
 ## Counterexample hunt
 
-The formal claims reduce to standard identities and inequalities for `sqrt` and `max`.
-Boundary checks at `x=c`, zero coupling, and positive coupling below/above threshold agree
-with the statements. Negative coupling was intentionally excluded from square-law and
-monotonicity claims; without that assumption the radicand need not represent the intended
-order parameter.
+The universal prime-conductor claim was reduced algebraically to
 
-## Interpretation
+`10000 < p - 1 ↔ 10001 < p`.
 
-The table displays continuous onset and square-root growth. It cannot validate the empirical
-premise, estimate a real critical edge count, or establish that theorem networks undergo a
-physical phase transition. Those require a specified dataset and statistical model.
+Potential corner cases include `p = 2`, the truncated natural subtraction in `p - 1`, and values near `10001`. Primality forces `p ≥ 2`, so subtraction is nondegenerate. The nearby values agree with the classification: `9973` is inactive, `10001` is not prime, and `10009` is active. The formal theorem covers all prime conductors, so these calculations are illustrations rather than the basis of the result.
+
+## Shape of the order parameter
+
+For coupling `κ > 0`, the modeled coherence is zero through `10000` connections and equals
+
+`√κ · √(edges - 10000)`
+
+above threshold. Consequently its square grows linearly in excess connections, while coherence itself has square-root onset. For prime conductor `p`, substitute `edges = p - 1`, obtaining excess `p - 10001`.
