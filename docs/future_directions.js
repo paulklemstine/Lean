@@ -88,7 +88,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Thermodynamics of Mathematical Proof"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d87f0198",
     "description": "Prove that adding an oracle for the halting problem to PA yields a theory that proves its own consistency but cannot decide its own soundness. Formalize the hierarchy: PA < PA^H < PA^{H^H} < ... and prove that each jump genuinely increases theorem-proving power. Show that the oracle hierarchy is isomorphic to the Turing jump hierarchy.",
     "domains": [
       "Novelty",
@@ -98,7 +98,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T21:02:27.020806+00:00",
     "title": "The Oracle's Burden: How Much Knowledge Is Too Much?"
   },
