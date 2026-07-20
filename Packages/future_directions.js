@@ -200,21 +200,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "[Reset] Fresh approach in Shared"
   },
   {
-    "consumed_by_exp_id": "b3f0d755",
-    "description": "Construct a category where composition is not associative but satisfies a controlled failure: (f circ g) circ h and f circ (g circ h) are naturally isomorphic but not equal. Prove that such almost-categories are exactly the bicategories and that every coherent loop-tolerant algebraic structure forms a higher category.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0498",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T22:20:03.236691+00:00",
-    "title": "Causal Loops in Category Theory: When Composition Loops Back"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 717f7483 (Q=0.750), which proved 19 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Godel's incompleteness theorem says there are true statements that cannot be proved. But what if we turn incompleteness into a GAME? Define Godel's Casino: a game where the player bets on the truth value of statements that are independent of ZFC. The house deals cards representing arithmetic stateme",
     "domains": [
@@ -241,6 +226,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-18T09:05:18.164692+00:00",
     "title": "Deepening: Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle b3f0d755 (Q=0.750), which proved 26 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Construct a category where composition is not associative but satisfies a controlled failure: (f circ g) circ h and f circ (g circ h) are naturally isomorphic but not equal. Prove that such almost-categories are exactly the bicategories and that every coherent loop-tolerant algebraic structure forms",
+    "domains": [
+      "Cryptography"
+    ],
+    "id": "push_b3f0d755_7327937a",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "b3f0d755",
+    "status": "available",
+    "timestamp": "2026-07-20T02:08:12.126638+00:00",
+    "title": "Deepening: Causal Loops in Category Theory: When Composition Loops Back"
   },
   {
     "consumed_by_exp_id": "",
@@ -301,6 +300,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Number Theory as Music Theory"
   },
   {
+    "consumed_by_exp_id": "",
+    "description": "Every mathematical structure is a category, and every theorem is a natural transformation. Define the 'genome' of a mathematical theory as its category of models. Prove: two theories are Morita-equivalent iff their model categories are equivalent. Show: the 'mutation' of a theory (changing one axiom) corresponds to an adjunction between model categories. Conjecture: every 'evolutionary path' between theories can be decomposed into a sequence of adjunctions and quotients.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0520",
+    "priority_score": 0.84,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-20T02:07:41.903948+00:00",
+    "title": "Speculative: Category Theory as the DNA of Mathematics"
+  },
+  {
     "consumed_by_exp_id": "ea7d1cf2",
     "description": "Conjecture that topological quantum error correcting codes can be derived from the homology of algebraic varieties. Formalize: the surface code is H_1 of the torus, the color code is H_1 of a 2-complex. Show that the distance of the code equals the systole of the underlying manifold. Predict: codes from higher-genus surfaces achieve distance O(sqrt(g)) where g is the genus.",
     "domains": [
@@ -314,20 +328,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-19T22:56:07.334764+00:00",
     "title": "Speculative: Topological Quantum Error Correction from Mathematical Structures"
-  },
-  {
-    "consumed_by_exp_id": "8797684d",
-    "description": "Model mathematical theories as species in an ecosystem. Define a fitness function: f(theory) = (number of connections to other theories) * (proof density) / (axiom count). Conjecture: theories evolve toward the niche of maximum fitness, and the resulting ecosystem satisfies a mathematical analog of the competitive exclusion principle (no two theories occupy the same niche). Prove that ZFC + large cardinals has higher fitness than ZFC alone.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_0506",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T23:30:38.615381+00:00",
-    "title": "Speculative: Mathematics as an Evolving Ecosystem"
   },
   {
     "consumed_by_exp_id": "d14aad94",
@@ -358,6 +358,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-19T23:48:18.405185+00:00",
     "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Construct a simplicial complex from the citation graph of mathematical theorems: vertices are theorems, edges connect co-cited theorems, triangles connect tri-cited theorems, etc. Compute the persistent homology of this complex. Conjecture: H_1 reveals 'schools of mathematics' (connected research communities) and H_2 reveals 'paradigm shifts' (structural changes in the network). Prove: the Betti numbers grow as \u03b2_k \u2248 n^(k+1) where n is the number of theorems.",
+    "domains": [
+      "Novelty",
+      "MachineLearning"
+    ],
+    "id": "fd_0521",
+    "priority_score": 0.82,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-20T02:07:41.956075+00:00",
+    "title": "Speculative: Topological Data Analysis of Theorem Networks"
   },
   {
     "consumed_by_exp_id": "",
@@ -5443,6 +5458,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## Replace illustrative measurements with audited data\n\nThe formal comparison theorem reduces every fitness claim to a cross-product inequality. A substantive empirical continuation should specify reproducible counting conventions for connections, proof density, and axiom cost, then import an audited census. The current concrete ZFC profiles are explicitly illustrative and should not be mistaken for metamathematical measurements.\n\n## Sensitivity and uncertainty\n\nRepresent each measured field by a rational interval and prove robust ordering: every admissible profile for one theory has greater fitness than every admissible profile for another. This would separate stable conclusions from artifacts of a chosen normalization.\n\n## Richer cost models\n\nAxiom count treats every axiom as equally costly. Alternatives include weighted axiom schemas, description length, consistency-strength strata, or ordinal-valued cost. One can investigate which fitness-comparison results survive monotone reparameterization.\n\n## Endogenous evolution\n\nThe present landscape assumes a Lyapunov distance and characterizes fixed points as global maxima. A stronger model would derive these properties from a concrete update rule, such as best-response movement on a finite niche graph. Potential results include convergence rates, basin decomposition, and perturbation stability.\n\n## Competitive exclusion from interactions\n\nThe allocation model enforces unique occupancy by representation. A deeper theorem would begin with an interaction matrix or resource constraints and derive exclusion dynamically. Equal scalar fitness profiles in the Lean development show why fitness alone cannot imply this principle; additional interaction hypotheses are mathematically necessary.\n\n## Diversity and coexistence\n\nExplore conditions under which different niches permit stable coexistence, and quantify the tradeoff between ecosystem-wide diversity and maximal individual fitness. Pareto frontiers may be more faithful than a single scalar objective.\n\n## Infinite ecosystems\n\nGeneralize finite-time natural-valued descent to well-founded ordinal ranks. This would permit transfinite evolutionary trajectories while retaining a convergence theorem.",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_0522",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "8797684d",
+    "status": "available",
+    "timestamp": "2026-07-20T02:07:55.985813+00:00",
+    "title": "The formal comparison theorem reduces every fitness claim to a cross-product ine"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Coherent Composition Loops\n\n## 1. Faithful non-thin causal-loop bicategories\n\n**Conjecture.** There is a finite one-object bicategory whose 1-cell composition is not associative as equality, whose associator is non-identity, and whose parallel 2-cells are not all equal; moreover, its associator pentagon can be witnessed by a finite rewriting system with decidable normalization.\n\nThe key insight is that the indiscrete locally thin example separates equality from coherent equivalence but erases the higher-dimensional information carried by distinct coherence paths. A finite non-thin model would preserve that information while remaining completely testable.\n\n**Why now?** The strict quotient and reassociation semantics isolate exactly which part of the present construction uses local thinness, so the missing coherence data can be introduced one layer at a time.\n\n## 2. Quantitative coherence leakage\n\n**Conjecture.** For every finite non-thin bicategory equipped with a subadditive real cost on 2-cells, the maximum observational drift between two parenthesizations equals the minimum total cost of a 2-cell path between them, and this distance is invariant under the pentagon and triangle relations.\n\nThe key insight is that a hybrid argument treats each associator as a local experiment transition; replacing a uniform bound by shortest-path cost should turn coherence into a quantitative security metric.\n\n**Why now?** The established reassociation hybrid bound already proves one inequality for uniform edge costs. Weighted associators and path minimization are the next falsifiable refinement.\n\n## 3. Collision resistance under weak composition\n\n**Conjecture.** Let generators act by 1-cells in a locally finite bicategory, and suppose bounded left and right principal-ideal traces separate generator words. Then quotienting by coherent reassociation preserves bounded collision resistance if and only if no nontrivial generator word is connected to a distinct word by a unit-preserving 2-cell.\n\nThe key insight is that principal-ideal traces detect strict syntax, whereas 2-cells detect semantic identifications; secure weak composition requires these two equivalence mechanisms to intersect only on intended reassociations.\n\n**Why now?** Bounded trace rigidity has been transported to atomic composition expressions, while strictification exhibits precisely how additional collisions can appear after quotienting.\n\n## 4. Associahedral normalization with certified diameter\n\n**Conjecture.** Any two binary parenthesizations of a word of length `n` are connected by at most `2n - 6` directed associator moves for `n \u2265 11`, and there are families attaining this bound after orientation-independent normalization.\n\nThe key insight is that reassociation syntax is the edge relation of the associahedron, so sharp rotation-distance bounds directly control the longest hybrid chain needed to compare coherent evaluations.\n\n**Why now?** Structural reassociation and its sound interpretation are available; adding leaf-preserving normal forms would convert a geometric diameter question into an explicit bound on observational drift.\n\n## 5. Higher coherence from terminating polygraphs\n\n**Conjecture.** Every finitely presented loop-tolerant algebra whose generating 2-dimensional rewrites form a terminating and confluent polygraph extends canonically to a weak higher category in which all higher coherence cells are generated by critical-pair fillers.\n\nThe key insight is that \u201cevery coherent loop-tolerant structure forms a higher category\u201d is too broad without a precise coherence mechanism; termination, confluence, and critical-pair fillers provide falsifiable conditions that may generate that mechanism dimension by dimension.\n\n**Why now?** The locally thin case shows that uniqueness of parallel cells is one sufficient mechanism. Convergent polygraphs offer a substantially broader replacement in which uniqueness follows from normalization rather than proof irrelevance.\n",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_0523",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "b3f0d755",
+    "status": "available",
+    "timestamp": "2026-07-20T02:08:07.796790+00:00",
+    "title": "**Conjecture.** There is a finite one-object bicategory whose 1-cell composition"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle d1663b23 (Q=0.700) proved 0 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'A minimal modularity lifting theorem for Siegel modular forms' and formalize its key results. Abstract: We prove a minimal modularity lifting theorem (in the spirit of Gen",
     "domains": [
       "Applications"
@@ -5496,6 +5541,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-19T23:13:43.623458+00:00",
     "title": "Close Proofs: The Oracle's Burden: How Much Knowledge Is Too Much?"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 8797684d (Q=0.670) proved 20 theorems in MachineLearning but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Model mathematical theories as species in an ecosystem. Define a fitness function: f(theory) = (number of connections to other theories) * (proof density) / (axiom count). Conjecture: theories evolve ",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "sorry_fill_8797684d_26f0c260",
+    "priority_score": 0.7200000000000001,
+    "research_mode": "team",
+    "source_exp_id": "8797684d",
+    "status": "available",
+    "timestamp": "2026-07-20T02:08:03.703672+00:00",
+    "title": "Close Proofs: Speculative: Mathematics as an Evolving Ecosystem"
   },
   {
     "consumed_by_exp_id": "",
