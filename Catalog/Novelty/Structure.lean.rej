@@ -1,0 +1,8 @@
+--- Structure.lean
++++ Structure.lean
+@@ -1,4 +1,4 @@
+-import Catalog.Novelty.Defs
++import Catalog.Novelty.TotalRainbowForest.Defs
+ 
+ /-!
+ 

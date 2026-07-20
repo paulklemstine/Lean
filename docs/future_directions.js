@@ -59,20 +59,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
   },
   {
-    "consumed_by_exp_id": "dd6a308e",
-    "description": "Building on cycle 7881a56b (Q=0.790), which proved 16 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'Reproducing the k-copwin Algorithm: Theory vs. Implementation' and formalize its key results. Abstract: Cops and Robbers is a well-studied pursuit-evasion game that provides insights into graph theory and theoretical computing. A central question is determining the minim",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_7881a56b_1df8c3bf",
-    "priority_score": 0.89,
-    "research_mode": "team",
-    "source_exp_id": "7881a56b",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T17:15:41.451394+00:00",
-    "title": "Deepening: ArXiv paper: Reproducing the k-copwin Algorithm: Theory vs. Implementation"
-  },
-  {
     "consumed_by_exp_id": "fbb9076c",
     "description": "Formalize a Landauer-like principle for mathematical reasoning: every bit of information destroyed in a proof step costs at least kT ln 2 of entropy. Prove that there exist theorems whose shortest proof requires exponentially more erasure than creation, and connect to Kolmogorov complexity and the thermodynamic cost of verification.",
     "domains": [
@@ -274,6 +260,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Cycle dd6a308e (Q=0.790) proved 11 theorems in Pythagorean but left 13 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Building on cycle 7881a56b (Q=0.790), which proved 16 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "sorry_fill_dd6a308e_dfbcebfe",
+    "priority_score": 0.8400000000000001,
+    "research_mode": "team",
+    "source_exp_id": "dd6a308e",
+    "status": "available",
+    "timestamp": "2026-07-20T09:41:55.293921+00:00",
+    "title": "Close Proofs: ArXiv paper: Reproducing the k-copwin Algorithm: Theory vs. Implementa"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalize the hard problem of consciousness as a theorem about the gap between functional descriptions and subjective experience. Prove that any system satisfying the functional definition of consciousness can have a zombie twin that is functionally identical but experientially void. Show this gap is isomorphic to G\u00f6del's incompleteness gap.",
     "domains": [
       "Novelty",
@@ -288,19 +288,19 @@ window.FUTURE_DIRECTIONS = [
     "title": "Zombies and Qualia: Mathematics of Subjective Experience"
   },
   {
-    "consumed_by_exp_id": "955187b3",
-    "description": "Construct a single algebraic object whose projections give S^0, S^1, S^2, ... simultaneously. Prove it exists as an inverse limit in the category of spheres. Show that its homology groups encode the Bernoulli numbers and that its cohomology ring is the polynomial ring on Stiefel-Whitney classes.",
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that P != NP has a physical interpretation: the universe's computational capacity is bounded by the polynomial hierarchy. Formalize this: any physical process that runs in polynomial time can be simulated by a polynomial-time Turing machine (Extended Church-Turing thesis). Show that if P = NP, then the second law of thermodynamics would be violated because Maxwell's demon could be implemented efficiently.",
     "domains": [
       "Novelty",
-      "Geometry"
+      "Physics"
     ],
-    "id": "fd_0493",
-    "priority_score": 0.83,
+    "id": "fd_0508",
+    "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T21:02:26.975866+00:00",
-    "title": "The Mega-Sphere: All Dimensions at Once"
+    "status": "available",
+    "timestamp": "2026-07-20T09:41:18.311495+00:00",
+    "title": "Speculative: Computational Complexity as Physical Law"
   },
   {
     "consumed_by_exp_id": "",
@@ -5323,6 +5323,51 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: Reciprocal-Zero Harmonics\n\n## 1. Certified low-height window theorem\n\nConstruct a proof-quality zero-counting certificate showing that the nontrivial zeros of the Riemann zeta function have no ordinates in `[-3,3]`. This would settle the support question behind the proposed octave and fifth cutoffs: under the stated reciprocal-sum definition, both harmonics would be zero rather than arithmetically distinct.\n\nThe key insight is that arithmetic classification must follow, not precede, certified knowledge of which zeros lie in the window.\n\nWhy now? Rigorous interval methods and explicit argument-principle computations make a finite low-height certification sharply testable.\n\n## 2. Correct asymptotic scale of the reciprocal-zero harmonic\n\nFor the conjugation-symmetric multiset of nontrivial zeros with ordinates of absolute value at most `T`, determine the asymptotic behavior of the symmetrically ordered sum of reciprocals, including multiplicity. Test whether it converges, remains bounded, or has a main term after the real contribution from each conjugate pair is isolated.\n\nThe key insight is that the classical zero count grows on the scale `T log T`, while reciprocal weighting and conjugate pairing substantially alter the scale of the resulting sum.\n\nWhy now? The separation-and-counting transfer theorem identifies exactly which analytic estimates must be sharpened and exposes why the originally proposed `log T / log log T` bound does not follow from zero counting alone.\n\n## 3. Arithmetic rigidity of finite spectral harmonics\n\nClassify quadratic and higher-degree spectral factors over number fields for which the sum of reciprocals of distinct roots is rational. In degree two the harmonic is the coefficient ratio `l/q`; in higher degree, test whether rationality is controlled precisely by the ratio of the linear and constant coefficients together with multiplicity corrections.\n\nThe key insight is that reciprocal-root harmonics are elementary symmetric functions, so musical interval labels can be replaced by explicit Galois-invariant coefficient conditions.\n\nWhy now? The exact graph-zeta calculation supplies a nontrivial finite model in which rationality is computable and stable under conjugation.\n\n## 4. Graph-to-Riemann limiting bridge\n\nFind a family of finite graph-zeta factors whose normalized zero measures converge to a zeta-like spectral measure, and determine whether their rational reciprocal harmonics converge to a canonical regularized reciprocal-zero sum.\n\nThe key insight is that finite graph spectra provide exact algebraic identities and critical-circle theorems, while a limiting process may retain enough structure to illuminate infinite zeta spectra.\n\nWhy now? Exact local factorization and harmonic identities are available at every finite stage, making convergence and loss of rationality concrete falsifiable questions.\n\n## 5. Renormalized interval map\n\nDefine a nondegenerate interval map by replacing the empty low-height cutoff with either shifted windows around certified zeros or normalized increments between consecutive zero ordinates. Test whether any resulting values are algebraic, transcendental, or statistically equidistributed modulo a musical octave.\n\nThe key insight is that interval information should come from changes in spectral content, not from cutoffs lying below the first spectral event.\n\nWhy now? The empty-window diagnosis identifies the precise defect in the original map and suggests several corrected observables with computable finite approximations.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0509",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "50f62832",
+    "status": "available",
+    "timestamp": "2026-07-20T09:41:41.863741+00:00",
+    "title": "Construct a proof-quality zero-counting certificate showing that the nontrivial "
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## What was formalized\n\n`AllDimensions.lean` defines the algebraic sphere\n\n\\[\nS^n_{\\mathrm{alg}}=\\{x:\\operatorname{Fin}(n+1)\\to\\mathbb R\\mid \\sum_i x_i^2=1\\}\n\\]\n\nand the mega-sphere `AllSpheres = (n : \u2115) \u2192 AlgebraicSphere n`. It proves that the coordinate projections form a limit cone for the discrete diagram of all finite-dimensional algebraic spheres in `Type`. The result includes the explicit universal map and its uniqueness, rather than merely invoking a general existence instance.\n\nThe development also proves:\n\n- maps into the mega-sphere are equivalent to dimension-indexed families of maps;\n- every coordinate projection is surjective, and two distinct coordinates may be prescribed independently;\n- coordinate projections are jointly injective;\n- the coordinatewise antipodal map is an involution with no fixed points;\n- each projection is antipode-equivariant;\n- equivariant maps assemble coordinatewise;\n- the object splits as `S\u2070` times the product of all positive-dimensional spheres.\n\n## Necessary correction to the research premise\n\nAn inverse limit is not determined by a list of objects alone: it also requires an indexing category and bonding maps. There is no standard category whose objects are exactly `S\u2070, S\u00b9, \u2026` and which supplies canonical inverse-system maps between consecutive spheres. The formal theorem therefore uses the canonical **discrete diagram**, whose limit is the product. This is the strongest interpretation that needs no arbitrary bonding-map choices.\n\nThe requested Bernoulli-number and Stiefel\u2013Whitney conclusions do not hold for this product of spheres. Bernoulli numbers are not the ordinary homology groups of such a product, while a polynomial ring on universal Stiefel\u2013Whitney classes describes the mod-2 cohomology of `BO`, not of a product containing one sphere in each dimension. Claiming those conclusions here would conflate different spaces.\n\n## Mathematically sound next projects\n\n1. **Topology rather than bare types.** Replace algebraic spheres in `Type` by bundled topological spaces, equip the dependent product with the product topology, and establish the corresponding categorical product in `TopCat`.\n\n2. **Finite-stage approximation.** Define `M_N = \u220f_{n < N} S^n`, prove `M_{N+1} \u2243 M_N \u00d7 S^N`, and construct the genuine inverse sequence with coordinate-forgetting bonding maps. Its inverse limit should recover the countable product. This gives a non-discrete inverse-system formulation of the same object.\n\n3. **Finite-stage cohomology.** Over a field, prove the K\u00fcnneth description of `H*(M_N)` as the graded tensor product of the cohomology rings of its sphere factors. The finite-stage Poincar\u00e9 polynomial should be `\u220f_{n < N} (1 + t^n)` after handling the `S\u2070` component convention carefully.\n\n4. **Correct Stiefel\u2013Whitney target.** Formalize finite Grassmannians, their tautological bundles, and stabilization maps. The colimit model for `BO` is the appropriate setting for a polynomial mod-2 cohomology ring on universal Stiefel\u2013Whitney classes.\n\n5. **Correct Bernoulli target.** Investigate classifying spaces, characteristic-number generating series, or the Chern character/Todd class, where Bernoulli numbers naturally occur. This should be developed independently of the sphere product unless a precise comparison map is supplied.\n\n6. **Equivariant structure.** Bundle the antipodal involutions as `C\u2082`-actions and lift the product universal property to an equivariant category. The proved pointwise freeness is a starting point, though quotient topology and infinite-product subtleties require separate work.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0510",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "955187b3",
+    "status": "available",
+    "timestamp": "2026-07-20T09:41:47.276492+00:00",
+    "title": "`AllDimensions.lean` defines the algebraic sphere"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions for Finite Cop-Win Elimination\n\n## 1. Order-independent asynchronous elimination\n\n**Conjecture.** Let a finite candidate system be governed by a monotone contracting parallel update. Any fair asynchronous execution that removes only candidates rejected by the current parallel update terminates at the same greatest fixed kernel as synchronous iteration.\n\nThe key insight is that monotonicity should turn every fair deletion schedule into a refinement of the same descending fixed-point computation, while fairness prevents a permanently rejected candidate from surviving.\n\n**Why now?** The sharp synchronous stabilization theorem and greatest-kernel characterization isolate exactly the two invariants\u2014descent and maximality\u2014that an asynchronous confluence argument must preserve.\n\n## 2. Polynomial certificate bound for explicit k-cop state spaces\n\n**Conjecture.** For a graph with `n` vertices and fixed `k`, the standard monotone elimination operator on robber\u2013cop configurations stabilizes in at most `n^(k+1)` changing rounds, and every rejected configuration admits a replayable certificate of depth at most that bound.\n\nThe key insight is that the abstract cardinality bound becomes an explicit complexity theorem once configurations are encoded as one robber position and `k` cop positions; the deletion history should simultaneously serve as a correctness certificate.\n\n**Why now?** A representation-independent round bound is available, so the remaining issue is a faithful configuration encoding and a proof that the paper's local update is contracting and monotone.\n\n## 3. Fair serial deletion with a linear total-deletion bound\n\n**Conjecture.** If an implementation deletes one currently rejected candidate at a time, never reintroduces candidates, and eventually selects every continuously rejected candidate, then it performs at most the initial number of candidates in total, regardless of selection order.\n\nThe key insight is that serial execution changes the number of rounds but not the strict-cardinality ranking: every effective operation spends one unit of a finite deletion budget.\n\n**Why now?** The concrete least-candidate example attains the abstract bound, showing that a linear estimate is both plausible and sharp rather than an artifact of parallel iteration.\n\n## 4. Well-founded infinite-state extension\n\n**Conjecture.** Suppose candidates carry an ordinal-valued rank and every proper pruning step strictly decreases the multiset extension of that rank. Then monotone contracting elimination reaches a greatest fixed kernel by transfinite iteration, with stabilization below the successor of the initial multiset rank.\n\nThe key insight is that finite cardinality is only one well-founded measure; replacing it by a multiset ordinal should preserve the termination architecture while admitting finitely represented infinite arenas.\n\n**Why now?** The finite proof already factors through a generic well-founded termination principle, exposing the exact interface at which ordinal or multiset measures can replace cardinality.\n\n## 5. Counterexample classification beyond monotonicity\n\n**Conjecture.** Among contracting updates on a finite powerset, synchronous iteration always stabilizes, but the terminal fixed point is greatest below every input if and only if the update satisfies a fixed-point preservation condition strictly weaker than full monotonicity.\n\nThe key insight is that contraction alone controls termination, whereas monotonicity was used only to preserve arbitrary fixed subsets; isolating the weakest replacement should classify when an implementation computes the intended semantic kernel.\n\n**Why now?** The present separation between stabilization and greatest-kernel semantics makes it possible to search for exact boundary axioms rather than treating monotonicity as an indivisible implementation requirement.\n",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_0511",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "dd6a308e",
+    "status": "available",
+    "timestamp": "2026-07-20T09:41:52.781315+00:00",
+    "title": "**Conjecture.** Let a finite candidate system be governed by a monotone contract"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle d1663b23 (Q=0.700) proved 0 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'A minimal modularity lifting theorem for Siegel modular forms' and formalize its key results. Abstract: We prove a minimal modularity lifting theorem (in the spirit of Gen",
     "domains": [
       "Applications"
@@ -5348,6 +5393,34 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-17T14:03:03.735341+00:00",
     "title": "Close Proofs: Dark Mathematics: Theorems That Exist But Cannot Be Found"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 50f62832 (Q=0.680) proved 11 theorems in Bridges but left 13 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Map prime numbers to harmonic overtones using the Riemann zeta function's non-trivial zeros. Define: the 'harmonic' of a number n is the sum of 1/\u03c1 for each zero \u03c1 with |Im(\u03c1)| \u2264 n. Prove: the harmoni",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "sorry_fill_50f62832_62fb1d41",
+    "priority_score": 0.7300000000000001,
+    "research_mode": "team",
+    "source_exp_id": "50f62832",
+    "status": "available",
+    "timestamp": "2026-07-20T09:41:43.432388+00:00",
+    "title": "Close Proofs: Speculative: Number Theory as Music Theory"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 955187b3 (Q=0.680) proved 20 theorems in Novelty but left 13 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Construct a single algebraic object whose projections give S^0, S^1, S^2, ... simultaneously. Prove it exists as an inverse limit in the category of spheres. Show that its homology groups encode the B",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_955187b3_4bf5505e",
+    "priority_score": 0.7300000000000001,
+    "research_mode": "team",
+    "source_exp_id": "955187b3",
+    "status": "available",
+    "timestamp": "2026-07-20T09:41:49.628881+00:00",
+    "title": "Close Proofs: The Mega-Sphere: All Dimensions at Once"
   },
   {
     "consumed_by_exp_id": "",

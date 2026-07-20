@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "eb62b00a",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions\n\n- Formalize matrix representability of finite matroids over `ZMod 3` and prove that it is preserved by deletion and contraction.\n- Connect the abstract theorem `matroid_wqo_gives_",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-19T02:26:34",
-      "title": "Matroid Minors and the Graph Theorem: Robertson-Seymour for Matroids"
-    },
-    {
       "cycle_id": "4c2c71e5",
       "domain": "MachineLearning",
       "key_insight": "# Future Directions\n\n- Replace the impossible global condition over all irrational frequencies by a condition excluding a fixed neighborhood of the integer resonances. Continuity forces values near th",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-20T05:49:00",
       "title": "Speculative: Computational Complexity as Physical Law"
+    },
+    {
+      "cycle_id": "dd6a308e",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions for Finite Cop-Win Elimination\n\n## 1. Order-independent asynchronous elimination\n\n**Conjecture.** Let a finite candidate system be governed by a monotone contracting parallel updat",
+      "quality_score": 0.79,
+      "sorry_count": 13,
+      "theorem_count": 11,
+      "timestamp": "2026-07-20T09:41:55",
+      "title": "Deepening: ArXiv paper: Reproducing the k-copwin Algorithm: Theory vs. Implementation"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "7d82c497",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\n## 1. Additive-energy amplification beyond the cardinality threshold\n\n**Conjecture.** Let two subsets of the depth-$n$ residue tree over $\\mathbb{F}_p$ omit a fixed positive propo",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-16T08:27:42",
-      "title": "ArXiv paper: Fractal uncertainty principle over $\\mathbb{Q}_p$"
-    },
     {
       "cycle_id": "e2f5c991",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 20,
       "timestamp": "2026-07-20T09:41:49",
       "title": "The Mega-Sphere: All Dimensions at Once"
+    },
+    {
+      "cycle_id": "dd6a308e",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions for Finite Cop-Win Elimination\n\n## 1. Order-independent asynchronous elimination\n\n**Conjecture.** Let a finite candidate system be governed by a monotone contracting parallel updat",
+      "quality_score": 0.79,
+      "sorry_count": 13,
+      "theorem_count": 11,
+      "timestamp": "2026-07-20T09:41:55",
+      "title": "Deepening: ArXiv paper: Reproducing the k-copwin Algorithm: Theory vs. Implementation"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "4c2c71e5",
-      "domain": "MachineLearning",
-      "name": "eisensteinNormSq_pow",
-      "quality": 0.8
-    },
-    {
-      "cycle_id": "4c2c71e5",
-      "domain": "MachineLearning",
-      "name": "sigma_pow_injective",
-      "quality": 0.8
-    },
-    {
-      "cycle_id": "ef699512",
-      "domain": "Applications",
-      "name": "connects",
-      "quality": 0.72
-    },
     {
       "cycle_id": "ef699512",
       "domain": "Applications",
@@ -2803,17 +2785,28 @@
       "domain": "Pythagorean",
       "name": "finite_memory_is_lossy",
       "quality": 0.74
+    },
+    {
+      "cycle_id": "dd6a308e",
+      "domain": "Pythagorean",
+      "name": "joins",
+      "quality": 0.79
+    },
+    {
+      "cycle_id": "dd6a308e",
+      "domain": "Pythagorean",
+      "name": "for",
+      "quality": 0.79
+    },
+    {
+      "cycle_id": "dd6a308e",
+      "domain": "Pythagorean",
+      "name": "finite_memory_is_lossy",
+      "quality": 0.79
     }
   ],
-  "last_updated": "2026-07-20T09:41:49",
+  "last_updated": "2026-07-20T09:41:55",
   "open_questions": [
-    {
-      "context": "sorry; depend on the catalog uniqueness proof.  (`#print axioms` shows no `sorryAx`.); MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
-      "cycle_id": "58c6edf0",
-      "domain": "Pythagorean",
-      "sorry_count": 4,
-      "timestamp": "2026-07-16T05:47:17"
-    },
     {
       "context": "",
       "cycle_id": "4e53cd7c",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 13,
       "timestamp": "2026-07-20T09:41:49"
+    },
+    {
+      "context": "+  sorry; +  sorry; +  sorry",
+      "cycle_id": "dd6a308e",
+      "domain": "Pythagorean",
+      "sorry_count": 13,
+      "timestamp": "2026-07-20T09:41:55"
     }
   ],
   "research_threads": {
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "4e53cd7c",
-        "quality": 0.7,
-        "theorems": 16,
-        "title": "ArXiv paper: Moment-based PPT criteria for random bipartite states"
-      },
-      {
         "cycle_id": "b71e4678",
         "quality": 0.67,
         "theorems": 20,
@@ -3885,6 +3879,12 @@
         "quality": 0.74,
         "theorems": 11,
         "title": "ArXiv paper: On Small Doubling in Right-Ordered Groups and Baumslag-Solitar Grou"
+      },
+      {
+        "cycle_id": "dd6a308e",
+        "quality": 0.79,
+        "theorems": 11,
+        "title": "Deepening: ArXiv paper: Reproducing the k-copwin Algorithm: Theory vs. Implement"
       }
     ],
     "Shared": [

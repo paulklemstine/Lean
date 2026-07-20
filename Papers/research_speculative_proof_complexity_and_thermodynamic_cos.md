@@ -1,284 +1,355 @@
-# Thermodynamic Proof Complexity: The Energy Landscape of Mathematical Reasoning
+# Description Complexity, Logical Erasure, and the Thermodynamic Cost of Proof
+
+**Aristotle**
+
+**20 July 2026**
 
 ## Abstract
 
-We introduce **ProofEnergetics**, a novel mathematical structure that formalizes the thermodynamic cost of mathematical proof via Landauer's principle. The framework captures how the energy cost of proving theorems distributes across proof lengths, introducing the *proof spectrum* (density of states by difficulty level) and the *proof partition function* (encoding the full statistical mechanics of proof search). We prove five main results: (1) strict monotonicity of Landauer cost in proof length, (2) spectrum telescoping identity, (3) the Chaitin Cost Theorem establishing that proof costs are unbounded, (4) partition function positivity and upper bounds, and (5) proof-theoretic entropy bounds. We show that comparison-based sorting is a special case of our framework, unifying results from ThermodynamicSorting with the broader proof complexity landscape. All results are formalized in Lean 4 with machine-verified proofs.
-
-**Keywords**: proof complexity, Landauer's principle, thermodynamic cost, partition function, Kolmogorov complexity, proof spectrum
-
----
+We develop a careful mathematical framework for relating proof descriptions to thermodynamic information cost. For a proof object $\pi$, a fixed prefix-free universal description language, and temperature parameter $T\ge 0$, we define the description-erasure scale $C_T(\pi)=T\ln(2)K(\pi)$, where $K(\pi)$ is prefix Kolmogorov complexity. Monotonicity is immediate: lower description complexity implies no greater cost. A prefix-free counting argument shows that, in a finite ensemble, descriptions below a threshold are scarce. For a uniformly sampled family of $2^n$ distinct objects, this yields mean complexity $\Theta(n)$ under a natural $O(n)$ encoding assumption, and hence mean description-erasure cost $\Theta(Tn)$. This refutes an undifferentiated claim of $\Theta(2^n)$ average cost for a cost functional linear in description length. Exponential behavior instead arises naturally in exhaustive search through descriptions. We connect these distinctions to comparison sorting: the factorial $n!$ controls decision-tree depth, information erased by the sorting map, and reversible history capacity, while redundant comparisons show that operation count is not itself Landauer cost. We conclude with a precise conjectural program for shortest-proof complexity and memory–dissipation tradeoffs. Throughout, description complexity, proof-search work, logical erasure, and physical dissipation are kept distinct.
 
 ## 1. Introduction
 
-### 1.1 Motivation
+The thermodynamics of information begins with a simple physical observation: computation is performed by material devices. Bits are represented by physical states, and resetting a memory can merge states that were previously distinguishable. Landauer’s principle associates the erasure of one unbiased bit at absolute temperature $T$ with the ideal energy scale $k_{\mathrm B}T\ln(2)$. If temperature is expressed in energy units, one writes simply $T\ln(2)$.
 
-Every computation has a thermodynamic cost. Landauer's principle (1961) establishes that erasing one bit of information requires at least $kT \ln 2$ energy, where $k$ is Boltzmann's constant, $T$ is temperature, and $\ln 2 \approx 0.693$. This fundamental bound has been experimentally verified and connects information theory to thermodynamics.
+A proof is also an information-bearing object. This motivates the formula
 
-Mathematical proof is a form of computation. A proof is a finite string over some alphabet, and verifying or producing it involves irreversible bit operations. The thermodynamic cost of these operations is bounded below by Landauer's principle, with the bound proportional to the proof length.
+$$
+C_T(\pi)=T\ln(2)K(\pi),
+$$
 
-This paper develops a rigorous mathematical framework for the thermodynamic cost of proof, introducing a novel mathematical structure that captures the *energy landscape* of a formal proof system.
+where $K(\pi)$ is the length of a shortest self-delimiting program producing $\pi$. The formula is mathematically coherent, but its interpretation requires discipline. It does not by itself state the energy used to discover $\pi$, the energy used by a particular verifier, or an unavoidable heat cost for every physical realization. Rather, it assigns a Landauer-scale benchmark to erasing a shortest description of the proof.
 
-### 1.2 Prior Work
+Four quantities must therefore be distinguished.
 
-**Proof complexity theory** studies the length of proofs in various formal systems (Cook and Reckhow, 1979; Razborov, 2003). Key results include exponential lower bounds on proof length in restricted systems and the separation of proof complexity classes.
+1. **Description complexity:** the bit length of a shortest program that generates a proof.
+2. **Search complexity:** the time, number of candidates, or other resources used to find a proof.
+3. **Logical erasure:** the number of distinctions merged by an irreversible computation.
+4. **Physical dissipation:** the heat generated by a concrete implementation.
 
-**Thermodynamics of computation** was initiated by Landauer (1961) and developed by Bennett (1973, 1982). The connection between sorting and thermodynamic work was formalized in our companion file `ThermodynamicSorting.lean`, which establishes that comparison sorting requires at least $kT \ln 2 \cdot \lfloor \log_2(n!) \rfloor$ energy.
+The first is an object-level information measure; the second is a process measure; the third is a property of a logical transformation together with a distributional model; and the fourth depends on hardware, protocols, error tolerance, speed, and environmental coupling. Their separation is the main organizing principle of this paper.
 
-**Information-theoretic proof search** bounds were developed in `ProofSearchInformation.lean`, establishing exponential gaps between proof verification and proof search, and introducing the `ProofSearchSpace` and `ProofComplexityProfile` structures.
+The resulting conclusions are both positive and corrective. The proposed cost is monotone in $K$. Finite counting forces incompressible members in large ensembles. Under uniform binary sampling, however, average description complexity grows linearly with statement length, not exponentially. Exponential cost is naturally associated with proof search rather than proof description. A detailed sorting model reinforces these conclusions and gives an exact instance in which one factorial invariant governs comparisons, erasure, and reversible memory.
 
-### 1.3 Contributions
+## 2. Definitions and conventions
 
-1. **ProofEnergetics**: A novel mathematical structure capturing the thermodynamic cost landscape of formal proof systems (Section 3).
-2. **Proof spectrum**: The density of states of the proof energy landscape (Section 4).
-3. **Chaitin Cost Theorem**: An analog of Chaitin's incompleteness theorem for thermodynamic cost (Section 5).
-4. **Proof partition function**: A statistical mechanics framework for proof search (Section 6).
-5. **Cross-connection**: Unification of sorting thermodynamics with general proof complexity (Section 7).
+### 2.1 Prefix descriptions and Kolmogorov complexity
 
----
+Fix a universal prefix-free binary machine $U$. Prefix-free means that no valid program is a proper prefix of another valid program. For any finite binary object $x$, its prefix Kolmogorov complexity is
 
-## 2. Landauer Cost Function
+$$
+K_U(x)=\min\{\lvert p\rvert:U(p)=x\}.
+$$
 
-### 2.1 Definition
+We suppress the subscript when the reference machine is fixed. Changing the universal machine changes $K$ by at most an additive constant independent of $x$. Thus exact numerical values are language-dependent, while asymptotic claims stable under additive constants are robust.
 
-**Definition 2.1** (Landauer Cost). The *Landauer cost* of irreversibly processing $n$ bits at temperature $T$ is:
-$$\text{cost}(n, T) = n \cdot T \cdot \ln 2$$
-In units where $k_B = 1$, this gives energy directly.
+A **proof system** consists of a decidable relation $V(s,\pi)$ between encoded statements $s$ and finite proof objects $\pi$. If $V(s,\pi)$ holds, then $\pi$ is a proof of $s$. Soundness means that every accepted statement is true under the intended semantics.
 
-### 2.2 Properties
+For a provable statement $s$, define its **shortest-proof description complexity** by
 
-**Theorem 2.2** (Strict Monotonicity). For $T > 0$, the function $n \mapsto \text{cost}(n, T)$ is strictly monotone:
-$$m < n \implies \text{cost}(m, T) < \text{cost}(n, T)$$
+$$
+K_{\mathrm{prf}}(s)=\min\{K(\pi):V(s,\pi)\}.
+$$
 
-*Proof*. Since $T > 0$ and $\ln 2 > 0$, we have $T \cdot \ln 2 > 0$, and multiplication by a positive constant preserves strict order on natural number casts. ∎
+This differs from the symbol length of a shortest proof. A repetitive proof can be long but generated by a short program; conversely, a relatively short written proof may be algorithmically incompressible.
 
-**Theorem 2.3** (Additivity). $\text{cost}(m + n, T) = \text{cost}(m, T) + \text{cost}(n, T)$.
+### 2.2 Description-erasure scale
 
-**Theorem 2.4** (Temperature Scaling). $\text{cost}(n, cT) = c \cdot \text{cost}(n, T)$.
+Let $T\ge 0$ be temperature expressed in energy units. For any finite proof $\pi$, define
 
-### 2.3 PEGB Analysis
+$$
+C_T(\pi)=T\ln(2)K(\pi).
+$$
 
-- **Proof**: Formalized in Lean 4 as `landauerCost_strict_mono`.
-- **Example**: At room temperature ($T = 300K$), erasing 1000 bits costs at least $2.87 \times 10^{-18}$ J.
-- **Generalization**: The result extends to any positive "temperature" parameter, not just physical temperature.
-- **Boundary**: At $T = 0$, cost vanishes (third law of thermodynamics); strict monotonicity requires $T > 0$.
+If $T_{\mathrm K}$ is measured in kelvin, replace $T$ by $k_{\mathrm B}T_{\mathrm K}$. For a provable statement $s$, define the minimum proof-description scale
 
----
+$$
+C_T^{\min}(s)=T\ln(2)K_{\mathrm{prf}}(s).
+$$
 
-## 3. The ProofEnergetics Structure
+The terminology “scale” is deliberate. Landauer’s principle applies when information is logically erased under specified physical assumptions. A reversible device may retain information and postpone erasure, while a practical irreversible device may dissipate much more than the ideal lower scale.
 
-### 3.1 Definition
+### 2.3 Ensembles and search
 
-**Definition 3.1** (ProofEnergetics). A *ProofEnergetics* structure $\mathcal{P} = (b, T, C)$ consists of:
-- Alphabet size $b \geq 2$
-- Temperature $T > 0$  
-- Cumulative theorem count $C : \mathbb{N} \to \mathbb{N}$, where $C(n)$ is the number of theorems provable with proofs of length $\leq n$
+For a finite nonempty set $S$ of objects with uniform distribution, define the mean complexity
 
-subject to:
-1. **Monotonicity**: $C$ is monotone ($m \leq n \implies C(m) \leq C(n)$)
-2. **Counting bound**: $C(n) \leq b^{n+1}$ for all $n$
-3. **Nontriviality**: $C(1) > 0$
+$$
+\overline K(S)=\frac{1}{\lvert S\rvert}\sum_{x\in S}K(x),
+$$
 
-### 3.2 Discussion
+and mean description-erasure scale
 
-The counting bound $C(n) \leq b^{n+1}$ reflects the pigeonhole principle: there are at most $\sum_{k=0}^n b^k \leq b^{n+1}$ strings of length $\leq n$ over an alphabet of size $b$, so at most that many theorems can be proved. The bound $b^{n+1}$ slightly overapproximates the geometric sum but simplifies analysis.
+$$
+\overline C_T(S)=T\ln(2)\,\overline K(S).
+$$
 
-This structure generalizes:
-- **ProofSearchSpace** from `ProofSearchInformation.lean` (which tracks a single proof length level)
-- **ComparisonSorter** from `ThermodynamicSorting.lean` (which uses $b = 2$ and $C(n) = \min(n!, 2^{n+1})$)
+A **description search through length $n$** examines candidate programs of lengths at most $n$. There are fewer than $2^{n+1}$ binary strings in that range. Thus a naive exhaustive search may require exponentially many candidates even when the located object has only $O(n)$ description length.
 
----
+## 3. Monotonicity and invariance
 
-## 4. The Proof Spectrum
+### Theorem 1 (Monotonicity of description-erasure cost)
 
-### 4.1 Definition
+Let $T\ge 0$ and let $\pi_1,\pi_2$ be proof objects. If $K(\pi_1)\le K(\pi_2)$, then
 
-**Definition 4.1** (Proof Spectrum). The *proof spectrum* of $\mathcal{P}$ at level $n$ is:
-$$S(0) = C(0), \quad S(n+1) = C(n+1) - C(n)$$
-This counts theorems whose *shortest* proof has length exactly $n$.
+$$
+C_T(\pi_1)\le C_T(\pi_2).
+$$
 
-### 4.2 Telescoping Identity
+If $T>0$, equality holds exactly when $K(\pi_1)=K(\pi_2)$.
 
-**Theorem 4.2** (Spectrum Telescoping). $\sum_{k=0}^n S(k) = C(n)$.
+**Proof sketch.** Since $T\ge 0$ and $\ln(2)>0$, multiplication by $T\ln(2)$ preserves order. If $T>0$, the multiplier is strictly positive, so it also reflects equality.
 
-*Proof sketch*. By induction on $n$. The base case is immediate ($S(0) = C(0)$). For the inductive step:
-$$\sum_{k=0}^{n+1} S(k) = \sum_{k=0}^n S(k) + S(n+1) = C(n) + (C(n+1) - C(n)) = C(n+1)$$
-using monotonicity of $C$ to justify the subtraction. ∎
+This theorem validates the statement “shorter proofs cost less” only when “shorter” refers to shorter minimal descriptions. Written length alone is insufficient.
 
-### 4.3 Spectrum Bounds
+### Proposition 2 (Change of universal language)
 
-**Theorem 4.3**. $S(n+1) \leq b^{n+2}$.
+Let $U$ and $U'$ be two universal prefix-free machines. There exists a constant $a\ge 0$ such that for every proof $\pi$,
 
-**Theorem 4.4** (Growth Detection). If $C(n) < C(n+1)$, then $S(n+1) > 0$.
+$$
+\left|C_{T,U}(\pi)-C_{T,U'}(\pi)\right|\le T\ln(2)a.
+$$
 
-### 4.4 PEGB Analysis
+**Proof sketch.** The invariance theorem for prefix complexity supplies constants $a_1,a_2$ with $K_U(\pi)\le K_{U'}(\pi)+a_1$ and the reverse inequality with $a_2$. Take $a=\max(a_1,a_2)$ and multiply by the nonnegative Landauer factor.
 
-- **Proof**: Formalized as `spectrum_sum_eq_cumCount`.
-- **Example**: For a binary system with $C(n) = 2^n$, the spectrum is $S(0) = 1, S(n) = 2^n - 2^{n-1} = 2^{n-1}$.
-- **Generalization**: The telescoping identity holds for any monotone function, not just cumulative theorem counts.
-- **Boundary**: If $C$ is constant on $[n, m]$, the spectrum vanishes on $(n, m]$—a "proof desert."
+The absolute cost assigned to a particular proof is therefore conventional up to a fixed offset, while large-scale growth rates remain meaningful.
 
----
+## 4. Finite incompressibility
 
-## 5. Chaitin's Cost Theorem
+### Lemma 3 (Prefix counting bound)
 
-### 5.1 Statement
+For every integer $m\ge 0$, fewer than $2^m$ objects can satisfy $K(x)<m$.
 
-**Theorem 5.1** (Chaitin Cost Theorem). If $b^{n+1} < C(m)$ for some $m \geq n$, then $C(n) < C(m)$.
+**Proof sketch.** Every object of complexity below $m$ is produced by at least one program of length below $m$. For a prefix-free program set, Kraft’s inequality gives
 
-*Proof*. $C(n) \leq b^{n+1} < C(m)$. ∎
+$$
+\sum_p 2^{-\lvert p\rvert}\le 1.
+$$
 
-### 5.2 Interpretation
+Each program of length below $m$ contributes more than $2^{-m}$, so there can be fewer than $2^m$ such programs. Choosing one shortest program per object gives the same bound for objects.
 
-This theorem has a striking physical interpretation: *for any energy budget $E$, there exist provable theorems whose minimum proof cost exceeds $E$.*
+### Theorem 4 (Finite ensemble incompressibility)
 
-To see this, choose $n = \lfloor E / (T \ln 2) \rfloor$. If there are more than $b^{n+1}$ provable theorems in total, then by Theorem 5.1, some theorem $\phi$ satisfies $\phi \notin C(n)$—its shortest proof has length $> n$, and hence its minimum thermodynamic cost exceeds $n \cdot T \cdot \ln 2 \geq E$.
+Let $S$ be a finite set of $N$ distinct objects. For every $m\ge 0$,
 
-### 5.3 PEGB Analysis
+$$
+\left|\{x\in S:K(x)\ge m\}\right|>N-2^m.
+$$
 
-- **Proof**: Formalized as `chaitin_cost_theorem` and `chaitin_gap_pos`.
-- **Example**: In a binary system ($b = 2$), if there are more than $2^{101}$ provable theorems, some require proofs longer than 100 bits, costing at least $100 \cdot T \cdot \ln 2$ energy.
-- **Generalization**: The result holds for any monotone counting function satisfying $C(n) \leq b^{n+1}$.
-- **Boundary**: If the total number of provable theorems is $\leq b^{n+1}$, the conclusion fails—all theorems might be "easy."
+In particular, if $N=2^n$ and $1\le c\le n$, then more than a fraction $1-2^{-c}$ of the members satisfy
 
----
+$$
+K(x)\ge n-c.
+$$
 
-## 6. The Proof Partition Function
+**Proof sketch.** By Lemma 3, fewer than $2^m$ members can have complexity below $m$. Subtract this exceptional set from $N$. For the second statement choose $m=n-c$ and divide by $2^n$.
 
-### 6.1 Definition
+### Corollary 5 (Mean lower bound)
 
-**Definition 6.1** (Proof Partition Function).
-$$Z(\beta, N) = \sum_{k=0}^N S(k) \cdot e^{-\beta k}$$
+If $S_n$ has $2^n$ distinct members and is sampled uniformly, then for every $1\le c\le n$,
 
-### 6.2 Properties
+$$
+\overline K(S_n)>(1-2^{-c})(n-c).
+$$
 
-**Theorem 6.2** (Positivity). For $N \geq 1$, $Z(\beta, N) > 0$.
+Consequently, for fixed $c$,
 
-**Theorem 6.3** (Monotonicity). For $\beta \geq 0$, $Z(\beta, N) \leq Z(\beta, N+1)$.
+$$
+\overline C_T(S_n)>T\ln(2)(1-2^{-c})(n-c).
+$$
 
-**Theorem 6.4** (Upper Bound). For $\beta \geq 0$, $Z(\beta, N) \leq b^{N+1}$.
+**Proof sketch.** At least the stated fraction of members contributes at least $n-c$ to the average, while all remaining complexities are nonnegative. Multiplication gives the cost bound.
 
-**Theorem 6.5** (Zero Temperature). $Z(0, N) = C(N)$ (the total theorem count).
+### Theorem 6 (Linear mean cost under uniform binary encoding)
 
-### 6.3 Physical Interpretation
+Suppose $S_n$ is a set of $2^n$ distinct objects and there is a fixed decoder that reconstructs every member from an $n$-bit index using at most $d$ additional self-delimiting bits, where $d$ is independent of $n$. Then
 
-The partition function encodes the thermodynamic structure of proof search:
-- At large $\beta$ (low temperature), only easy theorems contribute—proof search is dominated by short proofs.
-- At small $\beta$ (high temperature), all theorems contribute equally—the landscape is "flat."
-- The free energy $F = -\ln Z / \beta$ gives the typical proof cost.
+$$
+\overline K(S_n)=\Theta(n).
+$$
 
-### 6.4 PEGB Analysis
+For every fixed $T>0$,
 
-- **Proof**: Formalized as `partition_fn_pos`, `partition_fn_mono_level`, `partition_fn_upper_bound`, `partition_fn_at_zero`.
-- **Example**: For $S(k) = 2^k$, $Z(\beta, N) = \sum 2^k e^{-\beta k} = \sum (2e^{-\beta})^k$, a geometric series converging for $\beta > \ln 2$.
-- **Generalization**: The partition function framework extends to continuous proof length distributions.
-- **Boundary**: At $\beta = 0$, $Z = C(N)$; as $\beta \to \infty$, $Z \to S(0) = C(0)$.
+$$
+\overline C_T(S_n)=\Theta(Tn).
+$$
 
----
+**Proof sketch.** Corollary 5 supplies a linear lower bound. The indexing assumption gives $K(x)\le n+d$ for every $x\in S_n$, hence the same upper bound for the mean. Multiplication by the positive constant $T\ln(2)$ preserves the order of growth.
 
-## 7. Cross-Connection: Sorting as Proof
+This theorem identifies the flaw in an unconditional claim that average proof cost should be $\Theta(2^n)$ merely because there are $2^n$ possible length-$n$ statements. Counting many objects forces most descriptions to have length near $n$; it does not force their descriptions to have length near the number of objects.
 
-### 7.1 Construction
+## 5. Description length versus proof search
 
-**Theorem 7.1**. Comparison-based sorting of $n \geq 2$ elements at temperature $T$ is a ProofEnergetics with $b = 2$ and $C(k) = \min(n!, 2^{k+1})$.
+### Proposition 7 (Exponential candidate space)
 
-This shows that `ThermodynamicSorting.lean`'s results are a special case of our framework: the thermodynamic work lower bound for sorting is precisely the Landauer cost of the minimum proof length in the sorting proof system.
+The number of binary strings of length at most $n$ is
 
-**Theorem 7.2**. If $2^{k+1} < n!$, then $C(k) < n!$—not all permutations can be "proved" (sorted) with $k$ comparisons.
+$$
+1+2+\cdots+2^n=2^{n+1}-1.
+$$
 
----
+Thus exhaustive testing of all candidate descriptions through length $n$ has a search space of size $\Theta(2^n)$.
 
-## 8. Incompressible Proof Dominance
+**Proof sketch.** There are exactly $2^j$ binary strings of length $j$. Summing the geometric series gives the formula.
 
-### 8.1 New Proof Capacity
+Prefix-free validity can reduce the number of executable candidates but does not convert the worst-case exponential scale into a linear one. The conclusion is a separation:
 
-**Theorem 8.1**. $b^{n+1} - b^n = (b-1) \cdot b^n$.
+- the description of a typical uniformly sampled $n$-bit object has $\Theta(n)$ bits;
+- naive search for that description may inspect $\Theta(2^n)$ candidates.
 
-This means the "new proof capacity" at each length level is a $(b-1)/b$ fraction of the total proof space at that level. For binary proofs, exactly half the proof space at each level is "new."
+The energy used by search depends on the search procedure and physical implementation. If each rejected candidate triggers irreversible resets, total dissipation can grow with the explored search tree. If the search is performed reversibly with retained history, heat can be reduced while time and memory requirements increase.
 
-### 8.2 Strict Growth
+## 6. A complete model: comparison sorting
 
-**Theorem 8.2**. For $b \geq 2$, $b^n < b^{n+1}$.
+Sorting distinct objects supplies a finite case in which all relevant multiplicities are explicit.
 
-The proof space grows strictly at every level, ensuring an ever-expanding arena for new proofs.
+### Definition 8 (Comparison tree)
 
----
+A binary comparison tree is either a leaf or a branch with two subtrees. Its number of leaves $L(t)$ and height $h(t)$ are defined recursively by
 
-## 9. Proof-Theoretic Entropy
+$$
+L(\mathrm{leaf})=1,
+\qquad
+L(\mathrm{branch}(u,v))=L(u)+L(v),
+$$
 
-### 9.1 Definition
+and
 
-**Definition 9.1** (Proof-Theoretic Entropy).
-$$H(n) = \begin{cases} 0 & \text{if } S(n) = 0 \\ \frac{\log S(n)}{\log b^n} & \text{otherwise} \end{cases}$$
+$$
+h(\mathrm{leaf})=0,
+\qquad
+h(\mathrm{branch}(u,v))=1+\max\{h(u),h(v)\}.
+$$
 
-### 9.2 Properties
+### Lemma 9 (Leaf–height bound)
 
-**Theorem 9.2**. $H(n) \geq 0$ for $n \geq 1$.
+Every binary comparison tree satisfies
 
-**Theorem 9.3**. $H(n) \leq (n+1)/n$ for $n \geq 1$.
+$$
+L(t)\le 2^{h(t)}.
+$$
 
-### 9.3 Interpretation
+**Proof sketch.** Induct on the tree. The leaf case is equality. At a branch, use the inductive bounds on both subtrees; each subtree has height at most one less than the parent height, so their leaf counts sum to at most $2^{h(t)-1}+2^{h(t)-1}=2^{h(t)}$.
 
-$H(n) \approx 1$ means the proof space at level $n$ is densely populated—almost every string of length $n$ is a useful proof. $H(n) \approx 0$ means the proof space is sparse—proofs are rare among strings. The bound $(n+1)/n$ approaches 1 as $n \to \infty$, showing that entropy cannot significantly exceed 1 for large proof lengths.
+### Theorem 10 (Comparison lower bound)
 
----
+Any binary comparison tree capable of distinguishing all $n!$ permutations of $n$ distinct inputs has
 
-## 10. Falsifiable Conjecture
+$$
+h(t)\ge \lceil\log_2(n!)\rceil.
+$$
 
-**Conjecture 10.1** (Proof Complexity Phase Transition). For natural proof systems, the proof-theoretic entropy $H(n)$ exhibits a phase transition at a critical length $n^*$:
-- For $n < n^*$: $H(n) \approx 1$ (dense proof space)
-- For $n > n^*$: $H(n) \to 0$ (sparse proof space)
+**Proof sketch.** Distinguishing all permutations requires at least $n!$ leaves. Lemma 9 gives $n!\le 2^{h(t)}$. Apply the base-two logarithm and take the ceiling.
 
-**Testable prediction**: For propositional resolution with $b = 2$, the phase transition occurs at $n^* \approx 2^s$ where $s$ is the statement length. This is computationally verifiable for small $s$ by exhaustive enumeration.
+### Theorem 11 (Exact sorting erasure scale)
 
-**Impact**: If true, this would establish a sharp thermodynamic phase transition in proof search cost, connecting proof complexity to the phase transitions observed in random SAT.
+Under a uniform distribution on input permutations, an irreversible sorting map that retains only the sorted output forgets exactly
 
----
+$$
+\log_2(n!)
+$$
 
-## 11. Algorithms
+bits of permutation information. Its ideal Landauer scale is
 
-### 11.1 Computing the Proof Spectrum
+$$
+T\ln(2)\log_2(n!)=T\ln(n!).
+$$
 
-```python
-def compute_spectrum(cum_count: list[int]) -> list[int]:
-    """Compute the proof spectrum from cumulative counts."""
-    spectrum = [cum_count[0]]
-    for i in range(1, len(cum_count)):
-        spectrum.append(cum_count[i] - cum_count[i-1])
-    return spectrum
-```
+**Proof sketch.** All $n!$ permutations map to the same ordered arrangement when object identities and values are fixed. A uniform label among $n!$ possibilities has Shannon entropy $\log_2(n!)$. The change-of-base identity $\ln(2)\log_2(n!)=\ln(n!)$ gives the energy expression.
 
-### 11.2 Computing the Partition Function
+### Theorem 12 (Reversible history lower bound)
 
-```python
-def partition_function(spectrum: list[int], beta: float) -> float:
-    """Compute the proof partition function at inverse temperature beta."""
-    import math
-    return sum(s * math.exp(-beta * k) for k, s in enumerate(spectrum))
-```
+Any reversible implementation whose visible output is the sorted sequence must have at least $n!$ distinguishable auxiliary history states over the fiber of that output.
 
----
+**Proof sketch.** A reversible transformation is injective. The $n!$ distinct input permutations cannot all map to the same complete output state. If their visible sorted component agrees, their auxiliary components must be pairwise distinct. Therefore the auxiliary state space has cardinality at least $n!$.
 
-## 12. Discussion and Future Work
+These results form a three-way factorial principle: $n!$ bounds comparison transcripts, erased permutation information, and reversible history capacity.
 
-The ProofEnergetics framework opens several research directions:
+### Definition 13 (Redundant padding)
 
-1. **Phase transitions in proof search**: Does the proof-theoretic entropy exhibit sharp transitions? Connection to random SAT phase transitions.
+Given a tree $t$, define its $r$-fold padding by $P_0(t)=t$ and
 
-2. **Optimal proof systems**: Can we design proof systems that minimize the average thermodynamic cost per theorem proved?
+$$
+P_{r+1}(t)=\mathrm{branch}(P_r(t),P_r(t)).
+$$
 
-3. **Kolmogorov complexity connection**: Replace proof length with Kolmogorov complexity for a tighter bound. The cost would become $K(\pi) \cdot T \cdot \ln 2$, where $K$ is Kolmogorov complexity.
+### Theorem 14 (Padding separates operation count from erasure)
 
-4. **Quantum proof systems**: Quantum proofs (QMA certificates) may have different thermodynamic profiles due to the reversibility of quantum computation.
+For every $r\ge 0$,
 
-5. **Experimental verification**: Landauer's principle has been experimentally verified for single-bit erasure. Can we design experiments testing the thermodynamic cost of simple proof verification?
+$$
+h(P_r(t))=r+h(t),
+$$
 
----
+and $P_r(t)$ has at least as many leaves as $t$. Hence if $t$ has enough transcripts to sort $n$ inputs, so does $P_r(t)$. Nevertheless, the sorting function—and therefore its erased permutation information and ideal Landauer scale—does not change.
 
-## References
+**Proof sketch.** The height identity follows by induction because each padding step adds one branch level above two equal copies. Leaf count doubles at each step, so transcript capacity cannot decrease. Padding alters the decision process but not the input–output map being implemented. Logical erasure assigned to that map is therefore unchanged.
 
-1. Landauer, R. (1961). Irreversibility and heat generation in the computing process. *IBM Journal of Research and Development*, 5(3), 183-191.
-2. Bennett, C. H. (1973). Logical reversibility of computation. *IBM Journal of Research and Development*, 17(6), 525-532.
-3. Chaitin, G. J. (1975). A theory of program size formally identical to information theory. *Journal of the ACM*, 22(3), 329-340.
-4. Cook, S. A., & Reckhow, R. A. (1979). The relative efficiency of propositional proof systems. *The Journal of Symbolic Logic*, 44(1), 36-50.
-5. Razborov, A. A. (2003). Proof complexity and beyond. *SIGACT News*, 34(4), 36-52.
-6. Bérut, A., et al. (2012). Experimental verification of Landauer's principle linking information and thermodynamics. *Nature*, 483, 187-189.
+The theorem is a structural counterexample to the equation “one comparison equals one erased bit.” A real redundant comparison can dissipate energy, but its dissipation must be analyzed from the circuit and reset protocol, not inferred from the abstract sorting map.
+
+## 7. Numerical algorithmics
+
+The finite results support simple computational diagnostics.
+
+### Algorithm A: factorial information profile
+
+Given $n$ and $T$, compute $n!$, the comparison lower bound $\lceil\log_2(n!)\rceil$, the erased information $\log_2(n!)$, and the Landauer scale $T\ln(n!)$. To avoid overflow, compute logarithms through $\lgamma(n+1)=\ln(n!)$. The time complexity is $O(1)$ under a fixed-precision special-function model and the space complexity is $O(1)$.
+
+### Algorithm B: incompressibility profile
+
+Given ensemble exponent $n$ and deficiency $c$, compute the guaranteed incompressible fraction $1-2^{-c}$ and mean lower bound $(1-2^{-c})(n-c)$. This is constant-time arithmetic. The output is a theorem-driven lower bound, not an estimate of exact Kolmogorov complexity.
+
+### Algorithm C: exhaustive-search contrast
+
+For a description limit $n$, compare linear description scale $n$ with the complete binary candidate count $2^{n+1}-1$. Big-integer exponentiation uses polynomial time in the output length; since the result has $\Theta(n)$ bits, standard exponentiation is efficient even though the represented candidate set is exponential.
+
+## 8. Applications to proof systems and machine learning
+
+In automated reasoning, a generator proposes proof objects and a verifier checks them. The shortest description of a successful proof, the number of proposals considered, and the information erased when work buffers are reset can differ by exponential factors. Benchmarking should therefore report at least proof size, search effort, verifier work, and peak retained history separately.
+
+The same issue appears in machine learning. A trained model may encode a concise rule only after an expensive optimization process. Model description length is not training energy. An inference trace may be reversible in principle while practical accelerators repeatedly overwrite registers. Compression can reduce storage and communication, yet decompression and search for the compressed representation have their own costs.
+
+Fiber multiplicity gives a useful bridge. For a deterministic map $f:X\to Y$, the fiber $f^{-1}(y)$ is the set of inputs merged into output $y$. Under a uniform distribution on that fiber, forgetting which input occurred loses $\log_2|f^{-1}(y)|$ bits. A reversible extension must retain at least $|f^{-1}(y)|$ distinguishable histories. Proof verification often has very large fibers: many malformed candidates share the verdict “reject,” and many encodings may represent the same mathematical argument. The physical consequences depend on when and how those distinctions are erased.
+
+## 9. Conjectural shortest-proof bounds
+
+The finite counting theorem does not by itself prove that shortest proofs in a fixed arithmetic theory escape every computable bound. It only says that a sufficiently large family cannot consist entirely of low-complexity objects. A proof-theoretic diagonal theorem would need additional ingredients: effective syntax, a computably axiomatized and sound theory, a specified proof relation, and a connection between statement length and the objects whose incompressibility is asserted.
+
+A precise research target is the following.
+
+### Conjecture 15 (Computable-bound escape)
+
+Fix a sound, computably axiomatized theory capable of elementary arithmetic and a prefix-free universal description language. There is no computable function $g$ such that every theorem with statement length at most $n$ has some proof $\pi$ satisfying
+
+$$
+K(\pi)\le g(n).
+$$
+
+A Chaitin-style strategy would assume such a bound, effectively search the finite proof space it supplies, and diagonalize to construct a statement or object whose certified complexity exceeds that bound. The difficult points are ensuring that the relevant complexity assertion is expressible, that the theory proves enough of the search’s correctness, and that soundness converts internal certification into an external truth.
+
+Even if established, this conjecture would concern nonexistence of a uniform computable upper bound. It would not imply that the mean cost for uniformly sampled length-$n$ statements is exponential. Unbounded domination, ensemble averages, and search time are logically different claims.
+
+## 10. Discussion and limitations
+
+Three limitations are fundamental.
+
+First, exact Kolmogorov complexity is uncomputable. Numerical demonstrations can evaluate surrogate code lengths or rigorous counting bounds, but not $K(x)$ for arbitrary $x$.
+
+Second, the Landauer factor is a lower scale for erasure, not a complete energy model. Error correction, finite-time operation, leakage, communication, clocking, and device physics can dominate practical consumption.
+
+Third, probability models matter. A uniform distribution over all binary strings of length $n$ differs from a distribution over true statements, over theorems generated by a curriculum, or over proofs emitted by a learned model. Mean complexity claims must specify the ensemble and encoding.
+
+These limitations strengthen rather than weaken the framework. They prevent an attractive metaphor from becoming a false identity. Description complexity explains scarcity of compressible proofs; search theory explains discovery effort; reversible computation explains how retained history can trade memory for heat; and statistical mechanics connects actual erasure to physical cost.
+
+## 11. Future work
+
+The first direction is to establish computable-bound escape in a concrete arithmetic proof system, with every encoding and soundness assumption explicit. The second is to prove separations between linear mean description cost and exponential mean proof-search work under natural theorem distributions. The third is to quantify the reversible verification space–heat frontier in terms of verifier fiber sizes. The fourth is to combine propositional proof-size lower bounds with ancillary-memory constraints to derive physical lower bounds for irreversible verification.
+
+A broader empirical program would compare proof compressors, search algorithms, and reversible verifier prototypes. Since exact Kolmogorov complexity is inaccessible, practical studies should report explicit upper bounds from compressors and explicit lower bounds from counting or proof-system structure.
+
+## 12. Conclusion
+
+The formula $C_T(\pi)=T\ln(2)K(\pi)$ supports a rigorous but limited conclusion: a proof with lower prefix complexity has a lower description-erasure scale. Prefix counting shows that most members of a uniform $2^n$-object ensemble require nearly $n$ bits, yielding linear mean cost under an $O(n)$ encoding. The exponential quantity $2^n$ belongs naturally to exhaustive search over candidate descriptions, not to the average length of those descriptions.
+
+Sorting supplies an exact finite analogue. The multiplicity $n!$ yields a comparison lower bound of $\lceil\log_2(n!)\rceil$, an erasure scale of $T\ln(n!)$, and a reversible history requirement of at least $n!$ states. Redundant padding can increase comparison depth arbitrarily without changing logical erasure, proving that instruction count and Landauer cost are not interchangeable.
+
+The thermodynamic study of proof should therefore focus on distinctions that computations merge, histories that reversible implementations retain, and search spaces that discovery procedures explore. Proof length, search work, logical erasure, and physical heat are connected—but only through explicitly stated models.
