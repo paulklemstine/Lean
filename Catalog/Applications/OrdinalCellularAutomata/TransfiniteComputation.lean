@@ -127,8 +127,11 @@ theorem no_history_enumeration (initial : Tape)
     (enumerate : ℕ → (ℕ → ℕ → Tape)) :
     ¬ Function.Surjective enumerate := by
       intro h_surj;
-      exact no_predicate_enumeration ( fun n => boundaryTrace ( enumerate n ) ) ( fun P => by
-        obtain ⟨ n, hn ⟩ := h_surj ( scheduledOmegaRun P initial ) ; use n; aesop; )
+      -- Compose every enumerated history with boundaryTrace to enumerate all predicates.
+      have h_composed : Function.Surjective (fun k => boundaryTrace (enumerate k)) := by
+        intro P;
+        obtain ⟨ k, hk ⟩ := h_surj ( scheduledOmegaRun P initial ) ; use k; aesop;
+      exact no_predicate_enumeration _ h_composed
 
 /-
 Concrete successor example: the all-zero tape is fixed by Rule 110.
