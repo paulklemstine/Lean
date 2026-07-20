@@ -1,259 +1,123 @@
+#!/usr/bin/env python3
+"""Numerical demonstrations of coherent nonassociative composition.
+
+The script uses only the Python standard library. It checks the three-arrow
+composition table, constructs the quotient by coherent equivalence, compares
+bounded continuation traces, and audits a real-valued hybrid telescope.
 """
-Causal Loops in Category Theory: a concrete non-strict monoidal category.
-
-This self-contained script demonstrates, numerically and constructively, the main
-results of the accompanying paper on the *parenthesization category*:
-
-  * Objects are binary trees with labelled leaves (formal parenthesizations).
-  * `flatten` forgets the bracketing, returning the underlying leaf-word.
-  * A morphism  s -> t  exists iff  flatten(s) == flatten(t), and is then unique
-    (the category is THIN) and invertible (it is a GROUPOID).
-  * The tensor product is  s (x) t := node(s, t), with unit the empty tree.
-  * Associativity FAILS on the nose: (a(x)b)(x)c  and  a(x)(b(x)c)  are distinct
-    trees, joined by a canonical, unique ASSOCIATOR isomorphism.
-  * STRICTIFICATION: every tree is (uniquely) isomorphic to its right-nested
-    normal form, and the whole category is equivalent to the discrete category
-    of words.
-
-Run:  python demo.py
-"""
-
 from __future__ import annotations
 
 from dataclasses import dataclass
-from functools import lru_cache
-from math import comb
-from typing import List, Optional, Tuple, Union
+from enum import Enum
+from itertools import product
+from typing import Callable, Iterable, Sequence, TypeVar
 
 
-# ----------------------------------------------------------------------------
-# Parenthesization trees
-# ----------------------------------------------------------------------------
+class Arrow(str, Enum):
+    E = "e"
+    A = "a"
+    B = "b"
+
+
+def compose(x: Arrow, y: Arrow) -> Arrow:
+    """Return x composed with y in the three-arrow example."""
+    table: dict[tuple[Arrow, Arrow], Arrow] = {
+        (Arrow.E, Arrow.E): Arrow.E, (Arrow.E, Arrow.A): Arrow.A,
+        (Arrow.E, Arrow.B): Arrow.B, (Arrow.A, Arrow.E): Arrow.A,
+        (Arrow.A, Arrow.A): Arrow.B, (Arrow.A, Arrow.B): Arrow.A,
+        (Arrow.B, Arrow.E): Arrow.B, (Arrow.B, Arrow.A): Arrow.E,
+        (Arrow.B, Arrow.B): Arrow.B,
+    }
+    return table[(x, y)]
+
+
+Word = tuple[Arrow, ...]
+T = TypeVar("T")
+
+
+def words(alphabet: Sequence[T], maximum_length: int) -> Iterable[tuple[T, ...]]:
+    """Generate all words over alphabet of length at most maximum_length."""
+    for length in range(maximum_length + 1):
+        yield from product(alphabet, repeat=length)
+
+
+def bounded_right_trace(radius: int, prefix: tuple[T, ...], alphabet: Sequence[T]) -> set[tuple[T, ...]]:
+    """Compute all words of length at most radius beginning with prefix."""
+    if len(prefix) > radius:
+        return set()
+    return {prefix + suffix for suffix in words(alphabet, radius - len(prefix))}
+
+
+def quotient_class(_: Arrow) -> int:
+    """Map an arrow to its class for the indiscrete coherent relation."""
+    return 0
+
+
+def hybrid_audit(scores: Sequence[float]) -> tuple[float, list[float], float, float]:
+    """Return endpoint gap, local gaps, telescoping sum, and uniform bound."""
+    if len(scores) < 2:
+        raise ValueError("at least two scores are required")
+    local = [abs(x - y) for x, y in zip(scores, scores[1:])]
+    endpoint = abs(scores[0] - scores[-1])
+    telescope = sum(local)
+    uniform = len(local) * max(local)
+    if endpoint > telescope + 1e-12 or telescope > uniform + 1e-12:
+        raise AssertionError("triangle-inequality audit failed")
+    return endpoint, local, telescope, uniform
+
 
 @dataclass(frozen=True)
-class Nil:
-    """The empty tree; the monoidal unit."""
+class Expr:
+    """A small binary expression tree."""
+    atom: Arrow | None = None
+    left: "Expr | None" = None
+    right: "Expr | None" = None
 
-
-@dataclass(frozen=True)
-class Leaf:
-    """A single labelled leaf."""
-    label: str
-
-
-@dataclass(frozen=True)
-class Node:
-    """A binary node: the formal bracketed product (left . right)."""
-    left: "PTree"
-    right: "PTree"
-
-
-PTree = Union[Nil, Leaf, Node]
-
-
-def flatten(t: PTree) -> List[str]:
-    """The underlying leaf-word of a tree, forgetting the bracketing."""
-    if isinstance(t, Nil):
-        return []
-    if isinstance(t, Leaf):
-        return [t.label]
-    return flatten(t.left) + flatten(t.right)
-
-
-def size(t: PTree) -> int:
-    """Total number of constructors in the tree (used for the non-strictness proof)."""
-    if isinstance(t, Nil):
-        return 1
-    if isinstance(t, Leaf):
-        return 1
-    return size(t.left) + size(t.right) + 1
-
-
-def show(t: PTree) -> str:
-    """Human-readable bracketing, e.g. Node(Leaf a, Node(Leaf b, Leaf c)) -> (a(bc))."""
-    if isinstance(t, Nil):
-        return "e"
-    if isinstance(t, Leaf):
-        return t.label
-    return "(" + show(t.left) + show(t.right) + ")"
-
-
-# The tensor product on objects and the unit.
-def tensor(s: PTree, t: PTree) -> PTree:
-    return Node(s, t)
-
-
-UNIT: PTree = Nil()
-
-
-# ----------------------------------------------------------------------------
-# Morphisms: a morphism s -> t is *witnessed* by flatten(s) == flatten(t).
-# In this thin groupoid a morphism carries no data beyond existence, so we model
-# "the morphism" as a boolean (exists?) plus the shared word.
-# ----------------------------------------------------------------------------
-
-def hom_exists(s: PTree, t: PTree) -> bool:
-    """Is there a morphism s -> t? (Equivalently: are s, t isomorphic?)"""
-    return flatten(s) == flatten(t)
-
-
-def are_isomorphic(s: PTree, t: PTree) -> bool:
-    """Isomorphism criterion: s ~= t  iff  flatten(s) == flatten(t)."""
-    return hom_exists(s, t)
-
-
-# The associator witnesses  (a(x)b)(x)c  ~=  a(x)(b(x)c).
-def associator_source(a: PTree, b: PTree, c: PTree) -> PTree:
-    return tensor(tensor(a, b), c)
-
-
-def associator_target(a: PTree, b: PTree, c: PTree) -> PTree:
-    return tensor(a, tensor(b, c))
-
-
-# ----------------------------------------------------------------------------
-# Normal form (right-nested tree) and strictification
-# ----------------------------------------------------------------------------
-
-def of_list(word: List[str]) -> PTree:
-    """The canonical right-nested tree of a word: a(b(c...))."""
-    result: PTree = Nil()
-    for label in reversed(word):
-        result = Node(Leaf(label), result)
-    return result
-
-
-def normalize(t: PTree) -> PTree:
-    """The normal form of t; t is (uniquely) isomorphic to normalize(t)."""
-    return of_list(flatten(t))
-
-
-# ----------------------------------------------------------------------------
-# Enumeration of all bracketings and Catalan counts
-# ----------------------------------------------------------------------------
-
-def all_bracketings(word: List[str]) -> List[PTree]:
-    """All parenthesization trees whose leaf-word is exactly `word` (word nonempty)."""
-    if len(word) == 1:
-        return [Leaf(word[0])]
-    out: List[PTree] = []
-    for i in range(1, len(word)):
-        for left in all_bracketings(word[:i]):
-            for right in all_bracketings(word[i:]):
-                out.append(Node(left, right))
-    return out
-
-
-@lru_cache(maxsize=None)
-def catalan(m: int) -> int:
-    """The m-th Catalan number C_m = binom(2m, m)/(m+1)."""
-    return comb(2 * m, m) // (m + 1)
-
-
-# ----------------------------------------------------------------------------
-# Demonstrations
-# ----------------------------------------------------------------------------
-
-def demo_non_strictness() -> None:
-    print("=" * 70)
-    print("1. ASSOCIATIVITY FAILS ON THE NOSE (but flattens equal)")
-    print("=" * 70)
-    a, b, c = Leaf("a"), Leaf("b"), Leaf("c")
-    lhs = associator_source(a, b, c)
-    rhs = associator_target(a, b, c)
-    print(f"  (a(x)b)(x)c = {show(lhs)}   size = {size(lhs)}")
-    print(f"  a(x)(b(x)c) = {show(rhs)}   size = {size(rhs)}")
-    print(f"  distinct objects?         {lhs != rhs}")
-    print(f"  same underlying word?     {flatten(lhs) == flatten(rhs)}  "
-          f"(both {''.join(flatten(lhs))})")
-    print(f"  associator exists (iso)?  {are_isomorphic(lhs, rhs)}")
-    print()
-
-
-def demo_thin_unique_associator() -> None:
-    print("=" * 70)
-    print("2. THIN GROUPOID: the associator is the UNIQUE isomorphism")
-    print("=" * 70)
-    a, b, c = Leaf("a"), Leaf("b"), Leaf("c")
-    lhs, rhs = associator_source(a, b, c), associator_target(a, b, c)
-    # In a thin category there is at most one morphism; count = 0 or 1.
-    n_morphisms = 1 if hom_exists(lhs, rhs) else 0
-    print(f"  number of morphisms (a(x)b)(x)c -> a(x)(b(x)c): {n_morphisms}")
-    print(f"  invertible (groupoid)?  {hom_exists(rhs, lhs)}")
-    print(f"  => the associator carries no data beyond existence.")
-    print()
-
-
-def demo_catalan_and_iso_class() -> None:
-    print("=" * 70)
-    print("3. BRACKETINGS PER WORD = CATALAN NUMBERS; all mutually isomorphic")
-    print("=" * 70)
-    for n in range(1, 7):
-        word = [chr(ord("a") + i) for i in range(n)]
-        trees = all_bracketings(word)
-        # verify all bracketings of a fixed word are mutually isomorphic
-        all_iso = all(are_isomorphic(trees[0], t) for t in trees)
-        print(f"  |word| = {n}:  #bracketings = {len(trees):3d}  "
-              f"= C_{n-1} = {catalan(n - 1):3d}   all isomorphic? {all_iso}")
-    print()
-
-
-def demo_strictification() -> None:
-    print("=" * 70)
-    print("4. STRICTIFICATION: every tree ~= its right-nested normal form")
-    print("=" * 70)
-    word = ["a", "b", "c", "d"]
-    for t in all_bracketings(word):
-        nf = normalize(t)
-        ok = are_isomorphic(t, nf) and flatten(nf) == flatten(t)
-        print(f"  {show(t):12s} ~=  {show(nf):12s}   iso & word-preserving? {ok}")
-    print(f"  normal form is the same for all bracketings of {''.join(word)}: "
-          f"{show(of_list(word))}")
-    print("  => flatten is an equivalence onto the discrete category of words.")
-    print()
-
-
-def demo_pentagon() -> None:
-    print("=" * 70)
-    print("5. PENTAGON: two associator routes agree on the flattened data")
-    print("=" * 70)
-    w, x, y, z = Leaf("w"), Leaf("x"), Leaf("y"), Leaf("z")
-    start = tensor(tensor(tensor(w, x), y), z)          # ((wx)y)z
-    end = tensor(w, tensor(x, tensor(y, z)))            # w(x(yz))
-    # long route waypoints
-    long_route = [
-        start,
-        tensor(tensor(w, tensor(x, y)), z),             # (w(xy))z
-        tensor(w, tensor(tensor(x, y), z)),             # w((xy)z)
-        end,
-    ]
-    # short route waypoints
-    short_route = [
-        start,
-        tensor(tensor(w, x), tensor(y, z)),             # (wx)(yz)
-        end,
-    ]
-    long_ok = all(are_isomorphic(long_route[i], long_route[i + 1])
-                  for i in range(len(long_route) - 1))
-    short_ok = all(are_isomorphic(short_route[i], short_route[i + 1])
-                   for i in range(len(short_route) - 1))
-    print(f"  start = {show(start)}")
-    print(f"  end   = {show(end)}")
-    print(f"  long route  (3 associators) all iso?  {long_ok}")
-    print(f"  short route (2 associators) all iso?  {short_ok}")
-    print(f"  both routes reach the same object with the same word?  "
-          f"{are_isomorphic(start, end)}")
-    print("  => the causal loop closes to the identity (pentagon holds).")
-    print()
+    def evaluate(self) -> Arrow:
+        if self.atom is not None:
+            return self.atom
+        if self.left is None or self.right is None:
+            raise ValueError("malformed expression")
+        return compose(self.left.evaluate(), self.right.evaluate())
 
 
 def main() -> None:
-    demo_non_strictness()
-    demo_thin_unique_associator()
-    demo_catalan_and_iso_class()
-    demo_strictification()
-    demo_pentagon()
-    print("All demonstrations completed.")
+    a = Arrow.A
+    left = compose(compose(a, a), a)
+    right = compose(a, compose(a, a))
+    print("Three-arrow composition")
+    print(f"  (a∘a)∘a = {left.value}")
+    print(f"  a∘(a∘a) = {right.value}")
+    print(f"  Strictly equal? {left == right}")
+    print(f"  Equal after coherent quotient? {quotient_class(left) == quotient_class(right)}")
+    assert left == Arrow.E and right == Arrow.A and left != right
+
+    atoms = [Arrow.E, Arrow.A, Arrow.B]
+    radius = 3
+    w: Word = (Arrow.A, Arrow.B)
+    w_prime: Word = (Arrow.A, Arrow.A)
+    trace = bounded_right_trace(radius, w, atoms)
+    trace_prime = bounded_right_trace(radius, w_prime, atoms)
+    print("\nBounded continuation fingerprints")
+    print(f"  |T_{radius}(ab)| = {len(trace)}")
+    print(f"  |T_{radius}(aa)| = {len(trace_prime)}")
+    print(f"  Traces equal? {trace == trace_prime}")
+    assert trace != trace_prime
+    # Exhaustively demonstrate separation for every word within a small radius.
+    all_words = list(words(atoms, radius))
+    signatures = [frozenset(bounded_right_trace(radius, x, atoms)) for x in all_words]
+    assert len(signatures) == len(set(signatures))
+    print(f"  Distinct traces for all {len(all_words)} words of length at most {radius}: yes")
+
+    scores = [0.12, 0.15, 0.19, 0.18, 0.22]
+    endpoint, local, telescope, uniform = hybrid_audit(scores)
+    print("\nHybrid reassociation audit")
+    print(f"  Scores: {scores}")
+    print(f"  Local drifts: {[round(x, 4) for x in local]}")
+    print(f"  Endpoint drift: {endpoint:.4f}")
+    print(f"  Sum of local drifts: {telescope:.4f}")
+    print(f"  Number of steps × largest local drift: {uniform:.4f}")
+    assert endpoint <= telescope <= uniform
 
 
 if __name__ == "__main__":

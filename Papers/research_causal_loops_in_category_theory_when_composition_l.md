@@ -1,427 +1,380 @@
-# Causal Loops in Category Theory: A Concrete Non-Strict Monoidal Category of Parenthesizations
+# Coherent Composition Loops: Strictification, Reassociation, and Hybrid Bounds
+
+**Aristotle**  
+**20 July 2026**
 
 ## Abstract
 
-We construct an explicit, fully elementary monoidal category whose tensor product fails to
-be associative *on the nose* yet is repaired by a canonical invertible associator, and in
-which all of the Mac Lane coherence data holds automatically. The objects of the category
-are binary trees with labelled leaves — formal parenthesizations of words — and a morphism
-between two trees is a proof that they have the same underlying leaf-word. This category is
-**thin** (at most one morphism between any two objects) and a **groupoid** (every morphism
-invertible). We prove three things. First, a general structural principle: *any* choice of
-tensor data on a thin category automatically satisfies the pentagon, the triangle, and all
-naturality axioms, so that coherence is free. Second, the concrete realization: on the
-parenthesization trees the two bracketings $(a\otimes b)\otimes c$ and $a\otimes(b\otimes c)$
-are genuinely distinct objects joined by a unique associator isomorphism, so the category is
-a non-strict monoidal category. Third, a strictification result: every bracketing is
-canonically isomorphic to a right-nested normal form, two bracketings are isomorphic iff
-they share an underlying word, and the whole category is equivalent to the discrete category
-of words. This gives a hands-on, end-to-end model of the slogan *a coherent
-loop-tolerant algebraic structure is equivalent to a strict one*, and a miniature laboratory
-for the phenomenon of associativity holding only up to coherent isomorphism.
+We study a minimal algebraic model in which composition is not associative as equality but is associative up to a specified proposition-valued invertible transformation. A controlled composition consists of a setoid of arrows, a binary operation, a weak unit, compatibility with the equivalence relation, an associator, and left and right unitors. Because transformations are proposition-valued, the model is locally thin: parallel transformations are unique, so the pentagon, triangle, and all higher coherence diagrams commute automatically. This identifies the construction as the locally thin, one-object fragment of bicategory theory, rather than as an unrestricted characterization of bicategories.
 
-**Keywords.** monoidal category, associator, pentagon identity, coherence, thin category,
-strictification, parenthesization, Catalan structures, binary trees.
-
----
+We prove soundness of a structural reassociation calculus, construct the strict quotient and prove strict associativity and strict unit laws there, and exhibit an explicit three-arrow unital operation whose two triple composites are unequal but coherently equivalent. We also prove that bounded right-continuation traces separate bounded atomic words. Finally, we connect coherent reassociation to the cryptographic hybrid method: if an observer changes by at most $\delta$ across each coherent step, then a chain of $k+1$ steps changes its endpoint score by at most $(k+1)\delta$. Together, these results separate strict syntax from coherent semantics and quantify the observational cost of moving between parenthesizations.
 
 ## 1. Introduction
 
-### 1.1 Motivation
+Associativity permits an unambiguous reading of an iterated product. In a monoid, category, or algebra of functions, the equality
 
-The associative law $(a\cdot b)\cdot c = a\cdot(b\cdot c)$ is usually treated as an equation:
-two ways of grouping a product yield the same result. In higher category theory one takes a
-more refined stance. The two groupings are regarded as *distinct objects*, and the
-associative law is upgraded from an *equation* to a *specified invertible transformation* —
-the **associator** — witnessing that the two groupings are canonically isomorphic. This is
-the defining move of a **monoidal category**: a category equipped with a tensor product that
-is associative and unital only *up to coherent natural isomorphism*.
-
-The price of this freedom is **coherence**. Once associativity is an isomorphism rather than
-an equation, one must ensure that all the different ways of re-bracketing a long product
-agree. Mac Lane's coherence theorem isolates two conditions — the **pentagon** and the
-**triangle** — from which all others follow, and guarantees that every formal diagram built
-from associators and unitors commutes.
-
-This paper isolates the phenomenon in its purest concrete form. We build a monoidal category
-directly out of parenthesizations, in which:
-
-1. associativity **fails** as a literal equality of objects;
-2. the failure is **repaired** by a canonical, and in fact unique, associator; and
-3. all coherence is **automatic**, because the category is thin.
-
-We then show that the resulting structure, for all its apparent richness, **collapses**: it
-is categorically equivalent to the discrete (strict, loop-free) category of underlying words.
-This is a concrete, verifiable instance of Mac Lane's strictification theorem.
-
-### 1.2 The guiding metaphor
-
-We think of a parenthesization as recording *how a composite computation is grouped*, and of
-the associator as recording *how composition loops back on itself* when the grouping is
-changed. The central conceptual claim is that when these loops are *coherent* — when the
-transformations recording re-association are rigid enough to be unique — the loop closes
-harmlessly: travelling out and back around a re-association cycle returns the identity. We
-make this precise below (Theorem 3.5) as the statement that a certain composite of associators
-around the pentagon equals the identity.
-
-### 1.3 Contributions and organization
-
-- **Section 2** develops the abstract engine: thin categories and the principle that
-  coherence is free on them (Theorem 2.4).
-- **Section 3** constructs the parenthesization category, endows it with a monoidal
-  structure, and proves that it is non-strict with a unique associator (Theorems 3.2–3.5).
-- **Section 4** proves strictification: normal forms, the isomorphism criterion, the
-  flattening functor, and the equivalence to the discrete category of words
-  (Theorems 4.1–4.4).
-- **Section 5** gives algorithms and numerical illustrations.
-- **Sections 6–7** discuss applications and future directions.
-
----
-
-## 2. Coherence from thinness
-
-### 2.1 Thin categories
-
-**Definition 2.1 (Thin category).** A category $\mathcal C$ is **thin** if for every pair of
-objects $X, Y$ the hom-set $\mathcal C(X,Y)$ has at most one element; equivalently, any two
-parallel morphisms $f, g\colon X\to Y$ are equal. A thin category is the same data as a
-preorder viewed as a category.
-
-The defining property has an immediate and powerful consequence.
-
-**Proposition 2.2 (Every diagram commutes).** In a thin category, any two morphisms with the
-same source and target are equal. Consequently every diagram of morphisms commutes.
-
-*Proof.* Immediate from Definition 2.1: two parallel morphisms are equal, and a diagram
-commutes iff certain parallel composites are equal. $\qquad\blacksquare$
-
-**Proposition 2.3 (Isomorphisms are unique).** In a thin category, between any two objects
-$X, Y$ there is at most one isomorphism; an isomorphism carries no information beyond its
-existence.
-
-*Proof.* Two isomorphisms $X\cong Y$ have equal underlying forward morphisms by thinness, and
-an isomorphism is determined by its forward morphism (its inverse is forced). $\qquad\blacksquare$
-
-### 2.2 The free-coherence principle
-
-Recall that a **monoidal category structure** on $\mathcal C$ consists of a tensor product
-bifunctor $\otimes$, a unit object $\mathbf 1$, and natural isomorphisms — the associator
-$\alpha_{X,Y,Z}\colon (X\otimes Y)\otimes Z\cong X\otimes(Y\otimes Z)$, the left unitor
-$\lambda_X\colon \mathbf 1\otimes X\cong X$, and the right unitor
-$\rho_X\colon X\otimes\mathbf 1\cong X$ — subject to the **pentagon** and **triangle** axioms
-and the naturality of $\alpha,\lambda,\rho$. A bare choice of such data *without* the axioms
-we call a **monoidal structure datum**.
-
-**Theorem 2.4 (Coherence is free on a thin category).** Let $\mathcal C$ be a thin category
-equipped with any monoidal structure datum (a tensor product, a unit, and associator/unitor
-isomorphisms). Then the datum automatically satisfies the pentagon identity, the triangle
-identity, and every naturality condition; that is, $\mathcal C$ is a genuine monoidal
-category.
-
-*Proof.* Each axiom asserts the equality of two morphisms sharing a common source and target.
-By Proposition 2.2 any such equality holds automatically. Concretely: the pentagon equates two
-morphisms $((W\otimes X)\otimes Y)\otimes Z \to W\otimes(X\otimes(Y\otimes Z))$; the triangle
-equates two morphisms $(X\otimes\mathbf 1)\otimes Y \to X\otimes Y$; each naturality square
-equates two morphisms with common endpoints. All hold by thinness. $\qquad\blacksquare$
-
-Two axioms are worth stating explicitly, as they are the coherence conditions of interest.
-
-**Corollary 2.5 (Pentagon).** In any monoidal structure datum on a thin category, for all
-objects $W, X, Y, Z$,
 $$
-(\alpha_{W,X,Y}\otimes \mathrm{id}_Z)\;\circ\;\alpha_{W, X\otimes Y, Z}\;\circ\;(\mathrm{id}_W\otimes \alpha_{X,Y,Z})
-\;=\;
-\alpha_{W\otimes X, Y, Z}\;\circ\;\alpha_{W, X, Y\otimes Z}.
+(x\circ y)\circ z=x\circ(y\circ z)
 $$
 
-**Corollary 2.6 (Triangle).** In any monoidal structure datum on a thin category, for all
-objects $X, Y$,
-$$
-\alpha_{X,\mathbf 1,Y}\;\circ\;(\mathrm{id}_X\otimes \lambda_Y)\;=\;\rho_X\otimes \mathrm{id}_Y.
-$$
+allows parentheses to be omitted. Yet equality is often stronger than the intended semantics. Different evaluation trees can retain different operational histories while being interchangeable through a reversible comparison. Examples arise in staged protocols, transformations of computation graphs, compositional semantics, and cryptographic hybrid proofs.
 
-Both follow from Theorem 2.4.
+The appropriate weakening is not arbitrary nonassociativity. One asks instead for an invertible transformation
 
-**Theorem 2.7 (The causal loop closes to the identity).** Fix objects $W, X, Y, Z$ in a thin
-monoidal category. Travel from $((W\otimes X)\otimes Y)\otimes Z$ to
-$W\otimes(X\otimes(Y\otimes Z))$ along the long (three-step) side of the pentagon, then return
-to the start along the inverse of the short (two-step) side. The resulting round trip is the
-identity:
 $$
-\Big[(\alpha_{W,X,Y}\otimes\mathrm{id}_Z)\circ\alpha_{W,X\otimes Y,Z}\circ(\mathrm{id}_W\otimes\alpha_{X,Y,Z})\Big]
-\circ\Big[\alpha_{W\otimes X,Y,Z}\circ\alpha_{W,X,Y\otimes Z}\Big]^{-1}
-=\mathrm{id}.
+\alpha_{x,y,z}:(x\circ y)\circ z\Longrightarrow x\circ(y\circ z),
 $$
 
-*Proof.* Both sides are endomorphisms of $((W\otimes X)\otimes Y)\otimes Z$; by thinness they
-are equal, and the identity is such an endomorphism. (Equivalently, apply the pentagon,
-Corollary 2.5, and cancel.) $\qquad\blacksquare$
+together with weak unit laws and coherence among all such transformations. In full bicategory theory, transformations between arrows form categories, and the pentagon and triangle equations are substantive axioms. Here we isolate a tractable boundary case: the transformation relation is proposition-valued. There is at most one transformation between fixed endpoints. This **local thinness** makes every pair of parallel coherence paths equal.
 
-This is the abstract form of the mission's slogan: *when composition loops back, it loops back
-to where it started.*
+The resulting model retains a genuine distinction between equality and coherent equivalence. It also supports two complementary views. The high-resolution view remembers arrows, parentheses, and transformations. The low-resolution view identifies coherently equivalent arrows; its induced composition is an ordinary associative unital operation. This quotient is a strictification at the level of equivalence classes.
 
----
+A second theme is observational. Parenthesizations form vertices of the associahedron, and elementary associator moves form its edges. A real-valued observer on evaluated arrows can be compared along an edge path. The triangle inequality then becomes a hybrid argument: local stability accumulates linearly along a chain. This supplies a precise bridge to cryptographic game hopping.
 
-## 3. The parenthesization category
+The paper makes five contributions. First, it defines controlled composition and explains its bicategorical scope. Second, it proves structural reassociation soundness and automatic coherence. Third, it constructs and analyzes a minimal three-arrow witness of strict nonassociativity. Fourth, it proves strictification and bounded trace separation. Fifth, it derives a quantitative endpoint bound for coherent hybrid chains.
 
-### 3.1 Objects, morphisms, and thinness
+## 2. Controlled composition
 
-Fix a set $\alpha$ of leaf labels.
+### 2.1. Basic definition
 
-**Definition 3.1 (Parenthesization trees).** The set $\mathrm{PTree}(\alpha)$ of
-**parenthesization trees** over $\alpha$ is generated inductively by:
-- an empty tree $\mathrm{nil}$;
-- a leaf $\mathrm{leaf}(a)$ for each label $a\in\alpha$;
-- a node $\mathrm{node}(s,t)$ for any two trees $s, t$.
+A **setoid** is a set $M$ equipped with an equivalence relation $\sim$. A **controlled composition** on $(M,\sim)$ consists of:
 
-We read $\mathrm{node}(s,t)$ as the formal bracketed product $(s\cdot t)$. The **flattening**
-map $\mathrm{flatten}\colon \mathrm{PTree}(\alpha)\to \mathrm{List}(\alpha)$ forgets the
-bracketing:
+- a binary operation $\circ:M\times M\to M$;
+- a distinguished element $e\in M$;
+- compatibility of composition with equivalence: if $a\sim a'$ and $b\sim b'$, then $a\circ b\sim a'\circ b'$;
+- for every $a,b,c\in M$, an associator relation
+
 $$
-\mathrm{flatten}(\mathrm{nil})=[\,],\qquad
-\mathrm{flatten}(\mathrm{leaf}(a))=[a],\qquad
-\mathrm{flatten}(\mathrm{node}(s,t))=\mathrm{flatten}(s)\mathbin{+\!\!+}\mathrm{flatten}(t),
+(a\circ b)\circ c\sim a\circ(b\circ c);
 $$
-where $+\!\!+$ denotes list concatenation.
 
-**Definition 3.2 (The parenthesization category).** Let the objects be parenthesization trees.
-For trees $s, t$ define the hom-set
+- for every $a\in M$, left and right unitor relations
+
 $$
-\mathcal P(s,t)\;=\;\{\text{proofs of } \mathrm{flatten}(s)=\mathrm{flatten}(t)\},
+e\circ a\sim a,
+\qquad
+a\circ e\sim a.
 $$
-a set with at most one element. Composition is transitivity of equality; the identity on $s$
-is reflexivity of $\mathrm{flatten}(s)=\mathrm{flatten}(s)$. This defines a category, the
-**parenthesization category** $\mathcal P(\alpha)$.
 
-**Theorem 3.1 (Thin groupoid).** The category $\mathcal P(\alpha)$ is thin, and it is a
-groupoid: every morphism is invertible.
+A **2-cell** from $a$ to $b$ is a witness of $a\sim b$. Since this assertion is proposition-valued, any two 2-cells with the same source and target coincide. Reflexivity gives identity 2-cells, symmetry gives inverses, and transitivity gives vertical composition. Compatibility of $\circ$ gives horizontal composition.
 
-*Proof.* Thinness holds because a hom-set is a set of proofs of a single equation, hence a
-subsingleton. Given $f\colon s\to t$, i.e. a proof $\mathrm{flatten}(s)=\mathrm{flatten}(t)$,
-its symmetric proof gives $f^{-1}\colon t\to s$; the two composites are identities by
-thinness. $\qquad\blacksquare$
+This definition deliberately distinguishes equality $=$ from equivalence $\sim$. The former records strict identity of arrows. The latter records invertible semantic comparison.
 
-Because $\mathcal P(\alpha)$ is thin, Theorem 2.4 applies to *any* monoidal datum we place on
-it.
+### 2.2. Scope and bicategorical interpretation
 
-### 3.2 The monoidal structure
+A controlled composition is the one-object, locally thin shadow of a bicategory. Its elements behave as 1-cells of the single object, and its equivalence witnesses behave as invertible 2-cells. The associator and unitors provide the expected weak structural laws. Local thinness supplies coherence.
 
-**Definition 3.3 (Tensor datum).** Define on $\mathcal P(\alpha)$:
-- **tensor of objects:** $s\otimes t := \mathrm{node}(s,t)$;
-- **unit:** $\mathbf 1 := \mathrm{nil}$;
-- **whiskering:** for $f\colon s\to t$, the morphisms $X\otimes f$ and $f\otimes Y$ are the
-  evident equalities obtained by concatenating $\mathrm{flatten}(X)$ on the left, or
-  $\mathrm{flatten}(Y)$ on the right, of the equation underlying $f$;
-- **associator:** $\alpha_{a,b,c}\colon (a\otimes b)\otimes c \to a\otimes(b\otimes c)$, the
-  morphism witnessed by the associativity of list concatenation,
-  $(\mathrm{flatten}(a)+\!\!+\mathrm{flatten}(b))+\!\!+\mathrm{flatten}(c)
-   = \mathrm{flatten}(a)+\!\!+(\mathrm{flatten}(b)+\!\!+\mathrm{flatten}(c))$;
-- **unitors:** $\lambda_a\colon \mathbf 1\otimes a\to a$ and $\rho_a\colon a\otimes\mathbf 1\to a$,
-  from $[\,]+\!\!+\ell=\ell$ and $\ell+\!\!+[\,]=\ell$ respectively.
+It is important not to overstate this conclusion. Merely specifying a binary operation that is associative “up to some isomorphism” does not produce a bicategory. In a non-thin setting one must provide typed 2-cells, functorial horizontal composition, natural associators and unitors, and explicit pentagon and triangle laws. The present model packages exactly the thin case, in which those diagrams commute because their parallel sides cannot be distinct.
 
-**Theorem 3.2 (Monoidal category).** With the datum of Definition 3.3, $\mathcal P(\alpha)$ is
-a monoidal category. In particular the pentagon, triangle and all naturality axioms hold.
+### 2.3. Automatic coherence
 
-*Proof.* $\mathcal P(\alpha)$ is thin (Theorem 3.1), so Theorem 2.4 supplies every axiom for
-free. $\qquad\blacksquare$
+**Theorem 2.1 (Uniqueness of parallel 2-cells).** For any $a,b\in M$, any two 2-cells from $a$ to $b$ are equal.
 
-### 3.3 Non-strictness and uniqueness of the associator
+**Proof sketch.** A 2-cell is a proof of the proposition $a\sim b$. Proposition-valued witnesses are subsingletons, so two witnesses of the same proposition coincide. $\square$
 
-**Theorem 3.3 (Associativity fails on the nose).** For all trees $a, b, c$, the objects
-$(a\otimes b)\otimes c$ and $a\otimes(b\otimes c)$ are distinct.
+**Theorem 2.2 (Associator pentagon).** Let $a,b,c,d\in M$. Any two composite 2-cells from
 
-*Proof.* Suppose $\mathrm{node}(\mathrm{node}(a,b),c)=\mathrm{node}(a,\mathrm{node}(b,c))$.
-Comparing first components forces $\mathrm{node}(a,b)=a$, i.e. a tree equal to a proper subtree
-of itself. Comparing sizes, $\mathrm{size}(\mathrm{node}(a,b))=\mathrm{size}(a)$ while
-$\mathrm{size}(\mathrm{node}(a,b))=\mathrm{size}(a)+\mathrm{size}(b)+1>\mathrm{size}(a)$, a
-contradiction. $\qquad\blacksquare$
-
-**Corollary 3.4 (Non-strict).** $\mathcal P(\alpha)$ is not a strict monoidal category: there
-exist objects (e.g. $a=b=c=\mathrm{nil}$) for which the source and target of the associator
-differ, so the associator cannot be an identity.
-
-Despite this, the associator is completely canonical.
-
-**Theorem 3.5 (Uniqueness of the associator).** For all $a, b, c$, the associator
-$\alpha_{a,b,c}$ is the *unique* isomorphism $(a\otimes b)\otimes c\cong a\otimes(b\otimes c)$.
-
-*Proof.* $\mathcal P(\alpha)$ is thin, so by Proposition 2.3 there is at most one isomorphism
-between any two objects; $\alpha_{a,b,c}$ is one, hence the only one. $\qquad\blacksquare$
-
-Together, Theorems 3.3–3.5 realize the target phenomenon: associativity fails literally, but
-its failure is repaired by a canonical and unique invertible $2$-cell, with coherence holding
-automatically.
-
----
-
-## 4. Strictification: collapsing the loops
-
-We now show that all of this apparent structure is, up to equivalence, strict.
-
-**Definition 4.1 (Normal form).** For a word $\ell\in\mathrm{List}(\alpha)$ define the
-**right-nested tree** $\mathrm{ofList}(\ell)$ by
 $$
-\mathrm{ofList}([\,])=\mathrm{nil},\qquad
-\mathrm{ofList}(a::\ell')=\mathrm{node}(\mathrm{leaf}(a),\,\mathrm{ofList}(\ell')).
+(((a\circ b)\circ c)\circ d)
 $$
-It satisfies $\mathrm{flatten}(\mathrm{ofList}(\ell))=\ell$, so $\mathrm{ofList}$ is a section
-of $\mathrm{flatten}$ and picks a canonical bracketing for each word.
 
-**Theorem 4.1 (Normalization).** Every tree $s$ is canonically isomorphic to its normal form:
-there is an isomorphism $s\cong \mathrm{ofList}(\mathrm{flatten}(s))$. In particular, all
-bracketings of a fixed word are canonically — and, by thinness, uniquely — isomorphic. This is
-Mac Lane's coherence theorem in concrete form for this family.
+to
 
-*Proof.* Since $\mathrm{flatten}(\mathrm{ofList}(\mathrm{flatten}(s)))=\mathrm{flatten}(s)$,
-the equation of words gives a morphism $s\to \mathrm{ofList}(\mathrm{flatten}(s))$, which is an
-isomorphism because $\mathcal P(\alpha)$ is a groupoid; uniqueness is Proposition 2.3.
-$\qquad\blacksquare$
-
-**Theorem 4.2 (Isomorphism criterion).** Two trees $s, t$ are isomorphic if and only if
-$\mathrm{flatten}(s)=\mathrm{flatten}(t)$. The isomorphism class of a bracketing remembers only
-its underlying word, not how it is parenthesized.
-
-*Proof.* An isomorphism $s\cong t$ yields a morphism $s\to t$, i.e. a proof
-$\mathrm{flatten}(s)=\mathrm{flatten}(t)$. Conversely such a proof is a morphism, and every
-morphism is invertible (Theorem 3.1). $\qquad\blacksquare$
-
-**Definition 4.2 (Flattening functor).** Let $\mathrm{Disc}(\mathrm{List}(\alpha))$ denote the
-**discrete category** on words: objects are words, and the only morphisms are identities. Define
-the **flattening functor**
 $$
-F\colon \mathcal P(\alpha)\to \mathrm{Disc}(\mathrm{List}(\alpha)),\qquad
-F(s)=\mathrm{flatten}(s),
+a\circ(b\circ(c\circ d))
 $$
-sending each morphism (an equality of words) to the corresponding identity-type morphism in the
-discrete target.
 
-**Theorem 4.3 (The loop is contracted).** Under $F$ the associator becomes an identity-type
-morphism: $F(\alpha_{a,b,c})$ is the identity morphism on the common word
-$\mathrm{flatten}(a)+\!\!+\mathrm{flatten}(b)+\!\!+\mathrm{flatten}(c)$. Strictification unbends
-the associator loop.
+are equal. In particular, the upper and lower routes around the associator pentagon agree.
 
-*Proof.* In the discrete category every hom-set is a subsingleton (each is empty or a single
-identity), so any two parallel morphisms coincide; $F(\alpha_{a,b,c})$ and the relevant
-identity are parallel. $\qquad\blacksquare$
+**Proof sketch.** Both routes are parallel 2-cells with the displayed source and target. Theorem 2.1 identifies them. The same argument applies to triangle diagrams and all higher pasting diagrams whose boundary 2-cells are parallel. $\square$
 
-**Theorem 4.4 (Strictification / equivalence to the strict skeleton).** The flattening functor
-is an equivalence of categories,
+The proof is short because the structural restriction is strong. It does not make coherence unimportant; it makes coherence a consequence of local thinness.
+
+## 3. A calculus of parenthesized expressions
+
+### 3.1. Expressions and evaluation
+
+A **composition expression** over $M$ is a finite binary tree defined recursively. An atom $[a]$ is an expression for every $a\in M$. If $x$ and $y$ are expressions, then $(x\,y)$ is an expression. Its evaluation is
+
 $$
-\mathcal P(\alpha)\;\simeq\;\mathrm{Disc}(\mathrm{List}(\alpha)),
+\operatorname{ev}([a])=a,
 $$
-with inverse $G=\mathrm{ofList}$ (the normal-form functor). The entire non-strict monoidal
-structure — an object for every bracketing, an associator loop connecting them — is, up to
-equivalence, the strict discrete category of words.
 
-*Proof.* Take $G\colon \mathrm{Disc}(\mathrm{List}(\alpha))\to\mathcal P(\alpha)$ to send a word
-$\ell$ to $\mathrm{ofList}(\ell)$. Then $F\circ G$ is the identity on objects, since
-$\mathrm{flatten}(\mathrm{ofList}(\ell))=\ell$, giving $F\circ G\cong \mathrm{id}$. In the other
-direction, Theorem 4.1 gives, naturally in $s$, an isomorphism
-$s\cong \mathrm{ofList}(\mathrm{flatten}(s))=(G\circ F)(s)$, so $\mathrm{id}\cong G\circ F$; the
-required naturality and triangle identities are automatic by thinness of the source and
-discreteness of the target. Hence $F$ and $G$ form an adjoint equivalence. $\qquad\blacksquare$
-
-This is the payoff of coherence: a *coherent* loop-tolerant structure is equivalent to a strict,
-loop-free one, in exact analogy with Mac Lane's strictification theorem for general monoidal
-categories.
-
----
-
-## 5. Algorithms and numerical illustrations
-
-The constructions above are entirely computable. We highlight three algorithms; full
-implementations appear in the accompanying demonstration code.
-
-### 5.1 Counting bracketings
-
-The number of parenthesization trees with a fixed leaf-word of length $n$ is the $(n-1)$-th
-Catalan number $C_{n-1}=\frac{1}{n}\binom{2(n-1)}{n-1}$, satisfying
 $$
-C_0=1,\qquad C_{m}=\sum_{i=0}^{m-1}C_i\,C_{m-1-i}.
+\operatorname{ev}((x\,y))=\operatorname{ev}(x)\circ\operatorname{ev}(y).
 $$
-For $n=1,2,3,4,5$ the counts are $1,1,2,5,14$. This measures the size of each isomorphism
-class in $\mathcal P(\alpha)$: by Theorem 4.2 all $C_{n-1}$ trees over a fixed word of length
-$n$ are mutually (uniquely) isomorphic — a single connected component of the groupoid whose
-"vertex count" is a Catalan number and whose "edge count" is one bridge per ordered pair.
 
-### 5.2 Normalization and re-association distance
+This syntax retains parentheses explicitly. Different binary trees with the same ordered leaves can evaluate to unequal arrows.
 
-Given any two bracketings of the same word, Theorem 4.1 provides a canonical isomorphism, but
-one can also realize a re-association *combinatorially* as a sequence of local rotations
-$(a\cdot b)\cdot c \leftrightarrow a\cdot(b\cdot c)$. The minimal number of such rotations
-between two trees is the **rotation distance**, famous for its connection to hyperbolic
-geometry and the diameter of the associahedron. Our normalization routine transports any tree
-to right-nested form and thereby produces an explicit witnessing path; the associator of
-Definition 3.3 is precisely the "certificate" that such a path exists, stripped of the choice
-of path.
+### 3.2. Structural reassociation
 
-### 5.3 The pentagon check
+Define a relation $x\rightsquigarrow y$, called **structural reassociation**, as the least relation generated by the following rules:
 
-For four factors there are five bracketings and, from
-$((w x) y) z$ to $w(x(y z))$, two natural associator routes. The pentagon check verifies that
-both routes send the underlying word to the same result (they do, trivially, since the word is
-fixed), illustrating Corollary 2.5 at the level of the flattened data.
+1. **Reflexivity:** $x\rightsquigarrow x$.
+2. **Symmetry:** if $x\rightsquigarrow y$, then $y\rightsquigarrow x$.
+3. **Transitivity:** if $x\rightsquigarrow y$ and $y\rightsquigarrow z$, then $x\rightsquigarrow z$.
+4. **Left context:** if $x\rightsquigarrow y$, then $(x\,z)\rightsquigarrow(y\,z)$.
+5. **Right context:** if $y\rightsquigarrow z$, then $(x\,y)\rightsquigarrow(x\,z)$.
+6. **Associator move:** $((x\,y)\,z)\rightsquigarrow(x\,(y\,z))$.
 
----
+Rules 4 and 5 are often called whiskering or contextual closure. They allow a local tree rotation at any depth.
 
-## 6. Applications and connections
+**Theorem 3.1 (Reassociation soundness).** If $x\rightsquigarrow y$, then
 
-- **Mac Lane coherence, made concrete.** The parenthesization category is a minimal, fully
-  explicit witness of the coherence theorem: it exhibits *the* generic re-association groupoid
-  on a word and shows it is contractible (all objects uniquely isomorphic).
+$$
+\operatorname{ev}(x)\sim\operatorname{ev}(y).
+$$
 
-- **Strictification in practice.** Theorem 4.4 is a bare-hands instance of "every monoidal
-  category is monoidally equivalent to a strict one," which underlies why practitioners may
-  safely omit associators in computations.
+**Proof sketch.** Induct on the derivation of $x\rightsquigarrow y$. Reflexivity uses reflexivity of $\sim$. Symmetry inverts a 2-cell. Transitivity vertically composes two 2-cells. Left and right contextual rules use compatibility of $\circ$ with $\sim$, pairing the inductive 2-cell with an identity 2-cell on the unchanged argument. The generating rotation uses the associator. These cases exhaust the construction. $\square$
 
-- **Higher categories and homotopy.** The move from equality to coherent isomorphism is the
-  entry point to bicategories, tricategories, and $\infty$-categories, and to the homotopy
-  hypothesis relating higher groupoids to spaces. The thin case treated here is the
-  $(1,1)$-truncated shadow of these towers.
+The theorem gives every syntactic path through the associahedron a semantic interpretation. In the locally thin setting, any two paths with common endpoints yield the same 2-cell.
 
-- **Quantum algebra and topological computation.** Associators satisfying the pentagon are the
-  algebraic core of braided and fusion categories, of quantum invariants of knots and
-  $3$-manifolds, and of anyonic (topological) quantum computation, where coherence of the
-  associator is what makes the computation well-defined.
+### 3.3. Associahedral geometry
 
----
+For a fixed ordered word of $n$ atoms, binary parenthesizations are vertices of the $(n-2)$-dimensional associahedron. Elementary rotations are edges. The soundness theorem says that evaluation maps every edge to an invertible 2-cell. The pentagon for four atoms is the two-dimensional face expressing agreement of alternative reassociation paths.
 
-## 7. Discussion and future directions
+This geometric view is useful computationally. A reassociation algorithm is a path-search procedure on a finite graph. Its path length controls both runtime and, under an observational stability hypothesis, cumulative drift.
 
-The core lesson is a principle: **rigidity guarantees coherence.** When the transformations
-recording re-association are unique — as they are in any thin category — the pentagon,
-triangle and naturality laws hold automatically, and the non-strict structure is equivalent
-to a strict one. The parenthesization category makes each half of this story concrete and
-checkable: associativity genuinely fails as an equation of objects, yet the repair is unique
-and coherence is free.
+## 4. A finite nonassociative witness
 
-Several extensions are natural:
+### 4.1. The composition table
 
-1. **Monoidal strictification.** Upgrade the equivalence of Theorem 4.4 to a *monoidal*
-   equivalence by equipping the discrete category of words with concatenation as tensor and
-   showing that the flattening functor is strong monoidal — the full statement of Mac Lane's
-   strictification theorem for this family.
+Let
 
-2. **Unitors and unit coherence.** Analyze the unit-coherence loops (the triangle) in the same
-   thin framework, comparing with the classical redundancy among the unit axioms.
+$$
+L=\{e,a,b\}
+$$
 
-3. **Bicategorical delooping.** A one-object bicategory is a monoidal category; feeding the
-   parenthesization category through the delooping produces an explicit one-object bicategory
-   whose horizontal composition is non-associative on the nose — a direct model of an
-   "almost-category."
+and define composition by the table
 
-4. **Non-thin obstructions.** The clean coherence here is *because* the category is thin. A
-   natural sequel is to exhibit a non-thin monoidal datum where the pentagon genuinely fails,
-   quantifying how thinness is exactly what removes the obstruction.
+$$
+\begin{array}{c|ccc}
+\circ & e & a & b\\ \hline
+e & e & a & b\\
+a & a & b & a\\
+b & b & e & b
+\end{array}.
+$$
 
----
+The first row and first column show that $e$ is a strict two-sided identity. The remaining equations are
 
-## 8. Conclusion
+$$
+a\circ a=b,\qquad a\circ b=a,
+$$
 
-We have built, from nothing but parenthesizations, a monoidal category in which associativity
-fails on the nose but is repaired by a canonical, unique associator, with all coherence holding
-automatically by thinness — and we have shown this structure collapses, up to equivalence, to
-the strict discrete category of words. The example is small enough to hold in the hand and
-complete enough to display the full arc of the theory: failure, canonical repair, free
-coherence, and strictification. It is a perfect miniature of the idea that, when composition
-loops back coherently, it loops back to exactly where it began.
+$$
+b\circ a=e,\qquad b\circ b=b.
+$$
+
+Equip $L$ with the indiscrete equivalence relation: $x\sim y$ for all $x,y\in L$. It is an equivalence relation, composition respects it, and every required associator and unitor exists. Since each relation is proposition-valued, parallel 2-cells are unique.
+
+**Theorem 4.1 (Strict nonassociativity with coherent comparison).** In the preceding controlled composition,
+
+$$
+(a\circ a)\circ a=e,
+$$
+
+while
+
+$$
+a\circ(a\circ a)=a.
+$$
+
+Hence $(a\circ a)\circ a\ne a\circ(a\circ a)$, but an invertible 2-cell relates the two composites.
+
+**Proof sketch.** The table gives $a\circ a=b$. Therefore the left-associated result is $b\circ a=e$, whereas the right-associated result is $a\circ b=a$. The symbols $e$ and $a$ are distinct. The indiscrete relation nevertheless gives $e\sim a$, and that witness is the associator for this triple. $\square$
+
+This example proves that coherent associativity need not collapse into strict associativity. Three arrows suffice for the separation exhibited here. The example is intentionally maximally thin: it witnesses unequal 1-cells but not distinct parallel 2-cells.
+
+## 5. Strictification by quotient
+
+Let $M/{\sim}$ denote the set of equivalence classes, and write $[x]$ for the class of $x$. Define
+
+$$
+[x]\star[y]=[x\circ y].
+$$
+
+**Lemma 5.1 (Well-defined quotient composition).** The operation $\star$ does not depend on the choice of representatives.
+
+**Proof sketch.** If $x\sim x'$ and $y\sim y'$, compatibility gives $x\circ y\sim x'\circ y'$. Thus the two composites determine the same equivalence class. $\square$
+
+**Theorem 5.2 (Strict Quotient Theorem).** For all $[x],[y],[z]\in M/{\sim}$,
+
+$$
+([x]\star[y])\star[z]=[x]\star([y]\star[z]).
+$$
+
+Moreover, $[e]$ is a strict two-sided identity:
+
+$$
+[e]\star[x]=[x],
+\qquad
+[x]\star[e]=[x].
+$$
+
+**Proof sketch.** The left side of associativity is the class of $(x\circ y)\circ z$ and the right side is the class of $x\circ(y\circ z)$. The associator places these representatives in the same class. The left and right unitor relations similarly identify $e\circ x$ and $x\circ e$ with $x$. $\square$
+
+**Corollary 5.3 (Strictification of the three-arrow witness).** In the quotient of the three-arrow example,
+
+$$
+[(a\circ a)\circ a]=[a\circ(a\circ a)].
+$$
+
+**Proof sketch.** Theorem 4.1 supplies the equivalence between the representatives, so their classes agree. In fact, the indiscrete relation makes this particular quotient a singleton. $\square$
+
+The quotient theorem precisely locates the obstruction to strictness. Before quotienting, the operation can remember implementation-level distinctions. After quotienting, associators and unitors become equality.
+
+## 6. Bounded traces as strict fingerprints
+
+Let $A$ be any alphabet and let $A^*$ be its finite words. For a radius $R\in\mathbb N$ and a word $w\in A^*$, define the **bounded right-continuation trace**
+
+$$
+T_R(w)=\{z\in A^*: |z|\le R\text{ and }z=w\,t\text{ for some }t\in A^*\}.
+$$
+
+Thus $T_R(w)$ is the portion, within the length bound $R$, of the principal right ideal generated by $w$. It records every admissible continuation of $w$.
+
+**Lemma 6.1 (Self-membership).** If $|w|\le R$, then $w\in T_R(w)$.
+
+**Proof sketch.** Choose the continuation $t$ to be the empty word. Then $w=w\,t$, and the length condition holds by assumption. $\square$
+
+**Theorem 6.2 (Bounded Trace Separation).** Let $w,w'\in A^*$ satisfy $|w|\le R$ and $|w'|\le R$. If
+
+$$
+T_R(w)=T_R(w'),
+$$
+
+then $w=w'$.
+
+**Proof sketch.** By Lemma 6.1, $w\in T_R(w)$; equality of traces gives $w\in T_R(w')$, so $w=w't$ for some $t$. Hence $w'$ is a prefix of $w$. Symmetrically, $w'$ lies in $T_R(w)$, so $w$ is a prefix of $w'$. Finite words that are mutual prefixes are equal. $\square$
+
+**Corollary 6.3 (Atomic-expression separation).** Under the hypotheses of Theorem 6.2, replacing every letter of $w$ and $w'$ by the corresponding atomic composition expression produces equal lists of atoms.
+
+This result concerns strict words, not quotient classes. It therefore complements strictification. The trace recognizes the exact generator sequence within the bound, while coherent equivalence determines which evaluated expressions may later be identified. In cryptographic language, the trace behaves as a complete bounded fingerprint for atomic syntax.
+
+## 7. Coherent reassociation as a hybrid argument
+
+### 7.1. The real telescope
+
+The numerical engine is a standard consequence of the triangle inequality.
+
+**Lemma 7.1 (Finite Hybrid Telescope).** Let $k\in\mathbb N$ and let
+
+$$
+p_0,p_1,\ldots,p_{k+1}\in\mathbb R.
+$$
+
+Then
+
+$$
+|p_0-p_{k+1}|\le\sum_{i=0}^{k}|p_i-p_{i+1}|.
+$$
+
+**Proof sketch.** Write
+
+$$
+p_0-p_{k+1}=(p_0-p_1)+(p_1-p_2)+\cdots+(p_k-p_{k+1}).
+$$
+
+Repeated application of $|u+v|\le |u|+|v|$ yields the result. Equivalently, proceed by induction on $k$, splitting off the last segment. $\square$
+
+### 7.2. Observer stability
+
+Let $s:M\to\mathbb R$ be an observer or score. Fix $\delta\in\mathbb R$. Say that $s$ is **$\delta$-stable under coherent equivalence** if
+
+$$
+x\sim y\quad\Longrightarrow\quad |s(x)-s(y)|\le\delta.
+$$
+
+In applications, $s(x)$ may be an acceptance probability, a statistical score, a cost, or another real observable. The hypothesis is meaningful only when such local comparisons are available. If coherent equivalence preserves the observer exactly, one may take $\delta=0$.
+
+### 7.3. Endpoint bound
+
+**Theorem 7.2 (Reassociation Hybrid Bound).** Let
+
+$$
+E_0,E_1,\ldots,E_{k+1}
+$$
+
+be composition expressions such that $E_i\rightsquigarrow E_{i+1}$ for every $0\le i\le k$. If $s$ is $\delta$-stable under coherent equivalence, then
+
+$$
+\left|s(\operatorname{ev}(E_0))-s(\operatorname{ev}(E_{k+1}))\right|
+\le(k+1)\delta.
+$$
+
+**Proof sketch.** Define
+
+$$
+p_i=s(\operatorname{ev}(E_i)).
+$$
+
+By Theorem 3.1, each adjacent reassociation gives
+
+$$
+\operatorname{ev}(E_i)\sim\operatorname{ev}(E_{i+1}).
+$$
+
+Stability therefore yields $|p_i-p_{i+1}|\le\delta$. Apply Lemma 7.1 and bound the sum of $k+1$ terms by $(k+1)\delta$. $\square$
+
+The theorem is the familiar hybrid method expressed in coherence language. An elementary reassociation is one game hop. The endpoint distinguishing gap is no larger than the sum of local gaps.
+
+A small numerical illustration uses scores
+
+$$
+0.12,\ 0.15,\ 0.19,\ 0.18,\ 0.22.
+$$
+
+The four local drifts are $0.03$, $0.04$, $0.01$, and $0.04$, whose sum is $0.12$. The endpoint drift is $0.10$, so the telescope holds. With the uniform local bound $\delta=0.04$, Theorem 7.2 gives the slightly looser estimate $0.16$.
+
+### 7.4. Algorithmic form
+
+Given an explicit path $E_0,\ldots,E_n$ and computed scores $p_0,\ldots,p_n$, one can audit the bound in one pass. Compute every local drift $d_i=|p_i-p_{i+1}|$, their sum $D=\sum_i d_i$, the maximum $\delta=\max_i d_i$, and the endpoint gap $G=|p_0-p_n|$. Then
+
+$$
+G\le D\le n\delta.
+$$
+
+The procedure takes $O(n)$ time and $O(1)$ auxiliary space if the local values are streamed. Finding a shortest reassociation path is a separate graph problem on parenthesizations. For a fixed word length, breadth-first search gives an unweighted shortest path in time linear in the explored associahedron graph, though the number of vertices is the corresponding Catalan number.
+
+## 8. Applications
+
+### 8.1. Cryptographic game hopping
+
+A security proof often replaces a real experiment by an ideal one through intermediate games. If each replacement changes an adversary's success probability by at most $\delta_i$, then the total distinguishing advantage is at most $\sum_i\delta_i$. Theorem 7.2 shows that changes of parenthesization can be treated in exactly this way whenever each coherent transformation has a local observational guarantee.
+
+This perspective is especially useful when composition order records protocol structure. Strictification says the endpoint semantics is associative after quotienting; the hybrid bound says how much a non-invariant observer may drift before that quotient is taken.
+
+### 8.2. Computation trees and batching
+
+Parallel reductions and compiler rewrites routinely alter binary evaluation trees. Exact arithmetic may make these changes invisible, while floating-point arithmetic, resource accounting, or side-channel observables may not. A controlled composition separates semantic interchangeability from literal execution identity. A weighted extension could attach costs to tree rotations and optimize a reassociation schedule.
+
+### 8.3. Collision analysis
+
+Bounded traces distinguish strict generator words. Quotienting by coherence may identify their evaluations. Secure composition therefore requires a disciplined relationship between syntactic fingerprints and semantic equivalence. The present results identify the two mechanisms cleanly but do not yet prove a general collision-resistance theorem for non-thin bicategories.
+
+## 9. Limitations and discussion
+
+The locally thin hypothesis is both the source of clarity and the main limitation. It collapses all parallel 2-cells, so the pentagon is automatic. Consequently, the three-arrow model cannot display a nontrivial choice between distinct coherence witnesses. A faithful higher-dimensional model must retain multiple 2-cells and verify coherence relations explicitly.
+
+The indiscrete equivalence relation is also extreme. It is ideal for separating strict inequality from coherent equivalence, but its quotient forgets everything. More selective relations would preserve nontrivial quotient structure and make observer stability more informative.
+
+The hybrid estimate is worst-case and path-dependent. The factor $(k+1)\delta$ ignores cancellation and treats all edges uniformly. The sharper telescope $\sum_i\delta_i$ is available when edge-specific bounds are known. A shortest-path formulation with nonnegative edge costs suggests a quantitative geometry of coherence.
+
+Finally, bounded traces classify words only under the explicit length hypotheses. If $|w|>R$, the trace may be empty and cannot identify $w$. The radius is therefore part of the fingerprinting specification, not an incidental parameter.
+
+## 10. Future work
+
+A first direction is a finite non-thin one-object bicategory with genuinely distinct parallel 2-cells, a nonidentity associator, and a decidable rewriting presentation of the pentagon. Such an example would preserve higher-dimensional information erased by local thinness.
+
+A second direction is **quantitative coherence leakage**. Assign a nonnegative subadditive cost to each 2-cell. One may then ask whether the maximal observational drift between parenthesizations equals the minimum path cost and whether this distance descends through pentagon and triangle relations.
+
+A third direction concerns collision resistance under weak composition. If bounded left and right principal-ideal traces separate words, one expects quotient collision resistance precisely when unit-preserving 2-cells introduce no unintended identifications between distinct generator words.
+
+A fourth direction uses sharp rotation-distance bounds in associahedra. If two parenthesizations of a word of length $n$ can always be joined by a controlled number of rotations, then the same diameter estimate bounds the length of the necessary hybrid chain. For sufficiently large $n$, the proposed target is $2n-6$ moves.
+
+## 11. Conclusion
+
+Controlled composition provides a compact model of operations whose parenthesizations are unequal but reversibly comparable. Local thinness yields automatic coherence; structural reassociation interprets every legal tree rotation; quotienting turns weak associativity and units into strict laws; a three-arrow table witnesses genuine nonassociativity; bounded continuation traces recover strict words; and the hybrid theorem converts local stability into a global endpoint bound.
+
+The framework draws a precise line between strict syntax and coherent semantics. Parentheses remain visible where operational history matters and disappear after passage to equivalence classes. Between those views lies a geometry of reassociation paths, and that geometry carries quantitative information relevant to compositional security.

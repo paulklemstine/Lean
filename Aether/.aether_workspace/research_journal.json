@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "4e53cd7c",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions: Moment Thresholds for Random Bipartite States\n\n## 1. Exact fixed-level induced-state threshold\n\nFor every fixed hierarchy level `m ≥ 2`, there is a unique constant `λ_m > 0` such",
-      "quality_score": 0.7,
-      "sorry_count": 3,
-      "theorem_count": 16,
-      "timestamp": "2026-07-16T05:48:53",
-      "title": "ArXiv paper: Moment-based PPT criteria for random bipartite states"
-    },
-    {
       "cycle_id": "aa7167bb",
       "domain": "Novelty",
       "key_insight": "# Future directions\n\nThe formalization establishes a reusable finite contraction calculus for the graph and character operations underlying crystal skeleton constructions. The next steps toward the pa",
@@ -2501,6 +2491,16 @@
       "theorem_count": 5,
       "timestamp": "2026-07-20T01:50:29",
       "title": "Speculative: Theorems as Phase Transitions in Proof Space"
+    },
+    {
+      "cycle_id": "8797684d",
+      "domain": "MachineLearning",
+      "key_insight": "# Future directions\n\n## Replace illustrative measurements with audited data\n\nThe formal comparison theorem reduces every fitness claim to a cross-product inequality. A substantive empirical continuati",
+      "quality_score": 0.67,
+      "sorry_count": 1,
+      "theorem_count": 20,
+      "timestamp": "2026-07-20T02:08:03",
+      "title": "Speculative: Mathematics as an Evolving Ecosystem"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-20T01:50:29",
+  "last_updated": "2026-07-20T02:08:03",
   "open_questions": [
-    {
-      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "5dadc373",
-      "domain": "NumberTheory",
-      "sorry_count": 4,
-      "timestamp": "2026-07-15T08:57:47"
-    },
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "8d2137d3",
@@ -3016,6 +3009,13 @@
       "domain": "Combinatorics",
       "sorry_count": 13,
       "timestamp": "2026-07-20T01:50:29"
+    },
+    {
+      "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
+      "cycle_id": "8797684d",
+      "domain": "MachineLearning",
+      "sorry_count": 1,
+      "timestamp": "2026-07-20T02:08:03"
     }
   ],
   "research_threads": {
@@ -3523,12 +3523,6 @@
         "title": "ArXiv paper: Counting oriented spanning trees in generalized join digraphs"
       },
       {
-        "cycle_id": "f4980b02",
-        "quality": 0.74,
-        "theorems": 18,
-        "title": "ArXiv paper: Counting oriented spanning trees in generalized join digraphs"
-      },
-      {
         "cycle_id": "ad5825e2",
         "quality": 0.71,
         "theorems": 0,
@@ -3575,6 +3569,12 @@
         "quality": 0.8,
         "theorems": 46,
         "title": "The Fourier Analysis of Collatz: Spectral Gaps in the 3n+1 Map"
+      },
+      {
+        "cycle_id": "8797684d",
+        "quality": 0.67,
+        "theorems": 20,
+        "title": "Speculative: Mathematics as an Evolving Ecosystem"
       }
     ],
     "Novelty": [
