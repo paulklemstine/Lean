@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-20T02:08:19.419379+00:00",
+  "last_updated": "2026-07-20T03:02:07.668369+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -30632,6 +30632,7 @@
       "outcome_quality": 0.67,
       "phase": "A_only",
       "phase_a_prompt_version": "v28",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v28",
@@ -30746,6 +30747,48 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-20T02:08:19.376708+00:00",
       "title": "ArXiv paper: On Small Doubling in Right-Ordered Groups and Baumslag-Solitar Groups-II"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 18,
+      "domain": "Logic",
+      "duration_seconds": 1045.84041762352,
+      "end_time": 1784516511.5791295,
+      "files_integrated": 10,
+      "job_id": "d4bc25af",
+      "outcome_quality": 0.65,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v27",
+      "phase_b_skip_reason": "low_quality_near_miss",
+      "phase_b_skipped": true,
+      "prompt_version": "v27",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.62,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.66,
+        "composite": 0.506,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.64,
+        "novelty": 0.68,
+        "proof_depth": 0.58,
+        "usefulness": 0.76
+      },
+      "quality_score": 0.65,
+      "sorry_count": 13,
+      "sorry_density": 1.4444444444444444,
+      "start_time": 1784515465.7387118,
+      "strategy_count": 0,
+      "theorem_count": 9,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 4,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-20T03:02:07.603890+00:00",
+      "title": "ArXiv paper: Efficient Hamilton covers and linear arboricity of random graphs"
     }
   ]
 }

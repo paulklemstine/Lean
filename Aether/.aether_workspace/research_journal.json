@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "aa7167bb",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\nThe formalization establishes a reusable finite contraction calculus for the graph and character operations underlying crystal skeleton constructions. The next steps toward the pa",
-      "quality_score": 0.62,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-07-16T07:08:21",
-      "title": "ArXiv paper: Contractions and applications of crystal skeletons: Young quasisymmetric and Stanley sy"
-    },
-    {
       "cycle_id": "cca295e6",
       "domain": "Shared",
       "key_insight": "# Future directions\n\n## Completed formalization\n\n`Construction.lean` is a self-contained finite-set formalization of the\npair-star 3-uniform hypergraph from the paper. All declarations have complete\np",
@@ -2501,6 +2491,16 @@
       "theorem_count": 11,
       "timestamp": "2026-07-20T02:08:19",
       "title": "ArXiv paper: On Small Doubling in Right-Ordered Groups and Baumslag-Solitar Groups-II"
+    },
+    {
+      "cycle_id": "d4bc25af",
+      "domain": "Logic",
+      "key_insight": "# Future directions\n\n## Scope achieved\n\n`HamiltonCoverLinearArboricityBridge.lean` formalizes a deterministic connector underlying the paper's probabilistic results. A cover by two-regular layers is i",
+      "quality_score": 0.65,
+      "sorry_count": 13,
+      "theorem_count": 9,
+      "timestamp": "2026-07-20T03:02:07",
+      "title": "ArXiv paper: Efficient Hamilton covers and linear arboricity of random graphs"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.74
     }
   ],
-  "last_updated": "2026-07-20T02:08:19",
+  "last_updated": "2026-07-20T03:02:07",
   "open_questions": [
-    {
-      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "8d2137d3",
-      "domain": "Combinatorics",
-      "sorry_count": 4,
-      "timestamp": "2026-07-16T03:53:58"
-    },
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "e2c77d51",
@@ -3016,6 +3009,13 @@
       "domain": "Pythagorean",
       "sorry_count": 13,
       "timestamp": "2026-07-20T02:08:19"
+    },
+    {
+      "context": "+  sorry; +  sorry; +  sorry",
+      "cycle_id": "d4bc25af",
+      "domain": "Logic",
+      "sorry_count": 13,
+      "timestamp": "2026-07-20T03:02:07"
     }
   ],
   "research_threads": {
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "f6622907",
-        "quality": 0.82,
-        "theorems": 20,
-        "title": "Hofstadter: Tangled Hierarchies in Type Theory"
-      },
-      {
         "cycle_id": "e6201bf5",
         "quality": 0.74,
         "theorems": 14,
@@ -3513,6 +3507,12 @@
         "quality": 0.64,
         "theorems": 61,
         "title": "ArXiv paper: Strongly complete sets and a conjecture of Erdős"
+      },
+      {
+        "cycle_id": "d4bc25af",
+        "quality": 0.65,
+        "theorems": 9,
+        "title": "ArXiv paper: Efficient Hamilton covers and linear arboricity of random graphs"
       }
     ],
     "MachineLearning": [

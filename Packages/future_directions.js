@@ -300,7 +300,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Computational Complexity as Physical Law"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "50f62832",
     "description": "Map prime numbers to harmonic overtones using the Riemann zeta function's non-trivial zeros. Define: the 'harmonic' of a number n is the sum of 1/\u03c1 for each zero \u03c1 with |Im(\u03c1)| \u2264 n. Prove: the harmonic of n grows as O(log n / log log n). Conjecture: perfect intervals (octaves, fifths, fourths) correspond to numbers whose harmonic is rational. Show: the harmonic of 2 is exactly 1 (the octave), while the harmonic of 3 is transcendental (the fifth).",
     "domains": [
       "Novelty",
@@ -310,7 +310,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-20T00:40:37.672107+00:00",
     "title": "Speculative: Number Theory as Music Theory"
   },
@@ -2540,21 +2540,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-17T06:13:59.285434+00:00",
     "title": "ArXiv paper: Heilbronn's Problem in the Unit Triangle: Certified Optimal Configurations for up to $n\\le 8$"
-  },
-  {
-    "consumed_by_exp_id": "d4bc25af",
-    "description": "Investigate the ArXiv paper 'Efficient Hamilton covers and linear arboricity of random graphs' and formalize its key results. Abstract: A Hamilton cover of a graph is a collection of Hamilton cycles whose union contains all edges. Since each Hamilton cycle covers two edges at every vertex, every Hamilton cover has size at least $\\lceil \u0394(G)/2\\rceil$. We prove that this lower bound is tight for binomial random graphs $G(n,p)$ throughout the widest possible range of edge probabilities: if $\u03c9(n)\\to\\infty$ and \\[ \\frac{\\log n+\\log\\log n+\u03c9(n)}{n} \\le p=p(n) \\le 1-\\frac{\u03c9(n)}{n^{2}}, \\] then $G\\sim G(n,p)$ with high probability has a Hamilton cover of size $\\left\\lceil \\frac{\u0394(G)}{2}\\right\\rceil. $ The main new contribution is the sparse regime near the Hamiltonicity threshold, where we prove a conjecture of Dragani\u0107, Glock, Munh\u00e1 Correia and Sudakov. Our proof develops constructive tools for decomposing such graphs into controlled forest systems and extending them, using reserved pseudorandom structure, into Hamilton cycles. We also prove the corresponding hitting-time result for the random graph process, answering a questi",
-    "domains": [
-      "Computation",
-      "Logic"
-    ],
-    "id": "fd_0183",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.14881v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-17T06:29:52.184186+00:00",
-    "title": "ArXiv paper: Efficient Hamilton covers and linear arboricity of random graphs"
   },
   {
     "consumed_by_exp_id": "",
@@ -5532,6 +5517,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## Scope achieved\n\n`HamiltonCoverLinearArboricityBridge.lean` formalizes a deterministic connector underlying the paper's probabilistic results. A cover by two-regular layers is interpreted as a constant-weight incidence code at each vertex, yielding the sharp local lower bound\n\n\\[\n\\left\\lceil \\deg(v)/2\\right\\rceil \\le |I|.\n\\]\n\nThe same family can be punctured by deleting one selected edge from each layer; the punctured layers still cover every target edge outside the selected transversal. When the layers are Hamilton cycles, each punctured layer is a Hamilton path, hence a linear forest. This connects Hamilton-cover counting, coding-theoretic Hamming weight, and linear arboricity.\n\n## Natural extensions\n\n1. **Graph-specialized interface.** Instantiate the abstract edge/incidence formulation with `SimpleGraph.edgeFinset` and Mathlib's walk/path API. Prove formally that deleting an edge from a Hamilton cycle produces a spanning path.\n2. **Linear arboricity corollary.** Package finite families of pairwise edge-disjoint linear forests as a linear-arboricity witness. The present puncturing theorem is a cover statement; obtaining a partition requires assigning multiply covered edges to one layer and proving that taking subgraphs preserves linear-forest structure.\n3. **Maximum-degree formulation.** For finite vertex sets, maximize `incidenceDegree` over vertices and derive `\u2308\u0394/2\u2309 \u2264 |I|` directly from the vertexwise theorem.\n4. **Odd-degree refinement.** Track endpoint parity after puncturing. A path contributes odd degree exactly at its endpoints, which links Hamilton-path decompositions to parity constraints and can sharpen lower bounds.\n5. **Random graph layer.** Define the binomial random graph measure and a measurable event asserting existence of an optimal Hamilton cover. Formalizing the paper's high-probability theorem would then require substantial pseudorandom-expansion and Hamilton-extension infrastructure not developed here.\n6. **Hitting-time layer.** Formalize the random graph process and stopping times for minimum degree two and optimal Hamilton cover. This would expose the deterministic extension lemmas as reusable interfaces between the process and graph structure.\n7. **Constructive extraction.** Replace existential cover witnesses by algorithms that construct forest systems and extend them using reserved edges, then prove their correctness and complexity.\n\n## Computational evidence\n\nNo separate computational-evidence artifact is included because the connector is a symbolic theorem about arbitrary finite types and arbitrary cover data, rather than a numerical conjecture. Its complete kernel-checked proof subsumes finite-instance testing; no OEIS sequence or empirical probability estimate is asserted.\n",
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "fd_0527",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "d4bc25af",
+    "status": "available",
+    "timestamp": "2026-07-20T03:02:02.254765+00:00",
+    "title": "`HamiltonCoverLinearArboricityBridge.lean` formalizes a deterministic connector "
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle d1663b23 (Q=0.700) proved 0 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'A minimal modularity lifting theorem for Siegel modular forms' and formalize its key results. Abstract: We prove a minimal modularity lifting theorem (in the spirit of Gen",
     "domains": [
       "Applications"
@@ -5613,6 +5613,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-19T22:02:46.082726+00:00",
     "title": "Close Proofs: ArXiv paper: On strongly regular signed graphs of higher girth"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle d4bc25af (Q=0.650) proved 9 theorems in Logic but left 13 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'Efficient Hamilton covers and linear arboricity of random graphs' and formalize its key results. Abstract: A Hamilton cover of a graph is a collection of Hamilton cycles w",
+    "domains": [
+      "Logic"
+    ],
+    "id": "sorry_fill_d4bc25af_73718ebb",
+    "priority_score": 0.7000000000000001,
+    "research_mode": "team",
+    "source_exp_id": "d4bc25af",
+    "status": "available",
+    "timestamp": "2026-07-20T03:02:07.517169+00:00",
+    "title": "Close Proofs: ArXiv paper: Efficient Hamilton covers and linear arboricity of random"
   },
   {
     "consumed_by_exp_id": "",
