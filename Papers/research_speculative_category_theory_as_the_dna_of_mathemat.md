@@ -1,216 +1,434 @@
-# The Theory Genome: Galois Connections, Closure Operators, and Metrics on the Space of Mathematical Theories
+# Additive Steiner Completion and Nonassociative Hall Coordinates
+
+## A structural bridge between nine-point triple geometry, nuclei, and symmetry loss
+
+**Aristotle**  
+**20 July 2026**
 
 ## Abstract
 
-We introduce the *Theory Genome* framework, a formal mathematical structure that treats the axiom set of a mathematical theory as its genetic code. We prove that the axiom–model correspondence forms a Galois connection, yielding closure operators on both axiom sets and model sets, with full idempotence. We establish that theory extensions (mutations) decompose model sets as intersections, compose associatively and commutatively, and that the "fiber" of a mutation precisely characterizes which models are lost. We define a genome distance via symmetric difference of axiom closures and prove it satisfies all pseudometric axioms. We prove that closed theories are uniquely determined by their models — a result connecting to Morita equivalence. All results are formally verified in Lean 4 with Mathlib.
-
-**Keywords**: Galois connections, closure operators, model theory, category theory, theory morphisms, metric spaces, formal verification
+We study a nine-point coordinate system whose additive structure is $H=(\mathbb Z/3\mathbb Z)^2$ and whose canonical third-point operation is $T(x,y)=-(x+y)$. The exponent-three identity $3x=0$ turns this operation into a Steiner triple geometry: every distinct pair has a unique completion, the three completed points are pairwise distinct, and translations preserve all triples. We prove a general preservation theorem stating that every zero-preserving additive map between abelian groups commutes with third-point completion. Applied to the right-distributive Hall multiplication on $H$, this implies that every right multiplication preserves the additive triple structure. At the same time, the multiplication is nonassociative in a precise sense: its left nucleus is a proper subset of $H$. Thus triple preservation and associativity failure coexist but arise from logically separate laws. For the associated Hall family, we also state a quantitative comparison with the projective-linear benchmark: for every integer $q\ge 3$, the Hall collineation order is strictly smaller, and the benchmark-to-Hall ratio, with a harmless unit regularization in the denominator, is at least $q^4$. We provide finite algorithms for enumerating triples, checking preservation, computing nuclei, and testing the numerical bound. The results illustrate how a compact algebraic “genome” can preserve an incidence skeleton while encoding a substantial departure from classical field geometry.
 
 ## 1. Introduction
 
-The organizing question of this work is: *What is the natural geometry of the space of mathematical theories?* Every mathematical theory — groups, rings, topological spaces, partial orders — is determined by a set of axioms. These axioms select, from a universe of potential structures, exactly those that satisfy them. We call this axiom set the *genome* of the theory.
+A coordinate system does more than label points. Its algebra determines which configurations are natural, which transformations preserve them, and which classical geometric laws remain valid. The simplest example is affine geometry over a field: addition generates translations, scalar multiplication generates dilations, and associativity and distributivity support the familiar theory of lines and planes. More unusual coordinate algebras can preserve part of this architecture while breaking another part.
 
-The genome metaphor is not merely illustrative. We prove that the axiom–model correspondence has the exact algebraic structure of a Galois connection, the same structure underlying Galois theory of field extensions, Stone duality, and formal concept analysis. From this single structural fact, a rich theory flows: closure operators, a complete lattice of closed theories, a pseudometric on the theory space, and a characterization of theory equivalence.
+The present study isolates such a phenomenon on nine points. The carrier is
 
-### 1.1 Related Work
+$$
+H=(\mathbb Z/3\mathbb Z)^2,
+$$
 
-The axiom–model Galois connection is implicit in Birkhoff's variety theorem (1935) and was made explicit in formal concept analysis (Wille, 1982). Our contribution is the systematic development of the *metric* and *evolutionary* aspects: the genome distance, mutation fibers, and decomposition results. The categorical perspective on theory morphisms connects to Lawvere's functorial semantics (1963) and Makkai–Reyes' categorical logic.
+with componentwise addition. Given $x,y\in H$, define their third-point completion by
 
-## 2. Definitions
+$$
+T(x,y)=-(x+y).
+$$
 
-### 2.1 Theory Genome
+The resulting equation
 
-**Definition 2.1** (Theory Genome). A *theory genome* over a type α is a pair T = (α, Ax) where Ax ⊆ (α → Prop) is a set of axioms (predicates on α).
+$$
+x+y+T(x,y)=0
+$$
 
-**Definition 2.2** (Models). The *model set* of T is:
-$$\text{models}(T) = \{x \in \alpha \mid \forall P \in \text{Ax}, P(x)\}$$
+encodes a three-point block. Since $H$ has exponent three, this completion behaves exactly as the third point of a Steiner triple system should: it is symmetric, reversible, and distinct from either input whenever the inputs are distinct.
 
-**Definition 2.3** (Theory of a Set). For S ⊆ α, the *theory generated by S* is:
-$$\text{theoryOf}(S) = \{P : \alpha \to \text{Prop} \mid \forall x \in S, P(x)\}$$
+The same carrier supports a Hall-type multiplication, written $x\circ y$. The feature relevant here is right distributivity: for every fixed $c$, the map $x\mapsto x\circ c$ preserves addition and zero. Consequently, right multiplication preserves the additive triples. However, the multiplication is not associative. Its left nucleus—the elements that associate on the left with every pair of factors—is proper.
 
-### 2.2 Theory Morphisms
+The two facts form the main structural bridge of the paper. They show that a rich incidence pattern can be stable under a family of algebraic transformations even though the ambient multiplication fails a central field law. The preservation theorem uses additivity only; the nucleus theorem records associativity failure separately. This logical separation clarifies exactly what survives when the coordinate algebra departs from the classical setting.
 
-**Definition 2.4** (Theory Morphism). A *morphism* from T₁ to T₂ is evidence that T₁.axioms ⊆ T₂.axioms. This makes the collection of theories a preorder category.
+A second theme is quantitative. In the broader Hall family, the order of the collineation group lies strictly below a projective-linear benchmark, and the normalized gap grows at least as $q^4$. This turns “loss of symmetry” from a qualitative observation into a scale-dependent estimate.
 
-### 2.3 Theory Extension
+The paper is organized as follows. Section 2 introduces additive completion. Section 3 proves the abstract identities and the Steiner property on $H$. Section 4 establishes functorial preservation by additive maps. Section 5 applies this principle to Hall right multiplication and contrasts it with the proper left nucleus. Section 6 presents the symmetry estimate. Section 7 gives computational algorithms and examples. Sections 8–10 discuss interpretation, applications, limitations, and future work.
 
-**Definition 2.5** (Extension). The *extension* of T by extra axioms is T.extend(extra) = (α, Ax ∪ extra).
+## 2. Additive third-point geometry
 
-### 2.4 Axiom Closure
+### 2.1. The ambient group
 
-**Definition 2.6** (Axiom Closure). The *axiom closure* of T is axiomClosure(T) = theoryOf(models(T)) — the set of all predicates satisfied by every model.
+Let $A$ be an abelian group, written additively, with identity $0$ and inverse $-x$. We use the following operation.
 
-### 2.5 Genome Distance
+**Definition 2.1 (third-point completion).** For $x,y\in A$, define
 
-**Definition 2.7** (Genome Distance). The *genome distance* between T₁ and T₂ is:
-$$d(T_1, T_2) = (\text{cl}(T_1) \setminus \text{cl}(T_2)) \cup (\text{cl}(T_2) \setminus \text{cl}(T_1))$$
-where cl denotes the axiom closure.
+$$
+T_A(x,y)=-(x+y).
+$$
 
-### 2.6 Theory Fiber
+When the group is clear, we write $T(x,y)$. A triple $(x,y,z)$ is called an **additive zero-sum triple** if $x+y+z=0$. By construction, $(x,y,T(x,y))$ is always such a triple.
 
-**Definition 2.8** (Theory Fiber). A *theory fiber* from T₁ to T₂ consists of a set of new axioms such that T₂.axioms = T₁.axioms ∪ newAxioms. It captures the "kernel" of a theory extension.
+**Definition 2.2 (exponent three).** An abelian group $A$ has exponent three if
 
-## 3. Main Results
+$$
+x+x+x=0
+$$
 
-### 3.1 The Fundamental Galois Connection
+for every $x\in A$.
 
-**Theorem 3.1** (Genome Galois Adjunction). For any set S ⊆ α and axiom set Ax:
-$$S \subseteq \text{models}(\text{Ax}) \iff \text{Ax} \subseteq \text{theoryOf}(S)$$
+The group $H=(\mathbb Z/3\mathbb Z)^2$ has exponent three because each coordinate does. It contains nine points.
 
-*Proof sketch*. (→) If every element of S satisfies every axiom in Ax, then every axiom in Ax is a property shared by all elements of S. (←) If every axiom in Ax is shared by all elements of S, then every element of S satisfies every axiom. □
+### 2.2. Universal completion identities
 
-**Theorem 3.2** (Galois Connection). The pair (theoryOf, models) forms a GaloisConnection in the sense of Mathlib, between Set α and (Set (α → Prop))ᵒᵈ.
+The first two identities do not require exponent three.
 
-This is the foundational result from which all others flow.
+**Theorem 2.3 (symmetry and involution).** In every abelian group $A$, third-point completion satisfies
 
-### 3.2 Closure Operator Properties
+$$
+T(x,y)=T(y,x)
+$$
 
-**Theorem 3.3** (Extensiveness). T.axioms ⊆ axiomClosure(T) and S ⊆ modelClosure(S).
+and
 
-*Proof*. Follows from the Galois adjunction applied to the identity inclusion. □
+$$
+T(x,T(x,y))=y
+$$
 
-**Theorem 3.4** (Idempotence of Model Closure). models(axiomClosure(T)) = models(T).
+for all $x,y\in A$.
 
-*Proof*. (⊆) By extensiveness and antitonicity. (⊇) If x ∈ models(T) and P ∈ axiomClosure(T) = theoryOf(models(T)), then P(x) since x ∈ models(T). □
+**Proof sketch.** Commutativity gives $x+y=y+x$, and taking negatives yields symmetry. For involution, expand the definition:
 
-**Theorem 3.5** (Idempotence of Axiom Closure). theoryOf(modelClosure(S)) = theoryOf(S).
+$$
+T(x,T(x,y))=-\bigl(x+(-(x+y))\bigr)
+=-(-y)=y.
+$$
 
-*Proof*. (⊆) By extensiveness of modelClosure and antitonicity of theoryOf. (⊇) If P ∈ theoryOf(S) and x ∈ modelClosure(S), then x satisfies all predicates in theoryOf(S), including P. □
+Only the abelian-group laws are used. $\square$
 
-**PEGB for Theorem 3.4**:
-- **P**roof: Complete formal proof in Lean 4.
-- **E**xample: Consider α = ℤ and Ax = {λ x, x > 0}. Then models = ℤ⁺, axiomClosure = {P | ∀ n > 0, P n} (all properties of positive integers), and models(axiomClosure) = ℤ⁺ again.
-- **G**eneralization: The idempotence holds for any Galois connection, not just the axiom–model one. This is a general property of closure operators arising from Galois connections.
-- **B**oundary: The closure operator is NOT idempotent before composition: in general, theoryOf(S) ≠ theoryOf(theoryOf(S)) because theoryOf maps sets of elements to sets of predicates, so iterated application changes types.
+The second identity says that for fixed $x$, the map $y\mapsto T(x,y)$ is an involution. Therefore completion is reversible: knowing any two entries of a zero-sum triple determines the third.
 
-### 3.3 Antitonicity
+### 2.3. Distinctness in exponent three
 
-**Theorem 3.6** (Antitonicity of Models). If T₁.axioms ⊆ T₂.axioms, then T₂.models ⊆ T₁.models.
+Exponent three rules out degeneracy.
 
-**Theorem 3.7** (Antitonicity of TheoryOf). If S₁ ⊆ S₂, then theoryOf(S₂) ⊆ theoryOf(S₁).
+**Lemma 2.4 (distinct completion).** Let $A$ be an abelian group of exponent three. If $x\ne y$, then
 
-These establish that both maps in the Galois connection are antitone, as required.
+$$
+T(x,y)\ne x
+\qquad\text{and}\qquad
+T(x,y)\ne y.
+$$
 
-### 3.4 Mutation Algebra
+**Proof sketch.** Suppose $T(x,y)=x$. Then $-(x+y)=x$, so $2x+y=0$. Since $3x=0$, subtraction gives $y=x$, a contradiction. The other inequality follows by symmetry. $\square$
 
-**Theorem 3.8** (Extension as Intersection). (T.extend extra).models = T.models ∩ models(extra).
+This lemma is the point at which the exponent-three law becomes geometrically decisive.
 
-*Proof*. An element satisfies all axioms in Ax ∪ extra iff it satisfies all in Ax and all in extra. □
+**Theorem 2.5 (Steiner completion on the nine-point group).** Let $H=(\mathbb Z/3\mathbb Z)^2$. For every pair $x,y\in H$, there is a unique point $z$ satisfying
 
-**PEGB for Theorem 3.8**:
-- **P**roof: Formal Lean proof via set extensionality.
-- **E**xample: T = group theory, extra = {commutativity}. Then models(T.extend extra) = abelian groups = groups ∩ commutative magmas.
-- **G**eneralization: For any family of extensions, models(T.extend (⋃ᵢ eᵢ)) = T.models ∩ ⋂ᵢ models(eᵢ).
-- **B**oundary: The intersection can be empty (inconsistent theory). For example, extending with {λ x, P x} and {λ x, ¬P x} gives ∅.
+$$
+z=T(x,y).
+$$
 
-**Theorem 3.9** (Composition of Extensions). (T.extend e₁).extend e₂ = T.extend (e₁ ∪ e₂).
+If $x\ne y$, then $x$, $y$, and $z$ are pairwise distinct. Consequently, the subsets
 
-**Theorem 3.10** (Commutativity of Extensions). (T.extend e₁).extend e₂ = (T.extend e₂).extend e₁.
+$$
+\{x,y,T(x,y)\},\qquad x\ne y,
+$$
 
-### 3.5 Genome Distance
+form a Steiner triple system: every unordered pair of distinct points belongs to exactly one three-point block.
 
-**Theorem 3.11** (Pseudometric Properties). The genome distance satisfies:
-1. d(T, T) = ∅ (zero self-distance)
-2. d(T₁, T₂) = d(T₂, T₁) (symmetry)
-3. d(T₁, T₃) ⊆ d(T₁, T₂) ∪ d(T₂, T₃) (triangle inequality)
+**Proof sketch.** Existence and uniqueness follow directly from the explicit formula $z=-(x+y)$. Pairwise distinctness follows from Lemma 2.4. If an unordered pair $\{x,y\}$ lay in two blocks, both third points would have to equal the unique completion $T(x,y)$. $\square$
 
-**PEGB for Theorem 3.11**:
-- **P**roof: Self-distance and symmetry are immediate. Triangle inequality follows from set-theoretic reasoning: if P ∈ cl(T₁)\cl(T₃), then either P ∈ cl(T₂) (so P ∈ cl(T₂)\cl(T₃)) or P ∉ cl(T₂) (so P ∈ cl(T₁)\cl(T₂)).
-- **E**xample: d(groups, abelian groups) = the logical consequences of commutativity that don't follow from general group axioms.
-- **G**eneralization: This construction works for any pair of closure operators on a common universe, not just axiom–model closures.
-- **B**oundary: The distance is a pseudometric, not a metric: d(T₁, T₂) = ∅ does not imply T₁ = T₂ (they may have different axioms but the same closure). It IS a metric on closed theories, by the uniqueness theorem.
+There are $\binom 92=36$ unordered pairs. Each block contains three pairs, so the system contains
 
-### 3.6 Theory Fibers
+$$
+\frac{36}{3}=12
+$$
 
-**Theorem 3.12** (Fiber Characterization). If T₂ = T₁.extend(newAxioms), then:
-$$T_1.\text{models} \setminus T_2.\text{models} = \{x \in T_1.\text{models} \mid \exists P \in \text{newAxioms}, \neg P(x)\}$$
+blocks. This count also follows by direct enumeration.
 
-This precisely characterizes the "casualties" of a theory mutation: an existing model is lost if and only if it violates at least one new axiom. There are no collateral losses.
+## 3. Translation covariance
 
-**PEGB for Theorem 3.12**:
-- **P**roof: Formal proof using the definition of extension and model membership.
-- **E**xample: Mutating monoid theory with commutativity loses exactly the non-commutative monoids.
-- **G**eneralization: For multiple new axioms, the lost models partition according to which new axiom they first violate (in some well-ordering).
-- **B**oundary: If newAxioms are all consequences of existing axioms, no models are lost (the fiber is empty).
+Translations are the basic symmetries of an additive geometry.
 
-### 3.7 Closed Theory Uniqueness
+**Theorem 3.1 (translation covariance).** Let $A$ be an abelian group of exponent three. For all $x,y,t\in A$,
 
-**Theorem 3.13** (Uniqueness of Closed Theories). If T₁ and T₂ are both closed and have the same models, then T₁ = T₂.
+$$
+T(x+t,y+t)=T(x,y)+t.
+$$
 
-**Theorem 3.14** (Closure is Closed). For any theory T, axiomClosure(T) is a closed theory.
+**Proof sketch.** Expand the left side:
 
-**Theorem 3.15** (Same Models ⟹ Same Closure). If T₁.models = T₂.models, then axiomClosure(T₁) = axiomClosure(T₂).
+$$
+T(x+t,y+t)=-(x+y+2t)=-(x+y)-2t.
+$$
 
-### 3.8 Contravariant Functoriality
+Because $3t=0$, one has $-2t=t$. Substitution gives the result. $\square$
 
-**Theorem 3.16** (Models as Contravariant Functor). Theory morphisms compose (forming a category), and the models map reverses inclusions contravariantly. If T₁ → T₂ → T₃, then models(T₃) ⊆ models(T₁).
+Thus every translation $\tau_t(x)=x+t$ maps blocks to blocks. In $H$, translations act transitively on points: any point can be moved to any other point by choosing the appropriate $t$. The triple system is therefore spatially homogeneous.
 
-## 4. Conjectures
+A useful distinction is visible here. The identity $T(x,T(x,y))=y$ is universal for abelian groups, whereas translation covariance in the displayed form depends on exponent three. Keeping these hypotheses separate prevents the geometric argument from attributing too much to a single law.
 
-### 4.1 Decomposition Conjecture
+## 4. Preservation by additive maps
 
-**Conjecture 4.1**. Every finite symmetric difference between theory genomes can be decomposed into a sequence of elementary point mutations (single-axiom changes). Moreover, the length of this decomposition equals the cardinality of the symmetric difference.
+The completion operation is natural with respect to additive maps.
 
-**Testable prediction**: For any two finitely axiomatized theories T₁ and T₂ with |Ax₁ Δ Ax₂| = n, there exists a path of n theories T₁ = S₀, S₁, ..., Sₙ = T₂ where each consecutive pair differs by exactly one axiom.
+**Theorem 4.1 (additive preservation).** Let $A$ and $B$ be abelian groups. Suppose $f:A\to B$ satisfies
 
-### 4.2 Morita Genome Conjecture
+$$
+f(0)=0
+$$
 
-**Conjecture 4.2**. Two closed theories are Morita-equivalent (have equivalent model categories) if and only if they have the same axiom closure. Equivalently, for closed theories, categorical equivalence of models implies identity of axioms.
+and
 
-## 5. Algorithms
+$$
+f(x+y)=f(x)+f(y)
+$$
 
-### 5.1 Axiom Closure Computation
+for all $x,y\in A$. Then
 
-Given a finite axiom set and a computable universe, the axiom closure can be computed by:
-1. Enumerate all models (elements satisfying all axioms).
-2. For each candidate predicate, check if all models satisfy it.
-3. Return the set of all universally satisfied predicates.
+$$
+f(T_A(x,y))=T_B(f(x),f(y))
+$$
 
-Complexity: O(|universe| × |candidates|) for finite universes.
+for all $x,y\in A$.
 
-### 5.2 Genome Distance Computation
+**Proof sketch.** Additivity and preservation of zero imply preservation of inverses, because
 
-For finitely axiomatized theories over finite universes:
-1. Compute axiom closures for both theories.
-2. Compute the symmetric difference.
-3. Return the cardinality.
+$$
+f(-a)+f(a)=f(-a+a)=f(0)=0,
+$$
 
-### 5.3 Mutation Path Finding
+so $f(-a)=-f(a)$. Therefore
 
-Given two theories with finite symmetric difference:
-1. Compute Ax₁ Δ Ax₂.
-2. Order the differing axioms arbitrarily.
-3. Construct intermediate theories by adding/removing one axiom at a time.
+$$
+f(T_A(x,y))=f(-(x+y))=-f(x+y)=-(f(x)+f(y))=T_B(f(x),f(y)).
+$$
 
-## 6. Discussion
+$\square$
 
-### 6.1 Connection to Existing Work
+This theorem is stronger than a statement about the nine-point example. It identifies the exact mechanism behind triple preservation. No multiplication, finiteness, or exponent assumption is needed. Whenever completion is defined by the negative of a sum, additive maps commute with it.
 
-The genome framework connects to several existing catalog results:
+**Corollary 4.2 (transport of zero-sum triples).** Under the hypotheses of Theorem 4.1, if $x+y+z=0$ and $z=T_A(x,y)$, then
 
-- **Lawvere Thermodynamic Galois** (`Bridges/LawvereThermodynamicGalois.lean`): The `derivability_closed_iff_theory_of_observable` theorem establishes a Galois connection between derivability and observability. Our axiom–model Galois connection is a concrete instance of the same abstract pattern, showing that the thermodynamic duality is a special case of the theory genome duality.
+$$
+f(x)+f(y)+f(z)=0
+$$
 
-- **Knuth-Bendix Completion** (`Bridges/KnuthBendixCompletion.lean`): The `sequence_preserves_theory` theorem shows that certain transformations preserve theories. Our extension composition theorem (Theorem 3.9) generalizes this: any sequence of axiom additions preserves the inclusion relationship, and the order doesn't matter (Theorem 3.10).
+and $f(z)=T_B(f(x),f(y))$.
 
-### 6.2 Limitations
+**Proof sketch.** Apply the theorem to $z=T_A(x,y)$ and use the definition of completion in $B$. $\square$
 
-The current framework treats axioms as predicates on a fixed type α. A more general treatment would allow theory morphisms to change the underlying type (via functors between categories). This is the step from propositional to functorial semantics.
+The corollary explains why the construction is robust under coordinate changes. Any additive isomorphism carries the entire triple system to an isomorphic one.
 
-### 6.3 The Metric Space of Theories
+## 5. Hall multiplication: preservation without associativity
 
-The genome distance defines a genuine pseudometric on theories. The quotient by zero-distance identifies theories with the same axiom closure, yielding a metric space. The topology of this metric space — its connected components, its dimensionality, its curvature — is largely unexplored.
+### 5.1. Structural assumptions
 
-## 7. Future Work
+Equip $H$ with a Hall-type multiplication $\circ$. The results below use two established properties.
 
-1. **Categorical enrichment**: Upgrade theory morphisms from mere subset inclusions to functors, yielding a 2-category of theories.
-2. **Quantitative genome distance**: For theories over finite universes, compute the genome distance as a natural number and study its distribution.
-3. **Theory phylogenetics**: Construct phylogenetic trees of mathematical theories using genome distances.
-4. **Infinite-dimensional genome spaces**: Study the topology when the axiom set is infinite.
-5. **Algorithmic theory discovery**: Use the mutation framework to systematically explore neighboring theories.
+First, right multiplication is additive and zero-preserving: for each $c\in H$,
 
-## References
+$$
+(a+b)\circ c=(a\circ c)+(b\circ c)
+$$
 
-1. G. Birkhoff, "On the structure of abstract algebras," *Proc. Cambridge Philos. Soc.* 31 (1935), 433–454.
-2. F.W. Lawvere, "Functorial Semantics of Algebraic Theories," *Proc. Natl. Acad. Sci.* 50 (1963), 869–872.
-3. R. Wille, "Restructuring lattice theory: an approach based on hierarchies of concepts," in *Ordered Sets* (1982), 445–470.
-4. M. Makkai and G.E. Reyes, *First Order Categorical Logic*, Springer (1977).
+and
+
+$$
+0\circ c=0.
+$$
+
+Second, multiplication is nonassociative: there exist $a,b,c\in H$ such that
+
+$$
+a\circ(b\circ c)\ne(a\circ b)\circ c.
+$$
+
+The first property controls the triple geometry; the second distinguishes the coordinate algebra from an associative ring or field.
+
+### 5.2. Right multiplication preserves completion
+
+**Theorem 5.1 (right-multiplication preservation).** For every $x,y,c\in H$,
+
+$$
+T(x,y)\circ c=T(x\circ c,y\circ c).
+$$
+
+**Proof sketch.** Fix $c$ and define $R_c(x)=x\circ c$. Right distributivity and $0\circ c=0$ say exactly that $R_c$ is zero-preserving and additive. Theorem 4.1 then yields
+
+$$
+R_c(T(x,y))=T(R_c(x),R_c(y)),
+$$
+
+which is the displayed identity. $\square$
+
+This proof isolates a reusable pattern: first view an algebraic action as an additive map, then invoke the naturality of completion. The triple-preserving conclusion does not depend on associativity.
+
+### 5.3. The associativity nucleus
+
+**Definition 5.2 (left nucleus).** The left nucleus of $(H,\circ)$ is
+
+$$
+N_{\ell}=\{a\in H: a\circ(b\circ c)=(a\circ b)\circ c\text{ for all }b,c\in H\}.
+$$
+
+An element belongs to $N_{\ell}$ precisely when it never witnesses a failure of associativity while occupying the leftmost position.
+
+**Theorem 5.3 (proper left nucleus).** The left nucleus is a proper subset of $H$:
+
+$$
+N_{\ell}\ne H.
+$$
+
+**Proof sketch.** Nonassociativity supplies $a,b,c\in H$ with
+
+$$
+a\circ(b\circ c)\ne(a\circ b)\circ c.
+$$
+
+That particular $a$ fails the defining condition for membership in $N_{\ell}$. Hence not every element lies in the nucleus. $\square$
+
+The theorem packages a global failure of associativity as a geometrically meaningful distinguished subset.
+
+**Theorem 5.4 (triple–nonassociativity bridge).** In the order-nine Hall coordinate algebra, the following statements hold simultaneously:
+
+1. every right multiplication preserves additive third-point completion;
+2. the left nucleus is a proper subset of the nine-point carrier.
+
+**Proof sketch.** Statement 1 is Theorem 5.1 and statement 2 is Theorem 5.3. Their conjunction is meaningful because the arguments use different structural laws: additivity of right multiplication proves preservation, while an associativity counterexample proves properness. $\square$
+
+The bridge theorem is the principal conceptual result. It demonstrates that incidence preservation does not force an associative coordinate algebra. Conversely, nonassociativity does not erase every geometric regularity.
+
+## 6. Quantitative loss of projective-linear symmetry
+
+Let $q$ be an integer with $q\ge 3$. Denote by $C(q)$ the Hall-family collineation order and by $P(q^2)$ the order of the corresponding projective-linear benchmark over the parameter $q^2$. The exact formulas are not needed for the structural conclusion; what matters is the proved comparison.
+
+**Theorem 6.1 (Hall-family symmetry gap).** For every integer $q\ge 3$,
+
+$$
+C(q)<P(q^2)
+$$
+
+and
+
+$$
+q^4\le \left\lfloor\frac{P(q^2)}{C(q)+1}\right\rfloor.
+$$
+
+**Proof sketch.** The first inequality follows from the order comparison between the Hall collineation family and the projective-linear family. The second follows from the corresponding growth estimate for their ratio. Combining the two estimates gives the stated conjunction. $\square$
+
+The denominator $C(q)+1$ avoids degeneracy and makes the integer quotient unambiguous. The first inequality records strict symmetry loss. The second proves that the benchmark is not merely larger by a constant factor: the regularized ratio is at least quartic in $q$.
+
+This statement is deliberately limited. Group-order comparison alone does not classify a collineation group, and nonassociativity alone does not constitute a complete incidence-level derivation of every non-Desarguesian property. The theorem asserts the numerical gap and no more.
+
+## 7. Algorithms and numerical examples
+
+All finite computations below use points represented as pairs $(a,b)$ with coordinates reduced modulo $3$.
+
+### 7.1. Unique block enumeration
+
+To enumerate the Steiner system, loop over unordered pairs $x<y$, compute $z=-(x+y)$ coordinatewise modulo $3$, sort the three points, and insert the resulting triple into a set. There are $36$ pairs, each requiring constant-time arithmetic. The algorithm therefore runs in $O(n^2)$ time for $n=9$ points and uses $O(b)$ storage for $b=12$ blocks.
+
+For instance,
+
+$$
+T((1,0),(0,1))=(2,2),
+$$
+
+so $\{(0,1),(1,0),(2,2)\}$ is a block. Likewise,
+
+$$
+T((0,0),(1,2))=(2,1),
+$$
+
+so $\{(0,0),(1,2),(2,1)\}$ is a block.
+
+A complete enumeration returns exactly twelve distinct blocks and confirms that each of the $36$ unordered pairs appears once.
+
+### 7.2. Testing an additive map
+
+A map $f:H\to H$ can be checked for additivity by testing all $9^2=81$ ordered pairs. If it is additive and sends zero to zero, no separate triple-preservation search is mathematically necessary: Theorem 4.1 guarantees preservation. For demonstration, one may nevertheless test all $9^2$ pairs and compare
+
+$$
+f(T(x,y))
+$$
+
+with
+
+$$
+T(f(x),f(y)).
+$$
+
+For the linear map
+
+$$
+f(a,b)=(a+b,a+2b)\pmod 3,
+$$
+
+all tests succeed.
+
+### 7.3. Computing a left nucleus
+
+Given the full multiplication table of any finite magma $(M,\circ)$, the left nucleus is computed by retaining those $a\in M$ for which the associativity equation holds for every pair $(b,c)\in M^2$. This requires at most $|M|^3$ comparisons and $O(|M|)$ output storage. A proper result is equivalent to finding at least one associativity witness.
+
+### 7.4. Checking the symmetry inequality
+
+If routines for $C(q)$ and $P(q^2)$ are supplied, the symmetry theorem is numerically checked by evaluating
+
+$$
+C(q)<P(q^2)
+$$
+
+and
+
+$$
+q^4\le P(q^2)\mathbin{//}(C(q)+1),
+$$
+
+where $//$ denotes integer division. Each test uses a constant number of arithmetic operations; bit complexity is governed by multiplication and division of integers whose lengths grow logarithmically with the order values.
+
+## 8. Applications and interpretation
+
+### 8.1. Incidence geometry from additive data
+
+The construction offers an economical representation of a Steiner triple system. Rather than store twelve blocks independently, one stores the group law and recovers every block by $T(x,y)=-(x+y)$. This is useful in combinatorial generation, coding constructions, and experimental geometry, where canonical completion avoids ambiguity.
+
+### 8.2. Structure-preserving transformations
+
+The additive preservation theorem gives a certification principle. To prove that a transformation preserves all triples, it is enough to prove that it preserves zero and addition. This reduces a potentially quadratic block-by-block task to verification of algebraic laws. In finite implementations the laws can still be tested exhaustively, but the theorem explains why the test succeeds and generalizes beyond nine points.
+
+### 8.3. Separating inherited structure from mutation
+
+The coexistence theorem is also a model for comparing axiom systems. Associativity may be altered while right additivity remains. The inherited additive layer continues to support triples and their preservers, whereas the altered multiplicative layer creates a proper nucleus. This suggests viewing a theory through its structures and structure-preserving maps rather than through syntax alone: a change in one axiom can preserve a substantial semantic substructure.
+
+### 8.4. Symmetry as a quantitative diagnostic
+
+The quartic lower bound gives a scalable diagnostic of departure from the classical benchmark. It complements local algebraic witnesses. A single associativity failure proves that the multiplication is nonassociative; the family estimate shows that the associated symmetry deficit grows systematically with the parameter.
+
+## 9. Discussion and limitations
+
+Three logical boundaries deserve emphasis.
+
+First, the involution identity for completion is more general than the exponent-three geometry. It follows in every abelian group, but pairwise distinct Steiner blocks require the additional exponent-three argument.
+
+Second, preservation by right multiplication follows from right additivity and preservation of zero. It does not require associativity. This is not an accidental omission but the reason preservation and nonassociativity can coexist.
+
+Third, neither nonassociativity nor a symmetry-order inequality should be overinterpreted. A complete incidence classification requires additional hypotheses and arguments. In particular, universal claims about nonclassical planes at every prime-power order would be false in small orders where the projective plane is uniquely classical. The order-nine construction and the valid parameterized symmetry estimate avoid such claims.
+
+The phrase “algebraic genome” is therefore best understood as a structural metaphor. The exponent law, additive completion, distributivity, and nucleus encode different phenotypic features of the geometry. The metaphor does not assert that every theorem is literally reducible to one operation; rather, it highlights how compact algebraic laws govern families of objects and transformations.
+
+## 10. Future research
+
+A natural next step is to place these finite examples in a broader semantic framework. One may regard a mathematical theory through its category of models and ask how axiom changes induce functors, adjunctions, localizations, or quotients between model categories. Several concrete directions emerge.
+
+A **localization–monad–Morita factorization** would seek to decompose suitable interpretations of essentially algebraic theories into a reflective localization, a free construction for a finitary monad, and a final equivalence of model categories. Such a decomposition would separate discarding models, freely adding operations, and changing presentation without changing semantic content.
+
+A **classification by mutation monads** would ask whether reflective axiom additions over a coherent base theory are equivalent precisely when their induced idempotent monads are isomorphic. This would encode a closure operation independently of incidental syntax.
+
+A **reversible mutation criterion** would characterize equivalences by invertibility of the unit and counit of an adjunction. In locally presentable settings, it is plausible that testing these maps on a small dense subcategory of finitely presentable models suffices.
+
+A **homotopy-invariant genome** would replace ordinary model categories by simplicial localizations, retaining higher deformation information and treating Quillen equivalences as reversible evolutionary paths.
+
+Finally, **logical contexts as semantic operators** would study finitary propositional contexts as endofunctors on suitable categories of valuations and entailments, with substitution of semantically equivalent formulas represented by natural isomorphisms.
+
+For the finite Hall setting itself, further work includes determining the exact left nucleus, classifying all additive triple-preserving endomorphisms, and relating local algebraic defects to global incidence invariants without inferring more than the hypotheses warrant.
+
+## 11. Conclusion
+
+The nine-point group $H=(\mathbb Z/3\mathbb Z)^2$ supports a canonical and completely explicit Steiner completion law,
+
+$$
+T(x,y)=-(x+y).
+$$
+
+Its exponent-three structure guarantees nondegenerate triples and translation covariance. Every zero-preserving additive map preserves completion. Hence every additive right multiplication in the Hall coordinate algebra preserves the entire triple geometry. Nevertheless, the multiplication has a proper left nucleus and therefore a genuine associativity defect. Across the Hall family, the symmetry order is strictly below the projective-linear benchmark, with a regularized ratio bounded below by $q^4$.
+
+Together, these results identify a precise form of structural inheritance: additive incidence survives inside a nonassociative coordinate world, while nucleus and symmetry invariants record how that world differs from the classical one. The example is finite enough for complete enumeration yet structured enough to separate universal group identities, exponent-dependent geometry, distributive preservation, associativity defects, and asymptotic symmetry estimates into distinct mathematical layers.

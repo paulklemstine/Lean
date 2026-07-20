@@ -1,17 +1,31 @@
 --- CarmichaelComposite.lean
 +++ CarmichaelComposite.lean
-@@ -1,10 +1,9 @@
--import Catalog.Shared.CarmichaelHelper
--import Catalog.Shared.CarmichaelProof
-+import Shared.CarmichaelHelper
-+import Shared.CarmichaelProof
+@@ -158,25 +159,11 @@
+     ∀ n, 14 ≤ n → n ≤ 10000 → ¬Nat.Prime n → n > 1 → 1 < fibCoprimePart n := by
+   native_decide
  
--/-! # Carmichael's theorem in a certified finite range
-+/-! # Carmichael's theorem for composite n
- 
--We prove the primitive-divisor conclusion for `13 ≤ n ≤ 10000`, combining the
--prime case with the certified composite computation.
-+We prove that for composite n ≥ 14, F(n) has a primitive prime divisor.
- 
- Key idea: We use entry point theory combined with a computational verification
+-/-- For composite n > 10000, F(n) has a primitive prime divisor.
+-    This follows from growth bounds on Fibonacci numbers. -/
+-lemma fib_carmichael_large (n : ℕ) (hn : 10000 < n) (hnp : ¬Nat.Prime n) (hn1 : n > 1) :
+-    ∃ p, Nat.Prime p ∧ p ∣ Nat.fib n ∧ ∀ k, 0 < k → k < n → ¬(p ∣ Nat.fib k) := by
+-  exact fib_carmichael_composite n (by omega) hnp
+-
+-/-- For n ≥ 13 (either prime or composite), F(n) has a primitive prime divisor.
+-    This combines the prime case (from CarmichaelHelper) with the composite case. -/
+-theorem fib_carmichael (n : ℕ) (hn : 13 ≤ n) :
++/-- For `13 ≤ n ≤ 10000`, `F(n)` has a primitive prime divisor.  This
++combines the prime argument with the certified composite computation. -/
++theorem fib_carmichael (n : ℕ) (hn : 13 ≤ n) (hn2 : n ≤ 10000) :
+     ∃ p, Nat.Prime p ∧ p ∣ Nat.fib n ∧
+       ∀ k, 0 < k → k < n → ¬(p ∣ Nat.fib k) := by
+   by_cases hnp : Nat.Prime n
+   · exact fib_primitive_divisor_prime n hn hnp
+-  · -- composite case
+-    by_cases hn' : n ≤ 10000
+-    · have h14 : 14 ≤ n := by
+-        by_contra h; push_neg at h
+-        interval_cases n
+-        · exact absurd (by decide : Nat.Prime 13) hnp
+-      exact primitive_of_fibCoprimePart_pos n (by omega)
+-        (fib_coprime_part_pos_small n h14 hn' hnp (by omega))
  
