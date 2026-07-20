@@ -245,7 +245,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Number Theory as Music Theory"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7fb32c18",
     "description": "Every mathematical structure is a category, and every theorem is a natural transformation. Define the 'genome' of a mathematical theory as its category of models. Prove: two theories are Morita-equivalent iff their model categories are equivalent. Show: the 'mutation' of a theory (changing one axiom) corresponds to an adjunction between model categories. Conjecture: every 'evolutionary path' between theories can be decomposed into a sequence of adjunctions and quotients.",
     "domains": [
       "Novelty",
@@ -255,7 +255,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-20T23:21:55.457337+00:00",
     "title": "Speculative: Category Theory as the DNA of Mathematics"
   },
@@ -5536,6 +5536,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: Coherent All-Stage Objects\n\n## 1. Coordinate-deletion limits over arbitrary coefficient objects\n\nLet `A` be an abelian group and let the `n`th stage be `A^{n+1}`, with bonding maps deleting the last coordinate. The resulting inverse limit should be naturally isomorphic to `A^\u2115`, functorially in `A`, and this isomorphism should intertwine every coordinate projection.\n\nThe key insight is that coherence transports each finite coordinate to a unique diagonal coordinate, independently of finiteness or field structure.\n\nWhy now? The Boolean case isolates the exact reconstruction argument, so the remaining task is to express and test its full functorial naturality.\n\n## 2. A sharp collapse criterion for integral scalar towers\n\nFor a sequence of nonzero integers `(d_n)`, consider the tower whose `n`th bonding map is multiplication by `d_n` on `\u2124`. Its inverse limit should be trivial exactly when the absolute values of the partial products are unbounded.\n\nThe key insight is that a coherent bottom coordinate must be divisible by every partial product, while bounded partial products can occur only when all but finitely many multipliers are units.\n\nWhy now? Coordinate-deletion and constant towers survive, whereas uniformly expanding multiplication towers collapse; variable multipliers are the natural test of the boundary between these regimes.\n\n## 3. Completion as the universal home of invertible total classes\n\nFor a graded connected algebra over `\ud835\udd3d\u2082`, every total characteristic class with constant coefficient one should become invertible in its degree completion, and its inverse coefficients should satisfy a universal convolution recurrence.\n\nThe key insight is that completion converts a degree-positive obstruction to polynomial invertibility into a convergent formal geometric recursion.\n\nWhy now? The universal class `1+w` already exhibits the polynomial-versus-series dichotomy, making a general filtered-algebra criterion both concrete and falsifiable.\n\n## 4. Naturality of all-index generating packages\n\nSuppose an inverse system of coefficient rings admits compatible Bernoulli-type exponential series at every stage. Under suitable completeness hypotheses, the stagewise series should assemble uniquely into a series over the inverse-limit ring, and coefficient extraction should commute with every projection.\n\nThe key insight is that an all-index numerical identity and an inverse-limit universal property can interact only through continuity of coefficientwise operations.\n\nWhy now? The present results establish both packages separately and identify the precise missing bridge: compatible coefficient rings and a topology supporting infinite series.\n\n## 5. A homological replacement for the literal tower of spheres\n\nThere should exist a canonical inverse system built from truncations of a single connective spectrum whose degree-`n` homotopy or homology recovers the stable contribution associated with `S^n`, while its homotopy limit records all stages without requiring nonexistent canonical maps `S^{n+1} \u2192 S^n`.\n\nThe key insight is that the obstruction belongs to unstable spaces and bonding maps, whereas stabilization and Postnikov truncation provide canonical transition morphisms.\n\nWhy now? The Boolean model proves that coherence is the essential algebraic mechanism, and the failure of literal sphere bonding maps sharply identifies stabilization as the next testable geometric setting.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0533",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "82c8c57a",
+    "status": "available",
+    "timestamp": "2026-07-20T23:22:30.536841+00:00",
+    "title": "Let `A` be an abelian group and let the `n`th stage be `A^{n+1}`, with bonding m"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle 1a27f9f3 (Q=0.700) proved 15 theorems in Combinatorics but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Define a natural metric on the space of all mathematical statements and prove that the set of true statements has a fractal dimension. Show that this dimension is strictly between 0 and 1 (truth is sp",
     "domains": [
       "Combinatorics"
@@ -5603,20 +5618,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-20T09:41:43.432388+00:00",
     "title": "Close Proofs: Speculative: Number Theory as Music Theory"
-  },
-  {
-    "consumed_by_exp_id": "82c8c57a",
-    "description": "Cycle 955187b3 (Q=0.680) proved 20 theorems in Novelty but left 13 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Construct a single algebraic object whose projections give S^0, S^1, S^2, ... simultaneously. Prove it exists as an inverse limit in the category of spheres. Show that its homology groups encode the B",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "sorry_fill_955187b3_4bf5505e",
-    "priority_score": 0.7300000000000001,
-    "research_mode": "team",
-    "source_exp_id": "955187b3",
-    "status": "in_progress",
-    "timestamp": "2026-07-20T09:41:49.628881+00:00",
-    "title": "Close Proofs: The Mega-Sphere: All Dimensions at Once"
   },
   {
     "consumed_by_exp_id": "",
