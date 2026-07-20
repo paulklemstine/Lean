@@ -4269,12 +4269,31 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'On the CGGRT Criterion for Detecting Bipartite Perfect Matchings in NC' and formalize its key results. Abstract: The recent breakthrough work of Chatterjee, Ghosh, Gurjar, Raj and Thierauf [CGGRT26] gives the first deterministic NC algorithm for the bipartite matching problem. They show how to detect as well as find perfect matchings in bipartite graphs in NC. In this note we present an arguably simpler-to-state variation of the NC detection criterion of [CGGRT26], with improved parameters.",
+    "domain_bridges": [],
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_0497",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2607.15554v1",
+    "status": "available",
+    "timestamp": "2026-07-20T03:51:26.151972+00:00",
+    "title": "ArXiv paper: On the CGGRT Criterion for Detecting Bipartite Perfect Matchings in NC"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'On Generalized von Neumann Inverse Graphs of Finite Commutative Regular Rings' and formalize its key results. Abstract: Let $R$ be a ring with identity. The generalized von Neumann inverse graph of $R$, denoted by $Γ_{Reg}(R)$, is defined as the graph whose vertex set is $Reg(R)$, where two distinct vertices $a,b \\in R$ are adjacent if and only if $aba=a$ or $bab=b$. In this work, we consider the reduced graph $Γ'_{Reg}(R)$ obtained by restricting the vertex set to $Reg(R)\\setminus{0_R}$, so that $Γ_{Reg}(R) \\cong K_1 + Γ'_{Reg}(R)$, allowing the analysis to focus on its nontrivial structure. We investigate the structure of $Γ'_{Reg}(R)$ for finite commutative von Neumann regular rings and establish several results describing its graph-theoretic properties in relation to the algebraic structure of $R$. In particular, we derive conditions that characterize connectivity, acyclicity, and planarity, and examine structural features such as vertex degrees, girth, and the existence of pendant vertices, along with their algebraic implications. We also identify circumstances under which $Γ'_{Reg}(R)$ exhibits sp",
     "domain_bridges": [],
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0497",
+    "id": "fd_0498",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -4294,7 +4313,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0498",
+    "id": "fd_0499",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -4303,6 +4322,26 @@
     "status": "available",
     "timestamp": "2026-07-20T03:35:25.814685+00:00",
     "title": "ArXiv paper: Nonnegative Bakry--Émery Curvature on Bounded-Degree Graphs Implies Volume Doubling and Poincaré Inequalities"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Lattice slices, Ehrhart polynomials, and magic positivity of generalized parking-function polytopes' and formalize its key results. Abstract: For $\\mathbf{b}=(b_1,\\dots,b_n)\\in\\mathbb{Z}_{>0}^n$, a $\\mathbf{b}$-parking function is a sequence $(β_1,\\dots,β_n)$ of positive integers whose nondecreasing rearrangement $β_1'\\leβ_2'\\le\\cdots\\leβ_n'$ satisfies $β_i'\\le b_1+\\cdots+b_i$. The $\\mathbf{b}$-parking-function polytope $\\mathfrak{X}_n(\\mathbf{b})$ is the convex hull of all $\\mathbf{b}$-parking functions of length $n$ in $\\mathbb{R}^n$. We prove that every lattice slice of $\\mathfrak{X}_n(\\mathbf{b})$, obtained by fixing one coordinate at an integer value, is itself a $\\mathbf{b}'$-parking-function polytope of one dimension less, with an explicit parameter vector $\\mathbf{b}'$; this yields a recursion for the number of lattice points of $\\mathfrak{X}_n(\\mathbf{b})$. We further show that every dilate of a $\\mathbf{b}$-parking-function polytope is a translate of another such polytope, that the number of lattice points is a polynomial function of $\\mathbf{b}$, and we deduce an explicit formula for the Ehrhart polynomial of $\\ma",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Cryptography"
+    ],
+    "id": "fd_0500",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2607.15503v1",
+    "status": "available",
+    "timestamp": "2026-07-20T03:51:29.578870+00:00",
+    "title": "ArXiv paper: Lattice slices, Ehrhart polynomials, and magic positivity of generalized parking-function polytopes"
   },
   {
     "ambition_level": "extension",
