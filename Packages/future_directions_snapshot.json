@@ -59,7 +59,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4505be0f",
     "description": "Building on cycle 77a52651 (Q=0.800), which proved 6 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: A quantum random walk on a group G is defined by a unitary operator U = sum_{g in S} |g><0| (where S is a generating set) acting on the Hilbert space l^2(G). The walk is periodic if U^k = I for some k, and mixing if the probability distribution P_n(g) = |<g|U^n|0>|^2 converges to the uniform distrib",
     "domain_bridges": [],
     "domains": [
@@ -71,7 +71,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "77a52651",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T08:00:50.933822+00:00",
     "title": "Deepening: Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
   },
@@ -118,7 +118,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1a27f9f3",
     "description": "Define a natural metric on the space of all mathematical statements and prove that the set of true statements has a fractal dimension. Show that this dimension is strictly between 0 and 1 (truth is sparse but not negligible). Connect to Chaitin's Omega and prove that the fractal dimension is uncomputable but approximable.",
     "domain_bridges": [],
     "domains": [
@@ -131,7 +131,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T20:25:40.511664+00:00",
     "title": "The Fractal Dimension of Mathematical Truth"
   },
@@ -387,7 +387,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bb72d587",
     "description": "Conjecture that P != NP has a physical interpretation: the universe's computational capacity is bounded by the polynomial hierarchy. Formalize this: any physical process that runs in polynomial time can be simulated by a polynomial-time Turing machine (Extended Church-Turing thesis). Show that if P = NP, then the second law of thermodynamics would be violated because Maxwell's demon could be implemented efficiently.",
     "domain_bridges": [],
     "domains": [
@@ -400,14 +400,14 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-20T09:41:18.311495+00:00",
     "title": "Speculative: Computational Complexity as Physical Law"
   },
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2f321176",
     "description": "Conjecture that mathematical discovery undergoes phase transitions: long periods of incremental progress punctuated by sudden reorganizations (like percolation transitions). Formalize this using statistical mechanics: define an order parameter for 'mathematical coherence' and show it undergoes a second-order phase transition as the number of connected theorems crosses a critical threshold. Predict: the next phase transition in number theory will occur when the connections between Langlands and arithmetic geometry exceed ~10^4 edges.",
     "domain_bridges": [],
     "domains": [
@@ -419,7 +419,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-20T05:48:35.575822+00:00",
     "title": "Speculative: Mathematics as a Phase Transition"
   },
