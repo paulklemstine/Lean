@@ -215,7 +215,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Causal Loops in Category Theory: When Composition Loops Back"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0cd9c194",
     "description": "Conjecture that major theorems (G\u00f6del's incompleteness, Fermat's Last Theorem, ABC conjecture) correspond to phase transitions in proof space. Define an order parameter: the ratio of provable to unprovable statements of length \u2264 n. Prove that this ratio undergoes a sharp transition at some critical n_c (the G\u00f6del threshold). Predict: the distribution of theorem lengths follows a power law with exponent related to the Hausdorff dimension of proof space.",
     "domains": [
       "Novelty",
@@ -225,7 +225,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T23:48:18.325000+00:00",
     "title": "Speculative: Theorems as Phase Transitions in Proof Space"
   },
