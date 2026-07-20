@@ -1,19 +1,34 @@
 # Computational Evidence
 
-The formal theorem is a general finite-counting argument, but small binary cases illustrate its sharp content.
+## Small cases
 
-| Book length `L` | Program length `k` | Books `2^L` | Programs `2^k` | Guaranteed unnamed books `2^L - 2^k` |
-|---:|---:|---:|---:|---:|
-| 2 | 1 | 4 | 2 | 2 |
-| 3 | 1 | 8 | 2 | 6 |
-| 3 | 2 | 8 | 4 | 4 |
-| 4 | 2 | 16 | 4 | 12 |
-| 8 | 4 | 256 | 16 | 240 |
+For an alphabet of size `A` and length `L`, direct enumeration predicts `A^L` books:
 
-The lower bound is sharp when the decoder is injective: exactly one distinct book is named by each program. Collisions only increase the number of unnamed books.
+| `A` | `L` | number of books |
+|---:|---:|---:|
+| 2 | 1 | 2 |
+| 2 | 2 | 4 |
+| 2 | 3 | 8 |
+| 3 | 2 | 9 |
+| 4 | 3 | 64 |
 
-For topology, any two distinct binary books have positive integral Hamming distance, hence the open ball of radius `1` around a book is its singleton. Thus every singleton is open (and closed), confirming discreteness and ruling out connectedness as soon as at least two books exist.
+For binary length `L = 4`, a decoder with only `2^(4-2) = 4` descriptions can name at most 4 of the 16 books, leaving at least 12 incompressible. The proved factorization gives `12 = (2^2 - 1) * 2^(4-2)`.
 
-No OEIS search is relevant: the sequences used are the elementary powers `2^n` and their differences, rather than a newly observed sequence.
+For binary length `L = 8`, the guaranteed numbers missed by decoders with deficiency `c` are:
 
-Counterexample hunt: the requested simultaneous claims “connected” and “totally disconnected” fail already for one-character binary books. The library has two points at Hamming distance one, and each point is open. The Lean development therefore proves the corrected statement: every nontrivial finite Hamming library is **not connected**.
+| `c` | descriptions `2^(L-c)` | all books | guaranteed missed |
+|---:|---:|---:|---:|
+| 1 | 128 | 256 | 128 |
+| 2 | 64 | 256 | 192 |
+| 3 | 32 | 256 | 224 |
+| 4 | 16 | 256 | 240 |
+
+## OEIS
+
+For fixed alphabet size `A`, the library sizes as `L` varies are the geometric sequence `A^L`. For `A = 2` these are the powers of two (OEIS A000079): `1, 2, 4, 8, 16, 32, ...`.
+
+## Counterexample hunt
+
+The universal connectedness claim fails already at `A = 2`, `L = 1`: the books `0` and `1` are distinct isolated points. More generally, whenever `2 ≤ A` and `0 < L`, the all-zero and all-one books are explicit distinct isolated points. This counterexample pattern is formalized for all such `A` and `L` in `BorgesLibrary.hamming_not_connected`.
+
+The apparent contradiction comes from confusing two structures. The Hamming *graph* can be path-connected by single-character edits, but the finite metric topology is discrete and therefore not topologically connected when it has more than one point.

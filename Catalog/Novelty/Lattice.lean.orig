@@ -1,4 +1,4 @@
-import Catalog.Novelty.DaisyCubes.PartialCube
+import Catalog.Novelty.PartialCube
 
 /-!
 # The lattice of daisy cubes and the generated daisy cube

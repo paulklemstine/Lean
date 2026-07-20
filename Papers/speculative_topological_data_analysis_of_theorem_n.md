@@ -1,59 +1,44 @@
-# Computational Evidence — Flag Complex of a Theorem Network
+# Computational Evidence
 
-We model a theorem network as a finite simple graph `G` (theorems = vertices,
-co-citation = edges) and study its **flag / clique complex**: the `k`-faces are the
-`(k+1)`-cliques. Let `faceCount G k = #{(k+1)-cliques}` be the `f`-vector, and let
-`n = #V` be the number of theorems.
+## Small-case calculations
 
-## 1. Small-case calculations (complete network `⊤`)
+The three-theorem corpus
 
-For the complete network every subset is a clique, so `faceCount ⊤ k = C(n, k+1)`.
+| document | cited theorems |
+|---|---|
+| A | `{0,1}` |
+| B | `{0,2}` |
+| C | `{1,2}` |
 
-| n | f₀=C(n,1) | f₁=C(n,2) | f₂=C(n,3) | f₃=C(n,4) | Euler χ = Σ(-1)^k f_k |
-|---|-----------|-----------|-----------|-----------|------------------------|
-| 1 | 1         | 0         | 0         | 0         | 1                      |
-| 2 | 2         | 1         | 0         | 0         | 2 - 1 = 1              |
-| 3 | 3         | 3         | 1         | 0         | 3 - 3 + 1 = 1          |
-| 4 | 4         | 6         | 4         | 1         | 4 - 6 + 4 - 1 = 1      |
-| 5 | 5         | 10        | 10        | 5         | 5 - 10 + 10 - 5 + 1 =1 |
+has all three pairwise co-citation edges. Its pairwise graph is therefore the complete graph on three vertices, whose clique complex contains the triangle `{0,1,2}`. The corpus complex itself contains only the empty face, three vertices, and three edges: no document witnesses the triple. Thus pairwise projection introduces one spurious two-simplex.
 
-Every row sums (with alternating signs) to **1**: the full simplex is contractible.
-This directly matches `euler_char_top`.
+For a corpus on `n` theorems, direct enumeration gives the following universal ceilings for the number of potential `k`-simplices:
 
-## 2. Growth of the f-vector
+| `n` | vertices | edges | triangles | tetrahedra |
+|---:|---:|---:|---:|---:|
+| 1 | 1 | 0 | 0 | 0 |
+| 2 | 2 | 1 | 0 | 0 |
+| 3 | 3 | 3 | 1 | 0 |
+| 4 | 4 | 6 | 4 | 1 |
+| 5 | 5 | 10 | 10 | 5 |
+| 6 | 6 | 15 | 20 | 15 |
 
-For fixed `k`, `faceCount ⊤ k = C(n, k+1)` is a polynomial in `n` of degree `k+1`
-with leading term `n^(k+1)/(k+1)!`. The two-sided bounds proved in Lean are:
+These are the binomial coefficients `n choose (k+1)`. Since homology is a quotient of a subspace of the corresponding chain space, every Betti number is bounded by the entry in the relevant column.
 
-* upper: `C(n, k+1) ≤ n^(k+1)`                       (`faceCount_le_pow`)
-* lower: `(n-k)^(k+1) ≤ (k+1)! · C(n, k+1)`           (`faceCount_top_lower`)
+## Counterexample hunt
 
-Numerical check for `k = 2` (so degree 3, faces = triangles), scaling `3! = 6`:
+The universal claim `β_k ≈ n^(k+1)` fails without additional quantifiers and a corpus model.
 
-| n | (n-2)^3 | 6·C(n,3) | n^3 |
-|---|---------|----------|-----|
-| 3 | 1       | 6        | 27  |
-| 4 | 8       | 24       | 64  |
-| 5 | 27      | 60       | 125 |
-| 6 | 64      | 120      | 216 |
-| 10| 512     | 720      | 1000|
+* If `k ≥ n`, there are no `(k+1)`-vertex faces, so `β_k = 0`, while `n^(k+1) > 0` for every nonempty corpus.
+* A corpus consisting of one document containing every theorem generates a full simplex. It has the maximal possible face count but no positive-dimensional homology, showing that simplex abundance alone does not force large Betti numbers.
+* The three-theorem example above shows that replacing genuine multiway co-citation by pairwise clique completion can change higher-dimensional topology.
 
-`(n-2)^3 ≤ 6·C(n,3) ≤ n^3` holds throughout, confirming cubic growth of the
-number of triangles.
+The accompanying results establish these obstructions symbolically for every finite theorem type; the table is illustrative rather than the basis of the conclusions.
 
-## 3. OEIS
+## Sequence search
 
-The `f`-vectors `C(n, k+1)` are the rows/diagonals of Pascal's triangle,
-**OEIS A007318** (1, 1,1, 1,2,1, 1,3,3,1, ...). The alternating row sum being `0`
-for `n ≥ 1` (equivalently Euler characteristic `1` after removing the empty face)
-is the classical identity `Σ_m (-1)^m C(n,m) = 0`.
+The face ceilings are the rows of Pascal's triangle. No separate sequence identification is needed: the exact formula is the standard binomial coefficient `n choose (k+1)`.
 
-## 4. Counterexample hunt for the literal conjecture
+## Interpretation boundary
 
-The mission conjecture states the **Betti numbers** grow as `β_k ≈ n^(k+1)`.
-For the complete co-citation network the complex is a full simplex, which is
-contractible, so `β₀ = 1` and `β_k = 0` for all `k ≥ 1`, and `χ = 1` for every `n`.
-Thus the literal statement about Betti numbers is **false** for this natural model
-(it is refuted for every `n ≥ 1`). What actually grows like `n^(k+1)` is the
-`f`-vector (face counts), which is the honest, provable form of the claim and is
-what the Lean file establishes.
+No calculation on an unlabeled incidence complex can by itself establish that a first-homology class is a “school of mathematics” or that a second-homology class is a “paradigm shift.” Those are hypotheses relating topology to external semantic or temporal labels and require a labeled data set and a statistical validation protocol.
