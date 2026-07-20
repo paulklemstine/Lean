@@ -5383,6 +5383,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: Theory Genomes and Semantic Evolution\n\n## 1. Localization\u2013Monad\u2013Morita Factorization\n\n**Conjecture.** Every interpretation between essentially algebraic theories whose model functor is accessible and preserves finite limits factors, up to natural isomorphism, as a reflective localization, followed by the free functor of a finitary monad, followed by a Morita equivalence.\n\nThe key insight is that the three factors isolate distinct semantic changes: discarding models, freely closing models under new operations, and changing presentation without changing model theory.\n\n**Why now?** The compositional calculus of mutations and reflective quotients identifies the endpoint adjunction of any proposed factorization, making uniqueness and obstruction questions precise.\n\n## 2. Mutation Monads Classify Conservative Axiom Addition\n\n**Conjecture.** For coherent theories, two reflective axiom additions over the same base theory are equivalent over the base if and only if their induced idempotent monads are isomorphic as monads.\n\nThe key insight is that an idempotent monad should retain the closure operation imposed by the new axioms while forgetting accidental syntax.\n\n**Why now?** Reflective mutations already compose and canonically induce monads, so the conjecture reduces classification of semantic changes to a comparison internal to one model category.\n\n## 3. Reversible Mutation Criterion\n\n**Conjecture.** A mutation is induced by a Morita equivalence if and only if both its unit and counit are natural isomorphisms; moreover, in locally presentable model categories it suffices to test these maps on a small dense subcategory of finitely presentable models.\n\nThe key insight is that reversibility is controlled by local comparison maps, while density should propagate those local isomorphisms to all models.\n\n**Why now?** The equivalence-to-bidirectional-mutation construction establishes one direction and isolates density as the substantive bridge needed for a practical criterion.\n\n## 4. Homotopy-Invariant Genome\n\n**Conjecture.** Replacing ordinary model categories by their simplicial localizations yields a genome invariant under derived Morita equivalence, and every Quillen equivalence induces a reversible evolutionary path at this enriched level.\n\nThe key insight is that ordinary homomorphism categories lose higher deformation data, whereas mapping spaces preserve the witnesses needed to compare derived theories.\n\n**Why now?** The present framework separates the abstract arguments\u2014equivalence, adjunction, composition, and reflection\u2014from the particular category of models, suggesting a direct enriched generalization.\n\n## 5. Logical Contexts as Natural Semantic Operators\n\n**Conjecture.** Every finitary propositional context induces an endofunctor on a suitable category of valuations and semantic entailments, and substitution by semantically equivalent formulas is a natural isomorphism between the induced operators.\n\nThe key insight is that congruence of implication is the binary base case of a general compositionality theorem indexed by formula contexts.\n\n**Why now?** Semantic replacement has been verified for implication in both arguments, providing the inductive seed for arbitrary contexts and, subsequently, algebraic signatures with binding.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0513",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "79f58a3a",
+    "status": "available",
+    "timestamp": "2026-07-20T09:42:04.261035+00:00",
+    "title": "**Conjecture.** Every interpretation between essentially algebraic theories whos"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle d1663b23 (Q=0.700) proved 0 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'A minimal modularity lifting theorem for Siegel modular forms' and formalize its key results. Abstract: We prove a minimal modularity lifting theorem (in the spirit of Gen",
     "domains": [
       "Applications"
