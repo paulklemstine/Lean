@@ -1,238 +1,127 @@
-# How a Computer Should Think When the Data Lies: Belnap's Four-Valued Logic
+# The Shape of Shared Ideas: What Co-Citation Can—and Cannot—Tell Us
 
-## A logic for the real world
+A mathematical paper rarely stands alone. It cites definitions, techniques, and theorems scattered across decades. If we imagine each theorem as a point and each document as a thread gathering several points together, an enormous fabric appears. Topological data analysis offers an appealing question: does this fabric have a shape?
 
-Classical logic is beautiful, and classical logic is brittle.
+The answer is yes, but with an important warning. The shape of co-citation is a precise combinatorial object; the meaning assigned to that shape is not automatic. A loop may reveal a genuine gap in higher-order citation, but it does not, by itself, name a “school of mathematics.” A cavity may mark a structural transition, but it does not prove that a paradigm shifted. The mathematics developed here separates what the network guarantees from what an interpretation must supply.
 
-It is beautiful because it rests on a single, clean idea: every statement is
-either **true** or **false**, and from that binary judgment the whole edifice of
-mathematics follows. It is brittle because of one notorious rule, the *principle
-of explosion*: from a contradiction, **anything** follows. In Latin it has a
-name that sounds almost gleeful — *ex falso quodlibet*, "from a falsehood,
-whatever you like." If a classical reasoner ever accepts both a statement and
-its negation, it does not merely make a local mistake. It collapses. Every
-sentence in its language, true or absurd, becomes provable. "The moon is made of
-cheese" and "the moon is not made of cheese" together entail "you owe me a
-million dollars."
+## From documents to a simplicial complex
 
-For a mathematician working with consistent axioms, explosion is harmless — you
-simply never feed the machine a contradiction. But step outside pure mathematics
-and contradictions are everywhere. A database merges two medical records and one
-says the patient is allergic to penicillin while the other says they are not. A
-sensor network reports that a valve is simultaneously open and closed. A
-search engine scrapes the web and finds one page asserting a fact and another
-denying it. A team of experts disagrees. In every one of these cases a classical
-reasoner, confronted with the contradiction, would be entitled to conclude
-*everything* — which is to say, to conclude *nothing useful at all*.
+Let $V$ be a finite collection of theorems. A **corpus** $C$ is a finite family of subsets of $V$. Each member $W\in C$ records all the theorems cited by one document. Such a member is sometimes called a hyperedge because it can join more than two vertices at once.
 
-In 1977 the philosopher and logician Nuel Belnap asked a deceptively simple
-question: **How should a computer think when its information might be both
-incomplete and inconsistent?** His answer was a tiny, elegant system now known
-as Belnap's FOUR, or "the logic of the four values." It is, in a precise sense
-we will make exact, the *smallest* logic that can survive a contradiction
-without exploding. This article is about why four is the magic number, and about
-a hidden symmetry that explains where those four values really come from.
+The **co-citation complex** $K(C)$ contains a finite set $S\subseteq V$ precisely when some document cites every theorem in $S$:
 
-## Counting your evidence both ways
+$$
+S\in K(C) \quad\Longleftrightarrow\quad \text{there is a }W\in C\text{ with }S\subseteq W.
+$$
 
-The trick is to stop asking "Is this statement true?" and start asking two
-separate questions:
+Thus a theorem is a vertex, a co-cited pair is an edge, a jointly cited triple is a filled triangle, and a jointly cited quadruple is a solid tetrahedron. Every subset of a witnessed set is witnessed by the same document. Consequently, if $S\in K(C)$ and $T\subseteq S$, then $T\in K(C)$. This downward-closure property is exactly what makes $K(C)$ a simplicial complex.
 
-1. **Have I been told it is true?** (Is there evidence *for* it?)
-2. **Have I been told it is false?** (Is there evidence *against* it?)
+There is also a simpler object: the **pairwise co-citation graph** $G(C)$. Two distinct theorems are adjacent when some document cites them both. Graphs are familiar, compact, and easy to visualize. Yet compressing documents to pairs may invent higher-dimensional structure that was never present.
 
-In classical logic these two questions are locked together: a "yes" to one is
-automatically a "no" to the other. Belnap's insight was to *unlock* them. Each
-question gets its own independent yes/no answer, and the combinations give
-exactly four possible epistemic states:
+## The smallest illusion
 
-- **N** — *Neither.* No evidence for, no evidence against. The database is
-  silent. This is genuine ignorance — the "I don't know" value.
-- **T** — *True.* Evidence for, no evidence against. The classical "true."
-- **F** — *False.* No evidence for, evidence against. The classical "false."
-- **B** — *Both.* Evidence for *and* evidence against. The database has been told
-  contradictory things. This is the "told both" value, the overload that
-  classical logic cannot represent.
+Consider three theorems $a$, $b$, and $c$, and three documents with citation sets
 
-That fourth value, **B**, is the whole point. Classical logic has no room for it:
-it cannot record that it has heard a statement is both true and false. Belnap's
-logic can. And crucially, it can record that fact *and keep working*.
+$$
+\{a,b\},\qquad \{a,c\},\qquad \{b,c\}.
+$$
 
-## Two orders, two questions
+Every pair occurs, so the pairwise graph is a triangle. Its **clique complex**—the simplicial complex obtained by filling every complete graph—contains the filled triangle $\{a,b,c\}$. But no document cites all three theorems together. The genuine co-citation complex contains the three boundary edges and not the triangular face.
 
-Once you have four values, you can sort them in two completely different ways,
-and the interplay between these two orderings is the deep structure of the
-system.
+Topologically, the distinction is dramatic. The boundary triangle has one independent one-dimensional loop, so over any field its first Betti number is $\beta_1=1$. Filling the triangle kills that loop, giving $\beta_1=0$. Pairwise projection has erased a genuine higher-order absence.
 
-The first ordering measures **truth**. Picture a vertical axis running from
-"definitely false" at the bottom to "definitely true" at the top:
+This is not a technical corner case. It identifies the exact question that must be asked whenever a graph is used to infer group interaction: do all pairwise relationships come from one common witness?
 
-> **F** is the least true, **T** is the most true, and **N** and **B** sit in
-> between — they are "half true" in the sense that they each carry exactly as
-> much truth-evidence as falsity-evidence (N has none of either, B has both).
+## When pairwise information is enough
 
-The second ordering measures **information**, or knowledge. Picture a *different*
-vertical axis, running from "I know nothing" at the bottom to "I have been told
-everything" at the top:
+A set of vertices is a **clique** if every two distinct vertices in it are adjacent. Call a corpus **conformal** when every clique $S$ in its pairwise graph fits inside at least one document $W\in C$.
 
-> **N** is the least informative (you've heard nothing), **B** is the most
-> informative (you've heard everything, including the contradiction), and **T**
-> and **F** sit in between — each represents one definite piece of news.
+The central reconstruction result is exact:
 
-Here is the picture that makes the whole thing click. Lay the four values out as
-a diamond:
+> **Conformality Criterion.** The genuine co-citation complex $K(C)$ equals the clique complex of the pairwise graph $G(C)$ if and only if the corpus is conformal—that is, every graph clique is contained in one common document.
 
-```
-            B  (told both)
-           / \
-          /   \
-   (false) F   T (true)
-          \   /
-           \ /
-            N  (told nothing)
-```
+The proof has two short directions. Every genuine face lies in a document, so every pair of its vertices is co-cited; hence every genuine face is a graph clique. Conversely, if every clique has a common witness, then each face inserted by clique completion is contained in a document and therefore already belongs to $K(C)$.
 
-Read the diamond **bottom-to-top** and you are climbing the *information* order:
-N at the bottom, B at the top, T and F as the two incomparable middle points.
-Read it **left-to-right** and you are climbing the *truth* order: F on the left,
-T on the right, N and B as the two incomparable middle points. One diamond,
-two orders, rotated ninety degrees from each other. A structure with two
-compatible lattice orders like this is called a **bilattice**, and FOUR is the
-founding example of the entire theory.
+The three-theorem example fails precisely this criterion. Its three pairs have three different witnesses, but the triple has none. At the opposite extreme, if a single document cites every theorem in $V$, then $K(C)$ is the full simplex of all subsets of $V$, the pairwise graph is complete, and conformality holds automatically.
 
-Negation — the logical "not" — lives on the truth axis. Flipping a statement's
-truth value means swapping evidence-for with evidence-against:
+The criterion is useful because it converts a vague concern about “lost higher-order information” into a testable condition. Pairwise data never omits a genuine face when one passes to clique completion; instead, it may add spurious faces. Conformality says exactly when it adds none.
 
-> not-**T** = **F**, not-**F** = **T**, and — here is the surprise —
-> not-**N** = **N** and not-**B** = **B**.
+## Growing corpora and persistence
 
-If you have heard nothing about a statement, you have heard nothing about its
-negation either, so N is its own negation. And if you have heard *both* that a
-statement is true and that it is false, then you have *also* heard both about its
-negation — so B is its own negation too. Negation flips the diamond left-to-right
-(swapping T and F) while leaving the information axis untouched.
+Real corpora develop over time. Suppose $C_t$ denotes all documents available by time $t$. If $s\le t$, then $C_s\subseteq C_t$. Adding documents can only add witnessed sets, so
 
-## Surviving the contradiction
+$$
+K(C_s)\subseteq K(C_t).
+$$
 
-Now we can say precisely what it means for this logic to "not explode."
+This **filtration theorem** supplies the basic structure required for persistent homology. A loop may appear when several pairwise co-citations accumulate, then disappear when a later document jointly cites the entire set and fills the gap. A two-dimensional cavity may likewise be born from witnessed triangles and die when suitable tetrahedra arrive.
 
-We declare a statement **assertible** — Belnap's word is *designated* — when we
-have evidence *for* it, regardless of whether we also have evidence against it.
-So the designated values are exactly **T** and **B**. (We assert what we've been
-told is true, even if we've also been told it's false.)
+Persistence records the interval between birth and death. Long intervals identify durable incidence patterns; short intervals identify fleeting ones. But persistence does not assign semantics. A persistent loop is a persistent loop in the citation incidence structure. Calling it a research community requires external evidence such as subject labels, author affiliations, textual similarity, or a statistical model linking those features to topology.
 
-Watch what happens with a contradiction. Take the value **B**. It is designated
-(we have evidence for it). Its negation is also **B**, which is *also* designated.
-So in FOUR the premise of explosion — "this statement is designated **and** its
-negation is designated" — is genuinely **satisfiable**. There really is a value,
-B, that witnesses a live contradiction.
+This distinction matters. Two corpora can have exactly the same simplicial complex while attaching completely different disciplinary labels to their vertices. No topological statistic can distinguish information that the incidence structure does not contain.
 
-In classical logic this can never happen. There, the designated value is just
-"true," and a value is true exactly when its negation is false, i.e. *not*
-designated. The classical contradiction premise — "*b* is true and not-*b* is
-true" — has **no witness at all**. It is unsatisfiable. This is the secret reason
-classical logic gets away with explosion: the rule "from a contradiction, infer
-anything" is **vacuously valid**, because the contradiction can never actually
-arise inside the algebra of two values. Classical logic does not *resist*
-contradictions; it merely *forbids* them, and inherits an explosive rule it never
-has to use.
+## How large can the topology become?
 
-FOUR makes a different bargain. It *permits* the contradiction (via B) and then
-*refuses* the explosion. Concretely: from the designated, self-contradictory
-value B you cannot derive the value F, because F is not designated. The inference
-"contradiction, therefore anything" simply fails. A reasoner using FOUR can be
-handed "the valve is open" and "the valve is not open," register both, mark the
-valve's status as **B** — and still correctly conclude that an *unrelated* valve
-across the plant is closed, without that local contradiction contaminating the
-global picture. This property — tolerating contradictions without trivializing —
-is called **paraconsistency**, and FOUR is the paradigm example.
+The original speculative picture suggests that the $k$th Betti number might grow like $n^{k+1}$, where $n=|V|$. There is a valid inequality nearby, but it is an upper bound rather than a universal growth law.
 
-The contrast is the heart of the matter. Paraconsistency is exactly **the gap
-between a contradiction being *satisfiable* and explosion being *valid*** — and
-that gap opens at precisely one place: a value that is designated and whose
-negation is also designated. In FOUR that value is B. In the two-valued world no
-such value exists, the gap snaps shut, and explosion rushes in.
+A $k$-dimensional simplex uses $k+1$ vertices. Among $n$ vertices there are only
 
-## Why four, and not three, or five?
+$$
+\binom{n}{k+1}
+$$
 
-You might wonder whether we could economize. Couldn't we get paraconsistency
-with just three values — true, false, and "both" — and skip the awkward
-"neither"?
+possible such simplices. Therefore the number $f_k$ of $k$-faces satisfies
 
-The bilattice structure says no, and the reason is symmetry. The information
-order needs a bottom (total ignorance) and a top (total information). The top is
-B: you've been told everything, both for and against. By the perfect duality of
-the two orders, the bottom must be the mirror image of B — a value that has been
-told *nothing*, neither for nor against. That is N. You cannot have B, the
-"overload," without N, the "void," any more than you can have a magnet with only
-one pole. The fourth value is *forced* by the geometry of the diamond. Drop N and
-the structure is no longer a bilattice; the two orders lose their bottom and the
-elegant duality breaks.
+$$
+f_k\le \binom{n}{k+1}.
+$$
 
-And you cannot do it with fewer than four, because two of the values (T and F)
-are needed to recover ordinary classical reasoning when the data happens to be
-clean. So four is not an arbitrary choice. It is the **minimum**: FOUR is the
-smallest non-trivial bilattice, the smallest arena in which contradiction and
-ignorance can both be represented as first-class citizens.
+Homology is obtained from chains by imposing cycle equations and quotienting by boundaries. It cannot have dimension larger than the chain space that contains it. Hence the **Betti Ceiling Theorem** states
 
-## The hidden product: 2 × 2
+$$
+\beta_k\le f_k\le \binom{n}{k+1}\le n^{k+1}.
+$$
 
-There is one final piece of magic, and it ties everything together.
+The last expression is real but coarse. It says only that $n^{k+1}$ is a ceiling. It does not say that $\beta_k$ is close to that ceiling, has the same asymptotic order, or is even positive.
 
-Remember how we built the four values: each is an answer to two independent
-yes/no questions, "evidence for?" and "evidence against?" That phrasing is
-literally a recipe for a **pair of bits**. Let us write each value as a pair
-(*for*, *against*), where each coordinate is 0 (no) or 1 (yes):
+Boundary ranks explain the gap. If $\partial_k$ is the boundary map from $k$-chains to $(k-1)$-chains, then
 
-- **N** = (0, 0) — no, no
-- **F** = (0, 1) — no, yes
-- **T** = (1, 0) — yes, no
-- **B** = (1, 1) — yes, yes
+$$
+\beta_k=f_k-\operatorname{rank}(\partial_k)-\operatorname{rank}(\partial_{k+1}).
+$$
 
-This is a perfect dictionary. There are exactly $2 \times 2 = 4$ such pairs, which
-is *why* there are exactly four values. And every operation of the logic becomes
-a simple, coordinate-by-coordinate Boolean operation on the two bits:
+Simplex counts determine how many generators are available; boundary maps determine how many survive as homology. Two complexes with the same face counts can have different Betti numbers because their faces are attached differently.
 
-- The **information meet and join** (combining or reconciling evidence) act on
-  each coordinate by ordinary AND and OR. To pool the *least* common information,
-  you AND the for-bits and AND the against-bits; to pool *all* available
-  information, you OR them.
-- The **truth meet and join** (logical AND and OR of the statements themselves)
-  also act coordinatewise — but with a twist: the "against" coordinate runs
-  *backwards*. Logical conjunction takes the AND of the for-bits but the OR of
-  the against-bits, because a statement "A and B" has evidence against it as soon
-  as there is evidence against *either* part.
-- **Negation** is the cleanest of all: it just **swaps the two bits**. Evidence
-  for becomes evidence against and vice versa. (Now it is obvious why N = (0,0)
-  and B = (1,1) are their own negations — swapping the coordinates of a pair of
-  equal bits changes nothing.)
+There is an even sharper obstruction. No face on $n$ vertices can contain more than $n$ vertices. Thus there are no $k$-simplices when $k\ge n$, and
 
-In the language of lattice theory, this dictionary says that FOUR is exactly the
-**product** of the two-element lattice $\mathbf{2} = \{0, 1\}$ with itself — written
-$\mathbf{2} \odot \mathbf{2}$ in Matthew Ginsberg's notation for bilattices. The four
-values are the founding bilattice precisely because they are the smallest
-non-trivial lattice squared. The two coordinates are the two questions; the two
-orders are the two ways of comparing pairs; and the whole rich structure of
-Belnap's logic unfolds, with nothing left to chance, from the simple act of
-asking about evidence twice.
+$$
+\beta_k=0\qquad\text{for every }k\ge n.
+$$
 
-## What it buys us
+For a nonempty vertex set, $n^{k+1}>0$. Therefore $\beta_k=n^{k+1}$ is impossible whenever $k\ge n$. Any genuine asymptotic law must specify a fixed-dimensional regime, a random or deterministic corpus model, and quantitative assumptions governing boundary ranks.
 
-This is not merely a philosopher's curiosity. The descendants of Belnap's FOUR
-run inside real systems. Relational databases with "null" and "inconsistent"
-markers, logic programs that must keep running when their knowledge base
-contradicts itself, multi-agent systems fusing disagreeing sensors, and
-trust-and-reputation engines on the open web all need a way to represent "I don't
-know" and "I've been told both" as honest, stable states rather than as crashes.
-Bilattice logics give them exactly that, and FOUR is the seed from which the
-whole forest grows.
+## A practical analysis pipeline
 
-The lesson is broader than logic. We tend to treat truth as a single dial running
-from false to true, and contradiction as a catastrophe to be avoided at all
-costs. Belnap's four values show a wiser stance. Truth and information are *two*
-dials, not one. A contradiction is not a catastrophe but a *data point* — the
-state of having heard both sides — and a system that can name that state calmly
-is far more robust than one that detonates the moment the world fails to agree
-with itself. Four values, arranged in a diamond, two questions asked
-independently: that is all it takes to teach a machine to keep its head when the
-data starts to lie.
+The mathematics suggests a disciplined workflow.
+
+First, retain each document as a set of cited theorems rather than immediately flattening it to edges. Generate the downward closure to obtain $K(C)$. Second, build $G(C)$ and its clique complex only as a comparison object. Third, test conformality by searching for cliques that lack a common document witness. Such a clique is a certificate that pairwise projection has inserted a spurious higher-dimensional face.
+
+Fourth, for a temporal corpus, order documents by date and build the nested complexes $K(C_t)$. Compute boundary matrices over a chosen field and use their ranks to obtain Betti numbers or persistence intervals. Finally, compare every computed $\beta_k$ with the sanity bounds
+
+$$
+0\le \beta_k\le f_k\le \binom{n}{k+1}.
+$$
+
+A violation signals an error in indexing, face generation, or rank computation.
+
+## Shape first, meaning second
+
+The topology of theorem networks is promising precisely because its limitations can be stated cleanly. The co-citation complex preserves common-document witnesses. The pairwise graph preserves only pairs. The Conformality Criterion says when those views agree. Monotonicity turns historical corpora into valid filtrations. Binomial bounds identify the largest possible homological dimensions, while dimension vanishing rules out an unrestricted positive power law.
+
+What remains is empirical and statistical. Under what random model do normalized Betti profiles converge? When does a growing corpus become conformal? Are persistent two-dimensional cavities better indicators of structural change than raw triangle counts? Which metadata makes semantic labels identifiable?
+
+These questions are more interesting after the foundational distinctions are made. A loop is not automatically a school, and a cavity is not automatically a revolution. Yet both are exact records of how pairwise compatibility succeeds—or fails—to assemble into genuine collective witness.
+
+That disciplined viewpoint has applications beyond mathematics. In collaboration data, an edge can mean that two people have worked together, while a filled triangle should mean that all three collaborated on one project—not merely that each pair met separately. In medicine, pairwise co-occurrence of symptoms does not guarantee a single patient exhibiting the whole cluster. In ecology, pairwise species encounters need not imply a jointly observed community. The same conformality question recurs whenever higher-order evidence is compressed into a graph.
+
+By keeping witnesses visible, topology becomes not a machine for attaching dramatic labels, but a language for asking sharper questions. It tells us which assemblies were observed, which were inferred, which gaps persisted, and which claims exceed the data. That is the shape hidden inside shared ideas.
