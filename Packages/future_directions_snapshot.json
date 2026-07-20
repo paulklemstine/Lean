@@ -4386,6 +4386,46 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Contextual Fraction on Permutation Gain Graphs: Exact Algorithms, Query Lower Bounds, and Dynamic Maintenance' and formalize its key results. Abstract: For an explicitly represented finite empirical model, deciding whether the contextual fraction is strictly below one is NP-complete, while the standard exact linear program has one column for every global assignment. We identify a permutation-transport class in which this global problem collapses to a fixed-point calculation. Let a connected permutation gain graph act on a finite state set $O$, let $H \\leq{ \\rm Sym}(O)$ be its holonomy subgroup, let $F = {\\rm Fix}(H)$, and let $p$ be an $H$-invariant root distribution. For the induced empirical model, \\[ {\\rm NCF}(e)=p(F),\\qquad {\\rm CF}(e)=1-p(F). \\] Consequently, compatibility, $F$, and ${\\rm CF}(e)$ are computable in $O(|O|(|V|+|E|))$ arithmetic and table operations. For every finite simple $2$-edge-connected graph, any deterministic exact algorithm in the explicit permutation-table query model requires at least $(|O|-1)|E|$ probes in the worst case, making the dependence on the input tables optimal up to constant factors. With a fi",
+    "domain_bridges": [],
+    "domains": [
+      "Computation",
+      "Pythagorean"
+    ],
+    "id": "fd_0503",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2607.16037v1",
+    "status": "available",
+    "timestamp": "2026-07-20T04:16:41.422553+00:00",
+    "title": "ArXiv paper: Contextual Fraction on Permutation Gain Graphs: Exact Algorithms, Query Lower Bounds, and Dynamic Maintenance"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Equidistribution for abelian extensions of global fields' and formalize its key results. Abstract: We establish asymptotic formulas for abelian extensions of global function fields ordered by conductor and subject to prescribed local conditions. Our proof combines harmonic analysis with a theory of frobenian functions over global function fields developed in this paper. We interpret our result via equidistribution on algebraic stacks.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0503",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2607.16079v1",
+    "status": "available",
+    "timestamp": "2026-07-20T04:16:44.737651+00:00",
+    "title": "ArXiv paper: Equidistribution for abelian extensions of global fields"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Cycle dcd7a4b2 (Q=0.750) proved 0 theorems in Tropical but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION — simulta",
     "domain_bridges": [],
     "domains": [
