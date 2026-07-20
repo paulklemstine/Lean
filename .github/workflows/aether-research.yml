@@ -72,6 +72,11 @@ jobs:
       - name: Write Pollinations key file
         run: echo "${{ secrets.POLLINATIONS_API_KEY }}" > Aether/.aether_workspace/pollinations_api_key
 
+      - name: Configure Git
+        run: |
+          git config --global user.name "Aether Bot"
+          git config --global user.email "aether-bot[bot]@users.noreply.github.com"
+
       - name: Run Aether tick
         env:
           ARISTOTLE_API_KEY: ${{ secrets.ARISTOTLE_API_KEY }}
