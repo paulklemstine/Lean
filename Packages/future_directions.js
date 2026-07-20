@@ -375,7 +375,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Proof Complexity and Thermodynamic Cost"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b44b7357",
     "description": "Formalize a notion of 'self-referential types' in dependent type theory where a type can quantify over itself. Define: a conscious type T satisfies T \u2248 \u03a0(x:T), P(x) for some predicate P. Prove: any such type must be undecidable (G\u00f6del-style). Show: the fixed points of the type-forming operations correspond to a hierarchy analogous to the arithmetical hierarchy. Conjecture: the cardinality of self-referential types is exactly \u2135_1^CK (the Church-Kleene ordinal).",
     "domains": [
       "Novelty",
@@ -385,7 +385,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T23:48:18.405185+00:00",
     "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
   },
@@ -3139,7 +3139,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Improved constant in Erd\u0151s sumset avoidance for dense subsets"
   },
   {
-    "consumed_by_exp_id": "08085b2c",
+    "consumed_by_exp_id": "",
     "description": "Formalize Australian Aboriginal kinship systems (section and subsection systems) as finite groups acting on person-sets. Prove that the 4-section system is isomorphic to Z2 x Z2 and the 8-subsection system to Z2 x Z2 x Z2. Show that marriage rules correspond to coset restrictions and that the entire system forms a consistent group-theoretic structure.",
     "domains": [
       "Novelty",
@@ -3149,7 +3149,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-19T20:43:51.819026+00:00",
     "title": "Aboriginal Kinship as Group Theory: Dreamtime Algebra"
   },

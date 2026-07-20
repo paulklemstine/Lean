@@ -504,7 +504,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b44b7357",
     "description": "Formalize a notion of 'self-referential types' in dependent type theory where a type can quantify over itself. Define: a conscious type T satisfies T ≈ Π(x:T), P(x) for some predicate P. Prove: any such type must be undecidable (Gödel-style). Show: the fixed points of the type-forming operations correspond to a hierarchy analogous to the arithmetical hierarchy. Conjecture: the cardinality of self-referential types is exactly ℵ_1^CK (the Church-Kleene ordinal).",
     "domain_bridges": [],
     "domains": [
@@ -517,7 +517,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T23:48:18.405185+00:00",
     "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
   },
@@ -4317,7 +4317,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "08085b2c",
+    "consumed_by_exp_id": "",
     "description": "Formalize Australian Aboriginal kinship systems (section and subsection systems) as finite groups acting on person-sets. Prove that the 4-section system is isomorphic to Z2 x Z2 and the 8-subsection system to Z2 x Z2 x Z2. Show that marriage rules correspond to coset restrictions and that the entire system forms a consistent group-theoretic structure.",
     "domain_bridges": [],
     "domains": [
@@ -4330,7 +4330,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-19T20:43:51.819026+00:00",
     "title": "Aboriginal Kinship as Group Theory: Dreamtime Algebra"
   },
