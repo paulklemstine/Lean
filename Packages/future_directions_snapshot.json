@@ -349,7 +349,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1a2d7e50",
     "description": "Every proof has a thermodynamic cost proportional to its Kolmogorov complexity. Define: cost(π) = K(π) * T * ln(2), where K is Kolmogorov complexity and T is temperature. Prove: shorter proofs have lower cost. Conjecture: there exist statements whose shortest proof has cost exceeding any computable bound (proof-theoretic analog of Chaitin's theorem). Show: the average cost of proving a random true statement of length n is Θ(2^n).",
     "domain_bridges": [],
     "domains": [
@@ -362,7 +362,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-20T22:20:22.701465+00:00",
     "title": "Speculative: Proof Complexity and Thermodynamic Cost"
   },
@@ -389,7 +389,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1f9eb531",
     "description": "Conjecture: the laws of physics are the fixed point of a computation that simulates itself. Formalize: define a universal physical simulator U that maps (initial_conditions, laws) → (next_state). The fixed point equation is U(L, L) = L, where L is the 'law of physics'. Prove: the solution exists (by the Kleene fixed point theorem). Show: the solution is unique up to computational equivalence. Predict: the fine structure constant α satisfies α = 1/(137.036...) because it's the simplest fixed point.",
     "domain_bridges": [],
     "domains": [
@@ -402,7 +402,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-20T22:20:22.643947+00:00",
     "title": "Speculative: The Universe Computes Its Own Existence (Physics = Computation)"
   },
