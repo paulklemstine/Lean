@@ -98,26 +98,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "d87f0198",
-    "description": "Prove that adding an oracle for the halting problem to PA yields a theory that proves its own consistency but cannot decide its own soundness. Formalize the hierarchy: PA < PA^H < PA^{H^H} < ... and prove that each jump genuinely increases theorem-proving power. Show that the oracle hierarchy is isomorphic to the Turing jump hierarchy.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0494",
-    "lineage_refs": [],
-    "priority_score": 0.88,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T21:02:27.020806+00:00",
-    "title": "The Oracle's Burden: How Much Knowledge Is Too Much?"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "1a27f9f3",
     "description": "Define a natural metric on the space of all mathematical statements and prove that the set of true statements has a fractal dimension. Show that this dimension is strictly between 0 and 1 (truth is sparse but not negligible). Connect to Chaitin's Omega and prove that the fractal dimension is uncomputable but approximable.",
     "domain_bridges": [],
@@ -461,26 +441,6 @@
     "status": "in_progress",
     "timestamp": "2026-07-20T05:48:35.575822+00:00",
     "title": "Speculative: Mathematics as a Phase Transition"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "fd569acd",
-    "description": "Compute the topological type of the Library of Babel: a space of all possible 410-page books. Prove that it is connected, totally disconnected under the Hamming metric, and has covering dimension 0. Determine the Kolmogorov complexity of a random book and prove that almost all books are incompressible.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Combinatorics"
-    ],
-    "id": "fd_0474",
-    "lineage_refs": [],
-    "priority_score": 0.81,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T17:49:41.587633+00:00",
-    "title": "Borges' Library of Babel: Combinatorics of Everything"
   },
   {
     "ambition_level": "extension",
@@ -7375,6 +7335,66 @@
     "status": "available",
     "timestamp": "2026-07-20T09:42:04.261035+00:00",
     "title": "**Conjecture.** Every interpretation between essentially algebraic theories whos"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: The Oracle's Burden\n\n## 1. A concrete relativized jump realizes every abstract level\n\n**Conjecture.** There is a uniformly defined operator on partial functions whose value at an oracle is the diagonal halting predicate relative to that oracle, and it satisfies both jump inequalities at every oracle. Its finite iterates therefore realize the strict order embedding established by the abstract hierarchy.\n\nThe key insight is that one universal relativized evaluator should supply both directions: direct simulation gives reducibility to the jump, while self-application and Boolean complementation give strict nonreducibility.\n\n**Why now?** The order-theoretic consequences have been isolated from coding details, so the remaining task has a sharply defined interface: construct one operator and establish exactly two inequalities.\n\n## 2. Oracle theories and Turing jumps coincide under an explicit interpretation\n\n**Conjecture.** For each finite level, arithmetic augmented by a truth predicate for the previous level has exactly the same computable sets as the corresponding finite Turing-jump iterate, under a uniform translation preserving provability of arithmetical sentences.\n\nThe key insight is to compare theories through representability and effective interpretation rather than identifying deductive strength with reducibility by analogy.\n\n**Why now?** The computational hierarchy is structurally complete, and the present critique identifies the missing bridge precisely: a syntax-and-semantics interpretation theorem linking oracle answers to arithmetical proofs.\n\n## 3. Relative consistency is visible one level above but not at its own level\n\n**Conjecture.** For a recursively axiomatized, sound base theory equipped with the appropriate oracle predicates, level `n + 1` proves a canonical consistency sentence for level `n`, while level `n` proves neither that sentence nor its negation under standard incompleteness hypotheses.\n\nThe key insight is to encode proof search as a halting question relative to the current oracle and then separate external soundness assumptions from internally expressible consistency.\n\n**Why now?** Strict computational growth and non-idempotence already identify the required diagonal pattern; what remains is to transport it through a faithful Gödel coding of syntax.\n\n## 4. Finite joins commute with the jump up to Turing degree\n\n**Conjecture.** The jump of a finite oracle join is Turing-equivalent to the join of the individual jumps, uniformly in the oracle indices.\n\nThe key insight is that the cut principle and least-upper-bound characterization should turn a coding theorem for paired oracle queries into an algebraic preservation law.\n\n**Why now?** Binary joins and their universal property are already established, making this a focused test of whether the abstract hierarchy interacts correctly with degree-theoretic lattice structure.\n\n## 5. Transfinite effective iteration extends the hierarchy through computable ordinals\n\n**Conjecture.** At successor stages take the relativized jump and at effective limit stages take a uniform join; every resulting level below the Church–Kleene ordinal is strictly above all earlier levels and the construction is invariant, up to Turing degree, under equivalent ordinal notations.\n\nThe key insight is to combine successor diagonalization with the join universal property at limits, while treating invariance under notation as the central coherence condition.\n\n**Why now?** The finite successor mechanism and finite join mechanism have been separated and proved structurally, exposing exactly the two ingredients that a transfinite recursion must generalize.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "fd_0516",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "d87f0198",
+    "status": "available",
+    "timestamp": "2026-07-20T15:09:27.334818+00:00",
+    "title": "**Conjecture.** There is a uniformly defined operator on partial functions whose"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Topology of Theorem Networks\n\n## 1. A null model for higher-dimensional citation topology\n\n**Conjecture.** In a sparse random corpus with bounded expected document size and theorem degrees converging to a nondegenerate distribution, each fixed-dimensional normalized Betti number has a deterministic limit, while the unnormalized Betti number is bounded above by the corresponding binomial face count and is typically of strictly smaller order.\n\nThe key insight is that the universal binomial ceiling controls the available chain generators, but boundary ranks—not simplex counts alone—determine the surviving topology.\n\n**Why now?** The structural ceiling and dimension-vanishing theorem identify exactly which asymptotic claims are possible; specifying a random incidence model is the missing ingredient needed to replace an unsupported power law by a falsifiable limit theorem.\n\n## 2. Conformality thresholds in temporal co-citation hypergraphs\n\n**Conjecture.** For a growing random co-citation corpus, there is a sharp threshold at which every clique in the pairwise co-citation graph acquires a common document witness, and hence the higher-order corpus complex becomes equal to its flag completion.\n\nThe key insight is that equality of the two complexes is governed by one exact obstruction: pairwise compatibility without a global witness.\n\n**Why now?** The three-theorem boundary example isolates the smallest obstruction, while the conformality criterion turns the disappearance of all such obstructions into a precise event whose threshold can be studied probabilistically.\n\n## 3. Stability of semantic labels under topological perturbation\n\n**Conjecture.** If research-community labels are defined independently of the citation complex, then no uniformly stable rule can recover them from first homology alone; recovery becomes possible only after adding vertex metadata or a generative assortativity assumption.\n\nThe key insight is that a cycle is an incidence pattern rather than a semantic object, so identical complexes can support incompatible assignments of mathematical schools.\n\n**Why now?** Structural topology can now be cleanly separated from interpretation. This makes it possible to state identifiability assumptions explicitly and test whether metadata genuinely contributes information beyond graph connectivity.\n\n## 4. Persistent detection of localized structural change\n\n**Conjecture.** In a temporal corpus filtration with bounded document size, an abrupt increase followed by decay in persistent second homology detects a sustained failure of local conformality more reliably than raw triangle or tetrahedron counts.\n\nThe key insight is that pairwise projection can fill a spurious triangle even when no triple witness exists, whereas persistence across the genuine hypergraph filtration records whether the resulting cavity survives subsequent documents.\n\n**Why now?** Monotonicity of the corpus complex provides a valid filtration, and the explicit strict-loss example supplies the elementary mechanism from which a statistical change-point theory can be built.\n\n## 5. Extremal Betti profiles under document-size constraints\n\n**Conjecture.** Among corpora on `n` theorems whose documents have size at most `d`, the maximum possible `k`-th Betti number is attained by a highly symmetric design and has order `n^(k+1)` only for fixed `k < d`, with constants depending essentially on both `d` and the coefficient field.\n\nThe key insight is that polynomial growth can be plausible in fixed dimension even though it is impossible uniformly across dimensions; document-size bounds determine which chain groups can exist at all.\n\n**Why now?** The binomial ceiling supplies the correct ambient scale, while dimension vanishing rules out overgeneralization. The remaining extremal problem is concrete, finite, and testable on designs, multipartite constructions, and random bounded hypergraphs.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0517",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "e3b4f2fe",
+    "status": "available",
+    "timestamp": "2026-07-20T15:09:33.179129+00:00",
+    "title": "**Conjecture.** In a sparse random corpus with bounded expected document size an"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## Results established\n\nThe finite Hamming Library of length `L` over `A` symbols has exactly `A^L` points and is homeomorphic to `Fin (A^L)` with its discrete topology. Singleton books form a clopen basis, so this gives the standard dimension-zero certificate for a finite metrizable space, and the Library is totally disconnected.\n\nThe proposed simultaneous connectedness claim is false in every genuine case: if `2 ≤ A` and `0 < L`, two explicit constant books are distinct and the Library is not connected. Moreover, every continuous decoder from a preconnected parameter space into the Library is constant, so no such decoder can be surjective onto a nontrivial Library.\n\nFor any decoder with `N` programs, at most `N` books are generated and at least `A^L - N` are incompressible relative to that decoder. In the binary case, allowing `2^(L-c)` descriptions leaves at least `2^L - 2^(L-c)` books undescribed. This is the precise finite counting content of “almost all books are incompressible.” Kolmogorov complexity is decoder-dependent, so there is no machine-independent exact complexity assigned to an individual random book.\n\n## Further formalization\n\n1. Define prefix-free machines and prefix Kolmogorov complexity, then derive the same counting bound from Kraft's inequality for all programs shorter than a threshold.\n2. Put the uniform probability measure on the finite Library and restate the cardinal bound as a probability estimate: the compressible fraction is at most `2^{-c}`.\n3. Formalize Lebesgue covering dimension itself and connect the proved clopen-basis certificate to a theorem `coveringDimension = 0`; the current development proves the standard finite metrizable certificate rather than introducing a separate dimension theory.\n4. Classify all degenerate connected cases (`L = 0`, or a one-symbol alphabet) and handle the empty-library corner case (`A = 0 < L`) explicitly.\n5. Extend fixed-length libraries to infinite streams. Product spaces over finite discrete alphabets are Cantor-like: unlike the finite Library, they are compact and perfect while remaining totally disconnected.\n6. Compare Hamming topology with graph connectivity of the Hamming graph. The graph is connected when single-symbol edits are allowed, while its metric topology is discrete; distinguishing these notions explains the original contradictory framing.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0518",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "fd569acd",
+    "status": "available",
+    "timestamp": "2026-07-20T15:09:39.187871+00:00",
+    "title": "The finite Hamming Library of length `L` over `A` symbols has exactly `A^L` poin"
   },
   {
     "ambition_level": "extension",

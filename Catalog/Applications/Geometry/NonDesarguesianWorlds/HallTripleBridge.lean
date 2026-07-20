@@ -1,5 +1,5 @@
-import Geometry.NonDesarguesianPlanes
-import Bridges.FiniteFieldBridge
+import Catalog.Geometry.NonDesarguesianPlanes
+import Catalog.Bridges.FiniteFieldBridge
 
 /-!
 # Hall Triple Structures from the Order-Nine Hall Multiplication
@@ -147,7 +147,7 @@ polynomial lower bound on the ratio to the projective-linear benchmark.
 theorem hall_symmetry_gap (q : ℕ) (hq : 3 ≤ q) :
     hallCollineationOrder q < pglOrder (q ^ 2) ∧
       q ^ 4 ≤ pglOrder (q ^ 2) / (hallCollineationOrder q + 1) := by
-  exact ⟨ NonDesarguesianPlanes.hall_collineation_lt_pgl q hq, NonDesarguesianPlanes.symmetry_ratio_growth q hq ⟩
+  exact ⟨ hall_collineation_lt_pgl q hq, symmetry_ratio_growth q hq ⟩
 
 /-
 The order-nine Hall algebra exhibits both sides of the bridge: every right
@@ -159,6 +159,6 @@ theorem hall_triple_nonassociative_bridge :
       hallMul (steinerThird x y) c =
         steinerThird (hallMul x c) (hallMul y c)) ∧
     HallLeftNucleus ≠ Set.univ := by
-  exact ⟨ hallMul_preserves_steinerThird, hallLeftNucleus_proper ⟩
+  exact ⟨ fun x y c => hallMul_preserves_steinerThird x y c, hallLeftNucleus_proper ⟩
 
 end NonDesarguesianWorlds

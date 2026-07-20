@@ -59,12 +59,12 @@ theorem steinerThird_comm {A : Type*} [AddCommGroup A] (x y : A) :
   unfold steinerThird; rw [ add_comm ] ;
 
 /-
-In an exponent-three group, completing twice recovers the omitted point.
+Completing twice with the same first point recovers the omitted point.
 -/
-theorem steinerThird_left_involutive {A : Type*} [AddCommGroup A]
-    (hexp : ∀ t : A, t + t + t = 0) (x y : A) :
+theorem steinerThird_left_involutive {A : Type*} [AddCommGroup A] (x y : A) :
     steinerThird x (steinerThird x y) = y := by
-  simp +decide [ steinerThird, ← eq_sub_iff_add_eq' ]
+  unfold steinerThird
+  simp [← add_assoc]
 
 /-
 Distinct points have a third point distinct from the first.
@@ -72,9 +72,8 @@ Distinct points have a third point distinct from the first.
 theorem steinerThird_ne_left {A : Type*} [AddCommGroup A]
     (hexp : ∀ t : A, t + t + t = 0) {x y : A} (hxy : x ≠ y) :
     steinerThird x y ≠ x := by
-  contrapose! hxy; simp_all +decide [ add_eq_zero_iff_eq_neg ] ;
-  unfold steinerThird at hxy;
-  grind
+  unfold steinerThird; intro h; have := hexp ( -x + -y ) ; simp_all +decide [ ← add_assoc ] ;
+  grind +qlia
 
 /-
 Translation preserves additive Steiner triples in exponent three.
@@ -82,8 +81,9 @@ Translation preserves additive Steiner triples in exponent three.
 theorem steinerThird_translate {A : Type*} [AddCommGroup A]
     (hexp : ∀ t : A, t + t + t = 0) (x y t : A) :
     steinerThird (x + t) (y + t) = steinerThird x y + t := by
-  simp +decide [ add_assoc, add_left_comm, add_comm, steinerThird ];
-  grind
+  unfold steinerThird;
+  rw [ neg_eq_iff_add_eq_zero ];
+  convert hexp t using 1 ; abel_nf
 
 /-
 Any zero-preserving additive map preserves third-point completion.
@@ -93,11 +93,11 @@ theorem additive_map_preserves_steinerThird
     (f : A → B) (hzero : f 0 = 0) (hadd : ∀ x y, f (x + y) = f x + f y)
     (x y : A) :
     f (steinerThird x y) = steinerThird (f x) (f y) := by
-  -- By definition of $f$, we know that $f(-x) = -f(x)$.
-  have h_neg : ∀ x : A, f (-x) = -f x := by
-    intro x; exact eq_neg_of_add_eq_zero_left (by
+  unfold steinerThird;
+  have h_neg : ∀ t : A, f (-t) = -f t := by
+    intro t; exact eq_neg_of_add_eq_zero_left (by
     rw [ ← hadd, neg_add_cancel, hzero ]);
-  unfold steinerThird; aesop;
+  rw [ h_neg, hadd ]
 
 abbrev HallPoint := ZMod 3 × ZMod 3
 
@@ -112,7 +112,7 @@ Every pair has a unique additive Steiner completion.
 -/
 theorem hall_triple_unique_completion (x y : HallPoint) :
     ∃! z : HallPoint, z = steinerThird x y := by
-  exact ⟨ _, rfl, fun z hz => hz ▸ rfl ⟩
+  exact ⟨ _, rfl, fun z hz => hz ⟩
 
 /-
 For distinct Hall points, all three entries of the completed triple are distinct.

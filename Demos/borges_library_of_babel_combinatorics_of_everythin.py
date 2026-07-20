@@ -1,139 +1,188 @@
 #!/usr/bin/env python3
 """Numerical demonstrations for the finite Library of Babel.
 
-The script uses only Python's standard library. It demonstrates exact library
-cardinality, Hamming geometry, the distinction between edit paths and topology,
-and finite incompressibility bounds without enumerating enormous libraries.
+The script uses only Python's standard library.  It computes exact cardinal and
+incompressibility bounds, constructs shortest Hamming-graph paths, checks small
+Hamming sphere counts, and samples the distribution of distances between random
+books.  It never attempts to enumerate astronomically large libraries.
 """
 
 from __future__ import annotations
 
+from collections import Counter
 from dataclasses import dataclass
-from fractions import Fraction
-from itertools import product
-from typing import Iterable, Iterator, Sequence, TypeVar
+from math import comb, log10
+from random import Random
+from typing import Iterable, Sequence, TypeVar
 
 Symbol = TypeVar("Symbol")
-Book = tuple[Symbol, ...]
 
 
 @dataclass(frozen=True)
-class IncompressibilityBound:
-    """Exact finite counting bound for a description language."""
+class LibraryAudit:
+    """Exact counting data for a finite library and a program budget."""
 
+    alphabet_size: int
+    book_length: int
+    program_budget: int
     total_books: int
-    descriptions: int
-    guaranteed_undescribed: int
-    guaranteed_fraction: Fraction
+    maximum_described: int
+    minimum_incompressible: int
+
+    @property
+    def minimum_incompressible_fraction(self) -> float:
+        """Return the guaranteed incompressible fraction as a float."""
+        if self.total_books == 0:
+            return 0.0
+        return self.minimum_incompressible / self.total_books
 
 
-def library_size(alphabet_size: int, length: int) -> int:
-    """Return the exact number A**L of length-L books on A symbols."""
-    if alphabet_size < 0 or length < 0:
-        raise ValueError("alphabet_size and length must be nonnegative")
-    return alphabet_size**length
+def audit_library(alphabet_size: int, book_length: int, program_budget: int) -> LibraryAudit:
+    """Compute exact cardinality and decoder-independent image bounds.
+
+    A decoder with ``program_budget`` inputs can have no more than that many
+    distinct outputs.  The returned incompressibility count is therefore a
+    lower bound valid for every such decoder.
+    """
+    if alphabet_size < 0 or book_length < 0 or program_budget < 0:
+        raise ValueError("alphabet size, book length, and program budget must be nonnegative")
+    total = alphabet_size**book_length
+    described = min(total, program_budget)
+    return LibraryAudit(
+        alphabet_size,
+        book_length,
+        program_budget,
+        total,
+        described,
+        total - described,
+    )
 
 
 def hamming_distance(left: Sequence[Symbol], right: Sequence[Symbol]) -> int:
-    """Count positions at which two equal-length books differ in O(L) time."""
+    """Return the number of coordinates on which two equal-length words differ."""
     if len(left) != len(right):
-        raise ValueError("Hamming distance requires equal lengths")
+        raise ValueError("Hamming distance requires equal-length words")
     return sum(a != b for a, b in zip(left, right))
 
 
-def shortest_edit_path(
-    start: Sequence[Symbol], target: Sequence[Symbol]
-) -> list[tuple[Symbol, ...]]:
-    """Construct a shortest path of single-symbol edits from start to target."""
+def shortest_edit_path(start: Sequence[Symbol], target: Sequence[Symbol]) -> list[tuple[Symbol, ...]]:
+    """Construct a shortest path in the Hamming graph from start to target."""
     if len(start) != len(target):
-        raise ValueError("books must have equal lengths")
+        raise ValueError("the words must have equal length")
     current = list(start)
     path = [tuple(current)]
-    for index, symbol in enumerate(target):
-        if current[index] != symbol:
-            current[index] = symbol
+    for index, desired in enumerate(target):
+        if current[index] != desired:
+            current[index] = desired
             path.append(tuple(current))
     return path
 
 
-def open_hamming_ball(
-    center: Sequence[Symbol], universe: Iterable[Sequence[Symbol]], radius: float
-) -> list[tuple[Symbol, ...]]:
-    """Enumerate a finite open Hamming ball for a supplied small universe."""
-    if radius <= 0:
-        return []
-    return [
-        tuple(book)
-        for book in universe
-        if hamming_distance(center, book) < radius
-    ]
+def hamming_sphere_size(alphabet_size: int, book_length: int, radius: int) -> int:
+    """Return the number of words at exactly ``radius`` from a fixed word."""
+    if alphabet_size < 1 or book_length < 0 or not 0 <= radius <= book_length:
+        raise ValueError("require A >= 1 and 0 <= radius <= L")
+    return comb(book_length, radius) * (alphabet_size - 1) ** radius
 
 
-def enumerate_books(alphabet: Sequence[Symbol], length: int) -> Iterator[Book[Symbol]]:
-    """Enumerate a small finite library; runtime and output size are A**L."""
-    if length < 0:
-        raise ValueError("length must be nonnegative")
-    yield from product(alphabet, repeat=length)
+def sample_distances(
+    alphabet_size: int, book_length: int, trials: int, seed: int = 20260720
+) -> Counter[int]:
+    """Sample Hamming distances between independent uniformly random books."""
+    if alphabet_size < 1 or book_length < 0 or trials < 0:
+        raise ValueError("require A >= 1 and nonnegative length and trial count")
+    rng = Random(seed)
+    histogram: Counter[int] = Counter()
+    for _ in range(trials):
+        left = [rng.randrange(alphabet_size) for _ in range(book_length)]
+        right = [rng.randrange(alphabet_size) for _ in range(book_length)]
+        histogram[hamming_distance(left, right)] += 1
+    return histogram
 
 
-def incompressibility_bound(
-    alphabet_size: int, length: int, descriptions: int
-) -> IncompressibilityBound:
-    """Compute the guaranteed number and fraction outside any decoder range."""
-    if descriptions < 0:
-        raise ValueError("descriptions must be nonnegative")
-    total = library_size(alphabet_size, length)
-    undescribed = max(0, total - descriptions)
-    fraction = Fraction(undescribed, total) if total else Fraction(0, 1)
-    return IncompressibilityBound(total, descriptions, undescribed, fraction)
+def decoder_image(programs: Iterable[str]) -> set[str]:
+    """Evaluate a transparent toy decoder and return its distinct outputs.
+
+    Programs have forms ``literal:text``, ``repeat:n:c``, and ``alternating:n:ab``.
+    Invalid programs are ignored.  Collisions illustrate why a decoder image can
+    be strictly smaller than its number of programs.
+    """
+    outputs: set[str] = set()
+    for program in programs:
+        parts = program.split(":", 2)
+        if len(parts) == 2 and parts[0] == "literal":
+            outputs.add(parts[1])
+        elif len(parts) == 3 and parts[0] == "repeat":
+            try:
+                count = int(parts[1])
+            except ValueError:
+                continue
+            if count >= 0 and len(parts[2]) == 1:
+                outputs.add(parts[2] * count)
+        elif len(parts) == 3 and parts[0] == "alternating":
+            try:
+                count = int(parts[1])
+            except ValueError:
+                continue
+            pattern = parts[2]
+            if count >= 0 and pattern:
+                outputs.add((pattern * ((count + len(pattern) - 1) // len(pattern)))[:count])
+    return outputs
 
 
-def binary_program_bound(book_length: int, program_length: int) -> IncompressibilityBound:
-    """Specialize the counting bound to L-bit books and k-bit programs."""
-    if program_length < 0:
-        raise ValueError("program_length must be nonnegative")
-    return incompressibility_bound(2, book_length, 2**program_length)
+def main() -> None:
+    """Run four reproducible demonstrations of the principal results."""
+    print("FINITE LIBRARY OF BABEL — NUMERICAL DEMONSTRATIONS\n")
 
+    pages, lines, columns, alphabet_size = 410, 40, 80, 25
+    length = pages * lines * columns
+    digits = int(length * log10(alphabet_size)) + 1
+    print("1. A Borges-scale library")
+    print(f"   Positions per book: {length:,}")
+    print(f"   Number of books: 25^{length:,}")
+    print(f"   Decimal digits in that count: {digits:,}\n")
 
-def demonstrate() -> None:
-    """Print reproducible examples of all central numerical results."""
-    print("FINITE LIBRARY CARDINALITY")
-    for alphabet_size, length in [(2, 10), (3, 8), (25, 410)]:
-        size = library_size(alphabet_size, length)
-        print(f"A={alphabet_size}, L={length}: A^L has {len(str(size))} decimal digits")
-        if size < 10**20:
-            print(f"  exact size = {size:,}")
+    print("2. Exact incompressibility bounds for binary books of length 64")
+    for saving in (5, 10, 20):
+        audit = audit_library(2, 64, 2 ** (64 - saving))
+        print(
+            f"   Saving {saving:2d} bits: at least "
+            f"{audit.minimum_incompressible_fraction:.9%} are undescribed"
+        )
+    print()
 
-    print("\nHAMMING GEOMETRY")
-    start = tuple("00101101")
-    target = tuple("01100111")
-    distance = hamming_distance(start, target)
+    print("3. Topological isolation versus graph connectivity")
+    start = tuple("BABEL")
+    target = tuple("BOOKS")
     path = shortest_edit_path(start, target)
-    print(f"start={''.join(start)}, target={''.join(target)}")
-    print(f"distance={distance}; shortest path has {len(path) - 1} edits")
-    print(" -> ".join("".join(book) for book in path))
+    print(f"   Hamming distance: {hamming_distance(start, target)}")
+    print("   A shortest one-symbol edit path:")
+    print("   " + " -> ".join("".join(word) for word in path))
+    print("   Yet every singleton is an open ball of radius 1/2.\n")
 
-    small_library = list(enumerate_books((0, 1), 4))
-    ball = open_hamming_ball((0, 0, 0, 0), small_library, 0.5)
-    print(f"Open radius-1/2 ball around 0000: {ball}")
-    assert ball == [(0, 0, 0, 0)]
+    print("4. Hamming spheres and typical random distances")
+    A, L = 3, 8
+    spheres = [hamming_sphere_size(A, L, k) for k in range(L + 1)]
+    print(f"   Sphere sizes for A={A}, L={L}: {spheres}")
+    print(f"   Their sum is {sum(spheres)} = {A}^{L}.")
+    histogram = sample_distances(A, L, trials=20_000)
+    empirical_mean = sum(distance * count for distance, count in histogram.items()) / 20_000
+    theoretical_mean = L * (1 - 1 / A)
+    print(f"   Sample mean distance: {empirical_mean:.4f}")
+    print(f"   Theoretical mean:     {theoretical_mean:.4f}\n")
 
-    print("\nBINARY INCOMPRESSIBILITY")
-    bound = binary_program_bound(book_length=20, program_length=12)
-    print(f"total books: {bound.total_books:,}")
-    print(f"12-bit descriptions: {bound.descriptions:,}")
-    print(f"guaranteed undescribed: {bound.guaranteed_undescribed:,}")
-    print(
-        "guaranteed fraction: "
-        f"{bound.guaranteed_fraction} = {float(bound.guaranteed_fraction):.8f}"
-    )
-
-    print("\nCOMPRESSION SAVINGS TABLE")
-    print("saved bits | guaranteed incompressible fraction")
-    for saved_bits in (1, 2, 4, 8, 10, 20):
-        fraction = Fraction(2**saved_bits - 1, 2**saved_bits)
-        print(f"{saved_bits:10d} | {fraction!s:>12} = {float(fraction):.9f}")
+    print("5. Decoder collisions")
+    programs = [
+        "literal:AAAA",
+        "repeat:4:A",  # same output as the first program
+        "literal:ABAB",
+        "alternating:4:AB",  # another collision
+        "repeat:4:B",
+    ]
+    outputs = decoder_image(programs)
+    print(f"   {len(programs)} programs produce only {len(outputs)} distinct books: {sorted(outputs)}")
+    print("   Collisions can only increase the number of undescribed books.")
 
 
 if __name__ == "__main__":
-    demonstrate()
+    main()

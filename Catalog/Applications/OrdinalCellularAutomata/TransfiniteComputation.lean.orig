@@ -126,9 +126,9 @@ every Boolean predicate occurs as the boundary trace of one such history.
 theorem no_history_enumeration (initial : Tape)
     (enumerate : ℕ → (ℕ → ℕ → Tape)) :
     ¬ Function.Surjective enumerate := by
-      intro h;
-      apply no_predicate_enumeration (fun n => boundaryTrace (enumerate n));
-      intro P; cases' h ( scheduledOmegaRun P initial ) with n hn; use n; simp +decide [ hn, boundaryTrace_scheduled ] ;
+      intro h_surj;
+      exact no_predicate_enumeration ( fun n => boundaryTrace ( enumerate n ) ) ( fun P => by
+        obtain ⟨ n, hn ⟩ := h_surj ( scheduledOmegaRun P initial ) ; use n; aesop; )
 
 /-
 Concrete successor example: the all-zero tape is fixed by Rule 110.
