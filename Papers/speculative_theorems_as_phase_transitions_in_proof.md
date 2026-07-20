@@ -1,78 +1,43 @@
-# Computational Evidence — Theorems as Phase Transitions in Proof Space
+# Computational Evidence
 
-The formalized results are analytic/combinatorial identities and limits rather
-than empirical conjectures, so "evidence" here means sanity-checking the closed
-forms and asymptotics that the Lean theorems prove.
+The investigation concerns symbolic asymptotic and order-theoretic laws rather than a single numerical deductive system. Small cases nevertheless expose the relevant competing behaviors.
 
-## 1. Counting statements (`Counting.lean`)
+## Small-case calculations
 
-`S k n = ∑_{i=0}^{n} k^i` counts statements of length `≤ n` over a `k`-symbol
-alphabet.  First values for `k = 2` and `k = 3`:
+For ambient growth `k = 4`, derivable growth `a = 2`, and prefactor `C = 1`, the comparison density is `(a/k)^n = 2^{-n}`:
 
-| n | S 2 n | 2^{n+1}-1 | S 3 n | (3^{n+1}-1)/2 |
-|---|-------|-----------|-------|----------------|
-| 0 | 1     | 1         | 1     | 1              |
-| 1 | 3     | 3         | 4     | 4              |
-| 2 | 7     | 7         | 13    | 13             |
-| 3 | 15    | 15        | 40    | 40             |
-| 4 | 31    | 31        | 121   | 121            |
+| `n` | ambient count `4^n` | derivable bound `2^n` | ratio bound |
+|---:|---:|---:|---:|
+| 0 | 1 | 1 | 1 |
+| 1 | 4 | 2 | 1/2 |
+| 2 | 16 | 4 | 1/4 |
+| 3 | 64 | 8 | 1/8 |
+| 4 | 256 | 16 | 1/16 |
+| 5 | 1024 | 32 | 1/32 |
 
-This confirms the closed form `(k-1)·S k n = k^{n+1} - 1` (`S_closed_form`), the
-bounds `k^n ≤ S k n ≤ k^{n+1}` (`pow_le_S`, `S_le_pow`), and exponential growth
-`2^n ≤ S k n` (`S_ge_two_pow`).  `S 2 n = 2^{n+1}-1` is OEIS A000225 (Mersenne
-numbers `2^n - 1`, shifted).
+At level `ε = 0.1`, the last index at or above the level is `c = 3`; every `n > 3` is below it. This illustrates the least-crossing construction used in the threshold theorem.
 
-## 2. Order parameter / asymptotic incompleteness (`OrderParameter.lean`)
+For the normalized geometric length law with `k = 2`, the first weights are `1/2, 1/4, 1/8, 1/16, 1/32`. Their successive ratio is always `1/2 = exp(-log 2)`.
 
-With `tot n = k^n` and provable count `prov n = C·a^n`, the order parameter
-`r n = prov n / tot n = C·(a/k)^n`.  For `k = 3`, `a = 2`, `C = 1`:
+## Sequence search
 
-| n | r n = (2/3)^n |
-|---|----------------|
-| 0 | 1.000 |
-| 5 | 0.132 |
-| 10| 0.017 |
-| 20| 0.0003 |
+The ambient exact-length counts are geometric sequences, and the cumulative counts are geometric sums. No specialized sequence identification is needed: the formulas determine all terms directly.
 
-`r n → 0`: provable statements have density zero (`orderParameter_tendsto_zero`).
+## Counterexample hunt
 
-## 3. Sharp phase transition (`PhaseTransition.lean`)
+Two overstrong claims fail immediately.
 
-Logistic profile `Φ β x = 1/(1+exp(-β(x-x_c)))`, `x_c = 0`.  Value at `x = 0.5`
-as sharpness `β` grows, versus `x = -0.5`:
+1. Monotonicity alone does not force a crossing: the constant sequence `r(n) = 1` never crosses `ε = 1/2`.
+2. A geometric law is not a power law in length: its successive ratio is constant below one, whereas `(n+1)^{-α}/n^{-α}` tends to one for every fixed positive `α`.
 
-| β   | Φ(0.5) | Φ(-0.5) | Φ(0) |
-|-----|--------|---------|------|
-| 1   | 0.622  | 0.378   | 0.5  |
-| 5   | 0.924  | 0.076   | 0.5  |
-| 20  | 0.99995| 0.00005 | 0.5  |
+These counterexamples motivate the convergence hypothesis in the finite-threshold theorem and the rejection of a direct power-law interpretation.
 
-The profile pins at `1/2` at criticality (`logistic_critical`) and converges to a
-Heaviside step: `→1` above, `→0` below (`logistic_tendsto_one/zero`).
+## Table of qualitative outcomes
 
-## 4. Dimension and length distribution (`Dimension.lean`)
-
-`dim = lim log(tot n)/n = log k`.  For `k=2`, `log(S 2 n)/n` approaches
-`log 2 ≈ 0.6931`:
-
-| n  | log(S 2 n)/n |
-|----|--------------|
-| 5  | 0.826 |
-| 20 | 0.727 |
-| 100| 0.700 |
-
-Length distribution `p(n) = (k-1)/k^{n+1}` for `k=2` is `p(n)=1/2^{n+1}`
-(`1/2, 1/4, 1/8, …`), summing to `1` (`lengthDist_tsum`).  Its geometric
-`k^{-n}` tail is the predicted power law in the length variable.
-
-## 5. Counterexample hunt
-
-- `S_closed_form`, `S_le_pow`, `S_ge_two_pow`: checked for all `k ∈ {2..6}`,
-  `n ∈ {0..8}` — no counterexample.
-- `orderParameter_tendsto_zero`: requires `a < k`; at `a = k` the ratio is the
-  constant `C`, so the hypothesis `a < k` is necessary (not a counterexample, a
-  sharp boundary).
-- `logistic` limits require `x ≠ x_c`; exactly at criticality the value is the
-  constant `1/2` for every `β`, consistent with `logistic_critical`.
-
-No counterexamples were found; all sampled cases match the proved statements.
+| Candidate claim | Outcome | Boundary |
+|---|---|---|
+| Sparse derivability with positive ambient entropy | Survives | Requires separated exponential rates |
+| Exact finite crossing | Survives | Requires convergence to zero, antitonicity, and a positive level |
+| Unique critical index | Survives | Requires a strict one-step crossing |
+| Geometric tail is a power law in length | Fails | A mixture of entropy rates may produce heavy tails |
+| Named major theorems define a universal threshold | Undetermined | Requires an encoding and structural counting hypotheses |
