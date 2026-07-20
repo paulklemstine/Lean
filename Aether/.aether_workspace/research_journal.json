@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "cc0903e0",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions: Functorial Information Loss\n\n## 1. A chain rule for composable finite functors\n\nFor composable functors between finite skeletal categories, define object loss from the uniform dis",
-      "quality_score": 0.74,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-19T05:56:29",
-      "title": "Categorification of Entropy: The Information Loss of Functors"
-    },
-    {
       "cycle_id": "4b7e775f",
       "domain": "Pythagorean",
       "key_insight": "# Future Directions: Information Geometry of Optimization\n\n## 1. Curvature-controlled exponential-map descent\n\n**Conjecture.** On a geodesically complete statistical manifold with sectional curvature",
@@ -499,19 +489,19 @@
       "theorem_count": 15,
       "timestamp": "2026-07-20T20:48:35",
       "title": "The Fractal Dimension of Mathematical Truth"
+    },
+    {
+      "cycle_id": "bb72d587",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions: Complexity, Reversibility, and Thermodynamic Cost\n\n## 1. Size-indexed dissipation lower bounds for irreversible decision procedures\n\n**Conjecture.** Let a family of decision proce",
+      "quality_score": 0.76,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-20T20:48:41",
+      "title": "Speculative: Computational Complexity as Physical Law"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "557a7f03",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Local Flag Algebras\n\n## 1. Sharp triangle-free pentagon certificate\n\n**Conjecture.** The optimal upper bound for the number of pentagons in a finite triangle-free graph, expressed",
-      "quality_score": 0.66,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-07-16T09:17:28",
-      "title": "ArXiv paper: Local flag algebras"
-    },
     {
       "cycle_id": "d1e62d74",
       "domain": "Novelty",
@@ -2501,6 +2491,16 @@
       "theorem_count": 15,
       "timestamp": "2026-07-20T20:48:35",
       "title": "The Fractal Dimension of Mathematical Truth"
+    },
+    {
+      "cycle_id": "bb72d587",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions: Complexity, Reversibility, and Thermodynamic Cost\n\n## 1. Size-indexed dissipation lower bounds for irreversible decision procedures\n\n**Conjecture.** Let a family of decision proce",
+      "quality_score": 0.76,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-20T20:48:41",
+      "title": "Speculative: Computational Complexity as Physical Law"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-20T20:48:35",
+  "last_updated": "2026-07-20T20:48:41",
   "open_questions": [
     {
       "context": "",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "cf605784",
-        "quality": 0.8,
-        "theorems": 127,
-        "title": "Close Proofs: This cycle promoted the component-count toughness toolkit from a c"
-      },
-      {
         "cycle_id": "5dadc373",
         "quality": 0.68,
         "theorems": 101,
@@ -3699,6 +3693,12 @@
         "quality": 0.7,
         "theorems": 7,
         "title": "Speculative: Mathematics as a Phase Transition"
+      },
+      {
+        "cycle_id": "bb72d587",
+        "quality": 0.76,
+        "theorems": 0,
+        "title": "Speculative: Computational Complexity as Physical Law"
       }
     ],
     "Physics": [
