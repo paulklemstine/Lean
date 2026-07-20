@@ -1,257 +1,354 @@
-# Computational Complexity as Physical Law: A Thermodynamic Framework
+# Efficient Decision Does Not Imply Free Erasure: A Complexity–Thermodynamics Separation for Maxwellian Demons
+
+**Aristotle**  
+**20 July 2026**
 
 ## Abstract
 
-We introduce a rigorous mathematical framework — the **Entropy-Bounded Computation (EBC)** model — that connects computational complexity theory to thermodynamics through Landauer's principle. The central construction is the `EntropyBudgetSystem`, a novel mathematical structure that models computation as a sequence of state transitions with mandatory entropy costs. Within this framework, we prove that: (1) the number of irreversible computational steps is bounded by the entropy budget divided by the per-step cost; (2) reversible (bijective) computations are thermodynamically free; (3) Maxwell's demon's total entropy extraction is bounded by its total information cost; (4) the entropy gap between exponential and polynomial search spaces grows without bound; and (5) sequential demons compose additively in entropy cost. These results formalize the Extended Church-Turing Thesis as a thermodynamic constraint and provide a rigorous framework in which P ≠ NP has a physical interpretation: if P = NP, then Maxwell's demon could be implemented efficiently, violating the second law of thermodynamics. All results are formally verified in Lean 4.
+We formulate a minimal bridge between polynomial physical realizability, deterministic and nondeterministic polynomial-time decision classes, and finite-state thermodynamic erasure. A physical-complexity model consists of three classes of decision problems: those physically realizable with polynomial resources, those decidable by polynomial-time deterministic machines, and those belonging to a nondeterministic polynomial class. The model assumes an extended Church–Turing inclusion from physical polynomial realizability to deterministic polynomial time, the standard deterministic-to-nondeterministic inclusion, and closure of deterministic polynomial time under polynomial many-one reductions. We prove that a physically polynomial solver for a nondeterministic-polynomial-hard problem collapses the deterministic and nondeterministic classes. Conversely, a class collapse makes every nondeterministic-polynomial demon problem efficiently decidable.
 
-**Keywords**: Landauer's principle, computational complexity, thermodynamics, P vs NP, Maxwell's demon, entropy budget, reversible computation
+The thermodynamic conclusion is deliberately separate. For a finite normalized ensemble of work trajectories satisfying the Jarzynski equality for erasure of a uniformly unknown bit at positive temperature, convexity yields the Landauer lower bound $\mathbb{E}[W]\geq kT\ln 2>0$. The reset map is also non-injective. Therefore, even under a deterministic–nondeterministic collapse, an erasing demon can be computationally efficient while remaining logically irreversible and subject to strictly positive mean work. In particular, the collapse assumption alone cannot produce a zero-work Maxwell demon or a violation of the second law in this finite model. Algorithms and numerical examples illustrate reduction transfer, exact finite-ensemble checks of the Jarzynski condition, and the scaling of the one-bit work bound.
 
 ## 1. Introduction
 
-The relationship between computation and physics has been explored since Landauer's seminal 1961 paper establishing that information erasure has an irreducible thermodynamic cost [1]. Bennett extended this work by showing that reversible computation can in principle be performed at zero energy cost [2]. The resolution of Maxwell's demon paradox through Landauer's principle, completed by Bennett [3] and Zurek [4], established that the second law of thermodynamics constrains computational processes.
+The relationship between computational complexity and physical law invites a powerful but dangerous analogy. Complexity theory separates problems according to the growth of computational resources with input size. Thermodynamics limits the transformation of energy and the disposal of information. Both disciplines constrain what can be done, but they constrain different quantities.
 
-Despite these foundational results, the formal connection between computational complexity classes and thermodynamic constraints has remained largely informal. In this paper, we introduce a mathematical framework that makes this connection precise.
+The temptation to conflate them is especially strong in discussions of Maxwell’s demon. A demon observes microscopic degrees of freedom, makes decisions, and uses those decisions to extract useful work from thermal motion. If the difficult decision task controlling the demon were suddenly easy—perhaps because deterministic and nondeterministic polynomial time coincided—one might conclude that the demon could violate the second law efficiently. This conclusion omits the cost of operating a repeatable information-processing cycle. In particular, a memory that records observations must eventually be restored, and a many-to-one reset discards information irrespective of the runtime needed to choose the reset.
 
-### 1.1 Contributions
+This paper isolates the valid logical implications. On the complexity side, we represent an extended Church–Turing thesis as a class inclusion: every decision problem realizable by a polynomially bounded physical process is decidable by a polynomial-time deterministic machine. If an $\mathsf{NP}$-hard demon problem is physically realizable within that bound, closure under reductions transfers efficient decidability to all of $\mathsf{NP}$. Together with the usual inclusion $\mathsf{P}\subseteq\mathsf{NP}$, this gives equality. In the reverse direction, $\mathsf{P}=\mathsf{NP}$ immediately makes every $\mathsf{NP}$ demon problem polynomial-time decidable.
 
-1. **Novel mathematical structure**: The `EntropyBudgetSystem` and associated structures (`MaxwellDemon`, `ComplexityEntropyDuality`, `ReversibleComputation`, `IrreversibleStep`) formalize computation under thermodynamic constraints.
+On the thermodynamic side, we consider finite trajectory ensembles. A normalized probability mass function $p$ assigns probabilities to trajectories, and a work random variable $W$ assigns their work values. For one-bit erasure at positive temperature, the Jarzynski equality with free-energy difference $\Delta F=kT\ln 2$ implies the mean-work inequality $\mathbb{E}[W]\geq\Delta F$. Since $k>0$, $T>0$, and $\ln 2>0$, the expectation is strictly positive. The reset operation is non-injective because it merges the logical inputs $0$ and $1$.
 
-2. **13 formally verified theorems** establishing properties of the framework, including composition, monotonicity, reversibility, and the key entropy gap theorem.
+The main result combines these independent implications without identifying their currencies. Under a class collapse, an $\mathsf{NP}$ demon decision problem is efficient. If its implementation performs the specified erasure, the implementation remains logically irreversible and has positive expected work. Hence “efficient decision” does not imply “free erasure.”
 
-3. **Physical interpretation of P ≠ NP**: We formalize the argument that if P = NP, Maxwell's demon could search exponential spaces using polynomial entropy, violating Landauer's principle.
+This conclusion is guarded in several ways. The extended Church–Turing thesis is an assumption, not a derived physical law. The complexity collapse is also a hypothesis. The thermodynamic statement assumes a finite normalized ensemble, positive temperature, and the Jarzynski condition. Moreover, the theorem applies only to an implementation that actually carries out the stated erasure; it does not assert that every decision procedure erases a bit. These boundaries are essential to the interpretation.
 
-4. **Falsifiable conjecture**: We state a precise conjecture connecting the polynomial hierarchy to entropy stratification, with computational tests.
+## 2. Complexity framework
 
-## 2. Definitions
+### 2.1 Decision problems and reductions
 
-### 2.1 Entropy Budget System
+Fix an input space $X$. A decision problem is a subset $A\subseteq X$: an input is accepted precisely when it belongs to $A$. We work abstractly with three collections of such subsets.
 
-**Definition 1** (EntropyBudgetSystem). An *entropy budget system* is a tuple (n, c, B) where:
-- n ∈ ℕ is the number of computational steps
-- c : Fin(n) → ℝ≥0 is the cost function assigning entropy cost to each step
-- B ∈ ℝ>0 is the total entropy budget
-- Σᵢ c(i) ≤ B (budget constraint)
+**Definition 2.1 (Physical-complexity model).** A physical-complexity model on $X$ is a triple
 
-The *total Landauer cost* is S.totalCost := Σᵢ c(i).
+$$
+(\mathcal{F},\mathcal{P},\mathcal{N}),
+$$
 
-**Remark.** The budget B represents the maximum entropy the physical system can produce, determined by temperature T, available energy E, and time τ via B = E/(kT) · τ/τ₀ where τ₀ is the minimum switching time.
+where $\mathcal{F}$ is the class of physically realizable polynomial-resource decision processes, $\mathcal{P}$ is the deterministic polynomial-time machine class, and $\mathcal{N}$ is the corresponding nondeterministic polynomial class. The following conditions are imposed:
 
-### 2.2 Reversible Computation
+1. **Extended Church–Turing inclusion:** $\mathcal{F}\subseteq\mathcal{P}$.
+2. **Deterministic simulation:** $\mathcal{P}\subseteq\mathcal{N}$.
+3. **Reduction closure:** if $A$ polynomial-time many-one reduces to $B$ and $B\in\mathcal{P}$, then $A\in\mathcal{P}$.
 
-**Definition 2** (ReversibleComputation). A *reversible computation* on Fin(n) is a pair (f, g) where f, g : Fin(n) → Fin(n) satisfy f ∘ g = id and g ∘ f = id. That is, f is a bijection with inverse g.
+A polynomial-time many-one reduction from $A$ to $B$ is an efficiently computable map $r$ satisfying
 
-### 2.3 Irreversible Step
+$$
+x\in A\quad\Longleftrightarrow\quad r(x)\in B.
+$$
 
-**Definition 3** (IrreversibleStep). An *irreversible step* is a function f : Fin(m) → Fin(n) with n < m. The *Landauer cost* is log(m/n), representing the information destroyed.
+The abstract closure condition is the only property of reductions used below.
 
-### 2.4 Maxwell's Demon
+**Definition 2.2 (Collapse hypothesis).** The nondeterministic class collapses to the deterministic class when
 
-**Definition 4** (MaxwellDemon). A *Maxwell's demon* is a tuple (N, b, δ, kT) where:
-- N ∈ ℕ is the number of particles processed
-- b ∈ ℝ≥0 is the information bits gathered per particle
-- δ ∈ ℝ is the entropy decrease achieved per particle
-- kT ∈ ℝ>0 is the temperature in energy units
-- δ ≤ b · kT · ln(2) (Landauer constraint)
+$$
+\mathcal{N}\subseteq\mathcal{P}.
+$$
 
-### 2.5 Complexity-Entropy Duality
+Because $\mathcal{P}\subseteq\mathcal{N}$ is already part of the model, this condition is equivalent to $\mathcal{P}=\mathcal{N}$.
 
-**Definition 5** (ComplexityEntropyDuality). A *complexity-entropy duality* connects a search problem to its thermodynamic cost:
-- searchSpaceSize ∈ ℕ>0: number of candidates
-- kT ∈ ℝ>0: temperature
-- timeSteps ∈ ℕ: computation time
-- entropyPerStep ∈ ℝ≥0: entropy produced per step
+**Definition 2.3 (Hard demon problem).** A demon decision problem $D\subseteq X$ is $\mathcal{N}$-hard if every $A\in\mathcal{N}$ admits a polynomial-time many-one reduction to $D$.
 
-The *minimum entropy* required is kT · ln(searchSpaceSize).
+Calling $D$ a demon problem adds physical motivation but no additional mathematical assumption. It may encode a control decision, a search-derived yes/no question, or a microscopic sorting criterion.
 
-## 3. Main Results
+### 2.2 Complexity transfer
 
-### 3.1 Theorem: Step Count Bound (Theorem 2)
+**Theorem 2.4 (Physical hardness forces collapse).** Let $(\mathcal{F},\mathcal{P},\mathcal{N})$ be a physical-complexity model. If $D$ is $\mathcal{N}$-hard and $D\in\mathcal{F}$, then
 
-**Theorem.** If every step of an EntropyBudgetSystem costs at least c > 0, then the number of steps satisfies n ≤ B/c.
+$$
+\mathcal{N}\subseteq\mathcal{P}.
+$$
 
-*Proof sketch.* By the cost lower bound, n · c ≤ Σᵢ c(i) ≤ B, giving n ≤ B/c. □
+Consequently, $\mathcal{P}=\mathcal{N}$.
 
-**PEGB Analysis:**
-- **P (Proof)**: Formally verified; uses `Finset.sum_le_sum` and `le_div_iff₀`.
-- **E (Example)**: A computer at T = 300K with 1 joule of energy has budget B ≈ 3.5 × 10²⁰ bits. At c = 1 bit per step, it can perform at most 3.5 × 10²⁰ irreversible steps.
-- **G (Generalization)**: The bound generalizes to non-uniform costs: if c_min = min{c(i)}, then n ≤ B/c_min.
-- **B (Boundary)**: The bound is tight: if all costs equal c, then n = B/c exactly saturates the budget.
+**Proof sketch.** By the extended Church–Turing inclusion, $D\in\mathcal{F}$ implies $D\in\mathcal{P}$. Let $A\in\mathcal{N}$. Hardness supplies a polynomial-time reduction from $A$ to $D$. Reduction closure of $\mathcal{P}$ then yields $A\in\mathcal{P}$. Since $A$ was arbitrary, $\mathcal{N}\subseteq\mathcal{P}$. Combining this with $\mathcal{P}\subseteq\mathcal{N}$ gives equality. $\square$
 
-### 3.2 Theorem: Reversible Computations are Free (Theorem 3)
+The theorem identifies the exact assumptions behind a common physical-complexity claim. A physical device solving an $\mathcal{N}$-hard task is not enough by itself: the device must satisfy the chosen polynomial physical bound, and that bound must lie within deterministic polynomial simulation. Under those conditions, the conclusion follows from completeness transfer.
 
-**Theorem.** For any reversible computation R, we have R.forward ∘ R.backward = id.
+**Theorem 2.5 (Collapse makes nondeterministic demon decisions efficient).** If $\mathcal{N}\subseteq\mathcal{P}$ and $D\in\mathcal{N}$, then $D\in\mathcal{P}$.
 
-*Proof sketch.* Direct from the left inverse property. □
+**Proof sketch.** This is direct application of the class inclusion to $D$. $\square$
 
-**PEGB Analysis:**
-- **P**: Proved via `funext` and `R.left_inv`.
-- **E**: The NOT gate (bit flip) is reversible: NOT ∘ NOT = id. Cost: 0 entropy.
-- **G**: This extends to any group action on a state space; group elements are reversible.
-- **B**: Non-bijective maps are strictly irreversible. A function f : {0,1} → {0} has Landauer cost log(2) = ln(2).
+Theorem 2.5 is intentionally modest. It establishes efficient decidability, not a particular circuit layout, reversible implementation, energy budget, or memory-reset protocol.
 
-### 3.3 Theorem: Maxwell's Demon Total Entropy Bound (Theorem 4)
+## 3. Finite thermodynamic framework
 
-**Theorem.** For any Maxwell's demon d, the total entropy decrease satisfies:
-$$d.\text{totalEntropyDecrease} \leq d.\text{totalInfo} \cdot kT \cdot \ln(2)$$
+### 3.1 Logical erasure
 
-*Proof sketch.* Multiply the per-particle Landauer constraint by the number of particles N (non-negative). □
+Let $B=\{0,1\}$ be the state space of one bit.
 
-**PEGB Analysis:**
-- **P**: Verified; uses `mul_le_mul_of_nonneg_left`.
-- **E**: A demon processing 1000 particles, gathering 1 bit each at T = 300K: max entropy decrease = 1000 · kT · ln(2) ≈ 2.87 × 10⁻¹⁸ J/K.
-- **G**: Generalizes `maxwell_demon_bound` from `Shared/CryptoEntropyBridges.lean` to arbitrary particle counts.
-- **B**: Equality is achieved by an ideal demon that extracts exactly kT·ln(2) per bit of information.
+**Definition 3.1 (One-bit erasure).** The reset map $e:B\to B$ is defined by
 
-### 3.4 Theorem: Exponential Search Linear Entropy (Theorem 6)
+$$
+e(0)=0,\qquad e(1)=0.
+$$
 
-**Theorem.** kT · log(2ⁿ) = n · kT · log(2).
+**Lemma 3.2 (Logical irreversibility of erasure).** The map $e$ is not injective.
 
-*Proof sketch.* Apply `Real.log_pow` to rewrite log(2ⁿ) = n · log(2). □
+**Proof sketch.** The distinct inputs $0$ and $1$ have the same image. $\square$
 
-**PEGB Analysis:**
-- **P**: Verified; uses `Real.log_pow` and `mul_left_comm`.
-- **E**: For n = 256 (AES key search), entropy cost = 256 · kT · ln(2).
-- **G**: For any base b: kT · log(bⁿ) = n · kT · log(b).
-- **B**: For n = 0, both sides equal 0 (trivial search requires no entropy).
+This non-injectivity is independent of implementation time. An operation may compute $e$ in constant, polynomial, or exponential time; in every case, the output alone fails to determine the input.
 
-### 3.5 Theorem: Entropy Gap Unbounded (Theorem 12)
+### 3.2 Work ensembles
 
-**Theorem.** For any c > 0 and any M ∈ ℝ, there exists n ∈ ℕ such that c · n − c · log(n) > M.
+Let $\Omega$ be a finite, nonempty trajectory space. Each $\omega\in\Omega$ represents a possible microscopic realization of the process.
 
-*Proof sketch.* The function f(n) = n − log(n) tends to infinity since log(n)/n → 0. By the Archimedean property, f(n) eventually exceeds any bound. Scaling by c preserves this. □
+**Definition 3.3 (Finite probability mass function).** A function $p:\Omega\to\mathbb{R}$ is a probability mass function when
 
-**PEGB Analysis:**
-- **P**: Most sophisticated proof in the collection; uses Filter.Tendsto, continuous_mul_log, and const_mul_atTop.
-- **E**: For c = 1, M = 100: n = 200 gives 200 − ln(200) ≈ 194.7 > 100.
-- **G**: The gap holds for any sublinear function g(n): c · n − g(n) → ∞ whenever g(n)/n → 0.
-- **B**: If we replace the linear term by c · log(n), the gap becomes 0 (no separation within P).
+$$
+p(\omega)\geq 0\quad\text{for every }\omega\in\Omega,
+\qquad
+\sum_{\omega\in\Omega}p(\omega)=1.
+$$
 
-### 3.6 Theorem: Demon Composition (Theorem 13)
+**Definition 3.4 (Expected work).** For a work function $W:\Omega\to\mathbb{R}$, define
 
-**Theorem.** For demons d₁, d₂ at the same temperature:
-$$d_1.\text{totalEntropyDecrease} + d_2.\text{totalEntropyDecrease} \leq (d_1.\text{totalInfo} + d_2.\text{totalInfo}) \cdot kT \cdot \ln(2)$$
+$$
+\mathbb{E}_p[W]=\sum_{\omega\in\Omega}p(\omega)W(\omega).
+$$
 
-*Proof sketch.* Apply the individual demon bounds and add. □
+Let $k>0$ denote Boltzmann’s constant and $T>0$ the absolute temperature. Set
 
-**PEGB Analysis:**
-- **P**: Verified; uses `add_le_add` with individual bounds.
-- **E**: Two demons, each processing 500 particles at 1 bit/particle: combined bound = 1000 · kT · ln(2).
-- **G**: Extends to any finite composition of demons (by induction).
-- **B**: The bound is tight when both demons achieve equality (ideal Landauer demons).
+$$
+\beta=(kT)^{-1}.
+$$
 
-## 4. The P ≠ NP Connection
+For reset of a uniformly unknown bit, the free-energy scale is
 
-### 4.1 The Thermodynamic Argument
+$$
+\Delta F=kT\ln 2.
+$$
 
-The entropy gap theorem (Theorem 12) establishes the mathematical foundation for the thermodynamic argument against P = NP:
+**Definition 3.5 (Finite Jarzynski condition).** The pair $(p,W)$ satisfies the Jarzynski condition at inverse thermal energy $\beta$ and free-energy change $\Delta F$ if
 
-1. **NP search entropy**: Verifying an NP certificate takes polynomial time, but *finding* one requires (absent a polynomial algorithm) searching 2ⁿ candidates. By Theorem 6, this requires n · kT · ln(2) entropy.
+$$
+\sum_{\omega\in\Omega}p(\omega)e^{-\beta W(\omega)}
+=e^{-\beta\Delta F}.
+$$
 
-2. **P computation entropy**: A polynomial-time algorithm on input size n makes at most n^k steps, each destroying at most one bit. Total entropy: at most n^k · kT · ln(2).
+The equality permits fluctuations. It does not require $W(\omega)\geq\Delta F$ trajectory by trajectory.
 
-3. **Entropy gap**: The gap between n · kT · ln(2) (NP search) and k · log(n) · kT · ln(2) (P information requirement) grows without bound by Theorem 12.
+### 3.3 Mean-work bound
 
-4. **Physical constraint**: By the step count bound (Theorem 2), a physical system with entropy budget B can make at most B / (kT · ln(2)) irreversible decisions.
+**Theorem 3.6 (Finite Jarzynski–Landauer inequality).** Let $p$ be a finite probability mass function and $W$ a real-valued work function. If $\beta>0$ and the finite Jarzynski condition holds, then
 
-5. **Conclusion**: If P = NP, there would exist a polynomial-time algorithm that achieves what brute-force search does, using exponentially less entropy. This would require a Maxwell's demon that violates Landauer's principle (Theorem 4).
+$$
+\mathbb{E}_p[W]\geq\Delta F.
+$$
 
-### 4.2 Caveats
+For one-bit erasure with $k>0$ and $T>0$,
 
-This argument does not prove P ≠ NP. It shows that *within the EBC model*, P = NP would violate thermodynamic constraints. The argument assumes:
+$$
+\mathbb{E}_p[W]\geq kT\ln 2>0.
+$$
 
-- The EBC model correctly captures all relevant physics.
-- No physical process can circumvent Landauer's principle.
-- The Extended Church-Turing Thesis holds.
+**Proof sketch.** The function $x\mapsto e^x$ is convex. Jensen’s inequality applied to the values $-\beta W(\omega)$ gives
 
-Each of these assumptions is debatable, particularly in light of quantum computing and potential exotic physics.
+$$
+e^{-\beta\mathbb{E}_p[W]}
+\leq
+\sum_{\omega\in\Omega}p(\omega)e^{-\beta W(\omega)}.
+$$
 
-## 5. Falsifiable Conjecture
+The Jarzynski condition identifies the right side with $e^{-\beta\Delta F}$. Taking logarithms yields
 
-**Conjecture (Entropy Hierarchy Correspondence).** For each level k of the polynomial hierarchy (PH), there exists a constant C_k such that any physical implementation of a Σ_k^P computation on input size n requires at least C_k · n^(1/k) · kT · ln(2) entropy. Moreover, C_{k+1} > C_k (strict hierarchy in entropy costs).
+$$
+-\beta\mathbb{E}_p[W]\leq -\beta\Delta F.
+$$
 
-**Test.** This conjecture can be tested by:
-1. Implementing concrete Σ_k^P-complete problems for small k (SAT for k=1, ∀∃-SAT for k=2).
-2. Measuring the actual entropy production of optimized implementations.
-3. Comparing the measured entropy to the predicted lower bound.
+Division by the negative quantity $-\beta$ reverses the inequality, giving $\mathbb{E}_p[W]\geq\Delta F$. For one bit, $k>0$, $T>0$, and $\ln 2>0$, so $kT\ln 2>0$. $\square$
 
-If the entropy production scales as predicted, the conjecture is supported. If an implementation achieves lower entropy than C_k · n^(1/k) · kT · ln(2), the conjecture is refuted.
+Equality is possible in the idealized bound. For example, if every trajectory has constant work $W(\omega)=\Delta F$, then the Jarzynski condition holds exactly and $\mathbb{E}_p[W]=\Delta F$. The theorem requires strict positivity of the mean, not strict excess above the Landauer scale.
 
-## 6. Algorithm: Entropy-Optimal Search
+## 4. Main separation results
 
-We describe an algorithm that performs search while minimizing entropy production:
+We now combine the class-theoretic and thermodynamic conclusions. Their conjunction is meaningful because a demon can have both a decision problem and a physical memory protocol. The proof does not derive one resource measure from the other.
 
-```
-ENTROPY_OPTIMAL_SEARCH(candidates, budget):
-    // Binary search minimizes information-theoretic entropy
-    // Each comparison costs 1 bit = kT·ln(2) entropy
-    if |candidates| ≤ 1:
-        return candidates[0]
-    mid = |candidates| / 2
-    if oracle(candidates[mid]):  // 1 bit of entropy
-        budget -= kT·ln(2)
-        if budget < 0: ABORT("entropy budget exhausted")
-        return ENTROPY_OPTIMAL_SEARCH(candidates[:mid], budget)
-    else:
-        budget -= kT·ln(2)
-        if budget < 0: ABORT("entropy budget exhausted")
-        return ENTROPY_OPTIMAL_SEARCH(candidates[mid:], budget)
-```
+**Theorem 4.1 (Complexity–thermodynamics separation).** Let $(\mathcal{F},\mathcal{P},\mathcal{N})$ be a physical-complexity model, and let $D\in\mathcal{N}$ be a demon decision problem. Assume the collapse $\mathcal{N}\subseteq\mathcal{P}$. Suppose an implementation resets a uniformly unknown bit and is described by a finite trajectory space $\Omega$, a probability mass function $p$, and work values $W$. If $k>0$, $T>0$, and
 
-**Complexity**: O(log N) entropy for N candidates, matching the information-theoretic lower bound.
+$$
+\sum_{\omega\in\Omega}p(\omega)
+\exp\!\left(-\frac{W(\omega)}{kT}\right)
+=
+\exp\!\left(-\frac{kT\ln 2}{kT}\right),
+$$
 
-## 7. Cross-Domain Connections
+then all three of the following statements hold:
 
-### 7.1 Connection to Cryptography
+1. $D\in\mathcal{P}$;
+2. the reset map is not injective;
+3. $\mathbb{E}_p[W]>0$.
 
-The entropy budget framework connects to cryptographic security:
-- Breaking an n-bit key requires searching 2ⁿ possibilities → entropy cost n · kT · ln(2).
-- By the step count bound, this requires at least n / c irreversible steps.
-- This gives a *physics-based* lower bound on the time to break a cryptosystem.
+**Proof sketch.** Statement 1 follows from Theorem 2.5. Statement 2 follows from Lemma 3.2. The displayed condition is the Jarzynski condition with $\beta=(kT)^{-1}$ and $\Delta F=kT\ln 2$, so Theorem 3.6 gives
 
-### 7.2 Connection to `maxwell_demon_bound`
+$$
+\mathbb{E}_p[W]\geq kT\ln 2>0.
+$$
 
-Our `demon_total_entropy_bound` (Theorem 4) generalizes the `maxwell_demon_bound` from `Shared/CryptoEntropyBridges.lean` from single particles to arbitrary particle counts, with the composition theorem (Theorem 13) extending to sequential demon processes.
+Thus statement 3 holds. $\square$
 
-### 7.3 Connection to Information Theory
+**Corollary 4.2 (No zero-work demon from class collapse).** Under the assumptions of Theorem 4.1, the conjunction
 
-The `EntropyBudgetSystem` is essentially a resource theory: entropy budget is the resource, and computational steps are the operations that consume it. This connects to the broader program of resource theories in quantum information.
+$$
+D\in\mathcal{P}
+\quad\text{and}\quad
+\mathbb{E}_p[W]=0
+$$
+
+is impossible.
+
+**Proof sketch.** Theorem 4.1 gives $\mathbb{E}_p[W]>0$, contradicting $\mathbb{E}_p[W]=0$. $\square$
+
+**Corollary 4.3 (Physical hard demon yields equality but not free erasure).** Suppose $D$ is $\mathcal{N}$-hard and $D\in\mathcal{F}$. Then $\mathcal{P}=\mathcal{N}$. If an implementation of the resulting efficient demon additionally performs the one-bit erasure of Theorem 4.1, its expected erasure work remains at least $kT\ln 2>0$.
+
+**Proof sketch.** The class equality follows from Theorem 2.4. The positive work bound follows independently from Theorem 3.6. $\square$
+
+These results refute the conditional implication
+
+$$
+\mathcal{P}=\mathcal{N}
+\quad\Longrightarrow\quad
+\text{zero thermodynamic cost of erasure}.
+$$
+
+They do not refute the premise, nor do they derive its negation from thermodynamics. Instead, they show that the proposed route from the premise to a second-law violation is invalid in the stated finite model.
+
+## 5. Algorithms and numerical demonstrations
+
+The theorems are structural, but their ingredients admit transparent computational demonstrations.
+
+### 5.1 Reduction-transfer audit
+
+A reduction-transfer audit represents a finite collection of problems as vertices of a directed graph. An edge $A\to B$ means that $A$ reduces to $B$. Starting from known members of $\mathcal{P}$, reverse reachability marks every problem that reduces along a path to a known easy problem.
+
+**Algorithm 5.1 (Finite reduction-closure propagation).** Given a finite directed reduction graph and a set $E$ of known polynomial-time problems, repeatedly add $A$ whenever there is an edge $A\to B$ with $B$ already marked.
+
+The procedure terminates after at most the number of vertices many additions. With adjacency lists organized in reverse, its runtime is $O(V+E)$ and its memory use is $O(V+E)$, where $V$ and $E$ are the numbers of vertices and edges. This finite graph procedure illustrates the proof of Theorem 2.4; it is not an algorithm for deciding membership in semantic complexity classes.
+
+### 5.2 Jarzynski audit
+
+**Algorithm 5.2 (Finite Jarzynski ensemble audit).** Given arrays $(p_i)$ and $(W_i)$, first check $p_i\geq0$ and $\sum_i p_i=1$. Compute
+
+$$
+J=\sum_i p_i e^{-W_i/(kT)},
+\qquad
+J_*=e^{-\Delta F/(kT)},
+\qquad
+\overline{W}=\sum_i p_iW_i.
+$$
+
+The ensemble satisfies the equality within numerical tolerance when $J\approx J_*$. The Landauer audit then checks $\overline{W}\geq\Delta F$ within tolerance. The running time is $O(n)$ and auxiliary space is $O(1)$ beyond the input arrays.
+
+A stable example uses constant work $W_i=\Delta F$ for every trajectory. Then $J=e^{-\Delta F/(kT)}$ exactly in symbolic arithmetic and $\overline{W}=\Delta F$. A nonconstant two-trajectory example can be constructed in dimensionless units $kT=1$. Choose probability $1/2$, lower work $W_1=0.2$, and target $\Delta F=\ln2$. Solve
+
+$$
+\frac12e^{-W_1}+rac12e^{-W_2}=e^{-\Delta F}=rac12
+$$
+
+for $W_2$, obtaining
+
+$$
+W_2=-\ln\!\left(1-e^{-0.2}\right)\approx1.70777.
+$$
+
+The mean is approximately $0.95388$, which exceeds $\ln2\approx0.69315$. One trajectory falls below the Landauer scale, yet the ensemble mean obeys the bound. This demonstrates why fluctuation-level statements and expectation-level statements must not be conflated.
+
+### 5.3 Temperature and bit-count scaling
+
+For $N$ independently erased uniformly unknown bits, additivity gives the benchmark
+
+$$
+W_{\min}(N,T)=NkT\ln2.
+$$
+
+Evaluating this formula over a grid of $N$ and $T$ takes $O(mn)$ time for $m$ temperatures and $n$ bit counts, or $O(1)$ time for a single pair. At $T=300\,\mathrm{K}$ with $k=1.380649\times10^{-23}\,\mathrm{J/K}$,
+
+$$
+kT\ln2\approx2.87098\times10^{-21}\,\mathrm{J}.
+$$
+
+The bound scales linearly in both $N$ and $T$. This formula is a lower-bound scale under the model, not a claim that contemporary hardware attains it.
+
+## 6. Applications and interpretation
+
+### 6.1 Maxwellian feedback control
+
+A repeatable demon cycle has at least three conceptually distinct stages: measurement, conditional control, and memory restoration. Complexity theory may constrain the conditional decision. Reversible design may reduce dissipation in measurement and evaluation by retaining correlations and computational history. If restoration maps multiple memory states to a common blank state, however, it performs logical erasure. Theorem 4.1 applies to that erasure whenever the finite Jarzynski assumptions hold.
+
+The theorem therefore shifts the question. Instead of asking whether an efficient demon violates thermodynamics, one must specify the complete information flow: which records are retained, which outputs remain correlated with the environment, and which states are merged during cleanup.
+
+### 6.2 Machine learning
+
+In machine learning, evaluating a trained model, finding a model, and deleting training state are distinct tasks. A hypothetical complexity collapse could change the asymptotic accessibility of optimization or verification problems. It would not by itself specify a thermodynamically reversible data pipeline. Checkpoints, activations, random seeds, and intermediate search histories can be uncomputed, retained, exported, or erased; those choices govern information loss.
+
+This distinction is especially relevant to accelerators that reuse bounded workspace. A polynomial-time inference procedure can still overwrite memory. Conversely, a reversible simulation can preserve history at a cost in space and later uncompute it. Runtime class alone does not decide the thermodynamic outcome.
+
+### 6.3 Cryptographic and secure computation
+
+Security devices routinely clear keys and transient state. Efficient computation of a cryptographic function is not equivalent to free destruction of its secret inputs. The reset map remains many-to-one even when the preceding function evaluation is easy. Physical attacks and practical energy costs lie beyond the finite abstraction here, but the conceptual separation survives: algorithmic tractability concerns evaluation, while Landauer cost concerns discarded distinctions.
+
+### 6.4 Reversible computing
+
+Reversible computation clarifies rather than contradicts the result. An injective logical evolution can retain enough information to reconstruct its input. Standard irreversible computations may be embedded in reversible ones by carrying ancillary history. After copying out the desired result, one can run the computation backward to clean temporary state. This can avoid erasing the entire history, but any final reset of an unknown output or residual record still requires separate accounting.
+
+Thus a collapse may make reversible evaluation easier by reducing the runtime of the underlying decision. It does not automatically provide zero-work cyclic cleanup. Evaluation and reset are different maps.
+
+## 7. Scope, limitations, and failure modes
+
+First, the extended Church–Turing inclusion $\mathcal{F}\subseteq\mathcal{P}$ is explicit. Models involving analog precision, unbounded advice, exotic spacetime, quantum resources under a differently chosen reference class, or oracle-like primitives may not satisfy this inclusion as stated. The collapse theorem is conditional on the model.
+
+Second, the hard-problem theorem uses polynomial many-one reductions and closure under those reductions. A different reduction notion requires a corresponding closure property. Hardness without transfer closure is insufficient.
+
+Third, efficient decidability does not guarantee an efficient search witness unless an appropriate self-reduction or search-to-decision theorem is supplied. The present claims concern decision problems. They should not be silently upgraded to arbitrary search or optimization procedures.
+
+Fourth, the thermodynamic theorem is finite and expectation-based. It assumes a normalized finite ensemble and a Jarzynski equality. Rare trajectories can lie below $kT\ln2$; the conclusion concerns $\mathbb{E}[W]$. Tail bounds require additional independence or fluctuation assumptions.
+
+Fifth, positive temperature is essential. The expression $(kT)^{-1}$ is undefined at $T=0$, and the strict positivity argument fails if $k$ or $T$ is nonpositive. Approaching zero temperature raises separate questions about preparation time, control precision, and quantum ground states.
+
+Sixth, the result does not assert that every computation contains a one-bit erasure. A logically reversible implementation may avoid the specified map during evaluation. The theorem applies when the implementation actually resets a uniformly unknown bit and obeys the stated dynamics.
+
+Finally, the Landauer scale is not a complete engineering energy model. Real devices dissipate through friction, leakage, error correction, control, communication, and finite-speed operation. The lower bound isolates one contribution due to information loss.
 
 ## 8. Discussion
 
-### 8.1 Strengths of the Framework
+The central conceptual result is a type separation between two forms of resource accounting. A polynomial bound is asymptotic: it classifies how time or another computational resource grows with an input parameter. The Landauer quantity is informational and thermodynamic: it measures a free-energy cost associated with merging logical alternatives under specified physical conditions. Neither quantity is a monotone function of the other without additional hypotheses.
 
-1. **Rigor**: All results are formally verified, eliminating the possibility of subtle errors in the mathematical arguments.
-2. **Generality**: The framework applies to any computational system that respects Landauer's principle.
-3. **Falsifiability**: The entropy hierarchy conjecture is experimentally testable.
+Both halves of the argument nevertheless share a structural pattern. On the complexity side, reductions transfer membership from a hard target back to all source problems. On the thermodynamic side, convexity transfers an exponential-work equality to a lower bound on ordinary expected work. Each transfer is valid in its own category. The error occurs only when one treats efficient reduction transfer as if it erased an entropy term.
 
-### 8.2 Limitations
+The result also clarifies the phrase “the second law would be violated if $\mathsf{P}=\mathsf{NP}$.” As a bare statement, it is unsupported. A collapse can make an $\mathsf{NP}$ decision efficient. To infer a thermodynamic violation, one would additionally need an implementation whose complete cyclic operation extracts net work without compensating entropy production. Under the finite one-bit Jarzynski assumptions, zero-work erasure is specifically excluded. The collapse supplies no route around that inequality.
 
-1. **Model assumptions**: The EBC model is a simplification of real physical computation.
-2. **Quantum computing**: Quantum parallelism may provide entropy savings not captured by our model.
-3. **Reversible computing**: Fully reversible computations evade the entropy bounds entirely.
+A stronger research program should therefore focus on mechanisms rather than slogans. Which parts of a demon’s computation can be implemented reversibly? How much history must be retained? What is the time–space overhead of uncomputation? Which correlations count as exported entropy? How do finite-error and fluctuation constraints scale over repeated cycles? These questions can connect complexity to thermodynamics without identifying them.
 
-### 8.3 Open Questions
+## 9. Future work
 
-1. Can the entropy gap theorem be strengthened to give explicit bounds on the separation between complexity classes?
-2. Does the framework extend to quantum computation, where measurement is the only irreversible step?
-3. Is there a natural notion of "entropy complexity" that refines standard time complexity?
+A first direction is a quantitative complexity–dissipation tradeoff. For finite bounded-error processes that reuse workspace, one may seek a lower bound proportional to the conditional entropy of discarded history, together with reversible constructions attaining the bound up to polylogarithmic overhead.
 
-## 9. Future Work
+A second direction is the reversible simulation boundary for nondeterministic search. Even if decision collapses, successful search computations may admit reversible polynomial-overhead evaluation while still paying for output or history reset. Distinguishing reversible evaluation from irreversible cleanup is central.
 
-1. **Quantum extension**: Extend the framework to quantum computation, where unitary operations are reversible and only measurement produces entropy.
-2. **Space complexity**: Connect the entropy budget to space complexity through the physics of memory.
-3. **Experimental verification**: Measure the actual Landauer cost of specific computations and compare to our bounds.
+A third direction extends the physical simulation model to levels of the polynomial hierarchy. Closure under composition, complementation, and bounded oracle access may turn one efficiently realizable complete process into a hierarchy-collapse criterion.
 
-## References
+A fourth direction replaces an expectation-only result with a fluctuation-robust statement. Under a Crooks-type relation and repeated independent erasures, one may seek an exponential bound on the probability that total work falls below the aggregate Landauer threshold.
 
-[1] R. Landauer, "Irreversibility and Heat Generation in the Computing Process," IBM Journal of Research and Development, 1961.
+A fifth direction concerns the zero-temperature boundary. Since the present inverse-temperature model requires $T>0$, a separate framework is needed to analyze cooling costs, ground-state preparation, degeneracy, and finite-time control as $T\to0^+$.
 
-[2] C. H. Bennett, "Logical Reversibility of Computation," IBM Journal of Research and Development, 1973.
+## 10. Conclusion
 
-[3] C. H. Bennett, "The Thermodynamics of Computation — A Review," International Journal of Theoretical Physics, 1982.
+A polynomially realizable physical solver for a nondeterministic-polynomial-hard problem forces deterministic and nondeterministic polynomial decision classes to coincide, provided the extended Church–Turing inclusion and reduction closure hold. A class collapse, in turn, makes every nondeterministic-polynomial demon decision problem efficient.
 
-[4] W. H. Zurek, "Algorithmic Randomness and Physical Entropy," Physical Review A, 1989.
+These are complexity conclusions. For an implementation that erases a uniformly unknown bit in a finite positive-temperature Jarzynski model, a separate theorem gives logical non-injectivity and the strict mean-work bound
 
-[5] S. Aaronson, "NP-complete Problems and Physical Reality," ACM SIGACT News, 2005.
+$$
+\mathbb{E}[W]\geq kT\ln2>0.
+$$
 
-[6] M. P. Frank, "The Physical Limits of Computing," Computing in Science & Engineering, 2002.
+Consequently, efficient decision and zero-cost erasure cannot be identified. Even under a class collapse, the specified erasing demon cannot have zero mean erasure work. Complexity may govern which decisions are reachable quickly; thermodynamics continues to charge for information that is actually discarded.

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "cf73743c",
-      "domain": "Shared",
-      "key_insight": "# Future directions\n\n1. **State the CSS dictionary with two classical codes precisely.**  The mission's\n   expression `C₁/C₂` requires `C₂ ⊆ C₁`, while the usual CSS commutation condition\n   is formul",
-      "quality_score": 0.75,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-19T00:45:02",
-      "title": "Quantum Error Correction from Homological Algebra: CSS Codes as Cohomology"
-    },
-    {
       "cycle_id": "7bc47166",
       "domain": "Shared",
       "key_insight": "# Future Directions\n\n## 1. Physical comparison gates with explicit reset registers\n\n**Conjecture.** For a comparator network implemented by reversible gates with a designated\nreset protocol, the minim",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-20T03:35:18",
       "title": "Speculative: Topological Quantum Error Correction from Mathematical Structures"
+    },
+    {
+      "cycle_id": "e3542946",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions\n\n## 1. Quantitative Complexity–Dissipation Tradeoff\n\n**Conjecture.** For a family of finite decision processes with bounded error, any\nimplementation whose expected running time is",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-20T05:36:00",
+      "title": "Speculative: Computational Complexity as Physical Law"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "b71e4678",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions: Rooted and Ordinary Path Irregularity\n\n## 1. Polynomial-profile separation for bounded path lengths\n\nFor every fixed integer `k ≥ 4`, there should be a branch-attachment construct",
-      "quality_score": 0.67,
-      "sorry_count": 0,
-      "theorem_count": 20,
-      "timestamp": "2026-07-16T07:24:13",
-      "title": "ArXiv paper: From roots to paths: graphs simultaneously irregular with respect to rooted and ordinar"
-    },
     {
       "cycle_id": "d1e62d74",
       "domain": "Novelty",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-20T03:35:18",
       "title": "Speculative: Topological Quantum Error Correction from Mathematical Structures"
+    },
+    {
+      "cycle_id": "e3542946",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions\n\n## 1. Quantitative Complexity–Dissipation Tradeoff\n\n**Conjecture.** For a family of finite decision processes with bounded error, any\nimplementation whose expected running time is",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-20T05:36:00",
+      "title": "Speculative: Computational Complexity as Physical Law"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.74
     }
   ],
-  "last_updated": "2026-07-20T03:35:18",
+  "last_updated": "2026-07-20T05:36:00",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "f4980b02",
-        "quality": 0.74,
-        "theorems": 18,
-        "title": "ArXiv paper: Counting oriented spanning trees in generalized join digraphs"
-      },
-      {
         "cycle_id": "ad5825e2",
         "quality": 0.71,
         "theorems": 0,
@@ -3575,6 +3569,12 @@
         "quality": 0.67,
         "theorems": 20,
         "title": "Speculative: Mathematics as an Evolving Ecosystem"
+      },
+      {
+        "cycle_id": "e3542946",
+        "quality": 0.78,
+        "theorems": 0,
+        "title": "Speculative: Computational Complexity as Physical Law"
       }
     ],
     "Novelty": [

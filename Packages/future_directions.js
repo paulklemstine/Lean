@@ -288,7 +288,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Mega-Sphere: All Dimensions at Once"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1a224f43",
     "description": "Formalize a game where one player (Mortal) has finite computation and the other (Eternity) has transfinite computation. Prove that Mortal can always force at least omega rounds before losing, and that with bounded nondeterminism, Mortal can force omega-squared rounds. Connect to Infinite Time Turing Machines.",
     "domains": [
       "Novelty",
@@ -298,7 +298,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T20:43:51.867187+00:00",
     "title": "Infinite Games Against Death: Immortality Strategies"
   },
@@ -3193,7 +3193,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "team",
     "source_exp_id": "2607.16037v1",
     "status": "available",
-    "timestamp": "2026-07-20T04:16:41.422553+00:00",
+    "timestamp": "2026-07-20T05:36:04.768655+00:00",
     "title": "ArXiv paper: Contextual Fraction on Permutation Gain Graphs: Exact Algorithms, Query Lower Bounds, and Dynamic Maintenance"
   },
   {
@@ -3203,12 +3203,12 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0503",
+    "id": "fd_0504",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.16079v1",
     "status": "available",
-    "timestamp": "2026-07-20T04:16:44.737651+00:00",
+    "timestamp": "2026-07-20T05:36:08.076511+00:00",
     "title": "ArXiv paper: Equidistribution for abelian extensions of global fields"
   },
   {

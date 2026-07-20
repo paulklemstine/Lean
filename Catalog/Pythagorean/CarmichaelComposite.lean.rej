@@ -1,6 +1,6 @@
 --- CarmichaelComposite.lean
 +++ CarmichaelComposite.lean
-@@ -157,25 +157,18 @@
+@@ -158,25 +159,11 @@
      ∀ n, 14 ≤ n → n ≤ 10000 → ¬Nat.Prime n → n > 1 → 1 < fibCoprimePart n := by
    native_decide
  
@@ -9,19 +9,13 @@
 -lemma fib_carmichael_large (n : ℕ) (hn : 10000 < n) (hnp : ¬Nat.Prime n) (hn1 : n > 1) :
 -    ∃ p, Nat.Prime p ∧ p ∣ Nat.fib n ∧ ∀ k, 0 < k → k < n → ¬(p ∣ Nat.fib k) := by
 -  exact fib_carmichael_composite n (by omega) hnp
-+/-
-+The former version stated an unbounded `fib_carmichael_large` theorem here, but
-+its proof merely called the composite theorem whose verified scope ends at
-+`10000`.  That was circular and omitted the essential growth argument, so the
-+unsupported declaration has been removed rather than represented as a theorem.
-+-/
- 
+-
 -/-- For n ≥ 13 (either prime or composite), F(n) has a primitive prime divisor.
 -    This combines the prime case (from CarmichaelHelper) with the composite case. -/
 -theorem fib_carmichael (n : ℕ) (hn : 13 ≤ n) :
-+/-- For `13 ≤ n ≤ 10000`, `F(n)` has a primitive prime divisor.  This combines
-+    the prime case with the fully checked finite composite computation. -/
-+theorem fib_carmichael (n : ℕ) (hn : 13 ≤ n) (hnupper : n ≤ 10000) :
++/-- For `13 ≤ n ≤ 10000`, `F(n)` has a primitive prime divisor.  This
++combines the prime argument with the certified composite computation. -/
++theorem fib_carmichael (n : ℕ) (hn : 13 ≤ n) (hn2 : n ≤ 10000) :
      ∃ p, Nat.Prime p ∧ p ∣ Nat.fib n ∧
        ∀ k, 0 < k → k < n → ¬(p ∣ Nat.fib k) := by
    by_cases hnp : Nat.Prime n

@@ -1,254 +1,158 @@
 #!/usr/bin/env python3
-"""
-Demonstration of the Entropy-Bounded Computation framework.
+"""Numerical demonstrations of complexity transfer and Landauer work bounds.
 
-Computes concrete numerical examples of the key theorems:
-1. Landauer cost of bit erasure
-2. Step count bounds from entropy budgets
-3. Maxwell's demon efficiency
-4. Entropy gap between P and NP search spaces
-5. Entropy costs of real-world computations
+The examples use only Python's standard library.  They illustrate finite reduction
+closure, one-bit erasure non-injectivity, exact construction of a two-trajectory
+Jarzynski ensemble, and linear Landauer scaling with temperature and bit count.
 """
 
-import math
+from __future__ import annotations
 
-# Physical constants
-k_B = 1.380649e-23  # Boltzmann constant (J/K)
-T_room = 300  # Room temperature (K)
-kT = k_B * T_room  # Thermal energy at room temperature
-LANDAUER_BIT = kT * math.log(2)  # Minimum cost to erase one bit
+from collections import deque
+from dataclasses import dataclass
+from math import exp, isclose, log
+from typing import Iterable, Mapping, Sequence
 
-
-def landauer_cost(n_bits: int, temperature: float = T_room) -> float:
-    """Minimum entropy cost of erasing n_bits at given temperature (in Joules)."""
-    return n_bits * k_B * temperature * math.log(2)
+BOLTZMANN_J_PER_K = 1.380649e-23
 
 
-def step_count_bound(budget_joules: float, cost_per_step: float) -> float:
-    """Maximum number of irreversible steps given an entropy budget."""
-    return budget_joules / cost_per_step
+def landauer_bound(bits: int, temperature_k: float,
+                    boltzmann: float = BOLTZMANN_J_PER_K) -> float:
+    """Return N k T ln(2) joules for N unbiased erased bits."""
+    if bits < 0:
+        raise ValueError("bits must be nonnegative")
+    if temperature_k <= 0.0 or boltzmann <= 0.0:
+        raise ValueError("temperature and Boltzmann constant must be positive")
+    return bits * boltzmann * temperature_k * log(2.0)
 
 
-def demon_bound(n_particles: int, bits_per_particle: float,
-                temperature: float = T_room) -> float:
-    """Maximum entropy decrease achievable by Maxwell's demon."""
-    return n_particles * bits_per_particle * k_B * temperature * math.log(2)
+def erasure(bit: int) -> int:
+    """Reset a bit to zero."""
+    if bit not in (0, 1):
+        raise ValueError("input must be 0 or 1")
+    return 0
 
 
-def entropy_gap(c: float, n: int) -> float:
-    """Entropy gap: c*n - c*log(n) for the P vs NP separation."""
-    if n <= 0:
-        return 0.0
-    return c * n - c * math.log(n)
+def is_injective_on_bits() -> bool:
+    """Check injectivity of reset on the two-element bit space."""
+    return len({erasure(0), erasure(1)}) == 2
 
 
-def search_entropy(search_space_size: int, temperature: float = T_room) -> float:
-    """Minimum entropy required to search a space of given size."""
-    if search_space_size <= 0:
-        return 0.0
-    return k_B * temperature * math.log(search_space_size)
+@dataclass(frozen=True)
+class JarzynskiReport:
+    probability_sum: float
+    exponential_average: float
+    target_exponential: float
+    expected_work: float
+    free_energy: float
+    equality_holds: bool
+    mean_bound_holds: bool
 
 
-def main():
-    print("=" * 70)
-    print("ENTROPY-BOUNDED COMPUTATION: Numerical Demonstrations")
-    print("=" * 70)
+def jarzynski_audit(probabilities: Sequence[float], works: Sequence[float],
+                     k_t: float, free_energy: float,
+                     tolerance: float = 1e-12) -> JarzynskiReport:
+    """Audit normalization, the finite Jarzynski equality, and the mean bound."""
+    if len(probabilities) != len(works) or not probabilities:
+        raise ValueError("probabilities and works must have equal nonzero length")
+    if k_t <= 0.0:
+        raise ValueError("kT must be positive")
+    if any(p < 0.0 for p in probabilities):
+        raise ValueError("probabilities must be nonnegative")
+    total = sum(probabilities)
+    if not isclose(total, 1.0, rel_tol=tolerance, abs_tol=tolerance):
+        raise ValueError("probabilities must sum to one")
+    exponential_average = sum(
+        p * exp(-work / k_t) for p, work in zip(probabilities, works)
+    )
+    target = exp(-free_energy / k_t)
+    expected = sum(p * work for p, work in zip(probabilities, works))
+    return JarzynskiReport(
+        total, exponential_average, target, expected, free_energy,
+        isclose(exponential_average, target,
+                rel_tol=tolerance, abs_tol=tolerance),
+        expected + tolerance >= free_energy,
+    )
 
-    # Demo 1: Landauer cost of bit erasure
-    print("\n--- Demo 1: Landauer Cost of Bit Erasure ---")
-    print(f"Temperature: {T_room} K")
-    print(f"kT = {kT:.4e} J")
-    print(f"Landauer cost per bit: {LANDAUER_BIT:.4e} J")
-    for n in [1, 8, 64, 256, 1024]:
-        cost = landauer_cost(n)
-        print(f"  Erasing {n:>4} bits costs at least {cost:.4e} J")
 
-    # Demo 2: Step count bounds
-    print("\n--- Demo 2: Step Count Bounds ---")
-    energies = [
-        ("AA battery (1 J)", 1.0),
-        ("Human body (100 W × 1 s)", 100.0),
-        ("Lightning bolt (1 GJ)", 1e9),
-        ("Sun per second (3.8e26 W)", 3.8e26),
-    ]
-    for name, energy in energies:
-        max_steps = step_count_bound(energy, LANDAUER_BIT)
-        print(f"  {name}: max {max_steps:.2e} irreversible steps")
+def two_trajectory_ensemble(lower_work: float, probability: float = 0.5,
+                            k_t: float = 1.0) -> tuple[list[float], list[float]]:
+    """Construct a two-path ensemble satisfying one-bit Jarzynski equality.
 
-    # Demo 3: Maxwell's demon
-    print("\n--- Demo 3: Maxwell's Demon Efficiency ---")
-    particles = [100, 1000, 1_000_000, 6.022e23]
-    for n in particles:
-        bound = demon_bound(int(n), 1.0)
-        print(f"  {n:.2e} particles, 1 bit/particle: "
-              f"max entropy decrease = {bound:.4e} J/K")
+    The free energy is kT ln(2).  The second work value is solved from the
+    equality after the first work and its probability are chosen.
+    """
+    if not (0.0 < probability < 1.0) or k_t <= 0.0:
+        raise ValueError("probability must be in (0,1) and kT must be positive")
+    target = 0.5  # exp(-ln 2)
+    remainder = (target - probability * exp(-lower_work / k_t)) / (1.0 - probability)
+    if not (0.0 < remainder):
+        raise ValueError("chosen lower work leaves no positive second weight")
+    upper_work = -k_t * log(remainder)
+    return [probability, 1.0 - probability], [lower_work, upper_work]
 
-    # Demo 4: Entropy gap (P vs NP)
-    print("\n--- Demo 4: Entropy Gap (P vs NP Signature) ---")
-    print("  The gap c*n - c*ln(n) grows without bound:")
-    c = 1.0
-    for n in [10, 100, 1000, 10000, 100000, 1000000]:
-        gap = entropy_gap(c, n)
-        print(f"  n = {n:>10}: gap = {gap:>15.2f}")
 
-    # Demo 5: Search entropy for cryptographic key spaces
-    print("\n--- Demo 5: Search Entropy for Key Spaces ---")
-    key_lengths = [56, 128, 256, 512, 1024, 4096]
-    for bits in key_lengths:
-        search_size = 2 ** bits
-        entropy = search_entropy(search_size)
-        print(f"  {bits:>4}-bit key: search entropy = {entropy:.4e} J "
-              f"= {bits} × kT·ln(2)")
+def reduction_closure(reduces_to: Mapping[str, Iterable[str]],
+                      known_easy: Iterable[str]) -> set[str]:
+    """Propagate easy status backward through a finite reduction graph.
 
-    # Demo 6: Comparison of P vs NP entropy costs
-    print("\n--- Demo 6: P vs NP Entropy Cost Comparison ---")
-    print("  For input size n, P costs O(log n) entropy, NP costs O(n) entropy:")
-    for n in [10, 100, 1000, 10000]:
-        p_cost = math.log(n) * LANDAUER_BIT
-        np_cost = n * LANDAUER_BIT
-        ratio = np_cost / p_cost
-        print(f"  n = {n:>6}: P cost = {p_cost:.4e} J, "
-              f"NP cost = {np_cost:.4e} J, ratio = {ratio:.1f}×")
+    If A maps to B, then A reduces to B.  Thus A is marked easy whenever B is.
+    Runtime is O(V+E) after construction of reverse adjacency lists.
+    """
+    predecessors: dict[str, set[str]] = {}
+    vertices: set[str] = set(known_easy)
+    for source, targets in reduces_to.items():
+        vertices.add(source)
+        for target in targets:
+            vertices.add(target)
+            predecessors.setdefault(target, set()).add(source)
+    easy = set(known_easy)
+    queue: deque[str] = deque(easy)
+    while queue:
+        target = queue.popleft()
+        for source in predecessors.get(target, ()):
+            if source not in easy:
+                easy.add(source)
+                queue.append(source)
+    return easy & vertices
 
-    # Demo 7: Physical limits of computation
-    print("\n--- Demo 7: Ultimate Physical Limits ---")
-    h_bar = 1.054571817e-34  # Reduced Planck constant
-    energy = 1.0  # 1 Joule
-    margolus_levitin = 2 * energy / (math.pi * h_bar)
-    max_bit_rate = margolus_levitin / (kT * math.log(2))
-    print(f"  Margolus-Levitin bound (1 J): {margolus_levitin:.4e} ops/s")
-    print(f"  Max irreversible bit rate: {max_bit_rate:.4e} bits/s")
-    print(f"  Modern CPU (~10 GHz): {1e10:.4e} ops/s")
-    print(f"  Gap to physical limit: {margolus_levitin / 1e10:.4e}×")
+
+def main() -> None:
+    print("COMPLEXITY–THERMODYNAMICS NUMERICAL DEMONSTRATION")
+    print("=" * 62)
+
+    graph = {
+        "Demon scheduling": ["Hard target"],
+        "Molecular partition": ["Hard target"],
+        "Auxiliary verifier": ["Demon scheduling"],
+    }
+    propagated = reduction_closure(graph, {"Hard target"})
+    print("\n1. Reduction closure from an easy hard target")
+    for problem in sorted(propagated):
+        print(f"   polynomial status transfers to: {problem}")
+
+    print("\n2. Logical reset")
+    print(f"   e(0)={erasure(0)}, e(1)={erasure(1)}")
+    print(f"   injective on bits? {is_injective_on_bits()}")
+
+    probabilities, works = two_trajectory_ensemble(lower_work=0.2)
+    delta_f = log(2.0)  # dimensionless units with kT=1
+    report = jarzynski_audit(probabilities, works, 1.0, delta_f)
+    print("\n3. Fluctuating two-trajectory ensemble in units kT=1")
+    print(f"   probabilities: {probabilities}")
+    print(f"   works: {[round(w, 8) for w in works]}")
+    print(f"   exponential average: {report.exponential_average:.12f}")
+    print(f"   Jarzynski target:    {report.target_exponential:.12f}")
+    print(f"   expected work:       {report.expected_work:.12f}")
+    print(f"   Landauer scale:      {report.free_energy:.12f}")
+    print(f"   equality holds? {report.equality_holds}")
+    print(f"   mean bound holds? {report.mean_bound_holds}")
+
+    print("\n4. Landauer scaling at 300 K")
+    for bits in (1, 1_000, 1_000_000, 1_000_000_000):
+        bound = landauer_bound(bits, 300.0)
+        print(f"   {bits:>12,d} bits: {bound:.6e} J")
 
 
 if __name__ == "__main__":
     main()
-
-
-#!/usr/bin/env python3
-"""
-Visualization: The Entropy Gap between P and NP search spaces.
-
-Plots the thermodynamic signature of P ≠ NP: the unbounded gap between
-linear entropy (NP search) and logarithmic entropy (P computation).
-"""
-
-import math
-
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
-
-
-def plot_entropy_gap():
-    """Plot the entropy gap c*n - c*log(n) showing P vs NP separation."""
-    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-    fig.suptitle('Thermodynamic Signature of P ≠ NP', fontsize=16, fontweight='bold')
-
-    n = np.linspace(1, 1000, 1000)
-
-    # Panel 1: NP vs P entropy costs
-    ax = axes[0, 0]
-    np_cost = n  # Linear: n bits
-    p_cost = np.log(n)  # Logarithmic: log(n) bits
-    ax.plot(n, np_cost, 'r-', linewidth=2, label='NP search: n bits')
-    ax.plot(n, p_cost, 'b-', linewidth=2, label='P computation: log(n) bits')
-    ax.fill_between(n, p_cost, np_cost, alpha=0.2, color='orange',
-                     label='Entropy gap')
-    ax.set_xlabel('Input size n')
-    ax.set_ylabel('Entropy cost (bits)')
-    ax.set_title('NP vs P Entropy Costs')
-    ax.legend(fontsize=9)
-    ax.grid(True, alpha=0.3)
-
-    # Panel 2: Entropy gap growth
-    ax = axes[0, 1]
-    gap = n - np.log(n)
-    ax.plot(n, gap, 'purple', linewidth=2)
-    ax.set_xlabel('Input size n')
-    ax.set_ylabel('Gap: n - log(n)')
-    ax.set_title('Entropy Gap (grows without bound)')
-    ax.grid(True, alpha=0.3)
-    # Add annotations for specific values
-    for n_val in [100, 500, 900]:
-        g = n_val - math.log(n_val)
-        ax.annotate(f'n={n_val}\ngap={g:.0f}',
-                    xy=(n_val, g), fontsize=8,
-                    arrowprops=dict(arrowstyle='->', color='gray'),
-                    xytext=(n_val - 100, g + 100))
-
-    # Panel 3: Step count bounds for different budgets
-    ax = axes[1, 0]
-    budgets = [100, 500, 1000, 5000]
-    colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728']
-    c_range = np.linspace(0.1, 10, 200)
-    for budget, color in zip(budgets, colors):
-        max_steps = budget / c_range
-        ax.plot(c_range, max_steps, color=color, linewidth=2,
-                label=f'Budget = {budget} bits')
-    ax.set_xlabel('Cost per step (bits)')
-    ax.set_ylabel('Maximum steps')
-    ax.set_title('Step Count Bound: n ≤ B/c')
-    ax.legend(fontsize=9)
-    ax.set_yscale('log')
-    ax.grid(True, alpha=0.3)
-
-    # Panel 4: Maxwell's demon efficiency
-    ax = axes[1, 1]
-    n_particles = np.arange(1, 101)
-    for bits in [0.5, 1.0, 2.0, 4.0]:
-        max_decrease = n_particles * bits  # in units of kT·ln(2)
-        ax.plot(n_particles, max_decrease, linewidth=2,
-                label=f'{bits} bits/particle')
-    ax.set_xlabel('Number of particles')
-    ax.set_ylabel('Max entropy decrease (kT·ln2 units)')
-    ax.set_title("Maxwell's Demon: Entropy Bound")
-    ax.legend(fontsize=9)
-    ax.grid(True, alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig('entropy_gap_visualization.png', dpi=150, bbox_inches='tight')
-    print("Saved: entropy_gap_visualization.png")
-
-
-def plot_landauer_hierarchy():
-    """Plot the Landauer cost hierarchy for different computations."""
-    fig, ax = plt.subplots(figsize=(12, 6))
-
-    n = np.arange(2, 100)
-
-    # Different computation types and their entropy costs
-    computations = [
-        ('Reversible (bijective)', np.zeros_like(n, dtype=float), '#2ca02c'),
-        ('Binary search: log₂(n)', np.log2(n), '#1f77b4'),
-        ('Sorting: n·log₂(n)', n * np.log2(n), '#ff7f0e'),
-        ('Quadratic: n²', n**2, '#d62728'),
-        ('Exponential: 2ⁿ', 2.0**np.minimum(n, 30), '#9467bd'),  # cap for display
-    ]
-
-    for name, cost, color in computations:
-        ax.plot(n, cost, color=color, linewidth=2.5, label=name)
-
-    ax.set_xlabel('Input size n', fontsize=12)
-    ax.set_ylabel('Landauer cost (bits)', fontsize=12)
-    ax.set_title('Thermodynamic Cost Hierarchy of Computations', fontsize=14)
-    ax.set_yscale('log')
-    ax.set_ylim(0.5, 1e10)
-    ax.legend(fontsize=10, loc='upper left')
-    ax.grid(True, alpha=0.3)
-
-    # Annotate the P/NP boundary
-    ax.axhline(y=1e6, color='gray', linestyle='--', alpha=0.5)
-    ax.text(50, 2e6, 'Typical entropy budget', fontsize=10, color='gray',
-            ha='center')
-
-    plt.tight_layout()
-    plt.savefig('landauer_hierarchy.png', dpi=150, bbox_inches='tight')
-    print("Saved: landauer_hierarchy.png")
-
-
-if __name__ == "__main__":
-    plot_entropy_gap()
-    plot_landauer_hierarchy()
