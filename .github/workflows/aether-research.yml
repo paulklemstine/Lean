@@ -74,8 +74,8 @@ jobs:
 
       - name: Configure Git
         run: |
-          git config --global user.name "Aether Bot"
-          git config --global user.email "aether-bot[bot]@users.noreply.github.com"
+          git config user.name "paul klemstine"
+          git config user.email "paulklemstine@gmail.com"
 
       - name: Run Aether tick
         env:
@@ -94,8 +94,8 @@ jobs:
 
       - name: Commit and push all changes
         run: |
-          git config user.name "Aether Bot"
-          git config user.email "aether-bot[bot]@users.noreply.github.com"
+          git config user.name "paul klemstine"
+          git config user.email "paulklemstine@gmail.com"
 
           # SAFETY MEASURE: Ensure we aren't staging hidden cache folders or massive models
           # If your script downloaded a 10GB file, git add -A will crash the runner here.
