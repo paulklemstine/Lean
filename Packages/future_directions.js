@@ -301,7 +301,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Computational Complexity as Physical Law"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e3086657",
     "description": "Construct a single algebraic object whose projections give S^0, S^1, S^2, ... simultaneously. Prove it exists as an inverse limit in the category of spheres. Show that its homology groups encode the Bernoulli numbers and that its cohomology ring is the polynomial ring on Stiefel-Whitney classes.",
     "domains": [
       "Novelty",
@@ -311,12 +311,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T21:02:26.975866+00:00",
     "title": "The Mega-Sphere: All Dimensions at Once"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ea7d1cf2",
     "description": "Conjecture that topological quantum error correcting codes can be derived from the homology of algebraic varieties. Formalize: the surface code is H_1 of the torus, the color code is H_1 of a 2-complex. Show that the distance of the code equals the systole of the underlying manifold. Predict: codes from higher-genus surfaces achieve distance O(sqrt(g)) where g is the genus.",
     "domains": [
       "Novelty",
@@ -326,7 +326,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T22:56:07.334764+00:00",
     "title": "Speculative: Topological Quantum Error Correction from Mathematical Structures"
   },
@@ -1236,7 +1236,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Proximity Measures for Classes of Phylogenetic Networks"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c1b3f8da",
     "description": "Investigate the ArXiv paper 'On Small Doubling in Right-Ordered Groups and Baumslag-Solitar Groups-II' and formalize its key results. Abstract: Recently, Mohan et al. [Results Math. 80 (2025), No. 4, 122] answered Freiman's $3k-4$ conjecture in right-ordered groups under certain restrictions. In this paper, we take a step further by investigating the structure of nonempty subsets $S$ of a right-ordered group satisfying the small doubling condition $|S^2| = 3|S|-3$. Moreover, we provide a complete characterization of all nonempty finite subsets $S$ of the Baumslag-Solitar group $\\mathrm{BS}(1,q)$ (with $q \\in \\mathbb{Z}$ and $q \\neq -1$) for which $|S^2| = 3|S|-3$ and the identity element is the minimum of $S$.",
     "domains": [
       "Pythagorean",
@@ -1246,7 +1246,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11194v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T11:25:22.149755+00:00",
     "title": "ArXiv paper: On Small Doubling in Right-Ordered Groups and Baumslag-Solitar Groups-II"
   },
