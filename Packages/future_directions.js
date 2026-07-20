@@ -187,7 +187,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "[Reset] Fresh approach in Shared"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3d25b5ad",
     "description": "Construct a category where composition is not associative but satisfies a controlled failure: (f circ g) circ h and f circ (g circ h) are naturally isomorphic but not equal. Prove that such almost-categories are exactly the bicategories and that every coherent loop-tolerant algebraic structure forms a higher category.",
     "domains": [
       "Novelty",
@@ -197,7 +197,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-20T05:48:35.520669+00:00",
     "title": "Causal Loops in Category Theory: When Composition Loops Back"
   },
@@ -288,7 +288,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Computational Complexity as Physical Law"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fc320765",
     "description": "Conjecture that topological quantum error correcting codes can be derived from the homology of algebraic varieties. Formalize: the surface code is H_1 of the torus, the color code is H_1 of a 2-complex. Show that the distance of the code equals the systole of the underlying manifold. Predict: codes from higher-genus surfaces achieve distance O(sqrt(g)) where g is the genus.",
     "domains": [
       "Novelty",
@@ -298,7 +298,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-20T12:32:18.020792+00:00",
     "title": "Speculative: Topological Quantum Error Correction from Mathematical Structures"
   },
@@ -5483,7 +5483,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Speculative: Number Theory as Music Theory"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "82c8c57a",
     "description": "Cycle 955187b3 (Q=0.680) proved 20 theorems in Novelty but left 13 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Construct a single algebraic object whose projections give S^0, S^1, S^2, ... simultaneously. Prove it exists as an inverse limit in the category of spheres. Show that its homology groups encode the B",
     "domains": [
       "Novelty"
@@ -5492,7 +5492,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7300000000000001,
     "research_mode": "team",
     "source_exp_id": "955187b3",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-20T09:41:49.628881+00:00",
     "title": "Close Proofs: The Mega-Sphere: All Dimensions at Once"
   },
