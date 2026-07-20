@@ -1,10 +1,10 @@
 import Mathlib
-import Catalog.Shared.CarmichaelComposite
+import Shared.CarmichaelComposite
 
 /-! # Carmichael's Primitive Divisor Theorem for Fibonacci Numbers
 
-For `13 ≤ n ≤ 10000`, `F(n)` has a primitive prime divisor: a prime `p` such
-that `p ∣ F(n)` but `p ∤ F(k)` for all `0 < k < n`.
+For `13 ≤ n ≤ 10000`, `F(n)` has a primitive prime divisor: a prime `p`
+such that `p ∣ F(n)` but `p ∤ F(k)` for all `0 < k < n`.
 -/
 
 set_option maxHeartbeats 800000
@@ -41,7 +41,8 @@ lemma non_primitive_to_proper_divisor (p n : ℕ) (_hp : Nat.Prime p)
   · calc Nat.gcd n k ≤ k := Nat.gcd_le_right n hk_pos
     _ < n := hk_lt
 
-/-- On the certified range `13 ≤ n ≤ 10000`, `F(n)` has a primitive prime divisor. -/
+/-- Verified range of Carmichael's theorem: for `13 ≤ n ≤ 10000`, `F(n)`
+has a primitive prime divisor. -/
 theorem fib_primitive_divisor (n : ℕ) (hn : 13 ≤ n) (hnupper : n ≤ 10000) :
     ∃ p, Nat.Prime p ∧ p ∣ Nat.fib n ∧
       ∀ k, 0 < k → k < n → ¬(p ∣ Nat.fib k) := by
