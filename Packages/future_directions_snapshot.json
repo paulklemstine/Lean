@@ -7045,6 +7045,46 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: Recursive Types and Diagonal Hierarchies\n\n## 1. Positive Recursive Types and Transfinite Closure\n\n**Conjecture.** For reflective codes in which the self-bound variable occurs only positively, the semantic closure ordinal is computable; moreover, every computable ordinal is realized as the closure ordinal of a finitely presented positive code over a suitable effective base.\n\nThe key insight is that positivity turns unrestricted self-reference into a monotone operator, so transfinite iteration becomes meaningful without introducing the liar contradiction.\n\n**Why now?** The finite rank filtration and its rank-preserving duality isolate exactly the syntactic information that a transfinite semantics must extend, while the diagonal boundary identifies the negative occurrences that must be excluded.\n\n## 2. Strict Alternation Hierarchy for Effective Self-Models\n\n**Conjecture.** In an effective semantics of reflective codes over natural numbers, each additional alternation between universal and existential layers defines a strictly larger class of predicates, even when a positive self-binder is permitted at every level.\n\nThe key insight is that syntactic rank is already unbounded and duality preserves it; strictness should follow by combining levelwise diagonalization with an effective universal predicate at each finite stage.\n\n**Why now?** Canonical witnesses exist at every finite rank, so the remaining test is semantic separation rather than construction of the hierarchy itself.\n\n## 3. Parametric Recursive Presentations versus Semantic Completeness\n\n**Conjecture.** A recursive presentation `T ≃ Π(x:T), P(x)` cannot induce a complete predicate self-model when the induced inspection map is natural under all automorphisms of `T`, even if arbitrary non-natural inspection maps are admitted externally.\n\nThe key insight is that the one-element countermodel shows recursive presentation alone is too weak, while diagonal omission shows completeness is too strong; naturality is a testable intermediate principle connecting the two.\n\n**Why now?** Both endpoints of the proposed implication have been sharply separated, making it possible to search for the weakest structural bridge rather than conflating presentation with self-knowledge.\n\n## 4. Computable Closure Ordinals below Church–Kleene\n\n**Conjecture.** Closure ordinals of finitely generated, positive, effective reflective codes are cofinal in the Church–Kleene ordinal but never attain it.\n\nThe key insight is that the Church–Kleene ordinal should enter as a supremum of effective iterative constructions, not as the cardinality of a universe-dependent collection of types.\n\n**Why now?** Recasting the original cardinality claim as a cofinality claim resolves the category mismatch between ordinals and classes of types while retaining a precise, falsifiable connection to recursive type formation.\n\n## 5. Fixed-Point-Free Observations Classify Self-Knowledge Obstructions\n\n**Conjecture.** For every effective observation algebra, complete internal naming fails exactly when the algebra admits a computable fixed-point-free endomorphism; when no such endomorphism exists, the obstruction is equivalent to a weaker effective failure of point-surjectivity.\n\nThe key insight is that Lawvere diagonalization converts fixed-point-free transformations directly into blind spots, suggesting an algebraic classification beyond Boolean and propositional negation.\n\n**Why now?** The general fixed-point theorem already applies to arbitrary observation types, so concrete finite algebras can be classified first and used to test the proposed equivalence.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0497",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "b44b7357",
+    "status": "available",
+    "timestamp": "2026-07-20T03:35:09.295643+00:00",
+    "title": "**Conjecture.** For reflective codes in which the self-bound variable occurs onl"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## 1. Arithmetic persistence of weighted homology\n\n**Conjecture.** Let a smooth projective surface and a normal-crossings cell model be\ndefined over a number field. Outside a finite set of primes, reduction preserves not\nonly the dimension of the relevant mod-two homology but the complete minimum-weight\nspectrum of cycle classes up to a uniform rescaling.\n\nThe key insight is that code distance depends on weighted homology rather than Betti\nnumbers alone, so arithmetic stability must control representatives and not merely\nranks. **Why now?** The distance–systole transport principle isolates exactly the datum\nthat a good-reduction theorem would need to preserve.\n\n## 2. Higher-dimensional distance–systole duality\n\n**Conjecture.** For CSS codes obtained from a finite cellular decomposition of a closed\n`d`-manifold, the two quantum distances equal the combinatorial systoles in complementary\ndimensions, with the identifications natural under subdivision maps of uniformly bounded\nlocal degree.\n\nThe key insight is that primal and dual logical operators should be treated as two\nweighted homology theories connected by cellular duality. **Why now?** The one-dimensional\ntransport theorem supplies a reusable finite-minimum argument; the remaining test is\nwhether subdivision distorts both weight functions by controlled constants.\n\n## 3. Sharp bounded-geometry genus law\n\n**Conjecture.** Fix upper and lower bounds on face degree and vertex degree for closed\norientable surface cellulations, and require the number of edges to be at most a fixed\nmultiple of genus. Then every associated homological code has distance at most\n`C√g`, for a constant depending only on those local bounds; moreover, infinitely many\ncellulations attain `c√g`.\n\nThe key insight is that genus does not control distance until combinatorial area is\nnormalized, after which a systolic square inequality gives the upper scale. **Why now?**\nThe fixed-genus refinement family supplies a decisive counterexample to the unnormalized\nclaim and identifies the precise missing hypothesis.\n\n## 4. Color-code flag-complex isometry\n\n**Conjecture.** For every trivalent, three-face-colorable closed surface cellulation,\nthe color-code logical sector admits a pointed weight-preserving equivalence, up to a\nuniversal factor of two, with the first homology of an explicitly constructed flag\n2-complex.\n\nThe key insight is that a homological vector-space isomorphism is too weak; the map must\ntrack support size to determine distance. **Why now?** Weighted isometry has emerged as\nthe exact bridge that converts a topological classification into a quantitative coding\ntheorem.\n\n## 5. Homotopy-stable code sectors with metric instability\n\n**Conjecture.** There exist infinite pairs of homotopy-equivalent finite 2-complexes whose\nfundamental groups and mod-two first homology agree, but whose combinatorial one-systoles\nhave unbounded ratio; bounded local subdivision degree is sufficient to prevent this\ninstability.\n\nThe key insight is that homotopy invariance controls which logical classes exist, whereas\ncellular geometry controls how expensive their representatives are. **Why now?** The\nfundamental-group invariance certificate and weighted-distance theorem separate these\ntwo layers cleanly enough for the distortion question to be tested directly.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Pythagorean"
+    ],
+    "id": "fd_0498",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "ea7d1cf2",
+    "status": "available",
+    "timestamp": "2026-07-20T03:35:17.836162+00:00",
+    "title": "**Conjecture.** Let a smooth projective surface and a normal-crossings cell mode"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Cycle d1663b23 (Q=0.700) proved 0 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'A minimal modularity lifting theorem for Siegel modular forms' and formalize its key results. Abstract: We prove a minimal modularity lifting theorem (in the spirit of Gen",
     "domain_bridges": [],
     "domains": [

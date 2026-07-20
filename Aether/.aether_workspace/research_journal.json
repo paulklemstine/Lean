@@ -1,26 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "cf69678e",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions\n\n## What was established\n\n`Algebra/SurrealDyadic.lean` formalizes the canonical dyadic part of the surreal hierarchy.\n\n* The canonical pre-game for `2⁻ⁿ` has birthday exactly `n +",
-      "quality_score": 0.75,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-19T00:44:51",
-      "title": "The Arithmetic of Games: Surreal Numbers as Number Fields"
-    },
-    {
-      "cycle_id": "ae36b246",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Boolean-Poset Avoidance Through Linear Closure\n\n## 1. A finite, explicit improvement over three middle layers\n\n**Conjecture.** There are explicit integers `q`, `n₀`, and a rationa",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-19T00:44:57",
-      "title": "ArXiv paper: On the maximum size of $B_3$-free families"
-    },
-    {
       "cycle_id": "cf73743c",
       "domain": "Shared",
       "key_insight": "# Future directions\n\n1. **State the CSS dictionary with two classical codes precisely.**  The mission's\n   expression `C₁/C₂` requires `C₂ ⊆ C₁`, while the usual CSS commutation condition\n   is formul",
@@ -499,29 +479,29 @@
       "theorem_count": 11,
       "timestamp": "2026-07-20T02:08:19",
       "title": "ArXiv paper: On Small Doubling in Right-Ordered Groups and Baumslag-Solitar Groups-II"
+    },
+    {
+      "cycle_id": "b44b7357",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Recursive Types and Diagonal Hierarchies\n\n## 1. Positive Recursive Types and Transfinite Closure\n\n**Conjecture.** For reflective codes in which the self-bound variable occurs only",
+      "quality_score": 0.75,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-20T03:35:14",
+      "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
+    },
+    {
+      "cycle_id": "ea7d1cf2",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions\n\n## 1. Arithmetic persistence of weighted homology\n\n**Conjecture.** Let a smooth projective surface and a normal-crossings cell model be\ndefined over a number field. Outside a fini",
+      "quality_score": 0.71,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-20T03:35:18",
+      "title": "Speculative: Topological Quantum Error Correction from Mathematical Structures"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "cca295e6",
-      "domain": "Shared",
-      "key_insight": "# Future directions\n\n## Completed formalization\n\n`Construction.lean` is a self-contained finite-set formalization of the\npair-star 3-uniform hypergraph from the paper. All declarations have complete\np",
-      "quality_score": 0.71,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-07-16T07:08:28",
-      "title": "ArXiv paper: Hypergraph Turan with bounded matching number"
-    },
-    {
-      "cycle_id": "b71e4678",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions: Rooted and Ordinary Path Irregularity\n\n## 1. Polynomial-profile separation for bounded path lengths\n\nFor every fixed integer `k ≥ 4`, there should be a branch-attachment construct",
-      "quality_score": 0.67,
-      "sorry_count": 0,
-      "theorem_count": 20,
-      "timestamp": "2026-07-16T07:23:26",
-      "title": "ArXiv paper: From roots to paths: graphs simultaneously irregular with respect to rooted and ordinar"
-    },
     {
       "cycle_id": "b71e4678",
       "domain": "Pythagorean",
@@ -2501,6 +2481,26 @@
       "theorem_count": 9,
       "timestamp": "2026-07-20T03:02:07",
       "title": "ArXiv paper: Efficient Hamilton covers and linear arboricity of random graphs"
+    },
+    {
+      "cycle_id": "b44b7357",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Recursive Types and Diagonal Hierarchies\n\n## 1. Positive Recursive Types and Transfinite Closure\n\n**Conjecture.** For reflective codes in which the self-bound variable occurs only",
+      "quality_score": 0.75,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-20T03:35:14",
+      "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
+    },
+    {
+      "cycle_id": "ea7d1cf2",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions\n\n## 1. Arithmetic persistence of weighted homology\n\n**Conjecture.** Let a smooth projective surface and a normal-crossings cell model be\ndefined over a number field. Outside a fini",
+      "quality_score": 0.71,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-20T03:35:18",
+      "title": "Speculative: Topological Quantum Error Correction from Mathematical Structures"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.74
     }
   ],
-  "last_updated": "2026-07-20T03:02:07",
+  "last_updated": "2026-07-20T03:35:18",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "f0066f11",
-        "quality": 0.67,
-        "theorems": 10,
-        "title": "Flatland Catastrophe: When 2D Physics Breaks"
-      },
-      {
         "cycle_id": "d23a186f",
         "quality": 0.69,
         "theorems": 8,
@@ -3637,15 +3631,15 @@
         "quality": 0.62,
         "theorems": 16,
         "title": "Fermat Near-Misses in the Twilight Zone"
+      },
+      {
+        "cycle_id": "b44b7357",
+        "quality": 0.75,
+        "theorems": 0,
+        "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
       }
     ],
     "NumberTheory": [
-      {
-        "cycle_id": "582560af",
-        "quality": 0.91,
-        "theorems": 30,
-        "title": "The results of this cycle establish that the Euler characteristic extends to"
-      },
       {
         "cycle_id": "a8d24466",
         "quality": 0.73,
@@ -3699,6 +3693,12 @@
         "quality": 0.64,
         "theorems": 9,
         "title": "Quantum Groups from Number Theory: The Riemann Hypothesis as a Representation Pr"
+      },
+      {
+        "cycle_id": "ea7d1cf2",
+        "quality": 0.71,
+        "theorems": 0,
+        "title": "Speculative: Topological Quantum Error Correction from Mathematical Structures"
       }
     ],
     "Physics": [

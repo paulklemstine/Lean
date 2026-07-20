@@ -19537,7 +19537,7 @@
       "depth_estimate": 3,
       "description": "Compute the topological type of the Library of Babel: a space of all possible 410-page books. Prove that it is connected, totally disconnected under the Hamming metric, and has covering dimension 0. Determine the Kolmogorov complexity of a random book and prove that almost all books are incompressible.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Novelty",
         "Combinatorics"
@@ -19742,7 +19742,7 @@
       "depth_estimate": 3,
       "description": "Formalize the hard problem of consciousness as a theorem about the gap between functional descriptions and subjective experience. Prove that any system satisfying the functional definition of consciousness can have a zombie twin that is functionally identical but experientially void. Show this gap is isomorphic to Gödel's incompleteness gap.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Novelty",
         "Logic"
@@ -19947,7 +19947,7 @@
       "depth_estimate": 3,
       "description": "Define a natural metric on the space of all mathematical statements and prove that the set of true statements has a fractal dimension. Show that this dimension is strictly between 0 and 1 (truth is sparse but not negligible). Connect to Chaitin's Omega and prove that the fractal dimension is uncomputable but approximable.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Novelty",
         "Logic"
@@ -20193,7 +20193,7 @@
       "depth_estimate": 3,
       "description": "Formalize a game where one player (Mortal) has finite computation and the other (Eternity) has transfinite computation. Prove that Mortal can always force at least omega rounds before losing, and that with bounded nondeterminism, Mortal can force omega-squared rounds. Connect to Infinite Time Turing Machines.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Novelty",
         "Logic"
@@ -20316,7 +20316,7 @@
       "depth_estimate": 3,
       "description": "Construct a single algebraic object whose projections give S^0, S^1, S^2, ... simultaneously. Prove it exists as an inverse limit in the category of spheres. Show that its homology groups encode the Bernoulli numbers and that its cohomology ring is the polynomial ring on Stiefel-Whitney classes.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Novelty",
         "Geometry"
@@ -20357,7 +20357,7 @@
       "depth_estimate": 3,
       "description": "Prove that adding an oracle for the halting problem to PA yields a theory that proves its own consistency but cannot decide its own soundness. Formalize the hierarchy: PA < PA^H < PA^{H^H} < ... and prove that each jump genuinely increases theorem-proving power. Show that the oracle hierarchy is isomorphic to the Turing jump hierarchy.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Novelty",
         "Logic"
@@ -20505,6 +20505,47 @@
       "thread_id": "th_d1e8c218",
       "timestamp": "2026-07-20T03:35:09.295643+00:00",
       "title": "**Conjecture.** For reflective codes in which the self-bound variable occurs onl"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "# Future Directions\n\n## 1. Arithmetic persistence of weighted homology\n\n**Conjecture.** Let a smooth projective surface and a normal-crossings cell model be\ndefined over a number field. Outside a finite set of primes, reduction preserves not\nonly the dimension of the relevant mod-two homology but the complete minimum-weight\nspectrum of cycle classes up to a uniform rescaling.\n\nThe key insight is that code distance depends on weighted homology rather than Betti\nnumbers alone, so arithmetic stability must control representatives and not merely\nranks. **Why now?** The distance–systole transport principle isolates exactly the datum\nthat a good-reduction theorem would need to preserve.\n\n## 2. Higher-dimensional distance–systole duality\n\n**Conjecture.** For CSS codes obtained from a finite cellular decomposition of a closed\n`d`-manifold, the two quantum distances equal the combinatorial systoles in complementary\ndimensions, with the identifications natural under subdivision maps of uniformly bounded\nlocal degree.\n\nThe key insight is that primal and dual logical operators should be treated as two\nweighted homology theories connected by cellular duality. **Why now?** The one-dimensional\ntransport theorem supplies a reusable finite-minimum argument; the remaining test is\nwhether subdivision distorts both weight functions by controlled constants.\n\n## 3. Sharp bounded-geometry genus law\n\n**Conjecture.** Fix upper and lower bounds on face degree and vertex degree for closed\norientable surface cellulations, and require the number of edges to be at most a fixed\nmultiple of genus. Then every associated homological code has distance at most\n`C√g`, for a constant depending only on those local bounds; moreover, infinitely many\ncellulations attain `c√g`.\n\nThe key insight is that genus does not control distance until combinatorial area is\nnormalized, after which a systolic square inequality gives the upper scale. **Why now?**\nThe fixed-genus refinement family supplies a decisive counterexample to the unnormalized\nclaim and identifies the precise missing hypothesis.\n\n## 4. Color-code flag-complex isometry\n\n**Conjecture.** For every trivalent, three-face-colorable closed surface cellulation,\nthe color-code logical sector admits a pointed weight-preserving equivalence, up to a\nuniversal factor of two, with the first homology of an explicitly constructed flag\n2-complex.\n\nThe key insight is that a homological vector-space isomorphism is too weak; the map must\ntrack support size to determine distance. **Why now?** Weighted isometry has emerged as\nthe exact bridge that converts a topological classification into a quantitative coding\ntheorem.\n\n## 5. Homotopy-stable code sectors with metric instability\n\n**Conjecture.** There exist infinite pairs of homotopy-equivalent finite 2-complexes whose\nfundamental groups and mod-two first homology agree, but whose combinatorial one-systoles\nhave unbounded ratio; bounded local subdivision degree is sufficient to prevent this\ninstability.\n\nThe key insight is that homotopy invariance controls which logical classes exist, whereas\ncellular geometry controls how expensive their representatives are. **Why now?** The\nfundamental-group invariance certificate and weighted-distance theorem separate these\ntwo layers cleanly enough for the distortion question to be tested directly.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Geometry",
+        "Pythagorean"
+      ],
+      "github_issue": 0,
+      "id": "fd_0498",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "ea7d1cf2",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/ea7d1cf2",
+      "status": "available",
+      "thread_id": "th_370627f0",
+      "timestamp": "2026-07-20T03:35:17.836162+00:00",
+      "title": "**Conjecture.** Let a smooth projective surface and a normal-crossings cell mode"
     },
     {
       "ambition_level": "extension",
@@ -20760,7 +20801,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 717f7483 (Q=0.750), which proved 19 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Godel's incompleteness theorem says there are true statements that cannot be proved. But what if we turn incompleteness into a GAME? Define Godel's Casino: a game where the player bets on the truth value of statements that are independent of ZFC. The house deals cards representing arithmetic stateme",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "NumberTheory"
       ],

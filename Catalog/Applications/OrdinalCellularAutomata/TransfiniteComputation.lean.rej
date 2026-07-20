@@ -1,25 +1,25 @@
 --- TransfiniteComputation.lean
 +++ TransfiniteComputation.lean
-@@ -119,19 +119,11 @@
+@@ -119,11 +119,19 @@
        by_contra! h_surj;
        exact h_surj ( fun n => if enumerate n n = Bool.true then Bool.false else Bool.true ) |> fun ⟨ k, hk ⟩ => by have := congr_fun hk k; by_cases h : enumerate k k <;> simp +decide [ h ] at this;
  
--/-
--Consequently the space of transfinite Rule 110 histories is not enumerable:
--every Boolean predicate occurs as the boundary trace of one such history.
---/
-+/-- Consequently the space of transfinite Rule 110 histories is not enumerable:
-+every Boolean predicate occurs as the boundary trace of one such history. -/
+-/-- Consequently the space of transfinite Rule 110 histories is not enumerable:
+-every Boolean predicate occurs as the boundary trace of one such history. -/
++/-
++Consequently the space of transfinite Rule 110 histories is not enumerable:
++every Boolean predicate occurs as the boundary trace of one such history.
++-/
  theorem no_history_enumeration (initial : Tape)
      (enumerate : ℕ → (ℕ → ℕ → Tape)) :
--    ¬ Function.Surjective enumerate := by
--      intro h_surj;
--      convert no_predicate_enumeration ( fun n => boundaryTrace ( enumerate n ) ) _;
--      intro P
--      obtain ⟨history, h_history⟩ : ∃ history : ℕ → ℕ → Tape, boundaryTrace history = P := by
--        exact ⟨ _, boundaryTrace_scheduled P initial ⟩;
--      obtain ⟨ n, hn ⟩ := h_surj history; use n; aesop;
-+    ¬ Function.Surjective enumerate := by sorry
+-    ¬ Function.Surjective enumerate := by sorry
++    ¬ Function.Surjective enumerate := by
++      intro h_surj;
++      -- Compose every enumerated history with boundaryTrace to enumerate all predicates.
++      have h_composed : Function.Surjective (fun k => boundaryTrace (enumerate k)) := by
++        intro P;
++        obtain ⟨ k, hk ⟩ := h_surj ( scheduledOmegaRun P initial ) ; use k; aesop;
++      exact no_predicate_enumeration _ h_composed
  
  /-
  
