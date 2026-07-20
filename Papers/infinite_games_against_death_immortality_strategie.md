@@ -1,44 +1,49 @@
 # Computational Evidence
 
-The claims are exact ordinal-arithmetic identities, so "evidence" takes the form
-of checking the survival values and the small-case survivable rounds directly.
+## Small-case calculations
 
-## Survival values (order types of the moment sets)
+The deterministic clock begins
 
-| Game | Moments | Order type (survival value) |
-|------|---------|-----------------------------|
-| finite deterministic | `ℕ` | `ω` |
-| bounded nondeterministic | `ℕ ×ₗ ℕ` (lex) | `ω · ω = ω²` |
-| `ω`-refinement of a game `G` | `Lex (G.Moment × ℕ)` | `ω · value(G)` |
+| finite request n | clock value |
+|---:|:---|
+| 0 | 0 |
+| 1 | 1 |
+| 2 | 2 |
+| 7 | 7 |
+| 19 | 19 |
 
-These follow from `type_nat_lt` (`type (<) = ω` on `ℕ`) and
-`type_prod_lex` (`type (Prod.Lex s r) = type r * type s`).
+The two-level clock `ω·k + n` begins by blocks:
 
-## Small-case survivable rounds
+| block budget k | finite tail n | clock value |
+|---:|---:|:---|
+| 0 | 0 | 0 |
+| 0 | 5 | 5 |
+| 1 | 0 | ω |
+| 1 | 3 | ω + 3 |
+| 2 | 0 | ω·2 |
+| 2 | 4 | ω·2 + 4 |
 
-Finite game — Mortal survives round `n` for every finite `n` because
-`(n : Ordinal) < ω`:
+For each fixed k, increasing n is cofinal in the next limit `ω·k + ω`. Increasing k through all finite values is therefore cofinal in `ω·ω`.
 
-```
-n = 0, 1, 2, 3, ...   all ≤ ω = value    ⇒  survivable
-first non-survivable round = ω
-```
+The canonical dyadic surreal units provide a second table through their birthdays:
 
-Nondeterministic game — Mortal survives round `ω · n` for every finite `n`
-because `ω · n ≤ ω · ω = ω²`:
+| unit | birthday |
+|:---|:---|
+| 1 | 1 |
+| 1/2 | 2 |
+| 1/4 | 3 |
+| 1/8 | 4 |
 
-```
-ω·0 = 0,  ω·1 = ω,  ω·2,  ω·3, ...   all ≤ ω² = value   ⇒ survivable
-first non-survivable round = ω²
-```
+## OEIS search results
+
+No integer sequence central to the ordinal claims arises: the target data are ordinal block values rather than natural-number terms. Consequently no OEIS identifier is asserted.
 
 ## Counterexample hunt
 
-The sharpness theorems are the counterexample check in the other direction:
-`ω + 1 > ω` and `ω² + 1 > ω²`, so `omega_is_sharp` and `omega_sq_is_sharp`
-confirm Mortal *cannot* survive one round beyond the value. No round below the
-value fails, and no round at/above it succeeds — the boundary is exact.
+The strongest naive reading—one finite computation itself lasts ω rounds—fails for every tested n and, structurally, for every natural n: its ordinal value is below ω. Likewise, testing fixed outer budgets k = 0, 1, 2 shows that arbitrary finite tails approach only `ω·k + ω`, never ω². These are boundary cases rather than counterexamples to the cofinal-supremum statements.
 
-All of the above is machine-checked in `Catalog/Novelty/ImmortalityGame.lean`
-(`finite_forces_nat`, `nondet_forces_omega_mul_nat`, `omega_is_sharp`,
-`omega_sq_is_sharp`), so no separate numerical script is needed.
+A terminology hazard was also tested: a single global bound on k cannot yield ω². The ω² result requires every individual outer choice to be finite while the family of allowed finite bounds is unbounded.
+
+## Table interpretation
+
+The tables are illustrative. The accompanying exact supremum and strict-bound theorems establish the universal claims; no claim depends on extrapolating from the displayed cases.
