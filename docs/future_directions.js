@@ -45,7 +45,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The Fourier Analysis of Collatz: Spectral Gaps in the 3n+1 Map"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fbb9076c",
     "description": "Formalize a Landauer-like principle for mathematical reasoning: every bit of information destroyed in a proof step costs at least kT ln 2 of entropy. Prove that there exist theorems whose shortest proof requires exponentially more erasure than creation, and connect to Kolmogorov complexity and the thermodynamic cost of verification.",
     "domains": [
       "Novelty",
@@ -55,7 +55,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T12:28:35.662011+00:00",
     "title": "Thermodynamics of Mathematical Proof"
   },
@@ -245,7 +245,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Zombies and Qualia: Mathematics of Subjective Experience"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "83bece51",
     "description": "Map prime numbers to harmonic overtones using the Riemann zeta function's non-trivial zeros. Define: the 'harmonic' of a number n is the sum of 1/\u03c1 for each zero \u03c1 with |Im(\u03c1)| \u2264 n. Prove: the harmonic of n grows as O(log n / log log n). Conjecture: perfect intervals (octaves, fifths, fourths) correspond to numbers whose harmonic is rational. Show: the harmonic of 2 is exactly 1 (the octave), while the harmonic of 3 is transcendental (the fifth).",
     "domains": [
       "Novelty",
@@ -255,7 +255,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-20T15:28:30.688765+00:00",
     "title": "Speculative: Number Theory as Music Theory"
   },
@@ -275,7 +275,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Topological Quantum Error Correction from Mathematical Structures"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f2b328a7",
     "description": "Model mathematical theories as species in an ecosystem. Define a fitness function: f(theory) = (number of connections to other theories) * (proof density) / (axiom count). Conjecture: theories evolve toward the niche of maximum fitness, and the resulting ecosystem satisfies a mathematical analog of the competitive exclusion principle (no two theories occupy the same niche). Prove that ZFC + large cardinals has higher fitness than ZFC alone.",
     "domains": [
       "Novelty"
@@ -284,12 +284,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-20T12:32:18.095289+00:00",
     "title": "Speculative: Mathematics as an Evolving Ecosystem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cd0075c8",
     "description": "Formalize a notion of 'self-referential types' in dependent type theory where a type can quantify over itself. Define: a conscious type T satisfies T \u2248 \u03a0(x:T), P(x) for some predicate P. Prove: any such type must be undecidable (G\u00f6del-style). Show: the fixed points of the type-forming operations correspond to a hierarchy analogous to the arithmetical hierarchy. Conjecture: the cardinality of self-referential types is exactly \u2135_1^CK (the Church-Kleene ordinal).",
     "domains": [
       "Novelty",
@@ -299,7 +299,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-20T15:28:30.627383+00:00",
     "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
   },
@@ -757,7 +757,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Record compositions of alternating permutations and noncommutative symmetric functions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3df39c71",
     "description": "Investigate the ArXiv paper 'On Agreement Subtrees in Multiple Pylogenetic Trees' and formalize its key results. Abstract: Snir and Yuster [Discrete Appl. Math. 347 (2026) 160--171] asked for the least number $h(k)$ such that $k$ unrooted binary phylogenetic trees on the same $h(k)$ leaves always share a common quartet. We give a new upper bound for the $k$-tree version of the Maximum Agreement Subtree problem, namely an upper bound for the number of leaves, on which $k$ unrooted binary phylogenetic trees always share a common induced binary subtree on $n$ leaves, which is a four-times iterated exponential function. For $h(k)$, this implies a four-times iterated exponential upper bound. We also set an exponential lower bound for $h(k)$.",
     "domains": [
       "Bridges"
@@ -766,7 +766,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12778v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T13:43:20.804355+00:00",
     "title": "ArXiv paper: On Agreement Subtrees in Multiple Pylogenetic Trees"
   },
@@ -2441,7 +2441,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Heilbronn's Problem in the Unit Triangle: Certified Optimal Configurations for up to $n\\le 8$"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "decbe545",
     "description": "Investigate the ArXiv paper 'Efficient Hamilton covers and linear arboricity of random graphs' and formalize its key results. Abstract: A Hamilton cover of a graph is a collection of Hamilton cycles whose union contains all edges. Since each Hamilton cycle covers two edges at every vertex, every Hamilton cover has size at least $\\lceil \u0394(G)/2\\rceil$. We prove that this lower bound is tight for binomial random graphs $G(n,p)$ throughout the widest possible range of edge probabilities: if $\u03c9(n)\\to\\infty$ and \\[ \\frac{\\log n+\\log\\log n+\u03c9(n)}{n} \\le p=p(n) \\le 1-\\frac{\u03c9(n)}{n^{2}}, \\] then $G\\sim G(n,p)$ with high probability has a Hamilton cover of size $\\left\\lceil \\frac{\u0394(G)}{2}\\right\\rceil. $ The main new contribution is the sparse regime near the Hamiltonicity threshold, where we prove a conjecture of Dragani\u0107, Glock, Munh\u00e1 Correia and Sudakov. Our proof develops constructive tools for decomposing such graphs into controlled forest systems and extending them, using reserved pseudorandom structure, into Hamilton cycles. We also prove the corresponding hitting-time result for the random graph process, answering a questi",
     "domains": [
       "Computation",
@@ -2451,7 +2451,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14881v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-17T06:29:52.184186+00:00",
     "title": "ArXiv paper: Efficient Hamilton covers and linear arboricity of random graphs"
   },
