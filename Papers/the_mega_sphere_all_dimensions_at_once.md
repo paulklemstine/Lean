@@ -1,69 +1,40 @@
-# Computational Evidence — The Mega-Sphere
+# Computational Evidence
 
-This note records the small-case checks that guided the formalization. Every
-claim below is subsequently proved in Lean (no `sorry`), so this is orientation
-rather than the final word.
+## Small-case calculations
 
-## 1. The inverse limit machinery
+For the finite Boolean stages `X_n = 𝔽₂^(n+1)`, the first cardinalities are:
 
-The inverse limit of a tower `⋯ → X(n+1) --πₙ--> Xₙ → ⋯` is the set of coherent
-sequences `{ x : Πn, Xₙ | ∀n, πₙ(x(n+1)) = xₙ }`. Two extreme towers were tested:
+| stage `n` | coordinates | cardinality |
+|---:|---:|---:|
+| 0 | 1 | 2 |
+| 1 | 2 | 4 |
+| 2 | 3 | 8 |
+| 3 | 4 | 16 |
+| 4 | 5 | 32 |
 
-### Constant tower `Xₙ = G`, `πₙ = id`
-Coherent sequences satisfy `x(n+1) = xₙ`, so by induction `xₙ = x₀` for all `n`:
-the limit is the diagonal copy of `G`. (Formalized: `constTower_invLimit_eq`.)
+The bonding map deletes the last coordinate. Every vector in `X_n` has exactly two lifts to `X_(n+1)`, obtained by appending either `0` or `1`. A coherent point is therefore determined by one new Boolean choice at each stage.
 
-### Doubling tower `ℤ ←×2— ℤ ←×2— ⋯`
-Here `2·x(n+1) = xₙ`, hence `x₀ = 2ᵏ·xₖ`, so `2ᵏ ∣ x₀` for every `k`.
-Sample: if `x₀ = 12`, then `x₀` must be divisible by `2,4,8,16,…` — impossible
-unless `x₀ = 0`. More generally the only integer divisible by all powers of `2`
-is `0`, so the whole limit collapses to `{0}`. (Formalized:
-`doublingTower_invLimit_eq_bot`, via `int_eq_zero_of_forall_two_pow_dvd`.)
+The first Bernoulli numbers relevant to the generating package are
+`B₀ = 1`, `B₁ = -1/2`, `B₂ = 1/6`, `B₃ = 0`, and `B₄ = -1/30`.
+The first Stiefel–Whitney monomials in the polynomial model are
+`1, w, w², w³, w⁴`; none vanishes.
 
-### `2`-adic tower `ZMod(2^(n+1))` with reduction maps
-Reductions `ZMod(2^(n+2)) → ZMod(2^(n+1))` are ring homs; the limit is the ring
-of `2`-adic integers `ℤ₂`, which is nontrivial (`0 ≠ 1` already at stage `0`,
-i.e. in `ZMod 2`). (Formalized: `padicTower_nontrivial`.)
+## OEIS search results
 
-## 2. Stiefel–Whitney classes and `H*(ℝP^∞; 𝔽₂) = 𝔽₂[w]`
+The stage-cardinality sequence `2, 4, 8, 16, 32, …` is OEIS A000079 with its initial `1` omitted. The Bernoulli numerators and denominators are standard Bernoulli-number sequences, but no sequence identification is needed by the stated results.
 
-Total SW class of the tautological line bundle: `w(L) = 1 + w`. In `𝔽₂` the
-geometric series inverts it by telescoping:
+## Counterexample hunt
 
-    (1 + w)·(1 + w + w² + w³ + ⋯)
-      = (1 + w + w² + ⋯) + (w + w² + w³ + ⋯)
-      = 1     (all higher terms cancel in pairs, since 1+1 = 0 in 𝔽₂).
+The literal proposal that ordinary spheres of all dimensions automatically form an inverse system fails at the specification level: an inverse limit requires selected bonding maps `S^(n+1) → S^n`, and no such maps were supplied. Different choices can yield different limits.
 
-So the dual SW classes are `w̄ₖ = wᵏ`, all `= 1`. This holds only after
-completing `𝔽₂[w]` to `𝔽₂⟦w⟧`; in the polynomial ring `1 + w` has degree `1` and
-is not a unit. (Formalized: `dual_sw_series`, `sw_isUnit_completion`,
-`sw_not_isUnit`.)
+Two representative pathological controls are already known. Zero bonding maps can make an inverse limit trivial even when every stage is nontrivial, and multiplication by `2` on integer stages also produces a trivial limit. These controls motivate the surjective coordinate-deletion maps used here.
 
-Frobenius / Whitney check in char 2:
+## Structural table
 
-| k | (1+w)^(2^k) expanded            | = 1 + w^(2^k) ? |
-|---|----------------------------------|-----------------|
-| 1 | 1 + 2w + w² = 1 + w²  (2w=0)     | yes, 1 + w²     |
-| 2 | (1+w²)² = 1 + w⁴                 | yes, 1 + w⁴     |
-| 3 | (1+w⁴)² = 1 + w⁸                 | yes, 1 + w⁸     |
-
-(Formalized: `sw_whitney_frobenius`, `sw_square`.)
-
-## 3. Bernoulli numbers (OEIS)
-
-Bernoulli numerators/denominators: `B₀=1, B₁=-1/2, B₂=1/6, B₃=0, B₄=-1/30,
-B₅=0, B₆=1/42, …`. Numerators are OEIS **A027641**, denominators **A027642**.
-Odd-index Bernoulli numbers vanish beyond `B₁` (parity symmetry).
-
-Faulhaber closed forms extracted from the Bernoulli power-sum formula, checked at
-`n = 4` (sum over `k = 0..3`):
-
-| p | ∑_{k<4} kᵖ | closed form value |
-|---|-----------|-------------------|
-| 1 | 0+1+2+3 = 6      | 4·3/2 = 6            |
-| 2 | 0+1+4+9 = 14     | 4·3·7/6 = 14         |
-| 3 | 0+1+8+27 = 36    | (4·3/2)² = 6² = 36   |
-
-The `p=3` case is Nicomachus's identity `∑k³ = (∑k)²`. (Formalized:
-`faulhaber_one/two/cube`, `nicomachus`, `bernoulli_recurrence`, `bernoulli_two`,
-`bernoulli_odd_eq_zero`.)
+| proposal | outcome | reason |
+|---|---|---|
+| finite Boolean coordinate tower | survives | bonding maps are explicit and surjective |
+| one coherent object recovers every finite Boolean stage | survives | extension by zero proves projection surjectivity |
+| limit equals countable Boolean product | survives | diagonal extraction and assembly are inverse |
+| Bernoulli numbers literally are homology groups of this limit | rejected | no supporting homology construction or grading match |
+| polynomial Stiefel–Whitney model as an independent universal package | survives | every generator power is nonzero |
