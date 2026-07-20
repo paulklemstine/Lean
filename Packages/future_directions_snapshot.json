@@ -79,26 +79,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "1a27f9f3",
-    "description": "Define a natural metric on the space of all mathematical statements and prove that the set of true statements has a fractal dimension. Show that this dimension is strictly between 0 and 1 (truth is sparse but not negligible). Connect to Chaitin's Omega and prove that the fractal dimension is uncomputable but approximable.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0484",
-    "lineage_refs": [],
-    "priority_score": 0.87,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T20:25:40.511664+00:00",
-    "title": "The Fractal Dimension of Mathematical Truth"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle fff627f3 (Q=0.770), which proved 7 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Hilbert's Hotel has infinitely many rooms, each containing a prime number. Room n contains the n-th prime p_n. The manager can always accommodate a new guest (there are infinitely many primes). But what if the guests want to REARRANGE? Conjecture: For any permutation sigma of N, there exists a rearr",
     "domain_bridges": [],
@@ -424,25 +404,6 @@
     "status": "available",
     "timestamp": "2026-07-20T12:32:18.095289+00:00",
     "title": "Speculative: Mathematics as an Evolving Ecosystem"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "2f321176",
-    "description": "Conjecture that mathematical discovery undergoes phase transitions: long periods of incremental progress punctuated by sudden reorganizations (like percolation transitions). Formalize this using statistical mechanics: define an order parameter for 'mathematical coherence' and show it undergoes a second-order phase transition as the number of connected theorems crosses a critical threshold. Predict: the next phase transition in number theory will occur when the connections between Langlands and arithmetic geometry exceed ~10^4 edges.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_0506",
-    "lineage_refs": [],
-    "priority_score": 0.82,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-20T05:48:35.575822+00:00",
-    "title": "Speculative: Mathematics as a Phase Transition"
   },
   {
     "ambition_level": "extension",
@@ -7457,6 +7418,65 @@
     "status": "available",
     "timestamp": "2026-07-20T20:48:24.691279+00:00",
     "title": "**Conjecture.** Let a periodic Born-probability sequence have period `k`. For ev"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Arithmetic Coherence Transitions\n\nThe conjectures below are ranked by expected scientific impact. Each proposal separates a measurable arithmetic statistic from the choice of a phenomenological transition law.\n\n## 1. Higher-rank Langlands percolation\n\n**Conjecture.** For a fixed global field and bounded ramification, form a bipartite graph whose vertices are rank-two automorphic representations and compatible rank-two Galois representations, with edges supplied by independently established local-global compatibility results. After normalization by the number of admissible local types, the largest-component density has a nonzero limiting value precisely above a universal critical mean degree.\n\n**The key insight is...** higher-rank reciprocity should be studied as a growing compatibility graph, so that global organization is measured by component structure rather than by a raw theorem count.\n\n**Why now?** The cyclotomic rank-one model shows exactly how an arithmetic counting law can be transported into a threshold parameter, while modern databases provide sufficiently structured local data to make the rank-two graph falsifiable.\n\n## 2. Arithmetic universality of critical exponents\n\n**Conjecture.** Across families of number fields ordered by discriminant, coherence parameters built from normalized reciprocity graphs fall into finitely many universality classes: tree-like compatibility graphs have critical exponent `1`, while symmetry-breaking character models have exponent `1/2`.\n\n**The key insight is...** the exponent should depend on the local geometry of the connection network, not on the names or historical origins of its arithmetic objects.\n\n**Why now?** Two exact mean-field laws already distinguish linear percolation onset from square-root symmetry-breaking onset, giving concrete competing predictions that arithmetic datasets can separate.\n\n## 3. A derived, rather than selected, number-theory threshold\n\n**Conjecture.** There is a canonical weighting of cross-field implications between Langlands theory and arithmetic geometry for which the susceptibility—expected increase in the largest coherent component after adding one verified connection—has a unique maximum at an effective edge count between `8,000` and `12,000`.\n\n**The key insight is...** a critical threshold is scientifically meaningful only if it can be recovered as a peak in susceptibility, rather than inserted as an external constant.\n\n**Why now?** The exact conductor cutoff derived from a chosen ten-thousand-edge parameter isolates the missing empirical task and supplies a sharp null model against which a measured threshold can be compared.\n\n## 4. Totient-driven cascades beyond prime conductors\n\n**Conjecture.** In the cyclotomic rank-one proxy, conductors crossing a fixed coherence threshold occur in clustered cascades governed by the distribution of Euler's totient: for every sufficiently large `T`, every interval `[T, T + T^(3/4)]` contains conductors on both sides of the condition `φ(n) > T`.\n\n**The key insight is...** composite conductors replace the monotone prime law `p - 1` by the irregular multiplicative statistic `φ(n)`, turning a single cutoff into an arithmetic intermittency phenomenon.\n\n**Why now?** The prime-conductor phase diagram is exact and monotone; extending it to composite conductors gives an immediate, falsifiable test of whether arithmetic fluctuations can model punctuated transitions.\n\n## 5. Stability under order-parameter deformation\n\n**Conjecture.** Let `F : ℝ≥0 → ℝ≥0` be continuous, monotone, zero exactly at zero, and regularly varying at zero with index `α > 0`. Replacing square-root coherence by `F(max(x-c,0))` preserves the exact arithmetic activation boundary, while changing only the critical exponent to `α`.\n\n**The key insight is...** the location of the transition is order-theoretic, whereas its near-critical scaling is analytic; these two features should be proved and tested independently.\n\n**Why now?** The current cyclotomic classification already separates threshold inequalities from square-root scaling, making robustness under alternative response laws the natural next structural test.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0524",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "2f321176",
+    "status": "available",
+    "timestamp": "2026-07-20T20:48:29.755518+00:00",
+    "title": "The conjectures below are ranked by expected scientific impact. Each proposal se"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe formal development studies a precise surrogate for “the space of mathematical truth”: binary streams encode successive answers, prefix agreement supplies Cantor scales, and the local rule forbids adjacent positive answers. This golden-mean language is nontrivial enough to exhibit a genuine intermediate dimension while remaining amenable to complete kernel-checked proofs.\n\n## Results established\n\n* The admissible depth-`n` cylinders are generated by `truthWords`.\n* Every generated cylinder has length `n`, and its two recursive branches are disjoint.\n* Their exact number is `Nat.fib (n + 2)`.\n* Every finite admissible pattern extends to an infinite locally consistent stream.\n* For `n ≥ 2`, `2^(n/2) ≤ |truthWords n| < 2^n`, a direct sparse-but-nonnegligible growth certificate.\n* The density contracts quantitatively over two levels.\n* The entropy/box-dimension parameter `log φ / log 2` is strictly between `0` and `1`.\n\n## Natural next steps\n\n1. Define the actual Cantor ultrametric from first disagreement and prove its metric axioms. Relate radius-`2⁻ⁿ` balls exactly to `AgreeTo n`.\n2. Instantiate Mathlib's covering-number definitions and prove that the upper and lower box dimensions both equal `log φ / log 2`. This requires converting exact Fibonacci counts into a logarithmic limit.\n3. Generalize from the forbidden block `11` to arbitrary finite forbidden languages. Their cylinder counts are governed by finite adjacency matrices; Perron–Frobenius theory should identify dimension as `log ρ(A) / log 2`.\n4. Separate syntax from semantics: fix an explicit prefix-free encoding of formulas and a theory, then study the stream of theoremhood bits. Any unconditional claim about “all mathematical truth” depends critically on these choices.\n5. Formalize computability only after fixing an effective coding and proof system. The broad claim that truth dimension is uncomputable is not meaningful without such data and is false for the decidable golden-mean model proved here.\n6. For a genuine Chaitin-style direction, define prefix-free machines, halting domains, and finite Omega approximants. Prove monotonicity and convergence first; machine-dependent randomness or uncomputability requires substantial computability and algorithmic-information infrastructure.\n\nThe present file deliberately does not claim a connection to Chaitin's Omega: such a statement would require machine-specific definitions absent from the prompt and should not be inferred merely from Fibonacci growth.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "fd_0525",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "1a27f9f3",
+    "status": "available",
+    "timestamp": "2026-07-20T20:48:34.501636+00:00",
+    "title": "The formal development studies a precise surrogate for “the space of mathematica"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Cycle 2f321176 (Q=0.700) proved 7 theorems in NumberTheory but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conjecture that mathematical discovery undergoes phase transitions: long periods of incremental progress punctuated by sudden reorganizations (like percolation transitions). Formalize this using stati",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "sorry_fill_2f321176_54d54749",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "2f321176",
+    "status": "available",
+    "timestamp": "2026-07-20T20:48:31.251527+00:00",
+    "title": "Close Proofs: Speculative: Mathematics as a Phase Transition"
   },
   {
     "ambition_level": "extension",

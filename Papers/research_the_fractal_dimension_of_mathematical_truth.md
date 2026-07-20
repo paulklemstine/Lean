@@ -1,465 +1,506 @@
-# The Fractal Dimension of Mathematical Truth: Prefix Geometry, Symbolic Counting, and Computability
+# The Fractal Dimension of a Locally Constrained Truth Language
 
 **Aristotle**  
-**19 July 2026**
+**July 20, 2026**
 
 ## Abstract
 
-We develop a self-contained model connecting binary truth assignments, prefix geometry, symbolic fractal dimension, real-number coding, and computability. An infinite theory is represented by a stream $x\in\{0,1\}^{\mathbb N}$. The weighted disagreement function
+We study a precise symbolic model for a constrained space of truth values. Infinite binary streams represent successive yes-or-no answers, and a local consistency condition forbids adjacent positive answers. Finite admissible prefixes form the golden-mean language. We give a self-contained combinatorial analysis: every admissible word has the prescribed length; the recursive branches are disjoint; the number of length-$n$ words is exactly the Fibonacci number $F_{n+2}$; and every finite admissible word extends to an infinite admissible stream. We prove explicit bounds
 
 $$
-d(x,y)=\sum_{n=0}^{\infty}\mathbf 1_{x_n\ne y_n}2^{-(n+1)}
+2^{\lfloor n/2\rfloor}\le F_{n+2}<2^n \qquad (n\ge2),
 $$
 
-is shown to be a metric. We then study a paired truth language in which every even coordinate is fixed to $1$ and every odd coordinate is free. Its admissible prefixes of length $2n$ are in bijection with $n$ freely chosen bits, so their number is $2^n$, whereas the ambient prefix count is $2^{2n}$. The exact identity $(2^n)^2=2^{2n}$ yields symbolic prefix-counting dimension $1/2$, strictly between $0$ and $1$. Every stream also determines a binary real $R(x)=\sum_{n\ge0}x_n2^{-(n+1)}$. Its first $N$ terms approximate it from below with error at most $2^{-N}$, and agreement on the first $N$ bits implies real-value distance at most $2^{-N}$. Finally, we distinguish this universal approximation phenomenon from computability: halting truth for programs on a fixed input is undecidable but recursively enumerable. The construction therefore provides a rigorous bridge among symbolic geometry, analysis, and computability while avoiding the unsupported claim that all mathematical truth has a canonical dimension or that the elementary half-free model is itself uncomputable.
+and a two-step contraction inequality for the density of admissible cylinders. With the Cantor prefix scale $2^{-n}$, the exponential growth parameter, entropy, and standard box-dimension value are
+
+$$
+D=\frac{\log\varphi}{\log2},
+\qquad
+\varphi=\frac{1+\sqrt5}{2},
+$$
+
+with $0<D<1$. The model therefore exhibits a rigorous sparse-but-nonnegligible regime. We also present linear-time recognition and generation algorithms, discuss connections with constrained coding and symbolic dynamics, and delimit the model’s relation to mathematical truth and Chaitin-style constructions. In particular, this decidable language does not support an uncomputability claim without additional semantic and machine-specific structure.
 
 ## 1. Introduction
 
-A mathematical statement can be assigned a binary value: true or false. After choosing a language, semantics, foundational setting, and enumeration of statements, a complete assignment becomes an infinite binary stream. This elementary representation invites geometric questions. If two assignments agree for a long initial segment, should they count as close? If a family of assignments allows only a restricted number of prefixes, can its rate of prefix growth be interpreted as a dimension? If the bits are used as binary digits of a real number, how accurately do finite observations determine that real? Finally, what changes when the bits encode an undecidable predicate such as program halting?
+Binary streams provide a common language for logic, information theory, computation, and symbolic dynamics. A stream $x:\mathbb N\to\{0,1\}$ may encode answers to an ordered collection of questions, successive states of a device, or a trajectory through a two-symbol dynamical system. The full set of streams is Cantor space. Its natural geometry is determined by prefixes: two streams are close if their first disagreement occurs far in the future.
 
-These questions must be separated carefully. There is no canonical effective enumeration of all mathematical statements independent of syntax and foundations. Dimension also depends on a metric or covering convention. Moreover, geometric approximation of a real does not imply that the underlying bits are computable, and undecidability of one truth predicate does not transfer automatically to an unrelated language.
+The full binary tree has $2^n$ prefixes of length $n$. Local restrictions prune this tree and may produce an infinite set whose number of surviving depth-$n$ cylinders grows at an intermediate exponential rate. Such sets are elementary examples of fractal symbolic spaces. Their geometry can often be read directly from combinatorics.
 
-The purpose of this paper is to construct an explicit model in which each connection has a precise theorem. The paired truth language fixes one coordinate in each pair and leaves the other free. This gives exact prefix counts at all finite scales and an elementary symbolic dimension of $1/2$. The dimension is therefore sparse but nonzero. Independently, the binary-real map supplies certified lower approximations and a prefix continuity bound. A final computability section explains the exact status of halting truth: it is noncomputable as a decision predicate but recursively enumerable in the positive direction.
+We consider the simplest nontrivial rule of this kind: the block $11$ is forbidden. Interpreting $1$ as a positive answer, the rule says that no two successive answers may both be positive. We call the resulting set the **golden-mean truth language**. The terminology “truth language” describes the binary interpretation, not a claim that this system captures all mathematical truth. Its consistency condition is intentionally local and transparent.
 
-The main results are:
+Three features make the model useful. First, it admits exact counting. The number of length-$n$ admissible words is $F_{n+2}$, where $F_n$ is the Fibonacci sequence. Second, no admissible finite prefix is a dead end: every one extends to an infinite admissible stream. Third, its growth rate is neither constant nor maximal. At scale $2^{-n}$ the number of inhabited cylinders is asymptotic to a constant times $\varphi^n$, so the associated dimension is $\log_2\varphi$, strictly between $0$ and $1$.
 
-1. **Prefix Metric Theorem.** The geometrically weighted coordinate-disagreement sum defines a metric on infinite Boolean streams.
-2. **Completion and Counting Theorem.** Every finite choice of $n$ odd bits extends injectively to a paired truth stream, and the number of admissible length-$2n$ prefixes is exactly $2^n$.
-3. **Exact Half-Dimension Theorem.** At every even scale, the square of the admissible-prefix count equals the ambient-prefix count; consequently, the symbolic prefix-counting dimension is exactly $1/2$.
-4. **Binary Approximation Theorem.** The first $N$ digits of any stream approximate its binary real from below with error at most $2^{-N}$.
-5. **Prefix Stability Theorem.** Two streams agreeing on their first $N$ coordinates determine binary reals at distance at most $2^{-N}$.
-6. **Halting Truth Theorem.** For any fixed input, halting as a predicate on program codes is undecidable but recursively enumerable.
+The paper develops these statements from first principles. Section 2 defines prefix scales, admissibility, and cylinders. Section 3 proves structural properties and exact Fibonacci enumeration. Section 4 establishes extension to infinite streams. Section 5 proves quantitative sparsity and density contraction. Section 6 derives entropy and dimension. Section 7 gives algorithms and numerical methods. Sections 8 and 9 discuss applications, scope, and generalization.
 
-The paired construction is deliberately a model rather than a claim about an invariant of mathematics as a whole. Its value lies in making the proposed bridges exact and auditable.
+## 2. Definitions and geometric setting
 
-## 2. Binary theories and prefix geometry
+### 2.1 Binary words and streams
 
-### 2.1 Infinite theories
+Let $\mathbb B=\{0,1\}$. A **binary word of length $n$** is an element
 
-A **binary theory** is a function
-
 $$
-x:\mathbb N\to\{0,1\}.
+w=(w_0,w_1,\ldots,w_{n-1})\in\mathbb B^n.
 $$
-
-The bit $x_n=1$ means that the $n$th statement is accepted as true, while $x_n=0$ means that it is not. No closure axioms are imposed: the word “theory” here refers to a binary assignment, not necessarily a deductively closed formal theory.
-
-For a proposition $P$, let $\mathbf 1_P$ denote its indicator, equal to $1$ when $P$ holds and $0$ otherwise.
-
-### 2.2 Weighted disagreement distance
 
-Define
+A **binary stream** is a function $x:\mathbb N\to\mathbb B$. A word or stream is **locally consistent** if it contains no adjacent pair of ones. Thus a finite word $w$ is locally consistent when
 
 $$
-d(x,y)=\sum_{n=0}^{\infty}\mathbf 1_{x_n\ne y_n}2^{-(n+1)}.
+\neg(w_k=1\ \text{and}\ w_{k+1}=1)
 $$
 
-The series converges absolutely because each summand lies between $0$ and $2^{-(n+1)}$, and
+for every $k<n-1$. A stream $x$ is locally consistent when
 
 $$
-\sum_{n=0}^{\infty}2^{-(n+1)}=1.
+\neg(x_k=1\ \text{and}\ x_{k+1}=1)
 $$
 
-Although the distance aggregates all disagreements rather than recording only the first, it has the essential prefix behavior: later disagreements carry exponentially smaller weights.
+for every $k\in\mathbb N$.
 
-### Theorem 2.1 (Prefix Metric Theorem)
+Let $W_n$ denote the set of locally consistent words of length $n$. We call its elements **admissible truth patterns**. Let
 
-For all binary theories $x,y,z$, the function $d$ satisfies:
+$$
+X=\{x\in\mathbb B^{\mathbb N}:x\text{ is locally consistent}\}
+$$
 
-1. $d(x,y)\ge0$;
-2. $d(x,y)=0$ if and only if $x=y$;
-3. $d(x,y)=d(y,x)$;
-4. $d(x,z)\le d(x,y)+d(y,z)$.
+be the infinite golden-mean language.
 
-Hence $d$ is a metric on $\{0,1\}^{\mathbb N}$.
+### 2.2 Recursive description
 
-#### Proof sketch
+The family $W_n$ has the initial values
 
-Nonnegativity follows term by term. Symmetry follows because $x_n\ne y_n$ is equivalent to $y_n\ne x_n$. If $x=y$, every indicator vanishes. Conversely, if $x\ne y$, there is an index $m$ with $x_m\ne y_m$, and the $m$th summand contributes $2^{-(m+1)}>0$; all other terms are nonnegative, so $d(x,y)>0$.
+$$
+W_0=\{\varepsilon\},
+\qquad
+W_1=\{0,1\},
+$$
 
-For the triangle inequality, at each coordinate one has
+where $\varepsilon$ is the empty word. For $n\ge0$, define recursively
 
 $$
-\mathbf 1_{x_n\ne z_n}
-\le \mathbf 1_{x_n\ne y_n}+\mathbf 1_{y_n\ne z_n}.
+W_{n+2}=0W_{n+1}\ \cup\ 10W_n,
 $$
 
-Indeed, if $x_n\ne z_n$, the intermediate bit $y_n$ cannot equal both. Multiplication by the positive weight $2^{-(n+1)}$ and summation over $n$ give the result. $\square$
+where $0W_{n+1}$ consists of words formed by prefixing $0$ to a member of $W_{n+1}$, and $10W_n$ consists of words formed by prefixing $10$ to a member of $W_n$.
 
-### Proposition 2.2 (Elementary bounds)
+This recursion expresses the first-symbol dichotomy. An admissible word either begins with $0$, after which any admissible tail is allowed, or begins with $1$, which forces the next symbol to be $0$.
 
-For all $x,y$,
+### 2.3 Prefix agreement and cylinders
 
-$$
-0\le d(x,y)\le1.
-$$
+For streams $x,y$ and $n\in\mathbb N$, say that $x$ and $y$ **agree to depth $n$**, written informally as $x\sim_n y$, if
 
-If $x$ and $y$ agree in their first $N$ positions, then
-
 $$
-d(x,y)\le2^{-N}.
+x_k=y_k\qquad\text{for all }k<n.
 $$
 
-#### Proof sketch
+For each fixed $n$, this is an equivalence relation. It is reflexive because every coordinate equals itself, symmetric because equality is symmetric, and transitive because coordinatewise equality is transitive. The relations are nested in the reverse direction: if $m\le n$ and $x\sim_n y$, then $x\sim_m y$.
 
-The first upper bound follows by replacing every indicator by $1$. Under prefix agreement, all terms with $n<N$ vanish, leaving the geometric tail
+Given a word $w\in\mathbb B^n$, its **cylinder** is
 
 $$
-\sum_{n=N}^{\infty}2^{-(n+1)}=2^{-N}.
+[w]=\{x\in\mathbb B^{\mathbb N}:x_k=w_k\text{ for every }k<n\}.
 $$
 
-This proposition displays the topology implicit in the construction: long common prefixes force small metric distance.
+The depth-$n$ cylinders partition Cantor space into $2^n$ pieces. Under the standard Cantor ultrametric, in which the distance between distinct streams whose first disagreement occurs at index $r$ is $2^{-r}$, these cylinders are balls at scale comparable to $2^{-n}$. The geometry needed below can therefore be expressed entirely through prefix depth.
 
-## 3. The paired truth language
+## 3. Structural lemmas and exact enumeration
 
-### 3.1 Definition
+We begin by justifying the recursive construction and then count its words.
 
-The **paired truth language** $\mathcal P$ consists of all binary theories satisfying
+### Lemma 3.1 (Length preservation)
 
-$$
-x_{2k}=1\qquad\text{for every }k\in\mathbb N.
-$$
+Every word in $W_n$ has length exactly $n$.
 
-Thus, in every pair $(x_{2k},x_{2k+1})$, the first bit is fixed and the second is free. This is a periodic subspace of the full binary shift.
+**Proof sketch.** The claim is immediate for $n=0$ and $n=1$. For the recursive step, a word in the first branch has the form $0u$ with $u\in W_{n+1}$; by induction its length is $1+(n+1)=n+2$. A word in the second branch has the form $10v$ with $v\in W_n$; its length is $2+n=n+2$. Hence every recursively generated word has the advertised length. $\square$
 
-A finite paired description at scale $n$ is a function
+### Lemma 3.2 (Disjoint branch decomposition)
 
-$$
-p:\{0,1,\ldots,n-1\}\to\{0,1\}.
-$$
+For every $n\ge0$, the sets $0W_{n+1}$ and $10W_n$ are disjoint.
 
-It stores exactly the first $n$ odd-coordinate choices. An unrestricted binary prefix of length $m$ is similarly a function from $\{0,1,\ldots,m-1\}$ to $\{0,1\}$.
+**Proof sketch.** Every word in $0W_{n+1}$ begins with $0$, whereas every word in $10W_n$ begins with $1$. No binary word can satisfy both conditions. $\square$
 
-### 3.2 Completion
+### Lemma 3.3 (Cylinder-count recurrence)
 
-Given a finite paired description $p$ of length $n$, define a completed infinite stream $C_p$ by
+For every $n\ge0$,
 
 $$
-(C_p)_{2k+1}=p_k\quad(0\le k<n)
+|W_{n+2}|=|W_{n+1}|+|W_n|.
 $$
 
-and set every other coordinate equal to $1$. In particular, all even coordinates are $1$, so $C_p\in\mathcal P$.
+**Proof sketch.** By the recursive description, $W_{n+2}$ is the union of $0W_{n+1}$ and $10W_n$. Prefixing a fixed finite word is injective, so these branches have cardinalities $|W_{n+1}|$ and $|W_n|$. Lemma 3.2 makes their union disjoint, and cardinalities therefore add. $\square$
 
-### Lemma 3.1 (Completion Lemma)
+Let the Fibonacci numbers be defined by
+
+$$
+F_0=0,
+\qquad
+F_1=1,
+\qquad
+F_{m+2}=F_{m+1}+F_m.
+$$
 
-Every finite paired description extends to a member of $\mathcal P$. The completion recovers each stored bit at its designated odd coordinate, and the map $p\mapsto C_p$ is injective.
+### Theorem 3.4 (Exact Cylinder Count Theorem)
 
-#### Proof sketch
+For every $n\ge0$, the number of admissible truth patterns of length $n$ is
 
-The construction explicitly makes every even coordinate $1$, proving membership. At coordinate $2k+1$ for $k<n$, the defining rule returns $p_k$. If $p\ne q$, choose $k$ with $p_k\ne q_k$; then $C_p$ and $C_q$ differ at $2k+1$, proving injectivity. $\square$
+$$
+|W_n|=F_{n+2}.
+$$
 
-The lemma is stronger than a raw cardinality calculation: it proves that every finite free pattern is consistent with an infinite paired stream and that no two descriptions collapse under completion.
+**Proof sketch.** The initial counts are $|W_0|=1=F_2$ and $|W_1|=2=F_3$. Lemma 3.3 gives the Fibonacci recurrence. Induction on $n$ identifies the two sequences term by term. $\square$
 
-### 3.3 Exact counts
+The theorem yields the sequence
 
-### Theorem 3.2 (Finite Prefix Counting Theorem)
+$$
+|W_0|,|W_1|,|W_2|,\ldots=1,2,3,5,8,13,21,\ldots.
+$$
 
-For every $n\ge0$, the number $A_n$ of admissible paired prefixes of length $2n$ is
+For example,
 
 $$
-A_n=2^n.
+W_3=\{000,001,010,100,101\}.
 $$
 
-The number $B_m$ of unrestricted binary prefixes of length $m$ is
+The exact count also has a matrix interpretation. If $a_n$ and $b_n$ count admissible words of length $n$ ending in $0$ and $1$, respectively, then
 
 $$
-B_m=2^m.
+\begin{pmatrix}a_{n+1}\\b_{n+1}\end{pmatrix}
+=
+\begin{pmatrix}1&1\\1&0\end{pmatrix}
+\begin{pmatrix}a_n\\b_n\end{pmatrix}.
 $$
 
-#### Proof sketch
+The leading eigenvalue of this matrix is $\varphi=(1+\sqrt5)/2$. This linear-algebraic description anticipates the entropy computation and generalizes to arbitrary finite forbidden-block systems.
 
-A paired prefix of length $2n$ has $n$ fixed even coordinates and $n$ independently chosen odd coordinates. Each free coordinate has two choices, so the multiplication principle gives $A_n=2^n$. An unrestricted prefix of length $m$ has two independent choices at each of $m$ positions, yielding $B_m=2^m$. $\square$
+## 4. Extension from finite patterns to infinite streams
 
-For the first six scales, the counts are
+Counting finite words measures inhabited cylinders only if every admissible prefix can occur in an infinite admissible stream. In the present model, extension is unconditional.
 
-| $n$ | Paired count $A_n$ | Ambient count $B_{2n}$ | Identity |
-|---:|---:|---:|:---|
-| $0$ | $1$ | $1$ | $1^2=1$ |
-| $1$ | $2$ | $4$ | $2^2=4$ |
-| $2$ | $4$ | $16$ | $4^2=16$ |
-| $3$ | $8$ | $64$ | $8^2=64$ |
-| $4$ | $16$ | $256$ | $16^2=256$ |
-| $5$ | $32$ | $1024$ | $32^2=1024$ |
+### Theorem 4.1 (Consistent Extension Theorem)
 
-The table illustrates an identity that holds at every scale, not merely the displayed cases.
+Let $w\in W_n$. There exists a stream $x\in X$ whose first $n$ coordinates equal $w$.
 
-## 4. Exact symbolic dimension
+**Proof sketch.** Define $x_k=w_k$ for $k<n$ and $x_k=0$ for $k\ge n$. No forbidden pair occurs within the prefix because $w$ is admissible. The boundary pair, if present, ends in the appended symbol $0$, and the infinite tail consists entirely of zeros. Thus $x$ contains no $11$ and extends $w$. $\square$
 
-### 4.1 Definition of symbolic prefix-counting dimension
+### Corollary 4.2 (Inhabited-cylinder count)
 
-For a language $L\subseteq\{0,1\}^{\mathbb N}$, let $N_L(m)$ be the number of length-$m$ prefixes that occur among streams in $L$. When the limit exists, define the normalized symbolic prefix-counting dimension by
+At depth $n$, exactly $F_{n+2}$ cylinders intersect $X$.
 
-$$
-\dim_{\mathrm{sym}}(L)
-=\lim_{m\to\infty}\frac{\log N_L(m)}{m\log2}.
-$$
+**Proof sketch.** A cylinder intersects $X$ exactly when its defining word is admissible. The forward implication follows because every prefix of a locally consistent stream is locally consistent. The reverse implication is Theorem 4.1. Theorem 3.4 supplies the count. $\square$
 
-The denominator is the logarithm of the ambient prefix count $2^m$. Thus a language with boundedly many prefixes has dimension $0$, while the full binary space has dimension $1$.
+This extension property distinguishes genuine geometric branches from temporary combinatorial possibilities. It also implies that $X$ has no isolated point: after any admissible prefix, one can extend by zeros, and sufficiently far beyond that prefix one may choose either $0$ or, when preceded by $0$, $1$, producing distinct streams with arbitrarily long common prefixes.
 
-For the paired language, it suffices initially to inspect even scales $m=2n$. At odd scales $m=2n+1$, there are still only $n$ free odd positions, so $N_{\mathcal P}(2n+1)=2^n$. Both subsequences lead to the same limiting ratio.
+## 5. Quantitative sparsity
 
-### Theorem 4.1 (Exact Half-Dimension Theorem)
+The exact Fibonacci formula allows asymptotic analysis, but elementary inequalities already certify intermediate growth.
 
-At every even scale $2n$,
+### Proposition 5.1 (Binary upper bound)
 
+For every $n\ge0$,
+
 $$
-N_{\mathcal P}(2n)^2=2^{2n}=N_{\mathrm{full}}(2n).
+F_{n+2}\le2^n.
 $$
+
+**Proof sketch.** Since $W_n\subseteq\mathbb B^n$, one immediately has $|W_n|\le2^n$. Equivalently, the inequality follows by induction from the Fibonacci recurrence and the identity $2^{n+1}=2^n+2^n$. $\square$
 
-Consequently,
+### Theorem 5.2 (Strict Sparsity Theorem)
 
+For every $n\ge2$,
+
 $$
-\dim_{\mathrm{sym}}(\mathcal P)=\frac12,
+|W_n|=F_{n+2}<2^n.
 $$
 
-and this value is strictly intermediate:
+**Proof sketch.** At $n=2$, the admissible words are $00$, $01$, and $10$, so $|W_2|=3<4$. Suppose the strict inequality is known at two consecutive indices. Then
 
 $$
-0<\frac12<1.
+|W_{n+2}|=|W_{n+1}|+|W_n|<2^{n+1}+2^n<2^{n+2}.
 $$
+
+Together with the initial cases, induction proves strictness at every depth at least two. $\square$
 
-#### Proof sketch
+### Theorem 5.3 (Exponential Lower Bound Theorem)
 
-By Theorem 3.2, $N_{\mathcal P}(2n)=2^n$ and the ambient count is $2^{2n}$. Therefore
+For every $n\ge0$,
 
 $$
-N_{\mathcal P}(2n)^2=(2^n)^2=2^{2n}.
+2^{\lfloor n/2\rfloor}\le |W_n|=F_{n+2}.
 $$
 
-For even scales,
+**Proof sketch.** For even length $n=2m$, independently choose each two-symbol block to be either $00$ or $10$. Concatenating the chosen blocks creates no adjacent ones, including across block boundaries, because every block ends in $0$. This injects $2^m$ choices into $W_{2m}$. For odd length $n=2m+1$, prepend or append a zero to the same construction, again obtaining $2^m$ distinct admissible words. Since $m=\lfloor n/2\rfloor$, the bound follows. $\square$
 
-$$
-\frac{\log N_{\mathcal P}(2n)}{(2n)\log2}
-=\frac{n\log2}{2n\log2}=\frac12
-$$
+### Corollary 5.4 (Intermediate Fractal Growth)
 
-for every $n>0$. For odd scales,
+For every $n\ge2$,
 
 $$
-\frac{\log N_{\mathcal P}(2n+1)}{(2n+1)\log2}
-=\frac{n}{2n+1}\longrightarrow\frac12.
+2^{\lfloor n/2\rfloor}\le |W_n|<2^n.
 $$
 
-Thus the full limit exists and equals $1/2$. The strict inequalities are immediate. $\square$
+The lower and upper exponents already imply that any limiting normalized logarithmic growth lies in $[1/2,1]$, while the exact Fibonacci formula sharpens this to a single value strictly inside the interval.
 
-### 4.2 Interpretation
+Define the depth-$n$ density by
 
-The theorem gives exact content to “sparse but not negligible.” The fraction of admissible length-$2n$ words among all binary words is
-
 $$
-\frac{2^n}{2^{2n}}=2^{-n},
+d_n=\frac{|W_n|}{2^n}.
 $$
-
-which tends to zero exponentially. In a density sense the language is sparse. Nevertheless, its number of distinguishable prefixes grows exponentially, so its normalized exponent is positive. Dimension records this residual exponential freedom.
 
-This is symbolic dimension. Establishing equality with a specific Hausdorff or box-counting dimension requires fixing a metric normalization and developing the corresponding cylinder-cover theory. The present exact count is the finite-scale combinatorial core from which such results may be derived.
+### Theorem 5.5 (Two-Step Density Contraction Theorem)
 
-## 5. Binary real coding
+For every $n\ge0$,
 
-### 5.1 Definitions
+$$
+d_{n+2}\le\frac34d_n.
+$$
 
-Associate to each binary theory $x$ the real number
+Equivalently,
 
 $$
-R(x)=\sum_{n=0}^{\infty}x_n2^{-(n+1)}.
+2^n|W_{n+2}|\le3\cdot2^n|W_n|.
 $$
 
-Since $0\le x_n\le1$, the series converges and $0\le R(x)\le1$. Define its $N$-term truncation by
+**Proof sketch.** Using $|W_m|=F_{m+2}$, it is enough to show $F_{n+4}\le3F_{n+2}$. The Fibonacci recurrence gives
 
 $$
-R_N(x)=\sum_{n=0}^{N-1}x_n2^{-(n+1)}.
+F_{n+4}=F_{n+3}+F_{n+2}=2F_{n+2}+F_{n+1}\le3F_{n+2},
 $$
 
-This is a dyadic rational computable from the first $N$ bits whenever those bits are available.
+because $F_{n+1}\le F_{n+2}$. Dividing by $2^{n+2}$ gives the density form. $\square$
 
-### Theorem 5.1 (Binary Approximation Theorem)
+### Corollary 5.6 (Vanishing density)
 
-For every binary theory $x$ and every $N\ge0$,
+The proportion $d_n$ tends to $0$ exponentially as $n\to\infty$.
 
-$$
-0\le R(x)-R_N(x)\le2^{-N}.
-$$
+**Proof sketch.** Iterating Theorem 5.5 separately along even and odd indices gives $d_{2m}\le(3/4)^m d_0$ and $d_{2m+1}\le(3/4)^m d_1$. Both bounds tend to zero. $\square$
+
+Thus absolute abundance and relative rarity coexist: $|W_n|$ is exponentially large, while its fraction among all binary words vanishes exponentially.
 
-#### Proof sketch
+## 6. Entropy and dimension
 
-Subtracting the finite prefix leaves the tail
+### 6.1 Exponential growth rate
 
+The golden ratio
+
 $$
-R(x)-R_N(x)=\sum_{n=N}^{\infty}x_n2^{-(n+1)}.
+\varphi=\frac{1+\sqrt5}{2}
 $$
 
-Every term is nonnegative, proving the lower bound. Replacing $x_n$ by its upper bound $1$ gives
+satisfies $\varphi^2=\varphi+1$. Binet’s formula states
 
 $$
-R(x)-R_N(x)
-\le\sum_{n=N}^{\infty}2^{-(n+1)}=2^{-N}.
+F_m=\frac{\varphi^m-\psi^m}{\sqrt5},
+\qquad
+\psi=\frac{1-\sqrt5}{2},
 $$
-
-The estimate is sharp: equality occurs when all bits from position $N$ onward equal $1$. $\square$
 
-The theorem yields an explicit approximation algorithm. Read $N$ bits, sum their dyadic weights, and return the interval
+with $|\psi|<1$. Therefore
 
 $$
-[R_N(x),R_N(x)+2^{-N}].
+F_{n+2}=\frac{\varphi^{n+2}}{\sqrt5}\left(1-\left(\frac{\psi}{\varphi}\right)^{n+2}\right),
 $$
 
-It is guaranteed to contain $R(x)$ and has width $2^{-N}$. To achieve additive uncertainty at most $\varepsilon>0$, it suffices to choose
+and hence
 
 $$
-N\ge\left\lceil\log_2\frac1\varepsilon\right\rceil.
+\lim_{n\to\infty}\frac1n\log F_{n+2}=\log\varphi.
 $$
 
-### Theorem 5.2 (Prefix Stability Theorem)
+The **topological entropy** of the language, measured in natural logarithmic units per symbol, is therefore $\log\varphi$. In bits per symbol it is $\log_2\varphi$.
 
-If binary theories $x$ and $y$ agree at every index $n<N$, then
+### 6.2 Box-counting interpretation
 
+At Cantor scale $2^{-n}$, Corollary 4.2 shows that exactly
+
 $$
-|R(x)-R(y)|\le2^{-N}.
+N_n=F_{n+2}
 $$
-
-#### Proof sketch
 
-The common prefix cancels from the difference:
+depth-$n$ cylinders are needed to cover $X$. The corresponding normalized logarithmic count is
 
 $$
-R(x)-R(y)=\sum_{n=N}^{\infty}(x_n-y_n)2^{-(n+1)}.
+D_n=\frac{\log N_n}{\log(2^n)}
+=
+\frac{\log F_{n+2}}{n\log2}.
 $$
 
-Since $|x_n-y_n|\le1$, the triangle inequality for series gives
+Taking the limit gives
 
 $$
-|R(x)-R(y)|
-\le\sum_{n=N}^{\infty}2^{-(n+1)}=2^{-N}.
+D=\lim_{n\to\infty}D_n
+=
+\frac{\log\varphi}{\log2}.
 $$
 
-Equivalently, both streams share the same truncation and their possible continuations fill an interval no wider than the binary tail. $\square$
+This is the standard box-dimension value associated with the golden-mean subshift in the binary Cantor metric.
 
-### Remark 5.3 (Nonunique binary expansions)
+### Theorem 6.1 (Intermediate Dimension Theorem)
 
-The map $R$ is not injective on all streams. For example, the stream beginning with $1$ and followed by zeros can represent the same real as the stream beginning with $0$ and followed by ones. The prefix metric remains separating, while the real coding identifies these dyadic endpoint pairs. The approximation and stability theorems do not require injectivity.
+The entropy-normalized dimension parameter
 
-### Proposition 5.4 (Lipschitz comparison)
+$$
+D=\frac{\log\varphi}{\log2}
+$$
 
-For all streams $x,y$,
+satisfies
 
 $$
-|R(x)-R(y)|\le d(x,y).
+0<D<1.
 $$
 
-#### Proof sketch
+**Proof sketch.** Since $\sqrt5>1$, one has $\varphi>1$. Since $\sqrt5<3$, one has $\varphi<2$. The logarithm is strictly increasing on positive real numbers, so
 
-Write
+$$
+0=\log1<\log\varphi<\log2.
+$$
 
+Because $\log2>0$, division by $\log2$ yields $0<D<1$. Numerically,
+
 $$
-R(x)-R(y)=\sum_{n=0}^{\infty}(x_n-y_n)2^{-(n+1)}.
+D\approx0.694241913630617.
 $$
+
+$\square$
+
+The dimension has a direct operational interpretation. Among all $n$-bit strings, the admissible set has approximately $\varphi^n$ elements. Naming one admissible word therefore requires approximately $n\log_2\varphi$ bits, rather than $n$ unrestricted bits. The same constant is simultaneously a geometric dimension, a symbolic entropy in base two, and an asymptotic coding rate.
+
+## 7. Algorithms and numerical experiments
+
+The theory leads to simple and useful computations.
+
+### 7.1 Linear-time recognition
+
+Given a word $w$ of length $n$, scan adjacent pairs from left to right. Reject as soon as $11$ appears; otherwise accept after the final symbol.
 
-At each coordinate, $|x_n-y_n|=\mathbf 1_{x_n\ne y_n}$. Apply the triangle inequality to the series. This observation explains why prefix closeness controls numerical closeness.
+**Correctness.** Rejection occurs exactly when the defining local condition fails. If the scan finishes, every adjacent pair has been inspected and none equals $11$, so the word is admissible.
 
-## 6. Algorithms and complexity
+**Complexity.** The algorithm uses $O(n)$ time and $O(1)$ auxiliary space.
 
-### 6.1 Prefix enumeration
+### 7.2 Recursive generation
 
-To enumerate all admissible paired prefixes at scale $n$, iterate over integers $j$ from $0$ through $2^n-1$, write $j$ as an $n$-bit word $(b_0,\ldots,b_{n-1})$, and output
+The decomposition
 
 $$
-(1,b_0,1,b_1,\ldots,1,b_{n-1}).
+W_{n+2}=0W_{n+1}\cup10W_n
 $$
 
-The procedure outputs exactly $2^n$ prefixes. Constructing each prefix requires $O(n)$ bit operations, so the total output-sensitive time is $O(n2^n)$ and the working space, excluding output storage, is $O(n)$.
+gives a generator. Recursively generate the two smaller languages, prefix their words, and concatenate the disjoint outputs.
 
-### 6.2 Certified real approximation
+**Correctness.** Every generated word is admissible by construction. Conversely, every admissible word begins in exactly one of the two forms, so no word is missed or duplicated.
 
-Given the first $N$ bits, initialize $s=0$ and add $x_n2^{-(n+1)}$ for $0\le n<N$. Return $s$ together with the interval $[s,s+2^{-N}]$. Using exact dyadic arithmetic, the sum can be represented as an integer divided by $2^N$. The procedure uses $O(N)$ arithmetic steps and $O(N)$ bits for the exact numerator.
+**Complexity.** Any explicit generator must spend $\Omega(nF_{n+2})$ time merely to write all output symbols. A straightforward implementation achieves $O(nF_{n+2})$ output-sensitive time and stores $O(n)$ state when implemented as a depth-first iterator.
 
-### 6.3 Prefix comparison
+### 7.3 Fast counting
 
-Given two finite samples and a requested common-prefix length $N$, check equality coordinate by coordinate. If all first $N$ bits agree, report the certified bound $2^{-N}$ on the distance between their binary reals. The algorithm takes $O(N)$ time and $O(1)$ auxiliary space beyond the input.
+For moderate sizes, iterate the recurrence with two integers. Starting from $c_0=1$ and $c_1=2$, update
 
-These algorithms demonstrate three aspects of the theory: exact combinatorial growth, geometric convergence, and stability under shared information.
+$$
+(c_k,c_{k+1})\leftarrow(c_{k+1},c_k+c_{k+1}).
+$$
 
-## 7. Computability and halting truth
+After $n-1$ updates, $c_n=F_{n+2}$.
 
-### 7.1 Decidable and recursively enumerable predicates
+This takes $O(n)$ integer additions and $O(1)$ integer registers. In bit complexity, the operands contain $O(n)$ bits, so arithmetic cost must also be accounted for. Matrix exponentiation or Fibonacci fast doubling computes the count in $O(\log n)$ recursive arithmetic steps.
 
-A predicate on program codes is **computable** or **decidable** if an algorithm halts on every code and correctly returns whether the predicate holds. It is **recursively enumerable** if there is an algorithm that eventually confirms every positive instance, while it may run forever on negative instances.
+### 7.4 Dimension approximation
 
-Fix a natural-number input $u$. For each program code $c$, define the halting truth predicate
+For $n\ge1$, define
 
 $$
-H_u(c)=1
-\quad\Longleftrightarrow\quad
-\text{program }c\text{ eventually halts on input }u.
+D_n=\frac{\log_2 |W_n|}{n}.
 $$
 
-### Theorem 7.1 (Halting Truth Theorem)
+Exact counting followed by a logarithm gives a convergent numerical estimate of $D$. Because $F_{n+2}=C\varphi^n(1+o(1))$ for a positive constant $C$, the error is of order $O(1/n)$ in this uncorrected estimator. A ratio estimator,
 
-For every fixed input $u$, the predicate $H_u$ is not computable. Nevertheless, its positive instances are recursively enumerable.
+$$
+R_n=\log_2\left(\frac{|W_{n+1}|}{|W_n|}\right),
+$$
 
-#### Proof sketch
+converges more rapidly to $\log_2\varphi$ because the Fibonacci ratio converges geometrically to $\varphi$.
 
-For noncomputability, suppose a total decision algorithm for $H_u$ existed. Standard program specialization allows arbitrary program-input pairs to be encoded as programs acting on the fixed input $u$. The assumed decider would therefore solve the general halting problem, contradicting the diagonal halting theorem.
+A numerical demonstration can tabulate $n$, $F_{n+2}$, $2^{\lfloor n/2\rfloor}$, $2^n$, the density $d_n$, and $D_n$. It can also enumerate short words to compare direct counts with the recurrence and plot the decay of $d_n$ alongside convergence of $D_n$.
 
-For recursive enumerability, simulate each program on $u$. A direct semidecision procedure runs the chosen program and accepts if it halts. To enumerate all positive codes simultaneously, dovetail the simulations: at stage $t$, run the first $t$ programs for $t$ steps and announce those newly observed to halt. Every halting computation has finite duration and will eventually be discovered. $\square$
+## 8. Applications and broader connections
 
-### 7.2 Relation to binary reals and Chaitin-style constructions
+### 8.1 Constrained coding
 
-The Binary Approximation Theorem applies to every stream, including one formed from halting bits after an enumeration of program codes has been chosen. However, the theorem is conditional on possession of the first $N$ bits; it does not supply an algorithm for deciding those bits. Analytic approximability of a series tail and effective availability of its digits are distinct notions.
+In magnetic and optical storage, certain local patterns may be undesirable because they impair timing recovery or produce unreliable physical states. A finite-state constraint removes those patterns. The number of valid codewords determines the achievable information rate. For the no-$11$ rule, that rate is $\log_2\varphi$ bits per stored symbol. The present counting and dimension calculation are therefore identical to a basic capacity computation for a constrained channel.
 
-Chaitin’s halting probability $\Omega$ is defined for a prefix-free machine by summing $2^{-|p|}$ over halting programs $p$. Prefix-freeness invokes Kraft’s inequality and ensures the sum is bounded by $1$. The simple coordinate-weighted coding $R(x)$ studied here resembles $\Omega$ in turning halting information into a real, but it is not automatically an $\Omega$ number. No prefix-free machine has been fixed in the paired construction, and its elementary dimension $1/2$ is entirely computable.
+### 8.2 Symbolic dynamics
 
-This separation prevents two invalid inferences. First, a geometrically convergent binary series need not have computable bits. Second, the existence of an undecidable halting stream does not make every sparse symbolic language undecidable or give its dimension an uncomputable value.
+The shift map removes the first symbol of a stream. The set $X$ is invariant under this operation and is a shift of finite type. Its allowed transitions can be represented by the matrix
 
-## 8. Applications and conceptual bridges
+$$
+A=\begin{pmatrix}1&1\\1&0\end{pmatrix},
+$$
 
-### 8.1 Symbolic dynamics and information rate
+where states record the previous symbol. The number of paths grows according to the spectral radius $\rho(A)=\varphi$. This explains why a local combinatorial rule determines a global entropy.
 
-The paired language is a periodic subshift-like constraint with one free bit per block of two. Its logarithmic prefix growth is an information rate: $n$ independent bits survive in a word of length $2n$. The dimension $1/2$ is therefore simultaneously a normalized combinatorial entropy.
+### 8.3 Finite automata and regular languages
 
-A natural extension fixes a periodic mask of block length $b$ with $a$ free coordinates. At scales $bn$, the number of admissible prefixes is $2^{an}$, predicting normalized symbolic dimension
+A two-state automaton recognizes the language. One state records that the previous symbol was $0$ or that no symbol has appeared; the other records that the previous symbol was $1$. Reading $1$ from the second state enters rejection. The language is regular, decidable, and efficiently enumerable. Its generating function is rational:
 
 $$
-\frac{a}{b}.
+\sum_{n\ge0}|W_n|z^n
+=
+\sum_{n\ge0}F_{n+2}z^n
+=
+\frac{1+z}{1-z-z^2}.
 $$
 
-This family can model constrained channels, symbolic encodings, or databases in which some fields are prescribed and others variable.
+The poles of this generating function again encode golden-ratio growth.
 
-### 8.2 Hierarchical data and robust approximation
+### 8.4 A disciplined metaphor for truth
 
-Prefix metrics occur naturally in tries, digital trees, coding theory, and hierarchical classification. The estimate $2^{-N}$ translates shared initial information into a certified uncertainty radius. In streaming settings, each incoming bit halves the worst-case interval for the coded real.
+If bits are interpreted as answers to statements, local rules can model dependencies among neighboring answers. The no-$11$ condition is deliberately minimal. It demonstrates that restricting patterns of answers can create a set with nonintegral geometric complexity. But semantic conclusions depend on the encoding, the ordering of statements, and the chosen theory. The model’s strength is that these assumptions are explicit rather than hidden.
 
-### 8.3 Logic and effective information
+## 9. Scope, limitations, and future directions
 
-The halting truth theorem illustrates a one-sided mode of knowledge: positive facts can appear over time even when no terminating decision procedure handles all cases. This asymmetry underlies computably enumerable theories and monotone approximations to halting-probability reals. It also warns that a finite numerical approximation may conceal logically inaccessible digits.
+The results concern a decidable golden-mean language, not the collection of truths of arithmetic or any other foundational theory. The dimension $\log_2\varphi$ is computable. Consequently, the present model does not prove that a “dimension of mathematical truth” is uncomputable.
 
-## 9. Limitations
+To formulate a semantic theorem, one would need at least the following data: an effective encoding of formulas, a fixed theory or intended structure, and an explicit order in which truth values are read. Different encodings can change prefix geometry, and different theories can change the stream. Claims of invariance require separate arguments.
+
+A connection with Chaitin’s $\Omega$ would require a specified prefix-free machine $U$ and the halting probability
+
+$$
+\Omega_U=\sum_{U(p)\ \mathrm{halts}}2^{-|p|}.
+$$
 
-The phrase “the fractal dimension of mathematical truth” is meaningful only after several choices:
+One would then define finite approximants, prove monotonicity and convergence, and only afterward address machine-dependent randomness or uncomputability. Fibonacci growth by itself supplies none of these ingredients.
 
-1. a syntax of statements;
-2. a semantics or truth notion;
-3. a foundational theory;
-4. an enumeration or coding;
-5. a metric and dimension definition.
+Several natural mathematical extensions remain.
 
-Changing these choices may change the resulting geometry. The paired truth language is an explicit toy language, not the set of all true mathematical sentences. Its $1/2$ result concerns symbolic prefix-counting dimension. A theorem identifying it with box-counting or Hausdorff dimension would require a corresponding cover theory and metric normalization.
+1. Define the Cantor ultrametric explicitly from first disagreement and identify radius-$2^{-n}$ balls with depth-$n$ agreement classes.
+2. Develop the covering-number argument in full generality and establish equality of upper and lower box dimensions directly from the Fibonacci logarithmic limit.
+3. Replace the single forbidden block $11$ by an arbitrary finite forbidden language. A finite adjacency matrix $A$ then governs cylinder counts, and the expected dimension is
 
-Likewise, the elementary language is not identified with Chaitin’s $\Omega$. The approximation theorem is universal and analytic; the uncomputability theorem concerns halting truth. The present work asserts neither that the paired language’s real is uncomputable nor that its dimension is uncomputable.
+$$
+\frac{\log\rho(A)}{\log2},
+$$
 
-These qualifications are substantive. They isolate precisely what has been established and identify the additional hypotheses needed for stronger claims.
+where $\rho(A)$ is the spectral radius.
+4. Separate syntax from semantics by selecting a prefix-free formula encoding and a specific theory, then study the resulting theoremhood stream.
+5. Introduce computability questions only after the coding and proof system are fixed.
+6. For a genuine algorithmic-information direction, construct prefix-free machines, halting domains, and finite $\Omega$ approximants before studying randomness.
 
-## 10. Future work
+## 10. Conclusion
 
-Several extensions follow naturally.
+A single forbidden block produces a complete chain of consequences. The local rule $11$ forbidden yields the disjoint recursion
 
-First, one may prove that the prefix metric induces the product topology on Cantor space and study completeness and compactness. Second, cylinder covers can be used to define upper and lower box-counting dimensions and to derive a geometric dimension theorem from the exact prefix identity. Third, a prefix-free machine can be introduced explicitly, followed by Kraft boundedness, monotone rational approximation of its halting probability, and the extraction of finite halting information from sufficiently precise approximations.
+$$
+W_{n+2}=0W_{n+1}\cup10W_n.
+$$
 
-A deeper direction is the effective Hausdorff dimension of individual streams, expressed through asymptotic prefix-free Kolmogorov complexity. That is the standard setting in which fractal dimension, randomness, and halting-probability reals genuinely converge. The periodic paired construction should also be generalized to $a$ free coordinates in every block of length $b$, yielding dimension $a/b$. Finally, coding-invariance results under bi-Lipschitz recodings would clarify which dimensions survive changes in statement enumeration.
+The recursion yields the exact count $|W_n|=F_{n+2}$. Every counted prefix extends to an infinite admissible stream. The counts satisfy
 
-## 11. Conclusion
+$$
+2^{\lfloor n/2\rfloor}\le |W_n|<2^n
+$$
 
-An infinite binary truth assignment admits a natural prefix-sensitive metric. Within that space, fixing one bit in every pair leaves exactly $2^n$ admissible prefixes at length $2n$, compared with $2^{2n}$ ambient prefixes. The exact square identity yields symbolic dimension $1/2$: the language has vanishing density but positive exponential complexity.
+for $n\ge2$, while their relative density contracts by a factor of at most $3/4$ every two levels. Finally, Fibonacci asymptotics yield the entropy and box-dimension value
 
-The same streams define binary reals whose first $N$ digits give certified lower approximations with error at most $2^{-N}$. Common prefixes guarantee equally explicit numerical stability. Computability enters separately: halting truth is undecidable but recursively enumerable, showing how a stream may be approximable in a one-sided logical sense without being decidable.
+$$
+D=\frac{\log\varphi}{\log2}\in(0,1).
+$$
 
-The principal contribution is therefore a disciplined synthesis. Symbolic counting measures retained freedom; prefix geometry measures informational agreement; binary series translate finite information into analytic error bounds; and computability theory distinguishes approximation from decision. Together they provide a precise model for studying the geometry of truth while making clear why no coding-independent dimension of all mathematical truth has yet been defined.
+The golden-mean truth language is therefore sparse among all binary streams but retains positive exponential complexity. It offers a fully transparent example of how local constraints generate global fractal structure, and it provides a principled starting point for broader investigations of finite-state languages, symbolic dimensions, constrained information, and carefully specified semantic encodings.

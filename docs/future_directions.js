@@ -45,20 +45,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The Fourier Analysis of Collatz: Spectral Gaps in the 3n+1 Map"
   },
   {
-    "consumed_by_exp_id": "4505be0f",
-    "description": "Building on cycle 77a52651 (Q=0.800), which proved 6 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: A quantum random walk on a group G is defined by a unitary operator U = sum_{g in S} |g><0| (where S is a generating set) acting on the Hilbert space l^2(G). The walk is periodic if U^k = I for some k, and mixing if the probability distribution P_n(g) = |<g|U^n|0>|^2 converges to the uniform distrib",
-    "domains": [
-      "Combinatorics"
-    ],
-    "id": "push_77a52651_1dafc39d",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "77a52651",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T08:00:50.933822+00:00",
-    "title": "Deepening: Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize a Landauer-like principle for mathematical reasoning: every bit of information destroyed in a proof step costs at least kT ln 2 of entropy. Prove that there exist theorems whose shortest proof requires exponentially more erasure than creation, and connect to Kolmogorov complexity and the thermodynamic cost of verification.",
     "domains": [
@@ -331,20 +317,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-20T12:32:18.095289+00:00",
     "title": "Speculative: Mathematics as an Evolving Ecosystem"
-  },
-  {
-    "consumed_by_exp_id": "2f321176",
-    "description": "Conjecture that mathematical discovery undergoes phase transitions: long periods of incremental progress punctuated by sudden reorganizations (like percolation transitions). Formalize this using statistical mechanics: define an order parameter for 'mathematical coherence' and show it undergoes a second-order phase transition as the number of connected theorems crosses a critical threshold. Predict: the next phase transition in number theory will occur when the connections between Langlands and arithmetic geometry exceed ~10^4 edges.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_0506",
-    "priority_score": 0.82,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-20T05:48:35.575822+00:00",
-    "title": "Speculative: Mathematics as a Phase Transition"
   },
   {
     "consumed_by_exp_id": "",
@@ -5485,6 +5457,50 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-20T20:48:19.904765+00:00",
     "title": "1. **Joint distributions and correlated cards.**  The expected payoff of additiv"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## 1. Sharp remainder bounds for arbitrary observation windows\n\n**Conjecture.** Let a periodic Born-probability sequence have period `k`. For every observation length `N`, its Ces\u00e0ro mean differs from its one-period mean by at most `2k/N` in total variation distance, and the optimal universal constant can be characterized from the extremal mass profile within one period.\n\nThe key insight is that division of `N` by `k` separates exact complete blocks from a single bounded remainder.\n\n**Why now?** The complete-block identity isolates the only possible source of error, making a sharp finite-time mixing estimate the natural next step.\n\n## 2. Spectral characterization of uniform time-averaged mixing on finite Cayley graphs\n\n**Conjecture.** For a translation-invariant coined quantum walk on a finite abelian Cayley graph, uniform Ces\u00e0ro mixing from a localized state occurs exactly when every repeated eigenphase has character coefficients whose aggregate off-diagonal contribution vanishes at each vertex.\n\nThe key insight is that time averaging kills interactions between distinct eigenphases but preserves interference inside degenerate eigenspaces.\n\n**Why now?** Exact periodic averaging reduces the dynamical question to one finite orbit, while Fourier characters offer an algebraic description of the surviving degeneracies.\n\n## 3. Quantitative stability under weak decoherence\n\n**Conjecture.** If a finite-order quantum evolution is followed at each step by depolarization of strength `\u03b5 > 0`, then its instantaneous Born distribution converges exponentially to the uniform distribution whenever the associated classical support graph is connected, with relaxation time bounded by a function of `\u03b5` and the classical spectral gap.\n\nThe key insight is that decoherence contracts the nonconstant spectral modes that pure periodic evolution merely rotates.\n\n**Why now?** The contrast between impossible instantaneous mixing and exact averaged mixing identifies decoherence as the minimal mechanism capable of converting recurrence into genuine convergence.\n\n## 4. Nonabelian representation-theoretic obstruction\n\n**Conjecture.** For finite nonabelian Cayley walks, failure of uniform Ces\u00e0ro mixing is equivalent to a nonzero matrix-coefficient obstruction supported on repeated irreducible eigenphases; the obstruction decomposes canonically over isotypic components of the regular representation.\n\nThe key insight is that the abelian character criterion should persist with scalar characters replaced by matrix coefficients and multiplicity spaces.\n\n**Why now?** The periodic block theorem is representation-independent, so the remaining difficulty is entirely spectral and can be attacked one irreducible component at a time.\n\n## 5. Period bounds from cyclotomic spectra\n\n**Conjecture.** A finite-dimensional translation-invariant quantum walk is periodic if and only if all ratios of eigenvalues are roots of unity; when its transition amplitudes lie in a fixed number field, its least period admits an explicit bound in terms of the field degree and state-space dimension.\n\nThe key insight is that global phase is invisible to Born probabilities, so probability-periodicity is governed by eigenvalue ratios rather than individual eigenvalues.\n\n**Why now?** The averaging results assume finite order; a cyclotomic criterion would turn that dynamical hypothesis into an arithmetic condition that can be checked from the spectrum.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0523",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "4505be0f",
+    "status": "available",
+    "timestamp": "2026-07-20T20:48:24.691279+00:00",
+    "title": "**Conjecture.** Let a periodic Born-probability sequence have period `k`. For ev"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Arithmetic Coherence Transitions\n\nThe conjectures below are ranked by expected scientific impact. Each proposal separates a measurable arithmetic statistic from the choice of a phenomenological transition law.\n\n## 1. Higher-rank Langlands percolation\n\n**Conjecture.** For a fixed global field and bounded ramification, form a bipartite graph whose vertices are rank-two automorphic representations and compatible rank-two Galois representations, with edges supplied by independently established local-global compatibility results. After normalization by the number of admissible local types, the largest-component density has a nonzero limiting value precisely above a universal critical mean degree.\n\n**The key insight is...** higher-rank reciprocity should be studied as a growing compatibility graph, so that global organization is measured by component structure rather than by a raw theorem count.\n\n**Why now?** The cyclotomic rank-one model shows exactly how an arithmetic counting law can be transported into a threshold parameter, while modern databases provide sufficiently structured local data to make the rank-two graph falsifiable.\n\n## 2. Arithmetic universality of critical exponents\n\n**Conjecture.** Across families of number fields ordered by discriminant, coherence parameters built from normalized reciprocity graphs fall into finitely many universality classes: tree-like compatibility graphs have critical exponent `1`, while symmetry-breaking character models have exponent `1/2`.\n\n**The key insight is...** the exponent should depend on the local geometry of the connection network, not on the names or historical origins of its arithmetic objects.\n\n**Why now?** Two exact mean-field laws already distinguish linear percolation onset from square-root symmetry-breaking onset, giving concrete competing predictions that arithmetic datasets can separate.\n\n## 3. A derived, rather than selected, number-theory threshold\n\n**Conjecture.** There is a canonical weighting of cross-field implications between Langlands theory and arithmetic geometry for which the susceptibility\u2014expected increase in the largest coherent component after adding one verified connection\u2014has a unique maximum at an effective edge count between `8,000` and `12,000`.\n\n**The key insight is...** a critical threshold is scientifically meaningful only if it can be recovered as a peak in susceptibility, rather than inserted as an external constant.\n\n**Why now?** The exact conductor cutoff derived from a chosen ten-thousand-edge parameter isolates the missing empirical task and supplies a sharp null model against which a measured threshold can be compared.\n\n## 4. Totient-driven cascades beyond prime conductors\n\n**Conjecture.** In the cyclotomic rank-one proxy, conductors crossing a fixed coherence threshold occur in clustered cascades governed by the distribution of Euler's totient: for every sufficiently large `T`, every interval `[T, T + T^(3/4)]` contains conductors on both sides of the condition `\u03c6(n) > T`.\n\n**The key insight is...** composite conductors replace the monotone prime law `p - 1` by the irregular multiplicative statistic `\u03c6(n)`, turning a single cutoff into an arithmetic intermittency phenomenon.\n\n**Why now?** The prime-conductor phase diagram is exact and monotone; extending it to composite conductors gives an immediate, falsifiable test of whether arithmetic fluctuations can model punctuated transitions.\n\n## 5. Stability under order-parameter deformation\n\n**Conjecture.** Let `F : \u211d\u22650 \u2192 \u211d\u22650` be continuous, monotone, zero exactly at zero, and regularly varying at zero with index `\u03b1 > 0`. Replacing square-root coherence by `F(max(x-c,0))` preserves the exact arithmetic activation boundary, while changing only the critical exponent to `\u03b1`.\n\n**The key insight is...** the location of the transition is order-theoretic, whereas its near-critical scaling is analytic; these two features should be proved and tested independently.\n\n**Why now?** The current cyclotomic classification already separates threshold inequalities from square-root scaling, making robustness under alternative response laws the natural next structural test.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0524",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "2f321176",
+    "status": "available",
+    "timestamp": "2026-07-20T20:48:29.755518+00:00",
+    "title": "The conjectures below are ranked by expected scientific impact. Each proposal se"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 2f321176 (Q=0.700) proved 7 theorems in NumberTheory but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conjecture that mathematical discovery undergoes phase transitions: long periods of incremental progress punctuated by sudden reorganizations (like percolation transitions). Formalize this using stati",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "sorry_fill_2f321176_54d54749",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "2f321176",
+    "status": "available",
+    "timestamp": "2026-07-20T20:48:31.251527+00:00",
+    "title": "Close Proofs: Speculative: Mathematics as a Phase Transition"
   },
   {
     "consumed_by_exp_id": "",

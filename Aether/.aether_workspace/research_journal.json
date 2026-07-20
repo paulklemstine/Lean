@@ -1,26 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "c58345ac",
-      "domain": "Probability",
-      "key_insight": "# Future Directions\n\n## What is proved\n\nThe four files in `MachineLearning/HodgeCycles/` give a complete finite-dimensional theory for a three-term cellular chain complex over any field. In the middle",
-      "quality_score": 0.71,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-19T05:39:26",
-      "title": "The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision Surfaces"
-    },
-    {
-      "cycle_id": "08d3e2eb",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\n## 1. The symmetric local lemma from finite survivor ratios\n\n**Conjecture.** For a finite family of bad events with dependency degree at most `d`, uniform probability at most `p`,",
-      "quality_score": 0.75,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-19T05:39:29",
-      "title": "Formalizing the Probabilistic Method: Erdos Meets Lean"
-    },
-    {
       "cycle_id": "cc0903e0",
       "domain": "Tropical",
       "key_insight": "# Future Directions: Functorial Information Loss\n\n## 1. A chain rule for composable finite functors\n\nFor composable functors between finite skeletal categories, define object loss from the uniform dis",
@@ -499,29 +479,29 @@
       "theorem_count": 5,
       "timestamp": "2026-07-20T20:48:25",
       "title": "Deepening: Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
+    },
+    {
+      "cycle_id": "2f321176",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions: Arithmetic Coherence Transitions\n\nThe conjectures below are ranked by expected scientific impact. Each proposal separates a measurable arithmetic statistic from the choice of a ph",
+      "quality_score": 0.7,
+      "sorry_count": 1,
+      "theorem_count": 7,
+      "timestamp": "2026-07-20T20:48:31",
+      "title": "Speculative: Mathematics as a Phase Transition"
+    },
+    {
+      "cycle_id": "1a27f9f3",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions\n\nThe formal development studies a precise surrogate for “the space of mathematical truth”: binary streams encode successive answers, prefix agreement supplies Cantor scales, and th",
+      "quality_score": 0.7,
+      "sorry_count": 1,
+      "theorem_count": 15,
+      "timestamp": "2026-07-20T20:48:35",
+      "title": "The Fractal Dimension of Mathematical Truth"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "d1e62d74",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\n1. **Formalize the underlying objects.** Supply precise definitions of an `n`-nice polytope, a “good” manifold, equivalence of manifolds for counting purposes, and the maximum bei",
-      "quality_score": 0.6,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-16T09:16:13",
-      "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
-    },
-    {
-      "cycle_id": "19cecd78",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Far-Apart Packing and Thickened Transversals\n\n## 1. Multiscale anchor theorem for long cycles\n\n**Conjecture.** For every finite graph and every length threshold ℓ, the family of c",
-      "quality_score": 0.69,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-07-16T09:17:20",
-      "title": "ArXiv paper: Far-apart Erdős--Pósa property of long cycles"
-    },
     {
       "cycle_id": "557a7f03",
       "domain": "Applications",
@@ -2501,45 +2481,29 @@
       "theorem_count": 5,
       "timestamp": "2026-07-20T20:48:25",
       "title": "Deepening: Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
+    },
+    {
+      "cycle_id": "2f321176",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions: Arithmetic Coherence Transitions\n\nThe conjectures below are ranked by expected scientific impact. Each proposal separates a measurable arithmetic statistic from the choice of a ph",
+      "quality_score": 0.7,
+      "sorry_count": 1,
+      "theorem_count": 7,
+      "timestamp": "2026-07-20T20:48:31",
+      "title": "Speculative: Mathematics as a Phase Transition"
+    },
+    {
+      "cycle_id": "1a27f9f3",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions\n\nThe formal development studies a precise surrogate for “the space of mathematical truth”: binary streams encode successive answers, prefix agreement supplies Cantor scales, and th",
+      "quality_score": 0.7,
+      "sorry_count": 1,
+      "theorem_count": 15,
+      "timestamp": "2026-07-20T20:48:35",
+      "title": "The Fractal Dimension of Mathematical Truth"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "cc0903e0",
-      "domain": "Tropical",
-      "name": "sorting_info_erased",
-      "quality": 0.74
-    },
-    {
-      "cycle_id": "cc0903e0",
-      "domain": "Tropical",
-      "name": "periodic_search_benchmark",
-      "quality": 0.74
-    },
-    {
-      "cycle_id": "8280a2b4",
-      "domain": "Algebra",
-      "name": "explicitly",
-      "quality": 0.76
-    },
-    {
-      "cycle_id": "d00870b3",
-      "domain": "Tropical",
-      "name": "sorting_info_erased",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "d00870b3",
-      "domain": "Tropical",
-      "name": "sorting_info_erased",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "d00870b3",
-      "domain": "Tropical",
-      "name": "periodic_search_benchmark",
-      "quality": 0.7
-    },
     {
       "cycle_id": "77a52651",
       "domain": "Combinatorics",
@@ -2803,24 +2767,46 @@
       "domain": "Combinatorics",
       "name": "bornProbability_cesaro_complete_blocks",
       "quality": 0.77
+    },
+    {
+      "cycle_id": "2f321176",
+      "domain": "NumberTheory",
+      "name": "connectionCount_eq_totient",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "2f321176",
+      "domain": "NumberTheory",
+      "name": "prime_connectionCount",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "2f321176",
+      "domain": "NumberTheory",
+      "name": "prime_above_threshold_iff",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "1a27f9f3",
+      "domain": "Combinatorics",
+      "name": "length_mem_truthWords",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "1a27f9f3",
+      "domain": "Combinatorics",
+      "name": "truthWords_branch_disjoint",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "1a27f9f3",
+      "domain": "Combinatorics",
+      "name": "card_truthWords_rec",
+      "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-20T20:48:25",
+  "last_updated": "2026-07-20T20:48:35",
   "open_questions": [
-    {
-      "context": "",
-      "cycle_id": "4e53cd7c",
-      "domain": "Pythagorean",
-      "sorry_count": 3,
-      "timestamp": "2026-07-16T05:47:36"
-    },
-    {
-      "context": "sorry; depend on the catalog uniqueness proof.  (`#print axioms` shows no `sorryAx`.); MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
-      "cycle_id": "58c6edf0",
-      "domain": "Pythagorean",
-      "sorry_count": 4,
-      "timestamp": "2026-07-16T05:48:35"
-    },
     {
       "context": "",
       "cycle_id": "4e53cd7c",
@@ -3016,6 +3002,20 @@
       "domain": "Pythagorean",
       "sorry_count": 13,
       "timestamp": "2026-07-20T09:41:55"
+    },
+    {
+      "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
+      "cycle_id": "2f321176",
+      "domain": "NumberTheory",
+      "sorry_count": 1,
+      "timestamp": "2026-07-20T20:48:31"
+    },
+    {
+      "context": "-    sorry+  have hchecked := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
+      "cycle_id": "1a27f9f3",
+      "domain": "Combinatorics",
+      "sorry_count": 1,
+      "timestamp": "2026-07-20T20:48:35"
     }
   ],
   "research_threads": {
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "f8479bcf",
-        "quality": 0.59,
-        "theorems": 0,
-        "title": "Knots That Think: Cognition as Braiding in Category Theory"
-      },
-      {
         "cycle_id": "64b7f63b",
         "quality": 0.73,
         "theorems": 65,
@@ -3265,6 +3259,12 @@
         "quality": 0.77,
         "theorems": 5,
         "title": "Deepening: Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
+      },
+      {
+        "cycle_id": "1a27f9f3",
+        "quality": 0.7,
+        "theorems": 15,
+        "title": "The Fractal Dimension of Mathematical Truth"
       }
     ],
     "Computation": [
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "192aef6c",
-        "quality": 0.55,
-        "theorems": 0,
-        "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
-      },
-      {
         "cycle_id": "cf605784",
         "quality": 0.8,
         "theorems": 127,
@@ -3699,6 +3693,12 @@
         "quality": 0.78,
         "theorems": 20,
         "title": "Deepening: Godel's Casino: Incomplete but Winnable Games"
+      },
+      {
+        "cycle_id": "2f321176",
+        "quality": 0.7,
+        "theorems": 7,
+        "title": "Speculative: Mathematics as a Phase Transition"
       }
     ],
     "Physics": [

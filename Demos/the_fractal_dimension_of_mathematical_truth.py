@@ -1,166 +1,139 @@
 #!/usr/bin/env python3
-"""Numerical demonstrations for prefix geometry and half-dimensional truth languages."""
+"""Numerical demonstrations for the golden-mean truth language.
+
+The admissible binary words contain no adjacent pair ``11``.  This script
+checks exact Fibonacci counts by enumeration, verifies the elementary growth
+bounds, displays density contraction, and approximates log_2(phi).
+"""
 
 from __future__ import annotations
 
-from dataclasses import dataclass
-from fractions import Fraction
-from itertools import product
-from typing import Iterable, Iterator, Sequence
-
-Bit = int
+from math import floor, log2, sqrt
+from typing import Iterable, Iterator
 
 
-def validate_bits(bits: Sequence[Bit]) -> None:
-    """Raise ValueError unless every entry is 0 or 1."""
-    if any(bit not in (0, 1) for bit in bits):
-        raise ValueError("bits must contain only 0 and 1")
-
-
-def paired_prefixes(n: int) -> Iterator[tuple[Bit, ...]]:
-    """Generate all length-2n prefixes whose even-indexed bits are 1."""
+def fibonacci(n: int) -> int:
+    """Return F_n with F_0 = 0 and F_1 = 1 in O(n) integer additions."""
     if n < 0:
         raise ValueError("n must be nonnegative")
-    for free_bits in product((0, 1), repeat=n):
-        yield tuple(value for bit in free_bits for value in (1, bit))
+    a, b = 0, 1
+    for _ in range(n):
+        a, b = b, a + b
+    return a
 
 
-def paired_count(n: int) -> int:
-    """Return the exact paired-prefix count 2^n."""
+def admissible(word: str) -> bool:
+    """Return whether a binary word avoids two consecutive ones."""
+    if any(bit not in "01" for bit in word):
+        raise ValueError("word must contain only '0' and '1'")
+    return "11" not in word
+
+
+def truth_words(n: int) -> list[str]:
+    """Generate all admissible words of length n via 0W_(n-1) union 10W_(n-2)."""
     if n < 0:
         raise ValueError("n must be nonnegative")
-    return 1 << n
+    words: list[list[str]] = [[""], ["0", "1"]]
+    if n <= 1:
+        return words[n]
+    for length in range(2, n + 1):
+        next_words = ["0" + w for w in words[length - 1]]
+        next_words.extend("10" + w for w in words[length - 2])
+        words.append(next_words)
+    return words[n]
 
 
-def ambient_count(length: int) -> int:
-    """Return the number 2^length of unrestricted binary prefixes."""
-    if length < 0:
-        raise ValueError("length must be nonnegative")
-    return 1 << length
+def count_truth_words(n: int) -> int:
+    """Count admissible length-n words in O(n) arithmetic steps and O(1) registers."""
+    if n < 0:
+        raise ValueError("n must be nonnegative")
+    if n == 0:
+        return 1
+    previous, current = 1, 2
+    for _ in range(1, n):
+        previous, current = current, previous + current
+    return current
 
 
-def symbolic_dimension_even_scale(n: int) -> Fraction:
-    """Return log_2(A_n)/(2n), represented exactly for n > 0."""
+def zero_extension(word: str, extra: int = 16) -> str:
+    """Exhibit a finite prefix of an infinite admissible extension by appending zeros."""
+    if not admissible(word):
+        raise ValueError("the prefix is not admissible")
+    if extra < 0:
+        raise ValueError("extra must be nonnegative")
+    return word + "0" * extra
+
+
+def dimension_estimate(n: int) -> float:
+    """Return log_2(|W_n|)/n for n > 0."""
     if n <= 0:
         raise ValueError("n must be positive")
-    return Fraction(n, 2 * n)
+    return log2(count_truth_words(n)) / n
 
 
-def prefix_distance(x: Sequence[Bit], y: Sequence[Bit]) -> Fraction:
-    """Compute weighted disagreement for finite streams, padding by zeros."""
-    validate_bits(x)
-    validate_bits(y)
-    length = max(len(x), len(y))
-    total = Fraction(0)
-    for index in range(length):
-        xb = x[index] if index < len(x) else 0
-        yb = y[index] if index < len(y) else 0
-        if xb != yb:
-            total += Fraction(1, 2 ** (index + 1))
-    return total
+def ratio_estimate(n: int) -> float:
+    """Return log_2(|W_(n+1)|/|W_n|), a fast dimension estimator."""
+    if n < 0:
+        raise ValueError("n must be nonnegative")
+    return log2(count_truth_words(n + 1) / count_truth_words(n))
 
 
-def binary_truncation(bits: Sequence[Bit], n: int | None = None) -> Fraction:
-    """Return the exact dyadic sum of the first n supplied bits."""
-    validate_bits(bits)
-    count = len(bits) if n is None else n
-    if count < 0 or count > len(bits):
-        raise ValueError("n must lie between 0 and the number of supplied bits")
-    return sum(
-        (Fraction(bits[index], 2 ** (index + 1)) for index in range(count)),
-        start=Fraction(0),
-    )
-
-
-@dataclass(frozen=True)
-class CertifiedInterval:
-    """A rigorous interval determined by a finite binary prefix."""
-
-    lower: Fraction
-    upper: Fraction
-
-    @property
-    def width(self) -> Fraction:
-        return self.upper - self.lower
-
-
-def certified_interval(prefix: Sequence[Bit]) -> CertifiedInterval:
-    """Enclose every infinite continuation of prefix in an interval of width 2^-N."""
-    lower = binary_truncation(prefix)
-    error = Fraction(1, 2 ** len(prefix))
-    return CertifiedInterval(lower, lower + error)
-
-
-def common_prefix_length(x: Sequence[Bit], y: Sequence[Bit]) -> int:
-    """Return the number of equal leading bits in two finite streams."""
-    validate_bits(x)
-    validate_bits(y)
-    for index, (xb, yb) in enumerate(zip(x, y)):
-        if xb != yb:
-            return index
-    return min(len(x), len(y))
-
-
-def print_count_table(max_n: int = 8) -> None:
-    """Print exact paired and ambient counts and verify the square identity."""
-    print("Exact paired-prefix growth")
-    print(" n | paired A_n | ambient B_2n | A_n^2 = B_2n")
-    print("---+------------+--------------+----------------")
+def rows(max_n: int) -> Iterator[tuple[int, int, int, int, float, float]]:
+    """Yield n, count, lower bound, full count, density, and dimension estimate."""
     for n in range(max_n + 1):
-        paired = paired_count(n)
-        ambient = ambient_count(2 * n)
-        print(f"{n:2d} | {paired:10d} | {ambient:12d} | {paired * paired == ambient}")
+        count = count_truth_words(n)
+        estimate = 0.0 if n == 0 else log2(count) / n
+        yield n, count, 2 ** floor(n / 2), 2**n, count / (2**n), estimate
 
 
-def demonstrate_completion(n: int = 3) -> None:
-    """Enumerate paired prefixes and show that all fixed coordinates equal 1."""
-    prefixes = list(paired_prefixes(n))
-    valid = all(all(prefix[2 * k] == 1 for k in range(n)) for prefix in prefixes)
-    print(f"\nThere are {len(prefixes)} paired prefixes at scale n={n}:")
-    print(" ".join("".join(map(str, prefix)) for prefix in prefixes))
-    print(f"Every even-indexed coordinate is fixed to 1: {valid}")
+def verify_results(max_n: int = 24) -> None:
+    """Check the exact count and all finite inequalities through max_n."""
+    for n in range(max_n + 1):
+        count = count_truth_words(n)
+        assert count == fibonacci(n + 2)
+        if n <= 16:
+            generated = truth_words(n)
+            assert len(generated) == count
+            assert len(set(generated)) == count
+            assert all(len(word) == n and admissible(word) for word in generated)
+            assert all(admissible(zero_extension(word)) for word in generated)
+        assert 2 ** floor(n / 2) <= count <= 2**n
+        if n >= 2:
+            assert count < 2**n
+        assert count_truth_words(n + 2) <= 3 * count
 
 
-def demonstrate_real_bounds() -> None:
-    """Show certified convergence and common-prefix stability."""
-    x = (1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1)
-    y = (1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 0)
-    print("\nCertified binary-real intervals")
-    for n in (2, 4, 6, 8):
-        interval = certified_interval(x[:n])
+def print_table(max_n: int = 20) -> None:
+    """Print a numerical summary of growth, rarity, and dimension convergence."""
+    header = (
+        f"{'n':>3} {'|W_n|':>12} {'2^floor(n/2)':>14} "
+        f"{'2^n':>12} {'density':>12} {'D_n':>11}"
+    )
+    print(header)
+    print("-" * len(header))
+    for n, count, lower, full, density, estimate in rows(max_n):
         print(
-            f"N={n:2d}: [{float(interval.lower):.6f}, "
-            f"{float(interval.upper):.6f}], width={float(interval.width):.6f}"
+            f"{n:3d} {count:12d} {lower:14d} {full:12d} "
+            f"{density:12.8f} {estimate:11.8f}"
         )
-    shared = common_prefix_length(x, y)
-    rx = binary_truncation(x)
-    ry = binary_truncation(y)
-    bound = Fraction(1, 2 ** shared)
-    print(f"\nTwo samples share {shared} initial bits.")
-    print(f"Observed finite-value gap: {float(abs(rx - ry)):.6f}")
-    print(f"Certified infinite-continuation bound: 2^-{shared} = {float(bound):.6f}")
-
-
-def demonstrate_triangle_inequality() -> None:
-    """Numerically check a representative metric triangle."""
-    x = (1, 0, 1, 0, 1, 0)
-    y = (1, 1, 1, 0, 0, 0)
-    z = (0, 1, 1, 1, 0, 1)
-    dxz = prefix_distance(x, z)
-    dxy = prefix_distance(x, y)
-    dyz = prefix_distance(y, z)
-    print("\nRepresentative prefix-metric triangle")
-    print(f"d(x,z) = {dxz} = {float(dxz):.6f}")
-    print(f"d(x,y) + d(y,z) = {dxy + dyz} = {float(dxy + dyz):.6f}")
-    print(f"Triangle inequality holds: {dxz <= dxy + dyz}")
 
 
 def main() -> None:
-    print_count_table()
-    demonstrate_completion()
-    demonstrate_real_bounds()
-    demonstrate_triangle_inequality()
-    print(f"\nExact symbolic dimension at every positive even scale: {symbolic_dimension_even_scale(7)}")
+    """Run all demonstrations."""
+    verify_results()
+    print("Admissible words at depth 4:")
+    print(", ".join(truth_words(4)))
+    print()
+    print_table()
+    phi = (1.0 + sqrt(5.0)) / 2.0
+    target = log2(phi)
+    print(f"\nTarget dimension log_2(phi): {target:.12f}")
+    for n in (5, 10, 20, 40, 80):
+        print(
+            f"n={n:2d}: direct={dimension_estimate(n):.12f}, "
+            f"ratio={ratio_estimate(n):.12f}"
+        )
+    print("\nAll exact finite checks passed.")
 
 
 if __name__ == "__main__":
