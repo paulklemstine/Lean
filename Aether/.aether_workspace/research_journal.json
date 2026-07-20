@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "cbc5314c",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions: Sudoku Ensembles, Thresholds, and Complexity\n\n## 1. Proof-complexity peak for independently assigned clues\n\nFix an ensemble in which a uniformly chosen set of cells receives indep",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-18T21:00:09",
-      "title": "The P vs NP of Sudoku: Phase Transitions in Constraint Satisfaction"
-    },
-    {
       "cycle_id": "ac79ade1",
       "domain": "Algebra",
       "key_insight": "# Future Directions\n\n## 1. Global completeness of the anisotropic plane\n\n**Conjecture.** Every maximal geodesic of the metric\n\\(\\cosh(y)^{-2}dx^2+\\cosh(x)^2dy^2\\) is defined for all real time.\n\nThe ke",
@@ -499,19 +489,19 @@
       "theorem_count": 11,
       "timestamp": "2026-07-20T00:23:30",
       "title": "Close Proofs: Self-Modifying Code That Cannot Be Stopped"
+    },
+    {
+      "cycle_id": "c930e14b",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions: Transfinite Survival Clocks\n\n## 1. Finite-depth clocks realize every finite power of omega\n\nFor each positive integer d, define a d-level survival clock by lexicographically nesti",
+      "quality_score": 0.71,
+      "sorry_count": 13,
+      "theorem_count": 0,
+      "timestamp": "2026-07-20T00:41:04",
+      "title": "Infinite Games Against Death: Immortality Strategies"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "4e53cd7c",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions: Moment Thresholds for Random Bipartite States\n\n## 1. Exact fixed-level induced-state threshold\n\nFor every fixed hierarchy level `m ≥ 2`, there is a unique constant `λ_m > 0` such",
-      "quality_score": 0.7,
-      "sorry_count": 3,
-      "theorem_count": 16,
-      "timestamp": "2026-07-16T05:47:36",
-      "title": "ArXiv paper: Moment-based PPT criteria for random bipartite states"
-    },
     {
       "cycle_id": "499d98ab",
       "domain": "Novelty",
@@ -2501,6 +2491,16 @@
       "theorem_count": 11,
       "timestamp": "2026-07-20T00:23:30",
       "title": "Close Proofs: Self-Modifying Code That Cannot Be Stopped"
+    },
+    {
+      "cycle_id": "c930e14b",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions: Transfinite Survival Clocks\n\n## 1. Finite-depth clocks realize every finite power of omega\n\nFor each positive integer d, define a d-level survival clock by lexicographically nesti",
+      "quality_score": 0.71,
+      "sorry_count": 13,
+      "theorem_count": 0,
+      "timestamp": "2026-07-20T00:41:04",
+      "title": "Infinite Games Against Death: Immortality Strategies"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-20T00:23:30",
+  "last_updated": "2026-07-20T00:41:04",
   "open_questions": [
-    {
-      "context": "",
-      "cycle_id": "3c80004e",
-      "domain": "Physics",
-      "sorry_count": 4,
-      "timestamp": "2026-07-15T05:40:44"
-    },
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "cf605784",
@@ -3016,16 +3009,17 @@
       "domain": "Geometry",
       "sorry_count": 13,
       "timestamp": "2026-07-20T00:23:26"
+    },
+    {
+      "context": "-  sorry; -  sorry; -  sorry",
+      "cycle_id": "c930e14b",
+      "domain": "Algebra",
+      "sorry_count": 13,
+      "timestamp": "2026-07-20T00:41:04"
     }
   ],
   "research_threads": {
     "Algebra": [
-      {
-        "cycle_id": "dfbea393",
-        "quality": 0.71,
-        "theorems": 0,
-        "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
-      },
       {
         "cycle_id": "1992c474",
         "quality": 0.59,
@@ -3079,6 +3073,12 @@
         "quality": 0.7,
         "theorems": 14,
         "title": "The Topology of Argumentation: Why Debates Have Holes"
+      },
+      {
+        "cycle_id": "c930e14b",
+        "quality": 0.71,
+        "theorems": 0,
+        "title": "Infinite Games Against Death: Immortality Strategies"
       }
     ],
     "Applications": [

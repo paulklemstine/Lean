@@ -301,6 +301,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Computational Complexity as Physical Law"
   },
   {
+    "consumed_by_exp_id": "",
+    "description": "Map prime numbers to harmonic overtones using the Riemann zeta function's non-trivial zeros. Define: the 'harmonic' of a number n is the sum of 1/\u03c1 for each zero \u03c1 with |Im(\u03c1)| \u2264 n. Prove: the harmonic of n grows as O(log n / log log n). Conjecture: perfect intervals (octaves, fifths, fourths) correspond to numbers whose harmonic is rational. Show: the harmonic of 2 is exactly 1 (the octave), while the harmonic of 3 is transcendental (the fifth).",
+    "domains": [
+      "Novelty",
+      "Pythagorean"
+    ],
+    "id": "fd_0514",
+    "priority_score": 0.84,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-20T00:40:37.672107+00:00",
+    "title": "Speculative: Number Theory as Music Theory"
+  },
+  {
     "consumed_by_exp_id": "e3086657",
     "description": "Construct a single algebraic object whose projections give S^0, S^1, S^2, ... simultaneously. Prove it exists as an inverse limit in the category of spheres. Show that its homology groups encode the Bernoulli numbers and that its cohomology ring is the polynomial ring on Stiefel-Whitney classes.",
     "domains": [
@@ -345,21 +360,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Mathematics as an Evolving Ecosystem"
   },
   {
-    "consumed_by_exp_id": "c930e14b",
-    "description": "Formalize a game where one player (Mortal) has finite computation and the other (Eternity) has transfinite computation. Prove that Mortal can always force at least omega rounds before losing, and that with bounded nondeterminism, Mortal can force omega-squared rounds. Connect to Infinite Time Turing Machines.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0490",
-    "priority_score": 0.82,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T20:43:51.867187+00:00",
-    "title": "Infinite Games Against Death: Immortality Strategies"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize a notion of 'self-referential types' in dependent type theory where a type can quantify over itself. Define: a conscious type T satisfies T \u2248 \u03a0(x:T), P(x) for some predicate P. Prove: any such type must be undecidable (G\u00f6del-style). Show: the fixed points of the type-forming operations correspond to a hierarchy analogous to the arithmetical hierarchy. Conjecture: the cardinality of self-referential types is exactly \u2135_1^CK (the Church-Kleene ordinal).",
     "domains": [
@@ -373,6 +373,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-19T23:48:18.405185+00:00",
     "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: the laws of physics are the fixed point of a computation that simulates itself. Formalize: define a universal physical simulator U that maps (initial_conditions, laws) \u2192 (next_state). The fixed point equation is U(L, L) = L, where L is the 'law of physics'. Prove: the solution exists (by the Kleene fixed point theorem). Show: the solution is unique up to computational equivalence. Predict: the fine structure constant \u03b1 satisfies \u03b1 = 1/(137.036...) because it's the simplest fixed point.",
+    "domains": [
+      "Novelty",
+      "Physics"
+    ],
+    "id": "fd_0515",
+    "priority_score": 0.81,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-20T00:40:37.718376+00:00",
+    "title": "Speculative: The Universe Computes Its Own Existence (Physics = Computation)"
   },
   {
     "consumed_by_exp_id": "",
@@ -3167,6 +3182,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Cycle c930e14b (Q=0.710) proved 0 theorems in Algebra but left 13 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize a game where one player (Mortal) has finite computation and the other (Eternity) has transfinite computation. Prove that Mortal can always force at least omega rounds before losing, and that",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "sorry_fill_c930e14b_3ec25391",
+    "priority_score": 0.76,
+    "research_mode": "team",
+    "source_exp_id": "c930e14b",
+    "status": "available",
+    "timestamp": "2026-07-20T00:41:04.989659+00:00",
+    "title": "Close Proofs: Infinite Games Against Death: Immortality Strategies"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "# Future directions\n\nThis development formalizes the finite coordinate core of Curtin's *Generalizations of nets and Latin squares* (arXiv:2607.10890v1): column- and row-Latin matrices, orthogonality, cooperative pairs and systems, coordinate reticulations, svelte arrays, unique cross-line intersections, the grid-coordinate characterizations of Lemma 7.5, and the `m*n` cardinality consequence of Theorem 3.1.\n\nNatural next steps are:\n\n1. **Partition-level incidence structures.** Connect the coordinate-fibre representation here to a literal structure whose lines are finite sets and whose families are `Set.PairwiseDisjoint` covers. Prove both representations equivalent, including all seven clauses of Theorem 3.1.\n2. **Full inverse correspondence.** Package the maps between ordered reticulations, svelte semi-orthogonal arrays, and normalized cooperative systems as equivalences, proving Theorems 6.2, 6.3, 7.7, and 7.8 at structure level rather than only the forward encodings established here.\n3. **Multiplicity and foundations.** Model multisets of line families, then formalize repetition-free reticulations and Proposition 4.1.\n4. **Parastrophy and isotopy.** Define the permutation actions from Sections 9 and 10 and prove that they preserve the cooperative and reticulation axioms.\n5. **Constructions.** Formalize prolongation, splicing, and direct products from Sections 12\u201314, with formulas for their parameters.\n6. **Classical specializations.** Build translations from nets, mixed orthogonal arrays, mutually orthogonal Latin squares, and bireversible Mealy automata, recovering Propositions 3.6 and 6.6 and Theorem 7.3.\n7. **Finite search.** Add executable enumeration of small repetition-free systems up to isotopy, together with kernel-checked certificates for any reported counts.\n",
     "domains": [
       "Algebra",
@@ -5381,6 +5410,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-20T00:23:29.768312+00:00",
     "title": "1. **Oracle-relative rewriting.** Extend `SelfModMachine` with oracle queries an"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Transfinite Survival Clocks\n\n## 1. Finite-depth clocks realize every finite power of omega\n\nFor each positive integer d, define a d-level survival clock by lexicographically nesting d finite counters, with the outer counters contributing successive ordinal blocks. The conjecture is that the supremum of all clock readings is exactly \u03c9^d, while every reading remains strictly below \u03c9^d.\n\nThe key insight is that the verified passage from finite delays to \u03c9, and from finite block budgets with finite tails to \u03c9\u00b2, should iterate through ordinal multiplication.\n\nWhy now? The one-level and two-level cases expose the induction invariant: each new finite choice layer takes the supremum of finite right multiples of the preceding clock.\n\n## 2. Operational infinite-time machines realize the same two-level clock\n\nConsider an infinite-time register machine with a specified limit-stage update rule and a Mortal controller choosing finite delay bounds at successor stages. The conjecture is that there is a concrete program/game pair whose attainable halting times are cofinal in \u03c9\u00b2 and whose rank agrees with the two-parameter block clock.\n\nThe key insight is that a first limit stage can reset a finite tail counter while preserving a finite count of completed \u03c9-blocks.\n\nWhy now? The ordinal calculation is exact, so the remaining test is semantic: construct transitions and prove that their operational ranks coincide with the algebraic clock rather than merely being bounded by it.\n\n## 3. Finitely branching survival trees separate height from branches\n\nThere exists a finitely branching, well-founded survival tree of rank \u03c9\u00b2 such that every branch is finite, and every fixed finite branching budget determines a subtree of rank strictly below \u03c9\u00b2. More generally, characterize which countable ordinals occur as ranks of trees generated by nested locally finite budgets.\n\nThe key insight is that cofinal survival is a property of the whole strategy tree, not the length of any individual play.\n\nWhy now? The verified boundary\u2014every fixed clock reading lies below \u03c9\u00b2 although their supremum equals \u03c9\u00b2\u2014gives a precise specification against which a tree model can be tested.\n\n## 4. Birthday spectra transfer ordinal clocks beyond dyadic units\n\nFor canonical short-game families built by iterated left/right option formation, the conjecture is that finite-depth constructors can realize birthday spectra cofinal in \u03c9^d for each finite d, while preserving an arithmetic interpretation analogous to dyadic surreal units.\n\nThe key insight is that the dyadic identity `birthday(2\u207b\u207f) = n + 1` converts arithmetic syntax directly into a cofinal ordinal clock; nested constructors should encode higher block structure.\n\nWhy now? The first birthday clock and its \u03c9-weighted lift are exact, providing both a base family and a falsifiable target for the first genuinely higher-depth construction.\n\n## 5. Global bounds destroy the omega-squared phenomenon\n\nIf a single natural number B globally bounds the outer nondeterministic budget, then the supremum of all finite-tail plays is conjectured to be exactly \u03c9\u00b7B + \u03c9 and therefore strictly below \u03c9\u00b2; conversely, any family cofinal in \u03c9\u00b2 must have unbounded outer budgets.\n\nThe key insight is that \u201cfinitely bounded at each choice\u201d and \u201cuniformly bounded over the strategy\u201d are mathematically different hypotheses.\n\nWhy now? The fixed-budget exact formula identifies the candidate supremum, while the two-parameter exact theorem identifies unboundedness as the mechanism producing the second limit level.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0516",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "c930e14b",
+    "status": "available",
+    "timestamp": "2026-07-20T00:41:00.008251+00:00",
+    "title": "For each positive integer d, define a d-level survival clock by lexicographicall"
   },
   {
     "consumed_by_exp_id": "",
