@@ -49,19 +49,22 @@
       "name": "Positive-Kernel Evaluation of a Critical-Line Harmonic",
       "description": "Replaces each complex conjugate reciprocal pair by the exact real kernel 1/(1/4+t²), then sums the terms. The method takes O(m) arithmetic operations for m ordinates and O(1) auxiliary space; it avoids numerical cancellation and exposes positivity.",
       "pseudocode": "INPUT: finite ordinates t[1..m]\nSET total := 0\nFOR j := 1 TO m:\n  SET total := total + 1/(1/4 + t[j]^2)\nRETURN total",
-      "code": "from __future__ import annotations\nfrom typing import Iterable\n\ndef window_harmonic(values: Iterable[float]) -> float:\n    return sum(1.0 / (0.25 + t*t) for t in values)\n\nvalues = [1.0, 2.0, 5.0, 10.0]\nfor n in range(len(values) + 1):\n    total = window_harmonic(values[:n])\n    print(n, total, total <= 4*n)\n"
+      "code": "from __future__ import annotations\nfrom typing import Iterable\n\ndef window_harmonic(values: Iterable[float]) -> float:\n    return sum(1.0 / (0.25 + t*t) for t in values)\n\nvalues = [1.0, 2.0, 5.0, 10.0]\nfor n in range(len(values) + 1):\n    total = window_harmonic(values[:n])\n    print(n, total, total <= 4*n)\n",
+      "code_file": "visualizations/speculative_number_theory_as_music_theory_positive_kernel_evaluation_of_a_critical.py"
     },
     {
       "name": "Cardinality-over-Separation Harmonic Certificate",
       "description": "Scans nonzero complex points to obtain the minimum modulus δ, sums their reciprocals, and returns the rigorous structural bound m/δ. It uses O(m) time and O(1) auxiliary storage, though the bound may be conservative because it ignores angular cancellation.",
       "pseudocode": "INPUT: nonzero complex points z[1..m]\nIF m = 0: RETURN harmonic 0 and bound 0\nSET delta := +infinity; SET H := 0\nFOR each z[j]:\n  IF z[j] = 0: FAIL\n  delta := min(delta, |z[j]|)\n  H := H + 1/z[j]\nRETURN H, delta, m/delta",
-      "code": "from __future__ import annotations\nfrom typing import Sequence\n\ndef certify(points: Sequence[complex]) -> tuple[complex, float]:\n    if not points:\n        return 0j, 0.0\n    if any(z == 0 for z in points):\n        raise ValueError(\"points must be nonzero\")\n    delta = min(abs(z) for z in points)\n    return sum((1/z for z in points), 0j), len(points)/delta\n\nprint(certify([2+1j, 2-1j, 3+4j, 3-4j]))\n"
+      "code": "from __future__ import annotations\nfrom typing import Sequence\n\ndef certify(points: Sequence[complex]) -> tuple[complex, float]:\n    if not points:\n        return 0j, 0.0\n    if any(z == 0 for z in points):\n        raise ValueError(\"points must be nonzero\")\n    delta = min(abs(z) for z in points)\n    return sum((1/z for z in points), 0j), len(points)/delta\n\nprint(certify([2+1j, 2-1j, 3+4j, 3-4j]))\n",
+      "code_file": "visualizations/speculative_number_theory_as_music_theory_cardinality_over_separation_harmonic_cer.py"
     },
     {
       "name": "Exact Reciprocal-Root Ratio Extraction",
       "description": "Obtains the two-root harmonic directly from rational symmetric coefficients without solving the quadratic. Exact fraction arithmetic prevents roundoff. The algorithm uses one rational division; its bit complexity is governed by integer numerator and denominator sizes.",
       "pseudocode": "INPUT: rational root-sum l and rational root-product q\nREQUIRE q != 0\nSET r := l/q using exact rational arithmetic\nRETURN r",
-      "code": "from fractions import Fraction\nfrom typing import Iterable\n\ndef ratio(l_value: Fraction, q_value: Fraction) -> Fraction:\n    if q_value == 0:\n        raise ValueError(\"q must be nonzero\")\n    return l_value / q_value\n\nfor name, l_value, q_value in [(\"octave\", 4, 2), (\"fifth\", 3, 2), (\"fourth\", 4, 3)]:\n    print(name, ratio(Fraction(l_value), Fraction(q_value)))\n"
+      "code": "from fractions import Fraction\nfrom typing import Iterable\n\ndef ratio(l_value: Fraction, q_value: Fraction) -> Fraction:\n    if q_value == 0:\n        raise ValueError(\"q must be nonzero\")\n    return l_value / q_value\n\nfor name, l_value, q_value in [(\"octave\", 4, 2), (\"fifth\", 3, 2), (\"fourth\", 4, 3)]:\n    print(name, ratio(Fraction(l_value), Fraction(q_value)))\n",
+      "code_file": "visualizations/speculative_number_theory_as_music_theory_exact_reciprocal_root_ratio_extraction.py"
     }
   ],
   "visualizations": [

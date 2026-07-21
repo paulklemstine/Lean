@@ -803,7 +803,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Record compositions of alternating permutations and noncommutative symmetric functions"
   },
   {
-    "consumed_by_exp_id": "3df39c71",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'On Agreement Subtrees in Multiple Pylogenetic Trees' and formalize its key results. Abstract: Snir and Yuster [Discrete Appl. Math. 347 (2026) 160--171] asked for the least number $h(k)$ such that $k$ unrooted binary phylogenetic trees on the same $h(k)$ leaves always share a common quartet. We give a new upper bound for the $k$-tree version of the Maximum Agreement Subtree problem, namely an upper bound for the number of leaves, on which $k$ unrooted binary phylogenetic trees always share a common induced binary subtree on $n$ leaves, which is a four-times iterated exponential function. For $h(k)$, this implies a four-times iterated exponential upper bound. We also set an exponential lower bound for $h(k)$.",
     "domains": [
       "Bridges"
@@ -812,7 +812,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12778v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T13:43:20.804355+00:00",
     "title": "ArXiv paper: On Agreement Subtrees in Multiple Pylogenetic Trees"
   },
@@ -3242,6 +3242,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-20T05:36:08.076511+00:00",
     "title": "ArXiv paper: Equidistribution for abelian extensions of global fields"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Determinant values on lattices' and formalize its key results. Abstract: We study the distribution of determinant values on lattices in $\\operatorname{M}_d(\\mathbb R)$ for $d\\ge 2$. Let $\u039b<\\operatorname{M}_d(\\mathbb R)$ be a lattice whose elements all have algebraic entries. We prove that if $\\det (\u039b)$ is not contained in a scalar multiple of $\\mathbb Z$, then for every $a<b$, $$ \\#\\{v\\in\u039b:\\|v\\| <T,\\ a<\\operatorname{det} v<b,\\ \\operatorname{det} v\\ne0\\} \\sim \\frac{C_d}{\\operatorname{covol}(\u039b)} (b-a)T^{d(d-1)} $$ as $T\\to \\infty$, where $\\|\\cdot\\|$ is the Frobenius norm and $C_d>0$ depends only on $d$. For such a lattice, under an isotropic noncoincidence hypothesis, automatic for $d=2,3$ and satisfied for all diagonal lattices when $d\\ge 4$, we also obtain an asymptotic formula for the determinant-zero lattice points. The same conclusions hold for the broader class of Diophantine lattices, under the corresponding hypotheses. For $d=2$, our result recovers the Eskin-Margulis-Mozes theorem on the quantitative Oppenheim problem for quadratic forms of signature",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0538",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.18038v1",
+    "status": "available",
+    "timestamp": "2026-07-21T03:53:07.680726+00:00",
+    "title": "ArXiv paper: Determinant values on lattices"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'A positive square-energy strengthening of Tur\u00e1n's theorem' and formalize its key results. Abstract: Let $G$ be an $n$-vertex graph with clique number $\u03c9(G)$, and let $s^+(G)$ denote the sum of the squared positive adjacency eigenvalues. We prove that $$ \\sqrt{s^+(G)}\\le\\left(1-\\frac{1}{\u03c9(G)}\\right)n. $$ This strengthens Wilf's classical spectral Tur\u00e1n theorem and resolves a conjecture of Elphick and Wocjan. Adopting the relaxation of our companion paper on the square-energy conjecture, we reduce the theorem to a Motzkin--Straus inequality for doubly nonnegative matrices, which we prove via a local inverse-probability estimate for the Caro--Wei greedy algorithm on the complement.",
+    "domains": [
+      "Computation",
+      "Physics"
+    ],
+    "id": "fd_0539",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.18044v1",
+    "status": "available",
+    "timestamp": "2026-07-21T03:53:11.223878+00:00",
+    "title": "ArXiv paper: A positive square-energy strengthening of Tur\u00e1n's theorem"
   },
   {
     "consumed_by_exp_id": "",
