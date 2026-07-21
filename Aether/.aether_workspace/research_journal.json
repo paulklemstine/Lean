@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "fe20b520",
-      "domain": "Applications",
-      "key_insight": "# Future directions\n\n## What was formalized\n\n`PruningSpectra.lean` develops two deterministic parts of the component-pruning argument.\n\n1. **Order-spectrum arithmetic.** One-dimensional semilinear spe",
-      "quality_score": 0.6,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-17T07:48:42",
-      "title": "ArXiv paper: Limit laws for component-pruned sparse random graphs and percolated tori"
-    },
-    {
       "cycle_id": "18617733",
       "domain": "Physics",
       "key_insight": "# Future directions\n\n## What is now proved\n\n`VampireBestiary/VampireUnitCurve.lean` isolates the exact digit-multiset core of a fang factorization and proves, in every base `b ≥ 2`,\n\n\\[\n(x-1)(y-1)=1 \\",
@@ -2501,6 +2491,16 @@
       "theorem_count": 18,
       "timestamp": "2026-07-21T14:31:19",
       "title": "Speculative: The Lean Theorem Prover as an Ecological Niche"
+    },
+    {
+      "cycle_id": "fee59e0b",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions\n\n## Result status\n\nThe motivating fixed-length claim was **disproved**, not proved. With a finite alphabet and a fixed length bound (such as 100), the collection of encoded stateme",
+      "quality_score": 0.69,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-21T14:31:27",
+      "title": "Speculative: Ramanujan-Style Intuition as Formalizable Meta-Reasoning"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-21T14:31:19",
+  "last_updated": "2026-07-21T14:31:27",
   "open_questions": [
     {
       "context": "",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "7b741692",
-        "quality": 0.83,
-        "theorems": 22,
-        "title": "Deepening: Speculative: Ramanujan-Style Intuition as Formalizable Meta-Reasoning"
-      },
-      {
         "cycle_id": "2152d45c",
         "quality": 0.61,
         "theorems": 11,
@@ -3389,6 +3383,12 @@
         "quality": 0.75,
         "theorems": 26,
         "title": "Causal Loops in Category Theory: When Composition Loops Back"
+      },
+      {
+        "cycle_id": "fee59e0b",
+        "quality": 0.69,
+        "theorems": 9,
+        "title": "Speculative: Ramanujan-Style Intuition as Formalizable Meta-Reasoning"
       }
     ],
     "Geometry": [

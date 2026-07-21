@@ -1,87 +1,112 @@
-# Anti-Gravity Mathematics: The Theorems That Hold Everything Up
+# Anti-Gravity Mathematics: The Small Theorems That Hold Up Entire Worlds
 
-Every mathematician has a favorite theorem — the one they reach for again and again, the one that seems to appear in the proof of everything. Ask an analyst and they might name the Mean Value Theorem. Ask an algebraist and they might name the Fundamental Theorem of Algebra. What these celebrated results share is not difficulty. Many of them have proofs that fit in a paragraph. What they share is *reach*: an enormous number of later results lean on them.
+A theorem can be difficult for two very different reasons. It may be hard to discover, demanding a brilliant change of viewpoint. Or it may be hard to replace: once known, it becomes a load-bearing beam used throughout mathematics. Those two kinds of difficulty are often conflated. The idea of **anti-gravity mathematics** separates them.
 
-This tension — a short proof that supports a towering edifice — is the subject of what we will call **anti-gravity mathematics**. Just as an anti-gravity device would produce a large lifting force with almost no effort, an anti-gravity *theorem* produces a large amount of mathematical support with almost no proof. This article tells the story of how to make that poetic idea into precise mathematics, and what turns out to be true — and false — once you do.
+Imagine a mathematical subject as a city suspended in the air. Each theorem is a platform, and each use of one theorem by another is a supporting cable. Some platforms sit near the skyline but carry almost nothing else. Others are short, plain, and easy to cross, yet hundreds of later structures hang from them. These compact, heavily reused results are anti-gravity theorems: they exert great mathematical influence while requiring little proof.
 
-## Weighing a theorem
+This metaphor can be made exact. It leads to a topology of mathematical dependence, a precise criterion for when anti-gravity theorems are dense, a counting principle that guarantees a ten-percent abundance, and a sharp warning: without structural assumptions, no universal percentage can be true.
 
-Imagine the whole of some mathematical library laid out as a network. Each theorem is a dot. We draw an arrow from theorem $a$ to theorem $b$ whenever $b$'s proof uses $a$. This network is the *dependency graph* of the library.
+## Turning the metaphor into mathematics
 
-Now we can measure two very different things about a single theorem $a$.
+Consider a finite collection $V$ of theorems. For two theorems $u$ and $x$, write $u\to x$ when the proof of $u$ directly uses $x$. Thus the arrow points from a user to one of its foundations.
 
-The first is how much *rests on it*. Define the **gravitational weight** of $a$, written $w(a)$, as the number of theorems that depend on $a$:
-$$w(a) = \#\{\, b : a \text{ is used in the proof of } b \,\}.$$
-A theorem with huge weight is load-bearing: remove it, and a large part of the building comes down.
+The **gravitational weight** of a theorem $x$ is the number of its direct users:
 
-The second is how much *effort it cost*. Let $\ell(a)$ denote the **proof length** of $a$ — the number of steps, lines, or lemmas its own proof requires.
+$$
+w(x)=\bigl|\{u\in V:u\to x\}\bigr|.
+$$
 
-Most theorems trade one for the other. A deep, hard-won result (large $\ell$) tends to be a specialized capstone that little else depends on (small $w$). A one-line triviality (small $\ell$) tends to be, well, trivial, and equally unused (small $w$). The interesting theorems live in the forbidden corner:
+We also assign each theorem $x$ a nonnegative integer $\ell(x)$ measuring proof length or proof cost. The exact unit can vary with the application: lines, symbols, inference steps, or another agreed measure. Fix two thresholds: a minimum weight $m$ and a maximum length $L$. A theorem $x$ is called **anti-gravity at thresholds $(m,L)$** when
 
-> A theorem is **anti-gravity** (at thresholds $w_0$ and $\ell_0$) if $w(a) \ge w_0$ and $\ell(a) \le \ell_0$ — **high weight, short proof.**
+$$
+w(x)\ge m\qquad\text{and}\qquad \ell(x)\le L.
+$$
 
-These are the miracles: cheap to establish, yet holding up the sky.
+This definition deliberately separates influence from cost. A theorem with a short proof but no users is elegant, not anti-gravitational. A theorem with many users but an enormous proof is foundational, but not lightweight. Anti-gravity lies at the conjunction: short and load-bearing.
 
-## A conservation law for libraries
+Direct use is only the first layer. Say that $x$ **supports** $y$ if one can start at $x$ and repeatedly move to theorems that use the current theorem, eventually reaching $y$. A theorem supports itself, and if $x$ supports $y$ while $y$ supports $z$, then $x$ supports $z$. In graph language, support is reflexive transitive reachability along the direction from foundations to users.
 
-Before hunting anti-gravity theorems, it helps to notice that the dependency network obeys a bookkeeping law, exactly like the classical "handshake lemma" for graphs.
+This distinction matters. A basic identity may have only a few immediate users, but those users may feed an enormous downstream theory. Direct weight measures local load; support records the whole upward cone.
 
-Alongside the weight $w(a)$ (how many theorems use $a$), define the **in-degree** $d(b)$ of a theorem $b$ as the number of theorems that $b$ itself uses:
-$$d(b) = \#\{\, a : a \text{ is used in the proof of } b \,\}.$$
-Every arrow in the network has a tail and a head. Counting all arrows by their tails gives $\sum_a w(a)$; counting the same arrows by their heads gives $\sum_b d(b)$. They must agree:
-$$\sum_a w(a) = \sum_b d(b).$$
-This **handshake identity** says something homely but useful: *the total amount of "support" supplied by all theorems equals the total amount of "reliance" consumed by all theorems.* Support is conserved. Nothing is created or destroyed in the accounting of dependencies.
+## A topology made from dependence
 
-A first consequence is a hard ceiling. In a library of $N$ theorems, no theorem can be depended on by more than $N$ others, so $w(a) \le N$. And if we insist — as we should — that no theorem's proof cites *itself*, then no theorem can support all $N$, giving the sharper bound $w(a) < N$.
+Topology is often introduced through distance, continuity, and neighborhoods. Yet no numerical distance is needed here. Dependence itself supplies a natural notion of openness.
 
-## The averaging argument: something is always heavy
+Call a set $U\subseteq V$ **dependency-open** if it is closed upward under support: whenever $x\in U$ and $x$ supports $y$, then $y\in U$. In other words, once an open set contains a foundation, it must contain every theorem downstream from that foundation.
 
-The handshake identity feeds directly into the central engine of the whole theory: **averaging**.
+These sets satisfy the axioms of a topology. The empty set and all of $V$ are dependency-open. Intersections of two dependency-open sets remain dependency-open. Arbitrary unions remain dependency-open. This is an Alexandrov topology, a topology generated by an order-like reachability relation.
 
-If the total weight is $\sum_a w(a)$ and there are $N$ theorems, then the *average* weight is $\frac{1}{N}\sum_a w(a)$. Some theorem must be at least average. More precisely, if $a^\star$ is a theorem of maximum weight, then
-$$\sum_b w(b) \le N \cdot w(a^\star).$$
-A heaviest theorem always exists, and it carries at least the average load. This is the mathematical version of the intuition that *every* library has its pillars.
+For each theorem $x$, its **dependency cone** is
 
-But being heavy is only half of anti-gravity. We also need the pillar to be *cheap*. The decisive result sharpens the averaging argument by restricting attention to the theorems with short proofs.
+$$
+C(x)=\{y\in V:x\text{ supports }y\}.
+$$
 
-> **Existence of anti-gravity theorems.** Let $S$ be the set of short-proof theorems, those with $\ell(a) \le \ell_0$. Suppose these short-proof theorems together carry a total weight of at least $w_0 \cdot |S|$. Then at least one of them has weight $w(a) \ge w_0$ — that is, an anti-gravity theorem exists.
+The cone $C(x)$ is open, and it contains $x$. It is the smallest natural neighborhood of $x$: the entire future that rests, directly or indirectly, on that theorem.
 
-The proof is a pure pigeonhole: if *every* short-proof theorem had weight below $w_0$, their total weight would fall below $w_0 \cdot |S|$, contradicting the hypothesis. So the short-proof theorems cannot all be lightweight; one of them must secretly be a pillar.
+Now recall the topological idea of density. A set $S$ is dense if every nonempty open set meets $S$. On the real line, the rational numbers are dense because every interval contains a rational. In a theorem network, density means something more structural and more vivid.
 
-This is the honest, provable core of the romantic slogan "anti-gravity theorems exist." They exist precisely when the cheap theorems, taken as a group, do a lot of collective lifting.
+**Dependency-Density Theorem.** A class $S$ of theorems is dense in the dependency topology if and only if every theorem supports at least one member of $S$.
 
-## Foundations are heavy — provably
+The proof is short. Suppose $S$ is dense. The cone $C(x)$ is an open neighborhood of any theorem $x$, so it must meet $S$. Therefore $x$ supports some theorem in $S$. Conversely, suppose every $x$ supports some $y\in S$. Any nonempty dependency-open set contains some $x$; because it is closed upward, it also contains the chosen $y$. Hence every nonempty open set meets $S$.
 
-There is a satisfying structural reason that the most basic theorems tend to be the heaviest. Dependency is *transitive*: if $b$ relies on $a$, and $c$ relies on $b$, then $c$ ultimately relies on $a$. In a library where we track all such indirect reliance, this has a clean consequence.
+This theorem is the conceptual heart of the story. Saying “anti-gravity theorems are dense” is not mystical language and does not mean that they are numerous in the ordinary percentage sense. It means exactly this: from every theorem, some downstream chain reaches a short, sufficiently reused theorem.
 
-> **Foundational theorems are heaviest.** If $b$ depends on $a$, then $w(b) \le w(a)$.
+It follows immediately that anti-gravity theorems are dense whenever, for every $x\in V$, there is a theorem $y$ supported by $x$ with $w(y)\ge m$ and $\ell(y)\le L$. The topological claim is therefore equivalent to a concrete cofinality condition on the dependency network.
 
-The reason is immediate once stated: every theorem that depends on $b$ also depends, through $b$, on $a$. So $a$ inherits all of $b$'s dependents and possibly more. Weight can only accumulate as you descend toward the foundations. The bedrock axioms and first lemmas of a subject are, by this logic, the heaviest objects in it — and they are typically also the ones with the shortest proofs. Anti-gravity is not an accident; it is baked into the shape of mathematical knowledge.
+## Density is not abundance
 
-## Two libraries you can hold in your hand
+A dense set need not occupy a large fraction of a space. One point can even be dense in certain finite topologies. So a separate argument is needed to justify a numerical prediction such as “at least ten percent of the theorems are anti-gravity.”
 
-Abstract existence is reassuring, but it is worth seeing anti-gravity theorems in fully explicit examples.
+The right tool is a charging map. Let $A\subseteq V$ be the anti-gravity class. Assign every theorem $x\in V$ to a theorem $c(x)\in A$. Think of $c(x)$ as an anti-gravity theorem that represents, absorbs, or certifies $x$. Suppose no member of $A$ receives more than ten assignments:
 
-**The linear library.** Take $n$ theorems arranged in a line, $0, 1, 2, \dots, n-1$, where theorem $j$ depends on theorem $i$ exactly when $i < j$. Each theorem builds on all the ones before it. The bottom theorem, number $0$, is depended on by every one of the other $n-1$ theorems, so its weight is exactly
-$$w(0) = n - 1.$$
-If every proof in this library has length $1$, then theorem $0$ has weight $n-1$ and proof length $1$: it is anti-gravity at thresholds $w_0 = n-1$, $\ell_0 = 1$. Its influence grows without bound as the library grows, while its cost stays fixed. This is the linear, $O(n)$, case.
+$$
+\bigl|\{x\in V:c(x)=a\}\bigr|\le 10
+\qquad\text{for every }a\in A.
+$$
 
-**The grid library.** Now arrange theorems in a rectangular grid of $n$ rows and $m$ columns, and say a node depends on another whenever it lies in a strictly later row. A single node in the bottom row is then depended on by *every node in every later row* — that is $(n-1)\cdot m$ theorems. Its weight is
-$$w = (n-1)\cdot m,$$
-which grows *quadratically* in the size of the library, while its proof length remains $1$. This realizes the folklore example of a theorem with weight $O(n^2)$ and proof length $O(1)$: one modest lemma silently underwriting a quadratic swarm of consequences.
+**Ten-Percent Charging Theorem.** Under these assumptions,
 
-## An honest ending: the myth of the fixed 10%
+$$
+|V|\le 10|A|,
+$$
 
-It is tempting to leap from these examples to grand universal laws: *"Anti-gravity theorems are everywhere,"* or the oft-repeated folklore that *"about 10% of the theorems in any library are anti-gravity."* Here the mathematics delivers a bracing correction.
+and therefore $|A|\ge |V|/10$.
 
-> **No dependencies, no anti-gravity.** Consider a library in which no theorem depends on any other — every result stands alone. Then every theorem has weight $0$. For any positive weight threshold $w_0 \ge 1$, *no* theorem clears the bar, so the library contains **no anti-gravity theorems at all.**
+The reason is the pigeonhole principle in reverse. The fibers of $c$ partition $V$, each fiber has at most ten elements, and only members of $A$ can appear as images. Summing the fiber sizes gives
 
-This single counterexample sinks the universal claims. There is no law guaranteeing a fixed positive fraction of anti-gravity theorems in *every* possible library, because a library with a sparse enough dependency structure has none. The famous "10%" is, at best, an empirical average over a particular real-world corpus — a description of how mathematicians actually organize their work, not a theorem about all conceivable organizations.
+$$
+|V|=\sum_{a\in A}|c^{-1}(a)|\le\sum_{a\in A}10=10|A|.
+$$
 
-What survives, and what we have proved, is more nuanced and more interesting than the slogan. Anti-gravity theorems are not *guaranteed*, but they are *forced* whenever the cheap results collectively do heavy lifting (the averaging theorem); they *cluster at the foundations* whenever dependency is transitive (the heaviness theorem); and they can be exhibited with any prescribed growth rate, linear or quadratic, in fully explicit libraries. The picture that emerges is that anti-gravity is a real and structural phenomenon — just not a universal constant of nature.
+This theorem does not assert that every mathematical collection automatically has ten percent anti-gravity theorems. It says that a concrete ten-to-one certificate is sufficient. That is a valuable shift: a loose prediction becomes a testable structural hypothesis.
 
-## Why it matters
+The same reasoning works at any scale. If each anti-gravity theorem receives at most $k$ charges, then $|V|\le k|A|$, so at least a fraction $1/k$ of the collection is anti-gravity. The number ten is not magical; it encodes the desired ten-percent target.
 
-Thinking of a theorem's worth as a *product* of reach and cheapness reframes a lot of ordinary mathematical experience. It explains why the results we teach first are so often the ones with two-line proofs: they are the heaviest load-bearers, and their cheapness is exactly what makes them safe to build on. It suggests a principled way to prioritize verification effort in large formal libraries — audit the anti-gravity theorems first, because an error there propagates the furthest for the least apparent cost. And it turns a vague aesthetic judgment ("this is a beautiful, powerful little theorem") into a quantity you can compute: high weight, short proof.
+## The counterexample that saves the idea
 
-The dream of anti-gravity — enormous lift for negligible effort — is impossible in physics. In mathematics, it happens every day. The surprise is not that such theorems exist. It is that, once you weigh them honestly, you can prove exactly when they must.
+Strong metaphors become useful only after surviving hostile examples. Consider ten theorems with no dependency arrows at all. Give every theorem proof length $1$. Every theorem is short, but every gravitational weight is $0$:
+
+$$
+w(x)=0\qquad\text{for all }x\in V.
+$$
+
+At thresholds $(1,1)$, no theorem is anti-gravity, because none has even one direct user. Thus an edgeless ten-theorem collection has an anti-gravity proportion of $0\%$, not $10\%$.
+
+This **Edgeless Counterexample** disproves the unconditional ten-percent prediction. Far from destroying the project, it clarifies what a meaningful empirical claim must say. Any lower bound needs assumptions: enough dependency structure, suitable thresholds, a bounded charging map, or a comparable growth condition.
+
+It also exposes an important philosophical point. Shortness alone is not influence. A collection of isolated gems can contain no anti-gravity at all. The phenomenon belongs to organized bodies of mathematics, where results are reused and theories accumulate.
+
+## Why the framework matters
+
+The framework offers a new lens on exposition. A textbook author might seek theorems with high weight and low proof cost, because proving them early could compress many later arguments. A curriculum designer might identify concepts whose modest local complexity unlocks large downstream regions. A researcher comparing proof strategies might ask whether a change of language turns a heavy foundational result into a short reusable lemma.
+
+It also connects mathematics to software architecture and citation networks, while remaining distinct from both. In software, a tiny utility function may support an entire system. In scholarship, a concise observation may be cited across disciplines. But mathematical dependence is sharper than citation: a theorem is not merely acknowledged; it is logically used.
+
+There are caveats. Direct-user counts are sensitive to presentation. Splitting one theorem into wrappers can inflate weight, while combining several arguments can suppress it. Proof length is likewise representation-dependent. A robust empirical theory should compare direct weight with transitive influence, discounted path counts, centrality, and downstream reach. It should also study which measurements survive refactoring.
+
+Still, the core results are exact. Dependency reachability creates a topology. Density in that topology is precisely support-cofinality. A bounded charging map yields a quantitative lower bound. An edgeless collection defeats any unconditional percentage claim.
+
+The resulting picture is more interesting than the original slogan. Anti-gravity theorems are not simply “important easy theorems.” They are junctions where compression meets influence. Topological density says they appear somewhere above every foundation; counting says when there must be many of them; counterexamples tell us which assumptions the world must satisfy before either intuition applies.
+
+Mathematics is often pictured as a tower, each floor resting on the one below. The dependency topology replaces that rigid image with a landscape of cones, pathways, and load-bearing shortcuts. Some theorems are monuments. Others are bridges. Anti-gravity theorems are the small joints that let the whole structure rise.
