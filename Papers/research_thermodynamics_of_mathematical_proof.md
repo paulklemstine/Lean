@@ -1,350 +1,383 @@
-# The Thermodynamics of Mathematical Proof: A Landauer Principle for Reasoning
+# Thermodynamics of Mathematical Proof: Finite Erasure, Incompressibility, and Adversarial Verification
+
+**Aristotle**  
+**July 20, 2026**
 
 ## Abstract
 
-We develop a rigorous information-theoretic model of the *energetic cost of reasoning*,
-transplanting Landauer's principle from physical computation to the elementary steps of a
-mathematical proof. Modeling each proof step as a function $f : \alpha \to \beta$ between
-finite state spaces, we define the *erased information* of a step as the drop in Shannon
-capacity between its input and output registers,
-$\mathrm{erased}(f) = \log_2 |\alpha| - \log_2 |\mathrm{im}\, f|$, and the associated
-*Landauer cost* as $\mathrm{erased}(f)\cdot k_B T \ln 2$. Within this model we prove: (i)
-erasure is nonnegative; (ii) a step erases zero bits if and only if it is injective
-(logically reversible); (iii) Landauer's principle in strict form — every irreversible
-step dissipates strictly positive heat at positive temperature; (iv) a data-processing
-inequality — erasure accumulates monotonically along a proof pipeline and is sub-additive
-rather than additive; (v) Bennett's reversible embedding — retaining the input renders any
-step free, so computation *per se* carries no cost; (vi) an *exponential erasure
-separation* — explicit families of verifications whose erasure grows linearly and doubly-
-exponentially in a size parameter, exhibiting theorems whose checking dissipates
-unboundedly more heat than others; and (vii) an incompressibility bound of Kolmogorov type
-— a counting argument showing that some Boolean predicate on $n$ bits admits no description
-shorter than $n$ bits, so its verification erases at least $n$ bits and dissipates at least
-$n\, k_B T \ln 2$. We include numerical demonstrations, algorithms for computing erasure,
-and a discussion of connections to reversible computing and complexity theory.
+We develop a finite model connecting proof search, information loss, and Landauer’s principle. A candidate derivation of depth $n$ is represented by a binary word of length $n$, so the search space contains exactly $2^n$ candidates. Selecting one candidate and discarding the rest produces an erased multiplicity
 
-**Keywords:** Landauer's principle, information erasure, reversible computation, Shannon
-entropy, Kolmogorov complexity, data-processing inequality, thermodynamics of computation.
+$$
+E(n)=2^n-1,
+$$
 
----
+with recurrence $E(n+1)=2E(n)+1$. This multiplicity dominates the $n$ created binary choices at every depth and exceeds $2n$ for $n\ge 4$. If each discarded alternative is represented by an independent bit that is irreversibly reset, the associated Landauer work is exactly
+
+$$
+W_n=kT\ln 2\,(2^n-1).
+$$
+
+Two complementary information-theoretic results arise from the same cardinality. First, no injective encoding can represent every depth-$n$ derivation by a binary string shorter than $n$. Second, any black-box verifier querying fewer than $2^n$ candidates can miss a uniquely successful derivation. We combine these facts into an exponential-erasure witness theorem. The conclusions are explicitly model-relative: the erased-alternative count is not a universal entropy formula, and the verification bound applies to adversarial unstructured search rather than semantic checking with exploitable structure. The framework isolates fiber multiplicity as the common invariant behind logical irreversibility, finite incompressibility, and adversarial ambiguity.
 
 ## 1. Introduction
 
-Landauer's principle (Landauer, 1961) asserts that the erasure of one bit of information in
-a physical system coupled to a thermal reservoir at absolute temperature $T$ must dissipate
-at least $k_B T \ln 2$ of energy as heat, where $k_B$ is Boltzmann's constant. The
-principle draws a sharp line between *logically reversible* operations, which map inputs
-bijectively to outputs and can in principle be performed at zero energy cost, and
-*logically irreversible* operations, which merge distinct inputs and thereby destroy
-information. Bennett (1973, 1982) showed that any computation can be made reversible by
-retaining intermediate results, so that the thermodynamic cost of computation is
-attributable entirely to erasure, not to computation itself.
-
-This paper asks whether the same accounting applies to *mathematical reasoning*. We regard
-a proof as a finite sequence of elementary steps — rewrites, substitutions, case merges,
-lookups, and the terminal verification of a claim — each of which transforms a finite space
-of "reasoning states" into another. Some steps are reversible (they lose no information);
-others collapse many possibilities into few, and it is these that carry a thermodynamic
-cost. Our aim is to make this analogy precise, prove the fundamental structural results, and
-exhibit theorems whose verification is provably expensive.
-
-The contributions are as follows. In Section 3 we define the erasure functional and prove
-its nonnegativity and the reversibility criterion. In Section 4 we introduce the Landauer
-cost and prove the strict form of Landauer's principle together with a lower bound for
-compression into a bounded register. Section 5 establishes the data-processing inequality
-and refutes additivity. Section 6 formalizes Bennett's reversible embedding. Section 7
-constructs explicit linear and exponential erasure families and proves the exponential
-separation. Section 8 gives the incompressibility bound and the resulting thermodynamic
-cost of verification. We conclude with applications and open problems.
-
----
-
-## 2. The model
-
-Throughout, $\alpha$ and $\beta$ denote nonempty finite sets, and $|\alpha|$ denotes the
-cardinality of $\alpha$. A **proof step** is any function $f : \alpha \to \beta$. We think
-of $\alpha$ as the register of possible states before the step and $\beta$ as the register
-after.
-
-**Definition 2.1 (Image count).** The *image count* of a step $f : \alpha \to \beta$ is the
-number of distinct outputs it produces,
-$$\mathrm{im\text{-}card}(f) \;=\; \bigl|\{\, f(x) : x \in \alpha \,\}\bigr|.$$
-
-Two elementary facts are used repeatedly. First, the image count never exceeds the domain
-size, $\mathrm{im\text{-}card}(f) \le |\alpha|$, since the image of a finite set under a
-function is no larger than the set. Second, when $\beta$ is finite the image count also
-satisfies $\mathrm{im\text{-}card}(f) \le |\beta|$. Third, when $\alpha$ is nonempty the
-image count is at least $1$. Finally, $f$ is injective if and only if
-$\mathrm{im\text{-}card}(f) = |\alpha|$, since an injection loses no distinctions.
-
----
+Mathematical proof is abstract, but every actual process that discovers, verifies, transmits, or stores a proof is physical. This distinction permits a precise question: when a reasoning process destroys information, what thermodynamic cost is forced by that destruction?
 
-## 3. Erased information and the reversibility criterion
-
-**Definition 3.1 (Erased bits).** The *erased information* of a step $f : \alpha \to \beta$
-is the entropy drop between its input and output registers,
-$$\mathrm{erased}(f) \;=\; \log_2 |\alpha| \;-\; \log_2 \mathrm{im\text{-}card}(f).$$
-Both terms are the Shannon capacities (in bits) of the respective registers under the
-uniform distribution; their difference is the information rendered irrecoverable by $f$.
+Landauer’s principle identifies the fundamental unit. Irreversibly resetting one unbiased bit at absolute temperature $T$ requires, in the ideal limit, at least $kT\ln 2$ of work dissipated as heat, where $k$ is Boltzmann’s constant. The principle attaches cost to logically irreversible operations, not to computation or deduction in general. An injective transformation preserves enough information to recover its input and can in principle be implemented reversibly. A many-to-one transformation merges distinguishable states; if the missing distinction is not retained elsewhere, information is erased.
 
-**Theorem 3.2 (Nonnegativity).** For every step $f$ on a nonempty domain,
-$\mathrm{erased}(f) \ge 0$.
+Proof search naturally suggests many-to-one operations. A procedure may explore many candidate derivations and retain one certificate, or normalize many syntactically distinct arguments to one canonical form. Yet broad thermodynamic claims about proof can easily outrun their assumptions. A proof space may possess strong semantic structure; an efficient checker need not search it blindly; and a machine may never materialize all rejected alternatives. For this reason, we study an explicit finite model whose claims can be stated and proved exactly.
 
-*Proof sketch.* Since $1 \le \mathrm{im\text{-}card}(f) \le |\alpha|$ and $\log_2$ is
-monotone increasing on the positive reals, $\log_2 \mathrm{im\text{-}card}(f) \le
-\log_2|\alpha|$, whence the difference is nonnegative. $\qquad\blacksquare$
+At depth $n$, a candidate derivation is a binary word of length $n$. Each coordinate records one of two possible inference choices. There are $2^n$ words. We model certification by retaining one word and discarding the remaining $2^n-1$. We then investigate four questions:
 
-**Theorem 3.3 (Reversibility criterion).** For a step $f$ on a nonempty finite domain,
-$$\mathrm{erased}(f) = 0 \iff f \text{ is injective.}$$
+1. How quickly does the discarded multiplicity grow relative to the retained description?
+2. What Landauer work follows under a specified independent-bit erasure convention?
+3. Can every candidate be encoded losslessly in fewer than $n$ bits?
+4. Can a verifier with fewer than $2^n$ black-box queries exclude a hidden unique proof?
 
-*Proof sketch.* If $f$ is injective then $\mathrm{im\text{-}card}(f) = |\alpha|$, so both
-logarithms coincide and the erasure is zero. Conversely, if the erasure is zero then
-$\log_2|\alpha| = \log_2 \mathrm{im\text{-}card}(f)$; since $\log_2$ is injective on the
-positive reals, $|\alpha| = \mathrm{im\text{-}card}(f)$, and a function on a finite set
-whose image has the same cardinality as its domain is injective. $\qquad\blacksquare$
+The answers are respectively: exponentially, exactly $kT\ln 2(2^n-1)$, no, and no. All four answers are controlled by the same finite cardinality.
 
-The criterion identifies logical reversibility with zero cost: a step is free precisely
-when it discards nothing. In particular a *bijection* is always free.
+The model is intentionally austere. It does not assert an unconditional exponential lower bound for theorem proving, nor does it equate the number of rejected candidates with Shannon entropy in every implementation. Rather, it supplies a clean bridge among combinatorics, information theory, and thermodynamics, while making the boundary of each conclusion visible.
 
-**Corollary 3.4 (Bijections are free).** If $f$ is a bijection then $\mathrm{erased}(f) =
-0$.
+## 2. Finite derivation spaces
 
-A notable consequence is that *activity is not cost*: a non-identity step may still be free.
-The Boolean NOT gate $b \mapsto \lnot b$ is a bijection distinct from the identity, hence
-erases zero bits. This refutes the plausible-sounding claim that every non-trivial proof
-step must dissipate energy: only *irreversible* steps do.
+### 2.1 Candidate derivations
 
----
+**Definition 2.1 (Binary derivation space).** For a nonnegative integer $n$, let
 
-## 4. The Landauer cost
+$$
+D_n=\{0,1\}^n
+$$
 
-**Definition 4.1 (Landauer cost).** For a nonnegative quantity of erased bits $b$, a
-Boltzmann constant $k_B$ and temperature $T$, the *Landauer cost* is
-$$\mathrm{cost}(b, k_B, T) \;=\; b \cdot k_B \, T \ln 2.$$
-The cost of a step $f$ is $\mathrm{cost}(\mathrm{erased}(f), k_B, T)$.
+be the set of binary words of length $n$. An element $b=(b_1,\ldots,b_n)$ is called a candidate derivation of depth $n$.
 
-When $b, k_B, T \ge 0$ the cost is nonnegative, since $\ln 2 > 0$.
+The terminology records an abstract branching process. At each of $n$ stages, the bit $b_i$ chooses one of two available branches. No semantic validity predicate is imposed yet.
 
-**Theorem 4.2 (Landauer's principle, strict form).** If $f$ is *not* injective and $k_B, T
-> 0$, then $\mathrm{cost}(\mathrm{erased}(f), k_B, T) > 0$.
+**Lemma 2.2 (Candidate count).** For every $n\ge 0$,
 
-*Proof sketch.* By the reversibility criterion, $f$ non-injective gives
-$\mathrm{erased}(f) \ne 0$, and by nonnegativity $\mathrm{erased}(f) > 0$. Since $k_B, T >
-0$ and $\ln 2 > 0$, the product is strictly positive. $\qquad\blacksquare$
+$$
+|D_n|=2^n.
+$$
 
-**Theorem 4.3 (Landauer lower bound).** If $f : \alpha \to \beta$ has output in a finite
-register $\beta$, then
-$$\mathrm{erased}(f) \;\ge\; \log_2 |\alpha| - \log_2 |\beta|.$$
+**Proof sketch.** Each of the $n$ coordinates has two independent values. By the multiplication principle, the number of words is the product of $n$ factors equal to $2$, hence $2^n$. For $n=0$, the unique empty word gives $2^0=1$. $\square$
 
-*Proof sketch.* Since $\mathrm{im\text{-}card}(f) \le |\beta|$ and $\log_2$ is monotone,
-$\log_2 \mathrm{im\text{-}card}(f) \le \log_2 |\beta|$; substituting into the definition of
-erasure gives the bound. $\qquad\blacksquare$
+### 2.2 Selection and erased multiplicity
 
-The bound expresses the intuitive fact that compressing a large state space $\alpha$ into a
-small register $\beta$ cannot be done for free: at least $\log_2(|\alpha|/|\beta|)$ bits
-must be erased.
+**Definition 2.3 (Erased multiplicity).** Suppose one distinguished element of $D_n$ is retained and every other candidate is discarded. Define
 
-**Example 4.4 (The AND gate).** The Boolean conjunction $\land : \{F,T\}^2 \to \{F,T\}$
-maps its four inputs to two outputs (three to $F$, one to $T$), so
-$\mathrm{im\text{-}card}(\land) = 2$ and
-$$\mathrm{erased}(\land) = \log_2 4 - \log_2 2 = 2 - 1 = 1 \text{ bit}.$$
-The AND gate is the canonical realization of $k_B T \ln 2$ of Landauer dissipation.
+$$
+E(n)=|D_n|-1.
+$$
 
----
+The word “erased” here denotes a logical model of selection. A physical energy interpretation requires the additional representation assumptions introduced in Section 3.
 
-## 5. Data processing: erasure accumulates and is sub-additive
+**Theorem 2.4 (Exact erased multiplicity).** For every $n\ge 0$,
 
-Proofs are compositions of steps. We show erasure behaves like a thermodynamic
-data-processing quantity: it can only grow downstream.
+$$
+E(n)=2^n-1.
+$$
 
-**Lemma 5.1.** For steps $f : \alpha \to \beta$ and $g : \beta \to \gamma$,
-$\mathrm{im\text{-}card}(g \circ f) \le \mathrm{im\text{-}card}(f)$.
+**Proof sketch.** Substitute the candidate count $|D_n|=2^n$ into Definition 2.3. $\square$
 
-*Proof sketch.* The image of $g \circ f$ is the image under $g$ of the image of $f$, and
-applying a function cannot increase cardinality. $\qquad\blacksquare$
+**Theorem 2.5 (Creation–erasure comparison).** For every $n\ge 0$,
 
-**Theorem 5.2 (Data-processing inequality).** For steps $f$ and $g$ composable as above,
-$$\mathrm{erased}(f) \;\le\; \mathrm{erased}(g \circ f).$$
+$$
+n\le E(n).
+$$
 
-*Proof sketch.* By Lemma 5.1, $\mathrm{im\text{-}card}(g\circ f) \le
-\mathrm{im\text{-}card}(f)$; monotonicity of $\log_2$ then gives $\log_2
-\mathrm{im\text{-}card}(g\circ f) \le \log_2 \mathrm{im\text{-}card}(f)$. Since both
-composite and $f$ share the same domain $\alpha$, subtracting from $\log_2|\alpha|$ yields
-the inequality. $\qquad\blacksquare$
+For every $n\ge 4$, the stronger strict inequality
 
-Information destroyed early in a proof cannot be recovered by later steps; the arrow of
-erasure points forward.
+$$
+2n<E(n)
+$$
 
-**Theorem 5.3 (Non-additivity).** Erasure is *not* additive under composition: there exist
-steps $f, g$ with $\mathrm{erased}(g \circ f) \ne \mathrm{erased}(f) + \mathrm{erased}(g)$.
+holds.
 
-*Proof sketch.* Take $f = g$ to be the constant map on a two-element set, each erasing $1$
-bit. Their composite is again the same constant map, erasing $1$ bit, not $2$.
-$\qquad\blacksquare$
+**Proof sketch.** The first claim is equivalent to $n+1\le 2^n$. It holds at $n=0$ and is preserved under induction because doubling $2^n$ grows at least as fast as increasing $n+1$ by one. For the second claim, the base case is $8<15$ at $n=4$. If $2n<2^n-1$, then
 
-Combining Theorems 5.2 and 5.3, erasure is *sub-additive* and monotone but not additive:
-the composite forgets at least as much as its first stage, yet no more than the sum of the
-stages, and often strictly less.
+$$
+2(n+1)=2n+2<2^{n+1}-1,
+$$
 
----
+since the inductive hypothesis gives $2n+2<2(2^n-1)+1=2^{n+1}-1$ once $2^n\ge 3$. $\square$
 
-## 6. Bennett's reversible embedding
+The number $n$ measures the binary choices recorded in one retained derivation. The number $E(n)$ measures how many other candidates selection excludes. The theorem compares description depth to discarded population; it does not claim that $E(n)$ bits are intrinsically necessary to represent the uncertainty.
 
-**Definition 6.1 (Reversible embedding).** For a step $f : \alpha \to \beta$, its *Bennett
-embedding* is
-$$\tilde f : \alpha \to \alpha \times \beta, \qquad \tilde f(x) = (x, f(x)).$$
+**Theorem 2.6 (One-level recurrence).** For every $n\ge 0$,
 
-**Lemma 6.2.** $\tilde f$ is injective.
+$$
+E(n+1)=2E(n)+1.
+$$
 
-*Proof sketch.* If $\tilde f(a) = \tilde f(b)$ then their first coordinates agree, so
-$a = b$. $\qquad\blacksquare$
+**Proof sketch.** Using Theorem 2.4,
 
-**Theorem 6.3 (Reversible computation is free).** For any step $f$, $\mathrm{erased}(\tilde
-f) = 0$.
+$$
+E(n+1)=2^{n+1}-1=2(2^n-1)+1=2E(n)+1.
+$$
 
-*Proof sketch.* By Lemma 6.2, $\tilde f$ is injective, so by the reversibility criterion its
-erasure vanishes. $\qquad\blacksquare$
+Combinatorially, every old candidate acquires two extensions. Relative to one newly retained extension, the discarded set contains two extensions of every previously discarded candidate and the unused extension of the previously retained one. $\square$
 
-The embedding keeps a copy of the input alongside the output, restoring reversibility.
-Hence *no computation intrinsically requires erasure*: the Landauer cost of a proof is a
-cost of *forgetting*, incurred only when scratch work is discarded, never of computation
-itself.
+## 3. Entropy and Landauer accounting
 
----
+### 3.1 Shannon entropy of a bit
 
-## 7. Explicit erasure families and the exponential separation
+For a finite probability distribution $p=(p_i)$, its Shannon entropy in natural units is
 
-We now exhibit verifications with prescribed erasure.
+$$
+H(p)=-\sum_i p_i\ln p_i,
+$$
 
-**Definition 7.1 (Collapse families).** For $n \in \mathbb{N}$, the *linear collapse*
-$C_n : \{0,1,\dots,2^n-1\} \to \{\ast\}$ maps a $2^n$-state search space onto a single
-answer. For $m \in \mathbb{N}$, the *big collapse* $B_m$ maps a $2^{(2^m)}$-state space onto
-a single answer.
+with the convention $0\ln 0=0$.
 
-**Theorem 7.2 (Erasure of a collapse).** A constant step on a nonempty domain $\gamma$
-erases $\log_2 |\gamma|$ bits. Consequently
-$$\mathrm{erased}(C_n) = n, \qquad \mathrm{erased}(B_m) = 2^m.$$
+Consider an unbiased bit with distribution $u=(1/2,1/2)$ and a reset bit with distribution $r=(1,0)$. Then
 
-*Proof sketch.* A constant map has image count $1$, so its erasure is $\log_2 |\gamma| -
-\log_2 1 = \log_2 |\gamma|$. For $C_n$, $|\gamma| = 2^n$ gives $n$; for $B_m$, $|\gamma| =
-2^{(2^m)}$ gives $2^m$. $\qquad\blacksquare$
+$$
+H(u)=-2\left(\frac12\ln\frac12\right)=\ln 2,
+$$
 
-**Theorem 7.3 (Exponential relation).** The erasure of the big collapse is $2$ raised to
-the erasure of the linear collapse at the same parameter:
-$$\mathrm{erased}(B_m) = 2^{\,\mathrm{erased}(C_m)}.$$
+whereas
 
-*Proof sketch.* $\mathrm{erased}(B_m) = 2^m = 2^{\,\mathrm{erased}(C_m)}$ by Theorem 7.2.
-$\qquad\blacksquare$
+$$
+H(r)=0.
+$$
 
-**Theorem 7.4 (Exponential erasure separation).** For every real bound $C$ there exists $m$
-with $\mathrm{erased}(B_m) > C$. Hence there are verifications whose erasure — and therefore
-Landauer heat at any fixed positive temperature — is unbounded, growing exponentially in the
-size parameter.
+Thus resetting an unbiased bit destroys exactly $\ln 2$ nats of Shannon entropy.
 
-*Proof sketch.* Since $2^m \to \infty$, choose $m$ with $2^m > C$; then
-$\mathrm{erased}(B_m) = 2^m > C$. $\qquad\blacksquare$
+**Theorem 3.1 (One-bit Landauer unit).** At Boltzmann scale $k$ and absolute temperature $T$, the ideal Landauer work associated with the entropy reduction from an unbiased bit to a fixed bit is
 
-**Corollary 7.5 (Exponential heat).** The dissipated heat of the big collapse is
-$$\mathrm{cost}(\mathrm{erased}(B_m), k_B, T) = 2^m \cdot k_B T \ln 2,$$
-exponential in $m$. Two theorems of comparable statement size — one a linear collapse, one a
-big collapse — can require exponentially different quantities of erasure to verify.
+$$
+kT\bigl(H(u)-H(r)\bigr)=kT\ln 2.
+$$
 
----
+**Proof sketch.** Insert $H(u)=\ln 2$ and $H(r)=0$ into the left-hand side. $\square$
 
-## 8. Incompressibility and the cost of verification
+### 3.2 Independent-bit erasure model
 
-Finally we establish a floor: most predicates cannot be proved cheaply.
+**Definition 3.2 (Independent erasure work).** For real parameters $k$ and $T$ and a nonnegative integer $m$, define
 
-**Theorem 8.1 (Incompressibility).** For every $n$, there is no injective map from the set
-of Boolean predicates on $n$ bits to the set of programs of length strictly less than $n$
-bits. Equivalently, the $2^n$ predicates cannot all be assigned distinct descriptions of
-length $< n$.
+$$
+W(k,T,m)=kT\ln 2\,m.
+$$
 
-*Proof sketch.* The register of interest has $2^n$ elements — the $2^n$ distinct $n$-bit
-inputs on which a predicate is evaluated, equivalently the $2^n$ Boolean-valued cells of a
-truth table on $n$ bits. The number of programs of
-length strictly less than $n$ is $2^0 + 2^1 + \dots + 2^{n-1} = 2^n - 1$. An injection from
-a set of size $2^n$ into a set of size $2^n - 1$ is impossible by the pigeonhole principle.
-$\qquad\blacksquare$
+This definition models the irreversible reset of $m$ independently represented unbiased bits. It is additive because the entropy of independent bits is additive.
 
-**Corollary 8.2 (Thermodynamic cost of verification).** For each $n$ there is a predicate
-whose shortest description has length at least $n$ bits. Storing and subsequently erasing
-its description (equivalently, collapsing its state register during verification) erases at
-least $n$ bits and therefore dissipates at least
-$$n \cdot k_B \, T \ln 2$$
-of heat at temperature $T$. No verification strategy at fixed temperature can beat this
-floor.
+**Theorem 3.3 (Entropy-loss representation).** For every $m\ge 0$,
 
-This is the qualitative shadow of Kolmogorov complexity: incompressible objects abound, and
-their verification is irreducibly costly. The counting bound above is a finite proxy for the
-statement that a positive-density fraction of $n$-bit predicates have Kolmogorov complexity
-$\ge n - O(1)$.
+$$
+W(k,T,m)=kT\bigl(H(u)-H(r)\bigr)m.
+$$
 
----
+**Proof sketch.** Apply Theorem 3.1 and multiply by $m$. $\square$
 
-## 9. Applications
+**Definition 3.4 (Proof-selection work).** Under the convention that each discarded candidate contributes one independently represented bit to be reset, define the work of selecting one depth-$n$ candidate by
 
-**Reversible computing.** Theorem 6.3 is the theoretical foundation of reversible computing:
-since erasure — not computation — is the sole source of cost, a machine that never discards
-information can, in principle, operate arbitrarily close to zero energy per operation. This
-motivates adiabatic and reversible logic families now under active engineering study, and
-frames energy-efficient computing as a discipline of *not forgetting*.
+$$
+W_n=W(k,T,E(n)).
+$$
 
-**Complexity theory.** The exponential separation (Theorem 7.4) and the incompressibility
-floor (Corollary 8.2) attach a physical quantity — dissipated heat — to the intuition that
-some theorems are harder than others. The framework suggests a thermodynamic reading of
-proof complexity: the minimal erasure of any verification of a statement is a
-complexity-like invariant bounded below by the statement's incompressibility.
+This convention is a physical modeling assumption. It corresponds, for example, to an implementation carrying one flag for each rejected candidate and resetting all flags. It should not be confused with the entropy of a single uniformly distributed index in $D_n$, which is only $n\ln 2$.
 
-**Proof engineering.** Treating a proof as a create/erase ledger suggests optimizing formal
-developments not only for length but for *reversibility*: proofs that retain intermediate
-data (in the spirit of Bennett) are, in this accounting, thermodynamically cheaper than
-proofs that aggressively collapse cases.
+**Theorem 3.5 (Exact proof-selection work).** Under Definition 3.4,
 
----
+$$
+W_n=kT\ln 2\,(2^n-1).
+$$
 
-## 10. Discussion and future work
+**Proof sketch.** Substitute $E(n)=2^n-1$ from Theorem 2.4 into Definition 3.2. $\square$
 
-We have shown that a clean Landauer-style theory of proof steps is not only possible but
-mathematically rich: reversibility is exactly zero-erasure, irreversibility strictly costs
-heat, erasure accumulates monotonically and sub-additively, computation is free while
-forgetting is not, and there exist verifications whose cost grows exponentially, floored
-below by incompressibility.
+**Theorem 3.6 (Linear Landauer lower comparison).** If $k\ge 0$ and $T\ge 0$, then for every $n\ge 0$,
 
-Several directions remain open.
+$$
+kT\ln 2\,n\le W_n.
+$$
 
-1. **A creation/erasure ledger.** Extend the model with an explicit *creation* primitive
-   (allocating ancilla, writing bits) and a cost functional over full proofs (lists of
-   create/erase steps). We conjecture that for every function there is a reversible dilation
-   with zero net erasure (Bennett), but that the *minimal simultaneous* creation and erasure
-   of a proof of a fixed predicate obey a trade-off $\mathrm{create} + \mathrm{erase} \ge
-   K(\text{predicate})$.
+**Proof sketch.** Theorem 2.5 gives $n\le E(n)$. Since $kT\ln 2$ is nonnegative, multiplication preserves the inequality. The right-hand side is $kT\ln 2\,E(n)=W_n$. $\square$
 
-2. **Genuine Kolmogorov complexity.** Replace the counting proxy of Theorem 8.1 with a true
-   prefix or plain Kolmogorov complexity $K$ relative to a universal machine, and prove the
-   *thermodynamic verification bound*: verifying $x$ from a shortest certificate erases at
-   least $K(x) - O(1)$ bits, hence dissipates at least $(K(x) - O(1)) \cdot k_B T \ln 2$.
+### 3.3 What the work formula does and does not mean
 
-3. **Exponential proof-vs-answer gap.** Formalize a concrete decision problem whose answer
-   is short but whose cheapest verification provably requires exponential erasure,
-   separating the size of a conclusion from the heat of establishing it.
+The exponential work in Theorem 3.5 follows from an exponential number of independently reset records. It is not a universal lower bound on every implementation that selects one proof. If a device stores a uniformly random candidate merely as its $n$-bit index and resets that index, its Shannon entropy loss is $n\ln 2$, not $(2^n-1)\ln 2$. If the distribution over candidates is nonuniform, the entropy may be smaller still.
 
-The overarching picture is that reasoning, like any physical process that reduces
-uncertainty, obeys a conservation-and-dissipation law. To prove a theorem is to collapse the
-space of possibilities onto the truth — and, by the second law, to warm the world a little in
-doing so.
+The invariant relevant to a general deterministic map $f:X\to Y$ is conditional uncertainty. For an observed output $y$, the fiber
 
----
+$$
+f^{-1}(y)=\{x\in X:f(x)=y\}
+$$
 
-## References
+lists inputs made indistinguishable by the output. Under a uniform conditional distribution on a fiber of size $M$, the lost information is $\ln M$. Under a nonuniform distribution it is the conditional Shannon entropy, bounded above by $\ln M$. The finite binary model isolates multiplicity first and then imposes a specific independent-record accounting convention.
 
-- R. Landauer, *Irreversibility and heat generation in the computing process*, IBM Journal
-  of Research and Development, 1961.
-- C. H. Bennett, *Logical reversibility of computation*, IBM Journal of Research and
-  Development, 1973.
-- C. H. Bennett, *The thermodynamics of computation — a review*, International Journal of
-  Theoretical Physics, 1982.
-- C. E. Shannon, *A mathematical theory of communication*, Bell System Technical Journal,
-  1948.
-- M. Li and P. Vitányi, *An Introduction to Kolmogorov Complexity and Its Applications*,
-  Springer.
+This separation is essential. It prevents a category mistake in which a combinatorial count is automatically treated as physical entropy. Thermodynamic work belongs to an implementation and a probability law; multiplicity describes the logical map that implementation realizes.
+
+## 4. Finite incompressibility
+
+### 4.1 Short binary descriptions
+
+**Definition 4.1 (Strictly short descriptions).** Let
+
+$$
+S_n=\bigcup_{j=0}^{n-1}\{0,1\}^j
+$$
+
+be the set of binary strings whose lengths are strictly less than $n$. For $n=0$, this union is empty.
+
+**Lemma 4.2 (Short-description count).** For every $n\ge 0$,
+
+$$
+|S_n|=2^n-1.
+$$
+
+**Proof sketch.** There are $2^j$ strings of length $j$. Therefore
+
+$$
+|S_n|=\sum_{j=0}^{n-1}2^j=2^n-1
+$$
+
+by the finite geometric-series formula. The empty sum for $n=0$ is $0=2^0-1$. $\square$
+
+**Theorem 4.3 (Finite incompressibility).** For every $n\ge 0$, no injective encoding
+
+$$
+c:D_n\longrightarrow S_n
+$$
+
+exists. Equivalently, no lossless scheme gives every depth-$n$ derivation a distinct binary description shorter than $n$.
+
+**Proof sketch.** By Lemma 2.2, $|D_n|=2^n$, while Lemma 4.2 gives $|S_n|=2^n-1$. An injection from a larger finite set to a smaller one is impossible by the pigeonhole principle. $\square$
+
+The theorem is uniform over the family, not individual. Some candidates may have much shorter descriptions, provided other candidates do not. Nor does the result depend on a programming language or universal machine. It is an exact finite precursor to incompressibility arguments in Kolmogorov complexity.
+
+A useful corollary is that any lossless variable-length code for all of $D_n$ must assign length at least $n$ to at least one candidate. More generally, the count of descriptions shorter than $n-c$ is $2^{n-c}-1$, so at most that many candidates can receive such descriptions injectively. Most candidates cannot enjoy large uniform savings.
+
+## 5. Adversarial verification
+
+### 5.1 Query model
+
+Let a verifier query a subset $Q\subseteq D_n$. A query reveals whether a candidate is successful. We assume no structural relation among answers: an adversary may choose the successful set after seeing $Q$, subject only to the stated condition that exactly one successful candidate exists.
+
+**Theorem 5.1 (Adversarial coverage).** Let $Q\subseteq D_n$. If
+
+$$
+|Q|<2^n,
+$$
+
+then there exists a candidate $p\in D_n\setminus Q$ such that the validity assignment declaring $p$ uniquely successful and every other candidate unsuccessful is consistent with all-negative answers on $Q$.
+
+**Proof sketch.** Since $|Q|<|D_n|$, the subset $Q$ is proper. Choose any $p\in D_n\setminus Q$. Declare $p$ successful and all candidates in $Q$ unsuccessful. Because $p$ was never queried, the transcript cannot distinguish this assignment from one having no success among the queried candidates. $\square$
+
+**Corollary 5.2 (Worst-case exhaustive requirement).** In the unstructured black-box model, a verifier that must rule out the existence of a uniquely successful depth-$n$ derivation after receiving only negative answers needs $2^n$ queries in the worst case.
+
+**Proof sketch.** Any smaller query set is defeated by Theorem 5.1. Querying all candidates plainly suffices. $\square$
+
+This result concerns search, not ordinary certificate checking. Given a candidate proof and local inference rules, a semantic checker may validate it in time polynomial in its length. The theorem instead addresses discovery or exclusion when validity is an arbitrary hidden predicate. Its purpose is to identify the operational content of cardinality in the absence of structure.
+
+## 6. Unified exponential witness
+
+The preceding results can be packaged into one statement.
+
+**Theorem 6.1 (Exponential erasure witness).** For every integer $n\ge 4$, the binary derivation family $D_n$ satisfies all of the following:
+
+1. selecting one candidate discards exactly
+
+   $$
+   E(n)=2^n-1
+   $$
+
+   alternatives;
+2. the discarded multiplicity obeys
+
+   $$
+   2n<E(n);
+   $$
+
+3. there is no injective encoding of all candidates by binary strings of length strictly below $n$; and
+4. for every query set $Q\subseteq D_n$ with $|Q|<2^n$, there exists an unqueried candidate that can be designated as the unique successful derivation while every queried candidate is unsuccessful.
+
+Under the independent-bit reset convention, the corresponding selection work is
+
+$$
+W_n=kT\ln 2\,(2^n-1).
+$$
+
+**Proof sketch.** Item 1 is Theorem 2.4, item 2 is the strict part of Theorem 2.5, item 3 is Theorem 4.3, and item 4 is Theorem 5.1. The work formula is Theorem 3.5. $\square$
+
+The theorem makes no appeal to a contradictory assumption and excludes the small depths at which strict more-than-double domination fails. At $n=0,1,2,3$, the exact formula remains valid, but $2n<2^n-1$ does not hold uniformly.
+
+## 7. Algorithms and numerical exploration
+
+### 7.1 Direct accounting
+
+Given $n$, $k$, and $T$, exact combinatorial accounting requires computing $2^n-1$. With arbitrary-precision integers, exponentiation by squaring uses $O(\log n)$ integer multiplications. If the output has $n+1$ bits, bit complexity must also reflect the cost of multiplying numbers of that size. For modest $n$, direct evaluation is immediate.
+
+A table for $0\le n\le 10$ illustrates the transition:
+
+| $n$ | $2^n$ candidates | $E(n)=2^n-1$ | $E(n)>2n$ |
+|---:|---:|---:|:---:|
+| $0$ | $1$ | $0$ | no |
+| $1$ | $2$ | $1$ | no |
+| $2$ | $4$ | $3$ | no |
+| $3$ | $8$ | $7$ | yes |
+| $4$ | $16$ | $15$ | yes |
+| $5$ | $32$ | $31$ | yes |
+| $10$ | $1024$ | $1023$ | yes |
+
+The theorem uses the clean sufficient boundary $n\ge 4$, although the strict inequality already happens at $n=3$ because $6<7$. The stated boundary is therefore sufficient rather than minimal.
+
+### 7.2 Constructing a compression collision
+
+To demonstrate finite incompressibility computationally, assign every one of the $2^n$ derivations to one of only $2^n-1$ short descriptions. A collision must occur. A program can detect the first pair with the same code by maintaining a dictionary from descriptions to prior derivations. This takes $O(2^n)$ assignments and $O(2^n)$ memory in the worst case, aside from word-length factors.
+
+The collision is not merely a programming accident. It is guaranteed for every attempted total assignment, because the codomain is too small.
+
+### 7.3 Adversarial witness construction
+
+Given a query set $Q$ with $|Q|<2^n$, enumerate $D_n$ until finding the first candidate outside $Q$. The resulting word is a witness for Theorem 5.1. With hash-set membership, the scan uses at most $2^n$ membership tests and constant auxiliary space beyond storage of $Q$ and the current word. If queries are represented as integers from $0$ through $2^n-1$, the first missing integer can be found by sorting in $O(|Q|\log|Q|)$ time or by a Boolean presence array in $O(2^n)$ time and space.
+
+## 8. Applications and interpretation
+
+### 8.1 Proof normalization
+
+A normalization map sends proof terms to canonical representatives. When many terms normalize to the same output, the map has nontrivial fibers. If the original term must be recoverable, a reversible implementation must retain enough side information to identify its position in the fiber. If that information is erased, conditional entropy determines the ideal thermodynamic cost.
+
+The binary derivation family supplies a target multiplicity for normalization systems in which many bureaucratic derivations collapse to one normal proof. Establishing such a result for a concrete calculus would require an explicit syntax, reduction relation, termination theorem, and exact fiber count.
+
+### 8.2 Reversible verification
+
+A verifier can avoid overwriting its transcript by retaining intermediate states. This shifts cost from erasure to memory. If memory is limited, it may keep checkpoints and recompute missing segments when reversing, producing a time–space tradeoff analogous to reversible pebble games. The adversarial coverage theorem identifies how much information an unstructured verifier must distinguish; a reversible analysis would determine how that information may be retained or reconstructed.
+
+### 8.3 Kolmogorov complexity
+
+The finite incompressibility theorem is machine-independent because it compares raw finite sets. Kolmogorov complexity strengthens the idea by fixing a universal prefix-free machine and asking for shortest program length. Counting implies that many strings of length $n$ have complexity near $n$, up to machine-dependent constants. A thermodynamic interpretation would then ask where a verifier obtains the missing information when reconstructing an incompressible proof from a shorter certificate.
+
+### 8.4 Shared lemmas and compositional accounting
+
+Independent proof obligations have additive Shannon entropy under product distributions, so ideal erasure costs add. Shared lemmas introduce correlations: information stored once can serve several obligations. The reduction in total work should be measured by mutual information rather than by naive subtraction of syntax sizes. This suggests a quantitative notion of thermodynamic reuse in libraries of arguments.
+
+## 9. Limitations
+
+Four limitations delimit the scope of the results.
+
+First, candidate multiplicity is not proof difficulty. The space $D_n$ contains every binary path, but a deductive calculus may reject most paths locally or guide search using semantics.
+
+Second, discarded alternatives are not automatically independent erased bits. The exact exponential work formula assumes one resettable record per discarded candidate. Different encodings and probability laws yield different entropy losses.
+
+Third, the adversarial verification theorem applies to a black-box validity predicate. It does not imply that checking a supplied proof requires exponential time.
+
+Fourth, finite incompressibility rules out uniform strict compression of all candidates, not compression of a particular structured candidate. It is related to, but does not itself establish, a universal-machine statement about Kolmogorov complexity.
+
+These limitations are strengths of the formulation: each conclusion can be traced to an explicit assumption rather than hidden in a metaphor.
+
+## 10. Future research
+
+A natural next step is a fiber-entropy theorem for finite terminating normalization systems. Given a probability law on proof terms, the destroyed information should equal conditional entropy. The expected logarithm of fiber size should be attained exactly when the conditional distribution is uniform on each fiber and should otherwise be a strict upper bound.
+
+A second direction is a Bennett-style tradeoff for verification. One seeks proof-system families in which reversible verification with subexponential auxiliary space requires superlinear recomputation, while an irreversible linear-time implementation destroys a linear transcript.
+
+Third, the abstract binary family can be realized inside a finitely presented strongly normalizing calculus. The target is a short conclusion with a short normal proof but exponentially many bounded-length preimages under normalization.
+
+Fourth, finite incompressibility can be lifted to prefix-free Kolmogorov complexity, with explicit additive constants and a clear account of how a universal verifier receives information absent from a short certificate.
+
+Finally, compositional Landauer accounting should quantify the savings generated by shared lemmas. For independent obligations, work is expected to add; for correlated obligations, mutual information should measure the reduction.
+
+## 11. Conclusion
+
+The finite binary model exhibits a precise common structure behind proof search, information loss, and thermodynamic accounting. At depth $n$, there are $2^n$ candidate derivations. Selecting one leaves $2^n-1$ alternatives; no strictly shorter binary code names every candidate uniquely; and every sub-exhaustive black-box verifier leaves room for a hidden unique success. Under an explicit independent-record reset model, the same multiplicity yields work $kT\ln 2(2^n-1)$.
+
+The central invariant is not “proof” in isolation but the multiplicity of distinctions collapsed by a physical operation. Logical maps determine which alternatives become indistinguishable; probability distributions determine how much information is lost; physical implementations determine whether that information is preserved, recomputed, or erased. Within that separation of roles, the thermodynamics of mathematical reasoning becomes a concrete finite theory rather than a metaphor.
