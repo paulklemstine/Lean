@@ -1,3 +1,9 @@
-# Computational Evidence Justification
+# Computational Evidence Skipped
 
-Computational evidence is not informative for these results. The claims concern equivalences, adjunctions, fully faithful functors, monads, and closure under categorical composition at arbitrary universe levels. They have no canonical finite sequence of numerical instances, and bounded enumeration would test only chosen presentations rather than the structural laws themselves. The relevant falsification step is conceptual: an arbitrary functor need not have an adjoint, so the unguarded mutation claim was replaced by an explicit adjunction-bearing notion. Concrete finite-model experiments are deferred until a specific syntactic class of theories and a finite model encoding are selected.
+Computational evidence is not informative for these results. The statements concern
+universal properties of functors and adjunctions rather than a numerical sequence or
+a family of finite calculations. The counterexample is structural: the counit of a
+hypothetical adjunction in a discrete model category forces every old model to satisfy
+the newly adjoined predicate. The Lean development proves the full classification,
+so finite enumeration would be strictly weaker and there is no relevant OEIS entry or
+plot.
