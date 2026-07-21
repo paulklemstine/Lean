@@ -1,7 +1,3 @@
 # Computational Evidence Justification
 
-Computational sampling is unnecessary for the principal results because they are structural classifications rather than numerical conjectures. The two-sheeted constructions are parameterized by an arbitrary type of functional profiles, and their conclusions follow from explicit mutually inverse maps. Small finite tables would merely repeat the Boolean case already exposed by the definitions and would provide no evidence for the arbitrary-type statements.
-
-A counterexample hunt is nevertheless incorporated mathematically: the singleton all-void model refutes both the claim that every fixed experience model already contains a zombie witness and the claim that experiential and semantic gaps are unconditionally isomorphic. This exact boundary example motivates the guarded conservative-extension and canonical-model formulations.
-
-No integer sequence arises, so an OEIS search and numerical plots are inapplicable.
+Computational enumeration is unnecessary for the principal results because they are structural classifications over arbitrary types, not asymptotic or numerical conjectures. The split model has only two experiential values, and both cases are exhausted symbolically in the involution and uniqueness arguments. The attempted unconditional existence claim is rejected by a uniform countermodel—constant-present experience—that works for every state space and every functional observation map. No numerical sample could strengthen that universal counterexample. The incompleteness component is inherited from the abstract standard GL model and concerns provability rather than a finite sequence suitable for OEIS comparison or plotting.

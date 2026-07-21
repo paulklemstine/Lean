@@ -1,26 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "d00870b3",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions: Subsequence Ramsey Theory for Genetic Words\n\n## 1. Sharp extremal law for repeated scattered words\n\nFor an alphabet of size `q`, determine the largest word length for which one ca",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-19T07:40:03",
-      "title": "The Ramsey Theory of DNA: Subsequence Avoidance in Genetic Codes"
-    },
-    {
-      "cycle_id": "77a52651",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions\n\n## What was established\n\n`QuantumWalkPeriodicityMixing.lean` proves a no-go bridge between algebraic periodicity and topological mixing. If an evolution operator has positive fini",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-07-19T08:00:50",
-      "title": "Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
-    },
-    {
       "cycle_id": "91c16818",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\n## What was proved\n\n1. **Missingness is not itself a sheaf obstruction.** A partial database modeled as a partial function into a nonempty value type always has a total completion",
@@ -499,29 +479,29 @@
       "theorem_count": 13,
       "timestamp": "2026-07-21T03:52:55",
       "title": "ArXiv paper: On Agreement Subtrees in Multiple Pylogenetic Trees"
+    },
+    {
+      "cycle_id": "cd0075c8",
+      "domain": "Computation",
+      "key_insight": "# Future Directions\n\n## Result of the contrarian test\n\nThe exact proposed fixed-point equation was formalized in\n`Catalog/Computation/ConsciousFixedPoints.lean` as\n\n\\[\n  \\exists P:T\\to\\mathrm{Prop},\\q",
+      "quality_score": 0.75,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-21T06:49:41",
+      "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
+    },
+    {
+      "cycle_id": "d5fe8eb3",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions: Functional Fibres and Subjective Structure\n\n## 1. Nontrivial qualia coverings\n\nConjecture: there are natural state spaces in which functional observation forms a nontrivial finite",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-07-21T06:49:45",
+      "title": "Zombies and Qualia: Mathematics of Subjective Experience"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "d1512647",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Rectangle Piercing, Packing, and Relaxation Gaps\n\n## 1. A complete coordinate certificate for the 64-rectangle family\n\n**Conjecture.** There is an integer-coordinate realization o",
-      "quality_score": 0.71,
-      "sorry_count": 0,
-      "theorem_count": 5,
-      "timestamp": "2026-07-16T10:37:17",
-      "title": "ArXiv paper: A 64-Rectangle Counterexample to Wegner's Conjecture and LP Gaps up to $5/2$"
-    },
-    {
-      "cycle_id": "dd61fafb",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\n- Formalize edge-deletion peeling and prove preservation for the paper's `(k, ωᵘ)`-truss.\n- Define radius-`d` edge neighborhoods and establish the generalized `(k, d, ωᵘ)`-truss t",
-      "quality_score": 0.73,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-16T10:37:21",
-      "title": "ArXiv paper: Improving Upper Bounds for the Maximum Clique Problem using Reduction Rules"
-    },
     {
       "cycle_id": "d1512647",
       "domain": "Applications",
@@ -2501,27 +2481,29 @@
       "theorem_count": 13,
       "timestamp": "2026-07-21T06:49:34",
       "title": "Speculative: Category Theory as the DNA of Mathematics"
+    },
+    {
+      "cycle_id": "cd0075c8",
+      "domain": "Computation",
+      "key_insight": "# Future Directions\n\n## Result of the contrarian test\n\nThe exact proposed fixed-point equation was formalized in\n`Catalog/Computation/ConsciousFixedPoints.lean` as\n\n\\[\n  \\exists P:T\\to\\mathrm{Prop},\\q",
+      "quality_score": 0.75,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-21T06:49:41",
+      "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
+    },
+    {
+      "cycle_id": "d5fe8eb3",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions: Functional Fibres and Subjective Structure\n\n## 1. Nontrivial qualia coverings\n\nConjecture: there are natural state spaces in which functional observation forms a nontrivial finite",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-07-21T06:49:45",
+      "title": "Zombies and Qualia: Mathematics of Subjective Experience"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "6fa68166",
-      "domain": "Algebra",
-      "name": "preferred_antichain",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "6fa68166",
-      "domain": "Algebra",
-      "name": "empty_not_preferred_of_nonempty_admissible",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "6fa68166",
-      "domain": "Algebra",
-      "name": "preferred_mem_generated",
-      "quality": 0.7
-    },
     {
       "cycle_id": "735120d5",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "Pythagorean",
       "name": "steinerThird_translate",
       "quality": 0.7
+    },
+    {
+      "cycle_id": "d5fe8eb3",
+      "domain": "Geometry",
+      "name": "exposes",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "d5fe8eb3",
+      "domain": "Geometry",
+      "name": "is",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "d5fe8eb3",
+      "domain": "Geometry",
+      "name": "qualiaFlip_involution",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-21T06:49:34",
+  "last_updated": "2026-07-21T06:49:45",
   "open_questions": [
     {
       "context": "",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "0664586a",
-        "quality": 0.83,
-        "theorems": 18,
-        "title": "Moonshot: Alien Number Systems — Mathematics Beyond Base-10"
-      },
-      {
         "cycle_id": "37f1d216",
         "quality": 0.91,
         "theorems": 9,
@@ -3327,6 +3321,12 @@
         "quality": 0.69,
         "theorems": 0,
         "title": "The Oracle's Burden: How Much Knowledge Is Too Much?"
+      },
+      {
+        "cycle_id": "cd0075c8",
+        "quality": 0.75,
+        "theorems": 0,
+        "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
       }
     ],
     "Cryptography": [
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "e0f3150d",
-        "quality": 0.67,
-        "theorems": 19,
-        "title": "ArXiv paper: Magnitude homology of tope graphs"
-      },
-      {
         "cycle_id": "7a91e930",
         "quality": 0.68,
         "theorems": 18,
@@ -3451,6 +3445,12 @@
         "quality": 0.8,
         "theorems": 0,
         "title": "Borges' Library of Babel: Combinatorics of Everything"
+      },
+      {
+        "cycle_id": "d5fe8eb3",
+        "quality": 0.72,
+        "theorems": 16,
+        "title": "Zombies and Qualia: Mathematics of Subjective Experience"
       }
     ],
     "Logic": [

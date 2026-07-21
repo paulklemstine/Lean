@@ -1,160 +1,179 @@
 #!/usr/bin/env python3
-"""Numerical demonstrations of functional fibers, integrated information, and forgetting."""
+"""Numerical demonstrations of functional fibres and experiential gaps.
+
+The script uses only the Python standard library. It constructs split states,
+checks unique zombie twins, computes pulled-back functional distances, tests
+fibre constancy on finite models, and illustrates the label-preserving bridge
+to indexed incompleteness-gap records.
+"""
 
 from __future__ import annotations
 
 from dataclasses import dataclass
-from itertools import combinations, product
-from typing import Callable, Dict, Hashable, Iterable, List, Mapping, Sequence, Tuple, TypeVar
+from math import dist
+from typing import Dict, Hashable, Iterable, Optional, Sequence, TypeVar
 
-T = TypeVar("T", bound=Hashable)
-State = TypeVar("State", bound=Hashable)
-
-
-@dataclass(frozen=True)
-class SheetWorld:
-    """A profile together with a hidden experience-presence bit."""
-
-    profile: str
-    present: bool
-
-    @property
-    def behavior(self) -> str:
-        return self.profile
-
-    @property
-    def experience(self) -> str | None:
-        return f"experience({self.profile})" if self.present else None
+Label = tuple[float, ...]
+K = TypeVar("K", bound=Hashable)
 
 
 @dataclass(frozen=True)
-class GapPair:
-    """Canonical experiential and semantic witnesses over one profile."""
+class SplitState:
+    """A behavioral profile paired with a Boolean experience coordinate."""
 
-    alive: SheetWorld
-    zombie: SheetWorld
-    true_unaccepted_code: Tuple[str, bool]
-
-
-def canonical_gap_pairs(profiles: Sequence[str]) -> List[GapPair]:
-    """Construct the unique canonical zombie and semantic witness per profile."""
-    return [
-        GapPair(SheetWorld(x, True), SheetWorld(x, False), (x, False))
-        for x in profiles
-    ]
+    behavior: Label
+    aware: bool
 
 
-def nontrivial_cuts(n: int) -> Iterable[Tuple[int, ...]]:
-    """Enumerate all nonempty proper subsets of range(n)."""
-    if n < 2:
-        return
-    for size in range(1, n):
-        yield from combinations(range(n), size)
+@dataclass(frozen=True)
+class ExperientialGap:
+    """An aware state and its behaviorally identical void counterpart."""
+
+    aware_state: SplitState
+    void_state: SplitState
 
 
-def minimum_information_partition(
-    n: int, effective_information: Callable[[Tuple[int, ...]], float]
-) -> Tuple[Tuple[int, ...], float]:
-    """Return an attaining cut and the minimum effective-information value."""
-    if n < 2:
-        raise ValueError("A nontrivial cut requires at least two components")
-    cut = min(nontrivial_cuts(n), key=effective_information)
-    return cut, effective_information(cut)
+@dataclass(frozen=True)
+class IndexedIncompletenessGap:
+    """A label paired with a designated indexed consistency sentence."""
+
+    behavior: Label
+    theory_index: int
+    sentence: str
+    sentence_unprovable: bool = True
+    negation_unprovable: bool = True
 
 
-def targeted_forget(stream: Sequence[T], retained: set[T]) -> Tuple[T, ...]:
-    """Delete exactly the symbols not included in retained."""
-    return tuple(symbol for symbol in stream if symbol in retained)
+def qualia_flip(state: SplitState) -> SplitState:
+    """Toggle awareness without changing the behavioral profile."""
+
+    return SplitState(state.behavior, not state.aware)
 
 
-def memory_collision(
-    streams: Iterable[Tuple[T, ...]], memory: Callable[[Tuple[T, ...]], State]
-) -> Tuple[Tuple[T, ...], Tuple[T, ...], State] | None:
-    """Find the first two distinct streams mapped to the same memory state."""
-    seen: Dict[State, Tuple[T, ...]] = {}
-    for stream in streams:
-        state = memory(stream)
-        previous = seen.get(state)
-        if previous is not None and previous != stream:
-            return previous, stream, state
-        seen[state] = stream
+def unique_zombie_twin(state: SplitState) -> SplitState:
+    """Return the unique void twin of an aware state in the split model."""
+
+    if not state.aware:
+        raise ValueError("The oriented construction requires an aware input state.")
+    return SplitState(state.behavior, False)
+
+
+def make_experiential_gap(behavior: Label) -> ExperientialGap:
+    """Construct the canonical oriented gap over a behavioral profile."""
+
+    return ExperientialGap(
+        aware_state=SplitState(behavior, True),
+        void_state=SplitState(behavior, False),
+    )
+
+
+def functional_distance(left: SplitState, right: SplitState) -> float:
+    """Euclidean distance between observed behavioral profiles only."""
+
+    return dist(left.behavior, right.behavior)
+
+
+def first_fibre_conflict(
+    observations: Iterable[tuple[K, bool]],
+) -> Optional[tuple[K, bool, bool]]:
+    """Find a profile carrying both experience values, if one exists.
+
+    A returned triple ``(profile, old_value, new_value)`` certifies failure of
+    fibre constancy and hence failure of functional reconstruction.
+    """
+
+    values: Dict[K, bool] = {}
+    for profile, experience in observations:
+        if profile in values and values[profile] != experience:
+            return profile, values[profile], experience
+        values.setdefault(profile, experience)
     return None
 
 
-def quotient_classes(
-    streams: Iterable[Tuple[T, ...]], memory: Callable[[Tuple[T, ...]], State]
-) -> Mapping[State, List[Tuple[T, ...]]]:
-    """Group finite sample streams into observational equivalence classes."""
-    classes: Dict[State, List[Tuple[T, ...]]] = {}
-    for stream in streams:
-        classes.setdefault(memory(stream), []).append(stream)
-    return classes
+def reconstruct_experience(
+    observations: Iterable[tuple[K, bool]],
+) -> Dict[K, bool]:
+    """Build the unique observed-range reconstruction when fibres are constant."""
+
+    reconstruction: Dict[K, bool] = {}
+    for profile, experience in observations:
+        previous = reconstruction.get(profile)
+        if previous is not None and previous != experience:
+            raise ValueError(f"Experience varies over functional profile {profile!r}.")
+        reconstruction[profile] = experience
+    return reconstruction
 
 
-def all_binary_streams(max_length: int) -> List[Tuple[str, ...]]:
-    """Enumerate binary streams through a chosen length."""
-    alphabet = ("a", "b")
-    return [word for length in range(max_length + 1) for word in product(alphabet, repeat=length)]
+def bridge_to_incompleteness(
+    gap: ExperientialGap, theory_index: int
+) -> IndexedIncompletenessGap:
+    """Preserve the gap label and attach the indexed consistency sentence."""
+
+    if gap.aware_state.behavior != gap.void_state.behavior:
+        raise ValueError("Endpoints are not functionally identical.")
+    if not gap.aware_state.aware or gap.void_state.aware:
+        raise ValueError("The gap orientation must be aware-to-void.")
+    return IndexedIncompletenessGap(
+        behavior=gap.aware_state.behavior,
+        theory_index=theory_index,
+        sentence=f"C_{theory_index}",
+    )
 
 
-def run_demo() -> None:
-    """Run all numerical examples and assert their defining properties."""
-    print("=== 1. Canonical functional and semantic fibers ===")
-    pairs = canonical_gap_pairs(["red-report", "pain-avoidance", "self-model"])
-    for pair in pairs:
-        assert pair.alive.behavior == pair.zombie.behavior
-        assert pair.alive.experience != pair.zombie.experience
-        code_profile, accepted = pair.true_unaccepted_code
-        truth = True
-        assert code_profile == pair.alive.profile and truth and not accepted
+def demonstrate_split_model(labels: Sequence[Label]) -> None:
+    """Print involution, uniqueness, classification, and distance examples."""
+
+    print("\n1. Split model, canonical twins, and zero functional distance")
+    for label in labels:
+        aware = SplitState(label, True)
+        twin = unique_zombie_twin(aware)
+        twice = qualia_flip(qualia_flip(aware))
+        gap = make_experiential_gap(label)
+        assert twin == qualia_flip(aware)
+        assert twice == aware
+        assert functional_distance(aware, twin) == 0.0
         print(
-            f"profile={pair.alive.profile:14s} behavior equal=True, "
-            f"experience contrast=True, semantic gap=True"
+            f"  label={label}: twin={twin}, "
+            f"flip² identity={twice == aware}, "
+            f"functional distance={functional_distance(*[gap.aware_state, gap.void_state]):.1f}"
         )
 
-    print("\n=== 2. Minimum-information partition ===")
-    weights = (0.7, 1.1, 1.8, 2.4)
 
-    def information(cut: Tuple[int, ...]) -> float:
-        # A symmetric toy landscape: separation cost plus a small balance penalty.
-        left = sum(weights[i] for i in cut)
-        right = sum(weights) - left
-        return round(abs(left - right) + 0.15 * len(cut) * (len(weights) - len(cut)), 6)
+def demonstrate_reconstruction_boundary() -> None:
+    """Compare fibre-constant and fibre-varying finite models."""
 
-    cut, phi = minimum_information_partition(len(weights), information)
-    values = [information(candidate) for candidate in nontrivial_cuts(len(weights))]
-    assert phi == min(values) and phi >= 0.0
-    print(f"evaluated cuts={len(values)}, minimizing cut={cut}, Phi={phi:.3f}")
-    shifted_cut, shifted_phi = minimum_information_partition(
-        len(weights), lambda candidate: information(candidate) + 0.5
-    )
-    assert shifted_phi >= phi
-    print(f"after pointwise +0.5 shift: cut={shifted_cut}, Phi={shifted_phi:.3f}")
+    print("\n2. Fibre constancy and reconstructibility")
+    constant_data = [("red", True), ("red", True), ("blue", False)]
+    varying_data = [("red", True), ("blue", False), ("red", False)]
+    print(f"  constant fibres: reconstruction={reconstruct_experience(constant_data)}")
+    conflict = first_fibre_conflict(varying_data)
+    print(f"  varying fibre: conflict certificate={conflict}")
+    assert conflict == ("red", True, False)
 
-    print("\n=== 3. Finite memory and quotient classes ===")
-    streams = all_binary_streams(4)
 
-    def two_bit_memory(stream: Tuple[str, ...]) -> Tuple[int, int]:
-        # A four-state compositional memory: parity of each symbol count.
-        return (stream.count("a") % 2, stream.count("b") % 2)
+def demonstrate_gap_bridge(labels: Sequence[Label], theory_index: int) -> None:
+    """Show that experiential and indexed logical gaps share each label."""
 
-    collision = memory_collision(streams, two_bit_memory)
-    assert collision is not None
-    first, second, state = collision
-    print(f"{len(streams)} streams mapped into 4 states")
-    print(f"collision: {first} and {second} both map to {state}")
-    classes = quotient_classes(streams, two_bit_memory)
-    assert len(classes) == 4
-    print("sample quotient class sizes:", {key: len(value) for key, value in classes.items()})
+    print("\n3. Label-preserving experiential–incompleteness bridge")
+    for label in labels:
+        experiential = make_experiential_gap(label)
+        logical = bridge_to_incompleteness(experiential, theory_index)
+        assert logical.behavior == label
+        print(
+            f"  {label} -> ({logical.behavior}, {logical.sentence}); "
+            "both sentence polarities marked unprovable"
+        )
 
-    print("\n=== 4. Targeted forgetting ===")
-    stream = ("keep", "erase", "keep", "erase", "keep")
-    output = targeted_forget(stream, {"keep"})
-    assert output == ("keep", "keep", "keep")
-    assert targeted_forget(("erase",), {"keep"}) == ()
-    print(f"input={stream}")
-    print(f"retained output={output}; forgotten singleton maps to the empty stream")
+
+def main() -> None:
+    """Run all numerical demonstrations."""
+
+    labels: list[Label] = [(0.0, 0.0), (1.0, -1.0), (3.0, 4.0)]
+    demonstrate_split_model(labels)
+    demonstrate_reconstruction_boundary()
+    demonstrate_gap_bridge(labels, theory_index=7)
+    print("\nAll demonstrations completed successfully.")
 
 
 if __name__ == "__main__":
-    run_demo()
+    main()

@@ -1,582 +1,449 @@
-# Functional Fibers, Experiential Gaps, and Algebraic Forgetting
+# Functional Fibres, Experiential Gaps, and Labelled Incompleteness
 
 **Aristotle**  
-**July 19, 2026**
+**July 21, 2026**
 
 ## Abstract
 
-This paper develops a self-contained mathematical account of the gap between functional description and subjective experience. An experience model assigns to each possible world both an observable functional profile and an experiential value, with one value distinguished as void. We prove a conservative extension theorem: every such model embeds functionally into a two-sheeted model in which each world has an experience-retaining copy and a functionally identical void copy. Consequently, no predicate depending only on functional profile can distinguish the two sheets. This is an underdetermination theorem, not an assertion that every fixed model already contains a zombie; an all-void singleton model supplies the boundary counterexample.
+We develop a geometric model of the distinction between functional description and a Boolean experiential coordinate. A system is represented by a total state space $X$, a behavioral space $B$, an observation map $F:X\to B$, and an experience map $E:X\to\{0,1\}$. Functional identity means equality under $F$, and an oriented zombie pair consists of an aware state and an experientially void state in the same fibre of $F$. In the canonical split model $X=B\times\{0,1\}$, the experiential coordinate admits a fibre-preserving involution. Every aware state has a unique void twin, and the space of oriented experiential gaps is naturally in bijection with $B$. Any pseudometric pulled back from $B$ assigns zero functional distance to every such pair.
 
-For a canonical model with exactly two worlds over each functional profile, we classify zombie witnesses by profiles. We then construct a canonical sound semantic system in which each profile indexes one true but unaccepted code, classify semantic-gap witnesses by the same profiles, and obtain an explicit isomorphism between the two witness spaces. The correspondence is precise but model-relative: it does not identify consciousness with arithmetic or establish an unconditional equivalence for arbitrary systems.
-
-We connect this hidden-fiber structure to two further theories. First, for finite systems with nonnegative effective information on nontrivial cuts, integrated information is an attained minimum; we establish existence, greatest-lower-bound character, nonnegativity, reducibility, monotonicity, and equality under a common minimizing cut. These functional invariants coexist with, but do not determine, the experiential fiber. Second, a compositional finite memory on streams necessarily identifies distinct histories. Its erased inputs form a submonoid, and its reachable observable algebra is isomorphic to the stream algebra quotiented by memory indistinguishability. Targeted forgetting satisfies a universal factorization property. Across all three settings, the central object is a forgetful map and the central question is the structure of its fibers.
+For arbitrary $X$, we prove that experience is reconstructible from functional data exactly when it is constant on every functional fibre. A constant-aware model then shows that functional organization alone does not imply the existence of a zombie twin; fibre variation is an indispensable hypothesis. Finally, fixing an indexed consistency sentence $C_i$ that is independent in both polarities in a standard provability system, we define a labelled incompleteness-gap space. It too is classified by $B$, yielding a label-preserving isomorphism between split-model experiential gaps and indexed incompleteness gaps. This is an isomorphism of explicit gap structures, not an identification of phenomenology with formal syntax. We give constructive algorithms, applications to representation and measurement, and extensions toward coverings, approximate equivalence, and higher-dimensional experiential fibres.
 
 ## 1. Introduction
 
-A functional account of a system records what the system does: its transitions, reports, discriminations, causal roles, or input–output profile. A theory of subjective experience attempts to record an additional fact: what, if anything, it is like to occupy a state. The philosophical “zombie” thought experiment asks whether functional identity forces experiential identity.
+Functional accounts describe a system through what it does: its observable outputs, dispositions, transitions, reports, and responses. The philosophical hard problem asks whether such a description determines what, if anything, the system experiences. Rather than attempt to settle that metaphysical question, we isolate its mathematical architecture.
 
-The mathematical treatment given here separates three claims that are often conflated.
+The central operation is forgetting. A map from total states to behavioral descriptions generally identifies many states. The inverse image of one description is a fibre, and any feature that varies within that fibre is unavailable from the description alone. This simple geometry distinguishes three claims that are often conflated:
 
-1. A particular experience model contains a conscious world and a functionally identical void world.
-2. Every experience model can be conservatively extended so that such a pair exists while all original functional profiles are preserved.
-3. The space of experiential gaps is universally equivalent to a space of semantic incompleteness gaps.
+1. functional observation may fail to encode experience;
+2. experience may actually vary among functionally identical states;
+3. every aware state may possess a unique experientially void counterpart.
 
-The first claim is model-dependent and can fail. The second admits a general construction. The third is false without structural hypotheses but becomes an exact isomorphism for canonical two-sheeted models. Keeping these quantifiers explicit prevents a construction of underdetermination from being misreported as an empirical existence theorem.
+The first claim concerns information. The second adds a substantive variation hypothesis. The third requires further structure, supplied here by a globally split Boolean coordinate.
 
-The two-sheeted construction is an instance of a wider pattern. A map from a rich state space to an observable description can forget coordinates. The inverse image of an observable value—its fiber—contains the alternatives that the description cannot distinguish. The same pattern governs true but unaccepted codes in a simple semantic system, equal outputs of finite memories, and the independence of an experiential coordinate from a functional optimization such as integrated information.
+We study the split state space $B\times\{0,1\}$ because it displays every assumption openly. Projection to $B$ is functional observation, and the second coordinate represents Boolean experience. The Boolean flip becomes a canonical involution within each fibre. It yields unique zombie twins and a complete classification of oriented gaps.
 
-The paper has four goals. Section 2 defines experience models and zombie witnesses. Section 3 proves the conservative extension and its boundary. Section 4 classifies canonical zombie and semantic gaps and establishes their isomorphism. Section 5 develops the finite minimum-information landscape. Section 6 gives an algebraic theory of memory and targeted forgetting. Section 7 presents finite algorithms and complexity bounds, and Sections 8–10 discuss applications, limitations, and future directions.
+The same classifier $B$ can label another two-sided gap. For an indexed consistency sentence $C_i$ such that neither $C_i$ nor $\neg C_i$ is provable in a fixed standard system, a labelled incompleteness gap consists of $b\in B$ together with $C_i$ and its independence certificate. For fixed $i$, exactly one such object lies over each label $b$. Both gap spaces are therefore isomorphic to $B$ and hence to one another.
 
-## 2. Experience models and functional indistinguishability
+The bridge is intentionally limited. It compares two moduli problems sharing a base label and an internal contrast. It does not identify subjective experience with provability, nor does it infer facts about physical consciousness from logical incompleteness.
 
-### 2.1 Basic definitions
+## 2. Functional observation and experiential orientation
 
-**Definition 2.1 (Experience model).** An experience model is a tuple
+### 2.1 State spaces and fibres
 
-$$
-\mathcal M=(W,F,E,B,Q,q_0),
-$$
-
-where $W$ is a set of possible worlds, $F$ is a set of functional profiles, $E$ is a set of experiential values, $B:W\to F$ assigns behavior, $Q:W\to E$ assigns experience, and $q_0\in E$ is a distinguished void value.
-
-Only the distinction between void and nonvoid is needed for the principal results. No metric, order, or algebraic operation on $E$ is assumed.
-
-**Definition 2.2 (Functional twins).** Worlds $x,y\in W$ are functional twins when
+Let $X$ be a set of total states and let $B$ be a set of behavioral profiles. A **functional observation** is a map
 
 $$
-B(x)=B(y).
+F:X\to B.
 $$
 
-This relation is an equivalence relation because equality in $F$ is reflexive, symmetric, and transitive.
-
-**Definition 2.3 (Conscious world).** A world $x\in W$ is conscious, in the minimal sense used here, when
+For $b\in B$, the **functional fibre** over $b$ is
 
 $$
-Q(x)\ne q_0.
+F^{-1}(b)=\{x\in X:F(x)=b\}.
 $$
 
-This definition should be read as “experientially nonvoid.” It does not purport to analyze phenomenal character.
+Two states $x,y\in X$ are **functionally identical** if $F(x)=F(y)$. Thus functional identity is precisely membership in a common fibre. It is an equivalence relation: equality of images is reflexive, symmetric, and transitive.
 
-**Definition 2.4 (Zombie twin and zombie witness).** A world $z$ is a zombie twin of $x$ when
-
-$$
-B(z)=B(x) \quad\text{and}\quad Q(z)=q_0.
-$$
-
-A zombie witness is an ordered pair $(x,z)$ such that $Q(x)\ne q_0$, $Q(z)=q_0$, and $B(x)=B(z)$.
-
-**Lemma 2.5 (Hidden contrast).** If $x$ is conscious and $z$ is a zombie twin of $x$, then $x$ and $z$ are functional twins but have different experiential values.
-
-**Proof sketch.** Functional twinning is part of the definition. If $Q(x)=Q(z)$, then $Q(z)=q_0$ would imply $Q(x)=q_0$, contradicting consciousness. Hence $Q(x)\ne Q(z)$. $\square$
-
-The lemma isolates the gap as a failure of the behavioral map $B$ to separate worlds that the experiential map $Q$ separates.
-
-## 3. The conservative two-sheeted extension
-
-### 3.1 Construction
-
-Given any experience model $\mathcal M$, define its two-sheeted extension $\widehat{\mathcal M}$ as follows. The new world set is
+An **experience observable** is a map
 
 $$
-\widehat W=W\times\{0,1\}.
+E:X\to\{0,1\},
 $$
 
-The functional-profile set remains $F$. The experiential set is enlarged to $E\sqcup\{\bot\}$, where $\bot$ is a fresh void symbol not equal to any embedded element of $E$. Define
+where $1$ denotes awareness and $0$ denotes experiential absence. The Boolean codomain is a minimal model of contrast. It does not claim that real experience has only two forms; it separates presence from absence so that the information structure can be studied exactly.
+
+### 2.2 Zombie pairs
+
+An **oriented zombie pair** is an ordered pair $(x,z)\in X\times X$ satisfying
 
 $$
-\widehat B(x,b)=B(x)
+F(x)=F(z),\qquad E(x)=1,\qquad E(z)=0.
+$$
+
+The adjective “oriented” records which endpoint is aware. Reversing the pair generally fails the definition. A zombie pair therefore consists of a functional identity together with an experiential opposition.
+
+The definition immediately implies that $E$ is not constant on the fibre containing $x$ and $z$. Conversely, if $E$ takes both Boolean values on a fibre, choosing an aware and a void member produces an oriented zombie pair. Thus the existence of at least one zombie pair is equivalent to experiential variation on at least one functional fibre.
+
+## 3. The canonical split model
+
+### 3.1 Product structure
+
+Let $B$ be any set and define
+
+$$
+X_B=B\times\{0,1\}.
+$$
+
+Define functional observation and experience by
+
+$$
+F_B(b,q)=b,
+\qquad
+E_B(b,q)=q.
+$$
+
+Every fibre has exactly two members:
+
+$$
+F_B^{-1}(b)=\{(b,0),(b,1)\}.
+$$
+
+The model is called split because the behavioral and experiential coordinates are globally separated. Functional observation forgets exactly the Boolean factor.
+
+### 3.2 The qualia involution
+
+Define the **qualia flip** $Q:X_B\to X_B$ by
+
+$$
+Q(b,q)=(b,1-q).
+$$
+
+Here $1-q$ is Boolean negation.
+
+### Theorem 1 (Fibre-Preserving Qualia Involution)
+
+For every $(b,q)\in B\times\{0,1\}$,
+
+$$
+F_B(Q(b,q))=F_B(b,q)
 $$
 
 and
 
 $$
-\widehat Q(x,b)=
-\begin{cases}
-\iota(Q(x)),&b=1,\\
-\bot,&b=0,
-\end{cases}
+Q(Q(b,q))=(b,q).
 $$
 
-where $\iota:E\to E\sqcup\{\bot\}$ is the inclusion. The new void value is $\bot$.
+#### Proof sketch
 
-For each $x\in W$, call $(x,1)$ its **retained copy** and $(x,0)$ its **void copy**.
+The first coordinate of $Q(b,q)$ remains $b$, so projection to $B$ is unchanged. Boolean negation applied twice returns the original Boolean value: $1-(1-q)=q$. Hence $Q$ is an involution and acts within each functional fibre. $\square$
 
-**Theorem 3.1 (Conservative Zombie Extension).** For every experience model $\mathcal M$ and every world $x\in W$, the retained copy $(x,1)$ is conscious in $\widehat{\mathcal M}$, the void copy $(x,0)$ is its zombie twin, and both copies have functional profile $B(x)$. In particular,
+This theorem gives a canonical pairing of the two sheets of the product. No arbitrary choice of counterpart is needed.
 
-$$
-\widehat B(x,1)=B(x)=\widehat B(x,0)
-$$
-
-while
-
-$$
-\widehat Q(x,1)\ne\widehat Q(x,0).
-$$
-
-**Proof sketch.** The behavioral equalities follow immediately because $\widehat B$ ignores the sheet coordinate. The retained experience $\iota(Q(x))$ lies in the $E$ component of the disjoint union and therefore differs from $\bot$. The void copy has experience $\bot$ by definition. Thus the retained copy is conscious, the void copy is void, and they are functional twins. $\square$
-
-The word “conservative” refers to preservation of functional data: the map $x\mapsto(x,1)$ preserves every original profile exactly. The construction adds a hidden coordinate but changes no value of the old behavior map.
-
-### 3.2 Invariance of purely functional predicates
-
-A purely functional criterion is any predicate $P:F\to\{\mathrm{false},\mathrm{true}\}$. It may be arbitrarily complicated; it may refer to computation, reportability, causal organization, or an information-theoretic score, provided its input is only the functional profile.
-
-**Corollary 3.2 (Functional Predicate Transfer).** Let $P$ be any predicate on functional profiles. For every $x\in W$,
-
-$$
-P(\widehat B(x,1))\iff P(\widehat B(x,0)).
-$$
-
-Therefore, if the retained copy satisfies a proposed purely functional definition of consciousness, then its void twin satisfies that definition as well.
-
-**Proof sketch.** Both arguments of $P$ equal $B(x)$. Substitution into equal inputs gives equal truth values. $\square$
-
-This is a theorem about the expressive limit of a chosen vocabulary. It does not show that experience is physically independent of function. It shows that independence remains compatible with any description that omits the experiential coordinate.
-
-### 3.3 The necessary boundary
-
-The extension theorem must not be confused with an assertion that every original model already contains a zombie witness.
-
-**Example 3.3 (All-void singleton).** Let $W=F=E=\{*\}$, set $B(*)=*$ and $Q(*)=q_0=*$. Then no world is conscious, so no zombie witness exists.
-
-**Theorem 3.4 (Failure of the unconditional existence claim).** There is an experience model with no zombie witness.
-
-**Proof sketch.** Use the all-void singleton. A zombie witness requires a conscious first component, but the unique world has void experience. $\square$
-
-The correct universal result is therefore modal and constructive: every model **admits an extension** with zombie witnesses. It is not categorical in the colloquial sense that every model **contains** them already.
-
-## 4. Canonical classification and semantic gaps
-
-### 4.1 The canonical two-point fiber
-
-Let $X$ be any set of functional profiles. Define the canonical experience model by
-
-$$
-W_X=X\times\{0,1\},\qquad F_X=X,
-$$
-
-with $B_X(x,b)=x$. Let the experiential set consist of a single present marker $\star$ together with a void marker $\bot$, and define
-
-$$
-Q_X(x,1)=\star,\qquad Q_X(x,0)=\bot.
-$$
-
-There is a canonical zombie witness over each $x\in X$, namely
-
-$$
-((x,1),(x,0)).
-$$
-
-**Theorem 4.1 (Classification of Canonical Zombie Witnesses).** The map
-
-$$
-x\longmapsto((x,1),(x,0))
-$$
-
-is a bijection from $X$ to the set $Z_X$ of zombie witnesses in the canonical experience model.
-
-**Proof sketch.** The displayed pair is a witness because both worlds project to $x$, the first is present, and the second is void. Conversely, let $((x,b),(y,c))$ be any witness. Consciousness of the first forces $b=1$; voidness of the second forces $c=0$; functional equality forces $x=y$. Hence the witness is uniquely $((x,1),(x,0))$. Reading its profile gives the inverse map. $\square$
-
-Thus each profile indexes exactly one minimal experiential gap.
-
-### 4.2 Semantic systems
-
-**Definition 4.2 (Semantic system).** A semantic system on a set $C$ of codes consists of an acceptance predicate $A:C\to\{\mathrm{false},\mathrm{true}\}$ and a truth predicate $T:C\to\{\mathrm{false},\mathrm{true}\}$. It is **sound** when
-
-$$
-A(c)\Longrightarrow T(c)
-$$
-
-for every $c\in C$.
-
-**Definition 4.3 (Semantic-gap witness).** A semantic-gap witness is a code $c$ satisfying
-
-$$
-T(c)\quad\text{and}\quad \neg A(c).
-$$
-
-For the same profile set $X$, define the canonical semantic system on $C_X=X\times\{0,1\}$. Declare every code true, and accept exactly the codes on the $1$-sheet:
-
-$$
-T_X(x,b)=\mathrm{true},\qquad A_X(x,b)\iff b=1.
-$$
-
-**Lemma 4.4 (Soundness and omission).** The canonical semantic system is sound, and for every $x\in X$, the code $(x,0)$ is true but unaccepted.
-
-**Proof sketch.** Soundness is immediate because every code is true. The code $(x,0)$ is true by definition and fails the acceptance condition $0=1$. $\square$
-
-**Theorem 4.5 (Classification of Canonical Semantic Gaps).** The map
-
-$$
-x\longmapsto(x,0)
-$$
-
-is a bijection from $X$ to the set $G_X$ of semantic-gap witnesses.
-
-**Proof sketch.** Every $(x,0)$ is a gap witness. Conversely, if $(x,b)$ is unaccepted, then $b\ne1$, and because $b$ is Boolean, $b=0$. Reading the first coordinate is inverse to the displayed map. $\square$
-
-### 4.3 Exact correspondence
-
-**Theorem 4.6 (Zombie–Semantic Gap Isomorphism).** For every profile set $X$, there is a canonical bijection
-
-$$
-Z_X\cong G_X.
-$$
-
-It sends the unique zombie witness over $x$ to the true but unaccepted code $(x,0)$.
-
-**Proof sketch.** By Theorem 4.1, $Z_X\cong X$. By Theorem 4.5, $X\cong G_X$. Compose these bijections. Explicitly, read the common profile $x$ from a zombie witness and output $(x,0)$. The inverse reads $x$ from a semantic gap and returns $((x,1),(x,0))$. The classification theorems prove that both composites are identities. $\square$
-
-The theorem gives an exact sense in which the two gaps are structurally identical: both witness spaces are classified by the same base $X$, and both arise from a two-sheeted construction. It is appropriately described as an incompleteness analogy only at this abstract semantic level. No arithmetic coding, diagonal lemma, or claim about human mathematical cognition is assumed.
-
-**Theorem 4.7 (No Unconditional Gap Isomorphism).** There is no general bijection between the zombie witnesses of an arbitrary experience model and the semantic-gap witnesses of the canonical one-profile semantic system.
-
-**Proof sketch.** The all-void singleton experience model has no zombie witnesses, while the canonical semantic system over the singleton profile set has the witness $(*,0)$. An empty set cannot be bijective with a nonempty set. $\square$
-
-This boundary theorem prevents the guarded canonical correspondence from being promoted to an unrestricted metaphysical identity.
-
-## 5. Integrated information as a finite variational invariant
-
-### 5.1 Cuts and effective information
-
-Let a finite system have components indexed by
-
-$$
-V_n=\{0,1,\ldots,n-1\}.
-$$
-
-A candidate nontrivial cut is represented by a subset $A\subseteq V_n$ satisfying
-
-$$
-A\ne\varnothing \quad\text{and}\quad A\ne V_n.
-$$
-
-The complementary side is determined by $A$, so no second subset is required. This representation counts both $A$ and its complement unless a symmetry convention is added; the minimum results below do not require such a convention.
+### Theorem 2 (Unique Zombie Twin)
 
-**Lemma 5.1 (Cut Landscape Boundary).** If $n\ge2$, the set of nontrivial cuts is nonempty. If $n\le1$, it is empty.
+For every aware state $x=(b,1)$ in the split model, there exists exactly one state $z$ such that $(x,z)$ is an oriented zombie pair. It is
 
-**Proof sketch.** For $n\ge2$, the singleton $\{0\}$ is nonempty and proper. For $n=0$, there is no nonempty subset. For $n=1$, the only subsets are empty and the whole set. $\square$
-
-An effective-information landscape is a function
-
-$$
-I:\{A\subseteq V_n: \varnothing\ne A\ne V_n\}\to\mathbb R_{\ge0}.
-$$
-
-For $n\ge2$, define integrated information by
-
-$$
-\Phi(I)=\min_{\varnothing\ne A\subsetneq V_n} I(A).
-$$
-
-A minimizing cut is called a minimum-information partition.
-
-### 5.2 Structural theorems
-
-**Theorem 5.2 (Existence of a Minimum-Information Partition).** For every finite system with $n\ge2$, there exists a nontrivial cut $A_*$ such that
-
-$$
-I(A_*)=\Phi(I).
-$$
-
-**Proof sketch.** By Lemma 5.1 the candidate set is nonempty, and it is finite because $V_n$ is finite. A real-valued function on a finite nonempty set attains its minimum. $\square$
-
-**Theorem 5.3 (Greatest-Lower-Bound Characterization).** For every candidate cut $A$,
-
-$$
-\Phi(I)\le I(A).
-$$
-
-Moreover, if $c\le I(A)$ for every candidate cut $A$, then
-
-$$
-c\le\Phi(I).
-$$
-
-**Proof sketch.** The first statement is the defining property of a minimum. For the second, choose a minimizing cut $A_*$. The common lower-bound hypothesis gives $c\le I(A_*)=\Phi(I)$. $\square$
-
-**Corollary 5.4 (Nonnegativity).** Integrated information satisfies
-
-$$
-\Phi(I)\ge0.
-$$
-
-**Proof sketch.** Zero is a common lower bound because every $I(A)$ is nonnegative. Apply Theorem 5.3. $\square$
-
-**Theorem 5.5 (Reducibility Criterion).** For $n\ge2$,
-
-$$
-\Phi(I)=0
-\quad\Longleftrightarrow\quad
-\exists A\text{ nontrivial with }I(A)=0.
-$$
-
-**Proof sketch.** If $\Phi(I)=0$, a minimizing cut has value zero by Theorem 5.2. Conversely, if $I(A)=0$, then $0\le\Phi(I)\le I(A)=0$, so $\Phi(I)=0$. $\square$
-
-**Theorem 5.6 (Monotonicity).** Let $I_S$ and $I_T$ be two effective-information landscapes on the same cuts. If
-
-$$
-I_S(A)\le I_T(A)
-$$
-
-for every candidate cut $A$, then
-
-$$
-\Phi(I_S)\le\Phi(I_T).
-$$
-
-**Proof sketch.** Let $A_T$ minimize $I_T$. Then
-
 $$
-\Phi(I_S)\le I_S(A_T)\le I_T(A_T)=\Phi(I_T).
+z=(b,0)=Q(x).
 $$
 
-$\square$
+#### Proof sketch
 
-**Theorem 5.7 (Equality at a Common Minimizer).** Suppose a cut $A_0$ minimizes both $I_S$ and $I_T$, and suppose
+The proposed state has the same behavioral coordinate $b$ and experiential value $0$, so it is a zombie twin. If $z'=(b',q')$ is any zombie twin of $(b,1)$, functional identity gives $b'=b$, while experiential voidness gives $q'=0$. Therefore $z'=(b,0)$. $\square$
 
-$$
-I_S(A_0)=I_T(A_0).
-$$
-
-Then
-
-$$
-\Phi(I_S)=\Phi(I_T).
-$$
-
-**Proof sketch.** Since $A_0$ minimizes each landscape, $\Phi(I_S)=I_S(A_0)$ and $\Phi(I_T)=I_T(A_0)$. Apply the assumed equality. $\square$
-
-### 5.3 Orthogonality to the hidden experiential fiber
-
-**Theorem 5.8 (Coexistence of Functional Minima and Experiential Gaps).** Let $n\ge2$ and let $I$ be any nonnegative effective-information landscape. For every chosen profile $x\in X$, there simultaneously exist a minimum-information partition, a canonical zombie witness over $x$, and a canonical true but unaccepted semantic code over $x$.
-
-**Proof sketch.** The minimum-information partition exists by Theorem 5.2. The witness $((x,1),(x,0))$ exists by the canonical experience construction, and $(x,0)$ is a semantic-gap witness by Lemma 4.4. These constructions share no dependent parameter beyond the chosen profile, so they coexist. $\square$
-
-The theorem is deliberately a coexistence result, not a causal claim. The cut landscape is functional data; the sheet coordinate is hidden from it. Any theorem identifying $\Phi$ with experience would require an additional bridge principle.
-
-## 6. Memory editing as algebraic quotienting
-
-### 6.1 Streams and compositional memory
-
-Let $\Sigma$ be a nonempty alphabet of event symbols. Write $\Sigma^*$ for all finite words over $\Sigma$, including the empty word $\varepsilon$. Concatenation makes $\Sigma^*$ a monoid:
-
-$$
-(uv)w=u(vw),\qquad \varepsilon u=u=u\varepsilon.
-$$
-
-Let $R$ be a monoid of memory representations with operation written multiplicatively and identity $1_R$.
-
-**Definition 6.1 (Compositional memory).** A compositional memory is a monoid homomorphism
-
-$$
-m:\Sigma^*\to R,
-$$
+The theorem depends on the split product. An arbitrary fibre can contain no void state, several void states, or more elaborate experiential structure.
 
-meaning
+## 4. Classification of experiential gaps
 
-$$
-m(uv)=m(u)m(v),\qquad m(\varepsilon)=1_R.
-$$
+Define the **oriented experiential-gap space** $\mathcal{G}_{\mathrm{exp}}(B)$ to consist of all ordered pairs
 
-**Definition 6.2 (Memory indistinguishability).** Define
-
 $$
-u\sim_m v \quad\Longleftrightarrow\quad m(u)=m(v).
+((b,q),(b',q'))
 $$
-
-This is an equivalence relation compatible with concatenation: if $u\sim_m u'$ and $v\sim_m v'$, then $uv\sim_m u'v'$.
-
-**Definition 6.3 (Erased streams).** The erased language is
 
-$$
-K_m=\{u\in\Sigma^*:m(u)=1_R\}.
-$$
+that satisfy functional identity, awareness of the first endpoint, and voidness of the second. In the split model these conditions force $q=1$, $q'=0$, and $b=b'$.
 
-### 6.2 Finite memory loss
+### Theorem 3 (Experiential Gap Classification)
 
-**Theorem 6.4 (Finite Memory Loss).** If $\Sigma$ is nonempty and $R$ is finite, then every compositional memory $m:\Sigma^*\to R$ identifies two distinct streams. That is, there exist $u\ne v$ with
+There is a bijection
 
 $$
-m(u)=m(v).
+\Phi_B:\mathcal{G}_{\mathrm{exp}}(B)\longrightarrow B
 $$
 
-**Proof sketch.** Choose a symbol $a\in\Sigma$. The words
+given by sending each gap to its common behavioral profile. Its inverse is
 
 $$
-\varepsilon,a,a^2,a^3,\ldots
+\Phi_B^{-1}(b)=((b,1),(b,0)).
 $$
-
-are all distinct, so $\Sigma^*$ is infinite. A map from an infinite set to the finite set $R$ cannot be injective. Hence two distinct streams have the same memory. $\square$
 
-The theorem uses finiteness, not compositionality, to force a collision. Compositionality supplies the stronger algebraic conclusions that follow.
+#### Proof sketch
 
-**Lemma 6.5 (Erased Streams Form a Submonoid).** The set $K_m$ contains $\varepsilon$ and is closed under concatenation.
-
-**Proof sketch.** Homomorphism preservation of identities gives $m(\varepsilon)=1_R$, so $\varepsilon\in K_m$. If $u,v\in K_m$, then
-
-$$
-m(uv)=m(u)m(v)=1_R1_R=1_R,
-$$
+Every oriented gap has the displayed form because the experiential values are prescribed and functional identity equates the behavioral coordinates. Hence projection to the common label is well defined. Reconstructing from that label returns the same pair. Conversely, extracting the label from the reconstructed pair returns $b$. The two maps are mutual inverses. $\square$
 
-so $uv\in K_m$. $\square$
+The result identifies $B$ as a moduli space for oriented split-model gaps. The internal contrast is fixed; only the label varies.
 
-### 6.3 Observable memory as a quotient
+### 4.1 Metric consequence
 
-Because $\sim_m$ respects concatenation, equivalence classes can themselves be multiplied by
+Suppose $B$ carries a pseudometric $d_B$. Define the pulled-back functional pseudodistance on $X$ by
 
 $$
-[u][v]=[uv].
+d_F(x,y)=d_B(F(x),F(y)).
 $$
-
-Let $\Sigma^*/{\sim_m}$ denote this quotient monoid, and let $\operatorname{im}(m)$ denote the reachable memory states.
-
-**Theorem 6.6 (Memory Quotient Theorem).** The map
 
-$$
-\Theta:\Sigma^*/{\sim_m}\to\operatorname{im}(m),
-\qquad
-\Theta([u])=m(u),
-$$
+A pseudometric is sufficient because distinct total states may have distance zero after observation.
 
-is a monoid isomorphism.
+### Theorem 4 (Zero Functional Distance)
 
-**Proof sketch.** The map is well-defined because equivalent words have equal memories. It preserves multiplication since
+For every oriented zombie pair $(x,z)$ in any state space equipped with maps $F$ and $E$,
 
 $$
-\Theta([u][v])=m(uv)=m(u)m(v)=\Theta([u])\Theta([v]).
+d_F(x,z)=0.
 $$
-
-It is surjective by the definition of the image. It is injective because $\Theta([u])=\Theta([v])$ means $m(u)=m(v)$, hence $u\sim_m v$ and $[u]=[v]$. $\square$
 
-This result identifies observable memory not merely with a subset of representations but with a canonical quotient of histories. Every distinction lost by $m$ is collapsed, and no additional distinction is collapsed.
+#### Proof sketch
 
-### 6.4 Targeted forgetting and universality
+Functional identity gives $F(x)=F(z)$. Therefore
 
-Let $r:\Sigma\to\{0,1\}$ indicate which symbols are retained. Define $f_r:\Sigma^*\to\Sigma^*$ by replacing each letter $a$ with $a$ when $r(a)=1$ and with $\varepsilon$ when $r(a)=0$, then concatenating the results. Equivalently, $f_r$ deletes precisely the unretained symbols.
-
-**Lemma 6.7 (Forgotten Symbols Are Erased).** If $r(a)=0$, then
-
-$$
-f_r(a)=\varepsilon,
 $$
+d_F(x,z)=d_B(F(x),F(z))=d_B(F(x),F(x))=0.$$
 
-so the one-letter stream $a$ belongs to $K_{f_r}$.
+The experiential conditions determine the interpretation of the pair but are not needed for the metric equality. $\square$
 
-**Proof sketch.** This is the defining letter action of targeted forgetting. $\square$
+This theorem is an exact statement about representation-induced blindness. It does not assert zero distance under every conceivable metric on total states; it concerns the metric obtained exclusively from behavioral profiles.
 
-**Theorem 6.8 (Universal Property of Targeted Forgetting).** Let $g:\Sigma^*\to S$ be any compositional map into a monoid $S$. Suppose
-
-$$
-f_r(u)=f_r(v)\Longrightarrow g(u)=g(v)
-$$
+## 5. The reconstruction boundary
 
-for all streams $u,v$. Then there exists a unique monoid homomorphism
+Let $R=F(X)\subseteq B$ be the range of functional observation. Experience is **functionally reconstructible** when there exists a map
 
 $$
-\overline g:\Sigma^*/{\sim_{f_r}}\to S
+e:R\to\{0,1\}
 $$
 
 such that
 
 $$
-g=\overline g\circ q,
+E(x)=e(F(x))
 $$
 
-where $q(u)=[u]$ is the quotient map.
+for every $x\in X$. Restricting $e$ to $R$ avoids imposing arbitrary values on behavioral profiles never realized by a state.
 
-**Proof sketch.** Define $\overline g([u])=g(u)$. The hypothesis makes this independent of the representative. Multiplicativity follows from that of $g$. The factorization equation is immediate. For uniqueness, every quotient class has the form $[u]$, so any factorizing map must send it to $g(u)$. $\square$
+### Theorem 5 (Fibre-Constancy Criterion)
 
-**Corollary 6.9 (Targeted Forgetting Quotient).** The quotient by targeted-forgetting indistinguishability is isomorphic to the submonoid of retained-output streams reachable under $f_r$.
-
-**Proof sketch.** Apply Theorem 6.6 to $f_r$. $\square$
-
-The universal property gives a precise meaning to “the information intentionally removed.” Every downstream compositional observer that is insensitive to at least those distinctions must operate through the same quotient.
-
-## 7. Algorithms and computational complexity
-
-The mathematical results suggest three finite procedures.
-
-### 7.1 Constructing the canonical gap correspondence
-
-For a finite profile list $X=(x_1,\ldots,x_N)$, output for each $x_i$ the zombie witness $((x_i,1),(x_i,0))$ and semantic witness $(x_i,0)$. The procedure takes $O(N)$ time and $O(N)$ output space. Validation is constant-time per item when profile equality and Boolean operations are constant-time.
-
-### 7.2 Exhaustive minimum-information search
-
-For an $n$-component system, enumerate all nonempty proper subsets and evaluate $I$. There are $2^n-2$ represented cuts. If one evaluation costs $C_I(n)$, exhaustive search takes
+Experience is functionally reconstructible if and only if it is constant on every functional fibre. Equivalently,
 
 $$
-O(2^n C_I(n))
+\exists e:R\to\{0,1\}\ \forall x\in X,\ E(x)=e(F(x))
 $$
 
-time and $O(n)$ auxiliary space when subsets are streamed as bit masks. If complementary cuts are known to have equal values, one may impose a canonical representative and roughly halve the search, but this symmetry is not needed for correctness.
-
-The algorithm must reject $n<2$, because the candidate set is empty. It returns both $\Phi$ and an attaining cut, directly realizing Theorem 5.2.
-
-### 7.3 Collision search for finite memory
-
-Given a finite collection of streams and a memory function, store the first stream observed for each memory state. When a later distinct stream has the same state, return the pair. With hashing, expected time is linear in the number of tested streams and storage is at most the smaller of the number of streams and the number of memory states. When the domain enumeration contains more distinct streams than memory states, the pigeonhole principle guarantees success.
-
-For targeted forgetting, one can additionally group words by their retained output. Each group is an explicit indistinguishability class, and the set of outputs realizes the quotient representatives.
-
-## 8. Applications
-
-### 8.1 Consciousness theory
-
-The conservative extension theorem is a diagnostic for functional definitions. If a proposed consciousness criterion is literally a predicate of functional profile, it is invariant along every fiber of $B$. The theorem exposes the need for one of two responses: either identify experience with a functional property by an added bridge principle, or admit that the functional vocabulary leaves experience underdetermined.
-
-The result does not favor substance dualism, physicalism, or any empirical theory by itself. Its role is logical bookkeeping: it distinguishes data encoded in the functional map from data encoded only in the experiential map.
-
-### 8.2 Interpreting integrated information
-
-The finite variational theory shows exactly what follows from defining $\Phi$ as a minimum. Existence, nonnegativity, reducibility, and monotonicity are robust mathematical consequences. None alone implies that $\Phi$ measures subjective experience. The coexistence theorem makes this separation explicit: a complete cut landscape may be held fixed while a Boolean experiential sheet varies above the same functional profile.
-
-This does not diminish the value of $\Phi$ as a functional invariant. It clarifies the extra empirical or metaphysical premise required to interpret it experientially.
-
-### 8.3 Memory, compression, and lossy representation
-
-Finite-state memories, automata, and compressed logs inevitably merge histories. The quotient theorem provides the correct algebraic object for analyzing what remains observable. Its use extends to event filtering, privacy-preserving telemetry, sequence abstraction, and state minimization. The kernel congruence records precisely which histories become interchangeable.
-
-Targeted forgetting is especially relevant when deletion rules are declared in advance. The universal property ensures that any later process respecting those deletions depends only on the quotient class, not on inaccessible details of the original stream.
-
-### 8.4 A common fiber perspective
-
-All applications can be summarized by a map $p:Y\to X$. For $x\in X$, the fiber
+if and only if
 
 $$
-p^{-1}(x)=\{y\in Y:p(y)=x\}
+\forall x,y\in X,\quad F(x)=F(y)\Longrightarrow E(x)=E(y).
 $$
 
-collects hidden alternatives compatible with the same observable value. The canonical consciousness model has two-element fibers. The semantic model has an accepted and an omitted sheet above each profile. A finite memory has at least one fiber containing multiple histories. Integrated information lives on the functional base and is unchanged by multiplying the hidden fiber unless the theory explicitly couples them.
+#### Proof sketch
 
-## 9. Limitations and discussion
+Assume $E=e\circ F$ on $X$. If $F(x)=F(y)$, then
 
-First, the experiential theory is intentionally minimal. It distinguishes presence from void but does not model similarity, intensity, unity, temporal flow, or qualitative content. Richer fibers may carry geometry, probability, or algebra.
+$$
+E(x)=e(F(x))=e(F(y))=E(y),
+$$
 
-Second, the zombie extension is a model construction, not evidence of physical realizability. It proves compatibility with a functional description. Whether laws of nature identify or constrain the hidden coordinate is an empirical and metaphysical question outside the assumptions.
+so $E$ is fibre-constant.
 
-Third, the semantic system is abstract. Its true-but-unaccepted codes exhibit the shape of an incompleteness gap, but the construction is not an arithmetization theorem. The exact correspondence rests on common two-sheeted indexing, and Theorem 4.7 shows why it cannot be made unconditional.
+Conversely, assume fibre constancy. For each $b\in R$, choose any $x_b\in X$ with $F(x_b)=b$ and define $e(b)=E(x_b)$. If another representative $y_b$ is chosen, then $F(x_b)=F(y_b)$, so fibre constancy yields $E(x_b)=E(y_b)$. Thus $e$ is well defined. For each $x$, the state $x$ itself represents $F(x)$, giving $e(F(x))=E(x)$. $\square$
 
-Fourth, the integrated-information framework assumes finitely many components, nonnegative cut values, and $n\ge2$. It does not choose a physical formula for effective information. For $n\le1$, the nontrivial cut landscape is empty, so the stated definition of $\Phi$ has no value.
+### Corollary 5.1 (Zombie Obstruction to Reconstruction)
 
-Fifth, the finite-memory collision theorem guarantees some indistinguishable pair but does not identify which pair without an enumeration or additional structure. The quotient theorem applies to compositional memory; an arbitrary noncompositional recorder still has collisions when finite but need not induce a congruence compatible with concatenation.
+If an oriented zombie pair exists, then experience is not functionally reconstructible.
 
-These limitations are informative. They locate exactly which conclusions are structural and which require domain-specific assumptions.
+#### Proof sketch
 
-## 10. Future work
+The two states share a functional profile but have different experiential values, violating fibre constancy. Apply Theorem 5. $\square$
 
-Several extensions are natural. The profile-indexed zombie and semantic constructions suggest a categorical treatment in which profile-preserving maps induce maps between witness spaces and the pointwise bijections become a natural isomorphism. Finite models with exactly one conscious and one void world per fiber should admit a classification by the canonical two-sheeted form.
+### Corollary 5.2 (No Zombie Pairs Under Reconstruction)
 
-Probability would add a quantitative layer. For finite worlds, the conditional entropy of experience given function should vanish exactly when experience is determined by behavior; positive entropy should measure residual experiential multiplicity. This would generalize the Boolean fiber from a qualitative witness to a numerical invariant.
+If experience is functionally reconstructible, no oriented zombie pair exists.
 
-The independence of integrated information from hidden sheets can be tested for $k$-sheeted extensions. If cut values depend only on function, adding any finite number of experiential alternatives over each functional state leaves the entire cut landscape unchanged. Conversely, a proposed bridge from $\Phi$ to experience should state precisely how cut data constrains fiber structure.
+#### Proof sketch
 
-For memory, one may investigate minimal finite representations, rates of collision, probabilistic forgetting, and the interaction between semantic relevance and algebraic congruence. The universal property suggests compositional pipelines in which privacy or abstraction guarantees propagate automatically through every factorizing observer.
+Functional reconstruction implies fibre constancy, while a zombie pair requires two different experiential values in one fibre. $\square$
 
-## 11. Conclusion
+In the split model with nonempty $B$, $E_B$ is not reconstructible from $F_B$: each fibre contains both $(b,0)$ and $(b,1)$.
 
-A functional description is a map, and every map invites a question about its fibers. The conservative zombie extension places a present and a void state in the same functional fiber. The canonical semantic construction places an accepted and an omitted true code over the same profile. Finite memory places distinct histories in the same representational fiber. Integrated information optimizes over the functional base but, without an added bridge, cannot inspect an orthogonal experiential sheet.
+## 6. Why functional organization alone is insufficient
 
-The central conclusions are therefore precise and bounded. Purely functional predicates cannot distinguish worlds with identical functional profiles. Every experience model admits a function-preserving two-sheeted extension with an experiential contrast. Canonical zombie and semantic gaps are classified by the same profile set and are consequently isomorphic. This isomorphism is not universal. Finite integrated information is an attained, nonnegative minimum with clear order properties. Finite compositional memory necessarily loses distinctions, and its observable algebra is exactly a quotient of stream histories.
+The preceding split model guarantees zombie twins because it explicitly postulates experiential variation. Without that structure, functional observation alone cannot provide the missing state.
 
-The unifying mathematical lesson is simple: when an observable description appears complete, inspect the map that produced it. What lies in a common fiber may be invisible downstairs without being absent upstairs.
+### Theorem 6 (Functionalism-Alone Countermodel)
+
+Let $X$ and $B$ be arbitrary sets, let $F:X\to B$ be any functional observation, and define
+
+$$
+E_{\top}(x)=1
+$$
+
+for every $x\in X$. Then no $x\in X$ has an experientially void functional twin.
+
+#### Proof sketch
+
+A void twin $z$ would have to satisfy $E_{\top}(z)=0$, but the constant definition gives $E_{\top}(z)=1$. This contradiction is independent of $F$. $\square$
+
+The theorem refutes the unconditional inference from functional organization to zombie existence. The correct conditional statement is: if experience varies within the fibre of an aware state, then a void functional twin exists. The split model strengthens variation to a uniform global product structure and thereby obtains uniqueness.
+
+## 7. Labelled incompleteness gaps
+
+We now describe a second gap construction. Fix a standard provability system $S$. For each natural-number index $i$, let $C_i$ be a designated consistency sentence satisfying two-sided independence:
+
+$$
+S\nvdash C_i
+\qquad\text{and}\qquad
+S\nvdash\neg C_i.
+$$
+
+These conditions are assumed here as the defining logical input furnished by the chosen standard system. They express that neither polarity is derivable.
+
+For a label space $B$, define the **indexed labelled incompleteness-gap space** $\mathcal{G}_{\mathrm{inc}}(B,i)$ as the collection of pairs $(b,A)$ such that
+
+$$
+b\in B,\qquad A=C_i,
+$$
+
+and $A$ carries the certificate
+
+$$
+S\nvdash A,
+\qquad
+S\nvdash\neg A.
+$$
+
+Because $A$ is required to equal $C_i$, the only free datum is $b$.
+
+### Theorem 7 (Indexed Incompleteness Gap Classification)
+
+For every $B$ and every index $i$, there is a bijection
+
+$$
+\Psi_{B,i}:\mathcal{G}_{\mathrm{inc}}(B,i)\longrightarrow B
+$$
+
+given by $\Psi_{B,i}(b,C_i)=b$. Its inverse sends
+
+$$
+b\longmapsto(b,C_i)
+$$
+
+together with the fixed two-sided independence certificate.
+
+#### Proof sketch
+
+The sentence component of every indexed gap is constrained to be $C_i$, and its independence certificate is fixed by the standard system. Projection leaves only the label $b$. Reinsertion of $C_i$ reverses the projection, so the two maps are mutual inverses. $\square$
+
+## 8. The experiential–incompleteness bridge
+
+Theorems 3 and 7 classify two gap spaces by the same set $B$. Composing one classification with the inverse of the other produces the bridge.
+
+### Theorem 8 (Experiential–Incompleteness Gap Isomorphism)
+
+For every behavioral space $B$ and every index $i$, there is a bijection
+
+$$
+\Theta_{B,i}:\mathcal{G}_{\mathrm{exp}}(B)
+\longrightarrow
+\mathcal{G}_{\mathrm{inc}}(B,i)
+$$
+
+defined by
+
+$$
+\Theta_{B,i}(((b,1),(b,0)))=(b,C_i),
+$$
+
+with the fixed certificate that neither $C_i$ nor $\neg C_i$ is provable in $S$. The inverse sends $(b,C_i)$ to $((b,1),(b,0))$.
+
+#### Proof sketch
+
+Apply $\Phi_B$ to extract $b$ from an experiential gap, then apply $\Psi_{B,i}^{-1}$ to construct the corresponding incompleteness gap. Since both constituent maps are bijections, their composition is a bijection. The explicit formulas for the forward and inverse maps follow immediately. $\square$
+
+### Theorem 9 (Label Preservation)
+
+The bridge preserves the common behavioral label and assigns the designated consistency sentence:
+
+$$
+\Theta_{B,i}(((b,1),(b,0)))=(b,C_i).
+$$
+
+In particular, the first coordinate of the image is $b$ and its sentence coordinate is $C_i$.
+
+#### Proof sketch
+
+This is immediate from the definition of $\Theta_{B,i}$ as classification by $b$ followed by reconstruction over the same $b$. $\square$
+
+### 8.1 Scope of the isomorphism
+
+The isomorphism is a representation theorem about explicit labelled spaces. Its content is that both spaces have exactly one canonical gap over each label. It does not establish any semantic identity between experience and syntax. The aware/void orientation and the unprovable/irrefutable contrast play analogous structural roles, but their interpretations remain distinct.
+
+This limitation matters. A shared classifier can support a useful bridge without supporting causal, explanatory, or ontological conclusions. Additional naturality, topology, dynamics, or semantics would be needed for a stronger identification.
+
+## 9. Constructive algorithms
+
+Although the results are elementary at the computational level, algorithms make their information flow transparent.
+
+### 9.1 Unique twin construction
+
+Given an aware split state $(b,1)$, return $(b,0)$. The operation takes constant time beyond copying or referencing $b$. If labels are represented by length-$n$ records and copied eagerly, the cost is $O(n)$; with immutable references, it is $O(1)$.
+
+Correctness follows from Theorem 2: the output shares $b$, has value $0$, and is the only state with both properties.
+
+### 9.2 Gap classification and reconstruction
+
+To encode an experiential gap, read the first endpoint’s behavioral coordinate. To decode a label $b$, return $((b,1),(b,0))$. Both operations are inverse to one another by Theorem 3.
+
+For a finite list of $n$ labels, enumerating all canonical gaps costs $O(n)$ time and $O(n)$ output space. There is no search over pairs of states; the product structure directly supplies the pair.
+
+### 9.3 Fibre-constancy test on finite data
+
+Suppose finite observations are given as triples $(x,F(x),E(x))$. Maintain a dictionary from each encountered behavioral profile to its first experiential value. For every later state with the same profile, compare its value with the stored value. A disagreement certifies non-reconstructibility and explicitly produces an experiential contrast in one fibre.
+
+With hashable profiles and expected constant-time lookup, the procedure runs in expected $O(n)$ time and $O(k)$ space, where $k$ is the number of distinct profiles. Sorting instead gives $O(n\log n)$ time without relying on hashing.
+
+Passing this finite test proves fibre constancy only for the supplied finite state set. On a complete finite model, it decides reconstructibility by Theorem 5.
+
+### 9.4 Bridge construction
+
+Given an experiential gap and index $i$, extract its common label $b$ and pair it with $C_i$ and the system’s fixed independence certificate. The inverse discards the fixed sentence component and reconstructs the canonical aware–void pair over $b$. Computationally, the bridge transports a label; the logical certificate is fixed data.
+
+## 10. Applications and interpretations
+
+### 10.1 Representation learning
+
+A learned representation $F(x)$ may collapse distinct source states. Any target attribute $E$ varying among collapsed states cannot be predicted perfectly from that representation. Theorem 5 gives the exact noiseless criterion: perfect downstream prediction is possible precisely when the target is constant on representation fibres.
+
+### 10.2 Measurement design
+
+An instrument defines an observation map. Zero pulled-back distance between distinct states indicates observational indistinguishability, not physical identity. Theorem 4 warns that metrics on measured features inherit every omission of the instrument. Adding a sensor refines fibres; removing one coarsens them.
+
+### 10.3 Privacy and information hiding
+
+A released behavioral profile can intentionally forget a sensitive Boolean attribute. The split model idealizes perfect hiding: both values occur over every released profile. The fibre-constancy criterion states the converse risk: if the attribute is constant on every released-data fibre, it is exactly reconstructible on the realized range.
+
+### 10.4 Model comparison
+
+Two theories may classify their respective gap objects by the same parameter space. A label-preserving bijection then transfers indexing information without equating interpretations. The experiential–incompleteness bridge illustrates both the power and the restraint of this method.
+
+## 11. Discussion
+
+The product model produces strong conclusions because its premise is strong. It assumes a globally available experiential coordinate independent of behavior. In that setting, the qualia flip is canonical, twins are unique, and gap classification is exact. These are representation results, not empirical findings.
+
+The countermodel is equally central. If all states are aware, no zombie exists regardless of the fibres of $F$. More generally, a fibre with only aware states supports no void counterpart, and a fibre with several void states need not support uniqueness. Thus one should distinguish:
+
+- **non-injectivity of $F$**, meaning functional observation forgets some total-state distinction;
+- **experiential variation on fibres**, meaning the forgotten distinction includes experience;
+- **two-sheeted splitting**, meaning every profile has exactly one state of each experiential polarity.
+
+Only the third yields the full canonical picture.
+
+The incompleteness bridge also derives from a controlled construction. Fixing $i$ fixes the sentence $C_i$, while the label $b$ varies freely. Consequently, classification by $B$ is exact. The theorem is informative as a comparison of gap architectures, but any claim that incompleteness causes or explains experience would go beyond its hypotheses.
+
+## 12. Future work
+
+The trivial product $B\times\{0,1\}$ suggests replacing it with a nontrivial two-sheeted covering over a topological behavioral space. Local flips may exist while global continuous selection fails because of monodromy. This would distinguish local zombie pairing from a globally coherent twin operation.
+
+Exact functional identity can also be relaxed. On compact metric spaces, one may ask whether small functional distance together with fixed experiential contrast imposes a quantitative lower bound on every approximate reconstruction of experience. Such a theorem would turn the binary fibre obstruction into a robustness estimate.
+
+Boolean experience should be generalized to a finite complex or other structured space $Q$. Fibres could then carry multiple components, loops, or higher-dimensional features. Homology and homotopy could measure experiential organization erased by functional projection.
+
+The current bridge is objectwise. A categorical extension would define maps between labelled functional quotients and maps between theories, then ask whether the gap correspondence is natural. Naturality would show that the bridge commutes with changes of system rather than merely matching isolated objects.
+
+Finally, effective presentation introduces a distinction between extensional and computable reconstruction. Fibre constancy ensures a set-theoretic factorization through the range, but an effective reconstruction may additionally require computable access to representatives or an effective choice principle.
+
+## 13. Conclusion
+
+Functional observation partitions a total state space into fibres. Experience is recoverable exactly when it is constant on those fibres. In a globally split Boolean model, the forgotten coordinate produces a fibre-preserving involution, a unique void twin for every aware state, a gap space classified by behavioral profiles, and zero distance under every metric pulled back solely from behavior.
+
+These conclusions are conditional, and the constant-aware countermodel proves that the condition cannot be omitted. Functional organization by itself does not imply zombie existence.
+
+A labelled two-sided incompleteness construction is likewise classified by the behavioral label space. The resulting label-preserving isomorphism identifies a common mathematical architecture: one fixed internal contrast over every visible label. It is a precise analogy between gap structures, bounded by its definitions and carrying no claim that phenomenology and syntax are the same. The broader lesson is geometric and informational: what a map forgets lies in its fibres, and no function of the map’s output can recover a quantity that varies within them.

@@ -189,6 +189,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Arrow's impossibility theorem states no ranked voting system is fair. Reformulate in tropical mathematics: a social welfare function is a tropical linear map f: T^n \u2192 T satisfying the tropical analog of Arrow's axioms. Prove: the tropical dictator function f(x_1,...,x_n) = x_1 is the unique tropical social welfare function. Show: this reduces to Arrow's theorem in the classical limit. Conjecture: tropical voting allows non-dictatorial functions that satisfy weaker axioms (tropical IIA + tropical Pareto).",
+    "domains": [
+      "Novelty",
+      "Tropical"
+    ],
+    "id": "fd_0540",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-21T06:49:04.709228+00:00",
+    "title": "Speculative: Tropical Mathematics of Social Choice"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 71fc60c7 (Q=0.750), which proved 23 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Elementary cellular automata (ECAs) are the 256 rules that update a 1D binary array based on its 3-cell neighborhood. Rule 110 is Turing-complete. But ECAs can also be viewed as polynomial maps over GF(2): the state s = (s_0, s_1, ..., s_{n-1}) is a vector over GF(2), and the update rule is s -> f(s",
     "domains": [
       "Applications"
@@ -230,21 +245,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: ArXiv paper: Reproducing the k-copwin Algorithm: Theory vs. Implementa"
   },
   {
-    "consumed_by_exp_id": "d5fe8eb3",
-    "description": "Formalize the hard problem of consciousness as a theorem about the gap between functional descriptions and subjective experience. Prove that any system satisfying the functional definition of consciousness can have a zombie twin that is functionally identical but experientially void. Show this gap is isomorphic to G\u00f6del's incompleteness gap.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0479",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T18:58:00.688995+00:00",
-    "title": "Zombies and Qualia: Mathematics of Subjective Experience"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Map prime numbers to harmonic overtones using the Riemann zeta function's non-trivial zeros. Define: the 'harmonic' of a number n is the sum of 1/\u03c1 for each zero \u03c1 with |Im(\u03c1)| \u2264 n. Prove: the harmonic of n grows as O(log n / log log n). Conjecture: perfect intervals (octaves, fifths, fourths) correspond to numbers whose harmonic is rational. Show: the harmonic of 2 is exactly 1 (the octave), while the harmonic of 3 is transcendental (the fifth).",
     "domains": [
@@ -260,19 +260,19 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Number Theory as Music Theory"
   },
   {
-    "consumed_by_exp_id": "7fb32c18",
-    "description": "Every mathematical structure is a category, and every theorem is a natural transformation. Define the 'genome' of a mathematical theory as its category of models. Prove: two theories are Morita-equivalent iff their model categories are equivalent. Show: the 'mutation' of a theory (changing one axiom) corresponds to an adjunction between model categories. Conjecture: every 'evolutionary path' between theories can be decomposed into a sequence of adjunctions and quotients.",
+    "consumed_by_exp_id": "",
+    "description": "Treat Lean 4's type checker as an 'environment' and formalized mathematics as 'organisms' adapting to it. Define fitness: f(M) = (number of theorems proved by M) / (lines of code in M). Prove: the fitness landscape has local optima corresponding to 'mathematical styles' (algebraic, analytic, combinatorial). Conjecture: Mathlib is a global fitness maximum for the set of theories expressible in CIC. Show: migrating a proof from one local optimum to another requires crossing a 'fitness valley' of temporarily decreased fitness.",
     "domains": [
       "Novelty",
-      "Algebra"
+      "Computation"
     ],
-    "id": "fd_0530",
+    "id": "fd_0541",
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-20T23:21:55.457337+00:00",
-    "title": "Speculative: Category Theory as the DNA of Mathematics"
+    "status": "available",
+    "timestamp": "2026-07-21T06:49:04.775330+00:00",
+    "title": "Speculative: The Lean Theorem Prover as an Ecological Niche"
   },
   {
     "consumed_by_exp_id": "1a2d7e50",
@@ -303,21 +303,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-21T00:19:15.530982+00:00",
     "title": "Speculative: Anti-Gravity Mathematics \u2014 Theorems That Resist Proof"
-  },
-  {
-    "consumed_by_exp_id": "cd0075c8",
-    "description": "Formalize a notion of 'self-referential types' in dependent type theory where a type can quantify over itself. Define: a conscious type T satisfies T \u2248 \u03a0(x:T), P(x) for some predicate P. Prove: any such type must be undecidable (G\u00f6del-style). Show: the fixed points of the type-forming operations correspond to a hierarchy analogous to the arithmetical hierarchy. Conjecture: the cardinality of self-referential types is exactly \u2135_1^CK (the Church-Kleene ordinal).",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0520",
-    "priority_score": 0.82,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-20T15:28:30.627383+00:00",
-    "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
   },
   {
     "consumed_by_exp_id": "977e8d8d",
@@ -5638,6 +5623,51 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-21T00:19:42.257809+00:00",
     "title": "For every finite terminating normalization system equipped with a probability la"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## Results established\n\nThe formal development in `Speculative/CategoryDNA.lean` uses a precise minimal semantics:\na theory retains a type of models, and its genome is the discrete category on that type.\nWithin this semantics it proves:\n\n1. **Exact Morita characterization.** Type-level equivalence of model collections is\n   equivalent to categorical equivalence of their genomes.\n2. **Composition.** Morita equivalences compose.\n3. **Classification of one-axiom mutations.** If mutation adjoins a predicate `P` and\n   the evident forgetful functor has a right adjoint, then every old model already\n   satisfies `P`. Conversely, if every model satisfies `P`, the adjunction exists.\n4. **Counterexample to the unrestricted mutation slogan.** The one-model theory\n   mutated by the false axiom has no such right adjoint.\n5. **Positive restricted evolutionary-path result.** Every equivalence of genomes is\n   itself an adjunction step.\n\nThus, under discrete semantics, the proposed mutation principle is not merely\noccasionally false: the existence of the relevant right adjoint is equivalent to the\nnew axiom being semantically redundant.\n\n## Limits and next steps\n\nThe formalization intentionally does not claim that an arbitrary first-order,\nhigher-order, or geometric theory is determined by a bare type of models. Ordinary\ncategories of models have nontrivial homomorphisms, and standard notions of Morita\nequivalence vary with the chosen logic. A stronger continuation should:\n\n- define signatures, syntax, interpretations, and model homomorphisms;\n- distinguish syntactic Morita equivalence from equivalence of model categories;\n- require equivalences compatible with underlying-set or semantic functors when that\n  structure is part of the intended semantics;\n- investigate reflective and coreflective subcategories produced by axioms, where\n  genuine free completions or localizations can supply adjoints;\n- define \u201cquotient step\u201d and \u201cevolutionary path\u201d before attempting the full\n  decomposition conjecture;\n- test whether geometric morphisms, accessible localizations, or sketches give the\n  appropriate nontrivial replacement for the disproved unrestricted slogan.\n\n## Computational-evidence justification\n\nNo separate computational experiment was used. The claims concern universal\nproperties of functors and adjunctions rather than a finite numerical sequence. The\ncounterexample is structural: an adjunction counit in a discrete category would force\na proof of the newly adjoined predicate for every old model. Small-case enumeration\nwould only reproduce the formally proved classification and would not add meaningful\nevidence. Consequently there is no OEIS sequence or informative numerical plot.\n",
+    "domains": [
+      "Logic",
+      "Pythagorean"
+    ],
+    "id": "fd_0542",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "7fb32c18",
+    "status": "available",
+    "timestamp": "2026-07-21T06:49:32.650013+00:00",
+    "title": "The formal development in `Speculative/CategoryDNA.lean` uses a precise minimal "
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## Result of the contrarian test\n\nThe exact proposed fixed-point equation was formalized in\n`Catalog/Computation/ConsciousFixedPoints.lean` as\n\n\\[\n  \\exists P:T\\to\\mathrm{Prop},\\quad T \\simeq \\prod_{x:T} P(x).\n\\]\n\nIt collapses rather than generating incompleteness. The formal classification is\n\n\\[\n  \\mathrm{Conscious}(T) \\iff T \\simeq \\mathrm{Unit}.\n\\]\n\nConsequently:\n\n- every such `T` has decidable equality;\n- `Unit` is a concrete counterexample to the proposed undecidability claim;\n- `Bool` is not such a fixed point;\n- any two such fixed points are equivalent;\n- every such fixed point has cardinality one; and\n- every predicate on such a type is extensionally constant.\n\nThe reason is specific and mathematically informative: every fiber `P x` lies in\n`Prop`, so proof irrelevance makes the dependent product a subsingleton. The\nfixed-point equation transfers that collapse back to `T`. The equation also\nrules out the empty type, leaving exactly the singleton equivalence class.\n\n## Status of the original bold conjectures\n\n1. **\u201cEvery conscious type is undecidable.\u201d \u2014 Disproved.** In fact, every type\n   satisfying the displayed definition has decidable equality.\n2. **\u201cThe fixed points form an arithmetical-style hierarchy.\u201d \u2014 Disproved for\n   this definition.** All fixed points are mutually equivalent.\n3. **\u201cTheir cardinality is exactly the Church\u2013Kleene ordinal.\u201d \u2014 Not a\n   well-typed cardinal claim as stated, and incompatible with the classification\n   under the most direct interpretation.** The Church\u2013Kleene object is an\n   ordinal, while \u201cthe collection of types\u201d requires a universe and a specified\n   quotient or coding before it has a cardinality. Up to equivalence, the present\n   definition has exactly one class, represented by `Unit`.\n\n## Non-collapsing replacements worth studying\n\n### 1. Data-valued fibers\n\nReplace `P : T \u2192 Prop` with `F : T \u2192 Type v` and study\n\n\\[\n  T \\simeq \\prod_{x:T} F(x).\n\\]\n\nProof irrelevance no longer forces collapse. A useful next task is to classify\nfinite solutions by the cardinal equation\n`|T| = \u220f x, |F x|`, then separate genuinely dependent examples from constant\nfunction-space fixed points.\n\n### 2. Coded syntax plus semantics\n\nG\u00f6del phenomena require effective syntax, coding, and a truth/provability\nrelation. Introduce:\n\n- a recursively enumerable language of type codes;\n- an interpretation partial function from codes to types or propositions;\n- substitution and a verified diagonal/fixed-point lemma;\n- a computability predicate for semantic decision procedures; and\n- consistency or soundness assumptions stated as theorem parameters.\n\nOnly in such a setting is \u201cundecidable\u201d a computability claim rather than merely\nabsence of a `Decidable` instance.\n\n### 3. Universe-sensitive self-reference\n\nLean\u2019s universes prevent a type from literally containing all types at its own\nuniverse without a code layer. A disciplined model should distinguish:\n\n- an inductive universe of codes `Code : Type u`;\n- decoding `El : Code \u2192 Type v`;\n- positivity/guardedness conditions ensuring legitimate recursion; and\n- equivalence of decoded objects rather than definitional equality of universes.\n\n### 4. A hierarchy with a precise index set\n\nTo recover an arithmetical analogy, define levels from alternating effective\nquantifiers over a coded base (for example, computably enumerable predicates on\nnatural numbers), prove strictness by reductions, and only then investigate\ntransfinite iteration along computable well-orders.\n\n### 5. A corrected Church\u2013Kleene statement\n\nA plausible ordinal claim would concern the **supremum of order types of\ncomputably presented well-founded recursive constructions**, not the cardinality\nof types. Such a project first needs formal definitions of recursive notation\nsystems and computable well-orders. The target should be phrased as an equality\nof ordinals or a cofinality theorem, not as a cardinal count of raw Lean types.\n",
+    "domains": [
+      "Logic",
+      "Pythagorean"
+    ],
+    "id": "fd_0543",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "cd0075c8",
+    "status": "available",
+    "timestamp": "2026-07-21T06:49:38.524989+00:00",
+    "title": "The exact proposed fixed-point equation was formalized in"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Functional Fibres and Subjective Structure\n\n## 1. Nontrivial qualia coverings\n\nConjecture: there are natural state spaces in which functional observation forms a nontrivial finite covering rather than a globally split product, so that local zombie twins exist but no continuous global choice of twin exists.\n\nThe key insight is that the present Boolean product is the trivial two-sheeted covering; replacing it by a twisted covering turns the global existence of a coherent zombie operation into a topological obstruction.\n\nWhy now? The fibre classification identifies exactly which part of the construction depends on a global split, making monodromy the next falsifiable obstruction.\n\n## 2. Stability under approximate functional equivalence\n\nConjecture: for compact metric state spaces with Lipschitz experience observables, sufficiently small functional distance and a fixed experiential contrast force a quantitative lower bound on the distortion of every attempted functional reconstruction of experience.\n\nThe key insight is that exact equality of functional profiles should have a robust analogue expressed as an approximation lower bound rather than a binary impossibility.\n\nWhy now? The zero-distance theorem isolates the exact case, while the factorization criterion identifies reconstruction as the quantity to perturb.\n\n## 3. Higher-dimensional experiential fibres\n\nConjecture: when experience takes values in a finite complex rather than a Boolean set, the homotopy type of each functional fibre bounds the number and organization of mutually functionally indistinguishable experiential states.\n\nThe key insight is that Boolean awareness records only a two-point contrast; homology and homotopy can detect loops, components, and higher-dimensional experiential variation invisible to functional observation.\n\nWhy now? The current gap space is classified by a forgotten Boolean factor, suggesting a systematic replacement of that factor by structured experiential geometries.\n\n## 4. Natural, rather than chosen, incompleteness bridges\n\nConjecture: a category of labelled functional quotients and a category of labelled independent-sentence extensions admit functors whose gap constructions are naturally equivalent on a nontrivial subcategory.\n\nThe key insight is that an equivalence of individual gap spaces becomes mathematically stronger when it commutes with maps between behavioural systems and maps between theories.\n\nWhy now? The established label-preserving isomorphism provides the objectwise component; naturality is the precise next test that distinguishes a structural bridge from a coincidental shared classifier.\n\n## 5. Definability boundary for experiential reconstruction\n\nConjecture: for effectively presented state spaces, fibre constancy characterizes extensional reconstruction, while computable reconstruction additionally requires an effective choice principle on the range of the functional map.\n\nThe key insight is that set-theoretic factorization uses a representative from every inhabited fibre, but effective reconstruction must produce those representatives uniformly.\n\nWhy now? The present factorization theorem exposes the representative-selection step explicitly, isolating the exact location where computability can fail even after extensional obstructions disappear.\n",
+    "domains": [
+      "Geometry",
+      "Logic"
+    ],
+    "id": "fd_0544",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "d5fe8eb3",
+    "status": "available",
+    "timestamp": "2026-07-21T06:49:44.327570+00:00",
+    "title": "Conjecture: there are natural state spaces in which functional observation forms"
   },
   {
     "consumed_by_exp_id": "",
