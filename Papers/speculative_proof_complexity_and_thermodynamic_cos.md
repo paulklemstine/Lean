@@ -1,20 +1,31 @@
 # Computational Evidence
 
-The finite theorem gives, for an ensemble of `2^n` objects, at least `2^(n-1)` objects of complexity at least `n-1`. Its certified aggregate lower and upper bounds are `(n-1)2^(n-1)` and `n2^n`.
+## Small cases
 
-| `n` | ensemble size `2^n` | certified incompressible count | aggregate lower bound | aggregate upper bound |
-|---:|---:|---:|---:|---:|
-| 1 | 2 | 1 | 0 | 2 |
-| 2 | 4 | 2 | 2 | 8 |
-| 3 | 8 | 4 | 8 | 24 |
-| 4 | 16 | 8 | 24 | 64 |
-| 5 | 32 | 16 | 64 | 160 |
-| 6 | 64 | 32 | 160 | 384 |
-| 7 | 128 | 64 | 384 | 896 |
-| 8 | 256 | 128 | 896 | 2048 |
+For the canonical binary description length `Nat.size x`, summing over `x < 2^n` gives:
 
-No OEIS identification is needed: all columns are elementary closed forms.
+| `n` | lengths by blocks | total | average |
+|---:|---|---:|---:|
+| 1 | `0, 1` | 1 | 1/2 |
+| 2 | previous, then two length-2 codes | 5 | 5/4 |
+| 3 | previous, then four length-3 codes | 17 | 17/8 |
+| 4 | previous, then eight length-4 codes | 49 | 49/16 |
 
-The universal exponential-average claim fails the representative uniform binary model. Dividing the aggregate bounds by `2^n` gives a mean complexity between `(n-1)/2` and `n`, hence linear rather than exponential growth. The explicit two-proof construction also refutes the universal claim that shorter written proofs must have lower thermodynamic cost: written length can increase while description complexity and cost decrease.
+These values agree with the formally proved formulas
+`total = (n - 1) * 2^n + 1` and `average = n - 1 + 2⁻ⁿ`.
 
-These calculations are instances of the proved symbolic bounds in `Catalog/MachineLearning/ProofThermodynamics.lean`; they are included to expose scale and boundary behavior rather than as a substitute for the general argument.
+## Counterexample hunt
+
+The proposed exponential-average claim already fails at `n = 4` in this canonical uniform model:
+`49/16 < 8 = 2^(4-1)`. This exact counterexample is proved in Lean as
+`exponential_average_claim_false`; it is not an unchecked numerical experiment.
+
+Raw-length monotonicity was also tested against padding. An empty payload with no padding and the same payload with one padding bit have raw lengths 0 and 1 but identical modeled complexity and cost. Lean proves this uniformly for every temperature in `padding_refutes_raw_length_cost`.
+
+## OEIS search
+
+No OEIS identification is asserted. The total sequence is elementary and is derived exactly in the Lean development, so an external sequence match is unnecessary.
+
+## Scope
+
+The phrase “random true statement” has no canonical distribution. The table uses all fixed-width binary words uniformly and serves as a countermodel to a distribution-independent exponential claim, not as evidence about every possible theorem distribution.
