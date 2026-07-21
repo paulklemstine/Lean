@@ -1,0 +1,3 @@
+# Computational Evidence Justification
+
+A separate computational experiment was not used because the completed results are universal structural consequences of the snake axioms, not estimates inferred from a finite sample. The finite record certificates for dimensions 9 through 13 were not present in the project, so reporting numerical checks of those records would not provide reproducible evidence. The scope is therefore stated explicitly: the accompanying results establish dimension-independent counting, separation, and endpoint bounds, while making no claim to certify the paper’s record-length datasets.
