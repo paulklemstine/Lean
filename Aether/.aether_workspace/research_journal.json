@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "57f0b740",
-      "domain": "Logic",
-      "key_insight": "# Future Directions\n\n## What the formalization establishes\n\nThe literal observer definition does not produce a nontrivial numerical invariant. For every topology `τ`, the `Unit`-indexed family whose o",
-      "quality_score": 0.75,
-      "sorry_count": 1,
-      "theorem_count": 707,
-      "timestamp": "2026-07-17T05:57:49",
-      "title": "Phantom Topologies: Spaces That Change When You Look at Them"
-    },
-    {
       "cycle_id": "16941ff7",
       "domain": "Novelty",
       "key_insight": "# Future Directions: Separated Filtrations and Chain Geometry\n\n## 1. Integer-valued polynomial filtration\n\nLet \\(\\operatorname{Int}(\\mathbb Z)\\) be the ring of rational polynomials taking integer valu",
@@ -2501,6 +2491,16 @@
       "theorem_count": 21,
       "timestamp": "2026-07-21T09:48:25",
       "title": "Speculative: Proof Complexity and Thermodynamic Cost"
+    },
+    {
+      "cycle_id": "c4a6ce21",
+      "domain": "Algebra",
+      "key_insight": "# Future directions\n\nThe present development proves an exact theorem for a finite exhaustive-verification model: `n` binary choices create `2^n` candidate certificates, retaining one resets `2^n - 1`",
+      "quality_score": 0.65,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-07-21T09:48:30",
+      "title": "Thermodynamics of Mathematical Proof"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-21T09:48:25",
+  "last_updated": "2026-07-21T09:48:30",
   "open_questions": [
     {
       "context": "",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "d69a2aa8",
-        "quality": 0.79,
-        "theorems": 11,
-        "title": "Tropical Cryptocurrency: Mining on the Min-Plus Semiring"
-      },
-      {
         "cycle_id": "5ae7f8c1",
         "quality": 0.85,
         "theorems": 19,
@@ -3079,6 +3073,12 @@
         "quality": 0.68,
         "theorems": 12,
         "title": "The Mega-Sphere: All Dimensions at Once"
+      },
+      {
+        "cycle_id": "c4a6ce21",
+        "quality": 0.65,
+        "theorems": 15,
+        "title": "Thermodynamics of Mathematical Proof"
       }
     ],
     "Applications": [

@@ -1,4 +1,4 @@
-import Catalog.Novelty.Defs
+import Catalog.Novelty.TotalRainbowForest.Defs
 
 /-!
 # Structure of minimal obstructions to total rainbow forests

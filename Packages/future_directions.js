@@ -45,21 +45,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The Fourier Analysis of Collatz: Spectral Gaps in the 3n+1 Map"
   },
   {
-    "consumed_by_exp_id": "c4a6ce21",
-    "description": "Formalize a Landauer-like principle for mathematical reasoning: every bit of information destroyed in a proof step costs at least kT ln 2 of entropy. Prove that there exist theorems whose shortest proof requires exponentially more erasure than creation, and connect to Kolmogorov complexity and the thermodynamic cost of verification.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0458",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T12:28:35.662011+00:00",
-    "title": "Thermodynamics of Mathematical Proof"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle fff627f3 (Q=0.770), which proved 7 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Hilbert's Hotel has infinitely many rooms, each containing a prime number. Room n contains the n-th prime p_n. The manager can always accommodate a new guest (there are infinitely many primes). But what if the guests want to REARRANGE? Conjecture: For any permutation sigma of N, there exists a rearr",
     "domains": [
@@ -87,6 +72,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-21T00:19:15.448973+00:00",
     "title": "Speculative: Ramanujan-Style Intuition as Formalizable Meta-Reasoning"
+  },
+  {
+    "consumed_by_exp_id": "279ae676",
+    "description": "Formalize Cantor's hierarchy of infinities in Lean 4: aleph_0 (countable), aleph_1 (first uncountable), the continuum hypothesis (CH = aleph_1 = 2^aleph_0). Prove: the power set axiom guarantees strictly larger cardinals. Show: the Hartogs number of any set exists without AC. Explore: can we formalize large cardinals (measurable, supercompact) and their consistency strength hierarchy? Connect to Rucker's intuition that 'infinity is a place you can visit.'",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0545",
+    "priority_score": 0.86,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-07-21T09:47:53.103125+00:00",
+    "title": "Rucker: Infinity and the Mind \u2014 Formalizing Different Sizes of Infinity"
   },
   {
     "consumed_by_exp_id": "",
@@ -203,6 +203,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Tropical Mathematics of Social Choice"
   },
   {
+    "consumed_by_exp_id": "0268a2b5",
+    "description": "Formalize 4D geometry: hyperspheres, tesseracts (4-cubes), Clifford tori. Prove: the 4D sphere S^3 has the Hopf fibration with fibers S^1 over S^2. Show: the volume of a 4D ball is (pi^2 / 2) * r^4. Explore: can we formalize Rucker's concept of 'rotation through the fourth dimension' as a smooth map from SO(4) that has no fixed point? Conjecture: every closed 3-manifold embeds in R^4.",
+    "domains": [
+      "Novelty",
+      "Geometry"
+    ],
+    "id": "fd_0546",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-07-21T09:47:53.203676+00:00",
+    "title": "Rucker: The Fourth Dimension as a Mathematical Playground"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 71fc60c7 (Q=0.750), which proved 23 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Elementary cellular automata (ECAs) are the 256 rules that update a 1D binary array based on its 3-cell neighborhood. Rule 110 is Turing-complete. But ECAs can also be viewed as polynomial maps over GF(2): the state s = (s_0, s_1, ..., s_{n-1}) is a vector over GF(2), and the update rule is s -> f(s",
     "domains": [
@@ -275,19 +290,19 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: The Lean Theorem Prover as an Ecological Niche"
   },
   {
-    "consumed_by_exp_id": "1a2d7e50",
-    "description": "Every proof has a thermodynamic cost proportional to its Kolmogorov complexity. Define: cost(\u03c0) = K(\u03c0) * T * ln(2), where K is Kolmogorov complexity and T is temperature. Prove: shorter proofs have lower cost. Conjecture: there exist statements whose shortest proof has cost exceeding any computable bound (proof-theoretic analog of Chaitin's theorem). Show: the average cost of proving a random true statement of length n is \u0398(2^n).",
+    "consumed_by_exp_id": "",
+    "description": "Formalize the concept of 'mind tools' \u2014 mathematical structures that extend cognition. Define: a mind tool is a formal system F such that the set of theorems provable in F is strictly larger than the set the human brain can directly apprehend. Prove: ZFC is a mind tool (by G\u00f6del's incompleteness \u2014 there exist ZFC theorems the brain cannot directly 'see'). Show: category theory is a more powerful mind tool than set theory for certain classes of problems (it proves things about all categories simultaneously). Conjecture: the hierarchy of mind tools is well-ordered by proof-theoretic ordinal.",
     "domains": [
       "Novelty",
-      "Computation"
+      "Logic"
     ],
-    "id": "fd_0528",
-    "priority_score": 0.83,
+    "id": "fd_0547",
+    "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-20T22:20:22.701465+00:00",
-    "title": "Speculative: Proof Complexity and Thermodynamic Cost"
+    "status": "available",
+    "timestamp": "2026-07-21T09:47:53.282315+00:00",
+    "title": "Rucker: Mind Tools \u2014 Mathematics as Cognitive Extension"
   },
   {
     "consumed_by_exp_id": "95b84694",
@@ -5668,6 +5683,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-21T06:49:44.327570+00:00",
     "title": "Conjecture: there are natural state spaces in which functional observation forms"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## Formal-machine Kolmogorov complexity\n\nThe development uses binary code length under an injective encoding, which captures the counting core of incompressibility but is computable rather than genuine prefix-free Kolmogorov complexity. A stronger continuation should define a prefix-free universal machine, partial evaluation, shortest-program complexity, and the invariance theorem up to an additive constant.\n\n## Proof systems and truth distributions\n\n\u201cRandom true statement of length `n`\u201d is not determined until one fixes a language, semantics, proof calculus, and probability distribution on the true formulas. The canonical fixed-width model formalized here has linear mean code length and therefore disproves any model-independent exponential claim. Future work should study explicitly specified ensembles\u2014for example, uniformly sampled provable formulas in a bounded syntax\u2014and distinguish statement length, shortest-proof length, and shortest-program length.\n\n## Busy-Beaver rather than a single dominating proof\n\nThe literal claim that one fixed proof exceeds every computable bound has the wrong quantifier order and is formally refuted. A viable noncomputable replacement is a Busy-Beaver function for proof search: as the statement-size budget grows, the maximum shortest proof length may dominate every computable function, subject to a suitable sound and sufficiently expressive formal theory. Formalizing this requires computably enumerable syntax, a proof checker, consistency/soundness assumptions as theorem parameters, and undecidability machinery.\n\n## Physical calibration\n\nThe factor `T * log 2` is presently a stipulated mathematical scaling law with Boltzmann\u2019s constant normalized to one. A physical treatment should distinguish logical erasure from proof verification, model reversible proof checking, include Boltzmann\u2019s constant and units, and prove lower bounds from explicit irreversible state transitions. Raw proof length alone cannot do this: the padding counterexample shows that semantically irrelevant storage can increase length without changing modeled information cost.\n\n## Sharper average-case results\n\nThe exact identity proved here, `n - 1 + 2\u207b\u207f`, concerns canonical binary representations of uniform fixed-width words. Natural extensions include prefix-free code ensembles, conditional complexity given the statement, distributions restricted to theorem sets, and expected shortest-proof complexity. Any asymptotic theorem should state the ensemble and normalization explicitly.\n",
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "fd_0548",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "1a2d7e50",
+    "status": "available",
+    "timestamp": "2026-07-21T09:48:24.551991+00:00",
+    "title": "The development uses binary code length under an injective encoding, which captu"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe present development proves an exact theorem for a finite exhaustive-verification model: `n` binary choices create `2^n` candidate certificates, retaining one resets `2^n - 1` rejection flags, and shorter uniform descriptions are impossible by cardinality. It deliberately does not claim that every proof calculus must use exhaustive search.\n\n1. **Machine-relative Kolmogorov complexity.** Define a prefix-free finite machine and replace the uniform injection obstruction by an objectwise incompressibility theorem. Relate machine descriptions to certificate decoders and quantify the additive invariance constant.\n2. **Shortest-proof complexity.** Define a concrete finite proof calculus, proof semantics, and minimum derivation length. Construct theorem families for which a formal lower bound on shortest proof length can be proved, rather than identifying candidates with proofs by definition.\n3. **Reversible verification.** Model verifier transitions as finite maps and compare irreversible flag reset with Bennett-style history retention. Prove a time-space-erasure tradeoff for the same verification relation.\n4. **Entropy rather than event counting.** Put probability distributions on candidates and prove the Landauer lower bound from Shannon entropy loss. The current `2^n - 1` figure counts reset flags; it is not itself the Shannon information of choosing one item from `2^n` possibilities, which is `n` bits under the uniform distribution.\n5. **Algebraic proof systems.** Instantiate certificates with derivations in a finitely presented monoid, group, or rewriting system. Kernel and quotient cardinalities should provide algebraic measures of indistinguishability under verification.\n6. **Tighter verification lower bounds.** Add an oracle/query model with soundness and completeness predicates, then strengthen `hidden_certificate` to an adversarial lower bound for deterministic and randomized verifiers.\n7. **Physical assumptions.** Separate logical irreversibility from physical dissipation by defining an implementation semantics and explicitly assuming a thermodynamic realization theorem. This would clarify exactly where the physical Landauer principle enters beyond the formal accounting functional.\n",
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "fd_0549",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "c4a6ce21",
+    "status": "available",
+    "timestamp": "2026-07-21T09:48:28.648973+00:00",
+    "title": "The present development proves an exact theorem for a finite exhaustive-verifica"
   },
   {
     "consumed_by_exp_id": "",

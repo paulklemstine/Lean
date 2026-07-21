@@ -3,8 +3,8 @@ import Shared.CarmichaelComposite
 
 /-! # Carmichael's Primitive Divisor Theorem for Fibonacci Numbers
 
-For `13 ≤ n ≤ 10000`, `F(n)` has a primitive prime divisor: a prime `p`
-such that `p ∣ F(n)` but `p ∤ F(k)` for all `0 < k < n`.
+For `13 ≤ n ≤ 10000`, `F(n)` has a primitive prime divisor: a prime `p` such
+that `p ∣ F(n)` but `p ∤ F(k)` for all `0 < k < n`.
 -/
 
 set_option maxHeartbeats 800000
