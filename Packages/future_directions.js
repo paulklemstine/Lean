@@ -245,7 +245,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Zombies and Qualia: Mathematics of Subjective Experience"
   },
   {
-    "consumed_by_exp_id": "83bece51",
+    "consumed_by_exp_id": "",
     "description": "Map prime numbers to harmonic overtones using the Riemann zeta function's non-trivial zeros. Define: the 'harmonic' of a number n is the sum of 1/\u03c1 for each zero \u03c1 with |Im(\u03c1)| \u2264 n. Prove: the harmonic of n grows as O(log n / log log n). Conjecture: perfect intervals (octaves, fifths, fourths) correspond to numbers whose harmonic is rational. Show: the harmonic of 2 is exactly 1 (the octave), while the harmonic of 3 is transcendental (the fifth).",
     "domains": [
       "Novelty",
@@ -255,7 +255,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-20T15:28:30.688765+00:00",
     "title": "Speculative: Number Theory as Music Theory"
   },
@@ -290,7 +290,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Proof Complexity and Thermodynamic Cost"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "95b84694",
     "description": "Define the 'gravitational weight' of a theorem T as the number of other theorems that depend on T. Define 'anti-gravity' theorems as those with high weight but short proofs. Conjecture: anti-gravity theorems exist in every branch of mathematics (e.g., the fundamental theorem of algebra has weight O(n^2) but proof length O(1) in complex analysis). Prove: the set of anti-gravity theorems is dense in the space of all theorems (in a suitable topology). Predict: 10% of theorems in any formal library are anti-gravity.",
     "domains": [
       "Novelty",
@@ -300,7 +300,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-21T00:19:15.530982+00:00",
     "title": "Speculative: Anti-Gravity Mathematics \u2014 Theorems That Resist Proof"
   },
@@ -320,7 +320,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "977e8d8d",
     "description": "Construct a simplicial complex from the citation graph of mathematical theorems: vertices are theorems, edges connect co-cited theorems, triangles connect tri-cited theorems, etc. Compute the persistent homology of this complex. Conjecture: H_1 reveals 'schools of mathematics' (connected research communities) and H_2 reveals 'paradigm shifts' (structural changes in the network). Prove: the Betti numbers grow as \u03b2_k \u2248 n^(k+1) where n is the number of theorems.",
     "domains": [
       "Novelty",
@@ -330,7 +330,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-21T00:19:15.361113+00:00",
     "title": "Speculative: Topological Data Analysis of Theorem Networks"
   },
