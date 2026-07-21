@@ -125,6 +125,17 @@ theorem small_cutoffs_coincide_of_empty (windowTwo windowThree : Finset ℂ)
   simp [hTwo, hThree, harmonic]
 
 /-
+The claimed transcendence at cutoff three also fails for an empty window: zero is
+annihilated by the nonzero polynomial `X` over the rationals.
+-/
+theorem cutoff_three_not_transcendental_of_empty (windowThree : Finset ℂ)
+    (hempty : windowThree = ∅) :
+    ¬ Transcendental ℚ (harmonic windowThree) := by
+  rw [ hempty, harmonic_eq_zero_of_empty ];
+  · exact fun h => h ( isAlgebraic_zero );
+  · rfl
+
+/-
 The catalog's quadratic graph-zeta factorization converts a reciprocal-root harmonic
 into the coefficient ratio `l/q`.  This is a finite exact analogue of a reciprocal-zero
 explicit formula.

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "86896469",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\n## What is now established\n\nFor an arbitrary activation map `a : X → (Fin k → Bool)`, the correct finite semantic space is its range `Feasible a`. The formal development proves:",
-      "quality_score": 0.76,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-19T11:15:50",
-      "title": "Stone Duality for Machine Learning: Neural Networks as Geometric Realizations"
-    },
-    {
       "cycle_id": "198023c0",
       "domain": "Applications",
       "key_insight": "# Future Directions: Structural Equivalence and Meaning\n\n## 1. Orbit-complete observational languages\n\n**Conjecture.** For every finite relational signature and finite model, there is a finite modal l",
@@ -499,19 +489,19 @@
       "theorem_count": 14,
       "timestamp": "2026-07-21T18:48:03",
       "title": "Rucker: The Fourth Dimension as a Mathematical Playground"
+    },
+    {
+      "cycle_id": "9d505535",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions: Tropical Mathematics of Social Choice\n\n## 1. Classification of finite min-plus aggregators\n\n**Conjecture.** Every normalized, translation-equivariant, coordinatewise-minimum-prese",
+      "quality_score": 0.75,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-21T20:46:11",
+      "title": "Speculative: Tropical Mathematics of Social Choice"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "bcfc30de",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions: Guarded Circular Proofs\n\n## 1. Algebraic-domain completion of finite proof approximants\n\nFor a finitary sequent calculus, order partial proof trees by information content, with an",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-07-17T09:40:03",
-      "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
-    },
     {
       "cycle_id": "f0c4ce45",
       "domain": "Bridges",
@@ -2501,6 +2491,16 @@
       "theorem_count": 16,
       "timestamp": "2026-07-21T20:46:00",
       "title": "Rucker: Mind Tools — Mathematics as Cognitive Extension"
+    },
+    {
+      "cycle_id": "9d505535",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions: Tropical Mathematics of Social Choice\n\n## 1. Classification of finite min-plus aggregators\n\n**Conjecture.** Every normalized, translation-equivariant, coordinatewise-minimum-prese",
+      "quality_score": 0.75,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-21T20:46:11",
+      "title": "Speculative: Tropical Mathematics of Social Choice"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.79
     }
   ],
-  "last_updated": "2026-07-21T20:46:00",
+  "last_updated": "2026-07-21T20:46:11",
   "open_questions": [
     {
       "context": "",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "5ae7f8c1",
-        "quality": 0.85,
-        "theorems": 19,
-        "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
-      },
-      {
         "cycle_id": "2170ccdf",
         "quality": 0.74,
         "theorems": 0,
@@ -3079,6 +3073,12 @@
         "quality": 0.65,
         "theorems": 15,
         "title": "Thermodynamics of Mathematical Proof"
+      },
+      {
+        "cycle_id": "9d505535",
+        "quality": 0.75,
+        "theorems": 0,
+        "title": "Speculative: Tropical Mathematics of Social Choice"
       }
     ],
     "Applications": [
