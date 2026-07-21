@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "e2a481c0",
-      "domain": "Probability",
-      "key_insight": "# Future directions\n\n1. **Tableau-level crystal data.** Define semistandard Young tableaux, crystal operators, descent compositions, and the quasicrystal equivalence relation. This would connect the a",
-      "quality_score": 0.65,
-      "sorry_count": 0,
-      "theorem_count": 4,
-      "timestamp": "2026-07-17T06:13:55",
-      "title": "ArXiv paper: Contractions and applications of crystal skeletons: Young quasisymmetric and Stanley sy"
-    },
-    {
       "cycle_id": "fe20b520",
       "domain": "Applications",
       "key_insight": "# Future directions\n\n## What was formalized\n\n`PruningSpectra.lean` develops two deterministic parts of the component-pruning argument.\n\n1. **Order-spectrum arithmetic.** One-dimensional semilinear spe",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-21T12:08:37",
       "title": "Speculative: The Universe Computes Its Own Existence (Physics = Computation)"
+    },
+    {
+      "cycle_id": "91cdf1e0",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions: Fitness Landscapes of Mathematical Theories\n\n## 1. Dependency-adjusted global champion conjecture\nFix a finite corpus of statements and charge each theory for both source length a",
+      "quality_score": 0.69,
+      "sorry_count": 0,
+      "theorem_count": 18,
+      "timestamp": "2026-07-21T14:31:19",
+      "title": "Speculative: The Lean Theorem Prover as an Ecological Niche"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-21T12:08:37",
+  "last_updated": "2026-07-21T14:31:19",
   "open_questions": [
     {
       "context": "",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "64b7f63b",
-        "quality": 0.73,
-        "theorems": 65,
-        "title": "Close Proofs: Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
-      },
-      {
         "cycle_id": "f2f32f44",
         "quality": 0.67,
         "theorems": 55,
@@ -3265,6 +3259,12 @@
         "quality": 0.7,
         "theorems": 15,
         "title": "The Fractal Dimension of Mathematical Truth"
+      },
+      {
+        "cycle_id": "91cdf1e0",
+        "quality": 0.69,
+        "theorems": 18,
+        "title": "Speculative: The Lean Theorem Prover as an Ecological Niche"
       }
     ],
     "Computation": [
