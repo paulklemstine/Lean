@@ -1,334 +1,427 @@
-# Theorems as Phase Transitions in Proof Space
+# Counted Proof Spaces: Entropy, Sparsity, and Critical Indices
 
 ## Abstract
 
-We develop a rigorous mathematical skeleton for the speculative thesis that the
-provability structure of formal mathematics undergoes a *phase transition* as a
-function of statement length. Modeling **proof space** as the set of finite
-words over a $k$-symbol alphabet, we establish the exact combinatorics of its
-growth, define an **order parameter** — the fraction of statements that are
-provable — and prove an *asymptotic incompleteness* theorem: whenever provable
-statements grow with a base strictly smaller than the alphabet size, the order
-parameter converges to zero, so provable statements have density zero in proof
-space. We then formalize the notion of a **sharp transition** at a critical
-length (the *Gödel threshold*) via a logistic order-parameter profile, proving
-that it is strictly monotone, equals $\tfrac12$ at criticality, and converges to
-a Heaviside step as a sharpness parameter tends to infinity — a first-order
-transition. We identify the **dimension** of proof space with its logarithmic
-growth rate $\log k$ (a box-counting dimension / topological entropy) and show
-that the induced geometric length distribution $(k-1)/k^{n+1}$ is a genuine
-probability distribution whose $k^{-n}$ tail realizes the predicted power law
-for theorem lengths. Finally, we isolate the abstract logical core of Gödel's
-first incompleteness theorem, prove it, show its hypotheses are satisfiable, and
-record a Cantor-style obstruction to internal completeness. Together these
-results turn an evocative analogy into a precise, self-contained framework.
-
-**Keywords.** proof space, order parameter, phase transition, Gödel
-incompleteness, box-counting dimension, topological entropy, power law,
-logistic profile.
-
----
+We study a finite-alphabet model of proof space in which all words of length at most $n$ form the ambient syntactic population and a cumulative function $P(n)$ counts a distinguished derivable subfamily. Three observables are separated: combinatorial volume, derivability density, and entropy density. For an alphabet of size $k\ge2$, the ambient volume is $S_k(n)=\sum_{i=0}^n k^i$. If $P(n)\le Ca^n$ for constants $C\ge0$ and $0\le a<k$, then the derivability density $\rho(n)=P(n)/S_k(n)$ tends to zero, while the ambient entropy density $h(n)=\log S_k(n)/n$ tends to $\log k$. Hence the two-coordinate phase observable converges to $\bigl(0,\log k\bigr)$: derivability is asymptotically sparse despite persistent positive syntactic entropy. If $\rho$ is additionally antitone, every positive level not exceeding the initial density has a unique finite critical index, and the indices are partitioned exactly into those before and after the crossing. We also analyze a homogeneous geometric model of statement lengths and prove that its successive probability ratio is constant, equal to $1/k$; exponential language growth therefore does not imply a power-law length distribution. The results give rigorous sufficient conditions for threshold behavior while clarifying dependence on encoding, observation level, and monotonicity. They do not assert a canonical numerical threshold arising from incompleteness alone.
 
 ## 1. Introduction
 
-Statistical physics classifies matter by *phases* separated by *critical
-points*, diagnosed through an *order parameter* that vanishes in one phase and is
-nonzero in the other, and through *scaling exponents* (critical exponents,
-fractal dimensions) that govern behavior near criticality. The organizing thesis
-of this paper is that formal mathematics — viewed as an ensemble of statements
-ordered by length — exhibits the same structure.
+The suggestion that major theorems behave like phase transitions in a space of possible proofs combines ideas from logic, combinatorics, information theory, and statistical physics. To make that suggestion mathematical, one must identify a state space, a size parameter, and an order parameter. A finite alphabet supplies a basic state space: all finite words that could encode statements or deductions. A length cutoff supplies scale. The fraction of words belonging to a selected derivable family supplies an order parameter.
 
-Concretely, consider all finite strings over a fixed finite alphabet. Each is a
-candidate statement; some parse, some are true, some are provable. As we increase
-a length cutoff $n$, the ensemble of statements of length $\le n$ grows
-exponentially, and the fraction of it that is provable defines an order
-parameter. The speculative claim — motivated by the observation that landmark
-undecidable or hard statements (Gödel sentences, and conjecturally objects like
-Fermat's Last Theorem or the ABC conjecture) require substantial length to
-express — is that this order parameter undergoes a *sharp transition* at a
-critical length $n_c$, the *Gödel threshold*, where self-reference first becomes
-expressible and provability parts ways with truth.
+This model is intentionally austere. It does not identify raw strings with meaningful formulas, nor does it prescribe a canonical encoding of a deductive system. Instead, it isolates consequences that follow from counting assumptions alone. This distinction is essential. Syntactic volume, derivability, semantic truth, and incompleteness are related concepts, but they are not interchangeable.
 
-This paper does not attempt to prove the full physical conjecture. Instead it
-builds the rigorous scaffolding on which such a conjecture must rest: the exact
-combinatorics of proof space, a well-defined and bounded order parameter, a
-proved asymptotic-incompleteness limit, a precise sharp-transition statement, a
-dimension/entropy computation, a power-law length distribution, and the abstract
-incompleteness theorem that forces a critical point to exist at all. Every
-statement below is accompanied by a complete proof sketch.
+The main conclusion is an entropy–sparsity separation. If the ambient language has exponential base $k$ while a derivable subfamily has an upper exponential base $a<k$, then the subfamily has zero asymptotic density. Nevertheless, the ambient entropy per unit length converges to the positive constant $\log k$. Thus a low-density derivable phase coexists with a highly expansive syntactic background.
 
-## 2. Proof space and its combinatorics
+A second conclusion turns asymptotic sparsity into a finite threshold. Convergence to zero alone allows oscillation and repeated crossings. Under the additional hypothesis that density is antitone, each admissible positive observation level $\varepsilon$ has a unique last index $c$ at which density is at least $\varepsilon$. For all $n$, density is below $\varepsilon$ exactly when $n>c$. This is a precise sharp-transition statement, conditional on monotonicity.
 
-### 2.1 Definitions
+A third conclusion concerns theorem-length predictions. A natural homogeneous length model determined by alphabet entropy is geometric, with constant successive ratio $1/k$. That behavior is incompatible with a genuine power law, whose successive ratio varies with length. A power-law tail therefore requires additional structure, such as a mixture of geometric regimes, rather than following from exponential word growth alone.
 
-Fix an integer alphabet size $k \ge 2$.
+The paper proceeds from definitions through limit theorems, a threshold theorem, algorithms, examples, applications, and limitations. All logarithms are natural logarithms. The natural numbers include $0$.
 
-**Definition 2.1 (Statements).** A *statement of length $n$* is a word of $n$
-symbols over the $k$-symbol alphabet. The number of statements of length exactly
-$n$ is
-$$\mathrm{statements}(k,n) = k^n.$$
+## 2. Counted languages and observables
 
-**Definition 2.2 (Cumulative count).** The number of statements of length at
-most $n$ is
-$$S(k,n) = \sum_{i=0}^{n} k^i.$$
+### 2.1. Ambient syntactic volume
 
-### 2.2 Growth
+Fix an alphabet with $k$ symbols, where $k\in\mathbb N$ and $k\ge2$. There are exactly $k^i$ words of length $i$. Including the empty word, the number of words of length at most $n$ is
 
-**Theorem 2.3 (Geometric closed form).** For every $k$ and $n$,
-$$(k-1)\,S(k,n) = k^{n+1} - 1,$$
-understood over $\mathbb{Z}$ to avoid truncated subtraction.
+$$
+S_k(n)=\sum_{i=0}^{n}k^i.
+$$
 
-*Proof.* This is the standard geometric-series identity $\left(\sum_{i=0}^n k^i\right)(k-1) = k^{n+1}-1$, obtained by telescoping $k^{i+1}-k^i$. $\square$
+The geometric-series identity gives
 
-**Theorem 2.4 (Lower sandwich).** $k^n \le S(k,n)$.
+$$
+S_k(n)=\frac{k^{n+1}-1}{k-1}.
+$$
 
-*Proof.* The term $i=n$ of the defining sum already contributes $k^n$, and all
-terms are nonnegative. $\square$
+The boundary convention matters: $S_k(0)=1$, so the ambient population is positive at every cutoff. We will repeatedly use the elementary lower bound
 
-**Theorem 2.5 (Upper sandwich).** For $k \ge 2$, $S(k,n) \le k^{n+1}$.
+$$
+k^n\le S_k(n).
+$$
 
-*Proof.* Induct on $n$. The base case $n=0$ gives $S=1 \le k$. For the step,
-$S(k,n+1) = S(k,n) + k^{n+1} \le k^{n+1} + k^{n+1} \le k^{n+2}$, using the
-inductive hypothesis and $2 \le k$. $\square$
+For $k\ge2$, another convenient upper bound is
 
-**Theorem 2.6 (Exponential growth).** For $k \ge 2$, $2^n \le S(k,n)$.
+$$
+S_k(n)\le k^{n+1}.
+$$
 
-*Proof.* $2^n \le k^n \le S(k,n)$ by monotonicity of $x \mapsto x^n$ and
-Theorem 2.4. $\square$
+Indeed, the closed form yields $S_k(n)<k^{n+1}/(k-1)\le k^{n+1}$ when interpreted with the appropriate non-strict endpoint bound.
 
-Theorems 2.4–2.5 give the tight sandwich
-$$k^n \le S(k,n) \le k^{n+1},\tag{$\ast$}$$
-which drives both the dimension computation (§5) and the order-parameter limit
-(§3).
+### 2.2. Distinguished counted families
 
-## 3. The order parameter and asymptotic incompleteness
+Let $P:\mathbb N\to\mathbb N$ be a cumulative count. The intended interpretation is that $P(n)$ counts members of a distinguished derivable family represented by words of length at most $n$. For a genuine subfamily we require
 
-We now work with abstract real-valued counting functions
-$\mathrm{prov}, \mathrm{tot} : \mathbb{N} \to \mathbb{R}$, where $\mathrm{tot}(n)$
-is the number of statements of length $\le n$ (growing like $k^n$ by $(\ast)$)
-and $\mathrm{prov}(n)$ is the number of provable ones.
+$$
+0\le P(n)\le S_k(n)
+$$
 
-**Definition 3.1 (Order parameter).** The *order parameter* of proof space is
-$$r(n) = \frac{\mathrm{prov}(n)}{\mathrm{tot}(n)}.$$
+at each relevant cutoff. No monotonicity is initially imposed on the ratio, although a literal cumulative count $P$ itself would normally be nondecreasing.
 
-**Theorem 3.2 (Boundedness).** If $0 \le \mathrm{prov}(n) \le \mathrm{tot}(n)$
-and $\mathrm{tot}(n) > 0$, then $r(n) \in [0,1]$.
+**Definition 1 (Derivability density).** The density of the distinguished family at cutoff $n$ is
 
-*Proof.* Nonnegativity is $\mathrm{prov}(n)/\mathrm{tot}(n) \ge 0$; the upper
-bound is $\mathrm{prov}(n) \le \mathrm{tot}(n)$ divided by the positive
-$\mathrm{tot}(n)$. $\square$
+$$
+\rho(n)=\frac{P(n)}{S_k(n)}.
+$$
 
-**Theorem 3.3 (Asymptotic incompleteness).** Let $k > 1$, $0 \le a < k$, and
-$C \ge 0$. Suppose for all $n$:
-$$\mathrm{prov}(n) \ge 0,\qquad \mathrm{tot}(n) \ge k^n,\qquad \mathrm{prov}(n) \le C\,a^n.$$
-Then $r(n) \to 0$ as $n \to \infty$.
+The term “derivability” labels the intended application; mathematically, the same definition applies to any counted subfamily.
 
-*Proof.* For each $n$,
-$$0 \le r(n) = \frac{\mathrm{prov}(n)}{\mathrm{tot}(n)} \le \frac{C\,a^n}{k^n} = C\left(\frac{a}{k}\right)^n.$$
-Since $0 \le a/k < 1$, the geometric sequence $(a/k)^n \to 0$, so
-$C\,(a/k)^n \to 0$. By the squeeze theorem, $r(n) \to 0$. $\square$
+**Lemma 1 (Unit-interval bound).** If $P(n)\le S_k(n)$, then
 
-**Interpretation.** Under the sole hypothesis that provable statements are
-exponentially sparser than statements in general ($a < k$), the provable
-statements have *density zero*: almost every statement is unprovable. This is
-the *disordered phase* of proof space, the analogue of a system below (or above)
-its ordering transition where the order parameter vanishes.
+$$
+0\le\rho(n)\le1.
+$$
 
-## 4. The sharp phase transition at the critical length
+**Proof sketch.** Both counts are nonnegative and $S_k(n)>0$, so the quotient is nonnegative. Dividing $P(n)\le S_k(n)$ by the positive denominator gives the upper bound. $\square$
 
-Density zero is an asymptotic statement; the conjecture is about *how* the order
-parameter decays. We model the transition profile at sharpness $\beta$ and
-critical length $x_c$ by the logistic function.
+### 2.3. Entropy density and phase observable
 
-**Definition 4.1 (Logistic order-parameter profile).**
-$$\Phi_\beta(x) = \frac{1}{1 + e^{-\beta(x - x_c)}}.$$
+**Definition 2 (Ambient entropy density).** For $n>0$, define
 
-**Theorem 4.2 (Range).** For all $\beta, x_c, x$, $\Phi_\beta(x) \in (0,1)$.
+$$
+h(n)=\frac{\log S_k(n)}{n}.
+$$
 
-*Proof.* The denominator $1 + e^{-\beta(x-x_c)}$ exceeds $1$ and is finite, so
-the ratio lies strictly between $0$ and $1$. $\square$
+This quantity measures logarithmic ambient volume per unit cutoff. Its limiting value is insensitive to multiplicative constants in $S_k(n)$ and captures the exponential growth rate of the language.
 
-**Theorem 4.3 (Criticality).** $\Phi_\beta(x_c) = \tfrac12$ for every $\beta$.
+**Definition 3 (Two-coordinate phase observable).** Define
 
-*Proof.* At $x = x_c$ the exponent vanishes: $e^0 = 1$, giving $1/(1+1)=\tfrac12$. $\square$
+$$
+\Phi(n)=\bigl(\rho(n),h(n)\bigr).
+$$
 
-**Theorem 4.4 (Monotonicity).** For $\beta > 0$, $\Phi_\beta$ is strictly
-increasing in $x$.
+The two coordinates are retained because they measure distinct phenomena. The first concerns the relative abundance of a selected family; the second concerns the growth of the entire syntax.
 
-*Proof.* As $x$ increases, $-\beta(x-x_c)$ decreases, so $e^{-\beta(x-x_c)}$
-decreases, the denominator decreases, and the reciprocal increases strictly. $\square$
+## 3. Entropy–sparsity separation
 
-**Theorem 4.5 (Sharp limit — ordered side).** If $x > x_c$, then
-$\Phi_\beta(x) \to 1$ as $\beta \to \infty$.
+We now impose an exponential upper bound on the selected family.
 
-*Proof.* With $x - x_c > 0$, the exponent $-\beta(x-x_c) \to -\infty$, so
-$e^{-\beta(x-x_c)} \to 0$ and $\Phi_\beta(x) \to 1/(1+0) = 1$. $\square$
+**Assumption (Exponential sparsity).** There exist real constants $C\ge0$ and $a$ with $0\le a<k$ such that
 
-**Theorem 4.6 (Sharp limit — disordered side).** If $x < x_c$, then
-$\Phi_\beta(x) \to 0$ as $\beta \to \infty$.
+$$
+P(n)\le Ca^n
+$$
 
-*Proof.* With $x - x_c < 0$, the exponent $-\beta(x-x_c) \to +\infty$, so the
-denominator $\to \infty$ and $\Phi_\beta(x) \to 0$. $\square$
+for every $n$.
 
-Combining Theorems 4.3, 4.5, 4.6, the profile converges pointwise to the
-Heaviside step
-$$\lim_{\beta\to\infty}\Phi_\beta(x) = \begin{cases} 1,& x > x_c,\\ \tfrac12,& x = x_c,\\ 0,& x < x_c,\end{cases}$$
-a single jump at $x_c$: the mathematical signature of a *first-order* phase
-transition. In the sharp-transition idealization, the order parameter of proof
-space is a step function switching on at the critical length.
+This assumption allows $P(n)$ to grow exponentially. It requires only that its exponential base be strictly smaller than that of the ambient language.
 
-## 5. Dimension and the length distribution
+**Theorem 1 (Vanishing density under exponential sparsity).** Let $k\ge2$, $C\ge0$, and $0\le a<k$. If $P(n)\le Ca^n$ for all $n$, then
 
-We now quantify the *size* of proof space and the *rarity* of long statements
-using the same exponent.
+$$
+\lim_{n\to\infty}\rho(n)=0.
+$$
 
-**Theorem 5.1 (Dimension of proof space).** Let $\mathrm{tot} : \mathbb{N} \to
-\mathbb{R}$ satisfy the sandwich $k^n \le \mathrm{tot}(n) \le k^{n+1}$ for some
-$k > 1$. Then
-$$\dim(\text{proof space}) := \lim_{n\to\infty} \frac{\log \mathrm{tot}(n)}{n} = \log k.$$
+**Proof sketch.** The ambient lower bound $S_k(n)\ge k^n$ gives
 
-*Proof.* Taking logarithms of the sandwich gives
-$n\log k \le \log\mathrm{tot}(n) \le (n+1)\log k$, hence
-$$\log k \le \frac{\log \mathrm{tot}(n)}{n} \le \frac{n+1}{n}\log k.$$
-As $n \to \infty$ the right side tends to $\log k$, so by squeezing the middle
-converges to $\log k$. $\square$
-
-This limit is the *box-counting dimension* of proof space, equivalently the
-*topological entropy* of the full shift on $k$ symbols: the volume scales as
-$e^{n\log k} = k^n$. At the level of exact counts, the pointwise rate is even
-cleaner: for $n \ge 1$,
-$$\frac{\log(k^n)}{n} = \log k,$$
-so the length-$n$ layer already realizes the dimension exactly.
-
-**Definition 5.2 (Length distribution).** Assign to length $n$ the weight
-$$p(n) = \frac{k-1}{k^{n+1}}.$$
-
-**Theorem 5.3 (Nonnegativity).** For $k \ge 1$, $p(n) \ge 0$ for all $n$.
-
-*Proof.* Numerator $k-1 \ge 0$ and denominator $k^{n+1} > 0$. $\square$
-
-**Theorem 5.4 (Normalization / power law).** For $k > 1$,
-$$\sum_{n=0}^{\infty} \frac{k-1}{k^{n+1}} = 1,$$
-so $p$ is a probability distribution over lengths, with geometric (power-law)
-tail $p(n) \propto k^{-n}$.
-
-*Proof.* Factor $p(n) = \frac{k-1}{k}\cdot\left(\frac{1}{k}\right)^n$. Since
-$0 < 1/k < 1$, the geometric series $\sum_n (1/k)^n = \frac{1}{1 - 1/k} =
-\frac{k}{k-1}$. Multiplying, $\frac{k-1}{k}\cdot\frac{k}{k-1} = 1$. $\square$
-
-The tail $p(n) \propto k^{-n}$ is, read in the length variable $n$, precisely the
-power law predicted for the distribution of theorem lengths, with decay rate
-governed by the dimension $\log k$. The size of proof space and the rarity of
-long statements are thus controlled by a single exponent.
-
-## 6. The Gödel threshold: abstract incompleteness
-
-The phase-transition picture requires that proof space genuinely fail to be
-complete; otherwise no critical point separating provable from unprovable can
-exist. We isolate the abstract logical core responsible.
-
-**Definition 6.1 (Formal system).** A *formal system* consists of:
-a type of *sentences*; a *provability* predicate $\mathrm{Prov}$; a *negation*
-operation $\neg$; a *truth* predicate $T$; together with
-- **soundness:** $\mathrm{Prov}(s) \Rightarrow T(s)$ for all $s$;
-- **truth respects negation:** $T(\neg s) \iff \lnot T(s)$;
-- **consistency:** never $\mathrm{Prov}(s) \wedge \mathrm{Prov}(\neg s)$.
-
-**Definition 6.2 (Gödel sentence).** A sentence $G$ is a *Gödel sentence* if it
-is a fixed point of unprovability:
-$$T(G) \iff \lnot \mathrm{Prov}(G).$$
-
-**Theorem 6.3 (Abstract Gödel incompleteness).** In any sound, consistent formal
-system possessing a Gödel sentence $G$, the sentence $G$ is true but neither $G$
-nor $\neg G$ is provable.
-
-*Proof.* First, $G$ is unprovable: if $\mathrm{Prov}(G)$, then by soundness
-$T(G)$; but $T(G)$ is equivalent to $\lnot\mathrm{Prov}(G)$, contradicting
-$\mathrm{Prov}(G)$. Hence $\lnot\mathrm{Prov}(G)$, and by the fixed-point
-equivalence $T(G)$ holds — $G$ is true. Finally $\neg G$ is unprovable: if
-$\mathrm{Prov}(\neg G)$, then by soundness $T(\neg G)$, i.e. $\lnot T(G)$,
-contradicting $T(G)$. $\square$
-
-**Theorem 6.4 (Non-vacuity).** The hypotheses of Theorem 6.3 are satisfiable:
-there exists a formal system with a genuine Gödel sentence.
-
-*Proof.* Take sentences to be the two Booleans, with each sentence *being* its
-own truth value ($T(b) \equiv (b = \text{true})$), negation the Boolean $\mathrm{not}$,
-and nothing provable ($\mathrm{Prov} \equiv \text{false}$). Soundness holds
-vacuously, negation respects truth by case check, and consistency holds because
-nothing is provable. Then $G = \text{true}$ satisfies
-$T(G) \iff \lnot\mathrm{Prov}(G)$, since both sides are true. $\square$
-
-**Theorem 6.5 (Cantor obstruction to completeness).** For any type of sentences,
-there is no surjection from sentences onto predicates of sentences: no map
-$f : \mathrm{Sentence} \to (\mathrm{Sentence} \to \mathrm{Prop})$ is onto.
-
-*Proof.* This is Cantor's diagonal argument. Given any $f$, the predicate
-$D(s) := \lnot f(s)(s)$ differs from $f(s)$ at $s$ for every $s$, so $D$ is not
-in the image of $f$. $\square$
-
-**Interpretation.** Theorem 6.3 shows truth outruns provability whenever
-self-reference (a Gödel sentence) is available; Theorem 6.4 shows this is not
-vacuous; Theorem 6.5 shows the deeper structural reason — the properties of
-statements cannot be enumerated by statements. Incompleteness is therefore
-intrinsic to any sufficiently expressive proof space, guaranteeing that
-somewhere along the length axis provability must separate from truth. That
-separation is the critical point of §4.
-
-## 7. Discussion
-
-The results assemble into a coherent statistical-mechanical portrait of proof
-space:
-
-- **Substrate (§2).** Proof space is an exponentially growing ensemble, exactly
-  counted by $S(k,n)$ with $(k-1)S(k,n) = k^{n+1}-1$ and sandwich
-  $k^n \le S(k,n) \le k^{n+1}$.
-- **Order parameter (§3).** The provable fraction $r(n)$ is well defined,
-  bounded in $[0,1]$, and provably collapses to $0$ once provability grows more
-  slowly than the alphabet — the disordered phase.
-- **Transition (§4).** The logistic profile provides a precise model of a sharp,
-  first-order transition at the critical length: monotone, $\tfrac12$ at
-  criticality, Heaviside in the sharp limit.
-- **Dimension & scaling (§5).** The logarithmic growth rate is $\log k$, a
-  box-counting dimension / topological entropy, and the same exponent governs a
-  power-law length distribution $p(n) \propto k^{-n}$.
-- **Cause (§6).** Abstract Gödel incompleteness, non-vacuous and underwritten by
-  a Cantor diagonal, forces the existence of a point where provability parts from
-  truth.
-
-What is *not* claimed is that any specific famous theorem literally sits at a
-computed critical length; that remains conjectural. What *is* established is that
-each component of the phase-transition analogy corresponds to a precise,
-proven mathematical statement, so the analogy is now a framework rather than a
-slogan.
-
-## 8. Future directions
-
-1. **Endogenous sharpness.** Derive the logistic profile from a microscopic
-   model (an energy/complexity functional on proofs) rather than positing it, so
-   that $n_c$ and $\beta$ emerge from the counting data.
-2. **Width of the critical window.** Prove that the length of the interval where
-   $\Phi_\beta \in (\varepsilon, 1-\varepsilon)$ shrinks like $1/\beta$, a
-   critical-exponent statement quantifying sharpness.
-3. **Concrete provability.** Replace abstract $\mathrm{prov}/\mathrm{tot}$ with a
-   genuine proof calculus and bound $\mathrm{prov}(n)$ to instantiate the
-   asymptotic-incompleteness theorem unconditionally.
-4. **Genuine Hausdorff dimension.** Metrize the space of infinite
-   statement-streams (a Cantor space) and connect $\log k$ to Hausdorff measure,
-   upgrading the box-counting analogue to an honest Hausdorff dimension.
-5. **Self-referential fixed point.** Strengthen §6 by *constructing* the Gödel
-   sentence via a diagonal lemma rather than assuming it, linking the Gödel
-   threshold to the length at which self-reference first becomes expressible.
-6. **Length distribution of real corpora.** Empirically fit the power-law
-   exponent against the length statistics of large theorem libraries and compare
-   with the $\log k$ prediction.
-
-## 9. Conclusion
-
-By combining exact combinatorics, a bounded order parameter with a proved
-density-zero limit, a rigorous sharp-transition model, a dimension/entropy
-computation with a matching power-law distribution, and the abstract core of
-Gödel incompleteness, we have given the speculative thesis — *theorems are phase
-transitions in proof space* — a self-contained mathematical skeleton. The
-skeleton is rigid enough to support the analogy and pointed enough to generate
-testable predictions about the structure of mathematics itself.
+$$
+0\le \rho(n)=\frac{P(n)}{S_k(n)}
+\le\frac{Ca^n}{k^n}
+=C\left(\frac ak\right)^n.
+$$
+
+Because $0\le a/k<1$, the geometric sequence on the right tends to zero. The squeeze theorem proves the claim. $\square$
+
+The strict rate gap $a<k$ is decisive. If $a=k$, the estimate only yields $\rho(n)\le C$ and supplies no decay. Thus the theorem records a comparison of exponential dimensions rather than mere unboundedness of the denominator.
+
+**Theorem 2 (Ambient entropy limit).** If $k\ge2$, then
+
+$$
+\lim_{n\to\infty}h(n)=\log k.
+$$
+
+**Proof sketch.** From $k^n\le S_k(n)\le k^{n+1}$ for positive $n$, monotonicity of the logarithm gives
+
+$$
+n\log k\le\log S_k(n)\le(n+1)\log k.
+$$
+
+After division by $n$,
+
+$$
+\log k\le h(n)\le\left(1+\frac1n\right)\log k.
+$$
+
+Both bounds tend to $\log k$, so another squeeze argument completes the proof. $\square$
+
+**Theorem 3 (Entropy–sparsity separation).** Under the assumptions of Theorem 1,
+
+$$
+\lim_{n\to\infty}\Phi(n)=\bigl(0,\log k\bigr).
+$$
+
+**Proof sketch.** The first coordinate converges to $0$ by Theorem 1, and the second converges to $\log k$ by Theorem 2. Coordinatewise convergence in the product gives the stated limit. $\square$
+
+The result is not a contradiction between scarcity and abundance. Density is relative. Even if $P(n)$ grows rapidly in absolute terms, it becomes negligible if $S_k(n)$ grows at a strictly larger exponential rate. The phase vector keeps this distinction visible: $(0,\log k)$ represents sparse distinguished structure embedded in a positive-entropy universe.
+
+## 4. Critical indices and sharp crossings
+
+### 4.1. Why convergence is insufficient
+
+Suppose only that $\rho(n)\to0$. For each $\varepsilon>0$, density is eventually below $\varepsilon$, but it may cross the level repeatedly before becoming permanently small. Hence a limit guarantees an eventual region, not a unique crossing boundary.
+
+To obtain a sharp threshold, assume antitonicity:
+
+$$
+m\le n\quad\Longrightarrow\quad \rho(n)\le\rho(m).
+$$
+
+This condition states that enlarging the cutoff never increases the relative density. It is stronger than monotonicity of the cumulative numerator $P(n)$, because the numerator and denominator may grow at competing rates.
+
+**Definition 4 (Level critical index).** Given $\varepsilon>0$, a natural number $c$ is a critical index at level $\varepsilon$ if
+
+$$
+\varepsilon\le\rho(c),\qquad \rho(c+1)<\varepsilon,
+$$
+
+and density lies below $\varepsilon$ exactly after $c$:
+
+$$
+\rho(n)<\varepsilon\quad\Longleftrightarrow\quad c<n.
+$$
+
+The final equivalence contains both sides of the transition, not merely the adjacent crossing inequalities.
+
+### 4.2. Existence and uniqueness
+
+**Theorem 4 (Unique critical index with positive ambient entropy).** Let $k\ge2$, $C\ge0$, and $0\le a<k$. Suppose
+
+$$
+P(n)\le Ca^n
+$$
+
+for every $n$, and suppose $\rho$ is antitone. For every level $\varepsilon$ satisfying
+
+$$
+0<\varepsilon\le\rho(0),
+$$
+
+the phase observable converges to $\bigl(0,\log k\bigr)$, and there exists a unique critical index $c\in\mathbb N$ such that
+
+$$
+\varepsilon\le\rho(c),
+$$
+
+$$
+\rho(c+1)<\varepsilon,
+$$
+
+and, for every $n$,
+
+$$
+\rho(n)<\varepsilon\quad\Longleftrightarrow\quad c<n.
+$$
+
+**Proof sketch.** The phase limit is Theorem 3. Since $\rho(n)\to0$ and $\varepsilon>0$, some $N$ satisfies $\rho(n)<\varepsilon$ for every $n\ge N$. Meanwhile $\rho(0)\ge\varepsilon$, so the finite set
+
+$$
+A=\{n<N:\varepsilon\le\rho(n)\}
+$$
+
+is nonempty. Let $c$ be its greatest element. Then $\varepsilon\le\rho(c)$, while maximality gives $\rho(c+1)<\varepsilon$. If $n>c$, antitonicity gives $\rho(n)\le\rho(c+1)<\varepsilon$. Conversely, if $n\le c$, antitonicity gives $\rho(c)\le\rho(n)$, so $\rho(n)\ge\varepsilon$. This proves the exact equivalence. Any other index satisfying the same equivalence must have the same successor region and therefore equals $c$. $\square$
+
+This theorem is the precise form of a counted phase transition. It is “sharp” because no transition window remains: the level classification changes between two consecutive cutoffs. It is “conditional” because antitonicity, the rate gap, and the initial-level condition are indispensable parts of the statement.
+
+### 4.3. A quantitative search bound
+
+The proof suggests a practical upper bound. From
+
+$$
+\rho(n)\le C(a/k)^n,
+$$
+
+any $N$ satisfying
+
+$$
+C\left(\frac ak\right)^N<\varepsilon
+$$
+
+lies strictly after the critical index. When $C>0$ and $0<a<k$, one may choose
+
+$$
+N>\frac{\log(C/\varepsilon)}{\log(k/a)}.
+$$
+
+Boundary cases are simpler: if $C=0$, then $P(n)=0$ and no positive $\varepsilon\le\rho(0)$ exists; if $a=0$, sparsity forces $P(n)=0$ for positive $n$, so any admissible crossing occurs immediately.
+
+## 5. Length distributions: geometric rather than scale-free
+
+A separate question concerns the distribution of lengths. Consider the normalized geometric model
+
+$$
+L_k(n)=\left(1-\frac1k\right)\exp(-n\log k),
+$$
+
+where now $k>1$ may be treated as a real parameter. Since $\exp(-n\log k)=k^{-n}$,
+
+$$
+L_k(n)=\left(1-\frac1k\right)k^{-n}.
+$$
+
+The prefactor normalizes the sum over $n\ge0$ to $1$.
+
+**Theorem 5 (Entropy controls the geometric length ratio).** For every real $k>1$ and every $n\in\mathbb N$,
+
+$$
+\frac{L_k(n+1)}{L_k(n)}=\exp(-\log k)=\frac1k.
+$$
+
+**Proof sketch.** Substitute the definition at $n+1$ and $n$. The common normalization cancels, and the exponential law leaves $\exp(-\log k)$. Since $k>0$, this equals $1/k$. $\square$
+
+This identity distinguishes geometric tails from power laws. If $Q(n)$ is proportional to $n^{-\alpha}$ for positive $n$, then
+
+$$
+\frac{Q(n+1)}{Q(n)}=\left(\frac{n}{n+1}\right)^\alpha,
+$$
+
+which depends on $n$ and tends to $1$. The geometric ratio remains fixed below $1$. Therefore an entropy parameter that generates a single exponential regime does not, by itself, determine a power-law exponent.
+
+A power law can emerge from a mixture. For example, writing a geometric tail as $e^{-\lambda n}$ and integrating over small rates $\lambda$ with a mixing density behaving like $\lambda^{\alpha-1}$ suggests
+
+$$
+\int_0^\infty e^{-\lambda n}\lambda^{\alpha-1}\,d\lambda
+=\Gamma(\alpha)n^{-\alpha}.
+$$
+
+This calculation motivates, but does not by itself prove for a concrete deductive system, a heterogeneity mechanism: scale-free aggregate behavior may arise from mixing many geometric proof regimes.
+
+## 6. Algorithms
+
+### 6.1. Exact ambient counting
+
+The ambient count can be computed either by summation or by the closed form. Integer arithmetic avoids floating-point error:
+
+1. Input integers $k\ge2$ and $n\ge0$.
+2. Initialize $S=0$ and $p=1$.
+3. For $i=0,\ldots,n$, add $p$ to $S$ and replace $p$ by $kp$.
+4. Return $S$.
+
+This requires $O(n)$ integer multiplications and additions and $O(1)$ stored integer variables. The closed form $(k^{n+1}-1)/(k-1)$ uses fast exponentiation in $O(\log n)$ multiplications, though the bit complexity depends on the exponentially growing output size.
+
+### 6.2. Density and entropy trajectory
+
+Given tabulated counts $P(0),\ldots,P(N)$, compute $S_k(n)$ iteratively, then evaluate
+
+$$
+\rho(n)=P(n)/S_k(n)
+$$
+
+and, for $n>0$,
+
+$$
+h(n)=\log S_k(n)/n.
+$$
+
+This produces the finite phase trajectory $\Phi(n)$. Exact rational arithmetic is available for density; entropy requires a real approximation unless represented symbolically.
+
+### 6.3. Critical-index detection
+
+When antitonicity holds and $0<\varepsilon\le\rho(0)$, scan from $n=0$ until $\rho(n+1)<\varepsilon$. Return $n$. For tabulated data through $N$, the algorithm costs $O(N)$ count comparisons. One should explicitly check antitonicity before interpreting the result as the unique global critical index. Without it, the scan finds only a first local crossing.
+
+If only the sparse upper bound is available, first choose a guaranteed terminal index from $C(a/k)^N<\varepsilon$, then evaluate counts up to that point. Binary search is possible if density can be queried at arbitrary indices and antitonicity has been established, reducing the number of queries to $O(\log N)$.
+
+## 7. Numerical examples
+
+### 7.1. Binary ambient volume
+
+For $k=2$ and $n=3$,
+
+$$
+S_2(3)=2^0+2^1+2^2+2^3=1+2+4+8=15.
+$$
+
+This confirms that the empty word is included. At cutoff $0$, there is one word; at cutoff $3$, there are fifteen.
+
+### 7.2. Uniformly bounded families
+
+Suppose $k=2$ and $P(n)\le7$ for all $n$. Taking $C=7$ and $a=1$ gives
+
+$$
+\rho(n)\le7\left(\frac12\right)^n.
+$$
+
+Thus density tends to zero. This example highlights that the numerator need not decrease. A fixed or bounded family becomes sparse because the ambient denominator grows exponentially.
+
+### 7.3. A model antitone crossing
+
+Let $k=3$ and define $P(n)=2^n$. Since $S_3(n)\ge3^n$,
+
+$$
+\rho(n)\le\left(\frac23\right)^n.
+$$
+
+Direct values are
+
+$$
+\rho(0)=1,
+\quad
+\rho(1)=\frac24=\frac12,
+\quad
+\rho(2)=\frac4{13},
+\quad
+\rho(3)=\frac8{40}=\frac15.
+$$
+
+For the level $\varepsilon=1/4$, the last density at or above the level occurs at $c=2$, because $4/13>1/4$ while $8/40<1/4$. In this model the density is decreasing, so all later indices remain below the level.
+
+### 7.4. Geometric ratio
+
+For $k=2$, the length model is
+
+$$
+L_2(n)=2^{-(n+1)}.
+$$
+
+Its first values are $1/2$, $1/4$, $1/8$, and $1/16$, with every successive ratio equal to $1/2$. For $k=4$, the ratio is $1/4$. These constant ratios visibly differ from power-law ratios, which drift upward toward $1$.
+
+## 8. Applications and interpretation
+
+### 8.1. Deductive systems
+
+For a fixed encoding of a deductive calculus, $P(n)$ may count encoded theorems or another derivable class. The results then state conditional facts about relative abundance. They do not equate uncounted words with falsehood: many words may be malformed, redundant, or encode semantically equivalent objects. The model describes the chosen representation.
+
+### 8.2. Program spaces
+
+Replace “derivable statement” by “program satisfying a specification.” If valid programs grow at a smaller exponential rate than all source strings, their density vanishes while the language retains positive entropy. Under a monotone-density condition, a specification-dependent critical cutoff exists for every admissible density level.
+
+### 8.3. Coding and constrained languages
+
+In coding theory, valid codewords or constrained sequences may form a lower-entropy subset of all strings. The phase vector separates channel capacity from code-family density. Similar reasoning applies to grammatically valid expressions, protocol-compliant messages, and combinatorial structures encoded as words.
+
+### 8.4. Search complexity
+
+Vanishing density suggests that uniform random search in the ambient syntax becomes inefficient: the probability of hitting the distinguished family approaches zero. This observation is qualitative. Translating density into algorithmic hardness requires a specified sampling distribution and computational model; sparse sets can still be easy to generate directly.
+
+## 9. Scope and limitations
+
+The framework supports four guarded conclusions.
+
+First, exponentially sparse derivability can coexist with positive syntactic entropy. Second, sparsity plus antitone density forces a unique finite crossing at every admissible level. Third, the crossing argument needs only an exponential upper bound, not exact formulas for $P(n)$. Fourth, a fixed entropy parameter controls a geometric successive ratio.
+
+Several stronger claims do not follow.
+
+A power law for raw theorem lengths does not follow from exponential word growth. A universal critical index does not survive arbitrary recoding. Abstract incompleteness does not determine a numerical threshold. Incompleteness concerns the existence of statements not derivable within suitable systems; it does not specify the counting rate $P(n)$, establish antitonicity of $\rho(n)$, choose $\varepsilon$, or canonically measure length.
+
+Encoding dependence is unavoidable at the present level. Adding syntactic padding can move lengths and distort finite crossings. Even efficiently equivalent encodings require a comparison theorem before their thresholds can be related.
+
+The antitone hypothesis is also substantive. A cumulative numerator may jump when a new proof schema becomes available, causing temporary increases in density. Exponential sparsity still guarantees convergence to zero but permits finite oscillations. Smoothed observables or transition windows may be more robust for empirical systems.
+
+Finally, ambient entropy is not a Hausdorff dimension in the full geometric sense unless a metric and limiting construction are specified. It is an exponential growth rate. Relations to fractal dimensions require additional definitions and hypotheses.
+
+## 10. Future research
+
+A first direction is quasi-invariance under efficient recoding. If two prefix-free encodings translate with additive overhead at most $b$, their length balls are shifted by at most $b$. After correcting for alphabet entropies, one may conjecture that corresponding level-critical indices differ by a controlled amount.
+
+A second direction is the treatment of oscillation. For cumulative derivability counts that are submultiplicative up to polynomial factors, logarithmic smoothing may yield eventual antitonicity or at least a transition window whose width is bounded independently of the cutoff.
+
+A third direction is a dimension spectrum. Partitioning derivable statements by proof-theoretic complexity and assigning each stratum an entropy growth rate could distinguish several lower-dimensional mechanisms hidden by the single limit $\rho(n)\to0$. Union and intersection laws would then become central questions.
+
+A fourth direction is the derivation of power laws from mixtures. If geometric regimes with decay parameter $\lambda$ are mixed using a density proportional to a power of $\lambda$ near zero, the aggregate may have a regularly varying tail. A rigorous theory would identify sufficient conditions and prove converse results under Tauberian regularity assumptions.
+
+## 11. Conclusion
+
+Counted proof spaces admit a precise but conditional phase-transition theory. The ambient language over $k\ge2$ symbols has entropy density tending to $\log k$. Any distinguished family bounded by $Ca^n$ with $a<k$ has density tending to zero. Together these facts yield the limiting phase vector $\bigl(0,\log k\bigr)$, expressing derivational sparsity amid syntactic abundance.
+
+When density is antitone, every positive level below the initial density has a unique critical index, with an exact before-and-after classification. Without antitonicity, convergence gives eventual sparsity but not a unique crossing. In the homogeneous length model, entropy produces a constant geometric ratio $1/k$, not a power law.
+
+These distinctions replace a broad metaphor with specific mathematical statements. They identify which assumptions create a sharp threshold, which observable captures ambient growth, and which proposed consequences require new mechanisms. The result is not a universal Gödel threshold, but a reusable framework for asking when a counted structured family changes phase relative to an exponentially expanding language.
