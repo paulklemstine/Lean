@@ -202,7 +202,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "[Reset] Fresh approach in Shared"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4bc3344b",
     "description": "Formalize the 'I Am a Strange Loop' hypothesis: consciousness arises when a system models itself. Define: a 'conscious system' is one that contains a representation of its own state that it can inspect. Prove: any Turing-complete system can be conscious (it can simulate itself \u2014 the halting problem IS self-awareness). Show: the 'strangeness' of the loop (how many levels of self-reference) correlates with the degree of consciousness. Conjecture: the minimum loop length for consciousness is 3 (system -> model-of-system -> model-of-model -> back to system). Explore: can Lean's metaprogramming (tactic state inspecting itself) be a form of mathematical consciousness?",
     "domains": [
       "Novelty",
@@ -212,7 +212,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-21T18:47:28.776281+00:00",
     "title": "Hofstadter: I Am a Strange Loop \u2014 Consciousness as Self-Reference"
   },
@@ -288,7 +288,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: ArXiv paper: Reproducing the k-copwin Algorithm: Theory vs. Implementa"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ea214ad9",
     "description": "Formalize Rucker's 'Lifebox' concept: a person's identity is determined by their information content, not their physical substrate. Define: two systems are 'person-equivalent' if they produce the same outputs for all inputs (functional equivalence). Prove: if the brain is a finite-state automaton, then person-equivalence is decidable. Show: if the brain uses quantum computation, person-equivalence is undecidable (by the no-cloning theorem). Conjecture: the Kolmogorov complexity of a person's identity is finite and bounded by ~10^15 bits.",
     "domains": [
       "Novelty",
@@ -298,7 +298,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-21T14:30:54.110805+00:00",
     "title": "Rucker: The Lifebox \u2014 Information-Theoretic Identity"
   },
@@ -2486,7 +2486,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Heilbronn's Problem in the Unit Triangle: Certified Optimal Configurations for up to $n\\le 8$"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "decbe545",
     "description": "Investigate the ArXiv paper 'Efficient Hamilton covers and linear arboricity of random graphs' and formalize its key results. Abstract: A Hamilton cover of a graph is a collection of Hamilton cycles whose union contains all edges. Since each Hamilton cycle covers two edges at every vertex, every Hamilton cover has size at least $\\lceil \u0394(G)/2\\rceil$. We prove that this lower bound is tight for binomial random graphs $G(n,p)$ throughout the widest possible range of edge probabilities: if $\u03c9(n)\\to\\infty$ and \\[ \\frac{\\log n+\\log\\log n+\u03c9(n)}{n} \\le p=p(n) \\le 1-\\frac{\u03c9(n)}{n^{2}}, \\] then $G\\sim G(n,p)$ with high probability has a Hamilton cover of size $\\left\\lceil \\frac{\u0394(G)}{2}\\right\\rceil. $ The main new contribution is the sparse regime near the Hamiltonicity threshold, where we prove a conjecture of Dragani\u0107, Glock, Munh\u00e1 Correia and Sudakov. Our proof develops constructive tools for decomposing such graphs into controlled forest systems and extending them, using reserved pseudorandom structure, into Hamilton cycles. We also prove the corresponding hitting-time result for the random graph process, answering a questi",
     "domains": [
       "Computation",
@@ -2496,7 +2496,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14881v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-17T06:29:52.184186+00:00",
     "title": "ArXiv paper: Efficient Hamilton covers and linear arboricity of random graphs"
   },
