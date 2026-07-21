@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "198023c0",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Structural Equivalence and Meaning\n\n## 1. Orbit-complete observational languages\n\n**Conjecture.** For every finite relational signature and finite model, there is a finite modal l",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-19T11:16:18",
-      "title": "Isomorphisms of Meaning: When Structures Collide"
-    },
-    {
       "cycle_id": "5f462d59",
       "domain": "Novelty",
       "key_insight": "# Future Directions: Surveillance Networks and Information Limits\n\n## 1. Entropy-sensitive dynamic converse\n\n**Conjecture.** For a nonuniform distribution on finite network histories and any randomize",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-21T20:46:11",
       "title": "Speculative: Tropical Mathematics of Social Choice"
+    },
+    {
+      "cycle_id": "ea115bd0",
+      "domain": "Computation",
+      "key_insight": "# Future Directions: Reciprocal-Zero Harmonics\n\n## 1. Renormalized zeta harmonic convergence\n\nDefine the multiplicity-sensitive, conjugate-symmetric sum\n`H(T) = Σ_{|Im ρ|≤T} 1/ρ` and determine an expl",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-21T22:19:10",
+      "title": "Speculative: Number Theory as Music Theory"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "f0c4ce45",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions: Avoidance Sequences Beyond a Singleton\n\n## 1. Growing forbidden-sum sets\n\nLet each new term be the least positive integer outside the set of all sums of two distinct earlier terms",
-      "quality_score": 0.68,
-      "sorry_count": 0,
-      "theorem_count": 20,
-      "timestamp": "2026-07-17T11:32:33",
-      "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
-    },
     {
       "cycle_id": "408bb225",
       "domain": "Tropical",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-21T20:46:11",
       "title": "Speculative: Tropical Mathematics of Social Choice"
+    },
+    {
+      "cycle_id": "ea115bd0",
+      "domain": "Computation",
+      "key_insight": "# Future Directions: Reciprocal-Zero Harmonics\n\n## 1. Renormalized zeta harmonic convergence\n\nDefine the multiplicity-sensitive, conjugate-symmetric sum\n`H(T) = Σ_{|Im ρ|≤T} 1/ρ` and determine an expl",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-21T22:19:10",
+      "title": "Speculative: Number Theory as Music Theory"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.79
     }
   ],
-  "last_updated": "2026-07-21T20:46:11",
+  "last_updated": "2026-07-21T22:19:10",
   "open_questions": [
     {
       "context": "",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "37f1d216",
-        "quality": 0.91,
-        "theorems": 9,
-        "title": "Two-parameter picture of *witness complexity* for the"
-      },
-      {
         "cycle_id": "da85fe77",
         "quality": 0.9,
         "theorems": 5,
@@ -3327,6 +3321,12 @@
         "quality": 0.75,
         "theorems": 0,
         "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
+      },
+      {
+        "cycle_id": "ea115bd0",
+        "quality": 0.7,
+        "theorems": 0,
+        "title": "Speculative: Number Theory as Music Theory"
       }
     ],
     "Cryptography": [

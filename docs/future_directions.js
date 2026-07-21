@@ -248,6 +248,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Formalize the Alcubierre warp drive metric: ds^2 = -dt^2 + (dx - v_s f(r_s))dt^2 + dy^2 + dz^2. Prove: the metric is a valid solution of Einstein's field equations. Show: the expansion of space behind the ship and contraction ahead creates effective FTL without local FTL. Explore: the energy requirement is negative (exotic matter). Conjecture: the total energy needed scales as E ~ M * v_s * c (where M is the ship mass). Formalize: does the Alcubierre drive create closed timelike curves?",
+    "domains": [
+      "Novelty",
+      "Physics"
+    ],
+    "id": "fd_0571",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-21T22:18:50.736623+00:00",
+    "title": "Moonshot: Warp Drive Spacetime \u2014 Alcubierre Metric Formalization"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 2fdbedee (Q=0.750), which proved 9 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Conjecture that major theorems (G\u00f6del's incompleteness, Fermat's Last Theorem, ABC conjecture) correspond to phase transitions in proof space. Define an order parameter: the ratio of provable to unprovable statements of length \u2264 n. Prove that this ratio undergoes a sharp transition at some critical ",
     "domains": [
       "Shared"
@@ -303,21 +318,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: ArXiv paper: Reproducing the k-copwin Algorithm: Theory vs. Implementa"
   },
   {
-    "consumed_by_exp_id": "ea115bd0",
-    "description": "Map prime numbers to harmonic overtones using the Riemann zeta function's non-trivial zeros. Define: the 'harmonic' of a number n is the sum of 1/\u03c1 for each zero \u03c1 with |Im(\u03c1)| \u2264 n. Prove: the harmonic of n grows as O(log n / log log n). Conjecture: perfect intervals (octaves, fifths, fourths) correspond to numbers whose harmonic is rational. Show: the harmonic of 2 is exactly 1 (the octave), while the harmonic of 3 is transcendental (the fifth).",
-    "domains": [
-      "Novelty",
-      "Pythagorean"
-    ],
-    "id": "fd_0521",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-20T15:28:30.688765+00:00",
-    "title": "Speculative: Number Theory as Music Theory"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize Rucker's 'Lifebox' concept: a person's identity is determined by their information content, not their physical substrate. Define: two systems are 'person-equivalent' if they produce the same outputs for all inputs (functional equivalence). Prove: if the brain is a finite-state automaton, then person-equivalence is decidable. Show: if the brain uses quantum computation, person-equivalence is undecidable (by the no-cloning theorem). Conjecture: the Kolmogorov complexity of a person's identity is finite and bounded by ~10^15 bits.",
     "domains": [
@@ -348,6 +348,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hofstadter: Fluid Concepts and Creative Analogies \u2014 Analogy as a Mathematical Operation"
   },
   {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the mathematics of a Dyson sphere: a megastructure that completely encloses a star to capture its energy output. Define: the Dyson sphere surface area is 4*pi*R^2 where R is the orbital radius. Prove: the optimal Dyson swarm (many independent collectors) has total collecting area equal to the sphere but with better thermal management. Show: the information capacity of a Dyson sphere (Landauer limit) is ~10^50 bits at 1 AU. Conjecture: a Type II civilization (Kardashev) generates 10^26 watts \u2014 enough to run 10^40 quantum operations per second. Explore: formalize the thermodynamic limits of megastructure computation.",
+    "domains": [
+      "Novelty",
+      "Physics"
+    ],
+    "id": "fd_0570",
+    "priority_score": 0.84,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-21T22:18:50.641161+00:00",
+    "title": "Moonshot: Dyson Sphere Mathematics \u2014 Energy Collection Optimization"
+  },
+  {
     "consumed_by_exp_id": "11a0fcb2",
     "description": "Formalize the hypothesis that spacetime has nontrivial topology (a 'donut' shape). Prove: if the universe has the topology of a 3-torus T^3, then there exist closed timelike geodesics. Show: the fundamental group pi_1(T^3) = Z^3 implies three independent families of 'wrapping around' the universe. Explore: what is the minimal volume complete hyperbolic 3-manifold? Conjecture: the Weeks manifold (volume ~0.94) is minimal. Connect to Rucker's vision of donut-shaped spacetime.",
     "domains": [
@@ -361,6 +376,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-21T12:07:59.348714+00:00",
     "title": "Rucker: Spacetime Donuts \u2014 Topology of the Universe"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize arithmetic in exotic number bases: negative bases (negabinary), complex bases (base i-1), irrational bases (base phi \u2014 the golden ratio). Prove: every integer has a unique representation in base (-2) (negabinary). Show: base phi (golden ratio) represents integers using only digits 0 and 1 with no two consecutive 1s. Conjecture: there exists a base b such that prime numbers have a simple pattern in base b (analog of the Ulam spiral). Explore: what would alien civilizations use as their number base? Would they prefer base 8 (octopus)? Base 12? Base phi?",
+    "domains": [
+      "Novelty",
+      "NumberTheory"
+    ],
+    "id": "fd_0572",
+    "priority_score": 0.83,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-21T22:18:50.818601+00:00",
+    "title": "Moonshot: Alien Number Systems \u2014 Mathematics Beyond Base-10"
   },
   {
     "consumed_by_exp_id": "",
@@ -2486,7 +2516,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Heilbronn's Problem in the Unit Triangle: Certified Optimal Configurations for up to $n\\le 8$"
   },
   {
-    "consumed_by_exp_id": "decbe545",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Efficient Hamilton covers and linear arboricity of random graphs' and formalize its key results. Abstract: A Hamilton cover of a graph is a collection of Hamilton cycles whose union contains all edges. Since each Hamilton cycle covers two edges at every vertex, every Hamilton cover has size at least $\\lceil \u0394(G)/2\\rceil$. We prove that this lower bound is tight for binomial random graphs $G(n,p)$ throughout the widest possible range of edge probabilities: if $\u03c9(n)\\to\\infty$ and \\[ \\frac{\\log n+\\log\\log n+\u03c9(n)}{n} \\le p=p(n) \\le 1-\\frac{\u03c9(n)}{n^{2}}, \\] then $G\\sim G(n,p)$ with high probability has a Hamilton cover of size $\\left\\lceil \\frac{\u0394(G)}{2}\\right\\rceil. $ The main new contribution is the sparse regime near the Hamiltonicity threshold, where we prove a conjecture of Dragani\u0107, Glock, Munh\u00e1 Correia and Sudakov. Our proof develops constructive tools for decomposing such graphs into controlled forest systems and extending them, using reserved pseudorandom structure, into Hamilton cycles. We also prove the corresponding hitting-time result for the random graph process, answering a questi",
     "domains": [
       "Computation",
@@ -2496,7 +2526,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14881v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-17T06:29:52.184186+00:00",
     "title": "ArXiv paper: Efficient Hamilton covers and linear arboricity of random graphs"
   },
@@ -5876,6 +5906,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-21T20:46:08.256420+00:00",
     "title": "**Conjecture.** Every normalized, translation-equivariant, coordinatewise-minimu"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Reciprocal-Zero Harmonics\n\n## 1. Renormalized zeta harmonic convergence\n\nDefine the multiplicity-sensitive, conjugate-symmetric sum\n`H(T) = \u03a3_{|Im \u03c1|\u2264T} 1/\u03c1` and determine an explicit renormalization under which `H(T)`\nconverges, with a quantitative error term derived from the Riemann\u2013von Mangoldt formula.\nThis is falsifiable by comparing the predicted error against certified zero tables.\n**The key insight is** that conjugate pairing converts a conditionally organized complex sum\ninto a real spectral statistic while zero counting controls its tail.\n**Why now?** The finite separation and conjugation principles isolate exactly which analytic\nestimates must be added to obtain a global theorem.\n\n## 2. Arithmetic classification of finite spectral harmonics\n\nClassify algebraic multisets of roots whose reciprocal sum is rational, algebraic irrational,\nor transcendental, beginning with Euler factors of increasing degree and prescribed Galois\ngroup. Test whether rationality is equivalent to a Galois-invariant coefficient ratio under\nnatural nonvanishing hypotheses.\n**The key insight is** that the reciprocal sum of roots is a Vieta invariant rather than a\nmysterious property of individual roots.\n**Why now?** The quadratic graph-zeta result gives an exact rational prototype and a concrete\nbase case for higher-degree experiments.\n\n## 3. Graph-zeta musical spectra under graph operations\n\nFor finite regular graphs, define the chord spectrum from reciprocal roots of Ihara local\nfactors and test whether graph products, covers, and edge subdivisions induce predictable\noperations on these spectra. A sharp conjecture is that rational chord spectra are preserved\nunder finite regular covers precisely when the new-factor traces and determinants remain\nrational.\n**The key insight is** that graph coverings supply a combinatorial laboratory where spectral\nfactorizations and arithmetic coefficient fields can both be computed exactly.\n**Why now?** The established factorization-with-harmonic identity directly connects a cataloged\ngraph-zeta factor to the proposed musical statistic.\n\n## 4. Certified first-zero exclusion windows\n\nDevelop a proof from explicit analytic inequalities that the zeta function has no nontrivial\nzero with `|Im \u03c1| \u2264 14`, and then couple it to the finite-window harmonic definition. The\nclaim is concrete: every cutoff in this interval must have harmonic zero.\n**The key insight is** that arithmetic classification must begin with certified support, not\nwith decimal approximations to values of a sum.\n**Why now?** The small-cutoff counterexample shows that an exclusion theorem would immediately\nsettle an entire interval of proposed musical assignments.\n\n## 5. Prime-indexed interval encoding\n\nReplace the cutoff `n` by a prime-dependent spectral band whose endpoints are chosen from the\nprime's logarithm, then test whether multiplication of primes corresponds to addition or\nconvolution of harmonic statistics. Require the correspondence to survive changes in\ntruncation convention and to distinguish at least the first hundred primes.\n**The key insight is** that any genuine number-theory/music bridge should encode prime\nstructure in the indexing rule, rather than merely evaluating the same zero sum at small\ninteger cutoffs.\n**Why now?** The failed octave/fifth assignment identifies the cutoff rule\u2014not reciprocal\nsummation itself\u2014as the weakest part of the original proposal.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0573",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "ea115bd0",
+    "status": "available",
+    "timestamp": "2026-07-21T22:19:09.560325+00:00",
+    "title": "Define the multiplicity-sensitive, conjugate-symmetric sum"
   },
   {
     "consumed_by_exp_id": "",
