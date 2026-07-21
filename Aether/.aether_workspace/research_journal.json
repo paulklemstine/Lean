@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "d1512647",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Rectangle Piercing, Packing, and Relaxation Gaps\n\n## 1. A complete coordinate certificate for the 64-rectangle family\n\n**Conjecture.** There is an integer-coordinate realization o",
-      "quality_score": 0.71,
-      "sorry_count": 0,
-      "theorem_count": 5,
-      "timestamp": "2026-07-16T10:38:08",
-      "title": "ArXiv paper: A 64-Rectangle Counterexample to Wegner's Conjecture and LP Gaps up to $5/2$"
-    },
-    {
       "cycle_id": "57f0b740",
       "domain": "Logic",
       "key_insight": "# Future Directions\n\n## What the formalization establishes\n\nThe literal observer definition does not produce a nontrivial numerical invariant. For every topology `τ`, the `Unit`-indexed family whose o",
@@ -2501,6 +2491,16 @@
       "theorem_count": 16,
       "timestamp": "2026-07-21T06:49:45",
       "title": "Zombies and Qualia: Mathematics of Subjective Experience"
+    },
+    {
+      "cycle_id": "1a2d7e50",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions\n\n## Formal-machine Kolmogorov complexity\n\nThe development uses binary code length under an injective encoding, which captures the counting core of incompressibility but is computab",
+      "quality_score": 0.69,
+      "sorry_count": 0,
+      "theorem_count": 21,
+      "timestamp": "2026-07-21T09:48:25",
+      "title": "Speculative: Proof Complexity and Thermodynamic Cost"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-21T06:49:45",
+  "last_updated": "2026-07-21T09:48:25",
   "open_questions": [
     {
       "context": "",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "9b262bd9",
-        "quality": 0.69,
-        "theorems": 11,
-        "title": "ArXiv paper: A Note on Iterated Beatty Sequences"
-      },
-      {
         "cycle_id": "4dee9bd5",
         "quality": 0.65,
         "theorems": 14,
@@ -4009,6 +4003,12 @@
         "quality": 0.7,
         "theorems": 14,
         "title": "The Ramsey Theory of DNA: Subsequence Avoidance in Genetic Codes"
+      },
+      {
+        "cycle_id": "1a2d7e50",
+        "quality": 0.69,
+        "theorems": 21,
+        "title": "Speculative: Proof Complexity and Thermodynamic Cost"
       }
     ]
   }
