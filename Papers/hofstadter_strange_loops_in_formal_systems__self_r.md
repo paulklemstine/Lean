@@ -1,0 +1,3 @@
+# Why computational evidence was skipped
+
+The proved claims are structural diagonal theorems quantified over abstract formal systems. Their conclusions follow from logical equivalences, soundness, representability, and rank separation; there is no naturally associated numerical sequence or finite sample whose testing would support the universal claims. Small finite models would also be misleading here: an unrestricted classical diagonal operator into semantic truth is inconsistent, while the coded interface deliberately restricts diagonalization to represented predicates. Accordingly, proof checking is the relevant evidence, and the Lean development provides it directly.
