@@ -1,4 +1,4 @@
-import Catalog.Novelty.PartialCube
+import Catalog.Novelty.DaisyCubes.PartialCube
 
 /-!
 # Meet structure and geodesic geometry of daisy cubes
