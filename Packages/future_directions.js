@@ -219,6 +219,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Formalize biological computation: a 'wetware' computation is a dynamical system on a neural manifold that computes a function f: X -> Y. Prove: wetware can simulate Turing machines (neural nets are Turing-complete). Show: the energy cost of a wetware computation is Theta(n * log(n)) where n is the number of neurons \u2014 better than silicon's Theta(n^2). Conjecture: there exist functions computable by wetware (using continuous dynamics) that are NOT computable by Turing machines \u2014 the 'super-Turing' wetware hypothesis.",
+    "domains": [
+      "Novelty",
+      "MachineLearning"
+    ],
+    "id": "fd_0551",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-21T12:07:59.417020+00:00",
+    "title": "Rucker: Wetware \u2014 Biological Computation and Its Mathematical Limits"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 71fc60c7 (Q=0.750), which proved 23 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Elementary cellular automata (ECAs) are the 256 rules that update a 1D binary array based on its 3-cell neighborhood. Rule 110 is Turing-complete. But ECAs can also be viewed as polynomial maps over GF(2): the state s = (s_0, s_1, ..., s_{n-1}) is a vector over GF(2), and the update rule is s -> f(s",
     "domains": [
       "Applications"
@@ -320,6 +335,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Anti-Gravity Mathematics \u2014 Theorems That Resist Proof"
   },
   {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the hypothesis that spacetime has nontrivial topology (a 'donut' shape). Prove: if the universe has the topology of a 3-torus T^3, then there exist closed timelike geodesics. Show: the fundamental group pi_1(T^3) = Z^3 implies three independent families of 'wrapping around' the universe. Explore: what is the minimal volume complete hyperbolic 3-manifold? Conjecture: the Weeks manifold (volume ~0.94) is minimal. Connect to Rucker's vision of donut-shaped spacetime.",
+    "domains": [
+      "Novelty",
+      "Physics"
+    ],
+    "id": "fd_0550",
+    "priority_score": 0.83,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-21T12:07:59.348714+00:00",
+    "title": "Rucker: Spacetime Donuts \u2014 Topology of the Universe"
+  },
+  {
     "consumed_by_exp_id": "977e8d8d",
     "description": "Construct a simplicial complex from the citation graph of mathematical theorems: vertices are theorems, edges connect co-cited theorems, triangles connect tri-cited theorems, etc. Compute the persistent homology of this complex. Conjecture: H_1 reveals 'schools of mathematics' (connected research communities) and H_2 reveals 'paradigm shifts' (structural changes in the network). Prove: the Betti numbers grow as \u03b2_k \u2248 n^(k+1) where n is the number of theorems.",
     "domains": [
@@ -333,21 +363,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-21T00:19:15.361113+00:00",
     "title": "Speculative: Topological Data Analysis of Theorem Networks"
-  },
-  {
-    "consumed_by_exp_id": "1f9eb531",
-    "description": "Conjecture: the laws of physics are the fixed point of a computation that simulates itself. Formalize: define a universal physical simulator U that maps (initial_conditions, laws) \u2192 (next_state). The fixed point equation is U(L, L) = L, where L is the 'law of physics'. Prove: the solution exists (by the Kleene fixed point theorem). Show: the solution is unique up to computational equivalence. Predict: the fine structure constant \u03b1 satisfies \u03b1 = 1/(137.036...) because it's the simplest fixed point.",
-    "domains": [
-      "Novelty",
-      "Physics"
-    ],
-    "id": "fd_0527",
-    "priority_score": 0.81,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-20T22:20:22.643947+00:00",
-    "title": "Speculative: The Universe Computes Its Own Existence (Physics = Computation)"
   },
   {
     "consumed_by_exp_id": "",
@@ -5713,6 +5728,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-21T09:48:28.648973+00:00",
     "title": "The present development proves an exact theorem for a finite exhaustive-verifica"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## What was established\n\nThe formal development isolates a mathematically valid core of the proposal:\n\n- a monotone binary simulator on a complete lattice has a canonical least self-application fixed point;\n- nested least-fixed-point semantics agrees with diagonal self-application (the fixed-point diagonal rule);\n- for laws represented by regions of a state space, that canonical fixed point is the unique least forward-invariant region containing the initial conditions;\n- membership in that region is equivalent to finite operational reachability.\n\nThis is a bridge between denotational computation (least fixed points), dynamical systems (iteration), and geometry/topology of regions (forward-invariant subsets).\n\n## Necessary limitations\n\nThe unrestricted uniqueness claim is false in general: a monotone map may have many fixed points. The proved uniqueness is therefore the strongest natural corrected statement: uniqueness under *generated/least-solution semantics*. Likewise, no mathematical premise supplied in the mission connects this order-theoretic fixed point to the fine-structure constant. Consequently, no numerical prediction for the fine-structure constant is asserted.\n\n## Extensions\n\n1. Replace plain sets by closed or measurable regions, adding hypotheses under which closure or measurability is preserved.\n2. Develop an omega-continuous version where the least law is the supremum of the finite approximation chain, closer to the Kleene fixed-point theorem in domain theory.\n3. Generalize deterministic `step : X \u2192 X` to nondeterministic transition relations and prove equivalence with reflexive-transitive closure.\n4. Equip the law lattice with a computability structure and formalize computational equivalence as mutual simulation or bisimulation.\n5. Study conditions such as contraction, antisymmetry of simulation quotients, or unique fixed-point properties that yield unrestricted uniqueness.\n6. Connect invariant regions to attractors only after adding metric/topological assumptions; least reachability closure alone does not imply asymptotic attraction.\n7. Any proposed dimensionless physical constant should be introduced only through an independently justified physical model that maps lattice semantics to measurable quantities.\n",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_0552",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "1f9eb531",
+    "status": "available",
+    "timestamp": "2026-07-21T12:08:36.224823+00:00",
+    "title": "The formal development isolates a mathematically valid core of the proposal:"
   },
   {
     "consumed_by_exp_id": "",
