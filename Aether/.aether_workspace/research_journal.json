@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "5f462d59",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Surveillance Networks and Information Limits\n\n## 1. Entropy-sensitive dynamic converse\n\n**Conjecture.** For a nonuniform distribution on finite network histories and any randomize",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-19T11:52:48",
-      "title": "Surveillance Networks: Information-Theoretic Undetectability"
-    },
-    {
       "cycle_id": "6d1b5339",
       "domain": "Applications",
       "key_insight": "# Future Directions: Infinite-Dimensional Chess\n\n## 1. Countable-Ordinal Realization by Finite Material\n\n**Conjecture.** Every countable ordinal is the game value of a winning position on an infinite",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-21T22:19:10",
       "title": "Speculative: Number Theory as Music Theory"
+    },
+    {
+      "cycle_id": "a4c98532",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions\n\n## 1. A syntactic GEB equivalence preserving substitution\n\nConstruct explicit formal, graphical, and contrapuntal syntax categories whose morphisms encode substitution, visual com",
+      "quality_score": 0.76,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-21T22:19:19",
+      "title": "Hofstadter: Gödel, Escher, Bach — Isomorphism Across Domains"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "408bb225",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions\n\n## 1. Measure-calibrated recurrence incidence\n\nFix a distribution of logistic parameters, an absolutely continuous distribution of initial states, a finite observation horizon, an",
-      "quality_score": 0.76,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-07-17T11:50:06",
-      "title": "The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
-    },
     {
       "cycle_id": "5f139cd0",
       "domain": "Applications",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-21T22:19:10",
       "title": "Speculative: Number Theory as Music Theory"
+    },
+    {
+      "cycle_id": "a4c98532",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions\n\n## 1. A syntactic GEB equivalence preserving substitution\n\nConstruct explicit formal, graphical, and contrapuntal syntax categories whose morphisms encode substitution, visual com",
+      "quality_score": 0.76,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-21T22:19:19",
+      "title": "Hofstadter: Gödel, Escher, Bach — Isomorphism Across Domains"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.79
     }
   ],
-  "last_updated": "2026-07-21T22:19:10",
+  "last_updated": "2026-07-21T22:19:19",
   "open_questions": [
     {
       "context": "",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "7a91e930",
-        "quality": 0.68,
-        "theorems": 18,
-        "title": "ArXiv paper: Large sets of mutually orthogonal quantum Latin squares"
-      },
-      {
         "cycle_id": "322b88bd",
         "quality": 0.7,
         "theorems": 15,
@@ -3451,6 +3445,12 @@
         "quality": 0.67,
         "theorems": 16,
         "title": "Rucker: Mind Tools — Mathematics as Cognitive Extension"
+      },
+      {
+        "cycle_id": "a4c98532",
+        "quality": 0.76,
+        "theorems": 0,
+        "title": "Hofstadter: Gödel, Escher, Bach — Isomorphism Across Domains"
       }
     ],
     "Logic": [

@@ -103,21 +103,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Rucker: Saucer Wisdom \u2014 Non-Human Mathematical Intuition"
   },
   {
-    "consumed_by_exp_id": "a4c98532",
-    "description": "Formalize the GEB thesis: deep isomorphisms connect G\u00f6del's incompleteness, Escher's visual paradoxes, and Bach's fugues. Define: a 'GEB isomorphism' is a structure-preserving map between three domains: (1) a formal system, (2) a visual art form, (3) a musical form. Prove: the self-reference in G\u00f6del's theorem, Escher's 'Drawing Hands,' and Bach's 'Crab Canon' all instantiate the same fixed-point construction (Lawvere's fixed point theorem). Show: every GEB isomorphism factors through the Y combinator.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0560",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-21T16:49:18.856877+00:00",
-    "title": "Hofstadter: G\u00f6del, Escher, Bach \u2014 Isomorphism Across Domains"
-  },
-  {
     "consumed_by_exp_id": "0c96a68a",
     "description": "Formalize tangled hierarchies \u2014 levels that are both above AND below each other. Define: a tangled hierarchy is a poset where there exist x, y such that x < y and y < x (a cycle). Prove: in dependent type theory, universe levels form an infinite hierarchy (Type_0 : Type_1 : Type_2 : ...) that is NOT tangled (it's well-founded). Show: with universe polymorphism, we can create apparent tangles (a term at level N can refer to level N+1). Conjecture: any consistent formalization of 'tangled hierarchies' requires abandoning either consistency or the hierarchy. Explore: Girard's paradox shows that Type:Type (the ultimate tangle) is inconsistent \u2014 formalize this in Lean.",
     "domains": [
@@ -217,21 +202,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "[Reset] Fresh approach in Shared"
   },
   {
-    "consumed_by_exp_id": "28edcf45",
-    "description": "Formalize biological computation: a 'wetware' computation is a dynamical system on a neural manifold that computes a function f: X -> Y. Prove: wetware can simulate Turing machines (neural nets are Turing-complete). Show: the energy cost of a wetware computation is Theta(n * log(n)) where n is the number of neurons \u2014 better than silicon's Theta(n^2). Conjecture: there exist functions computable by wetware (using continuous dynamics) that are NOT computable by Turing machines \u2014 the 'super-Turing' wetware hypothesis.",
-    "domains": [
-      "Novelty",
-      "MachineLearning"
-    ],
-    "id": "fd_0551",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-21T12:07:59.417020+00:00",
-    "title": "Rucker: Wetware \u2014 Biological Computation and Its Mathematical Limits"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize the 'I Am a Strange Loop' hypothesis: consciousness arises when a system models itself. Define: a 'conscious system' is one that contains a representation of its own state that it can inspect. Prove: any Turing-complete system can be conscious (it can simulate itself \u2014 the halting problem IS self-awareness). Show: the 'strangeness' of the loop (how many levels of self-reference) correlates with the degree of consciousness. Conjecture: the minimum loop length for consciousness is 3 (system -> model-of-system -> model-of-model -> back to system). Explore: can Lean's metaprogramming (tactic state inspecting itself) be a form of mathematical consciousness?",
     "domains": [
@@ -247,7 +217,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hofstadter: I Am a Strange Loop \u2014 Consciousness as Self-Reference"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4d85ad7f",
     "description": "Formalize the Alcubierre warp drive metric: ds^2 = -dt^2 + (dx - v_s f(r_s))dt^2 + dy^2 + dz^2. Prove: the metric is a valid solution of Einstein's field equations. Show: the expansion of space behind the ship and contraction ahead creates effective FTL without local FTL. Explore: the energy requirement is negative (exotic matter). Conjecture: the total energy needed scales as E ~ M * v_s * c (where M is the ship mass). Formalize: does the Alcubierre drive create closed timelike curves?",
     "domains": [
       "Novelty",
@@ -257,7 +227,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-21T22:18:50.736623+00:00",
     "title": "Moonshot: Warp Drive Spacetime \u2014 Alcubierre Metric Formalization"
   },
@@ -5921,6 +5891,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-21T22:19:09.560325+00:00",
     "title": "Define the multiplicity-sensitive, conjugate-symmetric sum"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## Scope and interpretation\n\nThe formal development in `Catalog/Algebra/RuckerWetware.lean` treats wetware as a deterministic discrete dynamical system. Its strongest results are exact within that model:\n\n- every typed function can be realized in one step when the state type, encoder, and decoder may depend on the function;\n- every orbit on a finite state space has a periodic tail;\n- consequently, no observation of such an orbit can be injective over time;\n- deterministic transition tables have information cost `n log\u2082 n`, whereas arbitrary binary connection matrices have cost `n\u00b2`;\n- the ratio of those costs tends to zero.\n\nThese are model-relative theorems. In particular, the energy definitions measure description length in bits, not physical thermodynamic energy. The universality theorem is an exact realization theorem, but it is not yet a compiler from a standard Turing-machine formalization into a fixed neural architecture.\n\n## Natural next theorems\n\n1. **Uniform Turing-machine simulation.** Import or define a concrete Turing-machine model, encode configurations in one fixed wetware state family, and prove a commuting simulation diagram for each transition. A useful final theorem would preserve halting and output, with an explicit neuron and time overhead.\n\n2. **Resource-aware realization.** Strengthen `Computes` with bounds on state dimension, runtime, precision, and fan-in. The current existential encoder/decoder can contain the whole function, so it deliberately says nothing about implementation efficiency.\n\n3. **Physical energy model.** Replace configuration-description length by a transition cost, such as the number of state changes or a weighted dissipation functional. Prove upper and lower asymptotic bounds under explicit architecture assumptions. This would separate the proved combinatorial comparison from claims about actual silicon or neural tissue.\n\n4. **Quantitative finite-state recurrence.** For a state space of cardinality `N`, prove that a collision occurs among the first `N + 1` states and obtain `start < N` and `period \u2264 N`. The current periodic-tail theorem establishes existence but does not expose these sharp bounds.\n\n5. **Robust continuous dynamics.** Model a neural manifold with a continuous or Lipschitz flow and a decoding partition. Determine which computations survive perturbations. Robustness and finite observational precision are likely to recover discrete computability restrictions.\n\n6. **Super-Turing hypothesis as a precise separation.** Define representations of inputs and outputs, effective initial conditions, admissible real constants, observation precision, and time bounds. Without these restrictions, a continuous system may hide a noncomputable set in an initial condition or parameter rather than compute it. A meaningful conjecture should distinguish oracle information from dynamics.\n\n7. **No-hypercomputation corollaries.** Extend `no_injective_observed_orbit` from natural-valued observations to arbitrary codomains and prove that every observed trace of a finite deterministic system is eventually periodic. Derive impossibility results for traces known to be aperiodic.\n\n## Evidence note\n\nSeparate ad-hoc computational evidence was unnecessary for the principal universal claims: the finite configuration counts are proved symbolically, and exact benchmark instances for two and four neurons are kernel-checked as `energy_two` and `energy_four`. No OEIS sequence is relevant to these closed-form counts. A broader empirical study would only become meaningful after choosing a physical transition-energy model.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0574",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "28edcf45",
+    "status": "available",
+    "timestamp": "2026-07-21T22:19:13.963072+00:00",
+    "title": "The formal development in `Catalog/Algebra/RuckerWetware.lean` treats wetware as"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## 1. A syntactic GEB equivalence preserving substitution\n\nConstruct explicit formal, graphical, and contrapuntal syntax categories whose morphisms encode substitution, visual completion, and reversible musical transformation. Conjecture that a nontrivial full subcategory of each admits equivalences preserving a common self-application operation, and that the resulting diagonal witnesses agree under those equivalences.\n\nThe key insight is that preservation of a binary evaluation table, rather than a bare bijection of artifacts, is exactly what makes fixed points transport.\n\nWhy now? The conditional transport theorem isolates the complete interface that concrete domain models must implement, while the failed bare-bijection conjecture identifies the principal obstruction.\n\n## 2. Choice independence from unique semantic fixed points\n\nConjecture that if every endomorphism in a designated semantic class has at most one fixed point, then all diagonal codes for the same endomorphism yield one common value, even when the codes themselves are unrelated by a domain isomorphism. Seek natural ordered or metric semantic domains where this uniqueness follows from contraction or guardedness.\n\nThe key insight is that the present construction separates two sources of ambiguity: presentation transport is canonical, but arbitrary universal codes need not choose the same fixed point.\n\nWhy now? The fixed-point factorization proves invariance along structure-preserving maps and precisely exposes uniqueness as the missing hypothesis for global code independence.\n\n## 3. A graded Lawvere theorem for partial universality\n\nDefine a hierarchy in which an evaluation table represents only predicates of bounded syntactic, geometric, or musical complexity. Conjecture that diagonal fixed points persist exactly when the represented class is closed under composition with the chosen semantic endomorphism and under diagonal evaluation. Determine the minimal closure axioms and exhibit sharp finite counterexamples when either closure condition is removed.\n\nThe key insight is that full surjectivity is stronger than the diagonal proof uses; only representability of a particular composite is essential.\n\nWhy now? Boolean universality is impossible, so a graded theory of representable fragments offers a testable route to concrete finite models without weakening the fixed-point mechanism into metaphor.\n\n## 4. Obstruction spectra for finite semantic domains\n\nFor each finite semantic set `B`, classify the largest family of endomorphisms `F \u2286 (B \u2192 B)` for which a single presentation can represent every diagonal composite associated with `F`. Conjecture that maximal families are controlled by the directed graph of fixed points of the transformation monoid generated by `F`.\n\nThe key insight is that Boolean negation fails because it is fixed-point-free, suggesting that obstruction is governed by transformation-monoid structure rather than cardinality alone.\n\nWhy now? The universal Boolean impossibility theorem supplies the first sharp negative case, and finite transformation monoids make exhaustive testing and structural classification feasible.\n\n## 5. Naturality under weaker simulations\n\nReplace evaluation-preserving equivalences by retractions, embeddings, or bisimulations. Conjecture that embeddings preserve fixed points in one direction, retractions lift them under an explicit coherence law, and bisimulations preserve only observational equivalence of `Y` values rather than literal equality.\n\nThe key insight is that exact isomorphism yields equality because both arguments of evaluation are preserved simultaneously; weakening either preservation law should produce a graded notion of fixed-point transport.\n\nWhy now? The current naturality theorem gives the strongest endpoint, from which each coherence condition can be removed independently and tested by counterexample.\n",
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "fd_0575",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "a4c98532",
+    "status": "available",
+    "timestamp": "2026-07-21T22:19:18.490628+00:00",
+    "title": "Construct explicit formal, graphical, and contrapuntal syntax categories whose m"
   },
   {
     "consumed_by_exp_id": "",

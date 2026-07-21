@@ -103,21 +103,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Rucker: Saucer Wisdom \u2014 Non-Human Mathematical Intuition"
   },
   {
-    "consumed_by_exp_id": "a4c98532",
-    "description": "Formalize the GEB thesis: deep isomorphisms connect G\u00f6del's incompleteness, Escher's visual paradoxes, and Bach's fugues. Define: a 'GEB isomorphism' is a structure-preserving map between three domains: (1) a formal system, (2) a visual art form, (3) a musical form. Prove: the self-reference in G\u00f6del's theorem, Escher's 'Drawing Hands,' and Bach's 'Crab Canon' all instantiate the same fixed-point construction (Lawvere's fixed point theorem). Show: every GEB isomorphism factors through the Y combinator.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0560",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-21T16:49:18.856877+00:00",
-    "title": "Hofstadter: G\u00f6del, Escher, Bach \u2014 Isomorphism Across Domains"
-  },
-  {
     "consumed_by_exp_id": "0c96a68a",
     "description": "Formalize tangled hierarchies \u2014 levels that are both above AND below each other. Define: a tangled hierarchy is a poset where there exist x, y such that x < y and y < x (a cycle). Prove: in dependent type theory, universe levels form an infinite hierarchy (Type_0 : Type_1 : Type_2 : ...) that is NOT tangled (it's well-founded). Show: with universe polymorphism, we can create apparent tangles (a term at level N can refer to level N+1). Conjecture: any consistent formalization of 'tangled hierarchies' requires abandoning either consistency or the hierarchy. Explore: Girard's paradox shows that Type:Type (the ultimate tangle) is inconsistent \u2014 formalize this in Lean.",
     "domains": [
@@ -217,21 +202,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "[Reset] Fresh approach in Shared"
   },
   {
-    "consumed_by_exp_id": "28edcf45",
-    "description": "Formalize biological computation: a 'wetware' computation is a dynamical system on a neural manifold that computes a function f: X -> Y. Prove: wetware can simulate Turing machines (neural nets are Turing-complete). Show: the energy cost of a wetware computation is Theta(n * log(n)) where n is the number of neurons \u2014 better than silicon's Theta(n^2). Conjecture: there exist functions computable by wetware (using continuous dynamics) that are NOT computable by Turing machines \u2014 the 'super-Turing' wetware hypothesis.",
-    "domains": [
-      "Novelty",
-      "MachineLearning"
-    ],
-    "id": "fd_0551",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-21T12:07:59.417020+00:00",
-    "title": "Rucker: Wetware \u2014 Biological Computation and Its Mathematical Limits"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize the 'I Am a Strange Loop' hypothesis: consciousness arises when a system models itself. Define: a 'conscious system' is one that contains a representation of its own state that it can inspect. Prove: any Turing-complete system can be conscious (it can simulate itself \u2014 the halting problem IS self-awareness). Show: the 'strangeness' of the loop (how many levels of self-reference) correlates with the degree of consciousness. Conjecture: the minimum loop length for consciousness is 3 (system -> model-of-system -> model-of-model -> back to system). Explore: can Lean's metaprogramming (tactic state inspecting itself) be a form of mathematical consciousness?",
     "domains": [
@@ -245,6 +215,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-21T18:47:28.776281+00:00",
     "title": "Hofstadter: I Am a Strange Loop \u2014 Consciousness as Self-Reference"
+  },
+  {
+    "consumed_by_exp_id": "4d85ad7f",
+    "description": "Formalize the Alcubierre warp drive metric: ds^2 = -dt^2 + (dx - v_s f(r_s))dt^2 + dy^2 + dz^2. Prove: the metric is a valid solution of Einstein's field equations. Show: the expansion of space behind the ship and contraction ahead creates effective FTL without local FTL. Explore: the energy requirement is negative (exotic matter). Conjecture: the total energy needed scales as E ~ M * v_s * c (where M is the ship mass). Formalize: does the Alcubierre drive create closed timelike curves?",
+    "domains": [
+      "Novelty",
+      "Physics"
+    ],
+    "id": "fd_0571",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-07-21T22:18:50.736623+00:00",
+    "title": "Moonshot: Warp Drive Spacetime \u2014 Alcubierre Metric Formalization"
   },
   {
     "consumed_by_exp_id": "",
@@ -303,21 +288,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: ArXiv paper: Reproducing the k-copwin Algorithm: Theory vs. Implementa"
   },
   {
-    "consumed_by_exp_id": "ea115bd0",
-    "description": "Map prime numbers to harmonic overtones using the Riemann zeta function's non-trivial zeros. Define: the 'harmonic' of a number n is the sum of 1/\u03c1 for each zero \u03c1 with |Im(\u03c1)| \u2264 n. Prove: the harmonic of n grows as O(log n / log log n). Conjecture: perfect intervals (octaves, fifths, fourths) correspond to numbers whose harmonic is rational. Show: the harmonic of 2 is exactly 1 (the octave), while the harmonic of 3 is transcendental (the fifth).",
-    "domains": [
-      "Novelty",
-      "Pythagorean"
-    ],
-    "id": "fd_0521",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-20T15:28:30.688765+00:00",
-    "title": "Speculative: Number Theory as Music Theory"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize Rucker's 'Lifebox' concept: a person's identity is determined by their information content, not their physical substrate. Define: two systems are 'person-equivalent' if they produce the same outputs for all inputs (functional equivalence). Prove: if the brain is a finite-state automaton, then person-equivalence is decidable. Show: if the brain uses quantum computation, person-equivalence is undecidable (by the no-cloning theorem). Conjecture: the Kolmogorov complexity of a person's identity is finite and bounded by ~10^15 bits.",
     "domains": [
@@ -348,6 +318,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hofstadter: Fluid Concepts and Creative Analogies \u2014 Analogy as a Mathematical Operation"
   },
   {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the mathematics of a Dyson sphere: a megastructure that completely encloses a star to capture its energy output. Define: the Dyson sphere surface area is 4*pi*R^2 where R is the orbital radius. Prove: the optimal Dyson swarm (many independent collectors) has total collecting area equal to the sphere but with better thermal management. Show: the information capacity of a Dyson sphere (Landauer limit) is ~10^50 bits at 1 AU. Conjecture: a Type II civilization (Kardashev) generates 10^26 watts \u2014 enough to run 10^40 quantum operations per second. Explore: formalize the thermodynamic limits of megastructure computation.",
+    "domains": [
+      "Novelty",
+      "Physics"
+    ],
+    "id": "fd_0570",
+    "priority_score": 0.84,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-21T22:18:50.641161+00:00",
+    "title": "Moonshot: Dyson Sphere Mathematics \u2014 Energy Collection Optimization"
+  },
+  {
     "consumed_by_exp_id": "11a0fcb2",
     "description": "Formalize the hypothesis that spacetime has nontrivial topology (a 'donut' shape). Prove: if the universe has the topology of a 3-torus T^3, then there exist closed timelike geodesics. Show: the fundamental group pi_1(T^3) = Z^3 implies three independent families of 'wrapping around' the universe. Explore: what is the minimal volume complete hyperbolic 3-manifold? Conjecture: the Weeks manifold (volume ~0.94) is minimal. Connect to Rucker's vision of donut-shaped spacetime.",
     "domains": [
@@ -361,6 +346,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-21T12:07:59.348714+00:00",
     "title": "Rucker: Spacetime Donuts \u2014 Topology of the Universe"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize arithmetic in exotic number bases: negative bases (negabinary), complex bases (base i-1), irrational bases (base phi \u2014 the golden ratio). Prove: every integer has a unique representation in base (-2) (negabinary). Show: base phi (golden ratio) represents integers using only digits 0 and 1 with no two consecutive 1s. Conjecture: there exists a base b such that prime numbers have a simple pattern in base b (analog of the Ulam spiral). Explore: what would alien civilizations use as their number base? Would they prefer base 8 (octopus)? Base 12? Base phi?",
+    "domains": [
+      "Novelty",
+      "NumberTheory"
+    ],
+    "id": "fd_0572",
+    "priority_score": 0.83,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-21T22:18:50.818601+00:00",
+    "title": "Moonshot: Alien Number Systems \u2014 Mathematics Beyond Base-10"
   },
   {
     "consumed_by_exp_id": "",
@@ -2486,7 +2486,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Heilbronn's Problem in the Unit Triangle: Certified Optimal Configurations for up to $n\\le 8$"
   },
   {
-    "consumed_by_exp_id": "decbe545",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Efficient Hamilton covers and linear arboricity of random graphs' and formalize its key results. Abstract: A Hamilton cover of a graph is a collection of Hamilton cycles whose union contains all edges. Since each Hamilton cycle covers two edges at every vertex, every Hamilton cover has size at least $\\lceil \u0394(G)/2\\rceil$. We prove that this lower bound is tight for binomial random graphs $G(n,p)$ throughout the widest possible range of edge probabilities: if $\u03c9(n)\\to\\infty$ and \\[ \\frac{\\log n+\\log\\log n+\u03c9(n)}{n} \\le p=p(n) \\le 1-\\frac{\u03c9(n)}{n^{2}}, \\] then $G\\sim G(n,p)$ with high probability has a Hamilton cover of size $\\left\\lceil \\frac{\u0394(G)}{2}\\right\\rceil. $ The main new contribution is the sparse regime near the Hamiltonicity threshold, where we prove a conjecture of Dragani\u0107, Glock, Munh\u00e1 Correia and Sudakov. Our proof develops constructive tools for decomposing such graphs into controlled forest systems and extending them, using reserved pseudorandom structure, into Hamilton cycles. We also prove the corresponding hitting-time result for the random graph process, answering a questi",
     "domains": [
       "Computation",
@@ -2496,7 +2496,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14881v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-17T06:29:52.184186+00:00",
     "title": "ArXiv paper: Efficient Hamilton covers and linear arboricity of random graphs"
   },
@@ -5876,6 +5876,51 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-21T20:46:08.256420+00:00",
     "title": "**Conjecture.** Every normalized, translation-equivariant, coordinatewise-minimu"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Reciprocal-Zero Harmonics\n\n## 1. Renormalized zeta harmonic convergence\n\nDefine the multiplicity-sensitive, conjugate-symmetric sum\n`H(T) = \u03a3_{|Im \u03c1|\u2264T} 1/\u03c1` and determine an explicit renormalization under which `H(T)`\nconverges, with a quantitative error term derived from the Riemann\u2013von Mangoldt formula.\nThis is falsifiable by comparing the predicted error against certified zero tables.\n**The key insight is** that conjugate pairing converts a conditionally organized complex sum\ninto a real spectral statistic while zero counting controls its tail.\n**Why now?** The finite separation and conjugation principles isolate exactly which analytic\nestimates must be added to obtain a global theorem.\n\n## 2. Arithmetic classification of finite spectral harmonics\n\nClassify algebraic multisets of roots whose reciprocal sum is rational, algebraic irrational,\nor transcendental, beginning with Euler factors of increasing degree and prescribed Galois\ngroup. Test whether rationality is equivalent to a Galois-invariant coefficient ratio under\nnatural nonvanishing hypotheses.\n**The key insight is** that the reciprocal sum of roots is a Vieta invariant rather than a\nmysterious property of individual roots.\n**Why now?** The quadratic graph-zeta result gives an exact rational prototype and a concrete\nbase case for higher-degree experiments.\n\n## 3. Graph-zeta musical spectra under graph operations\n\nFor finite regular graphs, define the chord spectrum from reciprocal roots of Ihara local\nfactors and test whether graph products, covers, and edge subdivisions induce predictable\noperations on these spectra. A sharp conjecture is that rational chord spectra are preserved\nunder finite regular covers precisely when the new-factor traces and determinants remain\nrational.\n**The key insight is** that graph coverings supply a combinatorial laboratory where spectral\nfactorizations and arithmetic coefficient fields can both be computed exactly.\n**Why now?** The established factorization-with-harmonic identity directly connects a cataloged\ngraph-zeta factor to the proposed musical statistic.\n\n## 4. Certified first-zero exclusion windows\n\nDevelop a proof from explicit analytic inequalities that the zeta function has no nontrivial\nzero with `|Im \u03c1| \u2264 14`, and then couple it to the finite-window harmonic definition. The\nclaim is concrete: every cutoff in this interval must have harmonic zero.\n**The key insight is** that arithmetic classification must begin with certified support, not\nwith decimal approximations to values of a sum.\n**Why now?** The small-cutoff counterexample shows that an exclusion theorem would immediately\nsettle an entire interval of proposed musical assignments.\n\n## 5. Prime-indexed interval encoding\n\nReplace the cutoff `n` by a prime-dependent spectral band whose endpoints are chosen from the\nprime's logarithm, then test whether multiplication of primes corresponds to addition or\nconvolution of harmonic statistics. Require the correspondence to survive changes in\ntruncation convention and to distinguish at least the first hundred primes.\n**The key insight is** that any genuine number-theory/music bridge should encode prime\nstructure in the indexing rule, rather than merely evaluating the same zero sum at small\ninteger cutoffs.\n**Why now?** The failed octave/fifth assignment identifies the cutoff rule\u2014not reciprocal\nsummation itself\u2014as the weakest part of the original proposal.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0573",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "ea115bd0",
+    "status": "available",
+    "timestamp": "2026-07-21T22:19:09.560325+00:00",
+    "title": "Define the multiplicity-sensitive, conjugate-symmetric sum"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## Scope and interpretation\n\nThe formal development in `Catalog/Algebra/RuckerWetware.lean` treats wetware as a deterministic discrete dynamical system. Its strongest results are exact within that model:\n\n- every typed function can be realized in one step when the state type, encoder, and decoder may depend on the function;\n- every orbit on a finite state space has a periodic tail;\n- consequently, no observation of such an orbit can be injective over time;\n- deterministic transition tables have information cost `n log\u2082 n`, whereas arbitrary binary connection matrices have cost `n\u00b2`;\n- the ratio of those costs tends to zero.\n\nThese are model-relative theorems. In particular, the energy definitions measure description length in bits, not physical thermodynamic energy. The universality theorem is an exact realization theorem, but it is not yet a compiler from a standard Turing-machine formalization into a fixed neural architecture.\n\n## Natural next theorems\n\n1. **Uniform Turing-machine simulation.** Import or define a concrete Turing-machine model, encode configurations in one fixed wetware state family, and prove a commuting simulation diagram for each transition. A useful final theorem would preserve halting and output, with an explicit neuron and time overhead.\n\n2. **Resource-aware realization.** Strengthen `Computes` with bounds on state dimension, runtime, precision, and fan-in. The current existential encoder/decoder can contain the whole function, so it deliberately says nothing about implementation efficiency.\n\n3. **Physical energy model.** Replace configuration-description length by a transition cost, such as the number of state changes or a weighted dissipation functional. Prove upper and lower asymptotic bounds under explicit architecture assumptions. This would separate the proved combinatorial comparison from claims about actual silicon or neural tissue.\n\n4. **Quantitative finite-state recurrence.** For a state space of cardinality `N`, prove that a collision occurs among the first `N + 1` states and obtain `start < N` and `period \u2264 N`. The current periodic-tail theorem establishes existence but does not expose these sharp bounds.\n\n5. **Robust continuous dynamics.** Model a neural manifold with a continuous or Lipschitz flow and a decoding partition. Determine which computations survive perturbations. Robustness and finite observational precision are likely to recover discrete computability restrictions.\n\n6. **Super-Turing hypothesis as a precise separation.** Define representations of inputs and outputs, effective initial conditions, admissible real constants, observation precision, and time bounds. Without these restrictions, a continuous system may hide a noncomputable set in an initial condition or parameter rather than compute it. A meaningful conjecture should distinguish oracle information from dynamics.\n\n7. **No-hypercomputation corollaries.** Extend `no_injective_observed_orbit` from natural-valued observations to arbitrary codomains and prove that every observed trace of a finite deterministic system is eventually periodic. Derive impossibility results for traces known to be aperiodic.\n\n## Evidence note\n\nSeparate ad-hoc computational evidence was unnecessary for the principal universal claims: the finite configuration counts are proved symbolically, and exact benchmark instances for two and four neurons are kernel-checked as `energy_two` and `energy_four`. No OEIS sequence is relevant to these closed-form counts. A broader empirical study would only become meaningful after choosing a physical transition-energy model.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0574",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "28edcf45",
+    "status": "available",
+    "timestamp": "2026-07-21T22:19:13.963072+00:00",
+    "title": "The formal development in `Catalog/Algebra/RuckerWetware.lean` treats wetware as"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## 1. A syntactic GEB equivalence preserving substitution\n\nConstruct explicit formal, graphical, and contrapuntal syntax categories whose morphisms encode substitution, visual completion, and reversible musical transformation. Conjecture that a nontrivial full subcategory of each admits equivalences preserving a common self-application operation, and that the resulting diagonal witnesses agree under those equivalences.\n\nThe key insight is that preservation of a binary evaluation table, rather than a bare bijection of artifacts, is exactly what makes fixed points transport.\n\nWhy now? The conditional transport theorem isolates the complete interface that concrete domain models must implement, while the failed bare-bijection conjecture identifies the principal obstruction.\n\n## 2. Choice independence from unique semantic fixed points\n\nConjecture that if every endomorphism in a designated semantic class has at most one fixed point, then all diagonal codes for the same endomorphism yield one common value, even when the codes themselves are unrelated by a domain isomorphism. Seek natural ordered or metric semantic domains where this uniqueness follows from contraction or guardedness.\n\nThe key insight is that the present construction separates two sources of ambiguity: presentation transport is canonical, but arbitrary universal codes need not choose the same fixed point.\n\nWhy now? The fixed-point factorization proves invariance along structure-preserving maps and precisely exposes uniqueness as the missing hypothesis for global code independence.\n\n## 3. A graded Lawvere theorem for partial universality\n\nDefine a hierarchy in which an evaluation table represents only predicates of bounded syntactic, geometric, or musical complexity. Conjecture that diagonal fixed points persist exactly when the represented class is closed under composition with the chosen semantic endomorphism and under diagonal evaluation. Determine the minimal closure axioms and exhibit sharp finite counterexamples when either closure condition is removed.\n\nThe key insight is that full surjectivity is stronger than the diagonal proof uses; only representability of a particular composite is essential.\n\nWhy now? Boolean universality is impossible, so a graded theory of representable fragments offers a testable route to concrete finite models without weakening the fixed-point mechanism into metaphor.\n\n## 4. Obstruction spectra for finite semantic domains\n\nFor each finite semantic set `B`, classify the largest family of endomorphisms `F \u2286 (B \u2192 B)` for which a single presentation can represent every diagonal composite associated with `F`. Conjecture that maximal families are controlled by the directed graph of fixed points of the transformation monoid generated by `F`.\n\nThe key insight is that Boolean negation fails because it is fixed-point-free, suggesting that obstruction is governed by transformation-monoid structure rather than cardinality alone.\n\nWhy now? The universal Boolean impossibility theorem supplies the first sharp negative case, and finite transformation monoids make exhaustive testing and structural classification feasible.\n\n## 5. Naturality under weaker simulations\n\nReplace evaluation-preserving equivalences by retractions, embeddings, or bisimulations. Conjecture that embeddings preserve fixed points in one direction, retractions lift them under an explicit coherence law, and bisimulations preserve only observational equivalence of `Y` values rather than literal equality.\n\nThe key insight is that exact isomorphism yields equality because both arguments of evaluation are preserved simultaneously; weakening either preservation law should produce a graded notion of fixed-point transport.\n\nWhy now? The current naturality theorem gives the strongest endpoint, from which each coherence condition can be removed independently and tested by counterexample.\n",
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "fd_0575",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "a4c98532",
+    "status": "available",
+    "timestamp": "2026-07-21T22:19:18.490628+00:00",
+    "title": "Construct explicit formal, graphical, and contrapuntal syntax categories whose m"
   },
   {
     "consumed_by_exp_id": "",
