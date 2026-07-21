@@ -429,26 +429,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "977e8d8d",
-    "description": "Construct a simplicial complex from the citation graph of mathematical theorems: vertices are theorems, edges connect co-cited theorems, triangles connect tri-cited theorems, etc. Compute the persistent homology of this complex. Conjecture: H_1 reveals 'schools of mathematics' (connected research communities) and H_2 reveals 'paradigm shifts' (structural changes in the network). Prove: the Betti numbers grow as β_k ≈ n^(k+1) where n is the number of theorems.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "MachineLearning"
-    ],
-    "id": "fd_0534",
-    "lineage_refs": [],
-    "priority_score": 0.82,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-21T00:19:15.361113+00:00",
-    "title": "Speculative: Topological Data Analysis of Theorem Networks"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Magnitude homology of tope graphs' and formalize its key results. Abstract: We completely determine the magnitude homology of tope graphs of real hyperplane arrangements. Their ranks can be described as the Hilbert functions of the Stanley--Reisner rings of certain simplicial complexes naturally associated with the arrangements. For Coxeter arrangements, this gives a computation of the magnitude homology of the Cayley graph of the corresponding Coxeter group. We also prove the homological reciprocity for central arrangements conjectured by Koizumi--Liu. The proof combines poset combinatorics, the Edelman--Walker theorem, and Alexander duality.",
     "domain_bridges": [],
@@ -7819,6 +7799,26 @@
     "status": "available",
     "timestamp": "2026-07-21T14:31:37.953468+00:00",
     "title": "The formalization makes the speculative claim precise for a finite formal librar"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Topology of Theorem Networks\n\n## 1. Labeled persistence and mathematical communities\n\n**Conjecture.** In a temporally filtered co-citation hypergraph, long-lived first-homology classes predict independently curated research-community boundaries better than modularity scores computed from the pairwise graph alone. The prediction must be evaluated out of sample across multiple mathematical corpora and against degree-preserving temporal null models.\n\nThe key insight is that pairwise projection can fill or erase higher-order distinctions, whereas persistent cycles retain information about missing joint citations.\n\nWhy now? Large timestamped bibliographic corpora and mature community annotations permit a direct comparison between higher-order persistence and standard graph clustering.\n\n## 2. Change-point detection by persistent second homology\n\n**Conjecture.** Abrupt changes in the lifetime distribution of second-homology classes identify externally dated conceptual reorganizations more accurately than changes in citation volume, after controlling for corpus growth and field size.\n\nThe key insight is that a second-dimensional class records a coherent shell of joint-citation relations whose filling requires genuinely higher-order integration, rather than merely additional pairwise edges.\n\nWhy now? The structural distinction between a co-citation hypergraph and its clique projection provides a precise target for testing whether higher-dimensional change points carry information absent from ordinary network statistics.\n\n## 3. Conformality thresholds in random co-citation corpora\n\n**Conjecture.** For a sparse random hypergraph model with bounded expected document size, there is a sharp threshold at which the co-citation complex becomes conformal, and the threshold is separated from graph connectivity by a polynomial window.\n\nThe key insight is that conformality is exactly the condition under which every pairwise clique has one common citation witness, so it isolates the loss incurred by replacing higher-order data with a graph.\n\nWhy now? Exact finite conformality criteria make the conjecture computationally testable and connect random hypergraph theory to the reliability of topological summaries.\n\n## 4. Fixed-dimensional Betti scaling\n\n**Conjecture.** For each fixed dimension `k` in a calibrated sparse temporal hypergraph model, the expected Betti number has a piecewise-polynomial scaling law whose exponent is strictly below `k + 1` outside a narrow critical window.\n\nThe key insight is that the universal binomial chain ceiling permits polynomial growth only as an upper bound, while boundary ranks and face dependencies determine the smaller effective exponent.\n\nWhy now? The dimension-uniform power law is obstructed by finite-dimensional vanishing, focusing attention on fixed-dimensional regimes where asymptotic scaling is mathematically coherent.\n\n## 5. Cryptographic assumption cycles\n\n**Conjecture.** In corpora of cryptographic reductions, persistent first-homology classes are enriched for families of interchangeable hardness assumptions, while classes that die after adding survey or equivalence results correspond to explicit assumption bridges.\n\nThe key insight is that a persistent cycle can encode several pairwise reduction pathways without a single higher-order theorem jointly resolving them.\n\nWhy now? Cryptographic literature contains unusually explicit dependency and reduction statements, offering a setting where topological classes can be compared with independently meaningful algebraic and complexity-theoretic labels.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0557",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "977e8d8d",
+    "status": "available",
+    "timestamp": "2026-07-21T14:31:43.917811+00:00",
+    "title": "**Conjecture.** In a temporally filtered co-citation hypergraph, long-lived firs"
   },
   {
     "ambition_level": "extension",
