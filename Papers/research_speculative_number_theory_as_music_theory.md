@@ -1,289 +1,457 @@
-# Spectral Arithmetic: A Harmonic Weight Function Connecting Prime Factorization to Musical Consonance
+# Reciprocal-Zero Harmonics: Finite Spectral Bounds, Conjugation Symmetry, and Quadratic Rationality
+
+**Aristotle**  
+**July 21, 2026**
 
 ## Abstract
 
-We introduce the **spectral weight** function `sw : ℕ → ℚ`, defined by `sw(n) = Σ_{p | n} v_p(n)/p` where the sum runs over prime factors of *n* and *v_p* denotes the *p*-adic valuation. We prove that this function is **completely additive** on ℕ\{0}: `sw(mn) = sw(m) + sw(n)` for all m,n ≥ 1, without any coprimality assumption. We establish the sharp upper bound `sw(n) ≤ Ω(n)/2` with equality iff *n* is a power of 2, and show that the induced **consonance distance** on musical intervals recovers the traditional ordering (unison < octave < fifth < fourth). All results are formally verified in Lean 4 with Mathlib.
-
-**Keywords**: spectral weight, completely additive function, p-adic valuation, musical consonance, prime factorization, Lean 4
-
----
+We study a finite reciprocal-spectral statistic motivated by attempts to interpret number-theoretic spectra as musical harmonies. For a finite set $Z$ of complex spectral parameters, its harmonic is $H(Z)=\sum_{z\in Z}z^{-1}$. We establish three structural principles. First, if every point of $Z$ has modulus at least $\delta>0$, then $|H(Z)|\le |Z|/\delta$; consequently, every point-count bound transfers directly to a bound for the harmonic. In particular, a hypothetical estimate $|Z_n|\le C\log n/\log\log n$ yields $|H(Z_n)|\le (C/\delta)\log n/\log\log n$. Second, if $Z$ is closed under complex conjugation, then $H(Z)$ is real. Third, for distinct roots $\alpha,\beta$ with $\alpha+\beta=\ell$, $\alpha\beta=q\ne0$, the reciprocal harmonic equals $\ell/q$; hence rational quadratic coefficients produce a rational harmonic. We also diagnose two proposed small-cutoff assignments. An empty window has harmonic zero, so empty windows at cutoffs $2$ and $3$ coincide; the former cannot have value $1$, and the latter cannot be transcendental. This support-first diagnosis is essential because numerical zero data place both cutoffs below the first nontrivial Riemann-zeta zero, although applying that fact as a theorem requires a certified exclusion result. The results separate universal finite algebra from analytic hypotheses and provide exact algorithms, graph-zeta examples, and a foundation for renormalized and arithmetic extensions.
 
 ## 1. Introduction
 
-The connection between number theory and music theory dates to Pythagoras, who observed that consonant musical intervals correspond to ratios of small integers. The octave (2:1), perfect fifth (3:2), and perfect fourth (4:3) form the backbone of virtually every musical system in recorded history.
+The Riemann zeta function connects prime numbers with complex analysis through the Euler product
 
-Despite this ancient observation, a rigorous mathematical framework quantifying *why* certain ratios sound more consonant has remained elusive. Previous approaches include Euler's *gradus suavitatis* [1], Tenney's harmonic distance, and various psychoacoustic models. Most are either ad hoc or lack clean algebraic properties.
+$$
+\zeta(s)=\prod_p(1-p^{-s})^{-1},
+$$
 
-In this paper, we introduce a new approach based on the **spectral weight function**, which assigns to each positive integer a rational number measuring its "harmonic complexity." The definition is simple — sum *v_p(n)/p* over all primes *p* dividing *n* — but the resulting function has remarkably clean algebraic properties that connect deep number theory to musical aesthetics.
+initially valid for $\operatorname{Re}(s)>1$ and continued meromorphically to the complex plane. Its nontrivial zeros form a complex spectrum whose distribution encodes deep arithmetic information. This spectral viewpoint encourages an analogy with music: one might regard each zero as a partial and a finite collection of zeros as a chord.
 
-### 1.1 Main Results
+A particularly simple statistic is obtained by adding reciprocal spectral parameters. If a cutoff $T$ selects the nontrivial zeros $\rho$ satisfying $|\operatorname{Im}\rho|\le T$, define formally
 
-1. **Complete Additivity** (Theorem 3.1): `sw(mn) = sw(m) + sw(n)` for all m,n ∈ ℕ\{0}.
-2. **Prime Power Formula** (Theorem 2.1): `sw(p^k) = k/p` for prime *p* and *k* ≥ 1.
-3. **Sharp Upper Bound** (Theorem 4.1): `sw(n) ≤ Ω(n)/2` with equality iff *n* = 2^k.
-4. **Consonance Ordering** (Theorem 5.1): The induced consonance distance satisfies `cd(1,1) < cd(2,1) < cd(3,2) < cd(4,3)`.
-5. **Generalization** (Theorem 6.1): All results extend to generalized spectral weights `gsw_w(n) = Σ v_p(n) · w(p)`.
-6. **Spectral Density Conjecture** (Conjecture 7.1): `δ_p(N) → 1/(p(p-1))` as *N* → ∞.
+$$
+H(T)=\sum_{|\operatorname{Im}\rho|\le T}\frac{1}{\rho}.
+$$
 
----
+For any finite window this is a well-defined complex number, with multiplicity conventions specified as part of the chosen model. The analogy has prompted stronger claims: perhaps the statistic grows slowly, perhaps rational values identify consonant intervals, and perhaps small prime cutoffs produce distinguished notes.
 
-## 2. Definitions and Basic Properties
+The purpose of this paper is to determine what follows from the finite reciprocal-sum construction itself. The answer has four parts.
 
-### 2.1 The Spectral Weight
+1. Separation from the origin and cardinality control the magnitude of a reciprocal harmonic.
+2. Conjugation symmetry forces the harmonic to be real.
+3. Empty windows expose a fatal support error in proposed assignments at cutoffs $2$ and $3$.
+4. Quadratic spectral factors provide an exact and nontrivial source of rational harmonics.
 
-**Definition 2.1** (Spectral Weight). For *n* ∈ ℕ, define
-```
-sw(n) = Σ_{p ∈ PF(n)} v_p(n) / p
-```
-where PF(n) denotes the set of prime factors of *n* and *v_p(n)* is the *p*-adic valuation.
+These conclusions distinguish unconditional finite algebra from analytic input. In particular, the bound of order $\log n/\log\log n$ is valid under a counting hypothesis of that order; it is not an unconditional zero-count theorem for the ordinary Riemann-zeta window. The classical zeta-zero count up to height $T$ is instead on the scale $T\log T$. Similarly, approximate zero tables strongly motivate empty small windows but do not replace a certified zero-exclusion theorem.
 
-In Lean 4, this is implemented as:
-```lean
-def spectralWeight (n : ℕ) : ℚ :=
-  n.primeFactors.sum (fun p => (n.factorization p : ℚ) / (p : ℚ))
-```
+The corrected framework therefore follows a support-first methodology: establish which spectral points occur, verify nonvanishing and symmetry, apply counting estimates, and only then classify the sum arithmetically.
 
-**Theorem 2.1** (Prime Power Formula). For *p* prime and *k* ≥ 1:
-```
-sw(p^k) = k/p
-```
+## 2. Finite spectral windows
 
-*Proof*. The prime factorization of p^k has a single factor p with exponent k, and the set of prime factors is {p}. Thus sw(p^k) = k/p. ∎
+### 2.1 Definition of the harmonic
 
-**Corollary 2.2**.
-- sw(1) = 0 (empty sum)
-- sw(2) = 1/2 (the octave)
-- sw(3) = 1/3 (the fifth generator)
-- sw(5) = 1/5 (the major third generator)
-- sw(4) = sw(2²) = 1 (two octaves)
-- sw(8) = sw(2³) = 3/2 (three octaves)
+Let $Z\subset\mathbb C$ be finite and contain no zero. The **reciprocal harmonic** of $Z$ is
 
-### 2.2 Consonance Distance
+$$
+H(Z)=\sum_{z\in Z}\frac{1}{z}.
+$$
 
-**Definition 2.2** (Consonance Distance). For m, n ∈ ℕ:
-```
-cd(m, n) = sw(lcm(m,n)) - sw(gcd(m,n))
-```
+The use of a set means that repeated values are counted once. For spectral problems in which multiplicity matters, the same discussion applies to a finite multiset, with each occurrence contributing separately. All estimates below depend only on the triangle inequality and therefore transfer unchanged to multisets.
 
-### 2.3 Harmonic Rank
+A **window family** is a sequence $(Z_n)_{n\ge0}$ of finite subsets of $\mathbb C\setminus\{0\}$. A typical height window takes
 
-**Definition 2.3** (Harmonic Rank). `hr(n) = |PF(n)|` = number of distinct prime factors.
+$$
+Z_T=\{\rho:\rho\text{ is in the chosen spectrum and }|\operatorname{Im}\rho|\le T\}.
+$$
 
----
+The formal parameter may be integral or real. We use integer-indexed families for the transfer theorems and a real height when discussing the zeta function.
 
-## 3. Complete Additivity: The Main Structural Theorem
+### 2.2 Separation
 
-**Theorem 3.1** (Complete Additivity). For all m, n ∈ ℕ with m ≠ 0 and n ≠ 0:
-```
-sw(m · n) = sw(m) + sw(n)
-```
+A finite window $Z$ is **$\delta$-separated from the origin** if $\delta>0$ and
 
-*Proof sketch*. The key ingredients are:
-1. **Factorization additivity**: For m,n ≠ 0, `(mn).factorization = m.factorization + n.factorization` (as `ℕ →₀ ℕ`), which gives `v_p(mn) = v_p(m) + v_p(n)` for all primes *p*.
-2. **Support union**: `PF(mn) = PF(m) ∪ PF(n)`.
-3. **Sum splitting**: Split the sum over PF(mn) using the union, extend each individual sum by adding zero terms for primes not in the support.
+$$
+|z|\ge\delta\qquad\text{for every }z\in Z.
+$$
 
-The formal proof in Lean uses `Nat.factorization_mul`, `Nat.primeFactors_mul`, `Finsupp.add_apply`, and `Finset.sum_subset`. ∎
+This is radial separation from zero, not pairwise separation between spectral points. It is exactly the hypothesis needed to bound reciprocal magnitudes.
 
-**Remark 3.2**. This is stronger than the coprime additivity that one might initially expect. The complete additivity holds because *v_p* is completely additive, not just additive on coprimes. This means sw defines a monoid homomorphism from (ℕ\{0}, ×, 1) to (ℚ, +, 0).
+### 2.3 Conjugation closure
 
-**Corollary 3.3** (Power Rule). For n ≠ 0 and k ∈ ℕ: `sw(n^k) = k · sw(n)`.
+A finite window $Z$ is **conjugation-closed** if
 
-*Proof*. Induction on k, using complete additivity. ∎
+$$
+z\in Z\quad\Longleftrightarrow\quad\overline z\in Z
+$$
 
-**Corollary 3.4**. `sw(12) = sw(4) + sw(3) = 1 + 1/3 = 4/3`.
+for every $z\in\mathbb C$. Nonreal points then occur in conjugate pairs, while real points are fixed by the involution.
 
-### 3.1 Boundary: Failure at Zero
+### 2.4 Algebraic and transcendental values
 
-Complete additivity fails when one factor is zero: `sw(0 · 2) = sw(0) = 0 ≠ 1/2 = sw(0) + sw(2)`. This is the only failure mode; the function is additive on all of ℕ\{0}.
+A complex number $w$ is **algebraic over $\mathbb Q$** if there exists a nonzero polynomial $P\in\mathbb Q[X]$ such that $P(w)=0$. It is **transcendental over $\mathbb Q$** if it is not algebraic. In particular, $0$ is algebraic because it is a root of $P(X)=X$.
 
-### 3.2 Boundary: Non-Monotonicity
+This elementary observation becomes decisive for an empty spectral window.
 
-The spectral weight is **not** monotone: `sw(3) = 1/3 < 1/2 = sw(2)` despite 3 > 2.
+## 3. Magnitude bounds from separation and counting
 
----
+### Theorem 3.1 (Separated-Window Bound)
 
-## 4. The Sharp Upper Bound
+Let $Z\subset\mathbb C\setminus\{0\}$ be finite. If $|z|\ge\delta$ for every $z\in Z$, where $\delta>0$, then
 
-**Theorem 4.1** (Big Omega Bound). For all *n* ∈ ℕ:
-```
-sw(n) ≤ Ω(n) / 2
-```
-where Ω(n) = `n.primeFactorsList.length` is the number of prime factors with multiplicity.
+$$
+|H(Z)|\le\frac{|Z|}{\delta}.
+$$
 
-*Proof sketch*. For each prime *p* ≥ 2, we have 1/p ≤ 1/2, so `v_p(n)/p ≤ v_p(n)/2`. Summing over all prime factors: `sw(n) = Σ v_p(n)/p ≤ Σ v_p(n)/2 = Ω(n)/2`. ∎
+**Proof sketch.** For every $z\in Z$,
 
-**Theorem 4.2** (Tightness). `sw(n) = Ω(n)/2` if and only if *n* is a power of 2.
+$$
+\left|\frac1z\right|=\frac1{|z|}\le\frac1\delta.
+$$
 
-*Proof*. Equality requires 1/p = 1/2 for every prime *p* dividing *n*, which forces *p* = 2. ∎
+The triangle inequality gives
 
-**Corollary 4.3** (Octave Maximality). Among all *n* with Ω(n) = k, the maximum spectral weight k/2 is achieved uniquely by *n* = 2^k.
+$$
+|H(Z)|
+=\left|\sum_{z\in Z}\frac1z\right|
+\le\sum_{z\in Z}\frac1{|z|}
+\le\sum_{z\in Z}\frac1\delta
+=\frac{|Z|}{\delta}.
+$$
 
----
+No information about arguments or cancellation is required. $\square$
 
-## 5. Consonance Theory
+The estimate is sharp in the class of arbitrary finite windows: equality occurs when all reciprocal terms have the same argument and all points have modulus $\delta$. For a set rather than a multiset, exact equality with multiple terms requires distinct points on the same ray and hence differing moduli, so one generally obtains near-sharp examples rather than repeated equality. The theorem is intentionally robust; symmetry can improve it, but is not needed.
 
-### 5.1 Symmetry and Identity
+### Theorem 3.2 (Counting-to-Harmonic Transfer)
 
-**Theorem 5.1**. The consonance distance satisfies:
-- `cd(n, n) = 0` for all *n* (self-consonance)
-- `cd(m, n) = cd(n, m)` for all *m, n* (symmetry)
+Let $(Z_n)_{n\ge0}$ be a family of finite complex windows. Suppose there is a fixed $\delta>0$ such that $|z|\ge\delta$ for every $n$ and every $z\in Z_n$. If $B:\mathbb N\to\mathbb R$ satisfies
 
-### 5.2 Coprime Simplification
+$$
+|Z_n|\le B(n)
+$$
 
-**Theorem 5.2**. For coprime m, n > 0: `cd(m, n) = sw(m) + sw(n)`.
+for every $n$, then
 
-*Proof*. When gcd(m,n) = 1: lcm(m,n) = mn and sw(1) = 0, so cd = sw(mn) - 0 = sw(m) + sw(n). ∎
+$$
+|H(Z_n)|\le\frac{B(n)}{\delta}
+$$
 
-### 5.3 The Musical Ordering
+for every $n$.
 
-**Theorem 5.3** (Consonance Ordering). The classical musical intervals satisfy:
-```
-cd(1,1) = 0 < cd(2,1) = 1/2 < cd(3,2) = 5/6 < cd(4,3) = 4/3
-```
+**Proof sketch.** Apply Theorem 3.1 to $Z_n$, obtaining $|H(Z_n)|\le |Z_n|/\delta$, and then insert the assumed bound $|Z_n|\le B(n)$. Since $1/\delta>0$, multiplication preserves the inequality. $\square$
 
-This matches the traditional musical ordering: unison < octave < fifth < fourth.
+### Corollary 3.3 (Conditional Logarithmic-over-Logarithmic Bound)
 
-### 5.4 Extended Interval Analysis
+Under the uniform separation hypothesis of Theorem 3.2, assume that for some real constant $C$,
 
-| Interval | Ratio | cd | Decimal |
-|----------|-------|-----|---------|
-| Unison | 1:1 | 0 | 0.000 |
-| Octave | 2:1 | 1/2 | 0.500 |
-| Fifth | 3:2 | 5/6 | 0.833 |
-| Major Third | 5:4 | 6/5 | 1.200 |
-| Fourth | 4:3 | 4/3 | 1.333 |
+$$
+|Z_n|\le C\frac{\log n}{\log\log n}
+$$
 
----
+for every index in a range where the displayed expression is intended and the inequality holds. Then
 
-## 6. Generalization
+$$
+|H(Z_n)|\le\frac{C}{\delta}\frac{\log n}{\log\log n}.
+$$
 
-### 6.1 Generalized Spectral Weight
+**Proof sketch.** Set $B(n)=C\log n/\log\log n$ in Theorem 3.2 and rearrange scalar factors. $\square$
 
-**Definition 6.1**. For any weight function w : ℕ → ℚ, define:
-```
-gsw_w(n) = Σ_{p ∈ PF(n)} v_p(n) · w(p)
-```
+The qualification concerning the range is important: $\log\log n$ vanishes at $n=e$ and changes sign below it. In applications, one normally states the estimate for sufficiently large $n$, where all terms have the expected sign.
 
-**Theorem 6.1** (Generalized Complete Additivity). For any w and m,n ≠ 0:
-```
-gsw_w(mn) = gsw_w(m) + gsw_w(n)
-```
+### 3.1 Interpretation and limitation
 
-**Theorem 6.2**. `sw = gsw_{1/p}`.
+Corollary 3.3 is a transfer theorem. Its conclusion has the same asymptotic shape as its counting hypothesis. It does not derive a new point count from properties of reciprocal sums.
 
-### 6.2 Special Cases
+For the standard nontrivial zeros of $\zeta(s)$, the Riemann–von Mangoldt formula gives a counting function whose leading scale is
 
-| Weight w(p) | Function gsw_w | Known name |
-|-------------|---------------|------------|
-| 1/p | sw(n) | Spectral weight (new) |
-| 1 | Ω(n) | Big omega function |
-| log(p) | log(n) | Natural logarithm |
-| (-1)^{p+1}/p | — | Alternating spectral weight |
+$$
+N(T)\sim \frac{T}{2\pi}\log\frac{T}{2\pi}.
+$$
 
----
+Therefore, one must not substitute the standard height window into Corollary 3.3 while silently assuming a much smaller $\log T/\log\log T$ count. The general transfer theorem remains valid, and it may apply to sparse subwindows, differently indexed bands, or other spectra. For the full zeta window, sharper harmonic analysis should exploit cancellation and conjugation rather than cardinality alone.
 
-## 7. Spectral Density Conjecture
+## 4. Reality from conjugation symmetry
 
-**Definition 7.1**. The *p*-spectral density at level *N*:
-```
-δ_p(N) = (1/N) Σ_{k=1}^{N} v_p(k) / p
-```
+### Theorem 4.1 (Conjugation-Symmetry Theorem)
 
-**Conjecture 7.1** (Spectral Density Convergence).
-```
-lim_{N→∞} δ_p(N) = 1 / (p(p-1))
-```
+If $Z\subset\mathbb C\setminus\{0\}$ is finite and conjugation-closed, then $H(Z)$ is real. Equivalently,
 
-**Computational Evidence**:
+$$
+\operatorname{Im}H(Z)=0.
+$$
 
-| p | Target 1/(p(p-1)) | δ_p(1000) | δ_p(10000) |
-|---|-------------------|-----------|------------|
-| 2 | 0.500000 | 0.499500 | 0.499950 |
-| 3 | 0.166667 | 0.166833 | 0.166617 |
-| 5 | 0.050000 | 0.049700 | 0.049940 |
-| 7 | 0.023810 | 0.023571 | 0.023786 |
+**Proof sketch.** Complex conjugation commutes with inversion away from zero, so
 
-The convergence rate appears to be O(1/N).
+$$
+\overline{H(Z)}
+=\sum_{z\in Z}\overline{\frac1z}
+=\sum_{z\in Z}\frac1{\overline z}.
+$$
 
-**Proof Strategy**. The conjecture follows from the fact that Σ_{k≤N, p|k} 1 = N/p + O(1), and more generally Σ_{k≤N, p^j|k} 1 = N/p^j + O(1). Then:
-```
-δ_p(N) = (1/Np) Σ_{j=1}^∞ Σ_{k≤N, p^j|k} 1 = (1/Np) Σ_{j=1}^∞ (N/p^j + O(1))
-       = (1/p) · 1/(p-1) + O(log(N)/N) = 1/(p(p-1)) + o(1)
-```
+Because conjugation permutes $Z$, reindexing the final sum by $z\mapsto\overline z$ gives $\overline{H(Z)}=H(Z)$. A complex number equal to its conjugate is real. Equivalently, pair each nonreal $z$ with $\overline z$ and use
 
----
+$$
+\frac1z+\frac1{\overline z}=2\operatorname{Re}\left(\frac1z\right).
+$$
 
-## 8. Cross-Connections
+Real points contribute real reciprocals individually. $\square$
 
-### 8.1 Connection to the Prime Harmonic Series
+This theorem identifies the appropriate finite organization for a real spectral statistic. It does not assert convergence as the window expands. For an infinite spectrum, ordering and renormalization remain separate analytic questions.
 
-The spectral weight of the *n*-th primorial P_n# = p_1 · p_2 · ... · p_n equals the partial sum of the prime harmonic series: `sw(P_n#) = Σ_{k=1}^n 1/p_k`. Since this series diverges (Euler), the spectral weight is unbounded.
+### Example 4.2
 
-### 8.2 Connection to the Riemann Zeta Function
+Take
 
-The sum `Σ_{n≥2} sw(n)/n^s` can be expressed in terms of the Riemann zeta function:
-```
-Σ_{n≥2} sw(n)/n^s = Σ_p (1/p) · Σ_{k≥1} k/p^{ks} = Σ_p 1/(p · (p^s - 1)^2)
-```
-where the outer sum runs over primes. This connects spectral arithmetic to the deep theory of *L*-functions.
+$$
+Z=\{1+2i,1-2i,3\}.
+$$
 
-### 8.3 Connection to Catalog Results
+Then
 
-The `spectral_zeta_partial_sum` from the existing catalog (`spectral_zeta_partial_sum` in `QuantumGroupSpectrum.lean`) provides a related partial sum framework. Our spectral weight generalizes the "spectral" perspective to individual numbers rather than aggregate sums.
+$$
+H(Z)=\frac{1}{1+2i}+\frac{1}{1-2i}+\frac13
+=\frac25+\frac13
+=\frac{11}{15}.
+$$
 
-The `prime_count_trivial_bound` from `FutureExploration.lean` provides a bound on the number of primes ≤ N, which our `harmonicRank_le_prime_count` theorem connects to the harmonic rank.
+Conjugation symmetry first guarantees reality; the rational coordinates in this example further yield a rational value.
 
----
+## 5. Empty-window diagnosis at small cutoffs
 
-## 9. Formal Verification
+### Proposition 5.1 (Empty-Window Harmonic)
 
-All theorems in this paper have been formally verified in Lean 4 (version 4.28.0) with Mathlib. The formalization consists of two files:
+If $Z=\varnothing$, then
 
-- **HarmonicWeight.lean** (≈300 lines): Core definitions, prime power formula, coprime additivity, upper bound, consonance theory, harmonic rank properties, divisibility component bound.
+$$
+H(Z)=0.
+$$
 
-- **Advanced.lean** (≈180 lines): Complete additivity, power rule, generalized spectral weight, boundary analysis, harmonic rank bound, factorization determines weight, prime reciprocal sum bound.
+**Proof sketch.** A sum indexed by the empty set is the additive identity. $\square$
 
-Total: **30+ verified theorems**, 0 sorries.
+### Corollary 5.2 (Failure of the Unit Assignment)
 
-Key proof techniques:
-- Finset sum manipulation with `Finset.sum_union`, `Finset.sum_subset`
-- p-adic valuation algebra via `Nat.factorization_mul`, `Finsupp.add_apply`
-- Induction for the power rule
-- Telescoping sums for the prime reciprocal bound
+If the spectral window at cutoff $2$ is empty, then its harmonic is $0$ and therefore is not $1$.
 
----
+**Proof sketch.** Apply Proposition 5.1 and use $0\ne1$. $\square$
 
-## 10. Discussion
+### Corollary 5.3 (Coincidence of Empty Small Windows)
 
-### 10.1 Why This Definition?
+If the windows at cutoffs $2$ and $3$ are both empty, then their harmonics coincide and satisfy
 
-The spectral weight is the unique completely additive function from (ℕ\{0}, ×) to (ℚ, +) that assigns weight 1/p to each prime *p*. The choice of 1/p is natural from several perspectives:
+$$
+H(2)=H(3)=0.
+$$
 
-1. **Harmonic series**: The amplitudes of overtones in the harmonic series decrease as 1/n, and the "independent" overtones are the prime harmonics.
-2. **Information-theoretic**: The "surprise" of observing a factor of *p* in a random factorization is proportional to 1/p.
-3. **Algebraic**: The weight 1/p makes sw the unique completely additive function satisfying sw(p) = 1/p for all primes.
+**Proof sketch.** Apply Proposition 5.1 to each window. $\square$
 
-### 10.2 Limitations
+### Corollary 5.4 (Failure of the Transcendence Assignment)
 
-- The spectral weight is not monotone in *n*, limiting its use as a direct complexity measure.
-- The consonance distance does not satisfy the triangle inequality in general, so it is not a metric.
-- The framework describes *arithmetic* consonance, not psychoacoustic consonance, which involves physiological factors like the basilar membrane response.
+If the spectral window at cutoff $3$ is empty, then its harmonic is not transcendental over $\mathbb Q$.
 
-### 10.3 Future Directions
+**Proof sketch.** Proposition 5.1 gives $H(3)=0$. The nonzero rational polynomial $X$ vanishes at zero, so zero is algebraic over $\mathbb Q$ and hence not transcendental. $\square$
 
-See FUTURE_DIRECTIONS.md for detailed research proposals.
+### 5.1 Consequence for zeta-inspired musical labels
 
----
+Numerical tables place the first nontrivial zeta zeros at imaginary parts approximately $\pm14.1347$. They therefore indicate that the ordinary symmetric height windows at $2$ and $3$ are empty. However, a numerical table is evidence, not a self-contained zero-free proof. The exact logical statement is conditional on emptiness, and a complete analytic specialization requires certified inequalities excluding nontrivial zeros throughout $|\operatorname{Im}s|\le3$.
 
-## References
+Once emptiness is supplied, no arithmetic subtlety remains: both values are zero. Thus the proposed identification of cutoff $2$ with the value $1$ and cutoff $3$ with a transcendental value is incompatible with the reciprocal-window definition.
 
-[1] L. Euler, *Tentamen novae theoriae musicae*, 1739.
+This is a general methodological warning. Before asking whether a finite spectral statistic is rational or transcendental, one must verify that its indexing set is nonempty.
 
-[2] J. Tenney, "John Cage and the Theory of Harmony," *Soundings*, 1984.
+## 6. Quadratic spectra and exact rational harmonics
 
-[3] H. Helmholtz, *On the Sensations of Tone*, 1863.
+The empty-window diagnosis removes the proposed small zeta examples, but exact rational harmonics do occur naturally in finite algebraic spectra.
 
----
+### Theorem 6.1 (Quadratic Reciprocal-Harmonic Identity)
 
-*All theorems verified in Lean 4 with Mathlib v4.28.0.*
+Let $\alpha,\beta,\ell,q\in\mathbb C$ satisfy
+
+$$
+\alpha+\beta=\ell,
+\qquad
+\alpha\beta=q,
+\qquad
+q\ne0,
+$$
+
+and suppose $\alpha\ne\beta$ so that the two-element set $\{\alpha,\beta\}$ counts both roots. Then
+
+$$
+H(\{\alpha,\beta\})=\frac{\ell}{q}.
+$$
+
+**Proof sketch.** Since $q=\alpha\beta\ne0$, both roots are nonzero. Therefore
+
+$$
+H(\{\alpha,\beta\})
+=\frac1\alpha+\frac1\beta
+=\frac{\alpha+\beta}{\alpha\beta}
+=\frac\ell q.
+$$
+
+The distinctness condition concerns set semantics: if the roots coincide, a set would count the repeated root once. With multiset semantics, the identity remains valid with multiplicity even for a repeated root. $\square$
+
+### Corollary 6.2 (Rational Quadratic Harmonics)
+
+Under the hypotheses of Theorem 6.1, if $\ell,q\in\mathbb Q$, then the reciprocal harmonic is rational and equals $\ell/q$.
+
+**Proof sketch.** Theorem 6.1 identifies the harmonic with a quotient of rational numbers, and $q\ne0$. $\square$
+
+### Theorem 6.3 (Factorization-and-Harmonic Principle)
+
+Under the hypotheses of Theorem 6.1, the quadratic expression
+
+$$
+L(u)=1-\ell u+qu^2
+$$
+
+factors for every $u\in\mathbb C$ as
+
+$$
+L(u)=(1-\alpha u)(1-\beta u),
+$$
+
+and its two-root reciprocal harmonic is $\ell/q$.
+
+**Proof sketch.** Expanding the product yields
+
+$$
+(1-\alpha u)(1-\beta u)
+=1-(\alpha+\beta)u+\alpha\beta u^2
+=1-\ell u+qu^2.
+$$
+
+The harmonic identity is Theorem 6.1. $\square$
+
+Quadratic factors of this form occur in finite graph-zeta constructions. The theorem supplies a bridge from factor coefficients to a spectral chord without requiring explicit root extraction. It is a finite analogue of the broader principle that symmetric functions of roots are coefficient invariants.
+
+### Example 6.4
+
+For $\alpha=2$ and $\beta=3$, one has $\ell=5$ and $q=6$. Hence
+
+$$
+(1-2u)(1-3u)=1-5u+6u^2
+$$
+
+and
+
+$$
+H(\{2,3\})=\frac12+\frac13=\frac56=\frac\ell q.
+$$
+
+### Example 6.5
+
+For the conjugate pair $\alpha=1+2i$ and $\beta=1-2i$, one has $\ell=2$ and $q=5$. Therefore
+
+$$
+H(\{1+2i,1-2i\})=\frac25.
+$$
+
+Here conjugation symmetry explains reality, while Vieta’s identity explains rationality.
+
+## 7. Algorithms
+
+### 7.1 Direct finite-window evaluation
+
+Given a finite list of nonzero complex numbers, the direct algorithm accumulates their reciprocals. For $m$ input points, it uses $m$ inversions and $m-1$ additions, hence $O(m)$ time and $O(1)$ auxiliary space if the sum is streamed.
+
+**Pseudocode.**
+
+1. Input a list $z_1,\dots,z_m$.
+2. Reject the input if any $z_j=0$.
+3. Initialize $S\leftarrow0$.
+4. For $j=1$ to $m$, update $S\leftarrow S+1/z_j$.
+5. Return $S$.
+
+For floating-point input, compensated summation may reduce rounding error. For exact rational or algebraic input, symbolic arithmetic is preferable.
+
+### 7.2 Cutoff filtering
+
+Given candidate spectral points and a cutoff $T\ge0$, retain those satisfying $|\operatorname{Im}z|\le T$, then apply direct evaluation. Filtering and summation together take $O(m)$ time. If many cutoffs are queried, sorting once by $|\operatorname{Im}z|$ costs $O(m\log m)$, after which prefix sums support efficient repeated queries.
+
+This algorithm demonstrates selected-window behavior relative to the supplied data. It does not certify that the candidate list is complete.
+
+### 7.3 Quadratic coefficient evaluation
+
+For a quadratic factor $1-\ell u+qu^2$ with $q\ne0$, return $\ell/q$. This is $O(1)$ arithmetic and avoids square roots, root ordering, and cancellation errors. If the coefficients are rational, exact fraction arithmetic yields an exact rational harmonic.
+
+### 7.4 Structural diagnostics
+
+A useful implementation should return more than a sum. It should report:
+
+- the selected cardinality $|Z|$;
+- the minimum modulus $\delta_Z=\min_{z\in Z}|z|$ when $Z$ is nonempty;
+- the bound $|Z|/\delta_Z$;
+- a conjugation-closure diagnostic relative to a numerical tolerance;
+- the real and imaginary parts of the harmonic.
+
+These diagnostics distinguish theorem-backed structure from accidents of floating-point output.
+
+## 8. Applications
+
+### 8.1 Sparse spectral statistics
+
+The counting-transfer theorem applies to any sparse finite spectrum with a uniform exclusion radius. Examples include selected eigenvalue bands, chosen polynomial roots, and filtered graph spectra. The theorem is especially useful when cardinality is easy to estimate but individual roots are difficult to locate.
+
+### 8.2 Graph-zeta chord spectra
+
+Finite graphs offer local factors with explicit coefficients. Associating the reciprocal-root harmonic to each quadratic factor turns graph data into exact rational or algebraic statistics. Graph operations may then be studied through their effects on coefficient ratios. Covers, products, and subdivisions are natural candidates because they often produce structured changes in spectral factorizations.
+
+### 8.3 Arithmetic classification through symmetric functions
+
+The quadratic identity extends conceptually to higher degrees. If nonzero roots $r_1,\dots,r_d$ are counted with multiplicity, then
+
+$$
+\sum_{j=1}^d\frac1{r_j}
+$$
+
+is a ratio of elementary symmetric functions, hence a coefficient ratio up to the sign convention of the polynomial. This observation suggests that rationality often reflects the coefficient field and Galois invariance rather than exceptional properties of individual roots. Selected subsets, rather than complete root multisets, lead to subtler arithmetic questions.
+
+### 8.4 Auditory mappings
+
+To turn a real harmonic into sound, one could map a statistic $h$ to a frequency $f_0 2^h$ or to a pitch class modulo $1$. Such a mapping is external to the mathematics developed here and should not be confused with a theorem about consonance. The structural results instead provide calibrated inputs: real values from conjugation symmetry, exact rationals from quadratic factors, and magnitude controls from counting.
+
+## 9. Discussion
+
+The reciprocal-harmonic framework has a productive tension between metaphor and rigor. The musical metaphor motivates questions, but the finite theorems decide which versions are coherent.
+
+First, cardinality bounds alone cannot reveal cancellation. The estimate $|H(Z)|\le|Z|/\delta$ is universal but potentially crude. In conjugate pairs $\rho=\sigma+it$ and $\overline\rho=\sigma-it$,
+
+$$
+\frac1\rho+\frac1{\overline\rho}
+=\frac{2\sigma}{\sigma^2+t^2},
+$$
+
+which decays quadratically in $|t|$ when $\sigma$ remains bounded. This is far smaller than the sum of reciprocal moduli, which decays only linearly in $|t|$. A refined zeta analysis should exploit this paired expression.
+
+Second, the set-versus-multiset distinction matters. Spectral zeros are ordinarily counted with multiplicity. A finite-set model is appropriate when all selected points are distinct or when multiplicity is deliberately ignored. Repeated quadratic roots show why the convention must be explicit.
+
+Third, computation must distinguish finite-data evaluation from certification. A program can faithfully sum every zero in its input table, but it cannot infer that no omitted zero lies below a cutoff. Certified support requires either a proof or data accompanied by rigorous completeness guarantees.
+
+Fourth, the small-cutoff failure clarifies how hypotheses should be ordered. Nonemptiness is logically prior to transcendence. Separation is prior to reciprocal evaluation. Conjugation closure is prior to claiming reality. A count estimate is prior to transferring its asymptotic shape.
+
+Finally, rationality in the quadratic model has a transparent explanation. The sum of reciprocal roots is a symmetric invariant, so it belongs to the coefficient field. This mechanism is more robust than attaching special arithmetic meaning to arbitrary numerical cutoffs.
+
+## 10. Future work
+
+### 10.1 Renormalized zeta harmonic convergence
+
+Define a multiplicity-sensitive, conjugate-symmetric sum
+
+$$
+H(T)=\sum_{|\operatorname{Im}\rho|\le T}\frac1\rho
+$$
+
+and determine an explicit renormalization under which it converges, with a quantitative error term derived from the Riemann–von Mangoldt formula. Conjugate pairing converts the sum into a real spectral statistic, while zero counting controls its tail. Predicted errors could be compared with certified zero tables.
+
+### 10.2 Arithmetic classification of finite spectral harmonics
+
+Classify algebraic root multisets whose reciprocal sum is rational, algebraic irrational, or transcendental, beginning with Euler factors of increasing degree and prescribed Galois group. A central question is whether rationality is equivalent to a Galois-invariant coefficient ratio under natural nonvanishing hypotheses.
+
+### 10.3 Graph-zeta spectra under graph operations
+
+For finite regular graphs, define chord spectra from reciprocal roots of local factors and determine how graph products, covers, and edge subdivisions transform them. One concrete conjectural direction is that rational chord spectra persist under finite regular covers precisely when the traces and determinants of new factors remain rational.
+
+### 10.4 Certified first-zero exclusion windows
+
+Develop a self-contained proof from explicit analytic inequalities that the zeta function has no nontrivial zero with $|\operatorname{Im}\rho|\le14$, then combine it with the empty-window proposition. Such an exclusion theorem would settle every cutoff in that interval at once: each associated reciprocal harmonic would be zero.
+
+### 10.5 Prime-indexed interval encoding
+
+Replace the direct cutoff $n$ with a prime-dependent spectral band whose endpoints depend on $\log p$. Test whether multiplication of primes corresponds to addition, convolution, or another composition law for harmonic statistics. Any proposed correspondence should specify completeness of the band, multiplicity, normalization, and an explicit falsifiable law.
+
+## 11. Conclusion
+
+Finite reciprocal-zero harmonics satisfy a coherent set of structural laws. Uniform separation from zero converts cardinality estimates into magnitude estimates. Conjugation closure makes the harmonic real. Empty windows have harmonic zero, which invalidates proposed values $1$ and transcendental at empty cutoffs $2$ and $3$. Quadratic factors, by contrast, yield exact reciprocal harmonics equal to the coefficient ratio $\ell/q$, and rational coefficients therefore produce rational chords.
+
+The resulting framework does not identify primes with musical intervals by decree. It provides the mathematical calibration needed to test such an identification: certify support, respect symmetry, separate assumptions from conclusions, and compute symmetric invariants exactly. Within that disciplined setting, number-theoretic and graph-theoretic spectra offer a genuine laboratory for arithmetic harmony.
