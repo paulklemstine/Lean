@@ -98,7 +98,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fee59e0b",
     "description": "Many of Ramanujan's identities were discovered without proof and later verified. Define a 'Ramanujan oracle' R that maps statements to {true, false, unknown} with accuracy ≥ 95% on number-theoretic statements of length ≤ 100. Prove: such an oracle cannot be computable (by a counting argument). Conjecture: the 'intuitive leap' in mathematical discovery corresponds to a specific non-computable operation related to the jump operator in computability theory.",
     "domain_bridges": [],
     "domains": [
@@ -111,7 +111,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-21T00:19:15.448973+00:00",
     "title": "Speculative: Ramanujan-Style Intuition as Formalizable Meta-Reasoning"
   },
@@ -232,7 +232,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2fdbedee",
     "description": "Conjecture that major theorems (Gödel's incompleteness, Fermat's Last Theorem, ABC conjecture) correspond to phase transitions in proof space. Define an order parameter: the ratio of provable to unprovable statements of length ≤ n. Prove that this ratio undergoes a sharp transition at some critical n_c (the Gödel threshold). Predict: the distribution of theorem lengths follows a power law with exponent related to the Hausdorff dimension of proof space.",
     "domain_bridges": [],
     "domains": [
@@ -245,7 +245,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-20T15:28:30.564786+00:00",
     "title": "Speculative: Theorems as Phase Transitions in Proof Space"
   },
