@@ -865,7 +865,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Even smaller universal posets' and formalize its key results. Abstract: We show that for every $η>0$ and sufficiently large $n$, there exists a poset of size $2^{(1+η)n/2}$ containing all the $n$-element posets as induced subposets. This improves a recent result of Bastide, Groenland and Nenadov. Our proof provides a labeling scheme preserving transitivity, inspired by the Boolean lattice. Among other tools, we use the Szemerédi Regularity Lemma.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Cryptography",
         "Logic"
@@ -7532,7 +7532,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Alternating adjacent-sum polytopes: transfer matrices and Ehrhart series' and formalize its key results. Abstract: We study a period-two family of adjacent-sum lattice polytopes whose consecutive-coordinate bounds alternate between $s$ and $s+1$. This provides a simple non-uniform deformation of the classical uniform model while retaining an explicit transfer-matrix structure. The lattice-point counts exhibit a parity split: the odd- and even-dimensional sequences have distinct rational generating functions with a common denominator. The odd-dimensional series satisfies a Möbius recurrence and admits an arctangent closed form, whereas the even-dimensional series obeys a coupled recurrence. Their common dominant pole determines the exponential growth in both parity classes. For the cyclic model obtained by adding a constraint between the first and last coordinates, the count becomes a matrix trace. The two cyclic parity classes again have rational generating functions with the same denominator; the even-dimensional numerator has a Jacobi-derivative form, while the odd-dimensional one is given by an ",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Cryptography"
       ],
@@ -17077,7 +17077,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\n## Formal consequences established\n\n`Catalog/Pythagorean/TropicalCryptography/EigenvalueLeakage.lean` proves the exact power law for a min-plus eigenpair:\n\n- if `A ⊗ v = λ + v`, then `A^[k] ⊗ v = (k+1)λ + v` for the positive-power convention `A^[0] = A`;\n- when `λ ≠ 0`, positive powers of `A` are injective in the exponent;\n- a collision between distinct positive powers forces every represented eigenvalue to be zero;\n- observing the eigenvalue of a public power on the same eigenvector determines its exponent scaling exactly;\n- uniformly shifting matrix entries by `c` changes `λ` to `c+λ`, so every shift except `c=-λ` has injective positive powers.\n\nThese are mathematical identifiability results, not an implementation of an eigenvalue algorithm and not a complexity or security proof. They show that the proposed eigenvalue relation is a potential leakage channel rather than evidence for one-wayness.\n\n## Next formal targets\n\n1. Connect `IsEigenpair` to the minimum cycle mean and formalize a certified cycle-mean algorithm over rational or integer weights.\n2. Prove that every finite irreducible min-plus matrix admits an eigenpair, including the extended value `∞` needed for sparse graphs.\n3. Define binary exponentiation and prove that it computes `positivePower`, with an explicit count of min-plus products.\n4. Formalize exponent recovery from two certified nonzero eigenvalues, including divisibility and uniqueness over integer/rational weights.\n5. Characterize the zero-eigenvalue case: eventual periodicity, collisions, and what auxiliary normalizations still reveal the exponent.\n6. Model the proposed key exchange carefully. In any single-base power semigroup, `(A^[a])^[b] = A^[(a+1)(b+1)-1]`; this exponent convention and associativity should be proved before making protocol claims.\n7. Implement small certified examples and benchmark only after proving correspondence between executable arrays and the matrix definitions used here.\n8. Study masking schemes and whether conjugation, scalar normalization, or projectivization actually removes cycle-mean leakage.\n\nNo claim of post-quantum security follows from the present algebraic results. A security statement would require a precise distribution, adversarial model, parameterization, and reduction or attack analysis.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Algebra",
         "Computation"
@@ -20398,7 +20398,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'The Endpoint Cardinality of Discrete Cube Skeleta' and formalize its key results. Abstract: We determine the minimum order of a finite lattice set that contains a filled axis-parallel cube skeleton about every point of some $N$-point set of centers. For fixed integers $0\\leq k<n$, the answer for $N$ centers is $N^{1-(n-k)/(2n^2)}$, up to constants depending on $n$ and $k$. Thornton proved every smaller exponent and gave a construction of this order; the endpoint lower bound was left open when $k\\geq1$. Our proof combines a midpoint estimate, a labelled form of Shearer's projection inequality, and a strong induction that balances large and small radii without a dyadic pigeonhole loss. In particular, a lattice set containing a square boundary about each of $N$ centers has at least a constant times $N^{7/8}$ points.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Cryptography",
         "Logic"
@@ -20640,7 +20640,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Lattice slices, Ehrhart polynomials, and magic positivity of generalized parking-function polytopes' and formalize its key results. Abstract: For $\\mathbf{b}=(b_1,\\dots,b_n)\\in\\mathbb{Z}_{>0}^n$, a $\\mathbf{b}$-parking function is a sequence $(β_1,\\dots,β_n)$ of positive integers whose nondecreasing rearrangement $β_1'\\leβ_2'\\le\\cdots\\leβ_n'$ satisfies $β_i'\\le b_1+\\cdots+b_i$. The $\\mathbf{b}$-parking-function polytope $\\mathfrak{X}_n(\\mathbf{b})$ is the convex hull of all $\\mathbf{b}$-parking functions of length $n$ in $\\mathbb{R}^n$. We prove that every lattice slice of $\\mathfrak{X}_n(\\mathbf{b})$, obtained by fixing one coordinate at an integer value, is itself a $\\mathbf{b}'$-parking-function polytope of one dimension less, with an explicit parameter vector $\\mathbf{b}'$; this yields a recursion for the number of lattice points of $\\mathfrak{X}_n(\\mathbf{b})$. We further show that every dilate of a $\\mathbf{b}$-parking-function polytope is a translate of another such polytope, that the number of lattice points is a polynomial function of $\\mathbf{b}$, and we deduce an explicit formula for the Ehrhart polynomial of $\\ma",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Geometry",
         "Cryptography"

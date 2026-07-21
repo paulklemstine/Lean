@@ -1,43 +1,33 @@
 # Computational Evidence
 
-The investigation concerns symbolic asymptotic and order-theoretic laws rather than a single numerical deductive system. Small cases nevertheless expose the relevant competing behaviors.
+## Small cases
 
-## Small-case calculations
+For a binary alphabet, the cumulative ambient counts are
 
-For ambient growth `k = 4`, derivable growth `a = 2`, and prefactor `C = 1`, the comparison density is `(a/k)^n = 2^{-n}`:
+| cutoff `n` | `S 2 n` |
+|---:|---:|
+| 0 | 1 |
+| 1 | 3 |
+| 2 | 7 |
+| 3 | 15 |
+| 4 | 31 |
+| 5 | 63 |
+| 6 | 127 |
 
-| `n` | ambient count `4^n` | derivable bound `2^n` | ratio bound |
-|---:|---:|---:|---:|
-| 0 | 1 | 1 | 1 |
-| 1 | 4 | 2 | 1/2 |
-| 2 | 16 | 4 | 1/4 |
-| 3 | 64 | 8 | 1/8 |
-| 4 | 256 | 16 | 1/16 |
-| 5 | 1024 | 32 | 1/32 |
+Thus a derivable family bounded by seven elements has upper density `7/(2^(n+1)-1)`, which tends to zero, while ambient entropy density tends to `log 2`.
 
-At level `ε = 0.1`, the last index at or above the level is `c = 3`; every `n > 3` is below it. This illustrates the least-crossing construction used in the threshold theorem.
+For geometric length weights with `k = 2`, the first values are `1/2, 1/4, 1/8, 1/16, 1/32`. Their successive ratio is constantly `1/2 = exp(-log 2)`.
 
-For the normalized geometric length law with `k = 2`, the first weights are `1/2, 1/4, 1/8, 1/16, 1/32`. Their successive ratio is always `1/2 = exp(-log 2)`.
+## OEIS signal
 
-## Sequence search
-
-The ambient exact-length counts are geometric sequences, and the cumulative counts are geometric sums. No specialized sequence identification is needed: the formulas determine all terms directly.
+The binary cumulative counts `1, 3, 7, 15, 31, 63, 127, ...` are the Mersenne numbers, OEIS A000225.
 
 ## Counterexample hunt
 
-Two overstrong claims fail immediately.
+The proposed raw-length power law fails in the homogeneous geometric model: a power law `n^(-α)` has successive ratio `(n/(n+1))^α`, which varies with `n` and tends to one, whereas the geometric model has the constant ratio `1/k < 1`.
 
-1. Monotonicity alone does not force a crossing: the constant sequence `r(n) = 1` never crosses `ε = 1/2`.
-2. A geometric law is not a power law in length: its successive ratio is constant below one, whereas `(n+1)^{-α}/n^{-α}` tends to one for every fixed positive `α`.
+Monotonicity is also necessary for an exact one-crossing theorem. The nonnegative sequence `r(n) = 1/(n+1)` for even `n` and `2/(n+1)` for odd `n` tends to zero but can cross a prescribed level more than once near the transition region.
 
-These counterexamples motivate the convergence hypothesis in the finite-threshold theorem and the rejection of a direct power-law interpretation.
+## Interpretation
 
-## Table of qualitative outcomes
-
-| Candidate claim | Outcome | Boundary |
-|---|---|---|
-| Sparse derivability with positive ambient entropy | Survives | Requires separated exponential rates |
-| Exact finite crossing | Survives | Requires convergence to zero, antitonicity, and a positive level |
-| Unique critical index | Survives | Requires a strict one-step crossing |
-| Geometric tail is a power law in length | Fails | A mixture of entropy rates may produce heavy tails |
-| Named major theorems define a universal threshold | Undetermined | Requires an encoding and structural counting hypotheses |
+The calculations support entropy–density separation and reject the direct inference from exponential proof-space growth to a power law in raw theorem length. No external arXiv, LMFDB, or additional sequence signal was supplied for this cycle.

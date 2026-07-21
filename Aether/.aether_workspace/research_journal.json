@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "735120d5",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions\n\n## 1. Localization under heterogeneous valley positions\n\n**Conjecture.** Let each respondent's confidence profile be strictly convex on a common ordered grid, with minimum positio",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 46,
-      "timestamp": "2026-07-19T08:57:30",
-      "title": "The Uncanny Valley of Mathematics: When Proofs Are Almost Right"
-    },
-    {
       "cycle_id": "d1a99009",
       "domain": "Combinatorics",
       "key_insight": "# Future Directions: Information and Derivation Search\n\n## 1. Variable-branching entropy law\n\nFor a depth-dependent derivation tree with branching sequence `b₁, b₂, …`, the minimal worst-case number o",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-21T14:31:40",
       "title": "Speculative: Anti-Gravity Mathematics — Theorems That Resist Proof"
+    },
+    {
+      "cycle_id": "977e8d8d",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions: Topology of Theorem Networks\n\n## 1. Labeled persistence and mathematical communities\n\n**Conjecture.** In a temporally filtered co-citation hypergraph, long-lived first-homology cl",
+      "quality_score": 0.74,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-21T14:31:45",
+      "title": "Speculative: Topological Data Analysis of Theorem Networks"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "a6705a36",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions: Universal Libraries and Catalog Capacity\n\n## 1. Succinct semantic catalogs\n\nFor a fixed sound proof calculus, characterize theorem families whose accepted volumes admit catalogs a",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-07-17T08:04:36",
-      "title": "The Library of Babel: Combinatorics of the Universal Library"
-    },
     {
       "cycle_id": "6da0544e",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-21T14:31:40",
       "title": "Speculative: Anti-Gravity Mathematics — Theorems That Resist Proof"
+    },
+    {
+      "cycle_id": "977e8d8d",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions: Topology of Theorem Networks\n\n## 1. Labeled persistence and mathematical communities\n\n**Conjecture.** In a temporally filtered co-citation hypergraph, long-lived first-homology cl",
+      "quality_score": 0.74,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-21T14:31:45",
+      "title": "Speculative: Topological Data Analysis of Theorem Networks"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "735120d5",
-      "domain": "Combinatorics",
-      "name": "holds",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "735120d5",
-      "domain": "Combinatorics",
-      "name": "strictValley_unique_min",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "735120d5",
-      "domain": "Combinatorics",
-      "name": "strictValley_location_unique",
-      "quality": 0.72
-    },
     {
       "cycle_id": "2d8c7907",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Geometry",
       "name": "qualiaFlip_involution",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "977e8d8d",
+      "domain": "Cryptography",
+      "name": "co",
+      "quality": 0.74
+    },
+    {
+      "cycle_id": "977e8d8d",
+      "domain": "Cryptography",
+      "name": "network",
+      "quality": 0.74
+    },
+    {
+      "cycle_id": "977e8d8d",
+      "domain": "Cryptography",
+      "name": "sets",
+      "quality": 0.74
     }
   ],
-  "last_updated": "2026-07-21T14:31:40",
+  "last_updated": "2026-07-21T14:31:45",
   "open_questions": [
     {
       "context": "",
@@ -3337,12 +3337,6 @@
         "title": "ArXiv paper: Even smaller universal posets"
       },
       {
-        "cycle_id": "2152d45c",
-        "quality": 0.61,
-        "theorems": 11,
-        "title": "ArXiv paper: Even smaller universal posets"
-      },
-      {
         "cycle_id": "bcfc30de",
         "quality": 0.72,
         "theorems": 8,
@@ -3389,6 +3383,12 @@
         "quality": 0.69,
         "theorems": 9,
         "title": "Speculative: Ramanujan-Style Intuition as Formalizable Meta-Reasoning"
+      },
+      {
+        "cycle_id": "977e8d8d",
+        "quality": 0.74,
+        "theorems": 9,
+        "title": "Speculative: Topological Data Analysis of Theorem Networks"
       }
     ],
     "Geometry": [

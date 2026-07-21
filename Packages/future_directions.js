@@ -59,21 +59,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
   },
   {
-    "consumed_by_exp_id": "fee59e0b",
-    "description": "Many of Ramanujan's identities were discovered without proof and later verified. Define a 'Ramanujan oracle' R that maps statements to {true, false, unknown} with accuracy \u2265 95% on number-theoretic statements of length \u2264 100. Prove: such an oracle cannot be computable (by a counting argument). Conjecture: the 'intuitive leap' in mathematical discovery corresponds to a specific non-computable operation related to the jump operator in computability theory.",
-    "domains": [
-      "Novelty",
-      "Pythagorean"
-    ],
-    "id": "fd_0535",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-21T00:19:15.448973+00:00",
-    "title": "Speculative: Ramanujan-Style Intuition as Formalizable Meta-Reasoning"
-  },
-  {
     "consumed_by_exp_id": "279ae676",
     "description": "Formalize Cantor's hierarchy of infinities in Lean 4: aleph_0 (countable), aleph_1 (first uncountable), the continuum hypothesis (CH = aleph_1 = 2^aleph_0). Prove: the power set axiom guarantees strictly larger cardinals. Show: the Hartogs number of any set exists without AC. Explore: can we formalize large cardinals (measurable, supercompact) and their consistency strength hierarchy? Connect to Rucker's intuition that 'infinity is a place you can visit.'",
     "domains": [
@@ -290,21 +275,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Number Theory as Music Theory"
   },
   {
-    "consumed_by_exp_id": "91cdf1e0",
-    "description": "Treat Lean 4's type checker as an 'environment' and formalized mathematics as 'organisms' adapting to it. Define fitness: f(M) = (number of theorems proved by M) / (lines of code in M). Prove: the fitness landscape has local optima corresponding to 'mathematical styles' (algebraic, analytic, combinatorial). Conjecture: Mathlib is a global fitness maximum for the set of theories expressible in CIC. Show: migrating a proof from one local optimum to another requires crossing a 'fitness valley' of temporarily decreased fitness.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0541",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-21T06:49:04.775330+00:00",
-    "title": "Speculative: The Lean Theorem Prover as an Ecological Niche"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize the concept of 'mind tools' \u2014 mathematical structures that extend cognition. Define: a mind tool is a formal system F such that the set of theorems provable in F is strictly larger than the set the human brain can directly apprehend. Prove: ZFC is a mind tool (by G\u00f6del's incompleteness \u2014 there exist ZFC theorems the brain cannot directly 'see'). Show: category theory is a more powerful mind tool than set theory for certain classes of problems (it proves things about all categories simultaneously). Conjecture: the hierarchy of mind tools is well-ordered by proof-theoretic ordinal.",
     "domains": [
@@ -320,19 +290,19 @@ window.FUTURE_DIRECTIONS = [
     "title": "Rucker: Mind Tools \u2014 Mathematics as Cognitive Extension"
   },
   {
-    "consumed_by_exp_id": "95b84694",
-    "description": "Define the 'gravitational weight' of a theorem T as the number of other theorems that depend on T. Define 'anti-gravity' theorems as those with high weight but short proofs. Conjecture: anti-gravity theorems exist in every branch of mathematics (e.g., the fundamental theorem of algebra has weight O(n^2) but proof length O(1) in complex analysis). Prove: the set of anti-gravity theorems is dense in the space of all theorems (in a suitable topology). Predict: 10% of theorems in any formal library are anti-gravity.",
+    "consumed_by_exp_id": "",
+    "description": "Formalize Rucker's 'Lifebox' concept: a person's identity is determined by their information content, not their physical substrate. Define: two systems are 'person-equivalent' if they produce the same outputs for all inputs (functional equivalence). Prove: if the brain is a finite-state automaton, then person-equivalence is decidable. Show: if the brain uses quantum computation, person-equivalence is undecidable (by the no-cloning theorem). Conjecture: the Kolmogorov complexity of a person's identity is finite and bounded by ~10^15 bits.",
     "domains": [
       "Novelty",
       "Logic"
     ],
-    "id": "fd_0536",
-    "priority_score": 0.83,
+    "id": "fd_0553",
+    "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-21T00:19:15.530982+00:00",
-    "title": "Speculative: Anti-Gravity Mathematics \u2014 Theorems That Resist Proof"
+    "status": "available",
+    "timestamp": "2026-07-21T14:30:54.110805+00:00",
+    "title": "Rucker: The Lifebox \u2014 Information-Theoretic Identity"
   },
   {
     "consumed_by_exp_id": "",
@@ -5743,6 +5713,51 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-21T12:08:36.224823+00:00",
     "title": "The formal development isolates a mathematically valid core of the proposal:"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Fitness Landscapes of Mathematical Theories\n\n## 1. Dependency-adjusted global champion conjecture\nFix a finite corpus of statements and charge each theory for both source length and the transitive size of its dependency closure. Among theories proving the entire corpus, the mature shared library has maximal dependency-adjusted fitness.\n\nThe key insight is that extensive reuse can outweigh the local cost of general abstractions once dependencies are charged only once. **Why now?** The finite maximum principle identifies exactly what remains empirical: a fixed comparison class, a reproducible cost model, and complete theorem-coverage measurements.\n\n## 2. Three-style metastability conjecture\nIn a migration graph built from bounded refactorings, algebraic, analytic, and combinatorial developments each contain a distinct strict local maximum after quotienting by semantics-preserving renaming.\n\nThe key insight is that local maxima require both stylewise efficiency and neighborhoods that rarely cross methodological boundaries. **Why now?** The style-center theorem separates these two conditions, making each independently measurable and falsifiable on a finite corpus.\n\n## 3. Quantitative adapter-valley conjecture\nFor pairs of developments whose principal interfaces use inequivalent abstraction layers, every semantics-preserving migration path incurs an intermediate source-length overhead of at least a fixed positive fraction of the smaller endpoint length.\n\nThe key insight is that the first boundary crossing is unavoidable; the open issue is whether interface adapters impose a uniform quantitative penalty there. **Why now?** The boundary-crossing theorem reduces the conjecture to measuring a single class of cross-interface transitions rather than all intermediate states.\n\n## 4. Multiplicative-reuse phase transition\nThere is a threshold dependency density above which composing two libraries increases fitness, even after charging for an adapter layer, while below that threshold composition decreases fitness.\n\nThe key insight is that independent candidate populations can grow multiplicatively while implementation costs usually add, but duplicated or incompatible interfaces can reverse the gain. **Why now?** Exact exponential candidate counts provide a controlled combinatorial baseline against which realistic additive and subadditive cost models can be tested.\n\n## 5. No universal maximum without resource normalization\nFor any theory language permitting conservative addition of independently stated consequences at sublinear marginal source cost, raw theorem-per-line fitness has no global maximum on the unrestricted class of expressible theories.\n\nThe key insight is that a global champion is meaningful only after fixing theorem identity, admissible dependencies, and a bounded comparison universe. **Why now?** The finite existence result and the documented unbounded boundary case together isolate normalization as the decisive hypothesis, turning a vague universality claim into a sharp falsifiable dichotomy.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0554",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "91cdf1e0",
+    "status": "available",
+    "timestamp": "2026-07-21T14:31:18.360788+00:00",
+    "title": "Fix a finite corpus of statements and charge each theory for both source length "
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## Result status\n\nThe motivating fixed-length claim was **disproved**, not proved. With a finite alphabet and a fixed length bound (such as 100), the collection of encoded statements is finite. Once a Boolean semantics is fixed, its exact truth table is a finite, computable oracle. The Lean theorem `finite_language_has_accurate_oracle` constructs this oracle and proves 95% accuracy (in fact 100%). `finite_oracle_has_table` explicitly represents every such oracle as a finite list.\n\nA nearby bold uniform claim was also **disproved**: one oracle cannot be 95%-accurate against every possible semantics. The adversarial semantics formalized by `adversarialTruth` makes every answer incorrect, yielding `no_uniform_accurate_oracle`.\n\nA genuinely infinitary diagonal claim was **proved**: for any natural-number-indexed family of Boolean sequences, `diagonalJump` differs from its `k`th row at coordinate `k`. Therefore no such family enumerates all Boolean sequences (`no_enumeration_of_boolean_sequences`). This captures the structural diagonal idea behind jump constructions, but it is intentionally not presented as a complete formalization of the Turing jump.\n\n## Important modeling distinctions\n\n1. **Finite domain versus practical feasibility.** A truth table can be astronomically large while remaining computable. Complexity, learnability, storage, and computability are different notions.\n2. **Semantic truth versus provability.** For bounded strings, a fixed external truth assignment has a finite table. For all arithmetic sentences, semantic truth and theoremhood lead to genuinely unbounded computability questions.\n3. **Pointwise accuracy versus uniform accuracy.** Existence of a good oracle for one fixed semantics is compatible with impossibility of one predictor working for all semantics.\n4. **Unknown answers.** This development counts `unknown` as incorrect. Other scoring rules should be stated explicitly and may change finite accuracy bounds, though not the finite-table counterexample.\n5. **Counting versus diagonalization.** Counting finite functions only gives exponential cardinalities. Noncomputability requires an unbounded effective presentation plus a diagonal or reduction argument.\n\n## Stronger formalization targets\n\n- Define a syntax of first-order arithmetic, a length function, and a satisfaction predicate for the standard natural numbers. Prove explicitly that the subtype of formulas of length at most 100 is finite.\n- Introduce a concrete partial-recursive machine model and prove the undecidability of its halting set. Then define a genuine jump operator relative to an oracle and prove that the jump is not computable from the original oracle.\n- Replace arbitrary Boolean semantics by arithmetic truth and formalize a reduction from halting to truth for an unbounded class of encoded sentences.\n- Study resource-bounded variants: circuit size, advice length, sample complexity, and probabilistic average-case accuracy. These are closer to the intended intuition than computability on a fixed finite domain.\n- Formalize distributions over statements. A meaningful \u201c95% accurate\u201d claim needs a specified finite benchmark or probability measure; accuracy without one is ambiguous.\n- Investigate whether a predictor can be both sound on definite answers and useful under an abstention budget. Without an abstention penalty, the constant `unknown` oracle can make some precision metrics vacuous.\n\n## Limits of the present results\n\nThe development does not identify human intuition with a noncomputable operation, and the formal results provide no evidence for that philosophical identification. It proves only a precise finite counterexample, a uniform adversarial impossibility, finite cardinality formulas, and an elementary Cantor-style diagonal theorem. Connecting mathematical discovery to the computability-theoretic jump would require a defensible formal model of discovery and a reduction theorem; neither is currently supplied.\n",
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "fd_0555",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "fee59e0b",
+    "status": "available",
+    "timestamp": "2026-07-21T14:31:25.130869+00:00",
+    "title": "The motivating fixed-length claim was **disproved**, not proved. With a finite a"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe formalization makes the speculative claim precise for a finite formal library: gravitational weight is the number of direct users, proof length is a natural-number cost, and dependency reachability induces an Alexandrov topology. In that topology, density is exactly dependency-cofinality: every theorem must support a theorem in the distinguished class.\n\nFurther work could:\n\n1. Extract dependency graphs and kernel-term sizes from concrete Lean environments, then evaluate weight and proof-length thresholds empirically.\n2. Replace direct-user weight by transitive influence, discounted path counts, centrality, or downstream declaration counts and compare the resulting notions.\n3. Study invariance under refactoring. Adding wrapper lemmas can change both dependency counts and proof lengths, so a robust statistic should quotient or penalize such transformations.\n4. Identify structural hypotheses on library growth that imply dependency-cofinality of short, high-weight declarations.\n5. Test bounded charging maps in real libraries. The proved counting theorem shows that a ten-to-one charging certificate is sufficient for a ten-percent lower bound.\n6. Develop asymptotic versions for increasing sequences of finite libraries, using lower density rather than a fixed finite proportion.\n\nThe unconditional ten-percent prediction cannot hold for arbitrary formal libraries: the verified edgeless ten-theorem library has no theorem of positive weight. Any empirical or universal replacement therefore needs explicit assumptions on dependency structure and threshold choice.",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_0556",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "95b84694",
+    "status": "available",
+    "timestamp": "2026-07-21T14:31:37.953468+00:00",
+    "title": "The formalization makes the speculative claim precise for a finite formal librar"
   },
   {
     "consumed_by_exp_id": "",
