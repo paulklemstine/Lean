@@ -1,5 +1,16 @@
 --- CarmichaelPrimitiveDivisor.lean
 +++ CarmichaelPrimitiveDivisor.lean
+@@ -3,8 +3,8 @@
+ 
+ /-! # Carmichael's Primitive Divisor Theorem for Fibonacci Numbers
+ 
+-For `13 ≤ n ≤ 10000`, `F(n)` has a primitive prime divisor: a prime `p`
+-such that `p ∣ F(n)` but `p ∤ F(k)` for all `0 < k < n`.
++For `13 ≤ n ≤ 10000`, `F(n)` has a primitive prime divisor: a prime `p` such
++that `p ∣ F(n)` but `p ∤ F(k)` for all `0 < k < n`.
+ -/
+ 
+ set_option maxHeartbeats 800000
 @@ -41,8 +41,7 @@
    · calc Nat.gcd n k ≤ k := Nat.gcd_le_right n hk_pos
      _ < n := hk_lt

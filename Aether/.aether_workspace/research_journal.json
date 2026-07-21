@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "6fa68166",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions\n\n## 1. Semantic equivalence and simple-homotopy type\n\n**Conjecture.** If two finite argumentation frameworks are strongly equivalent under preferred semantics, then the downward-cl",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-19T08:23:22",
-      "title": "The Topology of Argumentation: Why Debates Have Holes"
-    },
-    {
       "cycle_id": "735120d5",
       "domain": "Combinatorics",
       "key_insight": "# Future Directions\n\n## 1. Localization under heterogeneous valley positions\n\n**Conjecture.** Let each respondent's confidence profile be strictly convex on a common ordered grid, with minimum positio",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-21T12:08:37",
       "title": "Speculative: The Universe Computes Its Own Existence (Physics = Computation)"
+    },
+    {
+      "cycle_id": "95b84694",
+      "domain": "Bridges",
+      "key_insight": "# Future directions\n\nThe formalization makes the speculative claim precise for a finite formal library: gravitational weight is the number of direct users, proof length is a natural-number cost, and d",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-21T14:31:40",
+      "title": "Speculative: Anti-Gravity Mathematics — Theorems That Resist Proof"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "18617733",
-      "domain": "Physics",
-      "key_insight": "# Future directions\n\n## What is now proved\n\n`VampireBestiary/VampireUnitCurve.lean` isolates the exact digit-multiset core of a fang factorization and proves, in every base `b ≥ 2`,\n\n\\[\n(x-1)(y-1)=1 \\",
-      "quality_score": 0.73,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-17T07:48:46",
-      "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
-    },
     {
       "cycle_id": "a6705a36",
       "domain": "Bridges",
@@ -2501,6 +2491,16 @@
       "theorem_count": 9,
       "timestamp": "2026-07-21T14:31:27",
       "title": "Speculative: Ramanujan-Style Intuition as Formalizable Meta-Reasoning"
+    },
+    {
+      "cycle_id": "95b84694",
+      "domain": "Bridges",
+      "key_insight": "# Future directions\n\nThe formalization makes the speculative claim precise for a finite formal library: gravitational weight is the number of direct users, proof length is a natural-number cost, and d",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-21T14:31:40",
+      "title": "Speculative: Anti-Gravity Mathematics — Theorems That Resist Proof"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-21T14:31:27",
+  "last_updated": "2026-07-21T14:31:40",
   "open_questions": [
     {
       "context": "",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "a6705a36",
-        "quality": 0.78,
-        "theorems": 19,
-        "title": "The Library of Babel: Combinatorics of the Universal Library"
-      },
-      {
         "cycle_id": "f0c4ce45",
         "quality": 0.68,
         "theorems": 20,
@@ -3203,6 +3197,12 @@
         "quality": 0.64,
         "theorems": 20,
         "title": "Speculative: Mathematics as an Evolving Ecosystem"
+      },
+      {
+        "cycle_id": "95b84694",
+        "quality": 0.7,
+        "theorems": 0,
+        "title": "Speculative: Anti-Gravity Mathematics — Theorems That Resist Proof"
       }
     ],
     "Combinatorics": [

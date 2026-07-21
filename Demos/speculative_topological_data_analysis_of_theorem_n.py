@@ -1,174 +1,160 @@
 #!/usr/bin/env python3
-"""Numerical demonstrations for higher-order co-citation complexes.
+"""Numerical demonstrations for higher-order theorem co-citation topology.
 
-The script uses only the Python standard library.  It constructs genuine
-co-citation complexes, pairwise flag completions, boundary matrices over F_2,
-Betti numbers, conformality certificates, and a small temporal filtration.
+The script uses only the Python standard library.  It constructs witness
+complexes from citation records, computes homology over F_2 by boundary-matrix
+ranks, compares pairwise graphs, checks temporal face persistence, and displays
+the finite-dimensional obstruction to a dimension-uniform Betti power law.
 """
 
 from __future__ import annotations
 
 from itertools import combinations
 from math import comb
-from typing import Dict, FrozenSet, Iterable, List, Sequence, Set, Tuple
+from typing import FrozenSet, Hashable, Iterable, Sequence, TypeVar
 
-Face = FrozenSet[int]
-Corpus = Sequence[Face]
-Complex = Set[Face]
-Interval = Tuple[int, int | None]
-
-
-def powerset(vertices: Iterable[int]) -> Iterable[Face]:
-    """Yield every subset of the supplied finite iterable."""
-    items = sorted(set(vertices))
-    for size in range(len(items) + 1):
-        for subset in combinations(items, size):
-            yield frozenset(subset)
+Vertex = TypeVar("Vertex", bound=Hashable)
+Face = FrozenSet[Vertex]
+Corpus = Sequence[Face[Vertex]]
 
 
-def co_citation_complex(corpus: Corpus) -> Complex:
-    """Return the downward closure of all document citation sets."""
-    return {face for document in corpus for face in powerset(document)}
-
-
-def pairwise_edges(corpus: Corpus) -> Set[Face]:
-    """Return all two-element co-citation edges."""
+def powerset(record: Face[Vertex]) -> set[Face[Vertex]]:
+    """Return all subsets of one finite citation record."""
+    ordered = tuple(sorted(record, key=repr))
     return {
-        frozenset(pair)
-        for document in corpus
-        for pair in combinations(sorted(document), 2)
+        frozenset(choice)
+        for size in range(len(ordered) + 1)
+        for choice in combinations(ordered, size)
     }
 
 
-def clique_complex(vertices: Iterable[int], edges: Set[Face]) -> Complex:
-    """Return the flag complex of a graph by exhaustive clique enumeration."""
-    result: Complex = set()
-    for candidate in powerset(vertices):
-        if all(frozenset(pair) in edges for pair in combinations(candidate, 2)):
-            result.add(candidate)
-    return result
+def cocitation_complex(corpus: Corpus[Vertex]) -> set[Face[Vertex]]:
+    """Build the downward-closed common-witness complex of a corpus."""
+    faces: set[Face[Vertex]] = set()
+    for record in corpus:
+        faces.update(powerset(record))
+    return faces
 
 
-def conformality_obstructions(corpus: Corpus) -> List[Face]:
-    """List inclusion-maximal graph cliques lacking a common document witness."""
-    vertices = set().union(*corpus) if corpus else set()
-    genuine = co_citation_complex(corpus)
-    flag = clique_complex(vertices, pairwise_edges(corpus))
-    missing = flag - genuine
+def cocitation_graph(corpus: Corpus[Vertex]) -> set[Face[Vertex]]:
+    """Return the pairwise shadow as a set of two-vertex edges."""
+    return {
+        frozenset(pair)
+        for record in corpus
+        for pair in combinations(sorted(record, key=repr), 2)
+    }
+
+
+def simplices(complex_: set[Face[Vertex]], dimension: int) -> list[Face[Vertex]]:
+    """List simplices of a chosen dimension in deterministic order."""
     return sorted(
-        (face for face in missing if not any(face < other for other in missing)),
-        key=lambda face: (len(face), sorted(face)),
+        (face for face in complex_ if len(face) == dimension + 1),
+        key=lambda face: tuple(sorted(map(repr, face))),
     )
 
 
-def rank_mod2(matrix: List[List[int]]) -> int:
-    """Compute matrix rank over the field with two elements."""
-    if not matrix or not matrix[0]:
-        return 0
-    data = [row[:] for row in matrix]
-    rows, cols = len(data), len(data[0])
+def rank_mod2(rows: list[int]) -> int:
+    """Compute the rank over F_2 of bit-packed matrix rows."""
+    rows = [row for row in rows if row]
     rank = 0
-    for col in range(cols):
-        pivot = next((r for r in range(rank, rows) if data[r][col]), None)
-        if pivot is None:
-            continue
-        data[rank], data[pivot] = data[pivot], data[rank]
-        for r in range(rows):
-            if r != rank and data[r][col]:
-                data[r] = [a ^ b for a, b in zip(data[r], data[rank])]
+    while rows:
+        pivot = max(rows, key=int.bit_length)
+        rows.remove(pivot)
+        pivot_bit = 1 << (pivot.bit_length() - 1)
+        rows = [
+            reduced
+            for row in rows
+            if (reduced := row ^ pivot if row & pivot_bit else row) != 0
+        ]
         rank += 1
-        if rank == rows:
-            break
     return rank
 
 
-def faces_by_dimension(complex_: Complex, dimension: int) -> List[Face]:
-    """Return sorted faces of a fixed simplicial dimension."""
-    return sorted(
-        (face for face in complex_ if len(face) == dimension + 1),
-        key=lambda face: sorted(face),
-    )
-
-
-def boundary_rank(complex_: Complex, dimension: int) -> int:
-    """Compute the rank over F_2 of the dimension-th boundary map."""
+def boundary_rank(complex_: set[Face[Vertex]], dimension: int) -> int:
+    """Compute rank of the dimension-k boundary matrix over F_2."""
     if dimension <= 0:
         return 0
-    columns = faces_by_dimension(complex_, dimension)
-    rows = faces_by_dimension(complex_, dimension - 1)
-    row_index = {face: i for i, face in enumerate(rows)}
-    matrix = [[0 for _ in columns] for _ in rows]
-    for j, simplex in enumerate(columns):
-        for boundary_face in combinations(sorted(simplex), dimension):
-            matrix[row_index[frozenset(boundary_face)]][j] = 1
-    return rank_mod2(matrix)
+    lower = simplices(complex_, dimension - 1)
+    upper = simplices(complex_, dimension)
+    upper_index = {face: column for column, face in enumerate(upper)}
+    rows: list[int] = []
+    for lower_face in lower:
+        packed = 0
+        for upper_face, column in upper_index.items():
+            if lower_face < upper_face:
+                packed |= 1 << column
+        rows.append(packed)
+    return rank_mod2(rows)
 
 
-def betti_numbers(complex_: Complex, max_dimension: int | None = None) -> List[int]:
-    """Compute ordinary Betti numbers over F_2 using boundary ranks."""
-    largest = max((len(face) - 1 for face in complex_ if face), default=0)
-    limit = largest if max_dimension is None else max_dimension
-    ranks = [boundary_rank(complex_, k) for k in range(limit + 2)]
-    return [
-        len(faces_by_dimension(complex_, k)) - ranks[k] - ranks[k + 1]
-        for k in range(limit + 1)
+def betti_numbers(complex_: set[Face[Vertex]], max_dimension: int) -> list[int]:
+    """Compute Betti numbers over F_2 through max_dimension."""
+    face_counts = [len(simplices(complex_, k)) for k in range(max_dimension + 2)]
+    ranks = [boundary_rank(complex_, k) for k in range(max_dimension + 2)]
+    return [face_counts[k] - ranks[k] - ranks[k + 1] for k in range(max_dimension + 1)]
+
+
+def triangle_demo() -> None:
+    """Show that a triple fills a hole without changing any graph edge."""
+    boundary: list[Face[str]] = [
+        frozenset(("A", "B")),
+        frozenset(("B", "C")),
+        frozenset(("A", "C")),
     ]
+    filled = boundary + [frozenset(("A", "B", "C"))]
+    boundary_complex = cocitation_complex(boundary)
+    filled_complex = cocitation_complex(filled)
+    graph_equal = cocitation_graph(boundary) == cocitation_graph(filled)
+
+    print("TRIANGLE FILLING")
+    print(f"Pairwise graphs equal: {graph_equal}")
+    print(f"Boundary face counts f0,f1,f2: {[len(simplices(boundary_complex, k)) for k in range(3)]}")
+    print(f"Filled face counts f0,f1,f2:   {[len(simplices(filled_complex, k)) for k in range(3)]}")
+    print(f"Boundary Betti numbers: {betti_numbers(boundary_complex, 2)}")
+    print(f"Filled Betti numbers:   {betti_numbers(filled_complex, 2)}")
+    assert graph_equal
+    assert boundary_complex < filled_complex
+    assert betti_numbers(boundary_complex, 2) == [1, 1, 0]
+    assert betti_numbers(filled_complex, 2) == [1, 0, 0]
 
 
-def betti_ceiling_table(complex_: Complex, vertex_count: int) -> List[Tuple[int, int, int, int]]:
-    """Return rows (k, beta_k, f_k, binomial ceiling) for all dimensions."""
-    betti = betti_numbers(complex_, vertex_count)
-    return [
-        (
-            k,
-            betti[k],
-            len(faces_by_dimension(complex_, k)),
-            comb(vertex_count, k + 1) if k + 1 <= vertex_count else 0,
-        )
-        for k in range(vertex_count + 1)
+def persistence_demo() -> None:
+    """Check face persistence and exhibit death of the triangular loop."""
+    stages: list[list[Face[str]]] = [
+        [frozenset(("A", "B"))],
+        [frozenset(("A", "B")), frozenset(("B", "C")), frozenset(("A", "C"))],
+        [frozenset(("A", "B")), frozenset(("B", "C")), frozenset(("A", "C")),
+         frozenset(("A", "B", "C"))],
     ]
+    complexes = [cocitation_complex(stage) for stage in stages]
+    monotone = all(earlier <= later for earlier, later in zip(complexes, complexes[1:]))
+    profiles = [betti_numbers(complex_, 2) for complex_ in complexes]
+    print("\nTEMPORAL FILTRATION")
+    print(f"Every earlier face persists: {monotone}")
+    for time, profile in enumerate(profiles):
+        print(f"time {time}: Betti numbers {profile}")
+    assert monotone
+    assert profiles[1][1] == 1 and profiles[2][1] == 0
 
 
-def cycle_lifetime(corpora: Sequence[Corpus]) -> List[int]:
-    """Return beta_1 at each stage of a nested corpus sequence."""
-    return [betti_numbers(co_citation_complex(corpus), 1)[1] for corpus in corpora]
+def dimensional_ceiling_demo(n: int = 5) -> None:
+    """Display the binomial ceiling and contradiction at k=n."""
+    if n <= 0:
+        raise ValueError("n must be positive")
+    print(f"\nDIMENSIONAL CEILING FOR n={n}")
+    print(" k | maximum k-faces | proposed n^(k+1)")
+    for k in range(n + 2):
+        maximum = comb(n, k + 1) if k + 1 <= n else 0
+        proposed = n ** (k + 1)
+        print(f"{k:2d} | {maximum:15d} | {proposed:18d}")
+    assert (comb(n, n + 1) if n + 1 <= n else 0) == 0
+    assert n ** (n + 1) > 0
 
 
 def main() -> None:
-    """Run three demonstrations of the principal structural results."""
-    triangle_boundary: Corpus = [
-        frozenset({0, 1}),
-        frozenset({0, 2}),
-        frozenset({1, 2}),
-    ]
-    genuine = co_citation_complex(triangle_boundary)
-    flag = clique_complex({0, 1, 2}, pairwise_edges(triangle_boundary))
-
-    print("DEMO 1 — Pairwise projection can fill a nonexistent triangle")
-    print("Conformality obstruction:", [sorted(x) for x in conformality_obstructions(triangle_boundary)])
-    print("Genuine Betti numbers:", betti_numbers(genuine, 2))
-    print("Flag-completion Betti numbers:", betti_numbers(flag, 2))
-    assert betti_numbers(genuine, 2) == [1, 1, 0]
-    assert betti_numbers(flag, 2) == [1, 0, 0]
-
-    print("\nDEMO 2 — Universal binomial ceilings")
-    for k, beta, faces, ceiling in betti_ceiling_table(genuine, 3):
-        print(f"k={k}: beta={beta}, faces={faces}, choose(3,{k + 1})={ceiling}")
-        assert 0 <= beta <= faces <= ceiling
-    assert betti_numbers(genuine, 3)[3] == 0
-
-    print("\nDEMO 3 — A loop is born and then filled")
-    stages: Sequence[Corpus] = [
-        [frozenset({0, 1})],
-        [frozenset({0, 1}), frozenset({1, 2})],
-        triangle_boundary,
-        [*triangle_boundary, frozenset({0, 1, 2})],
-    ]
-    beta_one = cycle_lifetime(stages)
-    print("beta_1 by stage:", beta_one)
-    assert beta_one == [0, 0, 1, 0]
-
-    print("\nAll demonstrations completed successfully.")
+    triangle_demo()
+    persistence_demo()
+    dimensional_ceiling_demo()
 
 
 if __name__ == "__main__":
