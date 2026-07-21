@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "d67581f7",
-      "domain": "Pythagorean",
-      "key_insight": "# Future directions\n\n## Formal consequences established\n\n`Catalog/Pythagorean/TropicalCryptography/EigenvalueLeakage.lean` proves the exact power law for a min-plus eigenpair:\n\n- if `A ⊗ v = λ + v`, t",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-19T07:21:30",
-      "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
-    },
-    {
       "cycle_id": "192fa110",
       "domain": "Combinatorics",
       "key_insight": "# Future Directions: Structural Register Allocation\n\n## 1. Weighted elimination-optimal spilling\n\n**Conjecture.** For a chordal interference graph with nonnegative vertex spill costs and a fixed regis",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-20T23:22:31",
       "title": "Close Proofs: The Mega-Sphere: All Dimensions at Once"
+    },
+    {
+      "cycle_id": "fbb9076c",
+      "domain": "Logic",
+      "key_insight": "# Future Directions: Thermodynamics of Mathematical Proof\n\n## 1. Fiber-entropy law for proof normalization\n\nFor every finite terminating normalization system equipped with a probability law on proof t",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-21T00:19:44",
+      "title": "Thermodynamics of Mathematical Proof"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "5759ba2d",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\n## Verified in this development\n\n1. **General packing and upper colouring.** A linearly `s`-stable `k`-set obeys the sharp span bound. This yields the canonical upper colouring wi",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 20,
-      "timestamp": "2026-07-16T10:21:20",
-      "title": "ArXiv paper: The chromatic number of 3-stable Kneser graphs"
-    },
     {
       "cycle_id": "08676759",
       "domain": "Applications",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-20T23:22:31",
       "title": "Close Proofs: The Mega-Sphere: All Dimensions at Once"
+    },
+    {
+      "cycle_id": "fbb9076c",
+      "domain": "Logic",
+      "key_insight": "# Future Directions: Thermodynamics of Mathematical Proof\n\n## 1. Fiber-entropy law for proof normalization\n\nFor every finite terminating normalization system equipped with a probability law on proof t",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-21T00:19:44",
+      "title": "Thermodynamics of Mathematical Proof"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-20T23:22:31",
+  "last_updated": "2026-07-21T00:19:44",
   "open_questions": [
     {
       "context": "",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "41e1526b",
-        "quality": 0.86,
-        "theorems": 5,
-        "title": "Deepening: Asymptotic Clique-to-Clique Density Bound"
-      },
-      {
         "cycle_id": "0f633d08",
         "quality": 0.66,
         "theorems": 107,
@@ -3513,6 +3507,12 @@
         "quality": 0.72,
         "theorems": 0,
         "title": "Speculative: Category Theory as the DNA of Mathematics"
+      },
+      {
+        "cycle_id": "fbb9076c",
+        "quality": 0.72,
+        "theorems": 0,
+        "title": "Thermodynamics of Mathematical Proof"
       }
     ],
     "MachineLearning": [

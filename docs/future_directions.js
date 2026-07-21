@@ -45,7 +45,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The Fourier Analysis of Collatz: Spectral Gaps in the 3n+1 Map"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c4a6ce21",
     "description": "Formalize a Landauer-like principle for mathematical reasoning: every bit of information destroyed in a proof step costs at least kT ln 2 of entropy. Prove that there exist theorems whose shortest proof requires exponentially more erasure than creation, and connect to Kolmogorov complexity and the thermodynamic cost of verification.",
     "domains": [
       "Novelty",
@@ -55,7 +55,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T12:28:35.662011+00:00",
     "title": "Thermodynamics of Mathematical Proof"
   },
@@ -72,6 +72,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-18T12:16:03.050816+00:00",
     "title": "Deepening: Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Many of Ramanujan's identities were discovered without proof and later verified. Define a 'Ramanujan oracle' R that maps statements to {true, false, unknown} with accuracy \u2265 95% on number-theoretic statements of length \u2264 100. Prove: such an oracle cannot be computable (by a counting argument). Conjecture: the 'intuitive leap' in mathematical discovery corresponds to a specific non-computable operation related to the jump operator in computability theory.",
+    "domains": [
+      "Novelty",
+      "Pythagorean"
+    ],
+    "id": "fd_0535",
+    "priority_score": 0.86,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-21T00:19:15.448973+00:00",
+    "title": "Speculative: Ramanujan-Style Intuition as Formalizable Meta-Reasoning"
   },
   {
     "consumed_by_exp_id": "",
@@ -275,6 +290,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Proof Complexity and Thermodynamic Cost"
   },
   {
+    "consumed_by_exp_id": "",
+    "description": "Define the 'gravitational weight' of a theorem T as the number of other theorems that depend on T. Define 'anti-gravity' theorems as those with high weight but short proofs. Conjecture: anti-gravity theorems exist in every branch of mathematics (e.g., the fundamental theorem of algebra has weight O(n^2) but proof length O(1) in complex analysis). Prove: the set of anti-gravity theorems is dense in the space of all theorems (in a suitable topology). Predict: 10% of theorems in any formal library are anti-gravity.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0536",
+    "priority_score": 0.83,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-21T00:19:15.530982+00:00",
+    "title": "Speculative: Anti-Gravity Mathematics \u2014 Theorems That Resist Proof"
+  },
+  {
     "consumed_by_exp_id": "cd0075c8",
     "description": "Formalize a notion of 'self-referential types' in dependent type theory where a type can quantify over itself. Define: a conscious type T satisfies T \u2248 \u03a0(x:T), P(x) for some predicate P. Prove: any such type must be undecidable (G\u00f6del-style). Show: the fixed points of the type-forming operations correspond to a hierarchy analogous to the arithmetical hierarchy. Conjecture: the cardinality of self-referential types is exactly \u2135_1^CK (the Church-Kleene ordinal).",
     "domains": [
@@ -290,19 +320,19 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
   },
   {
-    "consumed_by_exp_id": "1f9eb531",
-    "description": "Conjecture: the laws of physics are the fixed point of a computation that simulates itself. Formalize: define a universal physical simulator U that maps (initial_conditions, laws) \u2192 (next_state). The fixed point equation is U(L, L) = L, where L is the 'law of physics'. Prove: the solution exists (by the Kleene fixed point theorem). Show: the solution is unique up to computational equivalence. Predict: the fine structure constant \u03b1 satisfies \u03b1 = 1/(137.036...) because it's the simplest fixed point.",
+    "consumed_by_exp_id": "",
+    "description": "Construct a simplicial complex from the citation graph of mathematical theorems: vertices are theorems, edges connect co-cited theorems, triangles connect tri-cited theorems, etc. Compute the persistent homology of this complex. Conjecture: H_1 reveals 'schools of mathematics' (connected research communities) and H_2 reveals 'paradigm shifts' (structural changes in the network). Prove: the Betti numbers grow as \u03b2_k \u2248 n^(k+1) where n is the number of theorems.",
     "domains": [
       "Novelty",
-      "Physics"
+      "MachineLearning"
     ],
-    "id": "fd_0527",
-    "priority_score": 0.81,
+    "id": "fd_0534",
+    "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-20T22:20:22.643947+00:00",
-    "title": "Speculative: The Universe Computes Its Own Existence (Physics = Computation)"
+    "status": "available",
+    "timestamp": "2026-07-21T00:19:15.361113+00:00",
+    "title": "Speculative: Topological Data Analysis of Theorem Networks"
   },
   {
     "consumed_by_exp_id": "",
@@ -5548,6 +5578,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-20T23:22:30.536841+00:00",
     "title": "Let `A` be an abelian group and let the `n`th stage be `A^{n+1}`, with bonding m"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Thermodynamics of Mathematical Proof\n\n## 1. Fiber-entropy law for proof normalization\n\nFor every finite terminating normalization system equipped with a probability law on proof terms, the minimum expected irreversible work of normalization equals the expected logarithm of the normalization-fiber size precisely when the conditional law is uniform on each fiber; otherwise the fiber logarithm is a strict upper bound on the Shannon entropy destroyed.\n\nThe key insight is that normalization is a many-to-one map, so its thermodynamic cost should be controlled by conditional entropy rather than raw term count. **Why now?** Exact finite multiplicities and the one-bit Landauer unit are available, making the equality and strictness cases sharply testable on concrete rewrite systems.\n\n## 2. Bennett tradeoff for theorem verification\n\nThere exists a family of finite proof systems for which reversible verification using subexponential auxiliary space necessarily incurs superlinear recomputation time, while irreversible linear-time verification destroys a linear number of transcript bits.\n\nThe key insight is that preserving a verifier transcript avoids erasure but forces a pebbling tradeoff between retained checkpoints and recomputation. **Why now?** The adversarial coverage theorem isolates the information that a verifier must distinguish; adding reversible pebble games can turn this static obstruction into a time-space-energy tradeoff.\n\n## 3. Exponential normalization fibers with short conclusions\n\nThere exists a finitely presented, strongly normalizing proof calculus containing conclusions of length `O(n)` whose shortest normal proofs have `2^n` distinct bounded-length preimages under normalization.\n\nThe key insight is that exponentially many bureaucratic derivations may collapse to one canonical proof even when the theorem and its normal proof remain short. **Why now?** The present binary derivation family supplies the target multiplicity, while an explicit normalization calculus would replace the abstract selection model by a semantic proof transformation.\n\n## 4. Kolmogorov-incompressible proof families\n\nFor infinitely many lengths `n`, some valid proof object of length `n` has prefix-free description complexity at least `n - O(1)`, and every universal verifier that reconstructs such a proof from a shorter certificate must acquire the missing information through either its input transcript or irreversible state changes.\n\nThe key insight is that finite pigeonhole incompressibility should persist under universal prefix-free coding and constrain where verification information can enter. **Why now?** Strict finite compression has already been excluded at each fixed depth; the next test is to obtain a machine-invariant asymptotic formulation with explicit additive constants.\n\n## 5. Compositional Landauer accounting\n\nFor independent proof obligations, minimum erasure work is additive, whereas shared lemmas reduce total work by exactly the mutual information between the obligations' proof distributions.\n\nThe key insight is that lemma reuse acts as statistical dependence, converting the gap between separate and joint verification costs into mutual information. **Why now?** Candidate-space products already produce additive logarithmic counts, and the entropy-loss identity provides a direct route from that combinatorics to a quantitative thermodynamic prediction.\n",
+    "domains": [
+      "Computation",
+      "Physics"
+    ],
+    "id": "fd_0537",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "fbb9076c",
+    "status": "available",
+    "timestamp": "2026-07-21T00:19:42.257809+00:00",
+    "title": "For every finite terminating normalization system equipped with a probability la"
   },
   {
     "consumed_by_exp_id": "",

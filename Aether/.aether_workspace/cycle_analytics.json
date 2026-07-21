@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-20T23:22:31.828957+00:00",
+  "last_updated": "2026-07-21T00:19:44.665007+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -31578,6 +31578,7 @@
       "outcome_quality": 0.69,
       "phase": "A_only",
       "phase_a_prompt_version": "v26",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v26",
@@ -31692,6 +31693,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-20T23:22:31.734181+00:00",
       "title": "Close Proofs: The Mega-Sphere: All Dimensions at Once"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 15,
+      "domain": "Logic",
+      "duration_seconds": 3428.49556684494,
+      "end_time": 1784593164.818967,
+      "files_integrated": 18,
+      "job_id": "fbb9076c",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.72,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.66,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.91,
+        "composite": 0.539,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.64,
+        "novelty": 0.67,
+        "proof_depth": 0.72,
+        "usefulness": 0.73
+      },
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1784589736.3234003,
+      "strategy_count": 0,
+      "theorem_count": 0,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-21T00:19:44.595197+00:00",
+      "title": "Thermodynamics of Mathematical Proof"
     }
   ]
 }
