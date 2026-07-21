@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "d1a99009",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions: Information and Derivation Search\n\n## 1. Variable-branching entropy law\n\nFor a depth-dependent derivation tree with branching sequence `b₁, b₂, …`, the minimal worst-case number o",
-      "quality_score": 0.71,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-19T09:14:58",
-      "title": "Information-Theoretic Limits of Proof Search: How Hard Is It to Find a Lean Proof?"
-    },
-    {
       "cycle_id": "8b838f97",
       "domain": "Novelty",
       "key_insight": "# Future Directions: Hypergraph Ramsey Theory Beyond Graphs\n\n## 1. Exact Property-B incidence threshold\n\n**Conjecture.** For every fixed uniformity `r ≥ 3`, there are infinitely many pairs `(n,k)` for",
@@ -499,19 +489,19 @@
       "theorem_count": 9,
       "timestamp": "2026-07-21T14:31:45",
       "title": "Speculative: Topological Data Analysis of Theorem Networks"
+    },
+    {
+      "cycle_id": "2fdbedee",
+      "domain": "Shared",
+      "key_insight": "# Future Directions: Critical Geometry of Counted Proof Spaces\n\n## 1. Quasi-invariance of critical indices under efficient recoding\n\nLet two prefix-free encodings of the same deductive system translat",
+      "quality_score": 0.75,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-21T16:50:02",
+      "title": "Speculative: Theorems as Phase Transitions in Proof Space"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "6da0544e",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\nThe formalization in `Catalog/Novelty/RecordCompositionsAlternating.lean` establishes the exact finite-cardinality product mechanism behind the paper's record-composition coeffici",
-      "quality_score": 0.65,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-07-17T08:35:55",
-      "title": "ArXiv paper: Record compositions of alternating permutations and noncommutative symmetric functions"
-    },
     {
       "cycle_id": "3c755fa4",
       "domain": "Combinatorics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 9,
       "timestamp": "2026-07-21T14:31:45",
       "title": "Speculative: Topological Data Analysis of Theorem Networks"
+    },
+    {
+      "cycle_id": "2fdbedee",
+      "domain": "Shared",
+      "key_insight": "# Future Directions: Critical Geometry of Counted Proof Spaces\n\n## 1. Quasi-invariance of critical indices under efficient recoding\n\nLet two prefix-free encodings of the same deductive system translat",
+      "quality_score": 0.75,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-21T16:50:02",
+      "title": "Speculative: Theorems as Phase Transitions in Proof Space"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "2d8c7907",
-      "domain": "Applications",
-      "name": "joins",
-      "quality": 0.76
-    },
-    {
-      "cycle_id": "2d8c7907",
-      "domain": "Applications",
-      "name": "for",
-      "quality": 0.76
-    },
-    {
-      "cycle_id": "2d8c7907",
-      "domain": "Applications",
-      "name": "finite_memory_is_lossy",
-      "quality": 0.76
-    },
     {
       "cycle_id": "d5e79e07",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Cryptography",
       "name": "sets",
       "quality": 0.74
+    },
+    {
+      "cycle_id": "2fdbedee",
+      "domain": "Shared",
+      "name": "lengths",
+      "quality": 0.75
+    },
+    {
+      "cycle_id": "2fdbedee",
+      "domain": "Shared",
+      "name": "statementsUpTo_pos",
+      "quality": 0.75
+    },
+    {
+      "cycle_id": "2fdbedee",
+      "domain": "Shared",
+      "name": "density_mem_Icc",
+      "quality": 0.75
     }
   ],
-  "last_updated": "2026-07-21T14:31:45",
+  "last_updated": "2026-07-21T16:50:02",
   "open_questions": [
     {
       "context": "",
@@ -3895,12 +3895,6 @@
         "title": "ArXiv paper: Cyclic Projective Orbits on Rational Normal Curves and MDS Codes"
       },
       {
-        "cycle_id": "cdb5c1e4",
-        "quality": 0.61,
-        "theorems": 11,
-        "title": "ArXiv paper: Cyclic Projective Orbits on Rational Normal Curves and MDS Codes"
-      },
-      {
         "cycle_id": "87b73bf0",
         "quality": 0.72,
         "theorems": 9,
@@ -3947,6 +3941,12 @@
         "quality": 0.75,
         "theorems": 0,
         "title": "Speculative: Topological Data Analysis of Theorem Networks"
+      },
+      {
+        "cycle_id": "2fdbedee",
+        "quality": 0.75,
+        "theorems": 9,
+        "title": "Speculative: Theorems as Phase Transitions in Proof Space"
       }
     ],
     "Tropical": [

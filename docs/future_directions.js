@@ -46,6 +46,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Formalize 'strange loops' \u2014 hierarchical levels that fold back on themselves. Define: a strange loop in a formal system F is a formula phi such that phi asserts its own provability or unprovability. Prove: G\u00f6del's incompleteness theorem IS a strange loop (the G\u00f6del sentence G says 'G is not provable'). Show: Tarski's undefinability of truth is a stronger strange loop (no formula can assert its own truth). Conjecture: every sufficiently expressive formal system contains infinitely many distinct strange loops. Explore: can we formalize the 'tangled hierarchy' where level N refers to level N-1 which refers to level N?",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0559",
+    "priority_score": 0.87,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-21T16:49:18.790612+00:00",
+    "title": "Hofstadter: Strange Loops in Formal Systems \u2014 Self-Reference as a Theorem"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle fff627f3 (Q=0.770), which proved 7 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Hilbert's Hotel has infinitely many rooms, each containing a prime number. Room n contains the n-th prime p_n. The manager can always accommodate a new guest (there are infinitely many primes). But what if the guests want to REARRANGE? Conjecture: For any permutation sigma of N, there exists a rearr",
     "domains": [
       "Pythagorean"
@@ -72,6 +87,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-21T09:47:53.103125+00:00",
     "title": "Rucker: Infinity and the Mind \u2014 Formalizing Different Sizes of Infinity"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Explore whether non-human intelligence (alien, AI, evolved) would discover the same mathematics. Define: 'universal mathematics' as the set of theorems provable in ANY sufficiently expressive formal system. Prove: Peano arithmetic is universal (its theorems are a subset of every consistent extension). Show: the parallel postulate is NOT universal (non-Euclidean geometries exist). Conjecture: the Riemann Hypothesis IS universal (every sufficiently rich arithmetic system proves it or its negation). Explore: what would alien number theory look like? Would aliens discover primes?",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0558",
+    "priority_score": 0.86,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-21T16:49:18.720669+00:00",
+    "title": "Rucker: Saucer Wisdom \u2014 Non-Human Mathematical Intuition"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the GEB thesis: deep isomorphisms connect G\u00f6del's incompleteness, Escher's visual paradoxes, and Bach's fugues. Define: a 'GEB isomorphism' is a structure-preserving map between three domains: (1) a formal system, (2) a visual art form, (3) a musical form. Prove: the self-reference in G\u00f6del's theorem, Escher's 'Drawing Hands,' and Bach's 'Crab Canon' all instantiate the same fixed-point construction (Lawvere's fixed point theorem). Show: every GEB isomorphism factors through the Y combinator.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0560",
+    "priority_score": 0.86,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-21T16:49:18.856877+00:00",
+    "title": "Hofstadter: G\u00f6del, Escher, Bach \u2014 Isomorphism Across Domains"
   },
   {
     "consumed_by_exp_id": "",
@@ -158,21 +203,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "[Reset] Fresh approach in Shared"
   },
   {
-    "consumed_by_exp_id": "2fdbedee",
-    "description": "Conjecture that major theorems (G\u00f6del's incompleteness, Fermat's Last Theorem, ABC conjecture) correspond to phase transitions in proof space. Define an order parameter: the ratio of provable to unprovable statements of length \u2264 n. Prove that this ratio undergoes a sharp transition at some critical n_c (the G\u00f6del threshold). Predict: the distribution of theorem lengths follows a power law with exponent related to the Hausdorff dimension of proof space.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0519",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-20T15:28:30.564786+00:00",
-    "title": "Speculative: Theorems as Phase Transitions in Proof Space"
-  },
-  {
     "consumed_by_exp_id": "9d505535",
     "description": "Arrow's impossibility theorem states no ranked voting system is fair. Reformulate in tropical mathematics: a social welfare function is a tropical linear map f: T^n \u2192 T satisfying the tropical analog of Arrow's axioms. Prove: the tropical dictator function f(x_1,...,x_n) = x_1 is the unique tropical social welfare function. Show: this reduces to Arrow's theorem in the classical limit. Conjecture: tropical voting allows non-dictatorial functions that satisfy weaker axioms (tropical IIA + tropical Pareto).",
     "domains": [
@@ -216,6 +246,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-21T12:07:59.417020+00:00",
     "title": "Rucker: Wetware \u2014 Biological Computation and Its Mathematical Limits"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 2fdbedee (Q=0.750), which proved 9 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Conjecture that major theorems (G\u00f6del's incompleteness, Fermat's Last Theorem, ABC conjecture) correspond to phase transitions in proof space. Define an order parameter: the ratio of provable to unprovable statements of length \u2264 n. Prove that this ratio undergoes a sharp transition at some critical ",
+    "domains": [
+      "Shared"
+    ],
+    "id": "push_2fdbedee_b5357a04",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "2fdbedee",
+    "status": "available",
+    "timestamp": "2026-07-21T16:50:02.187185+00:00",
+    "title": "Deepening: Speculative: Theorems as Phase Transitions in Proof Space"
   },
   {
     "consumed_by_exp_id": "",
@@ -5758,6 +5802,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-21T14:31:43.917811+00:00",
     "title": "**Conjecture.** In a temporally filtered co-citation hypergraph, long-lived firs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Critical Geometry of Counted Proof Spaces\n\n## 1. Quasi-invariance of critical indices under efficient recoding\n\nLet two prefix-free encodings of the same deductive system translate into one another with additive length overhead at most `b`. Conjecture that their level-`\u03b5` critical indices differ by at most `b`, after correcting for the two alphabet entropies.\n\nThe key insight is that a bounded recoding distorts metric balls only by a bounded radial shift, so a threshold should move rather than disappear.\n\nWhy now? The entropy\u2013density separation identifies exactly which observables must be compared, while the critical-index theorem isolates monotonicity and a positive crossing level as sufficient hypotheses.\n\n## 2. Threshold windows for submultiplicative derivability counts\n\nFor a finitely generated deductive calculus, suppose cumulative derivability counts are submultiplicative up to a polynomial factor and have exponential growth rate strictly below the ambient language. Conjecture that a logarithmically smoothed density is eventually antitone and that every fixed positive level has a transition window of width bounded independently of the cutoff.\n\nThe key insight is that submultiplicativity should suppress oscillations that are invisible to exponential growth rates but currently obstruct an intrinsic threshold.\n\nWhy now? The existing boundary analysis shows that exponential sparsity alone gives convergence but not a sharp finite crossing; controlling oscillation is the precise missing ingredient.\n\n## 3. Dimension spectrum of theorem families\n\nPartition derivable statements by proof-theoretic complexity and define the entropy dimension of each stratum from its cumulative growth rate. Conjecture that natural calculi exhibit a nontrivial multifractal spectrum and that the union dimension is the supremum of the stratum dimensions, while intersections obey a strict dimension drop under an independence condition.\n\nThe key insight is that a single provable/unprovable ratio discards internal geometry, whereas a spectrum can distinguish several mechanisms of derivability with the same zero ambient density.\n\nWhy now? Positive ambient entropy coexisting with zero derivability density supplies the first robust separation needed to define and compare lower-dimensional strata.\n\n## 4. Power laws from mixtures of geometric proof regimes\n\nLet theorem lengths be generated by a scale mixture of geometric distributions whose entropy parameter has density proportional to a power near zero. Conjecture that the mixed length distribution has a regularly varying tail, with exponent determined by the small-entropy mixing law, and prove a converse under a Tauberian regularity condition.\n\nThe key insight is that a fixed entropy produces geometric decay, so a genuine power law must arise from heterogeneity across proof regimes rather than from one homogeneous proof space.\n\nWhy now? The exact constant successive-ratio law rules out the naive power-law prediction and points directly to scale mixtures as a falsifiable replacement.\n\n## 5. G\u00f6del fixed points with quantitative coding bounds\n\nFor a concrete arithmetized theory with a fixed prefix-free syntax, conjecture explicit upper and lower bounds on the shortest fixed-point sentence in terms of the description length of its provability predicate. Test whether bounded recodings preserve these bounds up to additive constants.\n\nThe key insight is that semantic incompleteness yields existence but no numerical threshold; quantitative diagonalization must account for the cost of quotation, substitution, and the provability predicate.\n\nWhy now? The abstract boundary is clear: counting laws and fixed-point laws are presently separate, so coding-cost estimates are the necessary bridge between them.\n",
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "fd_0561",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "2fdbedee",
+    "status": "available",
+    "timestamp": "2026-07-21T16:50:00.752005+00:00",
+    "title": "Let two prefix-free encodings of the same deductive system translate into one an"
   },
   {
     "consumed_by_exp_id": "",
