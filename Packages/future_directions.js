@@ -203,7 +203,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Rucker: The Fourth Dimension as a Mathematical Playground"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "28edcf45",
     "description": "Formalize biological computation: a 'wetware' computation is a dynamical system on a neural manifold that computes a function f: X -> Y. Prove: wetware can simulate Turing machines (neural nets are Turing-complete). Show: the energy cost of a wetware computation is Theta(n * log(n)) where n is the number of neurons \u2014 better than silicon's Theta(n^2). Conjecture: there exist functions computable by wetware (using continuous dynamics) that are NOT computable by Turing machines \u2014 the 'super-Turing' wetware hypothesis.",
     "domains": [
       "Novelty",
@@ -213,7 +213,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-21T12:07:59.417020+00:00",
     "title": "Rucker: Wetware \u2014 Biological Computation and Its Mathematical Limits"
   },
@@ -260,7 +260,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: ArXiv paper: Reproducing the k-copwin Algorithm: Theory vs. Implementa"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ea115bd0",
     "description": "Map prime numbers to harmonic overtones using the Riemann zeta function's non-trivial zeros. Define: the 'harmonic' of a number n is the sum of 1/\u03c1 for each zero \u03c1 with |Im(\u03c1)| \u2264 n. Prove: the harmonic of n grows as O(log n / log log n). Conjecture: perfect intervals (octaves, fifths, fourths) correspond to numbers whose harmonic is rational. Show: the harmonic of 2 is exactly 1 (the octave), while the harmonic of 3 is transcendental (the fifth).",
     "domains": [
       "Novelty",
@@ -270,12 +270,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-20T15:28:30.688765+00:00",
     "title": "Speculative: Number Theory as Music Theory"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f3a76d9a",
     "description": "Formalize the concept of 'mind tools' \u2014 mathematical structures that extend cognition. Define: a mind tool is a formal system F such that the set of theorems provable in F is strictly larger than the set the human brain can directly apprehend. Prove: ZFC is a mind tool (by G\u00f6del's incompleteness \u2014 there exist ZFC theorems the brain cannot directly 'see'). Show: category theory is a more powerful mind tool than set theory for certain classes of problems (it proves things about all categories simultaneously). Conjecture: the hierarchy of mind tools is well-ordered by proof-theoretic ordinal.",
     "domains": [
       "Novelty",
@@ -285,7 +285,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-21T09:47:53.282315+00:00",
     "title": "Rucker: Mind Tools \u2014 Mathematics as Cognitive Extension"
   },
@@ -2399,7 +2399,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Products of simplices are canonically Ramsey"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bf4ad478",
     "description": "Investigate the ArXiv paper 'A Census of New Snake-in-the-Box Records' and formalize its key results. Abstract: The snake-in-the-box problem, introduced by Kautz in 1958, asks for the longest induced (chordless) path, called a snake, in the hypercube graph $Q_n$. The maximum length $a(n)$ is known in each dimension $n \\leq 8$. We give snakes that are longer than the previous best-known in every dimension from $9$ to $13$, improving the lower bound on $a(n)$. All record-length paths are provided in a computer-verifiable dataset.",
     "domains": [
       "Bridges"
@@ -2408,7 +2408,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.15270v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-17T04:12:38.554073+00:00",
     "title": "ArXiv paper: A Census of New Snake-in-the-Box Records"
   },
