@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "5759ba2d",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\n## Verified in this development\n\n1. **General packing and upper colouring.** A linearly `s`-stable `k`-set obeys the sharp span bound. This yields the canonical upper colouring wi",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 20,
-      "timestamp": "2026-07-16T10:22:17",
-      "title": "ArXiv paper: The chromatic number of 3-stable Kneser graphs"
-    },
-    {
       "cycle_id": "d1512647",
       "domain": "Applications",
       "key_insight": "# Future Directions: Rectangle Piercing, Packing, and Relaxation Gaps\n\n## 1. A complete coordinate certificate for the 64-rectangle family\n\n**Conjecture.** There is an integer-coordinate realization o",
@@ -2501,6 +2491,16 @@
       "theorem_count": 13,
       "timestamp": "2026-07-21T03:52:55",
       "title": "ArXiv paper: On Agreement Subtrees in Multiple Pylogenetic Trees"
+    },
+    {
+      "cycle_id": "7fb32c18",
+      "domain": "Logic",
+      "key_insight": "# Future Directions\n\n## Results established\n\nThe formal development in `Speculative/CategoryDNA.lean` uses a precise minimal semantics:\na theory retains a type of models, and its genome is the discret",
+      "quality_score": 0.65,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-07-21T06:49:34",
+      "title": "Speculative: Category Theory as the DNA of Mathematics"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-21T03:52:55",
+  "last_updated": "2026-07-21T06:49:34",
   "open_questions": [
     {
       "context": "",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "0f633d08",
-        "quality": 0.66,
-        "theorems": 107,
-        "title": "ArXiv paper: Magnitude homology of tope graphs"
-      },
-      {
         "cycle_id": "08212964",
         "quality": 0.68,
         "theorems": 17,
@@ -3513,6 +3507,12 @@
         "quality": 0.72,
         "theorems": 0,
         "title": "Thermodynamics of Mathematical Proof"
+      },
+      {
+        "cycle_id": "7fb32c18",
+        "quality": 0.65,
+        "theorems": 13,
+        "title": "Speculative: Category Theory as the DNA of Mathematics"
       }
     ],
     "MachineLearning": [

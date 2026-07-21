@@ -1,4 +1,4 @@
-import Catalog.Novelty.AntiFibonacci.Basic
+import Catalog.Novelty.Basic
 import Catalog.Novelty.RiordanRowSumFibonacci
 
 /-!

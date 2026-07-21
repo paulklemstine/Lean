@@ -1,1 +1,13 @@
-Computational evidence is unnecessary for the central diagonal results because they are structural and quantify over arbitrary types rather than a numerical sequence. The proposed undecidability implication is settled by an explicit one-element countermodel, and the hierarchy witnesses have an exact symbolic rank formula at every level. Finite tabulation would only repeat these closed-form arguments and would not bear on the transfinite Church–Kleene conjecture, which first requires a precise effective semantics and a reformulation from cardinality to closure-ordinal cofinality.
+# Why computational evidence was skipped
+
+The conjecture is settled structurally, not numerically. For any type `T` and
+predicate `P : T → Prop`, the dependent product `∀ x : T, P x` is a
+subsingleton by proof irrelevance. An equivalence from `T` to that product
+therefore forces `T` to be a subsingleton, and a separate argument excludes the
+empty type. Thus all cases, finite and infinite, collapse to the equivalence
+class of `Unit`.
+
+Small-case enumeration would only illustrate consequences already proved for
+all universes, and there is no integer sequence for which an OEIS search would
+be mathematically relevant. The formal file nevertheless includes concrete
+boundary cases: `Unit` satisfies the equation and `Bool` does not.
