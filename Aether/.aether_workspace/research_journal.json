@@ -1,26 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "8b838f97",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Hypergraph Ramsey Theory Beyond Graphs\n\n## 1. Exact Property-B incidence threshold\n\n**Conjecture.** For every fixed uniformity `r ≥ 3`, there are infinitely many pairs `(n,k)` for",
-      "quality_score": 0.79,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-19T09:49:29",
-      "title": "Hypergraph Ramsey Theory: Beyond Graphs"
-    },
-    {
-      "cycle_id": "19a1a7a8",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Quantitative Sphere Detection from Finite Data\n\n## 1. Quantitative homotopy recovery under reach and density\n\nLet a compact smooth submanifold have reach at least `τ`, and let a f",
-      "quality_score": 0.76,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-19T09:49:32",
-      "title": "The Poincare Conjecture for Data: Manifold Detection via Persistent Homology"
-    },
-    {
       "cycle_id": "86896469",
       "domain": "Novelty",
       "key_insight": "# Future directions\n\n## What is now established\n\nFor an arbitrary activation map `a : X → (Fin k → Bool)`, the correct finite semantic space is its range `Feasible a`. The formal development proves:",
@@ -499,29 +479,29 @@
       "theorem_count": 9,
       "timestamp": "2026-07-21T16:50:02",
       "title": "Speculative: Theorems as Phase Transitions in Proof Space"
+    },
+    {
+      "cycle_id": "279ae676",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions\n\n- Develop Hartogs' theorem over an explicit axiomatic set theory without assuming a global choice principle. The present `HartogsType` formulation is type-theoretic and uses Mathl",
+      "quality_score": 0.76,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-21T18:47:58",
+      "title": "Rucker: Infinity and the Mind — Formalizing Different Sizes of Infinity"
+    },
+    {
+      "cycle_id": "0268a2b5",
+      "domain": "Shared",
+      "key_insight": "# Future Directions: Four-Dimensional Geometry\n\n## 1. Embedding obstructions for closed three-manifolds — open-problem category\n\n**Conjecture.** A closed, connected, orientable smooth three-manifold e",
+      "quality_score": 0.79,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-21T18:48:03",
+      "title": "Rucker: The Fourth Dimension as a Mathematical Playground"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "3c755fa4",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions: Arithmetic of Modular Hyperbolic Orbits\n\n## 1. Universal trace multiplication polynomials\n\nFor every positive integer $m$, there should be a unique monic integral polynomial $C_m$",
-      "quality_score": 0.73,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-07-17T08:35:59",
-      "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk"
-    },
-    {
-      "cycle_id": "322b88bd",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions\n\n1. Generalize the Boolean challenge space to a finite field and prove the corresponding special-soundness extractor and exact knowledge error.\n2. Replace multiset equality by equa",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-17T08:36:16",
-      "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
-    },
     {
       "cycle_id": "463376b0",
       "domain": "NumberTheory",
@@ -2501,27 +2481,29 @@
       "theorem_count": 9,
       "timestamp": "2026-07-21T16:50:02",
       "title": "Speculative: Theorems as Phase Transitions in Proof Space"
+    },
+    {
+      "cycle_id": "279ae676",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions\n\n- Develop Hartogs' theorem over an explicit axiomatic set theory without assuming a global choice principle. The present `HartogsType` formulation is type-theoretic and uses Mathl",
+      "quality_score": 0.76,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-21T18:47:58",
+      "title": "Rucker: Infinity and the Mind — Formalizing Different Sizes of Infinity"
+    },
+    {
+      "cycle_id": "0268a2b5",
+      "domain": "Shared",
+      "key_insight": "# Future Directions: Four-Dimensional Geometry\n\n## 1. Embedding obstructions for closed three-manifolds — open-problem category\n\n**Conjecture.** A closed, connected, orientable smooth three-manifold e",
+      "quality_score": 0.79,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-21T18:48:03",
+      "title": "Rucker: The Fourth Dimension as a Mathematical Playground"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "d5e79e07",
-      "domain": "Applications",
-      "name": "curv_shift",
-      "quality": 0.73
-    },
-    {
-      "cycle_id": "d5e79e07",
-      "domain": "Applications",
-      "name": "periodX_shift",
-      "quality": 0.73
-    },
-    {
-      "cycle_id": "d5e79e07",
-      "domain": "Applications",
-      "name": "periodY_shift",
-      "quality": 0.73
-    },
     {
       "cycle_id": "7881a56b",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Shared",
       "name": "density_mem_Icc",
       "quality": 0.75
+    },
+    {
+      "cycle_id": "0268a2b5",
+      "domain": "Shared",
+      "name": "deliberately",
+      "quality": 0.79
+    },
+    {
+      "cycle_id": "0268a2b5",
+      "domain": "Shared",
+      "name": "hopf_norm_sq",
+      "quality": 0.79
+    },
+    {
+      "cycle_id": "0268a2b5",
+      "domain": "Shared",
+      "name": "hopf_maps_unit_sphere",
+      "quality": 0.79
     }
   ],
-  "last_updated": "2026-07-21T16:50:02",
+  "last_updated": "2026-07-21T18:48:03",
   "open_questions": [
     {
       "context": "",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "ee626e30",
-        "quality": 0.76,
-        "theorems": 14,
-        "title": "Chaos as a Computable Shadow: The Shadowing Lemma for Real Programs"
-      },
-      {
         "cycle_id": "f0aa5907",
         "quality": 0.73,
         "theorems": 0,
@@ -3575,6 +3569,12 @@
         "quality": 0.71,
         "theorems": 0,
         "title": "Speculative: Proof Complexity and Thermodynamic Cost"
+      },
+      {
+        "cycle_id": "279ae676",
+        "quality": 0.76,
+        "theorems": 0,
+        "title": "Rucker: Infinity and the Mind — Formalizing Different Sizes of Infinity"
       }
     ],
     "Novelty": [
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "cdb5c1e4",
-        "quality": 0.61,
-        "theorems": 11,
-        "title": "ArXiv paper: Cyclic Projective Orbits on Rational Normal Curves and MDS Codes"
-      },
-      {
         "cycle_id": "87b73bf0",
         "quality": 0.72,
         "theorems": 9,
@@ -3947,6 +3941,12 @@
         "quality": 0.75,
         "theorems": 9,
         "title": "Speculative: Theorems as Phase Transitions in Proof Space"
+      },
+      {
+        "cycle_id": "0268a2b5",
+        "quality": 0.79,
+        "theorems": 14,
+        "title": "Rucker: The Fourth Dimension as a Mathematical Playground"
       }
     ],
     "Tropical": [

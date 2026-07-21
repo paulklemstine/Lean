@@ -1,222 +1,174 @@
-"""
-The Fourth Dimension as a Mathematical Playground -- Numerical Demonstrations.
+#!/usr/bin/env python3
+"""Numerical demonstrations for four-dimensional complex geometry.
 
-This self-contained script verifies, numerically, the central results of the
-accompanying paper:
-
-  1. The volume of a 4-ball of radius r equals (pi^2 / 2) * r^4.
-  2. The rotation R(x0,x1,x2,x3) = (-x1, x0, -x3, x2) is a fixed-point-free
-     isometry of the 3-sphere with R^2 = -I, realized by an SO(4) matrix.
-  3. The Hopf map (z,w) -> (2 z conj(w), |z|^2 - |w|^2) sends S^3 onto S^2 and
-     is constant along the circle orbits (z,w) -> (lam z, lam w), |lam| = 1.
-  4. The Clifford torus C(a,b) lies on S^3 with balanced radii 1/sqrt(2).
-  5. The alternating face count of the n-cube is 1, giving boundary Euler
-     characteristics 2 (cube surface, S^2) and 0 (tesseract boundary, S^3).
-
-Only the Python standard library is required.
+The script uses only Python's standard library.  It checks the Hopf norm
+identity and phase fibers, identifies the Clifford torus over the equator,
+exhibits a fixed-point-free quarter-turn, evaluates four-ball volumes, and
+enumerates all tesseract vertex distances.
 """
 
 from __future__ import annotations
 
-import cmath
-import math
-from math import comb, cos, gamma, pi, sin, sqrt
-from typing import List, Tuple
+from itertools import combinations, product
+from math import isclose, pi, sqrt
+from typing import Iterable, TypeAlias
 
-Vec4 = Tuple[float, float, float, float]
-
-
-# ---------------------------------------------------------------------------
-# 1. Volume of the four-dimensional ball
-# ---------------------------------------------------------------------------
-
-def unit_ball_volume(n: int) -> float:
-    """Volume of the unit ball in R^n: pi^(n/2) / Gamma(n/2 + 1)."""
-    return pi ** (n / 2) / gamma(n / 2 + 1)
+ComplexPair: TypeAlias = tuple[complex, complex]
+Vector3: TypeAlias = tuple[float, float, float]
+Vertex4: TypeAlias = tuple[int, int, int, int]
 
 
-def ball_volume_dim4(r: float) -> float:
-    """Closed-form volume of a radius-r ball in R^4: (pi^2 / 2) * r^4."""
-    return (pi ** 2 / 2) * r ** 4
+def norm_sq_pair(point: ComplexPair) -> float:
+    """Return |z|^2 + |w|^2 for a point (z, w) in complex two-space."""
+    z, w = point
+    return abs(z) ** 2 + abs(w) ** 2
 
 
-def monte_carlo_ball4(r: float, samples: int = 2_000_000, seed: int = 1) -> float:
-    """Estimate the 4-ball volume by Monte Carlo over the cube [-r, r]^4."""
-    import random
-
-    rng = random.Random(seed)
-    inside = 0
-    for _ in range(samples):
-        x = [rng.uniform(-r, r) for _ in range(4)]
-        if sum(c * c for c in x) <= r * r:
-            inside += 1
-    cube_volume = (2 * r) ** 4
-    return cube_volume * inside / samples
+def normalize(point: ComplexPair) -> ComplexPair:
+    """Normalize a nonzero complex pair to the unit three-sphere."""
+    length = sqrt(norm_sq_pair(point))
+    if length == 0.0:
+        raise ValueError("the zero vector cannot be normalized")
+    z, w = point
+    return z / length, w / length
 
 
-# ---------------------------------------------------------------------------
-# 2. Fixed-point-free rotation of S^3
-# ---------------------------------------------------------------------------
-
-def rot4(x: Vec4) -> Vec4:
-    """Rucker's rotation: (x0,x1,x2,x3) -> (-x1, x0, -x3, x2)."""
-    x0, x1, x2, x3 = x
-    return (-x1, x0, -x3, x2)
+def hopf(point: ComplexPair) -> Vector3:
+    """Compute the three real quadratic Hopf coordinates."""
+    z, w = point
+    cross = z * w.conjugate()
+    return 2.0 * cross.real, 2.0 * cross.imag, abs(z) ** 2 - abs(w) ** 2
 
 
-def sq_norm(x: Vec4) -> float:
-    return sum(c * c for c in x)
+def vector3_norm_sq(vector: Vector3) -> float:
+    """Return the squared Euclidean norm of a real three-vector."""
+    return sum(coordinate * coordinate for coordinate in vector)
 
 
-def rot4_matrix() -> List[List[float]]:
-    """Block-diagonal SO(4) matrix realizing rot4."""
-    j = [[0.0, -1.0], [1.0, 0.0]]
-    m = [[0.0] * 4 for _ in range(4)]
-    for a in range(2):
-        for b in range(2):
-            m[a][b] = j[a][b]
-            m[a + 2][b + 2] = j[a][b]
-    return m
+def phase_action(phase: complex, point: ComplexPair) -> ComplexPair:
+    """Multiply both complex coordinates by a common phase."""
+    z, w = point
+    return phase * z, phase * w
 
 
-def matmul(a: List[List[float]], b: List[List[float]]) -> List[List[float]]:
-    n = len(a)
-    return [[sum(a[i][k] * b[k][j] for k in range(n)) for j in range(n)] for i in range(n)]
+def reconstruct_phase(source: ComplexPair, target: ComplexPair) -> complex:
+    """Recover the common phase target = phase * source for unit pairs."""
+    z, w = source
+    zp, wp = target
+    return z.conjugate() * zp + w.conjugate() * wp
 
 
-def transpose(a: List[List[float]]) -> List[List[float]]:
-    return [list(row) for row in zip(*a)]
+def pair_distance(source: ComplexPair, target: ComplexPair) -> float:
+    """Return Euclidean distance in complex two-space."""
+    return sqrt(abs(source[0] - target[0]) ** 2 + abs(source[1] - target[1]) ** 2)
 
 
-def det4(a: List[List[float]]) -> float:
-    """Determinant of a 4x4 matrix via cofactor expansion."""
-    def minor(m, i, j):
-        return [[m[r][c] for c in range(len(m)) if c != j] for r in range(len(m)) if r != i]
-
-    def det(m):
-        n = len(m)
-        if n == 1:
-            return m[0][0]
-        if n == 2:
-            return m[0][0] * m[1][1] - m[0][1] * m[1][0]
-        return sum((-1) ** j * m[0][j] * det(minor(m, 0, j)) for j in range(n))
-
-    return det(a)
+def quarter_turn(point: ComplexPair) -> ComplexPair:
+    """Rotate both orthogonal complex coordinate planes by 90 degrees."""
+    return phase_action(1j, point)
 
 
-# ---------------------------------------------------------------------------
-# 3. The Hopf fibration S^3 -> S^2
-# ---------------------------------------------------------------------------
-
-def hopf(z: complex, w: complex) -> Tuple[complex, float]:
-    """Hopf map (z,w) -> (2 z conj(w), |z|^2 - |w|^2)."""
-    return (2 * z * w.conjugate(), abs(z) ** 2 - abs(w) ** 2)
+def four_ball_volume(radius: float) -> float:
+    """Return the volume of an open four-ball; nonpositive radii give zero."""
+    return 0.5 * pi**2 * max(radius, 0.0) ** 4
 
 
-def hopf_image_norm_sq(z: complex, w: complex) -> float:
-    c, real = hopf(z, w)
-    return abs(c) ** 2 + real ** 2
+def tesseract_vertices() -> list[Vertex4]:
+    """Return the sixteen sign vertices of the standard tesseract."""
+    return [tuple(signs) for signs in product((-1, 1), repeat=4)]  # type: ignore[misc]
 
 
-# ---------------------------------------------------------------------------
-# 4. The Clifford torus
-# ---------------------------------------------------------------------------
-
-def clifford(a: float, b: float) -> Vec4:
-    r = 1 / sqrt(2)
-    return (r * cos(a), r * sin(a), r * cos(b), r * sin(b))
+def hamming_distance(x: Vertex4, y: Vertex4) -> int:
+    """Count coordinates in which two sign vertices differ."""
+    return sum(a != b for a, b in zip(x, y))
 
 
-# ---------------------------------------------------------------------------
-# 5. The tesseract: face counts and Euler characteristics
-# ---------------------------------------------------------------------------
-
-def cube_face_counts(n: int) -> List[int]:
-    """Number of k-faces of the n-cube, for k = 0..n."""
-    return [comb(n, k) * 2 ** (n - k) for k in range(n + 1)]
+def squared_vertex_distance(x: Vertex4, y: Vertex4) -> int:
+    """Compute squared Euclidean distance between tesseract vertices."""
+    return sum((a - b) ** 2 for a, b in zip(x, y))
 
 
-def alternating_face_sum(n: int) -> int:
-    return sum((-1) ** k * comb(n, k) * 2 ** (n - k) for k in range(n + 1))
+def histogram(values: Iterable[int]) -> dict[int, int]:
+    """Count integer values and return a key-sorted dictionary."""
+    counts: dict[int, int] = {}
+    for value in values:
+        counts[value] = counts.get(value, 0) + 1
+    return dict(sorted(counts.items()))
 
 
-def boundary_euler_char(n: int) -> int:
-    """Euler characteristic of the boundary S^(n-1) of the n-cube: 1 - (-1)^n."""
-    return 1 - (-1) ** n
+def demonstrate_hopf_geometry() -> None:
+    """Print numerical checks of the Hopf and Clifford-torus results."""
+    point = normalize((1.0 + 2.0j, -0.5 + 1.5j))
+    image = hopf(point)
+    phase = complex(3.0 / 5.0, 4.0 / 5.0)
+    moved = phase_action(phase, point)
+    moved_image = hopf(moved)
+    recovered = reconstruct_phase(point, moved)
+
+    print("HOPF GEOMETRY")
+    print(f"unit point: {point}")
+    print(f"Hopf image: {image}")
+    print(f"squared image norm: {vector3_norm_sq(image):.15f}")
+    print(f"phase-invariance residual: "
+          f"{sqrt(sum((a-b)**2 for a, b in zip(image, moved_image))):.3e}")
+    print(f"chosen phase:    {phase}")
+    print(f"recovered phase: {recovered}")
+    print(f"reconstruction error: "
+          f"{pair_distance(moved, phase_action(recovered, point)):.3e}")
+
+    clifford_point = (1.0 / sqrt(2.0), 1j / sqrt(2.0))
+    clifford_image = hopf(clifford_point)
+    print("\nCLIFFORD TORUS")
+    print(f"point: {clifford_point}")
+    print(f"equal coordinate moduli: "
+          f"{isclose(abs(clifford_point[0]), abs(clifford_point[1]))}")
+    print(f"Hopf image: {clifford_image}")
+    print(f"equatorial height: {clifford_image[2]:.3e}")
 
 
-# ---------------------------------------------------------------------------
-# Driver
-# ---------------------------------------------------------------------------
+def demonstrate_rotation_and_volume() -> None:
+    """Print checks for the quarter-turn and four-ball volume scaling."""
+    point: ComplexPair = (2.0 - 1.0j, -3.0 + 0.5j)
+    turned = quarter_turn(point)
+    print("\nFOUR-DIMENSIONAL QUARTER-TURN")
+    print(f"point: {point}")
+    print(f"quarter-turn: {turned}")
+    print(f"norm squared before/after: "
+          f"{norm_sq_pair(point):.6f} / {norm_sq_pair(turned):.6f}")
+    print(f"distance from its image: {pair_distance(point, turned):.6f}")
+
+    print("\nFOUR-BALL VOLUME")
+    for radius in (0.5, 1.0, 2.0):
+        print(f"radius {radius:>3}: volume {four_ball_volume(radius):.10f}")
+    ratio = four_ball_volume(2.0) / four_ball_volume(1.0)
+    print(f"doubling-radius volume ratio: {ratio:.1f} (expected 2^4 = 16)")
+
+
+def demonstrate_tesseract() -> None:
+    """Enumerate tesseract pairs and verify distance equals four times Hamming distance."""
+    vertices = tesseract_vertices()
+    pairs = list(combinations(vertices, 2))
+    assert all(
+        squared_vertex_distance(x, y) == 4 * hamming_distance(x, y)
+        for x, y in pairs
+    )
+    distances = [squared_vertex_distance(x, y) for x, y in pairs]
+    maximum = max(distances)
+    maximizing_pairs = [(x, y) for x, y in pairs if squared_vertex_distance(x, y) == maximum]
+
+    print("\nTESSERACT DISTANCES")
+    print(f"vertices: {len(vertices)}; unordered pairs: {len(pairs)}")
+    print(f"squared-distance histogram: {histogram(distances)}")
+    print(f"maximum squared distance: {maximum}; diameter: {sqrt(maximum):.1f}")
+    print(f"antipodal maximizing pairs: {len(maximizing_pairs)}")
+    print(f"example: {maximizing_pairs[0]}")
+
 
 def main() -> None:
-    print("=" * 66)
-    print("The Fourth Dimension as a Mathematical Playground -- demo")
-    print("=" * 66)
-
-    print("\n[1] Volume of the 4-ball")
-    for r in (1.0, 2.0, 0.5):
-        print(f"    r={r}:  closed form = {ball_volume_dim4(r):.6f}, "
-              f"pi^2/2 * r^4 check = {(pi**2/2)*r**4:.6f}")
-    print(f"    unit-ball volume omega_4 = {unit_ball_volume(4):.6f} "
-          f"(pi^2/2 = {pi**2/2:.6f})")
-    mc = monte_carlo_ball4(1.0, samples=400_000)
-    print(f"    Monte Carlo (r=1) = {mc:.4f}  vs  {ball_volume_dim4(1.0):.4f}")
-
-    print("\n[2] Fixed-point-free rotation of S^3")
-    pts = [(1.0, 0.0, 0.0, 0.0), (0.5, 0.5, 0.5, 0.5),
-           (cos(0.7), sin(0.7), 0.0, 0.0)]
-    for x in pts:
-        rx = rot4(x)
-        rrx = rot4(rx)
-        iso = abs(sq_norm(rx) - sq_norm(x)) < 1e-12
-        neg = all(abs(a + b) < 1e-12 for a, b in zip(rrx, x))
-        fixed = all(abs(a - b) < 1e-12 for a, b in zip(rx, x))
-        print(f"    x={tuple(round(c,3) for c in x)}: isometry={iso}, "
-              f"R^2=-I: {neg}, has_fixed_point={fixed}")
-    m = rot4_matrix()
-    mtm = matmul(transpose(m), m)
-    is_id = all(abs(mtm[i][j] - (1.0 if i == j else 0.0)) < 1e-12
-                for i in range(4) for j in range(4))
-    print(f"    M^T M = I: {is_id},  det M = {det4(m):.6f}  (SO(4))")
-
-    print("\n[3] Hopf fibration S^3 -> S^2")
-    for z, w in [(complex(0.6, 0.0), complex(0.8, 0.0)),
-                 (complex(0.3, 0.4), complex(0.5, 0.5))]:
-        norm = abs(z) ** 2 + abs(w) ** 2
-        z, w = z / sqrt(norm), w / sqrt(norm)  # normalize onto S^3
-        img = hopf_image_norm_sq(z, w)
-        print(f"    |z|^2+|w|^2={abs(z)**2+abs(w)**2:.4f}  =>  "
-              f"|h(z,w)|^2 = {img:.6f} (should be 1)")
-        # circle invariance
-        lam = cmath.exp(1j * 1.3)
-        c1, r1 = hopf(z, w)
-        c2, r2 = hopf(lam * z, lam * w)
-        print(f"      fibre invariance: |dc|={abs(c1-c2):.2e}, "
-              f"|dr|={abs(r1-r2):.2e}")
-
-    print("\n[4] Clifford torus on S^3")
-    for a, b in [(0.0, 0.0), (0.7, 2.1), (1.5, 4.0)]:
-        p = clifford(a, b)
-        r1sq = p[0] ** 2 + p[1] ** 2
-        r2sq = p[2] ** 2 + p[3] ** 2
-        print(f"    C({a},{b}): |.|^2={sq_norm(p):.6f}, "
-              f"plane radii^2 = ({r1sq:.4f}, {r2sq:.4f})")
-
-    print("\n[5] Tesseract and Euler characteristics")
-    for n in range(1, 6):
-        counts = cube_face_counts(n)
-        print(f"    n={n}: face counts {counts}, "
-              f"alt-sum={alternating_face_sum(n)}, "
-              f"boundary chi = {counts_boundary_chi(counts)} "
-              f"(= 1-(-1)^n = {boundary_euler_char(n)})")
-
-    print("\nAll numerical checks completed.")
-
-
-def counts_boundary_chi(counts: List[int]) -> int:
-    """Alternating sum of proper faces (drop the top cell)."""
-    return sum((-1) ** k * c for k, c in enumerate(counts[:-1]))
+    """Run every numerical demonstration."""
+    demonstrate_hopf_geometry()
+    demonstrate_rotation_and_volume()
+    demonstrate_tesseract()
 
 
 if __name__ == "__main__":

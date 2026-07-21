@@ -4,10 +4,10 @@
  the classification theorem itself.
  -/
  import Mathlib
--import FINAL.Topology
--import FINAL.Homology
-+import Catalog.Novelty.Topology
-+import Catalog.Novelty.Homology
+-import Catalog.Novelty.Topology
+-import Catalog.Novelty.Homology
++import FINAL.Topology
++import FINAL.Homology
  
  open scoped ContinuousMap unitInterval
  

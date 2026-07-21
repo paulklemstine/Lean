@@ -1,8 +1,8 @@
 --- Asymptotics.lean
 +++ Asymptotics.lean
 @@ -1,4 +1,4 @@
--import Catalog.Novelty.AntiFibonacci.Basic
-+import Catalog.Novelty.Basic
+-import Catalog.Novelty.Basic
++import Catalog.Novelty.AntiFibonacci.Basic
  
  /-!
  

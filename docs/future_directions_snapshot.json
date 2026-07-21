@@ -98,26 +98,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "279ae676",
-    "description": "Formalize Cantor's hierarchy of infinities in Lean 4: aleph_0 (countable), aleph_1 (first uncountable), the continuum hypothesis (CH = aleph_1 = 2^aleph_0). Prove: the power set axiom guarantees strictly larger cardinals. Show: the Hartogs number of any set exists without AC. Explore: can we formalize large cardinals (measurable, supercompact) and their consistency strength hierarchy? Connect to Rucker's intuition that 'infinity is a place you can visit.'",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0545",
-    "lineage_refs": [],
-    "priority_score": 0.86,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-21T09:47:53.103125+00:00",
-    "title": "Rucker: Infinity and the Mind — Formalizing Different Sizes of Infinity"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Explore whether non-human intelligence (alien, AI, evolved) would discover the same mathematics. Define: 'universal mathematics' as the set of theorems provable in ANY sufficiently expressive formal system. Prove: Peano arithmetic is universal (its theorems are a subset of every consistent extension). Show: the parallel postulate is NOT universal (non-Euclidean geometries exist). Conjecture: the Riemann Hypothesis IS universal (every sufficiently rich arithmetic system proves it or its negation). Explore: what would alien number theory look like? Would aliens discover primes?",
     "domain_bridges": [],
@@ -328,6 +308,26 @@
     "status": "in_progress",
     "timestamp": "2026-07-21T12:07:59.417020+00:00",
     "title": "Rucker: Wetware — Biological Computation and Its Mathematical Limits"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalize the 'I Am a Strange Loop' hypothesis: consciousness arises when a system models itself. Define: a 'conscious system' is one that contains a representation of its own state that it can inspect. Prove: any Turing-complete system can be conscious (it can simulate itself — the halting problem IS self-awareness). Show: the 'strangeness' of the loop (how many levels of self-reference) correlates with the degree of consciousness. Conjecture: the minimum loop length for consciousness is 3 (system -> model-of-system -> model-of-model -> back to system). Explore: can Lean's metaprogramming (tactic state inspecting itself) be a form of mathematical consciousness?",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0562",
+    "lineage_refs": [],
+    "priority_score": 0.85,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-21T18:47:28.776281+00:00",
+    "title": "Hofstadter: I Am a Strange Loop — Consciousness as Self-Reference"
   },
   {
     "ambition_level": "extension",
@@ -7898,6 +7898,25 @@
     "status": "available",
     "timestamp": "2026-07-21T16:50:00.752005+00:00",
     "title": "Let two prefix-free encodings of the same deductive system translate into one an"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n- Develop Hartogs' theorem over an explicit axiomatic set theory without assuming a global choice principle. The present `HartogsType` formulation is type-theoretic and uses Mathlib's cardinal infrastructure; it establishes the characteristic non-embedding theorem but is not a metatheoretic independence proof.\n- Formalize the statement that `aleph 1` is the least uncountable cardinal in terms of countability predicates on types, and connect this characterization to the successor-cardinal presentation proved here.\n- Add equivalent formulations of the continuum hypothesis: every infinite subset of the reals is countable or equinumerous with the reals, and the absence of cardinals strictly between `aleph0` and `continuum`.\n- Extend the finite successor-step theorem for `beth` to transfinite limit stages and prove comparison results between the full `aleph` and `beth` hierarchies.\n- Define inaccessible, measurable, strongly compact, and supercompact cardinals after establishing the required filters, ultrafilters, elementary embeddings, and universe bookkeeping. Their relative consistency hierarchy cannot be proved merely from the definitions; faithful consistency-strength results require an explicit formal metatheory, models of set theory, and carefully stated background assumptions.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_0563",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "279ae676",
+    "status": "available",
+    "timestamp": "2026-07-21T18:47:57.053400+00:00",
+    "title": "Future directions from cycle 279ae676"
   },
   {
     "ambition_level": "extension",
