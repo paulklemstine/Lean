@@ -1,87 +1,171 @@
-# The Algebra That Breaks Arrow's Curse
+# When Voting Rules Enter the Tropics
 
-**How tropical mathematics dissolves the most famous impossibility theorem in social choice**
+## The algebraic border between compromise and dictatorship
 
----
+Imagine a committee trying to turn many numerical opinions into one social score. Each voter assigns a real number to an option: perhaps a cost, a level of disapproval, a risk estimate, or a priority. The committee then applies a rule
 
-In 1951, economist Kenneth Arrow published a result so devastating to democratic theory that it earned him a Nobel Prize. Arrow's impossibility theorem showed that no voting system for three or more candidates can simultaneously satisfy three seemingly modest conditions: if every voter prefers candidate A to candidate B, the group should too (the Pareto condition); the group's ranking of any two candidates should depend only on how voters rank those two candidates (independence of irrelevant alternatives); and no single voter should dictate the outcome for everyone else. The conclusion was stark: every "fair" voting system is a dictatorship.
+$$
+f:\mathbb{R}^V\longrightarrow\mathbb{R},
+$$
 
-For over seventy years, mathematicians, economists, and political scientists have lived with this result. Some sought escape through weaker axioms. Others explored restricted preference domains. A few tried probabilistic or cardinal approaches. But the core message seemed unshakable: there is something fundamentally broken about aggregating individual preferences into collective decisions.
+where $V$ is the finite set of voters and a profile $x\in\mathbb{R}^V$ records the score $x_i$ supplied by voter $i$.
 
-Now a new mathematical framework suggests that Arrow's impossibility isn't a universal truth about voting — it's an artifact of a particular kind of algebra. By recasting social choice in the language of *tropical mathematics*, where maximums replace sums and addition replaces multiplication, the impossibility theorem doesn't just weaken. It inverts completely.
+At first this looks like ordinary averaging. Tropical mathematics changes the basic arithmetic. In the min-plus convention, “addition” means taking a minimum, while adding an ordinary constant plays the role of tropical scalar multiplication. This is not an exotic game with symbols. Minimum-based systems appear whenever the bottleneck, cheapest route, earliest arrival, weakest link, or most cautious assessment controls an outcome. Scheduling, shortest-path algorithms, logistics, risk aggregation, and discrete-event systems all naturally speak this language.
 
-## A Different Kind of Arithmetic
+The surprising question is political as well as algebraic: when does a tropical aggregation rule have to be a dictatorship, simply repeating one voter’s score? And when can several voters genuinely matter?
 
-Tropical mathematics sounds exotic, but its core idea is simple. Imagine replacing every "plus" sign in ordinary algebra with "take the maximum," and every "times" sign with "plus." In this strange arithmetic, 3 + 5 = 5 (the maximum), and 3 × 5 = 8 (ordinary addition). This isn't mathematical whimsy — tropical algebra arises naturally in optimization, phylogenetics, chip design, and even auction theory.
+The answer reveals a sharp boundary. Two innocent-looking tropical laws allow a non-dictatorial rule. Dictatorship appears only after independence is strengthened into a precise theory of decisive coalitions.
 
-The key property that makes tropical algebra different is *idempotency*: in tropical addition, x + x = x (the maximum of a number with itself is just that number). In ordinary algebra, x + x = 2x, which carries information about "how many times" a value appears. Tropical algebra forgets this counting — only the extreme values matter.
+## The tropical rules of the game
 
-This seemingly minor difference has profound consequences for social choice.
+Given two profiles $x$ and $y$, define their coordinatewise minimum by
 
-## Tropical Voting
+$$
+(x\wedge y)_i=\min(x_i,y_i).
+$$
 
-In the tropical framework, a *social welfare function* takes each voter's numerical score and produces a social outcome using the tropical analog of a linear combination. Instead of a weighted average ∑wᵢxᵢ, the tropical welfare function computes max(w₁ + x₁, w₂ + x₂, ..., wₙ + xₙ), where wᵢ is voter i's structural weight and xᵢ is their reported preference intensity.
+An aggregator $f$ will be called **weakly tropical-linear** when it obeys two laws.
 
-This formulation is natural: the social outcome is determined by whichever voter feels most strongly (after accounting for their structural influence). If all weights are zero — the egalitarian case — the outcome is simply the maximum of all votes: whoever cares most, wins.
+First, it preserves coordinatewise minima:
 
-The tropical welfare function satisfies both of Arrow's "good" conditions automatically:
+$$
+f(x\wedge y)=\min\{f(x),f(y)\}.
+$$
 
-**Monotonicity (Pareto):** If every voter increases their score, the social outcome can only increase. This follows immediately from the fact that maximums are monotone.
+Second, it is equivariant under common translations:
 
-**Unanimity:** If all voters report the same value c, the social outcome is c. When the maximum weight is zero (the calibration condition), this holds by simple algebra: max(0 + c, 0 + c, ...) = c.
+$$
+f(x+c\mathbf{1})=f(x)+c,
+$$
 
-## The Anti-Arrow Theorem
+where $\mathbf{1}$ is the all-ones profile. If every voter raises a score by the same amount, society’s score rises by exactly that amount. This is a natural tropical version of Pareto consistency: common shifts in the scale are respected.
 
-Here is where the story takes its surprising turn. Arrow proved that classical welfare functions satisfying his conditions must be dictatorial — one voter always determines the outcome. But in the tropical setting, the opposite is true: **no tropical welfare function is ever dictatorial**.
+We also impose **normalization**,
 
-The proof is elegant. Suppose voter j were a dictator: the social outcome always equals xⱼ regardless of other voters' inputs. Pick any other voter i. Now imagine voter i reports an astronomically high value M while voter j reports 0. The tropical welfare function computes at least wᵢ + M (voter i's contribution), but must equal xⱼ = 0. This means wᵢ + M ≤ 0 for every possible M — but there is no finite weight wᵢ that satisfies this for all M. The dictator hypothesis collapses.
+$$
+f(0)=0.
+$$
 
-The mathematical content is a theorem we call the **Tropical Anti-Arrow**: for any number of voters n ≥ 2, no tropical social welfare function is dictatorial. Period.
+Normalization merely chooses an origin. Without it, a projection could be followed by an arbitrary additive offset.
 
-Combined with the automatic satisfaction of Pareto and unanimity, this gives the **Tropical Possibility Theorem**: there exist tropical welfare functions satisfying unanimity, Pareto, and non-dictatorship simultaneously. What Arrow proved impossible in classical algebra, tropical algebra achieves effortlessly.
+The obvious dictatorial rules are the coordinate projections. For a chosen voter $d$,
 
-## Why the Impossibility Dissolves
+$$
+p_d(x)=x_d.
+$$
 
-What is it about tropical algebra that breaks Arrow's curse? The answer lies in that innocuous property of idempotency.
+Every projection preserves coordinatewise minima, commutes with common translations, and is normalized. Already this corrects one tempting but false slogan: the first voter is not inherently unique. Every voter supplies an equally valid projection unless some additional structure singles one out.
 
-In classical algebra, a linear combination ∑wᵢxᵢ can be dominated by a single term only if that term's coefficient is overwhelmingly large relative to the others. The information-theoretic structure of addition allows one voter to "wash out" all others — this is the mathematical mechanism behind dictatorship.
+## Coalitions that contain all the information
 
-In tropical algebra, the max operation already extracts extremes. Every voter has an "escape hatch": by reporting a sufficiently extreme value, any voter can override any other. No structural weight advantage can permanently suppress a voter's influence, because the integer line has no upper bound. The tropical welfare function is inherently *democratically resilient*.
+To express strong independence, we ask which coalitions determine the social score. For a set $S\subseteq V$, say that $f$ **depends only on $S$** if any two profiles agreeing on $S$ receive the same social score. In symbols, whenever
 
-This connects to a deeper insight about the *weight gap* — the difference between the highest and lowest voter weights. When the weight gap is zero (all weights equal), every voter is in the "support" — the ruling coalition. As the gap increases, the coalition narrows, but it can never shrink to a single dictator. The gap measures a kind of *democratic deficit*, analogous to the spectral gap in physics that measures how quickly a system forgets its initial state.
+$$
+x_i=y_i\quad\text{for every }i\in S,
+$$
 
-## The Oligarchy Spectrum
+we require $f(x)=f(y)$.
 
-If dictatorship is impossible, what structures *can* arise? The tropical framework reveals a rich spectrum of possibilities.
+Such sets are information-sufficient coalitions. If $S$ determines the result, then every larger coalition does too. A dictatorship $p_d$ depends only on precisely those coalitions containing $d$.
 
-At one extreme is the egalitarian function: all weights zero, outcome is the maximum vote. Every voter has equal structural influence. This is the "tropical majority rule."
+The decisive-coalition principle used here requires these sufficient coalitions to form an **ultrafilter**. An ultrafilter $\mathcal U$ on $V$ is a family of subsets satisfying four rules: it contains $V$ but not the empty set; it is closed under intersections; it is upward closed; and, for every $S\subseteq V$, exactly one of $S$ and its complement $V\setminus S$ belongs to $\mathcal U$. The last condition makes the family maximally decisive: every proposed division of the electorate has a chosen side.
 
-At the other extreme, one voter's weight is zero and all others are deeply negative. This voter is a "near-dictator" — they determine the outcome unless someone else reports a value exceeding the weight gap. The larger the gap, the more dictator-like the function becomes, but true dictatorship remains forever out of reach.
+An aggregator is **strongly Arrow-compatible** with $\mathcal U$ when
 
-Between these extremes lies a continuum of "oligarchic" functions. The support — voters with the highest weights — forms a ruling coalition. For "typical" inputs where no voter reports an extreme value, only the coalition matters. But any voter outside the coalition can stage a "preference revolt" by reporting a sufficiently extreme value, temporarily joining the effective decision-makers.
+$$
+S\in\mathcal U
+\quad\Longleftrightarrow\quad
+f\text{ depends only on }S.
+$$
 
-This paints a more nuanced and arguably more realistic picture of collective decision-making than Arrow's all-or-nothing dictatorship result. Real political systems often feature coalitions, influence gradients, and the occasional populist surge that disrupts established power structures. The tropical framework captures all of these phenomena algebraically.
+This is much stronger than preserving minima. It does not merely constrain numerical outputs; it organizes all coalitions carrying enough information into a coherent, maximally decisive system.
 
-## Tropical Linearity: A Deeper Structure
+## The finite tropical Arrow theorem
 
-The tropical welfare function isn't just monotone — it's genuinely *tropical linear*. This means it satisfies two key algebraic properties:
+Here is the central result.
 
-First, **tropical additivity**: the outcome of the "tropical sum" (pointwise maximum) of two preference profiles equals the tropical sum of the individual outcomes. Symbolically: f(max(x,y)) = max(f(x), f(y)).
+**Finite Tropical Arrow Theorem.** *Let $V$ be a finite electorate. Suppose $f:\mathbb{R}^V\to\mathbb{R}$ is normalized and translation-equivariant. If the coalitions on which $f$ depends are exactly the members of an ultrafilter on $V$, then there is a unique voter $d\in V$ such that*
 
-Second, **tropical homogeneity**: shifting all voters' values by the same constant shifts the outcome by that constant. Symbolically: f(c + x) = c + f(x).
+$$
+f(x)=x_d\qquad\text{for every profile }x.
+$$
 
-These properties mean the tropical welfare function preserves the full algebraic structure of the tropical semiring. It is not merely a convenient aggregation rule — it is a morphism in the category of tropical modules. This positions tropical social choice within the broader mathematical program of tropical geometry, connecting voting theory to optimization, algebraic geometry, and theoretical computer science.
+*In particular, adding preservation of coordinatewise minima does not change the conclusion.*
 
-## What It Means
+The proof has two clean steps. The first is combinatorial. Every ultrafilter on a finite set is **principal**: there is a unique voter $d$ such that
 
-The tropical anti-Arrow theorem does not, of course, solve the practical problem of designing fair elections. Real voting systems involve ordinal rankings, strategic behavior, and institutional constraints that go beyond any single mathematical framework.
+$$
+S\in\mathcal U\quad\Longleftrightarrow\quad d\in S.
+$$
 
-But it does something perhaps more important: it shows that Arrow's impossibility is not a theorem about the *nature* of collective choice. It is a theorem about the *algebra* of classical linear aggregation. Change the algebra, and the impossibility evaporates.
+Why? Intersect all members of the ultrafilter. Finiteness ensures that this remains a member and is nonempty. It cannot contain two distinct voters, because the ultrafilter must choose between a singleton containing one of them and its complement. Thus one voter survives as the common point of every decisive coalition.
 
-This is a pattern with deep precedents in mathematics. Euclid's parallel postulate seemed like a necessary truth about geometry until Lobachevsky and Bolyai showed it could be replaced. Gödel's incompleteness seemed to close off foundations until Cohen showed independence results could be navigated. Arrow's impossibility, similarly, reflects the structure of the mathematical framework, not an immutable constraint on democracy.
+The second step is algebraic. Since the singleton $\{d\}$ is decisive, $f$ depends only on coordinate $d$. Compare an arbitrary profile $x$ with the constant profile $x_d\mathbf{1}$. They agree at $d$, so
 
-The tropical framework suggests that the most important question in social choice theory may not be "which axioms should we weaken?" but rather "which algebra should we use?" The algebra determines which possibilities are open and which doors are closed. And in the lush, maximum-based landscape of tropical mathematics, Arrow's locked door stands wide open.
+$$
+f(x)=f(x_d\mathbf{1}).
+$$
 
----
+Translation equivariance and normalization give
 
-*This research builds on connections between tropical geometry and social choice theory, linking the tropical spectral gap (a measure of coefficient separation in optimization) to the weight gap in voter influence structures. The results establish tropical social welfare functions as genuine tropical linear maps — morphisms in the category of tropical modules — providing the first algebraic framework where all of Arrow's desirable conditions are simultaneously achievable.*
+$$
+f(x_d\mathbf{1})=f(0)+x_d=x_d.
+$$
+
+Therefore $f=p_d$. Uniqueness follows because two distinct coordinate projections disagree on a profile that separates their coordinates.
+
+If the ultrafilter is fixed in advance to the coalitions containing the first voter, then $d$ is the first voter and the social score is exactly the first coordinate. This is the correct sense in which the first projection is unique: not by symmetry, but because the decisive structure explicitly selects it.
+
+## The escape hatch: minimum aggregation
+
+What happens if we retain the tropical algebra but abandon ultrafilter decisiveness? With two voters, consider
+
+$$
+m(x_1,x_2)=\min(x_1,x_2).
+$$
+
+This rule is normalized. It respects common translations because
+
+$$
+\min(x_1+c,x_2+c)=\min(x_1,x_2)+c.
+$$
+
+It also preserves coordinatewise minima. Taking the minimum within each coordinate and then across coordinates is the same as taking the minimum of all four numbers, regardless of the order in which the operations are performed.
+
+Yet $m$ is not a projection. At $(0,1)$ it equals $0$, disagreeing with the second projection; at $(1,0)$ it again equals $0$, disagreeing with the first projection. Thus:
+
+**Non-Dictatorial Tropical Aggregation Theorem.** *The binary minimum is a normalized, weakly tropical-linear social score, but it is not the projection onto either voter.*
+
+This is more than a counterexample. It identifies exactly what weak tropical axioms fail to encode. The minimum depends only on the full coalition $\{1,2\}$, but not on either singleton. Its sufficient coalitions therefore do not form an ultrafilter. Algebraic minimum preservation is not the same thing as Arrow-style independence.
+
+## A geometric bonus: concavity
+
+The minimum rule is also a genuine min-plus expression, built by tropical addition from the two coordinate variables. That grants it a familiar geometric property.
+
+**Concavity Theorem.** *For profiles $x,y\in\mathbb{R}^2$ and $0\le t\le1$,*
+
+$$
+m((1-t)x+ty)\ge(1-t)m(x)+tm(y).
+$$
+
+The proof follows from two elementary inequalities. Each coordinate of $(1-t)x+ty$ is at least $(1-t)m(x)+tm(y)$, because $x_i\ge m(x)$ and $y_i\ge m(y)$. Taking the minimum over the two coordinates preserves that lower bound.
+
+Geometrically, the graph of $m(x_1,x_2)$ consists of two flat planes meeting along the wall $x_1=x_2$. On one side voter $1$ supplies the minimum; on the other, voter $2$ does. The wall is where decisiveness changes hands. This small picture hints at a broader polyhedral theory in which regions of score space are labeled by the coalitions currently controlling a tropical expression.
+
+## What this says—and what it does not
+
+The lesson is not that tropical voting evades every impossibility theorem. Rather, it separates two notions too easily conflated.
+
+Weak tropical linearity is an algebraic condition. It says that the aggregator respects minima and common changes of scale. Under those rules, compromise-like multi-voter mechanisms exist; binary minimum is the simplest.
+
+Strong decisive-coalition independence is combinatorial. It says that all sufficient coalitions form an ultrafilter. On a finite electorate, that condition selects one voter, and normalization plus translation equivariance turns selection into exact projection.
+
+No automatic “classical limit” should be inferred from this alone. Connecting tropical and ordinary aggregation requires a specified deformation, such as logarithmic dequantization, a topology of convergence, and a semantics translating numerical scores into rankings. Without those choices, the phrase “reduces to the classical theorem” is ambiguous. A promising precise question is whether families of ordinary positive linear aggregators whose dependence systems stabilize as ultrafilters can converge only to tropical projections.
+
+## A map of the frontier
+
+Several avenues now become visible. One may seek to classify all finite normalized aggregators preserving minima and translations. A natural conjecture is that each is a finite minimum of selected coordinates, with a unique irredundant support. If so, the sufficient coalitions would form the principal filter generated by that support, becoming an ultrafilter exactly when the support has one voter. That would make dictatorship not merely one endpoint, but a one-element-support phase of a complete tropical classification.
+
+The geometry also invites exploration. Min-plus expressions divide projective score space into polyhedral chambers according to which coordinates or monomials attain the minimum. Those chambers could provide a visual atlas of social decisiveness: moving across a wall changes the controlling coalition.
+
+Tropical mathematics therefore does not erase the conflict between fairness and decisiveness. It sharpens it. Minimum-based algebra permits collective rules, but maximal coalition independence collapses them to a single coordinate. Between those poles lies a rich landscape of supports, filters, and polyhedral regions—a mathematical territory where the architecture of a voting rule can be seen as both algebra and geometry.

@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "47f9b94d",
-      "domain": "Computation",
-      "key_insight": "# Future directions\n\n## Conclusions established in Lean\n\nThe proposed phenomenon splits into one valid structural statement and several claims that fail as stated.\n\n1. `Escher.EscherStaircase R`, defi",
-      "quality_score": 0.78,
-      "sorry_count": 3,
-      "theorem_count": 4,
-      "timestamp": "2026-07-17T09:24:10",
-      "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
-    },
-    {
       "cycle_id": "bcfc30de",
       "domain": "Cryptography",
       "key_insight": "# Future Directions: Guarded Circular Proofs\n\n## 1. Algebraic-domain completion of finite proof approximants\n\nFor a finitary sequent calculus, order partial proof trees by information content, with an",
@@ -2501,6 +2491,16 @@
       "theorem_count": 9,
       "timestamp": "2026-07-21T20:45:23",
       "title": "ArXiv paper: A Census of New Snake-in-the-Box Records"
+    },
+    {
+      "cycle_id": "f3a76d9a",
+      "domain": "Geometry",
+      "key_insight": "# Future directions\n\n## Scope and limitations\n\nThe phrase “directly apprehended by a human brain” is not presently a mathematical predicate with an agreed formal semantics. The development therefore t",
+      "quality_score": 0.67,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-07-21T20:46:00",
+      "title": "Rucker: Mind Tools — Mathematics as Cognitive Extension"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.79
     }
   ],
-  "last_updated": "2026-07-21T20:45:23",
+  "last_updated": "2026-07-21T20:46:00",
   "open_questions": [
     {
       "context": "",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "e0f3150d",
-        "quality": 0.67,
-        "theorems": 19,
-        "title": "ArXiv paper: Magnitude homology of tope graphs"
-      },
-      {
         "cycle_id": "7a91e930",
         "quality": 0.68,
         "theorems": 18,
@@ -3451,6 +3445,12 @@
         "quality": 0.71,
         "theorems": 0,
         "title": "Speculative: The Universe Computes Its Own Existence (Physics = Computation)"
+      },
+      {
+        "cycle_id": "f3a76d9a",
+        "quality": 0.67,
+        "theorems": 16,
+        "title": "Rucker: Mind Tools — Mathematics as Cognitive Extension"
       }
     ],
     "Logic": [
