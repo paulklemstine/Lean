@@ -78,7 +78,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b31f2cf9",
     "description": "Formalize 'strange loops' — hierarchical levels that fold back on themselves. Define: a strange loop in a formal system F is a formula phi such that phi asserts its own provability or unprovability. Prove: Gödel's incompleteness theorem IS a strange loop (the Gödel sentence G says 'G is not provable'). Show: Tarski's undefinability of truth is a stronger strange loop (no formula can assert its own truth). Conjecture: every sufficiently expressive formal system contains infinitely many distinct strange loops. Explore: can we formalize the 'tangled hierarchy' where level N refers to level N-1 which refers to level N?",
     "domain_bridges": [],
     "domains": [
@@ -91,7 +91,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-21T16:49:18.790612+00:00",
     "title": "Hofstadter: Strange Loops in Formal Systems — Self-Reference as a Theorem"
   },
