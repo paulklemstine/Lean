@@ -1,5 +1,5 @@
-import Catalog.Novelty.FifthRootSumMinimal
-import Catalog.Probability.FermatLittleFive
+import FINAL.Novelty.FifthRootSumMinimal
+import FINAL.Probability.FermatLittleFive
 
 /-!
 # Monotonicity of `σ₅` along residue classes modulo 5

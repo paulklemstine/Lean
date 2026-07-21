@@ -189,6 +189,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Arrow's impossibility theorem states no ranked voting system is fair. Reformulate in tropical mathematics: a social welfare function is a tropical linear map f: T^n \u2192 T satisfying the tropical analog of Arrow's axioms. Prove: the tropical dictator function f(x_1,...,x_n) = x_1 is the unique tropical social welfare function. Show: this reduces to Arrow's theorem in the classical limit. Conjecture: tropical voting allows non-dictatorial functions that satisfy weaker axioms (tropical IIA + tropical Pareto).",
+    "domains": [
+      "Novelty",
+      "Tropical"
+    ],
+    "id": "fd_0538",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-21T03:52:15.842425+00:00",
+    "title": "Speculative: Tropical Mathematics of Social Choice"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 71fc60c7 (Q=0.750), which proved 23 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Elementary cellular automata (ECAs) are the 256 rules that update a 1D binary array based on its 3-cell neighborhood. Rule 110 is Turing-complete. But ECAs can also be viewed as polynomial maps over GF(2): the state s = (s_0, s_1, ..., s_{n-1}) is a vector over GF(2), and the update rule is s -> f(s",
     "domains": [
       "Applications"
@@ -801,20 +816,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-15T13:25:40.671949+00:00",
     "title": "ArXiv paper: Record compositions of alternating permutations and noncommutative symmetric functions"
-  },
-  {
-    "consumed_by_exp_id": "3df39c71",
-    "description": "Investigate the ArXiv paper 'On Agreement Subtrees in Multiple Pylogenetic Trees' and formalize its key results. Abstract: Snir and Yuster [Discrete Appl. Math. 347 (2026) 160--171] asked for the least number $h(k)$ such that $k$ unrooted binary phylogenetic trees on the same $h(k)$ leaves always share a common quartet. We give a new upper bound for the $k$-tree version of the Maximum Agreement Subtree problem, namely an upper bound for the number of leaves, on which $k$ unrooted binary phylogenetic trees always share a common induced binary subtree on $n$ leaves, which is a four-times iterated exponential function. For $h(k)$, this implies a four-times iterated exponential upper bound. We also set an exponential lower bound for $h(k)$.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0041",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.12778v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-15T13:43:20.804355+00:00",
-    "title": "ArXiv paper: On Agreement Subtrees in Multiple Pylogenetic Trees"
   },
   {
     "consumed_by_exp_id": "",
@@ -5608,6 +5609,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-21T00:19:42.257809+00:00",
     "title": "For every finite terminating normalization system equipped with a probability la"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Agreement Subtrees in Multiple Phylogenetic Trees\n\n## 1. Compatibility-sensitive state compression\n\n**Conjecture.** For each fixed leaf number `a`, the number of restrictions to an `a`-leaf set arising from unrooted binary phylogenetic trees is exponentially smaller, in the exponent, than the crude count of arbitrary families of subsets of those leaves. Moreover, this saving can be expressed through a canonical encoding by compatible quartet signatures.\n\nThe key insight is that edge splits of a tree are pairwise compatible, whereas the powerset bound treats them as independent bits. A canonical compatible encoding should expose the information discarded by that crude estimate.\n\n**Why now?** The restriction algebra and its universal powerset bound isolate compatibility as the only missing ingredient in the counting layer. This gives a precise benchmark against which a sharper state count can be measured.\n\n## 2. Connected-family gluing beyond chains\n\n**Conjecture.** Let a finite hypergraph index subfamilies of phylogenetic trees, with each hyperedge carrying a common induced subtree on the same leaf set. If the intersection graph of the hyperedges is connected, then the union of all indexed trees has that common induced subtree. Conversely, disconnectedness is the only obstruction valid for arbitrary split systems.\n\nThe key insight is that equality of restriction witnesses propagates along overlaps exactly as a locally constant function propagates on a connected space.\n\n**Why now?** Chain gluing establishes the path case. Recasting the result for arbitrary connected overlap graphs would create a reusable local-to-global principle and clarify its relation to sheaf-style consistency.\n\n## 3. Fourfold exponential bound from iterative signature refinement\n\n**Conjecture.** There is an explicit recurrence based on four rounds of compatible-signature refinement whose terminal value bounds the leaf number sufficient to force an `n`-leaf common agreement subtree among `k` unrooted binary phylogenetic trees.\n\nThe key insight is that each refinement round should remove one layer of dependence\u2014leaf placement, split compatibility, tree identity, and family identity\u2014so that four nested exponential losses suffice.\n\n**Why now?** The abstract quartet-transfer theorem already shows that any such MAST bound immediately bounds the common-quartet threshold. What remains is a quantitative compatible-tree argument, not additional threshold logic.\n\n## 4. Exponential lower bound via quartet codes\n\n**Conjecture.** Families of binary phylogenetic trees can be encoded as error-correcting codes in quartet-signature space so that large pairwise distance prevents a common quartet, yielding an exponential lower bound for the least leaf number forcing a common quartet. The optimal exponential rate equals a packing rate in a constrained ternary code.\n\nThe key insight is that each four-leaf set admits three resolved quartet types, while consistency among overlapping quartets imposes code constraints analogous to local parity checks.\n\n**Why now?** The common-agreement predicate supplies an exact equality notion for restrictions. This makes it possible to formulate avoidance as distance in a finite signature space and to compare probabilistic tree constructions with coding-theoretic bounds.\n\n## 5. Exact small-parameter thresholds\n\n**Conjecture.** For every fixed number of trees `k \u2264 4`, the least leaf number forcing a common quartet is attained by a family whose quartet signatures form a maximally distant code, and all extremal families are generated by finitely many relabelling orbits.\n\nThe key insight is that small instances combine hereditary restriction with finite group symmetry, so orbit reduction should replace exhaustive enumeration by a structured classification.\n\n**Why now?** The established heredity and pairwise-characterization results sharply reduce the predicates that a finite search must test, while the coding interpretation suggests which extremal configurations to classify.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0539",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "3df39c71",
+    "status": "available",
+    "timestamp": "2026-07-21T03:52:53.752476+00:00",
+    "title": "**Conjecture.** For each fixed leaf number `a`, the number of restrictions to an"
   },
   {
     "consumed_by_exp_id": "",

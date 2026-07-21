@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "192fa110",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions: Structural Register Allocation\n\n## 1. Weighted elimination-optimal spilling\n\n**Conjecture.** For a chordal interference graph with nonnegative vertex spill costs and a fixed regis",
-      "quality_score": 0.76,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-19T07:22:06",
-      "title": "The Combinatorics of Compiler Optimization: Register Allocation as Graph Coloring"
-    },
-    {
       "cycle_id": "d00870b3",
       "domain": "Tropical",
       "key_insight": "# Future Directions: Subsequence Ramsey Theory for Genetic Words\n\n## 1. Sharp extremal law for repeated scattered words\n\nFor an alphabet of size `q`, determine the largest word length for which one ca",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-21T00:19:44",
       "title": "Thermodynamics of Mathematical Proof"
+    },
+    {
+      "cycle_id": "3df39c71",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Agreement Subtrees in Multiple Phylogenetic Trees\n\n## 1. Compatibility-sensitive state compression\n\n**Conjecture.** For each fixed leaf number `a`, the number of restrictions to a",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-07-21T03:52:55",
+      "title": "ArXiv paper: On Agreement Subtrees in Multiple Pylogenetic Trees"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "08676759",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\n## 1. Parameter-only complexity for constant-term evaluation\n\n**Conjecture.** For structured coefficients `aᵢ=pᵢM+rᵢN` with coprime positive\n`M,N`, the denumerant can be evaluated",
-      "quality_score": 0.69,
-      "sorry_count": 0,
-      "theorem_count": 17,
-      "timestamp": "2026-07-16T10:22:07",
-      "title": "ArXiv paper: Polynomial-Time Evaluation of Aardal-Lenstra Denumerants via Constant Term Method"
-    },
     {
       "cycle_id": "5759ba2d",
       "domain": "Novelty",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-21T00:19:44",
       "title": "Thermodynamics of Mathematical Proof"
+    },
+    {
+      "cycle_id": "3df39c71",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Agreement Subtrees in Multiple Phylogenetic Trees\n\n## 1. Compatibility-sensitive state compression\n\n**Conjecture.** For each fixed leaf number `a`, the number of restrictions to a",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-07-21T03:52:55",
+      "title": "ArXiv paper: On Agreement Subtrees in Multiple Pylogenetic Trees"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-21T00:19:44",
+  "last_updated": "2026-07-21T03:52:55",
   "open_questions": [
     {
       "context": "",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "7881a56b",
-        "quality": 0.79,
-        "theorems": 16,
-        "title": "ArXiv paper: Reproducing the k-copwin Algorithm: Theory vs. Implementation"
-      },
-      {
         "cycle_id": "d0217292",
         "quality": 0.73,
         "theorems": 21,
@@ -3637,6 +3631,12 @@
         "quality": 0.68,
         "theorems": 20,
         "title": "The Mega-Sphere: All Dimensions at Once"
+      },
+      {
+        "cycle_id": "3df39c71",
+        "quality": 0.72,
+        "theorems": 13,
+        "title": "ArXiv paper: On Agreement Subtrees in Multiple Pylogenetic Trees"
       }
     ],
     "NumberTheory": [
