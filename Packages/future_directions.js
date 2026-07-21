@@ -188,7 +188,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Theorems as Phase Transitions in Proof Space"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9d505535",
     "description": "Arrow's impossibility theorem states no ranked voting system is fair. Reformulate in tropical mathematics: a social welfare function is a tropical linear map f: T^n \u2192 T satisfying the tropical analog of Arrow's axioms. Prove: the tropical dictator function f(x_1,...,x_n) = x_1 is the unique tropical social welfare function. Show: this reduces to Arrow's theorem in the classical limit. Conjecture: tropical voting allows non-dictatorial functions that satisfy weaker axioms (tropical IIA + tropical Pareto).",
     "domains": [
       "Novelty",
@@ -198,7 +198,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-21T06:49:04.709228+00:00",
     "title": "Speculative: Tropical Mathematics of Social Choice"
   },
