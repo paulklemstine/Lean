@@ -11578,7 +11578,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "5d6a1919",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -11606,7 +11606,7 @@
       "source": "",
       "source_exp_id": "e456357e",
       "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/e456357e",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "th_51f9da44",
       "timestamp": "2026-07-18T06:39:49.078146+00:00",
       "title": "1. **Repair the definition before studying asymptotics.** The literal rule exclu"

@@ -1744,7 +1744,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Tur\u00e1n-Type Bounds for Graphs Containing Large $F$-Sparse Sets"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f65064a1",
     "description": "Investigate the ArXiv paper 'Counting Odd Cycles in Graphs with Bounded Circumference' and formalize its key results. Abstract: For an integer $L\\ge2$, let $a=\\lfloor L/2\\rfloor$. Let $H(n,L)$ be the join of $K_a$ and an independent set of order $n-a$, with one extra edge in the independent set when $L$ is odd. We prove that, for every fixed $s\\ge3$ and $L\\ge2s+2$, and for all sufficiently large $n$, \\[ \\operatorname{ex}(n,C_{2s+1},\\mathcal{C}_{\\ge L+1}) =N(C_{2s+1},H(n,L)). \\] Together with the recent result of even-cycle by Zhao and Wang~[arXiv:2607.04357, 2026], this settles the conjecture of Zhu, Gy\u0151ri, He, Lv, Salia and Xiao~[Bull. Lond. Math. Soc. 55 (2023)] on counting fixed cycles in graphs with bounded circumference. We also determine the corresponding maximum number of copies of odd cycles when a path is forbidden.",
     "domains": [
       "Pythagorean"
@@ -1753,7 +1753,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.10779v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T14:42:51.230098+00:00",
     "title": "ArXiv paper: Counting Odd Cycles in Graphs with Bounded Circumference"
   },
@@ -3668,7 +3668,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "`Catalog/Physics/ImpossibilityResults/FreeActionPrinciple.lean` gives a precise "
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5d6a1919",
     "description": "# Future directions\n\n1. **Repair the definition before studying asymptotics.** The literal rule excludes one integer and collapses to the constant-one sequence. A revised rule must specify the candidate set and all exclusions\u2014for example, whether terms must be new, increasing, or avoid sums of any pair of earlier terms.\n\n2. **Reconcile the displayed prefix.** The listed values are `1 + n(n-1)/2` for the displayed indices and hence suggest quadratic coefficient `1/2`, not `1/4`. Any intended recurrence should be checked against both this prefix and the proposed coefficient.\n\n3. **Study global additive avoidance.** A mathematically richer replacement could greedily choose the least unused positive integer outside the restricted sumset of earlier terms. Its existence, monotonicity, sum-free structure, and counting function would connect additive combinatorics with greedy algorithms.\n\n4. **Generalize the graph bridge.** For a repaired sequence, define a graph on time indices by an additive relation among values. Edge density, clique number, and forbidden subgraphs may translate additive structure into extremal graph invariants.\n\n5. **Formalize density only after fixing the universe.** \u201cThe complement\u201d should specify whether it means the complement of the value set in the positive integers or the complement of an earlier-term sumset. These are different sets and can have different densities.\n\n6. **Retain the present file as a specification regression test.** Any revised definition intended to produce `1,1,2,4,7,...` should be given a new name; the current theorem records exactly why the original wording does not do so.\n",
     "domains": [
       "Algebra",
@@ -3678,7 +3678,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "e456357e",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-18T06:39:49.078146+00:00",
     "title": "1. **Repair the definition before studying asymptotics.** The literal rule exclu"
   },
