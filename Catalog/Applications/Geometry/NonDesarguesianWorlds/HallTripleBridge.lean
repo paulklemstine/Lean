@@ -63,8 +63,7 @@ Completing twice with the same first point recovers the omitted point.
 -/
 theorem steinerThird_left_involutive {A : Type*} [AddCommGroup A] (x y : A) :
     steinerThird x (steinerThird x y) = y := by
-  unfold steinerThird
-  simp [← add_assoc]
+  simp [steinerThird]
 
 /-
 Distinct points have a third point distinct from the first.
@@ -72,8 +71,10 @@ Distinct points have a third point distinct from the first.
 theorem steinerThird_ne_left {A : Type*} [AddCommGroup A]
     (hexp : ∀ t : A, t + t + t = 0) {x y : A} (hxy : x ≠ y) :
     steinerThird x y ≠ x := by
-  unfold steinerThird; intro h; have := hexp ( -x + -y ) ; simp_all +decide [ ← add_assoc ] ;
-  grind +qlia
+  intro h
+  have := steinerThird_left_involutive x y
+  simp_all +decide [ steinerThird ];
+  grind +suggestions
 
 /-
 Translation preserves additive Steiner triples in exponent three.
@@ -81,9 +82,14 @@ Translation preserves additive Steiner triples in exponent three.
 theorem steinerThird_translate {A : Type*} [AddCommGroup A]
     (hexp : ∀ t : A, t + t + t = 0) (x y t : A) :
     steinerThird (x + t) (y + t) = steinerThird x y + t := by
-  unfold steinerThird;
-  rw [ neg_eq_iff_add_eq_zero ];
-  convert hexp t using 1 ; abel_nf
+  have h_inv : -(x + t + (y + t)) = -(x + y) + t := by
+    have h_inv : -(x + t + (y + t)) = -(x + y) - 2 • t := by
+      abel_nf
+    have h_inv' : -(x + y) - 2 • t = -(x + y) + t := by
+      simp +decide [ two_smul, sub_eq_add_neg ];
+      grind
+    rw [h_inv, h_inv'];
+  exact h_inv
 
 /-
 Any zero-preserving additive map preserves third-point completion.
@@ -94,9 +100,8 @@ theorem additive_map_preserves_steinerThird
     (x y : A) :
     f (steinerThird x y) = steinerThird (f x) (f y) := by
   unfold steinerThird;
-  have h_neg : ∀ t : A, f (-t) = -f t := by
-    intro t; exact eq_neg_of_add_eq_zero_left (by
-    rw [ ← hadd, neg_add_cancel, hzero ]);
+  have h_neg : f (-(x + y)) = -f (x + y) := by
+    exact eq_neg_of_add_eq_zero_left ( by rw [ ← hadd, neg_add_cancel, hzero ] );
   rw [ h_neg, hadd ]
 
 abbrev HallPoint := ZMod 3 × ZMod 3
@@ -112,14 +117,14 @@ Every pair has a unique additive Steiner completion.
 -/
 theorem hall_triple_unique_completion (x y : HallPoint) :
     ∃! z : HallPoint, z = steinerThird x y := by
-  exact ⟨ _, rfl, fun z hz => hz ⟩
+  exact ⟨ _, rfl, fun z hz => hz.symm ▸ rfl ⟩
 
 /-
 For distinct Hall points, all three entries of the completed triple are distinct.
 -/
 theorem hall_triple_pairwise_distinct {x y : HallPoint} (hxy : x ≠ y) :
     x ≠ steinerThird x y ∧ y ≠ steinerThird x y := by
-  native_decide +revert
+  decide +revert
 
 /-
 Right multiplication in the Hall algebra preserves additive Steiner triples.
@@ -147,7 +152,7 @@ polynomial lower bound on the ratio to the projective-linear benchmark.
 theorem hall_symmetry_gap (q : ℕ) (hq : 3 ≤ q) :
     hallCollineationOrder q < pglOrder (q ^ 2) ∧
       q ^ 4 ≤ pglOrder (q ^ 2) / (hallCollineationOrder q + 1) := by
-  exact ⟨ NonDesarguesianPlanes.hall_collineation_lt_pgl q hq, NonDesarguesianPlanes.symmetry_ratio_growth q hq ⟩
+  exact ⟨ hall_collineation_lt_pgl q hq, symmetry_ratio_growth q hq ⟩
 
 /-
 The order-nine Hall algebra exhibits both sides of the bridge: every right
@@ -159,6 +164,6 @@ theorem hall_triple_nonassociative_bridge :
       hallMul (steinerThird x y) c =
         steinerThird (hallMul x c) (hallMul y c)) ∧
     HallLeftNucleus ≠ Set.univ := by
-  exact ⟨ hallMul_preserves_steinerThird, hallLeftNucleus_proper ⟩
+  exact ⟨ fun x y c => hallMul_preserves_steinerThird x y c, hallLeftNucleus_proper ⟩
 
 end NonDesarguesianWorlds
