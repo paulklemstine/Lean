@@ -445,27 +445,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "47ca7342",
-    "description": "Formalize molecular computing: a 'nanocomputer' is a system of molecules that performs computation via chemical reactions. Prove: chemical reaction networks (CRNs) with mass-action kinetics are Turing-complete (they can simulate any Turing machine). Show: the minimum volume for a CRN computing a function f is proportional to the Kolmogorov complexity of f. Conjecture: a single cubic micrometer of DNA can store 10^18 bits and compute at 10^15 operations/second. Explore: formalize the 'DNA computer' — can we solve NP-complete problems faster with molecular parallelism? Prove: molecular parallelism gives a constant-factor speedup, not exponential (the molecules still need to be prepared).",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0585",
-    "lineage_refs": [],
-    "priority_score": 0.84,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-22T02:30:27.993245+00:00",
-    "title": "Moonshot: Nanotechnology Computation — Molecular Computing Limits"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "24111e1f",
     "description": "In the far future (10^100 years), all stars burn out and computation ceases. Formalize: a 'theorem' is a finite string provable in ZFC. Prove: the set of all theorems is countably infinite, so in principle they can all be discovered in finite time. Show: the heat death of the universe limits computation to ~10^120 operations — enough to discover only finitely many theorems. Conjecture: the fraction of ZFC theorems discoverable before heat death is zero (the set is countable but infinite; we discover only finitely many). Explore: if we could store theorems on black holes (holographic principle), could we extend the computation limit? Prove: a black hole of mass M can store ~M^2 bits (Bekenstein bound).",
     "domain_bridges": [],
     "domains": [
@@ -478,7 +458,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-22T04:48:23.171062+00:00",
     "title": "Moonshot: The Last Theorem — Formalizing the Heat Death of Mathematics"
   },
@@ -578,26 +558,6 @@
     "status": "available",
     "timestamp": "2026-07-15T09:16:25.430793+00:00",
     "title": "ArXiv paper: From roots to paths: graphs simultaneously irregular with respect to rooted and ordinary paths"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "2a77d2cb",
-    "description": "Investigate the ArXiv paper 'A decomposition of Weyl group multiple Dirichlet series for symmetrizable Kac-Moody root systems' and formalize its key results. Abstract: We study twisted Weyl group multiple Dirichlet series attached to symmetrizable Kac-Moody root systems, using the Chinta-Gunnells method to construct their $p$-parts. Our main result is a decomposition theorem for functions invariant under the twisted Chinta-Gunnells action: under natural analytic hypotheses, such a function has a unique expansion in terms of shifted Chinta-Gunnells averages, indexed by the dominant weights in the highest weight module determined by the twisting parameter. In particular, we show that this decomposition holds for twisted multiple Dirichlet series over rational function fields. For finite root systems, these results were proved by Friedlander. We also show that the relevant Chinta-Gunnells averages admit analytic continuation to the interior of the complexified Tits cone. In the affine $\\widetilde{A}_1$ case, we prove extra functional equations, not arising from the Weyl group, for the untwisted average and for averages twisted by fundamental weights. As",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_0011",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.11834v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-15T06:52:29.386046+00:00",
-    "title": "ArXiv paper: A decomposition of Weyl group multiple Dirichlet series for symmetrizable Kac-Moody root systems"
   },
   {
     "ambition_level": "extension",
@@ -8298,6 +8258,46 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## What is proved here\n\nThe Lean development establishes a reusable discrete CRN semantics and an exact compiler for deterministic finite-state transition systems. Each state is represented by one molecule, each transition by a unary reaction, and arbitrary finite traces are simulated exactly while total molecular count remains one.\n\nIt also proves an end-to-end preparation-cost theorem. In the stated model, preparing `n` molecular candidates costs `p*n`, testing all candidates takes one parallel round, and `p ≥ 1`. Sequential search then costs at most twice molecular search, including candidate spaces of size `2^k`.\n\nFinally, it formalizes an assumption-explicit information-capacity lower bound: if complexity `k` fits in volume `v` at `b` bits per volume unit, then `k ≤ b*v`, equivalently `ceil(k/b) ≤ v` when `b > 0`.\n\n## Next formal steps\n\n1. **Autonomous CRN execution.** Replace the externally scheduled `runCompiled` semantics with a transition relation over reaction multisets, then prove that exactly one compiled reaction is enabled at every reachable one-hot population.\n2. **Bounded Turing machines.** Define tapes of bounded length and compile complete machine configurations into species. The finite-state compiler in this directory should then yield exact simulation up to the tape bound.\n3. **Unbounded universality.** Add a representation of counters or tapes by molecular counts and prove simulation of a known universal register machine. This is the substantial missing step toward a genuine CRN Turing-completeness theorem.\n4. **Mass-action kinetics.** Connect discrete firings to stochastic or deterministic mass-action semantics. Exact trajectory simulation will require a carefully stated encoding and observation theorem; ordinary differential-equation trajectories should not be conflated with discrete reaction traces.\n5. **Kolmogorov complexity.** Fix a universal description language and a compiler from descriptions to CRNs. Prove lower bounds from finite encoding capacity and upper bounds from compiler size. The current file proves only the generic capacity implication, not proportionality of physical volume and Kolmogorov complexity.\n6. **Preparation-aware complexity models.** Generalize the linear preparation model to bounded-rate synthesis, copying, routing, and readout. Identify assumptions under which constant-factor, polynomial, or larger speedups are possible.\n7. **NP search.** Formalize candidate generation and verification separately. The present theorem applies to exhaustive candidate preparation; it does not prove a complexity-theoretic lower bound for every possible molecular algorithm.\n8. **Empirical DNA claims.** Storage density (`10^18` bits per cubic micrometer) and throughput (`10^15` operations/second) need experimentally justified parameters and unit-aware physical models. They are deliberately not asserted as theorems here.\n\n## Scope warning\n\nThe broad claim that mass-action CRNs are Turing-complete depends strongly on the precise CRN semantics, admissible concentrations/counts, error model, and output convention. Likewise, a universal physical-volume/Kolmogorov proportionality theorem is false without encoding-capacity and compiler assumptions. Future statements should retain these assumptions explicitly.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "fd_0596",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "47ca7342",
+    "status": "available",
+    "timestamp": "2026-07-22T06:54:39.673753+00:00",
+    "title": "The Lean development establishes a reusable discrete CRN semantics and an exact "
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## 1. Locally finite orbit-triangular decomposition on the Tits cone\n\n**Conjecture.** For every symmetrizable Kac–Moody root datum and twisting weight, the shifted Chinta–Gunnells averages form a topological Schauder basis of the invariant holomorphic functions on every Weyl-stable compact subset of the interior of the complexified Tits cone, when coefficients are ordered by dominance.\n\nThe key insight is that the finite orbit-indicator decomposition should persist as a locally finite triangular expansion once orbit support is replaced by dominance-controlled analytic support. **Why now?** The finite theorem isolates uniqueness from analytic continuation, making the exact convergence statement that remains to be established both visible and testable.\n\n## 2. Dominance graph criterion beyond simply-laced type\n\n**Conjecture.** For every symmetrizable generalized Cartan matrix, the dominant labels occurring in the decomposition admit a finite collection of weighted-degree inequalities on the oriented multiple-bond Dynkin graph, generalizing the simply-laced criterion `degree(i) + degree_D(i) ≥ 2`.\n\nThe key insight is that coroot pairings turn root sums into weighted in-degrees, so non-simply-laced dominance should remain local after edge multiplicities and symmetrizers are incorporated. **Why now?** A complete simply-laced criterion is available as an anchor, and the weighted formulation can be tested immediately on rank-two finite and affine matrices.\n\n## 3. Hecke-idempotent interpretation of twisted averaging\n\n**Conjecture.** After localization away from the metaplectic denominator, the twisted Chinta–Gunnells averaging operator is an idempotent in a completed unequal-parameter Hecke algebra, and its image is exactly the space appearing in the decomposition theorem.\n\nThe key insight is that finite Reynolds projection and twisted Weyl averaging share the same projection geometry, while the cocycle should deform the group algebra into a Hecke-type completion. **Why now?** The finite idempotence theorem identifies the algebraic identity that the localized cocycle must satisfy and separates it from all convergence questions.\n\n## 4. Affine extra functional equations from diagram-lattice symmetry\n\n**Conjecture.** In affine type, every functional equation of a fundamental-weight-twisted average that does not arise from the affine Weyl group is induced by an automorphism of the extended Dynkin diagram combined with a translation in the coweight lattice; in type `Ã₁`, this mechanism generates all extra equations.\n\nThe key insight is that the unexplained equations should be symmetries of the extended root datum rather than accidental identities of rational functions. **Why now?** The explicit `Ã₁` equations provide a minimal falsifiable test, while the orbit viewpoint predicts precisely how such a symmetry must permute decomposition coefficients.\n\n## 5. Function-field coefficient positivity and crystal multiplicities\n\n**Conjecture.** After a uniform power-of-`q` renormalization, every coefficient in the dominant-weight decomposition of the rational-function-field multiple Dirichlet series is a polynomial in `q` with nonnegative integer coefficients, and its value at `q = 1` is a weight multiplicity in the highest-weight module determined by the twisting parameter.\n\nThe key insight is that dominant labels already come from a highest-weight module, suggesting that arithmetic coefficients refine crystal multiplicities rather than merely being indexed by them. **Why now?** The decomposition theorem supplies canonical coefficients, so positivity can be tested in low-rank finite and affine examples without ambiguity about normalization or basis choice.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0597",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "2a77d2cb",
+    "status": "available",
+    "timestamp": "2026-07-22T06:54:44.010438+00:00",
+    "title": "**Conjecture.** For every symmetrizable Kac–Moody root datum and twisting weight"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Cycle 1a27f9f3 (Q=0.700) proved 15 theorems in Combinatorics but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Define a natural metric on the space of all mathematical statements and prove that the set of true statements has a fractal dimension. Show that this dimension is strictly between 0 and 1 (truth is sp",
     "domain_bridges": [],
     "domains": [
@@ -8411,7 +8411,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f152bc79",
     "description": "Cycle a88a4e5d (Q=0.626) proved 18 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Prove that cellular automata can perform transfinite computations when run on ordinals instead of N. Formalize a Rule 110 analog on omega-squared and prove it achieves super-Turing computation. Connec",
     "domain_bridges": [],
     "domains": [
@@ -8423,7 +8423,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "a88a4e5d",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T11:52:43.410408+00:00",
     "title": "Close Proofs: Cellular Automata at the Ordinals: Transfinite Computation"
   },

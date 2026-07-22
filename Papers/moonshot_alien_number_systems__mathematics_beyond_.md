@@ -1,53 +1,61 @@
-# Computational Evidence — Alien Number Systems
+# Computational Evidence
 
-Concise numerical support for the two formalized systems: **base `-2`** (negabinary)
-and **base `φ`** (the golden-ratio system).
+## Small-case calculations
 
-## 1. Negabinary (base `-2`)
+Negabinary extraction uses the parity digit `r = n mod 2` and next state
+`q = (r − n)/2`. The first representative values are:
 
-Value of a bit list, least-significant bit first: `value = Σ dᵢ·(-2)ⁱ`.
-Canonical form = no trailing `0` (list does not end in `false`).
+| Integer | Canonical base `−2` word |
+|---:|:---|
+| −5 | `1111` |
+| −4 | `1100` |
+| −3 | `1101` |
+| −2 | `10` |
+| −1 | `11` |
+| 0 | `0` (empty internal word) |
+| 1 | `1` |
+| 2 | `110` |
+| 3 | `111` |
+| 4 | `100` |
+| 5 | `101` |
+| 13 | `11101` |
+| −13 | `110111` |
 
-| n  | canonical bits (LSB→MSB) | standard "digit string" | check |
-|----|--------------------------|-------------------------|-------|
-| 0  | `[]`                     | `0`                     | 0 |
-| 1  | `[1]`                    | `1`                     | 1 |
-| 2  | `[0,1,1]`                | `110`                   | 0 − 2 + 4 = 2 |
-| 3  | `[1,1,1]`                | `111`                   | 1 − 2 + 4 = 3 |
-| 4  | `[0,0,1]`                | `100`                   | 4 = 4 |
-| −1 | `[1,1]`                  | `11`                    | 1 − 2 = −1 |
-| −2 | `[0,1]`                  | `10`                    | 0 − 2 = −2 |
-| −3 | `[1,0,1,1]`              | `1101`                  | 1 + 0 + 4 − 8 = −3 |
+The displayed words are most-significant digit first; the formal evaluator stores
+digits in the reverse order. The checked example evaluates `[1,1,1,0,1,1]` to `−13`.
 
-**Observations.**
-* Both positive and negative integers appear with digits `{0,1}` only — no sign.
-* Every integer in the sample has exactly one canonical representation, matching the
-  proved bijection `negabinary_unique_rep`.
-* **Counterexample hunt (uniqueness).** Dropping canonicality breaks uniqueness:
-  `[]`, `[0]`, `[0,0]` all evaluate to `0`. This is why the "no trailing `0`"
-  condition is mandatory; the proof `nvalue_eq_zero_of_canonical` isolates exactly
-  this failure mode.
-* **OEIS.** Negabinary representations of `0,1,2,…` are catalogued as A039724.
+For Fibonacci numeration, the first examples include
+`10 = 8 + 2 = F₆ + F₃` and `100 = 89 + 8 + 3 = F₁₁ + F₆ + F₄`.
+The indices differ by at least two, so no selected Fibonacci numbers are consecutive.
 
-## 2. Base `φ` (golden-ratio system)
+## OEIS signal
 
-`φ = (1+√5)/2`, `φ² = φ + 1`, and `φ⁻² = 2 − φ`.
+The negabinary numeral sequence for nonnegative integers is commonly indexed as OEIS
+A039724. The Fibonacci/Zeckendorf digit language is tied to Fibonacci word counts:
+binary words of length `k` with no adjacent ones are counted by `F_{k+2}`.
+These signals motivated treating both systems through canonical local normalization.
 
-Phinary expansions (digit strings, radix point separating non-negative and negative
-exponents):
+## Counterexample hunt and boundary cases
 
-| n | base-`φ` string | powers used | check |
-|---|-----------------|-------------|-------|
-| 1 | `1`        | φ⁰               | 1 |
-| 2 | `10.01`    | φ¹ + φ⁻²         | φ + (2−φ) = 2 |
-| 3 | `100.01`   | φ² + φ⁻²         | (φ+1) + (2−φ) = 3 |
-| 4 | `101.01`   | φ² + φ⁰ + φ⁻²    | (φ+1) + 1 + (2−φ) = 4 |
+The naive termination claim `|q| < |n|` fails at `n = −1`, because extraction sends
+`−1` to `1`. This counterexample forced the signed interleaving measure used in the
+existence proof.
 
-**Observations.**
-* No expansion contains two consecutive `1`s — the positional shadow of the collapse
-  rule `φⁿ + φⁿ⁺¹ = φⁿ⁺²` (formalized as `phiPow_carry`, i.e. `011 = 100`).
-* Values with only non-negative exponents always lie in `ℤ + ℤ·φ` with Fibonacci
-  coordinates (`phiSum_fib`); genuine integers require the symmetric ± exponent
-  pattern (`phi_repr_three` gives `3 = φ² + φ⁻²`).
-* Coordinate uniqueness of `a·φ + b` over `ℚ` is a consequence of the irrationality
-  of `φ` (`phi_coord_unique`) — over `ℝ` it would fail.
+Negabinary uniqueness fails if leading zeroes are allowed: the empty word, `[0]`, and
+`[0,0]` all evaluate to zero. Canonicality excludes exactly this ambiguity.
+
+For base `φ`, nonnegative powers alone do not provide the advertised representation of
+all integers. Since every such finite sum has coordinates in `ℤ + ℤφ`, cancellation of
+the irrational coordinate is restrictive. General phinary integer expansions require
+negative exponents; accordingly, the proved result uses the exact Zeckendorf boundary
+and records the full phinary statement as a future target.
+
+## Carry table
+
+The local golden-ratio rewrite is independent of position:
+
+| Local digits | Value | Normalized digits |
+|:---:|:---|:---:|
+| `011` at positions `n,n+1,n+2` | `φⁿ + φⁿ⁺¹` | `100` |
+
+This follows from `φ² = φ + 1` after multiplication by `φⁿ`.

@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "5102d77c",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Recurrence in Cognitive Dynamics\n\n## 1. Observation-invariant recurrence spectra\n\n**Conjecture.** For compact metric cognitive systems related by a topological conjugacy, the exac",
-      "quality_score": 0.67,
-      "sorry_count": 0,
-      "theorem_count": 7,
-      "timestamp": "2026-07-17T18:22:10",
-      "title": "The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
-    },
-    {
       "cycle_id": "9f14a31b",
       "domain": "Applications",
       "key_insight": "# Future directions\n\n## What the formal result establishes\n\n`Catalog/Computation/SoundOfPi.lean` audits the proposed digit-to-note model before undertaking statistical tests.  With pitch offset equal",
@@ -2501,6 +2491,16 @@
       "theorem_count": 27,
       "timestamp": "2026-07-22T06:54:41",
       "title": "Moonshot: Nanotechnology Computation — Molecular Computing Limits"
+    },
+    {
+      "cycle_id": "2a77d2cb",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions\n\n## 1. Locally finite orbit-triangular decomposition on the Tits cone\n\n**Conjecture.** For every symmetrizable Kac–Moody root datum and twisting weight, the shifted Chinta–Gunnells",
+      "quality_score": 0.66,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-22T06:54:45",
+      "title": "ArXiv paper: A decomposition of Weyl group multiple Dirichlet series for symmetrizable Kac-Moody roo"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.71
     }
   ],
-  "last_updated": "2026-07-22T06:54:41",
+  "last_updated": "2026-07-22T06:54:45",
   "open_questions": [
     {
       "context": "",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "322b88bd",
-        "quality": 0.7,
-        "theorems": 15,
-        "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showin"
-      },
-      {
         "cycle_id": "9b57ae5c",
         "quality": 0.69,
         "theorems": 58,
@@ -3451,6 +3445,12 @@
         "quality": 0.76,
         "theorems": 0,
         "title": "Hofstadter: Gödel, Escher, Bach — Isomorphism Across Domains"
+      },
+      {
+        "cycle_id": "2a77d2cb",
+        "quality": 0.66,
+        "theorems": 9,
+        "title": "ArXiv paper: A decomposition of Weyl group multiple Dirichlet series for symmetr"
       }
     ],
     "Logic": [
