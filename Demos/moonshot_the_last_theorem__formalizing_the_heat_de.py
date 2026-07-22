@@ -1,161 +1,176 @@
-"""
-The Last Theorem: numerical demonstrations.
+#!/usr/bin/env python3
+"""Numerical demonstrations for countable theorem libraries and finite resources.
 
-Self-contained numerical illustrations of the core results:
-
-  1. Shortlex enumeration of finite strings over a finite alphabet, realizing the
-     bijection N -> Sigma* that witnesses countability of the set of theorems.
-  2. Collapse of the discoverable fraction: a fixed finite discovered count N,
-     divided by the growing enumeration index n, tends to zero.
-  3. Bekenstein-Hawking storage: a black hole of mass M stores I(M) ~ M^2 bits.
-  4. Quadratic-beats-linear crossover: the area law overtakes a linear budget at
-     an explicit crossover mass M* = beta / gamma.
-
-Run with:  python demo.py
-Requires only the Python standard library.
+The script uses only Python's standard library. It illustrates:
+1. reciprocal decay of the finite-budget discoverable fraction;
+2. quadratic Bekenstein--Hawking entropy scaling in Planck units;
+3. crossover of quadratic and linear storage laws; and
+4. finite holographic capacity followed by zero-density decay.
 """
 
 from __future__ import annotations
 
-import itertools
-import math
-from typing import Iterator, List, Tuple
-
-# --------------------------------------------------------------------------
-# Physical constants (SI units)
-# --------------------------------------------------------------------------
-G: float = 6.674e-11        # gravitational constant  [m^3 kg^-1 s^-2]
-HBAR: float = 1.0546e-34    # reduced Planck constant [J s]
-C: float = 2.998e8          # speed of light          [m s^-1]
-LN2: float = math.log(2.0)
-
-# Cosmological operation budget before heat death (order-of-magnitude).
-N_MAX: float = 1e120
-
-# Solar mass [kg].
-M_SUN: float = 1.989e30
+from dataclasses import dataclass
+from math import floor, pi
+from typing import Iterable, Sequence
 
 
-# --------------------------------------------------------------------------
-# 1. Shortlex enumeration of Sigma* (witness of countability)
-# --------------------------------------------------------------------------
-def shortlex_enumeration(alphabet: str) -> Iterator[str]:
-    """Yield every finite string over `alphabet` exactly once, in shortlex order.
+@dataclass(frozen=True)
+class FractionSample:
+    """A sample of finite-budget coverage at one prefix length."""
 
-    Shortlex = ordered first by length, then lexicographically within a length.
-    This is an explicit bijection N -> Sigma*, so it demonstrates that the set of
-    finite strings (hence the set of theorems, a subset) is countable.
+    prefix_size: int
+    reachable: int
+    fraction: float
+
+
+@dataclass(frozen=True)
+class EntropySample:
+    """An entropy value and its ratio to a unit-mass reference."""
+
+    mass: float
+    entropy: float
+    ratio_to_unit_mass: float
+
+
+def discoverable_fraction(budget: int, prefix_size: int) -> float:
+    """Return min(budget, prefix_size) / prefix_size, with value 0 at zero.
+
+    Args:
+        budget: Maximum number of distinct theorems available; must be nonnegative.
+        prefix_size: Number of enumerated theorems considered; must be nonnegative.
     """
-    length = 0
-    while True:
-        for tup in itertools.product(alphabet, repeat=length):
-            yield "".join(tup)
-        length += 1
-
-
-def first_n_strings(alphabet: str, n: int) -> List[str]:
-    """Return the first `n` strings in shortlex order over `alphabet`."""
-    gen = shortlex_enumeration(alphabet)
-    return [next(gen) for _ in range(n)]
-
-
-# --------------------------------------------------------------------------
-# 2. Discoverable fraction collapse
-# --------------------------------------------------------------------------
-def discoverable_fraction(discovered_count: float, enumeration_index: float) -> float:
-    """Fraction of the first `enumeration_index` theorems that a process with a
-    fixed `discovered_count` budget has exhibited.
-
-    Once the enumeration index exceeds the budget, the fraction is
-    discovered_count / enumeration_index, which tends to 0 as the index grows.
-    """
-    if enumeration_index <= 0:
+    if budget < 0 or prefix_size < 0:
+        raise ValueError("budget and prefix_size must be nonnegative")
+    if prefix_size == 0:
         return 0.0
-    return min(discovered_count, enumeration_index) / enumeration_index
+    return min(budget, prefix_size) / prefix_size
 
 
-# --------------------------------------------------------------------------
-# 3. Bekenstein-Hawking storage law  I(M) = gamma * M^2  (bits)
-# --------------------------------------------------------------------------
-def gamma_coefficient() -> float:
-    """Coefficient gamma in I(M) = gamma * M^2, from Bekenstein-Hawking entropy.
-
-        S_BH = (4 pi k_B G / (hbar c)) M^2 ,   I = S / (k_B ln 2)
-     => I(M) = (4 pi G / (hbar c ln 2)) M^2 .
-    """
-    return 4.0 * math.pi * G / (HBAR * C * LN2)
+def fraction_profile(budget: int, prefix_sizes: Iterable[int]) -> list[FractionSample]:
+    """Evaluate the finite-budget fraction at supplied prefix sizes."""
+    samples: list[FractionSample] = []
+    for n in prefix_sizes:
+        fraction = discoverable_fraction(budget, n)
+        samples.append(FractionSample(n, min(budget, n), fraction))
+    return samples
 
 
-def black_hole_bits(mass_kg: float) -> float:
-    """Number of bits storable on a Schwarzschild black hole of the given mass."""
-    return gamma_coefficient() * mass_kg ** 2
+def schwarzschild_radius(a: float, mass: float) -> float:
+    """Return the idealized Schwarzschild radius r = a M."""
+    return a * mass
 
 
-# --------------------------------------------------------------------------
-# 4. Quadratic-beats-linear crossover mass  M* = beta / gamma
-# --------------------------------------------------------------------------
-def crossover_mass(beta: float, gamma: float) -> float:
-    """Mass at which area law gamma*M^2 overtakes linear budget beta*M."""
-    return beta / gamma
+def horizon_area(radius: float) -> float:
+    """Return spherical horizon area A = 4 pi r^2."""
+    return 4.0 * pi * radius**2
 
 
-def storage_regime(mass_kg: float, beta: float, gamma: float) -> str:
-    """Classify which storage law dominates at a given mass."""
-    m_star = crossover_mass(beta, gamma)
-    if mass_kg > m_star:
-        return "enumeration-limited (area law dominates)"
-    if math.isclose(mass_kg, m_star):
-        return "crossover"
-    return "budget-limited (linear budget dominates)"
+def bekenstein_entropy(a: float, mass: float) -> float:
+    """Return S = A/4 = pi a^2 M^2 in Planck units."""
+    return horizon_area(schwarzschild_radius(a, mass)) / 4.0
 
 
-# --------------------------------------------------------------------------
-# Driver
-# --------------------------------------------------------------------------
+def entropy_profile(a: float, masses: Iterable[float]) -> list[EntropySample]:
+    """Compute entropy and its ratio to entropy at unit mass."""
+    baseline = bekenstein_entropy(a, 1.0)
+    samples: list[EntropySample] = []
+    for mass in masses:
+        entropy = bekenstein_entropy(a, mass)
+        ratio = entropy / baseline if baseline != 0.0 else float("nan")
+        samples.append(EntropySample(mass, entropy, ratio))
+    return samples
+
+
+def quadratic_linear_crossover(k: float, c: float) -> float:
+    """Return the nonnegative threshold M = c/k where k M^2 meets c M."""
+    if k <= 0.0 or c < 0.0:
+        raise ValueError("k must be positive and c must be nonnegative")
+    return c / k
+
+
+def holographic_theorem_budget(a: float, mass: float) -> int:
+    """Return max(0, floor(S)) as an idealized theorem capacity."""
+    return max(0, floor(bekenstein_entropy(a, mass)))
+
+
+def format_table(headers: Sequence[str], rows: Sequence[Sequence[str]]) -> str:
+    """Format a compact plain-text table."""
+    widths = [len(header) for header in headers]
+    for row in rows:
+        for index, cell in enumerate(row):
+            widths[index] = max(widths[index], len(cell))
+    line = "-+-".join("-" * width for width in widths)
+    output = [" | ".join(h.ljust(widths[i]) for i, h in enumerate(headers)), line]
+    output.extend(" | ".join(cell.rjust(widths[i]) for i, cell in enumerate(row)) for row in rows)
+    return "\n".join(output)
+
+
+def run_finite_budget_demo() -> None:
+    """Print reciprocal decay for a representative fixed theorem budget."""
+    budget = 1_000
+    prefixes = [1, 10, 100, 1_000, 10_000, 100_000, 1_000_000]
+    samples = fraction_profile(budget, prefixes)
+    rows = [
+        (f"{s.prefix_size:,}", f"{s.reachable:,}", f"{s.fraction:.6g}")
+        for s in samples
+    ]
+    print("\nFINITE-BUDGET DISCOVERY FRACTION")
+    print(format_table(("prefix n", "reachable", "min(N,n)/n"), rows))
+    assert samples[-1].fraction == budget / prefixes[-1]
+
+
+def run_entropy_scaling_demo() -> None:
+    """Print the quadratic entropy profile and check the scaling law."""
+    a = 2.0
+    masses = [0.5, 1.0, 2.0, 3.0, 10.0]
+    samples = entropy_profile(a, masses)
+    rows = [
+        (f"{s.mass:g}", f"{s.entropy:.6f}", f"{s.ratio_to_unit_mass:.6g}")
+        for s in samples
+    ]
+    print("\nQUADRATIC HORIZON ENTROPY")
+    print(format_table(("mass M", "S = pi a^2 M^2", "S(M)/S(1)"), rows))
+    unit = bekenstein_entropy(a, 1.0)
+    assert abs(bekenstein_entropy(a, 2.0) - 4.0 * unit) < 1e-12
+    assert abs(bekenstein_entropy(a, 3.0) - 9.0 * unit) < 1e-12
+
+
+def run_crossover_demo() -> None:
+    """Compare a quadratic capacity with a linear capacity around crossover."""
+    k, c = 3.0, 24.0
+    threshold = quadratic_linear_crossover(k, c)
+    masses = [threshold / 2.0, threshold, 2.0 * threshold, 10.0 * threshold]
+    rows: list[tuple[str, str, str, str]] = []
+    for mass in masses:
+        quadratic = k * mass**2
+        linear = c * mass
+        rows.append(
+            (f"{mass:g}", f"{linear:.3f}", f"{quadratic:.3f}", str(quadratic >= linear))
+        )
+    print("\nQUADRATIC--LINEAR CROSSOVER")
+    print(f"Threshold c/k = {threshold:g}")
+    print(format_table(("mass M", "cM", "kM^2", "quadratic >= linear"), rows))
+
+
+def run_holographic_fraction_demo() -> None:
+    """Turn finite entropy into an integer budget and display density decay."""
+    a, mass = 2.0, 10.0
+    budget = holographic_theorem_budget(a, mass)
+    prefixes = [budget, 10 * budget, 100 * budget, 1_000 * budget]
+    samples = fraction_profile(budget, prefixes)
+    rows = [(f"{s.prefix_size:,}", f"{s.fraction:.6g}") for s in samples]
+    print("\nFINITE HOLOGRAPHIC CAPACITY")
+    print(f"a = {a:g}, M = {mass:g}, floor(S) = {budget:,} theorem slots")
+    print(format_table(("prefix n", "covered fraction"), rows))
+
+
 def main() -> None:
-    print("=" * 68)
-    print("1. Shortlex enumeration of finite strings (countability witness)")
-    print("=" * 68)
-    alphabet = "01"
-    strings = first_n_strings(alphabet, 12)
-    for idx, s in enumerate(strings):
-        print(f"   t_{idx:<2} = {s!r}")
-    print("   ... every finite string appears at some finite index.\n")
-
-    print("=" * 68)
-    print("2. Discoverable fraction collapses to zero")
-    print("=" * 68)
-    budget_exp = 120  # log10 of the fixed budget N_MAX
-    for exp in (60, 120, 180, 240, 360):
-        # discovered/all = min(budget, n)/n; work with log10 to avoid overflow.
-        frac_log10 = min(0, budget_exp - exp)
-        print(f"   n = 1e{exp:<3}   discovered/all = 1e{frac_log10}")
-    print("   As n -> infinity with fixed budget, the fraction -> 0.\n")
-
-    print("=" * 68)
-    print("3. Bekenstein-Hawking storage  I(M) ~ M^2")
-    print("=" * 68)
-    print(f"   gamma = {gamma_coefficient():.3e} bits / kg^2")
-    for label, mass in [
-        ("solar-mass BH", M_SUN),
-        ("1e6 solar masses", 1e6 * M_SUN),
-        ("1e9 solar masses (SMBH)", 1e9 * M_SUN),
-    ]:
-        print(f"   {label:<26} M = {mass:.3e} kg -> {black_hole_bits(mass):.3e} bits")
-    print("   Vast, finite -> still density zero within the countable set T.\n")
-
-    print("=" * 68)
-    print("4. Quadratic-beats-linear crossover")
-    print("=" * 68)
-    gamma = gamma_coefficient()
-    beta = 1e60  # illustrative fixed linear budget [bits / kg]
-    m_star = crossover_mass(beta, gamma)
-    print(f"   linear coefficient beta = {beta:.1e} bits/kg")
-    print(f"   crossover mass M* = beta/gamma = {m_star:.3e} kg")
-    for mass in (0.1 * m_star, m_star, 10 * m_star):
-        print(f"   M = {mass:.3e} kg -> {storage_regime(mass, beta, gamma)}")
-    print("\n   Beyond M*, storage grows quadratically -- yet for every finite M")
-    print("   the stored set is finite, so the discoverable fraction stays 0.")
+    """Run all numerical demonstrations."""
+    run_finite_budget_demo()
+    run_entropy_scaling_demo()
+    run_crossover_demo()
+    run_holographic_fraction_demo()
 
 
 if __name__ == "__main__":

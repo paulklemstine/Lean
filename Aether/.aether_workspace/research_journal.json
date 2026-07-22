@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "e1956901",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\n## What is proved now\n\n`Heegner163.lean` gives a kernel-checked elementary chain connecting Euler's\nquadratic polynomial to the discriminants 43, 67, and 163. It proves the sharp",
-      "quality_score": 0.61,
-      "sorry_count": 0,
-      "theorem_count": 18,
-      "timestamp": "2026-07-18T02:47:23",
-      "title": "The Unreasonable Effectiveness of the Number 163"
-    },
-    {
       "cycle_id": "fe36a9a3",
       "domain": "Bridges",
       "key_insight": "# Future Directions: A Periodic Table of Finite Groups\n\n## 1. Extension fingerprints refine composition columns\n\n**Conjecture.** Among groups of order at most 2000, the multiset of composition factors",
@@ -2501,6 +2491,16 @@
       "theorem_count": 19,
       "timestamp": "2026-07-22T14:30:05",
       "title": "Moonshot: The Mathematics of Dyson's Intelligence Explosion"
+    },
+    {
+      "cycle_id": "0a1b5635",
+      "domain": "Shared",
+      "key_insight": "# Future Directions\n\n## Completed foundation\n\nThe current development is complete and `sorry`-free.  For the concrete order-nine Hall multiplication it proves right distributivity, a proper three-elem",
+      "quality_score": 0.64,
+      "sorry_count": 2,
+      "theorem_count": 4,
+      "timestamp": "2026-07-22T16:54:21",
+      "title": "Close Proofs: Non-Desarguesian Worlds: Geometry Without Desargues"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.75
     }
   ],
-  "last_updated": "2026-07-22T14:30:05",
+  "last_updated": "2026-07-22T16:54:21",
   "open_questions": [
-    {
-      "context": "",
-      "cycle_id": "4e53cd7c",
-      "domain": "Pythagorean",
-      "sorry_count": 3,
-      "timestamp": "2026-07-16T05:48:53"
-    },
     {
       "context": "",
       "cycle_id": "57f0b740",
@@ -3016,6 +3009,13 @@
       "domain": "Combinatorics",
       "sorry_count": 1,
       "timestamp": "2026-07-20T20:48:35"
+    },
+    {
+      "context": "+unproved infinite tail as a `sorry`.  The computational certificate; -    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
+      "cycle_id": "0a1b5635",
+      "domain": "Shared",
+      "sorry_count": 2,
+      "timestamp": "2026-07-22T16:54:21"
     }
   ],
   "research_threads": {
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "87b73bf0",
-        "quality": 0.72,
-        "theorems": 9,
-        "title": "The Sound of Pi: Musical Structure in Transcendental Constants"
-      },
-      {
         "cycle_id": "186c9eac",
         "quality": 0.68,
         "theorems": 0,
@@ -3947,6 +3941,12 @@
         "quality": 0.79,
         "theorems": 14,
         "title": "Rucker: The Fourth Dimension as a Mathematical Playground"
+      },
+      {
+        "cycle_id": "0a1b5635",
+        "quality": 0.64,
+        "theorems": 4,
+        "title": "Close Proofs: Non-Desarguesian Worlds: Geometry Without Desargues"
       }
     ],
     "Tropical": [
