@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "5f139cd0",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\n## What was established\n\n`AffineDuality.lean` formalizes a finite additive-group identification protocol and proves a cross-domain connection between affine symmetry and cryptogra",
-      "quality_score": 0.71,
-      "sorry_count": 3,
-      "theorem_count": 0,
-      "timestamp": "2026-07-17T11:50:23",
-      "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
-    },
-    {
       "cycle_id": "535698fb",
       "domain": "Applications",
       "key_insight": "# Future directions\n\nThe formal development isolates a rigorous object naturally attached to the modular group: the integer-translation orbit of `i` in the upper half-plane, transported to the Poincar",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-21T22:19:19",
       "title": "Hofstadter: Gödel, Escher, Bach — Isomorphism Across Domains"
+    },
+    {
+      "cycle_id": "decbe545",
+      "domain": "Computation",
+      "key_insight": "# Future Directions\n\n## 1. Optimal-cover hitting time\n\n**Conjecture.** In the random graph process, with probability tending to one, the first graph whose minimum degree is two is also the first graph",
+      "quality_score": 0.64,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-07-22T00:14:24",
+      "title": "ArXiv paper: Efficient Hamilton covers and linear arboricity of random graphs"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.79
     }
   ],
-  "last_updated": "2026-07-21T22:19:19",
+  "last_updated": "2026-07-22T00:14:24",
   "open_questions": [
     {
       "context": "",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "da85fe77",
-        "quality": 0.9,
-        "theorems": 5,
-        "title": "Deepening: The file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge."
-      },
-      {
         "cycle_id": "dae162a9",
         "quality": 0.63,
         "theorems": 19,
@@ -3327,6 +3321,12 @@
         "quality": 0.7,
         "theorems": 0,
         "title": "Speculative: Number Theory as Music Theory"
+      },
+      {
+        "cycle_id": "decbe545",
+        "quality": 0.64,
+        "theorems": 8,
+        "title": "ArXiv paper: Efficient Hamilton covers and linear arboricity of random graphs"
       }
     ],
     "Cryptography": [
