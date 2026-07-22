@@ -1,188 +1,160 @@
-# Alien Number Systems: Counting Beyond Base Ten
+# Alien Number Systems: Arithmetic Beyond Base Ten
 
-Imagine a spacecraft descends, a hatch opens, and out steps a civilization
-that has never once counted on ten fingers. Perhaps they have eight limbs, like
-an octopus, and think naturally in eights. Perhaps they measure the year in
-twelve moons and prefer a dozen. Or perhaps — and this is where mathematics
-gets genuinely strange — they long ago abandoned the idea that a "base" must be
-a positive whole number at all. What would their arithmetic look like?
+*By Aristotle — July 22, 2026*
 
-The surprising answer is that we can already write down, and rigorously prove
-things about, several of these exotic systems. You can build a perfectly
-consistent arithmetic on a *negative* base, on a *complex* base, or on an
-*irrational* base. Each of these systems does something that ordinary base ten
-cannot, and each is beautiful for a different reason. This article tells the
-story of two of them in detail: **negabinary**, the number system built on the
-base $-2$, and **phinary**, the system built on the golden ratio
-$\varphi = \tfrac{1+\sqrt 5}{2}$.
+Imagine intercepting a message from another civilization. The signal repeats in crisp pulses, grouped into apparent numerals. Would the senders count by tens because they have ten fingers? By eights because they have eight tentacles? Or might they choose a system for mathematical rather than anatomical reasons—a base that is negative, irrational, or even complex?
 
-## The problem with a minus sign
+Our familiar decimal notation is only one member of a much larger family. In base ten, a word such as $327$ means
 
-Ordinary positional notation is a wonderful invention. The string $1011$ in
-base $2$ means
-$$1\cdot 2^3 + 0\cdot 2^2 + 1\cdot 2^1 + 1\cdot 2^0 = 11.$$
-Every digit sits above a power of the base, and you add up the pieces. But
-ordinary bases have a blind spot: with digits $\{0,1\}$ and powers of $2$, every
-value you can build is non-negative. To write $-11$ you must bolt on a separate
-symbol, the minus sign, which is not really a digit at all — it is an
-annotation that lives outside the number.
+$$
+3\cdot 10^2+2\cdot 10+7.
+$$
 
-Negative numbers are, in a sense, second-class citizens of base ten. Alien
-number systems can promote them. Consider what happens if we keep the digits
-$\{0,1\}$ but change the base from $2$ to $-2$. Now the string $d_k \ldots d_1 d_0$
-means
-$$\sum_{i} d_i \,(-2)^i,$$
-and because the powers of $-2$ alternate in sign
-$$(-2)^0=1,\quad (-2)^1=-2,\quad (-2)^2=4,\quad (-2)^3=-8,\quad (-2)^4=16,\ \ldots$$
-we suddenly have *negative building blocks for free*. For instance
-$$11_{(-2)} = 1\cdot(-2) + 1\cdot 1 = -1,$$
-so the number *negative one* is written with no minus sign at all. Similarly
-$$110_{(-2)} = 1\cdot 4 + 1\cdot(-2) + 0 = 2, \qquad 111_{(-2)} = 4 - 2 + 1 = 3.$$
+The same positional idea survives when the radix is stranger than $10$. Replace $10$ by $-2$, by the golden ratio $\varphi=(1+\sqrt5)/2$, or by the complex number $i-1$, and the powers of the radix trace radically different paths. Yet in each case, tiny local rules can organize an infinite world of numbers.
 
-This system is called **negabinary**. Its central promise is a bold one, and it
-turns out to be exactly true.
+This story has three branches. Negabinary notation gives every integer a unique signless binary name. Fibonacci notation gives every natural number a unique sum of nonadjacent Fibonacci numbers, tied to base $\varphi$ by a carry law. And the complex base $i-1$ gives every Gaussian integer—a lattice point $a+bi$—a unique signless binary name. Together they show that positional notation is not really about rows of digits. It is about division, remainders, descent, and normalization.
 
-> **The Negabinary Representation Theorem.** *Every integer — positive,
-> negative, or zero — has one and only one representation in base $-2$ using the
-> digits $0$ and $1$.*
+## A minus sign hidden in the radix
 
-No sign bit. No special case for negatives. A single alphabet of two symbols
-names all of $\mathbb{Z}$, each integer exactly once. That is something base ten
-simply cannot do.
+A finite negabinary word with digits $d_j\in\{0,1\}$ has value
 
-## Why the theorem is true (and why it is subtle)
+$$
+N=\sum_{j=0}^{k}d_j(-2)^j.
+$$
 
-There are two halves to prove: that *every* integer can be written, and that no
-integer can be written *twice*. Both hinge on one humble observation about
-parity.
+Because successive powers alternate sign, the numeral itself needs no separate minus sign. For example, the ordinary-looking word $110111_{(-2)}$, read with its most significant digit on the left, means
 
-Look at the last digit. Every power $(-2)^i$ for $i \ge 1$ is even, so the value
-of any negabinary string has the *same parity as its final digit*. If the
-number you are representing is even, the last digit is forced to be $0$; if odd,
-it is forced to be $1$. There is no choice. Once you subtract off that last
-digit and divide by $-2$, you are left with a smaller sub-problem of exactly the
-same shape, and you repeat. Because the final digit is pinned down at every
-step, the representation is **unique**: there is never a fork in the road.
+$$
+(-2)^5+(-2)^4+(-2)^2+(-2)+1=-32+16+4-2+1=-13.
+$$
 
-Existence is where negative bases hide their one real difficulty. In ordinary
-base $2$, you prove every number is representable by noting that dividing by the
-base makes the number smaller, so the process must stop. In base $-2$ this
-naive argument breaks. Watch what the "peel off a digit and divide" step does to
-$-1$: it sends $-1 \mapsto 1 \mapsto -1 \mapsto 1 \mapsto \cdots$, ping-ponging
-forever if you measure size by absolute value. The number never shrinks.
+The first central result is complete.
 
-The fix is a clever way of *measuring* integers so that the base-$(-2)$ step
-genuinely makes progress. Instead of ranking integers by magnitude, we
-interleave the positive and negative half-lines into a single queue,
-$$0,\ -1,\ 1,\ -2,\ 2,\ -3,\ 3,\ \ldots,$$
-assigning each integer a position in this list. Under this ranking, one step of
-the negabinary algorithm always moves you *strictly earlier* in the queue, so it
-cannot ping-pong and must terminate. This interleaving is the whole secret of
-negative bases: absolute value is the wrong ruler, and a zig-zag ruler is the
-right one.
+**Negabinary Representation Theorem.** Every integer $n$ has exactly one finite base-$-2$ expansion with digits $0$ and $1$, provided the zero integer is represented by the empty word and every nonempty word has leading digit $1$.
 
-## A base that is not even a whole number
+The qualification about leading zeroes matters. Without it, $11$, $011$, $0011$, and infinitely many padded variants would be different strings for the same value.
 
-If a negative base feels exotic, an *irrational* one feels almost paradoxical.
-Yet the most elegant alien system of all is built on the golden ratio
-$$\varphi = \frac{1+\sqrt 5}{2} \approx 1.618\ldots,$$
-the famous proportion that appears in sunflower seeds, pinecones, and the
-rectangles beloved by Renaissance painters. In **phinary**, the string with
-digits $d_i \in \{0,1\}$ means
-$$\sum_i d_i \,\varphi^{\,i},$$
-allowing positions both to the left and to the right of the "phinary point,"
-just as ordinary decimals allow digits after the decimal point.
+Why does an expansion always exist? Given an integer $n$, choose its parity digit $r=n\bmod 2$, where $r$ is either $0$ or $1$. Then define
 
-The single algebraic fact that makes the golden ratio special is the equation it
-was born to satisfy:
-$$\varphi^2 = \varphi + 1.$$
-Read in the language of positions, this says something magical. It says that a
-$1$ in place $n$ plus a $1$ in the next place up equals a single $1$ two places
-higher:
-$$\varphi^{\,n} + \varphi^{\,n+1} = \varphi^{\,n+2}.$$
-In digit-string form, $011 = 100$. This is the **carry rule** of the golden-ratio
-base, and it is entirely responsible for phinary's signature feature:
+$$
+q=\frac{r-n}{2}.
+$$
 
-> **The No-Consecutive-Ones Property.** *Every positive integer can be written
-> in base $\varphi$ using only the digits $0$ and $1$, arranged so that no two
-> $1$s ever sit side by side.*
+This rearranges to $n=r+(-2)q$. Thus $r$ is the least significant digit, while $q$ is the integer still to be encoded. Repeating the operation peels off one digit at a time.
 
-Whenever an expansion threatens to place two $1$s next to each other, the carry
-rule collapses them upward, $011 \to 100$, and the adjacency disappears. The
-rule can be applied over and over until every neighboring pair of ones is gone.
-The "beautiful" number system, in which forbidden patterns melt away on
-contact, owes its beauty to a single quadratic equation.
+The only subtle point is proving that repetition stops. Ordinary size is not enough: starting from $-1$, the next quotient is $1$, so absolute value does not decrease. Instead, order the integers in the interleaved sequence
 
-As a concrete taste, the number $3$ has the tidy phinary expansion
-$$3 = \varphi^2 + \varphi^{-2} = 100.01_{(\varphi)},$$
-one digit to the left of the point and one to the right — no two ones adjacent,
-exactly as promised. (You can check it: $\varphi^2 = \varphi + 1 \approx 2.618$
-and $\varphi^{-2} \approx 0.382$, and they sum to $3$ on the nose.)
+$$
+0,1,-1,2,-2,3,-3,\ldots
+$$
 
-## The hidden Fibonacci machinery
+and assign the measure
 
-Why should an irrational base ever produce a clean whole number like $3$? The
-answer reveals a beautiful bridge between the continuous world of $\varphi$ and
-the discrete world of counting.
+$$
+\mu(n)=
+\begin{cases}
+2n-1,&n>0,\\
+-2n,&n\le 0.
+\end{cases}
+$$
 
-Every phinary value built from *non-negative* powers of $\varphi$ turns out to
-live in the two-dimensional world of numbers of the form $a\varphi + b$ with $a$
-and $b$ whole numbers. And the coordinates $a$ and $b$ are not random — they are
-**sums of Fibonacci numbers**, the sequence $1, 1, 2, 3, 5, 8, 13, \ldots$ in
-which each term is the sum of the two before it. Precisely, if you switch on the
-digits in a set $S$ of positions, then
-$$\sum_{i\in S}\varphi^{\,i+1} = \Big(\sum_{i\in S} F_{i+1}\Big)\varphi \;+\; \sum_{i\in S} F_i,$$
-where $F_i$ is the $i$-th Fibonacci number. The golden ratio and Fibonacci
-numbers are two faces of the same coin, and phinary is where they shake hands.
+For every nonzero $n$, the quotient $(r-n)/2$ has strictly smaller $\mu$. No infinite descent is possible among natural-number measures, so the algorithm reaches $0$.
 
-This also explains why $3$ needed a digit *after* the point. A value made only
-from non-negative powers is a whole number precisely when its $\varphi$-coordinate
-(the Fibonacci sum multiplying $\varphi$) cancels to zero — and for that you
-generally need the *symmetric* combinations of $\varphi$ with its algebraic twin
-$\psi = \tfrac{1-\sqrt5}{2}$. Those symmetric combinations are exactly the
-**Lucas numbers**, cousins of the Fibonacci sequence, and they satisfy the clean
-identity
-$$\varphi^{\,n+1} + \psi^{\,n+1} = F_{n+2} + F_n,$$
-whose right-hand side is always a whole number. To hit an arbitrary integer with
-digits $\{0,1\}$, you must reach across the phinary point and use negative
-powers too — which is precisely why $3 = \varphi^2 + \varphi^{-2}$ and not
-something one-sided.
+Uniqueness is even more revealing. Reducing a base-$-2$ value modulo $2$ destroys all terms except the least significant digit. Therefore parity forces that digit. If two canonical words have the same value, their first digits agree; subtract that common digit and divide by $-2$. The tails then have equal values. Repeating proves equality digit by digit.
 
-## Uniqueness, and the role of irrationality
+This is a recurring pattern: residue extraction determines a local symbol, and descent guarantees that local choices eventually describe the whole number.
 
-There is one more twist that shows how delicately these systems are balanced.
-The reason phinary coordinates are meaningful at all is that a number of the form
-$a\varphi + b$ pins down $a$ and $b$ **uniquely** — but only when $a$ and $b$ are
-rational.
+## The golden ratio learns to carry
 
-> **Coordinate Uniqueness.** *If $a\varphi + b = c\varphi + d$ with $a,b,c,d$
-> rational, then $a=c$ and $b=d$.*
+The golden ratio satisfies
 
-The proof is a two-line gem. If $a \ne c$, rearranging gives
-$\varphi = (d-b)/(a-c)$, a ratio of rationals — which would make $\varphi$
-rational. But $\varphi = (1+\sqrt5)/2$ is irrational, because $\sqrt 5$ is. The
-contradiction forces $a=c$, and then $b=d$ follows. Remarkably, the *analytic*
-fact that $\varphi$ is irrational is exactly what guarantees the *algebraic*
-well-definedness of phinary coordinates. Over the reals the statement collapses —
-every real number can be written as $a\varphi + b$ in infinitely many ways — so
-rationality is not a technicality but the load-bearing wall.
+$$
+\varphi^2=\varphi+1.
+$$
 
-## So what would the aliens choose?
+Multiplying by $\varphi^n$ gives the carry identity
 
-Return to our visitors. If they value *symmetry between positive and negative*,
-they might well count in negabinary, where a minus sign is an unnecessary crutch
-and every integer stands on equal footing. If they prize *aesthetic economy* and
-delight in forbidden patterns that cannot occur, they might build their
-arithmetic on the golden ratio, letting the equation $\varphi^2=\varphi+1$ do the
-policing. A more practical species might simply have eight arms and settle on
-base eight, or twelve moons and settle on a dozen — sensible, but far less
-adventurous.
+$$
+\varphi^n+\varphi^{n+1}=\varphi^{n+2}
+$$
 
-The deeper lesson is that base ten is a biological accident, not a mathematical
-law. The rules of arithmetic are robust enough to survive being rebuilt on a
-negative number, on the golden ratio, even on the complex number $i-1$ (where the
-very same "residue fixes the next digit, quotient shrinks" recipe conjecturally
-lets the Gaussian integers be written in binary). Counting, it turns out, is a
-far larger country than our ten fingers ever let us see — and much of its
-landscape is already mapped, waiting for anyone, human or otherwise, willing to
-count a little differently.
+for every natural number $n$. In a binary string indexed by powers of $\varphi$, two adjacent $1$ digits can therefore be replaced by a single $1$ one place farther left. Symbolically, the local pattern $011$ becomes $100$.
+
+The discrete counterpart uses Fibonacci numbers. Let $F_0=0$, $F_1=1$, and $F_{m+2}=F_{m+1}+F_m$. An admissible Fibonacci representation is a sum of distinct Fibonacci numbers $F_j$ with indices $j\ge2$, no two selected indices consecutive.
+
+**Zeckendorf Representation Theorem.** Every natural number has exactly one admissible representation as a sum of nonconsecutive Fibonacci numbers.
+
+For $100$, the unique choice is
+
+$$
+100=89+8+3=F_{11}+F_6+F_4.
+$$
+
+A greedy algorithm finds it: take the largest Fibonacci number not exceeding the current remainder, subtract it, and continue. If $F_k$ is chosen, the remainder is smaller than $F_{k-1}$; otherwise $F_{k+1}=F_k+F_{k-1}$ would also have fit. Thus the next chosen index cannot be adjacent. For uniqueness, compare the largest selected indices in two admissible sums. All permitted lower, nonadjacent Fibonacci terms sum to less than the larger leading term, so unequal leading indices cannot yield equal totals. Remove the shared leading term and repeat.
+
+The relation with base $\varphi$ is structural rather than a license for an overbroad claim. It is false that every integer can be written using only $0$ and $1$ and only nonnegative powers of $\varphi$. Such sums lie in the ring $\mathbb Z+\mathbb Z\varphi$, and matching an ordinary integer generally requires cancellation involving negative powers or another endpoint convention. What is established without ambiguity is the unique Fibonacci expansion and the exact carry law that makes it the combinatorial shadow of phinary notation.
+
+## A binary system that fills a plane
+
+Now let the radix be $\beta=i-1$. Its powers no longer alternate along a line; multiplication rotates and stretches the complex plane. Remarkably, the same two real digits $0$ and $1$ can name every Gaussian integer $a+bi$, with $a,b\in\mathbb Z$.
+
+A finite word has value
+
+$$
+Z=\sum_{j=0}^{k}d_j(i-1)^j,
+\qquad d_j\in\{0,1\}.
+$$
+
+**Complex Binary Representation Theorem.** Every Gaussian integer has exactly one finite base-$(i-1)$ expansion with digits $0$ and $1$, after leading zeroes are forbidden.
+
+No explicit sign is needed. No imaginary digit is needed. For instance,
+
+$$
+11_{(i-1)}=1+(i-1)=i.
+$$
+
+To see how digit extraction works, write $z=x+yi$. Multiplication by $i-1$ sends $u+vi$ to
+
+$$
+(-u-v)+(u-v)i.
+$$
+
+The sum of the resulting coordinates is $-2v$, always even. Consequently the parity of $x+y$ forces the least significant digit $d$. After choosing $d\in\{0,1\}$ with $d\equiv x+y\pmod2$, the quotient $(z-d)/(i-1)$ is again a Gaussian integer. In coordinates it is
+
+$$
+\left(\frac{y-(x-d)}{2}\right)
++
+\left(-\frac{(x-d)+y}{2}\right)i.
+$$
+
+As before, parity proves uniqueness: equal values have the same first digit, cancellation and division expose equal tails, and induction finishes the comparison.
+
+Existence is more delicate. The Gaussian norm $N(x+yi)=x^2+y^2$ usually decreases after extracting a digit, but not always. At $z=i$, the next quotient is $1$, and both have norm $1$. A correct argument isolates five exceptional points,
+
+$$
+i,\quad -i,\quad -1,\quad -2+i,\quad -2-i,
+$$
+
+which have direct finite expansions. Outside this set and $0$, the quotient has strictly smaller norm. Induction on the norm then constructs an expansion for every lattice point. The exception is not an embarrassment; it is the geometry that a one-dimensional intuition would miss.
+
+## One architecture, three worlds
+
+These systems share a common design.
+
+1. **Evaluation:** a numeral is interpreted by repeated multiplication by a radix and addition of a digit.
+2. **Local normalization:** parity or an algebraic relation determines an allowed rewrite.
+3. **Termination:** a well-founded measure prevents endless rewriting.
+4. **Canonical form:** leading-zero rules and local restrictions remove ambiguity.
+5. **Uniqueness:** residues or dominant terms force choices one step at a time.
+
+Ordinary positive bases hide this machinery because division with remainder and absolute-value descent behave so smoothly. Exotic bases make it visible. Negative bases need a signed interleaving measure. Complex bases need lattice geometry and a finite exceptional region. Golden-ratio arithmetic replaces integer remainder classes with an algebraic carry and Fibonacci combinatorics.
+
+There are practical echoes. Signed-digit systems can simplify subtraction in digital circuits. Fibonacci coding supports self-synchronizing data representations. Complex radices turn planar lattice arithmetic into one-dimensional digit streams. More broadly, numeral design becomes an optimization problem: not merely how short a representation is, but how expensive its carries are, how robust its boundaries are, and what geometry its radix naturally follows.
+
+Consider addition. In decimal notation, a carry can ripple through a long run of $9$ digits. In Fibonacci notation, normalization responds to forbidden local patterns; in a negative or complex base, carries can move with the geometry of alternating or rotating powers. The average number of rewrites may matter more to a machine than the number of written digits. One can imagine ranking radices by the stationary behavior of a finite carry process, just as engineers rank codes by error rate or compression ratio.
+
+The complex theorem also changes how we picture a numeral. Ordinary notation lays points from a line into strings. Base $i-1$ lays an entire square lattice into strings while preserving exact arithmetic. A map of representation lengths over the Gaussian plane would show rings, anisotropies, and small irregularities around the five exceptional points. The radix is therefore both an encoding device and a geometric lens.
+
+An alien civilization might still choose base eight or twelve for anatomical reasons. But mathematics offers stranger possibilities. A civilization doing lattice signal processing might find a complex radix natural. One concerned with local rewrite simplicity might favor a Fibonacci system. One seeking signless encoding of positive and negative quantities might choose a negative radix.
+
+The deepest lesson is that a number base is not a fact of nature. It is a coordinate system for arithmetic. Change the coordinate system, and familiar numbers acquire unfamiliar shapes—yet parity, descent, and canonical form continue to guide us home.
