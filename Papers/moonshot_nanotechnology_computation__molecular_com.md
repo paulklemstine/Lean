@@ -1,67 +1,30 @@
-# Computational Evidence
+# Computational evidence
 
-Concise numerical checks supporting the formalized theorems.
+## Small-case calculations
 
-## 1. Molecular parallelism: work–time rectangle bound
+For preparation cost `p = 1`, the formal model gives
 
-The core claim is `W ≤ T · p` (work bounded by time × parallelism). Small cases,
-taking a "full" schedule `ops t = p`:
+| candidates `n` | molecular time `n + 1` | sequential time `2n` | sequential / molecular |
+|---:|---:|---:|---:|
+| 1 | 2 | 2 | 1.000 |
+| 2 | 3 | 4 | 1.333 |
+| 4 | 5 | 8 | 1.600 |
+| 8 | 9 | 16 | 1.778 |
+| 16 | 17 | 32 | 1.882 |
+| 1024 | 1025 | 2048 | 1.998 |
 
-| p (molecules) | T (steps) | max work T·p |
-|---------------|-----------|--------------|
-| 1             | 8         | 8            |
-| 2             | 4         | 8            |
-| 4             | 2         | 8            |
-| 8             | 1         | 8            |
+The first four rows are certified in Lean by `preparation_cost_small_cases`; the general factor-two bound, including the `n = 2^10` instance, is certified by `boolean_search_no_exponential_speedup` and `ten_bit_search_bound`.
 
-Doubling parallelism halves the time needed for the *same* total work `W = 8` —
-exactly a factor-`p` speedup, never more. The product `T·p` is invariant.
+For Boolean search with `n = 2^k`, the two times are `2^k + 1` and `2^(k+1)`. Their ratio approaches 2 rather than growing exponentially.
 
-## 2. No exponential speedup (fixed volume `P`)
+## OEIS search
 
-With work `W(n) = 2^n` and a fixed molecule budget `P`, parallel time obeys
-`T(n) ≥ 2^n / P`:
-
-| n  | 2^n        | P=10^6 : lower bound 2^n/P |
-|----|------------|-----------------------------|
-| 20 | 1.05e6     | 1                           |
-| 30 | 1.07e9     | 1073                        |
-| 40 | 1.10e12    | 1.10e6                      |
-| 60 | 1.15e18    | 1.15e12                     |
-
-Even a mole-scale molecule budget (`P ≈ 6·10^23`) only shifts the crossover by
-~79 in `n` (`log₂(6·10^23) ≈ 79`). The exponential wall is pushed, never removed —
-matching `no_exponential_speedup`.
-
-## 3. Storage / description bounds
-
-`k` two-state molecules ⇒ at most `2^k` configurations.
-
-| k  | 2^k        | vs 10^18 |
-|----|------------|----------|
-| 59 | 5.76e17    | < 10^18  |
-| 60 | 1.15e18    | ≥ 10^18  |
-
-So distinguishing `10^18` states needs `⌈log₂ 10^18⌉ = 60` molecules, i.e. `59`
-never suffice. This is exactly `dna_density_bound` (`2^59 < 10^18 ≤ 2^60`) and
-`dna_density_needs_more`.
-
-## 4. No zero-test (CRN monotonicity), worked instance
-
-Species `{A}`, reaction `r` with `reactant = product = 0` (a trivial always-enabled
-reaction). Enabledness is `0 ≤ x`, true for **every** state, so it can never equal
-the predicate `x A = 0`. Concretely, `r` is enabled both at `x A = 0` and `x A = 5`,
-so no reaction's enabling condition can equal "A is absent". This is the finite
-witness behind `no_zero_test`: monotone triggers cannot detect absence, the exact
-gap that blocks register-machine simulation in the exact discrete model.
+No OEIS search is relevant: the sequences used here are elementary affine and power-of-two sequences, not a newly observed combinatorial sequence.
 
 ## Counterexample hunt
 
-- Initially claimed `2^60 < 10^18`; a direct computation shows `2^60 ≈ 1.153·10^18 > 10^18`.
-  Corrected the exponent to `59` (`2^59 ≈ 5.76·10^17 < 10^18`); now machine-checked
-  via `norm_num`.
-- No counterexamples found to the monotonicity, conservation, or work–time claims;
-  all are proved for arbitrary parameters.
+Boundary cases were checked while formulating the theorem. The hypothesis `1 ≤ p` is essential to its intended interpretation: if preparation were free (`p = 0`), molecular time is always 1 while sequential time is `n`, so no uniform factor-two bound exists. With `p ≥ 1`, the Lean theorem proves the bound for every natural `n`, making a separate finite random search unnecessary.
 
-All quantitative statements are additionally verified inside Lean (`norm_num` /
-`decide` / general proofs), so no separate scripting was required.
+## Interpretation
+
+These calculations support only the explicit end-to-end cost model formalized in the Lean file. They are not measurements of DNA hardware and do not establish the empirical storage or operation-rate conjectures in the research prompt.
