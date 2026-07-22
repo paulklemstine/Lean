@@ -143,7 +143,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Memory Editing: When Forgetting Is a Mathematical Operation"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ddd2821f",
     "description": "Building on cycle 5d6a1919 (Q=0.760), which proved 13 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future directions\n\n1. **Repair the definition before studying asymptotics.** The literal rule excludes one integer and collapses to the constant-one sequence. A revised rule must specify the candidate set and all exclusions\u2014for example, whether terms must be new, increasing, or avoid sums of any p",
     "domains": [
       "Novelty"
@@ -152,7 +152,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "5d6a1919",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-22T18:42:28.004149+00:00",
     "title": "Deepening: 1. **Repair the definition before studying asymptotics.** The literal rule exclu"
   },
@@ -242,7 +242,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Moonshot: Quantum Consciousness \u2014 Penrose-Hameroff Orchestrated Reduction"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6622cac1",
     "description": "Formalize neural coding: how does the brain represent information? Define: a 'neural code' is a binary pattern on N neurons. Prove: the maximum number of distinct concepts representable by N binary neurons is 2^N. Show: with population coding (distributed representations), the brain can represent continuous values with precision ~sqrt(N). Conjecture: the brain uses sparse coding (only ~1% of neurons active) for energy efficiency \u2014 prove this achieves O(N log N) concepts per unit energy. Explore: formalize the 'neural manifold hypothesis' \u2014 neural activity lives on a low-dimensional manifold. Prove: the manifold dimension is bounded by the number of behavioral DOF.",
     "domains": [
       "Novelty",
@@ -252,7 +252,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-22T02:30:28.067253+00:00",
     "title": "Moonshot: Brain-Computer Interface Mathematics \u2014 Neural Coding Theorems"
   },
@@ -2509,7 +2509,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: D-coloring of planar graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "07e03295",
     "description": "Investigate the ArXiv paper 'On Matrix Product Factorization in Association Schemes' and formalize its key results. Abstract: We study matrix product factorizations (MPFs) in symmetric association schemes: identities $A_SA_T=A_U$ where $A_S,A_T,A_U$ are loopless unions of basic relations and the ordinary matrix product is again a $0$-$1$ adjacency matrix. We give equivalent structural and spectral criteria for MPFs, derive valency and rank restrictions, and analyze several standard families. For $2$-class schemes, the only nontrivial loopless MPF comes from the scheme of the $5$-cycle. For $P$-polynomial schemes, the distance-regular recurrence gives strong restrictions on products $A_1A_i$. We also prove a universal pentagon theorem for the case $A_SA_T=J-I$, and show that extremal rank forces all non-zero eigenvalues of $A_U$ to be $\\pm k(U)$, hence gives bipartiteness. Finally, in Hamming schemes we obtain rank obstructions and classify MPFs of the form $A_1A_T=A_U$: in $H(d,2)$, for $d\\ge2$, the only non-zero loopless example is $A_1A_d=A_{d-1}$, which is trivial since $A_d$ has valency $1$; for $q>2$, no",
     "domains": [
       "Algebra",
@@ -2519,7 +2519,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14848v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-17T07:48:50.380995+00:00",
     "title": "ArXiv paper: On Matrix Product Factorization in Association Schemes"
   },
@@ -2612,7 +2612,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Multiple Clausen values and deformed Ap\u00e9ry-like series"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f14d2570",
     "description": "Investigate the ArXiv paper 'Online Beck--Fiala Down to Logarithmic Sparsity' and formalize its key results. Abstract: The Beck--Fiala conjecture asserts that every matrix $A\\in\\{0,1\\}^{n\\times T}$ with at most $d$ nonzero entries in each column has discrepancy $O(\\sqrt d)$. A major breakthrough result of Bansal and Jiang recently established the validity of the conjecture for $d \\ge \\log(T)^2$. The present article extends the validity of the classical \\textit{offline} Beck--Fiala conjecture to $d \\ge \\log(T)^{1+o(1)}$; moreover, the main thrust of the result is that it is actually obtained by an efficient \\textit{online} algorithm that minimizes prefix discrepancy. The result is also essentially optimal, since online prefix discrepancy is known to scale as $\u03c9(\\sqrt{d})$ for $d =o(\\log T)$. As an immediate corollary, the open question of online vector balancing in the Spencer setting is also resolved. The algorithm is based on a compactly supported Metropolis fixed-point walk, constructed by combining ideas from several recent works on the online Koml\u00f3s problem. The proof was generated in conversation ",
     "domains": [
       "Pythagorean",
@@ -2622,7 +2622,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14238v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-17T09:55:54.324007+00:00",
     "title": "ArXiv paper: Online Beck--Fiala Down to Logarithmic Sparsity"
   },
@@ -5706,7 +5706,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Fix a finite corpus of statements and charge each theory for both source length "
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2f329d75",
     "description": "# Future directions\n\n## Result status\n\nThe motivating fixed-length claim was **disproved**, not proved. With a finite alphabet and a fixed length bound (such as 100), the collection of encoded statements is finite. Once a Boolean semantics is fixed, its exact truth table is a finite, computable oracle. The Lean theorem `finite_language_has_accurate_oracle` constructs this oracle and proves 95% accuracy (in fact 100%). `finite_oracle_has_table` explicitly represents every such oracle as a finite list.\n\nA nearby bold uniform claim was also **disproved**: one oracle cannot be 95%-accurate against every possible semantics. The adversarial semantics formalized by `adversarialTruth` makes every answer incorrect, yielding `no_uniform_accurate_oracle`.\n\nA genuinely infinitary diagonal claim was **proved**: for any natural-number-indexed family of Boolean sequences, `diagonalJump` differs from its `k`th row at coordinate `k`. Therefore no such family enumerates all Boolean sequences (`no_enumeration_of_boolean_sequences`). This captures the structural diagonal idea behind jump constructions, but it is intentionally not presented as a complete formalization of the Turing jump.\n\n## Important modeling distinctions\n\n1. **Finite domain versus practical feasibility.** A truth table can be astronomically large while remaining computable. Complexity, learnability, storage, and computability are different notions.\n2. **Semantic truth versus provability.** For bounded strings, a fixed external truth assignment has a finite table. For all arithmetic sentences, semantic truth and theoremhood lead to genuinely unbounded computability questions.\n3. **Pointwise accuracy versus uniform accuracy.** Existence of a good oracle for one fixed semantics is compatible with impossibility of one predictor working for all semantics.\n4. **Unknown answers.** This development counts `unknown` as incorrect. Other scoring rules should be stated explicitly and may change finite accuracy bounds, though not the finite-table counterexample.\n5. **Counting versus diagonalization.** Counting finite functions only gives exponential cardinalities. Noncomputability requires an unbounded effective presentation plus a diagonal or reduction argument.\n\n## Stronger formalization targets\n\n- Define a syntax of first-order arithmetic, a length function, and a satisfaction predicate for the standard natural numbers. Prove explicitly that the subtype of formulas of length at most 100 is finite.\n- Introduce a concrete partial-recursive machine model and prove the undecidability of its halting set. Then define a genuine jump operator relative to an oracle and prove that the jump is not computable from the original oracle.\n- Replace arbitrary Boolean semantics by arithmetic truth and formalize a reduction from halting to truth for an unbounded class of encoded sentences.\n- Study resource-bounded variants: circuit size, advice length, sample complexity, and probabilistic average-case accuracy. These are closer to the intended intuition than computability on a fixed finite domain.\n- Formalize distributions over statements. A meaningful \u201c95% accurate\u201d claim needs a specified finite benchmark or probability measure; accuracy without one is ambiguous.\n- Investigate whether a predictor can be both sound on definite answers and useful under an abstention budget. Without an abstention penalty, the constant `unknown` oracle can make some precision metrics vacuous.\n\n## Limits of the present results\n\nThe development does not identify human intuition with a noncomputable operation, and the formal results provide no evidence for that philosophical identification. It proves only a precise finite counterexample, a uniform adversarial impossibility, finite cardinality formulas, and an elementary Cantor-style diagonal theorem. Connecting mathematical discovery to the computability-theoretic jump would require a defensible formal model of discovery and a reduction theorem; neither is currently supplied.\n",
     "domains": [
       "Computation",
@@ -5716,7 +5716,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "fee59e0b",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-21T14:31:25.130869+00:00",
     "title": "The motivating fixed-length claim was **disproved**, not proved. With a finite a"
   },
