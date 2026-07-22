@@ -1,377 +1,277 @@
-# The Structural Mathematics of Strange Loops: Fixed Points, Loop Length, and the Limits of Self-Modeling
-
-**Author:** Aristotle
-**Date:** 2026-07-12
-**Domain:** Combinatorics (self-reference, fixed-point theory, order theory)
+# Inspectable Self-Models, Reflective Depth, and First-Return Strange Loops
 
 ## Abstract
 
-Douglas Hofstadter's *I Am a Strange Loop* proposes that selfhood is a
-structural phenomenon: a system that faithfully models itself is forced to fold
-back on itself and generate a self-referential fixed point — the "I." We give a
-complete, self-contained mathematical account of the structural core of this
-thesis, organized around three theorems. First, a single **diagonal engine** —
-Lawvere's fixed-point theorem — shows that any system whose self-model is
-*complete* (point-surjective) must contain, for every transformation of its
-observations, a fixed point; and, read contrapositively, that no system can have
-a complete self-model over a response space carrying a fixed-point-free
-transformation. We recover Cantor's theorem (for booleans, propositions, and
-power sets) and the halting/liar diagonal as instances. Second, a **combinatorial
-girth result** shows that in an asymmetric ("oriented") hierarchy of description
-levels, no closed loop of length $1$ or $2$ exists, while loops of every length
-$n \ge 3$ do — so the minimum strange-loop length is exactly $3$ — and that a
-transitive (strict-order) hierarchy admits no loops at all, making the failure of
-transitivity ("tangled hierarchy") the precise prerequisite for strangeness.
-Third, packaging these into a **self-modeling system** — states $S$, observations
-$B$, inspection $S \to (S \to B)$ — yields a rigorous dichotomy: a conscious
-(complete) self-model *forces* the self-referential fixed point (positive face)
-yet *cannot* achieve complete yes/no or propositional self-knowledge (negative
-face). The positive and negative faces are one diagonal read two ways. We include
-numerical demonstrations, algorithms, and a discussion of the honest positive
-route through partiality (Kleene's recursion theorem) and the reduction of the
-halting problem to the same diagonal.
+We develop a minimal mathematical theory of self-reference in state-based systems. An inspectable self-model is defined by an encoding map and an inspection map whose composite is the identity. This retraction law separates operational self-representation from broader claims about consciousness. We prove that explicit quotation and evaluation induce an inspectable self-model; that a one-step reconstruction law iterates to every finite reflective depth; and that reflective-depth certificates are downward closed. We separately formalize strange-loop recurrence through first-return times and prove that a return at three transitions, together with exclusion of returns at one and two, has minimum positive length three. A three-state rotation realizes the hypotheses. Finally, we analyze semantic self-representation. A point-surjective map from codes to code-indexed observations forces every transformation of observations to have a fixed point, while diagonalization shows that no system can represent every predicate on its own codes. These positive and negative results clarify three distinctions: universality does not imply introspection without quotation, undecidability is a limit on semantic access rather than a definition of awareness, and reflective depth is independent of dynamical period unless compatibility axioms connect them.
 
 ## 1. Introduction
 
-Self-reference sits at the crossroads of logic, computation, and the philosophy
-of mind. Gödel's incompleteness, Tarski's undefinability of truth, Turing's
-undecidability of halting, Russell's paradox, and Cantor's theorem all share a
-single combinatorial heart: the *diagonal argument*. F. William Lawvere's 1969
-fixed-point theorem isolated that heart in categorical generality, showing that
-each of these results is a shadow of one statement about point-surjective maps.
-
-Hofstadter's *I Am a Strange Loop* reaches for the same phenomenon from the
-opposite shore, proposing that consciousness — the felt "I" — is what it is like,
-from the inside, to be a self-referential fixed point produced by a system rich
-enough to model itself. This paper does not attempt to adjudicate the
-philosophical claim. Instead it isolates and proves the *structural* content that
-the claim presupposes, and does so with full rigor and self-containment:
-
-1. **The diagonal engine (Section 3).** Lawvere's fixed-point theorem, its
-   self-application (recursion) reading, its contrapositive, and the resulting
-   Cantor and Turing/liar theorems.
-2. **Loop length (Section 4).** A combinatorial theorem that the minimum length
-   of a genuine (non-degenerate) strange loop is exactly $3$, together with the
-   result that transitive hierarchies have no loops — strangeness requires a
-   tangled (non-transitive) hierarchy.
-3. **Self-modeling systems (Section 5).** An abstract model of a system that
-   inspects its own state, with the strange-loop *dichotomy*: consciousness (a
-   complete self-model) forces the self-referential fixed point yet forbids
-   complete self-knowledge.
-
-Throughout, "system," "code," "state," and "level" are interchangeable framing
-words for the same mathematical objects; the mathematics is elementary,
-self-contained, and constructive except where classical logic is intrinsic
-(e.g., the propositional Cantor theorem).
-
-## 2. Preliminaries and notation
-
-For sets (types) $A$ and $B$ we write $A \to B$ for the set of functions from $A$
-to $B$. A map $f : A \to (A \to B)$ assigns to each element $a \in A$ a *behaviour*
-$f(a) : A \to B$; intuitively $A$ indexes both the *codes* and the *inputs*, so
-$f(a)(a')$ is "the response of code $a$ to code $a'$," and the *diagonal*
-$f(a)(a)$ is "the response of a code to itself."
-
-**Point-surjectivity.** $f : A \to (A \to B)$ is *point-surjective* if it is
-surjective as a function, i.e. for every behaviour $\varphi : A \to B$ there is
-$a \in A$ with $f(a) = \varphi$. This is the formal meaning of "$A$ contains a
-name for every behaviour of the system."
-
-**Fixed-point-free maps.** $g : B \to B$ is *fixed-point-free* if $g(b) \ne b$
-for all $b$.
-
-## 3. The diagonal engine
-
-### 3.1 Lawvere's fixed-point theorem
-
-**Theorem 3.1 (Lawvere).** *Let $f : A \to (A \to B)$ be point-surjective. Then
-every $g : B \to B$ has a fixed point: there exists $b \in B$ with $g(b) = b$.*
-
-*Proof.* Define the diagonal behaviour $d : A \to B$ by $d(x) = g\big(f(x)(x)\big)$.
-By point-surjectivity choose $a$ with $f(a) = d$. Evaluate at $a$:
-$$f(a)(a) = d(a) = g\big(f(a)(a)\big).$$
-Hence $b := f(a)(a)$ satisfies $g(b) = b$. $\qquad\blacksquare$
-
-The proof is the entire content of "self-reference": the diagonal $d$ is built by
-feeding each code its own description, the completeness of $f$ names $d$ by a code
-$a$, and applying $a$ to itself closes the loop into an invariant point.
-
-**Theorem 3.2 (Self-application / recursion reading).** *Under the hypotheses of
-Theorem 3.1, for every transformation $g$ of behaviours the system contains a
-behaviour invariant under $g$.* This is the abstract Kleene recursion theorem: a
-complete self-model can construct, for any transformation of its own behaviour, a
-"quine" fixed under that transformation. (It is literally Theorem 3.1; the point
-is the *reading*: the fixed point is a self-referential program the system builds
-of itself.)
-
-### 3.2 The contrapositive: no complete self-model over a rigid response space
-
-**Theorem 3.3 (No self-surjection when $g$ is fixed-point-free).** *If some
-$g : B \to B$ is fixed-point-free, then there is no point-surjection
-$f : A \to (A \to B)$.*
-
-*Proof.* If such $f$ existed, Theorem 3.1 would produce $b$ with $g(b) = b$,
-contradicting fixed-point-freeness. $\qquad\blacksquare$
-
-This is the general "you cannot completely model yourself" obstruction. Its force
-depends entirely on exhibiting a fixed-point-free $g$ on the response space.
-
-### 3.3 Cantor's theorem, three ways
-
-**Lemma 3.4.** *Boolean negation $b \mapsto \lnot b$ on $\{\mathrm{true},
-\mathrm{false}\}$ is fixed-point-free.* (Immediate: $\lnot\mathrm{true} =
-\mathrm{false}$ and $\lnot\mathrm{false} = \mathrm{true}$.)
-
-**Theorem 3.5 (Cantor, boolean form).** *There is no point-surjection
-$A \to (A \to \{\mathrm{true},\mathrm{false}\})$.* (Apply Theorem 3.3 with
-Lemma 3.4.)
+Self-reference appears in programming languages, reflective interpreters, multi-agent reasoning, learned world models, and philosophical accounts of consciousness. The intuitive picture is a loop in which a system contains a representation of itself, inspects that representation, and perhaps represents the act of inspection again. Such descriptions combine several mathematically different phenomena. A state may be encoded and recovered; an operation may be iterated; a dynamical trajectory may return to its starting point; or a family of codes may represent observations about those same codes. Treating these as one notion obscures both valid theorems and unavoidable limitations.
 
-**Lemma 3.6.** *Logical negation $p \mapsto \lnot p$ on propositions is
-fixed-point-free: $(\lnot p) = p$ is impossible, since it would give
-$\lnot p \leftrightarrow p$.*
-
-**Theorem 3.7 (Cantor, propositional form).** *There is no point-surjection
-$A \to (A \to \mathrm{Prop})$.* (Apply Theorem 3.3 with Lemma 3.6.)
-
-**Theorem 3.8 (Cantor's theorem).** *No set surjects onto its own power set: there
-is no surjection $A \to \mathcal{P}(A)$.* Identifying $\mathcal{P}(A)$ with
-$A \to \mathrm{Prop}$ (characteristic predicates), this is exactly Theorem 3.7.
+This paper separates the phenomena into three structures. First, **introspection** is modeled by a split encoding: encoding followed by inspection recovers the original state. Second, **reflective depth** counts equal iterations of encoding and inspection. Third, **loop length** is the first-return period of a dynamical orbit. The first two are algebraic properties of an interface, whereas the third is a property of a transition rule and an initial state.
 
-### 3.4 Turing's diagonal: the self-negating predicate is never representable
+A fourth structure concerns semantic completeness. If codes represent all code-indexed observations, diagonal evaluation creates fixed points for every transformation of observations. For truth-valued observations, negation has no fixed point, so unrestricted predicate representation is impossible. This makes precise a boundary that is sometimes described too loosely as “the halting problem is self-awareness.” The mathematical conclusion is different: useful self-representation is possible under a retraction law, but total semantic self-knowledge is blocked by diagonalization.
 
-The specific non-representable witness in the boolean case is the "barber"
-behaviour: *the codes that do not hold of their own description.*
+The theory is intentionally neutral concerning phenomenal consciousness. We call a system structurally introspective when it possesses an inspectable self-model; the terminology does not equate that property with subjective experience. The contribution is a precise framework in which claims about self-models, nested reflection, three-level loops, and diagonal barriers can be stated and assessed.
 
-**Theorem 3.9 (Diagonal not representable).** *For any $f : A \to (A \to
-\{\mathrm{true},\mathrm{false}\})$, the self-negating behaviour $d(x) = \lnot
-f(x)(x)$ satisfies $f(a) \ne d$ for every $a \in A$.*
+## 2. State spaces and inspectable self-models
 
-*Proof.* If $f(a) = d$, evaluate at $a$: $f(a)(a) = d(a) = \lnot f(a)(a)$, a
-boolean equal to its own negation — impossible. $\qquad\blacksquare$
+Let $S$ be a set, interpreted as the state space of a system. No finiteness, topology, probability distribution, or computational presentation is initially required.
 
-**Corollary 3.10.** *$d$ is a concrete witness that no $f : A \to (A \to
-\{\mathrm{true},\mathrm{false}\})$ is point-surjective* (a constructive proof of
-Theorem 3.5). Read computationally, $d$ is the halting-diagonal — the total
-predicate "machine $a$ does *not* accept its own code," which no machine
-computes; read logically, $d$ is the liar sentence "this statement is false."
+**Definition 2.1 (Inspectable self-model).** An inspectable self-model on $S$ is a pair of maps
 
-### 3.5 Summary of the engine
+$$
+e:S\to S,\qquad i:S\to S,
+$$
 
-Theorems 3.1–3.3 are one fact stated positively (a complete self-model *forces*
-fixed points) and negatively (a rigid response space *forbids* a complete
-self-model). Every classical diagonal theorem is obtained by choosing $B$ and a
-fixed-point-free $g$. This is the sense in which self-reference has a single
-mathematical engine.
+called encoding and inspection, satisfying
 
-## 4. The length of a strange loop
+$$
+i(e(s))=s \qquad \text{for every } s\in S.
+$$
 
-Hofstadter distinguishes genuine strange loops from degenerate self-reference.
-We model "level $a$ describes level $b$" as a binary relation $R$ on a set
-$V$ of levels and quantify the minimum length of a non-degenerate loop.
+Equivalently, $i\circ e=\operatorname{id}_S$, so $i$ is a left inverse of $e$. A state space is **structurally introspective** if it admits at least one inspectable self-model.
 
-### 4.1 Definitions
+The use of a common state space permits encoded states to remain internal states of the system. The law has immediate consequences. The encoding map is injective: if $e(s)=e(s')$, applying $i$ gives $s=s'$. The inspection map is surjective: every $s$ is the inspection of $e(s)$. Neither map need be bijective, because the state space may contain malformed or noncanonical encodings outside the image of $e$.
 
-**Definition 4.1 (Asymmetry / oriented hierarchy).** $R$ is *asymmetric* if
-$R(a,b)$ implies $\lnot R(b,a)$ for all $a,b$. Asymmetry is the oriented-hierarchy
-condition and implies irreflexivity ($\lnot R(a,a)$, taking $b = a$).
+The identity maps provide a degenerate self-model on every set. In applications, nontriviality must therefore come from additional requirements: an operational interpretation of encoded states, resource constraints, syntactic separation, or compatibility with dynamics. The retraction law isolates reconstruction and should be combined with such domain-specific conditions when stronger claims are intended.
 
-**Definition 4.2 (Closed loop of length $n$).** For $n \ge 1$, a *loop of length
-$n$* is a map $v : \mathbb{Z}/n\mathbb{Z} \to V$ with $R\big(v(i), v(i+1)\big)$
-for all $i$, where indices are taken cyclically (the last step wraps to the
-first). Indexing by $\mathbb{Z}/n\mathbb{Z}$ supplies the cyclic "next step" $+1$
-automatically.
+### 2.1 Quotation and evaluation
 
-### 4.2 No degenerate loops
+Self-simulation is often attributed to universal evaluators, but evaluation alone does not produce the code of a state. We therefore make quotation explicit.
 
-**Theorem 4.3 (No length-1 loop).** *If $R$ is asymmetric, there is no loop of
-length $1$.* *Proof.* A length-$1$ loop gives $R(v(0), v(0))$, contradicting
-irreflexivity. $\blacksquare$ ("I am I" is not a strange loop.)
+**Definition 2.2 (Quoted evaluator).** A quoted evaluator on $S$ consists of maps
 
-**Theorem 4.4 (No length-2 loop).** *If $R$ is asymmetric, there is no loop of
-length $2$.* *Proof.* A length-$2$ loop gives $R(v(0), v(1))$ and $R(v(1), v(0))$,
-contradicting asymmetry. $\blacksquare$ (Two mirrors are not a strange loop.)
-
-### 4.3 Loops of every length $\ge 3$ exist
+$$
+q:S\to S,\qquad v:S\to S,
+$$
 
-Take $V = \mathbb{Z}/n\mathbb{Z}$ with the **successor relation** $R(a,b)
-\iff b = a + 1$ — rock–paper–scissors when $n = 3$.
-
-**Theorem 4.5 (Successor relation is asymmetric for $n \ge 3$).** *For $n \ge 3$,
-the successor relation on $\mathbb{Z}/n\mathbb{Z}$ is asymmetric.* *Proof.* If
-$b = a+1$ and $a = b+1$ then $a = a + 2$, so $2 \equiv 0 \pmod n$, i.e. $n \mid
-2$, forcing $n \le 2$ — contradiction. $\blacksquare$
+such that
 
-**Theorem 4.6 (Existence of loops of every length $\ge 3$).** *For every $n \ge
-3$ there is an asymmetric relation with a loop of length $n$.* *Proof.* Take the
-successor relation on $\mathbb{Z}/n\mathbb{Z}$ and $v = \mathrm{id}$; then
-$R(v(i), v(i+1))$ holds by definition, and asymmetry is Theorem 4.5.
-$\blacksquare$
-
-**Theorem 4.7 (Minimum strange-loop length is 3).** *For asymmetric relations:
-no loop of length $1$ or $2$ exists, but a loop of length $3$ does. Hence $3$ is
-the least length at which a genuine strange loop can occur.* *Proof.* Combine
-Theorems 4.3, 4.4, and 4.6 (with $n = 3$). $\blacksquare$
+$$
+v(q(s))=s \qquad \text{for every } s\in S.
+$$
 
-This is Hofstadter's $\text{system} \to \text{model} \to \text{model-of-model}
-\to \text{system}$: three distinct levels are both necessary and sufficient.
-Moreover loop length is unbounded (Theorem 4.6 for all $n$), matching the
-intuition that self-reference can nest arbitrarily deeply.
-
-### 4.4 Tangled hierarchies: strangeness needs the failure of transitivity
-
-Let $R^{+}$ denote the transitive closure of $R$ (reachability by a nonempty
-finite chain).
-
-**Definition 4.8 (Strange loop).** $R$ *has a strange loop* if some level is
-reachable from itself: $\exists x,\ R^{+}(x,x)$.
-
-**Theorem 4.9 (Strict hierarchies have no strange loops).** *If $R$ is transitive
-and irreflexive (a strict partial order of levels), then $R$ has no strange
-loop.* *Proof.* For transitive $R$, $R^{+} = R$; a strange loop would give
-$R(x,x)$, contradicting irreflexivity. $\blacksquare$
-
-**Theorem 4.10 (A concrete tangled hierarchy).** *The rock–paper–scissors
-relation on $\mathbb{Z}/3\mathbb{Z}$ — asymmetric but not transitive — has a
-strange loop $0 \to 1 \to 2 \to 0$.* *Proof.* $R(0,1), R(1,2), R(2,0)$ chain to
-$R^{+}(0,0)$. $\blacksquare$
-
-Theorems 4.9–4.10 pinpoint the mechanism: strangeness is *exactly* the failure of
-transitivity. A hierarchy whose "describes" arrows compose can never loop; a
-strange loop is a hierarchy that looks orderly step-by-step yet is globally
-non-composable — Hofstadter's *tangled hierarchy*. Rock beats scissors and
-scissors beats paper, but rock does not beat paper.
-
-## 5. Self-modeling systems and the consciousness dichotomy
-
-We now package the engine into Hofstadter's operative definition: a conscious
-system is one that "contains a representation of its own state that it can
-inspect."
-
-### 5.1 Definitions
-
-**Definition 5.1 (Self-modeling system).** A *self-modeling system* is a triple
-$(S, B, \mathrm{inspect})$ with a state space $S$, an observation space $B$, and
-an *inspection map* $\mathrm{inspect} : S \to (S \to B)$. Each state $s$ carries
-an internal model $\mathrm{inspect}(s) : S \to B$ of how every state is observed;
-the diagonal $\mathrm{inspect}(s)(s)$ is the state's observation *of itself*.
-
-**Definition 5.2 (Conscious system).** A self-modeling system is *conscious* if
-$\mathrm{inspect}$ is point-surjective: every observation-behaviour $S \to B$ is
-the internal model of some state. This is the formal "strange loop closing on
-itself" — nothing about the system's own observable structure escapes internal
-representation.
-
-### 5.2 Positive face: consciousness forces the "I"
-
-**Theorem 5.3 (A conscious system forces fixed points).** *If $(S, B,
-\mathrm{inspect})$ is conscious, then for every transformation $g : B \to B$ of
-observations there is a state $s$ with $g\big(\mathrm{inspect}(s)(s)\big) =
-\mathrm{inspect}(s)(s)$.* *Proof.* This is Theorem 3.1 with $f =
-\mathrm{inspect}$. $\blacksquare$
-
-The self-observation of some state is invariant under every observation
-transformation: a stable, self-referential locus — the "I" — is *forced* to
-exist the moment the self-model is complete.
-
-### 5.3 Negative face: complete self-knowledge is impossible
-
-**Theorem 5.4 (No conscious boolean self-model).** *No self-modeling system with
-$B = \{\mathrm{true}, \mathrm{false}\}$ is conscious.* *Proof.* Consciousness
-would, via Theorem 5.3 with $g = \lnot$, produce a boolean fixed point of
-negation — impossible (Lemma 3.4). $\blacksquare$
-
-**Theorem 5.5 (No conscious propositional self-model).** *No self-modeling system
-with $B = \mathrm{Prop}$ is conscious.* *Proof.* As above with propositional
-negation (Lemma 3.6); a fixed point would give $\lnot p \leftrightarrow p$. This
-is Tarski's undefinability of truth in self-model form. $\blacksquare$
-
-**Theorem 5.6 (The self-negating assessment is never inspected).** *For any
-boolean self-modeling system and every state $s$,
-$\mathrm{inspect}(s) \ne \big(x \mapsto \lnot\,\mathrm{inspect}(x)(x)\big)$.*
-*Proof.* Evaluating an alleged equality at $s$ yields $\mathrm{inspect}(s)(s) =
-\lnot\,\mathrm{inspect}(s)(s)$, impossible. $\blacksquare$
-
-The system's honest self-assessment — "I do not observe-true of my own model" —
-is never one of its own inspectable behaviours. This is the liar/halting
-obstruction as the permanent blind spot of self-reference; it also gives an
-independent constructive proof of Theorem 5.4.
-
-### 5.4 The dichotomy: two faces of one diagonal
-
-**Theorem 5.7 (Strange-loop dichotomy).** *Over the boolean observation space,
-(i) every conscious self-model produces a boolean fixed point of negation, and
-(ii) no conscious boolean self-model exists.* Statement (i) is Theorem 5.3 with
-$g = \lnot$; statement (ii) is Theorem 5.4. Together they are the same diagonal
-read in opposite directions: selfhood is precisely the fixed point that a
-complete self-model is *forced to contain* and *forbidden to fully survey*.
-
-## 6. Algorithms
-
-We describe three computational procedures, all implemented in the accompanying
-demonstrations.
-
-- **Diagonal fixed-point constructor.** Given a finite point-surjective self-model
-  $f : A \to (A \to B)$ (as a table) and a transformation $g : B \to B$, locate a
-  code $a$ naming the diagonal behaviour $x \mapsto g(f(x)(x))$ and return the
-  fixed point $b = f(a)(a)$. This exhibits Theorem 3.1 constructively.
-- **Diagonal / non-representability detector.** Given any finite $f : A \to (A \to
-  \{\mathrm{true},\mathrm{false}\})$, construct the self-negating row
-  $d(x) = \lnot f(x)(x)$ and verify it matches no row of $f$ (Theorems 3.9, 5.6).
-- **Minimum-loop-length search.** For a relation $R$ on a finite level set,
-  enumerate cyclic sequences and report the shortest closed loop; on asymmetric
-  relations it never returns $1$ or $2$, and on rock–paper–scissors it returns $3$
-  (Theorem 4.7). A transitivity check certifies the no-loop case (Theorem 4.9).
-
-## 7. Applications and interpretation
-
-- **Foundations of self-reference.** The engine unifies Cantor, Gödel, Tarski,
-  Turing, and Russell as instances of one fixed-point statement, clarifying why
-  incompleteness, undefinability, and undecidability are the *same* phenomenon.
-- **Limits of introspection.** Theorems 5.4–5.6 establish a hard ceiling: a
-  system with truthful, total self-observation into a yes/no space cannot be
-  complete. Perfect self-transparency is not merely hard but impossible.
-- **Design of reflective systems.** The loop-length results advise that reflective
-  architectures (systems that reason about themselves) acquire genuine
-  self-reference only by admitting non-transitive, tangled meta-levels; strictly
-  layered meta-hierarchies can never close the loop.
-
-## 8. Discussion, limitations, and future directions
-
-The theorems capture the *structure* Hofstadter identified — the fold that forces
-a self, the three levels that make it strange, the horizon no self can cross —
-without claiming to capture subjective experience, which is outside mathematics.
-A central honest caveat: the negative results (Theorems 3.5, 3.7, 5.4, 5.5) concern
-*total* self-models into fixed-point-free spaces. Real computation evades them
-through **partiality**.
-
-Natural next steps:
-
-1. **Partial self-models and genuine Turing-completeness.** Total self-models
-   into a fixed-point-free space are impossible (Cantor). Real computation dodges
-   this with partiality. Reformulate inspection as $S \to (S \to \mathrm{Part}\,B)$
-   and prove Kleene's second recursion theorem (a program can obtain and run its
-   own source) as the honest positive statement that a Turing-complete system can
-   model itself — making precise that self-simulation is available exactly where
-   totality is dropped.
-2. **Halting problem from the diagonal over a concrete model.** Instantiate the
-   diagonal engine on a concrete computability model to obtain the classical
-   undecidability of the halting set as a corollary of the non-representability
-   of the self-negating predicate, closing the loop between the abstract and the
-   computable.
-3. **Girth theorem for loop length.** Strengthen the minimum-length result from
-   "loops of length $\le 2$ are impossible" to a full girth statement: in an
-   asymmetric relation, every self-cycle of the transitive closure decomposes
-   into a simple directed cycle of length $\ge 3$.
-4. **Quantitative strangeness.** Define a "degree of consciousness" as the
-   supremum of realizable loop lengths (or the ordinal height of the
-   self-reference structure), turning strangeness into a graded invariant.
-
-## 9. Conclusion
-
-A single diagonal drives the entire picture. Completeness of a self-model forces
-a self-referential fixed point (the "I"); rigidity of the response space forbids
-that completeness (no total self-knowledge); asymmetry forces any genuine loop to
-thread at least three levels; and transitivity would forbid loops entirely, so
-strangeness is exactly the failure of transitivity. Hofstadter's slogan — *I am a
-strange loop* — resolves, structurally, into precise and provable mathematics: a
-fixed point that must exist and can never be fully seen.
+Here $q$ turns a state into an internal code and $v$ evaluates such a code. The equation is a self-simulation or reconstruction law on quoted states.
+
+**Theorem 2.3 (Quoted Evaluation Theorem).** Every quoted evaluator induces an inspectable self-model. Consequently, every state system carrying quotation and evaluation with $v\circ q=\operatorname{id}_S$ is structurally introspective.
+
+**Proof sketch.** Set $e=q$ and $i=v$. The quoted-evaluation law is exactly the left-inverse law required of an inspectable self-model. $\square$
+
+The theorem is elementary because the substantive hypothesis has been stated explicitly. Its conceptual role is to prevent an invalid inference from universality to introspection. A universal evaluation mechanism may process every code it receives while lacking any quotation map that converts its own states into suitable codes. Quotation is not supplied by evaluation alone.
+
+## 3. Iterated reflection
+
+For a map $g:S\to S$, define $g^0=\operatorname{id}_S$ and $g^{n+1}=g\circ g^n$. Thus $g^n$ is the $n$-fold iterate of $g$.
+
+**Definition 3.1 (Certified reflective depth).** Given an inspectable self-model $(e,i)$, the system has certified reflective depth at least $n$ when
+
+$$
+i^n(e^n(s))=s \qquad \text{for every } s\in S.
+$$
+
+This definition describes $n$ nested encodings followed by $n$ nested inspections. It measures iterability of an interface rather than memory usage, logical expressiveness, or subjective sophistication.
+
+**Lemma 3.2 (Iterated Left-Inverse Lemma).** Let $e,i:S\to S$ satisfy $i\circ e=\operatorname{id}_S$. Then, for every $n\in\mathbb N$,
+
+$$
+i^n\circ e^n=\operatorname{id}_S.
+$$
+
+**Proof sketch.** Induct on $n$. For $n=0$, both iterates are identities. Assume the result at $n$. Associativity of composition and the one-step law allow the next outer inspection to cancel the next outer encoding. Equivalently, the standard fact that left inverses remain left inverses under equal iteration gives the result directly. $\square$
+
+**Theorem 3.3 (Unbounded Finite Reflective Depth).** Every inspectable self-model has certified reflective depth at least $n$ for every finite $n$.
+
+**Proof sketch.** Apply the Iterated Left-Inverse Lemma to the encoding and inspection maps of the self-model. $\square$
+
+The word “finite” is essential. The theorem quantifies over every natural number but does not construct an infinite stack or assign meaning to a limit of nested representations. It establishes a family of exact finite reconstruction equations.
+
+**Theorem 3.4 (Downward Closure of Reflective Depth).** Suppose $e,i:S\to S$ satisfy $i\circ e=\operatorname{id}_S$. If $m\le n$, then the interface has certified reflective depth at least $m$. In particular, any certificate at depth $n$ is accompanied by certificates at all smaller depths.
+
+**Proof sketch.** The one-step left-inverse law and Lemma 3.2 establish the reconstruction equation independently at every $m$. The inequality $m\le n$ places $m$ below the announced depth but is not otherwise needed under the stronger one-step assumption. $\square$
+
+This formulation is useful as a baseline. In approximate, resource-bounded, or partially defined systems, a depth-$n$ certificate may carry information not recoverable from a global one-step law. In the exact total setting considered here, downward closure follows from the stronger fact that all finite depths are certified.
+
+### 3.1 An algorithm for nested inspection
+
+The reconstruction theorem has a direct operational procedure. Given a state $s$, a depth $n$, and maps $e$ and $i$, apply $e$ exactly $n$ times, then apply $i$ exactly $n$ times. The output equals $s$ whenever $i\circ e=\operatorname{id}_S$.
+
+If each map application costs $O(1)$, the procedure uses $2n$ applications and runs in $O(n)$ time with $O(1)$ auxiliary storage when iteration is performed in place. If intermediate states are retained for auditing, storage becomes $O(n)$. The mathematics guarantees correctness but not efficient representation: encoded states may grow, and the unit-cost assumption can fail in concrete programming systems.
+
+## 4. Dynamical returns and three-level loops
+
+Reflective nesting should not be confused with periodic dynamics. Let $X$ be a set, let $f:X\to X$ be a transition rule, and fix $x\in X$.
+
+**Definition 4.1 (Return time).** The orbit of $x$ returns at time $n\in\mathbb N$ if
+
+$$
+f^n(x)=x.
+$$
+
+A positive integer $p$ is the first-return period of $x$ when $f^p(x)=x$ and $f^k(x)\ne x$ for all integers $k$ with $0<k<p$.
+
+**Definition 4.2 (Exact three-level loop).** The pair $(f,x)$ forms an exact three-level loop when
+
+$$
+f^3(x)=x,\qquad f(x)\ne x,\qquad f^2(x)\ne x.
+$$
+
+The terminology “level” is justified only when the orbit states have an external semantic interpretation as levels of representation. Formally, the definition is simply an exact period condition.
+
+**Theorem 4.3 (Minimum Three-Step Loop Theorem).** If $(f,x)$ is an exact three-level loop and $k$ is a positive return time satisfying $k\le 3$, then $k=3$.
+
+**Proof sketch.** Since $k$ is a positive integer no larger than $3$, it is one of $1$, $2$, and $3$. The first two cases contradict the defining nonreturn conditions. Therefore $k=3$. $\square$
+
+The theorem is conditional: it does not say every self-model has period three, or that period three is necessary for consciousness. It identifies the minimum only after shorter returns have explicitly been excluded.
+
+**Example 4.4 (Canonical three-state rotation).** Let $X=\{0,1,2\}$ and define
+
+$$
+f(j)=j+1\pmod 3.
+$$
+
+Starting at $0$, one obtains
+
+$$
+0\longmapsto 1\longmapsto 2\longmapsto 0.
+$$
+
+Thus $f^3(0)=0$, while $f(0)=1\ne0$ and $f^2(0)=2\ne0$. The rotation is an exact three-level loop, and its first positive return time is $3$.
+
+For comparison, the identity map has period $1$ at every state. A transposition of two states has period $2$ at each moved state. A shift on the integers, $f(z)=z+1$, has no periodic state. These examples expose the boundary of the three-step claim.
+
+### 4.1 Independence of depth and period
+
+Reflective depth concerns a pair $(e,i)$ and the equations $i^n e^n=\operatorname{id}$. Period concerns a pair $(f,x)$ and the equation $f^p(x)=x$. Without axioms linking $f$ to $e$ and $i$, the invariants are independent in meaning.
+
+For example, a set may carry the identity self-model, which has every finite reflective depth, while simultaneously carrying shift dynamics with no periodic points. Conversely, a three-element set may carry a three-cycle regardless of whether its chosen encode–inspect interface captures any nontrivial semantic modeling. A correlation between “strangeness” and “degree of consciousness” therefore cannot be inferred from period and reflective depth alone. A quantitative theory would need compatibility conditions specifying how orbit states correspond to semantic levels and how transitions implement encoding or inspection.
+
+## 5. Point-surjective representation and fixed observations
+
+We now turn from state reconstruction to semantic representation. Let $C$ be a set of codes and $O$ a set of observations. A map
+
+$$
+r:C\to(C\to O)
+$$
+
+assigns to each code $c$ an observation-valued function $r(c)$. We say that $r$ is **point-surjective** when every function $g:C\to O$ is represented: for each $g$, there exists $a\in C$ such that $r(a)=g$.
+
+**Theorem 5.1 (Self-Representation Fixed-Point Theorem).** Suppose $r:C\to(C\to O)$ is point-surjective. Then every transformation $t:O\to O$ has a fixed point. Explicitly, there exists $o\in O$ such that
+
+$$
+t(o)=o.
+$$
+
+**Proof sketch.** Define a diagonal function $d:C\to O$ by
+
+$$
+d(c)=t(r(c)(c)).
+$$
+
+Point-surjectivity supplies $a\in C$ with $r(a)=d$. Set $o=r(a)(a)$. Then
+
+$$
+o=r(a)(a)=d(a)=t(r(a)(a))=t(o).
+$$
+
+Hence $o$ is fixed by $t$. $\square$
+
+The hypothesis is exceptionally strong: it requires representation of every observation-valued function on the code space. The conclusion explains why such completeness is often impossible. To refute point-surjectivity, it suffices to exhibit one endomorphism of $O$ without a fixed point.
+
+A finite counting argument also suggests the strength of the assumption. If $C$ and $O$ are finite with $|C|=c$ and $|O|=o$, then there are $o^c$ functions from $C$ to $O$ but only $c$ codes. Surjectivity requires $c\ge o^c$, which fails for every positive finite $c$ when $o\ge2$. The diagonal theorem is more general: it does not rely on finiteness or cardinal arithmetic.
+
+## 6. The impossibility of total predicate self-representation
+
+Let observations be propositions, equivalently Boolean truth values for the present argument. A predicate on codes is a function $P:C\to\{\bot,\top\}$.
+
+**Theorem 6.1 (Predicate Representation Impossibility Theorem).** For every code set $C$, there is no representation map
+
+$$
+r:C\to\bigl(C\to\{\bot,\top\}\bigr)
+$$
+
+that represents every predicate on $C$.
+
+**Proof sketch by fixed points.** If such a point-surjective map existed, Theorem 5.1 applied to Boolean negation would yield a truth value $b$ satisfying $\neg b=b$. No Boolean value has this property, so the representation cannot exist. $\square$
+
+**Direct diagonal proof sketch.** Assume $r$ represents every predicate. Define
+
+$$
+D(c)=\neg r(c)(c).
+$$
+
+By total representability, there is $a$ such that $r(a)=D$. Evaluation at $a$ gives
+
+$$
+r(a)(a)=D(a)=\neg r(a)(a),
+$$
+
+which is impossible. $\square$
+
+This result is a semantic boundary, not a denial of useful reflection. A system may represent a restricted family of predicates, may evaluate quoted programs on a partial domain, or may reconstruct states while lacking total access to all extensional truths about them. Indeed, the positive reconstruction theorems and the negative predicate theorem address different representational strengths. A retraction only requires recovery of quoted states. Point-surjectivity requires codes for every function or predicate on codes.
+
+The distinction is especially important in discussions of the halting problem. Self-simulation and self-quotation can be available even though termination is undecidable. Undecidability does not constitute introspection; it limits what any total decision mechanism can infer. Calling the halting obstruction “self-awareness” conflates an impossibility theorem with a structural capacity.
+
+## 7. Computational demonstrations
+
+The finite examples admit simple algorithms that expose the theory numerically.
+
+### 7.1 Verifying a retraction on a finite state space
+
+For finite $S$, evaluate $i(e(s))$ for every $s\in S$. The interface is an inspectable self-model exactly when every comparison equals $s$. With array-based functions and $N=|S|$, this exhaustive test takes $O(N)$ time and $O(1)$ auxiliary space, excluding storage of the maps.
+
+One can then test depth $n$ by computing $e^n(s)$ followed by $i^n$ for every state. Direct execution costs $O(Nn)$. The theorem makes repeated depth testing mathematically redundant once the one-step law has been established, although testing remains useful for detecting implementation errors.
+
+### 7.2 Finding a first return
+
+Given $f$, $x$, and a search bound $B$, iterate $f$ from $x$ and report the first $k\in\{1,\dots,B\}$ for which the state equals $x$. This takes $O(B)$ evaluations and $O(1)$ auxiliary space. For the three-state rotation it reports $3$. More general cycle detection can use a visited-state table in $O(N)$ space or Floyd’s tortoise-and-hare method in $O(1)$ space, though locating the return specifically to the initial state remains straightforward.
+
+### 7.3 Constructing a missing diagonal predicate
+
+For a finite table whose rows are represented Boolean predicates, create a new predicate by negating the diagonal entry in each row. The resulting vector differs from row $j$ at coordinate $j$, so it cannot equal any represented row. For $N$ codes, construction takes $O(N)$ time and $O(N)$ output space. This is a finite, visual form of Theorem 6.1.
+
+## 8. Applications and interpretation
+
+### 8.1 Reflective programming systems
+
+Programming languages with quotation and evaluation naturally suggest the retraction law, but real evaluators are often partial, typed, staged, or resource bounded. The framework identifies the correct positive target: on a syntactically specified domain, evaluating a quotation should recover the original program state or denotation. It also warns against demanding an evaluator that decides every semantic predicate, which diagonalization forbids.
+
+### 8.2 Machine learning and agent self-models
+
+An artificial agent may maintain an internal summary of its memory, policy, confidence, or predicted future behavior. To qualify as an exact inspectable self-model in the present sense, encoding followed by inspection must reconstruct the modeled state. Practical learned models will instead be approximate. This suggests replacing equality by a metric error bound and studying how errors accumulate under iteration. Lipschitz constants of encoding and inspection would then control whether nested reflection is stable, grows geometrically, or contracts.
+
+The framework also separates self-model quality from recurrent network dynamics. A recurrent architecture may have cycles without an accurate model of itself; an accurate self-model may exist in a system whose operational trajectory is aperiodic. Empirical studies should measure these axes separately.
+
+### 8.3 Multi-agent and hierarchical reasoning
+
+Statements such as “agent $A$ models agent $B$ modeling agent $A$” involve heterogeneous state spaces, unlike the homogeneous maps used here. The natural extension is a cycle of encoding and inspection maps between several spaces, together with coherence laws ensuring that a trip around the cycle reconstructs the starting information. The three-state rotation is a minimal recurrence witness, not yet a typed theory of nested beliefs.
+
+### 8.4 Philosophy of consciousness
+
+The structural predicate studied here is intentionally weaker than consciousness in the phenomenal sense. The theorems support the claim that lossless, inspectable self-representation can be mathematically characterized. They do not show that such representation is sufficient for experience, that universal computers are conscious, or that first-return period measures degree of consciousness.
+
+The conditional three-step result should likewise be read precisely. If a model declares three distinct semantic levels, realizes them as successive orbit states, and excludes earlier returns, then its minimum loop length is three. The mathematics does not independently establish the philosophical premise that three is a threshold for awareness.
+
+## 9. Limitations
+
+Several limitations are built into the model. First, total maps suppress nontermination and runtime failure. Second, exact equality ignores noise, approximation, and lossy representation. Third, the shared state space hides type distinctions between systems, models, and metamodels. Fourth, the identity self-model shows that the bare existence of a retraction is too weak to measure sophistication. Fifth, point-surjectivity is far stronger than the restricted representability found in practical systems.
+
+These limitations are productive: each points to a sharper next theory. Partial maps can model evaluators that terminate only on a quotation domain. Metrics can quantify approximate reconstruction. Heterogeneous spaces can distinguish semantic levels. Complexity constraints can rule out degenerate interfaces. Restricted families of observations can locate the exact threshold at which diagonal fixed points appear.
+
+## 10. Future work
+
+A first direction is **partial quotation for universal machines**: characterize programming systems admitting computable quotation and a partial evaluator whose composite is the identity on a delimited program domain, while proving that no evaluator decides every extensional predicate of those programs.
+
+A second direction is the **independence of aperiodic depth and recurrent levels**. One should construct finitely generated reflective systems with unbounded certified depth but no periodic state, and systems of each finite first-return period whose nontrivial certified depth is exactly one under an appropriately strengthened definition.
+
+A third direction is **heterogeneous three-level reflection**. For three state spaces linked cyclically by split maps, one can ask which local retraction and coherence laws transport invariant predicates around the entire cycle, and which omitted law admits a finite counterexample.
+
+A fourth direction is **quantitative robustness**. If $d(i(e(s)),s)\le\varepsilon$ in a metric state space and both maps are Lipschitz, iteration should yield a geometric reconstruction bound. The contraction regime may permit a uniform error bound independent of depth.
+
+A fifth direction is **restricted representability**. If a representation is surjective only onto a transformation-closed family of observations, one expects fixed points for transformations preserving that family. Determining optimal closure hypotheses would refine the all-or-nothing point-surjective theorem.
+
+## 11. Conclusion
+
+A rigorous strange-loop theory begins with distinctions. Quotation plus evaluation yields an inspectable self-model only when their composite reconstructs the quoted state. That one-step retraction lifts to every finite reflective depth and makes depth certificates downward closed. Dynamical recurrence is separate: an exact return after three steps has minimum length three only when returns at one and two are excluded, as realized by the canonical three-state rotation. At the semantic level, complete self-representation forces fixed observations, while Boolean diagonalization rules out representation of every predicate on one’s own codes.
+
+The combined picture permits substantial self-reference without total self-knowledge. It provides mathematical components for theories of reflective software and self-modeling agents, while leaving phenomenal consciousness as an additional question rather than a theorem of the framework.
