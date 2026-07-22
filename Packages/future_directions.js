@@ -102,6 +102,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 43fa6482 (Q=0.770), which proved 7 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Complexity, Reversibility, and Thermodynamic Cost\n\n## 1. Size-indexed dissipation lower bounds for irreversible decision procedures\n\n**Conjecture.** Let a family of decision procedures on inputs of length `n` irreversibly discard at least `b(n)` unbiased logical bits. Under fini",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_43fa6482_c922ce7d",
+    "priority_score": 0.87,
+    "research_mode": "team",
+    "source_exp_id": "43fa6482",
+    "status": "available",
+    "timestamp": "2026-07-22T18:42:11.729178+00:00",
+    "title": "Deepening: **Conjecture.** Let a family of decision procedures on inputs of length `n` irre"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle fff627f3 (Q=0.770), which proved 7 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Hilbert's Hotel has infinitely many rooms, each containing a prime number. Room n contains the n-th prime p_n. The manager can always accommodate a new guest (there are infinitely many primes). But what if the guests want to REARRANGE? Conjecture: For any permutation sigma of N, there exists a rearr",
     "domains": [
       "Pythagorean"
@@ -214,7 +228,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Moonshot: Quantum Consciousness \u2014 Penrose-Hameroff Orchestrated Reduction"
   },
   {
-    "consumed_by_exp_id": "c9711bb7",
+    "consumed_by_exp_id": "",
     "description": "Formalize neural coding: how does the brain represent information? Define: a 'neural code' is a binary pattern on N neurons. Prove: the maximum number of distinct concepts representable by N binary neurons is 2^N. Show: with population coding (distributed representations), the brain can represent continuous values with precision ~sqrt(N). Conjecture: the brain uses sparse coding (only ~1% of neurons active) for energy efficiency \u2014 prove this achieves O(N log N) concepts per unit energy. Explore: formalize the 'neural manifold hypothesis' \u2014 neural activity lives on a low-dimensional manifold. Prove: the manifold dimension is bounded by the number of behavioral DOF.",
     "domains": [
       "Novelty",
@@ -224,7 +238,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-22T02:30:28.067253+00:00",
     "title": "Moonshot: Brain-Computer Interface Mathematics \u2014 Neural Coding Theorems"
   },
@@ -5527,21 +5541,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "The formal development studies a precise surrogate for \u201cthe space of mathematica"
   },
   {
-    "consumed_by_exp_id": "43fa6482",
-    "description": "# Future Directions: Complexity, Reversibility, and Thermodynamic Cost\n\n## 1. Size-indexed dissipation lower bounds for irreversible decision procedures\n\n**Conjecture.** Let a family of decision procedures on inputs of length `n` irreversibly discard at least `b(n)` unbiased logical bits. Under finite-temperature dynamics satisfying an input-wise fluctuation relation, its expected dissipated work is at least `k T b(n) log 2`, independently of whether its runtime is polynomial.\n\nThe key insight is that asymptotic runtime and entropy loss should be indexed by the same input-size parameter without identifying them as the same resource. **Why now?** The one-bit result isolates the exact additive unit of cost, making tensorized or conditional-entropy extensions sharply testable.\n\n## 2. Reversible simulation separates complexity collapse from heat generation\n\n**Conjecture.** Every polynomial-time decision procedure admits a logically reversible simulation with polynomial time and space overhead, while any final many-to-one output reset pays exactly for the conditional information discarded at that reset.\n\nThe key insight is that computational hardness may affect the cost of finding an answer, whereas Landauer cost attaches to information destruction in the implementation. **Why now?** The present no-go boundary shows that efficient solvability alone says nothing about zero-work erasure, so reversible simulation is the natural mechanism for identifying the missing implementation-level hypothesis.\n\n## 3. Stable hierarchy collapse yields uniform physical simulation\n\n**Conjecture.** For a size-indexed polynomial hierarchy equipped with explicit machine clocks, collapse at level `k` plus a uniform extended Church\u2013Turing simulation at level `k` produces one polynomial overhead bound that simulates every fixed higher level.\n\nThe key insight is that extensional class inclusion should be strengthened to a uniform quantitative compiler whose overhead can be composed through the hierarchy. **Why now?** Hierarchy-wide extensional simulation already follows from stable collapse; the unresolved question is whether its witnesses can be chosen with controlled exponents.\n\n## 4. Efficient NP-hard demons cannot beat fluctuation-corrected free-energy cost\n\n**Conjecture.** For any finite-state Maxwell demon solving an NP-hard language, a fluctuation relation bounds net extracted work by free-energy change minus the mutual information retained in the demon's memory, regardless of a collapse of deterministic and nondeterministic polynomial time.\n\nThe key insight is that the demon's computational class and its thermodynamic accounting meet through memory correlations, not through runtime alone. **Why now?** The erasure theorem treats one unbiased bit; adding retained side information gives a falsifiable route to distinguish genuine feedback extraction from hidden reset costs.\n\n## 5. Physical complexity requires a two-resource hierarchy\n\n**Conjecture.** There exist families of computations with polynomial runtime but superlogarithmic unavoidable entropy export under bounded-memory cyclic implementations, and families with superpolynomial runtime but asymptotically vanishing dissipation per step.\n\nThe key insight is that time and dissipation should form a partially ordered two-resource hierarchy rather than collapse to one scalar notion of efficiency. **Why now?** The proved separation between polynomial-time membership and positive erasure work supplies the first guarded instance of such incomparability and identifies the additional cyclic-memory hypotheses needed for a quantitative test.\n",
-    "domains": [
-      "Computation",
-      "Physics"
-    ],
-    "id": "fd_0526",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "bb72d587",
-    "status": "in_progress",
-    "timestamp": "2026-07-20T20:48:39.660968+00:00",
-    "title": "**Conjecture.** Let a family of decision procedures on inputs of length `n` irre"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "# Future directions\n\n- Replace the illustrative rational census by an audited dataset and use `fitness_lt_iff_cross_product` as the exact validation criterion. In particular, the labels \u201cZFC\u201d and \u201cZFC plus large cardinals\u201d do not determine connection counts or proof density without an explicit measurement protocol.\n- Generalize fitness from one scalar to a partially ordered vector of explanatory reach, theorem production, consistency strength, and axiom cost. This would distinguish profiles that the scalar product identifies.\n- Derive competitive exclusion from an explicit resource model rather than encoding unique occupancy in `NicheAllocation`. A useful next model would assign resource-demand vectors and prove exclusion under strict scarcity and equilibrium assumptions.\n- Study stochastic evolution with a supermartingale Lyapunov function, replacing deterministic bounded stabilization by almost-sure convergence.\n- Connect theory profiles to a finite graph whose edges are interpretation, conservativity, or transfer theorems, so that `connections` is computed from formal data rather than supplied as a field.\n- Investigate coexistence: the formal counterexample shows that equal scalar fitness need not imply equal profiles, so a richer niche definition may support stable polymorphic equilibria rather than exclusion.\n",
     "domains": [
@@ -6169,6 +6168,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T16:54:31.009955+00:00",
     "title": "1. **Concrete ZFC syntax and proof checking.** Replace the abstract `DeductiveSy"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Size-Indexed Information Loss and Fluctuation Bounds\n\nThe formal result in `Catalog/Applications/SizeIndexedLandauerBridge.lean` connects two resources that share an input-size index but are not identified: the cardinality loss of resetting an `n`-bit Boolean register and the expected work of a finite-temperature process satisfying a Jarzynski relation. The exact count `2^n` yields `n` discarded bits, hence an expected-work lower bound `k T n log 2`; an arbitrary runtime function does not enter the derivation. A second theorem permits any lower bound `b(n)` on discarded bits, and a tail theorem exponentially bounds runs that beat the threshold.\n\n## 1. Conditional information with retained side memory\n\nReplace uniform full-register reset by a joint memory `(X,Y)` where `Y` is retained. The natural exact cost is conditional entropy `H(X|Y)`, not `H(X)`. A useful next theorem would combine a finite conditional-entropy identity with an input-wise Jarzynski relation and recover the present `n`-bit result when the side register is trivial.\n\n## 2. Nonuniform inputs and fiber-weighted reset cost\n\nThe current register is uniform, so cardinality and Shannon entropy agree. For nonuniform input distributions, define the logical loss through pushforward entropy and prove a work bound proportional to `H(p) - H(f_*p)`. This would distinguish a many-to-one map whose unused fibers have zero probability from one that actually destroys likely distinctions.\n\n## 3. Reversible simulation followed by a localized reset\n\nFormalize a clocked transition system whose reversible simulation retains a history tape. The computational phase should be represented by an injection and therefore incur zero logical loss in the finite model; only discarding the history should contribute. The main quantitative question is whether a polynomial-time machine admits a reversible transition system with polynomially bounded clock and history state.\n\n## 4. Composition with correlations\n\nFor sequential procedures, naive addition can overcount when later discarded registers are correlated with earlier ones. Develop a chain rule in which total work is indexed by conditional entropy increments. Exact additivity should hold under an appropriate conditional independence or surjectivity condition, while a data-processing inequality should handle the general case.\n\n## 5. Uniform hierarchy simulation\n\nEnrich extensional complexity classes with explicit clocks and compiler overhead functions. A stable hierarchy collapse can then be asked to produce one overhead polynomial for every fixed higher level. This requires tracking the dependence of polynomial exponents on the hierarchy level rather than merely proving set inclusion.\n\n## 6. Cyclic bounded-memory implementations\n\nTo approach a two-resource hierarchy, define cyclic implementations whose work registers and memory size are bounded as functions of input length. Seek explicit families with polynomial runtime and superlogarithmic entropy export, and separately families with long runtime implemented by nearly reversible transitions. Any impossibility theorem must state the reset, cyclicity, and bounded-memory assumptions explicitly.\n\n## 7. Beyond expectation: concentration and repeated trials\n\nThe finite-size theorem already gives a one-run exponential lower-tail bound. For independent repeated resets, tensorize the fluctuation relation and derive concentration around the extensive threshold. For dependent trials, identify mixing or martingale hypotheses sufficient for a comparable bound.\n",
+    "domains": [
+      "Computation",
+      "Bridges"
+    ],
+    "id": "fd_0605",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "43fa6482",
+    "status": "available",
+    "timestamp": "2026-07-22T18:42:10.261239+00:00",
+    "title": "The formal result in `Catalog/Applications/SizeIndexedLandauerBridge.lean` conne"
   },
   {
     "consumed_by_exp_id": "",

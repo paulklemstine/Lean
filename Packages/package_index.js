@@ -4,6 +4,28 @@
 
 window.PACKAGE_INDEX = [
   {
+    "date": "2026-07-22T18:42:12Z",
+    "domain": "Cryptography",
+    "exp_id": "c612ec41",
+    "filename": "for_any_family_of_local_stabilizer_codes_admitting.json",
+    "pkg_num": 790,
+    "quality": "unrated",
+    "quality_score": null,
+    "quality_tier": "unrated",
+    "title": "Exact Singleton Defect and Protected Quantum Information"
+  },
+  {
+    "date": "2026-07-22T18:42:07Z",
+    "domain": "Applications",
+    "exp_id": "43fa6482",
+    "filename": "conjecture_let_a_family_of_decision_procedures_on_.json",
+    "pkg_num": 789,
+    "quality": "substantial",
+    "quality_score": 0.77,
+    "quality_tier": "silver",
+    "title": "Size-Indexed Landauer Bounds for Boolean-Register Reset"
+  },
+  {
     "date": "2026-07-22T16:54:25Z",
     "domain": "Novelty",
     "exp_id": "24111e1f",
@@ -10114,6 +10136,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "The Octahedron Bridge: Balanced Clique Matrices and Clique-Helly Graphs"
   },
+  "conjecture_let_a_family_of_decision_procedures_on_.json": {
+    "domain": "Applications",
+    "exp_id": "43fa6482",
+    "source_exp_ids": [
+      "bb72d587"
+    ],
+    "title": "Size-Indexed Landauer Bounds for Boolean-Register Reset"
+  },
   "conjecture_on_absolute_boundedness_of_polynomial_d.json": {
     "domain": "Logic",
     "exp_id": "150736b0",
@@ -11725,6 +11755,14 @@ window.PACKAGE_DB_INDEX = {
       "999c0f6b"
     ],
     "title": "The Only Cost Is Height: A Unit-Cost Ultrametric Functor from Valuation Depth to Tropical Trees"
+  },
+  "for_any_family_of_local_stabilizer_codes_admitting.json": {
+    "domain": "Cryptography",
+    "exp_id": "c612ec41",
+    "source_exp_ids": [
+      "f25f9735"
+    ],
+    "title": "Exact Singleton Defect and Protected Quantum Information"
   },
   "for_every_natural_number_k_the_factorial_code_spac.json": {
     "domain": "Novelty",

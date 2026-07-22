@@ -4,6 +4,17 @@
 
 window.PACKAGE_INDEX = [
   {
+    "date": "2026-07-22T18:42:07Z",
+    "domain": "Applications",
+    "exp_id": "43fa6482",
+    "filename": "conjecture_let_a_family_of_decision_procedures_on_.json",
+    "pkg_num": 789,
+    "quality": "substantial",
+    "quality_score": 0.77,
+    "quality_tier": "silver",
+    "title": "Size-Indexed Landauer Bounds for Boolean-Register Reset"
+  },
+  {
     "date": "2026-07-22T16:54:25Z",
     "domain": "Novelty",
     "exp_id": "24111e1f",
@@ -10113,6 +10124,14 @@ window.PACKAGE_DB_INDEX = {
       "2607.00730v1"
     ],
     "title": "The Octahedron Bridge: Balanced Clique Matrices and Clique-Helly Graphs"
+  },
+  "conjecture_let_a_family_of_decision_procedures_on_.json": {
+    "domain": "Applications",
+    "exp_id": "43fa6482",
+    "source_exp_ids": [
+      "bb72d587"
+    ],
+    "title": "Size-Indexed Landauer Bounds for Boolean-Register Reset"
   },
   "conjecture_on_absolute_boundedness_of_polynomial_d.json": {
     "domain": "Logic",

@@ -1,26 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "3dea732a",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Causal Consistency Beyond Global Contraction\n\n## 1. Local basin Novikov principle for polynomial feedback\n\n**Conjecture.** Let a real polynomial causal return map preserve a close",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-19T20:44:12",
-      "title": "Time Travel Consistency: Novikov's Principle as a Fixed-Point Theorem"
-    },
-    {
-      "cycle_id": "cb3d5d14",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Self-Modifying Computation\n\n## 1. Resource-Bounded Rewrite Hierarchy\n\nFor every positive integer `k`, there exists a natural machine model in which permitting at most `k + 1` code",
-      "quality_score": 0.8,
-      "sorry_count": 13,
-      "theorem_count": 0,
-      "timestamp": "2026-07-19T22:03:14",
-      "title": "Self-Modifying Code That Cannot Be Stopped"
-    },
-    {
       "cycle_id": "606f7bdd",
       "domain": "Applications",
       "key_insight": "# Future Directions: Functional Fibers, Experience, and Semantic Gaps\n\n## 1. Naturality of the zombie–semantic gap correspondence\n\n**Conjecture.** There is a category of functional profiles and profil",
@@ -499,29 +479,29 @@
       "theorem_count": 24,
       "timestamp": "2026-07-22T16:54:33",
       "title": "Moonshot: The Last Theorem — Formalizing the Heat Death of Mathematics"
+    },
+    {
+      "cycle_id": "43fa6482",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Size-Indexed Information Loss and Fluctuation Bounds\n\nThe formal result in `Catalog/Applications/SizeIndexedLandauerBridge.lean` connects two resources that share an input-size in",
+      "quality_score": 0.77,
+      "sorry_count": 0,
+      "theorem_count": 7,
+      "timestamp": "2026-07-22T18:42:11",
+      "title": "**Conjecture.** Let a family of decision procedures on inputs of length `n` irre"
+    },
+    {
+      "cycle_id": "c612ec41",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions\n\n## Result established\n\nFor code parameters satisfying the quantum Singleton inequality\n`k + 2(d - 1) ≤ n` with positive distance, define the exact Singleton defect\n\n`D = n + 2 - 2",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-07-22T18:42:15",
+      "title": "For any family of local stabilizer codes admitting a geometric realization, conj"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "d69a2aa8",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions: Tropical Hashing Beyond Coordinate Minima\n\n## 1. Complexity transition under coupled message constraints\n\nConjecture: If messages are restricted by a sparse system of integer diff",
-      "quality_score": 0.79,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-18T03:22:53",
-      "title": "Tropical Cryptocurrency: Mining on the Min-Plus Semiring"
-    },
-    {
-      "cycle_id": "5ae7f8c1",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions\n\n## What the formal result establishes\n\nThe proposed “interval topology” is the ordinary order topology: open intervals and open rays generate the same topology on a linear order.",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-07-18T03:54:50",
-      "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
-    },
     {
       "cycle_id": "ee626e30",
       "domain": "MachineLearning",
@@ -2501,45 +2481,29 @@
       "theorem_count": 24,
       "timestamp": "2026-07-22T16:54:33",
       "title": "Moonshot: The Last Theorem — Formalizing the Heat Death of Mathematics"
+    },
+    {
+      "cycle_id": "43fa6482",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Size-Indexed Information Loss and Fluctuation Bounds\n\nThe formal result in `Catalog/Applications/SizeIndexedLandauerBridge.lean` connects two resources that share an input-size in",
+      "quality_score": 0.77,
+      "sorry_count": 0,
+      "theorem_count": 7,
+      "timestamp": "2026-07-22T18:42:11",
+      "title": "**Conjecture.** Let a family of decision procedures on inputs of length `n` irre"
+    },
+    {
+      "cycle_id": "c612ec41",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions\n\n## Result established\n\nFor code parameters satisfying the quantum Singleton inequality\n`k + 2(d - 1) ≤ n` with positive distance, define the exact Singleton defect\n\n`D = n + 2 - 2",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-07-22T18:42:15",
+      "title": "For any family of local stabilizer codes admitting a geometric realization, conj"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "1a27f9f3",
-      "domain": "Combinatorics",
-      "name": "truthWords_branch_disjoint",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "1a27f9f3",
-      "domain": "Combinatorics",
-      "name": "card_truthWords_rec",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "3d25b5ad",
-      "domain": "Pythagorean",
-      "name": "steinerThird_left_involutive",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "3d25b5ad",
-      "domain": "Pythagorean",
-      "name": "steinerThird_ne_left",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "3d25b5ad",
-      "domain": "Pythagorean",
-      "name": "steinerThird_translate",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "d5fe8eb3",
-      "domain": "Geometry",
-      "name": "exposes",
-      "quality": 0.72
-    },
     {
       "cycle_id": "d5fe8eb3",
       "domain": "Geometry",
@@ -2803,9 +2767,45 @@
       "domain": "NumberTheory",
       "name": "codes",
       "quality": 0.75
+    },
+    {
+      "cycle_id": "43fa6482",
+      "domain": "Applications",
+      "name": "but",
+      "quality": 0.77
+    },
+    {
+      "cycle_id": "43fa6482",
+      "domain": "Applications",
+      "name": "strengthens",
+      "quality": 0.77
+    },
+    {
+      "cycle_id": "43fa6482",
+      "domain": "Applications",
+      "name": "card_bitRegister",
+      "quality": 0.77
+    },
+    {
+      "cycle_id": "c612ec41",
+      "domain": "Cryptography",
+      "name": "singleton_rearranged",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "c612ec41",
+      "domain": "Cryptography",
+      "name": "defect_nonnegative",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "c612ec41",
+      "domain": "Cryptography",
+      "name": "logical_dimension_le_defect",
+      "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-22T16:54:33",
+  "last_updated": "2026-07-22T18:42:15",
   "open_questions": [
     {
       "context": "",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "238d5b60",
-        "quality": 0.76,
-        "theorems": 0,
-        "title": "Aleph-1 Surface: Geometry Between Dimensions"
-      },
-      {
         "cycle_id": "3dea732a",
         "quality": 0.78,
         "theorems": 0,
@@ -3141,6 +3135,12 @@
         "quality": 0.77,
         "theorems": 21,
         "title": "Moonshot: Dyson Sphere Mathematics — Energy Collection Optimization"
+      },
+      {
+        "cycle_id": "43fa6482",
+        "quality": 0.77,
+        "theorems": 7,
+        "title": "**Conjecture.** Let a family of decision procedures on inputs of length `n` irre"
       }
     ],
     "Bridges": [
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "bcfc30de",
-        "quality": 0.72,
-        "theorems": 8,
-        "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
-      },
-      {
         "cycle_id": "f25f9735",
         "quality": 0.75,
         "theorems": 0,
@@ -3389,6 +3383,12 @@
         "quality": 0.71,
         "theorems": 10,
         "title": "ArXiv paper: Lattice slices, Ehrhart polynomials, and magic positivity of genera"
+      },
+      {
+        "cycle_id": "c612ec41",
+        "quality": 0.7,
+        "theorems": 15,
+        "title": "For any family of local stabilizer codes admitting a geometric realization, conj"
       }
     ],
     "Geometry": [
