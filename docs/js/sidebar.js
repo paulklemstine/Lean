@@ -94,20 +94,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Search filter
-    if (searchInput) {
-        searchInput.addEventListener('input', (e) => {
-            const term = e.target.value.toLowerCase();
-            const base = window.Aether.packages || [];
-            const filtered = term
-                ? base.filter(p =>
-                    p.title?.toLowerCase().includes(term) ||
-                    p.domain?.toLowerCase().includes(term)
-                  )
-                : base;
-            currentPage = 1;
-            window.renderSidebar(filtered);
-        });
-    }
+    searchInput.addEventListener('input', (e) => {
+        const term = e.target.value.toLowerCase();
+        const base = window.Aether.packages || [];
+        const filtered = term
+            ? base.filter(p =>
+                p.title?.toLowerCase().includes(term) ||
+                p.domain?.toLowerCase().includes(term)
+              )
+            : base;
+        currentPage = 1;
+        window.renderSidebar(filtered);
+    });
 
     // Sort mode change
     if (sortMode) {
