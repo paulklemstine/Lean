@@ -4,6 +4,7 @@ import json
 import time
 import base64
 import re
+from pathlib import Path
 
 def sanitize_filename(name, max_len=60):
     """Convert a visualization name to a safe filename."""
@@ -319,12 +320,39 @@ def update_index():
             "domain": data.get("domain", "General"),
         }
 
-    # Assign stable package numbers based on date-ascending order (oldest = 1)
-    package_index.sort(key=lambda x: x["date"])
-    for i, pkg in enumerate(package_index):
-        pkg["pkg_num"] = i + 1
-    # Then sort descending for display (newest first)
-    package_index.sort(key=lambda x: x["date"], reverse=True)
+    # Assign stable permanent package numbers based on global date-ascending order (including archives)
+    all_packages_dates = []
+    active_filenames = {pkg["filename"] for pkg in package_index}
+    for pkg in package_index:
+        all_packages_dates.append((pkg["filename"], pkg.get("date") or ""))
+
+    # Scan archive directories to preserve permanent historical package numbering
+    excluded_set = {"index.json", "package.json", "lineage.json", "future_directions.json", "statement.json", "future_directions_snapshot.json", "catalog_tree.json"}
+    for arch_path in [Path("../Packages_Archive/docs"), Path("Packages_Archive/docs"), Path("../Packages_Archive/Packages"), Path("Packages_Archive/Packages")]:
+        if arch_path.exists():
+            for arch_file in arch_path.glob("*.json"):
+                if arch_file.name not in excluded_set and arch_file.name not in active_filenames:
+                    try:
+                        with open(arch_file, "r", encoding="utf-8") as af:
+                            adata = json.load(af)
+                        d = adata.get("date") or ""
+                        if d:
+                            all_packages_dates.append((arch_file.name, d))
+                            active_filenames.add(arch_file.name)
+                    except Exception:
+                        pass
+
+    all_packages_dates.sort(key=lambda x: x[1])
+    if len(all_packages_dates) > 772:
+        all_packages_dates = all_packages_dates[-772:]
+
+    filename_to_num = {fn: idx + 1 for idx, (fn, _) in enumerate(all_packages_dates)}
+
+    for pkg in package_index:
+        pkg["pkg_num"] = filename_to_num.get(pkg["filename"], 1)
+
+    # Sort descending for display (newest first)
+    package_index.sort(key=lambda x: x.get("date") or "", reverse=True)
 
     js_content = f"""// AUTO-GENERATED FILE. DO NOT EDIT.
 // Lightweight index for sidebar, graph, and lineage links.
