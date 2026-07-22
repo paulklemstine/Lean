@@ -1,218 +1,157 @@
-# The Logic of Time Travel: When Can a Loop in Time Hold Together?
+# Time-Travel Logic: When a Loop Is Not a Paradox
 
-Imagine stepping into a machine, spinning the dial back to a summer afternoon
-decades before you were born, and walking out into a world that has not yet made
-you. Everything you touch there will ripple forward through the years and,
-eventually, back to the moment you left. You are not just a visitor to the past;
-you are now a *cause* of the present you came from. The future you knew depends
-on what you do here — and what you do here depends on the future you knew.
+*By Aristotle — July 22, 2026*
 
-This is the strange knot at the heart of every time-travel story: a loop in which
-effect feeds back into cause. Physicists call such a loop a **closed timelike
-curve**. Storytellers call it a paradox waiting to happen. For a long time both
-groups treated the subject as a playground for intuition and contradiction. But
-the question "when can a loop in time hold together?" turns out to have a crisp,
-provable answer. This article is about that answer.
+A time traveler enters a machine, vanishes into yesterday, and changes the event that sent them there. Popular stories treat the resulting contradiction as a fog of metaphysics. Mathematics asks a sharper question: what, exactly, is looping? A sequence of states can return to where it began without any state being compatible with what happens next. That small distinction separates a repeating history from a self-consistent one.
 
-## A loop in time is a function
+This article develops a spare mathematical world in which that distinction becomes exact. It has no wormholes, curved spacetime, or quantum amplitudes. It begins with a set $X$ of possible event-states and a deterministic causal law
 
-Strip away the romance and a time loop is a bookkeeping device. Something goes
-around it — call it the **state of the world**, everything the loop can touch —
-and comes back changed. Whatever the physics, the *net effect* of one trip
-around the loop is captured by a single rule: give me the state of the world as
-the loop begins, and I will tell you the state of the world as the loop closes.
+$$
+f:X\to X.
+$$
 
-We write that rule as a function $f$ that takes a world-state $s$ and returns a
-new world-state $f(s)$. Traveling once around the loop turns $s$ into $f(s)$.
+If the present state is $x$, the next state is $f(x)$. Repeated application gives $f^2(x)=f(f(x))$, then $f^3(x)$, and in general $f^n(x)$. This simple language is enough to isolate three ideas often blurred together in discussions of time travel: closure, consistency, and fixed points.
 
-Now the paradox has a precise shape. A loop is a genuine, self-supporting piece
-of history only if the world it hands back is the very world it started from.
-The state you leave must be the state you arrive to create. In symbols, the loop
-holds together exactly when there is a world-state $s$ with
-$$f(s) = s.$$
-A world-state that satisfies this equation is called a **fixed point** of $f$:
-the loop maps it to itself. The whole subject of time-travel consistency reduces
-to a single question about ordinary functions: *does this function have a fixed
-point?*
+## Three meanings of “the story comes back”
 
-This is the mathematical face of a principle that physicists have long invoked
-to tame time travel — the **self-consistency principle**, which insists that the
-only journeys into the past that can actually occur are the ones that produce the
-history they departed from. In our language:
+A **closed causal orbit of positive period $p$** begins at a state $x$ and returns after $p>0$ updates:
 
-> **Self-consistency principle (fixed-point form).** A time loop with net effect
-> $f$ admits a consistent history if and only if $f$ has a fixed point, a
-> world-state $s$ with $f(s) = s$.
+$$
+f^p(x)=x.
+$$
 
-The principle stops being a philosophical stance and becomes a theorem about
-functions. And once it is a theorem, we can actually decide, loop by loop,
-whether a given piece of time travel is possible.
+The visited states are $x,f(x),\ldots,f^{p-1}(x)$. Closure says only that the journey returns. It does not say that any individual state is unchanged by the causal law.
 
-## Histories that close
+A visited state $y$ is a **fixed point** if
 
-A real time loop is not one instantaneous jump; it is a chain of events, each
-causing the next: $e_1 \to e_2 \to \dots \to e_n \to e_1$. To model this, think
-of the loop as a sequence of causal steps. Step $0$ turns the state at event
-$e_1$ into the state at $e_2$; step $1$ turns that into the state at $e_3$; and
-so on around the ring. Applying the first $k$ steps in order, starting from a
-state $s$, produces what we might call *the state after $k$ steps*, and the full
-loop of length $n$ is what you get after all $n$ steps.
+$$
+f(y)=y.
+$$
 
-A **closed timelike history** is an honest labeling of the events by
-world-states — a value $h(0), h(1), \dots, h(n)$ at each event — with two
-properties: every step does its job, so the effect $h(k+1)$ really is what the
-cause $h(k)$ produces, and the loop actually closes, so $h(n) = h(0)$. This is
-what a self-consistent journey *looks like* from the inside: a diary of the trip
-in which every entry is caused by the one before and the last entry matches the
-first.
+A loop **contains a fixed point** when $f^k(x)$ is fixed for some index $k$ with $0\le k<p$.
 
-The first theorem says these two viewpoints — the abstract "does the net map
-have a fixed point?" and the concrete "is there a diary that closes?" — are one
-and the same.
+Finally, the loop is **pointwise self-consistent in the Novikov sense** when every visited state is fixed:
 
-> **Theorem (Novikov equivalence).** A loop of length $n$ has a self-consistent
-> net effect (its overall map has a fixed point) if and only if it admits a
-> closed timelike history.
+$$
+f\bigl(f^k(x)\bigr)=f^k(x)\qquad\text{for every }0\le k<p.
+$$
 
-The proof is a pleasant round trip. From a fixed point $s$, define the diary by
-letting $h(k)$ be the state after $k$ steps starting from $s$; because $s$ is
-fixed, the last entry returns to the first, and every step obviously does its
-job. Conversely, from a closed diary, its starting value $h(0)$ is fixed by the
-full loop, because running all $n$ steps from $h(0)$ retraces the diary and lands
-back at $h(n) = h(0)$. Consistency of the whole is exactly consistency step by
-step.
+This is deliberately strong. It says that applying the causal rule at any point on the loop leaves that event-state unchanged. In this deterministic model, consistency is not merely “eventually returning”; it is local stability everywhere along the closed history.
 
-## The grandfather paradox, made impossible on purpose
+The first easy result is that a nonempty self-consistent loop contains a fixed point. The starting state itself supplies one: choose $k=0$. A second result runs in the other direction from a fixed start. If $f(x)=x$, then induction gives $f^n(x)=x$ for every $n\ge0$, so every visited state equals the same fixed state and the orbit is self-consistent.
 
-The most famous time-travel puzzle is the grandfather paradox: you go back and
-prevent your own ancestor from ever having descendants — but then you were never
-born, so you never went back, so your ancestor survives, so you *were* born. The
-story spins forever precisely because it can never settle.
+The crucial bridge is stronger.
 
-We can make this exact. Reduce the ancestor to a single bit of world-state:
-*alive* or *dead*. The traveler's action, carried around the loop, flips that
-bit — the whole point of the journey is to change the ancestor's fate. So the
-net effect is the function that swaps *alive* with *dead* and *dead* with
-*alive*. Call it $f$.
+**Fixed-event collapse theorem.** If a deterministic orbit closes after $p>0$ steps and one of its visited states is fixed, then the starting state is fixed and every state on the orbit is equal to it.
 
-Does $f$ have a fixed point? A fixed point would be a status that the loop leaves
-unchanged. But flipping never leaves anything unchanged: *alive* becomes *dead*
-and *dead* becomes *alive*, so $f(s) \neq s$ for every $s$. We call such a loop
-**paradoxical**: no world-state survives a trip around it. And a paradoxical loop
-can have no fixed point, hence no consistent history.
+To see why, suppose $y=f^k(x)$ and $f(y)=y$. Every later iterate remains $y$. In particular, advancing the remaining $p-k$ steps gives $f^p(x)=y$. Closure also gives $f^p(x)=x$, hence $x=y$. Once the start is fixed, all iterates are identical.
 
-> **Theorem (grandfather paradox is impossible).** The flip-the-ancestor loop
-> has no fixed point, so it admits no self-consistent history whatsoever.
+This yields the central statement.
 
-This is not hand-waving about causality; it is the observation that a function
-with no fixed point cannot support a closed loop, together with the fact that a
-flip has no fixed point. The grandfather paradox is impossible in the strongest
-sense: not "it would be weird," but "there is provably no way to fill in the
-diary." Under the self-consistency principle, nature simply does not allow such a
-journey to happen.
+**Novikov fixed-point equivalence.** On every nonempty closed orbit of a deterministic causal law, pointwise self-consistency holds if and only if the orbit contains a fixed point.
 
-## When loops are guaranteed to hold together
+One direction is immediate because every point in a self-consistent loop is fixed. In the other direction, one fixed visited event collapses the closed deterministic orbit to a constant history, which is self-consistent.
 
-If some loops are impossible, are others *guaranteed* to be possible? Remarkably,
-yes — and here mathematics hands time travel three separate safety certificates,
-each springing from a classical fixed-point theorem.
+This theorem reveals something unexpectedly severe about the model. A deterministic closed loop cannot contain a fixed event alongside genuinely changing events. If one point becomes immovable, closure drags the entire cycle into that point. A fixed point is not a quiet station on a moving circular railway; it is a terminus that absorbs the whole route.
 
-**Order and monotonicity.** Suppose the world-states can be ranked, with a
-richest possible state and a poorest, and every collection of states has a least
-upper bound and a greatest lower bound. (Mathematicians call such a structure a
-*complete lattice*; think of it as a space with no gaps at the top or bottom.)
-Suppose too that the loop is **monotone**: feeding it a richer input never yields
-a poorer output. Then the loop is *always* self-consistent. This is a form of
-the celebrated Knaster–Tarski theorem, and the fixed point it produces is
-canonical — the smallest self-consistent world the loop can settle into.
+## Laws that settle after one step
 
-**Continuity on a dial.** Now imagine the world-state is a single continuous
-parameter — a dial reading between $0$ and $1$, say the phase of some cyclic
-process. If the loop's net effect varies continuously and never sends the dial
-outside its range, then it must fix some setting.
+Some causal laws erase further change as soon as they act. Mathematicians call $f$ **idempotent** when
 
-> **Theorem (continuous loops are self-consistent).** A continuous map $f$ of the
-> interval $[0,1]$ into itself has a point $s$ with $f(s) = s$.
+$$
+f(f(x))=f(x)\qquad\text{for every }x\in X.
+$$
 
-The reason is the intermediate value theorem in disguise. Look at
-$g(x) = f(x) - x$, the amount by which the loop *displaces* the dial. At the
-bottom of the range $g(0) = f(0) \ge 0$, because $f(0)$ cannot fall below $0$. At
-the top $g(1) = f(1) - 1 \le 0$, because $f(1)$ cannot rise above $1$. A
-continuous quantity that starts nonnegative and ends nonpositive must pass
-through zero, and where $g$ vanishes, $f$ fixes the dial. This one-dimensional
-result is a toy model of a striking conjecture in general relativity: that every
-closed timelike curve in the rotating cosmos known as the Gödel universe is
-self-consistent. Where the state space is continuous and self-contained,
-paradoxes cannot survive.
+Projection is the standard picture. Imagine a system that replaces every messy state by its canonical representative. Applying the cleanup twice does nothing beyond applying it once. Database normalization, rounding to an allowed category, and projecting a point onto a chosen coordinate axis all have this flavor.
 
-**Symmetry and parity.** Finally, suppose the loop is an **involution** — going
-around it twice restores the world exactly, so $f(f(s)) = s$ — and suppose the
-world has a finite, *odd* number of possible states. Then the loop must fix at
-least one of them.
+Under an idempotent law, every state reached after at least one update is fixed. Indeed, the first update produces $f(x)$, and idempotence says that another update leaves it unchanged. Induction then shows
 
-> **Theorem (odd involutive loops are self-consistent).** An involution on a
-> finite set of odd size has a fixed point.
+$$
+f^n(x)=f(x)\qquad\text{for every }n>0.
+$$
 
-The argument is a parity count. An involution pairs up the states it moves: each
-moved state $s$ is matched with its distinct partner $f(s)$, and these pairs use
-up an *even* number of states. If the total count is odd, at least one state
-cannot be paired off — and an unpaired state is one the loop leaves fixed. Odd
-symmetry leaves no room for a paradox.
+Now combine this with closure.
 
-## The many-worlds escape hatch
+**Idempotent causal-loop collapse theorem.** If $f$ is idempotent, $p>0$, and $f^p(x)=x$, then $f(x)=x$. Consequently the closed orbit is constant and pointwise self-consistent.
 
-There is one last twist, and it is the most satisfying. What happens to the
-grandfather paradox if history is allowed to *branch*?
+The proof is a single collision of equations. Positive iteration lands at the fixed state $f(x)$, while closure says the same iterate lands back at $x$. Thus $x=f(x)$. In this setting three descriptions coincide on a positive closed orbit: the orbit is Novikov-consistent; its starting point is fixed; and it contains a fixed point.
 
-In the branching picture, the traveler who goes back and kills the ancestor does
-not overwrite the timeline they came from. Instead they step into a *fresh
-branch* of reality — a new copy of the world, tagged with a branch number — and
-act freely there. The ancestor dies in the new branch; the traveler lives on in
-it; and the original timeline, the one that produced the traveler, is left
-untouched. No contradiction ever forms because no single timeline is ever asked
-to close on itself.
+The idempotence assumption matters. Without it, repetition can masquerade as consistency.
 
-We can model this precisely. A branching state is a world-state together with a
-branch index, and each step applies the traveler's action *and* advances the
-index to a new branch. Two facts follow, and together they are the whole
-resolution.
+## The grandfather switch
 
-First, branching never repeats a state: because the branch index strictly
-increases every step, the traveler never returns to a multiverse-state they have
-already occupied. Second — and this is the punchline — *every* action, even a
-provably paradoxical one like flip-the-ancestor, admits a perfectly consistent
-branching history.
+Strip the grandfather paradox to one bit. Let $A=1$ mean “the ancestor survives” and $A=0$ mean “the ancestor does not survive.” The intervention flips the bit:
 
-> **Theorem (branching resolves every paradox).** For any action with no
-> single-timeline fixed point, the branching model still produces a complete,
-> self-consistent history: start at the original world in branch $0$, and at each
-> step apply the action and move to a new branch. This history exists no matter
-> how paradoxical the action is.
+$$
+g(A)=1-A.
+$$
 
-The grandfather paradox, impossible as a loop that must close, becomes an
-ordinary sequence of events once we let the timeline fork. The traveler pulls the
-trigger; the ancestor falls; a new world spins off; and mathematics registers no
-complaint. Where the single-timeline story hit a brick wall — a function with no
-fixed point — the branching story simply walks around it, because it never
-demands that the function fix anything at all.
+There is no fixed state. If $A=0$, then $g(A)=1$; if $A=1$, then $g(A)=0$. So the consistency equation $g(A)=A$ has no solution.
 
-## Why this matters
+Yet the dynamics are perfectly periodic. Two flips restore the original state:
 
-It is tempting to see all this as clever bookkeeping for a physics we will never
-build. But the mathematics reaches much further than time machines. A "loop that
-must close" is one of the most common structures in all of science: an economy
-whose expectations shape the prices that shape the expectations; a population
-whose next generation is a function of this one; a numerical scheme searching for
-the state that reproduces itself; a program whose output is fed back as its
-input. Every one of these is a map $f$, and every one of them is asking the same
-question the time traveler asks — *is there a state you leave unchanged?*
+$$
+g^2(A)=A.
+$$
 
-The theory laid out here answers that question with a small toolkit of guarantees
-and one sharp impossibility. Flips and negations — systems built to overturn
-their own inputs — can never settle, and that is the grandfather paradox in its
-purest form. But order, continuity, and symmetry each force a resting point into
-existence, and when none of these hold, allowing the system to branch dissolves
-the deadlock entirely.
+More generally, $g^{2m}(A)=A$ for every nonnegative integer $m$, while $g^{2m+1}(A)=1-A$. Therefore every even number of interventions closes the orbit, and no odd number does.
 
-Time travel, it turns out, is not a licence for contradiction. It is a demand for
-a fixed point — and mathematics knows exactly when that demand can be met.
+This produces a precise no-go result.
+
+**Grandfather-paradox theorem.** The Boolean flip has no self-consistent state. No odd-period orbit closes. Every even-period orbit closes, but every positive even-period orbit is inconsistent because its first update changes the current state. In particular, the two-step orbit is closed but not Novikov-consistent.
+
+The example is also not idempotent: $g(g(A))=A$ whereas $g(A)=1-A$. It therefore pinpoints why the collapse theorem needs its hypothesis. Periodicity alone does not cure contradiction. A pendulum returns; a blinking light repeats; a two-state paradox cycles. None is locally unchanged.
+
+This lesson reaches beyond fictional time machines. In distributed computing, a process may revisit a global configuration while individual updates continue to alter it. In control systems, a limit cycle is not an equilibrium. In economics, recurring market states need not be stable under the next trading round. “We came back” and “nothing conflicts with itself” are mathematically different claims.
+
+## Escape by branching
+
+There is another way to model a traveler’s intervention: refuse to overwrite the past. Represent a timeline as a finite list of events
+
+$$
+H=[e_1,e_2,\ldots,e_n].
+$$
+
+Travel with an intervention $a$ creates a new timeline by appending one event:
+
+$$
+T(H,a)=H\mathbin{+\!+}[a].
+$$
+
+Here $+\!+$ denotes list concatenation. The source history remains intact. The new history is a child branch.
+
+Define $H$ to be an **ancestor** of $K$ when $H$ is a prefix of $K$: there exists a list $R$ such that $K=H\mathbin{+\!+}R$. Define $K$ to be a **strict descendant** of $H$ when $H$ is an ancestor of $K$ and $H\ne K$.
+
+Several structural facts follow.
+
+First, every travel operation preserves its source as an ancestor, because
+
+$$
+T(H,a)=H\mathbin{+\!+}[a].
+$$
+
+Second, the new branch has length $|H|+1$, so it cannot equal $H$. Thus travel always creates a strict descendant.
+
+Third, strict descent is transitive. If $B$ strictly extends $A$ and $C$ strictly extends $B$, then prefix transitivity makes $A$ a prefix of $C$. Moreover, the lengths strictly increase, so $A\ne C$. Hence $C$ is a strict descendant of $A$.
+
+Fourth, no history is its own strict descendant. The definition would require both $H=H$ and $H\ne H$. This irreflexivity is the branching model’s acyclicity law.
+
+Finally, different interventions create different sibling branches. If $a\ne b$, then
+
+$$
+H\mathbin{+\!+}[a]\ne H\mathbin{+\!+}[b].
+$$
+
+The two branches have equal length. A prefix relation between equal-length finite lists forces equality, so neither sibling can be an ancestor of the other. They are incomparable descendants of the same source.
+
+**Branch-creation theorem.** Appending an intervention creates a strict descendant of the source. Strict descent is transitive and irreflexive, so repeated branch creation cannot form a causal loop. Distinct interventions from one source create distinct, mutually incomparable sibling timelines.
+
+The “paradox” is dissolved by changing the data structure. In the loop model, the intervention acts on a state that must somehow feed back into itself. In the branch model, the intervention extends a record. The traveler does not erase the prefix that made the journey possible; the traveler creates a longer history with that prefix as ancestry.
+
+## What the mathematics does—and does not—say
+
+These results clarify logical architecture, not relativistic physics. A closed timelike curve is a geometric object in spacetime. Self-consistency depends additionally on a law governing matter and events along that curve. Geometry alone does not provide the deterministic update $f$, much less prove that its states are fixed. Any claim about a Gödel universe would require a Lorentzian spacetime, timelike curves, Gödel’s metric, and a specified evolution law. Closure in spacetime must not be silently identified with consistency of dynamics.
+
+The small model nevertheless offers a useful map. Deterministic loops obey a rigid fixed-point equivalence. Idempotent laws collapse positive closed orbits to equilibria. The grandfather flip proves that even perfect periodicity can remain inconsistent. Branching histories avoid overwrite paradoxes because extension is acyclic.
+
+The deepest idea is also the simplest: a circle and a fixed point are not the same thing. A story can return to its first page while changing every sentence along the way. To call that story self-consistent, one must specify what consistency demands. Once that demand is written as an equation, the mist clears—and the paradox becomes a theorem about dynamics, fixed points, and the shape of history.

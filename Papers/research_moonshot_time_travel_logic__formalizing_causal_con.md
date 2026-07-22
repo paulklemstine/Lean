@@ -1,375 +1,344 @@
-# Time-Travel Logic: A Fixed-Point Theory of Causal Consistency
+# Deterministic Causal Loops, Fixed-Point Consistency, and Acyclic Branching Histories
+
+**Aristotle**  
+**July 22, 2026**
 
 ## Abstract
 
-We give a self-contained mathematical theory of closed timelike curves (CTCs)
-and time-travel paradoxes, organized around a single object: the **loop map**
-$f \colon S \to S$, which records the net effect on the state of the world of one
-traversal of a closed timelike curve. We identify the *Novikov self-consistency
-principle* with the existence of a fixed point of $f$, and prove this abstract
-condition equivalent to the existence of a concrete **closed timelike history** of
-the discrete loop. We then formalize the **grandfather paradox** as a
-fixed-point-free ("paradoxical") loop and prove it genuinely inconsistent. Three
-positive consistency guarantees follow from classical fixed-point theorems:
-monotone loops on a complete lattice are self-consistent (Knaster–Tarski);
-continuous loops on the phase interval $[0,1]$ are self-consistent (the
-one-dimensional Brouwer property, via the intermediate value theorem), a toy
-model of the conjecture that every CTC in the Gödel universe is self-consistent;
-and involutive loops on a state space of odd cardinality are self-consistent (a
-parity argument). Finally, we develop the **many-worlds** resolution: a branching
-evolution on $S \times \mathbb{N}$ in which the traveler is always sent to a fresh
-branch. We prove that branching never repeats a state, and that *every*
-paradoxical action nonetheless admits a fully consistent branching history. The
-grandfather action, impossible in a single timeline, becomes consistent in the
-multiverse. The results form a single deductive chain from the definitions to the
-branching resolution.
+We present a minimal discrete mathematics of causal loops and branching timelines. A deterministic causal law is a map $f:X\to X$, and a closed orbit of positive period $p$ is a state $x$ satisfying $f^p(x)=x$. We distinguish this periodic closure from pointwise Novikov consistency, which requires every visited state $f^k(x)$, for $0\le k<p$, to be fixed by $f$. The central theorem proves that, on any nonempty deterministic closed orbit, pointwise consistency is equivalent to the presence of a fixed point on the orbit. The key mechanism is a collapse principle: one fixed point on a deterministic closed orbit forces the starting state, and hence the entire orbit, to equal that point. For idempotent laws satisfying $f^2=f$, every positive closed orbit collapses automatically.
 
-**Keywords:** closed timelike curve, self-consistency, fixed point,
-Knaster–Tarski theorem, Brouwer fixed point, intermediate value theorem,
-involution, parity, many-worlds, branching timelines.
-
----
+Boolean negation provides a minimal grandfather-intervention model. It has no fixed point; odd-period closure is impossible; and every positive even period closes while remaining inconsistent. Thus periodicity alone is strictly weaker than self-consistency, and idempotence is essential to the automatic collapse result. We then replace history-overwriting by a finite-prefix branching model. An intervention appends an event to a finite history, producing a strict descendant. Strict descent is transitive and irreflexive, while distinct interventions produce incomparable sibling branches. These results supply precise criteria for distinguishing recurrence, equilibrium, contradiction, and branch creation. We conclude with algorithms, applications, limitations, and extensions to relational, probabilistic, temporal, and geometric models.
 
 ## 1. Introduction
 
-Time travel into the past raises the possibility of *causal loops*: sequences of
-events $e_1 \to e_2 \to \dots \to e_n \to e_1$ in which each event causes the
-next and the last causes the first. Such a loop, a **closed timelike curve**
-(CTC), is not forbidden by the field equations of general relativity — explicit
-solutions such as the Gödel universe contain them — and it forces a foundational
-question: which causal loops describe a coherent history, and which collapse into
-paradox?
-
-The physics literature answers with the **Novikov self-consistency principle**:
-the only processes that can occur around a CTC are those globally consistent with
-themselves. The grandfather paradox — a traveler who prevents their own
-existence — is then excluded not by fiat but because no self-consistent history
-realizes it. This paper renders that informal principle as mathematics.
-
-Our organizing abstraction is deliberately minimal. Whatever the underlying
-spacetime, the *net effect* of traversing a CTC once is a function
-$f \colon S \to S$ on the space $S$ of world-states. We call $f$ the **loop map**.
-The self-consistency principle then reads: *the loop admits a consistent history
-if and only if $f$ has a fixed point.* This reframing converts a philosophical
-debate into a question in fixed-point theory, where a rich classical toolkit
-applies.
-
-The paper proceeds as a single chain. Section 2 sets up the loop map and the
-fixed-point criterion. Section 3 introduces discrete loops and closed timelike
-histories and proves their equivalence with the fixed-point criterion. Section 4
-formalizes and refutes the grandfather paradox. Section 5 gives three positive
-consistency guarantees from order theory, topology, and parity. Section 6
-develops the branching (many-worlds) resolution. Section 7 discusses
-applications and Section 8 lists future directions.
-
----
-
-## 2. The loop map and the self-consistency principle
-
-Fix a type $S$ of **world-states** — an exhaustive description of everything the
-loop can affect.
-
-**Definition 2.1 (causal loop).** A *causal loop* (closed timelike curve) on $S$
-is a function $f \colon S \to S$, called the **loop map** or **evolution**. The
-value $f(s)$ is the world-state produced by feeding $s$ once around the loop.
-
-**Definition 2.2 (self-consistency).** A causal loop $f$ is **self-consistent**
-if there exists a world-state reproduced by one traversal:
-$$\exists\, s \in S, \quad f(s) = s.$$
-Such an $s$ is a *fixed point* of $f$; it is a history compatible with itself.
-
-Definition 2.2 *is* the Novikov principle in fixed-point form. We record the
-tautological but conceptually central restatement.
-
-**Theorem 2.3 (fixed-point criterion).** A causal loop $f$ is self-consistent if
-and only if $f$ has a fixed point. $\qquad\blacksquare$
-
-The content of the theory is not this restatement but what fixed-point theory
-then tells us: which loops must have fixed points, and which cannot.
-
----
-
-## 3. Discrete loops and closed timelike histories
-
-A CTC is physically a chain of causal steps, not a single jump. We model a loop
-of length $n$ by a sequence of step maps $\text{steps} \colon \mathbb{N} \to (S
-\to S)$, where $\text{steps}(k)$ maps the state at event $e_{k+1}$ to the state at
-event $e_{k+2}$.
-
-**Definition 3.1 (traversal).** The *partial traversal* is defined by recursion:
-$$\operatorname{tr}(0, s) = s, \qquad
-  \operatorname{tr}(k+1, s) = \text{steps}(k)\big(\operatorname{tr}(k, s)\big).$$
-Thus $\operatorname{tr}(k, s)$ is the state after applying the first $k$ steps
-from $s$, and the full length-$n$ loop map is $s \mapsto \operatorname{tr}(n, s)$.
-
-**Definition 3.2 (closed timelike history).** A *closed timelike history* of the
-length-$n$ loop is a labeling $h \colon \mathbb{N} \to S$ of events by
-world-states such that
-$$\text{(steps realized)}\quad h(k+1) = \text{steps}(k)\big(h(k)\big) \text{ for
-all } k < n, \qquad \text{(loop closes)}\quad h(n) = h(0).$$
-It is the "diary" of a self-consistent journey: every effect is produced by its
-cause, and the loop returns to its start.
-
-**Lemma 3.3 (traversal recovers a history).** If $h$ is a closed timelike history
-of the length-$n$ loop, then for all $k \le n$,
-$\operatorname{tr}(k, h(0)) = h(k)$.
-
-*Proof.* Induction on $k$. The base case is $\operatorname{tr}(0, h(0)) = h(0)$.
-For the step, assume $\operatorname{tr}(k, h(0)) = h(k)$ with $k < n$. Then
-$\operatorname{tr}(k+1, h(0)) = \text{steps}(k)(\operatorname{tr}(k, h(0))) =
-\text{steps}(k)(h(k)) = h(k+1)$, using the induction hypothesis and the
-step-realized condition. $\qquad\blacksquare$
-
-**Theorem 3.4 (Novikov equivalence).** The length-$n$ loop is self-consistent —
-its loop map $s \mapsto \operatorname{tr}(n, s)$ has a fixed point — if and only
-if it admits a closed timelike history:
-$$\big(\exists\, s,\ \operatorname{tr}(n, s) = s\big) \iff \big(\exists\, h,\
-\text{$h$ is a closed timelike history of length } n\big).$$
-
-*Proof.* ($\Rightarrow$) Given a fixed point $s$ with $\operatorname{tr}(n,s)=s$,
-define $h(k) = \operatorname{tr}(k, s)$. The step-realized condition holds by
-Definition 3.1, and $h(n) = \operatorname{tr}(n, s) = s = h(0)$, so the loop
-closes.
-
-($\Leftarrow$) Given a closed timelike history $h$, take $s = h(0)$. By Lemma 3.3
-with $k = n$, $\operatorname{tr}(n, h(0)) = h(n) = h(0)$, so $h(0)$ is a fixed
-point of the length-$n$ loop map. $\qquad\blacksquare$
+Time-travel paradoxes are often expressed in narrative terms: an event causes an intervention that prevents the event itself. Their logical core, however, can be studied without assuming a physical mechanism for time travel. One needs only a space of event-states, a rule for causal succession, and a precise meaning of consistency.
 
-Theorem 3.4 justifies passing freely between the abstract fixed-point view and
-the concrete event-by-event view: global self-consistency is equivalent to
-step-local consistency that closes.
+The first challenge is terminological. A process may return to its starting state after several updates without being stable at any intermediate point. In dynamical systems, this is the distinction between a periodic orbit and an equilibrium. In discussions of causal loops, the same distinction separates mere closure from local self-consistency. A two-state system that alternates forever is periodic, but neither state survives one application of the rule. Calling such a loop “consistent” without qualification conceals the central issue.
 
----
+We study two small models. The first is deterministic and cyclic. It describes causal succession by a function and treats a closed history as a periodic point. Within this model we impose a strong, pointwise version of Novikov consistency: every state encountered before closure must be fixed under the causal law. This definition makes the local requirement explicit and supports a complete characterization by fixed points.
 
-## 4. The grandfather paradox
+The second model is branching rather than cyclic. A timeline is a finite sequence of events, and an intervention appends a new event. Ancestry is prefix inclusion. Because every intervention strictly increases length, causal descent is acyclic. This captures a minimal many-worlds intuition: the traveler does not overwrite the source history but creates a descendant history.
 
-**Definition 4.1 (paradoxical loop).** A loop map $f \colon S \to S$ is
-**paradoxical** if no world-state is left unchanged by a traversal:
-$$\forall\, s \in S, \quad f(s) \neq s.$$
+The purpose is not to claim a theory of relativistic spacetime. In particular, a closed timelike curve is a geometric object, whereas the consistency considered here is a property of a specified evolution law. The discrete results identify what can be concluded from deterministic dynamics and finite ancestry alone, and equally importantly, what cannot.
 
-**Theorem 4.2 (paradoxical loops are inconsistent).** A paradoxical loop map has
-no fixed point, hence is not self-consistent.
+## 2. Deterministic causal dynamics
 
-*Proof.* Immediate: a fixed point $s$ would satisfy $f(s) = s$, contradicting
-$f(s) \neq s$. $\qquad\blacksquare$
+Let $X$ be a nonempty or empty set of possible event-states; no algebraic or topological structure is required. A **deterministic causal law** is a function
 
-We now instantiate this with the grandfather action. Reduce the ancestor's fate
-to a single bit, $S = \{\text{alive}, \text{dead}\}$, identified with the boolean
-values. The traveler's action, carried around the loop, flips the bit: the loop
-map is boolean negation $\lnot$, sending alive to dead and dead to alive.
+$$
+f:X\to X.
+$$
 
-**Proposition 4.3 (the grandfather loop is paradoxical).** Boolean negation
-$\lnot$ is paradoxical: $\lnot s \neq s$ for both values of $s$.
+For $n\in\mathbb N$, write $f^n$ for the $n$-fold iterate, with $f^0$ the identity and $f^{n+1}=f\circ f^n$. The elementary composition rule is
 
-*Proof.* Check the two cases: $\lnot\,\text{true} = \text{false} \neq
-\text{true}$ and $\lnot\,\text{false} = \text{true} \neq \text{false}$.
-$\qquad\blacksquare$
+$$
+f^{m+n}(x)=f^m\bigl(f^n(x)\bigr).
+$$
 
-**Theorem 4.4 (the grandfather paradox is impossible).** The grandfather loop
-$\lnot$ admits no self-consistent history.
+### 2.1. Closure, consistency, and fixed points
 
-*Proof.* Combine Proposition 4.3 with Theorem 4.2. $\qquad\blacksquare$
+**Definition 2.1 (closed orbit).** Given $p\in\mathbb N$ and $x\in X$, the orbit from $x$ is closed after $p$ steps when
 
-Theorem 4.4 is the precise sense in which the grandfather paradox cannot occur:
-not merely that it is counterintuitive, but that there is provably no assignment
-of world-states closing the loop. Under the self-consistency principle,
-nature excludes it.
+$$
+f^p(x)=x.
+$$
 
----
+The main results concern positive periods $p>0$. Positivity is necessary because $f^0(x)=x$ for every state, so period zero carries no dynamical information.
 
-## 5. Positive consistency guarantees
+**Definition 2.2 (pointwise Novikov consistency).** The length-$p$ orbit from $x$ is pointwise self-consistent when
 
-Impossibility results have counterparts: broad classes of loops that are
-*guaranteed* self-consistent. Each of the following draws on a classical
-fixed-point theorem.
+$$
+f\bigl(f^k(x)\bigr)=f^k(x)
+$$
 
-### 5.1 Order: monotone loops (Knaster–Tarski)
+for every integer $k$ satisfying $0\le k<p$.
 
-**Theorem 5.1 (monotone loops are self-consistent).** Let $S$ be a complete
-lattice and $f \colon S \to S$ monotone (order-preserving:
-$x \le y \Rightarrow f(x) \le f(y)$). Then $f$ is self-consistent; indeed its
-least fixed point
-$$\operatorname{lfp}(f) = \bigsqcap \{\, x : f(x) \le x \,\}$$
-satisfies $f(\operatorname{lfp}(f)) = \operatorname{lfp}(f)$.
+Thus every state listed in the finite orbit segment
 
-*Proof.* This is the Knaster–Tarski theorem. Let $P = \{x : f(x) \le x\}$ be the
-set of prefixed points and $m = \bigsqcap P$. For any $x \in P$, monotonicity
-gives $f(m) \le f(x) \le x$; taking the infimum over $x \in P$ yields
-$f(m) \le m$, so $m \in P$. Applying $f$ and using monotonicity,
-$f(f(m)) \le f(m)$, so $f(m) \in P$ and hence $m \le f(m)$. Therefore
-$f(m) = m$. $\qquad\blacksquare$
+$$
+x,f(x),f^2(x),\ldots,f^{p-1}(x)
+$$
 
-The fixed point is *canonical*: the least self-consistent world the loop can
-settle into. Ordered, gap-free state spaces with order-preserving dynamics can
-never be paradoxical.
+must be stable under one further causal update.
 
-### 5.2 Topology: continuous loops on a phase interval
+**Definition 2.3 (fixed point on the loop).** The length-$p$ orbit from $x$ contains a fixed point when there is an index $k$ with $0\le k<p$ such that
 
-**Theorem 5.2 (continuous loops are self-consistent).** Let $f \colon [0,1] \to
-[0,1]$ be continuous (as a self-map of the phase interval). Then $f$ has a fixed
-point: there exists $s \in [0,1]$ with $f(s) = s$.
+$$
+f\bigl(f^k(x)\bigr)=f^k(x).
+$$
 
-*Proof.* This is the one-dimensional Brouwer fixed-point property, via the
-intermediate value theorem. Put $g(x) = f(x) - x$, continuous on $[0,1]$. Since
-$f$ maps into $[0,1]$, we have $g(0) = f(0) - 0 \ge 0$ and $g(1) = f(1) - 1 \le
-0$. A continuous function that is nonnegative at $0$ and nonpositive at $1$ takes
-the value $0$ at some $s \in [0,1]$; there $f(s) = s$. $\qquad\blacksquare$
+Definitions 2.2 and 2.3 differ only in quantifier: pointwise consistency requires stability at every visited state, whereas fixed-point existence requires stability at at least one visited state. On arbitrary finite sequences, the difference is substantial. Determinism and closure make it disappear.
 
-This is a toy model of the conjecture that **every closed timelike curve in the
-Gödel universe is self-consistent.** When the CTC phase space is a continuous,
-self-contained region and the loop map is continuous, a fixed point is forced.
-The natural strengthening to a continuous self-map of a nonempty compact convex
-subset of $\mathbb{R}^n$ (full Brouwer) is discussed in Section 8.
-
-### 5.3 Parity: involutive loops on odd state spaces
-
-**Theorem 5.3 (odd involutive loops are self-consistent).** Let $S$ be finite of
-odd cardinality and let $f \colon S \to S$ be an involution ($f(f(s)) = s$ for
-all $s$; going around the loop twice restores the state). Then $f$ has a fixed
-point.
-
-*Proof.* A parity/orbit count. As an involution, $f$ is a bijection whose square
-is the identity, so it is a permutation all of whose cycles have length $1$ or
-$2$. The length-$2$ cycles partition the non-fixed states into disjoint pairs
-$\{s, f(s)\}$, accounting for an even number of states. If $S$ has odd
-cardinality, the number of non-fixed states cannot be even unless it is strictly
-less than $|S|$; equivalently, since $|S|$ is odd it is not divisible by $2$, and
-a fixed-point-free permutation of order dividing $2$ would pair all elements,
-forcing $|S|$ even. Hence at least one state is fixed. $\qquad\blacksquare$
-
-Odd symmetry leaves no room for a paradox: at least one world is always left
-invariant.
-
----
-
-## 6. Branching (many-worlds) time travel
-
-The results above concern a *single* timeline that must close on itself. The
-many-worlds interpretation offers a different resolution: rather than forcing the
-loop to close, the traveler is sent to a **fresh branch** of reality. We model
-the multiverse state as a pair $(s, b) \in S \times \mathbb{N}$ — a world-state
-together with a branch index — and define branching evolution to apply the
-action and advance the branch.
-
-**Definition 6.1 (branching evolution).** For an action $a \colon S \to S$, the
-*branching evolution* is
-$$\operatorname{branch}_a \colon S \times \mathbb{N} \to S \times \mathbb{N},
-\qquad \operatorname{branch}_a(s, b) = (a(s),\, b + 1).$$
-
-**Theorem 6.2 (a fresh branch every time).** For any action $a$, the branching
-evolution $\operatorname{branch}_a$ is paradoxical as an ordinary loop map on
-$S \times \mathbb{N}$: it has no fixed point, because the branch index strictly
-increases at each step.
-
-*Proof.* A fixed point $(s,b)$ would satisfy $(a(s), b+1) = (s,b)$, forcing
-$b + 1 = b$, which is impossible in $\mathbb{N}$. $\qquad\blacksquare$
-
-Thus branching never returns to a multiverse-state already visited: the history
-of a branching traveler never loops. Crucially, this non-closure is exactly what
-*permits* consistency, because it dissolves the demand for a fixed point.
-
-**Theorem 6.3 (branching history exists).** For any action $a$ and any initial
-world-state $s_0$, there is a history $H \colon \mathbb{N} \to S \times
-\mathbb{N}$ with
-$$H(0) = (s_0, 0), \qquad H(k+1) = \operatorname{branch}_a\big(H(k)\big) \text{
-for all } k.$$
-
-*Proof.* Define $H$ by recursion: $H(0) = (s_0, 0)$ and $H(k+1) =
-\operatorname{branch}_a(H(k))$. This is a valid definition by recursion on
-$\mathbb{N}$ and satisfies both requirements by construction. $\qquad\blacksquare$
-
-**Theorem 6.4 (branching resolves every paradox).** Let $a \colon S \to S$ be
-*any* paradoxical action (so it has no single-timeline fixed point). Then both:
-
-1. the single-timeline loop is inconsistent — there is no $s$ with $a(s) = s$; and
-2. the branching model nonetheless admits a fully consistent branching history:
-   there exists $H$ with $H(0) = (s_0, 0)$ and $H(k+1) =
-   \operatorname{branch}_a(H(k))$ for all $k$.
-
-*Proof.* Part 1 is the definition of paradoxical together with Theorem 4.2. Part
-2 is Theorem 6.3, which places no hypothesis on $a$. $\qquad\blacksquare$
-
-**Corollary 6.5 (grandfather in the multiverse).** The grandfather action
-$\lnot$ on $S = \{\text{alive}, \text{dead}\}$ has no single-timeline fixed point,
-yet admits a consistent branching history starting from any $s_0$: the traveler
-kills the ancestor in a new branch and lives on there.
-
-*Proof.* Apply Theorem 6.4 with $a = \lnot$, paradoxical by Proposition 4.3.
-$\qquad\blacksquare$
-
-The single-timeline obstruction — a loop map with no fixed point — is precisely
-what branching sidesteps, because branching never asks the map to fix anything.
-
----
-
-## 7. Applications and interpretation
-
-**A unifying diagnostic.** The theory yields a simple decision procedure for the
-consistency of any modeled loop: form the loop map $f$ and ask whether it has a
-fixed point. Impossibility comes from fixed-point-free structure (flips,
-negations, strictly advancing counters); guaranteed consistency comes from order
-(monotonicity on a complete lattice), topology (continuity on a compact interval,
-and its higher-dimensional analogues), or parity (odd involutions).
-
-**Beyond time machines.** The loop map is ubiquitous. Self-referential
-equilibria (expectations that determine the prices that determine the
-expectations), population recurrences, fixed-point iterations in numerical
-analysis, and feedback in control and programming semantics are all instances of
-"find a state reproduced by the dynamics." The consistency dichotomy developed
-here — guaranteed fixed points versus provable fixed-point freeness, with
-branching as a universal escape — transfers directly to these settings. In
-particular, the Knaster–Tarski instance underlies denotational semantics of
-recursion, and the interval instance is the workhorse existence theorem behind
-one-dimensional equilibrium models.
-
-**Interpretational payoff.** The results sharpen the standard philosophical
-positions. The self-consistency principle is *not* an extra postulate once one
-accepts a single timeline: it is equivalent to the demand for a fixed point, and
-that demand is met or refuted by the structure of the loop map alone. The
-many-worlds position is likewise made precise: branching is consistent for
-*every* action, including the paradoxical ones, because the branch index breaks
-every cycle.
-
----
-
-## 8. Future directions
-
-- **Full Brouwer in higher dimensions.** Replace the one-dimensional interval
-  model of Theorem 5.2 by a continuous self-map of a nonempty compact convex
-  subset of $\mathbb{R}^n$ (or a simplex), giving self-consistency for
-  higher-dimensional CTC phase spaces. This requires Brouwer's fixed-point
-  theorem at the appropriate level of generality.
-
-- **The Gödel universe, honestly.** Formalize the Gödel metric and its timelike
-  geodesics, define a CTC intrinsically, and derive the loop map from the
-  geometry so that the continuous-consistency theorem (or its $\mathbb{R}^n$
-  upgrade) applies. The conjecture "every CTC in a Gödel universe is
-  self-consistent" would then become a corollary rather than a modeled instance.
-
-- **Quantitative Novikov / measure of consistent histories.** Put a probability
-  measure on $S$ and study the measure of the fixed-point set, formalizing the
-  folklore that "consistent histories have probability 1." For contractions this
-  connects to Banach fixed points (uniqueness); for measure-preserving loops, to
-  Poincaré recurrence.
-
-- **Branching as a category / tree.** Model the multiverse as a rooted tree of
-  branches and show the branching evolution is an injective, acyclic dynamical
-  system with no cycle across branches, formalizing in full generality why
-  many-worlds time travel cannot produce paradoxes.
-
-- **A fixed-point-free / inconsistency spectrum.** Classify which loop maps on a
-  finite $S$ are self-consistent purely in terms of their cycle structure,
-  yielding a complete combinatorial dichotomy between consistent and paradoxical
-  finite loops.
-
----
-
-## 9. Conclusion
-
-Modeling a closed timelike curve by its loop map $f \colon S \to S$ turns the
-Novikov self-consistency principle into the existence of a fixed point, and
-equates it with the existence of a closed timelike history of the discrete loop.
-Within this frame the grandfather paradox is provably impossible, three classical
-fixed-point theorems supply broad guarantees of consistency, and a branching
-multiverse resolves *every* paradoxical action by refusing to close the loop. The
-logic of time travel is, in the end, the logic of fixed points.
+### 2.2. Elementary fixed-point lemmas
+
+**Lemma 2.4 (consistency supplies a fixed point).** Let $p>0$. If the length-$p$ orbit from $x$ is pointwise Novikov-consistent, then it contains a fixed point.
+
+**Proof sketch.** The index $k=0$ lies in the range $0\le k<p$. Pointwise consistency at that index says $f(f^0(x))=f^0(x)$, which is exactly $f(x)=x$. Hence the starting state is already a fixed point. $\square$
+
+This observation reflects the strength of the chosen consistency condition. It also motivates the converse starting from a fixed initial event.
+
+**Lemma 2.5 (fixed start gives consistency).** If $f(x)=x$, then $f^n(x)=x$ for every $n\in\mathbb N$. Consequently, for every period $p$, the length-$p$ orbit from $x$ is pointwise Novikov-consistent.
+
+**Proof sketch.** Induct on $n$. The case $n=0$ is immediate. If $f^n(x)=x$, then
+
+$$
+f^{n+1}(x)=f(f^n(x))=f(x)=x.
+$$
+
+Every visited state therefore equals $x$ and is fixed. $\square$
+
+The next lemma uses closure to turn a fixed point encountered later into a fixed starting point.
+
+**Lemma 2.6 (fixed-event collapse).** Suppose $f^p(x)=x$ and the orbit contains a fixed point $y=f^k(x)$ for some $0\le k<p$. Then $y=x$, $f(x)=x$, and every state on the orbit equals $x$.
+
+**Proof sketch.** Since $f(y)=y$, induction gives $f^n(y)=y$ for every $n\ge0$. Because $k<p$, write $p=k+(p-k)$. Then
+
+$$
+f^p(x)=f^{p-k}(f^k(x))=f^{p-k}(y)=y.
+$$
+
+Closure says $f^p(x)=x$, so $x=y$. The fixed-point identity $f(y)=y$ becomes $f(x)=x$. Lemma 2.5 then makes every iterate equal to $x$. $\square$
+
+The inequality $k<p$ matters only to ensure the orbit point is represented before closure and to make the decomposition by $p-k$ transparent. The argument expresses a general property of deterministic maps: once an orbit reaches a fixed point, it cannot leave; if that orbit must later return to its start, the start was the fixed point all along.
+
+### 2.3. The fixed-point characterization
+
+**Theorem 2.7 (Novikov fixed-point equivalence).** Let $p>0$ and suppose $f^p(x)=x$. The orbit from $x$ is pointwise Novikov-consistent if and only if it contains a fixed point.
+
+**Proof sketch.** If the orbit is pointwise consistent, Lemma 2.4 supplies a fixed point. Conversely, if the orbit contains a fixed point, Lemma 2.6 shows that the starting state is fixed. Lemma 2.5 then gives pointwise consistency throughout the orbit. $\square$
+
+**Corollary 2.8 (no mixed deterministic loop).** A positive closed orbit of a deterministic map cannot contain both a fixed state and a distinct moving state. If any visited state is fixed, the orbit is constant.
+
+**Proof sketch.** Apply Lemma 2.6. $\square$
+
+This is the main structural result. The phrase “the loop has a fixed point” may sound weaker than “every point is consistent,” but on a deterministic closed orbit it is not. A fixed event is absorbing, and closure forces the whole orbit into it.
+
+## 3. Idempotent laws and automatic collapse
+
+A particularly rigid class of causal laws settles after one update.
+
+**Definition 3.1 (idempotent causal law).** A causal law $f:X\to X$ is idempotent if
+
+$$
+f(f(x))=f(x)
+$$
+
+for every $x\in X$.
+
+Equivalently, $f^2=f$. Such maps include projections and canonicalization procedures. Their images consist entirely of fixed points.
+
+**Lemma 3.2 (positive iterates are fixed).** If $f$ is idempotent, then for every $x\in X$ and every $n>0$,
+
+$$
+f^n(x)=f(x)
+$$
+
+and hence
+
+$$
+f(f^n(x))=f^n(x).
+$$
+
+**Proof sketch.** Write $n=m+1$. Starting from $f(x)$, every additional application of $f$ leaves the state unchanged by idempotence. An induction on $m$ yields $f^{m+1}(x)=f(x)$. Applying $f$ once more changes nothing. $\square$
+
+**Theorem 3.3 (idempotent causal-loop collapse).** Let $f$ be idempotent, let $p>0$, and suppose $f^p(x)=x$. Then $f(x)=x$. The closed orbit is constant and pointwise Novikov-consistent.
+
+**Proof sketch.** Lemma 3.2 says that $f^p(x)$ is fixed and, more specifically, equals $f(x)$. Closure gives $f^p(x)=x$. Therefore $f(x)=x$, and Lemma 2.5 completes the argument. $\square$
+
+**Theorem 3.4 (three-way characterization under idempotence).** Under the hypotheses of Theorem 3.3, the following are equivalent:
+
+1. the orbit is pointwise Novikov-consistent;
+2. the starting state is fixed and the orbit contains a fixed point;
+3. the starting state is fixed.
+
+**Proof sketch.** Theorem 3.3 already gives the fixed-start condition from idempotence and closure. A consistent positive orbit contains a fixed point by Lemma 2.4. Conversely, a fixed start gives consistency by Lemma 2.5 and itself supplies a fixed point at index $0$. $\square$
+
+Idempotence is sufficient rather than necessary for a particular closed orbit to collapse. A non-idempotent map may still have fixed points. Its importance is uniform: it ensures every state reaches a fixed point after one application, so no nontrivial positive cycle can occur anywhere.
+
+## 4. The Boolean grandfather intervention
+
+We now exhibit the sharp separation between periodic closure and self-consistency.
+
+Let the state space be $B=\{0,1\}$. Interpret $1$ as “the ancestor survives” and $0$ as “the ancestor does not survive.” Define the intervention law $g:B\to B$ by
+
+$$
+g(a)=1-a.
+$$
+
+Thus each application reverses the survival status.
+
+**Theorem 4.1 (absence of a self-consistent grandfather state).** There is no $a\in B$ satisfying $g(a)=a$.
+
+**Proof sketch.** Directly, $g(0)=1\ne0$ and $g(1)=0\ne1$. These exhaust $B$. $\square$
+
+**Lemma 4.2 (parity of iterated intervention).** For every $m\in\mathbb N$ and $a\in B$,
+
+$$
+g^{2m}(a)=a,
+$$
+
+while
+
+$$
+g^{2m+1}(a)=g(a)=1-a.
+$$
+
+**Proof sketch.** Two applications cancel: $g^2(a)=a$. Group an even iterate into $m$ pairs. An odd iterate is one flip followed by an even number of flips. $\square$
+
+**Theorem 4.3 (odd-period no-go).** For every odd positive integer $p$ and every $a\in B$,
+
+$$
+g^p(a)\ne a.
+$$
+
+Hence no odd-period grandfather orbit closes.
+
+**Proof sketch.** Write $p=2m+1$. Lemma 4.2 gives $g^p(a)=1-a$, which differs from $a$ for both Boolean states. $\square$
+
+**Theorem 4.4 (even closure without consistency).** For every positive even integer $p$ and every $a\in B$, the orbit closes:
+
+$$
+g^p(a)=a.
+$$
+
+Nevertheless it is not pointwise Novikov-consistent. In particular, the two-step orbit closes but is inconsistent.
+
+**Proof sketch.** Write $p=2m$ with $m>0$. Even closure follows from Lemma 4.2. Pointwise consistency would require stability at index $0$, namely $g(a)=a$, contradicting Theorem 4.1. $\square$
+
+**Corollary 4.5 (non-idempotence).** The grandfather law is not idempotent.
+
+**Proof sketch.** For either Boolean state, $g(g(a))=a$ while $g(a)=1-a$, so $g(g(a))\ne g(a)$. $\square$
+
+These results precisely locate the paradox. The update rule is well-defined, deterministic, and periodic. What fails is the fixed-point equation demanded by local self-consistency. The two-step orbit $0\mapsto1\mapsto0$ is a closed cycle, but neither $0$ nor $1$ is stable. Thus any principle equating recurrence with consistency is false without additional hypotheses.
+
+## 5. Finite branching histories
+
+The preceding model sends states around a single deterministic orbit. A branching model instead treats a history as an immutable prefix that may have multiple continuations.
+
+Let $E$ be a set of events. A **timeline** is a finite list
+
+$$
+H=[e_1,e_2,\ldots,e_n]
+$$
+
+with entries in $E$. Its length is denoted $|H|$. For lists $H$ and $R$, write $H\mathbin{+\!+}R$ for concatenation.
+
+**Definition 5.1 (travel by extension).** Given a source timeline $H$ and an intervention $a\in E$, define the resulting timeline by
+
+$$
+T(H,a)=H\mathbin{+\!+}[a].
+$$
+
+**Definition 5.2 (ancestry).** A timeline $A$ is an ancestor of $B$ if $A$ is a prefix of $B$, meaning that there exists a finite list $R$ with
+
+$$
+B=A\mathbin{+\!+}R.
+$$
+
+**Definition 5.3 (strict descent).** A timeline $B$ is a strict descendant of $A$ if $A$ is an ancestor of $B$ and $A\ne B$.
+
+The prefix relation is reflexive and transitive. Strict descent removes reflexivity and orients branch growth from a source toward a longer continuation.
+
+**Lemma 5.4 (source preservation).** For every source $H$ and intervention $a$, the source $H$ is an ancestor of $T(H,a)$.
+
+**Proof sketch.** Take the remainder list to be $[a]$ in Definition 5.2. $\square$
+
+**Lemma 5.5 (unit length growth).** For every $H$ and $a$,
+
+$$
+|T(H,a)|=|H|+1.
+$$
+
+**Proof sketch.** List concatenation adds lengths, and the singleton list $[a]$ has length $1$. $\square$
+
+**Theorem 5.6 (branch creation).** For every source $H$ and intervention $a$, $T(H,a)\ne H$, and $T(H,a)$ is a strict descendant of $H$.
+
+**Proof sketch.** Equality would imply equal lengths, contradicting Lemma 5.5. Combine inequality with source preservation from Lemma 5.4. $\square$
+
+**Theorem 5.7 (transitivity of strict descent).** If $B$ is a strict descendant of $A$ and $C$ is a strict descendant of $B$, then $C$ is a strict descendant of $A$.
+
+**Proof sketch.** Prefix transitivity makes $A$ a prefix of $C$. Proper prefix extension strictly increases length: $|A|<|B|<|C|$. Therefore $A\ne C$. $\square$
+
+**Theorem 5.8 (acyclicity).** No timeline is its own strict descendant. Consequently, no finite chain of strict branch extensions can return to its starting timeline.
+
+**Proof sketch.** Self-descent would require a timeline both to equal and not equal itself. For a chain, repeated use of Theorem 5.7 would turn a return into self-descent. Equivalently, length strictly increases at every branch-creation step and therefore cannot return to its original value. $\square$
+
+**Theorem 5.9 (distinct sibling creation).** If $a,b\in E$ and $a\ne b$, then
+
+$$
+T(H,a)\ne T(H,b).
+$$
+
+**Proof sketch.** If the appended lists were equal, cancellation of their common prefix $H$ would give $[a]=[b]$, hence $a=b$, a contradiction. $\square$
+
+**Theorem 5.10 (sibling incomparability).** If $a\ne b$, neither $T(H,a)$ nor $T(H,b)$ is an ancestor of the other.
+
+**Proof sketch.** Both children have length $|H|+1$. If one finite list is a prefix of another of equal length, the lists are equal. That contradicts Theorem 5.9. The argument is symmetric. $\square$
+
+Theorems 5.6–5.10 define the core geometry of the branch model. Travel preserves the complete source history, adds one event, and produces a genuinely new child. Distinct interventions are not competing descriptions of one overwritten timeline; they are incomparable siblings sharing a common ancestor.
+
+## 6. Algorithms and computational interpretation
+
+The finite models support direct algorithms. Assume equality testing on states and events takes constant time unless noted otherwise.
+
+### 6.1. Orbit audit
+
+Given a finite-state update table for $f$, a start $x$, and a proposed positive period $p$, iterate the law $p$ times. Record whether each visited state $y$ satisfies $f(y)=y$, whether any visited state does, and whether the final state equals $x$.
+
+The algorithm takes $O(p)$ time. If all $p$ visited states are retained, it uses $O(p)$ memory; if only the three Boolean audit flags are needed, it uses $O(1)$ auxiliary memory. On a closed deterministic orbit, Theorem 2.7 predicts equality between the “all fixed” and “some fixed” outcomes.
+
+### 6.2. Idempotence audit
+
+For a finite state space of size $N$, test $f(f(x))=f(x)$ for each state $x$. This takes $O(N)$ table lookups and $O(1)$ auxiliary space. If the test succeeds, every proposed positive closed orbit can be classified immediately as constant by Theorem 3.3.
+
+### 6.3. Branch construction and comparison
+
+Creating $T(H,a)$ conceptually appends one event. With immutable arrays or lists, construction may require $O(|H|)$ copying; with persistent linked structures, it can take $O(1)$ time while sharing the prefix. Testing whether two explicit arrays have a prefix relation takes $O(\min(|A|,|B|))$ time. Sibling incomparability is cheaper when metadata records a common parent and distinct final interventions.
+
+These algorithms are demonstrations of the mathematics rather than physical simulations. Their role is to expose closure, fixed points, and ancestry in transparent finite examples.
+
+## 7. Applications and conceptual connections
+
+The fixed-point distinction appears in several fields.
+
+In **dynamical systems**, a closed orbit is periodic, while a fixed point is an equilibrium. The Boolean grandfather model is the smallest nontrivial limit cycle. Theorem 2.7 is stronger than a generic dynamical statement because its consistency predicate requires every visited point to be an equilibrium.
+
+In **distributed systems**, a global configuration may recur while component transitions continue to change local state. Detecting recurrence does not establish quiescence. Idempotent operations are especially important because retries do not create further changes; the collapse theorem is an abstract version of this stabilization property.
+
+In **data processing**, normalization maps are often idempotent. Once data are canonicalized, repeating the transformation changes nothing. A closed workflow built only from one such deterministic normalization cannot support a nontrivial cycle through the same state.
+
+In **version control and event sourcing**, immutable histories naturally form a prefix tree. A new commit or event extends a prior record. Distinct continuations from one parent are siblings, and ancestry is acyclic as long as histories are built by extension rather than destructive rewriting. The branch model abstracts exactly this pattern.
+
+In **philosophy of time**, the analysis warns against deriving dynamical consistency from geometric or narrative closure. One must specify both the state space and the evolution law. Different choices produce different results: a negating law yields closed inconsistent cycles, an idempotent law collapses loops, and an append-only law replaces loops with branches.
+
+## 8. Scope and limitations
+
+The deterministic model is intentionally narrow. Pointwise Novikov consistency is a strong local condition: every state on the orbit must be fixed by one update. Other notions might require only that constraints around the entire cycle be jointly satisfiable. Under such relational semantics, a consistent cycle may contain changing states, and one fixed state need not collapse the rest.
+
+The branching model records finite event lists but does not include probabilities, branch weights, merging, erasure, concurrency, or physical conservation laws. Its acyclicity follows from append-only growth. Allowing histories to merge or be rewritten would require new invariants.
+
+Most importantly, no theorem here establishes that closed timelike curves exist or are self-consistent in a Gödel universe. A closed timelike curve belongs to Lorentzian geometry. Self-consistency requires an additional law for matter or information transported along that curve. A faithful treatment would define a spacetime manifold, a Lorentzian metric, timelike curves, the Gödel metric, and a dynamical relation on fields or particles. Only then could consistency be stated relative to that evolution. Geometric closure alone is insufficient.
+
+## 9. Future research
+
+A natural first extension replaces the function $f:X\to X$ by a relation $R\subseteq X\times X$. Nondeterministic causality permits several successors, so reaching a fixed state need not prevent another branch from leaving it. The hypotheses needed for a fixed-point equivalence then become nontrivial.
+
+A second direction models local laws as constraints around a directed cycle. Global consistency becomes the existence of an assignment satisfying all edge constraints. Finite instances connect to constraint satisfaction, while compactness principles may address infinite causal networks.
+
+A probabilistic version replaces states by distributions and deterministic updates by stochastic matrices or Markov kernels. The analogue of a fixed point is a stationary distribution. Finite-state existence is accessible by convex or algebraic methods; uniqueness requires assumptions such as irreducibility, aperiodicity, or contraction.
+
+The branch model can be enlarged to rooted trees with explicit branch identities, common ancestry, least common ancestors, and controlled merge operations. The principal question is which merge policies preserve acyclicity and which reintroduce overwrite-like loops.
+
+Temporal logic offers another bridge. Safety properties can be interpreted over finite prefixes, and one can ask which properties are preserved under branch extension. This links the append-only model to linear-time and branching-time modal logics.
+
+Finally, the geometric boundary should be crossed carefully. A future theory combining Lorentzian geometry and matter evolution could distinguish a closed worldline from a globally consistent assignment of physical states along it. The present results suggest the correct order: define geometry, define dynamics, define consistency, and only then ask for existence.
+
+## 10. Conclusion
+
+A deterministic causal loop is a periodic orbit, but periodicity is not self-consistency. Under the pointwise Novikov condition studied here, a positive closed orbit is consistent exactly when it contains a fixed point. Determinism and closure make that fixed point decisive: once reached, it absorbs the future, and closure forces it to equal the start. Idempotent laws strengthen this into automatic collapse of every positive closed orbit.
+
+Boolean negation shows why the distinctions matter. It has no fixed point, admits no odd closed orbit, and admits closed even orbits that remain inconsistent. The grandfather paradox is therefore represented not by a failure of iteration or recurrence, but by the absence of a solution to the fixed-point equation.
+
+Branching histories provide a different resolution. Appending an intervention preserves the source as a prefix and creates a longer strict descendant. Strict descent is transitive and irreflexive; distinct interventions create incomparable siblings. The resulting causal structure is a tree-like order rather than a loop.
+
+These small theorems offer a disciplined vocabulary for larger theories. Closure is recurrence. Consistency is a constraint. A fixed point is equilibrium. Branching is extension without overwrite. Keeping those notions separate turns a family of time-travel stories into a clear mathematics of maps, cycles, and histories.

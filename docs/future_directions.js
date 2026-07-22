@@ -117,21 +117,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hofstadter: Tangled Hierarchies in Type Theory"
   },
   {
-    "consumed_by_exp_id": "3e4f1b52",
-    "description": "Formalize time-travel paradoxes in Lean 4. Define: a 'causal loop' is a sequence of events e1 -> e2 -> ... -> en -> e1 where each causes the next. Prove: the Novikov self-consistency principle (every event in a causal loop is self-consistent) is equivalent to the statement that the loop has a fixed point. Show: the grandfather paradox (kill your ancestor) violates self-consistency \u2014 prove it's impossible. Conjecture: every closed timelike curve in a G\u00f6del universe is self-consistent. Explore: formalize branching timelines (many-worlds time travel) \u2014 prove the traveler creates a new branch, not a paradox.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0577",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-21T23:19:06.787016+00:00",
-    "title": "Moonshot: Time-Travel Logic \u2014 Formalizing Causal Consistency"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize Freeman Dyson's idea that intelligence grows without limit in the deep future. Define: 'intelligence growth rate' as the rate at which a civilization discovers new theorems. Prove: if the growth rate is superexponential (faster than 2^(2^n)), then the civilization discovers ALL theorems of ZFC in finite time (by compactness). Show: if the growth rate is merely exponential (2^n), then there exist theorems that are NEVER discovered (G\u00f6del). Conjecture: the growth rate is bounded by the physical computation limit (Bekenstein bound) at ~10^120 ops in the observable universe. Explore: does the intelligence explosion require new mathematics (theorems not expressible in current systems)?",
     "domains": [
@@ -3211,21 +3196,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Nonnegative Bakry--\u00c9mery Curvature on Bounded-Degree Graphs Implies Volume Doubling and Poincar\u00e9 Inequalities"
   },
   {
-    "consumed_by_exp_id": "939843de",
-    "description": "Investigate the ArXiv paper 'Lattice slices, Ehrhart polynomials, and magic positivity of generalized parking-function polytopes' and formalize its key results. Abstract: For $\\mathbf{b}=(b_1,\\dots,b_n)\\in\\mathbb{Z}_{>0}^n$, a $\\mathbf{b}$-parking function is a sequence $(\u03b2_1,\\dots,\u03b2_n)$ of positive integers whose nondecreasing rearrangement $\u03b2_1'\\le\u03b2_2'\\le\\cdots\\le\u03b2_n'$ satisfies $\u03b2_i'\\le b_1+\\cdots+b_i$. The $\\mathbf{b}$-parking-function polytope $\\mathfrak{X}_n(\\mathbf{b})$ is the convex hull of all $\\mathbf{b}$-parking functions of length $n$ in $\\mathbb{R}^n$. We prove that every lattice slice of $\\mathfrak{X}_n(\\mathbf{b})$, obtained by fixing one coordinate at an integer value, is itself a $\\mathbf{b}'$-parking-function polytope of one dimension less, with an explicit parameter vector $\\mathbf{b}'$; this yields a recursion for the number of lattice points of $\\mathfrak{X}_n(\\mathbf{b})$. We further show that every dilate of a $\\mathbf{b}$-parking-function polytope is a translate of another such polytope, that the number of lattice points is a polynomial function of $\\mathbf{b}$, and we deduce an explicit formula for the Ehrhart polynomial of $\\ma",
-    "domains": [
-      "Geometry",
-      "Cryptography"
-    ],
-    "id": "fd_0501",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.15503v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-20T03:51:29.578870+00:00",
-    "title": "ArXiv paper: Lattice slices, Ehrhart polynomials, and magic positivity of generalized parking-function polytopes"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Hitting all maximal independent sets in $c$-hollow graphs' and formalize its key results. Abstract: Fix a constant $c$ with $0<c<1$. We say a graph $G$ on $n$ vertices is $c$-hollow if every maximal independent set of $G$ has size at least $cn$. Denote by $\u03c4(G)$ the size of a smallest set of vertices $T\\subseteq V(G)$ such that every maximal independent set in $G$ intersects $T$, i.e., $T$ is a transversal for the family of maximal independent sets. In 1991, Bollob\u00e1s, Erd\u0151s, and Tuza conjectured that if $G$ is $c$-hollow, then $\u03c4(G)=o(n)$. Using a random construction, we show there exist $c$-hollow graphs with $\u03c4(G)=\u03a9\\left(\\frac{n^{1/3}}{\\log n }\\right)$, establishing the first nontrivial lower bound constraining the conjecture and complementing a closely related lower bound due to Alon for maximum independent sets. We also show the conjecture holds in a strong form for the class of cographs and split graphs.",
     "domains": [
@@ -6112,6 +6082,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T04:48:45.278911+00:00",
     "title": "`FiniteStateIdentity.lean` proves decidability by reducing trace equivalence to "
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## 1. Value-dependent gluing of lattice slices\n\nFor every positive profile and every admissible integer coordinate value, determine an\nexplicit transformed profile whose parking-function polytope is affinely isomorphic\nto the corresponding labelled-coordinate slice. The conjecture is falsifiable by\ncomparing the predicted profile with all lattice points in dimensions at most six.\n\nThe key insight is that rank deletion is exact inside each sorted chamber, while the\nfixed coordinate value determines which ranks can contain the deleted coordinate and\ntherefore how adjacent chambers must glue.\n\nWhy now? The rank-deletion theorem isolates the local operation, and the observed\nnonconstant slice counts identify precisely why a value-independent deletion rule\ncannot suffice.\n\n## 2. Shelling explanation for magic positivity\n\nThe sorted-chamber decomposition admits a shelling in which every restriction face\ncontributes a polynomial with nonnegative coefficients in the natural partial-sum\nvariables. Consequently, summing the local contributions yields coefficientwise\npositivity of the multivariate lattice-point polynomial and of its Ehrhart\nspecializations.\n\nThe key insight is that permutation chambers convert global convex geometry into\nrank inequalities, while rank deletion should organize their intersections into a\nrecursive shelling.\n\nWhy now? Profile monotonicity and chamber deletion supply the two local compatibility\nrelations needed to formulate an inductive shelling criterion.\n\n## 3. Integer decomposition compatible with affine dilation\n\nEvery lattice point in the `t`-fold affine dilation about the all-ones vector is a sum,\nafter the corresponding translation, of `t` lattice points from the original\nparking-function polytope. This predicts the integer-decomposition property uniformly\nfor all positive generalized parking profiles.\n\nThe key insight is that affine dilation preserves the full sorted inequality system,\nso a decomposition theorem can be sought rank by rank rather than in ambient\ncoordinates.\n\nWhy now? Affine transport has been established at the level of parking vectors and\nprofiles; the remaining testable step is a constructive decomposition of integral\npoints in the convex hull.\n\n## 4. Structured parking-profile improvement for SIS\n\nWhen the columns of a modular syndrome matrix are monotone with respect to a parking\nprofile, the number of parking vectors\u2014not the cardinality of the surrounding cube\u2014\ncontrols collision existence, yielding strictly smaller infinity-norm witnesses for\nan infinite family of rectangular matrices.\n\nThe key insight is that parking vectors form a highly structured search region whose\npermutation symmetry may retain enough entropy for pigeonhole collisions while using\nfar fewer extreme coordinates than a cube.\n\nWhy now? The box-based modular-kernel bridge gives a baseline bound, and the enumerated\nparking counts provide concrete thresholds against which the proposed improvement can\nbe tested.\n\n## 5. Deletion recursion as a valuation identity\n\nThe lattice-point enumerator of a generalized parking-function polytope satisfies a\ndelete-and-contract recursion over cumulative profiles, and this recursion extends to\na valuative invariant on the associated generalized permutohedral subdivision.\n\nThe key insight is that coordinate slicing is a discrete valuation operation, while\nrank deletion identifies its chamberwise contraction rule.\n\nWhy now? Small-case slice tables already display a stable recursive stratification;\nan explicit gluing theorem would turn that evidence into a precise valuation formula.\n",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_0594",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "939843de",
+    "status": "available",
+    "timestamp": "2026-07-22T04:48:50.189459+00:00",
+    "title": "For every positive profile and every admissible integer coordinate value, determ"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## What was formalized\n\n`Speculative/TimeTravelLogic.lean` develops a deterministic discrete model of causal histories.\nIts central theorem, `novikov_iff_loop_has_fixed_point`, proves that on every nonempty closed\norbit, pointwise Novikov consistency is equivalent to the presence of a fixed point on that\norbit. The proof also isolates the stronger fact that one fixed event on a deterministic closed\norbit forces the entire orbit to collapse to that event.\n\nThe file then proves an idempotent-law collapse theorem, models the grandfather intervention as\nBoolean negation, proves that odd-period loops are impossible while even-period loops are closed\nbut inconsistent, and develops a finite-history branching model. In that model travel appends an\nevent, creates a strict descendant, strict descent is transitive and irreflexive, and distinct\ninterventions produce incomparable sibling branches.\n\n## Mathematical extensions\n\n1. **Relational and nondeterministic causality.** Replace a function `\u03b1 \u2192 \u03b1` with a relation\n   `\u03b1 \u2192 \u03b1 \u2192 Prop`. In this setting one fixed event need not collapse a whole cycle, so the exact\n   hypotheses needed for a Novikov/fixed-point equivalence become mathematically substantive.\n\n2. **Constraint-based self-consistency.** Model local physical laws as relations on assignments\n   around a finite directed cycle. Existence of a globally consistent assignment then becomes a\n   finite constraint-satisfaction theorem. Compactness could extend this to infinite causal\n   networks.\n\n3. **Probabilistic causal loops.** Use stochastic matrices or Markov kernels. A fixed point is\n   then a stationary distribution rather than an unchanged event. Finite-state existence could\n   be proved algebraically; uniqueness would require irreducibility or contraction hypotheses.\n\n4. **Branch trees and merges.** Generalize lists to a rooted tree with branch identifiers.\n   Formalize common ancestry, least common ancestors, branch independence, and controlled merge\n   operations. Study precisely which merge policies preserve acyclicity.\n\n5. **Temporal logic.** Define modal operators over histories and prove preservation theorems for\n   safety properties under branch extension. This would connect the finite prefix model to\n   established linear-time and branching-time temporal logics.\n\n6. **Lorentzian geometry boundary.** The G\u00f6del-universe conjecture is not asserted here: a closed\n   timelike curve is geometric, whereas self-consistency requires an additional dynamical law.\n   A faithful future treatment should first formalize a Lorentzian spacetime, timelike curves,\n   G\u00f6del's metric, and a matter evolution relation. It should then state consistency relative to\n   that evolution law rather than infer it from geometric closure alone.\n\n## Limits of the present model\n\nThe deterministic update semantics is intentionally small and exact. It captures the logical\ndifference between periodicity and pointwise consistency, but not relativistic spacetime,\nback-reaction, quantum mechanics, or physical realizability. The branching result proves\nacyclicity for append-only finite histories; it does not claim that many-worlds quantum mechanics\nhas been formalized.\n",
+    "domains": [
+      "Geometry",
+      "Logic"
+    ],
+    "id": "fd_0595",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "3e4f1b52",
+    "status": "available",
+    "timestamp": "2026-07-22T04:48:57.289523+00:00",
+    "title": "`Speculative/TimeTravelLogic.lean` develops a deterministic discrete model of ca"
   },
   {
     "consumed_by_exp_id": "",
