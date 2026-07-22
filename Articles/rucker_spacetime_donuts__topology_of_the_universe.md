@@ -1,169 +1,145 @@
-# Spacetime Donuts: What It Would Mean to Live Inside a Cosmic Torus
+# Spacetime Donuts: What It Really Means to Wrap Around the Universe
 
-Look up at the night sky and you naturally imagine space stretching out
-forever — an infinite void in which the galaxies drift like dust. But there is
-another possibility, one that has fascinated cosmologists and science-fiction
-writers alike: what if space *wraps around*? What if, traveling far enough in a
-straight line, you would eventually arrive back where you started, having
-circled the entire universe like an ant crawling around a donut?
+Imagine setting out in a perfectly straight line and, without ever turning, eventually returning home from the opposite direction. On an ordinary infinite plain this cannot happen. On the surface of a cylinder it can happen in one direction, and on the surface of a doughnut it can happen in two. A three-dimensional torus adds a third independent direction of return. It is the mathematical model behind the phrase “donut-shaped universe”—although the object is not a doughnut sitting inside a larger room. It is a space whose opposite faces are identified.
 
-This is the idea of a **donut-shaped universe**, and it is not mere whimsy. It
-is a mathematically precise, physically plausible model of the cosmos. The
-"donut" in question is a three-dimensional analogue of the surface of a bagel,
-called the **three-torus**, written $\mathbb{T}^3$. This article is about what
-such a universe would actually *look like* from the inside — and about a small
-collection of clean theorems that pin down its structure exactly.
+This distinction matters. Topology describes how a space is connected, not how it must look from outside. Begin with a unit cube. Declare the left face to be the same as the right face, the front the same as the back, and the floor the same as the ceiling. A traveler exiting through any face immediately re-enters through its partner. The resulting space is the three-torus, written
 
-## Building a donut out of flat space
+$$
+T^3=(\mathbb R/\mathbb Z)^3.
+$$
 
-The surface of a real donut is curved, but the universe we are imagining is
-different: it is *flat*, like an ordinary room, yet still finite and wrapped.
-How can something be flat and wrapped at the same time?
+The notation says that positions differing by an integer in any coordinate represent the same place. Thus $(x,y,z)$ and $(x+a,y+b,z+c)$ agree whenever $a,b,c\in\mathbb Z$. The cube is only a convenient fundamental cell; there is no physical boundary.
 
-The trick is the same one used by classic arcade games. In *Asteroids*, when
-your ship flies off the right edge of the screen, it reappears on the left; fly
-off the top, and you come back at the bottom. The screen is flat, and yet it has
-no edges — it is a two-dimensional torus. Mathematically, you take a square and
-declare that the left edge *is* the right edge and the top edge *is* the bottom
-edge. Nothing is curved; you have simply changed the rules about which points
-count as the same.
+This model produces a rich family of closed paths. It also exposes a subtle mistake that often enters discussions of cosmic topology: closed routes through *space* do not automatically become closed timelike routes through *spacetime*. Space can wrap while time remains open. Understanding that separation is the central story.
 
-Do this in three dimensions and you get the three-torus. Take all of ordinary
-space $\mathbb{R}^3$, described by coordinates $(x,y,z)$, and declare that
-shifting any coordinate by a whole number lands you back at the same point. In
-symbols, the point $(x,y,z)$ is identified with $(x+1, y, z)$, with
-$(x, y+1, z)$, and with $(x, y, z+1)$. The set of all such whole-number shifts
-forms a grid — the **integer lattice** $\mathbb{Z}^3$ — and the torus is what
-remains after gluing space together according to that grid:
-$$\mathbb{T}^3 = \mathbb{R}^3 / \mathbb{Z}^3.$$
-Each coordinate now lives on a circle of circumference one, written
-$\mathbb{R}/\mathbb{Z}$, so the whole universe is a product of three circles.
-It is perfectly flat everywhere, has finite volume, and has no walls, no edges,
-no center, and no boundary. Walk far enough in any direction and you loop back
-home.
+## Straight lines that return
 
-## Straight lines that come home
+In the covering space $\mathbb R^3$, choose an integer vector
 
-In a flat universe, the natural paths — the routes light rays and free-falling
-bodies follow — are *straight lines*. In infinite space, a straight line never
-returns. But in the donut universe, some straight lines close up into loops.
-These closed straight paths are called **closed geodesics**, and they are the
-threads that stitch the donut together.
+$$
+n=(n_1,n_2,n_3)\in\mathbb Z^3
+$$
 
-Here is the precise picture. Fire a beam from the origin in the direction of a
-vector $n = (n_1, n_2, n_3)$. In the unwrapped space $\mathbb{R}^3$ the beam
-traces the line $t \mapsto (t\,n_1, t\,n_2, t\,n_3)$. Project this line down into
-the torus — that is, reduce each coordinate modulo one — and you get a path on
-the donut. The central observation is beautifully simple:
+and follow the straight line $t\mapsto tn$. Projecting each coordinate modulo $1$ gives a path on the torus,
 
-> **A straight-line path closes into a loop exactly when its direction points
-> along whole numbers.** If every component $n_i$ is an integer, then after one
-> unit of time each coordinate has advanced by a whole number and therefore
-> returns to its starting value on its circle. The path is periodic with period
-> one:
-> $$\text{geo}(n, t+1) = \text{geo}(n, t) \quad\text{for all } t.$$
+$$
+\gamma_n(t)=(tn_1,tn_2,tn_3)\pmod{\mathbb Z^3}.
+$$
 
-So every integer direction gives a closed geodesic. But we should be careful:
-standing perfectly still is *also* periodic, in a trivial way. Does an integer
-direction give a path that genuinely *travels* around the universe, or might it
-secretly sit motionless? The answer is that any **nonzero** integer direction
-produces a genuinely moving, non-constant loop. The proof is a small gem. Pick a
-coordinate $i$ where $n_i \neq 0$ and look at the path at the *half-period* time
-$t = \tfrac{1}{2n_i}$. At that instant the $i$-th coordinate equals exactly
-$\tfrac12$ — the antipode of the starting point $0$ on the circle. Since
-$\tfrac12 \neq 0$ on a circle of circumference one, the path has demonstrably
-moved. It really does wrap around.
+After one unit of parameter time,
 
-The upshot: **a flat donut universe is threaded through and through by closed
-geodesics.** Aim in any whole-number direction and your straight-line journey
-eventually brings you home.
+$$
+\gamma_n(t+1)=\gamma_n(t),
+$$
 
-## Three independent ways to circle the cosmos
+because the extra displacement is exactly the integer vector $n$. The route is therefore closed. In the flat torus geometry it is also a geodesic: upstairs it is a straight line, and projection preserves its local straightness.
 
-How many *essentially different* ways are there to loop around the donut? On an
-ordinary bagel there are two obvious ones: the short way through the hole, and
-the long way around the ring. These two loops are independent — no amount of
-sliding and stretching turns one into the other. The three-torus has *three*
-such independent loops, one for each coordinate circle.
+Could such a route be secretly constant? Only when $n=0$. If some coordinate $n_i$ is nonzero, choose $t=1/(2n_i)$. In that coordinate the path has moved by $1/2$ modulo $1$, which is not the starting point. We obtain the **Closed Spatial Geodesic Theorem**: every nonzero integer vector determines a nonconstant closed geodesic on the flat three-torus, with period $1$. In particular, the vector $(1,0,0)$ gives an explicit closed geodesic.
 
-This is captured by an object mathematicians call the **fundamental group**,
-which catalogues all the essentially different loops in a space. For the donut
-universe the answer is exactly the integer grid we started with:
-$$\pi_1(\mathbb{T}^3) \cong \mathbb{Z}^3.$$
-The meaning is concrete. A loop is classified by how many times it wraps around
-in each of the three directions — a triple of whole numbers. Wrapping "twice
-around the $x$-circle and once backward around the $z$-circle" is the class
-$(2, 0, -1)$. Two loops are equivalent precisely when they have the same triple.
-Adding loops corresponds to adding their triples, and the three basic wraps —
-$(1,0,0)$, $(0,1,0)$, $(0,0,1)$ — are **independent generators**: none is a
-combination of the others. These are the *three independent families of wrapping*
-that define the shape of the universe.
+These paths are not merely many drawings of the same loop. Their integer vectors record how often and in which orientation they cross the three paired faces. The vector $(2,-1,3)$ wraps twice around the first direction, once backward around the second, and three times around the third.
 
-There is a clean way to *see* this group without any hand-waving. Recall that
-the torus is built by gluing space along the integer grid. The gluing is
-governed by the "deck transformations" — the whole-number shifts that move a
-point in unwrapped space to another point representing the *same* torus point.
-The set of shifts that return you to your exact starting torus point is precisely
-the integer lattice $\mathbb{Z}^3$: a point of unwrapped space projects to the
-home point of the torus if and only if all three of its coordinates are whole
-numbers. This lattice is a *faithful* copy of $\mathbb{Z}^3$ — distinct integer
-vectors give genuinely distinct shifts — and it is generated by exactly three
-independent basis directions. That is the fundamental group, made completely
-explicit, and it confirms that there are infinitely many inequivalent closed
-geodesics, one for each triple of whole numbers.
+## Why there are three independent ways to wrap
 
-## The wrapping spectrum: hearing the shape of the donut
+The projection from $\mathbb R^3$ to $T^3$ forgets integer translations. Its kernel—the displacements that return to the same point—is exactly
 
-Once you know that closed geodesics are labeled by integer vectors, a lovely
-question opens up: *how long* are they? In the simplest cubical donut, the loop
-in direction $(n_1, n_2, n_3)$ has length equal to the ordinary Euclidean length
-of that vector, $\sqrt{n_1^2 + n_2^2 + n_3^2}$. The shortest nontrivial loops
-have length one — the three basic circles. The next shortest have length
-$\sqrt{2}$ (the face diagonals), then $\sqrt{3}$ (the body diagonal), and so on.
+$$
+\mathbb Z^3=\{(a,b,c):a,b,c\in\mathbb Z\}.
+$$
 
-The full list of these lengths is the **wrapping spectrum** of the universe, and
-it is a genuine physical fingerprint. If space really is a donut, then light from
-distant sources can reach us by more than one route — the "direct" path and the
-various "wrapped" paths — producing repeated, ghostly images of the same galaxy
-or matching circles of temperature in the cosmic microwave background. The
-pattern of those repetitions is exactly the wrapping spectrum. Cosmologists have
-searched real sky maps for precisely this signature. In this sense the abstract
-list of geodesic lengths is something we could, in principle, *measure*.
+Indeed, a real displacement projects to zero precisely when each coordinate is an integer. This lattice is generated by
 
-## The smallest possible curved universe
+$$
+e_1=(1,0,0),\qquad e_2=(0,1,0),\qquad e_3=(0,0,1).
+$$
 
-The flat donut is only the beginning. If space is allowed to be gently *curved*
-— specifically, **hyperbolic**, the geometry of constant negative curvature —
-then the catalogue of possible finite universes explodes into an astonishingly
-rich zoo. And here nature seems to enforce a strange kind of rigidity: unlike a
-donut, whose overall size you can freely rescale, a closed hyperbolic universe
-has its **volume fixed by its shape alone**. You cannot make a slightly bigger
-copy of the same hyperbolic universe; changing the size changes the space.
+The generators are independent: if $ae_1+be_2+ce_3=0$ with integers $a,b,c$, then inspection of coordinates gives $a=b=c=0$. Every wrapping vector has a unique decomposition $ae_1+be_2+ce_3$. This is the concrete content of the familiar statement that the fundamental group of the three-torus is $\mathbb Z^3$: loops carry three integer winding numbers.
 
-This raises an irresistible question: **what is the smallest possible closed
-hyperbolic three-dimensional universe?** Among all such spaces, which one has the
-least volume? The leading candidate is a remarkable object called the **Weeks
-manifold**, whose volume is
-$$V_{\text{Weeks}} \approx 0.9427073627769277.$$
-The conjecture — supported by extensive computation — is that no closed
-orientable hyperbolic three-manifold has volume below about $0.94$, and that the
-Weeks manifold uniquely achieves this minimum. It is, in a precise sense, the
-tiniest curved universe that can exist. That such a "smallest universe" should
-exist at all, and be a single specific space, is one of the most beautiful facts
-in modern geometry.
+The lattice description also proves that there are infinitely many distinct wrapping classes. The assignment from $n\in\mathbb Z^3$ to its lifted endpoint is injective, so different integer vectors remain different as wrapping data. Three basis directions do not mean only three loops; they mean three independent coordinates for infinitely many loops.
 
-## Why it matters
+This has an observational echo. In a sufficiently small toroidal cosmos, light could traverse different winding routes and bring multiple images of the same distant object. The geometry of a flat quotient could create repeated patterns in the sky. The mathematics here does not claim that our universe has this topology, but it clarifies exactly what the hypothesis predicts at the level of global routes.
 
-Whether the real cosmos is a donut, a hyperbolic gem, or genuinely infinite
-remains an open observational question. But the mathematics is unambiguous and,
-as it turns out, entirely rigorous. A flat donut universe *necessarily* contains
-closed straight-line paths that wrap around it; those paths are organized into
-exactly three independent families; the catalogue of loops is the integer grid
-$\mathbb{Z}^3$; and the lengths of the loops form a measurable spectrum that
-could, one day, betray the true shape of space.
+## The trap: confusing spatial closure with time travel
 
-The science-fiction dream of flying off in a straight line and arriving back
-home is, mathematically, not fiction at all. It is a theorem. And if we ever do
-find repeating galaxies or matching circles in the sky, we will know we are
-living inside a spacetime donut — and we will already possess the exact language
-to describe it.
+Now add time. The most direct spacetime built from toroidal space is
+
+$$
+\mathbb R\times T^3.
+$$
+
+Time ranges over the ordinary real line, while space wraps in three directions. A constant-velocity affine trajectory can be described by
+
+$$
+v=(\tau,s_1,s_2,s_3),
+$$
+
+where $\tau$ is its time velocity and $s=(s_1,s_2,s_3)$ is its spatial velocity. In units where the speed of light is $1$, the trajectory is timelike when
+
+$$
+s_1^2+s_2^2+s_3^2<\tau^2.
+$$
+
+A unit-period trajectory closes in $\mathbb R\times T^3$ only if its time displacement vanishes and all spatial displacements are integers:
+
+$$
+\tau=0,\qquad s_i\in\mathbb Z\quad(i=1,2,3).
+$$
+
+But substituting $\tau=0$ into the timelike inequality would require
+
+$$
+s_1^2+s_2^2+s_3^2<0,
+$$
+
+which is impossible because a sum of squares is nonnegative.
+
+This proves the **Product-Spacetime Causality Theorem**: no unit-period affine geodesic in $\mathbb R\times T^3$ is both closed and timelike. Consequently, toroidal *spatial* topology alone does not force closed timelike geodesics. The conclusion is not a technical loophole. It expresses a physical principle: a traveler may return to the same spatial address at a later time without returning to the same spacetime event.
+
+Picture an aircraft circling Earth. It returns to its airport, but the clock has advanced. Spatial recurrence is not time travel. The same logic survives when the spatial arena is a three-torus.
+
+## What changes when time itself is circular
+
+The causal conclusion changes dramatically if time is also identified modulo $1$. Consider
+
+$$
+(\mathbb R/\mathbb Z)\times T^3.
+$$
+
+A unit displacement in time now returns to the same temporal coordinate. Take the velocity
+
+$$
+v=(1,0,0,0).
+$$
+
+Its displacement is integral in every compact coordinate, so the path closes after one unit. It is timelike because
+
+$$
+0<1^2.
+$$
+
+Thus the **Compact-Time Existence Theorem** states that a spacetime with circular time contains a closed timelike affine geodesic: motion once around the time circle with no spatial motion is an explicit example.
+
+The contrast isolates the true mechanism. In a quotient of Minkowski space, a closed affine trajectory corresponds to an identification vector. Whether that closed trajectory is spacelike, null, or timelike depends on the Lorentzian norm of that vector. Purely spatial lattice vectors do not create time machines; a timelike identification vector does.
+
+This distinction is valuable well beyond the toy model. It offers a diagnostic for any proposed periodic spacetime: first find the lattice of identifications, then classify its vectors by causal type. A timelike lattice vector produces a closed timelike curve. A null vector produces a closed lightlike route. If every nonzero identification vector is spacelike, the affine wrapping routes do not violate causality.
+
+## A different kind of small universe
+
+Toroidal geometry is flat, but topology also shapes negatively curved spaces. Among closed orientable hyperbolic three-manifolds, the Weeks manifold is famous for its exceptionally small volume, approximately $0.94$ in curvature-normalized units. The precise minimal-volume assertion has a simple logical form. Given a class $M$ of candidate manifolds, a volume function $V:M\to\mathbb R$, and a distinguished candidate $W$, say that $W$ has minimal volume when
+
+$$
+V(W)\le V(X)\qquad\text{for every }X\in M.
+$$
+
+Equivalently, $V(W)$ is a lower bound for the set of all candidate volumes $\{V(X):X\in M\}$. This equivalence follows immediately by unpacking the definition of “lower bound.” It is an important clarification, but not by itself a proof that the Weeks manifold minimizes volume. Such a proof requires the full geometry of hyperbolic three-manifolds, certified volume estimates, and global classification arguments. The number near $0.94$ should therefore be read here as context, not as a newly established numerical theorem.
+
+The torus and the Weeks manifold illustrate two different meanings of a compact universe. The torus is assembled from translations and has three commuting winding coordinates. A hyperbolic manifold is assembled by more intricate isometries and can have a much richer loop structure. Volume and topology interact, but neither can be read from a pastry analogy alone.
+
+## The topology is a map, not a time machine
+
+The durable lesson is both imaginative and corrective. A three-torus really does support straight journeys that return, three independent winding directions, and infinitely many wrapping classes. These facts make “spacetime donuts” mathematically fertile: global topology can turn local straightness into cosmic recurrence.
+
+Yet recurrence must be labeled carefully. In $\mathbb R\times T^3$, the clock coordinate never wraps. Closed spatial geodesics exist, but closed timelike affine geodesics do not. Only after an additional temporal identification does the simple closed timelike example appear.
+
+Topology tells us which routes can meet themselves. Geometry tells us which routes are straight. Lorentzian causality tells us which routes a massive traveler could follow. The three questions cooperate, but they are not interchangeable. The most revealing feature of a donut-shaped cosmos may therefore be not that it licenses time travel, but that it teaches us exactly why returning to the same place is different from returning to the same event.
+
+The mathematics replaces a seductive slogan with a sharper picture: a universe may be spatially periodic without making history periodic. Its roads can loop while its timeline remains open, and only the causal geometry of the identifications decides whether a returning road is also a route back to the same moment.

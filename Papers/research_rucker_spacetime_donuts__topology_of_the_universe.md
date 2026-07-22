@@ -1,360 +1,358 @@
-# Closed Geodesics and the Wrapping Lattice of the Flat Three-Torus
+# Flat Toroidal Space, Wrapping Classes, and the Causal Role of Time Identification
+
+**Aristotle**  
+**21 July 2026**
 
 ## Abstract
 
-We give a self-contained and fully rigorous account of the geodesic and
-homotopical structure of the **flat three-torus** $\mathbb{T}^3 = (\mathbb{R}/\mathbb{Z})^3$,
-regarded as a model of a spatially closed ("donut-shaped") universe. Working in
-the universal cover $\mathbb{R}^3$ and its integer-lattice quotient, we prove
-four results. First, every straight line with an integer direction vector
-projects to a **closed geodesic of period one** on the torus. Second, every
-*nonzero* integer direction yields a genuinely **non-constant** loop, so the
-torus is threaded by closed geodesics that actually wrap around it. Third, the
-group of covering translations — equivalently, the fundamental group — is exactly
-the integer lattice, giving $\pi_1(\mathbb{T}^3) \cong \mathbb{Z}^3$; its three
-standard generators are $\mathbb{Z}$-linearly independent, yielding **three
-independent families of wrapping**. Fourth, the assignment of an integer
-direction to the free-homotopy class of its geodesic is **injective**, so the
-torus carries a full $\mathbb{Z}^3$ of inequivalent closed geodesics. We then
-develop the **wrapping spectrum** — the multiset of geodesic lengths as lattice
-norms — and connect it to observational cosmology. Finally we record the
-**minimal-volume problem** for closed hyperbolic three-manifolds and the
-conjecture that the Weeks manifold, of volume $\approx 0.9427073627769277$, is
-the unique minimizer.
-
-**Keywords:** three-torus, closed geodesic, fundamental group, integer lattice,
-covering space, flat manifold, systole, hyperbolic three-manifold, Weeks
-manifold, cosmic topology.
-
----
+We study the flat three-torus $T^3=(\mathbb R/\mathbb Z)^3$ through its universal covering projection and use it to separate two claims that are often conflated: the existence of closed spatial geodesics and the existence of closed timelike geodesics. Every integer vector $n\in\mathbb Z^3$ defines a periodic projected straight line $\gamma_n(t)=tn\pmod{\mathbb Z^3}$, and every nonzero such vector gives a nonconstant closed spatial geodesic. The kernel of the covering projection is exactly the integer lattice, whose three coordinate vectors are linearly independent; consequently, there are three independent winding directions and infinitely many distinct wrapping classes. We then analyze constant-velocity affine geodesics in the product spacetime $\mathbb R\times T^3$. Closure forces zero displacement in the unquotiented time coordinate, while timelikeness forces a nonzero time component. Hence no unit-period affine geodesic in this product is both closed and timelike. Spatial torus topology alone therefore does not imply closed timelike geodesics. By contrast, compactifying time gives $(\mathbb R/\mathbb Z)\times T^3$, where unit motion around the time circle is an explicit closed timelike affine geodesic. Finally, we formulate minimal volume abstractly and show that a distinguished candidate is volume-minimizing exactly when its volume is a lower bound of the range of the volume function. This last statement clarifies the logical shape of the Weeks-manifold question without asserting the geometric minimality theorem.
 
 ## 1. Introduction
 
-The global topology of the physical universe is not fixed by Einstein's field
-equations, which are local. A spatial slice that is everywhere flat may
-nonetheless be finite and multiply connected; the simplest such possibility is
-the **three-torus** $\mathbb{T}^3$, popularized as the "donut-shaped" universe.
-In such a cosmos a traveler moving on a straight path can return to the starting
-point, and light can reach an observer along several distinct geodesic routes,
-producing potentially observable repetitions (ghost images, matched circles in
-the microwave background).
-
-This paper isolates the mathematical core of that picture and proves it cleanly.
-We model $\mathbb{T}^3$ as the quotient of $\mathbb{R}^3$ by the integer
-translation lattice $\mathbb{Z}^3$, realize geodesics as projected straight
-lines, and establish (i) closedness of integer-direction geodesics, (ii) their
-genuine non-triviality, (iii) the identification of the covering-translation
-group with $\mathbb{Z}^3$ and hence $\pi_1(\mathbb{T}^3) \cong \mathbb{Z}^3$
-with three independent generators, and (iv) an injective correspondence between
-integer directions and homotopy classes of closed geodesics. Around this core we
-build the length ("wrapping") spectrum and its cosmological reading, and we frame
-the minimal-volume problem in the hyperbolic setting.
-
-All statements are elementary in the sense that they reduce to arithmetic on the
-circle $\mathbb{R}/\mathbb{Z}$; no unproved topological input is used. Where we
-invoke the phrase "fundamental group," we mean it in the concrete guise of the
-covering-translation (deck) group, which for a universal covering of a manifold
-is canonically isomorphic to $\pi_1$.
-
----
-
-## 2. Definitions and setup
-
-Throughout, $\mathbb{R}/\mathbb{Z}$ denotes the circle of circumference one,
-i.e. the additive quotient group of the reals by the integers. For a real number
-$r$ we write $[r] \in \mathbb{R}/\mathbb{Z}$ for its class. The key elementary
-fact is:
-$$[r] = 0 \iff r \in \mathbb{Z}, \qquad [r+m] = [r] \text{ for all } m \in \mathbb{Z}.$$
-
-**Definition 2.1 (Flat three-torus).**
-The *flat three-torus* is
-$$\mathbb{T}^3 := (\mathbb{R}/\mathbb{Z})^3 = \{\, (u_0, u_1, u_2) : u_i \in \mathbb{R}/\mathbb{Z} \,\},$$
-an abelian group under coordinatewise addition, equipped with the flat Riemannian
-metric inherited from $\mathbb{R}^3$.
-
-**Definition 2.2 (Covering projection).**
-The *universal covering projection* is the group homomorphism
-$$\pi : \mathbb{R}^3 \to \mathbb{T}^3, \qquad \pi(x_0, x_1, x_2) = ([x_0], [x_1], [x_2]).$$
-It is a local isometry and a covering map; $\mathbb{R}^3$ is its universal cover.
-
-**Definition 2.3 (Integer geodesic).**
-For a direction vector $n = (n_0, n_1, n_2) \in \mathbb{Z}^3$ the *integer
-geodesic* with direction $n$ is
-$$\gamma_n : \mathbb{R} \to \mathbb{T}^3, \qquad \gamma_n(t) = \pi(t\,n) = ([t\,n_0], [t\,n_1], [t\,n_2]).$$
-By construction $\gamma_n$ is the projection of the straight line $t \mapsto t\,n$
-in the universal cover, hence a geodesic of the flat metric.
-
-**Definition 2.4 (Wrapping lattice).**
-The *wrapping lattice* is the image of the injection
-$$\iota : \mathbb{Z}^3 \hookrightarrow \mathbb{R}^3, \qquad \iota(n) = (n_0, n_1, n_2),$$
-the group of covering translations of $\pi$.
-
----
-
-## 3. Closed geodesics
-
-**Theorem 3.1 (Closedness / period one).**
-For every $n \in \mathbb{Z}^3$ and every $t \in \mathbb{R}$,
-$$\gamma_n(t + 1) = \gamma_n(t).$$
-That is, every integer-direction geodesic is a closed loop of period one.
-
-*Proof sketch.* Coordinatewise, $(t+1)n_i = t\,n_i + n_i$, and $n_i \in \mathbb{Z}$,
-so $[(t+1)n_i] = [t\,n_i + n_i] = [t\,n_i]$ because adding an integer does not
-change the class on the circle. As this holds in each coordinate,
-$\gamma_n(t+1) = \gamma_n(t)$. $\qquad\blacksquare$
-
-**Remark.** Closedness by itself is not enough to certify wrapping: the constant
-path $\gamma_0$ is also period-one. The next theorem rules out this degeneracy.
-
-**Theorem 3.2 (Non-triviality of wrapping).**
-If $n \in \mathbb{Z}^3$ is nonzero, then $\gamma_n$ is non-constant; explicitly,
-there is $t \in \mathbb{R}$ with $\gamma_n(t) \neq \gamma_n(0)$.
-
-*Proof sketch.* Choose a coordinate $i$ with $n_i \neq 0$. Evaluate at the
-half-period $t^\* = \tfrac{1}{2 n_i}$. Then the $i$-th coordinate is
-$[t^\* n_i] = [\tfrac12]$. Now $[\tfrac12] = 0$ would require $\tfrac12 \in \mathbb{Z}$,
-which is false; equivalently, $\tfrac12$ is the unique element of order two on the
-circle and is distinct from $0$. Hence $\gamma_n(t^\*) \neq \gamma_n(0)$, so
-$\gamma_n$ is non-constant. $\qquad\blacksquare$
-
-**Corollary 3.3.** The flat three-torus contains infinitely many non-constant
-closed geodesics — at least one for every nonzero $n \in \mathbb{Z}^3$. (That
-they are genuinely distinct as homotopy classes is Theorem 5.2.)
-
----
-
-## 4. The wrapping lattice and $\pi_1(\mathbb{T}^3) \cong \mathbb{Z}^3$
-
-**Theorem 4.1 (Kernel of the covering projection).**
-For $x \in \mathbb{R}^3$,
-$$\pi(x) = 0 \iff x_i \in \mathbb{Z} \text{ for every } i.$$
-Equivalently, $\ker \pi = \iota(\mathbb{Z}^3)$, the wrapping lattice.
-
-*Proof sketch.* By definition $\pi(x) = 0$ means $[x_i] = 0$ for all $i$, and
-$[x_i] = 0$ holds if and only if $x_i \in \mathbb{Z}$. Collecting the three
-integer coordinates into a vector $m \in \mathbb{Z}^3$ gives $x = \iota(m)$;
-conversely any $\iota(m)$ has all-integer coordinates and projects to $0$.
-$\qquad\blacksquare$
-
-**Theorem 4.2 (Faithfulness of the lattice).**
-The map $\iota : \mathbb{Z}^3 \to \mathbb{R}^3$ is injective: distinct integer
-vectors give distinct covering translations.
-
-*Proof sketch.* If $\iota(a) = \iota(b)$ then $a_i = b_i$ as reals for each $i$;
-since these are integers, $a = b$. $\qquad\blacksquare$
-
-**Theorem 4.3 ($\pi_1(\mathbb{T}^3) \cong \mathbb{Z}^3$).**
-The group of covering translations of the universal cover $\pi$ equals the image
-of $\iota$, and $\iota$ is an injective group homomorphism. Hence the
-fundamental group of the flat three-torus is free abelian of rank three:
-$$\pi_1(\mathbb{T}^3) \;\cong\; \ker \pi \;=\; \iota(\mathbb{Z}^3) \;\cong\; \mathbb{Z}^3.$$
-
-*Proof sketch.* By Theorem 4.1 the covering-translation group $\ker \pi$ is
-exactly $\iota(\mathbb{Z}^3)$. By Theorem 4.2, $\iota$ is an injective
-homomorphism, so it is an isomorphism onto its image. For a universal covering of
-a (path-connected, locally nice) space, the deck-transformation group is
-canonically isomorphic to $\pi_1$; therefore $\pi_1(\mathbb{T}^3) \cong \mathbb{Z}^3$.
-$\qquad\blacksquare$
-
-**Theorem 4.4 (Three independent families of wrapping).**
-The three standard directions $e_0 = (1,0,0)$, $e_1 = (0,1,0)$, $e_2 = (0,0,1)$
-are $\mathbb{Z}$-linearly independent and generate the wrapping lattice.
-Consequently $\pi_1(\mathbb{T}^3)$ has exactly three independent generators, and
-there are exactly three independent families of ways to loop around the donut
-universe.
-
-*Proof sketch.* The $e_i$ are the standard basis of the free $\mathbb{Z}$-module
-$\mathbb{Z}^3$: a relation $\sum_i c_i e_i = 0$ reads coordinatewise as
-$c_j = 0$ for each $j$, so they are independent; and every integer vector is
-$\sum_i n_i e_i$, so they generate. The rank three is a topological invariant
-(the first Betti number $b_1(\mathbb{T}^3) = 3$). $\qquad\blacksquare$
-
----
-
-## 5. Homotopy classes of closed geodesics
-
-We record the free-homotopy class of $\gamma_n$ by the endpoint of its canonical
-lift starting at the origin. The lift of $\gamma_n$ through $0$ is the straight
-line $t \mapsto t\,n$, whose value at $t = 1$ is the lattice point $\iota(n) \in \ker\pi$.
-
-**Definition 5.1 (Homotopy class map).**
-Let $c : \mathbb{Z}^3 \to \ker\pi$ be given by $c(n) = \iota(n)$. Since
-$\iota(n)$ has all-integer coordinates, $c(n) \in \ker\pi$ by Theorem 4.1, and
-$\pi(c(n)) = \gamma_n(1)$: projecting the lift's endpoint recovers the geodesic
-at time one.
-
-**Theorem 5.2 (Injectivity; infinitely many distinct geodesics).**
-The map $c$ is injective. Hence distinct integer directions yield inequivalent
-closed geodesics, and the flat three-torus supports a full $\mathbb{Z}^3$ of
-distinct free-homotopy classes of closed geodesics.
-
-*Proof sketch.* If $c(a) = c(b)$ then $\iota(a) = \iota(b)$, and by Theorem 4.2
-$a = b$. Injectivity from the infinite set $\mathbb{Z}^3$ gives infinitely many
-classes. $\qquad\blacksquare$
-
-**Remark (primitivity).** A direction $n$ is *primitive* if $\gcd(n_0,n_1,n_2)=1$.
-Non-primitive $n = d\,m$ ($d \ge 2$) traverses the same image as $m$ but $d$
-times; the *primitive* closed geodesics are those with $\gcd = 1$, and they
-biject with primitive lattice vectors. This is the geometric content underlying
-the length spectrum below.
-
----
-
-## 6. The wrapping spectrum
-
-For a general flat torus $\mathbb{R}^3 / L$, where $L$ is a rank-three lattice
-(the cubic case is $L = \mathbb{Z}^3$), the metric length of the closed geodesic
-in the class of $v \in L$ is the Euclidean norm $\lVert v \rVert$. This turns a
-dynamical question into a lattice-counting one.
-
-**Definition 6.1 (Wrapping / length spectrum).**
-The *wrapping spectrum* of $\mathbb{R}^3 / L$ is the multiset
-$$\mathcal{L}(L) = \{\, \lVert v \rVert : v \in L \setminus \{0\} \,\},$$
-and the *systole* is $\mathrm{sys}(L) = \min_{v \in L \setminus \{0\}} \lVert v \rVert$,
-the length of the shortest non-constant closed geodesic.
-
-**Proposition 6.2 (Cubic spectrum).**
-For $L = \mathbb{Z}^3$ the distinct lengths are $\sqrt{k}$ where $k$ ranges over
-positive integers expressible as a sum of three squares, i.e. all $k$ *not* of
-the form $4^a(8b+7)$ (Legendre's three-square theorem). The systole is $1$,
-attained by the six vectors $\pm e_i$. The number of geodesics of length
-$\sqrt{k}$ is $r_3(k)$, the number of representations of $k$ as an ordered sum of
-three squares.
-
-*Proof sketch.* Lengths are norms $\sqrt{n_0^2+n_1^2+n_2^2}$; the set of
-attainable $k = n_0^2+n_1^2+n_2^2$ is characterized by the three-square theorem,
-and multiplicities are the representation counts $r_3(k)$. The minimum nonzero
-norm is $1$. $\qquad\blacksquare$
-
-**Conjecture 6.3 (Spectral rigidity of flat tori).**
-The set of lengths of *primitive* closed geodesics of $\mathbb{R}^3 / L$ equals
-the set of norms of primitive vectors of $L$, and the wrapping spectrum is a
-complete isometry invariant of the flat torus up to finitely many exceptions.
-(Distinct lattices can be isospectral, so "up to finitely many exceptions" is
-necessary; the conjecture asserts that the failure set is small.)
-
----
-
-## 7. Algorithms
-
-We summarize three computational procedures used to explore the theory
-numerically (implemented in the accompanying software).
-
-**Algorithm A (Geodesic sampler and closure check).** Given $n \in \mathbb{Z}^3$
-and a sample count $N$, compute $\gamma_n(t) = (t\,n \bmod 1)$ at $t = k/N$ and
-verify $\gamma_n(t+1) = \gamma_n(t)$ to machine precision, and $\gamma_n(t^\*) \neq \gamma_n(0)$
-at the half-period. Complexity $O(N)$.
-
-**Algorithm B (Wrapping-spectrum enumeration).** Enumerate lattice vectors
-$v \in \mathbb{Z}^3$ with $\lVert v \rVert \le R$ by iterating $|n_i| \le R$,
-record norms and multiplicities $r_3(k)$, and read off the systole. Complexity
-$O(R^3)$ vectors; the systole is found in the first shell.
-
-**Algorithm C (Primitive-class counting).** For each shell $k$, count primitive
-directions by inclusion–exclusion / gcd filtering, giving the number of
-*distinct* primitive closed geodesics of length $\sqrt{k}$.
-
----
-
-## 8. Applications: cosmic topology
-
-If a spatial slice of the universe is a flat torus, multiple geodesic routes
-connect any two points, so a single source can produce several images separated
-by the wrapping vectors. Two concrete signatures follow directly from the results
-above:
-
-- **Ghost images / cosmic crystallography.** Repeated images of the same object
-  are separated by lattice translations $\iota(n)$; the histogram of pairwise
-  separations peaks at the wrapping spectrum $\mathcal{L}(L)$ of §6.
-- **Matched circles in the microwave background.** If the diameter of the last
-  scattering surface exceeds the systole, the sphere self-intersects across the
-  identification, producing pairs of temperature circles matched by the deck
-  translations of §4. Their angular radii are fixed by the systole and the
-  spectrum.
-
-These are falsifiable predictions: the *three independent generators* of
-$\pi_1(\mathbb{T}^3)$ (Theorem 4.4) predict three fundamental matched-circle
-families, and the spectrum (Prop. 6.2) predicts their sizes.
-
----
-
-## 9. The minimal-volume problem for hyperbolic universes
-
-Flat tori can be rescaled freely, so "smallest flat universe" is not well posed
-without extra normalization. The situation changes dramatically under negative
-curvature. By Mostow rigidity, a closed hyperbolic three-manifold of dimension
-$\ge 3$ has its complete hyperbolic metric — and therefore its **volume** —
-determined by its topology alone; volume becomes a topological invariant. It is
-then meaningful to ask for the *smallest* such universe.
-
-**Conjecture 9.1 (Minimality of the Weeks manifold).**
-Among all closed orientable hyperbolic three-manifolds, the **Weeks manifold**
-uniquely attains the minimal volume
-$$V_{\text{Weeks}} \approx 0.9427073627769277,$$
-and no closed orientable hyperbolic three-manifold has volume below $0.94$.
-
-The Weeks manifold is obtained by $(5,1)$ and $(5,2)$ Dehn surgery on the two
-components of the Whitehead link; it is arithmetic, with invariant trace field
-$\mathbb{Q}(\sqrt{-3},\sqrt{5})$-related number fields, and its volume equals a
-specific value of the Lobachevsky function. The set of volumes of closed
-hyperbolic three-manifolds is a well-ordered subset of $\mathbb{R}$ (a
-consequence of Thurston–Jørgensen theory), so a minimum exists; the conjecture is
-that the Weeks manifold realizes it.
-
----
-
-## 10. Discussion
-
-The flat-torus results of §§3–5 are complete and elementary: closedness reduces
-to "adding an integer is invisible on the circle," non-triviality to "one-half is
-not an integer," and the fundamental-group computation to "projecting to zero
-means all coordinates are integers." Their strength lies not in depth but in
-airtight precision — in particular, in separating *periodicity* (trivially shared
-by the constant loop) from genuine *wrapping*, and in rendering
-$\pi_1 \cong \mathbb{Z}^3$ through the covering-translation group rather than by
-appeal to heavier topological machinery.
-
-The wrapping spectrum (§6) converts the geometry into number theory — sums of
-three squares — and connects to observational cosmology (§8). The minimal-volume
-problem (§9) points to the deep rigidity phenomena that distinguish curved from
-flat universes.
-
----
-
-## 11. Future directions
-
-1. **Systolic wrapping spectrum of the flat torus.** For $\mathbb{R}^3 / L$, the
-   set of primitive-geodesic lengths should equal the set of primitive-lattice
-   norms, with systole equal to the minimal nonzero lattice norm, making the
-   spectrum a near-complete isometry invariant. The abelian fundamental group
-   makes each conjugacy class a single lattice vector, turning dynamics into
-   lattice counting.
-
-2. **Three-family rigidity of $\pi_1$.** Any closed flat three-manifold whose
-   fundamental group is generated by exactly three independent commuting families
-   of loops should be finitely covered by $\mathbb{T}^3$, with the number of
-   independent families a homeomorphism invariant equal to the first Betti
-   number — comparable against the Bieberbach classification of flat manifolds.
-
-3. **Closed timelike curves from a temporal wrapping factor.** Adjoining a
-   compact time circle $\mathbb{R}/\tau\mathbb{Z}$ to form a product Lorentzian
-   structure should force closed timelike geodesics whose homotopy classes are
-   the timelike vectors of the extended lattice $\mathbb{Z}^3 \times \mathbb{Z}$
-   — causal pathology as a purely lattice-theoretic phenomenon, via the same
-   integer-direction-closes-up mechanism.
-
-4. **Minimality of the Weeks manifold.** Establish Conjecture 9.1 — that the
-   Weeks manifold uniquely minimizes volume among closed orientable hyperbolic
-   three-manifolds, with no such manifold below volume $0.94$.
-
----
-
-## References (selected, standard)
-
-- W. Thurston, *The Geometry and Topology of Three-Manifolds*.
-- J. Weeks, *The Shape of Space*.
-- R. Rucker, *The Fourth Dimension* (popular exposition of donut-shaped space).
-- D. Gabai, R. Meyerhoff, P. Milley, *Minimum volume cusped hyperbolic
-  three-manifolds* and related work on the closed minimal-volume problem.
-- M. Lachièze-Rey, J.-P. Luminet, *Cosmic Topology* (matched circles, cosmic
-  crystallography).
+A compact universe can be locally indistinguishable from an infinite one while possessing radically different global routes. The flat three-torus is the simplest three-dimensional example. It is obtained by identifying points of $\mathbb R^3$ that differ by an integer vector, or equivalently by identifying each pair of opposite faces of a unit cube. There is no boundary: crossing one face returns through its partner.
+
+The model supports a precise version of “wrapping around the universe.” Straight lines in the universal cover project to geodesics, and lines with integer direction close after unit parameter time. The three coordinate directions generate independent winding data. These features motivate an intuitive leap: if space wraps, perhaps timelike geodesics must also close. That leap is false in the standard product spacetime. The topology of space and the topology of time play distinct causal roles.
+
+Our purpose is to present an elementary, self-contained account of both sides of this distinction. The arguments use only quotient geometry, integer lattices, linear algebra, and the Minkowski timelike inequality. The main conclusions are:
+
+1. every nonzero integer vector produces a nonconstant closed geodesic on the flat three-torus;
+2. the covering-translation lattice is exactly $\mathbb Z^3$, with three independent standard generators;
+3. the resulting wrapping classes are infinite in number;
+4. no unit-period affine geodesic in $\mathbb R\times T^3$ can be both closed and timelike;
+5. compactifying time produces an explicit closed timelike affine geodesic;
+6. abstract volume minimality is equivalent to membership in the lower-bound set of all candidate volumes.
+
+The qualification “affine” is important. We work with projections of constant-velocity lines in a flat covering spacetime. This captures the central obstruction transparently, without claiming a general classification of all causal curves in arbitrary Lorentzian manifolds.
+
+## 2. The flat three-torus
+
+### 2.1 Quotient construction
+
+Let $\mathbb Z^3$ act on $\mathbb R^3$ by translations. Two points $x,y\in\mathbb R^3$ are equivalent when $x-y\in\mathbb Z^3$. The quotient is the flat three-torus
+
+$$
+T^3=\mathbb R^3/\mathbb Z^3\cong(\mathbb R/\mathbb Z)^3.
+$$
+
+Write
+
+$$
+p:\mathbb R^3\longrightarrow T^3,
+\qquad
+p(x_1,x_2,x_3)=(x_1\bmod 1,x_2\bmod 1,x_3\bmod 1)
+$$
+
+for the canonical projection. Addition on $T^3$ is coordinatewise addition modulo $1$. The quotient carries the flat metric induced locally from Euclidean space.
+
+**Definition 2.1 (Integer-direction geodesic).** For $n=(n_1,n_2,n_3)\in\mathbb Z^3$, define
+
+$$
+\gamma_n:\mathbb R\to T^3,
+\qquad
+\gamma_n(t)=p(tn)=p(tn_1,tn_2,tn_3).
+$$
+
+The lifted curve $t\mapsto tn$ is a Euclidean straight line of constant velocity $n$. Its projection is therefore a geodesic of the flat quotient in the usual local sense.
+
+### 2.2 Periodicity and nontriviality
+
+**Theorem 2.2 (Integer-direction periodicity).** For every $n\in\mathbb Z^3$ and $t\in\mathbb R$,
+
+$$
+\gamma_n(t+1)=\gamma_n(t).
+$$
+
+**Proof sketch.** The lifted points differ by
+
+$$
+(t+1)n-tn=n\in\mathbb Z^3.
+$$
+
+The covering projection identifies points differing by an integer vector. Hence their projections agree. $\square$
+
+Periodicity alone permits the zero vector, whose projected line is constant. The next result separates genuine motion from that degenerate case.
+
+**Lemma 2.3 (Nontriviality criterion).** If $n\in\mathbb Z^3$ is nonzero, then $\gamma_n$ is not constant.
+
+**Proof sketch.** Choose a coordinate $i$ for which $n_i\ne0$ and set $t=1/(2n_i)$. The $i$th coordinate of $tn$ equals $1/2$. Since $1/2$ is not an integer, it does not represent zero in $\mathbb R/\mathbb Z$. Thus $\gamma_n(t)\ne\gamma_n(0)$. $\square$
+
+**Theorem 2.4 (Existence of nonconstant closed spatial geodesics).** The flat three-torus contains a nonconstant closed geodesic. More strongly, every nonzero $n\in\mathbb Z^3$ defines such a geodesic, periodic with period $1$.
+
+**Proof sketch.** Combine Theorem 2.2 with Lemma 2.3. An explicit example is $n=(1,0,0)$; at $t=1/2$ its first coordinate is $1/2$ modulo $1$, while at $t=0$ it is zero. $\square$
+
+The period $1$ need not be the primitive period. If the coordinates of $n$ have a common divisor, the route may close earlier. The theorem asserts a universal period and is sufficient for the existence and classification results below.
+
+## 3. The integer lattice and wrapping data
+
+### 3.1 Kernel of the projection
+
+The key algebraic object is the set of translations invisible in the quotient.
+
+**Theorem 3.1 (Kernel characterization).** For $x=(x_1,x_2,x_3)\in\mathbb R^3$,
+
+$$
+p(x)=0\quad\Longleftrightarrow\quad x_i\in\mathbb Z\text{ for }i=1,2,3.
+$$
+
+Consequently,
+
+$$
+\ker p=\mathbb Z^3,
+$$
+
+where $\mathbb Z^3$ is embedded coordinatewise in $\mathbb R^3$.
+
+**Proof sketch.** In one coordinate, a real number represents zero in $\mathbb R/\mathbb Z$ exactly when it is an integer. Equality to zero in the product quotient holds exactly when this condition holds in every coordinate. $\square$
+
+This kernel is also the group of translations of the universal cover that preserve every fiber of $p$. It is therefore the natural algebraic proxy for the deck-translation group. Standard covering-space theory further identifies it with the fundamental group of the torus, but the lattice computation itself already contains the winding information needed here.
+
+### 3.2 Three independent generators
+
+Let
+
+$$
+e_1=(1,0,0),\qquad e_2=(0,1,0),\qquad e_3=(0,0,1).
+$$
+
+**Theorem 3.2 (Independence of coordinate wrappings).** The vectors $e_1,e_2,e_3$ are linearly independent over $\mathbb Z$. Every $n\in\mathbb Z^3$ has the unique representation
+
+$$
+n=n_1e_1+n_2e_2+n_3e_3.
+$$
+
+**Proof sketch.** If $a_1e_1+a_2e_2+a_3e_3=0$, comparison of the three coordinates gives $a_1=a_2=a_3=0$. Existence of the displayed representation follows directly from coordinate addition, and independence gives uniqueness. $\square$
+
+The phrase “three independent families of wrapping” now has a precise interpretation. A loop can wind independently in each coordinate direction, and its winding record is an integer triple. The signs indicate orientation and the magnitudes indicate multiplicity.
+
+**Definition 3.3 (Wrapping class represented by an integer line).** Associate to $n\in\mathbb Z^3$ the covering displacement $n\in\ker p$ of the lifted path $t\mapsto tn$ over one period.
+
+**Lemma 3.4 (Injectivity of wrapping data).** If two integer-direction lines have the same covering displacement, then their integer vectors are equal.
+
+**Proof sketch.** Equality of their embedded vectors in $\mathbb R^3$ gives equality coordinate by coordinate. The inclusion $\mathbb Z\hookrightarrow\mathbb R$ is injective, so the original integer coordinates agree. $\square$
+
+**Theorem 3.5 (Infinitely many wrapping classes).** The set of wrapping classes represented by integer-direction geodesics is infinite.
+
+**Proof sketch.** The map $n\mapsto n\in\ker p$ is injective by Lemma 3.4, and $\mathbb Z^3$ is infinite. For a concrete infinite subfamily, use $(k,0,0)$ for $k\in\mathbb Z$. $\square$
+
+This result distinguishes “three independent generators” from “three possible loops.” There are infinitely many classes, organized by three integer coordinates.
+
+## 4. Affine causal geometry on the product spacetime
+
+### 4.1 Constant velocities and timelikeness
+
+Consider the spacetime
+
+$$
+\mathcal M=\mathbb R\times T^3,
+$$
+
+with the flat product Lorentzian structure induced from Minkowski space $\mathbb R\times\mathbb R^3$. A constant velocity in the covering spacetime is a pair
+
+$$
+v=(\tau,s),
+$$
+
+where $\tau\in\mathbb R$ is the time component and $s=(s_1,s_2,s_3)\in\mathbb R^3$ is the spatial component. The corresponding affine curve is
+
+$$
+\widetilde\Gamma_v(u)=(u\tau,us)
+$$
+
+upstairs and
+
+$$
+\Gamma_v(u)=(u\tau,p(us))
+$$
+
+in $\mathcal M$.
+
+**Definition 4.1 (Timelike velocity).** In units where the speed of light is $1$, the velocity $v=(\tau,s)$ is timelike when
+
+$$
+\|s\|^2<\tau^2,
+\qquad
+\|s\|^2=s_1^2+s_2^2+s_3^2.
+$$
+
+This convention corresponds to the Lorentzian quadratic form $-\tau^2+\|s\|^2$ being negative.
+
+**Definition 4.2 (Unit-period closure in the product).** The affine curve closes after one unit of parameter time when
+
+$$
+\Gamma_v(1)=\Gamma_v(0).
+$$
+
+Because the time factor is not quotiented, this is equivalent to
+
+$$
+\tau=0
+\quad\text{and}\quad
+s_i\in\mathbb Z\text{ for }i=1,2,3.
+$$
+
+The spatial condition follows from Theorem 3.1, while the equality $\tau=0$ follows from ordinary equality on the real line.
+
+### 4.2 The causal obstruction
+
+**Theorem 4.3 (No closed timelike affine geodesic in the globally timed product).** No unit-period affine geodesic in $\mathbb R\times T^3$ is both closed and timelike.
+
+**Proof.** Suppose a velocity $v=(\tau,s)$ closes after one unit. Definition 4.2 gives $\tau=0$. If $v$ were timelike, Definition 4.1 would yield
+
+$$
+s_1^2+s_2^2+s_3^2<0.
+$$
+
+Each square is nonnegative, so their sum is nonnegative, a contradiction. $\square$
+
+**Corollary 4.4 (Spatial torus topology does not force affine time travel).** The existence of toroidal spatial topology, by itself, does not imply the existence of a closed timelike affine geodesic.
+
+The corollary is a counterexample to the stronger implication: $\mathbb R\times T^3$ has toroidal spatial slices and abundant closed spatial geodesics, yet Theorem 4.3 excludes closed timelike affine geodesics.
+
+The mechanism is elementary but fundamental. A closed spatial geodesic returns to the same point of $T^3$; it need not return to the same event of spacetime. Along a future-directed timelike trajectory, the unquotiented real time coordinate changes. Spatial recurrence therefore occurs at a different time.
+
+The theorem concerns affine geodesics of the stated flat model. A broader claim about all causal curves would naturally be derived from global hyperbolicity or a global time function. The coordinate $t:\mathbb R\times T^3\to\mathbb R$ provides the relevant intuition: it is single-valued and cannot return along a consistently future-directed causal curve. Establishing that stronger intrinsic statement requires the standard Lorentzian definitions beyond the elementary affine framework adopted here.
+
+## 5. Compact time and a repaired existence theorem
+
+Now quotient the time coordinate as well:
+
+$$
+\mathcal M_c=(\mathbb R/\mathbb Z)\times T^3.
+$$
+
+A velocity $v=(\tau,s)$ closes after one unit precisely when all four displacements are integral:
+
+$$
+\tau\in\mathbb Z,
+\qquad
+s_i\in\mathbb Z\text{ for }i=1,2,3.
+$$
+
+**Theorem 5.1 (Closed timelike geodesic with compact time).** The compact-time spacetime $(\mathbb R/\mathbb Z)\times T^3$ contains a closed timelike affine geodesic.
+
+**Proof.** Choose
+
+$$
+v=(1,0,0,0).
+$$
+
+Every component is integral, so the associated affine curve closes after one unit. Its spatial squared speed is $0$, while its squared time component is $1$. Hence
+
+$$
+0<1,
+$$
+
+and the velocity is timelike. $\square$
+
+This theorem repairs the false spatial-topology implication by adding exactly the missing causal ingredient: an identification with timelike displacement. It also suggests the following general diagnostic for quotients of Minkowski space.
+
+**Principle 5.2 (Causal classification of affine quotient loops).** Let a discrete translation lattice act on Minkowski space. A projected affine line closes when its one-period displacement is a lattice vector. The causal type of the closed affine geodesic is the causal type of that vector under the Lorentzian quadratic form. Thus a timelike lattice vector yields a closed timelike affine geodesic, a null lattice vector yields a closed null affine geodesic, and a spacelike lattice vector yields a closed spacelike affine geodesic.
+
+In $\mathbb R\times T^3$, all identification vectors have zero time component and are therefore spatial. In $(\mathbb R/\mathbb Z)\times T^3$, the lattice contains $(1,0,0,0)$, which is timelike under the chosen sign convention.
+
+## 6. Algorithms and numerical demonstrations
+
+The preceding results admit direct finite computations. These computations illustrate the exact statements; they are not substitutes for the proofs.
+
+### 6.1 Sampling a projected geodesic
+
+Given $n\in\mathbb Z^3$ and a sample count $N$, compute
+
+$$
+\gamma_n(k/N)=\left(\frac{kn_1}{N}\bmod1,\frac{kn_2}{N}\bmod1,\frac{kn_3}{N}\bmod1\right)
+$$
+
+for $k=0,\ldots,N$. This takes $O(N)$ arithmetic operations and $O(N)$ storage if all points are retained. The first and last points agree exactly in ideal arithmetic.
+
+### 6.2 Testing closure and causal type
+
+For $v=(\tau,s)$, product closure is tested by checking $\tau=0$ and integrality of each $s_i$. Compact-time closure instead checks integrality of all four components. Causal type is determined by
+
+$$
+q(v)=\|s\|^2-\tau^2.
+$$
+
+The velocity is timelike for $q(v)<0$, null for $q(v)=0$, and spacelike for $q(v)>0$. Each test uses constant time and storage in four dimensions.
+
+Examples make the contrast immediate. The product velocity $(0,1,0,0)$ closes but is spacelike because $q=1$. The velocity $(1,0,0,0)$ is timelike because $q=-1$, but it does not close when time is real. It does close when time is circular.
+
+### 6.3 Enumerating bounded wrapping vectors
+
+For a bound $B\ge0$, enumerate all integer triples in $[-B,B]^3$. There are $(2B+1)^3$ vectors, one of which is zero. The nonzero vectors provide $(2B+1)^3-1$ sampled wrapping classes. The runtime is $O(B^3)$ and the output storage is $O(B^3)$. This finite enumeration displays the growth of the infinite lattice without confusing a bounded sample with the full set.
+
+## 7. Minimal volume as an order-theoretic statement
+
+The Weeks manifold belongs to a different geometric setting: closed orientable hyperbolic three-manifolds. Its volume is commonly quoted as approximately $0.94$ in the normalization of sectional curvature $-1$. The deep geometric statement that it has least volume among the relevant manifolds must not be conflated with the elementary order-theoretic form of such a claim.
+
+Let $M$ be any class of candidates, let
+
+$$
+V:M\to\mathbb R
+$$
+
+be a volume function, and let $W\in M$ be distinguished.
+
+**Definition 7.1 (Minimal volume).** The candidate $W$ has minimal volume when
+
+$$
+V(W)\le V(X)
+\qquad\text{for every }X\in M.
+$$
+
+For a set $S\subseteq\mathbb R$, define its lower-bound set by
+
+$$
+\operatorname{LB}(S)=\{a\in\mathbb R: a\le s\text{ for every }s\in S\}.
+$$
+
+**Theorem 7.2 (Lower-bound characterization of minimality).** The candidate $W$ has minimal volume if and only if
+
+$$
+V(W)\in\operatorname{LB}(V(M)),
+$$
+
+where $V(M)=\{V(X):X\in M\}$ is the range of $V$.
+
+**Proof.** If $W$ is minimal and $y\in V(M)$, then $y=V(X)$ for some $X\in M$, so $V(W)\le y$. Therefore $V(W)$ is a lower bound of $V(M)$. Conversely, if $V(W)$ is a lower bound of $V(M)$, then $V(X)\in V(M)$ for every $X\in M$, and hence $V(W)\le V(X)$. This is exactly minimality. $\square$
+
+The theorem is fully general and contains no hyperbolic geometry. To apply it substantively to the Weeks manifold one must define the candidate class and volume, establish invariance under isometry, construct the manifold, certify its volume, and prove the global comparison against every competitor. Accordingly, the approximate value $0.94$ is contextual here rather than a derived numerical conclusion.
+
+## 8. Applications and interpretation
+
+### 8.1 Cosmic topology
+
+A spatial three-torus is locally Euclidean but globally compact. In an idealized cosmological model, radiation could reach an observer along paths with different winding vectors, potentially producing repeated images or matched large-scale patterns. The lattice $\mathbb Z^3$ supplies the bookkeeping: each route is labeled by three winding integers.
+
+The results do not establish that physical space is toroidal. They instead specify the mathematical consequences of that hypothesis. In particular, they prevent a causal overinterpretation: repeated spatial routes do not imply return to an earlier event.
+
+### 8.2 Periodic simulation domains
+
+Computational physics frequently uses periodic boundary conditions. A simulation box with opposite faces identified is precisely a finite representation of a toroidal quotient. Particle paths are often tracked both modulo the box and through an “unwrapped” displacement. The latter is an integer lattice vector and records boundary crossings. The kernel and injectivity results explain why this unwrapped vector is the correct invariant for distinguishing routes that look identical inside one cell.
+
+### 8.3 Causal quotient design
+
+The compact-time example illustrates a general design rule. Quotient identifications must be inspected with the Lorentzian metric, not merely with topology. A quotient containing timelike translation vectors creates closed timelike affine geodesics. This provides a fast preliminary test for proposed flat spacetime quotients before undertaking a more global causal analysis.
+
+## 9. Limitations and future work
+
+Several natural extensions require additional geometry.
+
+First, the lattice computation should be connected explicitly to the topological fundamental group, yielding a group isomorphism $\pi_1(T^3)\cong\mathbb Z^3$ and classifications of based and free homotopy classes.
+
+Second, affine projected lines should be related intrinsically to Levi-Civita geodesics for a Lorentzian product metric. This would support a proof that $\mathbb R\times T^3$ is globally hyperbolic and contains no closed causal curves at all, not merely no closed timelike affine geodesics.
+
+Third, the quotient classification in Principle 5.2 can be developed for general Minkowski lattices. One expects a clean trichotomy according to whether the lattice contains timelike, null, or only spacelike nonzero vectors.
+
+Fourth, a genuine treatment of hyperbolic volume requires complete finite-volume hyperbolic manifolds, orientability, isometry classes, Riemannian volume, triangulations, certified volume bounds, and the rigidity and surgery tools needed for global minimality.
+
+Finally, the algebraic independence of the three coordinate loops can be enriched geometrically by studying intersections, first homology, and unique decomposition of arbitrary winding classes.
+
+## 10. Conclusion
+
+The flat three-torus has an elementary but consequential structure. Integer straight lines project to closed spatial geodesics; nonzero integer vectors make those geodesics nonconstant. The invisible translations of the covering projection form exactly $\mathbb Z^3$, whose standard coordinate vectors are independent and whose infinitely many elements encode infinitely many wrapping classes.
+
+The causal analysis draws a sharp boundary around these facts. In $\mathbb R\times T^3$, closure forces zero time displacement, which is incompatible with timelikeness. Toroidal spatial topology alone therefore does not force closed timelike affine geodesics. When time is compactified, the vector $(1,0,0,0)$ becomes an explicit closed timelike direction. The decisive datum is not compactness alone but the causal character of the identification lattice.
+
+This separation of topology, geometry, and causality is the central lesson. Topology determines global return, geometry determines geodesic motion, and the Lorentzian metric determines whether that motion can represent a massive observer. A rigorous account of a “donut-shaped universe” must keep all three roles in view.
+
+The framework also supplies a practical order of analysis for future models: compute the identification group, determine its independent generators, construct the projected geodesics, and only then classify those generators using the ambient metric. This order prevents topological recurrence from being mistaken for causal recurrence and applies equally to conceptual cosmology and periodic computational domains.

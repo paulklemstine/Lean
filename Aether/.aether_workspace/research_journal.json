@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "535698fb",
-      "domain": "Applications",
-      "key_insight": "# Future directions\n\nThe formal development isolates a rigorous object naturally attached to the modular group: the integer-translation orbit of `i` in the upper half-plane, transported to the Poincar",
-      "quality_score": 0.66,
-      "sorry_count": 3,
-      "theorem_count": 14,
-      "timestamp": "2026-07-17T12:07:38",
-      "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk"
-    },
-    {
       "cycle_id": "ad5825e2",
       "domain": "MachineLearning",
       "key_insight": "# Future directions\n\n## What the formal result establishes\n\n`Catalog/MachineLearning/FiniteGroupPeriodicLaw.lean` proves an infinite counterexample family to prediction from coarse “periodic-table coo",
@@ -2501,6 +2491,16 @@
       "theorem_count": 8,
       "timestamp": "2026-07-22T00:14:24",
       "title": "ArXiv paper: Efficient Hamilton covers and linear arboricity of random graphs"
+    },
+    {
+      "cycle_id": "759f53fa",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions\n\n1. **Replace discrete carriers by actual categories.** Define an analogy from functors `F : A ⥤ B` and `G : B ⥤ A`, and measure agreement of `G ⋙ F` with the identity using natura",
+      "quality_score": 0.66,
+      "sorry_count": 0,
+      "theorem_count": 21,
+      "timestamp": "2026-07-22T00:14:30",
+      "title": "Hofstadter: Fluid Concepts and Creative Analogies — Analogy as a Mathematical Operation"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.79
     }
   ],
-  "last_updated": "2026-07-22T00:14:24",
+  "last_updated": "2026-07-22T00:14:30",
   "open_questions": [
     {
       "context": "",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "f2f32f44",
-        "quality": 0.67,
-        "theorems": 55,
-        "title": "The Fourier Transform of the Riemann Zeta: Hearing the Primes"
-      },
-      {
         "cycle_id": "cf69678e",
         "quality": 0.75,
         "theorems": 0,
@@ -3265,6 +3259,12 @@
         "quality": 0.69,
         "theorems": 18,
         "title": "Speculative: The Lean Theorem Prover as an Ecological Niche"
+      },
+      {
+        "cycle_id": "759f53fa",
+        "quality": 0.66,
+        "theorems": 21,
+        "title": "Hofstadter: Fluid Concepts and Creative Analogies — Analogy as a Mathematical Op"
       }
     ],
     "Computation": [
