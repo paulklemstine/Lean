@@ -1,26 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "6d1b5339",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Infinite-Dimensional Chess\n\n## 1. Countable-Ordinal Realization by Finite Material\n\n**Conjecture.** Every countable ordinal is the game value of a winning position on an infinite",
-      "quality_score": 0.79,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-19T12:11:44",
-      "title": "Infinite-Dimensional Chess: Winning on the Hilbert Board"
-    },
-    {
-      "cycle_id": "2d8c7907",
-      "domain": "Applications",
-      "key_insight": "# Future directions\n\n## 1. Quantitative collision bounds\nThe current finite-memory theorem proves that a collision exists. A sharper development could restrict streams to length at most `n`, count the",
-      "quality_score": 0.76,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-19T16:07:13",
-      "title": "Memory Editing: When Forgetting Is a Mathematical Operation"
-    },
-    {
       "cycle_id": "8d3b0867",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\nThe completed development separates three notions that are often conflated in informal thermodynamic accounts of sorting:\n\n1. **Decision-tree complexity.** A binary comparison tre",
@@ -499,29 +479,29 @@
       "theorem_count": 0,
       "timestamp": "2026-07-21T22:19:19",
       "title": "Hofstadter: Gödel, Escher, Bach — Isomorphism Across Domains"
+    },
+    {
+      "cycle_id": "11a0fcb2",
+      "domain": "Logic",
+      "key_insight": "# Future directions\n\n## 1. Replace the deck-group proxy by an actual fundamental-group calculation\n\n`Catalog/Logic/SpacetimeDonuts.lean` proves that the kernel of the universal-cover projection is exa",
+      "quality_score": 0.74,
+      "sorry_count": 0,
+      "theorem_count": 23,
+      "timestamp": "2026-07-22T00:14:35",
+      "title": "Rucker: Spacetime Donuts — Topology of the Universe"
+    },
+    {
+      "cycle_id": "b31f2cf9",
+      "domain": "Logic",
+      "key_insight": "# Future directions\n\nThe completed development establishes the abstract logical core in three layers. `Core.lean` studies unrestricted semantic diagonalization and fixed-point arguments; `Independence",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 21,
+      "timestamp": "2026-07-22T00:14:40",
+      "title": "Hofstadter: Strange Loops in Formal Systems — Self-Reference as a Theorem"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "ad5825e2",
-      "domain": "MachineLearning",
-      "key_insight": "# Future directions\n\n## What the formal result establishes\n\n`Catalog/MachineLearning/FiniteGroupPeriodicLaw.lean` proves an infinite counterexample family to prediction from coarse “periodic-table coo",
-      "quality_score": 0.71,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-17T12:07:43",
-      "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
-    },
-    {
-      "cycle_id": "8b90ccda",
-      "domain": "MachineLearning",
-      "key_insight": "# Future directions\n\nThis development formalizes the finite coordinate core of Curtin's *Generalizations of nets and Latin squares* (arXiv:2607.10890v1): column- and row-Latin matrices, orthogonality,",
-      "quality_score": 0.69,
-      "sorry_count": 0,
-      "theorem_count": 25,
-      "timestamp": "2026-07-17T13:12:16",
-      "title": "ArXiv paper: Generalizations of nets and Latin squares"
-    },
     {
       "cycle_id": "d1663b23",
       "domain": "Applications",
@@ -2501,45 +2481,29 @@
       "theorem_count": 21,
       "timestamp": "2026-07-22T00:14:30",
       "title": "Hofstadter: Fluid Concepts and Creative Analogies — Analogy as a Mathematical Operation"
+    },
+    {
+      "cycle_id": "11a0fcb2",
+      "domain": "Logic",
+      "key_insight": "# Future directions\n\n## 1. Replace the deck-group proxy by an actual fundamental-group calculation\n\n`Catalog/Logic/SpacetimeDonuts.lean` proves that the kernel of the universal-cover projection is exa",
+      "quality_score": 0.74,
+      "sorry_count": 0,
+      "theorem_count": 23,
+      "timestamp": "2026-07-22T00:14:35",
+      "title": "Rucker: Spacetime Donuts — Topology of the Universe"
+    },
+    {
+      "cycle_id": "b31f2cf9",
+      "domain": "Logic",
+      "key_insight": "# Future directions\n\nThe completed development establishes the abstract logical core in three layers. `Core.lean` studies unrestricted semantic diagonalization and fixed-point arguments; `Independence",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 21,
+      "timestamp": "2026-07-22T00:14:40",
+      "title": "Hofstadter: Strange Loops in Formal Systems — Self-Reference as a Theorem"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "7881a56b",
-      "domain": "Novelty",
-      "name": "winStep_mono",
-      "quality": 0.79
-    },
-    {
-      "cycle_id": "7881a56b",
-      "domain": "Novelty",
-      "name": "winningRegion_subset_succ",
-      "quality": 0.79
-    },
-    {
-      "cycle_id": "d0217292",
-      "domain": "Novelty",
-      "name": "are",
-      "quality": 0.73
-    },
-    {
-      "cycle_id": "d0217292",
-      "domain": "Novelty",
-      "name": "euler_pure_formula",
-      "quality": 0.73
-    },
-    {
-      "cycle_id": "d0217292",
-      "domain": "Novelty",
-      "name": "euler_negative_dimension",
-      "quality": 0.73
-    },
-    {
-      "cycle_id": "606f7bdd",
-      "domain": "Applications",
-      "name": "joins",
-      "quality": 0.73
-    },
     {
       "cycle_id": "606f7bdd",
       "domain": "Applications",
@@ -2803,9 +2767,45 @@
       "domain": "Shared",
       "name": "hopf_maps_unit_sphere",
       "quality": 0.79
+    },
+    {
+      "cycle_id": "11a0fcb2",
+      "domain": "Logic",
+      "name": "proj_apply",
+      "quality": 0.74
+    },
+    {
+      "cycle_id": "11a0fcb2",
+      "domain": "Logic",
+      "name": "geo_eq_proj_line",
+      "quality": 0.74
+    },
+    {
+      "cycle_id": "11a0fcb2",
+      "domain": "Logic",
+      "name": "geo_periodic",
+      "quality": 0.74
+    },
+    {
+      "cycle_id": "b31f2cf9",
+      "domain": "Logic",
+      "name": "ranges",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "b31f2cf9",
+      "domain": "Logic",
+      "name": "goedel_fixed_point",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "b31f2cf9",
+      "domain": "Logic",
+      "name": "goedel_unprovable",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-07-22T00:14:30",
+  "last_updated": "2026-07-22T00:14:40",
   "open_questions": [
     {
       "context": "",
@@ -3455,18 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "08212964",
-        "quality": 0.68,
-        "theorems": 17,
-        "title": "ArXiv paper: From roots to paths: graphs simultaneously irregular with respect t"
-      },
-      {
-        "cycle_id": "57f0b740",
-        "quality": 0.75,
-        "theorems": 707,
-        "title": "Phantom Topologies: Spaces That Change When You Look at Them"
-      },
-      {
         "cycle_id": "70b6aa60",
         "quality": 0.76,
         "theorems": 0,
@@ -3513,6 +3501,18 @@
         "quality": 0.65,
         "theorems": 13,
         "title": "Speculative: Category Theory as the DNA of Mathematics"
+      },
+      {
+        "cycle_id": "11a0fcb2",
+        "quality": 0.74,
+        "theorems": 23,
+        "title": "Rucker: Spacetime Donuts — Topology of the Universe"
+      },
+      {
+        "cycle_id": "b31f2cf9",
+        "quality": 0.83,
+        "theorems": 21,
+        "title": "Hofstadter: Strange Loops in Formal Systems — Self-Reference as a Theorem"
       }
     ],
     "MachineLearning": [

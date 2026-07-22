@@ -348,21 +348,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Rucker: The Lifebox \u2014 Information-Theoretic Identity"
   },
   {
-    "consumed_by_exp_id": "759f53fa",
-    "description": "Formalize analogy-making as a mathematical operation. Define: an analogy between structures A and B is a pair of functors F: A -> B and G: B -> A with F . G approximating identity. Prove: the best analogies maximize the 'structural similarity' (the composition F.G should be close to id_A in some metric). Show: the 'copycat' analogy (Hofstadter's model) is a special case where A = B = the concept lattice. Conjecture: every creative mathematical insight can be decomposed into a sequence of analogy operations. Explore: can we formalize 'making a good analogy' as an optimization problem?",
-    "domains": [
-      "Novelty",
-      "Bridges"
-    ],
-    "id": "fd_0565",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-21T20:43:46.479808+00:00",
-    "title": "Hofstadter: Fluid Concepts and Creative Analogies \u2014 Analogy as a Mathematical Operation"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize the mathematics of a Dyson sphere: a megastructure that completely encloses a star to capture its energy output. Define: the Dyson sphere surface area is 4*pi*R^2 where R is the orbital radius. Prove: the optimal Dyson swarm (many independent collectors) has total collecting area equal to the sphere but with better thermal management. Show: the information capacity of a Dyson sphere (Landauer limit) is ~10^50 bits at 1 AU. Conjecture: a Type II civilization (Kardashev) generates 10^26 watts \u2014 enough to run 10^40 quantum operations per second. Explore: formalize the thermodynamic limits of megastructure computation.",
     "domains": [
@@ -376,21 +361,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-21T22:18:50.641161+00:00",
     "title": "Moonshot: Dyson Sphere Mathematics \u2014 Energy Collection Optimization"
-  },
-  {
-    "consumed_by_exp_id": "11a0fcb2",
-    "description": "Formalize the hypothesis that spacetime has nontrivial topology (a 'donut' shape). Prove: if the universe has the topology of a 3-torus T^3, then there exist closed timelike geodesics. Show: the fundamental group pi_1(T^3) = Z^3 implies three independent families of 'wrapping around' the universe. Explore: what is the minimal volume complete hyperbolic 3-manifold? Conjecture: the Weeks manifold (volume ~0.94) is minimal. Connect to Rucker's vision of donut-shaped spacetime.",
-    "domains": [
-      "Novelty",
-      "Physics"
-    ],
-    "id": "fd_0550",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-21T12:07:59.348714+00:00",
-    "title": "Rucker: Spacetime Donuts \u2014 Topology of the Universe"
   },
   {
     "consumed_by_exp_id": "",
@@ -2531,7 +2501,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Heilbronn's Problem in the Unit Triangle: Certified Optimal Configurations for up to $n\\le 8$"
   },
   {
-    "consumed_by_exp_id": "decbe545",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Efficient Hamilton covers and linear arboricity of random graphs' and formalize its key results. Abstract: A Hamilton cover of a graph is a collection of Hamilton cycles whose union contains all edges. Since each Hamilton cycle covers two edges at every vertex, every Hamilton cover has size at least $\\lceil \u0394(G)/2\\rceil$. We prove that this lower bound is tight for binomial random graphs $G(n,p)$ throughout the widest possible range of edge probabilities: if $\u03c9(n)\\to\\infty$ and \\[ \\frac{\\log n+\\log\\log n+\u03c9(n)}{n} \\le p=p(n) \\le 1-\\frac{\u03c9(n)}{n^{2}}, \\] then $G\\sim G(n,p)$ with high probability has a Hamilton cover of size $\\left\\lceil \\frac{\u0394(G)}{2}\\right\\rceil. $ The main new contribution is the sparse regime near the Hamiltonicity threshold, where we prove a conjecture of Dragani\u0107, Glock, Munh\u00e1 Correia and Sudakov. Our proof develops constructive tools for decomposing such graphs into controlled forest systems and extending them, using reserved pseudorandom structure, into Hamilton cycles. We also prove the corresponding hitting-time result for the random graph process, answering a questi",
     "domains": [
       "Computation",
@@ -2541,7 +2511,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14881v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-17T06:29:52.184186+00:00",
     "title": "ArXiv paper: Efficient Hamilton covers and linear arboricity of random graphs"
   },
@@ -5966,6 +5936,51 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-21T22:19:18.490628+00:00",
     "title": "Construct explicit formal, graphical, and contrapuntal syntax categories whose m"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## 1. Optimal-cover hitting time\n\n**Conjecture.** In the random graph process, with probability tending to one, the first graph whose minimum degree is two is also the first graph whose edges admit a Hamilton cover of size `\u2308\u0394/2\u2309`.\n\nThe key insight is that the deterministic incidence-capacity obstruction becomes sharp as soon as the process supplies enough global connectivity to extend every controlled forest system.\n\n**Why now?** The local parity theorem identifies exactly the zero-or-one incidence defect that an extension procedure must absorb, reducing the hitting-time question to a structured global completion problem.\n\n## 2. Punctured optimal covers realize linear arboricity\n\n**Conjecture.** Throughout the Hamiltonian range of the binomial random graph, every minimum-size Hamilton cover admits a choice of one edge from each cycle such that the punctured Hamilton paths, together with at most one additional linear forest, form an optimal linear-forest decomposition.\n\nThe key insight is that puncturing preserves coverage away from a transversal, while the parity-controlled local excess should allow the transversal edges to be routed without increasing the asymptotically sharp number of layers.\n\n**Why now?** The deterministic puncturing theorem isolates the only edges that can be lost, making the remaining question a concrete transversal-selection and rerouting problem.\n\n## 3. Spectral reserved-structure criterion\n\n**Conjecture.** There are absolute constants `c,C > 0` such that every sufficiently large graph with minimum degree at least `C log n`, normalized second eigenvalue at most `c`, and robust sparse-cut expansion admits a Hamilton cover of size `\u2308\u0394/2\u2309`.\n\nThe key insight is that a spectral reservoir could replace probabilistic exposure in the forest-extension argument, converting pseudorandom Hamilton completion into a deterministic theorem.\n\n**Why now?** The incidence-code equality case gives the exact local target, so a spectral criterion need only guarantee simultaneous global extension while preserving the prescribed parity defects.\n\n## 4. Stability of near-optimal covers\n\n**Conjecture.** If a family of two-regular spanning layers covers a graph using `\u2308\u0394/2\u2309 + k` layers, then at every maximum-degree vertex its total repeated-incidence multiplicity is at most `2k + 1`; moreover, for pseudorandom graphs this local bound forces the cover to differ from an optimal cover in only `O(kn)` edge-layer incidences.\n\nThe key insight is that excess layer count translates exactly into local coding slack, suggesting a stability bridge from arithmetic capacity to global edit distance.\n\n**Why now?** The proved parity law settles the equality case and indicates the precise linear error term that should govern the near-equality regime.\n",
+    "domains": [
+      "Computation",
+      "Pythagorean"
+    ],
+    "id": "fd_0579",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "decbe545",
+    "status": "available",
+    "timestamp": "2026-07-22T00:14:23.064740+00:00",
+    "title": "**Conjecture.** In the random graph process, with probability tending to one, th"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n1. **Replace discrete carriers by actual categories.** Define an analogy from functors `F : A \u2964 B` and `G : B \u2964 A`, and measure agreement of `G \u22d9 F` with the identity using natural isomorphisms or a metric on functors. The present function model is exactly the discrete-category base case.\n\n2. **Weighted structural similarity.** Replace fixed-point count by a weighted sum over concepts, or count preserved relations, operations, and incidence data. Prove monotonicity and optimization results for nonnegative weights.\n\n3. **Two-sided fidelity.** Score both source and target round trips. Characterize maximum two-sided similarity by equivalence/bijection, contrasting it with the intentionally one-sided notion proved here.\n\n4. **Approximate metric fidelity.** For finite metric structures, minimize maximum or average displacement of the round trip. Establish existence of minimizers and quantitative composition inequalities.\n\n5. **Formal concept lattices.** Instantiate the carriers with closed concepts of a finite formal context and require monotone or adjoint maps. Compare fixed-point similarity with the cardinality of the stable closure core.\n\n6. **Uniqueness modulo symmetry.** The Boolean flip computation shows that Copycat is not the unique maximizer. Classify all maximizers as split embeddings, and in the self-finite case relate them to permutations/automorphisms.\n\n7. **Search algorithms.** Give a computable enumeration of finite candidate analogies and prove that an implementation returns an optimizer, with complexity bounds and symmetry reduction.\n\n8. **Decomposition claims.** The universal statement about every creative mathematical insight is not mathematically well-posed without a formal type of insights and a semantics connecting them to analogy operations. A defensible next step is to define a generated subcategory of transformations and characterize exactly which transformations admit finite decompositions.\n",
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "fd_0580",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "759f53fa",
+    "status": "available",
+    "timestamp": "2026-07-22T00:14:27.819343+00:00",
+    "title": "1. **Replace discrete carriers by actual categories.** Define an analogy from fu"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## 1. Replace the deck-group proxy by an actual fundamental-group calculation\n\n`Catalog/Logic/SpacetimeDonuts.lean` proves that the kernel of the universal-cover projection is exactly the integer lattice and that its three standard generators are linearly independent. A fuller development should construct the covering map as a topological covering and connect its deck transformations to Mathlib's fundamental group, obtaining an explicit group equivalence\n\n`\u03c0\u2081(T\u00b3) \u2243+ (Fin 3 \u2192 \u2124)`.\n\nThis would also permit a formal classification of based and free homotopy classes of loops.\n\n## 2. Connect affine lines to differential-geometric geodesics\n\nThe present causal model deliberately defines the relevant curves through constant velocities in the flat universal cover. A stronger result should:\n\n- equip `\u211d \u00d7 T\u00b3` with a Lorentzian product metric;\n- define Levi-Civita geodesics and causal character intrinsically;\n- prove that projections of affine lines satisfy the geodesic equation;\n- prove that the product spacetime is globally hyperbolic and therefore has no closed causal curves.\n\nThe current theorem already isolates the essential obstruction: an unquotiented real time coordinate cannot return after a nonzero timelike affine displacement.\n\n## 3. Classify causal behavior of general spacetime quotients\n\nFor a lattice in Minkowski space, closed affine geodesics correspond to lattice vectors. Their causal type is determined by the Lorentzian norm. This suggests a general classification theorem:\n\n- no causal lattice vectors implies causal quotient;\n- a null lattice vector produces a closed null geodesic;\n- a timelike lattice vector produces a closed timelike geodesic.\n\nThe compact-time example in the Lean file is the simplest positive instance.\n\n## 4. Formalize hyperbolic 3-manifold volume\n\nThe file states only the abstract order-theoretic shape of the Weeks minimal-volume assertion. A genuine formalization requires substantial new infrastructure:\n\n1. complete finite-volume hyperbolic 3-manifolds;\n2. orientability and manifold isometry classes;\n3. Riemannian volume and its invariance under isometry;\n4. ideal tetrahedra, triangulations, and certified volume bounds;\n5. a concrete construction and volume certification for the Weeks manifold;\n6. the rigidity and surgery arguments needed for global minimality.\n\nUntil these objects exist, the numerical value near `0.94` should be treated as contextual mathematical information, not as a theorem established by this project.\n\n## 5. Geometric independence versus algebraic independence\n\nThe three basis loops are proved linearly independent in `\u2124\u00b3`. Future work could show their pairwise intersection behavior, establish the induced first-homology basis, and prove that every wrapping class has a unique integer-coordinate decomposition. This would make the phrase \u201cthree independent families of wrapping\u201d simultaneously algebraic, homotopical, and geometric.\n",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_0581",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "11a0fcb2",
+    "status": "available",
+    "timestamp": "2026-07-22T00:14:33.447981+00:00",
+    "title": "`Catalog/Logic/SpacetimeDonuts.lean` proves that the kernel of the universal-cov"
   },
   {
     "consumed_by_exp_id": "",
