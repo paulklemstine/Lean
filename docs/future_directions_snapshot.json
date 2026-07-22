@@ -135,26 +135,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "3511fbf3",
-    "description": "Formalize tangled hierarchies — levels that are both above AND below each other. Define: a tangled hierarchy is a poset where there exist x, y such that x < y and y < x (a cycle). Prove: in dependent type theory, universe levels form an infinite hierarchy (Type_0 : Type_1 : Type_2 : ...) that is NOT tangled (it's well-founded). Show: with universe polymorphism, we can create apparent tangles (a term at level N can refer to level N+1). Conjecture: any consistent formalization of 'tangled hierarchies' requires abandoning either consistency or the hierarchy. Explore: Girard's paradox shows that Type:Type (the ultimate tangle) is inconsistent — formalize this in Lean.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0566",
-    "lineage_refs": [],
-    "priority_score": 0.86,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-21T20:43:46.569281+00:00",
-    "title": "Hofstadter: Tangled Hierarchies in Type Theory"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "227d6015",
     "description": "Formalize Freeman Dyson's idea that intelligence grows without limit in the deep future. Define: 'intelligence growth rate' as the rate at which a civilization discovers new theorems. Prove: if the growth rate is superexponential (faster than 2^(2^n)), then the civilization discovers ALL theorems of ZFC in finite time (by compactness). Show: if the growth rate is merely exponential (2^n), then there exist theorems that are NEVER discovered (Gödel). Conjecture: the growth rate is bounded by the physical computation limit (Bekenstein bound) at ~10^120 ops in the observable universe. Explore: does the intelligence explosion require new mathematics (theorems not expressible in current systems)?",
     "domain_bridges": [],
@@ -8312,6 +8292,26 @@
     "status": "available",
     "timestamp": "2026-07-22T09:46:27.142706+00:00",
     "title": "**Conjecture.** Classify all quadratic algebraic integers `β` of norm two for wh"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Tangled Hierarchies in Type Theory\n\n## 1. Rankability Characterizes Predicative Dependency\n\n**Conjecture.** Every countable dependency relation that is well-founded and has finite predecessor sets admits a rank into the natural numbers that strictly decreases along dependency edges; without finite branching, ordinal-valued ranks are necessary and sufficient.\n\nThe key insight is that absence of cycles is weaker than the existence of a numerical level assignment, while finite branching may bridge that gap by bounding the height below each node.\n\n**Why now?** The finite-cycle obstruction isolates rank descent as the mechanism behind untangled hierarchies, making the precise boundary between natural and transfinite ranks directly testable.\n\n## 2. Coherent Universe Transport Forms No Semantic Cycle\n\n**Conjecture.** Any finite diagram generated solely by universe lifts, projections, products, and dependent sums admits a normalization in which every closed transport loop acts as the identity on represented values, while the syntactic level graph remains acyclic.\n\nThe key insight is that reversible presentation changes can create closed paths among representations without creating reverse edges in the strict universe ordering.\n\n**Why now?** One- and two-step lift coherence already separate value transport from level dependency; extending this to a compositional language would determine exactly how far apparent tangles can be normalized away.\n\n## 3. Impredicative Self-Coding Forces a Lawvere Fixed Point\n\n**Conjecture.** In any extensional dependent calculus with an internal code type closed under dependent products, a decoding operation that represents every predicate on codes entails a fixed point for every endomorphism of truth values.\n\nThe key insight is that the dangerous ingredient is not self-membership alone but point-surjective semantic evaluation, which converts diagonal substitution into a universal fixed-point principle.\n\n**Why now?** The predicate-space diagonal obstruction identifies a compact interface whose derivability can be tested independently across proposed impredicative calculi.\n\n## 4. A Minimal Girard Boundary\n\n**Conjecture.** There is a smallest combination of dependent products, self-typing universes, and extensionality principles sufficient to derive contradiction, and removing any one component yields a model with normalization.\n\nThe key insight is that “Type in Type” packages several closure principles; isolating the minimal contradictory fragment would distinguish genuine hierarchy collapse from harmless recursive syntax.\n\n**Why now?** The current separation between well-founded levels, reversible lifting, and universal semantic representation supplies three independently variable axes for a sharp minimality analysis.\n\n## 5. Ordinal Height Measures the Cost of Untangling\n\n**Conjecture.** For every well-founded dependency network, the least ordinal rank strictly decreasing along edges is invariant under edge subdivision and nonincreasing under semantics-preserving quotient maps; moreover, it exactly measures the minimum hierarchy height required to eliminate all apparent cycles.\n\nThe key insight is that untangling may be quantified by ordinal height rather than treated as a binary property, linking dependency analysis to termination complexity.\n\n**Why now?** Natural-valued ranks already prohibit every finite cycle, and the next testable step is to determine whether least ordinal ranks behave functorially under standard transformations of dependency networks.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0600",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "3511fbf3",
+    "status": "available",
+    "timestamp": "2026-07-22T09:46:33.641785+00:00",
+    "title": "**Conjecture.** Every countable dependency relation that is well-founded and has"
   },
   {
     "ambition_level": "extension",

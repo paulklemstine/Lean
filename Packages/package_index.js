@@ -9,9 +9,9 @@ window.PACKAGE_INDEX = [
     "exp_id": "3511fbf3",
     "filename": "hofstadter_tangled_hierarchies_in_type_theory.json",
     "pkg_num": 787,
-    "quality": "unrated",
-    "quality_score": null,
-    "quality_tier": "unrated",
+    "quality": "substantial",
+    "quality_score": 0.73,
+    "quality_tier": "silver",
     "title": "The Ladder, the Loop, and the Diagonal: Tangled Hierarchies in Type Theory"
   },
   {
@@ -20253,8 +20253,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "hofstadter_tangled_hierarchies_in_type_theory",
       "primary_domain": "Logic",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.73,
+      "quality": "substantial",
       "shape": "star_of_david",
       "title": "Tangled Hierarchies: Order, Grading, and the Inconsistency of the Ultimate Tangle"
     },
