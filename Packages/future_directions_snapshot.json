@@ -308,7 +308,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c9711bb7",
     "description": "Formalize neural coding: how does the brain represent information? Define: a 'neural code' is a binary pattern on N neurons. Prove: the maximum number of distinct concepts representable by N binary neurons is 2^N. Show: with population coding (distributed representations), the brain can represent continuous values with precision ~sqrt(N). Conjecture: the brain uses sparse coding (only ~1% of neurons active) for energy efficiency — prove this achieves O(N log N) concepts per unit energy. Explore: formalize the 'neural manifold hypothesis' — neural activity lives on a low-dimensional manifold. Prove: the manifold dimension is bounded by the number of behavioral DOF.",
     "domain_bridges": [],
     "domains": [
@@ -321,7 +321,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-22T02:30:28.067253+00:00",
     "title": "Moonshot: Brain-Computer Interface Mathematics — Neural Coding Theorems"
   },

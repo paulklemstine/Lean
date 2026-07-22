@@ -229,7 +229,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Moonshot: Quantum Consciousness \u2014 Penrose-Hameroff Orchestrated Reduction"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c9711bb7",
     "description": "Formalize neural coding: how does the brain represent information? Define: a 'neural code' is a binary pattern on N neurons. Prove: the maximum number of distinct concepts representable by N binary neurons is 2^N. Show: with population coding (distributed representations), the brain can represent continuous values with precision ~sqrt(N). Conjecture: the brain uses sparse coding (only ~1% of neurons active) for energy efficiency \u2014 prove this achieves O(N log N) concepts per unit energy. Explore: formalize the 'neural manifold hypothesis' \u2014 neural activity lives on a low-dimensional manifold. Prove: the manifold dimension is bounded by the number of behavioral DOF.",
     "domains": [
       "Novelty",
@@ -239,7 +239,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-22T02:30:28.067253+00:00",
     "title": "Moonshot: Brain-Computer Interface Mathematics \u2014 Neural Coding Theorems"
   },
@@ -1044,7 +1044,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Expansions of $\\binom{pn}{p+r}$ in Shifted Binomial Bases and a Modular Symmetry Criterion"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "699db10f",
     "description": "Investigate the ArXiv paper 'A few remarks on the Baez-Duarte Criterion' and formalize its key results. Abstract: The goal of this paper is to derive a few very interesting lemmas related to the B\u00e1ez-Duarte criterion.",
     "domains": [
       "Bridges"
@@ -1053,7 +1053,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12084v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T06:36:12.474914+00:00",
     "title": "ArXiv paper: A few remarks on the Baez-Duarte Criterion"
   },
