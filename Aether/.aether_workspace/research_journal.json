@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "238d5b60",
-      "domain": "Applications",
-      "key_insight": "# Future directions\n\n## Scope of the completed formalization\n\n`AlephOneSurface.lean` formalizes the mathematically well-typed replacement for the phrase “Hausdorff dimension exactly aleph-one.” In Mat",
-      "quality_score": 0.76,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-19T20:25:54",
-      "title": "Aleph-1 Surface: Geometry Between Dimensions"
-    },
-    {
       "cycle_id": "9fc00121",
       "domain": "Novelty",
       "key_insight": "# Future Directions: Substrate-Invariant Complexity\n\n## 1. Polynomial-overhead invariance of asymptotic classes\n\n**Conjecture.** If two machine substrates simulate one another with polynomially bounde",
@@ -499,19 +489,19 @@
       "theorem_count": 20,
       "timestamp": "2026-07-22T09:46:34",
       "title": "Hofstadter: Tangled Hierarchies in Type Theory"
+    },
+    {
+      "cycle_id": "3dce6722",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Dyson-Swarm Thermodynamic Optimization\n\n## 1. Strictly convex radiator laws\n\n**Conjecture.** For every strictly convex radiator-cost function, every finite swarm with fixed total",
+      "quality_score": 0.77,
+      "sorry_count": 0,
+      "theorem_count": 21,
+      "timestamp": "2026-07-22T12:13:55",
+      "title": "Moonshot: Dyson Sphere Mathematics — Energy Collection Optimization"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "406a341d",
-      "domain": "Pythagorean",
-      "key_insight": "# Future directions\n\n## What the formal development establishes\n\nThe original proposal mixes two different notions. The files now separate them.\n\n1. In `Pythagorean/EscherStaircases.lean`, an ascendin",
-      "quality_score": 0.63,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-07-18T01:16:35",
-      "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
-    },
     {
       "cycle_id": "1992c474",
       "domain": "Algebra",
@@ -2501,27 +2491,19 @@
       "theorem_count": 20,
       "timestamp": "2026-07-22T09:46:34",
       "title": "Hofstadter: Tangled Hierarchies in Type Theory"
+    },
+    {
+      "cycle_id": "3dce6722",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Dyson-Swarm Thermodynamic Optimization\n\n## 1. Strictly convex radiator laws\n\n**Conjecture.** For every strictly convex radiator-cost function, every finite swarm with fixed total",
+      "quality_score": 0.77,
+      "sorry_count": 0,
+      "theorem_count": 21,
+      "timestamp": "2026-07-22T12:13:55",
+      "title": "Moonshot: Dyson Sphere Mathematics — Energy Collection Optimization"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "4505be0f",
-      "domain": "Combinatorics",
-      "name": "periodic_cesaro_complete_blocks",
-      "quality": 0.77
-    },
-    {
-      "cycle_id": "4505be0f",
-      "domain": "Combinatorics",
-      "name": "bornProbability_cesaro_complete_blocks",
-      "quality": 0.77
-    },
-    {
-      "cycle_id": "2f321176",
-      "domain": "NumberTheory",
-      "name": "connectionCount_eq_totient",
-      "quality": 0.7
-    },
     {
       "cycle_id": "2f321176",
       "domain": "NumberTheory",
@@ -2803,9 +2785,27 @@
       "domain": "Computation",
       "name": "wellFounded_not_tangled",
       "quality": 0.73
+    },
+    {
+      "cycle_id": "3dce6722",
+      "domain": "Applications",
+      "name": "full_area_captures_luminosity",
+      "quality": 0.77
+    },
+    {
+      "cycle_id": "3dce6722",
+      "domain": "Applications",
+      "name": "capturedPower_le_luminosity",
+      "quality": 0.77
+    },
+    {
+      "cycle_id": "3dce6722",
+      "domain": "Applications",
+      "name": "swarm_area_matches_shell",
+      "quality": 0.77
     }
   ],
-  "last_updated": "2026-07-22T09:46:34",
+  "last_updated": "2026-07-22T12:13:55",
   "open_questions": [
     {
       "context": "",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "961be33a",
-        "quality": 0.61,
-        "theorems": 14,
-        "title": "Categorical Physics: The Shape of a Theory of Everything"
-      },
-      {
         "cycle_id": "238d5b60",
         "quality": 0.76,
         "theorems": 0,
@@ -3141,6 +3135,12 @@
         "quality": 0.69,
         "theorems": 129,
         "title": "Moonshot: Multiverse Set Theory — Mathematics Across Branches"
+      },
+      {
+        "cycle_id": "3dce6722",
+        "quality": 0.77,
+        "theorems": 21,
+        "title": "Moonshot: Dyson Sphere Mathematics — Energy Collection Optimization"
       }
     ],
     "Bridges": [
