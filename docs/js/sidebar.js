@@ -55,11 +55,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Handle clicks on main content to close sidebar on mobile
-    document.getElementById('main-content').addEventListener('click', () => {
-        if (window.innerWidth <= 768 && sidebar.classList.contains('open')) {
-            window.closeSidebar();
-        }
-    });
+    const mainContent = document.getElementById('main-content');
+    if (mainContent) {
+        mainContent.addEventListener('click', () => {
+            if (window.innerWidth <= 768 && sidebar && sidebar.classList.contains('open')) {
+                window.closeSidebar();
+            }
+        });
+    }
 
     function sortPackages(pkgs, mode) {
         const sorted = [...pkgs];
