@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "8d3b0867",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nThe completed development separates three notions that are often conflated in informal thermodynamic accounts of sorting:\n\n1. **Decision-tree complexity.** A binary comparison tre",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-19T16:07:17",
-      "title": "Deepening: The Thermodynamics of Sorting: Entropy and Computational Work"
-    },
-    {
       "cycle_id": "d5e79e07",
       "domain": "Applications",
       "key_insight": "# Future Directions: Impossible Figures as Geometric Obstructions\n\n## 1. Cellular classification beyond the torus\n\n**Conjecture.** For every finite connected two-dimensional cell complex and every add",
@@ -499,19 +489,19 @@
       "theorem_count": 21,
       "timestamp": "2026-07-22T00:14:40",
       "title": "Hofstadter: Strange Loops in Formal Systems — Self-Reference as a Theorem"
+    },
+    {
+      "cycle_id": "4d85ad7f",
+      "domain": "MachineLearning",
+      "key_insight": "# Future directions\n\nThe formal development proves a pointwise and finite-chain core, not the full differential-geometric Alcubierre spacetime. The next steps are:\n\n1. **Smooth spacetime model.** Defi",
+      "quality_score": 0.74,
+      "sorry_count": 0,
+      "theorem_count": 31,
+      "timestamp": "2026-07-22T03:26:50",
+      "title": "Moonshot: Warp Drive Spacetime — Alcubierre Metric Formalization"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "d1663b23",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Minimal Modularity Lifting for Genus Two\n\n## 1. Integral stable-Yoshida modularity lifting\n\nLet a four-dimensional residual symplectic representation arise by automorphic inductio",
-      "quality_score": 0.7,
-      "sorry_count": 3,
-      "theorem_count": 0,
-      "timestamp": "2026-07-17T13:29:16",
-      "title": "ArXiv paper: A minimal modularity lifting theorem for Siegel modular forms"
-    },
     {
       "cycle_id": "dcd7a4b2",
       "domain": "Tropical",
@@ -2501,27 +2491,19 @@
       "theorem_count": 21,
       "timestamp": "2026-07-22T00:14:40",
       "title": "Hofstadter: Strange Loops in Formal Systems — Self-Reference as a Theorem"
+    },
+    {
+      "cycle_id": "4d85ad7f",
+      "domain": "MachineLearning",
+      "key_insight": "# Future directions\n\nThe formal development proves a pointwise and finite-chain core, not the full differential-geometric Alcubierre spacetime. The next steps are:\n\n1. **Smooth spacetime model.** Defi",
+      "quality_score": 0.74,
+      "sorry_count": 0,
+      "theorem_count": 31,
+      "timestamp": "2026-07-22T03:26:50",
+      "title": "Moonshot: Warp Drive Spacetime — Alcubierre Metric Formalization"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "606f7bdd",
-      "domain": "Applications",
-      "name": "for",
-      "quality": 0.73
-    },
-    {
-      "cycle_id": "606f7bdd",
-      "domain": "Applications",
-      "name": "finite_memory_is_lossy",
-      "quality": 0.73
-    },
-    {
-      "cycle_id": "ca6fc5a2",
-      "domain": "Applications",
-      "name": "of",
-      "quality": 0.72
-    },
     {
       "cycle_id": "ca6fc5a2",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Logic",
       "name": "goedel_unprovable",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "4d85ad7f",
+      "domain": "MachineLearning",
+      "name": "localFrame_fromLocalFrame",
+      "quality": 0.74
+    },
+    {
+      "cycle_id": "4d85ad7f",
+      "domain": "MachineLearning",
+      "name": "fromLocalFrame_localFrame",
+      "quality": 0.74
+    },
+    {
+      "cycle_id": "4d85ad7f",
+      "domain": "MachineLearning",
+      "name": "metricQ_eq_minkowski_after_shear",
+      "quality": 0.74
     }
   ],
-  "last_updated": "2026-07-22T00:14:40",
+  "last_updated": "2026-07-22T03:26:50",
   "open_questions": [
     {
       "context": "",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "f0aa5907",
-        "quality": 0.73,
-        "theorems": 0,
-        "title": "The Monster Group's Secret Message: Moonshine Beyond the j-Function"
-      },
-      {
         "cycle_id": "74205c89",
         "quality": 0.69,
         "theorems": 10,
@@ -3575,6 +3569,12 @@
         "quality": 0.76,
         "theorems": 0,
         "title": "Rucker: Infinity and the Mind — Formalizing Different Sizes of Infinity"
+      },
+      {
+        "cycle_id": "4d85ad7f",
+        "quality": 0.74,
+        "theorems": 31,
+        "title": "Moonshot: Warp Drive Spacetime — Alcubierre Metric Formalization"
       }
     ],
     "Novelty": [

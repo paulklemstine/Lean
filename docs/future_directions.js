@@ -117,21 +117,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Rucker: Saucer Wisdom \u2014 Non-Human Mathematical Intuition"
   },
   {
-    "consumed_by_exp_id": "0c96a68a",
-    "description": "Formalize tangled hierarchies \u2014 levels that are both above AND below each other. Define: a tangled hierarchy is a poset where there exist x, y such that x < y and y < x (a cycle). Prove: in dependent type theory, universe levels form an infinite hierarchy (Type_0 : Type_1 : Type_2 : ...) that is NOT tangled (it's well-founded). Show: with universe polymorphism, we can create apparent tangles (a term at level N can refer to level N+1). Conjecture: any consistent formalization of 'tangled hierarchies' requires abandoning either consistency or the hierarchy. Explore: Girard's paradox shows that Type:Type (the ultimate tangle) is inconsistent \u2014 formalize this in Lean.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0566",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-21T20:43:46.569281+00:00",
-    "title": "Hofstadter: Tangled Hierarchies in Type Theory"
-  },
-  {
     "consumed_by_exp_id": "3e4f1b52",
     "description": "Formalize time-travel paradoxes in Lean 4. Define: a 'causal loop' is a sequence of events e1 -> e2 -> ... -> en -> e1 where each causes the next. Prove: the Novikov self-consistency principle (every event in a causal loop is self-consistent) is equivalent to the statement that the loop has a fixed point. Show: the grandfather paradox (kill your ancestor) violates self-consistency \u2014 prove it's impossible. Conjecture: every closed timelike curve in a G\u00f6del universe is self-consistent. Explore: formalize branching timelines (many-worlds time travel) \u2014 prove the traveler creates a new branch, not a paradox.",
     "domains": [
@@ -246,21 +231,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hofstadter: I Am a Strange Loop \u2014 Consciousness as Self-Reference"
   },
   {
-    "consumed_by_exp_id": "4d85ad7f",
-    "description": "Formalize the Alcubierre warp drive metric: ds^2 = -dt^2 + (dx - v_s f(r_s))dt^2 + dy^2 + dz^2. Prove: the metric is a valid solution of Einstein's field equations. Show: the expansion of space behind the ship and contraction ahead creates effective FTL without local FTL. Explore: the energy requirement is negative (exotic matter). Conjecture: the total energy needed scales as E ~ M * v_s * c (where M is the ship mass). Formalize: does the Alcubierre drive create closed timelike curves?",
-    "domains": [
-      "Novelty",
-      "Physics"
-    ],
-    "id": "fd_0571",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-21T22:18:50.736623+00:00",
-    "title": "Moonshot: Warp Drive Spacetime \u2014 Alcubierre Metric Formalization"
-  },
-  {
     "consumed_by_exp_id": "4c498610",
     "description": "Formalize the Penrose-Hameroff Orch OR hypothesis: consciousness arises from quantum coherence in microtubules. Define: a 'conscious event' is the collapse of a superposition in a microtubule, with timing ~500 ms (the gamma synchrony). Prove: the Penrose objective reduction (OR) threshold is E ~ h/(t * sqrt(N)) where N is the number of tubulins. Show: for N ~ 10^11 tubulins, the coherence time is ~10^-33 s \u2014 too short for room temperature. Conjecture: if quantum consciousness exists, it requires a warm-coherent mechanism not yet formalized. Explore: formalize 'non-computable consciousness' \u2014 does the brain compute beyond Turing?",
     "domains": [
@@ -347,7 +317,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Rucker: The Lifebox \u2014 Information-Theoretic Identity"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3dce6722",
     "description": "Formalize the mathematics of a Dyson sphere: a megastructure that completely encloses a star to capture its energy output. Define: the Dyson sphere surface area is 4*pi*R^2 where R is the orbital radius. Prove: the optimal Dyson swarm (many independent collectors) has total collecting area equal to the sphere but with better thermal management. Show: the information capacity of a Dyson sphere (Landauer limit) is ~10^50 bits at 1 AU. Conjecture: a Type II civilization (Kardashev) generates 10^26 watts \u2014 enough to run 10^40 quantum operations per second. Explore: formalize the thermodynamic limits of megastructure computation.",
     "domains": [
       "Novelty",
@@ -357,7 +327,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-21T22:18:50.641161+00:00",
     "title": "Moonshot: Dyson Sphere Mathematics \u2014 Energy Collection Optimization"
   },
@@ -3307,13 +3277,42 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0583",
+    "id": "fd_0584",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.19093v1",
     "status": "available",
     "timestamp": "2026-07-22T01:29:44.273281+00:00",
     "title": "ArXiv paper: Various Bialgebras Of Representative Functions On Free Monoids"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture' and formalize its key results. Abstract: We prove Norine's conjecture: every red--blue edge-coloring of the \\(n\\)-dimensional hypercube \\(Q_n\\), \\(n\\geq2\\), in which antipodal edges have opposite colors contains a monochromatic path joining some vertex to its antipode. From a hypothetical counterexample we construct an antipodally equivariant, augmentation-preserving chain map from the cellular chains of the cubical boundary of a cube to subdivision-invariant polyhedral chains on a sphere of one lower dimension. A purely algebraic chain-level Borsuk--Ulam obstruction rules out this map.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0585",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.19276v1",
+    "status": "available",
+    "timestamp": "2026-07-22T03:26:54.581466+00:00",
+    "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'On the autotopism groups and the equivalence of finite cyclic semifields' and formalize its key results. Abstract: Special cases of finite cyclic semifields were first constructed by Hughes and Kleinfeld in 1960, and later by Sandler in 1962 and Knuth in 1965. The general construction of cyclic semifields was subsequently introduced by Petit in 1966, and later rediscovered from the perspective of irreducible semilinear transformations by Jha and Johnson in 1989. Since Sandler's foundational work in 1962, the complete determination of the autotopism groups of cyclic semifields and the full resolution of the isotopy problem for this family have remained long-standing open problems. The most significant advances in determining these autotopism groups are due to Dempwolff in 2011, who left open the case in which the field extension degree strictly divides the degree of the polynomial defining the semifield. In this paper, we provide a complete classification of cyclic semifields up to isotopy, together with the full determination of their autotopism groups, thereby closing the remaining cases left open",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0586",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.19172v1",
+    "status": "available",
+    "timestamp": "2026-07-22T03:26:57.754218+00:00",
+    "title": "ArXiv paper: On the autotopism groups and the equivalence of finite cyclic semifields"
   },
   {
     "consumed_by_exp_id": "",
