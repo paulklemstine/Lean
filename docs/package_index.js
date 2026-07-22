@@ -4,6 +4,17 @@
 
 window.PACKAGE_INDEX = [
   {
+    "date": "2026-07-22T14:29:59Z",
+    "domain": "NumberTheory",
+    "exp_id": "227d6015",
+    "filename": "moonshot_the_mathematics_of_dysons_intelligence_ex.json",
+    "pkg_num": 788,
+    "quality": "substantial",
+    "quality_score": 0.75,
+    "quality_tier": "silver",
+    "title": "Discovery Rates and the Limits of an Intelligence Explosion"
+  },
+  {
     "date": "2026-07-22T12:13:51Z",
     "domain": "Applications",
     "exp_id": "3dce6722",
@@ -12519,6 +12530,14 @@ window.PACKAGE_DB_INDEX = {
       "seed"
     ],
     "title": "The Last Theorem: Countable Provability against a Finite Physical Budget"
+  },
+  "moonshot_the_mathematics_of_dysons_intelligence_ex.json": {
+    "domain": "NumberTheory",
+    "exp_id": "227d6015",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Discovery Rates and the Limits of an Intelligence Explosion"
   },
   "moonshot_time_travel_logic__formalizing_causal_con.json": {
     "domain": "Novelty",

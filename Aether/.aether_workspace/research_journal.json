@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "9fc00121",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Substrate-Invariant Complexity\n\n## 1. Polynomial-overhead invariance of asymptotic classes\n\n**Conjecture.** If two machine substrates simulate one another with polynomially bounde",
-      "quality_score": 0.77,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-19T20:26:22",
-      "title": "Computational Complexity of Alien Civilizations"
-    },
-    {
       "cycle_id": "7286e7be",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\n## 1. Last-occurrence normal forms for revision histories\n\n**Conjecture.** Every finite sequence of signed-literal revisions has a unique normal form containing, for each atom men",
@@ -499,19 +489,19 @@
       "theorem_count": 21,
       "timestamp": "2026-07-22T12:13:55",
       "title": "Moonshot: Dyson Sphere Mathematics — Energy Collection Optimization"
+    },
+    {
+      "cycle_id": "227d6015",
+      "domain": "NumberTheory",
+      "key_insight": "# Future directions\n\n1. Replace natural-number theorem codes by a concrete recursively enumerable syntax for first-order set theory, with a proof-checking predicate and explicit enumeration of derivat",
+      "quality_score": 0.75,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-07-22T14:30:05",
+      "title": "Moonshot: The Mathematics of Dyson's Intelligence Explosion"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "1992c474",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions\n\n- Extend the finite rational identity to real or complex weights and prove convergence of the occupation sums when every local weight has norm less than one.\n- Connect the resulti",
-      "quality_score": 0.59,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-07-18T01:16:43",
-      "title": "Holographic Primes: The Prime Number AdS/CFT Correspondence"
-    },
     {
       "cycle_id": "e1956901",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 21,
       "timestamp": "2026-07-22T12:13:55",
       "title": "Moonshot: Dyson Sphere Mathematics — Energy Collection Optimization"
+    },
+    {
+      "cycle_id": "227d6015",
+      "domain": "NumberTheory",
+      "key_insight": "# Future directions\n\n1. Replace natural-number theorem codes by a concrete recursively enumerable syntax for first-order set theory, with a proof-checking predicate and explicit enumeration of derivat",
+      "quality_score": 0.75,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-07-22T14:30:05",
+      "title": "Moonshot: The Mathematics of Dyson's Intelligence Explosion"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "2f321176",
-      "domain": "NumberTheory",
-      "name": "prime_connectionCount",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "2f321176",
-      "domain": "NumberTheory",
-      "name": "prime_above_threshold_iff",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "1a27f9f3",
-      "domain": "Combinatorics",
-      "name": "length_mem_truthWords",
-      "quality": 0.7
-    },
     {
       "cycle_id": "1a27f9f3",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "swarm_area_matches_shell",
       "quality": 0.77
+    },
+    {
+      "cycle_id": "227d6015",
+      "domain": "NumberTheory",
+      "name": "discovery",
+      "quality": 0.75
+    },
+    {
+      "cycle_id": "227d6015",
+      "domain": "NumberTheory",
+      "name": "codes",
+      "quality": 0.75
+    },
+    {
+      "cycle_id": "227d6015",
+      "domain": "NumberTheory",
+      "name": "codes",
+      "quality": 0.75
     }
   ],
-  "last_updated": "2026-07-22T12:13:55",
+  "last_updated": "2026-07-22T14:30:05",
   "open_questions": [
     {
       "context": "",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "463376b0",
-        "quality": 0.66,
-        "theorems": 0,
-        "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
-      },
-      {
         "cycle_id": "717f7483",
         "quality": 0.75,
         "theorems": 19,
@@ -3699,6 +3693,12 @@
         "quality": 0.84,
         "theorems": 45,
         "title": "Moonshot: Alien Number Systems — Mathematics Beyond Base-10"
+      },
+      {
+        "cycle_id": "227d6015",
+        "quality": 0.75,
+        "theorems": 19,
+        "title": "Moonshot: The Mathematics of Dyson's Intelligence Explosion"
       }
     ],
     "Physics": [

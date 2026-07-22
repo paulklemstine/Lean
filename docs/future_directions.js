@@ -115,21 +115,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
   },
   {
-    "consumed_by_exp_id": "227d6015",
-    "description": "Formalize Freeman Dyson's idea that intelligence grows without limit in the deep future. Define: 'intelligence growth rate' as the rate at which a civilization discovers new theorems. Prove: if the growth rate is superexponential (faster than 2^(2^n)), then the civilization discovers ALL theorems of ZFC in finite time (by compactness). Show: if the growth rate is merely exponential (2^n), then there exist theorems that are NEVER discovered (G\u00f6del). Conjecture: the growth rate is bounded by the physical computation limit (Bekenstein bound) at ~10^120 ops in the observable universe. Explore: does the intelligence explosion require new mathematics (theorems not expressible in current systems)?",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0587",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-22T02:30:28.139148+00:00",
-    "title": "Moonshot: The Mathematics of Dyson's Intelligence Explosion"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 2d8c7907 (Q=0.760), which proved 11 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize memory as a monoid homomorphism from experience streams to compressed representations. Prove that any such homomorphism satisfying a finite-memory bound must be lossy and that the information loss forms a submonoid. Show that targeted forgetting is equivalent to a quotient construction in ",
     "domains": [
@@ -242,6 +227,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-22T02:30:28.067253+00:00",
     "title": "Moonshot: Brain-Computer Interface Mathematics \u2014 Neural Coding Theorems"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 227d6015 (Q=0.750), which proved 19 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Freeman Dyson's idea that intelligence grows without limit in the deep future. Define: 'intelligence growth rate' as the rate at which a civilization discovers new theorems. Prove: if the growth rate is superexponential (faster than 2^(2^n)), then the civilization discovers ALL theorems of",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "push_227d6015_c2607b53",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "227d6015",
+    "status": "available",
+    "timestamp": "2026-07-22T14:30:05.202834+00:00",
+    "title": "Deepening: Moonshot: The Mathematics of Dyson's Intelligence Explosion"
   },
   {
     "consumed_by_exp_id": "",
@@ -6143,6 +6142,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n1. Replace natural-number theorem codes by a concrete recursively enumerable syntax for first-order set theory, with a proof-checking predicate and explicit enumeration of derivations.\n2. Separate theorems, true sentences, and semantic predicates. The present diagonal barrier concerns all `\u2115 \u2192 Prop`; transferring it to arithmetic truth requires a satisfaction relation and a formal undefinability theorem.\n3. Formalize incompleteness with the hypotheses it actually needs: effective axiomatizability, consistency or soundness, and enough represented arithmetic. A discovery-rate bound alone has no G\u00f6del consequence.\n4. Generalize `finite_corpus_common_deadline` to compact topological families and compare genuine compactness with the invalid inference from finite proofs to a finite deadline for infinitely many theorems.\n5. Add resource costs for proof search and verification, rather than only counting output. A Bekenstein-style model should specify a time horizon, operations per step, memory, and whether the cap is instantaneous or cumulative.\n6. Study fair schedules under arbitrary positive rate profiles and construct exact-rate disjoint batches using prefix sums.\n7. Replace classical `Prop` predicates in the semantic diagonal theorem by computable Boolean predicates. The naive diagonal is then computable only relative to a sufficiently strong evaluator, leading naturally to Turing jumps and oracle-relative discovery.\n",
+    "domains": [
+      "Logic",
+      "Pythagorean"
+    ],
+    "id": "fd_0602",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "227d6015",
+    "status": "available",
+    "timestamp": "2026-07-22T14:30:03.550639+00:00",
+    "title": "1. Replace natural-number theorem codes by a concrete recursively enumerable syn"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle 1a27f9f3 (Q=0.700) proved 15 theorems in Combinatorics but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Define a natural metric on the space of all mathematical statements and prove that the set of true statements has a fractal dimension. Show that this dimension is strictly between 0 and 1 (truth is sp",
     "domains": [
       "Combinatorics"
@@ -6226,7 +6240,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
   },
   {
-    "consumed_by_exp_id": "f152bc79",
+    "consumed_by_exp_id": "",
     "description": "Cycle a88a4e5d (Q=0.626) proved 18 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Prove that cellular automata can perform transfinite computations when run on ordinals instead of N. Formalize a Rule 110 analog on omega-squared and prove it achieves super-Turing computation. Connec",
     "domains": [
       "Applications"
@@ -6235,7 +6249,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.6756666666666666,
     "research_mode": "team",
     "source_exp_id": "a88a4e5d",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-19T11:52:43.410408+00:00",
     "title": "Close Proofs: Cellular Automata at the Ordinals: Transfinite Computation"
   },
