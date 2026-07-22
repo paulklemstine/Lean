@@ -156,7 +156,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "0c96a68a",
+    "consumed_by_exp_id": "",
     "description": "Formalize tangled hierarchies — levels that are both above AND below each other. Define: a tangled hierarchy is a poset where there exist x, y such that x < y and y < x (a cycle). Prove: in dependent type theory, universe levels form an infinite hierarchy (Type_0 : Type_1 : Type_2 : ...) that is NOT tangled (it's well-founded). Show: with universe polymorphism, we can create apparent tangles (a term at level N can refer to level N+1). Conjecture: any consistent formalization of 'tangled hierarchies' requires abandoning either consistency or the hierarchy. Explore: Girard's paradox shows that Type:Type (the ultimate tangle) is inconsistent — formalize this in Lean.",
     "domain_bridges": [],
     "domains": [
@@ -169,7 +169,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-21T20:43:46.569281+00:00",
     "title": "Hofstadter: Tangled Hierarchies in Type Theory"
   },
@@ -192,6 +192,26 @@
     "status": "in_progress",
     "timestamp": "2026-07-21T23:19:06.787016+00:00",
     "title": "Moonshot: Time-Travel Logic — Formalizing Causal Consistency"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalize Freeman Dyson's idea that intelligence grows without limit in the deep future. Define: 'intelligence growth rate' as the rate at which a civilization discovers new theorems. Prove: if the growth rate is superexponential (faster than 2^(2^n)), then the civilization discovers ALL theorems of ZFC in finite time (by compactness). Show: if the growth rate is merely exponential (2^n), then there exist theorems that are NEVER discovered (Gödel). Conjecture: the growth rate is bounded by the physical computation limit (Bekenstein bound) at ~10^120 ops in the observable universe. Explore: does the intelligence explosion require new mathematics (theorems not expressible in current systems)?",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0587",
+    "lineage_refs": [],
+    "priority_score": 0.86,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-22T02:30:28.139148+00:00",
+    "title": "Moonshot: The Mathematics of Dyson's Intelligence Explosion"
   },
   {
     "ambition_level": "extension",
@@ -330,26 +350,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "4d85ad7f",
-    "description": "Formalize the Alcubierre warp drive metric: ds^2 = -dt^2 + (dx - v_s f(r_s))dt^2 + dy^2 + dz^2. Prove: the metric is a valid solution of Einstein's field equations. Show: the expansion of space behind the ship and contraction ahead creates effective FTL without local FTL. Explore: the energy requirement is negative (exotic matter). Conjecture: the total energy needed scales as E ~ M * v_s * c (where M is the ship mass). Formalize: does the Alcubierre drive create closed timelike curves?",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Physics"
-    ],
-    "id": "fd_0571",
-    "lineage_refs": [],
-    "priority_score": 0.85,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-21T22:18:50.736623+00:00",
-    "title": "Moonshot: Warp Drive Spacetime — Alcubierre Metric Formalization"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "4c498610",
     "description": "Formalize the Penrose-Hameroff Orch OR hypothesis: consciousness arises from quantum coherence in microtubules. Define: a 'conscious event' is the collapse of a superposition in a microtubule, with timing ~500 ms (the gamma synchrony). Prove: the Penrose objective reduction (OR) threshold is E ~ h/(t * sqrt(N)) where N is the number of tubulins. Show: for N ~ 10^11 tubulins, the coherence time is ~10^-33 s — too short for room temperature. Conjecture: if quantum consciousness exists, it requires a warm-coherent mechanism not yet formalized. Explore: formalize 'non-computable consciousness' — does the brain compute beyond Turing?",
     "domain_bridges": [],
@@ -366,6 +366,26 @@
     "status": "in_progress",
     "timestamp": "2026-07-21T23:19:06.708946+00:00",
     "title": "Moonshot: Quantum Consciousness — Penrose-Hameroff Orchestrated Reduction"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "625f68c4",
+    "description": "Formalize neural coding: how does the brain represent information? Define: a 'neural code' is a binary pattern on N neurons. Prove: the maximum number of distinct concepts representable by N binary neurons is 2^N. Show: with population coding (distributed representations), the brain can represent continuous values with precision ~sqrt(N). Conjecture: the brain uses sparse coding (only ~1% of neurons active) for energy efficiency — prove this achieves O(N log N) concepts per unit energy. Explore: formalize the 'neural manifold hypothesis' — neural activity lives on a low-dimensional manifold. Prove: the manifold dimension is bounded by the number of behavioral DOF.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "MachineLearning"
+    ],
+    "id": "fd_0586",
+    "lineage_refs": [],
+    "priority_score": 0.85,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-07-22T02:30:28.067253+00:00",
+    "title": "Moonshot: Brain-Computer Interface Mathematics — Neural Coding Theorems"
   },
   {
     "ambition_level": "extension",
@@ -482,6 +502,26 @@
     "status": "available",
     "timestamp": "2026-07-21T22:18:50.641161+00:00",
     "title": "Moonshot: Dyson Sphere Mathematics — Energy Collection Optimization"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalize molecular computing: a 'nanocomputer' is a system of molecules that performs computation via chemical reactions. Prove: chemical reaction networks (CRNs) with mass-action kinetics are Turing-complete (they can simulate any Turing machine). Show: the minimum volume for a CRN computing a function f is proportional to the Kolmogorov complexity of f. Conjecture: a single cubic micrometer of DNA can store 10^18 bits and compute at 10^15 operations/second. Explore: formalize the 'DNA computer' — can we solve NP-complete problems faster with molecular parallelism? Prove: molecular parallelism gives a constant-factor speedup, not exponential (the molecules still need to be prepared).",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_0585",
+    "lineage_refs": [],
+    "priority_score": 0.84,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-22T02:30:27.993245+00:00",
+    "title": "Moonshot: Nanotechnology Computation — Molecular Computing Limits"
   },
   {
     "ambition_level": "extension",
@@ -4551,7 +4591,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0583",
+    "id": "fd_0584",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -8175,6 +8215,26 @@
     "status": "available",
     "timestamp": "2026-07-22T00:14:39.275128+00:00",
     "title": "The completed development establishes the abstract logical core in three layers."
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe formal development proves a pointwise and finite-chain core, not the full differential-geometric Alcubierre spacetime. The next steps are:\n\n1. **Smooth spacetime model.** Define the manifold `ℝ × ℝ³`, a smooth ship worldline, `rₛ`, and a smooth compactly supported (or rapidly decaying) shape function. Package `metricB` as a smooth Lorentzian metric tensor and derive its inverse and determinant.\n2. **Curvature and Einstein tensor.** Compute the Levi-Civita connection, Riemann and Ricci tensors, scalar curvature, and Einstein tensor. Then define `T = G/(8π)` and prove the Einstein field equation by construction. This is the precise interpretation of “solution”: the metric generally is not a vacuum solution, but determines a stress-energy tensor.\n3. **Energy density derivation.** Derive, rather than assume, the Eulerian density formula represented here by `energyDensity`. Integrate it with the geometric volume form and establish hypotheses ensuring finite total energy.\n4. **Energy scaling.** The proved model is exactly quadratic in speed. Investigate how bubble radius, wall thickness, shape profile, and any ship-mass coupling alter the scaling. The proposed `E ~ M vₛ c` law is not established by the standard fixed-profile density formula.\n5. **Global effective FTL.** Upgrade the pointwise theorem to two worldlines and compare elapsed coordinate time against null travel in asymptotically flat regions. State all assumptions needed for a genuine global travel-time result.\n6. **Chronology.** The finite-chain theorem proves that any region admitting a strict global time function has no closed future-directed causal chain. Determine whether a single globally defined Alcubierre bubble has such a time function, and separately formalize multi-bubble constructions where chronology violation has been proposed.\n7. **Energy conditions.** Formalize null, weak, dominant, and averaged energy conditions and identify exactly which fail for classes of shape functions.\n8. **Cross-domain optimization bridge.** Treat the integrated negative density as a weighted Dirichlet energy of transverse shape gradients. This connects exotic-matter minimization to variational calculus and convex quadratic optimization under bubble-shape boundary constraints.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0588",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "4d85ad7f",
+    "status": "available",
+    "timestamp": "2026-07-22T02:31:00.563718+00:00",
+    "title": "The formal development proves a pointwise and finite-chain core, not the full di"
   },
   {
     "ambition_level": "extension",
