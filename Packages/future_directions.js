@@ -261,7 +261,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Moonshot: Quantum Consciousness \u2014 Penrose-Hameroff Orchestrated Reduction"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "12464dbf",
     "description": "Formalize neural coding: how does the brain represent information? Define: a 'neural code' is a binary pattern on N neurons. Prove: the maximum number of distinct concepts representable by N binary neurons is 2^N. Show: with population coding (distributed representations), the brain can represent continuous values with precision ~sqrt(N). Conjecture: the brain uses sparse coding (only ~1% of neurons active) for energy efficiency \u2014 prove this achieves O(N log N) concepts per unit energy. Explore: formalize the 'neural manifold hypothesis' \u2014 neural activity lives on a low-dimensional manifold. Prove: the manifold dimension is bounded by the number of behavioral DOF.",
     "domains": [
       "Novelty",
@@ -271,7 +271,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-22T02:30:28.067253+00:00",
     "title": "Moonshot: Brain-Computer Interface Mathematics \u2014 Neural Coding Theorems"
   },
