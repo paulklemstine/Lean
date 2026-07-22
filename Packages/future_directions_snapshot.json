@@ -1403,7 +1403,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "699db10f",
     "description": "Investigate the ArXiv paper 'A few remarks on the Baez-Duarte Criterion' and formalize its key results. Abstract: The goal of this paper is to derive a few very interesting lemmas related to the Báez-Duarte criterion.",
     "domain_bridges": [],
     "domains": [
@@ -1415,7 +1415,7 @@
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
     "source_exp_id": "2607.12084v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T06:36:12.474914+00:00",
     "title": "ArXiv paper: A few remarks on the Baez-Duarte Criterion"
   },
