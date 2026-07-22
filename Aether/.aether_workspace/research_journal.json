@@ -1,26 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "4c40ce69",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\nThe formal development establishes three robust conclusions for precise counterfactual models:\n\n1. the Cramér density series diverges even on every fixed nonconstant arithmetic pr",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-19T20:08:35",
-      "title": "Counterfactual Number Theory: What If Primes Were Random?"
-    },
-    {
-      "cycle_id": "af530f4e",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Hypercomputation and Physical Information\n\n## 1. Quantitative energy–precision tradeoff\n\n**Conjecture.** For every family of devices that exactly resolves the first `n` bits of an",
-      "quality_score": 0.77,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-19T20:08:39",
-      "title": "Hypercomputation: Computing the Uncomputable"
-    },
-    {
       "cycle_id": "238d5b60",
       "domain": "Applications",
       "key_insight": "# Future directions\n\n## Scope of the completed formalization\n\n`AlephOneSurface.lean` formalizes the mathematically well-typed replacement for the phrase “Hausdorff dimension exactly aleph-one.” In Mat",
@@ -499,29 +479,29 @@
       "theorem_count": 10,
       "timestamp": "2026-07-22T04:48:51",
       "title": "ArXiv paper: Lattice slices, Ehrhart polynomials, and magic positivity of generalized parking-functi"
+    },
+    {
+      "cycle_id": "e24b36f0",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions for Exotic Positional Arithmetic\n\n## 1. Canonical binary expansions in imaginary quadratic rings\n\n**Conjecture.** Classify all quadratic algebraic integers `β` of norm two for whic",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 45,
+      "timestamp": "2026-07-22T09:46:29",
+      "title": "Moonshot: Alien Number Systems — Mathematics Beyond Base-10"
+    },
+    {
+      "cycle_id": "3511fbf3",
+      "domain": "Computation",
+      "key_insight": "# Future Directions: Tangled Hierarchies in Type Theory\n\n## 1. Rankability Characterizes Predicative Dependency\n\n**Conjecture.** Every countable dependency relation that is well-founded and has finite",
+      "quality_score": 0.73,
+      "sorry_count": 0,
+      "theorem_count": 20,
+      "timestamp": "2026-07-22T09:46:34",
+      "title": "Hofstadter: Tangled Hierarchies in Type Theory"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "dfbea393",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions: Quantum States with Non-Archimedean Probabilities\n\n## 1. Standard-part Born measures on arbitrary finite supports\n\n**Conjecture.** Let a finitely supported state have finite hyper",
-      "quality_score": 0.71,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-18T00:42:46",
-      "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
-    },
-    {
-      "cycle_id": "0f8a1331",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\n## Result established\n\n`Catalog/Applications/HyperbolicNumberTheory/CayleyPythagoreanBridge.lean` gives a precise replacement for the underspecified “hyperbolic integers” proposal",
-      "quality_score": 0.67,
-      "sorry_count": 0,
-      "theorem_count": 7,
-      "timestamp": "2026-07-18T00:59:51",
-      "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk"
-    },
     {
       "cycle_id": "406a341d",
       "domain": "Pythagorean",
@@ -2501,45 +2481,29 @@
       "theorem_count": 129,
       "timestamp": "2026-07-22T09:46:20",
       "title": "Moonshot: Multiverse Set Theory — Mathematics Across Branches"
+    },
+    {
+      "cycle_id": "e24b36f0",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions for Exotic Positional Arithmetic\n\n## 1. Canonical binary expansions in imaginary quadratic rings\n\n**Conjecture.** Classify all quadratic algebraic integers `β` of norm two for whic",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 45,
+      "timestamp": "2026-07-22T09:46:29",
+      "title": "Moonshot: Alien Number Systems — Mathematics Beyond Base-10"
+    },
+    {
+      "cycle_id": "3511fbf3",
+      "domain": "Computation",
+      "key_insight": "# Future Directions: Tangled Hierarchies in Type Theory\n\n## 1. Rankability Characterizes Predicative Dependency\n\n**Conjecture.** Every countable dependency relation that is well-founded and has finite",
+      "quality_score": 0.73,
+      "sorry_count": 0,
+      "theorem_count": 20,
+      "timestamp": "2026-07-22T09:46:34",
+      "title": "Hofstadter: Tangled Hierarchies in Type Theory"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "dd6a308e",
-      "domain": "Pythagorean",
-      "name": "for",
-      "quality": 0.79
-    },
-    {
-      "cycle_id": "dd6a308e",
-      "domain": "Pythagorean",
-      "name": "finite_memory_is_lossy",
-      "quality": 0.79
-    },
-    {
-      "cycle_id": "d0cb2642",
-      "domain": "NumberTheory",
-      "name": "steinerThird_left_involutive",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "d0cb2642",
-      "domain": "NumberTheory",
-      "name": "steinerThird_ne_left",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "d0cb2642",
-      "domain": "NumberTheory",
-      "name": "steinerThird_translate",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "4505be0f",
-      "domain": "Combinatorics",
-      "name": "periodic_sum_complete_blocks",
-      "quality": 0.77
-    },
     {
       "cycle_id": "4505be0f",
       "domain": "Combinatorics",
@@ -2803,9 +2767,45 @@
       "domain": "Cryptography",
       "name": "parking_has_sorted_chamber",
       "quality": 0.71
+    },
+    {
+      "cycle_id": "e24b36f0",
+      "domain": "NumberTheory",
+      "name": "negaValue_nil",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "e24b36f0",
+      "domain": "NumberTheory",
+      "name": "digit_injective",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "e24b36f0",
+      "domain": "NumberTheory",
+      "name": "negaValue_cons_emod",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "3511fbf3",
+      "domain": "Computation",
+      "name": "is",
+      "quality": 0.73
+    },
+    {
+      "cycle_id": "3511fbf3",
+      "domain": "Computation",
+      "name": "tangled_iff_two_cycle",
+      "quality": 0.73
+    },
+    {
+      "cycle_id": "3511fbf3",
+      "domain": "Computation",
+      "name": "wellFounded_not_tangled",
+      "quality": 0.73
     }
   ],
-  "last_updated": "2026-07-22T09:46:20",
+  "last_updated": "2026-07-22T09:46:34",
   "open_questions": [
     {
       "context": "",
@@ -3275,12 +3275,6 @@
         "title": "ArXiv paper: Superlinear complexity of the $(3/2)^n$ steering word"
       },
       {
-        "cycle_id": "dae162a9",
-        "quality": 0.63,
-        "theorems": 19,
-        "title": "ArXiv paper: Superlinear complexity of the $(3/2)^n$ steering word"
-      },
-      {
         "cycle_id": "47f9b94d",
         "quality": 0.78,
         "theorems": 4,
@@ -3327,6 +3321,12 @@
         "quality": 0.64,
         "theorems": 8,
         "title": "ArXiv paper: Efficient Hamilton covers and linear arboricity of random graphs"
+      },
+      {
+        "cycle_id": "3511fbf3",
+        "quality": 0.73,
+        "theorems": 20,
+        "title": "Hofstadter: Tangled Hierarchies in Type Theory"
       }
     ],
     "Cryptography": [
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "d2c19f81",
-        "quality": 0.67,
-        "theorems": 14,
-        "title": "ArXiv paper: Quantum Latin Squares of Order Six with Cardinalities Nineteen, Twe"
-      },
-      {
         "cycle_id": "463376b0",
         "quality": 0.66,
         "theorems": 0,
@@ -3699,6 +3693,12 @@
         "quality": 0.71,
         "theorems": 0,
         "title": "Close Proofs: The Mega-Sphere: All Dimensions at Once"
+      },
+      {
+        "cycle_id": "e24b36f0",
+        "quality": 0.84,
+        "theorems": 45,
+        "title": "Moonshot: Alien Number Systems — Mathematics Beyond Base-10"
       }
     ],
     "Physics": [

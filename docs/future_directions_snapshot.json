@@ -22,6 +22,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle e24b36f0 (Q=0.840), which proved 45 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize arithmetic in exotic number bases: negative bases (negabinary), complex bases (base i-1), irrational bases (base phi — the golden ratio). Prove: every integer has a unique representation in base (-2) (negabinary). Show: base phi (golden ratio) represents integers using only digits 0 and 1 ",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "push_e24b36f0_f306ed30",
+    "lineage_refs": [],
+    "priority_score": 0.94,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "e24b36f0",
+    "status": "available",
+    "timestamp": "2026-07-22T09:46:30.052991+00:00",
+    "title": "Deepening: Moonshot: Alien Number Systems — Mathematics Beyond Base-10"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle b31f2cf9 (Q=0.830), which proved 21 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize 'strange loops' — hierarchical levels that fold back on themselves. Define: a strange loop in a formal system F is a formula phi such that phi asserts its own provability or unprovability. Prove: Gödel's incompleteness theorem IS a strange loop (the Gödel sentence G says 'G is not provable",
     "domain_bridges": [],
     "domains": [
@@ -93,26 +112,6 @@
     "status": "available",
     "timestamp": "2026-07-21T18:48:03.438961+00:00",
     "title": "Deepening: Rucker: The Fourth Dimension as a Mathematical Playground"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "3e9a9a06",
-    "description": "Formalize the multiverse interpretation of set theory (Hamkins). Define: a 'set-theoretic multiverse' is a collection of models of ZFC, each with different 'truth' values for independent statements (CH, large cardinals, V=L). Prove: CH is true in some universes and false in others (by forcing). Show: the multiverse is closed under forcing (every universe has forcing extensions). Conjecture: there is no 'true' CH — the question is meaningless without specifying which universe. Explore: formalize 'multiverse truth' — a statement is multiverse-true if it holds in all universes. Prove: ZFC is multiverse-true, CH is not.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0578",
-    "lineage_refs": [],
-    "priority_score": 0.87,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-21T23:19:06.862954+00:00",
-    "title": "Moonshot: Multiverse Set Theory — Mathematics Across Branches"
   },
   {
     "ambition_level": "extension",
@@ -461,26 +460,6 @@
     "status": "in_progress",
     "timestamp": "2026-07-22T04:48:23.171062+00:00",
     "title": "Moonshot: The Last Theorem — Formalizing the Heat Death of Mathematics"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "e24b36f0",
-    "description": "Formalize arithmetic in exotic number bases: negative bases (negabinary), complex bases (base i-1), irrational bases (base phi — the golden ratio). Prove: every integer has a unique representation in base (-2) (negabinary). Show: base phi (golden ratio) represents integers using only digits 0 and 1 with no two consecutive 1s. Conjecture: there exists a base b such that prime numbers have a simple pattern in base b (analog of the Ulam spiral). Explore: what would alien civilizations use as their number base? Would they prefer base 8 (octopus)? Base 12? Base phi?",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "NumberTheory"
-    ],
-    "id": "fd_0572",
-    "lineage_refs": [],
-    "priority_score": 0.83,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-21T22:18:50.818601+00:00",
-    "title": "Moonshot: Alien Number Systems — Mathematics Beyond Base-10"
   },
   {
     "ambition_level": "extension",
@@ -8293,6 +8272,46 @@
     "status": "available",
     "timestamp": "2026-07-22T06:54:44.010438+00:00",
     "title": "**Conjecture.** For every symmetrizable Kac–Moody root datum and twisting weight"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Multiverse Truth and Forcing Branches\n\n## 1. Internal Boolean-Valued Realization\n\nConstruct a Boolean-valued universe whose generic quotients instantiate the abstract frame, with forcing closure, directedness, and opposite Continuum Hypothesis branches derived rather than assumed. This is falsifiable: the construction must supply one satisfaction relation for which every frame law and both branch conditions hold.\n\nThe key insight is that the abstract theory identifies the exact interface a model construction must satisfy, so Boolean-valued semantics can be developed independently and connected through a small number of preservation theorems.\n\nWhy now? The modal consequences have been separated cleanly from model construction, exposing the precise obligations needed for a semantic realization.\n\n## 2. Exact S4.2 Completeness for Finite Control Frames\n\nProve that every modal formula outside S4.2 fails on a finite pre-Boolean forcing frame assembled from independent buttons and switches, while every S4.2 theorem is valid on all directed preorders. This is falsifiable by either a formula valid on all proposed finite frames but not derivable in S4.2, or a purported S4.2 principle failing on one frame.\n\nThe key insight is that CH branching behaves like a switch, whereas persistent forcing assertions behave like buttons; finite products of these controls should realize the canonical countermodels.\n\nWhy now? Directedness has already been isolated as the semantic source of `.2`, and asymmetric catalog examples separate it from the stronger axiom `5`.\n\n## 3. Multiverse-Invariant Fragment Theorem\n\nCharacterize a syntactic fragment of set theory whose sentences are preserved under both forcing extensions and grounds, and prove that its members are multiverse-true whenever they hold in one universe of a sufficiently connected multiverse. This is falsifiable by a sentence in the proposed fragment that changes truth value along an allowed extension or ground relation.\n\nThe key insight is that invariance requires bidirectional control: extension preservation alone yields necessity above a world, not truth throughout all branches and grounds.\n\nWhy now? The distinction between global multiverse truth and local forcing necessity is explicit, making it possible to state the missing connectivity and preservation conditions without conflation.\n\n## 4. Large-Cardinal Calibration of Branching\n\nFor each selected large-cardinal assertion, determine the weakest preservation hypotheses under which forcing can vary CH while retaining that assertion in both branches. The conjecture is that a uniform preparation principle yields CH and non-CH branches preserving every assertion in a fixed finite hierarchy of indestructible large cardinals. It is falsifiable by a preservation obstruction at a specified level of the hierarchy.\n\nThe key insight is that independent branching should be parameterized by invariants that forcing must preserve, rather than represented by unconstrained propositional switches.\n\nWhy now? The abstract frame supports arbitrary background theories, so preservation can be expressed as background soundness while branch constructions are refined separately.\n\n## 5. Ground–Extension Modal Bimodality\n\nDevelop a bimodal semantics with one modality for forcing extensions and another for grounds, and determine the interaction logic generated by upward directedness, downward directedness, and mantle-like common cores. Conjecturally, neither modality alone determines the mixed validities. This is falsifiable by deriving every mixed validity from the two unimodal theories, or by exhibiting two frames with identical unimodal logics but distinct mixed validities.\n\nThe key insight is that “truth in all universes” ranges across both upward and downward movement, whereas ordinary forcing necessity sees only extensions.\n\nWhy now? The current separation between membership, accessibility, and global truth gives a natural foundation for adding a second relation without changing the satisfaction interface.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Logic",
+      "Pythagorean"
+    ],
+    "id": "fd_0598",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "3e9a9a06",
+    "status": "available",
+    "timestamp": "2026-07-22T09:46:18.771154+00:00",
+    "title": "Construct a Boolean-valued universe whose generic quotients instantiate the abst"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions for Exotic Positional Arithmetic\n\n## 1. Canonical binary expansions in imaginary quadratic rings\n\n**Conjecture.** Classify all quadratic algebraic integers `β` of norm two for which the digit set `{0,1}` gives unique finite expansions of every element of the ambient imaginary quadratic integer ring. The classification should be expressible through the geometry of a finite exceptional region for norm descent.\n\nThe key insight is that the proved base `i − 1` theorem reduces the infinite lattice to parity extraction, strict norm decrease, and five exceptional points; the same three-part mechanism should distinguish the successful quadratic radices.\n\n**Why now?** Complete negabinary and Gaussian base theorems provide one-dimensional and two-dimensional models, making a uniform classification both concrete and falsifiable.\n\n## 2. A transducer between Zeckendorf and phinary normal forms\n\n**Conjecture.** There is a terminating, confluent finite-state rewrite system that converts every Zeckendorf representation into a finite base-`φ` expansion with digits `0` and `1`, no adjacent ones, and bounded negative support; its output is canonical among expansions satisfying a fixed endpoint convention.\n\nThe key insight is that both systems normalize by the same local relation, `011 ↔ 100`, but Zeckendorf indices and phinary exponents impose different boundary conditions.\n\n**Why now?** Uniqueness of nonconsecutive Fibonacci sums and the golden-ratio carry law are established independently, making confluence and endpoint control the remaining testable bridge.\n\n## 3. Negative-base uniqueness over Euclidean domains\n\n**Conjecture.** Let `R` be a Euclidean domain and let `β ∈ R` have finite residue ring. If a complete residue digit set contains zero and admits a strictly decreasing Euclidean digit-extraction map outside a finite exceptional set, then every element of `R` has a canonical finite base-`β` expansion; uniqueness is equivalent to uniqueness of residues at every extraction step.\n\nThe key insight is that existence and uniqueness separate cleanly: descent proves termination, while residue injectivity peels equal expansions one digit at a time.\n\n**Why now?** Negabinary arithmetic supplies the complete one-dimensional model, while complex bases provide immediate nontrivial test cases over `ℤ[i]`.\n\n## 4. Carry complexity as a radix-selection invariant\n\n**Conjecture.** Among canonical radix systems of fixed residue alphabet size, the expected number of local rewrites required to normalize the sum of two length-`n` random numerals has a linear asymptotic whose coefficient is determined by the stationary distribution of a finite carry automaton.\n\nThe key insight is that an alien civilization's preferred base may be governed less by numeral length than by normalization cost, which can be modeled as an ergodic statistic of carry states.\n\n**Why now?** Mixed-radix Horner evaluation, negabinary parity extraction, and phinary rewriting offer three sharply different systems on which the proposed invariant can be calculated and compared.\n\n## 5. Prime-pattern invariance under computable radix changes\n\n**Conjecture.** No computable positional radix system with bounded digits, unique finite normal forms, and finite-state addition can make primality eventually recognizable by a regular language of digit strings.\n\nThe key insight is that a genuinely “simple” prime pattern should be defined by automata-theoretic complexity rather than visual appearance; closure properties of automatic sets should then conflict with the multiplicative irregularity of the primes.\n\n**Why now?** The explicit canonical systems developed here make the admissibility, uniqueness, and finite-state hypotheses precise enough to separate meaningful prime-pattern claims from coordinate artifacts such as spiral plots.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "fd_0599",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "e24b36f0",
+    "status": "available",
+    "timestamp": "2026-07-22T09:46:27.142706+00:00",
+    "title": "**Conjecture.** Classify all quadratic algebraic integers `β` of norm two for wh"
   },
   {
     "ambition_level": "extension",
