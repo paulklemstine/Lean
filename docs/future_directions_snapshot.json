@@ -2898,7 +2898,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1efa5ae1",
     "description": "Investigate the ArXiv paper 'Spectral extremal problems on planar and outerplanar graphs without $C_{k,l}' and formalize its key results. Abstract: Let $\\emph{spex}_{\\mathcal{P}}(n,F)$ and $\\emph{spex}_{\\mathcal{OP}}(n,F)$ be the maximum spectral radius among all $n$-vertex $F$-free planar graphs and outerplanar graphs, respectively. Define $C_{k,l}$ as a graph obtained from $C_k \\cup C_l$ such that the two cycles share a common vertex, where $l \\ge k \\ge 3$. In the 1990s, Cvetković and Rowlinson conjectured $K_1 + P_{n-1}$ maximizes spectral radius in outerplanar graphs on $n$ vertices, while Boots and Royle (independently, Cao and Vince) conjectured $K_2 + P_{n-2} $ does so in planar graphs. Tait and Tobin [J. Combin. Theory Ser. B, 2017] determined the fundamental structure as the key to confirming these two conjectures for sufficiently large $n$. Recently, Yin and Li [Discrete Mathematics, 2026] characterized the extremal graphs for $\\emph{spex}_{\\mathcal{P}}(n,B_{t,l})$ and $\\emph{spex}_{\\mathcal{OP}}(n,B_{t,l})$ in planar and outerplanar graphs on the basis of this key idea, where $B_{t,l}$ denotes the graph obtained by $t$ ",
     "domain_bridges": [],
     "domains": [
@@ -2911,7 +2911,7 @@
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
     "source_exp_id": "2607.13538v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T23:55:08.684252+00:00",
     "title": "ArXiv paper: Spectral extremal problems on planar and outerplanar graphs without $C_{k,l}"
   },
@@ -7675,7 +7675,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "642478f0",
     "description": "# Future Directions: Functional Fibres and Subjective Structure\n\n## 1. Nontrivial qualia coverings\n\nConjecture: there are natural state spaces in which functional observation forms a nontrivial finite covering rather than a globally split product, so that local zombie twins exist but no continuous global choice of twin exists.\n\nThe key insight is that the present Boolean product is the trivial two-sheeted covering; replacing it by a twisted covering turns the global existence of a coherent zombie operation into a topological obstruction.\n\nWhy now? The fibre classification identifies exactly which part of the construction depends on a global split, making monodromy the next falsifiable obstruction.\n\n## 2. Stability under approximate functional equivalence\n\nConjecture: for compact metric state spaces with Lipschitz experience observables, sufficiently small functional distance and a fixed experiential contrast force a quantitative lower bound on the distortion of every attempted functional reconstruction of experience.\n\nThe key insight is that exact equality of functional profiles should have a robust analogue expressed as an approximation lower bound rather than a binary impossibility.\n\nWhy now? The zero-distance theorem isolates the exact case, while the factorization criterion identifies reconstruction as the quantity to perturb.\n\n## 3. Higher-dimensional experiential fibres\n\nConjecture: when experience takes values in a finite complex rather than a Boolean set, the homotopy type of each functional fibre bounds the number and organization of mutually functionally indistinguishable experiential states.\n\nThe key insight is that Boolean awareness records only a two-point contrast; homology and homotopy can detect loops, components, and higher-dimensional experiential variation invisible to functional observation.\n\nWhy now? The current gap space is classified by a forgotten Boolean factor, suggesting a systematic replacement of that factor by structured experiential geometries.\n\n## 4. Natural, rather than chosen, incompleteness bridges\n\nConjecture: a category of labelled functional quotients and a category of labelled independent-sentence extensions admit functors whose gap constructions are naturally equivalent on a nontrivial subcategory.\n\nThe key insight is that an equivalence of individual gap spaces becomes mathematically stronger when it commutes with maps between behavioural systems and maps between theories.\n\nWhy now? The established label-preserving isomorphism provides the objectwise component; naturality is the precise next test that distinguishes a structural bridge from a coincidental shared classifier.\n\n## 5. Definability boundary for experiential reconstruction\n\nConjecture: for effectively presented state spaces, fibre constancy characterizes extensional reconstruction, while computable reconstruction additionally requires an effective choice principle on the range of the functional map.\n\nThe key insight is that set-theoretic factorization uses a representative from every inhabited fibre, but effective reconstruction must produce those representatives uniformly.\n\nWhy now? The present factorization theorem exposes the representative-selection step explicitly, isolating the exact location where computability can fail even after extensional obstructions disappear.\n",
     "domain_bridges": [],
     "domains": [
@@ -7688,7 +7688,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "d5fe8eb3",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-21T06:49:44.327570+00:00",
     "title": "Conjecture: there are natural state spaces in which functional observation forms"
   },
