@@ -246,21 +246,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "[Reset] Fresh approach in Shared"
   },
   {
-    "consumed_by_exp_id": "4bc3344b",
-    "description": "Formalize the 'I Am a Strange Loop' hypothesis: consciousness arises when a system models itself. Define: a 'conscious system' is one that contains a representation of its own state that it can inspect. Prove: any Turing-complete system can be conscious (it can simulate itself \u2014 the halting problem IS self-awareness). Show: the 'strangeness' of the loop (how many levels of self-reference) correlates with the degree of consciousness. Conjecture: the minimum loop length for consciousness is 3 (system -> model-of-system -> model-of-model -> back to system). Explore: can Lean's metaprogramming (tactic state inspecting itself) be a form of mathematical consciousness?",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0562",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-21T18:47:28.776281+00:00",
-    "title": "Hofstadter: I Am a Strange Loop \u2014 Consciousness as Self-Reference"
-  },
-  {
     "consumed_by_exp_id": "4c498610",
     "description": "Formalize the Penrose-Hameroff Orch OR hypothesis: consciousness arises from quantum coherence in microtubules. Define: a 'conscious event' is the collapse of a superposition in a microtubule, with timing ~500 ms (the gamma synchrony). Prove: the Penrose objective reduction (OR) threshold is E ~ h/(t * sqrt(N)) where N is the number of tubulins. Show: for N ~ 10^11 tubulins, the coherence time is ~10^-33 s \u2014 too short for room temperature. Conjecture: if quantum consciousness exists, it requires a warm-coherent mechanism not yet formalized. Explore: formalize 'non-computable consciousness' \u2014 does the brain compute beyond Turing?",
     "domains": [
@@ -3344,6 +3329,35 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T01:29:44.273281+00:00",
     "title": "ArXiv paper: Various Bialgebras Of Representative Functions On Free Monoids"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture' and formalize its key results. Abstract: We prove Norine's conjecture: every red--blue edge-coloring of the \\(n\\)-dimensional hypercube \\(Q_n\\), \\(n\\geq2\\), in which antipodal edges have opposite colors contains a monochromatic path joining some vertex to its antipode. From a hypothetical counterexample we construct an antipodally equivariant, augmentation-preserving chain map from the cellular chains of the cubical boundary of a cube to subdivision-invariant polyhedral chains on a sphere of one lower dimension. A purely algebraic chain-level Borsuk--Ulam obstruction rules out this map.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0589",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.19276v1",
+    "status": "available",
+    "timestamp": "2026-07-22T03:54:11.648214+00:00",
+    "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'On the autotopism groups and the equivalence of finite cyclic semifields' and formalize its key results. Abstract: Special cases of finite cyclic semifields were first constructed by Hughes and Kleinfeld in 1960, and later by Sandler in 1962 and Knuth in 1965. The general construction of cyclic semifields was subsequently introduced by Petit in 1966, and later rediscovered from the perspective of irreducible semilinear transformations by Jha and Johnson in 1989. Since Sandler's foundational work in 1962, the complete determination of the autotopism groups of cyclic semifields and the full resolution of the isotopy problem for this family have remained long-standing open problems. The most significant advances in determining these autotopism groups are due to Dempwolff in 2011, who left open the case in which the field extension degree strictly divides the degree of the polynomial defining the semifield. In this paper, we provide a complete classification of cyclic semifields up to isotopy, together with the full determination of their autotopism groups, thereby closing the remaining cases left open",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0590",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.19172v1",
+    "status": "available",
+    "timestamp": "2026-07-22T03:54:14.911360+00:00",
+    "title": "ArXiv paper: On the autotopism groups and the equivalence of finite cyclic semifields"
   },
   {
     "consumed_by_exp_id": "",
