@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "f0aa5907",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions: Moonshine Products and Character Reconstruction\n\n## 1. Class-indexed pole order for the Monster\n\nConstruct the 194 normalized McKay–Thompson series in a common analytic setting an",
-      "quality_score": 0.73,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-18T04:11:23",
-      "title": "The Monster Group's Secret Message: Moonshine Beyond the j-Function"
-    },
-    {
       "cycle_id": "f8479bcf",
       "domain": "Combinatorics",
       "key_insight": "# Future Directions\n\n## 1. Markov-invariant cyclotomic information\n\nConstruct a normalized closure invariant whose cube-root modulus is unchanged under both conjugation and stabilization, then determi",
@@ -2501,6 +2491,16 @@
       "theorem_count": 13,
       "timestamp": "2026-07-22T18:42:27",
       "title": "1. **Repair the definition before studying asymptotics.** The literal rule exclu"
+    },
+    {
+      "cycle_id": "f65064a1",
+      "domain": "Physics",
+      "key_insight": "# Future Directions: Odd Cycles with Bounded Circumference\n\n## 1. Exact odd-cycle enumeration in the core–periphery extremizer\n\nFor fixed integers `s ≥ 3` and `L ≥ 2s+2`, derive a closed polynomial fo",
+      "quality_score": 0.69,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-07-22T20:39:25",
+      "title": "ArXiv paper: Counting Odd Cycles in Graphs with Bounded Circumference"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.76
     }
   ],
-  "last_updated": "2026-07-22T18:42:27",
+  "last_updated": "2026-07-22T20:39:25",
   "open_questions": [
     {
       "context": "",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "57481379",
-        "quality": 0.75,
-        "theorems": 19,
-        "title": "ArXiv paper: Quantum Latin Squares of Order Six with Cardinalities Nineteen, Twe"
-      },
-      {
         "cycle_id": "18617733",
         "quality": 0.73,
         "theorems": 0,
@@ -3761,6 +3755,12 @@
         "quality": 0.56,
         "theorems": 13,
         "title": "Speculative: Mathematics as a Phase Transition"
+      },
+      {
+        "cycle_id": "f65064a1",
+        "quality": 0.69,
+        "theorems": 8,
+        "title": "ArXiv paper: Counting Odd Cycles in Graphs with Bounded Circumference"
       }
     ],
     "Probability": [

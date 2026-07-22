@@ -1743,20 +1743,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Tur\u00e1n-Type Bounds for Graphs Containing Large $F$-Sparse Sets"
   },
   {
-    "consumed_by_exp_id": "f65064a1",
-    "description": "Investigate the ArXiv paper 'Counting Odd Cycles in Graphs with Bounded Circumference' and formalize its key results. Abstract: For an integer $L\\ge2$, let $a=\\lfloor L/2\\rfloor$. Let $H(n,L)$ be the join of $K_a$ and an independent set of order $n-a$, with one extra edge in the independent set when $L$ is odd. We prove that, for every fixed $s\\ge3$ and $L\\ge2s+2$, and for all sufficiently large $n$, \\[ \\operatorname{ex}(n,C_{2s+1},\\mathcal{C}_{\\ge L+1}) =N(C_{2s+1},H(n,L)). \\] Together with the recent result of even-cycle by Zhao and Wang~[arXiv:2607.04357, 2026], this settles the conjecture of Zhu, Gy\u0151ri, He, Lv, Salia and Xiao~[Bull. Lond. Math. Soc. 55 (2023)] on counting fixed cycles in graphs with bounded circumference. We also determine the corresponding maximum number of copies of odd cycles when a path is forbidden.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_0120",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.10779v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-16T14:42:51.230098+00:00",
-    "title": "ArXiv paper: Counting Odd Cycles in Graphs with Bounded Circumference"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Generalizations of nets and Latin squares' and formalize its key results. Abstract: We examine combinatorial structures which generalize $(k,n)$-nets, orthogonal arrays, and mutually orthogonal Latin squares. By a reticulation we mean of a point set and two collections (types) of families of lines such that two lines of different types meet in exactly one point and each family of lines partitions the point set. The number of points incident with any line depends only upon the type of the line, and every point is incident with the same number of lines of a given type. Each choice of one line family of each type leads to an arrangement of the points into a rectangular grid. Recording the line containing a given point in the corresponding position of an array gives to a generalization of sets of mutually orthogonal Latin squares, dubbed a cooperative system. A cooperative system consists of a collection of column-Latin matrices and a collection of row-Latin matrices such that each column-Latin matrix is orthogonal to each row-Latin matrix. Recording lines which contain a",
     "domains": [
@@ -2930,7 +2916,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The K\u0151vari-S\u00f3s-Tur\u00e1n Conjecture for GF(q)-representable Matroids: Sharp Asymptotic Bound"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "beffe971",
     "description": "For every fixed integer k \u2265 5, let G be a uniformly random simple, connected, k-regular graph on n vertices. Let d\u2080 = \u230ag/2\u230b where g = n - k + 1 is the genus of G. Then almost surely (as n \u2192 \u221e), for every pair of non-negative integers r\u2080, d\u2080 satisfying \u03c1(g,r\u2080,d\u2080) \u2265 0, there exists a divisor D on G of degree d\u2080 and rank at least r\u2080.",
     "domains": [
       "Pythagorean",
@@ -2940,7 +2926,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.15213v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-17T14:08:38.389554+00:00",
     "title": "Almost Sure Brill-Noether Existence at Half-Canonical Degree for Random Regular Graphs"
   },
@@ -6213,6 +6199,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T18:42:25.479302+00:00",
     "title": "**Conjecture.** The globally additive-avoiding greedy trajectory beginning at on"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Odd Cycles with Bounded Circumference\n\n## 1. Exact odd-cycle enumeration in the core\u2013periphery extremizer\n\nFor fixed integers `s \u2265 3` and `L \u2265 2s+2`, derive a closed polynomial formula in `n` for the number of unoriented copies of `C_{2s+1}` in the join of a clique of order `\u230aL/2\u230b` and an independent set of order `n-\u230aL/2\u230b`, including the correction contributed by the exceptional peripheral edge when `L` is odd. The formula should be separated by the number of peripheral vertices used by the cycle and should agree with direct enumeration for every `n \u2265 \u230aL/2\u230b`.\n\nThe key insight is that the cyclic charging inequality not only bounds cycle length: it restricts admissible core\u2013periphery words to binary necklaces with no adjacent peripheral symbols, apart from one controlled exception.\n\nWhy now? The sharp circumference bound identifies exactly which cyclic incidence patterns can occur, reducing the remaining task to weighted necklace enumeration and automorphism factors.\n\n## 2. Stability from near-maximal odd-cycle count\n\nFix `s \u2265 3` and `L \u2265 2s+2`. Conjecture that there are constants `\u03b4>0`, `n\u2080`, and `C` such that every `n`-vertex graph of circumference at most `L` with at least `(1-\u03b4)N(C_{2s+1},H(n,L))` copies of `C_{2s+1}` differs from some copy of `H(n,L)` in at most `Cn` edge edits, for all `n \u2265 n\u2080`.\n\nThe key insight is that near equality in the peripheral-to-core injection should force almost every long odd cycle to saturate the charging map, producing a common small core shared by most cycles.\n\nWhy now? The exact local equality conditions are visible in the charging proof and provide a concrete route from cycle counts to global structural stability.\n\n## 3. A weighted transfer-matrix theorem for bounded exceptional transitions\n\nFor each `r \u2265 0`, classify and enumerate cyclic binary words in which at most `r` peripheral symbols are followed by peripheral symbols, with weights recording core and peripheral vertex choices. Conjecture that, for fixed word length, the resulting weighted enumerator is the trace of a `2(r+1) \u00d7 2(r+1)` transfer matrix and satisfies a linear recurrence whose characteristic polynomial factors according to the allowed defect states.\n\nThe key insight is that deleting at most `r` exceptional peripheral positions restores an injective rotation map, while a finite-state automaton records where those deletions occur.\n\nWhy now? The one-defect circumference theorem supplies the base case `r=1`, and the finite-state formulation can simultaneously control circumference and exact cycle counts.\n\n## 4. Spectral defect versus odd-cycle supersaturation\n\nFor fixed `s`, seek a sharp inequality relating the `(2s+1)`-st adjacency trace, the edge count, and a nonnegative spectral excess above the corresponding bounded-circumference extremizer. Conjecture that under circumference at most `L`, positive spectral excess forces a quantitatively comparable excess in the number of `C_{2s+1}` copies unless the graph is within `O(n)` edits of `H(n,L)`.\n\nThe key insight is that traces count closed walks while the core\u2013periphery charging map distinguishes the closed walks whose support is a simple odd cycle; combining the two should isolate the contribution of repeated-vertex walks.\n\nWhy now? The cubic trace\u2013triangle identity gives a complete short-cycle model, and the charging bounds provide the missing support-size control for longer odd moments.\n\n## 5. Path-forbidden analogue through endpoint charging\n\nFor fixed `s` and forbidden path order `P`, determine the exact maximum number of copies of `C_{2s+1}` and characterize every extremizer. Conjecture that an endpoint version of the core\u2013periphery charging map yields a finite family of extremal templates, with parity corrections analogous to the exceptional edge in the bounded-circumference construction.\n\nThe key insight is that a path has two boundary positions, so successor charging should lose control only at controlled endpoints rather than at an exceptional cyclic transition.\n\nWhy now? The cyclic argument cleanly separates the injective combinatorial mechanism from the graph-specific construction, making its linear-order analogue precise and testable.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0609",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "f65064a1",
+    "status": "available",
+    "timestamp": "2026-07-22T20:39:24.216472+00:00",
+    "title": "For fixed integers `s \u2265 3` and `L \u2265 2s+2`, derive a closed polynomial formula in"
   },
   {
     "consumed_by_exp_id": "",

@@ -9512,7 +9512,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "11T06 - Discrete geometry, finite metric spaces",
         "05C80 - Random graphs",
@@ -9521,7 +9521,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "beffe971",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -9538,7 +9538,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0231",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-22T20:39:40.957481+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem almost_sure_BN_existence_half_canonical (k : ℕ) (hk : k ≥ 5) : ∀ (G : random_simple_connected_k_regular_graph), ∀ (r₀ d₀ : ℕ), ρ (genus_of G) r₀ d₀ ≥ 0 → ∃ (D : divisor G), degree D = d₀ ∧ rank D ≥ r₀",
       "lineage_refs": [],
@@ -9553,7 +9553,7 @@
       "source": "",
       "source_exp_id": "2607.15213v1",
       "source_path": "http://arxiv.org/abs/2607.15213v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-17T14:08:38.389554+00:00",
       "title": "Almost Sure Brill-Noether Existence at Half-Canonical Degree for Random Regular Graphs"
@@ -26897,6 +26897,7 @@
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
-    "abduction_followup"
+    "abduction_followup",
+    "cross_domain_bridge"
   ]
 }
