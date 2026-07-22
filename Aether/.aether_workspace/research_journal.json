@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "f8479bcf",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions\n\n## 1. Markov-invariant cyclotomic information\n\nConstruct a normalized closure invariant whose cube-root modulus is unchanged under both conjugation and stabilization, then determi",
-      "quality_score": 0.59,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-18T04:28:04",
-      "title": "Knots That Think: Cognition as Braiding in Category Theory"
-    },
-    {
       "cycle_id": "b01a1ab3",
       "domain": "Tropical",
       "key_insight": "# Dark Mathematics — results and future directions\n\n## Formal results\n\n`Tropical/DarkMathematics.lean` treats provability as an abstract predicate `Pr : Prop → Prop` with the minimal rule that provabi",
@@ -2501,6 +2491,16 @@
       "theorem_count": 8,
       "timestamp": "2026-07-22T20:39:25",
       "title": "ArXiv paper: Counting Odd Cycles in Graphs with Bounded Circumference"
+    },
+    {
+      "cycle_id": "1efa5ae1",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions: Spectral Extremal Problems with Intersecting Forbidden Cycles\n\n## 1. Stability of the universal-vertex outerplanar construction\n\n**Conjecture.** For every fixed pair `l ≥ k ≥ 3`,",
+      "quality_score": 0.61,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-07-22T22:24:58",
+      "title": "ArXiv paper: Spectral extremal problems on planar and outerplanar graphs without $C_{k,l}"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.76
     }
   ],
-  "last_updated": "2026-07-22T20:39:25",
+  "last_updated": "2026-07-22T22:24:58",
   "open_questions": [
     {
       "context": "",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "fe36a9a3",
-        "quality": 0.66,
-        "theorems": 11,
-        "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
-      },
-      {
         "cycle_id": "7328a55d",
         "quality": 0.7,
         "theorems": 8,
@@ -3203,6 +3197,12 @@
         "quality": 0.65,
         "theorems": 27,
         "title": "Moonshot: Nanotechnology Computation — Molecular Computing Limits"
+      },
+      {
+        "cycle_id": "1efa5ae1",
+        "quality": 0.61,
+        "theorems": 6,
+        "title": "ArXiv paper: Spectral extremal problems on planar and outerplanar graphs without"
       }
     ],
     "Combinatorics": [

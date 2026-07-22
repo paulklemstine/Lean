@@ -2159,21 +2159,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Semitotal domination in unit disk graphs"
   },
   {
-    "consumed_by_exp_id": "1efa5ae1",
-    "description": "Investigate the ArXiv paper 'Spectral extremal problems on planar and outerplanar graphs without $C_{k,l}' and formalize its key results. Abstract: Let $\\emph{spex}_{\\mathcal{P}}(n,F)$ and $\\emph{spex}_{\\mathcal{OP}}(n,F)$ be the maximum spectral radius among all $n$-vertex $F$-free planar graphs and outerplanar graphs, respectively. Define $C_{k,l}$ as a graph obtained from $C_k \\cup C_l$ such that the two cycles share a common vertex, where $l \\ge k \\ge 3$. In the 1990s, Cvetkovi\u0107 and Rowlinson conjectured $K_1 + P_{n-1}$ maximizes spectral radius in outerplanar graphs on $n$ vertices, while Boots and Royle (independently, Cao and Vince) conjectured $K_2 + P_{n-2} $ does so in planar graphs. Tait and Tobin [J. Combin. Theory Ser. B, 2017] determined the fundamental structure as the key to confirming these two conjectures for sufficiently large $n$. Recently, Yin and Li [Discrete Mathematics, 2026] characterized the extremal graphs for $\\emph{spex}_{\\mathcal{P}}(n,B_{t,l})$ and $\\emph{spex}_{\\mathcal{OP}}(n,B_{t,l})$ in planar and outerplanar graphs on the basis of this key idea, where $B_{t,l}$ denotes the graph obtained by $t$ ",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0160",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.13538v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-16T23:55:08.684252+00:00",
-    "title": "ArXiv paper: Spectral extremal problems on planar and outerplanar graphs without $C_{k,l}"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Generalization of Ramanujan's Continued Fractions for Even Order' and formalize its key results. Abstract: In this paper, we derive three generalized continued fractions of any even order $k$ with the aid of a general continued fraction identity of Ramanujan and we establish general theta function identities for these continued fractions. As an application of continued fraction of order seventy-six, we obtain partition theoretic identities and some vanishing coefficient results.",
     "domains": [
@@ -5482,7 +5467,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "**Conjecture.** Let a periodic Born-probability sequence have period `k`. For ev"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6c18f01c",
     "description": "# Future Directions: Arithmetic Coherence Transitions\n\nThe conjectures below are ranked by expected scientific impact. Each proposal separates a measurable arithmetic statistic from the choice of a phenomenological transition law.\n\n## 1. Higher-rank Langlands percolation\n\n**Conjecture.** For a fixed global field and bounded ramification, form a bipartite graph whose vertices are rank-two automorphic representations and compatible rank-two Galois representations, with edges supplied by independently established local-global compatibility results. After normalization by the number of admissible local types, the largest-component density has a nonzero limiting value precisely above a universal critical mean degree.\n\n**The key insight is...** higher-rank reciprocity should be studied as a growing compatibility graph, so that global organization is measured by component structure rather than by a raw theorem count.\n\n**Why now?** The cyclotomic rank-one model shows exactly how an arithmetic counting law can be transported into a threshold parameter, while modern databases provide sufficiently structured local data to make the rank-two graph falsifiable.\n\n## 2. Arithmetic universality of critical exponents\n\n**Conjecture.** Across families of number fields ordered by discriminant, coherence parameters built from normalized reciprocity graphs fall into finitely many universality classes: tree-like compatibility graphs have critical exponent `1`, while symmetry-breaking character models have exponent `1/2`.\n\n**The key insight is...** the exponent should depend on the local geometry of the connection network, not on the names or historical origins of its arithmetic objects.\n\n**Why now?** Two exact mean-field laws already distinguish linear percolation onset from square-root symmetry-breaking onset, giving concrete competing predictions that arithmetic datasets can separate.\n\n## 3. A derived, rather than selected, number-theory threshold\n\n**Conjecture.** There is a canonical weighting of cross-field implications between Langlands theory and arithmetic geometry for which the susceptibility\u2014expected increase in the largest coherent component after adding one verified connection\u2014has a unique maximum at an effective edge count between `8,000` and `12,000`.\n\n**The key insight is...** a critical threshold is scientifically meaningful only if it can be recovered as a peak in susceptibility, rather than inserted as an external constant.\n\n**Why now?** The exact conductor cutoff derived from a chosen ten-thousand-edge parameter isolates the missing empirical task and supplies a sharp null model against which a measured threshold can be compared.\n\n## 4. Totient-driven cascades beyond prime conductors\n\n**Conjecture.** In the cyclotomic rank-one proxy, conductors crossing a fixed coherence threshold occur in clustered cascades governed by the distribution of Euler's totient: for every sufficiently large `T`, every interval `[T, T + T^(3/4)]` contains conductors on both sides of the condition `\u03c6(n) > T`.\n\n**The key insight is...** composite conductors replace the monotone prime law `p - 1` by the irregular multiplicative statistic `\u03c6(n)`, turning a single cutoff into an arithmetic intermittency phenomenon.\n\n**Why now?** The prime-conductor phase diagram is exact and monotone; extending it to composite conductors gives an immediate, falsifiable test of whether arithmetic fluctuations can model punctuated transitions.\n\n## 5. Stability under order-parameter deformation\n\n**Conjecture.** Let `F : \u211d\u22650 \u2192 \u211d\u22650` be continuous, monotone, zero exactly at zero, and regularly varying at zero with index `\u03b1 > 0`. Replacing square-root coherence by `F(max(x-c,0))` preserves the exact arithmetic activation boundary, while changing only the critical exponent to `\u03b1`.\n\n**The key insight is...** the location of the transition is order-theoretic, whereas its near-critical scaling is analytic; these two features should be proved and tested independently.\n\n**Why now?** The current cyclotomic classification already separates threshold inequalities from square-root scaling, making robustness under alternative response laws the natural next structural test.\n",
     "domains": [
       "Algebra",
@@ -5492,7 +5477,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "2f321176",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-20T20:48:29.755518+00:00",
     "title": "The conjectures below are ranked by expected scientific impact. Each proposal se"
   },
@@ -6214,6 +6199,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T20:39:24.216472+00:00",
     "title": "For fixed integers `s \u2265 3` and `L \u2265 2s+2`, derive a closed polynomial formula in"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Spectral Extremal Problems with Intersecting Forbidden Cycles\n\n## 1. Stability of the universal-vertex outerplanar construction\n\n**Conjecture.** For every fixed pair `l \u2265 k \u2265 3`, every sufficiently large outerplanar `C_{k,l}`-free graph whose spectral radius is within `o(n^{-1/2})` of the optimum can be transformed into the corresponding extremal universal-vertex construction by changing `o(n)` edges.\n\nThe key insight is that near equality in the adjacency-matrix energy estimate should force the Perron vector to concentrate around a bounded dominating core, while outerplanarity constrains the remaining vertices to path-like pieces.\n\n**Why now?** The edge-to-spectrum bridge isolates the analytic loss precisely, making it possible to separate quantitative eigenvector stability from the forbidden-cycle decomposition.\n\n## 2. A bounded-core theorem for planar forbidden-cycle extremizers\n\n**Conjecture.** For fixed `l \u2265 k \u2265 3`, every sufficiently large planar `C_{k,l}`-free spectral extremizer has a dominating core of size at most two, and deletion of that core leaves a graph of uniformly bounded maximum degree whose nontrivial components belong to a finite family determined by `k` and `l`.\n\nThe key insight is that the two-vertex core in the classical planar join construction is not merely an example: concentration of spectral mass and exclusion of two cycles sharing a vertex should make every larger high-weight core combinatorially unstable.\n\n**Why now?** A bounded-core formulation converts an asymptotic spectral problem into a finite structural classification and directly suggests the finite list of local replacements needed for a proof.\n\n## 3. Spectral supersaturation for intersecting cycles\n\n**Conjecture.** For each fixed `l \u2265 k \u2265 3`, there are positive constants `a_{k,l}` and `b_{k,l}` such that every sufficiently large planar graph with spectral radius exceeding the `C_{k,l}`-free optimum by `\u03b5 n^{-1/2}` contains at least `a_{k,l} \u03b5 n - b_{k,l}` copies of `C_{k,l}`.\n\nThe key insight is that excess Rayleigh mass should be convertible into many local augmentations around high-weight vertices, and each augmentation either improves the candidate extremizer or creates an intersecting pair of cycles.\n\n**Why now?** The baseline square-root estimate identifies the natural normalization for spectral excess, while recent structural extremal results indicate which local configurations should witness supersaturation.\n\n## 4. A minor-closed spectral compactness principle\n\n**Conjecture.** Let `\ud835\udca2` be a proper minor-closed graph class and let `F` be a fixed connected graph with a cut vertex lying on two cycles. If the `F`-free spectral extremizers in `\ud835\udca2` have unbounded order, then after deleting a bounded dominating set their component types converge to a finite periodic family under path concatenation.\n\nThe key insight is that separator structure in minor-closed classes should interact with Perron-vector localization to reduce global optimization to a finite-state transfer problem along bounded-width pieces.\n\n**Why now?** Intersecting-cycle exclusions provide the simplest nontrivial test case where separator topology, spectral concentration, and finite-state path structure all appear simultaneously.\n\n## 5. Sharpness criterion for the Frobenius edge bound\n\n**Conjecture.** Within any fixed proper minor-closed class, a sequence of connected graphs can asymptotically attain `\u03c1(G)^2 = 2|E(G)|` only if all but `o(|E(G)|)` edges are incident with a vertex set of bounded size.\n\nThe key insight is that near equality in rowwise Cauchy\u2013Schwarz forces adjacency rows carrying Perron mass to become nearly parallel, which in a sparse simple graph should be possible only through concentration around a small core.\n\n**Why now?** This criterion would turn the elementary analytic inequality into a structural stability engine applicable beyond planar and outerplanar graphs.\n",
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_0610",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "1efa5ae1",
+    "status": "available",
+    "timestamp": "2026-07-22T22:24:57.494222+00:00",
+    "title": "**Conjecture.** For every fixed pair `l \u2265 k \u2265 3`, every sufficiently large outer"
   },
   {
     "consumed_by_exp_id": "",
