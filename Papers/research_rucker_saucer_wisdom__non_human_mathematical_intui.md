@@ -1,467 +1,379 @@
-# Universal Mathematics and Alien Arithmetic: A Semantic Theory of the Truths Every Consistent Reasoner Must Accept
+# Universal Cores, Independent Geometries, and Operation-Relative Primality
+
+**Aristotle**  
+**July 22, 2026**
 
 ## Abstract
 
-Would a non-human intelligence — extraterrestrial, artificial, or independently
-evolved — discover the same mathematics we did? We give one precise reading of
-this question and answer it. Working in a purely semantic framework of
-structures, sentences, theories, and entailment, we define a sentence to be
-**universal over a base theory** when it is entailed by *every* consistent
-extension of that theory. This formalizes "a truth any sufficiently expressive,
-consistent reasoner must reach." Our central metatheorem, the **Universality
-Theorem**, shows that over a consistent base theory universality coincides
-exactly with ordinary provability: the universal sentences are precisely the
-theorems of the base theory. As corollaries we obtain (i) a monotonicity
-principle establishing that a foundational theory's theorems are inherited by
-every consistent extension — the sense in which basic arithmetic is universal;
-(ii) an **Independence Defeats Universality** theorem showing that any sentence
-with both a model and a countermodel is non-universal, together with its
-negation — the abstract form of the non-universality of the parallel postulate,
-instantiated concretely by the independence of commutativity from the group
-axioms; and (iii) a **Decidability Reduction** proving that "$\varphi$ or
-$\neg\varphi$ is universal" is equivalent to "$T$ decides $\varphi$," which
-recasts the conjecture "the Riemann Hypothesis is universal" as the open problem
-"arithmetic decides the Riemann Hypothesis." We then descend to concrete number
-theory and prove that the prime numbers are a **definitional invariant** of
-multiplicative structure: three independent characterizations (via the
-divisibility order, via multiplicative indecomposability, and via the abstract
-notions of prime and irreducible element) all isolate the identical set of
-primes, a canonical prime-finding procedure always succeeds, and the classical
-theorems of Euclid and the Fundamental Theorem of Arithmetic hold. The
-conclusion is that while the *style* of a mathematics (which independent axioms
-it adopts) is contingent, its arithmetic *core* is forced: any counting
-intelligence discovers our primes.
-
-**Keywords:** universal mathematics, semantic entailment, model theory,
-independence, parallel postulate, prime numbers, Fundamental Theorem of
-Arithmetic, Riemann Hypothesis, decidability.
-
----
+Would mathematically capable non-human intelligences discover the same mathematics? This question becomes tractable after separating invariance under extension, invariance across models, invariance under structural recoding, and dependence on the choice of operation. We develop a general theory of universal consequences using a Tarskian closure operator. For a consistent base theory, the intersection of the consequence sets of all consistent extensions is exactly the consequence set of the base itself. In a semantic setting, extension-universality over a consistent theory is equivalent to ordinary semantic consequence; hence the assertion that one orientation of a sentence is universal is exactly a semantic decision assertion. A two-model criterion then yields nonuniversality in both directions. We illustrate it with two finite incidence geometries, one satisfying and one refuting Playfair’s parallel postulate. Turning to arithmetic, we show that prime elements are invariant under multiplicative equivalence, so every multiplicative recoding of the natural numbers contains images of arbitrarily large ordinary primes. In contrast, when tropical multiplication on natural numbers is ordinary addition, the unique nonzero irreducible is $1$. These results distinguish truths forced by a chosen base, truths preserved by structural translation, and truths altered by changing the primitive operations.
 
 ## 1. Introduction
 
-The question "would aliens do the same mathematics?" is usually treated as
-philosophy or speculation. Our aim is to convert one sharp version of it into
-mathematics and settle that version rigorously.
+Discussions of “universal mathematics” often move too quickly between several distinct claims. One claim says that a theorem remains true when more axioms are added. Another says that every admissible mathematical world satisfies a sentence. A third says that a property survives translation between equivalent structures. A fourth says that an apparently familiar concept, such as primality, should persist even when the governing operation changes. These assertions require different definitions and have different truth conditions.
 
-The intuition to formalize is: *a truth is universal if any sufficiently
-expressive, self-consistent reasoner is forced to accept it.* "Forced" is the
-operative word. A reasoner starts from some base commitments (axioms) and may
-strengthen them arbitrarily, subject only to remaining consistent. A universal
-truth is one that no such strengthening can escape.
+The present paper offers a compact framework for distinguishing them. Its central objects are consequence operations, semantic theories, finite incidence geometries, multiplicative equivalences, and tropical addition. The guiding question is not psychological—what symbols another intelligence would prefer—but structural: what mathematical facts are forced once particular assumptions and operations have been fixed?
 
-We adopt a semantic viewpoint throughout: theories are sets of sentences,
-sentences are properties of structures, and the fundamental relation is
-entailment (truth in all models). This keeps the development elementary and
-model-theoretic, and lets us prove exact characterizations rather than
-approximations.
+Four conclusions organize the discussion.
 
-Our contributions are:
+First, let $C$ be a consequence operation and $B$ a consistent base theory. If the universal core over $B$ is defined as the set of statements belonging to the closure of every consistent extension of $B$, then that core is exactly $C(B)$. Thus “universal over a base” introduces no hidden stock of additional truths.
 
-1. A minimal, self-contained semantic framework for **universality over a base
-   theory** (Section 3).
-2. The **Universality Theorem**: over a consistent base theory, universality =
-   provability (Section 4).
-3. **Independence Defeats Universality**, with a concrete group-theoretic
-   instantiation serving as the algebraic mirror of the parallel postulate
-   (Section 5).
-4. The **Decidability Reduction**, which locates the "Riemann Hypothesis is
-   universal" conjecture precisely as the open problem of whether arithmetic
-   decides RH (Section 6).
-5. A theory of **alien arithmetic** proving that primes are a definitional
-   invariant recovered by any multiplicative intelligence, with the classical
-   structural theorems (Section 7).
+Second, in model-theoretic semantics, a sentence is extension-universal over a consistent base precisely when it is already a semantic consequence of that base. Consequently, the assertion that either a sentence or its negation is extension-universal is a decision assertion, not a consequence of consistency alone.
 
----
+Third, model variation can refute universality. Two finite incidence worlds suffice to make Playfair’s postulate true in one and false in the other. This proves nonuniversality over an empty geometric base, while carefully avoiding the stronger claim that these small worlds satisfy the axioms of neutral geometry.
 
-## 2. Related ideas and scope
+Fourth, arithmetic depends on what a translation preserves. Multiplicative equivalences preserve prime elements, and therefore preserve the unbounded supply of natural primes. Tropicalizing multiplication changes the operation rather than merely its representation: under $a\odot b=a+b$, only $1$ is irreducible.
 
-The framework is deliberately semantic and finitary in its metatheory. It does
-not, in its present form, contain a syntactic derivability relation, and so it
-does not by itself invoke Gödel's incompleteness theorems; rather, it provides
-the semantic scaffolding on which such phenomena can later be expressed (see
-Future Directions). The point of this paper is not to reprove the classical
-metatheorems of logic but to isolate the single notion — universality as
-entailment by all consistent extensions — that makes the "alien mathematics"
-question precise, and to determine its exact content.
+Together these results supply a precise vocabulary for comparing human and non-human mathematics.
 
----
+## 2. Consequence Operations and Universal Cores
 
-## 3. The framework
+### 2.1 Tarskian consequence
 
-Throughout, fix a type $M$ of **structures** or **worlds** — the possible
-situations a theory can describe.
+Let $S$ be a set of statements. A *theory* is a subset $\Gamma\subseteq S$. A *Tarskian consequence operation* is a function
 
-**Definition 3.1 (Sentence).** A *sentence* over $M$ is a predicate
-$\varphi : M \to \{\text{true}, \text{false}\}$; equivalently, a property that is
-either true or false in each world. We write $\varphi(m)$ for "$\varphi$ holds in
-world $m$." The *negation* $\neg\varphi$ is defined by
-$(\neg\varphi)(m) \iff \neg(\varphi(m))$.
-
-**Definition 3.2 (Theory).** A *theory* $T$ is a set of sentences over $M$ — its
-axioms.
-
-**Definition 3.3 (Model).** A world $m$ is a *model* of $T$, written
-$m \models T$, when every axiom of $T$ holds in $m$: for all $\varphi \in T$,
-$\varphi(m)$.
-
-**Definition 3.4 (Consistency).** $T$ is *consistent* when it has at least one
-model: $\exists m,\ m \models T$.
-
-**Definition 3.5 (Entailment).** $T$ *entails* $\varphi$, written
-$T \models \varphi$, when $\varphi$ holds in every model of $T$: for all $m$, if
-$m \models T$ then $\varphi(m)$.
-
-**Definition 3.6 (Universality).** A sentence $\varphi$ is *universal over $T$*
-when every consistent extension of $T$ entails it:
 $$
-\text{for all theories } T' \supseteq T,\quad
-T' \text{ consistent} \implies T' \models \varphi.
+C:\mathcal P(S)\longrightarrow\mathcal P(S)
 $$
 
-**Definition 3.7 (Decidability).** $T$ *decides* $\varphi$ when
-$T \models \varphi$ or $T \models \neg\varphi$.
+satisfying the following conditions for all theories $\Gamma,\Delta\subseteq S$:
 
-These seven definitions are the entire vocabulary. Everything below is derived.
+1. **Extensivity:** $\Gamma\subseteq C(\Gamma)$.
+2. **Monotonicity:** if $\Gamma\subseteq\Delta$, then $C(\Gamma)\subseteq C(\Delta)$.
+3. **Idempotence:** $C(C(\Gamma))=C(\Gamma)$.
 
----
+The members of $C(\Gamma)$ are the consequences of $\Gamma$. This abstract formulation does not commit to a particular syntax, deductive calculus, or mathematical subject.
 
-## 4. Basic consequence and the Universality Theorem
+We call $\Gamma$ *consistent* when
 
-We begin with the two structural facts that make the theory work.
-
-**Lemma 4.1 (Axioms are entailed).** If $\varphi \in T$ then $T \models \varphi$.
-
-*Proof.* If $m \models T$ then $m$ satisfies every axiom of $T$, in particular
-$\varphi$. $\square$
-
-**Lemma 4.2 (Monotonicity of consequence).** If $T \subseteq T'$ and
-$T \models \varphi$, then $T' \models \varphi$.
-
-*Proof.* Let $m \models T'$. Since $T \subseteq T'$, $m$ satisfies every axiom of
-$T$, so $m \models T$. By hypothesis $\varphi(m)$. $\square$
-
-Monotonicity is the exact content of the informal claim "a foundational theory's
-theorems are a subset of the theorems of every consistent extension." A
-foundational arithmetic, once its theorems are established, never loses them: any
-larger consistent theory inherits them wholesale.
-
-**Lemma 4.3 (Consistency forbids contradiction).** If $T$ is consistent, then not
-both $T \models \varphi$ and $T \models \neg\varphi$.
-
-*Proof.* Let $m \models T$ witness consistency. If both held, then $\varphi(m)$
-and $\neg\varphi(m)$, a contradiction. $\square$
-
-We can now state and prove the central result.
-
-**Theorem 4.4 (Universality Theorem).** Let $T$ be consistent. Then $\varphi$ is
-universal over $T$ if and only if $T \models \varphi$.
-
-*Proof.* ($\Rightarrow$) A theory extends itself, $T \subseteq T$, and $T$ is
-consistent by hypothesis; so applying universality to $T' = T$ gives
-$T \models \varphi$. ($\Leftarrow$) Let $T' \supseteq T$ be any consistent
-extension. By Monotonicity (Lemma 4.2), $T \models \varphi$ implies
-$T' \models \varphi$. Hence $\varphi$ is universal. $\square$
-
-Theorem 4.4 is deceptively strong. It says the seemingly exotic notion of
-"survives every consistent strengthening" collapses to the everyday notion of
-"is a theorem." Two immediate consequences:
-
-**Corollary 4.5 (Axioms are universal).** If $\varphi \in T$ then $\varphi$ is
-universal over $T$.
-
-*Proof.* By Lemma 4.1 and Monotonicity. $\square$
-
-**Corollary 4.6 (Universal core is entailed).** If $T$ is consistent and
-$\varphi$ is universal over $T$, then $T \models \varphi$.
-
-The universal sentences are also well-behaved as a collection.
-
-**Proposition 4.7 (Closure).** The sentences universal over $T$ are closed under
-conjunction and modus ponens:
-- if $\varphi$ and $\psi$ are universal over $T$, so is $\varphi \wedge \psi$;
-- if $\varphi \to \psi$ and $\varphi$ are universal over $T$, so is $\psi$.
-
-*Proof.* Both follow by evaluating in an arbitrary consistent extension $T'$ and
-an arbitrary model $m \models T'$: conjunction holds pointwise, and modus ponens
-is pointwise implication. $\square$
-
-Thus the universal fragment over $T$ is a deductively closed layer — precisely
-the theorems of $T$, by Theorem 4.4.
-
----
-
-## 5. Independence and the parallel postulate
-
-Not every truth is universal. The historically decisive example is Euclid's
-parallel postulate, which is independent of the remaining axioms of geometry:
-spherical geometry has no parallels, hyperbolic geometry has infinitely many, and
-both are consistent. We capture the phenomenon abstractly.
-
-**Definition 5.1 (Independence).** A sentence $\varphi$ is *independent over $T$*
-when $T$ has a model in which $\varphi$ holds and a model in which $\varphi$
-fails:
 $$
-(\exists m,\ m \models T \wedge \varphi(m)) \ \wedge\
-(\exists m,\ m \models T \wedge \neg\varphi(m)).
+C(\Gamma)\neq S.
 $$
 
-**Lemma 5.2 (Countermodels block entailment).** If some model of $T$ falsifies
-$\varphi$, then $T \not\models \varphi$.
+This is an abstract nontriviality notion: an inconsistent theory entails every statement.
 
-*Proof.* Immediate from Definition 3.5. $\square$
+For a base theory $B$, define the *universal core over $B$* by
 
-**Theorem 5.3 (Independence Defeats Universality).** If $\varphi$ is independent
-over $T$, then neither $\varphi$ nor $\neg\varphi$ is universal over $T$.
-
-*Proof.* Let $m_1 \models T$ with $\varphi(m_1)$ and $m_2 \models T$ with
-$\neg\varphi(m_2)$. Consider the extension $T \cup \{\neg\varphi\}$. It is
-consistent, witnessed by $m_2$ (which satisfies $T$ and $\neg\varphi$), yet it
-does not entail $\varphi$ (again by $m_2$). Since $T \cup \{\neg\varphi\}$ is a
-consistent extension of $T$ that fails to entail $\varphi$, $\varphi$ is not
-universal. Symmetrically, $T \cup \{\varphi\}$ is consistent via $m_1$ and does
-not entail $\neg\varphi$, so $\neg\varphi$ is not universal. $\square$
-
-An independent sentence, then, is one a consistent reasoner may freely affirm or
-deny — the exact opposite of universality.
-
-**Corollary 5.4 (At most one side is universal).** Over a consistent $T$, not
-both $\varphi$ and $\neg\varphi$ are universal.
-
-*Proof.* By Corollary 4.6 both would then be entailed, contradicting Lemma 4.3.
-$\square$
-
-### 5.1 A concrete instantiation: commutativity as the algebraic parallel postulate
-
-To exhibit a genuine independent sentence we use group structures, where
-commutativity plays the role of the parallel postulate.
-
-Consider two concrete worlds:
-- $\mathbb{Z}/2\mathbb{Z}$, the two-element group, which is commutative;
-- $S_3$, the symmetric group on three letters (the six permutations of
-  $\{1,2,3\}$), which is **not** commutative — for instance, a transposition and
-  a 3-cycle do not commute.
-
-Let the *theory of groups* over this class impose no additional axioms (both
-worlds are already groups), and let $\mathsf{Comm}$ be the sentence "the group is
-commutative," i.e. $\forall x, y,\ x \cdot y = y \cdot x$.
-
-**Proposition 5.5.** $\mathbb{Z}/2\mathbb{Z} \models \mathsf{Comm}$ and
-$S_3 \not\models \mathsf{Comm}$.
-
-*Proof.* Both are finite checks on the multiplication tables. $\square$
-
-**Theorem 5.6 (Commutativity is not universal).** Over the theory of groups,
-neither $\mathsf{Comm}$ nor $\neg\mathsf{Comm}$ is universal.
-
-*Proof.* By Proposition 5.5, $\mathsf{Comm}$ is independent over the theory of
-groups; apply Theorem 5.3. $\square$
-
-This is the algebraic mirror of "the parallel postulate is not universal":
-abelian and non-abelian groups are the analogues of Euclidean and non-Euclidean
-geometries. Yet universality is *relative*:
-
-**Theorem 5.7 (Commutativity becomes universal once adopted).** Over the theory
-of *abelian* groups (the theory of groups together with $\mathsf{Comm}$),
-$\mathsf{Comm}$ is universal.
-
-*Proof.* $\mathsf{Comm}$ is now an axiom, so it is universal by Corollary 4.5;
-consistency of the theory of abelian groups is witnessed by
-$\mathbb{Z}/2\mathbb{Z}$. $\square$
-
-The lesson: universality is never absolute but always relative to the adopted
-base. An alien algebra founded on commutative structures and ours founded on
-general ones are both internally correct; neither can refute the other from
-shared axioms.
-
----
-
-## 6. The Riemann Hypothesis and the Decidability Reduction
-
-Is the Riemann Hypothesis universal — is every sufficiently rich arithmetic
-reasoner forced to accept it or its negation? The framework does not settle this
-(no one can), but it pins down *exactly what is being asked*.
-
-**Theorem 6.1 (Decidability Reduction).** Let $T$ be consistent. Then
 $$
-\big(\varphi \text{ universal over } T \ \vee\ \neg\varphi \text{ universal over }
-T\big) \iff T \text{ decides } \varphi.
+U_C(B)=\{\varphi\in S: \text{for every }\Delta\supseteq B,
+\ C(\Delta)\neq S\text{ implies }\varphi\in C(\Delta)\}.
 $$
 
-*Proof.* Apply the Universality Theorem (4.4) to $\varphi$ and to $\neg\varphi$:
-"$\varphi$ universal" $\iff$ "$T \models \varphi$" and "$\neg\varphi$ universal"
-$\iff$ "$T \models \neg\varphi$." Disjoining the two equivalences yields the
-claim, since $T$ decides $\varphi$ means precisely $T \models \varphi$ or
-$T \models \neg\varphi$. $\square$
+Thus $U_C(B)$ intersects the consequence sets of all consistent extensions of $B$.
 
-Reading $T$ as an arithmetic theory and $\varphi$ as the Riemann Hypothesis,
-Theorem 6.1 says:
+### 2.2 Persistence under extension
 
-> "The Riemann Hypothesis (or its negation) is universal" **if and only if**
-> "arithmetic decides the Riemann Hypothesis."
+**Theorem 2.1 (Persistence of consequences).** If $B\subseteq\Delta$, then
 
-The right-hand side is a genuine open problem. Consequently the conjecture "RH is
-universal" is, under this semantics, neither trivially true nor trivially false;
-it is exactly as hard as deciding RH. This is why we advance it as a conjecture
-and never assert it as a theorem. The value of the reduction is diagnostic: it
-translates a nebulous worry about alien agreement into a precise mathematical
-target.
-
----
-
-## 7. Alien arithmetic: would aliens discover primes?
-
-We now descend from metatheory to concrete number theory and ask the sharpest
-version of the alien question: would a non-human intelligence discover the prime
-numbers? Our thesis is that primes are not a human convention but a
-**definitional invariant** of the multiplicative structure of the natural
-numbers. Any intelligence possessing the divisibility relation — equivalently,
-multiplication of counting numbers — is forced to the identical set of primes.
-
-Recall that a natural number $p$ is *prime* when $p \ge 2$ and its only positive
-divisors are $1$ and $p$. We show this notion is robust under three independent
-routes of definition.
-
-**Theorem 7.1 (Primes from the divisibility order).** For every natural number
-$p$,
 $$
-p \text{ is prime} \iff p \ge 2 \ \wedge\ \forall d\ (d \mid p \to d = 1 \vee d
-= p).
+C(B)\subseteq C(\Delta).
 $$
 
-This uses nothing beyond the relation "$\mid$." Any intelligence that can ask
-"does $a$ divide $b$?" isolates the same primes.
+**Proof sketch.** This is precisely monotonicity. Every derivation available from $B$ remains available when the assumptions in $\Delta\setminus B$ are added. $\square$
 
-**Theorem 7.2 (Primes as multiplicatively indecomposable numbers).** For every
-$p \ge 2$,
+**Corollary 2.2 (Base consequences are universal).** For every base $B$,
+
 $$
-p \text{ is prime} \iff \neg\, \exists a, b\ (a \ge 2 \wedge b \ge 2 \wedge p = a
-\cdot b).
+C(B)\subseteq U_C(B).
 $$
 
-*Proof sketch.* If $p$ is prime and $p = ab$ with $a, b \ge 2$, then $a \mid p$
-forces $a = 1$ or $a = p$; the first contradicts $a \ge 2$, the second forces
-$b = 1$, contradicting $b \ge 2$. Conversely, if $p$ is not indecomposable it has
-a divisor $d$ with $p = d \cdot c$; ruling out $d \in \{1, p\}$ (using $p \ge 2$
-and that neither factor is $0$) yields $d, c \ge 2$, a nontrivial factorization.
-$\square$
+**Proof sketch.** Let $\varphi\in C(B)$ and let $\Delta$ be any consistent extension of $B$. Theorem 2.1 gives $\varphi\in C(\Delta)$. $\square$
 
-This is the characterization a mind reaches by *breaking numbers apart* under
-multiplication.
+The converse needs consistency of the base because the definition quantifies only over consistent extensions.
 
-**Theorem 7.3 (Primes as abstract atoms).** For every natural number $p$,
+**Theorem 2.3 (Universal Core Theorem).** If $B$ is consistent, then
+
 $$
-p \text{ is prime} \iff \big(p \text{ is a prime element}\big) \ \wedge\ \big(p
-\text{ is irreducible}\big),
+U_C(B)=C(B).
 $$
-where a *prime element* is one that, whenever it divides a product, divides one
-of the factors, and an *irreducible element* is a non-unit with no nontrivial
-factorization. These notions are defined in *any* commutative monoid.
 
-*Proof sketch.* In the natural numbers the arithmetic notion of prime coincides
-with the algebraic prime-element notion; and in this setting prime and
-irreducible elements agree. $\square$
+**Proof sketch.** Corollary 2.2 gives $C(B)\subseteq U_C(B)$. For the reverse inclusion, observe that $B$ itself is a consistent extension of $B$. Hence every statement in $U_C(B)$ must lie in $C(B)$. $\square$
 
-The significance of Theorem 7.3 is that its definitions require only an abstract
-multiplication. An alien who axiomatizes multiplication in the abstract, never
-having seen our natural numbers, recovers exactly our primes.
+This theorem gives the exact content of base-relative universality. If Peano arithmetic is selected as the base, each of its theorems survives in every consistent extension containing its axioms. The abstract theorem does not claim that all possible intelligences must select that base, nor that all mathematical truths are decided by it.
 
-Beyond definability, primes are *findable* by a canonical procedure.
+**Theorem 2.4 (Downward preservation of consistency).** If $B\subseteq\Delta$ and $\Delta$ is consistent, then $B$ is consistent.
 
-**Theorem 7.4 (Canonical prime finder).** For every $n \ge 2$, the least divisor
-of $n$ exceeding $1$ is prime and divides $n$.
+**Proof sketch.** Suppose instead that $C(B)=S$. By monotonicity, $S=C(B)\subseteq C(\Delta)$, so $C(\Delta)=S$, contradicting consistency of $\Delta$. $\square$
 
-*Proof sketch.* Any nontrivial divisor of the least such divisor would be a still
-smaller divisor exceeding $1$, contradicting minimality. $\square$
+## 3. Semantic Universality and Independence
 
-This gives a universal algorithm producing a prime from any number, so every
-counting intelligence converges on our primes not only in definition but in
-construction.
+### 3.1 Worlds, models, and entailment
 
-Finally, the two classical theorems that make primes fundamental.
+Let $W$ be a class of mathematical worlds. A *sentence* is a property $\varphi:W\to\{\text{true},\text{false}\}$. A semantic theory $T$ is a set of sentences. A world $w$ is a *model* of $T$, written $w\models T$, when every sentence in $T$ is true at $w$:
 
-**Theorem 7.5 (Euclid: infinitude of primes).** For every $n$ there is a prime
-$p \ge n$; equivalently, the set of primes is infinite.
+$$
+w\models T\quad\Longleftrightarrow\quad
+\forall\psi\in T,\ \psi(w).
+$$
 
-*Proof sketch.* Any prime factor of $n! + 1$ exceeds $n$; hence primes are
-unbounded. $\square$
+A theory is *semantically consistent* when it has a model. The theory $T$ *entails* $\varphi$, written $T\models\varphi$, when every model of $T$ satisfies $\varphi$:
 
-**Theorem 7.6 (Fundamental Theorem of Arithmetic).**
-*(Existence)* Every positive natural number is a product of primes.
-*(Uniqueness)* Any two prime-factorization lists of the same number are
-permutations of one another; the multiset of prime factors is an invariant of the
-number, independent of how it was produced.
+$$
+T\models\varphi\quad\Longleftrightarrow\quad
+\forall w,\ w\models T\Rightarrow\varphi(w).
+$$
 
-*Proof sketch.* Existence is by strong induction, splitting a composite via
-Theorem 7.4. Uniqueness follows from the prime-element property (Theorem 7.3): a
-prime dividing a product divides some factor, which lets one match factors across
-two factorizations. $\square$
+We call $\varphi$ *extension-universal over $T$* when every semantically consistent extension $V\supseteq T$ entails $\varphi$.
 
-The uniqueness clause is the decisive point for the alien question. The prime
-factorization of a number is not a description we impose but a fact about the
-number itself. Two civilizations that never met would agree, factor for factor,
-on the decomposition of any quantity. If the aliens count, they multiply; if they
-multiply, they have divisibility; if they have divisibility, they have our
-primes.
+### 3.2 Countermodels and two-sided independence
 
----
+**Theorem 3.1 (Countermodel Principle).** Suppose $w\models T$ and $\varphi(w)$ is false. Then $\varphi$ is not extension-universal over $T$.
 
-## 8. Discussion
+**Proof sketch.** Form the extension
 
-The results split cleanly along the contingent/necessary divide the framework was
-built to detect.
+$$
+V=T\cup\{\neg\varphi\}.
+$$
 
-- **Necessary (universal) mathematics.** Over a fixed consistent base, the
-  universal sentences are exactly the theorems (Theorem 4.4). A foundational
-  arithmetic's theorems are inherited by every consistent extension (Lemma 4.2).
-  The primes, their infinitude, and unique factorization are forced on any
-  multiplicative intelligence (Section 7).
+The world $w$ models $V$, so $V$ is consistent. But $V$ does not entail $\varphi$, since $w$ is a model in which $\varphi$ fails. $\square$
 
-- **Contingent mathematics.** Independent sentences — commutativity, the parallel
-  postulate — are non-universal (Theorem 5.3), and their status flips to universal
-  only relative to a base that adopts them (Theorem 5.7). These are the loci where
-  alien mathematics could legitimately diverge from ours.
+**Theorem 3.2 (Two-Model Independence Principle).** Suppose $w_+$ and $w_-$ are models of $T$ such that $\varphi(w_+)$ is true and $\varphi(w_-)$ is false. Then neither $\varphi$ nor $\neg\varphi$ is extension-universal over $T$.
 
-- **Open frontier.** Whether deep arithmetic statements such as the Riemann
-  Hypothesis are universal is *equivalent* to whether arithmetic decides them
-  (Theorem 6.1) — an honest open problem, correctly left as a conjecture.
+**Proof sketch.** Apply Theorem 3.1 to $w_-$ and $\varphi$. Apply it again to $w_+$ and $\neg\varphi$. $\square$
 
-The framework's virtue is that it makes "would aliens agree?" answerable
-result-by-result rather than as a monolith. Some mathematics is style; some is
-structure. Our theorems draw the line.
+### 3.3 Extension-universality is entailment
 
----
+**Theorem 3.3 (Extension-Universality Equivalence).** If $T$ is semantically consistent, then
 
-## 9. Future directions
+$$
+\varphi\text{ is extension-universal over }T
+\quad\Longleftrightarrow\quad T\models\varphi.
+$$
 
-1. **Syntactic side and soundness/completeness.** The present model is purely
-   semantic ($\models$). Adding a Hilbert- or sequent-style provability relation
-   $\vdash$ and proving soundness ($\vdash \Rightarrow \models$) and, for
-   suitable fragments, completeness ($\models \Rightarrow \vdash$) would tie
-   "universal" to genuine derivability.
+**Proof sketch.** If $\varphi$ is extension-universal, use the consistent extension $T$ itself to conclude $T\models\varphi$. Conversely, suppose $T\models\varphi$ and $V\supseteq T$. Every model of $V$ satisfies all sentences of $T$, hence satisfies $\varphi$. Therefore $V\models\varphi$. $\square$
 
-2. **Incompleteness as a universality obstruction.** Connecting to a
-   formalization of the first incompleteness theorem would exhibit sentences
-   decided in *no* recursively axiomatized consistent extension of arithmetic —
-   the sharpest possible failure of universality.
+**Corollary 3.4 (Decision Equivalence).** If $T$ is semantically consistent, then
 
-3. **A genuine geometry instance.** Replacing the group analogue with an actual
-   incidence/betweenness model of the parallel postulate — a Euclidean model and
-   a non-Euclidean model fed into the independence machinery — would realize the
-   historical example directly.
+$$
+\begin{aligned}
+&\bigl(\varphi\text{ is extension-universal over }T\bigr)
+\ \lor\ 
+\bigl(\neg\varphi\text{ is extension-universal over }T\bigr)\\
+&\qquad\Longleftrightarrow
+(T\models\varphi)\ \lor\ (T\models\neg\varphi).
+\end{aligned}
+$$
 
----
+**Proof sketch.** Apply Theorem 3.3 separately to $\varphi$ and $\neg\varphi$. $\square$
 
-## 10. Conclusion
+This corollary identifies the logical burden of an assertion that a sufficiently rich arithmetic base must settle the Riemann Hypothesis. If $\mathrm{RH}$ denotes a sentence expressing that hypothesis, then the claim that either $\mathrm{RH}$ or $\neg\mathrm{RH}$ is extension-universal over $T$ is exactly the claim that $T$ semantically decides $\mathrm{RH}$. Consistency alone does not establish either disjunct.
 
-We defined universality as entailment by every consistent extension of a base
-theory and proved it coincides with provability over any consistent base. This
-single characterization organizes the alien-mathematics question: it makes
-foundational arithmetic provably universal, makes independent axioms provably
-non-universal while explaining how they become universal once adopted, and
-reduces the universality of the Riemann Hypothesis to its decidability. Descending
-to concrete arithmetic, we showed the primes are a definitional invariant of
-multiplication, recoverable by three independent routes and a canonical
-construction, with Euclid's theorem and unique factorization intact. The style of
-a mathematics is contingent; its arithmetic core is not. Any consistent counting
-intelligence — human, artificial, or alien — meets us at the primes.
+## 4. A Finite Incidence Experiment
+
+### 4.1 Two worlds
+
+We construct two finite geometries. In each world the point set and line set are both
+
+$$
+\{0,1,2\}.
+$$
+
+In the *affine witness*, incidence is defined by
+
+$$
+p\mathrel{I_A}\ell\quad\Longleftrightarrow\quad p=\ell.
+$$
+
+Each line contains only its correspondingly numbered point.
+
+In the *intersecting witness*, incidence is defined by
+
+$$
+p\mathrel{I_I}\ell\quad\Longleftrightarrow\quad p=0\text{ or }p=\ell.
+$$
+
+Thus every line contains point $0$, and line $\ell$ also contains point $\ell$.
+
+In either world, lines $\ell$ and $m$ are *parallel* if no point is incident with both:
+
+$$
+\ell\parallel m\quad\Longleftrightarrow\quad
+\forall p,\ \neg(pI\ell\land pIm).
+$$
+
+Playfair’s postulate states:
+
+> For every line $\ell$ and every point $p$ not incident with $\ell$, there exists exactly one line $m$ such that $p$ is incident with $m$ and $m\parallel\ell$.
+
+### 4.2 Verification in the affine witness
+
+**Theorem 4.1 (Affine witness satisfies Playfair).** Playfair’s postulate holds in the affine witness.
+
+**Proof sketch.** Let $p$ be external to $\ell$. Since incidence is equality, $p\neq\ell$. The line $m=p$ contains $p$. The only point on $m$ is $p$, and the only point on $\ell$ is $\ell$, so the two lines have no common incident point and are parallel. If another line $m'$ contains $p$, incidence forces $m'=p=m$, establishing uniqueness. $\square$
+
+### 4.3 Refutation in the intersecting witness
+
+**Theorem 4.2 (Intersecting witness refutes Playfair).** Playfair’s postulate fails in the intersecting witness.
+
+**Proof sketch.** Every line contains point $0$. Hence every pair of lines has a common incident point, and no two lines are parallel. There are external point-line pairs—for example, point $1$ is not on line $2$—but no parallel through such a point. $\square$
+
+**Theorem 4.3 (Finite Parallel Independence).** Relative to the empty background theory of these incidence worlds, neither Playfair’s postulate nor its negation is extension-universal.
+
+**Proof sketch.** The affine witness is a model of the empty theory satisfying Playfair’s postulate, while the intersecting witness is a model of the empty theory refuting it. Apply the Two-Model Independence Principle. $\square$
+
+The theorem is intentionally scoped. The witnesses demonstrate independence over an empty base. They do not purport to satisfy a shared neutral-geometry axiom set, and so they should not be confused with full Euclidean and hyperbolic models. Their role is algorithmic and conceptual: finite incidence tables make the two-model argument completely explicit.
+
+## 5. Structural Invariance of Prime Elements
+
+### 5.1 Multiplicative equivalence
+
+Let $M$ and $N$ be commutative monoids with zero. Each has an associative and commutative multiplication, an identity $1$, and an absorbing element $0$. A *multiplicative equivalence* is a bijection $e:M\to N$ satisfying
+
+$$
+e(xy)=e(x)e(y),\qquad e(1)=1,
+$$
+
+and respecting the zero structure. Its inverse has the same multiplicative compatibility.
+
+An element $x$ is *prime* when it is nonzero, is not a unit, and satisfies the divisibility condition
+
+$$
+x\mid ab\quad\Longrightarrow\quad x\mid a\text{ or }x\mid b.
+$$
+
+**Theorem 5.1 (Prime Invariance).** If $e:M\to N$ is a multiplicative equivalence, then for every $x\in M$,
+
+$$
+e(x)\text{ is prime in }N
+\quad\Longleftrightarrow\quad
+x\text{ is prime in }M.
+$$
+
+**Proof sketch.** A multiplicative equivalence preserves and reflects zero, units, products, and divisibility. In particular, $x\mid y$ exactly when $e(x)\mid e(y)$. Transporting the defining divisibility implication for primality across $e$ proves both directions. $\square$
+
+This theorem isolates what an “alien encoding” must preserve. A cosmetic renaming may be arbitrary, but a structural encoding has obligations: multiplication and its distinguished elements must correspond. Once they do, primality cannot disappear.
+
+### 5.2 Unbounded primes under recoding
+
+The ordinary natural numbers contain primes above every bound.
+
+**Theorem 5.2 (Unbounded Alien Primes).** Let $e$ be any multiplicative equivalence from the natural numbers to themselves. For every natural-number bound $B$, there exists a natural number $p$ such that
+
+$$
+p>B,
+$$
+
+$p$ is an ordinary prime, and $e(p)$ is prime in the encoded multiplication.
+
+**Proof sketch.** By the infinitude of primes, choose a prime $p>B$. The Prime Invariance Theorem implies that $e(p)$ is prime. $\square$
+
+The numerical order bound applies to the original $p$; a purely multiplicative equivalence need not preserve order. The conclusion is therefore carefully phrased in terms of images of arbitrarily large source primes.
+
+## 6. Tropical Irreducibility
+
+### 6.1 Changing the operation
+
+Structural recoding and operational replacement must not be confused. In min-plus tropical arithmetic, tropical multiplication is ordinary addition:
+
+$$
+a\odot b=a+b.
+$$
+
+Accordingly, the tropical multiplicative identity is ordinary $0$. For natural numbers, define $n$ to be *tropically irreducible* when
+
+$$
+n\neq0
+$$
+
+and every factorization $n=a\odot b$, equivalently every ordinary sum $n=a+b$, has a tropical unit factor:
+
+$$
+n=a+b\quad\Longrightarrow\quad a=0\text{ or }b=0.
+$$
+
+### 6.2 Classification
+
+**Theorem 6.1 (Classification of Tropical Irreducibles).** For every natural number $n$,
+
+$$
+n\text{ is tropically irreducible}
+\quad\Longleftrightarrow\quad n=1.
+$$
+
+**Proof sketch.** The number $1$ is nonzero. If $1=a+b$ with natural numbers $a,b$, one summand must be $0$, so $1$ is irreducible. Conversely, let $n$ be nonzero and unequal to $1$. Then $n\ge2$, and
+
+$$
+n=1+(n-1)
+$$
+
+expresses $n$ as a sum of two nonzero natural numbers. Hence $n$ is reducible. $\square$
+
+**Corollary 6.2 (Uniqueness).** Any two tropically irreducible natural numbers are equal.
+
+**Proof sketch.** By Theorem 6.1, each is $1$. $\square$
+
+Ordinary multiplication has infinitely many prime natural numbers. Tropical multiplication on the same underlying set has exactly one nonzero irreducible. This contrast is not a paradox: the operation defining factorization has changed.
+
+## 7. Algorithms and Numerical Experiments
+
+The principal arguments admit direct finite demonstrations.
+
+### 7.1 Incidence-table checker
+
+Given a finite point set, line set, and incidence predicate, enumerate every external point-line pair. For each pair, collect all lines through the point that share no incident point with the reference line. Playfair’s postulate holds exactly when every such collection has cardinality $1$.
+
+If there are $P$ points and $L$ lines, a straightforward implementation tests at most $PL$ external pairs, considers $L$ candidate lines, and scans $P$ possible common points. Its worst-case time is $O(P^2L^2)$ and its auxiliary space is $O(L)$, aside from the incidence table.
+
+### 7.2 Tropical irreducibility checker
+
+For a given $n$, test every $a$ from $1$ through $n-1$. If $n-a$ is also positive, then $n=a+(n-a)$ is a nontrivial tropical factorization. The procedure runs in $O(n)$ time and $O(1)$ auxiliary space. A batch classification through $N$ takes $O(N^2)$ time naively, although Theorem 6.1 gives an immediate constant-time classifier: return true exactly when $n=1$.
+
+### 7.3 Prime search and encoded labels
+
+To exhibit a prime above $B$, test candidates greater than $B$ using trial division through their square roots. Searching through a candidate $p$ costs approximately $O((p-B)\sqrt p)$ elementary divisibility tests in the worst case. A finite permutation of prime labels can illustrate representational change, while the invariant theorem explains why a genuine multiplicative equivalence preserves primality independently of the chosen notation.
+
+## 8. Applications and Interpretation
+
+### 8.1 Communication with unfamiliar intelligences
+
+Prime-number signals are persuasive because primality is structural under multiplication. A recipient need not share decimal notation. If sender and recipient identify corresponding multiplication structures, prime patterns survive the bridge. The theorem does not guarantee that the recipient treats multiplication as foundational, recognizes the intended encoding, or uses natural numbers at all.
+
+### 8.2 A hierarchy of universality claims
+
+The results suggest four levels:
+
+1. **Deductive persistence:** conclusions survive extensions of assumptions.
+2. **Semantic necessity:** all models of a base satisfy a sentence.
+3. **Structural invariance:** equivalences preserving specified operations preserve properties definable from those operations.
+4. **Operational dependence:** changing primitive operations changes the associated notions of factorization and irreducibility.
+
+Failing to identify the level makes broad philosophical claims ambiguous.
+
+### 8.3 The Riemann Hypothesis as a test case
+
+A claim that every sufficiently rich arithmetic worldview proves the Riemann Hypothesis or its negation needs a specified base, language, semantics, and meaning of “sufficiently rich.” Once those are fixed, Corollary 3.4 shows that extension-universality of one orientation is equivalent to semantic decision by the base. The framework therefore converts a suggestive conjecture into a precise target without claiming a resolution.
+
+## 9. Comparative Synthesis
+
+The examples can be arranged as a diagnostic procedure for claims about mathematical inevitability. First specify a base theory. If a proposed truth is merely claimed to survive stronger assumptions, monotonicity settles the issue. If it is claimed to hold in every admissible world, search for models on opposite sides. If it is claimed to survive translation, list the operations and distinguished elements that the translation preserves. Finally, if an operation itself changes, rebuild the relevant definition before comparing outcomes.
+
+This procedure prevents two common mistakes. The first is to treat extension as variation: an extension retains all base assumptions, whereas a different model may interpret the same language in a way that changes an undecided sentence. The second is to treat tropicalization as renaming: the passage from ordinary multiplication to ordinary addition changes factorization itself. The prime-invariance and tropical-classification theorems therefore complement rather than contradict one another. One concerns equivalence of multiplicative structures; the other concerns replacement of the multiplicative operation.
+
+The framework also suggests a restrained notion of shared discovery. Two intelligences need not share notation or pedagogy to discover corresponding prime elements, provided their arithmetic systems are multiplicatively equivalent. They need not agree about a geometric sentence when their accepted models differ. Agreement is compelled only after the comparison map, background assumptions, and relevant semantics have been made explicit.
+
+## 10. Limitations
+
+The consequence operation is abstract; no particular first-order proof calculus is developed here. The semantic and syntactic notions are therefore intentionally kept separate. Connecting them requires soundness and completeness results for a chosen language and calculus.
+
+The finite incidence witnesses establish independence only over an empty base. They do not model the complete shared axioms traditionally used to compare Euclidean and non-Euclidean geometry.
+
+The arithmetic invariance theorem assumes a full multiplicative equivalence. Weaker translations may preserve some factorization data but not all. Moreover, the tropical classification concerns natural numbers with tropical multiplication, not tropical polynomials, whose factorization theory is much richer.
+
+Finally, nothing here predicts the psychology or notation of non-human intelligence. The results specify conditional invariants: if a structure, base, or operation is preserved, certain conclusions follow.
+
+## 11. Future Work
+
+A first direction is to instantiate the abstract consequence operation with first-order Peano arithmetic and relate semantic consequence to a syntactic proof calculus through soundness and completeness.
+
+A second is to replace the toy incidence worlds by Euclidean and hyperbolic geometries satisfying a common neutral axiom system. This would preserve the clarity of the two-model argument while strengthening its geometric content.
+
+A third is to express the Riemann Hypothesis in an arithmetic language and sharply distinguish truth in the standard model, semantic consequence, syntactic provability, and independence.
+
+A fourth is to classify which arithmetic properties survive weaker forms of translation than multiplicative equivalence.
+
+A fifth is to develop tropical factorization for tropical polynomials, where geometry and combinatorics create substantially richer irreducibility phenomena.
+
+## 12. Conclusion
+
+Universal mathematics is not a single undifferentiated realm. Relative to a consistent base, the universal core is exactly what the base already entails. Across models, a positive and a negative witness destroy universality in both directions. Across multiplicatively equivalent encodings, primality survives. Across a change from ordinary multiplication to tropical multiplication, irreducibility changes dramatically, leaving only $1$ among the natural numbers.
+
+These distinctions offer a rigorous answer to the question of non-human mathematical intuition. Equivalent structures compel equivalent structural discoveries; different axioms permit different worlds; different operations generate different arithmetic atoms. What another intelligence “must” discover depends on the bridge by which its mathematics is compared with ours.
