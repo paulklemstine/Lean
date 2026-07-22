@@ -1,89 +1,25 @@
-# Computational Evidence — Neural Coding Theorems
+# Computational Evidence
 
-All claims formalized in `NeuralCoding.lean` are exact combinatorial / algebraic
-identities, so the "evidence" below is small-case verification of the closed
-forms before formalization.
+## Small cases
 
-## 1. Coding capacity `2^N` and the doubling law
+For `N` binary neurons, exhaustive counting gives the following values. The dense mean energy uses one unit per active neuron, and the last column is the relative population error for unit per-neuron variance.
 
-| N | #codes `Fin N → Bool` = 2^N |
-|---|-----------------------------|
-| 0 | 1  |
-| 1 | 2  |
-| 2 | 4  |
-| 3 | 8  |
-| 4 | 16 |
-| 5 | 32 |
+| `N` | all patterns `2^N` | one-hot patterns | dense mean energy `N/2` | error `1/√N` |
+|---:|---:|---:|---:|---:|
+| 1 | 2 | 1 | 0.5 | 1.0000 |
+| 2 | 4 | 2 | 1 | 0.7071 |
+| 4 | 16 | 4 | 2 | 0.5000 |
+| 8 | 256 | 8 | 4 | 0.3536 |
+| 16 | 65536 | 16 | 8 | 0.2500 |
 
-Each step doubles (`card_neuralCode_succ`). Sequence = OEIS A000079 (powers of 2).
+For ten neurons, the exact-weight counts at weights `0,1,2,3` are `1,10,45,120`, agreeing with `10.choose k`.
 
-## 2. Weight-`k` (sparse) code counts = `C(N, k)`
+## Sequence identification
 
-For `N = 4`, counting `c : Fin 4 → Bool` by number of `true`s:
+The total pattern counts are the powers of two, OEIS A000079: `1, 2, 4, 8, 16, 32, ...` when indexed from `N = 0`. The one-hot counts are the positive integers, OEIS A000027. Fixed-weight counts are binomial-coefficient diagonals in Pascal's triangle.
 
-| weight k | count | C(4,k) |
-|----------|-------|--------|
-| 0 | 1 | 1 |
-| 1 | 4 | 4 |
-| 2 | 6 | 6 |
-| 3 | 4 | 4 |
-| 4 | 1 | 1 |
+## Counterexample and formulation check
 
-Row sums to 16 = 2^4 (Pascal's triangle, OEIS A007318). Confirms `card_sparse`
-and `card_grandmother` (weight 1 → N codes).
+The literal phrase “`O(N log N)` concepts per unit energy” does not match the natural one-hot model: it represents exactly `N` concepts at one spike each, while its information per spike is `log₂ N` bits. For exactly `k` active neurons, the raw concept count per spike is `N.choose k / k`, which is not generally `O(N log N)` when `k` grows proportionally to `N`. The formal development therefore proves the coherent information-theoretic statement: one-hot sparse coding has `log₂ N` bits per spike, versus two bits per average spike for the full dense codebook, and this sparse rate tends to infinity.
 
-## 3. Total / average weight
-
-Sum of weights over all 2^N codes:
-
-| N | Σ weight | N·2^(N-1) | average = N/2 |
-|---|----------|-----------|---------------|
-| 1 | 1  | 1  | 0.5 |
-| 2 | 4  | 4  | 1.0 |
-| 3 | 12 | 12 | 1.5 |
-| 4 | 32 | 32 | 2.0 |
-
-Matches `total_weight` and `average_weight` (mean dense energy `= N/2`).
-(For N=4: Σ = 0·1+1·4+2·6+3·4+4·1 = 32.) Sequence N·2^(N-1) = OEIS A001787.
-
-## 4. Population precision `∝ 1/√N`
-
-`popPrecision v N = √v / √N`. With `v = 1`:
-
-| N | 1/√N | 4N halving check |
-|---|------|------------------|
-| 1 | 1.000 | popPrecision(4) = 0.5 = popPrecision(1)/2 ✓ |
-| 4 | 0.500 | popPrecision(16) = 0.25 = popPrecision(4)/2 ✓ |
-| 16| 0.250 | |
-
-Confirms `popPrecision_quarter` and monotone decrease `popPrecision_antitone`.
-
-## 5. Sparse energy efficiency (bits per spike)
-
-* Dense rate = `log₂(2^N) / (N/2) = N / (N/2) = 2` bits/spike (constant).
-* One-hot sparse rate = `log₂ N / 1 = log₂ N` bits/spike.
-
-| N | dense rate | sparse rate log₂N | sparse wins? |
-|---|-----------|-------------------|--------------|
-| 4 | 2 | 2.00 | tie |
-| 5 | 2 | 2.32 | yes |
-| 8 | 2 | 3.00 | yes |
-| 16| 2 | 4.00 | yes |
-| 1024 | 2 | 10.00 | yes |
-
-Crossover at N = 4, strict advantage for N ≥ 5 (`sparse_more_efficient`),
-unbounded as N → ∞ (`sparse_rate_tendsto_atTop`).
-
-## 6. Manifold dimension bound
-
-`neural_manifold_dim_le_dof`: for a linear behaviour→activity map
-`ℝ^d → ℝ^N`, `dim(range) ≤ d`. E.g. a 2-DOF reaching task (d=2) recorded from
-N=100 neurons has neural activity confined to a subspace of dimension ≤ 2.
-This is the rank–nullity bound and needs no numerical search.
-
-## Counterexample hunt
-
-No universal claim admitted a counterexample in the ranges checked (N up to a few
-thousand for the numeric rates; all algebraic identities are exact). The
-crossover point N = 4 for dense-vs-sparse efficiency was located exactly and is
-reflected in the `5 ≤ N` hypothesis of `sparse_more_efficient`.
+No counterexample was found to the finite identities formalized in Lean; they are established symbolically for every natural `N` (and every weight `k` where applicable), rather than inferred from this table.
