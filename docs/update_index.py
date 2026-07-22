@@ -343,9 +343,6 @@ def update_index():
                         pass
 
     all_packages_dates.sort(key=lambda x: x[1])
-    if len(all_packages_dates) > 772:
-        all_packages_dates = all_packages_dates[-772:]
-
     filename_to_num = {fn: idx + 1 for idx, (fn, _) in enumerate(all_packages_dates)}
 
     for pkg in package_index:
