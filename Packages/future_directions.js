@@ -242,21 +242,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Moonshot: Quantum Consciousness \u2014 Penrose-Hameroff Orchestrated Reduction"
   },
   {
-    "consumed_by_exp_id": "6622cac1",
-    "description": "Formalize neural coding: how does the brain represent information? Define: a 'neural code' is a binary pattern on N neurons. Prove: the maximum number of distinct concepts representable by N binary neurons is 2^N. Show: with population coding (distributed representations), the brain can represent continuous values with precision ~sqrt(N). Conjecture: the brain uses sparse coding (only ~1% of neurons active) for energy efficiency \u2014 prove this achieves O(N log N) concepts per unit energy. Explore: formalize the 'neural manifold hypothesis' \u2014 neural activity lives on a low-dimensional manifold. Prove: the manifold dimension is bounded by the number of behavioral DOF.",
-    "domains": [
-      "Novelty",
-      "MachineLearning"
-    ],
-    "id": "fd_0586",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-22T02:30:28.067253+00:00",
-    "title": "Moonshot: Brain-Computer Interface Mathematics \u2014 Neural Coding Theorems"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 227d6015 (Q=0.750), which proved 19 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Freeman Dyson's idea that intelligence grows without limit in the deep future. Define: 'intelligence growth rate' as the rate at which a civilization discovers new theorems. Prove: if the growth rate is superexponential (faster than 2^(2^n)), then the civilization discovers ALL theorems of",
     "domains": [
@@ -2772,7 +2757,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Aperiodicity and subword complexity in the binary expansion of powers of three"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "40432087",
     "description": "Investigate the ArXiv paper 'Several families of incommensurable noncompact hyperbolic Coxeter polytopes' and formalize its key results. Abstract: We classify all 141 finite-volume hyperbolic Coxeter five-dimensional polytopes with eight facets, of which 125 are noncompact. Using maximal-cusp density and a noncompact analog of Bogachev-Douba-Raimbault's argument, we construct infinitely many pairwise incommensurable noncompact Coxeter polytopes in dimensions 4, 5, 6, 7, and 9, with the number of commensurability classes growing at least exponentially in volume.",
     "domains": [
       "Bridges"
@@ -2781,7 +2766,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14715v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-17T08:20:29.584439+00:00",
     "title": "ArXiv paper: Several families of incommensurable noncompact hyperbolic Coxeter polytopes"
   },
@@ -6214,6 +6199,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T22:24:57.494222+00:00",
     "title": "**Conjecture.** For every fixed pair `l \u2265 k \u2265 3`, every sufficiently large outer"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n- Replace the stipulated variance-of-the-mean formula with a probability-space model of independent, identically distributed neural responses, and derive the `1 / \u221aN` error law from variance and independence.\n- Generalize binary activity to finite alphabets, obtaining `q^N` capacity and energy-constrained type-class bounds.\n- Develop exact and asymptotic bounds for codes with weight at most `k`, including entropy estimates for `\u2211_{j \u2264 k} N.choose j` when `k / N` is near one percent.\n- Add noisy channels and prove decoding guarantees from Hamming distance, minimum-distance bounds, and error-correcting neural populations.\n- Optimize information per expected spike under nonuniform concept distributions and neuron-dependent energy costs.\n- Extend the linear neural-manifold theorem to smooth maps. The appropriate target is a local rank bound for the image of a smooth behavioral parametrization, with explicit hypotheses distinguishing image dimension, tangent rank, and the dimension of the image's linear span.\n- Formalize nonlinear population codes and Fisher information, then connect estimator variance to a rigorously stated Cram\u00e9r\u2013Rao bound.\n- Study temporal codes by replacing a single Boolean pattern with spike trains and proving finite-window capacity bounds under refractory-period constraints.\n",
+    "domains": [
+      "Computation",
+      "Geometry"
+    ],
+    "id": "fd_0611",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "6622cac1",
+    "status": "available",
+    "timestamp": "2026-07-22T23:23:57.106183+00:00",
+    "title": "Future directions from cycle 6622cac1"
   },
   {
     "consumed_by_exp_id": "",

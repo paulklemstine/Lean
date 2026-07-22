@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-22T22:24:58.598340+00:00",
+  "last_updated": "2026-07-22T23:24:02.285989+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -33723,6 +33723,7 @@
       "outcome_quality": 0.61,
       "phase": "A_only",
       "phase_a_prompt_version": "v19",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v19",
@@ -33751,6 +33752,48 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-22T22:24:58.518336+00:00",
       "title": "ArXiv paper: Spectral extremal problems on planar and outerplanar graphs without $C_{k,l}"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 3,
+      "domain": "Novelty",
+      "duration_seconds": 3541.085239648819,
+      "end_time": 1784762622.355084,
+      "files_integrated": 2,
+      "job_id": "6622cac1",
+      "outcome_quality": 0.69,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v24",
+      "phase_b_skip_reason": "low_quality_near_miss",
+      "phase_b_skipped": true,
+      "prompt_version": "v24",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.7,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.84,
+        "composite": 0.5185,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.58,
+        "novelty": 0.61,
+        "proof_depth": 0.68,
+        "usefulness": 0.76
+      },
+      "quality_score": 0.69,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1784759081.2698443,
+      "strategy_count": 0,
+      "theorem_count": 0,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-22T23:24:02.211262+00:00",
+      "title": "Moonshot: Brain-Computer Interface Mathematics \u2014 Neural Coding Theorems"
     }
   ]
 }
