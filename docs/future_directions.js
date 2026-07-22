@@ -18,6 +18,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle b31f2cf9 (Q=0.830), which proved 21 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize 'strange loops' \u2014 hierarchical levels that fold back on themselves. Define: a strange loop in a formal system F is a formula phi such that phi asserts its own provability or unprovability. Prove: G\u00f6del's incompleteness theorem IS a strange loop (the G\u00f6del sentence G says 'G is not provable",
+    "domains": [
+      "Logic"
+    ],
+    "id": "push_b31f2cf9_51d634f4",
+    "priority_score": 0.9299999999999999,
+    "research_mode": "team",
+    "source_exp_id": "b31f2cf9",
+    "status": "available",
+    "timestamp": "2026-07-22T00:14:40.319211+00:00",
+    "title": "Deepening: Hofstadter: Strange Loops in Formal Systems \u2014 Self-Reference as a Theorem"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 4920904c (Q=0.800), which proved 46 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Erdos-Renyi random graph G(n, p) has n vertices where each edge appears independently with probability p. At p = log(n)/n, G(n,p) becomes connected. But what if p is COMPLEX? Define G(n, z) where z is a complex number: each edge (i,j) appears with 'probability' z, meaning the edge weight is z in",
     "domains": [
       "Logic"
@@ -57,21 +71,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-21T18:48:03.438961+00:00",
     "title": "Deepening: Rucker: The Fourth Dimension as a Mathematical Playground"
-  },
-  {
-    "consumed_by_exp_id": "b31f2cf9",
-    "description": "Formalize 'strange loops' \u2014 hierarchical levels that fold back on themselves. Define: a strange loop in a formal system F is a formula phi such that phi asserts its own provability or unprovability. Prove: G\u00f6del's incompleteness theorem IS a strange loop (the G\u00f6del sentence G says 'G is not provable'). Show: Tarski's undefinability of truth is a stronger strange loop (no formula can assert its own truth). Conjecture: every sufficiently expressive formal system contains infinitely many distinct strange loops. Explore: can we formalize the 'tangled hierarchy' where level N refers to level N-1 which refers to level N?",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0559",
-    "priority_score": 0.87,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-21T16:49:18.790612+00:00",
-    "title": "Hofstadter: Strange Loops in Formal Systems \u2014 Self-Reference as a Theorem"
   },
   {
     "consumed_by_exp_id": "",
@@ -3198,7 +3197,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Nonnegative Bakry--\u00c9mery Curvature on Bounded-Degree Graphs Implies Volume Doubling and Poincar\u00e9 Inequalities"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "939843de",
     "description": "Investigate the ArXiv paper 'Lattice slices, Ehrhart polynomials, and magic positivity of generalized parking-function polytopes' and formalize its key results. Abstract: For $\\mathbf{b}=(b_1,\\dots,b_n)\\in\\mathbb{Z}_{>0}^n$, a $\\mathbf{b}$-parking function is a sequence $(\u03b2_1,\\dots,\u03b2_n)$ of positive integers whose nondecreasing rearrangement $\u03b2_1'\\le\u03b2_2'\\le\\cdots\\le\u03b2_n'$ satisfies $\u03b2_i'\\le b_1+\\cdots+b_i$. The $\\mathbf{b}$-parking-function polytope $\\mathfrak{X}_n(\\mathbf{b})$ is the convex hull of all $\\mathbf{b}$-parking functions of length $n$ in $\\mathbb{R}^n$. We prove that every lattice slice of $\\mathfrak{X}_n(\\mathbf{b})$, obtained by fixing one coordinate at an integer value, is itself a $\\mathbf{b}'$-parking-function polytope of one dimension less, with an explicit parameter vector $\\mathbf{b}'$; this yields a recursion for the number of lattice points of $\\mathfrak{X}_n(\\mathbf{b})$. We further show that every dilate of a $\\mathbf{b}$-parking-function polytope is a translate of another such polytope, that the number of lattice points is a polynomial function of $\\mathbf{b}$, and we deduce an explicit formula for the Ehrhart polynomial of $\\ma",
     "domains": [
       "Geometry",
@@ -3208,7 +3207,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.15503v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-20T03:51:29.578870+00:00",
     "title": "ArXiv paper: Lattice slices, Ehrhart polynomials, and magic positivity of generalized parking-function polytopes"
   },
@@ -5981,6 +5980,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T00:14:33.447981+00:00",
     "title": "`Catalog/Logic/SpacetimeDonuts.lean` proves that the kernel of the universal-cov"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe completed development establishes the abstract logical core in three layers. `Core.lean` studies unrestricted semantic diagonalization and fixed-point arguments; `Independence.lean` isolates the short soundness-to-independence chain; and `CodedHierarchy.lean` gives the faithful coded interface in which diagonalization ranges only over represented object-language predicates. The coded layer proves G\u00f6del fixed-point truth and independence, Tarski-style non-representability of semantic truth and untruth, an infinite rank-separated family of independent loops, and transport of incompleteness around a two-level hierarchy.\n\nThe following extensions would move from this abstract foundation toward concrete metamathematics.\n\n1. **Arithmetic realization.** Instantiate `CodedDiagonalSystem` for a recursively axiomatized extension of Robinson arithmetic. This requires inductive formula and derivation syntax, G\u00f6del coding, primitive-recursive substitution, representability, and the syntactic diagonal lemma.\n\n2. **Derived rank separation.** `RankedDiagonalSystem` currently records rank-separated unprovability codes as structure data. In a concrete syntax, derive these codes by padding G\u00f6del formulas with syntactically distinct tautological conjuncts, proving preservation of meaning together with strict growth of formula size or depth.\n\n3. **Sharper consistency assumptions.** The present independence result uses semantic soundness. Separate consistency, 1-consistency, and omega-consistency, and formalize the original G\u00f6del and Rosser arguments under their standard weaker hypotheses.\n\n4. **Derivability logic.** Replace the abstract `Provable` predicate with an inductive proof calculus and establish the Hilbert\u2013Bernays\u2013L\u00f6b derivability conditions. This would support kernel-checked versions of L\u00f6b's theorem and G\u00f6del's second incompleteness theorem rather than only the abstract analog in `Core.lean`.\n\n5. **Graph-shaped tangled hierarchies.** Generalize `TwoLevelTangle` to a directed graph or category whose vertices are formal systems and whose edges are interpretations. Characterize which cycles preserve truth, reflect proof, or transport independence, and prove a cycle theorem for arbitrary finite hierarchies.\n\n6. **Intensional distinctions.** Use concrete formula syntax to distinguish literal syntactic inequality, alpha-equivalence, provable equivalence, and semantic equivalence. This would make the infinitude theorem independent of a supplied rank function and clarify exactly in which sense its strange loops are distinct.\n\n7. **Stratified truth.** Construct a Tarskian hierarchy with a truth predicate at each level for lower-level sentences. Prove the consistency of the acyclic stratification relative to the base semantics, then identify the exact diagonal obstruction introduced when a reference edge closes a cycle.\n\n8. **Concrete examples and extraction.** Once syntax is computable, add small coded examples that evaluate substitution, negation, rank, and translation. At that stage a genuine `ComputationalEvidence.md` can replace the present justification for skipping finite experiments; such computations are not informative for the current structures because their predicates and semantics are abstract.\n",
+    "domains": [
+      "Logic",
+      "Pythagorean"
+    ],
+    "id": "fd_0582",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "b31f2cf9",
+    "status": "available",
+    "timestamp": "2026-07-22T00:14:39.275128+00:00",
+    "title": "The completed development establishes the abstract logical core in three layers."
   },
   {
     "consumed_by_exp_id": "",
