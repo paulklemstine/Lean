@@ -136,26 +136,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "09546bb0",
-    "description": "Explore whether non-human intelligence (alien, AI, evolved) would discover the same mathematics. Define: 'universal mathematics' as the set of theorems provable in ANY sufficiently expressive formal system. Prove: Peano arithmetic is universal (its theorems are a subset of every consistent extension). Show: the parallel postulate is NOT universal (non-Euclidean geometries exist). Conjecture: the Riemann Hypothesis IS universal (every sufficiently rich arithmetic system proves it or its negation). Explore: what would alien number theory look like? Would aliens discover primes?",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0558",
-    "lineage_refs": [],
-    "priority_score": 0.86,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-21T16:49:18.720669+00:00",
-    "title": "Rucker: Saucer Wisdom — Non-Human Mathematical Intuition"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Formalize tangled hierarchies — levels that are both above AND below each other. Define: a tangled hierarchy is a poset where there exist x, y such that x < y and y < x (a cycle). Prove: in dependent type theory, universe levels form an infinite hierarchy (Type_0 : Type_1 : Type_2 : ...) that is NOT tangled (it's well-founded). Show: with universe polymorphism, we can create apparent tangles (a term at level N can refer to level N+1). Conjecture: any consistent formalization of 'tangled hierarchies' requires abandoning either consistency or the hierarchy. Explore: Girard's paradox shows that Type:Type (the ultimate tangle) is inconsistent — formalize this in Lean.",
     "domain_bridges": [],
@@ -428,6 +408,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle ea214ad9 (Q=0.750), which proved 34 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Rucker's 'Lifebox' concept: a person's identity is determined by their information content, not their physical substrate. Define: two systems are 'person-equivalent' if they produce the same outputs for all inputs (functional equivalence). Prove: if the brain is a finite-state automaton, t",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_ea214ad9_ee69a3ef",
+    "lineage_refs": [],
+    "priority_score": 0.85,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "ea214ad9",
+    "status": "available",
+    "timestamp": "2026-07-22T04:48:46.692100+00:00",
+    "title": "Deepening: Rucker: The Lifebox — Information-Theoretic Identity"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Cycle dd6a308e (Q=0.790) proved 11 theorems in Pythagorean but left 13 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Building on cycle 7881a56b (Q=0.790), which proved 16 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting.",
     "domain_bridges": [],
     "domains": [
@@ -442,26 +441,6 @@
     "status": "available",
     "timestamp": "2026-07-20T09:41:55.293921+00:00",
     "title": "Close Proofs: ArXiv paper: Reproducing the k-copwin Algorithm: Theory vs. Implementa"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "ea214ad9",
-    "description": "Formalize Rucker's 'Lifebox' concept: a person's identity is determined by their information content, not their physical substrate. Define: two systems are 'person-equivalent' if they produce the same outputs for all inputs (functional equivalence). Prove: if the brain is a finite-state automaton, then person-equivalence is decidable. Show: if the brain uses quantum computation, person-equivalence is undecidable (by the no-cloning theorem). Conjecture: the Kolmogorov complexity of a person's identity is finite and bounded by ~10^15 bits.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0553",
-    "lineage_refs": [],
-    "priority_score": 0.84,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-21T14:30:54.110805+00:00",
-    "title": "Rucker: The Lifebox — Information-Theoretic Identity"
   },
   {
     "ambition_level": "extension",
@@ -502,6 +481,26 @@
     "status": "in_progress",
     "timestamp": "2026-07-22T02:30:27.993245+00:00",
     "title": "Moonshot: Nanotechnology Computation — Molecular Computing Limits"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "In the far future (10^100 years), all stars burn out and computation ceases. Formalize: a 'theorem' is a finite string provable in ZFC. Prove: the set of all theorems is countably infinite, so in principle they can all be discovered in finite time. Show: the heat death of the universe limits computation to ~10^120 operations — enough to discover only finitely many theorems. Conjecture: the fraction of ZFC theorems discoverable before heat death is zero (the set is countable but infinite; we discover only finitely many). Explore: if we could store theorems on black holes (holographic principle), could we extend the computation limit? Prove: a black hole of mass M can store ~M^2 bits (Bekenstein bound).",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Physics"
+    ],
+    "id": "fd_0591",
+    "lineage_refs": [],
+    "priority_score": 0.84,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-22T04:48:23.171062+00:00",
+    "title": "Moonshot: The Last Theorem — Formalizing the Heat Death of Mathematics"
   },
   {
     "ambition_level": "extension",
@@ -4425,26 +4424,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "939843de",
-    "description": "Investigate the ArXiv paper 'Lattice slices, Ehrhart polynomials, and magic positivity of generalized parking-function polytopes' and formalize its key results. Abstract: For $\\mathbf{b}=(b_1,\\dots,b_n)\\in\\mathbb{Z}_{>0}^n$, a $\\mathbf{b}$-parking function is a sequence $(β_1,\\dots,β_n)$ of positive integers whose nondecreasing rearrangement $β_1'\\leβ_2'\\le\\cdots\\leβ_n'$ satisfies $β_i'\\le b_1+\\cdots+b_i$. The $\\mathbf{b}$-parking-function polytope $\\mathfrak{X}_n(\\mathbf{b})$ is the convex hull of all $\\mathbf{b}$-parking functions of length $n$ in $\\mathbb{R}^n$. We prove that every lattice slice of $\\mathfrak{X}_n(\\mathbf{b})$, obtained by fixing one coordinate at an integer value, is itself a $\\mathbf{b}'$-parking-function polytope of one dimension less, with an explicit parameter vector $\\mathbf{b}'$; this yields a recursion for the number of lattice points of $\\mathfrak{X}_n(\\mathbf{b})$. We further show that every dilate of a $\\mathbf{b}$-parking-function polytope is a translate of another such polytope, that the number of lattice points is a polynomial function of $\\mathbf{b}$, and we deduce an explicit formula for the Ehrhart polynomial of $\\ma",
-    "domain_bridges": [],
-    "domains": [
-      "Geometry",
-      "Cryptography"
-    ],
-    "id": "fd_0501",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.15503v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-20T03:51:29.578870+00:00",
-    "title": "ArXiv paper: Lattice slices, Ehrhart polynomials, and magic positivity of generalized parking-function polytopes"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Hitting all maximal independent sets in $c$-hollow graphs' and formalize its key results. Abstract: Fix a constant $c$ with $0<c<1$. We say a graph $G$ on $n$ vertices is $c$-hollow if every maximal independent set of $G$ has size at least $cn$. Denote by $τ(G)$ the size of a smallest set of vertices $T\\subseteq V(G)$ such that every maximal independent set in $G$ intersects $T$, i.e., $T$ is a transversal for the family of maximal independent sets. In 1991, Bollobás, Erdős, and Tuza conjectured that if $G$ is $c$-hollow, then $τ(G)=o(n)$. Using a random construction, we show there exist $c$-hollow graphs with $τ(G)=Ω\\left(\\frac{n^{1/3}}{\\log n }\\right)$, establishing the first nontrivial lower bound constraining the conjecture and complementing a closely related lower bound due to Alon for maximum independent sets. We also show the conjecture holds in a strong form for the class of cographs and split graphs.",
     "domain_bridges": [],
@@ -8254,6 +8233,66 @@
     "status": "available",
     "timestamp": "2026-07-22T02:31:00.563718+00:00",
     "title": "The formal development proves a pointwise and finite-chain core, not the full di"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n- Replace the abstract consequence operator with a concrete encoding of first-order Peano arithmetic, and connect semantic consequence to a syntactic proof calculus through soundness and completeness.\n- Formalize Euclidean and hyperbolic incidence geometries satisfying a shared neutral-geometry axiom set; the finite models here isolate independence of Playfair's sentence but are not models of neutral geometry.\n- State the Riemann Hypothesis in an arithmetic language and distinguish semantic decision, syntactic decision, truth in the standard model, and independence. The proved reduction shows that “RH or its negation is extension-universal” is precisely a decision assertion, not a consequence of consistency.\n- Generalize alien encoding invariance from commutative monoids with zero to equivalences of richer arithmetic structures and characterize which notions of factorization survive weaker translations.\n- Develop tropical factorization over tropical polynomials, where irreducibility is substantially richer than irreducibility of natural numbers under tropical multiplication.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Logic"
+    ],
+    "id": "fd_0592",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "09546bb0",
+    "status": "available",
+    "timestamp": "2026-07-22T04:48:40.609115+00:00",
+    "title": "Future directions from cycle 09546bb0"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## 1. Extract an explicit partition-refinement algorithm\n\n`FiniteStateIdentity.lean` proves decidability by reducing trace equivalence to a search over finite Boolean relations. A stronger development would implement the standard greatest-fixed-point refinement algorithm on `Finset (S × T)`, prove that it terminates, prove it computes the greatest bisimulation, and establish a polynomial running-time bound. This would turn the existence-level decision procedure into executable verified code.\n\n## 2. Bound the length of distinguishing experiments\n\nFor machines with state sets `S` and `T`, inequivalent initial states should admit a distinguishing word whose length is bounded in terms of `|S| · |T|`. Formalizing this would sharpen decidability into a finite test suite theorem and connect the positive finite-state result directly to `no_finite_test`, which shows that no fixed finite suite works for arbitrary functions on an infinite input type.\n\n## 3. Minimize finite person models\n\nDefine observational equivalence between states of one machine, quotient by it, and prove the quotient is behaviorally equivalent and minimal. A uniqueness theorem for reachable minimal models would precisely identify the substrate-independent information retained by the Lifebox semantics.\n\n## 4. Add richer interaction semantics\n\nThe current Moore-machine model returns the observation at the final state after a finite input history. Natural extensions include Mealy outputs at every transition, infinite streams, probabilistic transition kernels, nondeterministic systems, and approximate equivalence under a metric on outputs. Each requires a corresponding bisimulation theorem and an analysis of when equivalence remains decidable.\n\n## 5. Separate quantum no-cloning from undecidability\n\n`LifeboxInformationIdentity.lean` proves the algebraic no-cloning theorem for a two-dimensional state space. No-cloning does not imply undecidability. A valid undecidability theorem would require a precise model of quantum programs, an equivalence predicate, and a reduction from a known undecidable problem. Future work should formalize such a programming-language semantics rather than infer computability consequences from a physical non-copying theorem.\n\n## 6. Formalize genuine Kolmogorov complexity\n\nThe current counting theorem concerns fixed-length bit-vectors, not machine-dependent Kolmogorov complexity. A faithful next step is to define a partial universal description machine, plain or prefix-free complexity, and conditional statements of the form: if an identity has a description of length at most `B`, then its complexity is at most `B` up to the chosen encoding overhead. The numerical `10^15` bound is an external empirical conjecture and cannot be derived from the abstract information model alone.\n\n## 7. Relate identity encodings categorically\n\nThe proved surjective-input and injective-output invariance laws suggest organizing person models and information-preserving encodings into a category. Behavioral equivalence could then be studied as a congruence, with products representing combined observation channels and quotients representing substrate erasure.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0593",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "ea214ad9",
+    "status": "available",
+    "timestamp": "2026-07-22T04:48:45.278911+00:00",
+    "title": "`FiniteStateIdentity.lean` proves decidability by reducing trace equivalence to "
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## 1. Value-dependent gluing of lattice slices\n\nFor every positive profile and every admissible integer coordinate value, determine an\nexplicit transformed profile whose parking-function polytope is affinely isomorphic\nto the corresponding labelled-coordinate slice. The conjecture is falsifiable by\ncomparing the predicted profile with all lattice points in dimensions at most six.\n\nThe key insight is that rank deletion is exact inside each sorted chamber, while the\nfixed coordinate value determines which ranks can contain the deleted coordinate and\ntherefore how adjacent chambers must glue.\n\nWhy now? The rank-deletion theorem isolates the local operation, and the observed\nnonconstant slice counts identify precisely why a value-independent deletion rule\ncannot suffice.\n\n## 2. Shelling explanation for magic positivity\n\nThe sorted-chamber decomposition admits a shelling in which every restriction face\ncontributes a polynomial with nonnegative coefficients in the natural partial-sum\nvariables. Consequently, summing the local contributions yields coefficientwise\npositivity of the multivariate lattice-point polynomial and of its Ehrhart\nspecializations.\n\nThe key insight is that permutation chambers convert global convex geometry into\nrank inequalities, while rank deletion should organize their intersections into a\nrecursive shelling.\n\nWhy now? Profile monotonicity and chamber deletion supply the two local compatibility\nrelations needed to formulate an inductive shelling criterion.\n\n## 3. Integer decomposition compatible with affine dilation\n\nEvery lattice point in the `t`-fold affine dilation about the all-ones vector is a sum,\nafter the corresponding translation, of `t` lattice points from the original\nparking-function polytope. This predicts the integer-decomposition property uniformly\nfor all positive generalized parking profiles.\n\nThe key insight is that affine dilation preserves the full sorted inequality system,\nso a decomposition theorem can be sought rank by rank rather than in ambient\ncoordinates.\n\nWhy now? Affine transport has been established at the level of parking vectors and\nprofiles; the remaining testable step is a constructive decomposition of integral\npoints in the convex hull.\n\n## 4. Structured parking-profile improvement for SIS\n\nWhen the columns of a modular syndrome matrix are monotone with respect to a parking\nprofile, the number of parking vectors—not the cardinality of the surrounding cube—\ncontrols collision existence, yielding strictly smaller infinity-norm witnesses for\nan infinite family of rectangular matrices.\n\nThe key insight is that parking vectors form a highly structured search region whose\npermutation symmetry may retain enough entropy for pigeonhole collisions while using\nfar fewer extreme coordinates than a cube.\n\nWhy now? The box-based modular-kernel bridge gives a baseline bound, and the enumerated\nparking counts provide concrete thresholds against which the proposed improvement can\nbe tested.\n\n## 5. Deletion recursion as a valuation identity\n\nThe lattice-point enumerator of a generalized parking-function polytope satisfies a\ndelete-and-contract recursion over cumulative profiles, and this recursion extends to\na valuative invariant on the associated generalized permutohedral subdivision.\n\nThe key insight is that coordinate slicing is a discrete valuation operation, while\nrank deletion identifies its chamberwise contraction rule.\n\nWhy now? Small-case slice tables already display a stable recursive stratification;\nan explicit gluing theorem would turn that evidence into a precise valuation formula.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_0594",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "939843de",
+    "status": "available",
+    "timestamp": "2026-07-22T04:48:50.189459+00:00",
+    "title": "For every positive profile and every admissible integer coordinate value, determ"
   },
   {
     "ambition_level": "extension",

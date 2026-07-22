@@ -1,184 +1,151 @@
-"""
-The Lifebox: Information-Theoretic Identity — numerical demonstrations.
+#!/usr/bin/env python3
+"""Numerical demonstrations of finite-state behavioral identity.
 
-This self-contained script illustrates the five core results:
-
-  1. Person-equivalence is functional equivalence (an equivalence relation).
-  2. Finite stimulus space  =>  person-equivalence is DECIDABLE, via the
-     distinguishing-stimulus set.
-  3. Infinite stimulus space  =>  NO finite test certifies equivalence:
-     for any finite probe set we build two systems that agree on it but differ.
-  4. No-cloning: no LINEAR map C on k^2 satisfies C(x) = x (x) x for all x
-     (demonstrated over the rationals via the failing cross terms).
-  5. Identity counting: identities describable in b bits number exactly 2**b.
-
-Run:  python demo.py
+The script uses only the Python standard library.  It compares three Moore
+machines, computes their greatest bisimulation, finds shortest distinguishing
+words, and verifies the fixed-length identity count on small bit budgets.
 """
 
 from __future__ import annotations
 
-from fractions import Fraction
+from collections import deque
+from dataclasses import dataclass
 from itertools import product
-from typing import Callable, Dict, List, Sequence, Tuple
+from typing import Callable, Generic, Hashable, Iterable, Optional, Sequence, TypeVar
+
+I = TypeVar("I", bound=Hashable)
+S = TypeVar("S", bound=Hashable)
+T = TypeVar("T", bound=Hashable)
+O = TypeVar("O", bound=Hashable)
 
 
-# ---------------------------------------------------------------------------
-# 1 & 2. Person-equivalence and finite-state decidability
-# ---------------------------------------------------------------------------
+@dataclass(frozen=True)
+class MooreMachine(Generic[I, S, O]):
+    """A deterministic finite Moore machine."""
 
-def distinguishing_stimuli(
-    f: Callable[[int], object],
-    g: Callable[[int], object],
-    inputs: Sequence[int],
-) -> List[int]:
-    """Return the finite set of inputs on which f and g disagree."""
-    return [i for i in inputs if f(i) != g(i)]
+    inputs: tuple[I, ...]
+    states: tuple[S, ...]
+    step: Callable[[S, I], S]
+    observe: Callable[[S], O]
 
+    def run(self, initial: S, word: Iterable[I]) -> S:
+        state = initial
+        for symbol in word:
+            state = self.step(state, symbol)
+        return state
 
-def person_equivalent_finite(
-    f: Callable[[int], object],
-    g: Callable[[int], object],
-    inputs: Sequence[int],
-) -> bool:
-    """Decide person-equivalence over a FINITE stimulus space.
-
-    Theorem: f ~ g  <=>  the distinguishing-stimulus set is empty.
-    """
-    return len(distinguishing_stimuli(f, g, inputs)) == 0
+    def output(self, initial: S, word: Iterable[I]) -> O:
+        return self.observe(self.run(initial, word))
 
 
-def demo_finite_decidability() -> None:
-    print("=" * 68)
-    print("1-2. Finite-state person-equivalence is DECIDABLE")
-    print("=" * 68)
-    stimuli = list(range(8))  # a finite mind with 8 possible stimuli
-
-    f = lambda i: (i * i) % 3
-    g = lambda i: (i * i) % 3          # same behavior, different "code"
-    h = lambda i: (i * i) % 3 if i != 5 else 99  # differs at i = 5
-
-    print(f"stimulus space = {stimuli}")
-    print(f"f ~ g ? {person_equivalent_finite(f, g, stimuli)}  (expected True)")
-    print(f"f ~ h ? {person_equivalent_finite(f, h, stimuli)}  (expected False)")
-    print(f"distinguishing stimuli of (f,h) = "
-          f"{distinguishing_stimuli(f, h, stimuli)}")
-    print()
-
-
-# ---------------------------------------------------------------------------
-# 3. No finite test over an infinite stimulus space
-# ---------------------------------------------------------------------------
-
-def build_impostor(probe_set: Sequence[int]) -> Tuple[
-    Callable[[int], bool], Callable[[int], bool], int
-]:
-    """Given a finite probe set S subset of N, construct f != g agreeing on S.
-
-    g is constant False; f is False everywhere except at some n not in S.
-    Returns (f, g, n).
-    """
-    n = 0
-    S = set(probe_set)
-    while n in S:            # find n outside S (possible: S finite, N infinite)
-        n += 1
-    g = lambda i: False
-    f = lambda i, _n=n: (i == _n)
-    return f, g, n
+def greatest_bisimulation(
+    left: MooreMachine[I, S, O], right: MooreMachine[I, T, O]
+) -> set[tuple[S, T]]:
+    """Compute the greatest cross-machine bisimulation by deletion."""
+    if left.inputs != right.inputs:
+        raise ValueError("machines must use the same ordered input alphabet")
+    relation = {
+        (s, t)
+        for s in left.states
+        for t in right.states
+        if left.observe(s) == right.observe(t)
+    }
+    changed = True
+    while changed:
+        changed = False
+        invalid = {
+            (s, t)
+            for (s, t) in relation
+            if any((left.step(s, a), right.step(t, a)) not in relation for a in left.inputs)
+        }
+        if invalid:
+            relation.difference_update(invalid)
+            changed = True
+    return relation
 
 
-def demo_no_finite_test() -> None:
-    print("=" * 68)
-    print("3. Infinite stimulus space: NO finite test certifies identity")
-    print("=" * 68)
-    for probe_set in ([0, 1, 2, 3], list(range(0, 20, 2)), [7, 42, 100]):
-        f, g, n = build_impostor(probe_set)
-        agree_on_probes = all(f(i) == g(i) for i in probe_set)
-        differ_at_n = f(n) != g(n)
-        print(f"probes={probe_set}")
-        print(f"   agree on all probes? {agree_on_probes}   "
-              f"differ at n={n}? {differ_at_n}")
-    print("   => every finite battery of tests is fooled by an impostor.")
-    print()
+def shortest_distinguishing_word(
+    left: MooreMachine[I, S, O],
+    right: MooreMachine[I, T, O],
+    left_initial: S,
+    right_initial: T,
+) -> Optional[tuple[I, ...]]:
+    """Return a shortest history with different outputs, or None if equivalent."""
+    if left.inputs != right.inputs:
+        raise ValueError("machines must use the same ordered input alphabet")
+    queue: deque[tuple[S, T, tuple[I, ...]]] = deque(
+        [(left_initial, right_initial, ())]
+    )
+    visited: set[tuple[S, T]] = {(left_initial, right_initial)}
+    while queue:
+        s, t, word = queue.popleft()
+        if left.observe(s) != right.observe(t):
+            return word
+        for symbol in left.inputs:
+            pair = (left.step(s, symbol), right.step(t, symbol))
+            if pair not in visited:
+                visited.add(pair)
+                queue.append((pair[0], pair[1], word + (symbol,)))
+    return None
 
 
-# ---------------------------------------------------------------------------
-# 4. No-cloning theorem (linear-algebra obstruction)
-# ---------------------------------------------------------------------------
-
-Vec2 = Tuple[Fraction, Fraction]
-# A tensor in k^2 (x) k^2 is stored as a 2x2 coefficient dict indexed (a,b).
-Tensor = Dict[Tuple[int, int], Fraction]
+def enumerate_words(alphabet: Sequence[I], max_length: int) -> Iterable[tuple[I, ...]]:
+    """Enumerate all words up to a chosen length."""
+    for length in range(max_length + 1):
+        yield from product(alphabet, repeat=length)
 
 
-def tensor_product(x: Vec2, y: Vec2) -> Tensor:
-    """Elementary tensor x (x) y as a 2x2 coefficient table."""
-    return {(a, b): x[a] * y[b] for a in (0, 1) for b in (0, 1)}
-
-
-def tensor_add(t: Tensor, s: Tensor) -> Tensor:
-    return {k: t.get(k, Fraction(0)) + s.get(k, Fraction(0))
-            for k in set(t) | set(s)}
-
-
-def demo_no_cloning() -> None:
-    print("=" * 68)
-    print("4. No-cloning: linearity contradicts x -> x (x) x")
-    print("=" * 68)
-    e1: Vec2 = (Fraction(1), Fraction(0))
-    e2: Vec2 = (Fraction(0), Fraction(1))
-    s: Vec2 = (Fraction(1), Fraction(1))  # e1 + e2
-
-    # A hypothetical linear cloner must satisfy C(e1+e2) = C(e1) + C(e2).
-    linear_side = tensor_add(tensor_product(e1, e1), tensor_product(e2, e2))
-    # The cloning definition instead demands C(e1+e2) = (e1+e2)(x)(e1+e2).
-    clone_side = tensor_product(s, s)
-
-    print("C(e1)+C(e2)  coefficients :", dict(sorted(linear_side.items())))
-    print("(e1+e2)(x)(e1+e2) coeffs  :", dict(sorted(clone_side.items())))
-    diff = {k: clone_side.get(k, Fraction(0)) - linear_side.get(k, Fraction(0))
-            for k in set(clone_side) | set(linear_side)}
-    print("difference (cross terms)  :", dict(sorted(diff.items())))
-    print("cross terms e1(x)e2 + e2(x)e1 are nonzero => NO linear cloner.")
-    print()
-
-
-# ---------------------------------------------------------------------------
-# 5. Counting identities
-# ---------------------------------------------------------------------------
-
-def count_identities(b: int) -> int:
-    """Number of identities describable in b bits: exactly 2**b."""
-    return 2 ** b
-
-
-def enumerate_identities(b: int) -> List[Tuple[bool, ...]]:
-    """Explicitly list all bit-vector identities of length b."""
-    return [tuple(bool(v) for v in bits) for bits in product((0, 1), repeat=b)]
-
-
-def demo_counting() -> None:
-    print("=" * 68)
-    print("5. Identities in b bits number exactly 2**b")
-    print("=" * 68)
-    for b in range(0, 6):
-        listed = enumerate_identities(b)
-        assert len(listed) == count_identities(b)
-        print(f"b={b}: 2**b = {count_identities(b):>3}   "
-              f"(enumerated {len(listed)})")
-    import math
-    bits = 10 ** 15
-    digits = int(bits * math.log10(2)) + 1  # decimal digits of 2**bits
-    print(f"\nLifebox bound: identities in 10^15 bits = 2^(10^15)")
-    print(f"   this integer has about {digits:,} decimal digits "
-          f"(finite, but astronomically large).")
-    print()
+def identity_descriptions(bits: int) -> list[str]:
+    """Enumerate all fixed-length bit descriptions for a small bit budget."""
+    if bits < 0:
+        raise ValueError("bits must be nonnegative")
+    return ["".join(map(str, word)) for word in product((0, 1), repeat=bits)]
 
 
 def main() -> None:
-    demo_finite_decidability()
-    demo_no_finite_test()
-    demo_no_cloning()
-    demo_counting()
+    alphabet = (False, True)
+    parity = MooreMachine(
+        inputs=alphabet,
+        states=(False, True),
+        step=lambda state, symbol: state ^ symbol,
+        observe=lambda state: state,
+    )
+    silent = MooreMachine(
+        inputs=alphabet,
+        states=(None,),
+        step=lambda _state, _symbol: None,
+        observe=lambda _state: False,
+    )
+    redundant_silent = MooreMachine(
+        inputs=alphabet,
+        states=(False, True),
+        step=lambda state, symbol: state ^ symbol,
+        observe=lambda _state: False,
+    )
+
+    histories = [(), (True,), (True, True), (True, False, True)]
+    outputs = [parity.output(False, word) for word in histories]
+    print("Parity outputs on representative histories:", outputs)
+
+    witness = shortest_distinguishing_word(parity, silent, False, None)
+    print("Shortest parity/silent distinguishing history:", witness)
+
+    relation = greatest_bisimulation(redundant_silent, silent)
+    print("Greatest redundant-silent/silent bisimulation:", relation)
+    print("Initial states equivalent:", (False, None) in relation)
+
+    print("\nAll words through length 4 for the two silent implementations:")
+    for word in enumerate_words(alphabet, 4):
+        left_output = redundant_silent.output(False, word)
+        right_output = silent.output(None, word)
+        assert left_output == right_output
+    print("Every tested output agrees; the bisimulation proves agreement for all lengths.")
+
+    bits = 4
+    descriptions = identity_descriptions(bits)
+    print(f"\n{bits}-bit descriptions ({len(descriptions)} = 2^{bits}):")
+    print(descriptions)
+    assert len(descriptions) == 2**bits
 
 
 if __name__ == "__main__":

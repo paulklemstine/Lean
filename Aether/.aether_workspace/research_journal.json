@@ -1,36 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "7881a56b",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions for Practical `k`-Copwin Recognition\n\n## 1. Symmetry-reduced backward search\n\n**Conjecture.** For every finite graph and every positive `k`, quotienting cop configurations by permu",
-      "quality_score": 0.79,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-07-19T17:15:41",
-      "title": "ArXiv paper: Reproducing the k-copwin Algorithm: Theory vs. Implementation"
-    },
-    {
-      "cycle_id": "cf6c2cd9",
-      "domain": "Applications",
-      "key_insight": "# Future directions\n\n## Results established\n\n`OpenSetsAtInfinity.lean` equips `Surreal.{0}` with its order topology and proves:\n\n- every countable positive family has a common positive strict lower bo",
-      "quality_score": 0.79,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-19T17:32:50",
-      "title": "Surreal Topology: Open Sets at Infinity"
-    },
-    {
-      "cycle_id": "d0217292",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\n## 1. Derived pro-spectra with nonconstant bonding homology\n\n**Conjecture.** Let an inverse tower of finite spectra have eventually perfect bonding maps on integral homology and f",
-      "quality_score": 0.73,
-      "sorry_count": 0,
-      "theorem_count": 21,
-      "timestamp": "2026-07-19T18:41:13",
-      "title": "Negative-Dimensional Topology: What Lives in Dimension -1?"
-    },
-    {
       "cycle_id": "4c40ce69",
       "domain": "Novelty",
       "key_insight": "# Future directions\n\nThe formal development establishes three robust conclusions for precise counterfactual models:\n\n1. the Cramér density series diverges even on every fixed nonconstant arithmetic pr",
@@ -499,39 +469,39 @@
       "theorem_count": 22,
       "timestamp": "2026-07-22T03:54:07",
       "title": "Hofstadter: I Am a Strange Loop — Consciousness as Self-Reference"
+    },
+    {
+      "cycle_id": "09546bb0",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions\n\n- Replace the abstract consequence operator with a concrete encoding of first-order Peano arithmetic, and connect semantic consequence to a syntactic proof calculus through soundn",
+      "quality_score": 0.74,
+      "sorry_count": 0,
+      "theorem_count": 31,
+      "timestamp": "2026-07-22T04:48:42",
+      "title": "Rucker: Saucer Wisdom — Non-Human Mathematical Intuition"
+    },
+    {
+      "cycle_id": "ea214ad9",
+      "domain": "Applications",
+      "key_insight": "# Future directions\n\n## 1. Extract an explicit partition-refinement algorithm\n\n`FiniteStateIdentity.lean` proves decidability by reducing trace equivalence to a search over finite Boolean relations. A",
+      "quality_score": 0.75,
+      "sorry_count": 0,
+      "theorem_count": 34,
+      "timestamp": "2026-07-22T04:48:46",
+      "title": "Rucker: The Lifebox — Information-Theoretic Identity"
+    },
+    {
+      "cycle_id": "939843de",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions\n\n## 1. Value-dependent gluing of lattice slices\n\nFor every positive profile and every admissible integer coordinate value, determine an\nexplicit transformed profile whose parking-f",
+      "quality_score": 0.71,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-07-22T04:48:51",
+      "title": "ArXiv paper: Lattice slices, Ehrhart polynomials, and magic positivity of generalized parking-functi"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "87b73bf0",
-      "domain": "Shared",
-      "key_insight": "# Future Directions\n\n## 1. Certified finite-prefix null tests for π, e, and √2\n\nFix a prefix length in advance and compare centered decimal-digit autocorrelations at lags 1–12 against the exact permut",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-07-17T13:45:51",
-      "title": "The Sound of Pi: Musical Structure in Transcendental Constants"
-    },
-    {
-      "cycle_id": "186c9eac",
-      "domain": "Shared",
-      "key_insight": "# Future directions\n\n## What was established\n\nThe formal development proves a general finite-tag amplification theorem. Relative to an abstract provability predicate, one dark existential predicate yi",
-      "quality_score": 0.68,
-      "sorry_count": 3,
-      "theorem_count": 0,
-      "timestamp": "2026-07-17T14:03:03",
-      "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
-    },
-    {
-      "cycle_id": "0daa61af",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions\n\n## 1. Renormalized removal of both cutoffs\n\n**Conjecture.** There is a natural joint scaling of the prime cutoff `x`, occupation cutoff `N`, and inverse temperature `β > 1` under",
-      "quality_score": 0.72,
-      "sorry_count": 3,
-      "theorem_count": 18,
-      "timestamp": "2026-07-17T18:03:33",
-      "title": "Holographic Primes: The Prime Number AdS/CFT Correspondence"
-    },
     {
       "cycle_id": "1003d095",
       "domain": "Applications",
@@ -2501,63 +2471,39 @@
       "theorem_count": 22,
       "timestamp": "2026-07-22T03:54:07",
       "title": "Hofstadter: I Am a Strange Loop — Consciousness as Self-Reference"
+    },
+    {
+      "cycle_id": "09546bb0",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions\n\n- Replace the abstract consequence operator with a concrete encoding of first-order Peano arithmetic, and connect semantic consequence to a syntactic proof calculus through soundn",
+      "quality_score": 0.74,
+      "sorry_count": 0,
+      "theorem_count": 31,
+      "timestamp": "2026-07-22T04:48:42",
+      "title": "Rucker: Saucer Wisdom — Non-Human Mathematical Intuition"
+    },
+    {
+      "cycle_id": "ea214ad9",
+      "domain": "Applications",
+      "key_insight": "# Future directions\n\n## 1. Extract an explicit partition-refinement algorithm\n\n`FiniteStateIdentity.lean` proves decidability by reducing trace equivalence to a search over finite Boolean relations. A",
+      "quality_score": 0.75,
+      "sorry_count": 0,
+      "theorem_count": 34,
+      "timestamp": "2026-07-22T04:48:46",
+      "title": "Rucker: The Lifebox — Information-Theoretic Identity"
+    },
+    {
+      "cycle_id": "939843de",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions\n\n## 1. Value-dependent gluing of lattice slices\n\nFor every positive profile and every admissible integer coordinate value, determine an\nexplicit transformed profile whose parking-f",
+      "quality_score": 0.71,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-07-22T04:48:51",
+      "title": "ArXiv paper: Lattice slices, Ehrhart polynomials, and magic positivity of generalized parking-functi"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "27f58424",
-      "domain": "Cryptography",
-      "name": "for",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "27f58424",
-      "domain": "Cryptography",
-      "name": "finite_memory_is_lossy",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "b3f0d755",
-      "domain": "Cryptography",
-      "name": "parallel_cells_unique",
-      "quality": 0.75
-    },
-    {
-      "cycle_id": "b3f0d755",
-      "domain": "Cryptography",
-      "name": "associator_pentagon",
-      "quality": 0.75
-    },
-    {
-      "cycle_id": "b3f0d755",
-      "domain": "Cryptography",
-      "name": "reassoc_sound",
-      "quality": 0.75
-    },
-    {
-      "cycle_id": "c1b3f8da",
-      "domain": "Pythagorean",
-      "name": "joins",
-      "quality": 0.74
-    },
-    {
-      "cycle_id": "c1b3f8da",
-      "domain": "Pythagorean",
-      "name": "for",
-      "quality": 0.74
-    },
-    {
-      "cycle_id": "c1b3f8da",
-      "domain": "Pythagorean",
-      "name": "finite_memory_is_lossy",
-      "quality": 0.74
-    },
-    {
-      "cycle_id": "dd6a308e",
-      "domain": "Pythagorean",
-      "name": "joins",
-      "quality": 0.79
-    },
     {
       "cycle_id": "dd6a308e",
       "domain": "Pythagorean",
@@ -2803,9 +2749,63 @@
       "domain": "MachineLearning",
       "name": "leftInverse_iterate",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "09546bb0",
+      "domain": "Tropical",
+      "name": "of",
+      "quality": 0.74
+    },
+    {
+      "cycle_id": "09546bb0",
+      "domain": "Tropical",
+      "name": "of",
+      "quality": 0.74
+    },
+    {
+      "cycle_id": "09546bb0",
+      "domain": "Tropical",
+      "name": "of",
+      "quality": 0.74
+    },
+    {
+      "cycle_id": "ea214ad9",
+      "domain": "Applications",
+      "name": "parity_not_silent",
+      "quality": 0.75
+    },
+    {
+      "cycle_id": "ea214ad9",
+      "domain": "Applications",
+      "name": "redundant_silent_equiv",
+      "quality": 0.75
+    },
+    {
+      "cycle_id": "ea214ad9",
+      "domain": "Applications",
+      "name": "runFrom_nil",
+      "quality": 0.75
+    },
+    {
+      "cycle_id": "939843de",
+      "domain": "Cryptography",
+      "name": "at",
+      "quality": 0.71
+    },
+    {
+      "cycle_id": "939843de",
+      "domain": "Cryptography",
+      "name": "for",
+      "quality": 0.71
+    },
+    {
+      "cycle_id": "939843de",
+      "domain": "Cryptography",
+      "name": "parking_has_sorted_chamber",
+      "quality": 0.71
     }
   ],
-  "last_updated": "2026-07-22T03:54:07",
+  "last_updated": "2026-07-22T04:48:51",
   "open_questions": [
     {
       "context": "",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "cf6c2cd9",
-        "quality": 0.79,
-        "theorems": 0,
-        "title": "Surreal Topology: Open Sets at Infinity"
-      },
-      {
         "cycle_id": "25709a4b",
         "quality": 0.58,
         "theorems": 23,
@@ -3141,6 +3135,12 @@
         "quality": 0.72,
         "theorems": 32,
         "title": "Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
+      },
+      {
+        "cycle_id": "ea214ad9",
+        "quality": 0.75,
+        "theorems": 34,
+        "title": "Rucker: The Lifebox — Information-Theoretic Identity"
       }
     ],
     "Bridges": [
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "2152d45c",
-        "quality": 0.61,
-        "theorems": 11,
-        "title": "ArXiv paper: Even smaller universal posets"
-      },
-      {
         "cycle_id": "bcfc30de",
         "quality": 0.72,
         "theorems": 8,
@@ -3389,6 +3383,12 @@
         "quality": 0.74,
         "theorems": 9,
         "title": "Speculative: Topological Data Analysis of Theorem Networks"
+      },
+      {
+        "cycle_id": "939843de",
+        "quality": 0.71,
+        "theorems": 10,
+        "title": "ArXiv paper: Lattice slices, Ehrhart polynomials, and magic positivity of genera"
       }
     ],
     "Geometry": [
@@ -3957,12 +3957,6 @@
         "title": "ArXiv paper: The chromatic number of 3-stable Kneser graphs"
       },
       {
-        "cycle_id": "4dee9bd5",
-        "quality": 0.65,
-        "theorems": 14,
-        "title": "ArXiv paper: The chromatic number of 3-stable Kneser graphs"
-      },
-      {
         "cycle_id": "408bb225",
         "quality": 0.76,
         "theorems": 12,
@@ -4009,6 +4003,12 @@
         "quality": 0.69,
         "theorems": 21,
         "title": "Speculative: Proof Complexity and Thermodynamic Cost"
+      },
+      {
+        "cycle_id": "09546bb0",
+        "quality": 0.74,
+        "theorems": 31,
+        "title": "Rucker: Saucer Wisdom — Non-Human Mathematical Intuition"
       }
     ]
   }

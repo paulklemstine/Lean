@@ -102,21 +102,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
   },
   {
-    "consumed_by_exp_id": "09546bb0",
-    "description": "Explore whether non-human intelligence (alien, AI, evolved) would discover the same mathematics. Define: 'universal mathematics' as the set of theorems provable in ANY sufficiently expressive formal system. Prove: Peano arithmetic is universal (its theorems are a subset of every consistent extension). Show: the parallel postulate is NOT universal (non-Euclidean geometries exist). Conjecture: the Riemann Hypothesis IS universal (every sufficiently rich arithmetic system proves it or its negation). Explore: what would alien number theory look like? Would aliens discover primes?",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0558",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-21T16:49:18.720669+00:00",
-    "title": "Rucker: Saucer Wisdom \u2014 Non-Human Mathematical Intuition"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize tangled hierarchies \u2014 levels that are both above AND below each other. Define: a tangled hierarchy is a poset where there exist x, y such that x < y and y < x (a cycle). Prove: in dependent type theory, universe levels form an infinite hierarchy (Type_0 : Type_1 : Type_2 : ...) that is NOT tangled (it's well-founded). Show: with universe polymorphism, we can create apparent tangles (a term at level N can refer to level N+1). Conjecture: any consistent formalization of 'tangled hierarchies' requires abandoning either consistency or the hierarchy. Explore: Girard's paradox shows that Type:Type (the ultimate tangle) is inconsistent \u2014 formalize this in Lean.",
     "domains": [
@@ -319,6 +304,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle ea214ad9 (Q=0.750), which proved 34 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Rucker's 'Lifebox' concept: a person's identity is determined by their information content, not their physical substrate. Define: two systems are 'person-equivalent' if they produce the same outputs for all inputs (functional equivalence). Prove: if the brain is a finite-state automaton, t",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_ea214ad9_ee69a3ef",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "ea214ad9",
+    "status": "available",
+    "timestamp": "2026-07-22T04:48:46.692100+00:00",
+    "title": "Deepening: Rucker: The Lifebox \u2014 Information-Theoretic Identity"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle dd6a308e (Q=0.790) proved 11 theorems in Pythagorean but left 13 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Building on cycle 7881a56b (Q=0.790), which proved 16 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting.",
     "domains": [
       "Pythagorean"
@@ -330,21 +329,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-20T09:41:55.293921+00:00",
     "title": "Close Proofs: ArXiv paper: Reproducing the k-copwin Algorithm: Theory vs. Implementa"
-  },
-  {
-    "consumed_by_exp_id": "ea214ad9",
-    "description": "Formalize Rucker's 'Lifebox' concept: a person's identity is determined by their information content, not their physical substrate. Define: two systems are 'person-equivalent' if they produce the same outputs for all inputs (functional equivalence). Prove: if the brain is a finite-state automaton, then person-equivalence is decidable. Show: if the brain uses quantum computation, person-equivalence is undecidable (by the no-cloning theorem). Conjecture: the Kolmogorov complexity of a person's identity is finite and bounded by ~10^15 bits.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0553",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-21T14:30:54.110805+00:00",
-    "title": "Rucker: The Lifebox \u2014 Information-Theoretic Identity"
   },
   {
     "consumed_by_exp_id": "3dce6722",
@@ -375,6 +359,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-22T02:30:27.993245+00:00",
     "title": "Moonshot: Nanotechnology Computation \u2014 Molecular Computing Limits"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "In the far future (10^100 years), all stars burn out and computation ceases. Formalize: a 'theorem' is a finite string provable in ZFC. Prove: the set of all theorems is countably infinite, so in principle they can all be discovered in finite time. Show: the heat death of the universe limits computation to ~10^120 operations \u2014 enough to discover only finitely many theorems. Conjecture: the fraction of ZFC theorems discoverable before heat death is zero (the set is countable but infinite; we discover only finitely many). Explore: if we could store theorems on black holes (holographic principle), could we extend the computation limit? Prove: a black hole of mass M can store ~M^2 bits (Bekenstein bound).",
+    "domains": [
+      "Novelty",
+      "Physics"
+    ],
+    "id": "fd_0591",
+    "priority_score": 0.84,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-22T04:48:23.171062+00:00",
+    "title": "Moonshot: The Last Theorem \u2014 Formalizing the Heat Death of Mathematics"
   },
   {
     "consumed_by_exp_id": "",
@@ -6083,6 +6082,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T02:31:00.563718+00:00",
     "title": "The formal development proves a pointwise and finite-chain core, not the full di"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n- Replace the abstract consequence operator with a concrete encoding of first-order Peano arithmetic, and connect semantic consequence to a syntactic proof calculus through soundness and completeness.\n- Formalize Euclidean and hyperbolic incidence geometries satisfying a shared neutral-geometry axiom set; the finite models here isolate independence of Playfair's sentence but are not models of neutral geometry.\n- State the Riemann Hypothesis in an arithmetic language and distinguish semantic decision, syntactic decision, truth in the standard model, and independence. The proved reduction shows that \u201cRH or its negation is extension-universal\u201d is precisely a decision assertion, not a consequence of consistency.\n- Generalize alien encoding invariance from commutative monoids with zero to equivalences of richer arithmetic structures and characterize which notions of factorization survive weaker translations.\n- Develop tropical factorization over tropical polynomials, where irreducibility is substantially richer than irreducibility of natural numbers under tropical multiplication.\n",
+    "domains": [
+      "Pythagorean",
+      "Logic"
+    ],
+    "id": "fd_0592",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "09546bb0",
+    "status": "available",
+    "timestamp": "2026-07-22T04:48:40.609115+00:00",
+    "title": "Future directions from cycle 09546bb0"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## 1. Extract an explicit partition-refinement algorithm\n\n`FiniteStateIdentity.lean` proves decidability by reducing trace equivalence to a search over finite Boolean relations. A stronger development would implement the standard greatest-fixed-point refinement algorithm on `Finset (S \u00d7 T)`, prove that it terminates, prove it computes the greatest bisimulation, and establish a polynomial running-time bound. This would turn the existence-level decision procedure into executable verified code.\n\n## 2. Bound the length of distinguishing experiments\n\nFor machines with state sets `S` and `T`, inequivalent initial states should admit a distinguishing word whose length is bounded in terms of `|S| \u00b7 |T|`. Formalizing this would sharpen decidability into a finite test suite theorem and connect the positive finite-state result directly to `no_finite_test`, which shows that no fixed finite suite works for arbitrary functions on an infinite input type.\n\n## 3. Minimize finite person models\n\nDefine observational equivalence between states of one machine, quotient by it, and prove the quotient is behaviorally equivalent and minimal. A uniqueness theorem for reachable minimal models would precisely identify the substrate-independent information retained by the Lifebox semantics.\n\n## 4. Add richer interaction semantics\n\nThe current Moore-machine model returns the observation at the final state after a finite input history. Natural extensions include Mealy outputs at every transition, infinite streams, probabilistic transition kernels, nondeterministic systems, and approximate equivalence under a metric on outputs. Each requires a corresponding bisimulation theorem and an analysis of when equivalence remains decidable.\n\n## 5. Separate quantum no-cloning from undecidability\n\n`LifeboxInformationIdentity.lean` proves the algebraic no-cloning theorem for a two-dimensional state space. No-cloning does not imply undecidability. A valid undecidability theorem would require a precise model of quantum programs, an equivalence predicate, and a reduction from a known undecidable problem. Future work should formalize such a programming-language semantics rather than infer computability consequences from a physical non-copying theorem.\n\n## 6. Formalize genuine Kolmogorov complexity\n\nThe current counting theorem concerns fixed-length bit-vectors, not machine-dependent Kolmogorov complexity. A faithful next step is to define a partial universal description machine, plain or prefix-free complexity, and conditional statements of the form: if an identity has a description of length at most `B`, then its complexity is at most `B` up to the chosen encoding overhead. The numerical `10^15` bound is an external empirical conjecture and cannot be derived from the abstract information model alone.\n\n## 7. Relate identity encodings categorically\n\nThe proved surjective-input and injective-output invariance laws suggest organizing person models and information-preserving encodings into a category. Behavioral equivalence could then be studied as a congruence, with products representing combined observation channels and quotients representing substrate erasure.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0593",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "ea214ad9",
+    "status": "available",
+    "timestamp": "2026-07-22T04:48:45.278911+00:00",
+    "title": "`FiniteStateIdentity.lean` proves decidability by reducing trace equivalence to "
   },
   {
     "consumed_by_exp_id": "",

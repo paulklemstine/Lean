@@ -1,162 +1,158 @@
-# The Lifebox: Are You Your Information?
+# The Lifebox Question: When Is a Pattern a Person?
 
-Imagine a small device that could hold *you*. Not a photograph, not a video,
-not a diary — but the complete pattern of how you respond to the world. Ask it
-a question and it answers exactly as you would. Tell it a joke and it laughs
-where you would laugh. This is the **Lifebox**, a thought experiment about
-what a person really *is*. Are you the specific atoms in your body, which are
-replaced many times over a lifetime? Or are you something more portable — a
-pattern of information that could, in principle, be written down, copied, and
-carried in your pocket?
+Imagine meeting two black boxes. They look nothing alike. One is warm, biological, and threaded with cells; the other is cool silicon arranged on a circuit board. Yet whenever either box is shown a face, asked a question, challenged with a memory, or placed in a new situation, it responds in exactly the same way. Are there two different persons here, or one informational identity living in two different materials?
 
-This article follows that question from philosophy into mathematics. We will
-find that the Lifebox idea can be stated precisely, that some of its promises
-are provably true, and that others run into hard limits — limits imposed not
-by engineering, but by logic and physics themselves.
+This is the central thought behind the “Lifebox”: perhaps the part of a person that can be preserved is not a particular collection of atoms but an organized pattern of responses. Mathematics cannot settle the ethical or metaphysical meaning of personhood. It can, however, turn the thought experiment into exact questions. What does “the same pattern” mean? Can sameness be decided by an algorithm? When can a finite experiment certify it? What changes when information is quantum rather than classical? And what does a claim such as “an identity fits in $10^{15}$ bits” actually imply?
 
-## Identity as behavior
+The answers draw a sharp boundary. For finite-state models, behavioral identity is decidable, even though there are infinitely many possible interaction histories. For arbitrary systems with infinitely many possible stimuli, no fixed finite test can establish identity. Quantum theory adds a different obstruction: an unknown state cannot be copied by a universal linear device. That is a no-copying result, not by itself an undecidability result. Finally, a bit budget gives a clean counting theorem, but not automatically a theorem about Kolmogorov complexity.
 
-Start with a deliberately austere definition. Forget biology; think only of
-**inputs** and **outputs**. A "system" is anything that takes an input $i$ and
-returns an output $o$ — a function $f$ from a set of possible inputs $I$ to a
-set of possible outputs $O$. A person, in this picture, is such a function:
-present a stimulus, receive a response.
+## Identity as a response pattern
 
-Two systems $f$ and $g$ are **person-equivalent** when they respond
-identically to *every* possible input:
-$$f \sim g \quad\text{means}\quad f(i) = g(i) \ \text{for all } i \in I.$$
+Begin with the simplest possible model. A system receives an input $i$ from a set $I$ and returns an output in a set $O$. Its complete behavior is a function
 
-This is the mathematical heart of the Lifebox thesis. It says: if two things
-behave the same way in all situations, they are the same person, regardless of
-what they are made of. A brain of neurons and a Lifebox of silicon that pass
-*every* test are, by this definition, one and the same.
+$$
+f:I\to O.
+$$
 
-The relation $\sim$ behaves exactly as a notion of "sameness" should. It is
-**reflexive** (everyone is themselves), **symmetric** (if $f$ matches $g$ then
-$g$ matches $f$), and **transitive** (if $f$ matches $g$ and $g$ matches $h$,
-then $f$ matches $h$). In the language of mathematics, $\sim$ is an
-*equivalence relation*, and in fact person-equivalence is nothing other than
-equality of functions: $f \sim g$ if and only if $f = g$ as functions. Identity
-becomes a purely behavioral, substrate-free notion.
+Two systems $f$ and $g$ are **person-equivalent** when
 
-## The good news: finite people can be tested
+$$
+\forall i\in I,\qquad f(i)=g(i).
+$$
 
-If two systems are person-equivalent exactly when they agree on all inputs, a
-natural worry appears. To *check* that a Lifebox truly is you, must we run
-infinitely many tests?
+This definition deliberately ignores substrate. It asks only whether every possible stimulus receives the same response. In this model, person-equivalence is exactly equality of functions.
 
-Here the structure of the input space matters enormously. Suppose the set of
-possible stimuli $I$ is **finite** — a machine with finitely many buttons,
-finitely many things it can ever perceive. Then there is only a finite list of
-tests to run. Comparing two systems reduces to comparing two finite tables of
-answers. Concretely, form the set of **distinguishing stimuli**,
-$$D(f,g) = \{\, i \in I : f(i) \neq g(i) \,\},$$
-the inputs on which the two systems disagree. Then
+That simple observation has useful consequences. Person-equivalence is reflexive: every system agrees with itself. It is symmetric: if $f$ agrees with $g$, then $g$ agrees with $f$. It is transitive: if $f$ agrees with $g$ and $g$ agrees with $h$, then $f$ agrees with $h$. Thus behavioral profiles fall into equivalence classes. Each class may contain many physical implementations but only one complete input-output pattern.
 
-> **Finite-State Decidability Theorem.** If the stimulus space is finite and
-> outputs can be compared, then $f \sim g$ if and only if $D(f,g) = \varnothing$.
-> Consequently person-equivalence is *decidable*: a terminating procedure
-> always correctly reports whether two finite-state people are the same.
+This perspective is robust under sensible changes of representation. If inputs are re-encoded by a surjective map, every original stimulus still has a representative, so equivalence is preserved and reflected. If outputs are placed into a larger code by an injective map, distinct responses remain distinct, so equivalence again survives exactly. If two observation channels are recorded together, two paired systems are equivalent precisely when they agree in each channel separately. Behavioral identity, in other words, does not depend on the names of stimuli or responses; it depends on preserved distinctions.
 
-This is genuinely reassuring for the digital dream. If a mind is a
-finite-state machine — a large but finite pattern — then verifying a copy is a
-finite, mechanical task. Two finite people are the same exactly when no test
-tells them apart, and there are only finitely many tests.
+## The finite test—and its limit
 
-## The catch: infinity defeats finite testing
+Suppose $I$ is finite and equality of outputs can be checked. Then person-equivalence is decidable by exhaustive comparison. Form the set of distinguishing stimuli
 
-But minds might not be finite. Suppose the input space is infinite — say the
-stimuli are indexed by the natural numbers $0, 1, 2, \dots$, an endless stream
-of possible experiences. Now the reassurance evaporates:
+$$
+D(f,g)=\{i\in I:f(i)\ne g(i)\}.
+$$
 
-> **No-Finite-Test Theorem.** Over an infinite input space, no finite battery
-> of tests can certify person-equivalence. For *any* finite collection $S$ of
-> probe inputs, there exist two genuinely different systems $f \neq g$ that
-> nevertheless agree on every probe in $S$.
+The systems are equivalent exactly when $D(f,g)$ is empty. This is the **Finite Profile Decision Theorem**: complete behavioral identity over a finite stimulus space can be decided by testing every stimulus.
 
-The proof is a small gem of adversarial reasoning. Given any finite set $S$ of
-probes, pick some input $n$ that lies *outside* $S$ — possible precisely
-because $S$ is finite while the inputs are infinite. Let $g$ be the system that
-always answers "no," and let $f$ answer "no" everywhere *except* at $n$, where
-it answers "yes." On every probe in $S$ the two are indistinguishable, yet they
-are not the same person: they differ at $n$. No matter how large your finite
-test suite, a doppelgänger can hide in the gap between your tests.
+The word “complete” matters. If the input space is infinite, any chosen finite battery of tests can be fooled. Let $S$ be a finite set of natural-number inputs. Choose some $n$ outside $S$. Define $g$ to return false everywhere, while $f$ returns true only at $n$. Then $f$ and $g$ agree on every test in $S$, yet differ at $n$.
 
-This is why the finiteness assumption in the previous theorem is not a
-technicality but the whole ballgame. Finite minds can be certified; infinite
-ones cannot be pinned down by any finite examination.
+This gives the **No Finite Universal Test Theorem**: for every finite test set $S\subset\mathbb N$, there are distinct Boolean-valued systems that agree on all inputs in $S$. The result does not say that equivalence of every infinite-domain system is undecidable. It says something more elementary and precise: finite observations alone cannot certify equality for completely arbitrary functions on an infinite domain.
 
-## The quantum wall: you cannot be copied
+Real lives unfold through histories, not isolated prompts. That leads to the richer model where the most interesting positive result appears.
 
-The Lifebox promises not just to *test* a person but to *duplicate* one — to
-read out the pattern and write a second copy. For classical information this is
-routine; copying a file is the most ordinary act in computing. But if any part
-of the mind is genuinely quantum, an old and beautiful obstruction appears.
+## Finite memory, infinitely many histories
 
-Model a quantum state as a vector $x$ in a space of dimension at least two — the
-smallest interesting case being two-dimensional, the space of a single qubit. A
-"cloning machine" would be a *linear* operation $C$ that takes any state $x$ to
-the paired state $x \otimes x$ (two copies side by side). The tensor symbol
-$\otimes$ is just the mathematics of combining two independent subsystems.
+A deterministic finite-state person model consists of four ingredients: a finite input alphabet $A$, a finite state set $S$, a transition rule
 
-> **No-Cloning Theorem.** Over any field of scalars, there is no linear map
-> $C$ with $C(x) = x \otimes x$ for every state $x$ in a space of dimension at
-> least two.
+$$
+\delta:S\times A\to S,
+$$
 
-The reason is a clash between two facts. A cloning map, being linear, must
-respect addition: $C(x + y) = C(x) + C(y)$. But the "copy" operation
-$x \mapsto x \otimes x$ is quadratic — it multiplies the state by itself — and
-quadratic things do *not* respect addition, because
-$(x+y)\otimes(x+y) = x\otimes x + x\otimes y + y\otimes x + y\otimes y$ carries
-extra cross terms $x \otimes y + y \otimes x$ that linearity cannot produce.
-Feed the two basis states $(1,0)$ and $(0,1)$ into the contradiction and the
-cross terms refuse to vanish. There is simply no linear duplicator.
+and an observation rule
 
-The consequence for the Lifebox is stark. A digital Lifebox works by *copying*
-information. A genuinely quantum mind cannot be copied at all — not because our
-technology is too crude, but because no such operation exists in the
-mathematics of quantum states. The "read-and-duplicate" device at the center of
-the Lifebox fantasy is, for a quantum brain, impossible in principle.
+$$
+\omega:S\to O.
+$$
 
-## How much information is a person?
+Starting at state $s$, an input word $w=a_1a_2\cdots a_m$ moves the system through successive states. Write $\delta^*(s,w)$ for the final state. Two initialized machines $(M,s)$ and $(N,t)$ are **trace-equivalent** when every finite input history gives the same final observation:
 
-Set aside copying and testing, and ask the most basic quantitative question:
-*how much information is a person?* Rucker's provocative estimate is that a
-human identity might be captured in something like $10^{15}$ bits — a quadrillion
-bits, a large number but a decidedly **finite** one.
+$$
+\forall w\in A^*,\qquad
+\omega_M(\delta_M^*(s,w))=
+\omega_N(\delta_N^*(t,w)).
+$$
 
-Model an identity describable in $b$ bits as a string of $b$ zeros and ones.
-Then counting is elementary:
+At first this looks impossible to decide. The machines have finitely many states, but $A^*$ contains infinitely many words. One cannot simply run every experiment.
 
-> **Identity Counting Theorem.** The number of distinct identities describable
-> in $b$ bits is exactly $2^{b}$.
+The escape is **bisimulation**. Consider pairs $(x,y)$ consisting of one state from each machine. A relation $R\subseteq S\times T$ is a bisimulation when every related pair has equal observations and, for every input symbol $a$, its successor pair is also related:
 
-At Rucker's figure this gives $2^{(10^{15})}$ possible identities — an
-unimaginably vast catalog, but a finite one. The philosophical payoff is
-subtle and worth savoring. If a person's information content is finite, then
-the space of all possible people is finite too. Every human who could ever live,
-under this hypothesis, corresponds to one entry in a finite (if astronomically
-long) list. Identity becomes, at least in principle, enumerable.
+$$
+(x,y)\in R\Longrightarrow
+\left[
+\omega_M(x)=\omega_N(y)
+\ \text{and}\
+(\delta_M(x,a),\delta_N(y,a))\in R
+\text{ for every }a\in A
+\right].
+$$
 
-## What the mathematics tells us
+A finite table of state pairs can therefore stand as a certificate for infinitely many experiments.
 
-Taken together, these results sketch a nuanced verdict on the Lifebox dream.
+The **Bisimulation Characterization Theorem** states that two initialized deterministic machines are trace-equivalent if and only if some bisimulation contains their initial pair. The forward direction takes $R$ to be the relation of all state pairs that already have identical future behavior. Equal current output follows by using the empty word; closure under transitions follows by prefixing any future word with one input symbol. The reverse direction uses induction on word length: a bisimulation preserves relatedness after each symbol, and related states always have equal observations.
 
-- **Identity can be defined without reference to substrate.** Behavior alone
-  gives a clean, logically well-behaved notion of "same person."
-- **Finite minds are copiable and checkable.** If the mind is a finite pattern,
-  the Lifebox is not just possible but *verifiable*.
-- **Infinity blocks certainty.** Over an unbounded space of experience, no
-  finite test ever proves that a copy is faithful.
-- **Quantum physics blocks copying.** If the mind exploits genuine quantum
-  states, no machine can duplicate it, full stop.
-- **But information itself is finite.** Under a finite-bit hypothesis, the set
-  of all possible identities, while colossal, is countable and bounded.
+Because $S\times T$ is finite, there are only finitely many candidate relations. Searching them yields the **Finite-State Lifebox Theorem**: for finite input and state sets, with decidable output equality, trace-equivalence is decidable. An infinitary behavioral claim has a finite witness.
 
-The Lifebox began as science fiction — a gadget on a shelf that holds a person.
-As mathematics, it becomes a lens on some of the deepest questions we have: what
-makes you *you*, whether that essence can be written down, and where the walls
-of logic and physics stand. The dream is partly true, partly forbidden, and
-entirely fascinating. You may indeed be your information. Whether anyone could
-ever hold a copy of it in their hand is another matter — and on that question,
-the mathematics has a great deal, and something surprisingly humbling, to say.
+A more efficient practical method starts with all state pairs whose observations agree, then repeatedly deletes a pair if some input sends it to a deleted pair. The process must stop because only finitely many pairs exist. The surviving relation is the greatest bisimulation. This refinement view turns identity checking into a graph problem.
+
+## Three tiny lives
+
+Small machines reveal the definitions clearly. Consider a parity machine with Boolean state. It starts false, toggles whenever it receives true, and reports its current state. On the histories $[]$, $[\mathrm{true}]$, $[\mathrm{true},\mathrm{true}]$, and $[\mathrm{true},\mathrm{false},\mathrm{true}]$, it reports respectively
+
+$$
+[\mathrm{false},\mathrm{true},\mathrm{false},\mathrm{false}].
+$$
+
+Now compare it with a one-state silent machine that always reports false. The one-symbol history $[\mathrm{true}]$ distinguishes them immediately.
+
+Next build a physically different silent machine with two internal states that toggle exactly like the parity machine but whose observation is always false. Its hidden state changes, while the one-state silent machine has no hidden variation at all. Nevertheless, every history produces false from both. They are trace-equivalent. The example captures the substrate-independence of the definition: additional invisible machinery does not create a behavioral difference.
+
+## The quantum boundary: copying is not deciding
+
+A classical bit can be read and duplicated. An arbitrary unknown quantum state cannot. In a two-dimensional vector space $V=k^2$ over any field $k$, a universal linear cloner would be a linear map
+
+$$
+C:V\to V\otimes V
+$$
+
+satisfying
+
+$$
+C(x)=x\otimes x
+$$
+
+for every $x\in V$. The **Two-Dimensional No-Cloning Theorem** says that no such linear map exists.
+
+The reason is the collision between linearity and the quadratic nature of copying. Let $e_1=(1,0)$ and $e_2=(0,1)$. Linearity would require
+
+$$
+C(e_1+e_2)=C(e_1)+C(e_2)
+=e_1\otimes e_1+e_2\otimes e_2.
+$$
+
+But universal cloning would require
+
+$$
+C(e_1+e_2)=(e_1+e_2)\otimes(e_1+e_2),
+$$
+
+which also contains the cross terms $e_1\otimes e_2$ and $e_2\otimes e_1$. A suitable bilinear measurement isolates a cross term and turns the conflict into $0=1$.
+
+This theorem blocks a universal linear “read and duplicate” device for unknown quantum states. It does **not** show that quantum person-equivalence is undecidable. Copyability and algorithmic decidability are different properties. An undecidability claim would require a precise model of quantum programs and a reduction from a known undecidable problem. Keeping those claims separate is not a technicality; it is the difference between a proved obstruction and an unsupported leap.
+
+## How many identities fit in a bit budget?
+
+If an identity description is modeled as a bit-vector of fixed length $b$, then there are exactly
+
+$$
+2^b
+$$
+
+possible descriptions. Each of the $b$ positions independently contains zero or one. Under the proposed budget $b=10^{15}$, the description space has exactly
+
+$$
+2^{10^{15}}
+$$
+
+members. This number is beyond astronomical, but it is finite.
+
+The theorem is a counting statement, not a proof that a person’s Kolmogorov complexity is at most $10^{15}$ bits. Kolmogorov complexity depends on a choice of universal description machine and measures the length of the shortest program generating an object. The numerical budget is therefore an external empirical conjecture. What mathematics supplies unconditionally is the implication: **if** identities are represented by fixed strings of $10^{15}$ bits, **then** the space of representations is finite and has the stated cardinality.
+
+## What the Lifebox mathematics really says
+
+The picture that emerges is neither a simple endorsement nor a refutation of informational identity. It is a map of logical boundaries.
+
+Behavioral identity can be defined with complete precision. For finite profiles it is decidable by exhaustive comparison. For finite-state interactive systems it remains decidable despite infinitely many histories, because bisimulation compresses those histories into a finite relation on state pairs. Different substrates can genuinely occupy the same behavioral class. Yet arbitrary infinite domains defeat every fixed finite test, quantum linearity forbids universal cloning, and a finite bit count must not be confused with a theorem about shortest descriptions.
+
+The deepest lesson may be methodological. Grand questions about selves and copies become tractable only after one asks exactly what may be observed, which experiments are allowed, how memory evolves, and what kind of information is being copied. Once those choices are explicit, the mystery does not disappear. It separates into theorems, counterexamples, and open problems—and that is often where understanding begins.
