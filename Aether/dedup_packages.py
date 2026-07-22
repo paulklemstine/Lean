@@ -229,18 +229,16 @@ def main():
             # Save merged canonical
             canonical_path.write_text(json.dumps(merged_data, indent=2, sort_keys=True), encoding="utf-8")
             total_modified += 1
-            # Delete duplicates - DISABLED per user request
+            # Delete duplicates - DISABLED (Packages are strictly add-only)
             for p in to_delete:
-                # p.unlink()
-                # total_deleted += 1
-                print(f"  [Disabled] Would have deleted: {p.name}")
+                print(f"  [Preserved] Add-only mode: keeping duplicate package file {p.name}")
         else:
             print(f"  [Dry-Run] Would write merged data to {canonical_path.name}")
             for p in to_delete:
                 print(f"  [Dry-Run] Would delete: {p.name}")
                 total_deleted += 1
 
-    print(f"\nDone! Modified: {total_modified} files, Deleted: {total_deleted} files.")
+    print(f"\nDone! Modified: {total_modified} files, Preserved (Add-Only): {total_deleted if dry_run else 'all'} files.")
 
     # Rebuild website package index if update_index.py exists
     update_script = REPO_ROOT / "docs" / "update_index.py"
