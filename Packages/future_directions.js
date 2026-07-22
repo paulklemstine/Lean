@@ -117,6 +117,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "Rucker: Saucer Wisdom \u2014 Non-Human Mathematical Intuition"
   },
   {
+    "consumed_by_exp_id": "",
+    "description": "Formalize tangled hierarchies \u2014 levels that are both above AND below each other. Define: a tangled hierarchy is a poset where there exist x, y such that x < y and y < x (a cycle). Prove: in dependent type theory, universe levels form an infinite hierarchy (Type_0 : Type_1 : Type_2 : ...) that is NOT tangled (it's well-founded). Show: with universe polymorphism, we can create apparent tangles (a term at level N can refer to level N+1). Conjecture: any consistent formalization of 'tangled hierarchies' requires abandoning either consistency or the hierarchy. Explore: Girard's paradox shows that Type:Type (the ultimate tangle) is inconsistent \u2014 formalize this in Lean.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0566",
+    "priority_score": 0.86,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-21T20:43:46.569281+00:00",
+    "title": "Hofstadter: Tangled Hierarchies in Type Theory"
+  },
+  {
     "consumed_by_exp_id": "3e4f1b52",
     "description": "Formalize time-travel paradoxes in Lean 4. Define: a 'causal loop' is a sequence of events e1 -> e2 -> ... -> en -> e1 where each causes the next. Prove: the Novikov self-consistency principle (every event in a causal loop is self-consistent) is equivalent to the statement that the loop has a fixed point. Show: the grandfather paradox (kill your ancestor) violates self-consistency \u2014 prove it's impossible. Conjecture: every closed timelike curve in a G\u00f6del universe is self-consistent. Explore: formalize branching timelines (many-worlds time travel) \u2014 prove the traveler creates a new branch, not a paradox.",
     "domains": [
@@ -130,6 +145,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-21T23:19:06.787016+00:00",
     "title": "Moonshot: Time-Travel Logic \u2014 Formalizing Causal Consistency"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Freeman Dyson's idea that intelligence grows without limit in the deep future. Define: 'intelligence growth rate' as the rate at which a civilization discovers new theorems. Prove: if the growth rate is superexponential (faster than 2^(2^n)), then the civilization discovers ALL theorems of ZFC in finite time (by compactness). Show: if the growth rate is merely exponential (2^n), then there exist theorems that are NEVER discovered (G\u00f6del). Conjecture: the growth rate is bounded by the physical computation limit (Bekenstein bound) at ~10^120 ops in the observable universe. Explore: does the intelligence explosion require new mathematics (theorems not expressible in current systems)?",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0587",
+    "priority_score": 0.86,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-22T02:30:28.139148+00:00",
+    "title": "Moonshot: The Mathematics of Dyson's Intelligence Explosion"
   },
   {
     "consumed_by_exp_id": "",
@@ -247,6 +277,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Formalize neural coding: how does the brain represent information? Define: a 'neural code' is a binary pattern on N neurons. Prove: the maximum number of distinct concepts representable by N binary neurons is 2^N. Show: with population coding (distributed representations), the brain can represent continuous values with precision ~sqrt(N). Conjecture: the brain uses sparse coding (only ~1% of neurons active) for energy efficiency \u2014 prove this achieves O(N log N) concepts per unit energy. Explore: formalize the 'neural manifold hypothesis' \u2014 neural activity lives on a low-dimensional manifold. Prove: the manifold dimension is bounded by the number of behavioral DOF.",
+    "domains": [
+      "Novelty",
+      "MachineLearning"
+    ],
+    "id": "fd_0586",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-22T02:30:28.067253+00:00",
+    "title": "Moonshot: Brain-Computer Interface Mathematics \u2014 Neural Coding Theorems"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 2fdbedee (Q=0.750), which proved 9 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Conjecture that major theorems (G\u00f6del's incompleteness, Fermat's Last Theorem, ABC conjecture) correspond to phase transitions in proof space. Define an order parameter: the ratio of provable to unprovable statements of length \u2264 n. Prove that this ratio undergoes a sharp transition at some critical ",
     "domains": [
       "Shared"
@@ -330,6 +375,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-21T22:18:50.641161+00:00",
     "title": "Moonshot: Dyson Sphere Mathematics \u2014 Energy Collection Optimization"
+  },
+  {
+    "consumed_by_exp_id": "47ca7342",
+    "description": "Formalize molecular computing: a 'nanocomputer' is a system of molecules that performs computation via chemical reactions. Prove: chemical reaction networks (CRNs) with mass-action kinetics are Turing-complete (they can simulate any Turing machine). Show: the minimum volume for a CRN computing a function f is proportional to the Kolmogorov complexity of f. Conjecture: a single cubic micrometer of DNA can store 10^18 bits and compute at 10^15 operations/second. Explore: formalize the 'DNA computer' \u2014 can we solve NP-complete problems faster with molecular parallelism? Prove: molecular parallelism gives a constant-factor speedup, not exponential (the molecules still need to be prepared).",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_0585",
+    "priority_score": 0.84,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-07-22T02:30:27.993245+00:00",
+    "title": "Moonshot: Nanotechnology Computation \u2014 Molecular Computing Limits"
   },
   {
     "consumed_by_exp_id": "",
@@ -3287,35 +3347,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture' and formalize its key results. Abstract: We prove Norine's conjecture: every red--blue edge-coloring of the \\(n\\)-dimensional hypercube \\(Q_n\\), \\(n\\geq2\\), in which antipodal edges have opposite colors contains a monochromatic path joining some vertex to its antipode. From a hypothetical counterexample we construct an antipodally equivariant, augmentation-preserving chain map from the cellular chains of the cubical boundary of a cube to subdivision-invariant polyhedral chains on a sphere of one lower dimension. A purely algebraic chain-level Borsuk--Ulam obstruction rules out this map.",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0585",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.19276v1",
-    "status": "available",
-    "timestamp": "2026-07-22T03:26:54.581466+00:00",
-    "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'On the autotopism groups and the equivalence of finite cyclic semifields' and formalize its key results. Abstract: Special cases of finite cyclic semifields were first constructed by Hughes and Kleinfeld in 1960, and later by Sandler in 1962 and Knuth in 1965. The general construction of cyclic semifields was subsequently introduced by Petit in 1966, and later rediscovered from the perspective of irreducible semilinear transformations by Jha and Johnson in 1989. Since Sandler's foundational work in 1962, the complete determination of the autotopism groups of cyclic semifields and the full resolution of the isotopy problem for this family have remained long-standing open problems. The most significant advances in determining these autotopism groups are due to Dempwolff in 2011, who left open the case in which the field extension degree strictly divides the degree of the polynomial defining the semifield. In this paper, we provide a complete classification of cyclic semifields up to isotopy, together with the full determination of their autotopism groups, thereby closing the remaining cases left open",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "fd_0586",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.19172v1",
-    "status": "available",
-    "timestamp": "2026-07-22T03:26:57.754218+00:00",
-    "title": "ArXiv paper: On the autotopism groups and the equivalence of finite cyclic semifields"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Cycle dcd7a4b2 (Q=0.750) proved 0 theorems in Tropical but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION \u2014 simulta",
     "domains": [
       "Tropical"
@@ -6023,6 +6054,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T00:14:39.275128+00:00",
     "title": "The completed development establishes the abstract logical core in three layers."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe formal development proves a pointwise and finite-chain core, not the full differential-geometric Alcubierre spacetime. The next steps are:\n\n1. **Smooth spacetime model.** Define the manifold `\u211d \u00d7 \u211d\u00b3`, a smooth ship worldline, `r\u209b`, and a smooth compactly supported (or rapidly decaying) shape function. Package `metricB` as a smooth Lorentzian metric tensor and derive its inverse and determinant.\n2. **Curvature and Einstein tensor.** Compute the Levi-Civita connection, Riemann and Ricci tensors, scalar curvature, and Einstein tensor. Then define `T = G/(8\u03c0)` and prove the Einstein field equation by construction. This is the precise interpretation of \u201csolution\u201d: the metric generally is not a vacuum solution, but determines a stress-energy tensor.\n3. **Energy density derivation.** Derive, rather than assume, the Eulerian density formula represented here by `energyDensity`. Integrate it with the geometric volume form and establish hypotheses ensuring finite total energy.\n4. **Energy scaling.** The proved model is exactly quadratic in speed. Investigate how bubble radius, wall thickness, shape profile, and any ship-mass coupling alter the scaling. The proposed `E ~ M v\u209b c` law is not established by the standard fixed-profile density formula.\n5. **Global effective FTL.** Upgrade the pointwise theorem to two worldlines and compare elapsed coordinate time against null travel in asymptotically flat regions. State all assumptions needed for a genuine global travel-time result.\n6. **Chronology.** The finite-chain theorem proves that any region admitting a strict global time function has no closed future-directed causal chain. Determine whether a single globally defined Alcubierre bubble has such a time function, and separately formalize multi-bubble constructions where chronology violation has been proposed.\n7. **Energy conditions.** Formalize null, weak, dominant, and averaged energy conditions and identify exactly which fail for classes of shape functions.\n8. **Cross-domain optimization bridge.** Treat the integrated negative density as a weighted Dirichlet energy of transverse shape gradients. This connects exotic-matter minimization to variational calculus and convex quadratic optimization under bubble-shape boundary constraints.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0588",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "4d85ad7f",
+    "status": "available",
+    "timestamp": "2026-07-22T02:31:00.563718+00:00",
+    "title": "The formal development proves a pointwise and finite-chain core, not the full di"
   },
   {
     "consumed_by_exp_id": "",
