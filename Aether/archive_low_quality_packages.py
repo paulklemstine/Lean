@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
+<<<<<<< HEAD
 """Archive Research Packages with Quality Score < 60% (0.60).
 
 Moves packages with quality score < 60% from active directories (Packages/, docs/)
 to Packages_Archive/ and rebuilds catalog indices.
+=======
+"""Archive Research Packages with Quality Score < 60% (as displayed in the menu) while preserving permanent package numbers.
+>>>>>>> c7ebc89c84 (Revert to commit 610c59c, archive 136 packages with displayed quality score < 60%, and enforce permanent immutable package numbers)
 
 Usage:
     python3 archive_low_quality_packages.py [--dry-run] [--threshold 0.60]
@@ -10,9 +14,14 @@ Usage:
 
 import os
 import sys
+<<<<<<< HEAD
 import glob
 import shutil
 import json
+=======
+import json
+import shutil
+>>>>>>> c7ebc89c84 (Revert to commit 610c59c, archive 136 packages with displayed quality score < 60%, and enforce permanent immutable package numbers)
 import argparse
 import subprocess
 from pathlib import Path
@@ -23,6 +32,7 @@ EXCLUDED_FILES = {
 }
 
 
+<<<<<<< HEAD
 def get_package_quality(fpath: Path) -> float:
     """Get the quality score of a package file."""
     try:
@@ -39,6 +49,10 @@ def get_package_quality(fpath: Path) -> float:
 
 def main():
     parser = argparse.ArgumentParser(description="Archive low-quality research packages")
+=======
+def main():
+    parser = argparse.ArgumentParser(description="Archive low-quality research packages (< 60% as displayed in menu)")
+>>>>>>> c7ebc89c84 (Revert to commit 610c59c, archive 136 packages with displayed quality score < 60%, and enforce permanent immutable package numbers)
     parser.add_argument("--dry-run", action="store_true", help="Preview without moving files")
     parser.add_argument("--threshold", type=float, default=0.60, help="Quality threshold (default: 0.60 / 60%)")
     args = parser.parse_args()
@@ -55,15 +69,53 @@ def main():
     docs_dir = repo_root / "docs"
     archive_dir = repo_root / "Packages_Archive"
 
+<<<<<<< HEAD
     print(f"Repo Root: {repo_root}")
     print(f"Archive Directory: {archive_dir}")
     print(f"Quality Threshold: < {threshold * 100:.1f}% ({threshold})\n")
+=======
+    idx_file = docs_dir / 'package_index.js'
+    if not idx_file.exists():
+        print(f"Error: {idx_file} not found.")
+        sys.exit(1)
+
+    raw_js = idx_file.read_text(encoding='utf-8')
+    master_index = json.loads(raw_js.split('window.PACKAGE_INDEX = ')[1].split(';\n')[0])
+
+    print(f"Repo Root: {repo_root}")
+    print(f"Archive Directory: {archive_dir}")
+    print(f"Quality Threshold: < {threshold * 100:.1f}%\n")
+
+    low_quality_files = set()
+    for pkg in master_index:
+        qs = pkg.get('quality_score')
+        if qs is not None:
+            try:
+                val = float(qs)
+                if val < threshold:
+                    low_quality_files.add((pkg['filename'], val, pkg.get('pkg_num')))
+            except ValueError:
+                pass
+
+    print(f"Identified {len(low_quality_files)} packages with displayed quality score < {threshold * 100:.1f}%:\n")
+
+    low_quality_filenames = {fn for fn, _, _ in low_quality_files}
+
+    sorted_low_q = sorted(low_quality_files, key=lambda x: x[1])
+    for fname, score, num in sorted_low_q:
+        print(f"  - #{num}: [Q={score*100:5.1f}%] {fname}")
+
+    if dry_run:
+        print(f"\n[DRY RUN] Would archive {len(low_quality_filenames)} package files and rebuild index.")
+        return
+>>>>>>> c7ebc89c84 (Revert to commit 610c59c, archive 136 packages with displayed quality score < 60%, and enforce permanent immutable package numbers)
 
     archive_packages = archive_dir / "Packages"
     archive_docs = archive_dir / "docs"
     archive_viz = archive_dir / "visualizations"
     archive_docs_viz = archive_dir / "docs_visualizations"
 
+<<<<<<< HEAD
     if not dry_run:
         archive_packages.mkdir(parents=True, exist_ok=True)
         archive_docs.mkdir(parents=True, exist_ok=True)
@@ -98,6 +150,14 @@ def main():
     # 2. Archive package .json files
     moved_count = 0
 
+=======
+    archive_packages.mkdir(parents=True, exist_ok=True)
+    archive_docs.mkdir(parents=True, exist_ok=True)
+    archive_viz.mkdir(parents=True, exist_ok=True)
+    archive_docs_viz.mkdir(parents=True, exist_ok=True)
+
+    moved_count = 0
+>>>>>>> c7ebc89c84 (Revert to commit 610c59c, archive 136 packages with displayed quality score < 60%, and enforce permanent immutable package numbers)
     if packages_dir.exists():
         for fpath in packages_dir.glob("*.json"):
             if fpath.name in low_quality_filenames:
@@ -112,9 +172,13 @@ def main():
                 shutil.move(str(fpath), str(dest))
                 moved_count += 1
 
+<<<<<<< HEAD
     # 3. Archive associated visualization files
     slugs = {fn.replace(".json", "") for fn in low_quality_filenames}
 
+=======
+    slugs = {fn.replace(".json", "") for fn in low_quality_filenames}
+>>>>>>> c7ebc89c84 (Revert to commit 610c59c, archive 136 packages with displayed quality score < 60%, and enforce permanent immutable package numbers)
     for viz_src, viz_dest in [(packages_dir / "visualizations", archive_viz), (docs_dir / "visualizations", archive_docs_viz)]:
         if viz_src.exists():
             for item in viz_src.iterdir():
@@ -126,7 +190,11 @@ def main():
 
     print(f"\nArchived {len(low_quality_filenames)} distinct packages ({moved_count} total file moves).")
 
+<<<<<<< HEAD
     # 4. Rebuild website package index
+=======
+    # Rebuild website package index while preserving permanent package numbers
+>>>>>>> c7ebc89c84 (Revert to commit 610c59c, archive 136 packages with displayed quality score < 60%, and enforce permanent immutable package numbers)
     update_script_docs = docs_dir / "update_index.py"
     if update_script_docs.exists():
         print("Rebuilding index for docs/...")

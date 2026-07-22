@@ -5031,61 +5031,6 @@ window.PACKAGE_INDEX = [
     "title": "Long Nontrivial Cycles in Hamiltonian Graphs on a Cyclic Frame"
   },
   {
-    "date": "2026-07-07T17:01:10Z",
-    "domain": "Tropical",
-    "exp_id": "236b0246",
-    "filename": "infinite_log_concavity_of_total_d_hoggatt_numbers.json",
-    "pkg_num": 309,
-    "quality": "partial",
-    "quality_score": 0.4996542252252253,
-    "quality_tier": "bronze",
-    "title": "A Log-Concavity Dichotomy for the Total d-Hoggatt Numbers"
-  },
-  {
-    "date": "2026-07-07T06:15:32Z",
-    "domain": "Probability",
-    "exp_id": "5156da6e",
-    "filename": "the_aharoni_korman_conjecture_for_well_founded_fac.json",
-    "pkg_num": 308,
-    "quality": "partial",
-    "quality_score": 0.5183991264367817,
-    "quality_tier": "bronze",
-    "title": "The Aharoni\u2013Korman Property for Well-Founded FAC Posets"
-  },
-  {
-    "date": "2026-07-07T05:04:22Z",
-    "domain": "Novelty",
-    "exp_id": "eb8019d8",
-    "filename": "existence_of_optimal_equidistant_codes_for_n__2_mo.json",
-    "pkg_num": 307,
-    "quality": "partial",
-    "quality_score": 0.49735784528301885,
-    "quality_tier": "bronze",
-    "title": "A Pell Obstruction to a Proposed Family of Optimal Equidistant Codes"
-  },
-  {
-    "date": "2026-07-07T03:17:06Z",
-    "domain": "Novelty",
-    "exp_id": "4231f6a2",
-    "filename": "characterization_of_extremal_graphs_for_positive_l.json",
-    "pkg_num": 306,
-    "quality": "partial",
-    "quality_score": 0.50904,
-    "quality_tier": "bronze",
-    "title": "Characterization of Extremal Graphs for Positive Lin-Lu-Yau Curvature"
-  },
-  {
-    "date": "2026-07-07T01:44:29Z",
-    "domain": "Applications",
-    "exp_id": "92285bf9",
-    "filename": "sharp_threshold_constant_for_cycle_games.json",
-    "pkg_num": 305,
-    "quality": "partial",
-    "quality_score": 0.57296,
-    "quality_tier": "bronze",
-    "title": "The Sharp Threshold Constant of the Maker-Breaker Cycle Game"
-  },
-  {
     "date": "2026-07-06T19:50:50Z",
     "domain": "Probability",
     "exp_id": "935491ef",
@@ -5095,17 +5040,6 @@ window.PACKAGE_INDEX = [
     "quality_score": 0.70296,
     "quality_tier": "silver",
     "title": "Minimal Dimension of Non-Gamma-Positive Symmetric Edge Polytopes"
-  },
-  {
-    "date": "2026-07-06T18:32:44Z",
-    "domain": "Shared",
-    "exp_id": "c1fb9afb",
-    "filename": "joint_descendants_of_the_last_k_vertices_in_random.json",
-    "pkg_num": 303,
-    "quality": "partial",
-    "quality_score": 0.45366952380952386,
-    "quality_tier": "bronze",
-    "title": "Joint Descendants of the Last k Vertices in Random d-DAGs: A Beta-Moment Telescoping Law"
   },
   {
     "date": "2026-07-06T15:29:20Z",
@@ -5130,28 +5064,6 @@ window.PACKAGE_INDEX = [
     "title": "Explicit Quantitative Power-Saving Corridor for Monic Minkowski Polynomials"
   },
   {
-    "date": "2026-07-06T11:53:18Z",
-    "domain": "Cryptography",
-    "exp_id": "a793b4d3",
-    "filename": "chain_covers_in_the_boolean_lattice.json",
-    "pkg_num": 300,
-    "quality": "partial",
-    "quality_score": 0.5242404210526316,
-    "quality_tier": "bronze",
-    "title": "Chain Covers in the Boolean Lattice"
-  },
-  {
-    "date": "2026-07-06T11:04:30Z",
-    "domain": "Logic",
-    "exp_id": "2058237b",
-    "filename": "characterization_of_the_aharoni_korman_conjecture_.json",
-    "pkg_num": 299,
-    "quality": "partial",
-    "quality_score": 0.49753964866339334,
-    "quality_tier": "bronze",
-    "title": "Characterization of the Aharoni-Korman Property via Saturated Chains: Structural Lemmas and a Refutation of the Obstruction Direction"
-  },
-  {
     "date": "2026-07-06T09:42:20Z",
     "domain": "Applications",
     "exp_id": "e50512ae",
@@ -5161,72 +5073,6 @@ window.PACKAGE_INDEX = [
     "quality_score": 0.74264,
     "quality_tier": "silver",
     "title": "Optimality of the Polynomial Factor in the Sunflower-Free Bound"
-  },
-  {
-    "date": "2026-07-06T09:13:52Z",
-    "domain": "Novelty",
-    "exp_id": "24d6d8b7",
-    "filename": "discrete_homotopy_groups_of_quasisymmetric_cubical.json",
-    "pkg_num": 297,
-    "quality": "partial",
-    "quality_score": 0.511,
-    "quality_tier": "bronze",
-    "title": "Discrete Homotopy Groups of Quasisymmetric Cubical Sets"
-  },
-  {
-    "date": "2026-07-06T07:50:44Z",
-    "domain": "Novelty",
-    "exp_id": "1e8c0c26",
-    "filename": "tightness_of_edge_deletion_bound_in_hyperstability.json",
-    "pkg_num": 296,
-    "quality": "partial",
-    "quality_score": 0.420858,
-    "quality_tier": "bronze",
-    "title": "Tightness of the Edge-Deletion Bound in a Hyperstability Extension of the Erdos-Gallai Theorem"
-  },
-  {
-    "date": "2026-07-06T05:40:38Z",
-    "domain": "Shared",
-    "exp_id": "e92fe2c1",
-    "filename": "formalized_rogersramanujan_identities_for_q_pochha.json",
-    "pkg_num": 295,
-    "quality": "partial",
-    "quality_score": 0.46650342687540775,
-    "quality_tier": "bronze",
-    "title": "The Finite Core of the Rogers-Ramanujan Identities: Schur Polynomials, Gaussian Binomials, and a Fibonacci Bridge"
-  },
-  {
-    "date": "2026-07-06T03:05:22Z",
-    "domain": "Tropical",
-    "exp_id": "e29ffbac",
-    "filename": "classification_of_regular_4maniplexes_via_tetraval.json",
-    "pkg_num": 294,
-    "quality": "partial",
-    "quality_score": 0.3793292235294118,
-    "quality_tier": "bronze",
-    "title": "Classification of Regular 4-Maniplexes via Tetravalent Graph Censuses"
-  },
-  {
-    "date": "2026-07-06T02:02:53Z",
-    "domain": "Novelty",
-    "exp_id": "e545fdf8",
-    "filename": "conjecture_on_the_structure_of_minimal_obstruction.json",
-    "pkg_num": 293,
-    "quality": "partial",
-    "quality_score": 0.3599485585714286,
-    "quality_tier": "bronze",
-    "title": "Minimal Obstructions to Total Rainbow Forests Are Single Monochromatic Cycles"
-  },
-  {
-    "date": "2026-07-06T01:26:06Z",
-    "domain": "Algebra",
-    "exp_id": "4591bde2",
-    "filename": "kernelcover_characterisation_of_the_weighted_daven.json",
-    "pkg_num": 292,
-    "quality": "partial",
-    "quality_score": 0.5155438642611684,
-    "quality_tier": "bronze",
-    "title": "Kernel-Cover Characterization of the Weighted Davenport Constant"
   },
   {
     "date": "2026-07-05T21:35:33Z",
@@ -5240,28 +5086,6 @@ window.PACKAGE_INDEX = [
     "title": "Sign Alternation in q-Hypergeometric Series via Oscillatory Asymptotics Near Roots of Unity"
   },
   {
-    "date": "2026-07-05T21:33:36Z",
-    "domain": "Novelty",
-    "exp_id": "2e937390",
-    "filename": "young_conjugation_induces_a_measure_preserving_inv.json",
-    "pkg_num": 290,
-    "quality": "partial",
-    "quality_score": 0.5295662942477877,
-    "quality_tier": "bronze",
-    "title": "Young Conjugation as a Measure-Preserving Klein Four-Group on the Natural Extension of the Triangle Map"
-  },
-  {
-    "date": "2026-07-05T21:12:33Z",
-    "domain": "MachineLearning",
-    "exp_id": "1da6d023",
-    "filename": "exact_2_adic_valuation_of_coefficients_of_txm_for_.json",
-    "pkg_num": 289,
-    "quality": "partial",
-    "quality_score": 0.5940000000000001,
-    "quality_tier": "bronze",
-    "title": "Exact 2-adic Valuations of the Coefficients of T(x)^m: the m=5 Law and the Failure of a Universal Formula"
-  },
-  {
     "date": "2026-07-05T20:32:45Z",
     "domain": "Probability",
     "exp_id": "a7402c18",
@@ -5271,17 +5095,6 @@ window.PACKAGE_INDEX = [
     "quality_score": 0.6096,
     "quality_tier": "bronze",
     "title": "Structural Base Cases for Seymour's Second Neighborhood Conjecture"
-  },
-  {
-    "date": "2026-07-04T22:12:28Z",
-    "domain": "Novelty",
-    "exp_id": "054477b4",
-    "filename": "nonexistence_of_nonconstant_colorings_satisfying_t.json",
-    "pkg_num": 287,
-    "quality": "partial",
-    "quality_score": 0.4514887166666668,
-    "quality_tier": "bronze",
-    "title": "Non-Existence of Non-Constant Blend Colorings on Strongly Connected Weighted Digraphs"
   },
   {
     "date": "2026-07-04T22:04:37Z",
@@ -5372,28 +5185,6 @@ window.PACKAGE_INDEX = [
     "title": "The Vanishing Pentagon: Residue-Class Monotonicity of the Minimal Modulus of Sums of Fifth Roots of Unity"
   },
   {
-    "date": "2026-07-04T11:51:57Z",
-    "domain": "Applications",
-    "exp_id": "c2b51bcc",
-    "filename": "tight_asymptotic_bound_for_the_nqueens_completion_.json",
-    "pkg_num": 278,
-    "quality": "partial",
-    "quality_score": 0.4724886610169492,
-    "quality_tier": "bronze",
-    "title": "Toroidal Constructions and Hall-Type Repair for the n-Queens Completion Problem"
-  },
-  {
-    "date": "2026-07-04T09:18:34Z",
-    "domain": "Applications",
-    "exp_id": "e62d479c",
-    "filename": "knots_that_think_cognition_as_braiding_in_category.json",
-    "pkg_num": 277,
-    "quality": "partial",
-    "quality_score": 0.30277126000000004,
-    "quality_tier": "bronze",
-    "title": "Knots That Think: The Writhe as a Well-Defined Invariant of Cognitive Braids"
-  },
-  {
     "date": "2026-07-04T07:33:51Z",
     "domain": "Applications",
     "exp_id": "0a7c4b5a",
@@ -5405,17 +5196,6 @@ window.PACKAGE_INDEX = [
     "title": "A Lower Bound for the Proportion of Critical-Line Zeros of PGL(3) Twisted L-functions"
   },
   {
-    "date": "2026-07-04T07:11:01Z",
-    "domain": "Novelty",
-    "exp_id": "51b04544",
-    "filename": "the_list_chromatic_number_of_3_colorable_planar_gr.json",
-    "pkg_num": 275,
-    "quality": "partial",
-    "quality_score": 0.4546,
-    "quality_tier": "bronze",
-    "title": "Colorability Does Not Control Choosability: A Complete Planar Witness at k=2"
-  },
-  {
     "date": "2026-07-04T05:23:04Z",
     "domain": "Novelty",
     "exp_id": "aed51c81",
@@ -5425,39 +5205,6 @@ window.PACKAGE_INDEX = [
     "quality_score": 0.6341600000000001,
     "quality_tier": "bronze",
     "title": "No Perfect Squares from Products of Shifted Odd Powers"
-  },
-  {
-    "date": "2026-07-04T04:39:20Z",
-    "domain": "Novelty",
-    "exp_id": "a1e3ce3a",
-    "filename": "multi_kernel_smoothing_lemma_for_sidon_sets.json",
-    "pkg_num": 273,
-    "quality": "partial",
-    "quality_score": 0.44295649681528665,
-    "quality_tier": "bronze",
-    "title": "A Multi-Kernel Support Law for Sidon Sets: Exact Difference-Set Cardinality and a Sharp Characterization"
-  },
-  {
-    "date": "2026-07-04T02:30:59Z",
-    "domain": "Novelty",
-    "exp_id": "01bea6c3",
-    "filename": "every_binvariant_edge_is_forcing_exactly_for_nearb.json",
-    "pkg_num": 272,
-    "quality": "partial",
-    "quality_score": 0.573804028436019,
-    "quality_tier": "bronze",
-    "title": "Every b-invariant Edge is Forcing Exactly for Near-Bipartite Bricks (Up to Three Classical Exceptions)"
-  },
-  {
-    "date": "2026-07-04T01:42:14Z",
-    "domain": "Geometry",
-    "exp_id": "e3e38cc8",
-    "filename": "even_harmonic_strength_of_antipodal_spherical_desi.json",
-    "pkg_num": 271,
-    "quality": "partial",
-    "quality_score": 0.5266726923076923,
-    "quality_tier": "bronze",
-    "title": "Even Harmonic Strength of Antipodal Spherical Designs Contains 2"
   },
   {
     "date": "2026-07-03T22:28:35Z",
@@ -5548,17 +5295,6 @@ window.PACKAGE_INDEX = [
     "title": "Characterization of Balanced Distance-Hereditary Graphs by the Complement of a 3-Matching"
   },
   {
-    "date": "2026-07-03T09:53:26Z",
-    "domain": "MachineLearning",
-    "exp_id": "9bec4051",
-    "filename": "optimality_of_vector_valued_convolution_kernels_fo.json",
-    "pkg_num": 262,
-    "quality": "partial",
-    "quality_score": 0.4398394666666667,
-    "quality_tier": "bronze",
-    "title": "The Difference-Set Method for Sidon Sets: Sharp Bounds and the Convolution-Kernel Programme"
-  },
-  {
     "date": "2026-07-03T07:33:52Z",
     "domain": "Cryptography",
     "exp_id": "583299ca",
@@ -5568,17 +5304,6 @@ window.PACKAGE_INDEX = [
     "quality_score": 0.7779935103225806,
     "quality_tier": "silver",
     "title": "The Mirror in the Weights: Purity and Central Hodge-Tate Weights for Polarized Representations over CM Fields"
-  },
-  {
-    "date": "2026-07-03T05:51:09Z",
-    "domain": "Pythagorean",
-    "exp_id": "a5a22996",
-    "filename": "isomorphism_of_generating_trees_for_greedy_m_tamar.json",
-    "pkg_num": 260,
-    "quality": "partial",
-    "quality_score": 0.5129090000000001,
-    "quality_tier": "bronze",
-    "title": "Isomorphisms of Generating Trees and Refined Equinumerosity for m-Tamari Intervals and (m+1)-Constellations"
   },
   {
     "date": "2026-07-03T03:31:12Z",
@@ -5603,17 +5328,6 @@ window.PACKAGE_INDEX = [
     "title": "Structural Constraints on Polynomial Diophantine Tuples with a k-th Power Condition"
   },
   {
-    "date": "2026-07-02T20:58:44Z",
-    "domain": "Pythagorean",
-    "exp_id": "7f2fc4f9",
-    "filename": "prove_fermats_little_theorem_for_p5.json",
-    "pkg_num": 257,
-    "quality": "partial",
-    "quality_score": 0.47561819905213276,
-    "quality_tier": "bronze",
-    "title": "The Fifth-Power Congruence Modulo Five and Its Pythagorean Consequences"
-  },
-  {
     "date": "2026-07-02T18:54:56Z",
     "domain": "Novelty",
     "exp_id": "3e52c27d",
@@ -5634,39 +5348,6 @@ window.PACKAGE_INDEX = [
     "quality_score": 0.68521,
     "quality_tier": "bronze",
     "title": "Stern's Diatomic Sequence: Coprimality, Counting, and a Fibonacci Bridge"
-  },
-  {
-    "date": "2026-07-02T14:35:00Z",
-    "domain": "Computation",
-    "exp_id": "5a8a4bbe",
-    "filename": "improved_constant_for_domination_in_cartesian_prod.json",
-    "pkg_num": 254,
-    "quality": "partial",
-    "quality_score": 0.562938,
-    "quality_tier": "bronze",
-    "title": "An Improved Vizing-Type Constant for Domination in Cartesian Products of Graphs"
-  },
-  {
-    "date": "2026-07-02T11:55:14Z",
-    "domain": "Shared",
-    "exp_id": "e39940c9",
-    "filename": "entanglement_inspired_algorithmic_complexity_in_no.json",
-    "pkg_num": 253,
-    "quality": "partial",
-    "quality_score": 0.45987362,
-    "quality_tier": "bronze",
-    "title": "Entanglement-Inspired Algorithmic Complexity in Noncommutative Spaces: A Transfer-Operator View of Fibonacci Correlations"
-  },
-  {
-    "date": "2026-07-02T07:50:26Z",
-    "domain": "Applications",
-    "exp_id": "756bc0b6",
-    "filename": "refined_enumeration_of_greedy_tamari_intervals_by_.json",
-    "pkg_num": 252,
-    "quality": "partial",
-    "quality_score": 0.389,
-    "quality_tier": "bronze",
-    "title": "The Valley Statistic Bridge: Greedy Tamari Intervals and Bipartite Planar Maps"
   },
   {
     "date": "2026-07-02T05:53:34Z",
@@ -5757,17 +5438,6 @@ window.PACKAGE_INDEX = [
     "title": "Uniform Extremality for Siblings of the Coupon Collector"
   },
   {
-    "date": "2026-07-02T01:57:30Z",
-    "domain": "Applications",
-    "exp_id": "946cfca3",
-    "filename": "ballas_conjecture_for___13.json",
-    "pkg_num": 243,
-    "quality": "partial",
-    "quality_score": 0.557,
-    "quality_tier": "bronze",
-    "title": "Balla's Conjecture for the Angle arccos(1/3): A Rank-Multiplicity Reduction"
-  },
-  {
     "date": "2026-07-02T01:24:17Z",
     "domain": "Novelty",
     "exp_id": "f955b422",
@@ -5788,28 +5458,6 @@ window.PACKAGE_INDEX = [
     "quality_score": 0.84436,
     "quality_tier": "silver",
     "title": "Hilbert 12: A Kronecker-Weber Generalization via Explicit Reciprocity"
-  },
-  {
-    "date": "2026-07-02T00:46:57Z",
-    "domain": "Novelty",
-    "exp_id": "307e78f2",
-    "filename": "exact_sign_law_for_coefficients_of_ramanujans_thir.json",
-    "pkg_num": 240,
-    "quality": "partial",
-    "quality_score": 0.46884433623188404,
-    "quality_tier": "bronze",
-    "title": "Exact Sign Law for the Coefficients of Ramanujan's Third Order Mock Theta Function rho(q)"
-  },
-  {
-    "date": "2026-07-01T23:54:22Z",
-    "domain": "Novelty",
-    "exp_id": "35d54dba",
-    "filename": "minimum_independence_ratio_constraint.json",
-    "pkg_num": 239,
-    "quality": "partial",
-    "quality_score": 0.527476,
-    "quality_tier": "bronze",
-    "title": "The Minimum Independence Ratio Constraint: A Reciprocal Bridge Between Coloring and Independence"
   },
   {
     "date": "2026-07-01T23:31:15Z",
@@ -5878,28 +5526,6 @@ window.PACKAGE_INDEX = [
     "title": "Franke Decomposition for SL(2, Z) Automorphic Forms"
   },
   {
-    "date": "2026-07-01T18:32:28Z",
-    "domain": "Algebra",
-    "exp_id": "e5cb827b",
-    "filename": "geometric_fractional_chromatic_number_of_the_29_ve.json",
-    "pkg_num": 232,
-    "quality": "partial",
-    "quality_score": 0.45374800000000004,
-    "quality_tier": "bronze",
-    "title": "The Independence-Ratio Certificate: A 29-Vertex Threshold for the Fractional Chromatic Number of the Plane"
-  },
-  {
-    "date": "2026-07-01T17:45:01Z",
-    "domain": "Algebra",
-    "exp_id": "33af5349",
-    "filename": "sensitivity_conjecture_extensions.json",
-    "pkg_num": 231,
-    "quality": "partial",
-    "quality_score": 0.48355851612903233,
-    "quality_tier": "bronze",
-    "title": "The Spectral Core of the Sensitivity Conjecture: Signed Adjacency Matrices of the Hypercube"
-  },
-  {
     "date": "2026-07-01T16:52:01Z",
     "domain": "Computation",
     "exp_id": "04b163c8",
@@ -5966,39 +5592,6 @@ window.PACKAGE_INDEX = [
     "title": "Reflection Duality for d-Balanced Partitions"
   },
   {
-    "date": "2026-07-01T12:33:56Z",
-    "domain": "MachineLearning",
-    "exp_id": "3257177e",
-    "filename": "euler_product_for_autocorrelation_of_simultaneousl.json",
-    "pkg_num": 224,
-    "quality": "partial",
-    "quality_score": 0.5029119272727274,
-    "quality_tier": "bronze",
-    "title": "An Euler Product for the Autocorrelation of Simultaneously Visible Lattice Points"
-  },
-  {
-    "date": "2026-07-01T08:48:54Z",
-    "domain": "Algebra",
-    "exp_id": "3fc75f2f",
-    "filename": "quadratic_reciprocity_five_proofs_formalized.json",
-    "pkg_num": 223,
-    "quality": "partial",
-    "quality_score": 0.3972276,
-    "quality_tier": "bronze",
-    "title": "Quadratic Reciprocity Through Five Windows: The Supplementary Laws"
-  },
-  {
-    "date": "2026-07-01T08:02:29Z",
-    "domain": "Novelty",
-    "exp_id": "90d1d2b2",
-    "filename": "projective_plane_coupon_collection_slowness.json",
-    "pkg_num": 222,
-    "quality": "partial",
-    "quality_score": 0.3699978030769231,
-    "quality_tier": "bronze",
-    "title": "Projective Plane Coupon Collection Slowness"
-  },
-  {
     "date": "2026-07-01T04:21:12Z",
     "domain": "Cryptography",
     "exp_id": "562c0234",
@@ -6010,39 +5603,6 @@ window.PACKAGE_INDEX = [
     "title": "Zero-Knowledge Proofs for Graph 3-Colouring: Completeness, Soundness Amplification, and Perfect Simulation"
   },
   {
-    "date": "2026-07-01T04:02:20Z",
-    "domain": "Novelty",
-    "exp_id": "650b150d",
-    "filename": "convex_position_minimizes_plane_graphs.json",
-    "pkg_num": 220,
-    "quality": "partial",
-    "quality_score": 0.516675,
-    "quality_tier": "bronze",
-    "title": "Convex Position Minimizes Plane Graphs"
-  },
-  {
-    "date": "2026-07-01T02:46:46Z",
-    "domain": "Applications",
-    "exp_id": "adbfcd0f",
-    "filename": "stereographic_fourier_analysis_spherical_harmonics.json",
-    "pkg_num": 219,
-    "quality": "partial",
-    "quality_score": 0.45705761904761916,
-    "quality_tier": "bronze",
-    "title": "Stereographic Fourier Analysis: The Chordal Metric Identity and Harmonic Analysis on Spheres"
-  },
-  {
-    "date": "2026-07-01T01:50:27Z",
-    "domain": "Logic",
-    "exp_id": "c69c4ab9",
-    "filename": "square_root_cancellation_for_gl2_triple_correlatio.json",
-    "pkg_num": 218,
-    "quality": "partial",
-    "quality_score": 0.4328038727272727,
-    "quality_tier": "bronze",
-    "title": "Square-Root Cancellation for GL(2) Triple Correlation Sums: The Deligne Chebyshev Envelope"
-  },
-  {
     "date": "2026-07-01T00:58:56Z",
     "domain": "Applications",
     "exp_id": "83afa678",
@@ -6052,39 +5612,6 @@ window.PACKAGE_INDEX = [
     "quality_score": 0.60704,
     "quality_tier": "bronze",
     "title": "Fourier Analysis on Finite Cyclic Groups: Convolution, Parseval, and the Donoho-Stark Uncertainty Principle"
-  },
-  {
-    "date": "2026-06-30T19:23:36Z",
-    "domain": "Shared",
-    "exp_id": "3131feed",
-    "filename": "goldbach_verification_framework.json",
-    "pkg_num": 216,
-    "quality": "partial",
-    "quality_score": 0.41286596521739133,
-    "quality_tier": "bronze",
-    "title": "A Reflection Principle for Goldbach Representation Counts"
-  },
-  {
-    "date": "2026-06-30T11:56:10Z",
-    "domain": "Pythagorean",
-    "exp_id": "efa9038a",
-    "filename": "homotopy_type_theory_as_foundations.json",
-    "pkg_num": 215,
-    "quality": "partial",
-    "quality_score": 0.455,
-    "quality_tier": "bronze",
-    "title": "The Gaussian Integer Parametrization of Pythagorean Triples"
-  },
-  {
-    "date": "2026-06-30T06:07:05Z",
-    "domain": "Physics",
-    "exp_id": "fd05632c",
-    "filename": "sums_of_three_cubes.json",
-    "pkg_num": 214,
-    "quality": "partial",
-    "quality_score": 0.40141157142857153,
-    "quality_tier": "bronze",
-    "title": "Sums of Three Cubes: The Modular Obstruction and the Density Conjecture"
   },
   {
     "date": "2026-06-30T05:24:55Z",
@@ -6107,39 +5634,6 @@ window.PACKAGE_INDEX = [
     "quality_score": 0.76576,
     "quality_tier": "silver",
     "title": "Certified Adversarial Robustness via Sheaf Cohomology"
-  },
-  {
-    "date": "2026-06-30T00:12:44Z",
-    "domain": "Cryptography",
-    "exp_id": "8f9a8a82",
-    "filename": "combinatorial_nerve_chain_homotopy_equivalence.json",
-    "pkg_num": 211,
-    "quality": "partial",
-    "quality_score": 0.29062540000000003,
-    "quality_tier": "bronze",
-    "title": "The Euler Characteristic of a Covered Complex: Exact Inclusion-Exclusion and the Numerical Shadow of Nerve Reconstruction"
-  },
-  {
-    "date": "2026-06-29T23:31:33Z",
-    "domain": "Computation",
-    "exp_id": "ee65478f",
-    "filename": "extremality_of_projective_plane_block_designs_in_t.json",
-    "pkg_num": 210,
-    "quality": "partial",
-    "quality_score": 0.44923399999999997,
-    "quality_tier": "bronze",
-    "title": "Extremality of Projective-Plane Designs in the Coupon Collector's Problem"
-  },
-  {
-    "date": "2026-06-29T23:27:59Z",
-    "domain": "Algebra",
-    "exp_id": "60fa5375",
-    "filename": "complete_solutions_to_the_14_gonal_fourth_power_di.json",
-    "pkg_num": 209,
-    "quality": "partial",
-    "quality_score": 0.5186266666666667,
-    "quality_tier": "bronze",
-    "title": "Complete Solutions to the 14-gonal Fourth-Power Diophantine Equation 6n^2 - 5n = t^4"
   },
   {
     "date": "2026-06-29T22:37:39Z",
@@ -6175,17 +5669,6 @@ window.PACKAGE_INDEX = [
     "title": "Unramified Obstruction Equals Descent Obstruction for Rationally Connected Varieties over p-adic Function Fields"
   },
   {
-    "date": "2026-06-29T18:20:35Z",
-    "domain": "Novelty",
-    "exp_id": "c9fb85eb",
-    "filename": "classification_of_perfect_cubes_in_14_gonal_number.json",
-    "pkg_num": 205,
-    "quality": "partial",
-    "quality_score": 0.4432100000000001,
-    "quality_tier": "bronze",
-    "title": "Classification of Perfect Cubes in 14-gonal Numbers"
-  },
-  {
     "date": "2026-06-29T17:59:42Z",
     "domain": "Applications",
     "exp_id": "3ec587ed",
@@ -6206,39 +5689,6 @@ window.PACKAGE_INDEX = [
     "quality_score": null,
     "quality_tier": "unrated",
     "title": "Close Proofs for Existential Theorem"
-  },
-  {
-    "date": "2026-06-29T11:02:20Z",
-    "domain": "Computation",
-    "exp_id": "fdb1bb82",
-    "filename": "euler_mascheroni_constant_irrationality_approaches.json",
-    "pkg_num": 202,
-    "quality": "partial",
-    "quality_score": 0.452,
-    "quality_tier": "bronze",
-    "title": "The Euler-Mascheroni Constant: Series, Integral, and Irrationality Approaches"
-  },
-  {
-    "date": "2026-06-29T08:21:10Z",
-    "domain": "Novelty",
-    "exp_id": "e0366114",
-    "filename": "excluded_minors_for_z_n_gainable_biased_graphs.json",
-    "pkg_num": 201,
-    "quality": "partial",
-    "quality_score": 0.4133402545454546,
-    "quality_tier": "bronze",
-    "title": "Excluded Minors for Z/n-Gainable Biased Graphs: The Parallel-Class Slice and a Divisibility Law"
-  },
-  {
-    "date": "2026-06-29T08:19:35Z",
-    "domain": "Shared",
-    "exp_id": "c78b961d",
-    "filename": "extremal_graph_theory_turn_and_szemerdi.json",
-    "pkg_num": 200,
-    "quality": "partial",
-    "quality_score": 0.4367097362637363,
-    "quality_tier": "bronze",
-    "title": "Density Forces Structure: Turan, Kruskal-Katona, and Roth in Extremal Combinatorics"
   },
   {
     "date": "2026-06-29T00:20:49Z",
@@ -6274,17 +5724,6 @@ window.PACKAGE_INDEX = [
     "title": "EML Universal Approximation: Density Meets Kolmogorov Incompressibility"
   },
   {
-    "date": "2026-06-28T23:21:40Z",
-    "domain": "Novelty",
-    "exp_id": "60145036",
-    "filename": "tightness_of_the_density_threshold_for_configurati.json",
-    "pkg_num": 196,
-    "quality": "partial",
-    "quality_score": 0.3726553552511416,
-    "quality_tier": "bronze",
-    "title": "Tightness of the Density Threshold for Configurations in Linear Hypergraphs"
-  },
-  {
     "date": "2026-06-28T23:16:59Z",
     "domain": "Novelty",
     "exp_id": "cfea11f0",
@@ -6294,17 +5733,6 @@ window.PACKAGE_INDEX = [
     "quality_score": 0.65976,
     "quality_tier": "bronze",
     "title": "Finite Optimal Transport and Wasserstein Distances"
-  },
-  {
-    "date": "2026-06-28T22:46:53Z",
-    "domain": "Applications",
-    "exp_id": "bfc7b99e",
-    "filename": "the_non_existence_of_new_factorial_square_solution.json",
-    "pkg_num": 194,
-    "quality": "partial",
-    "quality_score": 0.44995,
-    "quality_tier": "bronze",
-    "title": "The Non-Existence of New Factorial Square Solutions: Brocard's Problem"
   },
   {
     "date": "2026-06-28T22:45:45Z",
@@ -6340,39 +5768,6 @@ window.PACKAGE_INDEX = [
     "title": "Contragredient Period Sign Formula for Betti\u2013Whittaker Periods of GL(n)"
   },
   {
-    "date": "2026-06-28T21:22:41Z",
-    "domain": "Applications",
-    "exp_id": "52a20f8b",
-    "filename": "eml_kolmogorov_arnold_representation.json",
-    "pkg_num": 190,
-    "quality": "partial",
-    "quality_score": 0.59432,
-    "quality_tier": "bronze",
-    "title": "EML Kolmogorov\u2013Arnold Separable Rank: Counting Outer exp Terms by Matrix Sampling"
-  },
-  {
-    "date": "2026-06-28T21:18:32Z",
-    "domain": "Novelty",
-    "exp_id": "3f78044a",
-    "filename": "formal_verification_of_algorithms.json",
-    "pkg_num": 189,
-    "quality": "partial",
-    "quality_score": 0.5920639999999999,
-    "quality_tier": "bronze",
-    "title": "Verified Binary Search as Threshold Finding, with a Bridge to the Factorial Number System"
-  },
-  {
-    "date": "2026-06-28T19:48:07Z",
-    "domain": "Applications",
-    "exp_id": "23de9107",
-    "filename": "continued_fractions_and_diophantine_approximation.json",
-    "pkg_num": 188,
-    "quality": "partial",
-    "quality_score": 0.5948,
-    "quality_tier": "bronze",
-    "title": "Continued Fractions and Diophantine Approximation: The Lagrange Constant"
-  },
-  {
     "date": "2026-06-28T19:20:36Z",
     "domain": "Novelty",
     "exp_id": "203b440f",
@@ -6404,17 +5799,6 @@ window.PACKAGE_INDEX = [
     "quality_score": 0.650914,
     "quality_tier": "bronze",
     "title": "The EML Fixed-Point Operator as a Certified ResNet Residual Layer"
-  },
-  {
-    "date": "2026-06-28T17:29:59Z",
-    "domain": "Novelty",
-    "exp_id": "e44edf9a",
-    "filename": "existence_of_non_trivial_boolean_degree_one_functi.json",
-    "pkg_num": 184,
-    "quality": "partial",
-    "quality_score": 0.39200000000000007,
-    "quality_tier": "bronze",
-    "title": "Existence of Non-Trivial Boolean Degree-One Functions on the Grassmann Scheme J_q(n,2)"
   },
   {
     "date": "2026-06-28T17:20:50Z",
@@ -6461,28 +5845,6 @@ window.PACKAGE_INDEX = [
     "title": "The Incoherence Index as an Arithmetic Invariant: Order Formula and Realizable Spectrum"
   },
   {
-    "date": "2026-06-28T15:11:23Z",
-    "domain": "Applications",
-    "exp_id": "d1a8353e",
-    "filename": "recurrence_relation_for_extended_eulerian_numbers.json",
-    "pkg_num": 179,
-    "quality": "partial",
-    "quality_score": 0.56128,
-    "quality_tier": "bronze",
-    "title": "A One-Parameter Deformation of the Eulerian Numbers and Its Recurrence"
-  },
-  {
-    "date": "2026-06-28T15:03:16Z",
-    "domain": "Novelty",
-    "exp_id": "72418ed5",
-    "filename": "equality_cases_for_spectral_radius_bound_in_signed.json",
-    "pkg_num": 178,
-    "quality": "partial",
-    "quality_score": 0.43096,
-    "quality_tier": "bronze",
-    "title": "Equality Cases for the Maximum-Degree Spectral Bound of Signed Graphs"
-  },
-  {
     "date": "2026-06-28T14:35:49Z",
     "domain": "Novelty",
     "exp_id": "0eb9ce9e",
@@ -6492,28 +5854,6 @@ window.PACKAGE_INDEX = [
     "quality_score": 0.63032,
     "quality_tier": "bronze",
     "title": "Degree-One Triviality Threshold for Grassmann Schemes: A Verified Gaussian-Binomial Backbone"
-  },
-  {
-    "date": "2026-06-28T14:31:02Z",
-    "domain": "Novelty",
-    "exp_id": "3f134ce6",
-    "filename": "existence_of_inverse_sprugnoli_arrays_with_closed_.json",
-    "pkg_num": 176,
-    "quality": "partial",
-    "quality_score": 0.5751195652173913,
-    "quality_tier": "bronze",
-    "title": "Inverse Sprugnoli Arrays with Closed-Form Coefficients and Odd-Indexed Fibonacci Row Sums"
-  },
-  {
-    "date": "2026-06-28T13:09:01Z",
-    "domain": "Novelty",
-    "exp_id": "42ce6f47",
-    "filename": "jacobian_conjecture_degree_2_and_3_cases.json",
-    "pkg_num": 175,
-    "quality": "partial",
-    "quality_score": 0.518,
-    "quality_tier": "bronze",
-    "title": "The Jacobian Conjecture: A Verified Bridge Theorem with Degree-2 and Cubic-Linear Cases"
   },
   {
     "date": "2026-06-28T13:04:26Z",
@@ -6527,50 +5867,6 @@ window.PACKAGE_INDEX = [
     "title": "Row Sum Fibonacci Property of the Pascal-like Riordan Array"
   },
   {
-    "date": "2026-06-28T12:41:53Z",
-    "domain": "Novelty",
-    "exp_id": "7e2e6a70",
-    "filename": "a_sharp_upper_bound_for_uniform_vcdimension_famili.json",
-    "pkg_num": 173,
-    "quality": "partial",
-    "quality_score": 0.36300923636363636,
-    "quality_tier": "bronze",
-    "title": "A Sharp Upper Bound for Uniform VC-Dimension Families via Layered Stars"
-  },
-  {
-    "date": "2026-06-28T12:11:56Z",
-    "domain": "Applications",
-    "exp_id": "4bc14309",
-    "filename": "prismatic_purity_for_f_crystals_on_regular_schemes.json",
-    "pkg_num": 172,
-    "quality": "partial",
-    "quality_score": 0.49242371929824563,
-    "quality_tier": "bronze",
-    "title": "Prismatic Purity for F-Crystals on Regular Schemes"
-  },
-  {
-    "date": "2026-06-28T11:38:59Z",
-    "domain": "Novelty",
-    "exp_id": "fdadfe48",
-    "filename": "the_most_natural_next_step_is_to_attack_the_residu.json",
-    "pkg_num": 171,
-    "quality": "partial",
-    "quality_score": 0.5959,
-    "quality_tier": "bronze",
-    "title": "One Known Solution Linearizes the Riccati Equation"
-  },
-  {
-    "date": "2026-06-28T10:40:58Z",
-    "domain": "Applications",
-    "exp_id": "6ac1dc4e",
-    "filename": "rainbow_triangle_density_lower_bound_conjecture.json",
-    "pkg_num": 170,
-    "quality": "partial",
-    "quality_score": 0.34884000000000004,
-    "quality_tier": "bronze",
-    "title": "Rainbow Triangle Density: The Extremal Bound \u2308(n-1)(n-3)/8\u2309"
-  },
-  {
     "date": "2026-06-28T10:39:47Z",
     "domain": "Applications",
     "exp_id": "00e5c711",
@@ -6580,39 +5876,6 @@ window.PACKAGE_INDEX = [
     "quality_score": 0.61002,
     "quality_tier": "bronze",
     "title": "Wall-Menger Separator Optimality: Tight Min-Cut / Max-Disjoint-Paths for Grid Graphs"
-  },
-  {
-    "date": "2026-06-28T10:10:44Z",
-    "domain": "Novelty",
-    "exp_id": "bac3bfcc",
-    "filename": "statistical_mechanics_ising_model_phase_transition.json",
-    "pkg_num": 168,
-    "quality": "partial",
-    "quality_score": 0.562048,
-    "quality_tier": "bronze",
-    "title": "Statistical Mechanics: The Exact Two-Point Correlation of the 1D Ising Chain"
-  },
-  {
-    "date": "2026-06-28T10:07:29Z",
-    "domain": "Applications",
-    "exp_id": "ce8c041d",
-    "filename": "eml_transseries_asymptotic_expansions_beyond_power.json",
-    "pkg_num": 167,
-    "quality": "partial",
-    "quality_score": 0.5816,
-    "quality_tier": "bronze",
-    "title": "EML Transseries: A Real-Exponent Hahn-Series Model with Dominance, Asymptotic Comparison, and Ingredients of Real Closure"
-  },
-  {
-    "date": "2026-06-28T09:13:22Z",
-    "domain": "Novelty",
-    "exp_id": "f6f6439c",
-    "filename": "linear_one_set_wall_menger_bound_for_elementary_wa.json",
-    "pkg_num": 166,
-    "quality": "partial",
-    "quality_score": 0.5631599999999999,
-    "quality_tier": "bronze",
-    "title": "Linear One-Set Wall-Menger Bound for Elementary Walls"
   },
   {
     "date": "2026-06-28T09:10:04Z",
@@ -6635,17 +5898,6 @@ window.PACKAGE_INDEX = [
     "quality_score": 0.7436,
     "quality_tier": "silver",
     "title": "Circuit Complexity: Monotone Lower Bounds"
-  },
-  {
-    "date": "2026-06-28T08:14:30Z",
-    "domain": "Novelty",
-    "exp_id": "e5555684",
-    "filename": "proof_of_hegeds_bound_via_spectral_constraints_in_.json",
-    "pkg_num": 163,
-    "quality": "partial",
-    "quality_score": 0.485834,
-    "quality_tier": "bronze",
-    "title": "The Spectral Fisher Bound: Uniform Set Families via Heged\u0171s' Eigenvalue Condition"
   },
   {
     "date": "2026-06-28T08:07:28Z",
@@ -6802,39 +6054,6 @@ window.PACKAGE_INDEX = [
     "title": "Hamiltonian Compression Factor of Cubic Edge-Transitive Graphs"
   },
   {
-    "date": "2026-06-28T03:26:24Z",
-    "domain": "Applications",
-    "exp_id": "49c290ff",
-    "filename": "constructing_a_canonical_f_isocrystal_to_enhance_t.json",
-    "pkg_num": 148,
-    "quality": "partial",
-    "quality_score": 0.48585960124610594,
-    "quality_tier": "bronze",
-    "title": "The Fibonacci Law of Apparition: alpha(p) Divides p-1 or p+1"
-  },
-  {
-    "date": "2026-06-28T01:56:12Z",
-    "domain": "Novelty",
-    "exp_id": "f3fa5004",
-    "filename": "explicit_bias_lower_bound_for_the_density_of_n_wit.json",
-    "pkg_num": 147,
-    "quality": "partial",
-    "quality_score": 0.38602000000000003,
-    "quality_tier": "bronze",
-    "title": "Binary Digit-Reversal Invariance of Cusick Densities (Exact Five-Bit Instances)"
-  },
-  {
-    "date": "2026-06-28T01:55:03Z",
-    "domain": "Novelty",
-    "exp_id": "2d24ca82",
-    "filename": "regularized_sum_of_primes_via_analytic_continuatio.json",
-    "pkg_num": 146,
-    "quality": "partial",
-    "quality_score": 0.5835454545454546,
-    "quality_tier": "bronze",
-    "title": "Regularized Sum of Primes via Analytic Continuation Beyond the Natural Boundary"
-  },
-  {
     "date": "2026-06-28T00:48:54Z",
     "domain": "Novelty",
     "exp_id": "2f2206c6",
@@ -6857,17 +6076,6 @@ window.PACKAGE_INDEX = [
     "title": "Brualdi\u2013Quinn\u2013Massey Strong Chromatic Index: Tightness and a Fibonacci\u2013Riordan Bridge"
   },
   {
-    "date": "2026-06-27T23:51:24Z",
-    "domain": "Novelty",
-    "exp_id": "417ceff0",
-    "filename": "falsifiability_of_multigraded_regularity_conjectur.json",
-    "pkg_num": 143,
-    "quality": "partial",
-    "quality_score": 0.49606231111111115,
-    "quality_tier": "bronze",
-    "title": "Falsifiability of the Multigraded Regularity Conjecture for Schubert Varieties via Bruhat Rank and Smooth Pattern Avoidance"
-  },
-  {
     "date": "2026-06-27T23:22:49Z",
     "domain": "Novelty",
     "exp_id": "6fa4f641",
@@ -6877,17 +6085,6 @@ window.PACKAGE_INDEX = [
     "quality_score": 0.7798419999999999,
     "quality_tier": "silver",
     "title": "Cycle-Containing Families of Vectors: Girth Thresholds and Binary Shattering"
-  },
-  {
-    "date": "2026-06-27T23:00:33Z",
-    "domain": "Novelty",
-    "exp_id": "26246c0e",
-    "filename": "rsa_factorization_with_partial_pq_knowledge_and_sm.json",
-    "pkg_num": 141,
-    "quality": "partial",
-    "quality_score": 0.39061,
-    "quality_tier": "bronze",
-    "title": "RSA Factorization with Partial p+q Knowledge and Small Private Exponent"
   },
   {
     "date": "2026-06-27T22:57:17Z",
@@ -6934,28 +6131,6 @@ window.PACKAGE_INDEX = [
     "title": "A Prime-Power Criterion for the GCD of the Interior of a Pascal Row"
   },
   {
-    "date": "2026-06-27T19:40:52Z",
-    "domain": "Computation",
-    "exp_id": "bdfd9dbb",
-    "filename": "polynomial_logarithmic_time_algorithm_for_global_l.json",
-    "pkg_num": 136,
-    "quality": "partial",
-    "quality_score": 0.3683071607142858,
-    "quality_tier": "bronze",
-    "title": "Global Label Min-Cut: A Verified Foundation and the Limits of a Fast-Algorithm Conjecture"
-  },
-  {
-    "date": "2026-06-27T19:01:38Z",
-    "domain": "Novelty",
-    "exp_id": "935abbfb",
-    "filename": "character_class_contradiction.json",
-    "pkg_num": 135,
-    "quality": "partial",
-    "quality_score": 0.484642,
-    "quality_tier": "bronze",
-    "title": "The Character Class Contradiction: A Rank-One Zeta Computation"
-  },
-  {
     "date": "2026-06-27T18:43:06Z",
     "domain": "Novelty",
     "exp_id": "f8a707b1",
@@ -6965,28 +6140,6 @@ window.PACKAGE_INDEX = [
     "quality_score": 0.7756646153846154,
     "quality_tier": "silver",
     "title": "Twin Prime Gaps: The Combinatorial Core of the Zhang\u2013Maynard\u2013Tao Theorem"
-  },
-  {
-    "date": "2026-06-27T17:06:58Z",
-    "domain": "Applications",
-    "exp_id": "33ec0c7d",
-    "filename": "characterization_of_modular_rank_four_nahm_sums_vi.json",
-    "pkg_num": 133,
-    "quality": "partial",
-    "quality_score": 0.5884799999999999,
-    "quality_tier": "bronze",
-    "title": "Characterization of Modular Rank-Four Nahm Sums via the Discriminant Condition"
-  },
-  {
-    "date": "2026-06-27T16:58:37Z",
-    "domain": "Bridges",
-    "exp_id": "d36ccdc3",
-    "filename": "girth_expansion_equivalence_for_optimal_small_set_.json",
-    "pkg_num": 132,
-    "quality": "partial",
-    "quality_score": 0.41604728262910795,
-    "quality_tier": "bronze",
-    "title": "Girth-Expansion Equivalence for Optimal Small-Set Expanders"
   },
   {
     "date": "2026-06-27T16:53:54Z",
@@ -7022,50 +6175,6 @@ window.PACKAGE_INDEX = [
     "title": "Pfaffian Giambelli Formula for Shifted t-Schur Functions"
   },
   {
-    "date": "2026-06-27T14:18:26Z",
-    "domain": "Novelty",
-    "exp_id": "06caccbf",
-    "filename": "excluded_minors_for_bias_graphs_gainable_over_cycl.json",
-    "pkg_num": 128,
-    "quality": "partial",
-    "quality_score": 0.463,
-    "quality_tier": "bronze",
-    "title": "Excluded Minors for Biased Graphs Gainable over Cyclic Groups Z/p: the Parallel-Class Obstruction (p+1)K\u2082"
-  },
-  {
-    "date": "2026-06-27T14:16:36Z",
-    "domain": "Novelty",
-    "exp_id": "beb2abc2",
-    "filename": "uniqueness_of_extremal_graphons_in_sparse_threshol.json",
-    "pkg_num": 127,
-    "quality": "partial",
-    "quality_score": 0.5954,
-    "quality_tier": "bronze",
-    "title": "Uniqueness of Extremal Graphons in Sparse Threshold Problems: The Fractional Independence Number and Its Sandwich"
-  },
-  {
-    "date": "2026-06-27T13:57:28Z",
-    "domain": "Novelty",
-    "exp_id": "a880054f",
-    "filename": "maximum_size_of_pairwise_orthogonal_italian_square.json",
-    "pkg_num": 126,
-    "quality": "partial",
-    "quality_score": 0.3646502272727273,
-    "quality_tier": "bronze",
-    "title": "The Maximum Size of a Family of Mutually Orthogonal Italian Squares is n-1, Attained at Prime Powers"
-  },
-  {
-    "date": "2026-06-27T13:56:02Z",
-    "domain": "Applications",
-    "exp_id": "f0d5604e",
-    "filename": "conjecture_the_limit_of_average_stack_sorting_dept.json",
-    "pkg_num": 125,
-    "quality": "partial",
-    "quality_score": 0.5150000000000001,
-    "quality_tier": "bronze",
-    "title": "Defant's Stack-Sorting Depth Constant: lambda = (3/5)(7 - 8 ln 2)"
-  },
-  {
     "date": "2026-06-27T13:53:28Z",
     "domain": "Novelty",
     "exp_id": "eb034b80",
@@ -7075,17 +6184,6 @@ window.PACKAGE_INDEX = [
     "quality_score": 0.8360800000000002,
     "quality_tier": "silver",
     "title": "Riemann-Roch Theory for Finite Graphs: Chip-Firing and Baker-Norine Rank"
-  },
-  {
-    "date": "2026-06-27T11:58:05Z",
-    "domain": "Applications",
-    "exp_id": "a151a9c3",
-    "filename": "birkhoff_polytopes_have_the_clique_face_property_o.json",
-    "pkg_num": 123,
-    "quality": "partial",
-    "quality_score": 0.5405,
-    "quality_tier": "bronze",
-    "title": "Birkhoff Polytopes Have the Clique-Face Property Only in Dimensions n <= 2"
   },
   {
     "date": "2026-06-27T11:55:01Z",
@@ -7121,39 +6219,6 @@ window.PACKAGE_INDEX = [
     "title": "Sharp Deterministic Approximate Caratheodory and Iterated Delaunay Refinement"
   },
   {
-    "date": "2026-06-27T09:16:14Z",
-    "domain": "Applications",
-    "exp_id": "10d0f89d",
-    "filename": "perfect_numbers_structure_of_even_perfects.json",
-    "pkg_num": 119,
-    "quality": "partial",
-    "quality_score": 0.38911390243902444,
-    "quality_tier": "bronze",
-    "title": "Perfect Numbers: The Abundancy Index and the Structure of Even Perfects"
-  },
-  {
-    "date": "2026-06-27T08:48:49Z",
-    "domain": "Novelty",
-    "exp_id": "982feb93",
-    "filename": "exponential_information_complexity_lower_bound_for.json",
-    "pkg_num": 118,
-    "quality": "partial",
-    "quality_score": 0.35044872340425537,
-    "quality_tier": "bronze",
-    "title": "Exponential Information Complexity Lower Bound for Periodic L_p-Discrepancy via a Duality Framework"
-  },
-  {
-    "date": "2026-06-27T08:45:52Z",
-    "domain": "Applications",
-    "exp_id": "d6c98458",
-    "filename": "collatz_conjecture.json",
-    "pkg_num": 117,
-    "quality": "partial",
-    "quality_score": 0.4269881818181818,
-    "quality_tier": "bronze",
-    "title": "Unconditional Cycle Obstructions for the Collatz Step Map"
-  },
-  {
     "date": "2026-06-27T08:16:34Z",
     "domain": "Applications",
     "exp_id": "08b15f3b",
@@ -7187,39 +6252,6 @@ window.PACKAGE_INDEX = [
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
   {
-    "date": "2026-06-27T06:26:20Z",
-    "domain": "Novelty",
-    "exp_id": "7f4f0e8d",
-    "filename": "proof_strategy_mining_from_deep_mathematics.json",
-    "pkg_num": 113,
-    "quality": "partial",
-    "quality_score": 0.505788,
-    "quality_tier": "bronze",
-    "title": "Proof Strategy Mining: The Primitive Divisor Schema for Strong Divisibility Sequences"
-  },
-  {
-    "date": "2026-06-27T05:38:36Z",
-    "domain": "Applications",
-    "exp_id": "8e92c627",
-    "filename": "exact_asymptotic_value_of_the_average_stack_sortin.json",
-    "pkg_num": 112,
-    "quality": "partial",
-    "quality_score": 0.5924299999999999,
-    "quality_tier": "bronze",
-    "title": "Exact Asymptotics of Stack-Sorting Depth: Invariants, Fixed Points, and the Catalan Law"
-  },
-  {
-    "date": "2026-06-27T05:35:06Z",
-    "domain": "Applications",
-    "exp_id": "688a9cbf",
-    "filename": "strange_attractors_as_algebraic_objects.json",
-    "pkg_num": 111,
-    "quality": "partial",
-    "quality_score": 0.57899,
-    "quality_tier": "bronze",
-    "title": "Strange Attractors as Algebraic Objects: A Finite-Nerve Obstruction for the Dyadic Solenoid"
-  },
-  {
     "date": "2026-06-27T05:33:47Z",
     "domain": "Novelty",
     "exp_id": "802107a7",
@@ -7242,17 +6274,6 @@ window.PACKAGE_INDEX = [
     "title": "Tightness of the Unit-Shift Bound for Euler's Totient Function"
   },
   {
-    "date": "2026-06-27T04:10:36Z",
-    "domain": "Novelty",
-    "exp_id": "887d83d7",
-    "filename": "resolution_of_erds_problem_550_on_tree_versus_comp.json",
-    "pkg_num": 108,
-    "quality": "partial",
-    "quality_score": 0.5740799999999999,
-    "quality_tier": "bronze",
-    "title": "Resolution of the Foundational Cases of Erdos Problem 550 (Tree vs. Complete Multipartite Ramsey Numbers)"
-  },
-  {
     "date": "2026-06-27T03:44:11Z",
     "domain": "Novelty",
     "exp_id": "11521acf",
@@ -7262,17 +6283,6 @@ window.PACKAGE_INDEX = [
     "quality_score": 0.72888,
     "quality_tier": "silver",
     "title": "Symmetric-Key Cryptanalysis: Four Rounds of AES Have at Least 25 Active S-boxes"
-  },
-  {
-    "date": "2026-06-27T03:19:25Z",
-    "domain": "Novelty",
-    "exp_id": "4efe75bb",
-    "filename": "close_proofs_alien_number_systems_beyond_base_n.json",
-    "pkg_num": 106,
-    "quality": "partial",
-    "quality_score": 0.5579999999999999,
-    "quality_tier": "bronze",
-    "title": "Alien Number Systems: Beyond Base-N (Mixed-Radix Positional Systems)"
   },
   {
     "date": "2026-06-27T02:11:13Z",
@@ -7286,61 +6296,6 @@ window.PACKAGE_INDEX = [
     "title": "Maximum Rank of Self-Dual String C-Groups for the Alternating Groups A_{4m+3}"
   },
   {
-    "date": "2026-06-27T00:49:29Z",
-    "domain": "Novelty",
-    "exp_id": "f881b568",
-    "filename": "kakeya_conjecture_known_cases_and_bounds.json",
-    "pkg_num": 104,
-    "quality": "partial",
-    "quality_score": 0.50863,
-    "quality_tier": "bronze",
-    "title": "The Kakeya Problem in the Finite-Field Model: Bush Counts, Incidences, and Sumset Growth"
-  },
-  {
-    "date": "2026-06-26T22:49:48Z",
-    "domain": "Applications",
-    "exp_id": "5544e8f5",
-    "filename": "lambda_calculus_church_rosser_and_normalization.json",
-    "pkg_num": 103,
-    "quality": "partial",
-    "quality_score": 0.5449999999999999,
-    "quality_tier": "bronze",
-    "title": "Lambda Calculus: Church-Rosser and Normalization"
-  },
-  {
-    "date": "2026-06-26T22:43:54Z",
-    "domain": "Novelty",
-    "exp_id": "3ffd492f",
-    "filename": "optimality_of_the_density_threshold_for_linear_run.json",
-    "pkg_num": 102,
-    "quality": "partial",
-    "quality_score": 0.3990000000000001,
-    "quality_tier": "bronze",
-    "title": "Optimality of the Density Threshold for Linear r-Uniform Hypergraphs"
-  },
-  {
-    "date": "2026-06-26T22:13:13Z",
-    "domain": "Novelty",
-    "exp_id": "6a7e7235",
-    "filename": "a_4k4_order_bound_for_connectivity_preserving_hami.json",
-    "pkg_num": 101,
-    "quality": "partial",
-    "quality_score": 0.5980399999999999,
-    "quality_tier": "bronze",
-    "title": "A 4k+4 Order Bound for Connectivity-Preserving Hamiltonian Prescribed-End Paths"
-  },
-  {
-    "date": "2026-06-26T21:09:03Z",
-    "domain": "Novelty",
-    "exp_id": "f36ed9b7",
-    "filename": "tight_asymptotic_lower_bound_for_the_maximum_numbe.json",
-    "pkg_num": 100,
-    "quality": "partial",
-    "quality_score": 0.54535,
-    "quality_tier": "bronze",
-    "title": "Tight \u0398(n^{2w}) Bound for Strict Alternating Cycles in Width-w Posets"
-  },
-  {
     "date": "2026-06-26T20:49:07Z",
     "domain": "Novelty",
     "exp_id": "bdb5ae9b",
@@ -7350,17 +6305,6 @@ window.PACKAGE_INDEX = [
     "quality_score": 0.67947,
     "quality_tier": "bronze",
     "title": "Quadratic-Irrational Density in the Ratio Spectrum: The Topological Floor"
-  },
-  {
-    "date": "2026-06-26T20:27:37Z",
-    "domain": "Applications",
-    "exp_id": "1f3047ef",
-    "filename": "representation_theory_character_tables_of_s_n.json",
-    "pkg_num": 98,
-    "quality": "partial",
-    "quality_score": 0.45104400000000006,
-    "quality_tier": "bronze",
-    "title": "Representation Theory: The Shape of the S_n Character Table via Partitions"
   },
   {
     "date": "2026-06-26T19:55:02Z",
@@ -7429,39 +6373,6 @@ window.PACKAGE_INDEX = [
     "title": "Quantum Mechanics: Spectral Theory of the Hydrogen Atom"
   },
   {
-    "date": "2026-06-26T16:12:03Z",
-    "domain": "Applications",
-    "exp_id": "1ce6e294",
-    "filename": "deepening_alien_number_systems_beyond_base_n.json",
-    "pkg_num": 91,
-    "quality": "partial",
-    "quality_score": 0.571318,
-    "quality_tier": "bronze",
-    "title": "Alien Number Systems: Mixed-Radix Positional Systems Beyond Base-N"
-  },
-  {
-    "date": "2026-06-26T14:32:09Z",
-    "domain": "Applications",
-    "exp_id": "a2f737c1",
-    "filename": "realization_of_all_even_incoherence_indices_4_by_m.json",
-    "pkg_num": 90,
-    "quality": "partial",
-    "quality_score": 0.4444762417582418,
-    "quality_tier": "bronze",
-    "title": "Realization of All Even Incoherence Indices \u2265 4 by Maximal Standard Frames"
-  },
-  {
-    "date": "2026-06-26T14:30:08Z",
-    "domain": "Novelty",
-    "exp_id": "7281fa18",
-    "filename": "row_exchange_under_eventual_contraction_for_the_in.json",
-    "pkg_num": 89,
-    "quality": "partial",
-    "quality_score": 0.5050399999999999,
-    "quality_tier": "bronze",
-    "title": "Row-Exchange Invariance under Eventual Contraction for the Infinite Asymmetric Five-Vertex Half-Strip"
-  },
-  {
     "date": "2026-06-26T13:58:55Z",
     "domain": "Cryptography",
     "exp_id": "ab42f98e",
@@ -7482,17 +6393,6 @@ window.PACKAGE_INDEX = [
     "quality_score": 0.6968799999999999,
     "quality_tier": "bronze",
     "title": "No Non-Trivial Extensions of Maximal Symplectic Groups on the Superspecial K3 Surface: Arithmetic Tameness in Characteristic p > 11"
-  },
-  {
-    "date": "2026-06-26T13:15:56Z",
-    "domain": "Applications",
-    "exp_id": "cb117fe9",
-    "filename": "discriminant_of_the_hermitian_bianchi_lattice_s_k.json",
-    "pkg_num": 86,
-    "quality": "partial",
-    "quality_score": 0.531112,
-    "quality_tier": "bronze",
-    "title": "Discriminant of the Hermitian Bianchi Lattice S_K = Herm\u2082(O_K)"
   },
   {
     "date": "2026-06-26T13:14:33Z",
@@ -7550,17 +6450,6 @@ window.PACKAGE_INDEX = [
     "title": "Betti-Whittaker Period Relation for Contragredient Representations of GL(n)"
   },
   {
-    "date": "2026-06-26T10:38:07Z",
-    "domain": "Novelty",
-    "exp_id": "da5cb31c",
-    "filename": "homotopy_equivalence_of_line_transversal_spaces_to.json",
-    "pkg_num": 80,
-    "quality": "partial",
-    "quality_score": 0.5496381818181819,
-    "quality_tier": "bronze",
-    "title": "Homotopy Equivalence of Line-Transversal Spaces to Spheres"
-  },
-  {
     "date": "2026-06-26T09:32:02Z",
     "domain": "MachineLearning",
     "exp_id": "ad454ca1",
@@ -7581,72 +6470,6 @@ window.PACKAGE_INDEX = [
     "quality_score": 0.67919,
     "quality_tier": "bronze",
     "title": "Domain Finiteness Bridge: From Pigeonhole Counting to Field Structure"
-  },
-  {
-    "date": "2026-06-26T06:48:58Z",
-    "domain": "Novelty",
-    "exp_id": "01ec1037",
-    "filename": "signless_laplacian_spectral_radius_of_pure_simplic.json",
-    "pkg_num": 77,
-    "quality": "partial",
-    "quality_score": 0.55696,
-    "quality_tier": "bronze",
-    "title": "Signless Laplacian Spectral Radius of Pure Simplicial Complexes with Vanishing Link Homology"
-  },
-  {
-    "date": "2026-06-26T06:10:37Z",
-    "domain": "Novelty",
-    "exp_id": "dfb56ea4",
-    "filename": "navier_stokes_existence_and_smoothness.json",
-    "pkg_num": 76,
-    "quality": "partial",
-    "quality_score": 0.52355,
-    "quality_tier": "bronze",
-    "title": "Two Anti-Blowup Mechanisms Unified: Viscous Energy Dissipation and Tropical Idempotency"
-  },
-  {
-    "date": "2026-06-26T05:32:32Z",
-    "domain": "Geometry",
-    "exp_id": "ab7f1188",
-    "filename": "duality_of_sublevel_set_homotopy_types_for_rc_func.json",
-    "pkg_num": 75,
-    "quality": "partial",
-    "quality_score": 0.49574803827751207,
-    "quality_tier": "bronze",
-    "title": "Duality of Sublevel-Set Homotopy Types for RC Functions on Finite-Dimensional Banach Spaces"
-  },
-  {
-    "date": "2026-06-26T03:43:29Z",
-    "domain": "Novelty",
-    "exp_id": "f6b20d87",
-    "filename": "exact_value_of_the_binomial_gcd_in_oeis_a080170.json",
-    "pkg_num": 74,
-    "quality": "partial",
-    "quality_score": 0.554,
-    "quality_tier": "bronze",
-    "title": "Exact Value of the Binomial GCD in OEIS A080170"
-  },
-  {
-    "date": "2026-06-26T02:41:47Z",
-    "domain": "Logic",
-    "exp_id": "9e1a2820",
-    "filename": "generalized_gawronmiskaulas_unboundedness_for_arbi.json",
-    "pkg_num": 73,
-    "quality": "partial",
-    "quality_score": 0.52704,
-    "quality_tier": "bronze",
-    "title": "Generalized Gawron\u2013Miska\u2013Ulas Unboundedness for Arbitrary Integer Bases"
-  },
-  {
-    "date": "2026-06-26T01:56:40Z",
-    "domain": "Algebra",
-    "exp_id": "25d6b815",
-    "filename": "central_gaussian_coefficient_maximizes_binary_2_bi.json",
-    "pkg_num": 72,
-    "quality": "partial",
-    "quality_score": 0.5960000000000001,
-    "quality_tier": "bronze",
-    "title": "Central Gaussian Coefficient Maximizes Binary 2-Binomial Class Size"
   },
   {
     "date": "2026-06-26T01:35:11Z",
@@ -7704,50 +6527,6 @@ window.PACKAGE_INDEX = [
     "title": "The Erd\u0151s\u2013Straus Conjecture: Parametric Families and a Prime-Core Reduction"
   },
   {
-    "date": "2026-06-25T22:45:08Z",
-    "domain": "Algebra",
-    "exp_id": "a8f472f7",
-    "filename": "existence_of_a_satisfactory_multiplier_vector_for_.json",
-    "pkg_num": 66,
-    "quality": "partial",
-    "quality_score": 0.56056,
-    "quality_tier": "bronze",
-    "title": "Existence of a Satisfactory Multiplier Vector for 2D Lacunary Distance Graphs"
-  },
-  {
-    "date": "2026-06-25T22:37:12Z",
-    "domain": "Cryptography",
-    "exp_id": "0cb84107",
-    "filename": "primes_of_the_form_n1.json",
-    "pkg_num": 65,
-    "quality": "partial",
-    "quality_score": 0.506378,
-    "quality_tier": "bronze",
-    "title": "Primes of the Form n\u00b2 + 1: The Verified Local Arithmetic Behind Landau's Problem"
-  },
-  {
-    "date": "2026-06-25T20:03:23Z",
-    "domain": "Physics",
-    "exp_id": "6218af01",
-    "filename": "irrational_densities_from_parabola_circumscribed_q.json",
-    "pkg_num": 64,
-    "quality": "partial",
-    "quality_score": 0.550667741935484,
-    "quality_tier": "bronze",
-    "title": "Irrational Densities from Parabola-Circumscribed Quadrilaterals in Aperiodic Tilings"
-  },
-  {
-    "date": "2026-06-25T18:18:38Z",
-    "domain": "Applications",
-    "exp_id": "364ec557",
-    "filename": "eml_differential_algebra_closure_properties.json",
-    "pkg_num": 63,
-    "quality": "partial",
-    "quality_score": 0.57649,
-    "quality_tier": "bronze",
-    "title": "EML Differential Algebra: Closure Properties of Log-Free Exponential Polynomials"
-  },
-  {
     "date": "2026-06-25T17:39:54Z",
     "domain": "Algebra",
     "exp_id": "7ae59772",
@@ -7768,17 +6547,6 @@ window.PACKAGE_INDEX = [
     "quality_score": 0.78684,
     "quality_tier": "silver",
     "title": "P\u00f3lya Tree Coefficient Recurrence: A Divisor Bridge"
-  },
-  {
-    "date": "2026-06-25T14:45:59Z",
-    "domain": "Novelty",
-    "exp_id": "fb5aee47",
-    "filename": "brocard_ramanujan_triangular_classification.json",
-    "pkg_num": 60,
-    "quality": "partial",
-    "quality_score": 0.30151606086956523,
-    "quality_tier": "bronze",
-    "title": "Brocard-Ramanujan Triangular Classification: Factorials Are Almost Never Squares"
   },
   {
     "date": "2026-06-25T12:38:53Z",
@@ -7814,17 +6582,6 @@ window.PACKAGE_INDEX = [
     "title": "Cutting Corners: The Polygon / Associahedron Model of the Finite Type A Cluster Algebra of Gr(2, m)"
   },
   {
-    "date": "2026-06-25T07:04:23Z",
-    "domain": "Novelty",
-    "exp_id": "ff8131d4",
-    "filename": "minimal_minor_closed_classes_below_32_have_single_.json",
-    "pkg_num": 56,
-    "quality": "partial",
-    "quality_score": 0.4658475833333334,
-    "quality_tier": "bronze",
-    "title": "Minimal Minor-Closed Classes Below Density 3/2 Have Single Forbidden Minors"
-  },
-  {
     "date": "2026-06-25T05:21:01Z",
     "domain": "Novelty",
     "exp_id": "7ca7bb8c",
@@ -7834,17 +6591,6 @@ window.PACKAGE_INDEX = [
     "quality_score": 0.886574,
     "quality_tier": "silver",
     "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology: Exact Betti-Count Recovery from Noisy Barcodes"
-  },
-  {
-    "date": "2026-06-25T05:16:14Z",
-    "domain": "Logic",
-    "exp_id": "4ab1c862",
-    "filename": "generalizedperiod_relation_for_betti_whittaker_per.json",
-    "pkg_num": 54,
-    "quality": "partial",
-    "quality_score": 0.5380114482758622,
-    "quality_tier": "bronze",
-    "title": "Regularity-Free Functional Equation for Betti\u2013Whittaker Periods and Contragredients of GL(n)"
   },
   {
     "date": "2026-06-25T03:40:22Z",
@@ -7867,17 +6613,6 @@ window.PACKAGE_INDEX = [
     "quality_score": 0.708,
     "quality_tier": "silver",
     "title": "The Pentagon Census: C5-Decomposition Divisibility and the 5/8 Threshold"
-  },
-  {
-    "date": "2026-06-24T23:31:48Z",
-    "domain": "Novelty",
-    "exp_id": "226a5c12",
-    "filename": "bridge_galois_connections_between_order_theory_and.json",
-    "pkg_num": 51,
-    "quality": "partial",
-    "quality_score": 0.57117,
-    "quality_tier": "bronze",
-    "title": "Galois Connections as a Bridge Between Order Theory and Topology"
   },
   {
     "date": "2026-06-24T23:28:31Z",
@@ -7913,28 +6648,6 @@ window.PACKAGE_INDEX = [
     "title": "Interpolation of Partial-Twuality Polynomials in Binary Delta-Matroids"
   },
   {
-    "date": "2026-06-24T21:30:24Z",
-    "domain": "Novelty",
-    "exp_id": "18853638",
-    "filename": "corrected_uniform_witness_bound_for_d1_uniform_fam.json",
-    "pkg_num": 47,
-    "quality": "partial",
-    "quality_score": 0.42325214328358207,
-    "quality_tier": "bronze",
-    "title": "The Uniform Witness Bound for (d+1)-Uniform Families with Prescribed Missing-Trace Size"
-  },
-  {
-    "date": "2026-06-24T20:28:07Z",
-    "domain": "Physics",
-    "exp_id": "50adb4ee",
-    "filename": "necessity_of_homological_condition_for_spectral_ra.json",
-    "pkg_num": 46,
-    "quality": "partial",
-    "quality_score": 0.49653899999999995,
-    "quality_tier": "bronze",
-    "title": "Necessity of a Homological Condition for an Extremal Spectral-Radius Bound: The Cone Mechanism"
-  },
-  {
     "date": "2026-06-24T18:59:38Z",
     "domain": "Bridges",
     "exp_id": "a1973066",
@@ -7944,17 +6657,6 @@ window.PACKAGE_INDEX = [
     "quality_score": 0.7684399999999999,
     "quality_tier": "silver",
     "title": "Brocard's Problem n! + 1 = m^2: A Borel-Cantelli Finiteness Theorem"
-  },
-  {
-    "date": "2026-06-24T16:21:17Z",
-    "domain": "Geometry",
-    "exp_id": "c235005e",
-    "filename": "symmetrized_monomial_generates_t_ideal_in_acyclic_.json",
-    "pkg_num": 44,
-    "quality": "partial",
-    "quality_score": 0.5303045714285715,
-    "quality_tier": "bronze",
-    "title": "The Shape of Nothing: Symmetrized Monomial Identities of Acyclic Path Algebras"
   },
   {
     "date": "2026-06-24T13:16:01Z",
@@ -7968,17 +6670,6 @@ window.PACKAGE_INDEX = [
     "title": "The Odd-Clique Obstruction for Conformability of Odd-Order Regular Graphs"
   },
   {
-    "date": "2026-06-24T12:15:09Z",
-    "domain": "Novelty",
-    "exp_id": "758d973b",
-    "filename": "degree_normalized_linked_tree_cut_decompositions_f.json",
-    "pkg_num": 42,
-    "quality": "partial",
-    "quality_score": 0.51744,
-    "quality_tier": "bronze",
-    "title": "Degree-Normalized Linked Tree-Cut Decompositions for Locally Finite Graphs"
-  },
-  {
     "date": "2026-06-24T10:35:56Z",
     "domain": "Novelty",
     "exp_id": "91104b94",
@@ -7988,17 +6679,6 @@ window.PACKAGE_INDEX = [
     "quality_score": 0.67432,
     "quality_tier": "bronze",
     "title": "Integrated Information (Phi): A Formally Verified Structural Core"
-  },
-  {
-    "date": "2026-06-24T09:33:05Z",
-    "domain": "Novelty",
-    "exp_id": "f0048c68",
-    "filename": "symmetric_group_generation_probability.json",
-    "pkg_num": 40,
-    "quality": "partial",
-    "quality_score": 0.4162,
-    "quality_tier": "bronze",
-    "title": "The Three-Quarter Generation Ceiling for the Symmetric Group"
   },
   {
     "date": "2026-06-24T08:38:58Z",
@@ -8032,72 +6712,6 @@ window.PACKAGE_INDEX = [
     "quality_score": 0.6342000000000001,
     "quality_tier": "bronze",
     "title": "Tropical Curves and Chip-Firing: Degree Invariance and the Canonical Genus Formula"
-  },
-  {
-    "date": "2026-06-24T04:39:42Z",
-    "domain": "Geometry",
-    "exp_id": "146bc8b0",
-    "filename": "homotopy_type_theory_foundations.json",
-    "pkg_num": 36,
-    "quality": "partial",
-    "quality_score": 0.48341799999999996,
-    "quality_tier": "bronze",
-    "title": "Homotopy Type Theory Foundations: Identity Types, Higher Inductive Types, and the Boundary of Univalence"
-  },
-  {
-    "date": "2026-06-23T19:25:16Z",
-    "domain": "Cryptography",
-    "exp_id": "5a2118a3",
-    "filename": "quantum_key_distribution_bb84_security_proof.json",
-    "pkg_num": 35,
-    "quality": "partial",
-    "quality_score": 0.49160000000000004,
-    "quality_tier": "bronze",
-    "title": "Quantum Key Distribution: A Formally Verified BB84 Security Proof"
-  },
-  {
-    "date": "2026-06-23T15:01:50Z",
-    "domain": "Novelty",
-    "exp_id": "0de5396c",
-    "filename": "rucker_gnarl_and_continuous_valued_cellular_automa.json",
-    "pkg_num": 34,
-    "quality": "partial",
-    "quality_score": 0.5094479615384615,
-    "quality_tier": "bronze",
-    "title": "The Knife-Edge of Chaos: Continuous-Valued Cellular Automata, the Diffusion Threshold, and Rucker's Gnarl"
-  },
-  {
-    "date": "2026-06-23T08:30:51Z",
-    "domain": "Computation",
-    "exp_id": "07255b71",
-    "filename": "sierpiski_numbers_covering_systems.json",
-    "pkg_num": 33,
-    "quality": "partial",
-    "quality_score": 0.5811999999999999,
-    "quality_tier": "bronze",
-    "title": "Sierpinski Numbers via Covering Systems: A Certificate Framework"
-  },
-  {
-    "date": "2026-06-23T07:38:24Z",
-    "domain": "MachineLearning",
-    "exp_id": "62850b85",
-    "filename": "attention_mechanisms_mathematical_properties.json",
-    "pkg_num": 32,
-    "quality": "partial",
-    "quality_score": 0.4446527272727273,
-    "quality_tier": "bronze",
-    "title": "Convex-Hull Confinement and Log-Partition Bounds for Softmax Self-Attention"
-  },
-  {
-    "date": "2026-06-23T07:31:52Z",
-    "domain": "Geometry",
-    "exp_id": "54153a72",
-    "filename": "convex_geometry_brunn_minkowski_theory.json",
-    "pkg_num": 31,
-    "quality": "partial",
-    "quality_score": 0.56159,
-    "quality_tier": "bronze",
-    "title": "Convex Geometry: The One-Dimensional Brunn\u2013Minkowski Inequality"
   },
   {
     "date": "2026-06-23T01:40:46Z",
@@ -11567,14 +10181,6 @@ window.PACKAGE_DB_INDEX = {
     "source_exp_ids": [],
     "title": "The One-Step Tax: A 1-Lipschitz Functor from Valuation-Depth Measures to Tropical Valuation Objects"
   },
-  "a_4k4_order_bound_for_connectivity_preserving_hami.json": {
-    "domain": "Novelty",
-    "exp_id": "6a7e7235",
-    "source_exp_ids": [
-      "2606.21383v1"
-    ],
-    "title": "A 4k+4 Order Bound for Connectivity-Preserving Hamiltonian Prescribed-End Paths"
-  },
   "a_functorial_tropical_lower_bound_for_rips_connect.json": {
     "domain": "Bridges",
     "exp_id": "6feb33cc",
@@ -11588,14 +10194,6 @@ window.PACKAGE_DB_INDEX = {
       "2606.22997v1"
     ],
     "title": "A Prime-Power Criterion for the GCD of the Interior of a Pascal Row"
-  },
-  "a_sharp_upper_bound_for_uniform_vcdimension_famili.json": {
-    "domain": "Novelty",
-    "exp_id": "7e2e6a70",
-    "source_exp_ids": [
-      "2606.23469v1"
-    ],
-    "title": "A Sharp Upper Bound for Uniform VC-Dimension Families via Layered Stars"
   },
   "aboriginal_kinship_as_group_theory_dreamtime_algeb.json": {
     "domain": "Novelty",
@@ -11984,14 +10582,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Atkin-Lehner Genus Zero Criterion for Giampietro-Darmon Factorization"
   },
-  "attention_mechanisms_mathematical_properties.json": {
-    "domain": "MachineLearning",
-    "exp_id": "62850b85",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "title": "Convex-Hull Confinement and Log-Partition Bounds for Softmax Self-Attention"
-  },
   "automatic_sequences_and_the_halting_problem_when_i.json": {
     "domain": "MachineLearning",
     "exp_id": "1f4bbef7",
@@ -12015,14 +10605,6 @@ window.PACKAGE_DB_INDEX = {
       "2606.24016v1"
     ],
     "title": "Balanced Side Lengths Maximize Spanning Trees in Free-Boundary Product Grids"
-  },
-  "ballas_conjecture_for___13.json": {
-    "domain": "Applications",
-    "exp_id": "946cfca3",
-    "source_exp_ids": [
-      "2606.29392v1"
-    ],
-    "title": "Balla's Conjecture for the Angle arccos(1/3): A Rank-Multiplicity Reduction"
   },
   "bayesian_werewolf_optimal_strategy_for_social_dedu.json": {
     "domain": "Applications",
@@ -12064,14 +10646,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "The Analytic Rank of an L-Function: A Formal Skeleton for Birch\u2013Swinnerton-Dyer"
   },
-  "birkhoff_polytopes_have_the_clique_face_property_o.json": {
-    "domain": "Applications",
-    "exp_id": "a151a9c3",
-    "source_exp_ids": [
-      "2606.20430v1"
-    ],
-    "title": "Birkhoff Polytopes Have the Clique-Face Property Only in Dimensions n <= 2"
-  },
   "borges_library_of_babel_combinatorics_of_everythin.json": {
     "domain": "Geometry",
     "exp_id": "fd569acd",
@@ -12104,14 +10678,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Bridge: The Subobject Lattice of a Topos \u2014 Double Negation as a Nucleus"
   },
-  "bridge_galois_connections_between_order_theory_and.json": {
-    "domain": "Novelty",
-    "exp_id": "226a5c12",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "title": "Galois Connections as a Bridge Between Order Theory and Topology"
-  },
   "bridge_ix_interleavinggeodesiclean_turned_the_pers.json": {
     "domain": "Novelty",
     "exp_id": "2ca3f901",
@@ -12143,14 +10709,6 @@ window.PACKAGE_DB_INDEX = {
       "seed"
     ],
     "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
-  },
-  "brocard_ramanujan_triangular_classification.json": {
-    "domain": "Novelty",
-    "exp_id": "fb5aee47",
-    "source_exp_ids": [
-      "2606.23485v1"
-    ],
-    "title": "Brocard-Ramanujan Triangular Classification: Factorials Are Almost Never Squares"
   },
   "brocards_problem_n__1__m.json": {
     "domain": "Bridges",
@@ -12240,14 +10798,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Cellular Automata at the Ordinals: Transfinite Computation"
   },
-  "central_gaussian_coefficient_maximizes_binary_2_bi.json": {
-    "domain": "Algebra",
-    "exp_id": "25d6b815",
-    "source_exp_ids": [
-      "2606.23426v1"
-    ],
-    "title": "Central Gaussian Coefficient Maximizes Binary 2-Binomial Class Size"
-  },
   "certified_adversarial_robustness_via_sheaf_cohomol.json": {
     "domain": "Novelty",
     "exp_id": "230b77ce",
@@ -12263,14 +10813,6 @@ window.PACKAGE_DB_INDEX = {
       "seed"
     ],
     "title": "Certified Novelty Detection for Theorem Provers"
-  },
-  "chain_covers_in_the_boolean_lattice.json": {
-    "domain": "Cryptography",
-    "exp_id": "a793b4d3",
-    "source_exp_ids": [
-      "2606.29385v2"
-    ],
-    "title": "Chain Covers in the Boolean Lattice"
   },
   "chaos_and_the_three_body_problem_lyapunov_exponent.json": {
     "domain": "Physics",
@@ -12288,14 +10830,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Chaos as a Computable Shadow: Finite-Horizon Certificates for Real Programs"
   },
-  "character_class_contradiction.json": {
-    "domain": "Novelty",
-    "exp_id": "935abbfb",
-    "source_exp_ids": [
-      "2606.22010v1"
-    ],
-    "title": "The Character Class Contradiction: A Rank-One Zeta Computation"
-  },
   "characterization_of_balanced_distance_hereditary_g.json": {
     "domain": "Bridges",
     "exp_id": "f91c88c3",
@@ -12312,14 +10846,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Characterization of Bipartite Partial Duals of Orientable Hypermaps"
   },
-  "characterization_of_extremal_graphs_for_positive_l.json": {
-    "domain": "Novelty",
-    "exp_id": "4231f6a2",
-    "source_exp_ids": [
-      "2607.02297v1"
-    ],
-    "title": "Characterization of Extremal Graphs for Positive Lin-Lu-Yau Curvature"
-  },
   "characterization_of_limit_points_below_the_golden_.json": {
     "domain": "Novelty",
     "exp_id": "5b1ced03",
@@ -12327,22 +10853,6 @@ window.PACKAGE_DB_INDEX = {
       "2606.28162v1"
     ],
     "title": "Characterization of Limit Points Below the Golden-Ratio Threshold for Largest Matching Roots"
-  },
-  "characterization_of_modular_rank_four_nahm_sums_vi.json": {
-    "domain": "Applications",
-    "exp_id": "33ec0c7d",
-    "source_exp_ids": [
-      "2606.25866v1"
-    ],
-    "title": "Characterization of Modular Rank-Four Nahm Sums via the Discriminant Condition"
-  },
-  "characterization_of_the_aharoni_korman_conjecture_.json": {
-    "domain": "Logic",
-    "exp_id": "2058237b",
-    "source_exp_ids": [
-      "2607.02500v1"
-    ],
-    "title": "Characterization of the Aharoni-Korman Property via Saturated Chains: Structural Lemmas and a Refutation of the Obstruction Direction"
   },
   "characterizing_finite_posets_whose_probabilistic_p.json": {
     "domain": "Applications",
@@ -12384,22 +10894,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Classification of Discrete d-Pseudomanifolds at the Vertex Threshold via the Minimal Projective Plane"
   },
-  "classification_of_perfect_cubes_in_14_gonal_number.json": {
-    "domain": "Novelty",
-    "exp_id": "c9fb85eb",
-    "source_exp_ids": [
-      "2606.28227v1"
-    ],
-    "title": "Classification of Perfect Cubes in 14-gonal Numbers"
-  },
-  "classification_of_regular_4maniplexes_via_tetraval.json": {
-    "domain": "Tropical",
-    "exp_id": "e29ffbac",
-    "source_exp_ids": [
-      "2606.27987v1"
-    ],
-    "title": "Classification of Regular 4-Maniplexes via Tetravalent Graph Censuses"
-  },
   "close_proofs_algebraic_and_order_theoretic_backbon.json": {
     "domain": "Applications",
     "exp_id": "d5fd302f",
@@ -12407,14 +10901,6 @@ window.PACKAGE_DB_INDEX = {
       "ccb9b034"
     ],
     "title": "Close Proofs: Algebraic and Order-Theoretic Backbone of Stereographic Capacity Theory"
-  },
-  "close_proofs_alien_number_systems_beyond_base_n.json": {
-    "domain": "Novelty",
-    "exp_id": "4efe75bb",
-    "source_exp_ids": [
-      "f25c8810"
-    ],
-    "title": "Alien Number Systems: Beyond Base-N (Mixed-Radix Positional Systems)"
   },
   "close_proofs_applicationsboltzmannbridgeinterleavi.json": {
     "domain": "Novelty",
@@ -13408,14 +11894,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Cographs Are a Self-Complementary Hereditary Class: Foundations for Generalized Spectral Closure"
   },
-  "collatz_conjecture.json": {
-    "domain": "Applications",
-    "exp_id": "d6c98458",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "title": "Unconditional Cycle Obstructions for the Collatz Step Map"
-  },
   "colorful_carathodory_theorem_for_spanning_k_trees_.json": {
     "domain": "Applications",
     "exp_id": "45e15555",
@@ -13423,14 +11901,6 @@ window.PACKAGE_DB_INDEX = {
       "2607.01143v1"
     ],
     "title": "Colorful Carath\u00e9odory over Spanning k-Trees: Polynomial-Size Witnesses"
-  },
-  "combinatorial_nerve_chain_homotopy_equivalence.json": {
-    "domain": "Cryptography",
-    "exp_id": "8f9a8a82",
-    "source_exp_ids": [
-      "2606.28047v1"
-    ],
-    "title": "The Euler Characteristic of a Covered Complex: Exact Inclusion-Exclusion and the Numerical Shadow of Nerve Reconstruction"
   },
   "combinatorial_species_exponential_generating_funct.json": {
     "domain": "Applications",
@@ -13461,14 +11931,6 @@ window.PACKAGE_DB_INDEX = {
       "2606.14529v1"
     ],
     "title": "A Norm Criterion for Linearized Frobenius Permutation Polynomials over F_{p^2}"
-  },
-  "complete_solutions_to_the_14_gonal_fourth_power_di.json": {
-    "domain": "Algebra",
-    "exp_id": "60fa5375",
-    "source_exp_ids": [
-      "2606.28227v1"
-    ],
-    "title": "Complete Solutions to the 14-gonal Fourth-Power Diophantine Equation 6n^2 - 5n = t^4"
   },
   "complexitydriven_emergence_of_spacetime_from_rando.json": {
     "domain": "Tropical",
@@ -13534,23 +11996,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Cancellation of the Leading Correction in a Spectral Heat-Kernel Expansion"
   },
-  "conjecture_on_the_structure_of_minimal_obstruction.json": {
-    "domain": "Novelty",
-    "exp_id": "e545fdf8",
-    "source_exp_ids": [
-      "2606.30475v1",
-      "2606.31240v1"
-    ],
-    "title": "Minimal Obstructions to Total Rainbow Forests Are Single Monochromatic Cycles"
-  },
-  "conjecture_the_limit_of_average_stack_sorting_dept.json": {
-    "domain": "Applications",
-    "exp_id": "f0d5604e",
-    "source_exp_ids": [
-      "2606.24110v1"
-    ],
-    "title": "Defant's Stack-Sorting Depth Constant: lambda = (3/5)(7 - 8 ln 2)"
-  },
   "conjecture_there_is_a_natural_joint_scaling_of_the.json": {
     "domain": "Algebra",
     "exp_id": "fa73eeee",
@@ -13591,14 +12036,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Constant Residue of Labeled Poset Counts Modulo 4"
   },
-  "constructing_a_canonical_f_isocrystal_to_enhance_t.json": {
-    "domain": "Applications",
-    "exp_id": "49c290ff",
-    "source_exp_ids": [
-      "2606.22637v1"
-    ],
-    "title": "The Fibonacci Law of Apparition: alpha(p) Divides p-1 or p+1"
-  },
   "constructive_lower_bound_half_of_the_co_index_theo.json": {
     "domain": "Physics",
     "exp_id": "3c80004e",
@@ -13615,14 +12052,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Constructive Analysis: A Non-Circular Approximate Intermediate Value Theorem with Explicit Modulus"
   },
-  "continued_fractions_and_diophantine_approximation.json": {
-    "domain": "Applications",
-    "exp_id": "23de9107",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "title": "Continued Fractions and Diophantine Approximation: The Lagrange Constant"
-  },
   "contragredient_period_sign_formula_for_betti_whitt.json": {
     "domain": "Applications",
     "exp_id": "dfab202e",
@@ -13630,30 +12059,6 @@ window.PACKAGE_DB_INDEX = {
       "2606.23171v1"
     ],
     "title": "Contragredient Period Sign Formula for Betti\u2013Whittaker Periods of GL(n)"
-  },
-  "convex_geometry_brunn_minkowski_theory.json": {
-    "domain": "Geometry",
-    "exp_id": "54153a72",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "title": "Convex Geometry: The One-Dimensional Brunn\u2013Minkowski Inequality"
-  },
-  "convex_position_minimizes_plane_graphs.json": {
-    "domain": "Novelty",
-    "exp_id": "650b150d",
-    "source_exp_ids": [
-      "2606.29446v1"
-    ],
-    "title": "Convex Position Minimizes Plane Graphs"
-  },
-  "corrected_uniform_witness_bound_for_d1_uniform_fam.json": {
-    "domain": "Novelty",
-    "exp_id": "18853638",
-    "source_exp_ids": [
-      "2606.24776v1"
-    ],
-    "title": "The Uniform Witness Bound for (d+1)-Uniform Families with Prescribed Missing-Trace Size"
   },
   "counterfactual_number_theory_what_if_primes_were_r.json": {
     "domain": "Geometry",
@@ -13750,14 +12155,6 @@ window.PACKAGE_DB_INDEX = {
       "e40b9050"
     ],
     "title": "The Algebraic Geometry of ReLU Decision Boundaries: A Depth-Free Tropical Correspondence and an Explicit Boundary Variety"
-  },
-  "deepening_alien_number_systems_beyond_base_n.json": {
-    "domain": "Applications",
-    "exp_id": "1ce6e294",
-    "source_exp_ids": [
-      "f25c8810"
-    ],
-    "title": "Alien Number Systems: Mixed-Radix Positional Systems Beyond Base-N"
   },
   "deepening_anti_mathematics_what_if_all_axioms_were.json": {
     "domain": "Novelty",
@@ -14812,14 +13209,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Mountain-Valley Configurations and the Hypercube Flip Graph of the Miura-ori"
   },
-  "degree_normalized_linked_tree_cut_decompositions_f.json": {
-    "domain": "Novelty",
-    "exp_id": "758d973b",
-    "source_exp_ids": [
-      "2606.20452v1"
-    ],
-    "title": "Degree-Normalized Linked Tree-Cut Decompositions for Locally Finite Graphs"
-  },
   "degree_one_triviality_threshold_for_grassmann_sche.json": {
     "domain": "Novelty",
     "exp_id": "0eb9ce9e",
@@ -14924,22 +13313,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Discrepancy of Random Linear Codes for All Hamming Balls: The Unconditional Kernel"
   },
-  "discrete_homotopy_groups_of_quasisymmetric_cubical.json": {
-    "domain": "Novelty",
-    "exp_id": "24d6d8b7",
-    "source_exp_ids": [
-      "2606.28693v2"
-    ],
-    "title": "Discrete Homotopy Groups of Quasisymmetric Cubical Sets"
-  },
-  "discriminant_of_the_hermitian_bianchi_lattice_s_k.json": {
-    "domain": "Applications",
-    "exp_id": "cb117fe9",
-    "source_exp_ids": [
-      "2606.22921v1"
-    ],
-    "title": "Discriminant of the Hermitian Bianchi Lattice S_K = Herm\u2082(O_K)"
-  },
   "domain_finiteness.json": {
     "domain": "Bridges",
     "exp_id": "d7fd1af1",
@@ -14955,14 +13328,6 @@ window.PACKAGE_DB_INDEX = {
       "seed"
     ],
     "title": "Dream Logic: Local Contradiction, Revision, and Algebraic Forgetting"
-  },
-  "duality_of_sublevel_set_homotopy_types_for_rc_func.json": {
-    "domain": "Geometry",
-    "exp_id": "ab7f1188",
-    "source_exp_ids": [
-      "2606.27004v1"
-    ],
-    "title": "Duality of Sublevel-Set Homotopy Types for RC Functions on Finite-Dimensional Banach Spaces"
   },
   "effective_computability_of_erds_550_threshold.json": {
     "domain": "Applications",
@@ -14988,14 +13353,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
   },
-  "eml_differential_algebra_closure_properties.json": {
-    "domain": "Applications",
-    "exp_id": "364ec557",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "title": "EML Differential Algebra: Closure Properties of Log-Free Exponential Polynomials"
-  },
   "eml_differential_equations_odes_with_exponential_l.json": {
     "domain": "Applications",
     "exp_id": "3ec587ed",
@@ -15020,14 +13377,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "EML Interpolation Theory: Stone\u2013Weierstrass Density and Jackson-Type Rates for Exponential\u2013Logarithmic Networks"
   },
-  "eml_kolmogorov_arnold_representation.json": {
-    "domain": "Applications",
-    "exp_id": "52a20f8b",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "title": "EML Kolmogorov\u2013Arnold Separable Rank: Counting Outer exp Terms by Matrix Sampling"
-  },
   "eml_single_operator_church_turing_thesis.json": {
     "domain": "Applications",
     "exp_id": "fbd73212",
@@ -15035,14 +13384,6 @@ window.PACKAGE_DB_INDEX = {
       "seed"
     ],
     "title": "EML Single-Operator Church-Turing Thesis: One Operator to Compute Them All"
-  },
-  "eml_transseries_asymptotic_expansions_beyond_power.json": {
-    "domain": "Applications",
-    "exp_id": "ce8c041d",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "title": "EML Transseries: A Real-Exponent Hahn-Series Model with Dominance, Asymptotic Comparison, and Ingredients of Real Closure"
   },
   "eml_universal_approximation.json": {
     "domain": "Applications",
@@ -15060,14 +13401,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "EML Universal Approximation: Single-Generator Density and Explicit Shallow Softplus Rates"
   },
-  "entanglement_inspired_algorithmic_complexity_in_no.json": {
-    "domain": "Shared",
-    "exp_id": "e39940c9",
-    "source_exp_ids": [
-      "pi_brainstorm"
-    ],
-    "title": "Entanglement-Inspired Algorithmic Complexity in Noncommutative Spaces: A Transfer-Operator View of Fibonacci Correlations"
-  },
   "entropy_bounded_computation_ebc_framew.json": {
     "domain": "Bridges",
     "exp_id": "17e8812c",
@@ -15077,14 +13410,6 @@ window.PACKAGE_DB_INDEX = {
       "seed"
     ],
     "title": "Closure-Circuit Duality: Canonical Residual Bases and Monotone Circuit Reconstruction"
-  },
-  "equality_cases_for_spectral_radius_bound_in_signed.json": {
-    "domain": "Novelty",
-    "exp_id": "72418ed5",
-    "source_exp_ids": [
-      "2606.23584v1"
-    ],
-    "title": "Equality Cases for the Maximum-Degree Spectral Bound of Signed Graphs"
   },
   "equivalence_of_oddomorphism_and_split_off_minor.json": {
     "domain": "Applications",
@@ -15126,30 +13451,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Escher Staircases in Commutative Algebra"
   },
-  "euler_mascheroni_constant_irrationality_approaches.json": {
-    "domain": "Computation",
-    "exp_id": "fdb1bb82",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "title": "The Euler-Mascheroni Constant: Series, Integral, and Irrationality Approaches"
-  },
-  "euler_product_for_autocorrelation_of_simultaneousl.json": {
-    "domain": "MachineLearning",
-    "exp_id": "3257177e",
-    "source_exp_ids": [
-      "2606.30132v1"
-    ],
-    "title": "An Euler Product for the Autocorrelation of Simultaneously Visible Lattice Points"
-  },
-  "even_harmonic_strength_of_antipodal_spherical_desi.json": {
-    "domain": "Geometry",
-    "exp_id": "e3e38cc8",
-    "source_exp_ids": [
-      "2607.01761v1"
-    ],
-    "title": "Even Harmonic Strength of Antipodal Spherical Designs Contains 2"
-  },
   "eventual_congruence_of_misre_ppositions_in_nuclear.json": {
     "domain": "Novelty",
     "exp_id": "c63aa9e3",
@@ -15157,30 +13458,6 @@ window.PACKAGE_DB_INDEX = {
       "2606.29015v1"
     ],
     "title": "Eventual Congruence of Mis\u00e8re P-Positions in Escalation Ladders"
-  },
-  "every_binvariant_edge_is_forcing_exactly_for_nearb.json": {
-    "domain": "Novelty",
-    "exp_id": "01bea6c3",
-    "source_exp_ids": [
-      "2607.00608v1"
-    ],
-    "title": "Every b-invariant Edge is Forcing Exactly for Near-Bipartite Bricks (Up to Three Classical Exceptions)"
-  },
-  "exact_2_adic_valuation_of_coefficients_of_txm_for_.json": {
-    "domain": "MachineLearning",
-    "exp_id": "1da6d023",
-    "source_exp_ids": [
-      "2606.28718v1"
-    ],
-    "title": "Exact 2-adic Valuations of the Coefficients of T(x)^m: the m=5 Law and the Failure of a Universal Formula"
-  },
-  "exact_asymptotic_value_of_the_average_stack_sortin.json": {
-    "domain": "Applications",
-    "exp_id": "8e92c627",
-    "source_exp_ids": [
-      "2606.24110v1"
-    ],
-    "title": "Exact Asymptotics of Stack-Sorting Depth: Invariants, Fixed Points, and the Catalan Law"
   },
   "exact_avdtotal_chromatic_number_of_central_graphs_.json": {
     "domain": "Applications",
@@ -15230,14 +13507,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Exact Ratio Spectrum of Lagrange Constants under Integer Linear Fractional Transformations"
   },
-  "exact_sign_law_for_coefficients_of_ramanujans_thir.json": {
-    "domain": "Novelty",
-    "exp_id": "307e78f2",
-    "source_exp_ids": [
-      "2606.27902v1"
-    ],
-    "title": "Exact Sign Law for the Coefficients of Ramanujan's Third Order Mock Theta Function rho(q)"
-  },
   "exact_topological_conjugacy_between_the_smooth_log.json": {
     "domain": "Novelty",
     "exp_id": "ac37e9f5",
@@ -15253,31 +13522,6 @@ window.PACKAGE_DB_INDEX = {
       "2607.02226v1"
     ],
     "title": "The Exact Value of the Three-Color Gallai Homothety Number of {0,2,5}"
-  },
-  "exact_value_of_the_binomial_gcd_in_oeis_a080170.json": {
-    "domain": "Novelty",
-    "exp_id": "f6b20d87",
-    "source_exp_ids": [
-      "2606.22997v1"
-    ],
-    "title": "Exact Value of the Binomial GCD in OEIS A080170"
-  },
-  "excluded_minors_for_bias_graphs_gainable_over_cycl.json": {
-    "domain": "Novelty",
-    "exp_id": "06caccbf",
-    "source_exp_ids": [
-      "2606.23826v1"
-    ],
-    "title": "Excluded Minors for Biased Graphs Gainable over Cyclic Groups Z/p: the Parallel-Class Obstruction (p+1)K\u2082"
-  },
-  "excluded_minors_for_z_n_gainable_biased_graphs.json": {
-    "domain": "Novelty",
-    "exp_id": "e0366114",
-    "source_exp_ids": [
-      "seed",
-      "2606.23826v1"
-    ],
-    "title": "Excluded Minors for Z/n-Gainable Biased Graphs: The Parallel-Class Slice and a Divisibility Law"
   },
   "existence_of_a_finite_unit_distance_graph_in_r_wit.json": {
     "domain": "Novelty",
@@ -15295,51 +13539,11 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "A Natural Boundary for the Prime-Ideal Zeta Function of Imaginary Quadratic Fields"
   },
-  "existence_of_a_satisfactory_multiplier_vector_for_.json": {
-    "domain": "Algebra",
-    "exp_id": "a8f472f7",
-    "source_exp_ids": [
-      "2606.22539v1"
-    ],
-    "title": "Existence of a Satisfactory Multiplier Vector for 2D Lacunary Distance Graphs"
-  },
-  "existence_of_inverse_sprugnoli_arrays_with_closed_.json": {
-    "domain": "Novelty",
-    "exp_id": "3f134ce6",
-    "source_exp_ids": [
-      "2606.22070v2"
-    ],
-    "title": "Inverse Sprugnoli Arrays with Closed-Form Coefficients and Odd-Indexed Fibonacci Row Sums"
-  },
-  "existence_of_non_trivial_boolean_degree_one_functi.json": {
-    "domain": "Novelty",
-    "exp_id": "e44edf9a",
-    "source_exp_ids": [
-      "2606.23465v1"
-    ],
-    "title": "Existence of Non-Trivial Boolean Degree-One Functions on the Grassmann Scheme J_q(n,2)"
-  },
-  "existence_of_optimal_equidistant_codes_for_n__2_mo.json": {
-    "domain": "Novelty",
-    "exp_id": "eb8019d8",
-    "source_exp_ids": [
-      "2606.29022v1"
-    ],
-    "title": "A Pell Obstruction to a Proposed Family of Optimal Equidistant Codes"
-  },
   "existential_theorem.json": {
     "domain": "Algebra",
     "exp_id": null,
     "source_exp_ids": [],
     "title": "Close Proofs for Existential Theorem"
-  },
-  "explicit_bias_lower_bound_for_the_density_of_n_wit.json": {
-    "domain": "Novelty",
-    "exp_id": "f3fa5004",
-    "source_exp_ids": [
-      "2606.23398v1"
-    ],
-    "title": "Binary Digit-Reversal Invariance of Cusick Densities (Exact Five-Bit Instances)"
   },
   "explicit_exponential_lower_bound_for_vietoris_rips.json": {
     "domain": "Applications",
@@ -15365,14 +13569,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Explicit Quantitative Power-Saving Corridor for Monic Minkowski Polynomials"
   },
-  "exponential_information_complexity_lower_bound_for.json": {
-    "domain": "Novelty",
-    "exp_id": "982feb93",
-    "source_exp_ids": [
-      "2606.24195v1"
-    ],
-    "title": "Exponential Information Complexity Lower Bound for Periodic L_p-Discrepancy via a Duality Framework"
-  },
   "exponentialdiameter_contraction_under_delaunay_min.json": {
     "domain": "Novelty",
     "exp_id": "669193db",
@@ -15397,14 +13593,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Extension of Matsuno's Formula for Non-Vanishing mu-Invariants"
   },
-  "extremal_graph_theory_turn_and_szemerdi.json": {
-    "domain": "Shared",
-    "exp_id": "c78b961d",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "title": "Density Forces Structure: Turan, Kruskal-Katona, and Roth in Extremal Combinatorics"
-  },
   "extremal_l1_mass_of_normalized_1_lipschitz_grid_he.json": {
     "domain": "Novelty",
     "exp_id": "28bd8499",
@@ -15421,14 +13609,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Extremal Signed Determinant of the Resistance Matrix of a Connected Graph"
   },
-  "extremality_of_projective_plane_block_designs_in_t.json": {
-    "domain": "Computation",
-    "exp_id": "ee65478f",
-    "source_exp_ids": [
-      "2606.28216v1"
-    ],
-    "title": "Extremality of Projective-Plane Designs in the Coupon Collector's Problem"
-  },
   "factorization_of_cyclotomic_gauss_sum_matrix.json": {
     "domain": "Applications",
     "exp_id": "ca370926",
@@ -15444,14 +13624,6 @@ window.PACKAGE_DB_INDEX = {
       "2606.30010v1"
     ],
     "title": "Failure of the L^p Relaxation of the KNRS Conjecture Below Threshold p"
-  },
-  "falsifiability_of_multigraded_regularity_conjectur.json": {
-    "domain": "Novelty",
-    "exp_id": "417ceff0",
-    "source_exp_ids": [
-      "2606.21058v1"
-    ],
-    "title": "Falsifiability of the Multigraded Regularity Conjecture for Schubert Varieties via Bruhat Rank and Smooth Pattern Avoidance"
   },
   "fan_structure_in_selmer_group_distributions_over_p.json": {
     "domain": "Algebra",
@@ -15552,14 +13724,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "CSS Codes as Cohomology: Quantum Error Correction from Homological Algebra"
   },
-  "formal_verification_of_algorithms.json": {
-    "domain": "Novelty",
-    "exp_id": "3f78044a",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "title": "Verified Binary Search as Threshold Finding, with a Bridge to the Factorial Number System"
-  },
   "formalize_the_paley_construction_for_any_prime_pow.json": {
     "domain": "Novelty",
     "exp_id": "f5f2f195",
@@ -15575,14 +13739,6 @@ window.PACKAGE_DB_INDEX = {
       "6c23eddb"
     ],
     "title": "Maslov Dequantization Isometry: Certified Robustness for Neural Classifiers via Tropical Geometry"
-  },
-  "formalized_rogersramanujan_identities_for_q_pochha.json": {
-    "domain": "Shared",
-    "exp_id": "e92fe2c1",
-    "source_exp_ids": [
-      "2607.01544v1"
-    ],
-    "title": "The Finite Core of the Rogers-Ramanujan Identities: Schur Polynomials, Gaussian Binomials, and a Fibonacci Bridge"
   },
   "formalizing_graph_linear_notation_in_lean_4.json": {
     "domain": "Computation",
@@ -15717,14 +13873,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Gamma-Positivity of Symmetric Edge Polytopes for Series-Parallel Graphs with at Most Four Paths"
   },
-  "generalized_gawronmiskaulas_unboundedness_for_arbi.json": {
-    "domain": "Logic",
-    "exp_id": "9e1a2820",
-    "source_exp_ids": [
-      "2606.25825v1"
-    ],
-    "title": "Generalized Gawron\u2013Miska\u2013Ulas Unboundedness for Arbitrary Integer Bases"
-  },
   "generalized_giampietro_darmon_factorization_for_ar.json": {
     "domain": "Novelty",
     "exp_id": "cbbd1369",
@@ -15765,22 +13913,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "A Generalized Variance Formula for the Digits of 1/p in Any Base"
   },
-  "generalizedperiod_relation_for_betti_whittaker_per.json": {
-    "domain": "Logic",
-    "exp_id": "4ab1c862",
-    "source_exp_ids": [
-      "2606.23171v1"
-    ],
-    "title": "Regularity-Free Functional Equation for Betti\u2013Whittaker Periods and Contragredients of GL(n)"
-  },
-  "geometric_fractional_chromatic_number_of_the_29_ve.json": {
-    "domain": "Algebra",
-    "exp_id": "e5cb827b",
-    "source_exp_ids": [
-      "2606.28157v1"
-    ],
-    "title": "The Independence-Ratio Certificate: A 29-Vertex Threshold for the Fractional Chromatic Number of the Plane"
-  },
   "giro_kittipassorn_narayanan_conjecture_on_long_non.json": {
     "domain": "Physics",
     "exp_id": "55b8bae9",
@@ -15797,15 +13929,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Girth Bounds the Minimum Distance of a Bipartite Graph Code"
   },
-  "girth_expansion_equivalence_for_optimal_small_set_.json": {
-    "domain": "Bridges",
-    "exp_id": "d36ccdc3",
-    "source_exp_ids": [
-      "2606.23579v1",
-      "2606.25825v1"
-    ],
-    "title": "Girth-Expansion Equivalence for Optimal Small-Set Expanders"
-  },
   "godels_casino_incomplete_but_winnable_games.json": {
     "domain": "NumberTheory",
     "exp_id": "717f7483",
@@ -15813,14 +13936,6 @@ window.PACKAGE_DB_INDEX = {
       "seed"
     ],
     "title": "G\u00f6del\u2019s Casino: Incomplete but Winnable Games?"
-  },
-  "goldbach_verification_framework.json": {
-    "domain": "Shared",
-    "exp_id": "3131feed",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "title": "A Reflection Principle for Goldbach Representation Counts"
   },
   "graph_coloring_chromatic_polynomial_theory.json": {
     "domain": "Algebra",
@@ -15942,30 +14057,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Holographic Primes: Finite Euler Products and Tropical Vacua"
   },
-  "homotopy_equivalence_of_line_transversal_spaces_to.json": {
-    "domain": "Novelty",
-    "exp_id": "da5cb31c",
-    "source_exp_ids": [
-      "2606.23193v1"
-    ],
-    "title": "Homotopy Equivalence of Line-Transversal Spaces to Spheres"
-  },
-  "homotopy_type_theory_as_foundations.json": {
-    "domain": "Pythagorean",
-    "exp_id": "efa9038a",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "title": "The Gaussian Integer Parametrization of Pythagorean Triples"
-  },
-  "homotopy_type_theory_foundations.json": {
-    "domain": "Geometry",
-    "exp_id": "146bc8b0",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "title": "Homotopy Type Theory Foundations: Identity Types, Higher Inductive Types, and the Boundary of Univalence"
-  },
   "homotopy_type_theory_of_cooking_recipes_paths_betw.json": {
     "domain": "Physics",
     "exp_id": "4d9b342d",
@@ -16030,14 +14121,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Improved Bilu-Linial Spectral Bound via Interlacing Families: The Unbalanced 4-Cycle Witness"
   },
-  "improved_constant_for_domination_in_cartesian_prod.json": {
-    "domain": "Computation",
-    "exp_id": "5a8a4bbe",
-    "source_exp_ids": [
-      "2607.01109v1"
-    ],
-    "title": "An Improved Vizing-Type Constant for Domination in Cartesian Products of Graphs"
-  },
   "in_catalogbridgescategoricaltropicalripsinterleavi.json": {
     "domain": "Geometry",
     "exp_id": "b9cc2fac",
@@ -16069,14 +14152,6 @@ window.PACKAGE_DB_INDEX = {
       "seed"
     ],
     "title": "Infinite Games Against Death: Immortality Strategies"
-  },
-  "infinite_log_concavity_of_total_d_hoggatt_numbers.json": {
-    "domain": "Tropical",
-    "exp_id": "236b0246",
-    "source_exp_ids": [
-      "2607.01582v1"
-    ],
-    "title": "A Log-Concavity Dichotomy for the Total d-Hoggatt Numbers"
   },
   "infinite_sign_changes_of_symmetric_power_l_functio.json": {
     "domain": "Novelty",
@@ -16164,14 +14239,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Inverse Stereographic Persistence: Topological Data Analysis on Spheres"
   },
-  "irrational_densities_from_parabola_circumscribed_q.json": {
-    "domain": "Physics",
-    "exp_id": "6218af01",
-    "source_exp_ids": [
-      "2606.24693v1"
-    ],
-    "title": "Irrational Densities from Parabola-Circumscribed Quadrilaterals in Aperiodic Tilings"
-  },
   "irreducibility_of_mod_p_reductions_of_crystalline_.json": {
     "domain": "Applications",
     "exp_id": "766b6e47",
@@ -16180,14 +14247,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Irreducibility of mod p Reductions of Crystalline Representations at Fractional Slope and Even Weight"
   },
-  "isomorphism_of_generating_trees_for_greedy_m_tamar.json": {
-    "domain": "Pythagorean",
-    "exp_id": "a5a22996",
-    "source_exp_ids": [
-      "2607.01206v1"
-    ],
-    "title": "Isomorphisms of Generating Trees and Refined Equinumerosity for m-Tamari Intervals and (m+1)-Constellations"
-  },
   "isomorphisms_of_meaning_when_structures_collide.json": {
     "domain": "Computation",
     "exp_id": "198023c0",
@@ -16195,14 +14254,6 @@ window.PACKAGE_DB_INDEX = {
       "seed"
     ],
     "title": "Isomorphisms of Meaning: When Structures Collide"
-  },
-  "jacobian_conjecture_degree_2_and_3_cases.json": {
-    "domain": "Novelty",
-    "exp_id": "42ce6f47",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "title": "The Jacobian Conjecture: A Verified Bridge Theorem with Degree-2 and Cubic-Linear Cases"
   },
   "join_of_gorenstein_polytopes_is_not_necessarily_go.json": {
     "domain": "Applications",
@@ -16220,30 +14271,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Join-Saturation Equality for Matchings with Isolated Vertices"
   },
-  "joint_descendants_of_the_last_k_vertices_in_random.json": {
-    "domain": "Shared",
-    "exp_id": "c1fb9afb",
-    "source_exp_ids": [
-      "2606.30475v1"
-    ],
-    "title": "Joint Descendants of the Last k Vertices in Random d-DAGs: A Beta-Moment Telescoping Law"
-  },
-  "kakeya_conjecture_known_cases_and_bounds.json": {
-    "domain": "Novelty",
-    "exp_id": "f881b568",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "title": "The Kakeya Problem in the Finite-Field Model: Bush Counts, Incidences, and Sumset Growth"
-  },
-  "kernelcover_characterisation_of_the_weighted_daven.json": {
-    "domain": "Algebra",
-    "exp_id": "4591bde2",
-    "source_exp_ids": [
-      "2607.02132v1"
-    ],
-    "title": "Kernel-Cover Characterization of the Weighted Davenport Constant"
-  },
   "khler_einstein_metrics_and_k_stability.json": {
     "domain": "Cryptography",
     "exp_id": "b86be6e3",
@@ -16259,14 +14286,6 @@ window.PACKAGE_DB_INDEX = {
       "seed"
     ],
     "title": "Knots and Lattices: Positivity and Signed Alexander State Sums"
-  },
-  "knots_that_think_cognition_as_braiding_in_category.json": {
-    "domain": "Applications",
-    "exp_id": "e62d479c",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "title": "Knots That Think: The Writhe as a Well-Defined Invariant of Cognitive Braids"
   },
   "knottedlightlean_formalizes_the_topological_charge.json": {
     "domain": "Applications",
@@ -16289,14 +14308,6 @@ window.PACKAGE_DB_INDEX = {
       "039d1273"
     ],
     "title": "Kripke-Semantic Core of G\u00f6del\u2013L\u00f6b Provability Logic: Ordinal Ranks, Polymodal Reductions, and Categorical Products"
-  },
-  "lambda_calculus_church_rosser_and_normalization.json": {
-    "domain": "Applications",
-    "exp_id": "5544e8f5",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "title": "Lambda Calculus: Church-Rosser and Normalization"
   },
   "langlands_correspondence_gl1_case.json": {
     "domain": "Applications",
@@ -16355,14 +14366,6 @@ window.PACKAGE_DB_INDEX = {
       "849e27bd"
     ],
     "title": "Collision Resistance as Joint Injectivity: Merkle-Damgard Chains and Merkle Trees"
-  },
-  "linear_one_set_wall_menger_bound_for_elementary_wa.json": {
-    "domain": "Novelty",
-    "exp_id": "f6f6439c",
-    "source_exp_ids": [
-      "2606.23121v1"
-    ],
-    "title": "Linear One-Set Wall-Menger Bound for Elementary Walls"
   },
   "linear_recurrence_for_coefficients_of_ramanujans_t.json": {
     "domain": "Bridges",
@@ -16460,14 +14463,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Cycle-Containing Families of Vectors: Girth Thresholds and Binary Shattering"
   },
-  "maximum_size_of_pairwise_orthogonal_italian_square.json": {
-    "domain": "Novelty",
-    "exp_id": "a880054f",
-    "source_exp_ids": [
-      "2606.25884v1"
-    ],
-    "title": "The Maximum Size of a Family of Mutually Orthogonal Italian Squares is n-1, Attained at Prime Powers"
-  },
   "memory_editing_when_forgetting_is_a_mathematical_o.json": {
     "domain": "Applications",
     "exp_id": "2d8c7907",
@@ -16498,14 +14493,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Minimal Dimension of Non-Gamma-Positive Symmetric Edge Polytopes"
   },
-  "minimal_minor_closed_classes_below_32_have_single_.json": {
-    "domain": "Novelty",
-    "exp_id": "ff8131d4",
-    "source_exp_ids": [
-      "2606.24326v1"
-    ],
-    "title": "Minimal Minor-Closed Classes Below Density 3/2 Have Single Forbidden Minors"
-  },
   "minimally_1tough_k__p_free_graphs_are_hamiltonian.json": {
     "domain": "Novelty",
     "exp_id": "ea3218f3",
@@ -16521,14 +14508,6 @@ window.PACKAGE_DB_INDEX = {
       "2606.31240v1"
     ],
     "title": "Minimal Obstructions to Total Rainbow Forests: An Edge-Deletion Analysis"
-  },
-  "minimum_independence_ratio_constraint.json": {
-    "domain": "Novelty",
-    "exp_id": "35d54dba",
-    "source_exp_ids": [
-      "2606.28157v1"
-    ],
-    "title": "The Minimum Independence Ratio Constraint: A Reciprocal Bridge Between Coloring and Independence"
   },
   "ml_generalization_bounds_rademacher_complexity_of_.json": {
     "domain": "MachineLearning",
@@ -16648,14 +14627,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Alcubierre Shift Geometry: Causality, Negative Energy, and Chronology"
   },
-  "multi_kernel_smoothing_lemma_for_sidon_sets.json": {
-    "domain": "Novelty",
-    "exp_id": "a1e3ce3a",
-    "source_exp_ids": [
-      "2607.01169v1"
-    ],
-    "title": "A Multi-Kernel Support Law for Sidon Sets: Exact Difference-Set Cardinality and a Sharp Characterization"
-  },
   "multilateral_non_trivial_cross_intersection_produc.json": {
     "domain": "Novelty",
     "exp_id": "0d192d1b",
@@ -16688,14 +14659,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Navier-Stokes Regularity: A Scalar A Priori Framework for 2D Smoothness and 3D Partial Results"
   },
-  "navier_stokes_existence_and_smoothness.json": {
-    "domain": "Novelty",
-    "exp_id": "dfb56ea4",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "title": "Two Anti-Blowup Mechanisms Unified: Viscous Energy Dissipation and Tropical Idempotency"
-  },
   "necessary_threshold_for_cubic_generalized_turn_gro.json": {
     "domain": "Algebra",
     "exp_id": "c4b2f906",
@@ -16703,14 +14666,6 @@ window.PACKAGE_DB_INDEX = {
       "2606.19217v1"
     ],
     "title": "The MDS\u2013Uncertainty Equivalence: a Sharp Additive Uncertainty Principle for Maximum Distance Separable Matrices"
-  },
-  "necessity_of_homological_condition_for_spectral_ra.json": {
-    "domain": "Physics",
-    "exp_id": "50adb4ee",
-    "source_exp_ids": [
-      "2606.22825v1"
-    ],
-    "title": "Necessity of a Homological Condition for an Extremal Spectral-Radius Bound: The Cone Mechanism"
   },
   "negative_dimensional_topology_what_lives_in_dimens.json": {
     "domain": "Novelty",
@@ -16828,14 +14783,6 @@ window.PACKAGE_DB_INDEX = {
     "source_exp_ids": [],
     "title": "Arithmetic-Height-Induced Ultrametrics: A Nonarchimedean Bridge"
   },
-  "nonexistence_of_nonconstant_colorings_satisfying_t.json": {
-    "domain": "Novelty",
-    "exp_id": "054477b4",
-    "source_exp_ids": [
-      "2606.31908v1"
-    ],
-    "title": "Non-Existence of Non-Constant Blend Colorings on Strongly Connected Weighted Digraphs"
-  },
   "normality_of_mathematical_constants.json": {
     "domain": "Algebra",
     "exp_id": "7ae59772",
@@ -16884,14 +14831,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Finite Optimal Transport and Wasserstein Distances"
   },
-  "optimality_of_the_density_threshold_for_linear_run.json": {
-    "domain": "Novelty",
-    "exp_id": "3ffd492f",
-    "source_exp_ids": [
-      "2606.25931v1"
-    ],
-    "title": "Optimality of the Density Threshold for Linear r-Uniform Hypergraphs"
-  },
   "optimality_of_the_polynomial_factor_in_the_naslund.json": {
     "domain": "Applications",
     "exp_id": "e50512ae",
@@ -16899,14 +14838,6 @@ window.PACKAGE_DB_INDEX = {
       "2606.30593v1"
     ],
     "title": "Optimality of the Polynomial Factor in the Sunflower-Free Bound"
-  },
-  "optimality_of_vector_valued_convolution_kernels_fo.json": {
-    "domain": "MachineLearning",
-    "exp_id": "9bec4051",
-    "source_exp_ids": [
-      "2607.01169v1"
-    ],
-    "title": "The Difference-Set Method for Sidon Sets: Sharp Bounds and the Convolution-Kernel Programme"
   },
   "order_theoretic_core_of_the_cookreckhow_program_as.json": {
     "domain": "Applications",
@@ -16956,14 +14887,6 @@ window.PACKAGE_DB_INDEX = {
       "2606.30996v1"
     ],
     "title": "Path-Minimality of Positive p-Energies for Connected Bipartite Graphs"
-  },
-  "perfect_numbers_structure_of_even_perfects.json": {
-    "domain": "Applications",
-    "exp_id": "10d0f89d",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "title": "Perfect Numbers: The Abundancy Index and the Structure of Even Perfects"
   },
   "persistent_cycles_in_randomized_graphs_via_hyperst.json": {
     "domain": "Computation",
@@ -17053,14 +14976,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Certified Novelty in Metric Spaces: Regions, Filtrations, Approximate Transport, and Hausdorff Duality"
   },
-  "polynomial_logarithmic_time_algorithm_for_global_l.json": {
-    "domain": "Computation",
-    "exp_id": "bdfd9dbb",
-    "source_exp_ids": [
-      "2606.25875v1"
-    ],
-    "title": "Global Label Min-Cut: A Verified Foundation and the Limits of a Fast-Algorithm Conjecture"
-  },
   "power_of_two_characterisation_of_1_pairwise_reflec.json": {
     "domain": "Applications",
     "exp_id": "59a15132",
@@ -17101,30 +15016,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Primality Testing: A Formally Verified AKS Polynomial Criterion"
   },
-  "primes_of_the_form_n1.json": {
-    "domain": "Cryptography",
-    "exp_id": "0cb84107",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "title": "Primes of the Form n\u00b2 + 1: The Verified Local Arithmetic Behind Landau's Problem"
-  },
-  "prismatic_purity_for_f_crystals_on_regular_schemes.json": {
-    "domain": "Applications",
-    "exp_id": "4bc14309",
-    "source_exp_ids": [
-      "2606.22637v1"
-    ],
-    "title": "Prismatic Purity for F-Crystals on Regular Schemes"
-  },
-  "projective_plane_coupon_collection_slowness.json": {
-    "domain": "Novelty",
-    "exp_id": "90d1d2b2",
-    "source_exp_ids": [
-      "2606.28216v1"
-    ],
-    "title": "Projective Plane Coupon Collection Slowness"
-  },
   "proof_automation_custom_lean_4_tactics.json": {
     "domain": "Bridges",
     "exp_id": "6c118cd3",
@@ -17149,22 +15040,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Proof Complexity: Resolution, Restrictions, and Cutting Planes"
   },
-  "proof_of_hegeds_bound_via_spectral_constraints_in_.json": {
-    "domain": "Novelty",
-    "exp_id": "e5555684",
-    "source_exp_ids": [
-      "2606.24624v1"
-    ],
-    "title": "The Spectral Fisher Bound: Uniform Set Families via Heged\u0171s' Eigenvalue Condition"
-  },
-  "proof_strategy_mining_from_deep_mathematics.json": {
-    "domain": "Novelty",
-    "exp_id": "7f4f0e8d",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "title": "Proof Strategy Mining: The Primitive Divisor Schema for Strong Divisibility Sequences"
-  },
   "proofs_as_dags_the_directed_acyclic_graph_structur.json": {
     "domain": "Bridges",
     "exp_id": "fc5e97aa",
@@ -17172,14 +15047,6 @@ window.PACKAGE_DB_INDEX = {
       "seed"
     ],
     "title": "Ranked Dependency Networks: Hierarchy, Width, and Robustness"
-  },
-  "prove_fermats_little_theorem_for_p5.json": {
-    "domain": "Pythagorean",
-    "exp_id": "7f2fc4f9",
-    "source_exp_ids": [
-      "github"
-    ],
-    "title": "The Fifth-Power Congruence Modulo Five and Its Pythagorean Consequences"
   },
   "proving_the_existence_of_a_sufficiently_large_extr.json": {
     "domain": "Novelty",
@@ -17196,14 +15063,6 @@ window.PACKAGE_DB_INDEX = {
       "2606.22229v1"
     ],
     "title": "Quadratic-Irrational Density in the Ratio Spectrum: The Topological Floor"
-  },
-  "quadratic_reciprocity_five_proofs_formalized.json": {
-    "domain": "Algebra",
-    "exp_id": "3fc75f2f",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "title": "Quadratic Reciprocity Through Five Windows: The Supplementary Laws"
   },
   "quantum_entanglement_as_algebraic_topology_the_lin.json": {
     "domain": "Algebra",
@@ -17236,14 +15095,6 @@ window.PACKAGE_DB_INDEX = {
       "seed"
     ],
     "title": "Quantum Hamiltonian Complexity: The Energy Algebra Behind QMA-Completeness of the Local Hamiltonian Problem"
-  },
-  "quantum_key_distribution_bb84_security_proof.json": {
-    "domain": "Cryptography",
-    "exp_id": "5a2118a3",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "title": "Quantum Key Distribution: A Formally Verified BB84 Security Proof"
   },
   "quantum_mechanics_spectral_theory_of_hydrogen.json": {
     "domain": "Applications",
@@ -17295,14 +15146,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Set-Local Distortion of Hausdorff Dimension"
   },
-  "rainbow_triangle_density_lower_bound_conjecture.json": {
-    "domain": "Applications",
-    "exp_id": "6ac1dc4e",
-    "source_exp_ids": [
-      "2606.22106v1"
-    ],
-    "title": "Rainbow Triangle Density: The Extremal Bound \u2308(n-1)(n-3)/8\u2309"
-  },
   "ramsey_theory_bounds_and_constructions.json": {
     "domain": "Novelty",
     "exp_id": "50d5b31e",
@@ -17343,22 +15186,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Real-Rootedness of the Square of the Eulerian Triangle"
   },
-  "realization_of_all_even_incoherence_indices_4_by_m.json": {
-    "domain": "Applications",
-    "exp_id": "a2f737c1",
-    "source_exp_ids": [
-      "2606.25954v1"
-    ],
-    "title": "Realization of All Even Incoherence Indices \u2265 4 by Maximal Standard Frames"
-  },
-  "recurrence_relation_for_extended_eulerian_numbers.json": {
-    "domain": "Applications",
-    "exp_id": "d1a8353e",
-    "source_exp_ids": [
-      "2606.15178v1"
-    ],
-    "title": "A One-Parameter Deformation of the Eulerian Numbers and Its Recurrence"
-  },
   "recursive_decomposition_isomorphism_for_general_m_.json": {
     "domain": "Applications",
     "exp_id": "465c6137",
@@ -17375,14 +15202,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Three Faces of the Same Number: A Constructive Bridge Between Plane Trees, Binary Trees, and Dyck Paths"
   },
-  "refined_enumeration_of_greedy_tamari_intervals_by_.json": {
-    "domain": "Applications",
-    "exp_id": "756bc0b6",
-    "source_exp_ids": [
-      "2607.01206v1"
-    ],
-    "title": "The Valley Statistic Bridge: Greedy Tamari Intervals and Bipartite Planar Maps"
-  },
   "reflective_type_theory_proving_things_about_provin.json": {
     "domain": "Pythagorean",
     "exp_id": "53d02dfc",
@@ -17390,14 +15209,6 @@ window.PACKAGE_DB_INDEX = {
       "seed"
     ],
     "title": "Reflective Type Theory and the Modal Fixed-Point Language"
-  },
-  "regularized_sum_of_primes_via_analytic_continuatio.json": {
-    "domain": "Novelty",
-    "exp_id": "2d24ca82",
-    "source_exp_ids": [
-      "2606.24536v1"
-    ],
-    "title": "Regularized Sum of Primes via Analytic Continuation Beyond the Natural Boundary"
   },
   "renormalization_fixed_points_in_transformer_in_con.json": {
     "domain": "Shared",
@@ -17407,14 +15218,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Renormalization Fixed Points in Transformer In-Context Learning via p-adic Attention"
   },
-  "representation_theory_character_tables_of_s_n.json": {
-    "domain": "Applications",
-    "exp_id": "1f3047ef",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "title": "Representation Theory: The Shape of the S_n Character Table via Partitions"
-  },
   "reset_fresh_approach_in_numbertheory.json": {
     "domain": "NumberTheory",
     "exp_id": "5e4735e1",
@@ -17422,14 +15225,6 @@ window.PACKAGE_DB_INDEX = {
       "auto_reset"
     ],
     "title": "Stern's Diatomic Sequence: Coprimality, Counting, and a Fibonacci Bridge"
-  },
-  "resolution_of_erds_problem_550_on_tree_versus_comp.json": {
-    "domain": "Novelty",
-    "exp_id": "887d83d7",
-    "source_exp_ids": [
-      "2606.23659v1"
-    ],
-    "title": "Resolution of the Foundational Cases of Erdos Problem 550 (Tree vs. Complete Multipartite Ramsey Numbers)"
   },
   "retrocausal_mathematics_where_effects_precede_caus.json": {
     "domain": "Cryptography",
@@ -17501,14 +15296,6 @@ window.PACKAGE_DB_INDEX = {
     "source_exp_ids": [],
     "title": "Rips Graph Monotonicity as a Functor into Tropical Valuation Objects"
   },
-  "row_exchange_under_eventual_contraction_for_the_in.json": {
-    "domain": "Novelty",
-    "exp_id": "7281fa18",
-    "source_exp_ids": [
-      "2606.22004v1"
-    ],
-    "title": "Row-Exchange Invariance under Eventual Contraction for the Infinite Asymmetric Five-Vertex Half-Strip"
-  },
   "row_sum_fibonacci_property_of_pascal_like_riordan_.json": {
     "domain": "Novelty",
     "exp_id": "ef629b7b",
@@ -17516,22 +15303,6 @@ window.PACKAGE_DB_INDEX = {
       "2606.22070v1"
     ],
     "title": "Row Sum Fibonacci Property of the Pascal-like Riordan Array"
-  },
-  "rsa_factorization_with_partial_pq_knowledge_and_sm.json": {
-    "domain": "Novelty",
-    "exp_id": "26246c0e",
-    "source_exp_ids": [
-      "2606.24717v1"
-    ],
-    "title": "RSA Factorization with Partial p+q Knowledge and Small Private Exponent"
-  },
-  "rucker_gnarl_and_continuous_valued_cellular_automa.json": {
-    "domain": "Novelty",
-    "exp_id": "0de5396c",
-    "source_exp_ids": [
-      "manual_research_brainstorm"
-    ],
-    "title": "The Knife-Edge of Chaos: Continuous-Valued Cellular Automata, the Diffusion Threshold, and Rucker's Gnarl"
   },
   "rucker_infinity_and_the_mind__formalizing_differen.json": {
     "domain": "Novelty",
@@ -17659,14 +15430,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Semiprime Cyclotomic Transfer for Square-Sided Dice: The Verified \u03a6\u2086 Base Case"
   },
-  "sensitivity_conjecture_extensions.json": {
-    "domain": "Algebra",
-    "exp_id": "33af5349",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "title": "The Spectral Core of the Sensitivity Conjecture: Signed Adjacency Matrices of the Hypercube"
-  },
   "seymours_second_neighborhood_conjecture_for_orient.json": {
     "domain": "Probability",
     "exp_id": "a7402c18",
@@ -17724,14 +15487,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "A Sharp Threshold for the Seidel-Energy Increase of Complete Bipartite Graphs Under Edge Deletion"
   },
-  "sharp_threshold_constant_for_cycle_games.json": {
-    "domain": "Applications",
-    "exp_id": "92285bf9",
-    "source_exp_ids": [
-      "2607.01294v1"
-    ],
-    "title": "The Sharp Threshold Constant of the Maker-Breaker Cycle Game"
-  },
   "sheaf_cohomology_of_data_the_topology_of_missing_i.json": {
     "domain": "Geometry",
     "exp_id": "950806e8",
@@ -17764,14 +15519,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Siegel-Weil Identity for the E8 Lattice Theta Series and its Sharp E4^2 = E8 Congruence"
   },
-  "sierpiski_numbers_covering_systems.json": {
-    "domain": "Computation",
-    "exp_id": "07255b71",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "title": "Sierpinski Numbers via Covering Systems: A Certificate Framework"
-  },
   "sign_alternation_in_q_hypergeometric_series_via_os.json": {
     "domain": "Applications",
     "exp_id": "59aff0ea",
@@ -17787,14 +15534,6 @@ window.PACKAGE_DB_INDEX = {
       "2607.05349v1"
     ],
     "title": "Sign Characterization of Microscopic Weighting on Euclidean Subsets"
-  },
-  "signless_laplacian_spectral_radius_of_pure_simplic.json": {
-    "domain": "Novelty",
-    "exp_id": "01ec1037",
-    "source_exp_ids": [
-      "2606.22825v1"
-    ],
-    "title": "Signless Laplacian Spectral Radius of Pure Simplicial Complexes with Vanishing Link Homology"
   },
   "social_credit_scores_as_topological_invariants.json": {
     "domain": "Applications",
@@ -17940,14 +15679,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theory"
   },
-  "square_root_cancellation_for_gl2_triple_correlatio.json": {
-    "domain": "Logic",
-    "exp_id": "c69c4ab9",
-    "source_exp_ids": [
-      "2606.29822v1"
-    ],
-    "title": "Square-Root Cancellation for GL(2) Triple Correlation Sums: The Deligne Chebyshev Envelope"
-  },
   "stability_of_cayley_digraphs_of_abelian_groups_of_.json": {
     "domain": "Applications",
     "exp_id": "b45eb1d8",
@@ -17963,22 +15694,6 @@ window.PACKAGE_DB_INDEX = {
       "2606.32024v1"
     ],
     "title": "Stability of the Sharp Diagonal Spectral Correlation Inequality for Monotone Boolean Functions"
-  },
-  "statistical_mechanics_ising_model_phase_transition.json": {
-    "domain": "Novelty",
-    "exp_id": "bac3bfcc",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "title": "Statistical Mechanics: The Exact Two-Point Correlation of the 1D Ising Chain"
-  },
-  "stereographic_fourier_analysis_spherical_harmonics.json": {
-    "domain": "Applications",
-    "exp_id": "adbfcd0f",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "title": "Stereographic Fourier Analysis: The Chordal Metric Identity and Harmonic Analysis on Spheres"
   },
   "stereographic_neural_attention_attention_via_riema.json": {
     "domain": "MachineLearning",
@@ -18003,14 +15718,6 @@ window.PACKAGE_DB_INDEX = {
       "seed"
     ],
     "title": "Stone Duality for Neural Networks: Activation Patterns as a Finite Boolean Algebra"
-  },
-  "strange_attractors_as_algebraic_objects.json": {
-    "domain": "Applications",
-    "exp_id": "688a9cbf",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "title": "Strange Attractors as Algebraic Objects: A Finite-Nerve Obstruction for the Dyadic Solenoid"
   },
   "strange_loops_self_reference_and_gdels_incompleten.json": {
     "domain": "Logic",
@@ -18052,14 +15759,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Digit Sums of Repeating Fractions 1/p: Full-Reptend and Half-Period Laws"
   },
-  "sums_of_three_cubes.json": {
-    "domain": "Physics",
-    "exp_id": "fd05632c",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "title": "Sums of Three Cubes: The Modular Obstruction and the Density Conjecture"
-  },
   "super_exponential_growth_of_the_number_of_symmetri.json": {
     "domain": "Novelty",
     "exp_id": "cff12e07",
@@ -18092,14 +15791,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "The Suspension Tower of Free Z/2-Complexes: Dimension Law, Facet Enumeration, and an Iterated Borsuk-Ulam Obstruction"
   },
-  "symmetric_group_generation_probability.json": {
-    "domain": "Novelty",
-    "exp_id": "f0048c68",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "title": "The Three-Quarter Generation Ceiling for the Symmetric Group"
-  },
   "symmetric_key_cryptanalysis_differential_and_linea.json": {
     "domain": "Novelty",
     "exp_id": "11521acf",
@@ -18107,14 +15798,6 @@ window.PACKAGE_DB_INDEX = {
       "seed"
     ],
     "title": "Symmetric-Key Cryptanalysis: Four Rounds of AES Have at Least 25 Active S-boxes"
-  },
-  "symmetrized_monomial_generates_t_ideal_in_acyclic_.json": {
-    "domain": "Geometry",
-    "exp_id": "c235005e",
-    "source_exp_ids": [
-      "2606.23024v1"
-    ],
-    "title": "The Shape of Nothing: Symmetrized Monomial Identities of Acyclic Path Algebras"
   },
   "symplectic_mirror_descent_gromov_witten_invariants.json": {
     "domain": "Bridges",
@@ -18195,14 +15878,6 @@ window.PACKAGE_DB_INDEX = {
       "e0ad2634"
     ],
     "title": "Proof System Collapse: The Simulation Lattice of Cook\u2013Reckhow Proof Systems"
-  },
-  "the_aharoni_korman_conjecture_for_well_founded_fac.json": {
-    "domain": "Probability",
-    "exp_id": "5156da6e",
-    "source_exp_ids": [
-      "2607.02500v1"
-    ],
-    "title": "The Aharoni\u2013Korman Property for Well-Founded FAC Posets"
   },
   "the_anti_fibonacci_sequence_numbers_that_avoid_the.json": {
     "domain": "Shared",
@@ -18670,14 +16345,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "The Library of Babel: Combinatorics of the Universal Library"
   },
-  "the_list_chromatic_number_of_3_colorable_planar_gr.json": {
-    "domain": "Novelty",
-    "exp_id": "51b04544",
-    "source_exp_ids": [
-      "2606.31702v1"
-    ],
-    "title": "Colorability Does Not Control Choosability: A Complete Planar Witness at k=2"
-  },
   "the_mandelbrot_sets_secret_number_theory_quadratic.json": {
     "domain": "Computation",
     "exp_id": "0ebc2749",
@@ -18734,14 +16401,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "The Monster Group\u2019s Secret Message: Pole Aggregation and Character Reconstruction"
   },
-  "the_most_natural_next_step_is_to_attack_the_residu.json": {
-    "domain": "Novelty",
-    "exp_id": "fdadfe48",
-    "source_exp_ids": [
-      "199a5960"
-    ],
-    "title": "One Known Solution Linearizes the Riccati Equation"
-  },
   "the_natural_next_step_is_to_formalize_the_actual_p.json": {
     "domain": "Novelty",
     "exp_id": "ff0f663c",
@@ -18770,14 +16429,6 @@ window.PACKAGE_DB_INDEX = {
       "90709731"
     ],
     "title": "Spectral Evaluation Elimination for Semiring Congruences"
-  },
-  "the_non_existence_of_new_factorial_square_solution.json": {
-    "domain": "Applications",
-    "exp_id": "bfc7b99e",
-    "source_exp_ids": [
-      "2606.23485v1"
-    ],
-    "title": "The Non-Existence of New Factorial Square Solutions: Brocard's Problem"
   },
   "the_opposite_semicube_helly_property_characterizes.json": {
     "domain": "Novelty",
@@ -19516,23 +17167,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Diagonalization as Topological Genericity: A Baire-Category Bridge for Ramanujan Oracles"
   },
-  "tight_asymptotic_bound_for_the_nqueens_completion_.json": {
-    "domain": "Applications",
-    "exp_id": "c2b51bcc",
-    "source_exp_ids": [
-      "4120a115",
-      "2606.24400v1"
-    ],
-    "title": "Toroidal Constructions and Hall-Type Repair for the n-Queens Completion Problem"
-  },
-  "tight_asymptotic_lower_bound_for_the_maximum_numbe.json": {
-    "domain": "Novelty",
-    "exp_id": "f36ed9b7",
-    "source_exp_ids": [
-      "2606.24877v1"
-    ],
-    "title": "Tight \u0398(n^{2w}) Bound for Strict Alternating Cycles in Width-w Posets"
-  },
   "tight_spectral_gap_exponent_for_the_fixed_genus_ch.json": {
     "domain": "Novelty",
     "exp_id": "1bd2f770",
@@ -19540,22 +17174,6 @@ window.PACKAGE_DB_INDEX = {
       "2607.02410v1"
     ],
     "title": "Tight Cubic Spectral-Gap Scaling for Chord-Swap Reconfiguration Chains"
-  },
-  "tightness_of_edge_deletion_bound_in_hyperstability.json": {
-    "domain": "Novelty",
-    "exp_id": "1e8c0c26",
-    "source_exp_ids": [
-      "2607.02483v1"
-    ],
-    "title": "Tightness of the Edge-Deletion Bound in a Hyperstability Extension of the Erdos-Gallai Theorem"
-  },
-  "tightness_of_the_density_threshold_for_configurati.json": {
-    "domain": "Novelty",
-    "exp_id": "60145036",
-    "source_exp_ids": [
-      "2606.25931v1"
-    ],
-    "title": "Tightness of the Density Threshold for Configurations in Linear Hypergraphs"
   },
   "tightness_of_the_isolation_lemma_bound_for_arbitra.json": {
     "domain": "Novelty",
@@ -19778,14 +17396,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Uniform Extremality for Siblings of the Coupon Collector"
   },
-  "uniqueness_of_extremal_graphons_in_sparse_threshol.json": {
-    "domain": "Novelty",
-    "exp_id": "beb2abc2",
-    "source_exp_ids": [
-      "2606.23737v1"
-    ],
-    "title": "Uniqueness of Extremal Graphons in Sparse Threshold Problems: The Fractional Independence Number and Its Sandwich"
-  },
   "uniqueness_of_minimal_median_decompositions_for_gr.json": {
     "domain": "Bridges",
     "exp_id": "5bd61b22",
@@ -19912,14 +17522,6 @@ window.PACKAGE_DB_INDEX = {
       "0abd0edb"
     ],
     "title": "The Extremal Regime of AVD-Total Colourings of Central Graphs of Regular Graphs"
-  },
-  "young_conjugation_induces_a_measure_preserving_inv.json": {
-    "domain": "Novelty",
-    "exp_id": "2e937390",
-    "source_exp_ids": [
-      "2606.28014v1"
-    ],
-    "title": "Young Conjugation as a Measure-Preserving Klein Four-Group on the Natural Extension of the Triangle Map"
   },
   "z__z_2n__2n1__2_for_all_positive_integers_n.json": {
     "domain": "Algebra",
@@ -21206,8 +18808,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "convex_geometry_brunn_minkowski_theory",
       "primary_domain": "Geometry",
-      "priority_score": 0.56159,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "hexagonal_prism",
       "title": "Convex Geometry: The One-Dimensional Brunn\u2013Minkowski Inequality"
     },
@@ -21217,8 +18819,8 @@ window.PACKAGE_GRAPH = {
       "hue": 95,
       "id": "attention_mechanisms_mathematical_properties",
       "primary_domain": "MachineLearning",
-      "priority_score": 0.4446527272727273,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "sphere_rings",
       "title": "Convex-Hull Confinement and Log-Partition Bounds for Softmax Self-Attention"
     },
@@ -21228,8 +18830,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "sierpiski_numbers_covering_systems",
       "primary_domain": "Computation",
-      "priority_score": 0.5811999999999999,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "cube",
       "title": "Sierpinski Numbers via Covering Systems: A Certificate Framework"
     },
@@ -21239,8 +18841,8 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "rucker_gnarl_and_continuous_valued_cellular_automa",
       "primary_domain": "Bridges",
-      "priority_score": 0.5094479615384615,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "The Knife-Edge of Chaos: Continuous-Valued Cellular Automata, the Diffusion Threshold, and Rucker's Gnarl"
     },
@@ -21250,8 +18852,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "quantum_key_distribution_bb84_security_proof",
       "primary_domain": "Cryptography",
-      "priority_score": 0.49160000000000004,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "dodecahedron",
       "title": "Quantum Key Distribution: A Formally Verified BB84 Security Proof"
     },
@@ -21261,8 +18863,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "homotopy_type_theory_foundations",
       "primary_domain": "Geometry",
-      "priority_score": 0.48341799999999996,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "hexagonal_prism",
       "title": "Homotopy Type Theory Foundations: Identity Types, Higher Inductive Types, and the Boundary of Univalence"
     },
@@ -21305,8 +18907,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "symmetric_group_generation_probability",
       "primary_domain": "Bridges",
-      "priority_score": 0.4162,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "The Three-Quarter Generation Ceiling for the Symmetric Group"
     },
@@ -21327,8 +18929,8 @@ window.PACKAGE_GRAPH = {
       "hue": 112,
       "id": "degree_normalized_linked_tree_cut_decompositions_f",
       "primary_domain": "Bridges",
-      "priority_score": 0.51744,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Degree-Normalized Linked Tree-Cut Decompositions for Locally Finite Graphs"
     },
@@ -21349,8 +18951,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "symmetrized_monomial_generates_t_ideal_in_acyclic_",
       "primary_domain": "Geometry",
-      "priority_score": 0.5303045714285715,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "hexagonal_prism",
       "title": "The Shape of Nothing: Symmetrized Monomial Identities of Acyclic Path Algebras"
     },
@@ -21382,8 +18984,8 @@ window.PACKAGE_GRAPH = {
       "hue": 134,
       "id": "necessity_of_homological_condition_for_spectral_ra",
       "primary_domain": "Physics",
-      "priority_score": 0.49653899999999995,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "diamond",
       "title": "Necessity of a Homological Condition for an Extremal Spectral-Radius Bound: The Cone Mechanism"
     },
@@ -21393,8 +18995,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "corrected_uniform_witness_bound_for_d1_uniform_fam",
       "primary_domain": "Bridges",
-      "priority_score": 0.42325214328358207,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "The Uniform Witness Bound for (d+1)-Uniform Families with Prescribed Missing-Trace Size"
     },
@@ -21437,8 +19039,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "bridge_galois_connections_between_order_theory_and",
       "primary_domain": "Bridges",
-      "priority_score": 0.57117,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Galois Connections as a Bridge Between Order Theory and Topology"
     },
@@ -21470,8 +19072,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "generalizedperiod_relation_for_betti_whittaker_per",
       "primary_domain": "Logic",
-      "priority_score": 0.5380114482758622,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "star_of_david",
       "title": "Regularity-Free Functional Equation for Betti\u2013Whittaker Periods and Contragredients of GL(n)"
     },
@@ -21492,8 +19094,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "minimal_minor_closed_classes_below_32_have_single_",
       "primary_domain": "Bridges",
-      "priority_score": 0.4658475833333334,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Minimal Minor-Closed Classes Below Density 3/2 Have Single Forbidden Minors"
     },
@@ -21547,8 +19149,8 @@ window.PACKAGE_GRAPH = {
       "hue": 275,
       "id": "brocard_ramanujan_triangular_classification",
       "primary_domain": "Bridges",
-      "priority_score": 0.30151606086956523,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Brocard-Ramanujan Triangular Classification: Factorials Are Almost Never Squares"
     },
@@ -21580,8 +19182,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "eml_differential_algebra_closure_properties",
       "primary_domain": "Bridges",
-      "priority_score": 0.57649,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "EML Differential Algebra: Closure Properties of Log-Free Exponential Polynomials"
     },
@@ -21602,8 +19204,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "irrational_densities_from_parabola_circumscribed_q",
       "primary_domain": "Physics",
-      "priority_score": 0.550667741935484,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "diamond",
       "title": "Irrational Densities from Parabola-Circumscribed Quadrilaterals in Aperiodic Tilings"
     },
@@ -21613,8 +19215,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "primes_of_the_form_n1",
       "primary_domain": "Cryptography",
-      "priority_score": 0.506378,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "dodecahedron",
       "title": "Primes of the Form n\u00b2 + 1: The Verified Local Arithmetic Behind Landau's Problem"
     },
@@ -21624,8 +19226,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "existence_of_a_satisfactory_multiplier_vector_for_",
       "primary_domain": "Algebra",
-      "priority_score": 0.56056,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "tetrahedron",
       "title": "Existence of a Satisfactory Multiplier Vector for 2D Lacunary Distance Graphs"
     },
@@ -21690,8 +19292,8 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "central_gaussian_coefficient_maximizes_binary_2_bi",
       "primary_domain": "Algebra",
-      "priority_score": 0.5960000000000001,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "tetrahedron",
       "title": "Central Gaussian Coefficient Maximizes Binary 2-Binomial Class Size"
     },
@@ -21701,8 +19303,8 @@ window.PACKAGE_GRAPH = {
       "hue": 134,
       "id": "generalized_gawronmiskaulas_unboundedness_for_arbi",
       "primary_domain": "Logic",
-      "priority_score": 0.52704,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "star_of_david",
       "title": "Generalized Gawron\u2013Miska\u2013Ulas Unboundedness for Arbitrary Integer Bases"
     },
@@ -21712,8 +19314,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "exact_value_of_the_binomial_gcd_in_oeis_a080170",
       "primary_domain": "Bridges",
-      "priority_score": 0.554,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Exact Value of the Binomial GCD in OEIS A080170"
     },
@@ -21723,8 +19325,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "duality_of_sublevel_set_homotopy_types_for_rc_func",
       "primary_domain": "Geometry",
-      "priority_score": 0.49574803827751207,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "hexagonal_prism",
       "title": "Duality of Sublevel-Set Homotopy Types for RC Functions on Finite-Dimensional Banach Spaces"
     },
@@ -21734,8 +19336,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "navier_stokes_existence_and_smoothness",
       "primary_domain": "Bridges",
-      "priority_score": 0.52355,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Two Anti-Blowup Mechanisms Unified: Viscous Energy Dissipation and Tropical Idempotency"
     },
@@ -21745,8 +19347,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "signless_laplacian_spectral_radius_of_pure_simplic",
       "primary_domain": "Bridges",
-      "priority_score": 0.55696,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Signless Laplacian Spectral Radius of Pure Simplicial Complexes with Vanishing Link Homology"
     },
@@ -21778,8 +19380,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "homotopy_equivalence_of_line_transversal_spaces_to",
       "primary_domain": "Bridges",
-      "priority_score": 0.5496381818181819,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Homotopy Equivalence of Line-Transversal Spaces to Spheres"
     },
@@ -21855,8 +19457,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "discriminant_of_the_hermitian_bianchi_lattice_s_k",
       "primary_domain": "Bridges",
-      "priority_score": 0.531112,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Discriminant of the Hermitian Bianchi Lattice S_K = Herm\u2082(O_K)"
     },
@@ -21888,8 +19490,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "row_exchange_under_eventual_contraction_for_the_in",
       "primary_domain": "Bridges",
-      "priority_score": 0.5050399999999999,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Row-Exchange Invariance under Eventual Contraction for the Infinite Asymmetric Five-Vertex Half-Strip"
     },
@@ -21899,8 +19501,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "realization_of_all_even_incoherence_indices_4_by_m",
       "primary_domain": "Bridges",
-      "priority_score": 0.4444762417582418,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Realization of All Even Incoherence Indices \u2265 4 by Maximal Standard Frames"
     },
@@ -21910,8 +19512,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "deepening_alien_number_systems_beyond_base_n",
       "primary_domain": "Bridges",
-      "priority_score": 0.571318,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Alien Number Systems: Mixed-Radix Positional Systems Beyond Base-N"
     },
@@ -21998,8 +19600,8 @@ window.PACKAGE_GRAPH = {
       "hue": 275,
       "id": "representation_theory_character_tables_of_s_n",
       "primary_domain": "Bridges",
-      "priority_score": 0.45104400000000006,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Representation Theory: The Shape of the S_n Character Table via Partitions"
     },
@@ -22020,8 +19622,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "tight_asymptotic_lower_bound_for_the_maximum_numbe",
       "primary_domain": "Bridges",
-      "priority_score": 0.54535,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Tight \u0398(n^{2w}) Bound for Strict Alternating Cycles in Width-w Posets"
     },
@@ -22031,8 +19633,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "a_4k4_order_bound_for_connectivity_preserving_hami",
       "primary_domain": "Bridges",
-      "priority_score": 0.5980399999999999,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "A 4k+4 Order Bound for Connectivity-Preserving Hamiltonian Prescribed-End Paths"
     },
@@ -22042,8 +19644,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "optimality_of_the_density_threshold_for_linear_run",
       "primary_domain": "Bridges",
-      "priority_score": 0.3990000000000001,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Optimality of the Density Threshold for Linear r-Uniform Hypergraphs"
     },
@@ -22053,8 +19655,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "lambda_calculus_church_rosser_and_normalization",
       "primary_domain": "Bridges",
-      "priority_score": 0.5449999999999999,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Lambda Calculus: Church-Rosser and Normalization"
     },
@@ -22064,8 +19666,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "kakeya_conjecture_known_cases_and_bounds",
       "primary_domain": "Bridges",
-      "priority_score": 0.50863,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "The Kakeya Problem in the Finite-Field Model: Bush Counts, Incidences, and Sumset Growth"
     },
@@ -22086,8 +19688,8 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "close_proofs_alien_number_systems_beyond_base_n",
       "primary_domain": "Bridges",
-      "priority_score": 0.5579999999999999,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Alien Number Systems: Beyond Base-N (Mixed-Radix Positional Systems)"
     },
@@ -22108,8 +19710,8 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "resolution_of_erds_problem_550_on_tree_versus_comp",
       "primary_domain": "Bridges",
-      "priority_score": 0.5740799999999999,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Resolution of the Foundational Cases of Erdos Problem 550 (Tree vs. Complete Multipartite Ramsey Numbers)"
     },
@@ -22152,8 +19754,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "strange_attractors_as_algebraic_objects",
       "primary_domain": "Bridges",
-      "priority_score": 0.57899,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Strange Attractors as Algebraic Objects: A Finite-Nerve Obstruction for the Dyadic Solenoid"
     },
@@ -22163,8 +19765,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "exact_asymptotic_value_of_the_average_stack_sortin",
       "primary_domain": "Bridges",
-      "priority_score": 0.5924299999999999,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Exact Asymptotics of Stack-Sorting Depth: Invariants, Fixed Points, and the Catalan Law"
     },
@@ -22174,8 +19776,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "proof_strategy_mining_from_deep_mathematics",
       "primary_domain": "Bridges",
-      "priority_score": 0.505788,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Proof Strategy Mining: The Primitive Divisor Schema for Strong Divisibility Sequences"
     },
@@ -22218,8 +19820,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "collatz_conjecture",
       "primary_domain": "Bridges",
-      "priority_score": 0.4269881818181818,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Unconditional Cycle Obstructions for the Collatz Step Map"
     },
@@ -22229,8 +19831,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "exponential_information_complexity_lower_bound_for",
       "primary_domain": "Bridges",
-      "priority_score": 0.35044872340425537,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Exponential Information Complexity Lower Bound for Periodic L_p-Discrepancy via a Duality Framework"
     },
@@ -22240,8 +19842,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "perfect_numbers_structure_of_even_perfects",
       "primary_domain": "Bridges",
-      "priority_score": 0.38911390243902444,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Perfect Numbers: The Abundancy Index and the Structure of Even Perfects"
     },
@@ -22284,8 +19886,8 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "birkhoff_polytopes_have_the_clique_face_property_o",
       "primary_domain": "Bridges",
-      "priority_score": 0.5405,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Birkhoff Polytopes Have the Clique-Face Property Only in Dimensions n <= 2"
     },
@@ -22306,8 +19908,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "conjecture_the_limit_of_average_stack_sorting_dept",
       "primary_domain": "Bridges",
-      "priority_score": 0.5150000000000001,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Defant's Stack-Sorting Depth Constant: lambda = (3/5)(7 - 8 ln 2)"
     },
@@ -22317,8 +19919,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "maximum_size_of_pairwise_orthogonal_italian_square",
       "primary_domain": "Bridges",
-      "priority_score": 0.3646502272727273,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "The Maximum Size of a Family of Mutually Orthogonal Italian Squares is n-1, Attained at Prime Powers"
     },
@@ -22328,8 +19930,8 @@ window.PACKAGE_GRAPH = {
       "hue": 100,
       "id": "uniqueness_of_extremal_graphons_in_sparse_threshol",
       "primary_domain": "Bridges",
-      "priority_score": 0.5954,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Uniqueness of Extremal Graphons in Sparse Threshold Problems: The Fractional Independence Number and Its Sandwich"
     },
@@ -22339,8 +19941,8 @@ window.PACKAGE_GRAPH = {
       "hue": 275,
       "id": "excluded_minors_for_bias_graphs_gainable_over_cycl",
       "primary_domain": "Bridges",
-      "priority_score": 0.463,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Excluded Minors for Biased Graphs Gainable over Cyclic Groups Z/p: the Parallel-Class Obstruction (p+1)K\u2082"
     },
@@ -22383,8 +19985,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "girth_expansion_equivalence_for_optimal_small_set_",
       "primary_domain": "Bridges",
-      "priority_score": 0.41604728262910795,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Girth-Expansion Equivalence for Optimal Small-Set Expanders"
     },
@@ -22394,8 +19996,8 @@ window.PACKAGE_GRAPH = {
       "hue": 95,
       "id": "characterization_of_modular_rank_four_nahm_sums_vi",
       "primary_domain": "Bridges",
-      "priority_score": 0.5884799999999999,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Characterization of Modular Rank-Four Nahm Sums via the Discriminant Condition"
     },
@@ -22427,8 +20029,8 @@ window.PACKAGE_GRAPH = {
       "hue": 275,
       "id": "character_class_contradiction",
       "primary_domain": "Bridges",
-      "priority_score": 0.484642,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "The Character Class Contradiction: A Rank-One Zeta Computation"
     },
@@ -22438,8 +20040,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "polynomial_logarithmic_time_algorithm_for_global_l",
       "primary_domain": "Computation",
-      "priority_score": 0.3683071607142858,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "cube",
       "title": "Global Label Min-Cut: A Verified Foundation and the Limits of a Fast-Algorithm Conjecture"
     },
@@ -22515,8 +20117,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "rsa_factorization_with_partial_pq_knowledge_and_sm",
       "primary_domain": "Bridges",
-      "priority_score": 0.39061,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "RSA Factorization with Partial p+q Knowledge and Small Private Exponent"
     },
@@ -22537,8 +20139,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "falsifiability_of_multigraded_regularity_conjectur",
       "primary_domain": "Bridges",
-      "priority_score": 0.49606231111111115,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Falsifiability of the Multigraded Regularity Conjecture for Schubert Varieties via Bruhat Rank and Smooth Pattern Avoidance"
     },
@@ -22570,8 +20172,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "regularized_sum_of_primes_via_analytic_continuatio",
       "primary_domain": "Bridges",
-      "priority_score": 0.5835454545454546,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Regularized Sum of Primes via Analytic Continuation Beyond the Natural Boundary"
     },
@@ -22581,8 +20183,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "explicit_bias_lower_bound_for_the_density_of_n_wit",
       "primary_domain": "Bridges",
-      "priority_score": 0.38602000000000003,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Binary Digit-Reversal Invariance of Cusick Densities (Exact Five-Bit Instances)"
     },
@@ -22592,8 +20194,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "constructing_a_canonical_f_isocrystal_to_enhance_t",
       "primary_domain": "Bridges",
-      "priority_score": 0.48585960124610594,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "The Fibonacci Law of Apparition: alpha(p) Divides p-1 or p+1"
     },
@@ -22757,8 +20359,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "proof_of_hegeds_bound_via_spectral_constraints_in_",
       "primary_domain": "Bridges",
-      "priority_score": 0.485834,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "The Spectral Fisher Bound: Uniform Set Families via Heged\u0171s' Eigenvalue Condition"
     },
@@ -22790,8 +20392,8 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "linear_one_set_wall_menger_bound_for_elementary_wa",
       "primary_domain": "Bridges",
-      "priority_score": 0.5631599999999999,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Linear One-Set Wall-Menger Bound for Elementary Walls"
     },
@@ -22801,8 +20403,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "eml_transseries_asymptotic_expansions_beyond_power",
       "primary_domain": "Bridges",
-      "priority_score": 0.5816,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "EML Transseries: A Real-Exponent Hahn-Series Model with Dominance, Asymptotic Comparison, and Ingredients of Real Closure"
     },
@@ -22812,8 +20414,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "statistical_mechanics_ising_model_phase_transition",
       "primary_domain": "Bridges",
-      "priority_score": 0.562048,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Statistical Mechanics: The Exact Two-Point Correlation of the 1D Ising Chain"
     },
@@ -22834,8 +20436,8 @@ window.PACKAGE_GRAPH = {
       "hue": 95,
       "id": "rainbow_triangle_density_lower_bound_conjecture",
       "primary_domain": "Bridges",
-      "priority_score": 0.34884000000000004,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Rainbow Triangle Density: The Extremal Bound \u2308(n-1)(n-3)/8\u2309"
     },
@@ -22845,8 +20447,8 @@ window.PACKAGE_GRAPH = {
       "hue": 101,
       "id": "the_most_natural_next_step_is_to_attack_the_residu",
       "primary_domain": "Bridges",
-      "priority_score": 0.5959,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "One Known Solution Linearizes the Riccati Equation"
     },
@@ -22856,8 +20458,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "prismatic_purity_for_f_crystals_on_regular_schemes",
       "primary_domain": "Bridges",
-      "priority_score": 0.49242371929824563,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Prismatic Purity for F-Crystals on Regular Schemes"
     },
@@ -22867,8 +20469,8 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "a_sharp_upper_bound_for_uniform_vcdimension_famili",
       "primary_domain": "Bridges",
-      "priority_score": 0.36300923636363636,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "A Sharp Upper Bound for Uniform VC-Dimension Families via Layered Stars"
     },
@@ -22889,8 +20491,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "jacobian_conjecture_degree_2_and_3_cases",
       "primary_domain": "Bridges",
-      "priority_score": 0.518,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "The Jacobian Conjecture: A Verified Bridge Theorem with Degree-2 and Cubic-Linear Cases"
     },
@@ -22911,8 +20513,8 @@ window.PACKAGE_GRAPH = {
       "hue": 95,
       "id": "existence_of_inverse_sprugnoli_arrays_with_closed_",
       "primary_domain": "Bridges",
-      "priority_score": 0.5751195652173913,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Inverse Sprugnoli Arrays with Closed-Form Coefficients and Odd-Indexed Fibonacci Row Sums"
     },
@@ -22933,8 +20535,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "equality_cases_for_spectral_radius_bound_in_signed",
       "primary_domain": "Bridges",
-      "priority_score": 0.43096,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Equality Cases for the Maximum-Degree Spectral Bound of Signed Graphs"
     },
@@ -22944,8 +20546,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "recurrence_relation_for_extended_eulerian_numbers",
       "primary_domain": "Bridges",
-      "priority_score": 0.56128,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "A One-Parameter Deformation of the Eulerian Numbers and Its Recurrence"
     },
@@ -23021,8 +20623,8 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "existence_of_non_trivial_boolean_degree_one_functi",
       "primary_domain": "Bridges",
-      "priority_score": 0.39200000000000007,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Existence of Non-Trivial Boolean Degree-One Functions on the Grassmann Scheme J_q(n,2)"
     },
@@ -23076,8 +20678,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "continued_fractions_and_diophantine_approximation",
       "primary_domain": "Bridges",
-      "priority_score": 0.5948,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Continued Fractions and Diophantine Approximation: The Lagrange Constant"
     },
@@ -23098,8 +20700,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "formal_verification_of_algorithms",
       "primary_domain": "Bridges",
-      "priority_score": 0.5920639999999999,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Verified Binary Search as Threshold Finding, with a Bridge to the Factorial Number System"
     },
@@ -23120,8 +20722,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "eml_kolmogorov_arnold_representation",
       "primary_domain": "Bridges",
-      "priority_score": 0.59432,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "EML Kolmogorov\u2013Arnold Separable Rank: Counting Outer exp Terms by Matrix Sampling"
     },
@@ -23164,8 +20766,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "the_non_existence_of_new_factorial_square_solution",
       "primary_domain": "Bridges",
-      "priority_score": 0.44995,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "The Non-Existence of New Factorial Square Solutions: Brocard's Problem"
     },
@@ -23197,8 +20799,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "tightness_of_the_density_threshold_for_configurati",
       "primary_domain": "Bridges",
-      "priority_score": 0.3726553552511416,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Tightness of the Density Threshold for Configurations in Linear Hypergraphs"
     },
@@ -23241,8 +20843,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "extremal_graph_theory_turn_and_szemerdi",
       "primary_domain": "Bridges",
-      "priority_score": 0.4367097362637363,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Density Forces Structure: Turan, Kruskal-Katona, and Roth in Extremal Combinatorics"
     },
@@ -23252,8 +20854,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "excluded_minors_for_z_n_gainable_biased_graphs",
       "primary_domain": "Bridges",
-      "priority_score": 0.4133402545454546,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Excluded Minors for Z/n-Gainable Biased Graphs: The Parallel-Class Slice and a Divisibility Law"
     },
@@ -23263,8 +20865,8 @@ window.PACKAGE_GRAPH = {
       "hue": 275,
       "id": "euler_mascheroni_constant_irrationality_approaches",
       "primary_domain": "Computation",
-      "priority_score": 0.452,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "cube",
       "title": "The Euler-Mascheroni Constant: Series, Integral, and Irrationality Approaches"
     },
@@ -23285,8 +20887,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "classification_of_perfect_cubes_in_14_gonal_number",
       "primary_domain": "Bridges",
-      "priority_score": 0.4432100000000001,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Classification of Perfect Cubes in 14-gonal Numbers"
     },
@@ -23329,8 +20931,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "complete_solutions_to_the_14_gonal_fourth_power_di",
       "primary_domain": "Algebra",
-      "priority_score": 0.5186266666666667,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "tetrahedron",
       "title": "Complete Solutions to the 14-gonal Fourth-Power Diophantine Equation 6n^2 - 5n = t^4"
     },
@@ -23340,8 +20942,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "extremality_of_projective_plane_block_designs_in_t",
       "primary_domain": "Computation",
-      "priority_score": 0.44923399999999997,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "cube",
       "title": "Extremality of Projective-Plane Designs in the Coupon Collector's Problem"
     },
@@ -23351,8 +20953,8 @@ window.PACKAGE_GRAPH = {
       "hue": 100,
       "id": "combinatorial_nerve_chain_homotopy_equivalence",
       "primary_domain": "Cryptography",
-      "priority_score": 0.29062540000000003,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "dodecahedron",
       "title": "The Euler Characteristic of a Covered Complex: Exact Inclusion-Exclusion and the Numerical Shadow of Nerve Reconstruction"
     },
@@ -23384,8 +20986,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "sums_of_three_cubes",
       "primary_domain": "Physics",
-      "priority_score": 0.40141157142857153,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "diamond",
       "title": "Sums of Three Cubes: The Modular Obstruction and the Density Conjecture"
     },
@@ -23395,8 +20997,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "homotopy_type_theory_as_foundations",
       "primary_domain": "Pythagorean",
-      "priority_score": 0.455,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "triangular_prism",
       "title": "The Gaussian Integer Parametrization of Pythagorean Triples"
     },
@@ -23439,8 +21041,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "goldbach_verification_framework",
       "primary_domain": "Bridges",
-      "priority_score": 0.41286596521739133,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "A Reflection Principle for Goldbach Representation Counts"
     },
@@ -23461,8 +21063,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "square_root_cancellation_for_gl2_triple_correlatio",
       "primary_domain": "Logic",
-      "priority_score": 0.4328038727272727,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "star_of_david",
       "title": "Square-Root Cancellation for GL(2) Triple Correlation Sums: The Deligne Chebyshev Envelope"
     },
@@ -23472,8 +21074,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "stereographic_fourier_analysis_spherical_harmonics",
       "primary_domain": "Bridges",
-      "priority_score": 0.45705761904761916,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Stereographic Fourier Analysis: The Chordal Metric Identity and Harmonic Analysis on Spheres"
     },
@@ -23483,8 +21085,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "convex_position_minimizes_plane_graphs",
       "primary_domain": "Bridges",
-      "priority_score": 0.516675,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Convex Position Minimizes Plane Graphs"
     },
@@ -23505,8 +21107,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "projective_plane_coupon_collection_slowness",
       "primary_domain": "Bridges",
-      "priority_score": 0.3699978030769231,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Projective Plane Coupon Collection Slowness"
     },
@@ -23516,8 +21118,8 @@ window.PACKAGE_GRAPH = {
       "hue": 100,
       "id": "quadratic_reciprocity_five_proofs_formalized",
       "primary_domain": "Algebra",
-      "priority_score": 0.3972276,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "tetrahedron",
       "title": "Quadratic Reciprocity Through Five Windows: The Supplementary Laws"
     },
@@ -23527,8 +21129,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "euler_product_for_autocorrelation_of_simultaneousl",
       "primary_domain": "MachineLearning",
-      "priority_score": 0.5029119272727274,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "sphere_rings",
       "title": "An Euler Product for the Autocorrelation of Simultaneously Visible Lattice Points"
     },
@@ -23615,8 +21217,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "sensitivity_conjecture_extensions",
       "primary_domain": "Algebra",
-      "priority_score": 0.48355851612903233,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "tetrahedron",
       "title": "The Spectral Core of the Sensitivity Conjecture: Signed Adjacency Matrices of the Hypercube"
     },
@@ -23626,8 +21228,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "geometric_fractional_chromatic_number_of_the_29_ve",
       "primary_domain": "Algebra",
-      "priority_score": 0.45374800000000004,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "tetrahedron",
       "title": "The Independence-Ratio Certificate: A 29-Vertex Threshold for the Fractional Chromatic Number of the Plane"
     },
@@ -23714,8 +21316,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "minimum_independence_ratio_constraint",
       "primary_domain": "Bridges",
-      "priority_score": 0.527476,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "The Minimum Independence Ratio Constraint: A Reciprocal Bridge Between Coloring and Independence"
     },
@@ -23725,8 +21327,8 @@ window.PACKAGE_GRAPH = {
       "hue": 292,
       "id": "exact_sign_law_for_coefficients_of_ramanujans_thir",
       "primary_domain": "Bridges",
-      "priority_score": 0.46884433623188404,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Exact Sign Law for the Coefficients of Ramanujan's Third Order Mock Theta Function rho(q)"
     },
@@ -23758,8 +21360,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "ballas_conjecture_for___13",
       "primary_domain": "Bridges",
-      "priority_score": 0.557,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Balla's Conjecture for the Angle arccos(1/3): A Rank-Multiplicity Reduction"
     },
@@ -23857,8 +21459,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "refined_enumeration_of_greedy_tamari_intervals_by_",
       "primary_domain": "Bridges",
-      "priority_score": 0.389,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "The Valley Statistic Bridge: Greedy Tamari Intervals and Bipartite Planar Maps"
     },
@@ -23868,8 +21470,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "entanglement_inspired_algorithmic_complexity_in_no",
       "primary_domain": "Bridges",
-      "priority_score": 0.45987362,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Entanglement-Inspired Algorithmic Complexity in Noncommutative Spaces: A Transfer-Operator View of Fibonacci Correlations"
     },
@@ -23879,8 +21481,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "improved_constant_for_domination_in_cartesian_prod",
       "primary_domain": "Computation",
-      "priority_score": 0.562938,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "cube",
       "title": "An Improved Vizing-Type Constant for Domination in Cartesian Products of Graphs"
     },
@@ -23912,8 +21514,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "prove_fermats_little_theorem_for_p5",
       "primary_domain": "Pythagorean",
-      "priority_score": 0.47561819905213276,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "triangular_prism",
       "title": "The Fifth-Power Congruence Modulo Five and Its Pythagorean Consequences"
     },
@@ -23945,8 +21547,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "isomorphism_of_generating_trees_for_greedy_m_tamar",
       "primary_domain": "Pythagorean",
-      "priority_score": 0.5129090000000001,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "triangular_prism",
       "title": "Isomorphisms of Generating Trees and Refined Equinumerosity for m-Tamari Intervals and (m+1)-Constellations"
     },
@@ -23967,8 +21569,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "optimality_of_vector_valued_convolution_kernels_fo",
       "primary_domain": "MachineLearning",
-      "priority_score": 0.4398394666666667,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "sphere_rings",
       "title": "The Difference-Set Method for Sidon Sets: Sharp Bounds and the Convolution-Kernel Programme"
     },
@@ -24066,8 +21668,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "even_harmonic_strength_of_antipodal_spherical_desi",
       "primary_domain": "Geometry",
-      "priority_score": 0.5266726923076923,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "hexagonal_prism",
       "title": "Even Harmonic Strength of Antipodal Spherical Designs Contains 2"
     },
@@ -24077,8 +21679,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "every_binvariant_edge_is_forcing_exactly_for_nearb",
       "primary_domain": "Bridges",
-      "priority_score": 0.573804028436019,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Every b-invariant Edge is Forcing Exactly for Near-Bipartite Bricks (Up to Three Classical Exceptions)"
     },
@@ -24088,8 +21690,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "multi_kernel_smoothing_lemma_for_sidon_sets",
       "primary_domain": "Bridges",
-      "priority_score": 0.44295649681528665,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "A Multi-Kernel Support Law for Sidon Sets: Exact Difference-Set Cardinality and a Sharp Characterization"
     },
@@ -24110,8 +21712,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "the_list_chromatic_number_of_3_colorable_planar_gr",
       "primary_domain": "Bridges",
-      "priority_score": 0.4546,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Colorability Does Not Control Choosability: A Complete Planar Witness at k=2"
     },
@@ -24132,8 +21734,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "knots_that_think_cognition_as_braiding_in_category",
       "primary_domain": "Bridges",
-      "priority_score": 0.30277126000000004,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Knots That Think: The Writhe as a Well-Defined Invariant of Cognitive Braids"
     },
@@ -24143,8 +21745,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "tight_asymptotic_bound_for_the_nqueens_completion_",
       "primary_domain": "Bridges",
-      "priority_score": 0.4724886610169492,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Toroidal Constructions and Hall-Type Repair for the n-Queens Completion Problem"
     },
@@ -24242,8 +21844,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "nonexistence_of_nonconstant_colorings_satisfying_t",
       "primary_domain": "Bridges",
-      "priority_score": 0.4514887166666668,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Non-Existence of Non-Constant Blend Colorings on Strongly Connected Weighted Digraphs"
     },
@@ -24264,8 +21866,8 @@ window.PACKAGE_GRAPH = {
       "hue": 275,
       "id": "exact_2_adic_valuation_of_coefficients_of_txm_for_",
       "primary_domain": "MachineLearning",
-      "priority_score": 0.5940000000000001,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "sphere_rings",
       "title": "Exact 2-adic Valuations of the Coefficients of T(x)^m: the m=5 Law and the Failure of a Universal Formula"
     },
@@ -24275,8 +21877,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "young_conjugation_induces_a_measure_preserving_inv",
       "primary_domain": "Bridges",
-      "priority_score": 0.5295662942477877,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Young Conjugation as a Measure-Preserving Klein Four-Group on the Natural Extension of the Triangle Map"
     },
@@ -24297,8 +21899,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "kernelcover_characterisation_of_the_weighted_daven",
       "primary_domain": "Algebra",
-      "priority_score": 0.5155438642611684,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "tetrahedron",
       "title": "Kernel-Cover Characterization of the Weighted Davenport Constant"
     },
@@ -24308,8 +21910,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "conjecture_on_the_structure_of_minimal_obstruction",
       "primary_domain": "Bridges",
-      "priority_score": 0.3599485585714286,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Minimal Obstructions to Total Rainbow Forests Are Single Monochromatic Cycles"
     },
@@ -24319,8 +21921,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "classification_of_regular_4maniplexes_via_tetraval",
       "primary_domain": "Tropical",
-      "priority_score": 0.3793292235294118,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "star",
       "title": "Classification of Regular 4-Maniplexes via Tetravalent Graph Censuses"
     },
@@ -24330,8 +21932,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "formalized_rogersramanujan_identities_for_q_pochha",
       "primary_domain": "Bridges",
-      "priority_score": 0.46650342687540775,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "The Finite Core of the Rogers-Ramanujan Identities: Schur Polynomials, Gaussian Binomials, and a Fibonacci Bridge"
     },
@@ -24341,8 +21943,8 @@ window.PACKAGE_GRAPH = {
       "hue": 95,
       "id": "tightness_of_edge_deletion_bound_in_hyperstability",
       "primary_domain": "Bridges",
-      "priority_score": 0.420858,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Tightness of the Edge-Deletion Bound in a Hyperstability Extension of the Erdos-Gallai Theorem"
     },
@@ -24352,8 +21954,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "discrete_homotopy_groups_of_quasisymmetric_cubical",
       "primary_domain": "Bridges",
-      "priority_score": 0.511,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Discrete Homotopy Groups of Quasisymmetric Cubical Sets"
     },
@@ -24374,8 +21976,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "characterization_of_the_aharoni_korman_conjecture_",
       "primary_domain": "Logic",
-      "priority_score": 0.49753964866339334,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "star_of_david",
       "title": "Characterization of the Aharoni-Korman Property via Saturated Chains: Structural Lemmas and a Refutation of the Obstruction Direction"
     },
@@ -24385,8 +21987,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "chain_covers_in_the_boolean_lattice",
       "primary_domain": "Cryptography",
-      "priority_score": 0.5242404210526316,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "dodecahedron",
       "title": "Chain Covers in the Boolean Lattice"
     },
@@ -24418,8 +22020,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "joint_descendants_of_the_last_k_vertices_in_random",
       "primary_domain": "Bridges",
-      "priority_score": 0.45366952380952386,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Joint Descendants of the Last k Vertices in Random d-DAGs: A Beta-Moment Telescoping Law"
     },
@@ -24440,8 +22042,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "sharp_threshold_constant_for_cycle_games",
       "primary_domain": "Bridges",
-      "priority_score": 0.57296,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "The Sharp Threshold Constant of the Maker-Breaker Cycle Game"
     },
@@ -24451,8 +22053,8 @@ window.PACKAGE_GRAPH = {
       "hue": 100,
       "id": "characterization_of_extremal_graphs_for_positive_l",
       "primary_domain": "Bridges",
-      "priority_score": 0.50904,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Characterization of Extremal Graphs for Positive Lin-Lu-Yau Curvature"
     },
@@ -24462,8 +22064,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "existence_of_optimal_equidistant_codes_for_n__2_mo",
       "primary_domain": "Bridges",
-      "priority_score": 0.49735784528301885,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "A Pell Obstruction to a Proposed Family of Optimal Equidistant Codes"
     },
@@ -24473,8 +22075,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "the_aharoni_korman_conjecture_for_well_founded_fac",
       "primary_domain": "Bridges",
-      "priority_score": 0.5183991264367817,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "The Aharoni\u2013Korman Property for Well-Founded FAC Posets"
     },
@@ -24484,8 +22086,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "infinite_log_concavity_of_total_d_hoggatt_numbers",
       "primary_domain": "Tropical",
-      "priority_score": 0.4996542252252253,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "star",
       "title": "A Log-Concavity Dichotomy for the Total d-Hoggatt Numbers"
     },
