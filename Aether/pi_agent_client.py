@@ -3263,7 +3263,7 @@ Be precise, be deep, be world-class.
                 {"title": "Beautiful Math-Rich Interactive Widget Title", "description": "Detailed description of the interactive widget and what users can explore.", "html": "<!DOCTYPE html><html>...</html>"}
               ],
               "interactive_layout": "Markdown representing a Jupyter-like narrative combining rich narrative text and interactive widgets. You have full freedom and space to design the order, explanation layout, and overall presentation flow of the page. Use placeholders like {{interactive_demo:0}} (or {{widget:0}}), {{visualization:0}}, {{algorithm:0}}, and {{demo:0}} to embed the generated widgets, visualizations, algorithms, and Python demos inline with your descriptive text. IMPORTANT: Use progressive disclosure! Complex proofs, dense mathematical definitions, and prerequisite background knowledge MUST be hidden behind beautifully styled HTML <details> and <summary> tags (e.g., <details><summary>Click to reveal the formal proof</summary>...</details>) to keep the main narrative focused and readable for beginners while offering depth for experts. Also, actively embed Markdown hyperlinks to external resources with more information inside your narrative. Make it an engaging, multimedia presentation.",
-              "lean_proofs": "LEAN_FILE_CONTENT_OR_PLACEHOLDER",
+              "lean_proofs": "FULL_LEAN_FILE_CONTENT_PASSED_THROUGH_FROM_PHASE_A",
               "future_directions": "FUTURE_DIRECTIONS_CONTENT",
               "modules": {"demo": "# full demo.py source..."},
               "lean_files": ["Catalog/Domain/Package/File.lean"]
@@ -3293,6 +3293,12 @@ Be precise, be deep, be world-class.
               formal-proof names, and do NOT use generic phrases like "Main theorem".
             - `keywords`: 3–8 mathematical keywords describing the work
               (e.g., `ReLU`, `Hodge decomposition`, `piecewise linear`).
+            - `lean_proofs`: MUST be populated with the complete, raw Lean 4 source code
+              and formal proofs passed through from Phase A. Do NOT use placeholder strings
+              like "Not included" or "Formal-proof source is intentionally not included" —
+              always include the full Lean 4 file code.
+            - `lean_files`: MUST list all relative file paths of the Lean 4 source files
+              from Phase A.
 
             ### PACKAGE.json Schema Checklist (verify before output)
             Before finalizing, confirm every item below:
@@ -3315,9 +3321,12 @@ Be precise, be deep, be world-class.
                   `{{algorithm:Z}}`, and `{{demo:W}}` placeholders.
             - [ ] `future_directions` contains the Phase A future directions provided
                   below, verbatim or lightly edited.
+            - [ ] `lean_proofs` and `lean_files` contain all Lean 4 proof source code and
+                  file paths passed through from Phase A in full.
 
             ### DO NOT OUTPUT:
-            - NO formal-proof source code (no `.lean` files, no theorem proofs)
+            - NO separate standalone .lean files as root outputs (all Lean 4 formal proof code
+              must be embedded directly inside PACKAGE.json under `lean_proofs` and listed under `lean_files`)
             - NO `FUTURE_DIRECTIONS.md` as a separate file (Phase A already produced
               future directions — they are provided below for inclusion in PACKAGE.json)
 

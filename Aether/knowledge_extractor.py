@@ -3778,12 +3778,28 @@ Research mode: {concept.research_mode}
                 pkg["future_directions"] = job.result_future_directions
         if hasattr(job, 'result_lean') and job.result_lean:
             lp = pkg.get("lean_proofs", "")
-            if isinstance(lp, str) and PLACEHOLDER_PATTERN.match(lp):
+            is_lp_placeholder = (
+                isinstance(lp, str) and (
+                    PLACEHOLDER_PATTERN.match(lp) or
+                    len(lp) < 100 or
+                    "not included" in lp.lower() or
+                    "placeholder" in lp.lower() or
+                    "package" in lp.lower()
+                )
+            )
+            if is_lp_placeholder:
                 pkg["lean_proofs"] = job.result_lean
             elif isinstance(lp, list):
-                # Replace string entries that look like filenames
+                # Replace string entries that look like filenames or placeholders
                 pkg["lean_proofs"] = [
-                    job.result_lean if isinstance(e, str) and PLACEHOLDER_PATTERN.match(e) else e
+                    job.result_lean if (
+                        isinstance(e, str) and (
+                            PLACEHOLDER_PATTERN.match(e) or
+                            len(e) < 100 or
+                            "not included" in e.lower() or
+                            "placeholder" in e.lower()
+                        )
+                    ) else e
                     for e in lp
                 ]
 
