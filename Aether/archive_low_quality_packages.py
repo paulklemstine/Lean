@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Archive Research Packages with Quality Score < threshold (Default: < 75% / 0.75, approx 140 packages).
+"""Archive Research Packages with Quality Score < 60% (0.60).
 
-Moves low-quality packages from active directories (Packages/, docs/, Catalog/Applications/Packages/)
-to Packages_Archive/ and rebuilds package indices.
+Moves packages with quality score < 60% from active directories (Packages/, docs/)
+to Packages_Archive/ and rebuilds catalog indices.
 
 Usage:
-    python3 archive_low_quality_packages.py [--dry-run] [--threshold 0.75]
+    python3 archive_low_quality_packages.py [--dry-run] [--threshold 0.60]
 """
 
 import os
@@ -40,7 +40,7 @@ def get_package_quality(fpath: Path) -> float:
 def main():
     parser = argparse.ArgumentParser(description="Archive low-quality research packages")
     parser.add_argument("--dry-run", action="store_true", help="Preview without moving files")
-    parser.add_argument("--threshold", type=float, default=0.75, help="Quality threshold (default: 0.75 for lowest 140 packages)")
+    parser.add_argument("--threshold", type=float, default=0.60, help="Quality threshold (default: 0.60 / 60%)")
     args = parser.parse_args()
 
     threshold = args.threshold
@@ -53,14 +53,12 @@ def main():
 
     packages_dir = repo_root / "Packages"
     docs_dir = repo_root / "docs"
-    catalog_pkgs = repo_root / "Catalog" / "Applications" / "Packages"
     archive_dir = repo_root / "Packages_Archive"
 
     print(f"Repo Root: {repo_root}")
     print(f"Archive Directory: {archive_dir}")
     print(f"Quality Threshold: < {threshold * 100:.1f}% ({threshold})\n")
 
-    # Prepare archive subdirectories
     archive_packages = archive_dir / "Packages"
     archive_docs = archive_dir / "docs"
     archive_viz = archive_dir / "visualizations"
@@ -74,25 +72,21 @@ def main():
 
     # 1. Collect low-quality package filenames from docs/ and Packages/
     low_quality_files = set()
-    scanned_count = 0
 
-    for source_dir in [docs_dir, packages_dir, catalog_pkgs]:
+    for source_dir in [docs_dir, packages_dir]:
         if not source_dir.exists():
             continue
         for fpath in source_dir.glob("*.json"):
             if fpath.name in EXCLUDED_FILES:
                 continue
-            scanned_count += 1
             score = get_package_quality(fpath)
             if score < threshold:
                 low_quality_files.add((fpath.name, score))
 
-    print(f"Scanned package entries across active directories.")
     print(f"Identified {len(low_quality_files)} packages with quality score < {threshold * 100:.1f}%:\n")
 
     low_quality_filenames = {fn for fn, _ in low_quality_files}
 
-    # Display list of packages to archive
     sorted_low_q = sorted(low_quality_files, key=lambda x: x[1])
     for fname, score in sorted_low_q:
         print(f"  - [Q={score*100:5.1f}%] {fname}")
@@ -104,7 +98,6 @@ def main():
     # 2. Archive package .json files
     moved_count = 0
 
-    # Archive from Packages/
     if packages_dir.exists():
         for fpath in packages_dir.glob("*.json"):
             if fpath.name in low_quality_filenames:
@@ -112,7 +105,6 @@ def main():
                 shutil.move(str(fpath), str(dest))
                 moved_count += 1
 
-    # Archive from docs/
     if docs_dir.exists():
         for fpath in docs_dir.glob("*.json"):
             if fpath.name in low_quality_filenames:
@@ -120,14 +112,7 @@ def main():
                 shutil.move(str(fpath), str(dest))
                 moved_count += 1
 
-    # Archive from Catalog/Applications/Packages/ if present
-    if catalog_pkgs.exists():
-        for fpath in catalog_pkgs.glob("*.json"):
-            if fpath.name in low_quality_filenames:
-                dest = archive_packages / fpath.name
-                shutil.move(str(fpath), str(dest))
-
-    # 3. Archive associated visualization and code files matching slugs
+    # 3. Archive associated visualization files
     slugs = {fn.replace(".json", "") for fn in low_quality_filenames}
 
     for viz_src, viz_dest in [(packages_dir / "visualizations", archive_viz), (docs_dir / "visualizations", archive_docs_viz)]:

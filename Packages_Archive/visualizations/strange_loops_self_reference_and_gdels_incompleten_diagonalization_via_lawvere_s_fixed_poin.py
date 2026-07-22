@@ -1,1 +1,0 @@
-from typing import Callable, Dict, List, Optional\n\ndef lawvere_fixed_point(phi: Dict[int, Dict[int, int]], dom: List[int],\n                        g: Callable[[int], int]) -> Optional[int]:\n    d = {a: g(phi[a][a]) for a in dom}\n    for a0 in dom:\n        if phi[a0] == d:\n            b = phi[a0][a0]\n            assert g(b) == b\n            return b\n    return None\n
