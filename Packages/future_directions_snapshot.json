@@ -193,6 +193,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 5d6a1919 (Q=0.760), which proved 13 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future directions\n\n1. **Repair the definition before studying asymptotics.** The literal rule excludes one integer and collapses to the constant-one sequence. A revised rule must specify the candidate set and all exclusions—for example, whether terms must be new, increasing, or avoid sums of any p",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_5d6a1919_3925c6b7",
+    "lineage_refs": [],
+    "priority_score": 0.86,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "5d6a1919",
+    "status": "available",
+    "timestamp": "2026-07-22T18:42:28.004149+00:00",
+    "title": "Deepening: 1. **Repair the definition before studying asymptotics.** The literal rule exclu"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 8280a2b4 (Q=0.760), which proved 14 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Riemann-Roch theorem for graphs (Baker-Norine, 2007) states that for a divisor D on a graph G, l(D) - l(K_G - D) = deg(D) + 1 - g(G) where l(D) is the rank of D, K_G is the canonical divisor, and g(G) is the genus (cyclomatic number). The chip-firing game is a combinatorial model: vertices hold ",
     "domain_bridges": [],
     "domains": [
@@ -1397,25 +1416,6 @@
     "status": "available",
     "timestamp": "2026-07-16T06:20:31.167605+00:00",
     "title": "ArXiv paper: Expansions of $\\binom{pn}{p+r}$ in Shifted Binomial Bases and a Modular Symmetry Criterion"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "699db10f",
-    "description": "Investigate the ArXiv paper 'A few remarks on the Baez-Duarte Criterion' and formalize its key results. Abstract: The goal of this paper is to derive a few very interesting lemmas related to the Báez-Duarte criterion.",
-    "domain_bridges": [],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0066",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.12084v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-16T06:36:12.474914+00:00",
-    "title": "ArXiv paper: A few remarks on the Baez-Duarte Criterion"
   },
   {
     "ambition_level": "extension",
@@ -8389,6 +8389,46 @@
     "status": "available",
     "timestamp": "2026-07-22T18:42:15.004832+00:00",
     "title": "For code parameters satisfying the quantum Singleton inequality"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future directions: the Báez–Duarte transform\n\n## 1. Quantitative passage from finite cutoffs to the full criterion\n\n**Conjecture.** For each fixed nonnegative integer `k`, the cutoff geometric\nmixtures with Möbius weights converge to the full Báez–Duarte coefficient, with\na truncation bound uniform for `k` in every interval `0 ≤ k ≤ N^α`, where some\nabsolute `α > 0` is admissible.\n\nThe key insight is that the finite identity cleanly separates exact binomial\nalgebra from the tail of a reciprocal-square Dirichlet series. **Why now?** The\ncutoff formula exposes the tail term explicitly, so uniform estimates can be\nattacked without repeatedly rearranging infinite sums.\n\n## 2. Complete finite-difference hierarchy for positive measures\n\n**Conjecture.** If nonnegative weights `a_n` satisfy `∑ a_n/n² < ∞`, then the\nassociated infinite geometric mixture is completely monotone:\n`(-1)^r Δ^r C_k ≥ 0` for all `r,k`, and every completely monotone sequence whose\nrepresenting measure is supported on `{1-n⁻² : n ≥ 1}` arises uniquely this way.\n\nThe key insight is that each forward difference multiplies a geometric mode by\n`-n⁻²`, turning all orders of finite differences into reciprocal moments.\n**Why now?** The first-difference identity and positivity result identify the\ncorrect representation theorem and its exact support.\n\n## 3. Weighted Banach-space involution\n\n**Conjecture.** There is a sharp polynomial weight exponent for which the\nalternating binomial transform extends to a bounded involution on the resulting\nweighted sequence space, and this exponent matches the decay threshold in the\nBáez–Duarte criterion.\n\nThe key insight is that finite binomial inversion is exact, but infinite\ninversion is controlled by the interaction between Pascal growth and sequence\ndecay. **Why now?** The finite involution isolates the sole unresolved issue as\ncontinuity under completion, making a functional-analytic formulation precise.\n\n## 4. Divisor-incidence and binomial-incidence compatibility\n\n**Conjecture.** The divisor-lattice Möbius inversion and the Boolean-lattice\nbinomial inversion combine into a natural two-parameter convolution whose\nspectral decomposition simultaneously encodes reciprocal-power moments and\narithmetic divisor sums.\n\nThe key insight is that both inversion laws recover primitive data from\ncumulative data, but on different incidence algebras. **Why now?** Their verified\ncoexistence in the cutoff theory suggests a concrete tensor-product incidence\nalgebra rather than a merely metaphorical analogy.\n\n## 5. Rigidity of geometric supports\n\n**Conjecture.** A signed sequence with sufficiently rapid decay that admits two\nabsolutely summable geometric-mixture representations supported on\n`{1-n⁻² : n ≥ 1}` has identical weights term by term.\n\nThe key insight is that binomial inversion recovers every reciprocal moment, so\nuniqueness should follow from a discrete moment problem with a single\naccumulation point. **Why now?** The exact moment/coefficient equivalence supplies\nall moments and identifies the topology in which a uniqueness theorem is needed.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0607",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "699db10f",
+    "status": "available",
+    "timestamp": "2026-07-22T18:42:20.048683+00:00",
+    "title": "**Conjecture.** For each fixed nonnegative integer `k`, the cutoff geometric"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## 1. Exact classification of the repaired trajectory\n\n**Conjecture.** The globally additive-avoiding greedy trajectory beginning at one is exactly the odd sequence: its term at index `n` is `2n+1`.\n\nThe key insight is that all sums of two earlier odd values are even, while the immediately preceding even candidate is forbidden as the sum of the initial one and the current value. **Why now?** The existence and growth-ceiling results isolate precisely the local admissibility argument needed for an induction, and the initial computations expose the parity invariant.\n\n## 2. Stability under changing the initial value\n\n**Conjecture.** For every positive initial value, the globally additive-avoiding greedy trajectory is eventually an arithmetic progression, with its common difference determined by the additive semigroup generated by the initial segment.\n\nThe key insight is that the forbidden set is a finite restricted sumset whose residue-class profile may stabilize even while its diameter grows. **Why now?** The explicit successor bound shows that all choices occur in a short moving interval, making residue stabilization a concrete and falsifiable mechanism rather than an unconstrained asymptotic claim.\n\n## 3. Higher-order additive avoidance\n\n**Conjecture.** If candidates avoid all sums of exactly `r` prior terms, with repetition allowed, then the greedy trajectory from one is eventually periodic modulo `r` and has linear growth.\n\nThe key insight is that an `r`-fold sum of a single stable residue class occupies one residue class, potentially leaving a neighboring class permanently admissible. **Why now?** Pair-sum avoidance demonstrates that a global exclusion rule need not force quadratic growth; varying the arity tests which part of the linear behavior is genuinely structural.\n\n## 4. Hypergraph sparsity under bounded perturbations\n\n**Conjecture.** Any increasing integer sequence whose successor differs from the globally greedy admissible choice by a uniformly bounded amount has a chronological additive hypergraph with zero upper edge density.\n\nThe key insight is that approximate greediness may preserve enough separation from the restricted sumset to suppress additive triples statistically even when exact sum-freeness is lost. **Why now?** The exact repaired rule produces an empty chronological hypergraph, providing the extremal endpoint from which a quantitative stability theory can be developed.\n\n## 5. Counting-function dichotomy\n\n**Conjecture.** A globally pair-sum-avoiding greedy sequence has either positive asymptotic density or a counting function bounded above by a constant multiple of the square root of the ambient cutoff, according to whether its stabilized residue support is sum-free in a finite cyclic group.\n\nThe key insight is that finite cyclic sum-free structure may govern the transition between linear and Sidon-like sparse growth. **Why now?** The repaired construction supplies both a concrete positive-density model and a restricted-sumset formulation suitable for comparison with additive-combinatorial density bounds.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0608",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "5d6a1919",
+    "status": "available",
+    "timestamp": "2026-07-22T18:42:25.479302+00:00",
+    "title": "**Conjecture.** The globally additive-avoiding greedy trajectory beginning at on"
   },
   {
     "ambition_level": "extension",

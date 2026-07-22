@@ -1,26 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "606f7bdd",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Functional Fibers, Experience, and Semantic Gaps\n\n## 1. Naturality of the zombie–semantic gap correspondence\n\n**Conjecture.** There is a category of functional profiles and profil",
-      "quality_score": 0.73,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-19T22:38:37",
-      "title": "Zombies and Qualia: Mathematics of Subjective Experience"
-    },
-    {
-      "cycle_id": "ca6fc5a2",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Paradox-Tolerant Reflection\n\n## 1. A compositional truth language with three genuine diagonal sentences\n\nConstruct a recursively generated language with quotation, substitution, a",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 32,
-      "timestamp": "2026-07-19T23:31:17",
-      "title": "Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
-    },
-    {
       "cycle_id": "65e81f6c",
       "domain": "Geometry",
       "key_insight": "# Future Directions\n\n1. **Infinite-page limit.** Replace fixed-length books by streams `ℕ → Fin A` with the product topology. The resulting Cantor-like space remains totally disconnected but is no lon",
@@ -499,29 +479,29 @@
       "theorem_count": 15,
       "timestamp": "2026-07-22T18:42:15",
       "title": "For any family of local stabilizer codes admitting a geometric realization, conj"
+    },
+    {
+      "cycle_id": "699db10f",
+      "domain": "Computation",
+      "key_insight": "# Future directions: the Báez–Duarte transform\n\n## 1. Quantitative passage from finite cutoffs to the full criterion\n\n**Conjecture.** For each fixed nonnegative integer `k`, the cutoff geometric\nmixtu",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-07-22T18:42:21",
+      "title": "ArXiv paper: A few remarks on the Baez-Duarte Criterion"
+    },
+    {
+      "cycle_id": "5d6a1919",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\n## 1. Exact classification of the repaired trajectory\n\n**Conjecture.** The globally additive-avoiding greedy trajectory beginning at one is exactly the odd sequence: its term at i",
+      "quality_score": 0.76,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-07-22T18:42:27",
+      "title": "1. **Repair the definition before studying asymptotics.** The literal rule exclu"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "ee626e30",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions: Computable Shadows of Chaotic Dynamics\n\n## 1. Certified shadowing from cone-field data\n\n**Conjecture.** A program implementing a differentiable map on a compact invariant set, tog",
-      "quality_score": 0.76,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-18T03:54:54",
-      "title": "Chaos as a Computable Shadow: The Shadowing Lemma for Real Programs"
-    },
-    {
-      "cycle_id": "ad1766b1",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\n## Formal conclusions\n\nThe file `Speculative/MoebiusArithmetic.lean` separates the topology from the proposed arithmetic and proves the following.\n\n### Disproved\n\n1. **Coordinatew",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-18T04:11:01",
-      "title": "Arithmetic on the Moebius Band: A Number System with a Twist"
-    },
     {
       "cycle_id": "f0aa5907",
       "domain": "MachineLearning",
@@ -2501,45 +2481,29 @@
       "theorem_count": 15,
       "timestamp": "2026-07-22T18:42:15",
       "title": "For any family of local stabilizer codes admitting a geometric realization, conj"
+    },
+    {
+      "cycle_id": "699db10f",
+      "domain": "Computation",
+      "key_insight": "# Future directions: the Báez–Duarte transform\n\n## 1. Quantitative passage from finite cutoffs to the full criterion\n\n**Conjecture.** For each fixed nonnegative integer `k`, the cutoff geometric\nmixtu",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-07-22T18:42:21",
+      "title": "ArXiv paper: A few remarks on the Baez-Duarte Criterion"
+    },
+    {
+      "cycle_id": "5d6a1919",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\n## 1. Exact classification of the repaired trajectory\n\n**Conjecture.** The globally additive-avoiding greedy trajectory beginning at one is exactly the odd sequence: its term at i",
+      "quality_score": 0.76,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-07-22T18:42:27",
+      "title": "1. **Repair the definition before studying asymptotics.** The literal rule exclu"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "d5fe8eb3",
-      "domain": "Geometry",
-      "name": "is",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "d5fe8eb3",
-      "domain": "Geometry",
-      "name": "qualiaFlip_involution",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "977e8d8d",
-      "domain": "Cryptography",
-      "name": "co",
-      "quality": 0.74
-    },
-    {
-      "cycle_id": "977e8d8d",
-      "domain": "Cryptography",
-      "name": "network",
-      "quality": 0.74
-    },
-    {
-      "cycle_id": "977e8d8d",
-      "domain": "Cryptography",
-      "name": "sets",
-      "quality": 0.74
-    },
-    {
-      "cycle_id": "2fdbedee",
-      "domain": "Shared",
-      "name": "lengths",
-      "quality": 0.75
-    },
     {
       "cycle_id": "2fdbedee",
       "domain": "Shared",
@@ -2803,9 +2767,45 @@
       "domain": "Cryptography",
       "name": "logical_dimension_le_defect",
       "quality": 0.7
+    },
+    {
+      "cycle_id": "699db10f",
+      "domain": "Computation",
+      "name": "applied",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "699db10f",
+      "domain": "Computation",
+      "name": "records",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "699db10f",
+      "domain": "Computation",
+      "name": "isolates",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "5d6a1919",
+      "domain": "Novelty",
+      "name": "mem_priorPairSums_iff",
+      "quality": 0.76
+    },
+    {
+      "cycle_id": "5d6a1919",
+      "domain": "Novelty",
+      "name": "twice_plus_one_admissible",
+      "quality": 0.76
+    },
+    {
+      "cycle_id": "5d6a1919",
+      "domain": "Novelty",
+      "name": "greedy_successor_exists",
+      "quality": 0.76
     }
   ],
-  "last_updated": "2026-07-22T18:42:15",
+  "last_updated": "2026-07-22T18:42:27",
   "open_questions": [
     {
       "context": "",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "dae162a9",
-        "quality": 0.63,
-        "theorems": 19,
-        "title": "ArXiv paper: Superlinear complexity of the $(3/2)^n$ steering word"
-      },
-      {
         "cycle_id": "47f9b94d",
         "quality": 0.78,
         "theorems": 4,
@@ -3327,6 +3321,12 @@
         "quality": 0.73,
         "theorems": 20,
         "title": "Hofstadter: Tangled Hierarchies in Type Theory"
+      },
+      {
+        "cycle_id": "699db10f",
+        "quality": 0.7,
+        "theorems": 6,
+        "title": "ArXiv paper: A few remarks on the Baez-Duarte Criterion"
       }
     ],
     "Cryptography": [
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "4c40ce69",
-        "quality": 0.7,
-        "theorems": 0,
-        "title": "Counterfactual Number Theory: What If Primes Were Random?"
-      },
-      {
         "cycle_id": "af530f4e",
         "quality": 0.77,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.7,
         "theorems": 24,
         "title": "Moonshot: The Last Theorem — Formalizing the Heat Death of Mathematics"
+      },
+      {
+        "cycle_id": "5d6a1919",
+        "quality": 0.76,
+        "theorems": 13,
+        "title": "1. **Repair the definition before studying asymptotics.** The literal rule exclu"
       }
     ],
     "NumberTheory": [

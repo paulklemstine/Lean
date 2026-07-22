@@ -1401,25 +1401,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "699db10f",
-    "description": "Investigate the ArXiv paper 'A few remarks on the Baez-Duarte Criterion' and formalize its key results. Abstract: The goal of this paper is to derive a few very interesting lemmas related to the Báez-Duarte criterion.",
-    "domain_bridges": [],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0066",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.12084v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-16T06:36:12.474914+00:00",
-    "title": "ArXiv paper: A few remarks on the Baez-Duarte Criterion"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Induced-Minor-Closed Classes have Linear, Square-Root, or Sub-Polynomial Tree-Independence' and formalize its key results. Abstract: An independent set in a graph $G$ is a set of pairwise non-adjacent vertices. A tree decomposition of $G$ is a pair $(T, χ)$ where $T$ is a tree and $χ: V(T) \\rightarrow 2^{V(G)}$ is a function satisfying two axioms: for every edge $uv \\in E(G)$ there is an $x \\in V(T)$ such that $\\{u,v\\} \\subseteq χ(x)$, and for every vertex $u \\in V(G)$ the set $\\{x \\in V(T) | u \\in χ(x)\\}$ induces a non-empty and connected subtree of $T$. The sets $χ(x)$ for $x \\in V(T)$ are called the bags of the tree decomposition. The tree-independence number of $G$ is the minimum taken over all tree decompositions of $G$ of the maximum size of an independent set of the graph induced by a bag of the decomposition. A graph $H$ is an induced minor of a graph $G$ if a graph isomorphic to $H$ can be obtained from $G$ by vertex deletions and edge contractions. We prove that for every $t\\in\\mathbb{N}$ there exists an $ε> 0$ such that every graph $G$ either contains the complete bipartite graph $K_{t,t}$ or the wall $W_",
     "domain_bridges": [],
@@ -5135,26 +5116,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "c612ec41",
-    "description": "# Future Directions: Geometric Constraints on Quantum-Code Parameters\n\n## 1. Geometric Defect as a Capacity Density\n\nFor any family of local stabilizer codes admitting a geometric realization, conjecture that the normalized defect `(n - 2d)/n` controls the asymptotic logical rate from both sides, up to constants determined only by locality and spatial dimension. This is falsifiable by constructing a local family with vanishing normalized defect and positive asymptotic rate, or by proving a matching lower bound for a specified geometric class. **The key insight is that the excess of physical size over twice the distance, rather than physical size alone, is the quantity left available for logical information by the Singleton constraint.** **Why now?** The exact upper defect-capacity law and its vanishing-rate consequence isolate the parameter that a geometric construction must enlarge to support extensive entropy.\n\n## 2. Cut-Dependent Singleton Defects and Entanglement\n\nFor tensor-network codes associated with discretized negatively curved spaces, conjecture that every boundary region has a cut-dependent defect whose minimum equals twice the gap between the Singleton upper bound and the region's encoded entropy. The claim can be tested on explicit finite tensor networks by comparing erasure distance, minimal-cut size, and reduced-state entropy for every boundary subset. **The key insight is that an entropy-area identity should correspond to saturation of a cut-indexed family of coding inequalities, not to a single global Singleton inequality.** **Why now?** The distinction between validity and saturation shows exactly which additional equality must be checked before a coding bound can become an entropy formula.\n\n## 3. No Extensive Entropy at Exact Length Balance\n\nFor any sequence of quantum codes satisfying `n = 2d + O(1)`, conjecture that every operationally meaningful encoded entropy is uniformly bounded whenever it is bounded above by the number of logical qubits. A counterexample would be a code family with bounded defect but unbounded protected entropy under an explicit noise model. **The key insight is that bounded geometric defect forces bounded logical dimension at the parameter level and hence obstructs extensive protected entropy.** **Why now?** The proven family theorem converts this qualitative tension into a sharp uniform bound and a zero-rate asymptotic prediction.\n\n## 4. Curvature from Spatial Variation of Coding Defect\n\nFor geometrically local subsystem codes on triangulated surfaces, conjecture that discrete curvature is proportional, after coarse-graining, to the Laplacian of a local Singleton-defect density. This is falsifiable by computing both quantities on families of refined regular, conical, and random triangulations and checking whether the proportionality survives refinement. **The key insight is that a constant defect constrains capacity but cannot encode geometry; spatial variation of defect is the minimal additional datum capable of carrying curvature information.** **Why now?** The global arithmetic analysis identifies what remains after distance consumes physical degrees of freedom, suggesting a concrete local field to compare with curvature.\n\n## 5. Syndrome Geometry Requires More Than Parameter Saturation\n\nConjecture that two stabilizer codes with identical saturated `[[n,k,d]]` parameters can have inequivalent syndrome adjacency geometries, with only one admitting a prescribed bulk metric under local decoding moves. The test is to enumerate or construct parameter-matched codes and compare the quasi-isometry classes of their syndrome graphs. **The key insight is that parameter equalities constrain information capacity but do not determine the incidence structure needed to interpret syndromes as matter or geometry.** **Why now?** The surviving results establish the strongest conclusions available from parameter arithmetic alone, making the missing structural invariant precise and experimentally accessible.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Geometry",
-      "Pythagorean"
-    ],
-    "id": "fd_0293",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "f25f9735",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T08:49:01.122706+00:00",
-    "title": "For any family of local stabilizer codes admitting a geometric realization, conj"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "# Future directions\n\n1. Define periodic left and right shifts explicitly and derive the Rule 110 singleton theorem as a concrete corollary of `rule110_fixedPoints_card_of_right_transitive`.\n2. Replace Boolean algebraic normal forms by polynomials in `MvPolynomial (Fin n) (ZMod 2)` and prove equality of polynomial evaluation with the global update map.\n3. Specify the fixed-point coordinate ring using both update equations and Boolean relations `x_i^2 - x_i`; study its Krull dimension separately from its number of `GF(2)`-rational points.\n4. Formalize all 256 rule tables from rule numbers and prove that rule-number decoding is a bijection with `LocalRule`.\n5. Compute fixed-point counts for every rule and bounded array size inside Lean, then compare those finite invariants with a precisely encoded Wolfram classification. Any correlation claim should state the boundary convention, size range, statistic, and classification data explicitly.\n6. Study periodic orbits of length greater than one. Turing universality concerns unbounded spacetime evolution, so orbit structure and simulation embeddings are more relevant invariants than fixed points alone.\n7. Formulate any sheaf construction explicitly: give the site, topology, restriction maps, and intended theorem relating global sections to configurations before comparing section structure across rules.\n",
     "domain_bridges": [],
@@ -8389,6 +8350,46 @@
     "status": "available",
     "timestamp": "2026-07-22T18:42:10.261239+00:00",
     "title": "The formal result in `Catalog/Applications/SizeIndexedLandauerBridge.lean` conne"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## Result established\n\nFor code parameters satisfying the quantum Singleton inequality\n`k + 2(d - 1) ≤ n` with positive distance, define the exact Singleton defect\n\n`D = n + 2 - 2d`.\n\nThe Lean development proves `0 ≤ k ≤ D`. Consequently, every nonnegative\noperational entropy bounded by `k` is bounded by `D`. It also separates this\nexact finite-length quantity from the proposed geometric defect\n`G = n - 2d`, proving `D = G + 2`.\n\nFor a family whose block lengths tend to infinity, the normalized exact and\ngeometric defects differ by `2/n`, which tends to zero. If `G` is uniformly\nbounded above, both the logical rate `k/n` and every nonnegative protected\nentropy density `S/n` (when `S ≤ k`) tend to zero. Conversely, a rate at least\n`ε` forces normalized exact defect at least `ε`.\n\n## What this does and does not settle\n\nThis proves the parameter-level obstruction behind “no extensive entropy at\nexact length balance,” including the `O(1)` defect case. It also identifies a\nnecessary positive defect density for positive asymptotic rate. It does not\nprove the conjectured lower bound of rate by defect density: Singleton provides\nonly the upper direction, and geometry/locality would need to supply additional\nstructure.\n\n## Next formal targets\n\n1. **Geometric lower bounds.** Define a concrete class of local CSS codes on\n   bounded-degree cell complexes, then formulate extra expansion or local-testability\n   hypotheses under which defect density yields a logical-rate lower bound.\n2. **Cut-indexed defects.** Introduce finite tensor-network cut data and prove a\n   finite cut-wise Singleton inequality before investigating equality with entropy.\n3. **Syndrome-graph counterexamples.** Formalize syndrome adjacency graphs and\n   exhibit parameter-matched stabilizer presentations with nonisomorphic graphs,\n   demonstrating that `[[n,k,d]]` data does not determine incidence geometry.\n4. **Subsystem-code locality.** Define a local defect field only after fixing a\n   canonical allocation of checks and logical degrees of freedom; test whether\n   different allocations invalidate any proposed curvature identity.\n5. **Sharper asymptotics.** Generalize bounded geometric defect to\n   `G(n) = o(n)` and prove zero logical and protected-entropy rates directly via\n   the same normalized Singleton estimate.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Pythagorean"
+    ],
+    "id": "fd_0606",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "c612ec41",
+    "status": "available",
+    "timestamp": "2026-07-22T18:42:15.004832+00:00",
+    "title": "For code parameters satisfying the quantum Singleton inequality"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future directions: the Báez–Duarte transform\n\n## 1. Quantitative passage from finite cutoffs to the full criterion\n\n**Conjecture.** For each fixed nonnegative integer `k`, the cutoff geometric\nmixtures with Möbius weights converge to the full Báez–Duarte coefficient, with\na truncation bound uniform for `k` in every interval `0 ≤ k ≤ N^α`, where some\nabsolute `α > 0` is admissible.\n\nThe key insight is that the finite identity cleanly separates exact binomial\nalgebra from the tail of a reciprocal-square Dirichlet series. **Why now?** The\ncutoff formula exposes the tail term explicitly, so uniform estimates can be\nattacked without repeatedly rearranging infinite sums.\n\n## 2. Complete finite-difference hierarchy for positive measures\n\n**Conjecture.** If nonnegative weights `a_n` satisfy `∑ a_n/n² < ∞`, then the\nassociated infinite geometric mixture is completely monotone:\n`(-1)^r Δ^r C_k ≥ 0` for all `r,k`, and every completely monotone sequence whose\nrepresenting measure is supported on `{1-n⁻² : n ≥ 1}` arises uniquely this way.\n\nThe key insight is that each forward difference multiplies a geometric mode by\n`-n⁻²`, turning all orders of finite differences into reciprocal moments.\n**Why now?** The first-difference identity and positivity result identify the\ncorrect representation theorem and its exact support.\n\n## 3. Weighted Banach-space involution\n\n**Conjecture.** There is a sharp polynomial weight exponent for which the\nalternating binomial transform extends to a bounded involution on the resulting\nweighted sequence space, and this exponent matches the decay threshold in the\nBáez–Duarte criterion.\n\nThe key insight is that finite binomial inversion is exact, but infinite\ninversion is controlled by the interaction between Pascal growth and sequence\ndecay. **Why now?** The finite involution isolates the sole unresolved issue as\ncontinuity under completion, making a functional-analytic formulation precise.\n\n## 4. Divisor-incidence and binomial-incidence compatibility\n\n**Conjecture.** The divisor-lattice Möbius inversion and the Boolean-lattice\nbinomial inversion combine into a natural two-parameter convolution whose\nspectral decomposition simultaneously encodes reciprocal-power moments and\narithmetic divisor sums.\n\nThe key insight is that both inversion laws recover primitive data from\ncumulative data, but on different incidence algebras. **Why now?** Their verified\ncoexistence in the cutoff theory suggests a concrete tensor-product incidence\nalgebra rather than a merely metaphorical analogy.\n\n## 5. Rigidity of geometric supports\n\n**Conjecture.** A signed sequence with sufficiently rapid decay that admits two\nabsolutely summable geometric-mixture representations supported on\n`{1-n⁻² : n ≥ 1}` has identical weights term by term.\n\nThe key insight is that binomial inversion recovers every reciprocal moment, so\nuniqueness should follow from a discrete moment problem with a single\naccumulation point. **Why now?** The exact moment/coefficient equivalence supplies\nall moments and identifies the topology in which a uniqueness theorem is needed.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0607",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "699db10f",
+    "status": "available",
+    "timestamp": "2026-07-22T18:42:20.048683+00:00",
+    "title": "**Conjecture.** For each fixed nonnegative integer `k`, the cutoff geometric"
   },
   {
     "ambition_level": "extension",
