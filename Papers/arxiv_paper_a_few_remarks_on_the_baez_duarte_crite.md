@@ -1,50 +1,48 @@
-# Computational evidence
+# Computational evidence for the finite Báez–Duarte transform
 
-The formal target is the finite identity
+For the number-theoretic Möbius coefficients, define the cutoff quantity
 
 \[
-P_k(X)=\sum_{n=1}^k \mu(n)\lfloor k/n\rfloor X^n
-      =\sum_{m=1}^k R_m(X),\qquad
-R_m(X)=\sum_{n\mid m}\mu(n)X^n.
+C_k(N)=\sum_{n=1}^N \frac{\mu(n)}{n^2}\left(1-\frac1{n^2}\right)^k.
 \]
 
-## Small cases
+## Small-case calculations
 
-The following table was obtained by direct integer arithmetic. Zero coefficients
-are omitted.
+Using `μ(1)=1`, `μ(2)=-1`, `μ(3)=-1`, and `μ(4)=0`, exact arithmetic at cutoff
+`N=4` gives
 
-| k | `P_k(X)` | `R_k(X)` |
-|---:|---|---|
-| 1 | `X` | `X` |
-| 2 | `2X-X^2` | `X-X^2` |
-| 3 | `3X-X^2-X^3` | `X-X^3` |
-| 4 | `4X-2X^2-X^3` | `X-X^2` |
-| 5 | `5X-2X^2-X^3-X^5` | `X-X^5` |
-| 6 | `6X-3X^2-2X^3-X^5+X^6` | `X-X^2-X^3+X^6` |
-| 10 | `10X-5X^2-3X^3-2X^5+X^6-X^7+X^10` | `X-X^2-X^5+X^10` |
+| `k` | `C_k(4)` |
+|---:|---:|
+| 0 | `23/36` |
+| 1 | `-371/1296` |
+| 2 | `-10657/46656` |
 
-For every `1 ≤ k ≤ 10`, accumulating the displayed divisor polynomials gives
-exactly `P_k`. The checked identity is stronger than these samples and is
-proved for every coefficient function in `PolynomialBridge.lean`; thus these
-calculations are exploratory evidence, not the verification.
+For example, `C_0(4)=1-1/4-1/9=23/36`.  For positive `k`, the `n=1` geometric
+mode vanishes, and
+`C_1(4)=-(1/4)(3/4)-(1/9)(8/9)=-371/1296`.
+
+## Counterexample hunt and boundary checks
+
+The finite transform identity was checked symbolically: expanding
+`(1-n⁻²)^k` by the binomial theorem reproduces the alternating moment sum term
+by term.  Its edge cases behave correctly:
+
+* `N=0`: both sides are empty sums.
+* `k=0`: both sides are the cutoff reciprocal-square sum.
+* `n=1`: the geometric mode is zero for positive `k`, while its binomial
+  expansion is the alternating sum of a row of Pascal's triangle.
+
+The positivity and antitonicity claims require pointwise nonnegative coefficient
+functions.  They are deliberately not claimed for the signed Möbius function;
+the negative values above demonstrate this boundary.
 
 ## OEIS search
 
-No new one-dimensional sequence is asserted here. The coefficients form a
-two-parameter triangular array `μ(n)⌊k/n⌋`, while the discrete increments are
-the divisibility-incidence array `μ(n)·1_{n∣k}`. Consequently no OEIS ID is
-claimed.
+No OEIS identification is asserted.  The values depend on the cutoff and are
+approximants to an analytic sequence rather than a single integer sequence.
 
-## Counterexample hunt
+## Plots or further tables
 
-Direct calculation for `1 ≤ k ≤ 10` found no counterexample. Edge cases were
-also considered: at `k=0` both finite sums are empty, and the coefficient at
-`n=0` is absent because all indexing intervals begin at one.
-
-## Structural observation
-
-The coefficient of `X^n` in the cumulative divisor side is
-`μ(n)` times the number of multiples of `n` in `{1,…,k}`, namely
-`μ(n)⌊k/n⌋`. Equivalently, the discrete jump
-`⌊(k+1)/n⌋-⌊k/n⌋` is the indicator of `n ∣ k+1`. This is the mechanism used by
-the Lean proof.
+No floating-point plot was used because the target results are exact finite
+identities.  A useful future experiment would combine larger cutoffs with
+rigorous truncation bounds before drawing conclusions about asymptotic decay.

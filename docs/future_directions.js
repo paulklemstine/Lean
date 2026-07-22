@@ -313,21 +313,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: ArXiv paper: Reproducing the k-copwin Algorithm: Theory vs. Implementa"
   },
   {
-    "consumed_by_exp_id": "24111e1f",
-    "description": "In the far future (10^100 years), all stars burn out and computation ceases. Formalize: a 'theorem' is a finite string provable in ZFC. Prove: the set of all theorems is countably infinite, so in principle they can all be discovered in finite time. Show: the heat death of the universe limits computation to ~10^120 operations \u2014 enough to discover only finitely many theorems. Conjecture: the fraction of ZFC theorems discoverable before heat death is zero (the set is countable but infinite; we discover only finitely many). Explore: if we could store theorems on black holes (holographic principle), could we extend the computation limit? Prove: a black hole of mass M can store ~M^2 bits (Bekenstein bound).",
-    "domains": [
-      "Novelty",
-      "Physics"
-    ],
-    "id": "fd_0591",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-22T04:48:23.171062+00:00",
-    "title": "Moonshot: The Last Theorem \u2014 Formalizing the Heat Death of Mathematics"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Magnitude homology of tope graphs' and formalize its key results. Abstract: We completely determine the magnitude homology of tope graphs of real hyperplane arrangements. Their ranks can be described as the Hilbert functions of the Stanley--Reisner rings of certain simplicial complexes naturally associated with the arrangements. For Coxeter arrangements, this gives a computation of the magnitude homology of the Cayley graph of the corresponding Coxeter group. We also prove the homological reciprocity for central arrangements conjectured by Koizumi--Liu. The proof combines poset combinatorics, the Edelman--Walker theorem, and Alexander duality.",
     "domains": [
@@ -3668,7 +3653,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "`Catalog/Physics/ImpossibilityResults/FreeActionPrinciple.lean` gives a precise "
   },
   {
-    "consumed_by_exp_id": "5d6a1919",
+    "consumed_by_exp_id": "",
     "description": "# Future directions\n\n1. **Repair the definition before studying asymptotics.** The literal rule excludes one integer and collapses to the constant-one sequence. A revised rule must specify the candidate set and all exclusions\u2014for example, whether terms must be new, increasing, or avoid sums of any pair of earlier terms.\n\n2. **Reconcile the displayed prefix.** The listed values are `1 + n(n-1)/2` for the displayed indices and hence suggest quadratic coefficient `1/2`, not `1/4`. Any intended recurrence should be checked against both this prefix and the proposed coefficient.\n\n3. **Study global additive avoidance.** A mathematically richer replacement could greedily choose the least unused positive integer outside the restricted sumset of earlier terms. Its existence, monotonicity, sum-free structure, and counting function would connect additive combinatorics with greedy algorithms.\n\n4. **Generalize the graph bridge.** For a repaired sequence, define a graph on time indices by an additive relation among values. Edge density, clique number, and forbidden subgraphs may translate additive structure into extremal graph invariants.\n\n5. **Formalize density only after fixing the universe.** \u201cThe complement\u201d should specify whether it means the complement of the value set in the positive integers or the complement of an earlier-term sumset. These are different sets and can have different densities.\n\n6. **Retain the present file as a specification regression test.** Any revised definition intended to produce `1,1,2,4,7,...` should be given a new name; the current theorem records exactly why the original wording does not do so.\n",
     "domains": [
       "Algebra",
@@ -3678,7 +3663,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "e456357e",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-18T06:39:49.078146+00:00",
     "title": "1. **Repair the definition before studying asymptotics.** The literal rule exclu"
   },
@@ -6157,6 +6142,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## Completed foundation\n\nThe current development is complete and `sorry`-free.  For the concrete order-nine Hall multiplication it proves right distributivity, a proper three-element left-associating nucleus inside the nine-element carrier, and hence a structural witness to nonassociativity.  The application chain then combines this algebraic defect with the strict Hall-collineation/PGL order inequality for every parameter `q \u2265 3`.  The companion Hall-triple bridge proves that right multiplication preserves the additive Steiner completion operation.\n\nThe only unrelated proof hole found elsewhere in the Lean catalog was an unsupported infinite-tail branch in the Fibonacci Carmichael development.  Its statements have been corrected to the exact kernel-certified range `13 \u2264 n \u2264 10000`; all dependent declarations now carry that upper bound and compile without placeholders.\n\n## Remaining mathematical extensions\n\n1. Package `hallMul` and componentwise addition as a concrete quasifield structure that includes the division and unique-solvability laws absent from the current lightweight `RightQuasifield` class.\n2. Define incidence for `CoordPoint` and `CoordLine`, prove all projective-plane axioms, and formalize Desargues configurations.  This would permit an incidence-level theorem deriving failure of Desargues directly from the proved associativity defect.\n3. Replace the numerical collineation-order formulas by actual finite collineation groups and projective general linear groups, construct the relevant action or embedding, and derive the strict cardinality comparison group-theoretically.\n4. Generalize the explicit order-nine Hall construction to quadratic extensions over the finite fields for which the Hall construction applies.  The original informal assertion at every prime-power order must not be used: prime-order planes are Desarguesian, and non-Desarguesian constructions require additional hypotheses on the order.\n5. Determine the exact left, middle, right, and full nuclei of the concrete Hall multiplication, then connect their sizes to incidence-geometric invariants.\n6. For the separate Fibonacci development, an unbounded Carmichael theorem would require a genuine proof of the large-index primitive-part estimate.  Until that analytic/number-theoretic argument is formalized, the certified theorem should retain the upper bound `n \u2264 10000`.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0603",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "0a1b5635",
+    "status": "available",
+    "timestamp": "2026-07-22T16:54:20.651484+00:00",
+    "title": "The current development is complete and `sorry`-free.  For the concrete order-ni"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n1. **Concrete ZFC syntax and proof checking.** Replace the abstract `DeductiveSystem` by an inductive first-order syntax, finite derivation trees, the ZFC axiom schemes, and a kernel-checked derivability relation. Prove productivity by constructing infinitely many syntactically distinct provable formulas (for example, iterated conjunctions of an equality axiom).\n\n2. **Effective enumeration rather than bare countability.** Define a dovetailed proof-search algorithm, prove that every valid finite derivation is eventually checked, and distinguish the number of candidate strings inspected from the number of distinct theorems emitted.\n\n3. **Complexity-sensitive scarcity.** Study the counting function for theorems having a proof of length at most `n`. Upper bounds follow from finite alphabets; meaningful lower bounds require explicit proof families. This would replace the idealized `min N n / n` observable with one induced by an actual proof-search strategy.\n\n4. **Enumeration-independent density notions.** An arbitrary bijection can rearrange a countable set and radically alter natural density. Formalize robust alternatives based on string length, proof length, prefix-free description complexity, or upper Banach density, and state exactly which zero-density claims survive re-enumeration.\n\n5. **Physical constants and dimensional analysis.** The current area law is in Planck units and proves the algebraic `M\u00b2` scaling from stated formulas. A fuller model should use typed physical dimensions, include `G`, `c`, `\u210f`, and `k_B`, and derive a bit count by dividing entropy by `k_B log 2`.\n\n6. **Cosmological resource assumptions.** Formalize the operation cap as an explicit hypothesis and compare several bounds (Margolus\u2013Levitin, Bekenstein, de Sitter horizon entropy). Mathematics alone does not establish a numerical `10^120` cap; such a theorem must expose the physical assumptions and measured parameters on which it depends.\n\n7. **Black-hole tradeoffs.** Couple quadratic horizon storage to lifetime, energy, access latency, and evaporation. The area law increases finite capacity but cannot make a finite-mass device store infinitely many finite strings; a formal resource model could quantify that tradeoff.\n\n8. **Unprovability versus undiscovered truth.** Add semantic truth in a model and separate provable strings, true sentences, independent sentences, and emitted discoveries. This opens a precise route to incompleteness results without conflating \u201cnot found before a deadline\u201d with \u201cunprovable.\u201d\n",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_0604",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "24111e1f",
+    "status": "available",
+    "timestamp": "2026-07-22T16:54:31.009955+00:00",
+    "title": "1. **Concrete ZFC syntax and proof checking.** Replace the abstract `DeductiveSy"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle 1a27f9f3 (Q=0.700) proved 15 theorems in Combinatorics but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Define a natural metric on the space of all mathematical statements and prove that the set of true statements has a fractal dimension. Show that this dimension is strictly between 0 and 1 (truth is sp",
     "domains": [
       "Combinatorics"
@@ -6252,20 +6267,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-19T11:52:43.410408+00:00",
     "title": "Close Proofs: Cellular Automata at the Ordinals: Transfinite Computation"
-  },
-  {
-    "consumed_by_exp_id": "0a1b5635",
-    "description": "Cycle b14c422f (Q=0.618) proved 61 theorems in Applications but left 12 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Construct and classify finite projective planes where Desargues' theorem fails. Prove that such planes exist at every prime power order and that their collineation groups are strictly smaller than PGL",
-    "domains": [
-      "Applications"
-    ],
-    "id": "sorry_fill_b14c422f_85cf9017",
-    "priority_score": 0.6681967213114755,
-    "research_mode": "team",
-    "source_exp_id": "b14c422f",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T11:52:35.440869+00:00",
-    "title": "Close Proofs: Non-Desarguesian Worlds: Geometry Without Desargues"
   },
   {
     "consumed_by_exp_id": "",
