@@ -855,7 +855,7 @@
       "depth_estimate": 3,
       "description": "Computes exact maximum region count formulas for depth-L ReLU neural network input space partitioning.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "MachineLearning"
       ],
@@ -895,7 +895,7 @@
       "depth_estimate": 3,
       "description": "Proves exponential decay rate bounds on the singular values of Softmax self-attention matrices in deep Transformer layers.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "MachineLearning"
       ],
@@ -935,7 +935,7 @@
       "depth_estimate": 3,
       "description": "Proves global 1-Lipschitz continuity for Eikonal-regularized neural network implicit surface representations.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "MachineLearning"
       ],
@@ -975,7 +975,7 @@
       "depth_estimate": 3,
       "description": "Proves exponential convergence of gradient descent optimization on infinite-width neural networks matching NTK dynamic regime.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "MachineLearning"
       ],
@@ -1015,7 +1015,7 @@
       "depth_estimate": 3,
       "description": "Derives tight uniform generalization error bounds for Vision Transformers via empirical Rademacher complexity.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "MachineLearning"
       ],
@@ -18585,7 +18585,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\n## What is proved\n\nThe four files in `MachineLearning/HodgeCycles/` give a complete finite-dimensional theory for a three-term cellular chain complex over any field. In the middle degree, if `d₁ ∘ d₂ = 0`, then\n\n`β₁ + rank(d₁) + rank(d₂) = dim(C₁)`.\n\nThey derive exact criteria for nonzero, vanishing, and maximal middle homology; prove that every quotient class lifts to a cellular cycle; count activation patterns; and establish monotone cell-count bounds. The Euler–Poincaré development additionally proves\n\n`dim(H₀) - dim(H₁) + dim(H₂) = dim(C₀) - dim(C₁) + dim(C₂)`,\n\nshows that this integer is independent of the differentials once the chain-group dimensions are fixed, and bounds its absolute value by the total chain dimension. Under a common activation-pattern bound `P` on all three chain dimensions, it obtains `|χ| ≤ 3P`. Taking the field to be `ℚ` gives the rational cellular statements relevant to finite polyhedral decision surfaces.\n\n## Mathematical correction to the motivating conjecture\n\nA general ReLU zero set is a real, usually noncompact, piecewise-linear set. It is not automatically a smooth complex projective variety, so classical Hodge numbers `h^{p,q}` are not canonically defined for it. Moreover, a polyhedral face is contained in an affine hyperplane but is generally not itself an algebraic subvariety or a global hyperplane section. Thus the classical Hodge conjecture cannot literally be declared trivial for neural-network decision surfaces.\n\nThe theorem proved here is the rigorous replacement that is available without extra geometric hypotheses: cellular homology classes are represented by cellular cycles, and their dimensions obey an exact rank formula. Calling these cellular generators “algebraic cycles” requires an additional, separately formalized realization map and should not be inferred merely from linear containment of each face.\n\n## Next formal targets\n\n1. **Finite polyhedral complexes.** Define a finite rational polyhedral complex and its cellular boundary maps, then instantiate the abstract theorem in every degree.\n2. **ReLU-to-complex construction.** Formalize affine ReLU networks, activation regions, and a finite polyhedral complex for a compact truncation of the zero set. Prove the boundary-square-zero law.\n3. **Locally finite or compactly supported theories.** Unbounded decision surfaces need locally finite homology, compactly supported cohomology, or a specified compactification; ordinary finite cellular homology is not enough.\n4. **Realization map.** Define an explicit cycle class map from rational polyhedral cycles into a chosen geometric cohomology theory. Only then can surjectivity be called a Hodge-type representability theorem.\n5. **Architecture bounds.** Prove bounds on the number of cells in each dimension from network architecture. The activation-pattern count `2^(sum widths)` is valid as a coarse combinatorial ceiling, but a proposed binomial bigrading needs a definition of the bigraded invariant before it is a meaningful theorem.\n6. **Sharp examples.** Construct network families whose cellular boundary ranks are computable and compare actual Betti numbers with cell-count bounds. The exact criterion in this development reduces this to determining two adjacent differential ranks.\n7. **Stability.** Study how the rank criterion changes under perturbations of weights and biases, especially across parameter values where activation complexes change combinatorial type.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Geometry",
         "Algebra"
@@ -21906,7 +21906,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions: Hypercomputation and Physical Information\n\n## 1. Quantitative energy–precision tradeoff\n\n**Conjecture.** For every family of devices that exactly resolves the first `n` bits of an arbitrary oracle, any physical model with at most `E` energy and spatial volume `V` must satisfy a lower bound of the form `E/V · log(1/ε) ≥ c n`, where `ε` is its distinguishability scale and `c > 0` depends only on the model’s noise law.\n\nThe key insight is that exact oracle loading is an injective encoding problem, so its qualitative cardinality obstruction should admit a metric packing refinement. **Why now?** The present infinite-capacity theorem identifies the correct injection; adding a physically justified packing bound would turn it into a falsifiable resource inequality.\n\n## 2. Robust hypercomputation under noisy queries\n\n**Conjecture.** An oracle evaluator whose independent answer error is bounded away from zero cannot decide the halting predicate with uniformly bounded error using finitely many repeated queries unless the oracle supplies a verifiable certificate relation unavailable to the base program table.\n\nThe key insight is that repeating an uncheckable semantic answer amplifies consistency but not correctness against systematic oracle corruption. **Why now?** The finite-transcript ambiguity theorem isolates exactly the missing information and suggests a sharp separation between stochastic noise and adversarially indistinguishable alternatives.\n\n## 3. Arithmetical hierarchy of iterated physical oracles\n\n**Conjecture.** A tower of `k` exact oracle loaders, where level `j+1` answers halting questions for machines equipped with level `j`, realizes the first `k` Turing jumps, and no lower level essentially computes the next level’s anti-diagonal predicate.\n\nThe key insight is that the accidental-versus-essential distinction iterates: each external oracle becomes part of the next machine model, after which diagonalization applies again. **Why now?** The one-level separation is established in a form that can be recursively parameterized by oracle semantics.\n\n## 4. Topological precision obstruction\n\n**Conjecture.** If physical states form a compact metric space and every oracle bit is read by a continuous Boolean-valued observable, then no continuous loader from Cantor space can encode all binary oracles while maintaining a uniform positive readout margin at every coordinate.\n\nThe key insight is that cardinality alone does not exclude continuum-sized compact state spaces, whereas uniform robustness should force an impossible infinite packing. **Why now?** The current result pinpoints cardinality as too coarse for analog systems and identifies uniform distinguishability as the natural next hypothesis.\n\n## 5. Thermodynamic bridge for exact oracle erasure\n\n**Conjecture.** In any finite approximation storing `n` independent oracle bits with a uniform prior, resetting the loader state incurs entropy loss at least `n log 2`; consequently, any reversible realization must export at least `n` bits of side information.\n\nThe key insight is that oracle capacity and Landauer cost are two views of the same injective encoding: loading preserves distinctions, while erasure collapses them. **Why now?** Exact-loader injectivity can be combined directly with the existing deterministic entropy data-processing framework to obtain a quantitative thermodynamic bridge.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Computation",
         "MachineLearning"
@@ -27955,7 +27955,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 4c2c71e5 (Q=0.800), which proved 46 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Collatz map T: N -> N defined by T(n) = n/2 if n even, 3n+1 if n odd, is conjectured to always reach 1. The Collatz conjecture is equivalent to: the orbit of every n under T eventually reaches the cycle {1, 4, 2, 1}. Define the Collatz Fourier transform: F_T(omega) = sum_{n=1}^{N} e^{2*pi*i*omeg",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "MachineLearning"
       ],
@@ -28555,7 +28555,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle ee626e30 (Q=0.760), which proved 14 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The shadowing lemma says that near an approximate orbit of a chaotic system, there exists a true orbit. In other words, every 'almost correct' trajectory of a chaotic map has a 'truly correct' trajectory nearby. This means that numerical errors in chaotic simulations are not bugs — they are SHADOWS ",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "MachineLearning"
       ],
@@ -29410,7 +29410,7 @@
       "depth_estimate": 3,
       "description": "Proves that neural network agents operating in self-referential training loops inevitably replace original memory traces with synthesized hallucinations.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "MachineLearning"
       ],
@@ -29530,7 +29530,7 @@
       "depth_estimate": 3,
       "description": "Proves the exact critical agent density threshold at which individual autonomous agents undergo a phase transition into a unified high-order consciousness.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "MachineLearning"
       ],
@@ -29610,7 +29610,7 @@
       "depth_estimate": 3,
       "description": "Proves that a neural agent's identity vector remains invariant under continuous substrate migration (mind uploading).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "MachineLearning"
       ],
@@ -29650,7 +29650,7 @@
       "depth_estimate": 3,
       "description": "Constructs artificial neural architectures capable of directly processing 11-dimensional spatial tensors without dimensional reduction loss.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "MachineLearning"
       ],
@@ -29690,7 +29690,7 @@
       "depth_estimate": 3,
       "description": "Proves that offline memory consolidation during neural 'sleep' cycles corresponds to traversing strange attractors in weight space.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "MachineLearning"
       ],

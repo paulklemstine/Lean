@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "c1b3f8da",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions: Small Doubling in Ordered and Metabelian Groups\n\n## 1. Stability from near-minimal collision surplus\n\n**Conjecture.** Let `S` be a finite nonempty subset of a right-ordered group.",
-      "quality_score": 0.74,
-      "sorry_count": 13,
-      "theorem_count": 11,
-      "timestamp": "2026-07-20T02:08:19",
-      "title": "ArXiv paper: On Small Doubling in Right-Ordered Groups and Baumslag-Solitar Groups-II"
-    },
-    {
       "cycle_id": "b44b7357",
       "domain": "Novelty",
       "key_insight": "# Future Directions: Recursive Types and Diagonal Hierarchies\n\n## 1. Positive Recursive Types and Transfinite Closure\n\n**Conjecture.** For reflective codes in which the self-bound variable occurs only",
@@ -499,19 +489,19 @@
       "theorem_count": 24,
       "timestamp": "2026-07-23T20:28:42",
       "title": "ArXiv paper: On Matrix Product Factorization in Association Schemes"
+    },
+    {
+      "cycle_id": "6c18f01c",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions: Arithmetic Coherence after Deformation Stability\n\n## 1. Higher-rank compatibility percolation with a deformation-invariant boundary\n\nFor a fixed global field and bounded ramificat",
+      "quality_score": 0.77,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-23T22:18:08",
+      "title": "The conjectures below are ranked by expected scientific impact. Each proposal se"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "60e00dda",
-      "domain": "Applications",
-      "key_insight": "# Future directions\n\n## What was established\n\n`Tropical/TropicalFOne/FixedPointEuler.lean` proves a precise finite-orbit theorem supporting one robust numerical part of the proposed tropical–F₁ pictur",
-      "quality_score": 0.66,
-      "sorry_count": 0,
-      "theorem_count": 23,
-      "timestamp": "2026-07-18T07:45:24",
-      "title": "Tropical Dreams: The Field with One Element Meets Tropical Geometry"
-    },
     {
       "cycle_id": "65eb2137",
       "domain": "Logic",
@@ -2501,6 +2491,16 @@
       "theorem_count": 8,
       "timestamp": "2026-07-23T22:18:04",
       "title": "This development formalizes the finite coordinate core of Curtin's *Generalizati"
+    },
+    {
+      "cycle_id": "6c18f01c",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions: Arithmetic Coherence after Deformation Stability\n\n## 1. Higher-rank compatibility percolation with a deformation-invariant boundary\n\nFor a fixed global field and bounded ramificat",
+      "quality_score": 0.77,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-23T22:18:08",
+      "title": "The conjectures below are ranked by expected scientific impact. Each proposal se"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-23T22:18:04",
+  "last_updated": "2026-07-23T22:18:08",
   "open_questions": [
     {
       "context": "",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "d757b941",
-        "quality": 0.73,
-        "theorems": 21,
-        "title": "The Uncertainty Principle Is a Fourier Thing: Position-Momentum Duality"
-      },
-      {
         "cycle_id": "d13e4521",
         "quality": 0.74,
         "theorems": 0,
@@ -3575,6 +3569,12 @@
         "quality": 0.72,
         "theorems": 22,
         "title": "Hofstadter: I Am a Strange Loop — Consciousness as Self-Reference"
+      },
+      {
+        "cycle_id": "6c18f01c",
+        "quality": 0.77,
+        "theorems": 0,
+        "title": "The conjectures below are ranked by expected scientific impact. Each proposal se"
       }
     ],
     "Novelty": [
