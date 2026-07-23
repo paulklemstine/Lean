@@ -143,7 +143,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Memory Editing: When Forgetting Is a Mathematical Operation"
   },
   {
-    "consumed_by_exp_id": "ddd2821f",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 5d6a1919 (Q=0.760), which proved 13 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future directions\n\n1. **Repair the definition before studying asymptotics.** The literal rule excludes one integer and collapses to the constant-one sequence. A revised rule must specify the candidate set and all exclusions\u2014for example, whether terms must be new, increasing, or avoid sums of any p",
     "domains": [
       "Novelty"
@@ -152,7 +152,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "5d6a1919",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-22T18:42:28.004149+00:00",
     "title": "Deepening: 1. **Repair the definition before studying asymptotics.** The literal rule exclu"
   },
@@ -2465,7 +2465,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: D-coloring of planar graphs"
   },
   {
-    "consumed_by_exp_id": "07e03295",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'On Matrix Product Factorization in Association Schemes' and formalize its key results. Abstract: We study matrix product factorizations (MPFs) in symmetric association schemes: identities $A_SA_T=A_U$ where $A_S,A_T,A_U$ are loopless unions of basic relations and the ordinary matrix product is again a $0$-$1$ adjacency matrix. We give equivalent structural and spectral criteria for MPFs, derive valency and rank restrictions, and analyze several standard families. For $2$-class schemes, the only nontrivial loopless MPF comes from the scheme of the $5$-cycle. For $P$-polynomial schemes, the distance-regular recurrence gives strong restrictions on products $A_1A_i$. We also prove a universal pentagon theorem for the case $A_SA_T=J-I$, and show that extremal rank forces all non-zero eigenvalues of $A_U$ to be $\\pm k(U)$, hence gives bipartiteness. Finally, in Hamming schemes we obtain rank obstructions and classify MPFs of the form $A_1A_T=A_U$: in $H(d,2)$, for $d\\ge2$, the only non-zero loopless example is $A_1A_d=A_{d-1}$, which is trivial since $A_d$ has valency $1$; for $q>2$, no",
     "domains": [
       "Algebra",
@@ -2475,7 +2475,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14848v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-17T07:48:50.380995+00:00",
     "title": "ArXiv paper: On Matrix Product Factorization in Association Schemes"
   },
@@ -2568,7 +2568,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Multiple Clausen values and deformed Ap\u00e9ry-like series"
   },
   {
-    "consumed_by_exp_id": "f14d2570",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Online Beck--Fiala Down to Logarithmic Sparsity' and formalize its key results. Abstract: The Beck--Fiala conjecture asserts that every matrix $A\\in\\{0,1\\}^{n\\times T}$ with at most $d$ nonzero entries in each column has discrepancy $O(\\sqrt d)$. A major breakthrough result of Bansal and Jiang recently established the validity of the conjecture for $d \\ge \\log(T)^2$. The present article extends the validity of the classical \\textit{offline} Beck--Fiala conjecture to $d \\ge \\log(T)^{1+o(1)}$; moreover, the main thrust of the result is that it is actually obtained by an efficient \\textit{online} algorithm that minimizes prefix discrepancy. The result is also essentially optimal, since online prefix discrepancy is known to scale as $\u03c9(\\sqrt{d})$ for $d =o(\\log T)$. As an immediate corollary, the open question of online vector balancing in the Spencer setting is also resolved. The algorithm is based on a compactly supported Metropolis fixed-point walk, constructed by combining ideas from several recent works on the online Koml\u00f3s problem. The proof was generated in conversation ",
     "domains": [
       "Pythagorean",
@@ -2578,7 +2578,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14238v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-17T09:55:54.324007+00:00",
     "title": "ArXiv paper: Online Beck--Fiala Down to Logarithmic Sparsity"
   },
@@ -3242,7 +3242,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0612",
+    "id": "fd_0613",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.20248v1",
@@ -5617,7 +5617,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The exact proposed fixed-point equation was formalized in"
   },
   {
-    "consumed_by_exp_id": "642478f0",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions: Functional Fibres and Subjective Structure\n\n## 1. Nontrivial qualia coverings\n\nConjecture: there are natural state spaces in which functional observation forms a nontrivial finite covering rather than a globally split product, so that local zombie twins exist but no continuous global choice of twin exists.\n\nThe key insight is that the present Boolean product is the trivial two-sheeted covering; replacing it by a twisted covering turns the global existence of a coherent zombie operation into a topological obstruction.\n\nWhy now? The fibre classification identifies exactly which part of the construction depends on a global split, making monodromy the next falsifiable obstruction.\n\n## 2. Stability under approximate functional equivalence\n\nConjecture: for compact metric state spaces with Lipschitz experience observables, sufficiently small functional distance and a fixed experiential contrast force a quantitative lower bound on the distortion of every attempted functional reconstruction of experience.\n\nThe key insight is that exact equality of functional profiles should have a robust analogue expressed as an approximation lower bound rather than a binary impossibility.\n\nWhy now? The zero-distance theorem isolates the exact case, while the factorization criterion identifies reconstruction as the quantity to perturb.\n\n## 3. Higher-dimensional experiential fibres\n\nConjecture: when experience takes values in a finite complex rather than a Boolean set, the homotopy type of each functional fibre bounds the number and organization of mutually functionally indistinguishable experiential states.\n\nThe key insight is that Boolean awareness records only a two-point contrast; homology and homotopy can detect loops, components, and higher-dimensional experiential variation invisible to functional observation.\n\nWhy now? The current gap space is classified by a forgotten Boolean factor, suggesting a systematic replacement of that factor by structured experiential geometries.\n\n## 4. Natural, rather than chosen, incompleteness bridges\n\nConjecture: a category of labelled functional quotients and a category of labelled independent-sentence extensions admit functors whose gap constructions are naturally equivalent on a nontrivial subcategory.\n\nThe key insight is that an equivalence of individual gap spaces becomes mathematically stronger when it commutes with maps between behavioural systems and maps between theories.\n\nWhy now? The established label-preserving isomorphism provides the objectwise component; naturality is the precise next test that distinguishes a structural bridge from a coincidental shared classifier.\n\n## 5. Definability boundary for experiential reconstruction\n\nConjecture: for effectively presented state spaces, fibre constancy characterizes extensional reconstruction, while computable reconstruction additionally requires an effective choice principle on the range of the functional map.\n\nThe key insight is that set-theoretic factorization uses a representative from every inhabited fibre, but effective reconstruction must produce those representatives uniformly.\n\nWhy now? The present factorization theorem exposes the representative-selection step explicitly, isolating the exact location where computability can fail even after extensional obstructions disappear.\n",
     "domains": [
       "Geometry",
@@ -5627,7 +5627,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "d5fe8eb3",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-21T06:49:44.327570+00:00",
     "title": "Conjecture: there are natural state spaces in which functional observation forms"
   },
@@ -5692,7 +5692,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Fix a finite corpus of statements and charge each theory for both source length "
   },
   {
-    "consumed_by_exp_id": "2f329d75",
+    "consumed_by_exp_id": "",
     "description": "# Future directions\n\n## Result status\n\nThe motivating fixed-length claim was **disproved**, not proved. With a finite alphabet and a fixed length bound (such as 100), the collection of encoded statements is finite. Once a Boolean semantics is fixed, its exact truth table is a finite, computable oracle. The Lean theorem `finite_language_has_accurate_oracle` constructs this oracle and proves 95% accuracy (in fact 100%). `finite_oracle_has_table` explicitly represents every such oracle as a finite list.\n\nA nearby bold uniform claim was also **disproved**: one oracle cannot be 95%-accurate against every possible semantics. The adversarial semantics formalized by `adversarialTruth` makes every answer incorrect, yielding `no_uniform_accurate_oracle`.\n\nA genuinely infinitary diagonal claim was **proved**: for any natural-number-indexed family of Boolean sequences, `diagonalJump` differs from its `k`th row at coordinate `k`. Therefore no such family enumerates all Boolean sequences (`no_enumeration_of_boolean_sequences`). This captures the structural diagonal idea behind jump constructions, but it is intentionally not presented as a complete formalization of the Turing jump.\n\n## Important modeling distinctions\n\n1. **Finite domain versus practical feasibility.** A truth table can be astronomically large while remaining computable. Complexity, learnability, storage, and computability are different notions.\n2. **Semantic truth versus provability.** For bounded strings, a fixed external truth assignment has a finite table. For all arithmetic sentences, semantic truth and theoremhood lead to genuinely unbounded computability questions.\n3. **Pointwise accuracy versus uniform accuracy.** Existence of a good oracle for one fixed semantics is compatible with impossibility of one predictor working for all semantics.\n4. **Unknown answers.** This development counts `unknown` as incorrect. Other scoring rules should be stated explicitly and may change finite accuracy bounds, though not the finite-table counterexample.\n5. **Counting versus diagonalization.** Counting finite functions only gives exponential cardinalities. Noncomputability requires an unbounded effective presentation plus a diagonal or reduction argument.\n\n## Stronger formalization targets\n\n- Define a syntax of first-order arithmetic, a length function, and a satisfaction predicate for the standard natural numbers. Prove explicitly that the subtype of formulas of length at most 100 is finite.\n- Introduce a concrete partial-recursive machine model and prove the undecidability of its halting set. Then define a genuine jump operator relative to an oracle and prove that the jump is not computable from the original oracle.\n- Replace arbitrary Boolean semantics by arithmetic truth and formalize a reduction from halting to truth for an unbounded class of encoded sentences.\n- Study resource-bounded variants: circuit size, advice length, sample complexity, and probabilistic average-case accuracy. These are closer to the intended intuition than computability on a fixed finite domain.\n- Formalize distributions over statements. A meaningful \u201c95% accurate\u201d claim needs a specified finite benchmark or probability measure; accuracy without one is ambiguous.\n- Investigate whether a predictor can be both sound on definite answers and useful under an abstention budget. Without an abstention penalty, the constant `unknown` oracle can make some precision metrics vacuous.\n\n## Limits of the present results\n\nThe development does not identify human intuition with a noncomputable operation, and the formal results provide no evidence for that philosophical identification. It proves only a precise finite counterexample, a uniform adversarial impossibility, finite cardinality formulas, and an elementary Cantor-style diagonal theorem. Connecting mathematical discovery to the computability-theoretic jump would require a defensible formal model of discovery and a reduction theorem; neither is currently supplied.\n",
     "domains": [
       "Computation",
@@ -5702,7 +5702,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "fee59e0b",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-21T14:31:25.130869+00:00",
     "title": "The motivating fixed-length claim was **disproved**, not proved. With a finite a"
   },
@@ -6244,6 +6244,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T23:23:57.106183+00:00",
     "title": "Future directions from cycle 6622cac1"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## From two-point risk to distributional lower bounds\n\nThe proved two-state theorem is a local obstruction. A next step is to integrate it over couplings of states whose functional observations are close but whose experiential values are separated. This should produce lower bounds for expected reconstruction loss in terms of an optimal-transport discrepancy between experiential and functional geometries.\n\n## Sharp constants and minimax reconstruction\n\nThe factor `1/2` comes from distributing a hidden contrast across two reconstruction errors. Characterizing equality, and then optimizing over Lipschitz decoders, would turn the bound into a minimax theorem. Finite metric spaces provide a tractable first setting, where the decoder problem can be compared with metric extension and facility-location problems.\n\n## Noisy and randomized decoders\n\nA randomized reconstruction is naturally a Markov kernel from functional observations to distributions on experiences. Replacing metric loss by Wasserstein loss should retain the same triangle-inequality obstruction. Formalizing this would connect hidden fibres to statistical experiments and data-processing inequalities.\n\n## Nontrivial coverings\n\nThe robust inequality does not require a globally split state space. It can therefore be applied locally to nontrivial finite coverings. A complementary topological development should construct an explicit connected two-sheeted cover and prove that it has local sheet swaps but no continuous global fibrewise choice of the opposite sheet.\n\n## Effective reconstruction\n\nThe present result bounds accuracy once a decoder is supplied. The definability question asks when a decoder exists computably. A useful next theorem would separate fibre constancy from uniform effective representative selection on the range of the functional map.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0614",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "642478f0",
+    "status": "available",
+    "timestamp": "2026-07-23T18:45:53.914887+00:00",
+    "title": "The proved two-state theorem is a local obstruction. A next step is to integrate"
   },
   {
     "consumed_by_exp_id": "",

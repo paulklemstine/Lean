@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "65e81f6c",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions\n\n1. **Infinite-page limit.** Replace fixed-length books by streams `ℕ → Fin A` with the product topology. The resulting Cantor-like space remains totally disconnected but is no lon",
-      "quality_score": 0.8,
-      "sorry_count": 13,
-      "theorem_count": 0,
-      "timestamp": "2026-07-20T00:23:26",
-      "title": "Borges' Library of Babel: Combinatorics of Everything"
-    },
-    {
       "cycle_id": "27f58424",
       "domain": "Cryptography",
       "key_insight": "# Future Directions\n\n1. **Oracle-relative rewriting.** Extend `SelfModMachine` with oracle queries and prove that storing the current program in the ordinary state still preserves the oracle-relative",
@@ -499,19 +489,19 @@
       "theorem_count": 13,
       "timestamp": "2026-07-22T18:42:27",
       "title": "1. **Repair the definition before studying asymptotics.** The literal rule exclu"
+    },
+    {
+      "cycle_id": "642478f0",
+      "domain": "Probability",
+      "key_insight": "# Future Directions\n\n## From two-point risk to distributional lower bounds\n\nThe proved two-state theorem is a local obstruction. A next step is to integrate it over couplings of states whose functiona",
+      "quality_score": 0.77,
+      "sorry_count": 0,
+      "theorem_count": 3,
+      "timestamp": "2026-07-23T18:45:55",
+      "title": "Conjecture: there are natural state spaces in which functional observation forms"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "b6dab3a0",
-      "domain": "Applications",
-      "key_insight": "# Future directions\n\n## Mathematical interpretation\n\nThe formal development treats a finite graph cellular sheaf through its two-term\ncochain complex `C⁰ → C¹`. It proves the exact identities\n\n- `b₀ +",
-      "quality_score": 0.64,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-18T06:03:10",
-      "title": "The Mathematics of Memes: Viral Information Topology"
-    },
     {
       "cycle_id": "e9a483ed",
       "domain": "Computation",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-23T02:29:55",
       "title": "Moonshot: Brain-Computer Interface Mathematics — Neural Coding Theorems"
+    },
+    {
+      "cycle_id": "642478f0",
+      "domain": "Probability",
+      "key_insight": "# Future Directions\n\n## From two-point risk to distributional lower bounds\n\nThe proved two-state theorem is a local obstruction. A next step is to integrate it over couplings of states whose functiona",
+      "quality_score": 0.77,
+      "sorry_count": 0,
+      "theorem_count": 3,
+      "timestamp": "2026-07-23T18:45:55",
+      "title": "Conjecture: there are natural state spaces in which functional observation forms"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.76
     }
   ],
-  "last_updated": "2026-07-23T02:29:55",
+  "last_updated": "2026-07-23T18:45:55",
   "open_questions": [
     {
       "context": "",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "d1d26693",
-        "quality": 0.75,
-        "theorems": 16,
-        "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showin"
-      },
-      {
         "cycle_id": "fcbd747f",
         "quality": 0.61,
         "theorems": 18,
@@ -3823,6 +3817,12 @@
         "quality": 0.66,
         "theorems": 9,
         "title": "ArXiv paper: A Census of New Snake-in-the-Box Records"
+      },
+      {
+        "cycle_id": "642478f0",
+        "quality": 0.77,
+        "theorems": 3,
+        "title": "Conjecture: there are natural state spaces in which functional observation forms"
       }
     ],
     "Pythagorean": [
