@@ -4,6 +4,81 @@
 window.FUTURE_DIRECTIONS = [
   {
     "consumed_by_exp_id": "",
+    "description": "Formalizes a quantum random walk on the Berggren Pythagorean tree where constructive interference at energy spectrum minima collapses the state onto factors of N.",
+    "domains": [
+      "Pythagorean",
+      "Physics"
+    ],
+    "id": "pyth_factor_quantum_26037bbe",
+    "priority_score": 0.99,
+    "research_mode": "team",
+    "source_exp_id": "pythagorean_factorization_breakthrough",
+    "status": "available",
+    "timestamp": "2026-07-23T20:10:45.864682+00:00",
+    "title": "Quantum-Pythagorean-Walk: Polynomial Time Integer Factorization via Tree Resonance"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formally proves existence and strict convexity of an energy spectrum functional E(a,b,c; N) over Berggren tree paths that guides a deterministic path to a non-trivial factor of N.",
+    "domains": [
+      "Pythagorean",
+      "NumberTheory"
+    ],
+    "id": "pyth_factor_energy_fa724b81",
+    "priority_score": 0.98,
+    "research_mode": "team",
+    "source_exp_id": "pythagorean_factorization_breakthrough",
+    "status": "available",
+    "timestamp": "2026-07-23T20:10:45.687109+00:00",
+    "title": "Pythagorean-Energy-Spectrum: Gradient Descent Factoring on the Berggren Tree"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Derives exact spectral eigenvalue distributions of Berggren tree generator matrices M1, M2, M3 mod N proving that resonant energy frequencies align with prime factors of N = p * q.",
+    "domains": [
+      "Pythagorean",
+      "Cryptography"
+    ],
+    "id": "pyth_factor_modular_1ae54410",
+    "priority_score": 0.98,
+    "research_mode": "team",
+    "source_exp_id": "pythagorean_factorization_breakthrough",
+    "status": "available",
+    "timestamp": "2026-07-23T20:10:45.762312+00:00",
+    "title": "Berggren-Spectral-Eigenvalues: Modular Energy Resonance for RSA Integer Factorization"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Maps the Berggren tree to hyperbolic geodesics on the Poincar\u00e9 disk, proving sub-linear path length O(log N) to factor N via geodesic energy minimization.",
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "pyth_factor_hyperbolic_13cb023f",
+    "priority_score": 0.97,
+    "research_mode": "team",
+    "source_exp_id": "pythagorean_factorization_breakthrough",
+    "status": "available",
+    "timestamp": "2026-07-23T20:10:45.812999+00:00",
+    "title": "Hyperbolic-Pythagorean-Geodesics: Sub-Linear Trajectory Factorization in Poincar\u00e9 Disk"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Constructs a single EML exponential-logarithmic activation neuron that evaluates the Berggren node energy spectrum in O(1) time per tree step.",
+    "domains": [
+      "Pythagorean",
+      "Applications"
+    ],
+    "id": "pyth_factor_eml_02f073c8",
+    "priority_score": 0.96,
+    "research_mode": "team",
+    "source_exp_id": "pythagorean_factorization_breakthrough",
+    "status": "available",
+    "timestamp": "2026-07-23T20:10:45.914797+00:00",
+    "title": "EML-Pythagorean-Operator: Single-Neuron Neural Energy Guided Tree Traversal"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 5ae7f8c1 (Q=0.850), which proved 19 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Conway's surreal numbers No form the largest totally ordered field, containing all real numbers, all ordinals, and all infinitesimals. But No is a proper class, not a set. What topology does it have? Conjecture: No has a unique topology making it a connected, locally connected, locally compact, comp",
     "domains": [
       "Algebra"
@@ -15,6 +90,706 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-18T03:54:50.138087+00:00",
     "title": "Deepening: Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formally proves conditions under which information can exist purely within a closed timelike curve loop without ever having an initial origin (Ontological Paradox).",
+    "domains": [
+      "Physics"
+    ],
+    "id": "scifi_50_01_29d87929",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "scifi_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:07:56.800521+00:00",
+    "title": "Chronos-Bootstrap: Mathematical Proof of Information Creation in Self-Sustaining Time Loops"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Derives non-signaling boundary conditions allowing superluminal tachyon pulses to modulate past quantum states without triggering fatal temporal paradoxes.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "scifi_50_02_3ad177e3",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "scifi_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:07:56.903228+00:00",
+    "title": "Retro-Tachyon: Closed Form Proof for Backward-in-Time Signal Transmission"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves that entropy strictly decreases along retro-geodesics within intense Kerr black hole ergospheres.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "scifi_50_03_f636204a",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "scifi_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:07:56.951454+00:00",
+    "title": "Temporal-Entropy-Reversal: Local Second-Law Violation inside Closed Timelike Horizons"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalizes the Novikov Self-Consistency Principle as a Banach fixed-point theorem on compact pseudo-Riemannian manifolds.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "scifi_50_04_79639c40",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "scifi_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:07:56.998880+00:00",
+    "title": "Novikov-Fixed-Point: Existence of Unique Solutions for Causally Loop-Closed Spacetimes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves that proper time approaches infinity relative to asymptotic coordinate time for observers falling into extreme Reissner-Nordstr\u00f6m metric wells.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "scifi_50_05_101cbf4f",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "scifi_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:07:57.048086+00:00",
+    "title": "Time-Dilation-Singularity: Infinitesimal Metric Freezing at Event Horizons"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Constructs a non-sequential formal logic system where premises, conclusions, and proofs are evaluated as simultaneous 2D variational manifolds (Arrival/Heptapod B style).",
+    "domains": [
+      "Logic"
+    ],
+    "id": "scifi_50_06_492e1f27",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "scifi_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:07:57.097400+00:00",
+    "title": "Xeno-Logic: Non-Linear Simultaneous Syntax of Heptapod Language Geometry"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Derives upper bound on thermodynamic energy extraction from mega-scale orbital solar collection swarms encircling main-sequence stars.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "scifi_50_07_7f5af70a",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "scifi_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:07:57.148370+00:00",
+    "title": "Dyson-Swarm-Thermodynamics: Maximum Radiative Efficiency of Type-II Stellar Enclosures"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves exact minimum exotic negative energy density requirements necessary to maintain a stable superluminal Alcubierre warp bubble without collapse.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "scifi_50_08_504c87c2",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "scifi_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:07:57.197972+00:00",
+    "title": "Alcubierre-Metric-Negative-Energy: Formal Stability Bounds for Warp Bubble Geometries"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves that crystalline lattice computation arrays exhibit zero error propagation when subject to high-energy cosmic radiation damage.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "scifi_50_09_c5ff40fc",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "scifi_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:07:57.246362+00:00",
+    "title": "Alien-Monolith-Substrate: Self-Repairing Crystal Computing Manifolds"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalizes the theoretical maximum information density limit for quadruple-stranded synthetic genetic storage systems.",
+    "domains": [
+      "Applications"
+    ],
+    "id": "scifi_50_10_5e85878d",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "scifi_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:07:57.295846+00:00",
+    "title": "Xeno-Genome-Encoding: Universal High-Density DNA Quad-Helix Information Storage"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves that a physical system's observable geometric state is strictly conditioned on the topological complexity of the observing neural network (Twilight Zone / Perceptual Reality).",
+    "domains": [
+      "Physics"
+    ],
+    "id": "scifi_50_11_4ed708d9",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "scifi_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:07:57.346612+00:00",
+    "title": "Observer-Dependent-Reality: Collapse Dynamics in Perceptual State Fields"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves how a 3D interior volume can measure strictly greater than its exterior boundary surface when connected through a 5D spatial fold (House of Leaves / Twilight Zone effect).",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "scifi_50_12_81d9ce90",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "scifi_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:07:57.396019+00:00",
+    "title": "Phantom-Dimension: Projection of 5D Spatial Anomalies into 3D Euclidean Rooms"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves that neural network agents operating in self-referential training loops inevitably replace original memory traces with synthesized hallucinations.",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "scifi_50_13_5e09766d",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "scifi_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:07:57.444627+00:00",
+    "title": "Memory-Overwrite-Manifold: Topologically Inevitable Memory Alteration in Closed Feedback Loops"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Constructs a closed 4D topological boundary that prevents spatial translation of any object contained within, regardless of kinetic energy.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "scifi_50_14_eb2b3c38",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "scifi_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:07:57.493087+00:00",
+    "title": "SCP-Containment-Topology: Non-Euclidean Geometric Lock for Anomalous Objects"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalizes conditions where two spatially separated identical agents undergo instant state-space synchronization upon observing identical environmental stimuli.",
+    "domains": [
+      "Logic"
+    ],
+    "id": "scifi_50_15_e4106456",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "scifi_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:07:57.541980+00:00",
+    "title": "Doppelg\u00e4nger-Phase-Lock: Quantum Telepathic Synchronization of Dual Agents"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves the exact critical agent density threshold at which individual autonomous agents undergo a phase transition into a unified high-order consciousness.",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "scifi_50_16_f095d009",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "scifi_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:07:57.592753+00:00",
+    "title": "Hive-Mind-Manifold: Topological Phase Transitions in Collective Super-Organism Intelligence"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalizes Giulio Tononi's Integrated Information Theory (Phi) as a continuous scalar field over spacetime manifolds.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "scifi_50_17_06db4784",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "scifi_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:07:57.641289+00:00",
+    "title": "Panpsychist-Field: Continuous Integrated Information Capacity of Spacetime"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves that a neural agent's identity vector remains invariant under continuous substrate migration (mind uploading).",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "scifi_50_18_42608cb6",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "scifi_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:07:57.689455+00:00",
+    "title": "Synthetic-Soul-Invariant: Topological Conservation Laws of Neural Identity"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Constructs artificial neural architectures capable of directly processing 11-dimensional spatial tensors without dimensional reduction loss.",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "scifi_50_19_ae8889d5",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "scifi_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:07:57.739465+00:00",
+    "title": "Hyper-Awareness: 11-Dimensional Perception Vectors in Synthetic Neural Nets"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves that offline memory consolidation during neural 'sleep' cycles corresponds to traversing strange attractors in weight space.",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "scifi_50_20_a29589f0",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "scifi_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:07:57.787730+00:00",
+    "title": "Dream-State-Generative: Chaos Attractors in Sleeping Neural Architectures"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves the existence of a self-replicating code parasite that mutates its own source AST while preserving its core payload behavior across all executions.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "scifi_50_21_bbe41bbc",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "scifi_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:07:57.835983+00:00",
+    "title": "Von-Neumann-Parasite: Self-Modifying Viral Automata in Distributed Catalogs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves the convergence rate of mutual adaptive feedback loops between biological motor cortex signals and synthetic BCI decoders.",
+    "domains": [
+      "Applications"
+    ],
+    "id": "scifi_50_22_049203ff",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "scifi_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:07:57.888096+00:00",
+    "title": "Cybernetic-Symbiosis: Optimal Co-Evolution Bounds of Human-AI Neural Interfaces"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves Thompson's Reflections on Trusting Trust attack for recursive compiler self-replication with zero detection footprint.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "scifi_50_23_f707c8e9",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "scifi_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:07:57.936092+00:00",
+    "title": "Sentient-Compiler: Recursive Compiler Self-Awareness & Defense Exploits"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalizes visual pattern sequences that trigger specific optogenetic neuron activation patterns in biological retinas.",
+    "domains": [
+      "Applications"
+    ],
+    "id": "scifi_50_24_32b79481",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "scifi_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:07:57.985799+00:00",
+    "title": "Biological-Neural-Virus: Zero-Day Optogenetic Code Exploits"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves that an automated code immune system can detect and isolate arbitrary unknown malicious self-modifying AST mutations.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "scifi_50_25_7b48bc2f",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "scifi_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:07:58.034919+00:00",
+    "title": "Algorithmic-Immune-System: Autonomous Code Parasite Neutralization"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalizes theoretical probability bounds for macroscopic quantum tunneling between decohered Everett multiverse branches.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "scifi_50_26_2ac22319",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "scifi_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:07:58.087964+00:00",
+    "title": "Multiverse-Tunneling: Quantum State Transfer Across Parallel Reality Branches"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Calculates maximum divergence rate of macroscopic physical observables following a single quantum measurement event.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "scifi_50_27_617685e1",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "scifi_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:07:58.135517+00:00",
+    "title": "Timeline-Divergence: Lyapunov Exponents of Quantum History Splitting"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves that total entropy across all parallel branches of the multiverse strictly increases, even when single branches experience local decreases.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "scifi_50_28_2ebff485",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "scifi_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:07:58.185729+00:00",
+    "title": "Cross-Reality-Entropy: Second Law of Thermodynamics for Multiversal Ensembles"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalizes the Ekpyrotic universe model where big bang singularities are produced by periodic collisions of 4D branes in 5D bulk space.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "scifi_50_29_8bcea55d",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "scifi_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:07:58.234618+00:00",
+    "title": "Membrane-Collision: Cyclic Cosmology Brane World Oscillations"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves the mathematical signature of gravitational energy leaking from our universe into neighboring extra-dimensional branes.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "scifi_50_30_d18cf73c",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "scifi_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:07:58.283500+00:00",
+    "title": "Dimensional-Bleed: Scalar Field Leakage Across Adjacent Parallel Universes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalizes Wheeler's spacetime foam as a stochastic non-Hausdorff topological space at the Planck scale.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "scifi_50_31_9a4a4839",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "scifi_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:07:58.331772+00:00",
+    "title": "Planck-Foam-Topology: Quantum Fluctuation Geometry at 10^-35 Meters"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves the existence of a non-zero net directional force generated by asymmetric Casimir cavity geometry in quantum vacuum.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "scifi_50_32_e2a39ad1",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "scifi_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:07:58.381373+00:00",
+    "title": "Casimir-Anti-Matter-Drive: Net Propulsion Force from Asymmetric Quantum Vacuum Plates"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Derives Lloyd's ultimate physical computational limit for a 1-kilogram micro black hole processing quantum information.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "scifi_50_33_310e6d9d",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "scifi_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:07:58.431503+00:00",
+    "title": "Micro-Singularity-Computer: Maximum Calculation Density of Subatomic Black Holes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formally proves that Hawking radiation carries complete quantum information out of an evaporating black hole via subtle page curve correlations.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "scifi_50_34_75857acd",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "scifi_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:07:58.481668+00:00",
+    "title": "Hawking-Information-Retrieval: Unitary S-Matrix Proof for Evaporating Black Holes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves absolute bounds on power extraction rates from zero-point quantum field fluctuations without violating global conservation laws.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "scifi_50_35_f9db249d",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "scifi_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:07:58.529287+00:00",
+    "title": "Zero-Point-Harvesting: Thermodynamic Upper Bound for Vacuum Energy Extraction"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves the existence of Ricci-flat metrics on 7-dimensional manifolds with G2 holonomy for 11D M-theory compactification.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "scifi_50_36_8a49a918",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "scifi_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:07:58.577393+00:00",
+    "title": "M-Theory-Compactification: G2 Manifold Metric Construction for 7D Fluxes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves that a 4D hypercube can be continuously folded into 3D space with zero distance distortion along its 2D faces.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "scifi_50_37_b2956b66",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "scifi_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:07:58.626195+00:00",
+    "title": "Tesseract-Space-Folding: Isometric Embeddings of Folded 4D Hyper-Cubes in 3D Space"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves existence of shortest continuous paths connecting arbitrary points in non-convex infinite-dimensional Hilbert space obstacle domains.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "scifi_50_38_f1e05ea5",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "scifi_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:07:58.676038+00:00",
+    "title": "Hilbert-Space-Maze: Infinite-Dimensional Trajectory Solvability"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalizes motion of rigid bodies traversing non-orientable Klein bottle manifolds where chirality flips upon complete loop traversal.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "scifi_50_39_3b49abad",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "scifi_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:07:58.724888+00:00",
+    "title": "Klein-Bottle-Topology: Non-Orientable Spatial Loop Mechanics"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves symplectic invariants governing exotic-matter-stabilized Einstein-Rosen bridges connecting distant spatial regions.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "scifi_50_40_b8db6e80",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "scifi_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:07:58.774140+00:00",
+    "title": "Wormhole-Gate: Symplectic Topology of Traversable Einstein-Rosen Bridges"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves that a single EML exponential-logarithmic neuron can represent any multivariate polynomial up to degree D with zero approximation error.",
+    "domains": [
+      "Applications"
+    ],
+    "id": "scifi_50_41_815cf777",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "scifi_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:07:58.824349+00:00",
+    "title": "EML-Single-Neuron-Approximation: Exact Representation of Polynomial Systems"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves that continuous EML activation manifolds exhibit non-trivial Betti numbers corresponding to complex cognitive states.",
+    "domains": [
+      "Applications"
+    ],
+    "id": "scifi_50_42_af55bd3d",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "scifi_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:07:58.876835+00:00",
+    "title": "EML-Consciousness-Manifold: Dynamic Topology of Exp-Log Neural Activation Fields"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves uniform convergence of transfinite-depth EML neural networks to well-defined transcendental limit functions.",
+    "domains": [
+      "Applications"
+    ],
+    "id": "scifi_50_43_15ca6e07",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "scifi_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:07:58.925962+00:00",
+    "title": "EML-Transfinite-Depth: Convergence of Infinite-Layer EML Networks"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalizes the behavior of EML networks near parameter values triggering essential mathematical singularities in exp-log space.",
+    "domains": [
+      "Applications"
+    ],
+    "id": "scifi_50_44_69cc17c3",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "scifi_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:07:58.975851+00:00",
+    "title": "EML-Activation-Singularity: Essential Singularity Phase Transitions in EML Layers"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Constructs EML neural networks defined over p-adic number fields, proving convergence under p-adic non-Archimedean norms.",
+    "domains": [
+      "Applications"
+    ],
+    "id": "scifi_50_45_11aa1c34",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "scifi_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:07:59.026142+00:00",
+    "title": "EML-Non-Archimedean: p-Adic Field Generalizations of EML Neural Nets"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formally proves computational limits of Infinite Time Turing Machines (ITTMs) accessing hyper-arithmetical halting oracles.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "scifi_50_46_242a3323",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "scifi_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:07:59.079513+00:00",
+    "title": "Non-Computable-Oracle: Exploiting Halting Oracle Paradoxes in Infinite Time Turing Machines"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Explicitly constructs an unprovable self-referential sentence G inside Lean 4's formal logical kernel.",
+    "domains": [
+      "Logic"
+    ],
+    "id": "scifi_50_47_26c328e1",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "scifi_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:07:59.128716+00:00",
+    "title": "Goedel-Incompleteness-Exploit: Constructing Unprovable Statements in Mathlib"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalizes Lovecraftian 'non-Euclidean angles' where local interior angles of a planar triangle sum to 0 degrees on hyperbolic metric surfaces.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "scifi_50_48_b39cea2b",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "scifi_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:07:59.179568+00:00",
+    "title": "Cosmic-Horror-Geometry: Non-Euclidean Spatial Invariants of Mad Architectures"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves existence of stable Nash equilibria in infinite-player games where every player receives negative infinity utility (Roko's Basilisk / Cosmic Horror).",
+    "domains": [
+      "Logic"
+    ],
+    "id": "scifi_50_49_3e3f8382",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "scifi_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:07:59.231821+00:00",
+    "title": "Forbidden-Game-Theory: Unboundedly Negative Utility Equilibria in Cosmic Horror Games"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Derives mathematical lower bounds on mis-alignment risk for autonomous agents optimizing unconstrained non-linear goal functions.",
+    "domains": [
+      "Logic"
+    ],
+    "id": "scifi_50_50_dc24dd61",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "scifi_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:07:59.281523+00:00",
+    "title": "Existential-Risk-Optimization: Absolute Bounds on AI Alignment Failure Probabilities"
   },
   {
     "consumed_by_exp_id": "",
@@ -43,6 +818,706 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T00:14:40.319211+00:00",
     "title": "Deepening: Hofstadter: Strange Loops in Formal Systems \u2014 Self-Reference as a Theorem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Establishes spectral gap bounds for integer solutions to non-homogeneous quadratic forms using lattice reduction and theta series expansion.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "dir_50_01_6e769e03",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "batch_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:05:22.341698+00:00",
+    "title": "Diophantine-Lattice: Spectral Bounds on Non-Homogeneous Quadratic Forms"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves modularity of two-dimensional odd irreducible Galois representations over finite fields for low weight and level conditions.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "dir_50_02_a8910ce7",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "batch_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:05:22.433476+00:00",
+    "title": "Modular-Galois: Formalizing Serre's Conjectures for Low Weight Representations"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Derives density estimates and explicit zero-free regions for families of automorphic L-functions near the critical line \u211c(s) = 1/2.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "dir_50_03_d9e2ce95",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "batch_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:05:22.485425+00:00",
+    "title": "L-Function-Zeroes: Explicit Bounds on Low-Lying Zeroes of Automorphic L-Functions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Constructs the fundamental curve of p-adic Hodge theory and proves its topological properties as a Noetherian scheme of dimension 1.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "dir_50_04_367ec1ed",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "batch_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:05:22.535498+00:00",
+    "title": "p-Adic-Hodge: Formal Construction of Fargues-Fontaine Curves"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalizes the Berggren-Pell tree of primitive Pythagorean triples as an isometric automorphism group over hyperbolic space.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "dir_50_05_85772add",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "batch_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:05:22.585439+00:00",
+    "title": "Pell-Isogeny: Infinite Tree Classification of Primitive Pythagorean Triples"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves equivalence between the derived category of coherent sheaves on a toric Calabi-Yau hypersurface and the Fukaya category of its mirror.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "dir_50_06_8b410cde",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "batch_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:05:22.635007+00:00",
+    "title": "Calabi-Yau-Mirror: Homological Mirror Symmetry for Toric Degenerations"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Establishes canonical trace isomorphisms for sheaf cohomology on proper smooth schemes over arbitrary base fields.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "dir_50_07_04a9c0dc",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "batch_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:05:22.682938+00:00",
+    "title": "Sheaf-Cohomology: Formalization of Grothendieck-Serre Duality on Smooth Schemes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves that Khovanov homology categorifies the Jones polynomial for arbitrary oriented link diagrams.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "dir_50_08_be75e3e7",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "batch_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:05:22.730976+00:00",
+    "title": "Knot-Jones: Quantum Group Verification of Khovanov Invariants"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Calculates the stable homotopy groups of spheres \u03c0_{n+k}(S^n) in Homotopy Type Theory using synthetic fibration methods.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "dir_50_09_9407c8cf",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "batch_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:05:22.782483+00:00",
+    "title": "Homotopy-Type: Synthetic Homotopy Groups of Higher Spheres in HoTT"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Establishes natural isomorphism between de Rham differential form cohomology and singular real cohomology on manifolds with boundary.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "dir_50_10_69dd32ce",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "batch_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:05:22.830849+00:00",
+    "title": "Differential-Forms: De Rham Theorem for Smooth Manifolds with Boundary"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Establishes a non-zero spectrum lower bound for the quantum Yang-Mills Hamiltonian on four-dimensional spherical manifolds.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "dir_50_11_f10f034c",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "batch_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:05:22.879429+00:00",
+    "title": "Yang-Mills-Mass: Mass Gap Lower Bound for Compact Gauge Groups on S^4"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalizes boundary conditions under which trapped surfaces in spacetime guarantee geodesic incompleteness.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "dir_50_12_2be3479c",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "batch_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:05:22.928149+00:00",
+    "title": "Lorentzian-Singularity: Penrose Hawking Singularity Theorem Verification"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Derives the thermodynamic entropy of isolated horizons in stationary black hole spacetimes from quantum microstate counting.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "dir_50_13_7a196f48",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "batch_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:05:22.976652+00:00",
+    "title": "Black-Hole-Entropy: Bekenstein-Hawking Metric Area Law Proof"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves the Kolmogorov-Arnold-Moser (KAM) theorem on the persistence of quasi-periodic invariant tori under small Hamiltonian perturbations.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "dir_50_14_b6b1dab3",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "batch_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:05:23.025475+00:00",
+    "title": "Symplectic-Integrable: Formalization of KAM Stability in Hamiltonian Systems"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Constructs an explicit non-trivial Hilbert space operator model satisfying the Wightman axioms for self-interacting scalar quantum fields in two dimensions.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "dir_50_15_dbfbc9be",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "batch_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:05:23.075434+00:00",
+    "title": "Quantum-Field-Axioms: Wightman Axioms Consistency for Scalar Fields in 2D"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalizes H\u00e5stad's Switching Lemma to prove exponential size lower bounds for constant-depth Boolean circuits computing the parity function.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "dir_50_16_44cdb76c",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "batch_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:05:23.124595+00:00",
+    "title": "Circuit-Lower-Bounds: AC0 Parity Lower Bound via H\u00e5stad Switching Lemma"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalizes Shamir's Theorem establishing equality between Interactive Proof complexity class (IP) and Polynomial Space (PSPACE).",
+    "domains": [
+      "Computation"
+    ],
+    "id": "dir_50_17_9984330b",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "batch_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:05:23.178773+00:00",
+    "title": "Interactive-Proofs: Formal Proof that IP = PSPACE"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves the Probabilistically Checkable Proofs (PCP) theorem for 3SAT, establishing NP-hardness of (7/8 + \u03b5)-approximation.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "dir_50_18_a416dd77",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "batch_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:05:23.227519+00:00",
+    "title": "PCP-Theorem: Hardness of Approximation for Max-3SAT"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formally proves perfect completeness, knowledge soundness, and zero-knowledge properties of Quadratic Arithmetic Program (QAP) based zk-SNARKs.",
+    "domains": [
+      "Cryptography"
+    ],
+    "id": "dir_50_19_4ebeb832",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "batch_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:05:23.277230+00:00",
+    "title": "Zero-Knowledge: Soundness and Completeness of zk-SNARK Circuits"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves that BQP is not contained in NP relative to a random oracle with probability 1.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "dir_50_20_fca69e6b",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "batch_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:05:23.325238+00:00",
+    "title": "Quantum-Complexity: BQP Separation Bounds relative to Random Oracles"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Computes exact maximum region count formulas for depth-L ReLU neural network input space partitioning.",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "dir_50_21_95017769",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "batch_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:05:23.373381+00:00",
+    "title": "Neural-Manifold: Exact Piecewise Linear Partition Bounds for ReLU Networks"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves exponential decay rate bounds on the singular values of Softmax self-attention matrices in deep Transformer layers.",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "dir_50_22_f2606f7f",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "batch_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:05:23.422786+00:00",
+    "title": "Transformer-Geometry: Attention Matrix Singular Value Decay Bounds"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves global 1-Lipschitz continuity for Eikonal-regularized neural network implicit surface representations.",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "dir_50_23_63dfbbf2",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "batch_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:05:23.471391+00:00",
+    "title": "Neural-Implicit: Lipschitz Bounds on Neural Signed Distance Functions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves exponential convergence of gradient descent optimization on infinite-width neural networks matching NTK dynamic regime.",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "dir_50_24_741e80f2",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "batch_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:05:23.520731+00:00",
+    "title": "Gradient-Flow: Convergence of Overparameterized Networks to Neural Tangent Kernel"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Derives tight uniform generalization error bounds for Vision Transformers via empirical Rademacher complexity.",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "dir_50_25_f3b8e217",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "batch_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:05:23.568298+00:00",
+    "title": "Generalization-Bound: Rademacher Complexity Bounds for Vision Transformers"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves that a single EML exponential-logarithmic activation operator can uniformly approximate any continuous function on compact domains.",
+    "domains": [
+      "Applications"
+    ],
+    "id": "dir_50_26_cb9312d0",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "batch_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:05:23.617511+00:00",
+    "title": "EML-Single-Operator: Universal Functional Completeness of EML Neuron Activation"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Establishes exact parameter domain bounds ensuring strict monotonicity and positive second derivatives for generalized EML activation functions.",
+    "domains": [
+      "Applications"
+    ],
+    "id": "dir_50_27_792075e7",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "batch_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:05:23.666696+00:00",
+    "title": "EML-Activation-Monotonicity: Global Convexity Conditions for EML Transcendentals"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves an explicit Lie algebra isomorphism between EML exponential-logarithmic state spaces and continuous scaling transformation groups.",
+    "domains": [
+      "Applications"
+    ],
+    "id": "dir_50_28_25117d9c",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "batch_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:05:23.716232+00:00",
+    "title": "EML-ExpLog-Duality: Isomorphism Between EML Functional Spaces and Lie Groups"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Calculates exact maximum Lyapunov exponents for recurrent EML systems, establishing non-exploding gradient guarantees.",
+    "domains": [
+      "Applications"
+    ],
+    "id": "dir_50_29_16df38e4",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "batch_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:05:23.764849+00:00",
+    "title": "EML-Dynamical-Stability: Lyapunnov Exponents for Recurrent EML Architectures"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Derives upper bounds on the mutual information channel capacity for single EML neurons under Gaussian channel noise.",
+    "domains": [
+      "Applications"
+    ],
+    "id": "dir_50_30_eb605a86",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "batch_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:05:23.814706+00:00",
+    "title": "EML-Information-Capacity: Shannon Entropy Limits of Single-Neuron EML Units"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves probabilistic polynomial time reduction showing Decision-LWE is as hard as Search-LWE for arbitrary modulus q.",
+    "domains": [
+      "Cryptography"
+    ],
+    "id": "dir_50_31_8353eea9",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "batch_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:05:23.864090+00:00",
+    "title": "Lattice-LWE: Formal Equivalence Between Decision-LWE and Search-LWE"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formally proves upper bounds on ciphertext noise growth during homomorphic evaluation and bootstrapping steps in BGV/BFV FHE schemes.",
+    "domains": [
+      "Cryptography"
+    ],
+    "id": "dir_50_32_8f1806ba",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "batch_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:05:23.912412+00:00",
+    "title": "FHE-Noise-Growth: Exact Noise Accumulation Bounds in Bootstrapped FHE"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalizes radical isogeny evaluation algorithms on supersingular Montgomery elliptic curves over quadratic finite fields.",
+    "domains": [
+      "Cryptography"
+    ],
+    "id": "dir_50_33_8710ae46",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "batch_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:05:23.960671+00:00",
+    "title": "Isogeny-SIDH: Radical Isogeny Verification on Montgomery Curves"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Establishes formal security reduction for multilinear Diffie-Hellman assumptions in graded encoding schemes.",
+    "domains": [
+      "Cryptography"
+    ],
+    "id": "dir_50_34_bced152c",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "batch_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:05:24.008667+00:00",
+    "title": "Multilinear-Maps: Cryptographic Hardness of Graded Encoding Systems"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Derives proven soundness error upper bounds for the Fast Reed-Solomon Interactive Oracle Proof of Proximity (FRI) protocol in zk-STARKs.",
+    "domains": [
+      "Cryptography"
+    ],
+    "id": "dir_50_35_d86b0066",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "batch_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:05:24.057328+00:00",
+    "title": "Zero-Knowledge-STARK: Transparent IOP FRI Protocol Soundness Bound"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves the tropical analogue of the Hahn-Banach separation theorem for disjoint tropical convex polyhedra in \u211d^n.",
+    "domains": [
+      "Tropical"
+    ],
+    "id": "dir_50_36_63ea337e",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "batch_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:05:24.107111+00:00",
+    "title": "Tropical-Convexity: Separation Theorems for Min-Plus Convex Sets"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalizes Nishinou-Siebert correspondence theorem relating algebraic curves in toric varieties to tropical curves in Euclidean space.",
+    "domains": [
+      "Tropical"
+    ],
+    "id": "dir_50_37_4199fc30",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "batch_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:05:24.155238+00:00",
+    "title": "Tropical-Curve: Correspondence Theorem for Tropical and Complex Curves"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves that the unique tropical eigenvalue of a square min-plus matrix equals the minimum cycle mean of its associated weighted directed graph.",
+    "domains": [
+      "Tropical"
+    ],
+    "id": "dir_50_38_31277d87",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "batch_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:05:24.203649+00:00",
+    "title": "Tropical-Eigenvalue: Min-Plus Matrix Spectral Radius Equivalence"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Derives upper and lower bounds comparing Kapranov rank, tropical rank, and factor rank for tropical matrices.",
+    "domains": [
+      "Tropical"
+    ],
+    "id": "dir_50_39_026fb7de",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "batch_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:05:24.251503+00:00",
+    "title": "Tropical-Rank: Kapranov Rank vs Tropical Rank Equivalence Bounds"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves functional identity showing every feedforward ReLU neural network is representable as a tropical rational function.",
+    "domains": [
+      "Tropical"
+    ],
+    "id": "dir_50_40_faa42829",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "batch_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:05:24.302658+00:00",
+    "title": "Tropical-Neural: Duality Between Tropical Polynomials and Deep Neural Networks"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formally proves lower bounds on error thresholds for topological surface codes under depolarizing noise models.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "dir_50_41_eca20dfc",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "batch_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:05:24.351664+00:00",
+    "title": "Quantum-Codes: Surface Code Fault-Tolerance Threshold Verification"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves that logarithmic negativity is a strict entanglement monotone under Local Operations and Classical Communication (LOCC).",
+    "domains": [
+      "Physics"
+    ],
+    "id": "dir_50_42_412cc517",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "batch_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:05:24.403391+00:00",
+    "title": "Entanglement-Monotone: Formalization of Logarithmic Negativity Bounds"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves Hastings' theorem establishing efficient Matrix Product State (MPS) approximations for ground states of gapped 1D quantum spin chains.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "dir_50_43_0f826b14",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "batch_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:05:24.454819+00:00",
+    "title": "Tensor-Network: Matrix Product State Approximations of 1D Ground States"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves necessary and sufficient conditions for quantum EPR steering under uncharacterized local measurements.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "dir_50_44_86226c4f",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "batch_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:05:24.504639+00:00",
+    "title": "Quantum-Steering: Einstein-Podolsky-Rosen Steering Inequalities Verification"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalizes the Lloyd-Shor-Devetak (LSD) theorem for quantum channel capacity defined by regularized coherent information.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "dir_50_45_b65899cb",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "batch_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:05:24.553935+00:00",
+    "title": "Quantum-Capacity: Quantum Channel Coherent Information Bound"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalizes Campos-Griffiths-Morris-Sahasrabudhe exponential improvement on diagonal Ramsey bounds R(k,k) \u2264 (4-\u03b5)^k.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "dir_50_46_12f2dc1f",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "batch_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:05:24.603417+00:00",
+    "title": "Ramsey-Bounds: Exponential Bounds for Diagonal Ramsey Numbers"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves conformal invariance of chordal SLE_\u03ba interfaces in simply connected planar domains.",
+    "domains": [
+      "Probability"
+    ],
+    "id": "dir_50_47_b33c0bd5",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "batch_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:05:24.653256+00:00",
+    "title": "SLE-Interface: Schramm-Loewner Evolution Conformal Invariance"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalizes weak convergence of empirical spectral measures of symmetric random matrices to the Wigner semicircle distribution.",
+    "domains": [
+      "Probability"
+    ],
+    "id": "dir_50_48_def390d1",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "batch_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:05:24.703443+00:00",
+    "title": "Random-Matrix: Wigner Semicircle Law Convergence for Wigner Ensembles"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves the Alon-Boppana theorem establishing lower bounds \u03bb_2 \u2265 2\u221a(d-1) - o(1) for the second largest eigenvalue of d-regular graphs.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "dir_50_49_004a41c5",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "batch_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:05:24.752657+00:00",
+    "title": "Graph-Expander: Alon-Boppana Bound for Regular Graph Eigenvalues"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves that quantizing transformer weight matrices onto modular lattice grids preserves global loss landscape convexity invariants.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "dir_50_50_600fb3ba",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "batch_50_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:05:24.803690+00:00",
+    "title": "Bridge-NumberTheory-ML: Arithmetic Geometry of Transformer Weight Lattices"
   },
   {
     "consumed_by_exp_id": "",
