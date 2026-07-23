@@ -31,14 +31,14 @@ else
 fi
 
 # Update all version files
-NOW_TIMESTAMP=$(date +"%m%d%y %H:%M")
+NOW_TIMESTAMP=$(date +"%m/%d/%y %H:%M")
 for f in "${VERSION_FILES[@]}"; do
     if [ -f "$f" ]; then
         # Update or insert the updated date/time badge right before the version badge
         if grep -q 'id="updated-badge"' "$f"; then
-            sed -i "s/id=\"updated-badge\">[^<]*/id=\"updated-badge\">${NOW_TIMESTAMP}/g" "$f"
+            sed -i "s|id=\"updated-badge\">[^<]*|id=\"updated-badge\">${NOW_TIMESTAMP}|g" "$f"
         else
-            sed -i "s/<span class=\"version-badge\"/<span class=\"updated-badge\" id=\"updated-badge\">${NOW_TIMESTAMP}<\/span> <span class=\"version-badge\"/g" "$f"
+            sed -i "s|<span class=\"version-badge\"|<span class=\"updated-badge\" id=\"updated-badge\">${NOW_TIMESTAMP}</span> <span class=\"version-badge\"|g" "$f"
         fi
 
         # Replace the version in the version-badge span
