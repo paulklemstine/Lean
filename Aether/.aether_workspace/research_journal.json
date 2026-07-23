@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "b01a1ab3",
-      "domain": "Tropical",
-      "key_insight": "# Dark Mathematics — results and future directions\n\n## Formal results\n\n`Tropical/DarkMathematics.lean` treats provability as an abstract predicate `Pr : Prop → Prop` with the minimal rule that provabi",
-      "quality_score": 0.66,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-18T05:47:04",
-      "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
-    },
-    {
       "cycle_id": "b6dab3a0",
       "domain": "Applications",
       "key_insight": "# Future directions\n\n## Mathematical interpretation\n\nThe formal development treats a finite graph cellular sheaf through its two-term\ncochain complex `C⁰ → C¹`. It proves the exact identities\n\n- `b₀ +",
@@ -2501,6 +2491,16 @@
       "theorem_count": 6,
       "timestamp": "2026-07-22T22:24:58",
       "title": "ArXiv paper: Spectral extremal problems on planar and outerplanar graphs without $C_{k,l}"
+    },
+    {
+      "cycle_id": "6622cac1",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n- Replace the stipulated variance-of-the-mean formula with a probability-space model of independent, identically distributed neural responses, and derive the `1 / √N` error law fr",
+      "quality_score": 0.69,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-23T02:29:55",
+      "title": "Moonshot: Brain-Computer Interface Mathematics — Neural Coding Theorems"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.76
     }
   ],
-  "last_updated": "2026-07-22T22:24:58",
+  "last_updated": "2026-07-23T02:29:55",
   "open_questions": [
     {
       "context": "",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "af530f4e",
-        "quality": 0.77,
-        "theorems": 0,
-        "title": "Hypercomputation: Computing the Uncomputable"
-      },
-      {
         "cycle_id": "9fc00121",
         "quality": 0.77,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.76,
         "theorems": 13,
         "title": "1. **Repair the definition before studying asymptotics.** The literal rule exclu"
+      },
+      {
+        "cycle_id": "6622cac1",
+        "quality": 0.69,
+        "theorems": 0,
+        "title": "Moonshot: Brain-Computer Interface Mathematics — Neural Coding Theorems"
       }
     ],
     "NumberTheory": [
