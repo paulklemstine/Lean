@@ -532,6 +532,24 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: 
         await _tick_impl(extractor, max_inflight, novelty_slots)
 
 
+async def _safe_get_active_jobs_count(aristotle_client) -> int:
+    if not aristotle_client:
+        return -1
+    try:
+        fn = getattr(aristotle_client, "get_active_jobs_count", None)
+        if not fn:
+            return -1
+        res = fn()
+        if asyncio.iscoroutine(res) or hasattr(res, "__await__"):
+            res = await res
+        if isinstance(res, (int, float)):
+            return int(res)
+        return -1
+    except Exception as e:
+        print(f"[Aristotle] Failed to query server active jobs count: {e}")
+        return -1
+
+
 async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: int = 3) -> None:
     """Run one tick inside a single event loop.
 
@@ -1166,12 +1184,12 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
     except Exception as e:
         print(f"[Decay] Quality decay detection failed: {e}")
 
-    # ── Cycle duration analytics: alert on slow cycles ──
+    # ── Duration analytics: flag unusually slow or fast cycles ──
     try:
         from cycle_analytics import CycleAnalytics
         ca = CycleAnalytics(extractor.workspace)
-        recent = ca.records[-5:] if len(ca.records) >= 5 else ca.records
-        with_dur = [r for r in recent if r.duration_seconds > 0]
+        recent_recs = ca.records[-20:] if hasattr(ca, "records") else []
+        with_dur = [r for r in recent_recs if getattr(r, "duration_seconds", 0) > 0]
         if with_dur:
             avg_dur = sum(r.duration_seconds for r in with_dur) / len(with_dur)
             slow = [r for r in with_dur if r.duration_seconds > 2 * avg_dur and avg_dur > 0]
@@ -1179,35 +1197,8 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                 mins = s.duration_seconds / 60
                 avg_mins = avg_dur / 60
                 print(f"[⏱️ Slow] {s.domain or '?'}: {mins:.1f}m (avg {avg_mins:.1f}m) — {(s.title or '?')[:40]}")
-            if not slow and with_dur:
-                avg_mins = avg_dur / 60
-                print(f"[Duration] Avg cycle: {avg_mins:.1f}m across {len(with_dur)} cycles")
     except Exception as e:
         print(f"[Duration] Cycle duration analytics failed: {e}")
-
-    # ── Discovery digest: summarize recent research activity ──
-    try:
-        from cycle_analytics import CycleAnalytics
-        ca = CycleAnalytics(extractor.workspace)
-        digest = ca.generate_digest(last_n=20)
-        if digest.get("total_cycles", 0) > 0:
-            print(f"[Digest] Cycles: {digest['total_cycles']} total, "
-                  f"{digest['recent_cycles']} recent, "
-                  f"avg Q={digest['avg_quality']:.3f}, "
-                  f"avg duration={digest['avg_duration_minutes']:.1f}m")
-            if digest.get("breakthroughs"):
-                for bt in digest["breakthroughs"][:3]:
-                    print(f"[🌟 BREAKTHROUGH] Q={bt['quality']:.3f} {bt['domain']}: {bt['title']}")
-            if digest.get("trends", {}).get("improving"):
-                print(f"[📈 Improving] {', '.join(digest['trends']['improving'])}")
-            if digest.get("trends", {}).get("declining"):
-                print(f"[📉 Declining] {', '.join(digest['trends']['declining'])}")
-            top = digest.get("top_cycles", [])[:3]
-            if top:
-                top_strs = [f"{t['domain']}:{t['quality']:.2f}" for t in top]
-                print(f"[Top] Best recent: {'; '.join(top_strs)}")
-    except Exception as e:
-        print(f"[Digest] Discovery digest failed: {e}")
 
     # ── Self-healing: auto-retry failed jobs with modified prompt ──
     # Find recently failed jobs and retry them once with a simpler research mode
@@ -1229,16 +1220,19 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
             del extractor.inflight[pid]
             retry_count += 1
 
-    # 3. Retry any queued retries first, before discovering new directions.
-    queued_retries = [j for j in extractor.inflight.values() if j.status == "retry_queued"]
-    if queued_retries:
-        server_running = await extractor.aristotle.get_active_jobs_count()
-        
-    for queued in queued_retries:
+    # 3. Retry or dispatch any queued jobs first, before discovering new directions.
+    queued_jobs = [j for j in extractor.inflight.values() if j.status in ("retry_queued", "dispatch_queued")]
+    if queued_jobs:
+        queued_jobs.sort(key=lambda j: getattr(j, "retry_queued_time", 0.0))
+        server_running = await _safe_get_active_jobs_count(extractor.aristotle)
+    else:
+        server_running = -1
+
+    for queued in queued_jobs:
         local_inflight = extractor._count_inflight_dispatched()
         current_inflight = max(local_inflight, server_running) if server_running >= 0 else local_inflight
         if current_inflight >= max_inflight:
-            print(f"[Tick] No capacity to drain queued retries ({current_inflight}/{max_inflight} inflight, {server_running} on server)")
+            print(f"[Tick] No capacity to drain queued jobs ({current_inflight}/{max_inflight} inflight, {server_running} on server)")
             break
         try:
             queued.status = "preparing"
@@ -1252,21 +1246,19 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
             queued.status = "B_dispatched" if getattr(queued, "phase", "") == "B" else "dispatched"
             queued.dispatch_time = time.time()
             extractor.inflight[project_id] = queued
-            # Retry-queued dispatches skip the discover path, but the direction
-            # was never released, so we do not need to re-consume it.
-            print(f"[Tick] Dispatched queued retry {project_id[:8]}: {queued.concept.title[:60]}")
+            print(f"[Tick] Dispatched queued job {project_id[:8]}: {queued.concept.title[:60]}")
         except Exception as e:
             if extractor._is_queue_full_error(e):
-                print(f"[Tick] Aristotle queue still full; leaving retry {queued.job_id[:8]} queued")
-                queued.status = "retry_queued"
+                print(f"[Tick] Aristotle queue still full; leaving job {queued.job_id[:8]} queued")
+                queued.status = "retry_queued" if getattr(queued, "phase", "") == "B" or getattr(queued, "retry_count", 0) > 0 else "dispatch_queued"
                 queued.project_id = None
             else:
-                print(f"[Tick] Queued retry dispatch failed for {queued.job_id[:8]}: {e}")
+                print(f"[Tick] Queued job dispatch failed for {queued.job_id[:8]}: {e}")
                 queued.status = "failed"
-                queued.error_message = f"Queued retry dispatch failed: {e}"
+                queued.error_message = f"Queued job dispatch failed: {e}"
                 extractor._release_direction(queued)
         
-        # We just dispatched a retry, so the server running count goes up
+        # We just dispatched a job, so the server running count goes up
         if server_running >= 0:
             server_running += 1
         extractor._save_inflight()
@@ -1281,7 +1273,7 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
 
     # 4. Dispatch new jobs up to max_inflight (with novelty track)
     local_inflight = extractor._count_inflight_dispatched()
-    server_running = await extractor.aristotle.get_active_jobs_count()
+    server_running = await _safe_get_active_jobs_count(extractor.aristotle)
     current_inflight = max(local_inflight, server_running) if server_running >= 0 else local_inflight
     print(f"[Tick] Inflight check: {local_inflight} local tracking, {server_running} actual on server -> using {current_inflight}")
     slots_available = max(0, max_inflight - current_inflight)
@@ -1339,7 +1331,7 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
             if injected:
                 for fd in injected:
                     local_inflight = extractor._count_inflight_dispatched()
-                    server_running = await extractor.aristotle.get_active_jobs_count()
+                    server_running = await _safe_get_active_jobs_count(extractor.aristotle)
                     current_inflight = max(local_inflight, server_running) if server_running >= 0 else local_inflight
                     if current_inflight >= max_inflight:
                         print(f"[Tick] Reached max_inflight ({max_inflight}); leaving injected issue queued: {fd.title}")

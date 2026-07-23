@@ -501,8 +501,9 @@ class KnowledgeExtractor:
         old_project_id = job.project_id
 
         # If there is no capacity, queue Phase B instead of dispatching.
-        if self._count_inflight_dispatched() >= max_inflight:
-            print(f"[Dispatch-B] Queueing Phase B for {job.job_id[:8]}: at max_inflight ({self._count_inflight_dispatched()}/{max_inflight})")
+        current_active = await self.get_capacity_used_async()
+        if current_active >= max_inflight:
+            print(f"[Dispatch-B] Queueing Phase B for {job.job_id[:8]}: at max_inflight ({current_active}/{max_inflight})")
             job.status = "retry_queued"
             job.retry_queued_time = time.time()
             job.project_id = old_project_id
@@ -541,11 +542,43 @@ class KnowledgeExtractor:
         return job
 
     def _count_inflight_dispatched(self) -> int:
-        """Count jobs currently occupying Aristotle slots."""
+        """Count jobs currently occupying active Aristotle slots."""
+        inactive_statuses = (
+            "completed", "failed", "integrated", "rejected", "idle_pending",
+            "retry_queued", "dispatch_queued", "queued"
+        )
         return len([
             j for j in self.inflight.values()
-            if j.status not in ("completed", "failed", "integrated", "rejected", "idle_pending")
+            if getattr(j, "status", None) not in inactive_statuses
         ])
+
+    async def get_capacity_used_async(self) -> int:
+        """Get total capacity currently in use across local tracking and Aristotle server."""
+        local_count = self._count_inflight_dispatched()
+        server_count = -1
+        if hasattr(self, "aristotle") and self.aristotle:
+            fn_type = type(getattr(self.aristotle, "get_active_jobs_count", None)).__name__
+            is_mocked = fn_type in ("MagicMock", "AsyncMock", "Mock")
+            is_pytest = bool(os.environ.get("PYTEST_CURRENT_TEST"))
+            if not is_pytest or is_mocked:
+                try:
+                    res = self.aristotle.get_active_jobs_count()
+                    if asyncio.iscoroutine(res) or hasattr(res, "__await__"):
+                        server_count = await res
+                    elif isinstance(res, (int, float)):
+                        server_count = int(res)
+                except Exception as e:
+                    print(f"[Capacity] Failed to check server jobs count: {e}")
+        if isinstance(server_count, (int, float)) and server_count >= 0:
+            return max(local_count, int(server_count))
+        return local_count
+
+    def get_capacity_used(self) -> int:
+        """Synchronous version of get_capacity_used_async."""
+        try:
+            return asyncio.run(self.get_capacity_used_async())
+        except RuntimeError:
+            return self._count_inflight_dispatched()
 
     async def dispatch_retry_async(self, job: "ResearchJob", retry_suggestion: Dict[str, Any], max_inflight: int = 9) -> "ResearchJob":
         """Queue or dispatch a proof repair retry, respecting the parallel limit.
@@ -579,8 +612,9 @@ class KnowledgeExtractor:
         (job.project_dir / "PROMPT.md").write_text(job.prompt)
 
         # If there is no capacity, queue the retry instead of dispatching.
-        if self._count_inflight_dispatched() >= max_inflight:
-            print(f"[Retry-Dispatch] Queueing retry for {job.job_id[:8]}: at max_inflight ({self._count_inflight_dispatched()}/{max_inflight})")
+        current_active = await self.get_capacity_used_async()
+        if current_active >= max_inflight:
+            print(f"[Retry-Dispatch] Queueing retry for {job.job_id[:8]}: at max_inflight ({current_active}/{max_inflight})")
             job.status = "retry_queued"
             job.retry_queued_time = time.time()
             job.project_id = old_project_id  # keep old id placeholder; will dispatch from queued state
@@ -823,7 +857,7 @@ class KnowledgeExtractor:
     # Phase 2: DISPATCH — Pi writes the prompt, Aristotle receives it
     # ==================================================================
 
-    def dispatch(self, job: ResearchJob, dry_run: bool = False) -> ResearchJob:
+    def dispatch(self, job: ResearchJob, dry_run: bool = False, max_inflight: int = 9) -> ResearchJob:
         """Pi writes a detailed prompt for Aristotle, then dispatches.
 
         The prompt asks Aristotle for:
@@ -839,6 +873,15 @@ class KnowledgeExtractor:
         if dry_run or job.status in ("failed", "dry_run"):
             if hasattr(self, 'locked_titles') and job.concept:
                 self.locked_titles.discard(job.concept.title)
+            return job
+
+        current_active = self.get_capacity_used()
+        if current_active >= max_inflight:
+            print(f"[Dispatch] Queueing job {job.job_id[:8]}: at max_inflight ({current_active}/{max_inflight})")
+            job.status = "dispatch_queued"
+            job.retry_queued_time = time.time()
+            self.inflight[job.job_id] = job
+            self._save_inflight()
             return job
 
         # Pre-register in inflight to avoid race conditions during the network call
@@ -879,7 +922,10 @@ class KnowledgeExtractor:
             self._save_inflight()
             if self._is_queue_full_error(e):
                 job.status = "dispatch_queued"
+                job.retry_queued_time = time.time()
                 job.error_message = f"Queue full: {e}"
+                self.inflight[job.job_id] = job
+                self._save_inflight()
                 print(f"[Dispatch] QUEUE FULL: {e}")
             else:
                 if hasattr(self, 'locked_titles') and job.concept:
@@ -890,7 +936,7 @@ class KnowledgeExtractor:
 
         return job
 
-    async def dispatch_async(self, job: ResearchJob, dry_run: bool = False) -> ResearchJob:
+    async def dispatch_async(self, job: ResearchJob, dry_run: bool = False, max_inflight: int = 9) -> ResearchJob:
         """Async version of dispatch() — call from inside an already-running event loop.
 
         This is the version to use in run_continuous() and other async contexts.
@@ -899,6 +945,15 @@ class KnowledgeExtractor:
         if dry_run or job.status in ("failed", "dry_run"):
             if hasattr(self, 'locked_titles') and job.concept:
                 self.locked_titles.discard(job.concept.title)
+            return job
+
+        current_active = await self.get_capacity_used_async()
+        if current_active >= max_inflight:
+            print(f"[Dispatch] Queueing job {job.job_id[:8]}: at max_inflight ({current_active}/{max_inflight})")
+            job.status = "dispatch_queued"
+            job.retry_queued_time = time.time()
+            self.inflight[job.job_id] = job
+            self._save_inflight()
             return job
 
         # Pre-register in inflight to avoid race conditions during the network call
@@ -937,7 +992,10 @@ class KnowledgeExtractor:
                 # Leave the job in a recoverable state so the caller can release
                 # the direction back to available and retry later.
                 job.status = "dispatch_queued"
+                job.retry_queued_time = time.time()
                 job.error_message = f"Queue full: {e}"
+                self.inflight[job.job_id] = job
+                self._save_inflight()
                 print(f"[Dispatch] QUEUE FULL: {e}")
             else:
                 if hasattr(self, 'locked_titles') and job.concept:

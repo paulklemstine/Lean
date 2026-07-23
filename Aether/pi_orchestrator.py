@@ -943,7 +943,19 @@ class PiAgentOrchestrator:
 
         while not self._shutdown_requested:
             # --- Fill the queue up to max_jobs ---
-            slots = max_jobs - len(in_flight)
+            server_running = -1
+            if hasattr(self, "aristotle") and self.aristotle:
+                try:
+                    res = self.aristotle.get_active_jobs_count()
+                    if asyncio.iscoroutine(res) or hasattr(res, "__await__"):
+                        server_running = await res
+                    elif isinstance(res, (int, float)):
+                        server_running = int(res)
+                except Exception:
+                    server_running = -1
+
+            effective_inflight = max(len(in_flight), server_running) if server_running >= 0 else len(in_flight)
+            slots = max_jobs - effective_inflight
             if slots > 0:
                 # Prepare and dispatch in batches
                 for _ in range(min(slots, fill_batch)):

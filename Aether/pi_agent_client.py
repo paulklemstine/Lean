@@ -3325,7 +3325,7 @@ Be precise, be deep, be world-class.
                   file paths passed through from Phase A in full.
 
             ### DO NOT OUTPUT:
-            - NO separate standalone .lean files as root outputs (all Lean 4 formal proof code
+            - NO separate standalone .lean files as root outputs (no `.lean` files as root outputs and no theorem proofs; all Lean 4 formal proof code
               must be embedded directly inside PACKAGE.json under `lean_proofs` and listed under `lean_files`)
             - NO `FUTURE_DIRECTIONS.md` as a separate file (Phase A already produced
               future directions — they are provided below for inclusion in PACKAGE.json)

@@ -319,9 +319,11 @@ def test_aether_tick_proof_repair_loop(tmp_workspace, research_job):
     extractor.evaluate = mock_evaluate
     
     # Mock FutureDirectionsManager, CatalogPruner, and CycleAnalytics
+    mock_pruner_module = MagicMock()
     with patch("research_memory.FutureDirectionsManager") as mock_fd_mgr, \
-         patch("catalog_pruner.CatalogPruner") as mock_pruner, \
+         patch.dict("sys.modules", {"catalog_pruner": mock_pruner_module}), \
          patch("cycle_analytics.CycleAnalytics") as mock_analytics:
+        mock_pruner = mock_pruner_module.CatalogPruner
          
         # Initialize mocks
         fd_mgr_instance = mock_fd_mgr.return_value
