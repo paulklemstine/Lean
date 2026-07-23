@@ -2316,26 +2316,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "abab9083",
-    "description": "Formalize the Penrose-Hameroff Orch OR hypothesis: consciousness arises from quantum coherence in microtubules. Define: a 'conscious event' is the collapse of a superposition in a microtubule, with timing ~500 ms (the gamma synchrony). Prove: the Penrose objective reduction (OR) threshold is E ~ h/(t * sqrt(N)) where N is the number of tubulins. Show: for N ~ 10^11 tubulins, the coherence time is ~10^-33 s — too short for room temperature. Conjecture: if quantum consciousness exists, it requires a warm-coherent mechanism not yet formalized. Explore: formalize 'non-computable consciousness' — does the brain compute beyond Turing?",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Physics"
-    ],
-    "id": "fd_0576",
-    "lineage_refs": [],
-    "priority_score": 0.85,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-21T23:19:06.708946+00:00",
-    "title": "Moonshot: Quantum Consciousness — Penrose-Hameroff Orchestrated Reduction"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle 227d6015 (Q=0.750), which proved 19 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Freeman Dyson's idea that intelligence grows without limit in the deep future. Define: 'intelligence growth rate' as the rate at which a civilization discovers new theorems. Prove: if the growth rate is superexponential (faster than 2^(2^n)), then the civilization discovers ALL theorems of",
     "domain_bridges": [],
@@ -3116,7 +3096,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "46e197e9",
     "description": "Investigate the ArXiv paper 'Recursive Formula for the Equations of Hessenberg Varieties' and formalize its key results. Abstract: Hessenberg varieties are subvarieties of the flag variety, defined by containment conditions on flags with respect to a linear operator. The study of these varieties lies in the intersection of algebraic geometry, combinatorics, and representation theory. In this paper, we develop an algebro-geometric procedure for determining the closed subvariety structure of a Hessenberg variety $\\mathcal{H}(X,h)$ in the flag variety for any linear operator $X$ and Hessenberg function $h$, by imposing a partial order on the Hessenberg functions and analyzing the relation of the corresponding Hessenberg varieties. In particular, we give a concrete recursive formula for determining all equations cutting out a given Hessenberg variety in each Schubert cell. As an application, we provide an alternative geometric proof of Tymoczko's results on the existence of affine pavings of a given Hessenberg variety and on the dimension count of its cells.",
     "domain_bridges": [],
     "domains": [
@@ -3129,7 +3109,7 @@
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
     "source_exp_id": "2607.12261v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T19:37:25.793116+00:00",
     "title": "ArXiv paper: Recursive Formula for the Equations of Hessenberg Varieties"
   },
@@ -6646,7 +6626,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "eb2592c6",
     "description": "# Future Directions: Recurrence in Cognitive Dynamics\n\n## 1. Observation-invariant recurrence spectra\n\n**Conjecture.** For compact metric cognitive systems related by a topological conjugacy, the exact-period spectrum, topological entropy, and existence of Li–Yorke scrambled sets are simultaneously invariant; under a merely finite-to-one observation map, exact periods can only decrease by divisibility.\n\nThe key insight is that faithful semiconjugacy already preserves exact period pointwise, while loss of injectivity is the precise mechanism by which an observed cycle can collapse. **Why now?** The finite-state embedding and exact-period transport results isolate the hypotheses needed to extend recurrence invariance from individual states to global entropy and chaos.\n\n## 2. Measured recurrence instead of point density\n\n**Conjecture.** In a parametrized family of cognitive observation models, lifetime recurrence incidence is determined by the measure of an observation-thickened recurrent set, not by the cardinality or topological density of periodic points; the two quantities can vary independently even among maps with dense periodic points.\n\nThe key insight is that population incidence is probabilistic, whereas density of periodic points is topological and carries no canonical percentage. **Why now?** The contraction counterexample rules out continuity as a sufficient explanation, and the faithful-observation theorem supplies a principled way to state how measurement changes recurrence.\n\n## 3. Period-three forcing with cognitive observability\n\n**Conjecture.** Let a continuous interval map have an exact period-three orbit and let an observation map separate the three orbit states by a fixed positive margin. Then there is a quantitative lower bound, depending only on that margin and a modulus of continuity, for the number of distinguishable finite observation words of length `n`, growing exponentially in `n`.\n\nThe key insight is that period three should force symbolic complexity only when the observation process can distinguish the forced orbit structure. **Why now?** Exact period three has been converted into an explicit three-state embedding, making quantitative separation the natural next hypothesis rather than an implicit assumption.\n\n## 4. Logistic parameter windows and robust recurrence\n\n**Conjecture.** Near the parameter `r = 3.83`, the logistic family admits an open parameter interval with an attracting exact three-cycle whose basin has positive Lebesgue measure, while the fixed-point set remains measure zero throughout that interval.\n\nThe key insight is that robust observed recurrence should be modeled through basin measure and attraction, not through the density of the periodic points themselves. **Why now?** The exact fixed states and critical value at `3.83` are known algebraically, so the remaining problem is a falsifiable stability and basin-measure calculation.\n\n## 5. Tropical drift as a recurrence obstruction\n\n**Conjecture.** For an irreducible min-plus cognitive transition matrix, a tropical eigenstate is periodic in the ordinary state space exactly when its eigenvalue is zero; modulo additive constants, every tropical eigenstate is fixed, and eventual projective recurrence is governed by the cyclicity of the critical graph.\n\nThe key insight is that a tropical eigenvalue records linear drift, so quotienting by global activation offset separates genuine recurrence from uniform translation. **Why now?** Zero-eigenvalue recurrence and the full iterate drift formula are already established, leaving critical-graph cyclicity as the concrete bridge from tropical spectral theory to periodic cognition.\n",
     "domain_bridges": [],
     "domains": [
@@ -6659,7 +6639,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "5102d77c",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-17T18:22:04.054428+00:00",
     "title": "**Conjecture.** For compact metric cognitive systems related by a topological co"
   },
@@ -9446,26 +9426,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "# Future Directions: Arithmetic Coherence Transitions\n\nThe conjectures below are ranked by expected scientific impact. Each proposal separates a measurable arithmetic statistic from the choice of a phenomenological transition law.\n\n## 1. Higher-rank Langlands percolation\n\n**Conjecture.** For a fixed global field and bounded ramification, form a bipartite graph whose vertices are rank-two automorphic representations and compatible rank-two Galois representations, with edges supplied by independently established local-global compatibility results. After normalization by the number of admissible local types, the largest-component density has a nonzero limiting value precisely above a universal critical mean degree.\n\n**The key insight is...** higher-rank reciprocity should be studied as a growing compatibility graph, so that global organization is measured by component structure rather than by a raw theorem count.\n\n**Why now?** The cyclotomic rank-one model shows exactly how an arithmetic counting law can be transported into a threshold parameter, while modern databases provide sufficiently structured local data to make the rank-two graph falsifiable.\n\n## 2. Arithmetic universality of critical exponents\n\n**Conjecture.** Across families of number fields ordered by discriminant, coherence parameters built from normalized reciprocity graphs fall into finitely many universality classes: tree-like compatibility graphs have critical exponent `1`, while symmetry-breaking character models have exponent `1/2`.\n\n**The key insight is...** the exponent should depend on the local geometry of the connection network, not on the names or historical origins of its arithmetic objects.\n\n**Why now?** Two exact mean-field laws already distinguish linear percolation onset from square-root symmetry-breaking onset, giving concrete competing predictions that arithmetic datasets can separate.\n\n## 3. A derived, rather than selected, number-theory threshold\n\n**Conjecture.** There is a canonical weighting of cross-field implications between Langlands theory and arithmetic geometry for which the susceptibility—expected increase in the largest coherent component after adding one verified connection—has a unique maximum at an effective edge count between `8,000` and `12,000`.\n\n**The key insight is...** a critical threshold is scientifically meaningful only if it can be recovered as a peak in susceptibility, rather than inserted as an external constant.\n\n**Why now?** The exact conductor cutoff derived from a chosen ten-thousand-edge parameter isolates the missing empirical task and supplies a sharp null model against which a measured threshold can be compared.\n\n## 4. Totient-driven cascades beyond prime conductors\n\n**Conjecture.** In the cyclotomic rank-one proxy, conductors crossing a fixed coherence threshold occur in clustered cascades governed by the distribution of Euler's totient: for every sufficiently large `T`, every interval `[T, T + T^(3/4)]` contains conductors on both sides of the condition `φ(n) > T`.\n\n**The key insight is...** composite conductors replace the monotone prime law `p - 1` by the irregular multiplicative statistic `φ(n)`, turning a single cutoff into an arithmetic intermittency phenomenon.\n\n**Why now?** The prime-conductor phase diagram is exact and monotone; extending it to composite conductors gives an immediate, falsifiable test of whether arithmetic fluctuations can model punctuated transitions.\n\n## 5. Stability under order-parameter deformation\n\n**Conjecture.** Let `F : ℝ≥0 → ℝ≥0` be continuous, monotone, zero exactly at zero, and regularly varying at zero with index `α > 0`. Replacing square-root coherence by `F(max(x-c,0))` preserves the exact arithmetic activation boundary, while changing only the critical exponent to `α`.\n\n**The key insight is...** the location of the transition is order-theoretic, whereas its near-critical scaling is analytic; these two features should be proved and tested independently.\n\n**Why now?** The current cyclotomic classification already separates threshold inequalities from square-root scaling, making robustness under alternative response laws the natural next structural test.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0524",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "2f321176",
-    "status": "available",
-    "timestamp": "2026-07-20T20:48:29.755518+00:00",
-    "title": "The conjectures below are ranked by expected scientific impact. Each proposal se"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "# Future directions\n\nThe formal development studies a precise surrogate for “the space of mathematical truth”: binary streams encode successive answers, prefix agreement supplies Cantor scales, and the local rule forbids adjacent positive answers. This golden-mean language is nontrivial enough to exhibit a genuine intermediate dimension while remaining amenable to complete kernel-checked proofs.\n\n## Results established\n\n* The admissible depth-`n` cylinders are generated by `truthWords`.\n* Every generated cylinder has length `n`, and its two recursive branches are disjoint.\n* Their exact number is `Nat.fib (n + 2)`.\n* Every finite admissible pattern extends to an infinite locally consistent stream.\n* For `n ≥ 2`, `2^(n/2) ≤ |truthWords n| < 2^n`, a direct sparse-but-nonnegligible growth certificate.\n* The density contracts quantitatively over two levels.\n* The entropy/box-dimension parameter `log φ / log 2` is strictly between `0` and `1`.\n\n## Natural next steps\n\n1. Define the actual Cantor ultrametric from first disagreement and prove its metric axioms. Relate radius-`2⁻ⁿ` balls exactly to `AgreeTo n`.\n2. Instantiate Mathlib's covering-number definitions and prove that the upper and lower box dimensions both equal `log φ / log 2`. This requires converting exact Fibonacci counts into a logarithmic limit.\n3. Generalize from the forbidden block `11` to arbitrary finite forbidden languages. Their cylinder counts are governed by finite adjacency matrices; Perron–Frobenius theory should identify dimension as `log ρ(A) / log 2`.\n4. Separate syntax from semantics: fix an explicit prefix-free encoding of formulas and a theory, then study the stream of theoremhood bits. Any unconditional claim about “all mathematical truth” depends critically on these choices.\n5. Formalize computability only after fixing an effective coding and proof system. The broad claim that truth dimension is uncomputable is not meaningful without such data and is false for the decidable golden-mean model proved here.\n6. For a genuine Chaitin-style direction, define prefix-free machines, halting domains, and finite Omega approximants. Prove monotonicity and convergence first; machine-dependent randomness or uncomputability requires substantial computability and algorithmic-information infrastructure.\n\nThe present file deliberately does not claim a connection to Chaitin's Omega: such a statement would require machine-specific definitions absent from the prompt and should not be inferred merely from Fibonacci growth.\n",
     "domain_bridges": [],
     "domains": [
@@ -10564,20 +10524,40 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "# Future Directions — Orthogonal families over the coordinate framework\n\nThis cycle specialized the coordinate/incidence framework for generalized nets\nto the classical square case and established the Euler–MacNeish ceiling: a\nfamily of pairwise-orthogonal reduced Latin squares of order `n` has at most\n`n − 1` members, with the ceiling attained at order three. The pivot argument at\nthe heart of the proof — inspecting only two grid cells — suggests several bold,\ntestable next steps.\n\n## Conjecture 1 — Reduction is a free normalization\n\n**Statement.** Every family of pairwise-orthogonal Latin squares of order `n` is\nequivalent, under independent symbol relabellings of each square, to a family of\n*reduced* squares of the same size, and the equivalence preserves orthogonality.\nConsequently the `n − 1` ceiling holds for *arbitrary* (not necessarily reduced)\nfamilies.\n\n**The key insight is** that orthogonality is invariant under relabelling the\nsymbol alphabet of each square separately, because it is a statement about the\n*fibres* of the coordinate maps rather than about the symbols attached to them;\nreduction is just the choice of relabelling that sends the first row to the\nidentity.\n\n**Why now?** The pivot proof already localizes the whole argument to two cells,\nso the only missing ingredient is a clean lemma that relabelling is a symmetry of\nthe incidence structure — a small, self-contained addition to the framework that\nimmediately upgrades the ceiling from reduced families to all families.\n\n## Conjecture 2 — The window bound generalizes to nets\n\n**Statement.** For a generalized net with `m` weft classes and `n` warp classes,\nthe maximum number of pairwise-orthogonal parallel classes that can be adjoined\nis controlled by the number of distinct symbols appearing in a *single bounded\nwindow* of the coordinate grid, generalizing the pivot count from a single cell\nto an `r × s` block.\n\n**The key insight is** that the pivot obstruction — distinct nonzero symbols in\none column — is the smallest instance of a general phenomenon: orthogonality\nforces injectivity of a \"local fingerprint\" map, and larger windows yield sharper\nceilings for higher-dimensional nets.\n\n**Why now?** The proof here demonstrates that a two-cell window already yields the\nsharp classical bound; extending the fingerprint to a block is a natural,\nmechanically checkable escalation that has not been isolated before at this level\nof generality.\n\n## Conjecture 3 — Tightness is exactly the prime-power spectrum\n\n**Statement.** Within the coordinate framework, a family attaining the full\n`n − 1` ceiling exists if and only if there is a coordinate system on the grid\ncarrying an affine-plane structure of order `n`; combined with the classical\ntheory this forces `n` to be a prime power (with the known exceptions `n = 6` and\nthe still-open `n = 10` on the impossibility side).\n\n**The key insight is** that a complete set of `n − 1` MOLS is interchangeable\nwith a finite affine plane, and the coordinate/reticulation language makes the\nplane's parallel classes literally the fibres of the coordinate maps, turning\n\"tightness\" into \"existence of a coordinatizing algebra\".\n\n**Why now?** With the ceiling and a concrete tight witness both in hand, the\nframework is ready to host the equivalence between complete MOLS families and\naffine planes, closing the loop between the incidence axioms and classical\ndesign theory.\n\n## Conjecture 4 — Parastrophy acts freely on saturated families\n\n**Statement.** The parastrophy (coordinate-permutation) action introduced for\nreticulations restricts to an action on the set of ceiling-saturating families,\nand this action is free whenever `n > 2`; in particular the number of saturated\nfamilies up to parastrophy is a divisor-controlled fraction of the total count.\n\n**The key insight is** that a saturated family pins down all six coordinate roles\nsimultaneously, leaving no nontrivial coordinate permutation that fixes it, so the\nsymmetry group acts without fixed points once the order exceeds the degenerate\ncase.\n\n**Why now?** The pivot proof exposes exactly which coordinate roles are forced by\nsaturation, giving a concrete handle on the stabilizer of a family — the first\nstep toward an orbit count for small orders.\n",
+    "description": "# Future Directions — Quantum Consciousness / Orch OR formalization\n\nThis project formalizes, in Lean 4 (Mathlib), the quantitative and logical core\nof the Penrose–Hameroff *Orchestrated Objective Reduction* (Orch OR) hypothesis.\n\n## What is proved\n\n### `Logic/OrchOR.lean` — the OR scaling laws\n* `orTime`, `thresholdEnergy`, `cohTime` — the Penrose collapse time `τ = ħ/E`,\n  the threshold energy `E = ħ/(t·√N)`, and the coherence time `t = ħ/(E·√N)`.\n* `thresholdEnergy_mul`, `cohTime_mul` — the defining identity `E·t·√N = ħ`.\n* `cohTime_thresholdEnergy`, `thresholdEnergy_cohTime` — the two formulas are\n  mutual inverses.\n* `cohTime_strictAnti_N` — coherence time strictly decreases in the tubulin\n  count `N`.\n* `cohTime_tendsto_zero` — coherence time `→ 0` as `N → ∞`.\n* `orchOR_too_short` — a concrete rational bound: at `ħ ≈ 1.055×10⁻³⁴`, thermal\n  `E ≈ 4.28×10⁻²¹ J`, `N = 10¹¹`, the coherence time is `< 10⁻¹⁸ s`.\n* `orchOR_shorter_than_gamma` — hence `< 0.5 s`, far below the gamma-synchrony\n  timescale of a conscious moment.\n\n### `Logic/NonComputableConsciousness.lean` — \"beyond Turing\"\n* `no_surj_nat_behaviors` — Cantor diagonal for behaviours `ℕ → Bool`.\n* `behaviors_uncountable` — behaviour space is uncountable.\n* `codes_not_surjective` — the countably many `Nat.Partrec.Code` algorithms\n  cannot realize every behaviour.\n* `exists_noncomputable_behavior` — there is a behaviour `ℕ → Bool` that is not\n  `Computable`.\n\nAll theorems compile with only `propext`, `Classical.choice`, `Quot.sound`.\n\n## Directions to extend\n\n1. **Warm-coherence mechanism.** Formalize a decoherence-time model\n   `t_dec = f(T, N, coupling)` and state precisely the inequality a hypothetical\n   \"warm quantum brain\" would need to satisfy (`t_dec ≥ t_γ`), then prove it is\n   violated for the standard thermal-bath model — turning the conjecture into a\n   sharp impossibility theorem under explicit physical assumptions.\n\n2. **Exact 10⁻³³ s regime.** Instantiate `cohTime` with the gravitational\n   self-energy of a displaced tubulin mass (rather than the thermal scale) and\n   derive the description's `≈ 10⁻³³ s` figure as a second concrete bound.\n\n3. **Gödelian non-computability.** Strengthen `exists_noncomputable_behavior`\n   to an *explicit* non-computable object — e.g. the halting predicate — using\n   Mathlib's `Nat.Partrec.Code` diagonalization, formalizing the Penrose–Lucas\n   \"human insight is non-algorithmic\" argument at the level of a named\n   undecidable set.\n\n4. **Rate/entropy bounds.** Combine `cohTime_tendsto_zero` with a Landauer /\n   thermodynamic bound to relate the number of possible conscious events per\n   second to `N` and `T`.\n\n5. **Abstract \"conscious event\" structure.** Define a `ConsciousEvent` as a\n   collapse record (superposition, self-energy, timestamp) and prove structural\n   laws (e.g. minimum inter-event spacing `≥ cohTime`).\n",
     "domain_bridges": [],
     "domains": [
-      "Pythagorean",
-      "Algebra"
+      "Computation",
+      "Physics"
     ],
     "id": "fd_0619",
     "lineage_refs": [],
     "priority_score": 0.75,
     "proof_strategy": "",
     "research_mode": "team",
+    "source_exp_id": "abab9083",
+    "status": "available",
+    "timestamp": "2026-07-23T22:17:56.170777+00:00",
+    "title": "This project formalizes, in Lean 4 (Mathlib), the quantitative and logical core"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Orthogonal families over the coordinate framework\n\nThis cycle specialized the coordinate/incidence framework for generalized nets\nto the classical square case and established the Euler–MacNeish ceiling: a\nfamily of pairwise-orthogonal reduced Latin squares of order `n` has at most\n`n − 1` members, with the ceiling attained at order three. The pivot argument at\nthe heart of the proof — inspecting only two grid cells — suggests several bold,\ntestable next steps.\n\n## Conjecture 1 — Reduction is a free normalization\n\n**Statement.** Every family of pairwise-orthogonal Latin squares of order `n` is\nequivalent, under independent symbol relabellings of each square, to a family of\n*reduced* squares of the same size, and the equivalence preserves orthogonality.\nConsequently the `n − 1` ceiling holds for *arbitrary* (not necessarily reduced)\nfamilies.\n\n**The key insight is** that orthogonality is invariant under relabelling the\nsymbol alphabet of each square separately, because it is a statement about the\n*fibres* of the coordinate maps rather than about the symbols attached to them;\nreduction is just the choice of relabelling that sends the first row to the\nidentity.\n\n**Why now?** The pivot proof already localizes the whole argument to two cells,\nso the only missing ingredient is a clean lemma that relabelling is a symmetry of\nthe incidence structure — a small, self-contained addition to the framework that\nimmediately upgrades the ceiling from reduced families to all families.\n\n## Conjecture 2 — The window bound generalizes to nets\n\n**Statement.** For a generalized net with `m` weft classes and `n` warp classes,\nthe maximum number of pairwise-orthogonal parallel classes that can be adjoined\nis controlled by the number of distinct symbols appearing in a *single bounded\nwindow* of the coordinate grid, generalizing the pivot count from a single cell\nto an `r × s` block.\n\n**The key insight is** that the pivot obstruction — distinct nonzero symbols in\none column — is the smallest instance of a general phenomenon: orthogonality\nforces injectivity of a \"local fingerprint\" map, and larger windows yield sharper\nceilings for higher-dimensional nets.\n\n**Why now?** The proof here demonstrates that a two-cell window already yields the\nsharp classical bound; extending the fingerprint to a block is a natural,\nmechanically checkable escalation that has not been isolated before at this level\nof generality.\n\n## Conjecture 3 — Tightness is exactly the prime-power spectrum\n\n**Statement.** Within the coordinate framework, a family attaining the full\n`n − 1` ceiling exists if and only if there is a coordinate system on the grid\ncarrying an affine-plane structure of order `n`; combined with the classical\ntheory this forces `n` to be a prime power (with the known exceptions `n = 6` and\nthe still-open `n = 10` on the impossibility side).\n\n**The key insight is** that a complete set of `n − 1` MOLS is interchangeable\nwith a finite affine plane, and the coordinate/reticulation language makes the\nplane's parallel classes literally the fibres of the coordinate maps, turning\n\"tightness\" into \"existence of a coordinatizing algebra\".\n\n**Why now?** With the ceiling and a concrete tight witness both in hand, the\nframework is ready to host the equivalence between complete MOLS families and\naffine planes, closing the loop between the incidence axioms and classical\ndesign theory.\n\n## Conjecture 4 — Parastrophy acts freely on saturated families\n\n**Statement.** The parastrophy (coordinate-permutation) action introduced for\nreticulations restricts to an action on the set of ceiling-saturating families,\nand this action is free whenever `n > 2`; in particular the number of saturated\nfamilies up to parastrophy is a divisor-controlled fraction of the total count.\n\n**The key insight is** that a saturated family pins down all six coordinate roles\nsimultaneously, leaving no nontrivial coordinate permutation that fixes it, so the\nsymmetry group acts without fixed points once the order exceeds the degenerate\ncase.\n\n**Why now?** The pivot proof exposes exactly which coordinate roles are forced by\nsaturation, giving a concrete handle on the stabilizer of a family — the first\nstep toward an orbit count for small orders.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0620",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
     "source_exp_id": "ec11492d",
     "status": "available",
-    "timestamp": "2026-07-23T22:26:04.074432+00:00",
+    "timestamp": "2026-07-23T22:18:01.963006+00:00",
     "title": "This cycle specialized the coordinate/incidence framework for generalized nets"
   },
   {
@@ -10590,14 +10570,14 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0620",
+    "id": "fd_0621",
     "lineage_refs": [],
     "priority_score": 0.75,
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "6c18f01c",
     "status": "available",
-    "timestamp": "2026-07-23T22:26:17.957498+00:00",
+    "timestamp": "2026-07-23T22:18:06.466835+00:00",
     "title": "For a fixed global field and bounded ramification, form a bipartite graph of ran"
   },
   {
