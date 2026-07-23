@@ -55,8 +55,9 @@ class AristotleSDKClient:
     async def get_active_jobs_count(self) -> int:
         """Get the number of currently running jobs on the Aristotle server."""
         try:
-            projs = await aristotlelib.Project.list_projects()
-            running = [p for p in projs if p.status == aristotlelib.ProjectStatus.RUNNING]
+            res = await aristotlelib.Project.list_projects()
+            projs = res[0] if isinstance(res, tuple) else res
+            running = [p for p in projs if getattr(p, "status", None) == aristotlelib.ProjectStatus.RUNNING]
             return len(running)
         except Exception as e:
             print(f"[Aristotle] Failed to list projects: {e}")
