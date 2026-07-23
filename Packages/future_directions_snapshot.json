@@ -192,7 +192,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b648d8e5",
     "description": "Building on cycle 5d6a1919 (Q=0.760), which proved 13 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future directions\n\n1. **Repair the definition before studying asymptotics.** The literal rule excludes one integer and collapses to the constant-one sequence. A revised rule must specify the candidate set and all exclusions—for example, whether terms must be new, increasing, or avoid sums of any p",
     "domain_bridges": [],
     "domains": [
@@ -204,7 +204,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "5d6a1919",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-22T18:42:28.004149+00:00",
     "title": "Deepening: 1. **Repair the definition before studying asymptotics.** The literal rule exclu"
   },
@@ -6435,7 +6435,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "274c401c",
     "description": "# Future Directions: Structural Register Allocation\n\n## 1. Weighted elimination-optimal spilling\n\n**Conjecture.** For a chordal interference graph with nonnegative vertex spill costs and a fixed register budget, there is an optimal spill set obtainable by dynamic programming over a clique tree, with state space bounded by a function of the maximum clique size.\n\nThe key insight is that chordality localizes all coloring obstructions to maximal cliques, while a clique tree records exactly how those obstructions overlap. **Why now?** The clique spill lower bound identifies the correct local constraint, but the failure of degree-only optimality leaves open how to combine local constraints globally and economically.\n\n## 2. Register-class list coloring with elimination certificates\n\n**Conjecture.** If every variable in a chordal interference graph has a list of admissible registers whose size is at least the largest clique containing that variable, then a valid list allocation exists.\n\nThe key insight is that a perfect elimination ordering exposes a local clique at every coloring step, suggesting a vertex-sensitive strengthening of the uniform clique bound. **Why now?** Modern architectures divide registers into heterogeneous classes, so a theorem with local list bounds would connect chordal perfectness to realistic allocation constraints.\n\n## 3. Semantic characterization of chordal SSA interference\n\n**Conjecture.** An SSA program whose live ranges are connected subtrees of a dominance tree has a chordal interference graph, and every finite chordal graph arises from such a subtree-liveness instance.\n\nThe key insight is that intersection graphs of subtrees of a tree are chordal, turning compiler dominance into a graph-theoretic representation theorem. **Why now?** Exact clique-based allocation is useful only when the semantic conditions producing the elimination structure are explicit and testable.\n\n## 4. A sharp boundary for degree-based spilling\n\n**Conjecture.** On unweighted chordal graphs, repeatedly deleting a maximum-degree vertex minimizes the number of spills needed for a one-register budget if and only if every block is a clique.\n\nThe key insight is that the three-vertex path already separates degree from chromatic demand, while block graphs form a natural class where local degree and clique congestion may align. **Why now?** The universal maximum-degree heuristic is false without restrictions; identifying its exact validity class would turn a heuristic into a structural theorem.\n\n## 5. Fixed-parameter allocation beyond chordality\n\n**Conjecture.** For interference graphs with chordality defect at most `d`—meaning deletion of at most `d` vertices makes the graph chordal—optimal weighted spilling and register allocation are fixed-parameter tractable in `d` plus the target register count.\n\nThe key insight is that a small exceptional set can isolate all non-clique coloring obstructions, after which elimination-based methods handle the chordal remainder. **Why now?** Real interference graphs may be nearly, but not exactly, chordal; a defect parameter provides a falsifiable bridge between exact structure and practical instances.\n",
     "domain_bridges": [],
     "domains": [
@@ -6448,7 +6448,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "192fa110",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T07:21:35.711367+00:00",
     "title": "**Conjecture.** For a chordal interference graph with nonnegative vertex spill c"
   },
@@ -6675,7 +6675,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6c3aaf50",
     "description": "# Future Directions\n\n1. **Internal Cartesian-closed formulation.** Generalize the type-level Lawvere theorem to an arbitrary locally small Cartesian closed category using global elements and a categorical notion of point-surjectivity. This would distinguish carefully between ordinary epimorphisms and the stronger hypothesis needed by diagonal evaluation.\n\n2. **Synthetic domain theory.** Replace the imported complete-lattice fixed-point theorem with an account of recursive types and Scott-continuous maps. The target is an approximation theorem showing that the least emergent fixed point is the supremum of finite stages from bottom.\n\n3. **A genuine topology of strange loops.** The present formalization proves the algebraic closure equation for self-observation. A stronger development should define a directed simplicial set or graph of modeling levels, construct the diagonal cycle, and calculate a nontrivial invariant (for example, a fundamental-group or homology class). Calling the current equation “topology” is only an interpretation, not yet a topological theorem.\n\n4. **Restricted self-models.** Complete Boolean self-models are impossible by Cantor diagonalization. Investigate partial, computable, modal, or stratified self-models and characterize exactly which classes of observations can be represented without contradiction.\n\n5. **Yoneda–Lawvere bridge.** Formalize the naturality of diagonal evaluation and derive Lawvere's theorem directly from exponentials, evaluation, and the Yoneda correspondence, rather than presenting the two results as complementary theorems in one file.\n\n6. **Uniqueness and dynamics.** Add contractive or order-theoretic hypotheses under which the emergent fixed point is unique, and prove convergence of iterative self-model updates to that point.\n\n7. **Intensional type theory.** Study guarded recursion, later modalities, and recursive types, where self-reference is controlled by time or modality. Compare their consistent fixed points with the extensional completeness obstruction proved here.\n\n8. **Empirical modeling boundary.** Any application to biological consciousness requires a separately specified state space, observation type, and measurable dynamics. The current results establish abstract mathematical constraints only; they do not identify a physical or cognitive system satisfying the hypotheses.\n",
     "domain_bridges": [],
     "domains": [
@@ -6688,7 +6688,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "e5cc823f",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T10:06:53.358179+00:00",
     "title": "1. **Internal Cartesian-closed formulation.** Generalize the type-level Lawvere "
   },
@@ -7994,7 +7994,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2c3f15cd",
     "description": "# Future directions\n\n1. **Replace discrete carriers by actual categories.** Define an analogy from functors `F : A ⥤ B` and `G : B ⥤ A`, and measure agreement of `G ⋙ F` with the identity using natural isomorphisms or a metric on functors. The present function model is exactly the discrete-category base case.\n\n2. **Weighted structural similarity.** Replace fixed-point count by a weighted sum over concepts, or count preserved relations, operations, and incidence data. Prove monotonicity and optimization results for nonnegative weights.\n\n3. **Two-sided fidelity.** Score both source and target round trips. Characterize maximum two-sided similarity by equivalence/bijection, contrasting it with the intentionally one-sided notion proved here.\n\n4. **Approximate metric fidelity.** For finite metric structures, minimize maximum or average displacement of the round trip. Establish existence of minimizers and quantitative composition inequalities.\n\n5. **Formal concept lattices.** Instantiate the carriers with closed concepts of a finite formal context and require monotone or adjoint maps. Compare fixed-point similarity with the cardinality of the stable closure core.\n\n6. **Uniqueness modulo symmetry.** The Boolean flip computation shows that Copycat is not the unique maximizer. Classify all maximizers as split embeddings, and in the self-finite case relate them to permutations/automorphisms.\n\n7. **Search algorithms.** Give a computable enumeration of finite candidate analogies and prove that an implementation returns an optimizer, with complexity bounds and symmetry reduction.\n\n8. **Decomposition claims.** The universal statement about every creative mathematical insight is not mathematically well-posed without a formal type of insights and a semantics connecting them to analogy operations. A defensible next step is to define a generated subcategory of transformations and characterize exactly which transformations admit finite decompositions.\n",
     "domain_bridges": [],
     "domains": [
@@ -8007,7 +8007,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "759f53fa",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-22T00:14:27.819343+00:00",
     "title": "1. **Replace discrete carriers by actual categories.** Define an analogy from fu"
   },
