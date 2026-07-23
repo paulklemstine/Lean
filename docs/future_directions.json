@@ -7,46 +7,6 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "Domain Shared has declined by 0.164 over recent cycles (recent avg=0.696 vs prior=0.860). Take a completely fresh approach — different proof techniques, new definitions, or a different subfield within this domain. Avoid repeating approaches that have been producing diminishing returns.",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
-      "domains": [
-        "Shared"
-      ],
-      "github_issue": 0,
-      "id": "auto_reset_Shared_98cb9029",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.85,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source": "",
-      "source_exp_id": "auto_reset",
-      "source_path": "quality_regression_Shared",
-      "status": "available",
-      "thread_id": "",
-      "timestamp": "2026-07-17T13:45:52.051601+00:00",
-      "title": "[Reset] Fresh approach in Shared"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
       "consumed_by_exp_id": "965ed961",
@@ -4422,46 +4382,6 @@
       "thread_id": "",
       "timestamp": "2026-07-16T11:09:16.692907+00:00",
       "title": "ArXiv paper: Combinatorial interpretation of the coefficients of the order polynomial of fence posets"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [],
-      "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "Investigate the ArXiv paper 'A 64-Rectangle Counterexample to Wegner's Conjecture and LP Gaps up to $5/2$' and formalize its key results. Abstract: Wegner conjectured that every finite family $\\mathcal R$ of axis-parallel rectangles satisfies $τ(\\mathcal R)\\le 2ν(\\mathcal R)-1$, where $ν$ is the packing number and $τ$ is the piercing number. Ajwani, Gajjala, Raman, and Ray recently disproved this by constructing a triangle-free counterexample on $2196\\cdot 8^9$ rectangles and, using a computer-assisted package-and-port recursion, obtained a standard LP gap of $17891/8064$ for Maximum Independent Set of Rectangles. We give a simpler and hand-checkable counterexample with $64$ rectangles. It is built from an eight-rectangle gadget whose independent sets inject into four ordered slots; we then use four horizontal and four vertical copies of this gadget to form a triangle-free family with $ν=16$ and $τ\\ge 32$. We use the same horizontal-vertical step to define recursive families of rectangles $P_r$ with $ν(P_r)=4^{2^r}$. For the standard clique, equivalently point, relaxation we obtain a finite gap $73/32$ at $P_3$, improving the prev",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
-      "domains": [
-        "Pythagorean"
-      ],
-      "github_issue": 0,
-      "id": "fd_0108",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "Bypassed",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.8,
-      "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source": "",
-      "source_exp_id": "2607.11318v2",
-      "source_path": "http://arxiv.org/abs/2607.11318v2",
-      "status": "available",
-      "thread_id": "",
-      "timestamp": "2026-07-16T11:25:26.123465+00:00",
-      "title": "ArXiv paper: A 64-Rectangle Counterexample to Wegner's Conjecture and LP Gaps up to $5/2$"
     },
     {
       "ambition_level": "extension",
@@ -9301,7 +9221,7 @@
       "status": "available",
       "thread_id": "th_8bd21d99",
       "timestamp": "2026-07-17T13:29:19.802752+00:00",
-      "title": "**Conjecture.** Let an ordered non-Archimedean real-closed field carry a standar"
+      "title": "Conjecture.Let an ordered non-Archimedean real-closed field carry a standar"
     },
     {
       "ambition_level": "extension",
@@ -9684,7 +9604,7 @@
       "status": "completed",
       "thread_id": "th_0cc1646b",
       "timestamp": "2026-07-17T18:03:25.411442+00:00",
-      "title": "**Conjecture.** There is a natural joint scaling of the prime cutoff `x`, occupa"
+      "title": "Conjecture.There is a natural joint scaling of the prime cutoff `x`, occupa"
     },
     {
       "ambition_level": "extension",
@@ -9848,7 +9768,7 @@
       "status": "available",
       "thread_id": "th_79e5a4d0",
       "timestamp": "2026-07-17T18:22:04.054428+00:00",
-      "title": "**Conjecture.** For compact metric cognitive systems related by a topological co"
+      "title": "Conjecture.For compact metric cognitive systems related by a topological co"
     },
     {
       "ambition_level": "extension",
@@ -10297,7 +10217,7 @@
       "status": "available",
       "thread_id": "th_1fca7a02",
       "timestamp": "2026-07-18T00:42:39.750259+00:00",
-      "title": "**Conjecture.** Let a finitely supported state have finite hyperreal amplitudes "
+      "title": "Conjecture.Let a finitely supported state have finite hyperreal amplitudes"
     },
     {
       "ambition_level": "extension",
@@ -10748,7 +10668,7 @@
       "status": "available",
       "thread_id": "th_446dac44",
       "timestamp": "2026-07-18T03:22:34.918486+00:00",
-      "title": "**Conjecture.** Among groups of order at most 2000, the multiset of composition "
+      "title": "Conjecture.Among groups of order at most 2000, the multiset of composition"
     },
     {
       "ambition_level": "extension",
@@ -10789,7 +10709,7 @@
       "status": "available",
       "thread_id": "th_9f3bd24b",
       "timestamp": "2026-07-18T03:22:48.562780+00:00",
-      "title": "Conjecture: If messages are restricted by a sparse system of integer difference "
+      "title": "Conjecture: If messages are restricted by a sparse system of integer difference"
     },
     {
       "ambition_level": "extension",
@@ -10912,7 +10832,7 @@
       "status": "available",
       "thread_id": "th_78363f8a",
       "timestamp": "2026-07-18T03:54:44.224707+00:00",
-      "title": "The proposed “interval topology” is the ordinary order topology: open intervals "
+      "title": "The proposed “interval topology” is the ordinary order topology: open intervals"
     },
     {
       "ambition_level": "extension",
@@ -10953,7 +10873,7 @@
       "status": "available",
       "thread_id": "th_7ce402a9",
       "timestamp": "2026-07-18T03:54:53.550842+00:00",
-      "title": "**Conjecture.** A program implementing a differentiable map on a compact invaria"
+      "title": "Conjecture.A program implementing a differentiable map on a compact invaria"
     },
     {
       "ambition_level": "extension",
@@ -11008,47 +10928,6 @@
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
-      "description": "# Future Directions\n\n## Formal conclusions\n\nThe file `Speculative/MoebiusArithmetic.lean` separates the topology from the proposed arithmetic and proves the following.\n\n### Disproved\n\n1. **Coordinatewise operations induce a ring on the Möbius quotient.** Both coordinatewise multiplication and coordinatewise addition fail the representative-independence test. For multiplication, applying the twist to both representatives reverses the fiber sign twice, while the quotient gluing reverses it only once. Thus there is no induced operation of the stated kind, so the advertised zero-divisor calculation does not establish a ring or a failure of integral-domain structure.\n\n2. **The formula embeds an integer as the real number it claims to represent.** For every positive integer `n`, the represented value\n   `|n| * (2 * (1/2 + 1/(2n)) - 1)` is `1`; for every negative integer it is `-1`. The coordinate pairs for `2` and `3` remain distinct, but the claimed real-number interpretation collapses them.\n\n3. **`-1` is a prime encoding orientation.** In the ordinary integer arithmetic recovered by the factorization formulas, `-1` is a unit and therefore is not prime.\n\n4. **`-6 = (-2)(-3)`.** This is false: the right side is `6`. The corrected equality is `-6 = 2 * 3 * (-1)`.\n\n5. **Zero has a prime factorization.** A finite product of nonzero integer factors is nonzero, so zero has no such factorization.\n\n### Proved\n\n* The endpoint relation used here is an equivalence relation and identifies `(0,y)` with `(1,-y)`.\n* `6 = 2 * 3` and `-6 = 2 * 3 * (-1)`.\n* The only integer units are `1` and `-1`, clarifying that orientation behaves like a unit rather than a prime in standard factorization.\n\n## Promising corrected research programs\n\n1. **Transport a ring structure through an explicit bijection.** One can place a ring structure on a bare set underlying a quotient only after constructing a bijection with a known ring. Such a structure would generally not be coordinatewise and would need a separate geometric naturality criterion.\n\n2. **Use a ring bundle rather than a ring on total-space points.** A Möbius line bundle supports fiberwise addition, but multiplication of two twisted fibers naturally lands in the tensor square, which is an untwisted line bundle. A graded algebra containing both twisted and untwisted sectors may encode the “two twists cancel” law faithfully.\n\n3. **Study orientation as a unit or grading.** The algebraic analog of orientation is naturally an order-two unit or a `Z/2Z` degree. Group rings, crossed products, and graded rings are more suitable than declaring orientation prime.\n\n4. **Repair the integer embedding.** Specify independently whether the goal is an injective discrete subset of the band, a compactification of the integers, or a map whose scalar evaluation equals `n`. The displayed formula cannot simultaneously provide the claimed scalar value and compactification behavior.\n\n5. **Formalize the actual quotient topology.** The present development proves the algebraic obstruction at the setoid level. A later development could use Mathlib quotient-topology APIs to establish topological properties, after first correcting the proposed subset and its accumulation point.\n",
-      "domain_bridges": [],
-      "domain_quality_penalty": 1.0,
-      "domains": [
-        "Algebra",
-        "Pythagorean"
-      ],
-      "github_issue": 0,
-      "id": "fd_0266",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.75,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source": "",
-      "source_exp_id": "ad1766b1",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/ad1766b1",
-      "status": "available",
-      "thread_id": "th_5b143c7b",
-      "timestamp": "2026-07-18T04:10:54.907896+00:00",
-      "title": "The file `Speculative/MoebiusArithmetic.lean` separates the topology from the pr"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
       "description": "# Future Directions: Moonshine Products and Character Reconstruction\n\n## 1. Class-indexed pole order for the Monster\n\nConstruct the 194 normalized McKay–Thompson series in a common analytic setting and prove that their class-indexed product has a pole of exact order 194 at the infinite cusp, with no cancellation in its leading coefficient. This sharply distinguishes a product over conjugacy classes from a product over group elements.\n\n**The key insight is...** normalized principal parts aggregate additively under finite products, so the indexing convention leaves an observable signature in the pole order.\n\n**Why now?** Exact class tables and replicable formulas provide finite input data, while the algebraic factorization theorem identifies the single analytic condition—control of the regular factors—needed to lift the result to genuine series.\n\n## 2. Minimal compensator for positive weight\n\nDetermine whether there is a canonical meromorphic compensator whose product with all class-indexed McKay–Thompson functions transforms with a prescribed positive weight, and classify the smallest possible divisor of such a compensator on the relevant modular curve.\n\n**The key insight is...** a finite product of weight-zero invariant functions remains weight zero; therefore every nonzero weight must come from an additional factor, multiplier system, or altered operation.\n\n**Why now?** The weight obstruction isolates a precise repair of the proposed positive-weight product and turns an inconsistent transformation claim into a concrete divisor-minimization problem.\n\n## 3. Finite coefficient threshold for character recovery\n\nFind the least integer `N` such that the coefficient functions through degree `N` of the 194 McKay–Thompson series uniquely recover every irreducible Monster character and the multiplicities of all graded pieces determined up to that degree. A falsifying outcome would be two distinct nonnegative multiplicity tables with identical classwise traces through degree `N`.\n\n**The key insight is...** recovery is an injectivity problem for a truncated character-evaluation operator, and positivity plus integrality may force injectivity substantially earlier than unrestricted linear algebra predicts.\n\n**Why now?** The abstract reconstruction theorem identifies injectivity as the exact boundary, making ranks, integral kernels, and positivity cones of finite truncations directly testable.\n\n## 4. Analytic finite-product theorem across levels\n\nFor a finite family of meromorphic modular functions attached to possibly different finite-index subgroups, prove that their product is meromorphic modular of weight zero for the intersection subgroup, and determine its complete cusp divisor from the individual cusp divisors. Apply the theorem to every McKay–Thompson family for which compatible expansions are available.\n\n**The key insight is...** finite products do not create a convergence problem once the factors are meromorphic; the genuine issues are the common symmetry group, cusp compatibility, and divisor bookkeeping.\n\n**Why now?** The algebraic product law already controls principal exponents, so the next extension has a sharply delimited analytic and geometric scope rather than requiring an unspecified global convergence argument.\n\n## 5. Information loss beyond the character table\n\nTest whether the complete family of McKay–Thompson series determines subgroup data such as maximal-subgroup conjugacy classes, or whether nonisomorphic finite groups can share equivalent graded character data while having different subgroup lattices.\n\n**The key insight is...** an injective character table recovers class functions and representation multiplicities, but subgroup incidence is additional structure and need not be encoded by character values alone.\n\n**Why now?** Separating what character evaluation provably reconstructs from stronger group-theoretic claims supplies a falsifiable boundary for the assertion that a q-expansion determines “every property” of a group.\n",
       "domain_bridges": [],
       "domain_quality_penalty": 0.9999999999999999,
@@ -11076,7 +10955,7 @@
       "status": "available",
       "thread_id": "th_a7cf71db",
       "timestamp": "2026-07-18T04:11:08.465669+00:00",
-      "title": "Construct the 194 normalized McKay–Thompson series in a common analytic setting "
+      "title": "Construct the 194 normalized McKay–Thompson series in a common analytic setting"
     },
     {
       "ambition_level": "extension",
@@ -11291,47 +11170,6 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "# Dark Mathematics — results and future directions\n\n## Formal results\n\n`Tropical/DarkMathematics.lean` treats provability as an abstract predicate `Pr : Prop → Prop` with the minimal rule that provability is preserved by valid implication. It proves:\n\n1. **Level 1 equals ordinary darkness.** The proposed base definition and the one-witness version coincide.\n2. **The proposed strict hierarchy collapses.** From any dark predicate `T`, tagging a hidden witness by `Fin k` constructs a level-`k` dark predicate for every finite `k`. Thus levels 1, 2, and 3 require no successively stronger independence principles. On a fixed predicate, level `l` implies every lower level `k ≤ l`.\n3. **Dark predicates are exactly an incompleteness phenomenon in the relevant sense.** They cannot occur for semantic truth, in a theory with the numerical existence property, or when the theory is sound and complete for the instances under consideration.\n4. **Canonical construction from an undecided sentence.** If a theory proves `U ∨ ¬U` but proves neither `U` nor `¬U`, the Boolean predicate selecting those alternatives is dark. Tagging it produces every finite level.\n5. **Provable concrete instances refute darkness.** Any family with even one provable named instance fails the definition.\n\nThese statements are kernel-checked and contain no `sorry` or added axioms.\n\n## Disproved or unsupported mission claims\n\n### The strict level hierarchy is false as stated\n\nCounting distinct witnesses does not measure proof-theoretic strength when the predicate's domain may change. The formal tagging construction sends a witness `x` to the distinct pairs `(i,x)`, one for each `i : Fin k`, while each tagged assertion is definitionally just `T x`. A strict hierarchy would need restrictions preventing such coding, plus a precise reducibility or strength relation.\n\n### Paris–Harrington and hydra do not directly provide the requested dark predicates\n\nTheir standard independence statements concern a universal assertion (or totality) not provable in PA. Each fixed finite Paris–Harrington instance and each fixed finite hydra computation is, in the ordinary setup, finitely checkable and provable in PA. Therefore indexing the usual finite instances gives the opposite of condition (2). The formal theorem `provable_instance_refutes_dark` captures this obstruction.\n\n### “Dense” and “most” are not defined by counting formulas\n\nThe collection of syntactic Pi-2 sentences is countable. Density requires a topology, and “most” requires a measure or an asymptotic-density convention together with a fixed Gödel numbering and length model. Raw counting is presentation-dependent: harmless recodings and padding can alter syntactic frequencies without changing mathematical content. Consequently the density conjecture has no invariant theorem statement yet and was not silently replaced by a weaker claim.\n\n### This is a form of incompleteness\n\nThe split construction turns any sentence independent of a classical theory into a dark existential over `Bool`. It therefore shows that the definition repackages undecidability/incompleteness rather than separating a new phenomenon from incompleteness.\n\n## Promising corrected questions\n\n1. Fix a recursively axiomatized theory, an explicit arithmetized proof predicate, a formula class, and a computable numbering; then formalize the abstract results for that syntax.\n2. Prohibit witness tagging by fixing the domain and a natural equivalence/reducibility relation. Ask whether levels separate under many-one or interpretability reductions.\n3. Replace “density” by a specified model: prefix-free program-size density, bounded Gödel-code density, or Baire-category notions on completions of a theory. Prove invariance results before interpreting any proportion.\n4. Investigate constructive theories with existence properties. The proved `no_dark_of_numericalExistenceProperty` theorem predicts that the original notion disappears there.\n5. For Paris–Harrington or hydra, study dark predicates built from undecidable *global bounds* or consistency statements, not from their concrete finite instances. Any such construction must prove both formalized PA-provability of the existential and PA-unprovability of every named instance.\n",
-      "domain_bridges": [],
-      "domain_quality_penalty": 1.0,
-      "domains": [
-        "Logic",
-        "Algebra"
-      ],
-      "github_issue": 0,
-      "id": "fd_0273",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.75,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source": "",
-      "source_exp_id": "b01a1ab3",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/b01a1ab3",
-      "status": "available",
-      "thread_id": "th_ef27d863",
-      "timestamp": "2026-07-18T05:46:59.196373+00:00",
-      "title": "`Tropical/DarkMathematics.lean` treats provability as an abstract predicate `Pr "
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
       "consumed_by_exp_id": "18410e31",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -11486,7 +11324,7 @@
       "status": "available",
       "thread_id": "th_58fde8eb",
       "timestamp": "2026-07-18T06:21:49.839014+00:00",
-      "title": "**Conjecture.** Every element of the Selberg class is uniquely determined by a f"
+      "title": "Conjecture.Every element of the Selberg class is uniquely determined by a f"
     },
     {
       "ambition_level": "extension",
@@ -11568,7 +11406,7 @@
       "status": "available",
       "thread_id": "th_c00068fe",
       "timestamp": "2026-07-18T06:39:37.660983+00:00",
-      "title": "`Catalog/Physics/ImpossibilityResults/FreeActionPrinciple.lean` gives a precise "
+      "title": "`Catalog/Physics/ImpossibilityResults/FreeActionPrinciple.lean` gives a precise"
     },
     {
       "ambition_level": "extension",
@@ -11609,7 +11447,7 @@
       "status": "available",
       "thread_id": "th_51f9da44",
       "timestamp": "2026-07-18T06:39:49.078146+00:00",
-      "title": "1. **Repair the definition before studying asymptotics.** The literal rule exclu"
+      "title": "Repair the definition before studying asymptotics.The literal rule exclu"
     },
     {
       "ambition_level": "extension",
@@ -11855,7 +11693,7 @@
       "status": "available",
       "thread_id": "th_1c1b733c",
       "timestamp": "2026-07-18T07:29:11.927861+00:00",
-      "title": "**Conjecture.** There is a uniform certificate language for standard completed L"
+      "title": "Conjecture.There is a uniform certificate language for standard completed L"
     },
     {
       "ambition_level": "extension",
@@ -12019,7 +11857,7 @@
       "status": "completed",
       "thread_id": "th_6483fb90",
       "timestamp": "2026-07-18T07:45:29.087564+00:00",
-      "title": "1. **Intrinsic curvature identification.** The proved curvature formula"
+      "title": "Intrinsic curvature identification.The proved curvature formula"
     },
     {
       "ambition_level": "extension",
@@ -12470,7 +12308,7 @@
       "status": "available",
       "thread_id": "th_a2b784ed",
       "timestamp": "2026-07-18T09:54:20.800277+00:00",
-      "title": "The proposed “cake” language does not by itself define a mathematical category, "
+      "title": "The proposed “cake” language does not by itself define a mathematical category,"
     },
     {
       "ambition_level": "extension",
@@ -12552,7 +12390,7 @@
       "status": "available",
       "thread_id": "th_7a5f545e",
       "timestamp": "2026-07-18T10:21:51.099682+00:00",
-      "title": "**Conjecture.** Up to permutation, the only nonzero integral solutions of"
+      "title": "Conjecture.Up to permutation, the only nonzero integral solutions of"
     },
     {
       "ambition_level": "extension",
@@ -12593,7 +12431,7 @@
       "status": "available",
       "thread_id": "th_46ede241",
       "timestamp": "2026-07-18T10:21:59.947911+00:00",
-      "title": "The present development settles the algebraic core: exact period classifies all "
+      "title": "The present development settles the algebraic core: exact period classifies all"
     },
     {
       "ambition_level": "extension",
@@ -12757,7 +12595,7 @@
       "status": "available",
       "thread_id": "th_29b2f795",
       "timestamp": "2026-07-18T10:39:14.961320+00:00",
-      "title": "**Conjecture.** For every certificate tree, augmenting redundant-restatement eli"
+      "title": "Conjecture.For every certificate tree, augmenting redundant-restatement eli"
     },
     {
       "ambition_level": "extension",
@@ -12962,7 +12800,7 @@
       "status": "available",
       "thread_id": "th_a2db0ea1",
       "timestamp": "2026-07-18T12:15:58.240013+00:00",
-      "title": "**Conjecture.** In the pointwise topology on the infinite symmetric group, the s"
+      "title": "Conjecture.In the pointwise topology on the infinite symmetric group, the s"
     },
     {
       "ambition_level": "extension",
@@ -13167,7 +13005,7 @@
       "status": "available",
       "thread_id": "th_6de786e8",
       "timestamp": "2026-07-18T12:48:35.496334+00:00",
-      "title": "**Conjecture.** For every odd positive integer `n`, the angular spectrum selecte"
+      "title": "Conjecture.For every odd positive integer `n`, the angular spectrum selecte"
     },
     {
       "ambition_level": "extension",
@@ -13413,7 +13251,7 @@
       "status": "available",
       "thread_id": "th_80da8829",
       "timestamp": "2026-07-18T13:38:08.403841+00:00",
-      "title": "1. **Heterogeneous planets.** Generalize the equal-rate formula `(1-p)^N` to `∏ "
+      "title": "Heterogeneous planets.Generalize the equal-rate formula `(1-p)^N` to `∏"
     },
     {
       "ambition_level": "extension",
@@ -13454,7 +13292,7 @@
       "status": "available",
       "thread_id": "th_7e6f8065",
       "timestamp": "2026-07-18T13:38:18.493859+00:00",
-      "title": "**Conjecture.** Let `N(n)` be the number of successful prefixes of length `n` in"
+      "title": "Conjecture.Let `N(n)` be the number of successful prefixes of length `n` in"
     },
     {
       "ambition_level": "extension",
@@ -13699,7 +13537,7 @@
       "status": "available",
       "thread_id": "th_4451f7ae",
       "timestamp": "2026-07-18T14:44:07.401295+00:00",
-      "title": "1. **Variable branching alphabets.** Generalize binary profiles to a fixed `b`-a"
+      "title": "Variable branching alphabets.Generalize binary profiles to a fixed `b`-a"
     },
     {
       "ambition_level": "extension",
@@ -13740,7 +13578,7 @@
       "status": "available",
       "thread_id": "th_243f52dd",
       "timestamp": "2026-07-18T14:44:15.194426+00:00",
-      "title": "**Conjecture.** In a finite social-deduction game whose information states form "
+      "title": "Conjecture.In a finite social-deduction game whose information states form"
     },
     {
       "ambition_level": "extension",
@@ -13863,7 +13701,7 @@
       "status": "available",
       "thread_id": "th_8ae8883c",
       "timestamp": "2026-07-18T15:01:25.646049+00:00",
-      "title": "**Conjecture.** For a fixed, versioned mathematical corpus, the tail exponent of"
+      "title": "Conjecture.For a fixed, versioned mathematical corpus, the tail exponent of"
     },
     {
       "ambition_level": "extension",
@@ -13986,7 +13824,7 @@
       "status": "available",
       "thread_id": "th_756ef143",
       "timestamp": "2026-07-18T15:18:01.647373+00:00",
-      "title": "For affine spatial modes coupled by a polynomial interaction law, the degree of "
+      "title": "For affine spatial modes coupled by a polynomial interaction law, the degree of"
     },
     {
       "ambition_level": "extension",
@@ -14027,7 +13865,7 @@
       "status": "available",
       "thread_id": "th_b7ee5e99",
       "timestamp": "2026-07-18T15:18:10.992927+00:00",
-      "title": "**Conjecture.** If a finite graph contains a complete graph on `t` vertices as a"
+      "title": "Conjecture.If a finite graph contains a complete graph on `t` vertices as a"
     },
     {
       "ambition_level": "extension",
@@ -14150,7 +13988,7 @@
       "status": "available",
       "thread_id": "th_662e5b4c",
       "timestamp": "2026-07-18T15:35:20.390071+00:00",
-      "title": "1. **Finite multimode superpositions.** Extend `winding_mul_zpow` from two modes"
+      "title": "Finite multimode superpositions.Extend `winding_mul_zpow` from two modes"
     },
     {
       "ambition_level": "extension",
@@ -14314,7 +14152,7 @@
       "status": "available",
       "thread_id": "th_9b8ffdf6",
       "timestamp": "2026-07-18T17:57:29.188214+00:00",
-      "title": "1. **Full Frobenius factorization dictionary.** Formalize that an irreducible fa"
+      "title": "Full Frobenius factorization dictionary.Formalize that an irreducible fa"
     },
     {
       "ambition_level": "extension",
@@ -14396,7 +14234,7 @@
       "status": "available",
       "thread_id": "th_b25f137d",
       "timestamp": "2026-07-18T19:01:40.919962+00:00",
-      "title": "**Conjecture.** For a generic family of `r` min-plus keys on `k` coordinates wit"
+      "title": "Conjecture.For a generic family of `r` min-plus keys on `k` coordinates wit"
     },
     {
       "ambition_level": "extension",
@@ -14519,7 +14357,7 @@
       "status": "available",
       "thread_id": "th_530614eb",
       "timestamp": "2026-07-18T19:24:44.313361+00:00",
-      "title": "**Conjecture.** Let a normalized integral transform send compactly supported inp"
+      "title": "Conjecture.Let a normalized integral transform send compactly supported inp"
     },
     {
       "ambition_level": "extension",
@@ -14806,7 +14644,7 @@
       "status": "available",
       "thread_id": "th_afee07a8",
       "timestamp": "2026-07-18T21:00:04.886319+00:00",
-      "title": "Fix an ensemble in which a uniformly chosen set of cells receives independently "
+      "title": "Fix an ensemble in which a uniformly chosen set of cells receives independently"
     },
     {
       "ambition_level": "extension",
@@ -14970,7 +14808,7 @@
       "status": "available",
       "thread_id": "th_6483fb90",
       "timestamp": "2026-07-18T22:22:37.537718+00:00",
-      "title": "**Conjecture.** Every maximal geodesic of the metric"
+      "title": "Conjecture.Every maximal geodesic of the metric"
     },
     {
       "ambition_level": "extension",
@@ -15134,7 +14972,7 @@
       "status": "available",
       "thread_id": "th_2ebac1f0",
       "timestamp": "2026-07-18T23:29:06.702461+00:00",
-      "title": "**Conjecture.** An elementary binary cellular automaton is reversible on every f"
+      "title": "Conjecture.An elementary binary cellular automaton is reversible on every f"
     },
     {
       "ambition_level": "extension",
@@ -15175,7 +15013,7 @@
       "status": "available",
       "thread_id": "th_a486761c",
       "timestamp": "2026-07-18T23:29:17.614598+00:00",
-      "title": "1. **Exact fiber cardinality.** Upgrade the explicit injection of `2^n` seeds to"
+      "title": "Exact fiber cardinality.Upgrade the explicit injection of `2^n` seeds to"
     },
     {
       "ambition_level": "extension",
@@ -15339,7 +15177,7 @@
       "status": "available",
       "thread_id": "th_fc85aad3",
       "timestamp": "2026-07-19T00:44:56.744069+00:00",
-      "title": "**Conjecture.** There are explicit integers `q`, `n₀`, and a rational constant `"
+      "title": "Conjecture.There are explicit integers `q`, `n₀`, and a rational constant `"
     },
     {
       "ambition_level": "extension",
@@ -15380,7 +15218,7 @@
       "status": "available",
       "thread_id": "th_576aa37a",
       "timestamp": "2026-07-19T00:45:01.733642+00:00",
-      "title": "1. **State the CSS dictionary with two classical codes precisely.**  The mission"
+      "title": "State the CSS dictionary with two classical codes precisely.The mission"
     },
     {
       "ambition_level": "extension",
@@ -15503,7 +15341,7 @@
       "status": "available",
       "thread_id": "th_2130c620",
       "timestamp": "2026-07-19T01:02:40.371534+00:00",
-      "title": "**Conjecture.** For a comparator network implemented by reversible gates with a "
+      "title": "Conjecture.For a comparator network implemented by reversible gates with a"
     },
     {
       "ambition_level": "extension",
@@ -15872,7 +15710,7 @@
       "status": "available",
       "thread_id": "th_042c4007",
       "timestamp": "2026-07-19T02:44:36.203621+00:00",
-      "title": "1. **Represent whole chords, not individual pitch classes.** Use 12-dimensional "
+      "title": "Represent whole chords, not individual pitch classes.Use 12-dimensional"
     },
     {
       "ambition_level": "extension",
@@ -16077,7 +15915,7 @@
       "status": "available",
       "thread_id": "th_9714541a",
       "timestamp": "2026-07-19T03:20:30.713701+00:00",
-      "title": "1. **Group actions and orbit relations.** Instantiate `InvariantPattern` with th"
+      "title": "Group actions and orbit relations.Instantiate `InvariantPattern` with th"
     },
     {
       "ambition_level": "extension",
@@ -16200,7 +16038,7 @@
       "status": "available",
       "thread_id": "th_72a25255",
       "timestamp": "2026-07-19T03:54:36.771701+00:00",
-      "title": "**Conjecture.** Every scalar feed-forward ReLU network admits a depth-preserving"
+      "title": "Conjecture.Every scalar feed-forward ReLU network admits a depth-preserving"
     },
     {
       "ambition_level": "extension",
@@ -16241,7 +16079,7 @@
       "status": "available",
       "thread_id": "th_58011fd8",
       "timestamp": "2026-07-19T03:55:07.490722+00:00",
-      "title": "**Conjecture.** Every oriented knot diagram with `n` crossings admits a canonica"
+      "title": "Conjecture.Every oriented knot diagram with `n` crossings admits a canonica"
     },
     {
       "ambition_level": "extension",
@@ -16364,7 +16202,7 @@
       "status": "available",
       "thread_id": "th_0cc1646b",
       "timestamp": "2026-07-19T04:29:06.865685+00:00",
-      "title": "**Conjecture.** On every compact subset of the half-plane `Re(s) > 1`, finite"
+      "title": "Conjecture.On every compact subset of the half-plane `Re(s) > 1`, finite"
     },
     {
       "ambition_level": "extension",
@@ -16528,7 +16366,7 @@
       "status": "available",
       "thread_id": "th_05920a71",
       "timestamp": "2026-07-19T04:49:01.534045+00:00",
-      "title": "**Conjecture.** For every integer `k ≥ 5`, there is a threshold `N₀(k)` such tha"
+      "title": "Conjecture.For every integer `k ≥ 5`, there is a threshold `N₀(k)` such tha"
     },
     {
       "ambition_level": "extension",
@@ -16651,7 +16489,7 @@
       "status": "available",
       "thread_id": "th_0d5dcecd",
       "timestamp": "2026-07-19T05:39:29.139889+00:00",
-      "title": "**Conjecture.** For a finite family of bad events with dependency degree at most"
+      "title": "Conjecture.For a finite family of bad events with dependency degree at most"
     },
     {
       "ambition_level": "extension",
@@ -16856,7 +16694,7 @@
       "status": "available",
       "thread_id": "th_ed3d4505",
       "timestamp": "2026-07-19T06:13:12.901596+00:00",
-      "title": "**Conjecture.** On a geodesically complete statistical manifold with sectional c"
+      "title": "Conjecture.On a geodesically complete statistical manifold with sectional c"
     },
     {
       "ambition_level": "extension",
@@ -17020,7 +16858,7 @@
       "status": "available",
       "thread_id": "th_bf67745b",
       "timestamp": "2026-07-19T06:30:52.446847+00:00",
-      "title": "**Conjecture.** Every divisor class on the complete graph `K_n` has a unique red"
+      "title": "Conjecture.Every divisor class on the complete graph `K_n` has a unique red"
     },
     {
       "ambition_level": "extension",
@@ -17143,7 +16981,7 @@
       "status": "in_progress",
       "thread_id": "th_7c5b0e71",
       "timestamp": "2026-07-19T07:21:35.711367+00:00",
-      "title": "**Conjecture.** For a chordal interference graph with nonnegative vertex spill c"
+      "title": "Conjecture.For a chordal interference graph with nonnegative vertex spill c"
     },
     {
       "ambition_level": "extension",
@@ -17485,47 +17323,6 @@
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
-      "description": "# Future Directions\n\n## What was proved\n\n1. **Missingness is not itself a sheaf obstruction.** A partial database modeled as a partial function into a nonempty value type always has a total completion. If every cell is observed, the completion is unique; if a cell is missing and two distinct values exist, there are at least two completions.\n\n2. **Overlap constraints can be highly dependent.** On a triangle, one equality follows from the other two. More generally, all pairwise equality constraints on a nonempty family are equivalent to the constraints comparing every member with one fixed root.\n\n3. **Finite sheaf-style imputation is genuinely constrained optimization.** For finite cells and values, a minimizer of observed Hamming loss exists among assignments satisfying any finite family of equality constraints. Feasibility is guaranteed by constant assignments.\n\n4. **Distribution-free strict superiority is impossible.** On complete data, any observation-preserving mean-style and sheaf-style method both return the truth and therefore tie under any loss normalized to zero at the truth.\n\n## What was disproved\n\n1. **The universal probability formula `P(sheaf) = (1-r)^C`.** Under the natural partial-function model, completability has probability one for every missingness pattern, not `(1-r)^C`. At `r = 1/2`, `C = 1`, the proposed expression is already `1/2`.\n\n2. **Independent multiplication over all overlaps.** The Boolean triangle has three edge equations but only two independent ones. Its consistent fraction is `1/4`, not the `1/8` predicted by multiplying three independent half-probabilities.\n\n3. **A distribution-free claim that sheaf imputation is always strictly better for `r < 0.5` and more than ten features.** Missing rate zero lies in this range, and complete data forces a tie between methods that preserve observations. Any valid performance theorem must specify a stochastic model and should use non-strict or expected-risk comparisons.\n\n## Next formal developments\n\n* Replace equality constraints by restriction maps of a finite cellular sheaf. Characterize feasibility as membership in the kernel of a coboundary map and derive exact counts over finite fields from its rank.\n* Prove the graph formula for a constant `q`-valued sheaf: the number of consistent assignments is `q` raised to the number of connected components. This would quantify precisely how cycles create redundant edge constraints.\n* Introduce a probability space for missingness and noisy observations. Derive probabilities from the specified observation model rather than solely from `r` and a raw constraint count.\n* Formalize squared-error imputation over finite-dimensional real vector spaces, with existence from closedness/coercivity or orthogonal projection onto the global-section subspace.\n* State method-comparison results in terms of expected risk under an explicit generative model. Without assumptions connecting the sheaf restrictions to ground truth, no uniform ranking over mean, KNN, MICE, and constrained methods can hold.\n* Study inconsistent local observations through least-squares residuals and cohomological obstruction certificates, separating ordinary missing data from genuinely conflicting overlap data.\n",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
-      "domains": [
-        "Computation",
-        "Algebra"
-      ],
-      "github_issue": 0,
-      "id": "fd_0424",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.75,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source": "",
-      "source_exp_id": "91c16818",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/91c16818",
-      "status": "available",
-      "thread_id": "th_0410ee3e",
-      "timestamp": "2026-07-19T08:21:34.140922+00:00",
-      "title": "1. **Missingness is not itself a sheaf obstruction.** A partial database modeled"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
       "description": "# Future Directions\n\n## 1. Semantic equivalence and simple-homotopy type\n\n**Conjecture.** If two finite argumentation frameworks are strongly equivalent under preferred semantics, then the downward-closed complexes generated by their preferred extensions are simple-homotopy equivalent after deleting vertices that occur in no preferred extension.\n\nThe key insight is that strong semantic equivalence should control not only the maximal faces but also the collapses among all their subfaces. **Why now?** The antichain theorem identifies maximal faces as the semantic data, while the generated-complex construction supplies the canonical topological object on which elementary collapses can be tested.\n\n## 2. Exact characterization of attack cycles detected by first homology\n\n**Conjecture.** For finite frameworks whose attack graph is a directed cactus and has no self-attacks, the first Betti number of the preferred-generated complex equals the number of induced directed cycles satisfying an explicit parity-and-defence condition.\n\nThe key insight is that an attack cycle alone is insufficient: admissible defence determines whether its combinatorial trace survives filling by higher-dimensional preferred faces. **Why now?** The failure of the naive cycle interpretation shows that a restricted graph class and a defence-sensitive criterion are necessary and directly testable.\n\n## 3. Grounded-core collapse criterion\n\n**Conjecture.** If every preferred extension of a finite framework contains its grounded extension and every argument outside the grounded extension has a unique defender inside it, then the preferred-generated complex collapses onto the simplex spanned by the grounded extension.\n\nThe key insight is that unique semantic defence may define dominated vertices, translating grounded semantics into a sequence of topological elementary collapses. **Why now?** The attack-free boundary case exhibits complete collapse to a simplex, and the generated construction makes the proposed domination mechanism precise.\n\n## 4. A corrected Euler–semantics identity\n\n**Conjecture.** There is no universal affine formula depending only on the numbers of arguments, attacks, preferred extensions, and grounded arguments that equals the Euler characteristic of the preferred-generated complex; however, on finite acyclic frameworks the Euler characteristic is determined by the intersection poset of preferred extensions through inclusion–exclusion.\n\nThe key insight is that Euler characteristic depends on overlaps among maximal faces, information erased by the four proposed scalar counts. **Why now?** The two-isolated-argument obstruction rules out the original formula, while the antichain structure points to the intersection poset as the minimal richer invariant.\n\n## 5. Realizability of simplicial complexes by argumentation semantics\n\n**Conjecture.** Every finite simplicial complex is homotopy equivalent to the downward closure generated by the preferred extensions of some finite argumentation framework, with the number of added arguments bounded linearly by the number of minimal nonfaces.\n\nThe key insight is that attacks and defenders can act as gadgets enforcing precisely a prescribed antichain of facets. **Why now?** Preferred families are necessarily antichains, exactly as facet families are, so the corrected construction turns realizability into a concrete synthesis problem rather than a mismatch of definitions.\n",
       "domain_bridges": [],
       "domain_quality_penalty": 0.7999999999999999,
@@ -17553,7 +17350,7 @@
       "status": "available",
       "thread_id": "th_aef50016",
       "timestamp": "2026-07-19T08:23:18.138098+00:00",
-      "title": "**Conjecture.** If two finite argumentation frameworks are strongly equivalent u"
+      "title": "Conjecture.If two finite argumentation frameworks are strongly equivalent u"
     },
     {
       "ambition_level": "extension",
@@ -17676,7 +17473,7 @@
       "status": "available",
       "thread_id": "th_51b9bc19",
       "timestamp": "2026-07-19T08:57:25.181083+00:00",
-      "title": "**Conjecture.** Let each respondent's confidence profile be strictly convex on a"
+      "title": "Conjecture.Let each respondent's confidence profile be strictly convex on a"
     },
     {
       "ambition_level": "extension",
@@ -17922,7 +17719,7 @@
       "status": "available",
       "thread_id": "th_23285878",
       "timestamp": "2026-07-19T09:49:23.776895+00:00",
-      "title": "**Conjecture.** For every fixed uniformity `r ≥ 3`, there are infinitely many pa"
+      "title": "Conjecture.For every fixed uniformity `r ≥ 3`, there are infinitely many pa"
     },
     {
       "ambition_level": "extension",
@@ -18127,7 +17924,7 @@
       "status": "in_progress",
       "thread_id": "th_0f295d03",
       "timestamp": "2026-07-19T10:06:53.358179+00:00",
-      "title": "1. **Internal Cartesian-closed formulation.** Generalize the type-level Lawvere "
+      "title": "Internal Cartesian-closed formulation.Generalize the type-level Lawvere"
     },
     {
       "ambition_level": "extension",
@@ -18455,7 +18252,7 @@
       "status": "available",
       "thread_id": "th_ffe6cbbf",
       "timestamp": "2026-07-19T11:15:54.327812+00:00",
-      "title": "**Conjecture.** For every finite relational signature and finite model, there is"
+      "title": "Conjecture.For every finite relational signature and finite model, there is"
     },
     {
       "ambition_level": "extension",
@@ -18578,7 +18375,7 @@
       "status": "available",
       "thread_id": "th_6e13a143",
       "timestamp": "2026-07-19T11:34:09.712036+00:00",
-      "title": "1. **Interval self-maps.** Add a theorem that a continuous self-map of a nonempt"
+      "title": "Interval self-maps.Add a theorem that a continuous self-map of a nonempt"
     },
     {
       "ambition_level": "extension",
@@ -18660,7 +18457,7 @@
       "status": "available",
       "thread_id": "th_334b2bb6",
       "timestamp": "2026-07-19T11:52:13.254664+00:00",
-      "title": "**Conjecture.** Adjoining distinct positive and negative zeros to the transreal "
+      "title": "Conjecture.Adjoining distinct positive and negative zeros to the transreal"
     },
     {
       "ambition_level": "extension",
@@ -18701,7 +18498,7 @@
       "status": "available",
       "thread_id": "th_a5fda560",
       "timestamp": "2026-07-19T11:52:44.403749+00:00",
-      "title": "**Conjecture.** For a nonuniform distribution on finite network histories and an"
+      "title": "Conjecture.For a nonuniform distribution on finite network histories and an"
     },
     {
       "ambition_level": "extension",
@@ -18824,7 +18621,7 @@
       "status": "available",
       "thread_id": "th_2119a73f",
       "timestamp": "2026-07-19T12:11:40.865284+00:00",
-      "title": "**Conjecture.** Every countable ordinal is the game value of a winning position "
+      "title": "Conjecture.Every countable ordinal is the game value of a winning position"
     },
     {
       "ambition_level": "extension",
@@ -18988,7 +18785,7 @@
       "status": "available",
       "thread_id": "th_6aa9c661",
       "timestamp": "2026-07-19T15:15:54.840240+00:00",
-      "title": "1. **Prefix-free Kolmogorov complexity.** Replace natural-number code size by a "
+      "title": "Prefix-free Kolmogorov complexity.Replace natural-number code size by a"
     },
     {
       "ambition_level": "extension",
@@ -19240,47 +19037,6 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "# Future Directions\n\n## What was proved\n\nThe formal model treats theories as points in a real inner-product space and phenomena as measurement directions. Prediction error is the absolute inner product of a theory's error vector with the phenomenon.\n\n1. **Perturbative convergence:** if a correction series sums to the exact displacement from the initial theory to truth, the wrongness of its partial theories converges to zero (`wrongness_converges_of_hasSum`). This is the precise sense in which a convergent series of corrections approaches truth.\n2. **Conditional unreasonable effectiveness:** a wrong theory beats any rival whose error vector is not parallel to its own on an explicitly constructible measurement direction (`wrong_theory_beats_nonparallel_rival`). Geometrically, the witness is the rival error's component orthogonal to the wrong theory's error.\n3. **Orthogonal exactness:** every theory, however globally wrong, is exact on measurement directions orthogonal to its error (`exact_on_orthogonal_phenomena`).\n\n## What was disproved\n\n1. **The unrestricted headline claim is false when “known correct theories” includes truth.** Truth has zero prediction error on every phenomenon, so no wrong theory can be strictly closer than every member of such a class (`cannot_beat_a_class_containing_truth`).\n2. **A wrong theory cannot uniformly dominate truth.** Testing in the direction of the wrong theory's own error makes truth strictly better (`truth_strictly_beats_every_wrong_theory_somewhere`).\n3. **Convergence is not monotone improvement.** The formal finite-support correction series in `convergent_correction_can_initially_worsen` first doubles wrongness and then reaches truth exactly.\n\nThus the strongest defensible result requires a nonparallel-error condition and a phenomenon selected for that geometry. Approximate correctness by itself does not imply superiority to correct theories.\n\n## Next formal questions\n\n- Replace linear measurements by bounded linear maps into a normed observation space and characterize when one model beats another on the kernel of its own residual.\n- For a finite set of rivals, prove existence of one measurement direction where the focal theory is exact and all rivals err, under suitable nonparallelity hypotheses.\n- Add a probability distribution on normalized phenomena and quantify the measure of directions on which one theory beats another.\n- Study noisy observations and prove robustness margins for the Gram–Schmidt witness.\n- Formalize asymptotic perturbation series separately from convergent series; physical perturbation expansions are often useful despite divergence, which the present `HasSum` theorem intentionally does not cover.\n- Characterize correction schedules that make wrongness monotone, rather than merely convergent.\n",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
-      "domains": [
-        "Algebra",
-        "Geometry"
-      ],
-      "github_issue": 0,
-      "id": "fd_0467",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.75,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source": "",
-      "source_exp_id": "d23a186f",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/d23a186f",
-      "status": "available",
-      "thread_id": "th_39662fd1",
-      "timestamp": "2026-07-19T16:24:17.981685+00:00",
-      "title": "The formal model treats theories as points in a real inner-product space and phe"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
       "attempt_count": 1,
       "catalog_references": [],
       "category": "",
@@ -19357,7 +19113,7 @@
       "status": "available",
       "thread_id": "th_18f8bd10",
       "timestamp": "2026-07-19T16:58:16.382490+00:00",
-      "title": "**Conjecture.** For every finite connected two-dimensional cell complex and ever"
+      "title": "Conjecture.For every finite connected two-dimensional cell complex and ever"
     },
     {
       "ambition_level": "extension",
@@ -19439,7 +19195,7 @@
       "status": "available",
       "thread_id": "th_eadd17f3",
       "timestamp": "2026-07-19T17:15:36.318557+00:00",
-      "title": "**Conjecture.** For every finite graph and every positive `k`, quotienting cop c"
+      "title": "Conjecture.For every finite graph and every positive `k`, quotienting cop c"
     },
     {
       "ambition_level": "extension",
@@ -19480,7 +19236,7 @@
       "status": "available",
       "thread_id": "th_5f3193e6",
       "timestamp": "2026-07-19T17:32:37.005774+00:00",
-      "title": "**Conjecture.** For every relational set universe, quotienting set-codes by equa"
+      "title": "Conjecture.For every relational set universe, quotienting set-codes by equa"
     },
     {
       "ambition_level": "extension",
@@ -19726,7 +19482,7 @@
       "status": "available",
       "thread_id": "th_a9712a49",
       "timestamp": "2026-07-19T18:41:09.759734+00:00",
-      "title": "**Conjecture.** Let an inverse tower of finite spectra have eventually perfect b"
+      "title": "Conjecture.Let an inverse tower of finite spectra have eventually perfect b"
     },
     {
       "ambition_level": "extension",
@@ -19768,47 +19524,6 @@
       "thread_id": "",
       "timestamp": "2026-07-19T18:58:00.688995+00:00",
       "title": "Zombies and Qualia: Mathematics of Subjective Experience"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "# Future directions\n\n## Scope and main conclusion\n\nThe literal research slogan cannot presently be proved as stated: “theory of everything,” “physics,” and “must” do not specify mathematical predicates, and an `(∞,2)`-category is not merely a structure that can be inferred from an arbitrary object called a theory. The Lean development therefore formalizes a precise decategorified universal-property fragment and tests the strongest conclusions that survive that precision.\n\n## Proved\n\n* `DualCharge G = G →₀ ℤ` is the free finite integer charge sector on generators `G`, with negative coefficients modeling formal duals.\n* Every assignment `G → A` into an additive commutative group extends uniquely to an additive shadow `DualCharge G →+ A`.\n* Such shadows preserve tensor composition (addition) and duality (negation).\n* Three separately named sectors—standing for decategorified TQFT, CFT, and string data—bundle uniquely into one product-valued shadow. This is a rigorous sense in which they can be components of one universal object; it does **not** claim that the actual analytic and higher-categorical theories have been identified.\n* Evaluation is explicitly a finite `Finsupp.sum`.\n* Arbitrary Boolean data embed injectively into positive-charge shadows valued in `ZMod 2`, and each bit is recovered by singleton evaluation. Hence finite evaluation is computable relative to generator data, while unrestricted generator data can carry arbitrary oracle information.\n\n## Disproved / rejected\n\nThe unqualified algebraic necessity of duals is false. A one-generator positive charge theory over `ℕ` has tensor composition but its generator has no additive inverse. Thus a theorem forcing duals requires substantive assumptions—such as full dualizability—not merely the word “theory.” This also blocks the stronger slogan that *any* physical theory must already be an `(∞,2)`-category with duals.\n\n## Next formalization targets\n\n1. Replace the decategorified free abelian group by a symmetric monoidal category with explicitly dualizable objects.\n2. Formalize a low-dimensional cobordism category (starting with oriented 1-cobordisms), prove its generators-and-relations presentation, and derive classification of 1D TQFTs.\n3. Lift the universal property through bicategories before attempting complete Segal spaces or another model of `(∞,2)`-categories.\n4. Distinguish field theories by their actual extra structure: locality, conformal structure, supersymmetry, boundary conditions, and analytic constraints. Product bundling alone is not physical unification.\n5. State computability parametrically: define effective encodings of generators and target operations, prove evaluation algorithms under those assumptions, and separately instantiate generator assignments with formally noncomputable predicates.\n6. Formulate a defensible “theory of everything” conjecture only after specifying an observational semantics and a universality criterion connecting mathematical models to experiments.\n",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
-      "domains": [
-        "Algebra",
-        "Computation"
-      ],
-      "github_issue": 0,
-      "id": "fd_0480",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.75,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source": "",
-      "source_exp_id": "961be33a",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/961be33a",
-      "status": "available",
-      "thread_id": "th_1cff989f",
-      "timestamp": "2026-07-19T19:32:44.018487+00:00",
-      "title": "The literal research slogan cannot presently be proved as stated: “theory of eve"
     },
     {
       "ambition_level": "extension",
@@ -19931,7 +19646,7 @@
       "status": "available",
       "thread_id": "th_c9e88f5d",
       "timestamp": "2026-07-19T20:08:38.889514+00:00",
-      "title": "**Conjecture.** For every family of devices that exactly resolves the first `n` "
+      "title": "Conjecture.For every family of devices that exactly resolves the first `n`"
     },
     {
       "ambition_level": "extension",
@@ -20054,7 +19769,7 @@
       "status": "available",
       "thread_id": "th_dda1c610",
       "timestamp": "2026-07-19T20:25:50.319607+00:00",
-      "title": "`AlephOneSurface.lean` formalizes the mathematically well-typed replacement for "
+      "title": "`AlephOneSurface.lean` formalizes the mathematically well-typed replacement for"
     },
     {
       "ambition_level": "extension",
@@ -20095,7 +19810,7 @@
       "status": "available",
       "thread_id": "th_86cd4ccb",
       "timestamp": "2026-07-19T20:26:03.577332+00:00",
-      "title": "**Conjecture.** If two machine substrates simulate one another with polynomially"
+      "title": "Conjecture.If two machine substrates simulate one another with polynomially"
     },
     {
       "ambition_level": "extension",
@@ -20136,7 +19851,7 @@
       "status": "available",
       "thread_id": "th_2ba36256",
       "timestamp": "2026-07-19T20:26:28.580190+00:00",
-      "title": "**Conjecture.** Every finite sequence of signed-literal revisions has a unique n"
+      "title": "Conjecture.Every finite sequence of signed-literal revisions has a unique n"
     },
     {
       "ambition_level": "extension",
@@ -20259,7 +19974,7 @@
       "status": "available",
       "thread_id": "th_f97cc5e2",
       "timestamp": "2026-07-19T20:44:07.239986+00:00",
-      "title": "**Conjecture.** Let a real polynomial causal return map preserve a closed interv"
+      "title": "Conjecture.Let a real polynomial causal return map preserve a closed interv"
     },
     {
       "ambition_level": "extension",
@@ -20300,7 +20015,7 @@
       "status": "available",
       "thread_id": "th_ec36dbec",
       "timestamp": "2026-07-19T20:44:15.853692+00:00",
-      "title": "**Conjecture.** A reflective fixed-point code admits a monotone interpretation i"
+      "title": "Conjecture.A reflective fixed-point code admits a monotone interpretation i"
     },
     {
       "ambition_level": "extension",
@@ -20910,7 +20625,7 @@
       "status": "available",
       "thread_id": "th_3d7ef265",
       "timestamp": "2026-07-20T05:48:58.813652+00:00",
-      "title": "**Conjecture.** For a family of finite decision processes with bounded error, an"
+      "title": "Conjecture.For a family of finite decision processes with bounded error, an"
     },
     {
       "ambition_level": "extension",
@@ -20992,7 +20707,7 @@
       "status": "available",
       "thread_id": "th_51174e10",
       "timestamp": "2026-07-20T09:41:41.863741+00:00",
-      "title": "Construct a proof-quality zero-counting certificate showing that the nontrivial "
+      "title": "Construct a proof-quality zero-counting certificate showing that the nontrivial"
     },
     {
       "ambition_level": "extension",
@@ -21074,7 +20789,7 @@
       "status": "available",
       "thread_id": "th_2a8a7690",
       "timestamp": "2026-07-20T09:41:52.781315+00:00",
-      "title": "**Conjecture.** Let a finite candidate system be governed by a monotone contract"
+      "title": "Conjecture.Let a finite candidate system be governed by a monotone contract"
     },
     {
       "ambition_level": "extension",
@@ -21115,7 +20830,7 @@
       "status": "available",
       "thread_id": "th_55fc6157",
       "timestamp": "2026-07-20T09:41:59.451179+00:00",
-      "title": "Fix a sound, computably axiomatized theory capable of elementary arithmetic and "
+      "title": "Fix a sound, computably axiomatized theory capable of elementary arithmetic and"
     },
     {
       "ambition_level": "extension",
@@ -21156,7 +20871,7 @@
       "status": "available",
       "thread_id": "th_ab7a8495",
       "timestamp": "2026-07-20T09:42:04.261035+00:00",
-      "title": "**Conjecture.** Every interpretation between essentially algebraic theories whos"
+      "title": "Conjecture.Every interpretation between essentially algebraic theories whos"
     },
     {
       "ambition_level": "extension",
@@ -21278,7 +20993,7 @@
       "status": "available",
       "thread_id": "th_fa98bd83",
       "timestamp": "2026-07-20T15:09:27.334818+00:00",
-      "title": "**Conjecture.** There is a uniformly defined operator on partial functions whose"
+      "title": "Conjecture.There is a uniformly defined operator on partial functions whose"
     },
     {
       "ambition_level": "extension",
@@ -21319,7 +21034,7 @@
       "status": "available",
       "thread_id": "th_d5415294",
       "timestamp": "2026-07-20T15:09:33.179129+00:00",
-      "title": "**Conjecture.** In a sparse random corpus with bounded expected document size an"
+      "title": "Conjecture.In a sparse random corpus with bounded expected document size an"
     },
     {
       "ambition_level": "extension",
@@ -21524,7 +21239,7 @@
       "status": "available",
       "thread_id": "th_b64f92d6",
       "timestamp": "2026-07-20T20:48:19.904765+00:00",
-      "title": "1. **Joint distributions and correlated cards.**  The expected payoff of additiv"
+      "title": "Joint distributions and correlated cards.The expected payoff of additiv"
     },
     {
       "ambition_level": "extension",
@@ -21565,7 +21280,7 @@
       "status": "available",
       "thread_id": "th_92047764",
       "timestamp": "2026-07-20T20:48:24.691279+00:00",
-      "title": "**Conjecture.** Let a periodic Born-probability sequence have period `k`. For ev"
+      "title": "Conjecture.Let a periodic Born-probability sequence have period `k`. For ev"
     },
     {
       "ambition_level": "extension",
@@ -21688,7 +21403,7 @@
       "status": "completed",
       "thread_id": "th_d9fedfd2",
       "timestamp": "2026-07-20T20:48:39.660968+00:00",
-      "title": "**Conjecture.** Let a family of decision procedures on inputs of length `n` irre"
+      "title": "Conjecture.Let a family of decision procedures on inputs of length `n` irre"
     },
     {
       "ambition_level": "extension",
@@ -22309,129 +22024,6 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "# Future Directions\n\n## Results established\n\nThe formal development in `Speculative/CategoryDNA.lean` uses a precise minimal semantics:\na theory retains a type of models, and its genome is the discrete category on that type.\nWithin this semantics it proves:\n\n1. **Exact Morita characterization.** Type-level equivalence of model collections is\n   equivalent to categorical equivalence of their genomes.\n2. **Composition.** Morita equivalences compose.\n3. **Classification of one-axiom mutations.** If mutation adjoins a predicate `P` and\n   the evident forgetful functor has a right adjoint, then every old model already\n   satisfies `P`. Conversely, if every model satisfies `P`, the adjunction exists.\n4. **Counterexample to the unrestricted mutation slogan.** The one-model theory\n   mutated by the false axiom has no such right adjoint.\n5. **Positive restricted evolutionary-path result.** Every equivalence of genomes is\n   itself an adjunction step.\n\nThus, under discrete semantics, the proposed mutation principle is not merely\noccasionally false: the existence of the relevant right adjoint is equivalent to the\nnew axiom being semantically redundant.\n\n## Limits and next steps\n\nThe formalization intentionally does not claim that an arbitrary first-order,\nhigher-order, or geometric theory is determined by a bare type of models. Ordinary\ncategories of models have nontrivial homomorphisms, and standard notions of Morita\nequivalence vary with the chosen logic. A stronger continuation should:\n\n- define signatures, syntax, interpretations, and model homomorphisms;\n- distinguish syntactic Morita equivalence from equivalence of model categories;\n- require equivalences compatible with underlying-set or semantic functors when that\n  structure is part of the intended semantics;\n- investigate reflective and coreflective subcategories produced by axioms, where\n  genuine free completions or localizations can supply adjoints;\n- define “quotient step” and “evolutionary path” before attempting the full\n  decomposition conjecture;\n- test whether geometric morphisms, accessible localizations, or sketches give the\n  appropriate nontrivial replacement for the disproved unrestricted slogan.\n\n## Computational-evidence justification\n\nNo separate computational experiment was used. The claims concern universal\nproperties of functors and adjunctions rather than a finite numerical sequence. The\ncounterexample is structural: an adjunction counit in a discrete category would force\na proof of the newly adjoined predicate for every old model. Small-case enumeration\nwould only reproduce the formally proved classification and would not add meaningful\nevidence. Consequently there is no OEIS sequence or informative numerical plot.\n",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
-      "domains": [
-        "Logic",
-        "Pythagorean"
-      ],
-      "github_issue": 0,
-      "id": "fd_0542",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.75,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source": "",
-      "source_exp_id": "7fb32c18",
-      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/7fb32c18",
-      "status": "available",
-      "thread_id": "th_0dc06923",
-      "timestamp": "2026-07-21T06:49:32.650013+00:00",
-      "title": "The formal development in `Speculative/CategoryDNA.lean` uses a precise minimal "
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "# Future Directions\n\n## Result of the contrarian test\n\nThe exact proposed fixed-point equation was formalized in\n`Catalog/Computation/ConsciousFixedPoints.lean` as\n\n\\[\n  \\exists P:T\\to\\mathrm{Prop},\\quad T \\simeq \\prod_{x:T} P(x).\n\\]\n\nIt collapses rather than generating incompleteness. The formal classification is\n\n\\[\n  \\mathrm{Conscious}(T) \\iff T \\simeq \\mathrm{Unit}.\n\\]\n\nConsequently:\n\n- every such `T` has decidable equality;\n- `Unit` is a concrete counterexample to the proposed undecidability claim;\n- `Bool` is not such a fixed point;\n- any two such fixed points are equivalent;\n- every such fixed point has cardinality one; and\n- every predicate on such a type is extensionally constant.\n\nThe reason is specific and mathematically informative: every fiber `P x` lies in\n`Prop`, so proof irrelevance makes the dependent product a subsingleton. The\nfixed-point equation transfers that collapse back to `T`. The equation also\nrules out the empty type, leaving exactly the singleton equivalence class.\n\n## Status of the original bold conjectures\n\n1. **“Every conscious type is undecidable.” — Disproved.** In fact, every type\n   satisfying the displayed definition has decidable equality.\n2. **“The fixed points form an arithmetical-style hierarchy.” — Disproved for\n   this definition.** All fixed points are mutually equivalent.\n3. **“Their cardinality is exactly the Church–Kleene ordinal.” — Not a\n   well-typed cardinal claim as stated, and incompatible with the classification\n   under the most direct interpretation.** The Church–Kleene object is an\n   ordinal, while “the collection of types” requires a universe and a specified\n   quotient or coding before it has a cardinality. Up to equivalence, the present\n   definition has exactly one class, represented by `Unit`.\n\n## Non-collapsing replacements worth studying\n\n### 1. Data-valued fibers\n\nReplace `P : T → Prop` with `F : T → Type v` and study\n\n\\[\n  T \\simeq \\prod_{x:T} F(x).\n\\]\n\nProof irrelevance no longer forces collapse. A useful next task is to classify\nfinite solutions by the cardinal equation\n`|T| = ∏ x, |F x|`, then separate genuinely dependent examples from constant\nfunction-space fixed points.\n\n### 2. Coded syntax plus semantics\n\nGödel phenomena require effective syntax, coding, and a truth/provability\nrelation. Introduce:\n\n- a recursively enumerable language of type codes;\n- an interpretation partial function from codes to types or propositions;\n- substitution and a verified diagonal/fixed-point lemma;\n- a computability predicate for semantic decision procedures; and\n- consistency or soundness assumptions stated as theorem parameters.\n\nOnly in such a setting is “undecidable” a computability claim rather than merely\nabsence of a `Decidable` instance.\n\n### 3. Universe-sensitive self-reference\n\nLean’s universes prevent a type from literally containing all types at its own\nuniverse without a code layer. A disciplined model should distinguish:\n\n- an inductive universe of codes `Code : Type u`;\n- decoding `El : Code → Type v`;\n- positivity/guardedness conditions ensuring legitimate recursion; and\n- equivalence of decoded objects rather than definitional equality of universes.\n\n### 4. A hierarchy with a precise index set\n\nTo recover an arithmetical analogy, define levels from alternating effective\nquantifiers over a coded base (for example, computably enumerable predicates on\nnatural numbers), prove strictness by reductions, and only then investigate\ntransfinite iteration along computable well-orders.\n\n### 5. A corrected Church–Kleene statement\n\nA plausible ordinal claim would concern the **supremum of order types of\ncomputably presented well-founded recursive constructions**, not the cardinality\nof types. Such a project first needs formal definitions of recursive notation\nsystems and computable well-orders. The target should be phrased as an equality\nof ordinals or a cofinality theorem, not as a cardinal count of raw Lean types.\n",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
-      "domains": [
-        "Logic",
-        "Pythagorean"
-      ],
-      "github_issue": 0,
-      "id": "fd_0543",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.75,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source": "",
-      "source_exp_id": "cd0075c8",
-      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/cd0075c8",
-      "status": "available",
-      "thread_id": "th_13621d63",
-      "timestamp": "2026-07-21T06:49:38.524989+00:00",
-      "title": "The exact proposed fixed-point equation was formalized in"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 1,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "# Future Directions: Functional Fibres and Subjective Structure\n\n## 1. Nontrivial qualia coverings\n\nConjecture: there are natural state spaces in which functional observation forms a nontrivial finite covering rather than a globally split product, so that local zombie twins exist but no continuous global choice of twin exists.\n\nThe key insight is that the present Boolean product is the trivial two-sheeted covering; replacing it by a twisted covering turns the global existence of a coherent zombie operation into a topological obstruction.\n\nWhy now? The fibre classification identifies exactly which part of the construction depends on a global split, making monodromy the next falsifiable obstruction.\n\n## 2. Stability under approximate functional equivalence\n\nConjecture: for compact metric state spaces with Lipschitz experience observables, sufficiently small functional distance and a fixed experiential contrast force a quantitative lower bound on the distortion of every attempted functional reconstruction of experience.\n\nThe key insight is that exact equality of functional profiles should have a robust analogue expressed as an approximation lower bound rather than a binary impossibility.\n\nWhy now? The zero-distance theorem isolates the exact case, while the factorization criterion identifies reconstruction as the quantity to perturb.\n\n## 3. Higher-dimensional experiential fibres\n\nConjecture: when experience takes values in a finite complex rather than a Boolean set, the homotopy type of each functional fibre bounds the number and organization of mutually functionally indistinguishable experiential states.\n\nThe key insight is that Boolean awareness records only a two-point contrast; homology and homotopy can detect loops, components, and higher-dimensional experiential variation invisible to functional observation.\n\nWhy now? The current gap space is classified by a forgotten Boolean factor, suggesting a systematic replacement of that factor by structured experiential geometries.\n\n## 4. Natural, rather than chosen, incompleteness bridges\n\nConjecture: a category of labelled functional quotients and a category of labelled independent-sentence extensions admit functors whose gap constructions are naturally equivalent on a nontrivial subcategory.\n\nThe key insight is that an equivalence of individual gap spaces becomes mathematically stronger when it commutes with maps between behavioural systems and maps between theories.\n\nWhy now? The established label-preserving isomorphism provides the objectwise component; naturality is the precise next test that distinguishes a structural bridge from a coincidental shared classifier.\n\n## 5. Definability boundary for experiential reconstruction\n\nConjecture: for effectively presented state spaces, fibre constancy characterizes extensional reconstruction, while computable reconstruction additionally requires an effective choice principle on the range of the functional map.\n\nThe key insight is that set-theoretic factorization uses a representative from every inhabited fibre, but effective reconstruction must produce those representatives uniformly.\n\nWhy now? The present factorization theorem exposes the representative-selection step explicitly, isolating the exact location where computability can fail even after extensional obstructions disappear.\n",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
-      "domains": [
-        "Geometry",
-        "Logic"
-      ],
-      "github_issue": 0,
-      "id": "fd_0544",
-      "last_attempt_time": "2026-07-22T16:54:49.436371+00:00",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.75,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source": "",
-      "source_exp_id": "d5fe8eb3",
-      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/d5fe8eb3",
-      "status": "available",
-      "thread_id": "th_e1e49a03",
-      "timestamp": "2026-07-21T06:49:44.327570+00:00",
-      "title": "Conjecture: there are natural state spaces in which functional observation forms"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
       "attempt_count": 1,
       "catalog_references": [],
       "category": "",
@@ -22836,48 +22428,7 @@
       "status": "available",
       "thread_id": "th_811a87bf",
       "timestamp": "2026-07-21T14:31:18.360788+00:00",
-      "title": "Fix a finite corpus of statements and charge each theory for both source length "
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 1,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "# Future directions\n\n## Result status\n\nThe motivating fixed-length claim was **disproved**, not proved. With a finite alphabet and a fixed length bound (such as 100), the collection of encoded statements is finite. Once a Boolean semantics is fixed, its exact truth table is a finite, computable oracle. The Lean theorem `finite_language_has_accurate_oracle` constructs this oracle and proves 95% accuracy (in fact 100%). `finite_oracle_has_table` explicitly represents every such oracle as a finite list.\n\nA nearby bold uniform claim was also **disproved**: one oracle cannot be 95%-accurate against every possible semantics. The adversarial semantics formalized by `adversarialTruth` makes every answer incorrect, yielding `no_uniform_accurate_oracle`.\n\nA genuinely infinitary diagonal claim was **proved**: for any natural-number-indexed family of Boolean sequences, `diagonalJump` differs from its `k`th row at coordinate `k`. Therefore no such family enumerates all Boolean sequences (`no_enumeration_of_boolean_sequences`). This captures the structural diagonal idea behind jump constructions, but it is intentionally not presented as a complete formalization of the Turing jump.\n\n## Important modeling distinctions\n\n1. **Finite domain versus practical feasibility.** A truth table can be astronomically large while remaining computable. Complexity, learnability, storage, and computability are different notions.\n2. **Semantic truth versus provability.** For bounded strings, a fixed external truth assignment has a finite table. For all arithmetic sentences, semantic truth and theoremhood lead to genuinely unbounded computability questions.\n3. **Pointwise accuracy versus uniform accuracy.** Existence of a good oracle for one fixed semantics is compatible with impossibility of one predictor working for all semantics.\n4. **Unknown answers.** This development counts `unknown` as incorrect. Other scoring rules should be stated explicitly and may change finite accuracy bounds, though not the finite-table counterexample.\n5. **Counting versus diagonalization.** Counting finite functions only gives exponential cardinalities. Noncomputability requires an unbounded effective presentation plus a diagonal or reduction argument.\n\n## Stronger formalization targets\n\n- Define a syntax of first-order arithmetic, a length function, and a satisfaction predicate for the standard natural numbers. Prove explicitly that the subtype of formulas of length at most 100 is finite.\n- Introduce a concrete partial-recursive machine model and prove the undecidability of its halting set. Then define a genuine jump operator relative to an oracle and prove that the jump is not computable from the original oracle.\n- Replace arbitrary Boolean semantics by arithmetic truth and formalize a reduction from halting to truth for an unbounded class of encoded sentences.\n- Study resource-bounded variants: circuit size, advice length, sample complexity, and probabilistic average-case accuracy. These are closer to the intended intuition than computability on a fixed finite domain.\n- Formalize distributions over statements. A meaningful “95% accurate” claim needs a specified finite benchmark or probability measure; accuracy without one is ambiguous.\n- Investigate whether a predictor can be both sound on definite answers and useful under an abstention budget. Without an abstention penalty, the constant `unknown` oracle can make some precision metrics vacuous.\n\n## Limits of the present results\n\nThe development does not identify human intuition with a noncomputable operation, and the formal results provide no evidence for that philosophical identification. It proves only a precise finite counterexample, a uniform adversarial impossibility, finite cardinality formulas, and an elementary Cantor-style diagonal theorem. Connecting mathematical discovery to the computability-theoretic jump would require a defensible formal model of discovery and a reduction theorem; neither is currently supplied.\n",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
-      "domains": [
-        "Computation",
-        "Algebra"
-      ],
-      "github_issue": 0,
-      "id": "fd_0555",
-      "last_attempt_time": "2026-07-22T18:43:43.089102+00:00",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.75,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source": "",
-      "source_exp_id": "fee59e0b",
-      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/fee59e0b",
-      "status": "available",
-      "thread_id": "th_a8f07f33",
-      "timestamp": "2026-07-21T14:31:25.130869+00:00",
-      "title": "The motivating fixed-length claim was **disproved**, not proved. With a finite a"
+      "title": "Fix a finite corpus of statements and charge each theory for both source length"
     },
     {
       "ambition_level": "extension",
@@ -22959,7 +22510,7 @@
       "status": "available",
       "thread_id": "th_6c73b2b5",
       "timestamp": "2026-07-21T14:31:43.917811+00:00",
-      "title": "**Conjecture.** In a temporally filtered co-citation hypergraph, long-lived firs"
+      "title": "Conjecture.In a temporally filtered co-citation hypergraph, long-lived firs"
     },
     {
       "ambition_level": "extension",
@@ -23245,7 +22796,7 @@
       "status": "available",
       "thread_id": "th_16c8d9ad",
       "timestamp": "2026-07-21T18:48:02.393211+00:00",
-      "title": "**Conjecture.** A closed, connected, orientable smooth three-manifold embeds smo"
+      "title": "Conjecture.A closed, connected, orientable smooth three-manifold embeds smo"
     },
     {
       "ambition_level": "extension",
@@ -23368,7 +22919,7 @@
       "status": "available",
       "thread_id": "th_db9fd67c",
       "timestamp": "2026-07-21T20:45:21.848410+00:00",
-      "title": "**Conjecture.** There is an absolute constant `c > 0` such that every sufficient"
+      "title": "Conjecture.There is an absolute constant `c > 0` such that every sufficient"
     },
     {
       "ambition_level": "extension",
@@ -23450,7 +23001,7 @@
       "status": "available",
       "thread_id": "th_8622df42",
       "timestamp": "2026-07-21T20:46:08.256420+00:00",
-      "title": "**Conjecture.** Every normalized, translation-equivariant, coordinatewise-minimu"
+      "title": "Conjecture.Every normalized, translation-equivariant, coordinatewise-minimu"
     },
     {
       "ambition_level": "extension",
@@ -23702,47 +23253,6 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 2,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "abab9083",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "Formalize the Penrose-Hameroff Orch OR hypothesis: consciousness arises from quantum coherence in microtubules. Define: a 'conscious event' is the collapse of a superposition in a microtubule, with timing ~500 ms (the gamma synchrony). Prove: the Penrose objective reduction (OR) threshold is E ~ h/(t * sqrt(N)) where N is the number of tubulins. Show: for N ~ 10^11 tubulins, the coherence time is ~10^-33 s — too short for room temperature. Conjecture: if quantum consciousness exists, it requires a warm-coherent mechanism not yet formalized. Explore: formalize 'non-computable consciousness' — does the brain compute beyond Turing?",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Novelty",
-        "Physics"
-      ],
-      "github_issue": 0,
-      "id": "fd_0576",
-      "last_attempt_time": "2026-07-23T02:30:53.711076+00:00",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.85,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source": "",
-      "source_exp_id": "seed",
-      "source_path": "seed:manual_v2",
-      "status": "in_progress",
-      "thread_id": "",
-      "timestamp": "2026-07-21T23:19:06.708946+00:00",
-      "title": "Moonshot: Quantum Consciousness — Penrose-Hameroff Orchestrated Reduction"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
       "attempt_count": 1,
       "catalog_references": [],
       "category": "famous_subtask",
@@ -23860,7 +23370,7 @@
       "status": "available",
       "thread_id": "th_a3af2d86",
       "timestamp": "2026-07-22T00:14:23.064740+00:00",
-      "title": "**Conjecture.** In the random graph process, with probability tending to one, th"
+      "title": "Conjecture.In the random graph process, with probability tending to one, th"
     },
     {
       "ambition_level": "extension",
@@ -23901,7 +23411,7 @@
       "status": "in_progress",
       "thread_id": "th_6a9b3bee",
       "timestamp": "2026-07-22T00:14:27.819343+00:00",
-      "title": "1. **Replace discrete carriers by actual categories.** Define an analogy from fu"
+      "title": "Replace discrete carriers by actual categories.Define an analogy from fu"
     },
     {
       "ambition_level": "extension",
@@ -24432,7 +23942,7 @@
       "status": "available",
       "thread_id": "th_57f5836f",
       "timestamp": "2026-07-22T04:48:45.278911+00:00",
-      "title": "`FiniteStateIdentity.lean` proves decidability by reducing trace equivalence to "
+      "title": "`FiniteStateIdentity.lean` proves decidability by reducing trace equivalence to"
     },
     {
       "ambition_level": "extension",
@@ -24555,7 +24065,7 @@
       "status": "available",
       "thread_id": "th_e967001f",
       "timestamp": "2026-07-22T06:54:39.673753+00:00",
-      "title": "The Lean development establishes a reusable discrete CRN semantics and an exact "
+      "title": "The Lean development establishes a reusable discrete CRN semantics and an exact"
     },
     {
       "ambition_level": "extension",
@@ -24596,7 +24106,7 @@
       "status": "available",
       "thread_id": "th_847b5488",
       "timestamp": "2026-07-22T06:54:44.010438+00:00",
-      "title": "**Conjecture.** For every symmetrizable Kac–Moody root datum and twisting weight"
+      "title": "Conjecture.For every symmetrizable Kac–Moody root datum and twisting weight"
     },
     {
       "ambition_level": "extension",
@@ -24678,7 +24188,7 @@
       "status": "available",
       "thread_id": "th_7dd39d5a",
       "timestamp": "2026-07-22T09:46:27.142706+00:00",
-      "title": "**Conjecture.** Classify all quadratic algebraic integers `β` of norm two for wh"
+      "title": "Conjecture.Classify all quadratic algebraic integers `β` of norm two for wh"
     },
     {
       "ambition_level": "extension",
@@ -24719,7 +24229,7 @@
       "status": "available",
       "thread_id": "th_60edd60e",
       "timestamp": "2026-07-22T09:46:33.641785+00:00",
-      "title": "**Conjecture.** Every countable dependency relation that is well-founded and has"
+      "title": "Conjecture.Every countable dependency relation that is well-founded and has"
     },
     {
       "ambition_level": "extension",
@@ -24760,7 +24270,7 @@
       "status": "available",
       "thread_id": "th_2e3e32e2",
       "timestamp": "2026-07-22T12:13:53.710531+00:00",
-      "title": "**Conjecture.** For every strictly convex radiator-cost function, every finite s"
+      "title": "Conjecture.For every strictly convex radiator-cost function, every finite s"
     },
     {
       "ambition_level": "extension",
@@ -24883,7 +24393,7 @@
       "status": "available",
       "thread_id": "th_61ed385b",
       "timestamp": "2026-07-22T16:54:31.009955+00:00",
-      "title": "1. **Concrete ZFC syntax and proof checking.** Replace the abstract `DeductiveSy"
+      "title": "Concrete ZFC syntax and proof checking.Replace the abstract `DeductiveSy"
     },
     {
       "ambition_level": "extension",
@@ -25006,7 +24516,7 @@
       "status": "available",
       "thread_id": "th_3a0e43c9",
       "timestamp": "2026-07-22T18:42:20.048683+00:00",
-      "title": "**Conjecture.** For each fixed nonnegative integer `k`, the cutoff geometric"
+      "title": "Conjecture.For each fixed nonnegative integer `k`, the cutoff geometric"
     },
     {
       "ambition_level": "extension",
@@ -25047,7 +24557,7 @@
       "status": "available",
       "thread_id": "th_51f9da44",
       "timestamp": "2026-07-22T18:42:25.479302+00:00",
-      "title": "**Conjecture.** The globally additive-avoiding greedy trajectory beginning at on"
+      "title": "Conjecture.The globally additive-avoiding greedy trajectory beginning at on"
     },
     {
       "ambition_level": "extension",
@@ -25129,7 +24639,7 @@
       "status": "available",
       "thread_id": "th_07fadefc",
       "timestamp": "2026-07-22T22:24:57.494222+00:00",
-      "title": "**Conjecture.** For every fixed pair `l ≥ k ≥ 3`, every sufficiently large outer"
+      "title": "Conjecture.For every fixed pair `l ≥ k ≥ 3`, every sufficiently large outer"
     },
     {
       "ambition_level": "extension",
@@ -25415,7 +24925,7 @@
       "status": "available",
       "thread_id": "th_a8f07f33",
       "timestamp": "2026-07-23T18:46:07.073017+00:00",
-      "title": "**Conjecture.** For a concrete syntax of first-order arithmetic with a standard-"
+      "title": "Conjecture.For a concrete syntax of first-order arithmetic with a standard-"
     },
     {
       "ambition_level": "extension",
@@ -25536,46 +25046,6 @@
       "thread_id": "",
       "timestamp": "2026-07-18T09:21:32.306900+00:00",
       "title": "Deepening: Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "Building on cycle 227d6015 (Q=0.750), which proved 19 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Freeman Dyson's idea that intelligence grows without limit in the deep future. Define: 'intelligence growth rate' as the rate at which a civilization discovers new theorems. Prove: if the growth rate is superexponential (faster than 2^(2^n)), then the civilization discovers ALL theorems of",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "NumberTheory"
-      ],
-      "github_issue": 0,
-      "id": "push_227d6015_c2607b53",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.85,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source": "",
-      "source_exp_id": "227d6015",
-      "source_path": "Moonshot: The Mathematics of Dyson's Intelligence Explosion",
-      "status": "available",
-      "thread_id": "",
-      "timestamp": "2026-07-22T14:30:05.202834+00:00",
-      "title": "Deepening: Moonshot: The Mathematics of Dyson's Intelligence Explosion"
     },
     {
       "ambition_level": "extension",
@@ -25735,7 +25205,7 @@
       "status": "available",
       "thread_id": "",
       "timestamp": "2026-07-22T18:42:11.729178+00:00",
-      "title": "Deepening: **Conjecture.** Let a family of decision procedures on inputs of length `n` irre"
+      "title": "Deepening: Conjecture.Let a family of decision procedures on inputs of length `n` irre"
     },
     {
       "ambition_level": "extension",
@@ -25856,46 +25326,6 @@
       "thread_id": "",
       "timestamp": "2026-07-18T03:54:50.138087+00:00",
       "title": "Deepening: Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 2,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "b648d8e5",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "Building on cycle 5d6a1919 (Q=0.760), which proved 13 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future directions\n\n1. **Repair the definition before studying asymptotics.** The literal rule excludes one integer and collapses to the constant-one sequence. A revised rule must specify the candidate set and all exclusions—for example, whether terms must be new, increasing, or avoid sums of any p",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Novelty"
-      ],
-      "github_issue": 0,
-      "id": "push_5d6a1919_3925c6b7",
-      "last_attempt_time": "2026-07-23T18:46:30.739146+00:00",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.86,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source": "",
-      "source_exp_id": "5d6a1919",
-      "source_path": "1. **Repair the definition before studying asymptotics.** The literal rule exclu",
-      "status": "in_progress",
-      "thread_id": "",
-      "timestamp": "2026-07-22T18:42:28.004149+00:00",
-      "title": "Deepening: 1. **Repair the definition before studying asymptotics.** The literal rule exclu"
     },
     {
       "ambition_level": "extension",
@@ -26495,7 +25925,7 @@
       "status": "available",
       "thread_id": "",
       "timestamp": "2026-07-19T04:29:12.043456+00:00",
-      "title": "Deepening: **Conjecture.** There is a natural joint scaling of the prime cutoff `x`, occupa"
+      "title": "Deepening: Conjecture.There is a natural joint scaling of the prime cutoff `x`, occupa"
     },
     {
       "ambition_level": "extension",
@@ -26905,46 +26335,6 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "Cycle a88a4e5d (Q=0.626) proved 18 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Prove that cellular automata can perform transfinite computations when run on ordinals instead of N. Formalize a Rule 110 analog on omega-squared and prove it achieves super-Turing computation. Connec",
-      "domain_bridges": [],
-      "domain_quality_penalty": 1.0,
-      "domains": [
-        "Applications"
-      ],
-      "github_issue": 0,
-      "id": "sorry_fill_a88a4e5d_285a4c01",
-      "last_attempt_time": "2026-07-22T06:55:13.123044+00:00",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.6756666666666666,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source": "",
-      "source_exp_id": "a88a4e5d",
-      "source_path": "Cellular Automata at the Ordinals: Transfinite Computation",
-      "status": "available",
-      "thread_id": "",
-      "timestamp": "2026-07-19T11:52:43.410408+00:00",
-      "title": "Close Proofs: Cellular Automata at the Ordinals: Transfinite Computation"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 1,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
       "consumed_by_exp_id": "0a1b5635",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
@@ -27098,7 +26488,618 @@
       "title": "Close Proofs: ArXiv paper: Reproducing the k-copwin Algorithm: Theory vs. Implementa"
     }
   ],
-  "pruned": [],
+  "pruned": [
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Domain Shared has declined by 0.164 over recent cycles (recent avg=0.696 vs prior=0.860). Take a completely fresh approach — different proof techniques, new definitions, or a different subfield within this domain. Avoid repeating approaches that have been producing diminishing returns.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.6,
+      "domains": [
+        "Shared"
+      ],
+      "github_issue": 0,
+      "id": "auto_reset_Shared_98cb9029",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.85,
+      "proof_strategy": "",
+      "prune_reason": "Pruned during future directions cleanup (dead end / trivial)",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "auto_reset",
+      "source_path": "quality_regression_Shared",
+      "status": "pruned",
+      "thread_id": "",
+      "timestamp": "2026-07-17T13:45:52.051601+00:00",
+      "title": "[Reset] Fresh approach in Shared"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Investigate the ArXiv paper 'A 64-Rectangle Counterexample to Wegner's Conjecture and LP Gaps up to $5/2$' and formalize its key results. Abstract: Wegner conjectured that every finite family $\\mathcal R$ of axis-parallel rectangles satisfies $τ(\\mathcal R)\\le 2ν(\\mathcal R)-1$, where $ν$ is the packing number and $τ$ is the piercing number. Ajwani, Gajjala, Raman, and Ray recently disproved this by constructing a triangle-free counterexample on $2196\\cdot 8^9$ rectangles and, using a computer-assisted package-and-port recursion, obtained a standard LP gap of $17891/8064$ for Maximum Independent Set of Rectangles. We give a simpler and hand-checkable counterexample with $64$ rectangles. It is built from an eight-rectangle gadget whose independent sets inject into four ordered slots; we then use four horizontal and four vertical copies of this gadget to form a triangle-free family with $ν=16$ and $τ\\ge 32$. We use the same horizontal-vertical step to define recursive families of rectangles $P_r$ with $ν(P_r)=4^{2^r}$. For the standard clique, equivalently point, relaxation we obtain a finite gap $73/32$ at $P_3$, improving the prev",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.5,
+      "domains": [
+        "Pythagorean"
+      ],
+      "github_issue": 0,
+      "id": "fd_0108",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "Bypassed",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+      "prune_reason": "Pruned during future directions cleanup (dead end / trivial)",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.11318v2",
+      "source_path": "http://arxiv.org/abs/2607.11318v2",
+      "status": "pruned",
+      "thread_id": "",
+      "timestamp": "2026-07-16T11:25:26.123465+00:00",
+      "title": "ArXiv paper: A 64-Rectangle Counterexample to Wegner's Conjecture and LP Gaps up to $5/2$"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "# Future Directions\n\n## Formal conclusions\n\nThe file `Speculative/MoebiusArithmetic.lean` separates the topology from the proposed arithmetic and proves the following.\n\n### Disproved\n\n1. **Coordinatewise operations induce a ring on the Möbius quotient.** Both coordinatewise multiplication and coordinatewise addition fail the representative-independence test. For multiplication, applying the twist to both representatives reverses the fiber sign twice, while the quotient gluing reverses it only once. Thus there is no induced operation of the stated kind, so the advertised zero-divisor calculation does not establish a ring or a failure of integral-domain structure.\n\n2. **The formula embeds an integer as the real number it claims to represent.** For every positive integer `n`, the represented value\n   `|n| * (2 * (1/2 + 1/(2n)) - 1)` is `1`; for every negative integer it is `-1`. The coordinate pairs for `2` and `3` remain distinct, but the claimed real-number interpretation collapses them.\n\n3. **`-1` is a prime encoding orientation.** In the ordinary integer arithmetic recovered by the factorization formulas, `-1` is a unit and therefore is not prime.\n\n4. **`-6 = (-2)(-3)`.** This is false: the right side is `6`. The corrected equality is `-6 = 2 * 3 * (-1)`.\n\n5. **Zero has a prime factorization.** A finite product of nonzero integer factors is nonzero, so zero has no such factorization.\n\n### Proved\n\n* The endpoint relation used here is an equivalence relation and identifies `(0,y)` with `(1,-y)`.\n* `6 = 2 * 3` and `-6 = 2 * 3 * (-1)`.\n* The only integer units are `1` and `-1`, clarifying that orientation behaves like a unit rather than a prime in standard factorization.\n\n## Promising corrected research programs\n\n1. **Transport a ring structure through an explicit bijection.** One can place a ring structure on a bare set underlying a quotient only after constructing a bijection with a known ring. Such a structure would generally not be coordinatewise and would need a separate geometric naturality criterion.\n\n2. **Use a ring bundle rather than a ring on total-space points.** A Möbius line bundle supports fiberwise addition, but multiplication of two twisted fibers naturally lands in the tensor square, which is an untwisted line bundle. A graded algebra containing both twisted and untwisted sectors may encode the “two twists cancel” law faithfully.\n\n3. **Study orientation as a unit or grading.** The algebraic analog of orientation is naturally an order-two unit or a `Z/2Z` degree. Group rings, crossed products, and graded rings are more suitable than declaring orientation prime.\n\n4. **Repair the integer embedding.** Specify independently whether the goal is an injective discrete subset of the band, a compactification of the integers, or a map whose scalar evaluation equals `n`. The displayed formula cannot simultaneously provide the claimed scalar value and compactification behavior.\n\n5. **Formalize the actual quotient topology.** The present development proves the algebraic obstruction at the setoid level. A later development could use Mathlib quotient-topology APIs to establish topological properties, after first correcting the proposed subset and its accumulation point.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 1.0,
+      "domains": [
+        "Algebra",
+        "Pythagorean"
+      ],
+      "github_issue": 0,
+      "id": "fd_0266",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "Pruned during future directions cleanup (dead end / trivial)",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "ad1766b1",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/ad1766b1",
+      "status": "pruned",
+      "thread_id": "th_5b143c7b",
+      "timestamp": "2026-07-18T04:10:54.907896+00:00",
+      "title": "The file `Speculative/MoebiusArithmetic.lean` separates the topology from the pr"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "# Dark Mathematics — results and future directions\n\n## Formal results\n\n`Tropical/DarkMathematics.lean` treats provability as an abstract predicate `Pr : Prop → Prop` with the minimal rule that provability is preserved by valid implication. It proves:\n\n1. **Level 1 equals ordinary darkness.** The proposed base definition and the one-witness version coincide.\n2. **The proposed strict hierarchy collapses.** From any dark predicate `T`, tagging a hidden witness by `Fin k` constructs a level-`k` dark predicate for every finite `k`. Thus levels 1, 2, and 3 require no successively stronger independence principles. On a fixed predicate, level `l` implies every lower level `k ≤ l`.\n3. **Dark predicates are exactly an incompleteness phenomenon in the relevant sense.** They cannot occur for semantic truth, in a theory with the numerical existence property, or when the theory is sound and complete for the instances under consideration.\n4. **Canonical construction from an undecided sentence.** If a theory proves `U ∨ ¬U` but proves neither `U` nor `¬U`, the Boolean predicate selecting those alternatives is dark. Tagging it produces every finite level.\n5. **Provable concrete instances refute darkness.** Any family with even one provable named instance fails the definition.\n\nThese statements are kernel-checked and contain no `sorry` or added axioms.\n\n## Disproved or unsupported mission claims\n\n### The strict level hierarchy is false as stated\n\nCounting distinct witnesses does not measure proof-theoretic strength when the predicate's domain may change. The formal tagging construction sends a witness `x` to the distinct pairs `(i,x)`, one for each `i : Fin k`, while each tagged assertion is definitionally just `T x`. A strict hierarchy would need restrictions preventing such coding, plus a precise reducibility or strength relation.\n\n### Paris–Harrington and hydra do not directly provide the requested dark predicates\n\nTheir standard independence statements concern a universal assertion (or totality) not provable in PA. Each fixed finite Paris–Harrington instance and each fixed finite hydra computation is, in the ordinary setup, finitely checkable and provable in PA. Therefore indexing the usual finite instances gives the opposite of condition (2). The formal theorem `provable_instance_refutes_dark` captures this obstruction.\n\n### “Dense” and “most” are not defined by counting formulas\n\nThe collection of syntactic Pi-2 sentences is countable. Density requires a topology, and “most” requires a measure or an asymptotic-density convention together with a fixed Gödel numbering and length model. Raw counting is presentation-dependent: harmless recodings and padding can alter syntactic frequencies without changing mathematical content. Consequently the density conjecture has no invariant theorem statement yet and was not silently replaced by a weaker claim.\n\n### This is a form of incompleteness\n\nThe split construction turns any sentence independent of a classical theory into a dark existential over `Bool`. It therefore shows that the definition repackages undecidability/incompleteness rather than separating a new phenomenon from incompleteness.\n\n## Promising corrected questions\n\n1. Fix a recursively axiomatized theory, an explicit arithmetized proof predicate, a formula class, and a computable numbering; then formalize the abstract results for that syntax.\n2. Prohibit witness tagging by fixing the domain and a natural equivalence/reducibility relation. Ask whether levels separate under many-one or interpretability reductions.\n3. Replace “density” by a specified model: prefix-free program-size density, bounded Gödel-code density, or Baire-category notions on completions of a theory. Prove invariance results before interpreting any proportion.\n4. Investigate constructive theories with existence properties. The proved `no_dark_of_numericalExistenceProperty` theorem predicts that the original notion disappears there.\n5. For Paris–Harrington or hydra, study dark predicates built from undecidable *global bounds* or consistency statements, not from their concrete finite instances. Any such construction must prove both formalized PA-provability of the existential and PA-unprovability of every named instance.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 1.0,
+      "domains": [
+        "Logic",
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_0273",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "Pruned during future directions cleanup (dead end / trivial)",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "b01a1ab3",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/b01a1ab3",
+      "status": "pruned",
+      "thread_id": "th_ef27d863",
+      "timestamp": "2026-07-18T05:46:59.196373+00:00",
+      "title": "`Tropical/DarkMathematics.lean` treats provability as an abstract predicate `Pr "
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "# Future Directions\n\n## What was proved\n\n1. **Missingness is not itself a sheaf obstruction.** A partial database modeled as a partial function into a nonempty value type always has a total completion. If every cell is observed, the completion is unique; if a cell is missing and two distinct values exist, there are at least two completions.\n\n2. **Overlap constraints can be highly dependent.** On a triangle, one equality follows from the other two. More generally, all pairwise equality constraints on a nonempty family are equivalent to the constraints comparing every member with one fixed root.\n\n3. **Finite sheaf-style imputation is genuinely constrained optimization.** For finite cells and values, a minimizer of observed Hamming loss exists among assignments satisfying any finite family of equality constraints. Feasibility is guaranteed by constant assignments.\n\n4. **Distribution-free strict superiority is impossible.** On complete data, any observation-preserving mean-style and sheaf-style method both return the truth and therefore tie under any loss normalized to zero at the truth.\n\n## What was disproved\n\n1. **The universal probability formula `P(sheaf) = (1-r)^C`.** Under the natural partial-function model, completability has probability one for every missingness pattern, not `(1-r)^C`. At `r = 1/2`, `C = 1`, the proposed expression is already `1/2`.\n\n2. **Independent multiplication over all overlaps.** The Boolean triangle has three edge equations but only two independent ones. Its consistent fraction is `1/4`, not the `1/8` predicted by multiplying three independent half-probabilities.\n\n3. **A distribution-free claim that sheaf imputation is always strictly better for `r < 0.5` and more than ten features.** Missing rate zero lies in this range, and complete data forces a tie between methods that preserve observations. Any valid performance theorem must specify a stochastic model and should use non-strict or expected-risk comparisons.\n\n## Next formal developments\n\n* Replace equality constraints by restriction maps of a finite cellular sheaf. Characterize feasibility as membership in the kernel of a coboundary map and derive exact counts over finite fields from its rank.\n* Prove the graph formula for a constant `q`-valued sheaf: the number of consistent assignments is `q` raised to the number of connected components. This would quantify precisely how cycles create redundant edge constraints.\n* Introduce a probability space for missingness and noisy observations. Derive probabilities from the specified observation model rather than solely from `r` and a raw constraint count.\n* Formalize squared-error imputation over finite-dimensional real vector spaces, with existence from closedness/coercivity or orthogonal projection onto the global-section subspace.\n* State method-comparison results in terms of expected risk under an explicit generative model. Without assumptions connecting the sheaf restrictions to ground truth, no uniform ranking over mean, KNN, MICE, and constrained methods can hold.\n* Study inconsistent local observations through least-squares residuals and cohomological obstruction certificates, separating ordinary missing data from genuinely conflicting overlap data.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.30000000000000004,
+      "domains": [
+        "Computation",
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_0424",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "Pruned during future directions cleanup (dead end / trivial)",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "91c16818",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/91c16818",
+      "status": "pruned",
+      "thread_id": "th_0410ee3e",
+      "timestamp": "2026-07-19T08:21:34.140922+00:00",
+      "title": "1. **Missingness is not itself a sheaf obstruction.** A partial database modeled"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "# Future Directions\n\n## What was proved\n\nThe formal model treats theories as points in a real inner-product space and phenomena as measurement directions. Prediction error is the absolute inner product of a theory's error vector with the phenomenon.\n\n1. **Perturbative convergence:** if a correction series sums to the exact displacement from the initial theory to truth, the wrongness of its partial theories converges to zero (`wrongness_converges_of_hasSum`). This is the precise sense in which a convergent series of corrections approaches truth.\n2. **Conditional unreasonable effectiveness:** a wrong theory beats any rival whose error vector is not parallel to its own on an explicitly constructible measurement direction (`wrong_theory_beats_nonparallel_rival`). Geometrically, the witness is the rival error's component orthogonal to the wrong theory's error.\n3. **Orthogonal exactness:** every theory, however globally wrong, is exact on measurement directions orthogonal to its error (`exact_on_orthogonal_phenomena`).\n\n## What was disproved\n\n1. **The unrestricted headline claim is false when “known correct theories” includes truth.** Truth has zero prediction error on every phenomenon, so no wrong theory can be strictly closer than every member of such a class (`cannot_beat_a_class_containing_truth`).\n2. **A wrong theory cannot uniformly dominate truth.** Testing in the direction of the wrong theory's own error makes truth strictly better (`truth_strictly_beats_every_wrong_theory_somewhere`).\n3. **Convergence is not monotone improvement.** The formal finite-support correction series in `convergent_correction_can_initially_worsen` first doubles wrongness and then reaches truth exactly.\n\nThus the strongest defensible result requires a nonparallel-error condition and a phenomenon selected for that geometry. Approximate correctness by itself does not imply superiority to correct theories.\n\n## Next formal questions\n\n- Replace linear measurements by bounded linear maps into a normed observation space and characterize when one model beats another on the kernel of its own residual.\n- For a finite set of rivals, prove existence of one measurement direction where the focal theory is exact and all rivals err, under suitable nonparallelity hypotheses.\n- Add a probability distribution on normalized phenomena and quantify the measure of directions on which one theory beats another.\n- Study noisy observations and prove robustness margins for the Gram–Schmidt witness.\n- Formalize asymptotic perturbation series separately from convergent series; physical perturbation expansions are often useful despite divergence, which the present `HasSum` theorem intentionally does not cover.\n- Characterize correction schedules that make wrongness monotone, rather than merely convergent.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.4,
+      "domains": [
+        "Algebra",
+        "Geometry"
+      ],
+      "github_issue": 0,
+      "id": "fd_0467",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "Pruned during future directions cleanup (dead end / trivial)",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "d23a186f",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/d23a186f",
+      "status": "pruned",
+      "thread_id": "th_39662fd1",
+      "timestamp": "2026-07-19T16:24:17.981685+00:00",
+      "title": "The formal model treats theories as points in a real inner-product space and phe"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "# Future directions\n\n## Scope and main conclusion\n\nThe literal research slogan cannot presently be proved as stated: “theory of everything,” “physics,” and “must” do not specify mathematical predicates, and an `(∞,2)`-category is not merely a structure that can be inferred from an arbitrary object called a theory. The Lean development therefore formalizes a precise decategorified universal-property fragment and tests the strongest conclusions that survive that precision.\n\n## Proved\n\n* `DualCharge G = G →₀ ℤ` is the free finite integer charge sector on generators `G`, with negative coefficients modeling formal duals.\n* Every assignment `G → A` into an additive commutative group extends uniquely to an additive shadow `DualCharge G →+ A`.\n* Such shadows preserve tensor composition (addition) and duality (negation).\n* Three separately named sectors—standing for decategorified TQFT, CFT, and string data—bundle uniquely into one product-valued shadow. This is a rigorous sense in which they can be components of one universal object; it does **not** claim that the actual analytic and higher-categorical theories have been identified.\n* Evaluation is explicitly a finite `Finsupp.sum`.\n* Arbitrary Boolean data embed injectively into positive-charge shadows valued in `ZMod 2`, and each bit is recovered by singleton evaluation. Hence finite evaluation is computable relative to generator data, while unrestricted generator data can carry arbitrary oracle information.\n\n## Disproved / rejected\n\nThe unqualified algebraic necessity of duals is false. A one-generator positive charge theory over `ℕ` has tensor composition but its generator has no additive inverse. Thus a theorem forcing duals requires substantive assumptions—such as full dualizability—not merely the word “theory.” This also blocks the stronger slogan that *any* physical theory must already be an `(∞,2)`-category with duals.\n\n## Next formalization targets\n\n1. Replace the decategorified free abelian group by a symmetric monoidal category with explicitly dualizable objects.\n2. Formalize a low-dimensional cobordism category (starting with oriented 1-cobordisms), prove its generators-and-relations presentation, and derive classification of 1D TQFTs.\n3. Lift the universal property through bicategories before attempting complete Segal spaces or another model of `(∞,2)`-categories.\n4. Distinguish field theories by their actual extra structure: locality, conformal structure, supersymmetry, boundary conditions, and analytic constraints. Product bundling alone is not physical unification.\n5. State computability parametrically: define effective encodings of generators and target operations, prove evaluation algorithms under those assumptions, and separately instantiate generator assignments with formally noncomputable predicates.\n6. Formulate a defensible “theory of everything” conjecture only after specifying an observational semantics and a universality criterion connecting mathematical models to experiments.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.30000000000000004,
+      "domains": [
+        "Algebra",
+        "Computation"
+      ],
+      "github_issue": 0,
+      "id": "fd_0480",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "Pruned during future directions cleanup (dead end / trivial)",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "961be33a",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/961be33a",
+      "status": "pruned",
+      "thread_id": "th_1cff989f",
+      "timestamp": "2026-07-19T19:32:44.018487+00:00",
+      "title": "The literal research slogan cannot presently be proved as stated: “theory of eve"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "# Future Directions\n\n## Results established\n\nThe formal development in `Speculative/CategoryDNA.lean` uses a precise minimal semantics:\na theory retains a type of models, and its genome is the discrete category on that type.\nWithin this semantics it proves:\n\n1. **Exact Morita characterization.** Type-level equivalence of model collections is\n   equivalent to categorical equivalence of their genomes.\n2. **Composition.** Morita equivalences compose.\n3. **Classification of one-axiom mutations.** If mutation adjoins a predicate `P` and\n   the evident forgetful functor has a right adjoint, then every old model already\n   satisfies `P`. Conversely, if every model satisfies `P`, the adjunction exists.\n4. **Counterexample to the unrestricted mutation slogan.** The one-model theory\n   mutated by the false axiom has no such right adjoint.\n5. **Positive restricted evolutionary-path result.** Every equivalence of genomes is\n   itself an adjunction step.\n\nThus, under discrete semantics, the proposed mutation principle is not merely\noccasionally false: the existence of the relevant right adjoint is equivalent to the\nnew axiom being semantically redundant.\n\n## Limits and next steps\n\nThe formalization intentionally does not claim that an arbitrary first-order,\nhigher-order, or geometric theory is determined by a bare type of models. Ordinary\ncategories of models have nontrivial homomorphisms, and standard notions of Morita\nequivalence vary with the chosen logic. A stronger continuation should:\n\n- define signatures, syntax, interpretations, and model homomorphisms;\n- distinguish syntactic Morita equivalence from equivalence of model categories;\n- require equivalences compatible with underlying-set or semantic functors when that\n  structure is part of the intended semantics;\n- investigate reflective and coreflective subcategories produced by axioms, where\n  genuine free completions or localizations can supply adjoints;\n- define “quotient step” and “evolutionary path” before attempting the full\n  decomposition conjecture;\n- test whether geometric morphisms, accessible localizations, or sketches give the\n  appropriate nontrivial replacement for the disproved unrestricted slogan.\n\n## Computational-evidence justification\n\nNo separate computational experiment was used. The claims concern universal\nproperties of functors and adjunctions rather than a finite numerical sequence. The\ncounterexample is structural: an adjunction counit in a discrete category would force\na proof of the newly adjoined predicate for every old model. Small-case enumeration\nwould only reproduce the formally proved classification and would not add meaningful\nevidence. Consequently there is no OEIS sequence or informative numerical plot.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.30000000000000004,
+      "domains": [
+        "Logic",
+        "Pythagorean"
+      ],
+      "github_issue": 0,
+      "id": "fd_0542",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "Pruned during future directions cleanup (dead end / trivial)",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "7fb32c18",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/7fb32c18",
+      "status": "pruned",
+      "thread_id": "th_0dc06923",
+      "timestamp": "2026-07-21T06:49:32.650013+00:00",
+      "title": "The formal development in `Speculative/CategoryDNA.lean` uses a precise minimal "
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "# Future Directions\n\n## Result of the contrarian test\n\nThe exact proposed fixed-point equation was formalized in\n`Catalog/Computation/ConsciousFixedPoints.lean` as\n\n\\[\n  \\exists P:T\\to\\mathrm{Prop},\\quad T \\simeq \\prod_{x:T} P(x).\n\\]\n\nIt collapses rather than generating incompleteness. The formal classification is\n\n\\[\n  \\mathrm{Conscious}(T) \\iff T \\simeq \\mathrm{Unit}.\n\\]\n\nConsequently:\n\n- every such `T` has decidable equality;\n- `Unit` is a concrete counterexample to the proposed undecidability claim;\n- `Bool` is not such a fixed point;\n- any two such fixed points are equivalent;\n- every such fixed point has cardinality one; and\n- every predicate on such a type is extensionally constant.\n\nThe reason is specific and mathematically informative: every fiber `P x` lies in\n`Prop`, so proof irrelevance makes the dependent product a subsingleton. The\nfixed-point equation transfers that collapse back to `T`. The equation also\nrules out the empty type, leaving exactly the singleton equivalence class.\n\n## Status of the original bold conjectures\n\n1. **“Every conscious type is undecidable.” — Disproved.** In fact, every type\n   satisfying the displayed definition has decidable equality.\n2. **“The fixed points form an arithmetical-style hierarchy.” — Disproved for\n   this definition.** All fixed points are mutually equivalent.\n3. **“Their cardinality is exactly the Church–Kleene ordinal.” — Not a\n   well-typed cardinal claim as stated, and incompatible with the classification\n   under the most direct interpretation.** The Church–Kleene object is an\n   ordinal, while “the collection of types” requires a universe and a specified\n   quotient or coding before it has a cardinality. Up to equivalence, the present\n   definition has exactly one class, represented by `Unit`.\n\n## Non-collapsing replacements worth studying\n\n### 1. Data-valued fibers\n\nReplace `P : T → Prop` with `F : T → Type v` and study\n\n\\[\n  T \\simeq \\prod_{x:T} F(x).\n\\]\n\nProof irrelevance no longer forces collapse. A useful next task is to classify\nfinite solutions by the cardinal equation\n`|T| = ∏ x, |F x|`, then separate genuinely dependent examples from constant\nfunction-space fixed points.\n\n### 2. Coded syntax plus semantics\n\nGödel phenomena require effective syntax, coding, and a truth/provability\nrelation. Introduce:\n\n- a recursively enumerable language of type codes;\n- an interpretation partial function from codes to types or propositions;\n- substitution and a verified diagonal/fixed-point lemma;\n- a computability predicate for semantic decision procedures; and\n- consistency or soundness assumptions stated as theorem parameters.\n\nOnly in such a setting is “undecidable” a computability claim rather than merely\nabsence of a `Decidable` instance.\n\n### 3. Universe-sensitive self-reference\n\nLean’s universes prevent a type from literally containing all types at its own\nuniverse without a code layer. A disciplined model should distinguish:\n\n- an inductive universe of codes `Code : Type u`;\n- decoding `El : Code → Type v`;\n- positivity/guardedness conditions ensuring legitimate recursion; and\n- equivalence of decoded objects rather than definitional equality of universes.\n\n### 4. A hierarchy with a precise index set\n\nTo recover an arithmetical analogy, define levels from alternating effective\nquantifiers over a coded base (for example, computably enumerable predicates on\nnatural numbers), prove strictness by reductions, and only then investigate\ntransfinite iteration along computable well-orders.\n\n### 5. A corrected Church–Kleene statement\n\nA plausible ordinal claim would concern the **supremum of order types of\ncomputably presented well-founded recursive constructions**, not the cardinality\nof types. Such a project first needs formal definitions of recursive notation\nsystems and computable well-orders. The target should be phrased as an equality\nof ordinals or a cofinality theorem, not as a cardinal count of raw Lean types.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.30000000000000004,
+      "domains": [
+        "Logic",
+        "Pythagorean"
+      ],
+      "github_issue": 0,
+      "id": "fd_0543",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "Pruned during future directions cleanup (dead end / trivial)",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "cd0075c8",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/cd0075c8",
+      "status": "pruned",
+      "thread_id": "th_13621d63",
+      "timestamp": "2026-07-21T06:49:38.524989+00:00",
+      "title": "The exact proposed fixed-point equation was formalized in"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 1,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "# Future Directions: Functional Fibres and Subjective Structure\n\n## 1. Nontrivial qualia coverings\n\nConjecture: there are natural state spaces in which functional observation forms a nontrivial finite covering rather than a globally split product, so that local zombie twins exist but no continuous global choice of twin exists.\n\nThe key insight is that the present Boolean product is the trivial two-sheeted covering; replacing it by a twisted covering turns the global existence of a coherent zombie operation into a topological obstruction.\n\nWhy now? The fibre classification identifies exactly which part of the construction depends on a global split, making monodromy the next falsifiable obstruction.\n\n## 2. Stability under approximate functional equivalence\n\nConjecture: for compact metric state spaces with Lipschitz experience observables, sufficiently small functional distance and a fixed experiential contrast force a quantitative lower bound on the distortion of every attempted functional reconstruction of experience.\n\nThe key insight is that exact equality of functional profiles should have a robust analogue expressed as an approximation lower bound rather than a binary impossibility.\n\nWhy now? The zero-distance theorem isolates the exact case, while the factorization criterion identifies reconstruction as the quantity to perturb.\n\n## 3. Higher-dimensional experiential fibres\n\nConjecture: when experience takes values in a finite complex rather than a Boolean set, the homotopy type of each functional fibre bounds the number and organization of mutually functionally indistinguishable experiential states.\n\nThe key insight is that Boolean awareness records only a two-point contrast; homology and homotopy can detect loops, components, and higher-dimensional experiential variation invisible to functional observation.\n\nWhy now? The current gap space is classified by a forgotten Boolean factor, suggesting a systematic replacement of that factor by structured experiential geometries.\n\n## 4. Natural, rather than chosen, incompleteness bridges\n\nConjecture: a category of labelled functional quotients and a category of labelled independent-sentence extensions admit functors whose gap constructions are naturally equivalent on a nontrivial subcategory.\n\nThe key insight is that an equivalence of individual gap spaces becomes mathematically stronger when it commutes with maps between behavioural systems and maps between theories.\n\nWhy now? The established label-preserving isomorphism provides the objectwise component; naturality is the precise next test that distinguishes a structural bridge from a coincidental shared classifier.\n\n## 5. Definability boundary for experiential reconstruction\n\nConjecture: for effectively presented state spaces, fibre constancy characterizes extensional reconstruction, while computable reconstruction additionally requires an effective choice principle on the range of the functional map.\n\nThe key insight is that set-theoretic factorization uses a representative from every inhabited fibre, but effective reconstruction must produce those representatives uniformly.\n\nWhy now? The present factorization theorem exposes the representative-selection step explicitly, isolating the exact location where computability can fail even after extensional obstructions disappear.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.6,
+      "domains": [
+        "Geometry",
+        "Logic"
+      ],
+      "github_issue": 0,
+      "id": "fd_0544",
+      "last_attempt_time": "2026-07-22T16:54:49.436371+00:00",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "Pruned during future directions cleanup (dead end / trivial)",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "d5fe8eb3",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/d5fe8eb3",
+      "status": "pruned",
+      "thread_id": "th_e1e49a03",
+      "timestamp": "2026-07-21T06:49:44.327570+00:00",
+      "title": "Conjecture: there are natural state spaces in which functional observation forms"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 1,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "# Future directions\n\n## Result status\n\nThe motivating fixed-length claim was **disproved**, not proved. With a finite alphabet and a fixed length bound (such as 100), the collection of encoded statements is finite. Once a Boolean semantics is fixed, its exact truth table is a finite, computable oracle. The Lean theorem `finite_language_has_accurate_oracle` constructs this oracle and proves 95% accuracy (in fact 100%). `finite_oracle_has_table` explicitly represents every such oracle as a finite list.\n\nA nearby bold uniform claim was also **disproved**: one oracle cannot be 95%-accurate against every possible semantics. The adversarial semantics formalized by `adversarialTruth` makes every answer incorrect, yielding `no_uniform_accurate_oracle`.\n\nA genuinely infinitary diagonal claim was **proved**: for any natural-number-indexed family of Boolean sequences, `diagonalJump` differs from its `k`th row at coordinate `k`. Therefore no such family enumerates all Boolean sequences (`no_enumeration_of_boolean_sequences`). This captures the structural diagonal idea behind jump constructions, but it is intentionally not presented as a complete formalization of the Turing jump.\n\n## Important modeling distinctions\n\n1. **Finite domain versus practical feasibility.** A truth table can be astronomically large while remaining computable. Complexity, learnability, storage, and computability are different notions.\n2. **Semantic truth versus provability.** For bounded strings, a fixed external truth assignment has a finite table. For all arithmetic sentences, semantic truth and theoremhood lead to genuinely unbounded computability questions.\n3. **Pointwise accuracy versus uniform accuracy.** Existence of a good oracle for one fixed semantics is compatible with impossibility of one predictor working for all semantics.\n4. **Unknown answers.** This development counts `unknown` as incorrect. Other scoring rules should be stated explicitly and may change finite accuracy bounds, though not the finite-table counterexample.\n5. **Counting versus diagonalization.** Counting finite functions only gives exponential cardinalities. Noncomputability requires an unbounded effective presentation plus a diagonal or reduction argument.\n\n## Stronger formalization targets\n\n- Define a syntax of first-order arithmetic, a length function, and a satisfaction predicate for the standard natural numbers. Prove explicitly that the subtype of formulas of length at most 100 is finite.\n- Introduce a concrete partial-recursive machine model and prove the undecidability of its halting set. Then define a genuine jump operator relative to an oracle and prove that the jump is not computable from the original oracle.\n- Replace arbitrary Boolean semantics by arithmetic truth and formalize a reduction from halting to truth for an unbounded class of encoded sentences.\n- Study resource-bounded variants: circuit size, advice length, sample complexity, and probabilistic average-case accuracy. These are closer to the intended intuition than computability on a fixed finite domain.\n- Formalize distributions over statements. A meaningful “95% accurate” claim needs a specified finite benchmark or probability measure; accuracy without one is ambiguous.\n- Investigate whether a predictor can be both sound on definite answers and useful under an abstention budget. Without an abstention penalty, the constant `unknown` oracle can make some precision metrics vacuous.\n\n## Limits of the present results\n\nThe development does not identify human intuition with a noncomputable operation, and the formal results provide no evidence for that philosophical identification. It proves only a precise finite counterexample, a uniform adversarial impossibility, finite cardinality formulas, and an elementary Cantor-style diagonal theorem. Connecting mathematical discovery to the computability-theoretic jump would require a defensible formal model of discovery and a reduction theorem; neither is currently supplied.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.2,
+      "domains": [
+        "Computation",
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_0555",
+      "last_attempt_time": "2026-07-22T18:43:43.089102+00:00",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "Pruned during future directions cleanup (dead end / trivial)",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "fee59e0b",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/fee59e0b",
+      "status": "pruned",
+      "thread_id": "th_a8f07f33",
+      "timestamp": "2026-07-21T14:31:25.130869+00:00",
+      "title": "The motivating fixed-length claim was **disproved**, not proved. With a finite a"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 2,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "abab9083",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Formalize the Penrose-Hameroff Orch OR hypothesis: consciousness arises from quantum coherence in microtubules. Define: a 'conscious event' is the collapse of a superposition in a microtubule, with timing ~500 ms (the gamma synchrony). Prove: the Penrose objective reduction (OR) threshold is E ~ h/(t * sqrt(N)) where N is the number of tubulins. Show: for N ~ 10^11 tubulins, the coherence time is ~10^-33 s — too short for room temperature. Conjecture: if quantum consciousness exists, it requires a warm-coherent mechanism not yet formalized. Explore: formalize 'non-computable consciousness' — does the brain compute beyond Turing?",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Novelty",
+        "Physics"
+      ],
+      "github_issue": 0,
+      "id": "fd_0576",
+      "last_attempt_time": "2026-07-23T02:30:53.711076+00:00",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.85,
+      "proof_strategy": "",
+      "prune_reason": "Pruned during future directions cleanup (dead end / trivial)",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "seed",
+      "source_path": "seed:manual_v2",
+      "status": "pruned",
+      "thread_id": "",
+      "timestamp": "2026-07-21T23:19:06.708946+00:00",
+      "title": "Moonshot: Quantum Consciousness — Penrose-Hameroff Orchestrated Reduction"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Building on cycle 227d6015 (Q=0.750), which proved 19 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Freeman Dyson's idea that intelligence grows without limit in the deep future. Define: 'intelligence growth rate' as the rate at which a civilization discovers new theorems. Prove: if the growth rate is superexponential (faster than 2^(2^n)), then the civilization discovers ALL theorems of",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "NumberTheory"
+      ],
+      "github_issue": 0,
+      "id": "push_227d6015_c2607b53",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.85,
+      "proof_strategy": "",
+      "prune_reason": "Pruned during future directions cleanup (dead end / trivial)",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "227d6015",
+      "source_path": "Moonshot: The Mathematics of Dyson's Intelligence Explosion",
+      "status": "pruned",
+      "thread_id": "",
+      "timestamp": "2026-07-22T14:30:05.202834+00:00",
+      "title": "Deepening: Moonshot: The Mathematics of Dyson's Intelligence Explosion"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 2,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "b648d8e5",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Building on cycle 5d6a1919 (Q=0.760), which proved 13 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future directions\n\n1. **Repair the definition before studying asymptotics.** The literal rule excludes one integer and collapses to the constant-one sequence. A revised rule must specify the candidate set and all exclusions—for example, whether terms must be new, increasing, or avoid sums of any p",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Novelty"
+      ],
+      "github_issue": 0,
+      "id": "push_5d6a1919_3925c6b7",
+      "last_attempt_time": "2026-07-23T18:46:30.739146+00:00",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.86,
+      "proof_strategy": "",
+      "prune_reason": "Pruned during future directions cleanup (dead end / trivial)",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "5d6a1919",
+      "source_path": "1. **Repair the definition before studying asymptotics.** The literal rule exclu",
+      "status": "pruned",
+      "thread_id": "",
+      "timestamp": "2026-07-22T18:42:28.004149+00:00",
+      "title": "Deepening: 1. **Repair the definition before studying asymptotics.** The literal rule exclu"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 1,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Cycle a88a4e5d (Q=0.626) proved 18 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Prove that cellular automata can perform transfinite computations when run on ordinals instead of N. Formalize a Rule 110 analog on omega-squared and prove it achieves super-Turing computation. Connec",
+      "domain_bridges": [],
+      "domain_quality_penalty": 1.0,
+      "domains": [
+        "Applications"
+      ],
+      "github_issue": 0,
+      "id": "sorry_fill_a88a4e5d_285a4c01",
+      "last_attempt_time": "2026-07-22T06:55:13.123044+00:00",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.6756666666666666,
+      "proof_strategy": "",
+      "prune_reason": "Pruned during future directions cleanup (dead end / trivial)",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "a88a4e5d",
+      "source_path": "Cellular Automata at the Ordinals: Transfinite Computation",
+      "status": "pruned",
+      "thread_id": "",
+      "timestamp": "2026-07-19T11:52:43.410408+00:00",
+      "title": "Close Proofs: Cellular Automata at the Ordinals: Transfinite Computation"
+    }
+  ],
   "recent_domain_counts": {},
   "recent_theme_keywords": {},
   "selection_log": [
