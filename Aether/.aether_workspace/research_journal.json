@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "65eb2137",
-      "domain": "Logic",
-      "key_insight": "# Future directions\n\n1. **Intrinsic curvature identification.** The proved curvature formula\n   \\[\n   K(x,y)=-\\cosh^2 y+\\frac{1-\\sinh^2 y}{\\cosh^2x\\cosh^2y}\n   \\]\n   is nonpositive everywhere, vanishe",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 40,
-      "timestamp": "2026-07-18T07:45:34",
-      "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
-    },
-    {
       "cycle_id": "f25f9735",
       "domain": "Cryptography",
       "key_insight": "# Future Directions: Geometric Constraints on Quantum-Code Parameters\n\n## 1. Geometric Defect as a Capacity Density\n\nFor any family of local stabilizer codes admitting a geometric realization, conject",
@@ -2501,6 +2491,16 @@
       "theorem_count": 15,
       "timestamp": "2026-07-23T23:12:20",
       "title": "Moonshot: Quantum Consciousness — Penrose-Hameroff Orchestrated Reduction"
+    },
+    {
+      "cycle_id": "2c3f15cd",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions — Analogy as a Mathematical Operation\n\nThe discrete model developed in this cycle scores an analogy `(fwd, bwd)` between\nfinite carriers by the number of concepts its round trip re",
+      "quality_score": 0.55,
+      "sorry_count": 0,
+      "theorem_count": 22,
+      "timestamp": "2026-07-23T23:12:25",
+      "title": "1. **Replace discrete carriers by actual categories.** Define an analogy from fu"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-23T23:12:20",
+  "last_updated": "2026-07-23T23:12:25",
   "open_questions": [
     {
       "context": "",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "b71e4678",
-        "quality": 0.67,
-        "theorems": 20,
-        "title": "ArXiv paper: From roots to paths: graphs simultaneously irregular with respect t"
-      },
-      {
         "cycle_id": "406a341d",
         "quality": 0.63,
         "theorems": 10,
@@ -3885,6 +3879,12 @@
         "quality": 0.7,
         "theorems": 19,
         "title": "Causal Loops in Category Theory: When Composition Loops Back"
+      },
+      {
+        "cycle_id": "2c3f15cd",
+        "quality": 0.55,
+        "theorems": 22,
+        "title": "1. **Replace discrete carriers by actual categories.** Define an analogy from fu"
       }
     ],
     "Shared": [
