@@ -7781,6 +7781,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n1. **Universal pentagon theorem.** The concrete 5-cycle instance is now formalized in\n   `Core.lean` (`Pentagon.pentagon_mpf`, `Pentagon.pentagon_valency_restriction`), giving\n   an explicit nontrivial factorization `A\u2081 A\u2082 = J - I` with `2 * 2 = 5 - 1`. The\n   remaining step is the *converse*: extend `complement_valency_restriction` with the\n   loopless, symmetric, association-scheme intersection-number hypotheses and prove that\n   any nontrivial factorization of `J-I` forces five vertices and two valency-two factors.\n2. **Spectral criterion.** Develop the simultaneous diagonalization of the Bose\u2013Mesner\n   algebra and prove the coordinatewise eigenvalue criterion\n   `theta_S(j) * theta_T(j) = theta_U(j)`.\n3. **Rank obstruction.** Combine the spectral criterion with rank inequalities for\n   matrix products. Formalize the extremal equality case in which every nonzero target\n   eigenvalue is `\u00b1k(U)`, and connect this to bipartiteness.\n4. **Two-class classification.** Encode strongly regular graph parameters and derive the\n   parameter equations imposed by an MPF, culminating in the `C\u2085` classification.\n5. **P-polynomial schemes.** Formalize the distance-regular three-term recurrence for\n   `A\u2081 A\u1d62` and classify when all coefficients are zero or one with loopless support.\n6. **Hamming schemes.** Define Hamming-distance relations on `Fin d \u2192 Fin q`, prove their\n   intersection-number formula, and formalize the binary identity\n   `A\u2081 A_d = A_{d-1}` together with the nonexistence result for `q > 2`.\n7. **Rectangular and directed extensions.** The unique-witness criterion in `Core.lean`\n   does not require symmetry. It can support analogous results for coherent\n   configurations, directed relations, and incidence matrices of finite geometries.\n",
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_0618",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "07e03295",
+    "status": "available",
+    "timestamp": "2026-07-23T20:28:41.148428+00:00",
+    "title": "1. **Universal pentagon theorem.** The concrete 5-cycle instance is now formaliz"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle 1a27f9f3 (Q=0.700) proved 15 theorems in Combinatorics but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Define a natural metric on the space of all mathematical statements and prove that the set of true statements has a fractal dimension. Show that this dimension is strictly between 0 and 1 (truth is sp",
     "domains": [
       "Combinatorics"

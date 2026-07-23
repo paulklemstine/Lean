@@ -1,5 +1,5 @@
-import Catalog.NumberTheory.GL1Correspondence
-import Catalog.Physics.MathematicsPhaseTransition
+import NumberTheory.GL1Correspondence
+import Physics.MathematicsPhaseTransition
 
 /-!
 # A threshold model for cyclotomic Langlands coherence

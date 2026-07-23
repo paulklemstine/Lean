@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "b3f0d755",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions: Coherent Composition Loops\n\n## 1. Faithful non-thin causal-loop bicategories\n\n**Conjecture.** There is a finite one-object bicategory whose 1-cell composition is not associative a",
-      "quality_score": 0.75,
-      "sorry_count": 0,
-      "theorem_count": 26,
-      "timestamp": "2026-07-20T02:08:12",
-      "title": "Causal Loops in Category Theory: When Composition Loops Back"
-    },
-    {
       "cycle_id": "c1b3f8da",
       "domain": "Pythagorean",
       "key_insight": "# Future Directions: Small Doubling in Ordered and Metabelian Groups\n\n## 1. Stability from near-minimal collision surplus\n\n**Conjecture.** Let `S` be a finite nonempty subset of a right-ordered group.",
@@ -499,19 +489,19 @@
       "theorem_count": 20,
       "timestamp": "2026-07-23T18:46:07",
       "title": "The motivating fixed-length claim was **disproved**, not proved. With a finite a"
+    },
+    {
+      "cycle_id": "07e03295",
+      "domain": "Physics",
+      "key_insight": "# Future directions\n\n1. **Universal pentagon theorem.** The concrete 5-cycle instance is now formalized in\n   `Core.lean` (`Pentagon.pentagon_mpf`, `Pentagon.pentagon_valency_restriction`), giving",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 24,
+      "timestamp": "2026-07-23T20:28:42",
+      "title": "ArXiv paper: On Matrix Product Factorization in Association Schemes"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "717f7483",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions\n\n## What was established\n\nThe completed development has two complementary formalizations. `Catalog/NumberTheory/GodelCasino.lean` studies finite sequences of unit bets and their ac",
-      "quality_score": 0.75,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-07-18T06:56:52",
-      "title": "Godel's Casino: Incomplete but Winnable Games"
-    },
     {
       "cycle_id": "f0f3cf3d",
       "domain": "Physics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 20,
       "timestamp": "2026-07-23T18:46:07",
       "title": "The motivating fixed-length claim was **disproved**, not proved. With a finite a"
+    },
+    {
+      "cycle_id": "07e03295",
+      "domain": "Physics",
+      "key_insight": "# Future directions\n\n1. **Universal pentagon theorem.** The concrete 5-cycle instance is now formalized in\n   `Core.lean` (`Pentagon.pentagon_mpf`, `Pentagon.pentagon_valency_restriction`), giving",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 24,
+      "timestamp": "2026-07-23T20:28:42",
+      "title": "ArXiv paper: On Matrix Product Factorization in Association Schemes"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "11a0fcb2",
-      "domain": "Logic",
-      "name": "geo_eq_proj_line",
-      "quality": 0.74
-    },
-    {
-      "cycle_id": "11a0fcb2",
-      "domain": "Logic",
-      "name": "geo_periodic",
-      "quality": 0.74
-    },
-    {
-      "cycle_id": "b31f2cf9",
-      "domain": "Logic",
-      "name": "ranges",
-      "quality": 0.83
-    },
     {
       "cycle_id": "b31f2cf9",
       "domain": "Logic",
@@ -2803,9 +2785,27 @@
       "domain": "Bridges",
       "name": "exactOracle_correct",
       "quality": 0.73
+    },
+    {
+      "cycle_id": "07e03295",
+      "domain": "Physics",
+      "name": "adjacency_mul_apply_eq_card",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "07e03295",
+      "domain": "Physics",
+      "name": "card_filter_univ_eq_one_iff_existsUnique",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "07e03295",
+      "domain": "Physics",
+      "name": "card_filter_univ_eq_zero_iff_not_exists",
+      "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-23T18:46:07",
+  "last_updated": "2026-07-23T20:28:42",
   "open_questions": [
     {
       "context": "",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "18617733",
-        "quality": 0.73,
-        "theorems": 0,
-        "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
-      },
-      {
         "cycle_id": "3aa7c983",
         "quality": 0.62,
         "theorems": 13,
@@ -3761,6 +3755,12 @@
         "quality": 0.69,
         "theorems": 8,
         "title": "ArXiv paper: Counting Odd Cycles in Graphs with Bounded Circumference"
+      },
+      {
+        "cycle_id": "07e03295",
+        "quality": 0.7,
+        "theorems": 24,
+        "title": "ArXiv paper: On Matrix Product Factorization in Association Schemes"
       }
     ],
     "Probability": [
