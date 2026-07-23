@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "e9a483ed",
-      "domain": "Computation",
-      "key_insight": "# Future Directions: The L-Function Census\n\n## 1. Faithful arithmetic coding of the Selberg class\n\n**Conjecture.** Every element of the Selberg class is uniquely determined by a finite arithmetic pack",
-      "quality_score": 0.76,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-07-18T06:23:02",
-      "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
-    },
-    {
       "cycle_id": "3aa7c983",
       "domain": "Physics",
       "key_insight": "# Future directions\n\n## What the formal chain establishes\n\n`Catalog/Physics/ImpossibilityResults/FreeActionPrinciple.lean` gives a precise task model: an invariant observable is required to distinguis",
@@ -2501,6 +2491,16 @@
       "theorem_count": 3,
       "timestamp": "2026-07-23T18:45:55",
       "title": "Conjecture: there are natural state spaces in which functional observation forms"
+    },
+    {
+      "cycle_id": "f14d2570",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nThis project formalizes the one-dimensional online primitive underlying the paper\n*\"Online Beck–Fiala Down to Logarithmic Sparsity\"* — the compactly supported,\nonline self-balanci",
+      "quality_score": 0.55,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-07-23T18:46:00",
+      "title": "ArXiv paper: Online Beck--Fiala Down to Logarithmic Sparsity"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.76
     }
   ],
-  "last_updated": "2026-07-23T18:45:55",
+  "last_updated": "2026-07-23T18:46:00",
   "open_questions": [
     {
       "context": "",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "9fc00121",
-        "quality": 0.77,
-        "theorems": 0,
-        "title": "Computational Complexity of Alien Civilizations"
-      },
-      {
         "cycle_id": "7286e7be",
         "quality": 0.74,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.69,
         "theorems": 0,
         "title": "Moonshot: Brain-Computer Interface Mathematics — Neural Coding Theorems"
+      },
+      {
+        "cycle_id": "f14d2570",
+        "quality": 0.55,
+        "theorems": 10,
+        "title": "ArXiv paper: Online Beck--Fiala Down to Logarithmic Sparsity"
       }
     ],
     "NumberTheory": [
