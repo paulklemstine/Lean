@@ -18,7 +18,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum-Pythagorean-Walk: Polynomial Time Integer Factorization via Tree Resonance"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "29ba074c",
     "description": "Formally proves existence and strict convexity of an energy spectrum functional E(a,b,c; N) over Berggren tree paths that guides a deterministic path to a non-trivial factor of N.",
     "domains": [
       "Pythagorean",
@@ -28,7 +28,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.98,
     "research_mode": "team",
     "source_exp_id": "pythagorean_factorization_breakthrough",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-23T20:10:45.687109+00:00",
     "title": "Pythagorean-Energy-Spectrum: Gradient Descent Factoring on the Berggren Tree"
   },
@@ -1772,7 +1772,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Rucker: The Lifebox \u2014 Information-Theoretic Identity"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b853373a",
     "description": "Cycle dd6a308e (Q=0.790) proved 11 theorems in Pythagorean but left 13 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Building on cycle 7881a56b (Q=0.790), which proved 16 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting.",
     "domains": [
       "Pythagorean"
@@ -1781,7 +1781,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8400000000000001,
     "research_mode": "team",
     "source_exp_id": "dd6a308e",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-20T09:41:55.293921+00:00",
     "title": "Close Proofs: ArXiv paper: Reproducing the k-copwin Algorithm: Theory vs. Implementa"
   },
@@ -6072,7 +6072,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The four files in `MachineLearning/HodgeCycles/` give a complete finite-dimensio"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a9c9c0c1",
     "description": "# Future Directions\n\n## 1. The symmetric local lemma from finite survivor ratios\n\n**Conjecture.** For a finite family of bad events with dependency degree at most `d`, uniform probability at most `p`, and `e p (d+1) \u2264 1`, every finite survivor set retains a positive fraction after one more constraint; consequently the full survivor set is nonempty.\n\nThe key insight is that the local lemma\u2019s analytic inequality should be isolated as a lower bound on a sequence of finite cardinality ratios, after which conditional avoidance follows by induction.\n\n**Why now?** The finite conditional-avoidance theorem identifies the exact interface that the dependency calculation must satisfy, separating probabilistic estimates from the combinatorial existence mechanism.\n\n## 2. Witness-tree bounds for deterministic resampling\n\n**Conjecture.** Under the standard variable model and the symmetric local-lemma criterion, the number of resamplings charged to any bad event is bounded in expectation by the total weight of its proper witness trees, and this series is at most `1/d` when `d > 0` under the canonical parameter choice.\n\nThe key insight is that each resampling log admits an injective encoding by a rooted dependency tree, turning runtime analysis into a convergent combinatorial generating function.\n\n**Why now?** The survivor formulation clarifies existence but not search; witness trees are the natural next structure for converting that existence argument into an explicit terminating procedure.\n\n## 3. A quantitative Ramsey lower bound at the classical exponential scale\n\n**Conjecture.** For all sufficiently large `k`, there is a red-blue coloring of the edges of `K_{\u230a2^{k/2}\u230b}` with no monochromatic `K_k`.\n\nThe key insight is that the exact Boolean-lattice event count already contains the probabilistic argument; the remaining obstacle is a sufficiently sharp uniform estimate for the binomial coefficient in the first-moment inequality.\n\n**Why now?** Exact finite counting is established, so asymptotic arithmetic\u2014not graph encoding or probability theory\u2014is the sole remaining step toward the stated exponential scale.\n\n## 4. A common entropy inequality for Ramsey avoidance and Tur\u00e1n extremality\n\n**Conjecture.** There is a finite entropy functional on edge-color distributions whose sublevel estimates imply the Ramsey first-moment bound, while its constrained maximizers over clique-free graphs are balanced Tur\u00e1n partitions.\n\nThe key insight is that random avoidance and deterministic extremality are dual counting problems: one controls the volume of forbidden coloring cylinders, while the other maximizes edge support under a forbidden-subgraph constraint.\n\n**Why now?** The two theories have been placed in a shared finite framework with exact cardinality statements, making an entropy-level bridge both precise and falsifiable.\n\n## 5. Sharp stability for near-extremal triangle-free graphs\n\n**Conjecture.** For every positive `\u03b5` there is a positive `\u03b4` such that every triangle-free graph with at least `(1/4-\u03b4)n\u00b2` edges differs from a complete bipartite graph in at most `\u03b5n\u00b2` edge edits.\n\nThe key insight is that equality in the balanced Tur\u00e1n calculation forces a two-part structure, and near-equality should quantitatively constrain the variance of part sizes and the number of missing cross edges.\n\n**Why now?** Exact sharpness is available as a rigid endpoint; stability is the next test of whether the extremal proof retains enough quantitative information to control approximate optimizers.\n",
     "domains": [
       "Algebra",
@@ -6082,7 +6082,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "08d3e2eb",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T05:39:29.139889+00:00",
     "title": "**Conjecture.** For a finite family of bad events with dependency degree at most"
   },
@@ -6160,21 +6160,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-19T07:21:25.546625+00:00",
     "title": "`Catalog/Pythagorean/TropicalCryptography/EigenvalueLeakage.lean` proves the exa"
-  },
-  {
-    "consumed_by_exp_id": "274c401c",
-    "description": "# Future Directions: Structural Register Allocation\n\n## 1. Weighted elimination-optimal spilling\n\n**Conjecture.** For a chordal interference graph with nonnegative vertex spill costs and a fixed register budget, there is an optimal spill set obtainable by dynamic programming over a clique tree, with state space bounded by a function of the maximum clique size.\n\nThe key insight is that chordality localizes all coloring obstructions to maximal cliques, while a clique tree records exactly how those obstructions overlap. **Why now?** The clique spill lower bound identifies the correct local constraint, but the failure of degree-only optimality leaves open how to combine local constraints globally and economically.\n\n## 2. Register-class list coloring with elimination certificates\n\n**Conjecture.** If every variable in a chordal interference graph has a list of admissible registers whose size is at least the largest clique containing that variable, then a valid list allocation exists.\n\nThe key insight is that a perfect elimination ordering exposes a local clique at every coloring step, suggesting a vertex-sensitive strengthening of the uniform clique bound. **Why now?** Modern architectures divide registers into heterogeneous classes, so a theorem with local list bounds would connect chordal perfectness to realistic allocation constraints.\n\n## 3. Semantic characterization of chordal SSA interference\n\n**Conjecture.** An SSA program whose live ranges are connected subtrees of a dominance tree has a chordal interference graph, and every finite chordal graph arises from such a subtree-liveness instance.\n\nThe key insight is that intersection graphs of subtrees of a tree are chordal, turning compiler dominance into a graph-theoretic representation theorem. **Why now?** Exact clique-based allocation is useful only when the semantic conditions producing the elimination structure are explicit and testable.\n\n## 4. A sharp boundary for degree-based spilling\n\n**Conjecture.** On unweighted chordal graphs, repeatedly deleting a maximum-degree vertex minimizes the number of spills needed for a one-register budget if and only if every block is a clique.\n\nThe key insight is that the three-vertex path already separates degree from chromatic demand, while block graphs form a natural class where local degree and clique congestion may align. **Why now?** The universal maximum-degree heuristic is false without restrictions; identifying its exact validity class would turn a heuristic into a structural theorem.\n\n## 5. Fixed-parameter allocation beyond chordality\n\n**Conjecture.** For interference graphs with chordality defect at most `d`\u2014meaning deletion of at most `d` vertices makes the graph chordal\u2014optimal weighted spilling and register allocation are fixed-parameter tractable in `d` plus the target register count.\n\nThe key insight is that a small exceptional set can isolate all non-clique coloring obstructions, after which elimination-based methods handle the chordal remainder. **Why now?** Real interference graphs may be nearly, but not exactly, chordal; a defect parameter provides a falsifiable bridge between exact structure and practical instances.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0415",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "192fa110",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T07:21:35.711367+00:00",
-    "title": "**Conjecture.** For a chordal interference graph with nonnegative vertex spill c"
   },
   {
     "consumed_by_exp_id": "",
@@ -6340,21 +6325,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-19T10:06:46.041462+00:00",
     "title": "The completed Lean development isolates a precise abstract diagonal argument, bu"
-  },
-  {
-    "consumed_by_exp_id": "6c3aaf50",
-    "description": "# Future Directions\n\n1. **Internal Cartesian-closed formulation.** Generalize the type-level Lawvere theorem to an arbitrary locally small Cartesian closed category using global elements and a categorical notion of point-surjectivity. This would distinguish carefully between ordinary epimorphisms and the stronger hypothesis needed by diagonal evaluation.\n\n2. **Synthetic domain theory.** Replace the imported complete-lattice fixed-point theorem with an account of recursive types and Scott-continuous maps. The target is an approximation theorem showing that the least emergent fixed point is the supremum of finite stages from bottom.\n\n3. **A genuine topology of strange loops.** The present formalization proves the algebraic closure equation for self-observation. A stronger development should define a directed simplicial set or graph of modeling levels, construct the diagonal cycle, and calculate a nontrivial invariant (for example, a fundamental-group or homology class). Calling the current equation \u201ctopology\u201d is only an interpretation, not yet a topological theorem.\n\n4. **Restricted self-models.** Complete Boolean self-models are impossible by Cantor diagonalization. Investigate partial, computable, modal, or stratified self-models and characterize exactly which classes of observations can be represented without contradiction.\n\n5. **Yoneda\u2013Lawvere bridge.** Formalize the naturality of diagonal evaluation and derive Lawvere's theorem directly from exponentials, evaluation, and the Yoneda correspondence, rather than presenting the two results as complementary theorems in one file.\n\n6. **Uniqueness and dynamics.** Add contractive or order-theoretic hypotheses under which the emergent fixed point is unique, and prove convergence of iterative self-model updates to that point.\n\n7. **Intensional type theory.** Study guarded recursion, later modalities, and recursive types, where self-reference is controlled by time or modality. Compare their consistent fixed points with the extensional completeness obstruction proved here.\n\n8. **Empirical modeling boundary.** Any application to biological consciousness requires a separately specified state space, observation type, and measurable dynamics. The current results establish abstract mathematical constraints only; they do not identify a physical or cognitive system satisfying the hypotheses.\n",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_0439",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "e5cc823f",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T10:06:53.358179+00:00",
-    "title": "1. **Internal Cartesian-closed formulation.** Generalize the type-level Lawvere "
   },
   {
     "consumed_by_exp_id": "",
@@ -7496,7 +7466,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "**Conjecture.** Every countable dependency relation that is well-founded and has"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "82236c9f",
     "description": "# Future Directions: Dyson-Swarm Thermodynamic Optimization\n\n## 1. Strictly convex radiator laws\n\n**Conjecture.** For every strictly convex radiator-cost function, every finite swarm with fixed total collecting area has a unique cost-minimizing allocation, namely equal area per collector; moreover, the minimum decreases monotonically when any collector is split into two independently radiating collectors.\n\nThe key insight is that the proved quadratic result is a variance inequality, while equal partition should follow more broadly from strict convexity and majorization.\n\n**Why now?** The quadratic model isolates the exact structural step that must be replaced by Jensen's inequality, making the generalization both testable and directly comparable with the established optimum.\n\n## 2. Joint collection\u2013radiation optimization\n\n**Conjecture.** In an isotropic star model with positive collector temperatures, Stefan\u2013Boltzmann emission, and a fixed material budget, the power-maximizing swarm has a computable optimal orbital radius at which intercepted power and radiative rejection constraints are simultaneously tight.\n\nThe key insight is that collecting area enters linearly, incident flux falls as inverse radius squared, and thermal emission grows as the fourth power of temperature, creating a constrained extremum rather than an unconditional preference for the smallest orbit.\n\n**Why now?** The present separation of geometry from thermal concentration supplies the two sides of the optimization, while an explicit radiation law would connect them without changing the resource-accounting layer.\n\n## 3. Occlusion-aware swarm capacity\n\n**Conjecture.** For collectors on finitely many spherical shells with bounded angular overlap, maximum captured luminosity is characterized by a submodular coverage function, and greedy placement achieves a universal constant-factor approximation while respecting per-collector thermal limits.\n\nThe key insight is that projected areas add only in the no-occlusion idealization; once shadows overlap, the lost flux behaves like a coverage penalty rather than a linear cost.\n\n**Why now?** The exact full-area theorem identifies additivity as the model's sharp boundary, so overlap is the first geometric correction that can falsify naive area accounting.\n\n## 4. Finite-time Landauer capacity at one astronomical unit\n\n**Conjecture.** Given stellar luminosity, operating duration, positive reservoir temperature, and a specified reversible overhead, the maximum number of irreversible bit erasures is bounded above and below by explicit expressions that agree asymptotically to first order in accumulated energy.\n\nThe key insight is that a radius alone cannot determine information capacity; a meaningful estimate must combine intercepted power, duration, temperature, and entropy loss.\n\n**Why now?** The calibrated bit-capacity theorem exposes every missing premise in the informal `10^50` estimate, allowing each physical parameter to be varied and empirically challenged.\n\n## 5. Reversible-computation frontier\n\n**Conjecture.** Under a fixed stellar power budget and bounded memory, any computation with sustained throughput above the irreversible Landauer rate must exhibit a quantitatively increasing fraction of logically reversible transitions, with a sharp tradeoff between memory reuse and heat rejection.\n\nThe key insight is that deterministic entropy loss is nonnegative and vanishes for injective transitions, so extreme throughput should force computation toward reversible dynamics rather than merely toward smaller devices.\n\n**Why now?** The entropy inequality and the energetic throughput bound are available in a common resource model; the remaining challenge is to introduce time, memory reuse, and a compositional transition system.",
     "domains": [
       "Geometry",
@@ -7506,7 +7476,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "3dce6722",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-22T12:13:53.710531+00:00",
     "title": "**Conjecture.** For every strictly convex radiator-cost function, every finite s"
   },
@@ -7791,8 +7761,38 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "team",
     "source_exp_id": "2c3f15cd",
     "status": "available",
-    "timestamp": "2026-07-23T23:21:45.691639+00:00",
+    "timestamp": "2026-07-23T23:12:23.650983+00:00",
     "title": "The discrete model developed in this cycle scores an analogy `(fwd, bwd)` betwee"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Clique-Localized Spilling and Structural Register Allocation\n\nThis cycle established the *local* theory of register spilling: on any interference\ngraph a clique of size `q` forces at least `q - k` spills under a `k`-register\nbudget, this bound is exactly achieved on a pure clique, and a spill-free\nallocation exists precisely when the graph is colorable within budget. These\nresults pin down the correct local constraint; the directions below push from local\ntightness toward global optimality.\n\n## 1. Clique-tree dynamic programming for exact weighted spilling\n\n**Conjecture.** On a chordal interference graph with nonnegative vertex spill costs\nand a fixed register budget `k`, a minimum-cost spill set can be computed by a\ndynamic program over any clique tree, with per-node state space bounded by a\nfunction of the maximum clique size.\n\nThe key insight is that the clique spill lower bound is already tight on a single\nclique, so the only remaining difficulty is bookkeeping how adjacent cliques share\nvertices \u2014 exactly the overlap information a clique tree records. **Why now?** With\nthe local constraint proved exactly tight, the open problem is purely the global\nassembly, and a clique tree turns that assembly into a bounded-width recursion.\n\n## 2. Vertex-local list bounds on chordal graphs\n\n**Conjecture.** If every variable in a chordal interference graph is given a list of\nadmissible registers whose size is at least the size of the largest clique\ncontaining that variable, then a spill-free list allocation exists.\n\nThe key insight is that a perfect elimination ordering exposes, at each removed\nvertex, a clique among its later neighbours, so the local list size needed is the\n*local* clique size rather than the global clique number. **Why now?** Real machines\npartition registers into heterogeneous classes, and the zero-spill characterisation\nproved here (allocation = coloring) is the exact hook onto which a list-coloring\nrefinement attaches.\n\n## 3. A sharp defect threshold for the clique lower bound\n\n**Conjecture.** The clique spill lower bound `\u03c9 - k` is globally tight exactly on the\nchordal graphs: for every non-chordal graph there is a register budget forcing\nstrictly more than `\u03c9 - k` spills, and for every chordal graph the bound is\nachievable for all budgets.\n\nThe key insight is that an induced chordless cycle raises the chromatic demand above\nthe clique number, creating spill obstructions that no single clique can witness \u2014\nthe `C_5` case already separates the two quantities. **Why now?** The lower bound is\nnow a theorem for all graphs, so the live question is precisely characterizing when\nit is *achievable*, and chordality is the natural candidate boundary.\n\n## 4. Elimination-ordered greedy allocation matches the clique optimum\n\n**Conjecture.** On a chordal interference graph, greedily allocating registers along a\nperfect elimination ordering (spilling a vertex only when its already-processed\nneighbours exhaust the budget) produces a spill set of minimum total count for the\none-cost model.\n\nThe key insight is that at each elimination step the processed neighbourhood is a\nclique, so a local greedy decision is forced by the same pigeonhole that drives the\nclique lower bound, making local greed globally optimal. **Why now?** The single-clique\noptimality result proved here is the base case; extending it along an elimination\nordering is the natural inductive next step and would convert a heuristic into a\ntheorem.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0623",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "274c401c",
+    "status": "available",
+    "timestamp": "2026-07-23T23:52:07.909452+00:00",
+    "title": "*local* theory of register spilling: on any interfere"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nDerived from the approximation-theoretic study of emergent fixed points, in\nwhich the stable self-image of a monotone self-observation operator on a\ncomplete lattice is shown to be the supremum of its finite iterates from the\nleast element \u2014 provided the operator is continuous \u2014 together with a sharp\ncounterexample showing that continuity is exactly the boundary of the theorem.\n\n## 1. A transfinite emergence hierarchy for discontinuous observers\n\n**Conjecture.** For a monotone but not necessarily continuous self-observation\noperator, the least fixed point is reached by continuing the finite stages into\nthe transfinite: iterate along ordinals, take suprema at limits, and the least\nfixed point appears at a stage bounded by the cofinality of the underlying\nlattice; the least ordinal at which it appears (the *emergence rank*) is an\norder invariant of the operator.\n\nThe key insight is that the strict gap between the finite-stage supremum and the\nleast fixed point is not a defect but a *measure*: the discontinuity witnessed on\ntwo stacked limit levels has emergence rank exactly two, and stacking `k` limit\nlevels produces rank exactly `k`.\n\nWhy now? The finite-stage approximation theorem and its discontinuous witness\nisolate the precise place where finite emergence fails, giving a concrete first\nrung of a transfinite ladder that can now be defined and calibrated.\n\n## 2. Uniqueness of the emergent state under contraction\n\n**Conjecture.** If a self-observation operator is strictly progressive below its\nleast fixed point \u2014 every non-fixed state moves strictly upward and the moves do\nnot accumulate short of the fixed point \u2014 then the least fixed point is the\n*unique* fixed point, and iterated self-modelling from any starting state, not\nonly from the least one, converges to it.\n\nThe key insight is that the pre-fixed-point bound (the emergent state lies below\nevery fixed point using monotonicity alone) already forces uniqueness the moment\none rules out plateaus: the only obstruction to a single global self-image is a\nsecond, higher fixed point, which strict progress forbids.\n\nWhy now? The separation established here between the monotone-only bound and the\ncontinuity-driven fixed point property shows exactly which extra hypothesis\n(progress, not mere monotonicity) is responsible for uniqueness, making the\ncontraction refinement a clean next step.\n\n## 3. Continuity as the exact frontier of finite self-knowledge\n\n**Conjecture.** Among all monotone self-observation operators on a fixed complete\nlattice, those whose emergent state equals their least fixed point are precisely\nthe continuous ones; equivalently, \"finite rounds of observation suffice\" is not\nmerely sufficient but *characterises* continuity on lattices rich enough to\ncarry a limit level.\n\nThe key insight is that the discontinuous witness fails the finite-suffices\nproperty in the sharpest possible way \u2014 its emergent state is a fixed point of no\niterate \u2014 suggesting that the implication \"finite-suffices \u21d2 continuous\" holds in\nfull generality, upgrading a one-directional theorem to an equivalence.\n\nWhy now? Having both the positive theorem (continuous \u21d2 finite-suffices) and an\nexplicit failure in the discontinuous case, the remaining converse is the natural\nand testable completion of the picture.\n\n## 4. Emergent fixed points of self-reference operators\n\n**Conjecture.** The negation/liar operator that obstructs complete self-knowledge\nis exactly the order-reversing map with no monotone approximation, whereas every\n*monotone* self-reference operator admits an emergent fixed point computed as the\nlimit of finite self-observation stages; consequently the consistent fragments of\na self-referential system are precisely its monotone sub-operators.\n\nThe key insight is that the diagonal obstruction and the emergent construction\nare two faces of one dichotomy: order-reversal kills fixed points, order-\npreservation guarantees an emergent one, and the finite-stage supremum makes the\nlatter constructive.\n\nWhy now? With the emergent fixed point pinned down as a concrete limit of finite\nstages, the long-standing contrast between paradoxical (order-reversing) and\nbenign (monotone) self-reference can be made quantitative rather than merely\nqualitative.\n",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_0624",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "6c3aaf50",
+    "status": "available",
+    "timestamp": "2026-07-23T23:52:12.591429+00:00",
+    "title": "Derived from the approximation-theoretic study of emergent fixed points, in"
   },
   {
     "consumed_by_exp_id": "",
