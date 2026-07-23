@@ -1,5 +1,115 @@
 [
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalizes a quantum random walk on the Berggren Pythagorean tree where constructive interference at energy spectrum minima collapses the state onto factors of N.",
+    "domain_bridges": [
+      "Pythagorean <-> Physics"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Physics"
+    ],
+    "id": "pyth_factor_quantum_26037bbe",
+    "lineage_refs": [],
+    "priority_score": 0.99,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "pythagorean_factorization_breakthrough",
+    "status": "available",
+    "timestamp": "2026-07-23T20:10:45.864682+00:00",
+    "title": "Quantum-Pythagorean-Walk: Polynomial Time Integer Factorization via Tree Resonance"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formally proves existence and strict convexity of an energy spectrum functional E(a,b,c; N) over Berggren tree paths that guides a deterministic path to a non-trivial factor of N.",
+    "domain_bridges": [
+      "Pythagorean <-> NumberTheory"
+    ],
+    "domains": [
+      "Pythagorean",
+      "NumberTheory"
+    ],
+    "id": "pyth_factor_energy_fa724b81",
+    "lineage_refs": [],
+    "priority_score": 0.98,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "pythagorean_factorization_breakthrough",
+    "status": "available",
+    "timestamp": "2026-07-23T20:10:45.687109+00:00",
+    "title": "Pythagorean-Energy-Spectrum: Gradient Descent Factoring on the Berggren Tree"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Derives exact spectral eigenvalue distributions of Berggren tree generator matrices M1, M2, M3 mod N proving that resonant energy frequencies align with prime factors of N = p * q.",
+    "domain_bridges": [
+      "Pythagorean <-> Cryptography"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Cryptography"
+    ],
+    "id": "pyth_factor_modular_1ae54410",
+    "lineage_refs": [],
+    "priority_score": 0.98,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "pythagorean_factorization_breakthrough",
+    "status": "available",
+    "timestamp": "2026-07-23T20:10:45.762312+00:00",
+    "title": "Berggren-Spectral-Eigenvalues: Modular Energy Resonance for RSA Integer Factorization"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Maps the Berggren tree to hyperbolic geodesics on the Poincaré disk, proving sub-linear path length O(log N) to factor N via geodesic energy minimization.",
+    "domain_bridges": [
+      "Pythagorean <-> Geometry"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "pyth_factor_hyperbolic_13cb023f",
+    "lineage_refs": [],
+    "priority_score": 0.97,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "pythagorean_factorization_breakthrough",
+    "status": "available",
+    "timestamp": "2026-07-23T20:10:45.812999+00:00",
+    "title": "Hyperbolic-Pythagorean-Geodesics: Sub-Linear Trajectory Factorization in Poincaré Disk"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Constructs a single EML exponential-logarithmic activation neuron that evaluates the Berggren node energy spectrum in O(1) time per tree step.",
+    "domain_bridges": [
+      "Pythagorean <-> EML"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Applications"
+    ],
+    "id": "pyth_factor_eml_02f073c8",
+    "lineage_refs": [],
+    "priority_score": 0.96,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "pythagorean_factorization_breakthrough",
+    "status": "available",
+    "timestamp": "2026-07-23T20:10:45.914797+00:00",
+    "title": "EML-Pythagorean-Operator: Single-Neuron Neural Energy Guided Tree Traversal"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
