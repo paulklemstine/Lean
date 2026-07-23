@@ -171,20 +171,27 @@ body {
     backdrop-filter: blur(10px);
 }
 
-.sidebar-header h2 {
+.sidebar-header h2,
+.sidebar h2,
+#home-link {
     font-family: var(--font-heading);
     font-weight: 700;
-    font-size: 1.4rem;
-    background: linear-gradient(135deg, #ff4466, #ffcc22, #44ff88, #22ccff, #8844ff, #ff44cc, #ff4466);
-    background-size: 300% 300%;
-    animation: gradientCycle 6s ease-in-out infinite;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
     letter-spacing: -0.02em;
 }
 
-.sidebar-header h2 a {
+.sidebar-header h2 a,
+.sidebar h2 a,
+#home-link,
+#home-link:visited,
+#home-link:hover,
+#home-link:active {
+    background: linear-gradient(90deg, #ff4466, #ffcc22, #44ff88, #22ccff, #8844ff, #ff44cc, #ff4466);
+    background-size: 300% 100%;
+    animation: gradientCycle 4s ease-in-out infinite;
+    -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    color: transparent;
+    text-decoration: none;
 }
 
 .version-badge {
