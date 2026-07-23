@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "f25f9735",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions: Geometric Constraints on Quantum-Code Parameters\n\n## 1. Geometric Defect as a Capacity Density\n\nFor any family of local stabilizer codes admitting a geometric realization, conject",
-      "quality_score": 0.75,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-18T08:49:08",
-      "title": "Gravity from Information: Spacetime as a Quantum Error-Correcting Code"
-    },
-    {
       "cycle_id": "71fc60c7",
       "domain": "Applications",
       "key_insight": "# Future directions\n\n1. Define periodic left and right shifts explicitly and derive the Rule 110 singleton theorem as a concrete corollary of `rule110_fixedPoints_card_of_right_transitive`.\n2. Replace",
@@ -2501,6 +2491,16 @@
       "theorem_count": 22,
       "timestamp": "2026-07-23T23:21:47",
       "title": "1. **Replace discrete carriers by actual categories.** Define an analogy from fu"
+    },
+    {
+      "cycle_id": "274c401c",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions: Clique-Localized Spilling and Structural Register Allocation\n\nThis cycle established the *local* theory of register spilling: on any interference\ngraph a clique of size `q` forces",
+      "quality_score": 0.55,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-23T23:52:09",
+      "title": "**Conjecture.** For a chordal interference graph with nonnegative vertex spill c"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-23T23:21:47",
+  "last_updated": "2026-07-23T23:52:09",
   "open_questions": [
     {
       "context": "",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "406a341d",
-        "quality": 0.63,
-        "theorems": 10,
-        "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
-      },
-      {
         "cycle_id": "fff627f3",
         "quality": 0.77,
         "theorems": 7,
@@ -3885,6 +3879,12 @@
         "quality": 0.55,
         "theorems": 22,
         "title": "1. **Replace discrete carriers by actual categories.** Define an analogy from fu"
+      },
+      {
+        "cycle_id": "274c401c",
+        "quality": 0.55,
+        "theorems": 11,
+        "title": "**Conjecture.** For a chordal interference graph with nonnegative vertex spill c"
       }
     ],
     "Shared": [
