@@ -6262,6 +6262,35 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis project formalizes the one-dimensional online primitive underlying the paper\n*\"Online Beck\u2013Fiala Down to Logarithmic Sparsity\"* \u2014 the compactly supported,\nonline self-balancing walk \u2014 in `Catalog/Novelty/OnlineBeckFialaWalk.lean`.\n\nNatural extensions, in rough order of difficulty:\n\n1. **Discrete Beck\u2013Fiala matrices, column sparsity `d = 1`.** Formalize a\n   `{0,1}` matrix with at most one nonzero per column (disjoint sets) and prove the\n   offline discrepancy bound `\u2264 1` via a balanced per-set coloring.\n\n2. **Classical offline Beck\u2013Fiala theorem `disc \u2264 2d \u2212 1`.** The floating-variables\n   / linear-algebra dimension argument: iterate over an active-constraint subspace of\n   positive dimension until a variable freezes at `\u00b11`. Requires finite-dimensional\n   linear algebra over `\u211d` and an incidence-counting lemma\n   (`#active constraints < #floating variables`).\n\n3. **Higher-dimensional online prefix discrepancy.** The heart of the paper: a\n   Metropolis fixed-point walk achieving prefix discrepancy `O(\u221ad)` for\n   `d \u2265 log(T)^{1+o(1)}`. This is a substantial research-level formalization target.\n\n4. **The `\u03c9(\u221ad)` online lower bound** for `d = o(log T)`, establishing optimality of\n   the online result, and the corollary resolving online vector balancing in the\n   Spencer setting.\n",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0615",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "f14d2570",
+    "status": "available",
+    "timestamp": "2026-07-23T18:45:59.367683+00:00",
+    "title": "This project formalizes the one-dimensional online primitive underlying the pape"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe repaired repeated-summand rule is now completely classified: its unique trajectory is `a n = 2n + 1`. The formal development also proves strict monotonicity, identifies its range with all odd natural numbers, and gives the exact cardinality of every finite prefix. The following are the main remaining extensions.\n\n1. **Distinct-summand repair.** Replace repeated-index pair sums by sums from distinct earlier indices. Determine the resulting greedy trajectory and classify its growth.\n2. **Higher-order forbidden sums.** Forbid sums of exactly `r` earlier values (with or without repetition). Establish existence, uniqueness, and quantitative growth as a function of `r`.\n3. **Alternative seeds.** Start from an arbitrary positive seed instead of one. Classify when the process becomes an arithmetic progression and when transient behavior persists.\n4. **Finite-prefix sumset structure.** Prove exact descriptions and cardinalities for the restricted pair-sum sets of the canonical trajectory.\n5. **Asymptotic density.** Upgrade the exact range classification to a filter-based proof that the value set has natural density `1/2`.\n6. **Stability under weakened greediness.** Study trajectories that select any admissible value within a fixed additive error of the least one, and bound their lower and upper densities.\n",
+    "domains": [
+      "Pythagorean",
+      "Logic"
+    ],
+    "id": "fd_0616",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "ddd2821f",
+    "status": "available",
+    "timestamp": "2026-07-23T18:46:02.662365+00:00",
+    "title": "The repaired repeated-summand rule is now completely classified: its unique traj"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle 1a27f9f3 (Q=0.700) proved 15 theorems in Combinatorics but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Define a natural metric on the space of all mathematical statements and prove that the set of true statements has a fractal dimension. Show that this dimension is strictly between 0 and 1 (truth is sp",
     "domains": [
       "Combinatorics"

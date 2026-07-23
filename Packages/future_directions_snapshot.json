@@ -8495,6 +8495,65 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis project formalizes the one-dimensional online primitive underlying the paper\n*\"Online Beck–Fiala Down to Logarithmic Sparsity\"* — the compactly supported,\nonline self-balancing walk — in `Catalog/Novelty/OnlineBeckFialaWalk.lean`.\n\nNatural extensions, in rough order of difficulty:\n\n1. **Discrete Beck–Fiala matrices, column sparsity `d = 1`.** Formalize a\n   `{0,1}` matrix with at most one nonzero per column (disjoint sets) and prove the\n   offline discrepancy bound `≤ 1` via a balanced per-set coloring.\n\n2. **Classical offline Beck–Fiala theorem `disc ≤ 2d − 1`.** The floating-variables\n   / linear-algebra dimension argument: iterate over an active-constraint subspace of\n   positive dimension until a variable freezes at `±1`. Requires finite-dimensional\n   linear algebra over `ℝ` and an incidence-counting lemma\n   (`#active constraints < #floating variables`).\n\n3. **Higher-dimensional online prefix discrepancy.** The heart of the paper: a\n   Metropolis fixed-point walk achieving prefix discrepancy `O(√d)` for\n   `d ≥ log(T)^{1+o(1)}`. This is a substantial research-level formalization target.\n\n4. **The `ω(√d)` online lower bound** for `d = o(log T)`, establishing optimality of\n   the online result, and the corollary resolving online vector balancing in the\n   Spencer setting.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0615",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "f14d2570",
+    "status": "available",
+    "timestamp": "2026-07-23T18:45:59.367683+00:00",
+    "title": "This project formalizes the one-dimensional online primitive underlying the pape"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe repaired repeated-summand rule is now completely classified: its unique trajectory is `a n = 2n + 1`. The formal development also proves strict monotonicity, identifies its range with all odd natural numbers, and gives the exact cardinality of every finite prefix. The following are the main remaining extensions.\n\n1. **Distinct-summand repair.** Replace repeated-index pair sums by sums from distinct earlier indices. Determine the resulting greedy trajectory and classify its growth.\n2. **Higher-order forbidden sums.** Forbid sums of exactly `r` earlier values (with or without repetition). Establish existence, uniqueness, and quantitative growth as a function of `r`.\n3. **Alternative seeds.** Start from an arbitrary positive seed instead of one. Classify when the process becomes an arithmetic progression and when transient behavior persists.\n4. **Finite-prefix sumset structure.** Prove exact descriptions and cardinalities for the restricted pair-sum sets of the canonical trajectory.\n5. **Asymptotic density.** Upgrade the exact range classification to a filter-based proof that the value set has natural density `1/2`.\n6. **Stability under weakened greediness.** Study trajectories that select any admissible value within a fixed additive error of the least one, and bound their lower and upper densities.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Logic"
+    ],
+    "id": "fd_0616",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "ddd2821f",
+    "status": "available",
+    "timestamp": "2026-07-23T18:46:02.662365+00:00",
+    "title": "The repaired repeated-summand rule is now completely classified: its unique traj"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## 1. Arithmetic truth as an unbounded limit of bounded truth tables\n\n**Conjecture.** For a concrete syntax of first-order arithmetic with a standard-model satisfaction relation, every length-bounded fragment has a finite exact truth table, but there is no single computable procedure whose restrictions produce all of these tables uniformly.\n\nThe key insight is that each finite stage is harmless while uniformity across all stages can encode the full unbounded truth problem.\n\n**Why now?** Exact finite tabulation and diagonal non-enumeration have been separated cleanly, making the missing uniformity condition precise enough to target by a reduction.\n\n## 2. Quantitative advice lower bounds for bounded semantics\n\n**Conjecture.** For binary statements of length `n`, any family of predictors that realizes every Boolean semantics exactly requires at least `2^n` bits of worst-case advice; under a 95-percent Hamming-accuracy requirement, the optimal advice length is governed asymptotically by the volume of radius-0.05 Hamming balls in the Boolean cube.\n\nThe key insight is that finite computability does not remove information-theoretic storage barriers, and approximate prediction converts truth tables into a covering-code problem.\n\n**Why now?** The exact table theorem identifies the ambient Boolean cube, while the adversarial theorem shows that semantics-free guarantees need additional information.\n\n## 3. Sound abstention under a coverage constraint\n\n**Conjecture.** If definite answers must always be sound and an oracle must answer on at least a fixed positive fraction of every sufficiently rich arithmetic benchmark, then no computable oracle attains the requirement uniformly over all length bounds.\n\nThe key insight is that abstention ceases to be vacuous only when soundness is paired with an explicit lower bound on coverage.\n\n**Why now?** The three-valued model already isolates abstention and counts it as failure, so alternative precision-and-coverage scoring rules can be compared without ambiguity.\n\n## 4. A concrete relativized jump and strict degree hierarchy\n\n**Conjecture.** A partial-recursive oracle-machine model admits a concrete jump operator whose iterates form a strict order embedding of the natural numbers into the Turing degrees.\n\nThe key insight is that diagonal complementation supplies the combinatorial obstruction, while a universal relativized machine supplies the effective coding needed to turn that obstruction into reducibility statements.\n\n**Why now?** The sequence-level diagonal theorem and the existing abstract strict jump hierarchy delimit exactly what must be added: a universal machine, relativized simulation, and the halting reduction.\n\n## 5. Distribution-sensitive limits for bounded truth prediction\n\n**Conjecture.** Under any computably samplable sequence of full-support distributions on arithmetic sentences whose lengths tend to infinity, no computable predictor is uniformly 95-percent accurate unless the distributions concentrate on a computably decidable semantic fragment.\n\nThe key insight is that meaningful average-case accuracy depends jointly on semantic hardness and on how probability mass moves through increasingly expressive fragments.\n\n**Why now?** Pointwise exactness on finite domains has ruled out bare fixed-length impossibility, leaving distributional uniformity as the natural testable replacement.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Computation",
+      "Pythagorean"
+    ],
+    "id": "fd_0617",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "2f329d75",
+    "status": "available",
+    "timestamp": "2026-07-23T18:46:07.073017+00:00",
+    "title": "**Conjecture.** For a concrete syntax of first-order arithmetic with a standard-"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Cycle 1a27f9f3 (Q=0.700) proved 15 theorems in Combinatorics but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Define a natural metric on the space of all mathematical statements and prove that the set of true statements has a fractal dimension. Show that this dimension is strictly between 0 and 1 (truth is sp",
     "domain_bridges": [],
     "domains": [

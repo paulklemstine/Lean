@@ -1,0 +1,25 @@
+--- NeuralCoding.lean
++++ NeuralCoding.lean
+@@ -45,6 +45,22 @@
+     activity is driven linearly by `d` behavioural degrees of freedom, the
+     neural manifold (the span of reachable activity) has dimension at most `d`.
+ 
++-- !-- Lab Notes -- !--
++Hypothesis (Hypothesizer): the information a neural population can carry is
++governed by simple combinatorics of binary patterns; sparsity trades raw
++capacity for energy efficiency, and the geometry of behaviour caps the geometry
++of neural activity.
++
++Experiment (Experimenter): we modelled a code as `Fin N → Bool`, counted states
++exactly (`2 ^ N`), counted weight-`k` states (`N.choose k`) via a bijection with
++`powersetCard`, and computed the mean weight (`N / 2`) by double counting.  The
++population-coding law is the algebraic core of the variance-of-the-mean
++computation, and the manifold bound is the rank–nullity bound for the linear
++behaviour→activity map.
++
++Analysis (Analyst): the binary model is deliberately lossy (no weights, no
++timing) yet already yields capacity, the sparse-coding efficiency gain, and the
++dimensional cap; richer models only refine these.
+ -/
+ 
+ 
