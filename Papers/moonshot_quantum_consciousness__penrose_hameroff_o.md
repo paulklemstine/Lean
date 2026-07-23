@@ -1,46 +1,72 @@
-# Computational Evidence: Objective Reduction Timescales
+# Computational Evidence — Penrose–Hameroff Orch OR
 
-Concise numerical support for the formal claims in `OrchestratedReduction.lean`.
+## 1. The Penrose objective-reduction (OR) time
 
-## 1. Energy–time reciprocity `E · t = ℏ`
+Penrose's collapse principle: a superposition of two mass distributions with
+gravitational self-energy difference `E` reduces after
 
-With `ℏ ≈ 1.0546 × 10⁻³⁴` J·s:
+    τ ≈ ħ / E,        ħ = 1.0546×10⁻³⁴ J·s.
 
-| collapse time t (s) | self-energy E = ℏ/t (J) | product E·t |
-|---------------------|-------------------------|-------------|
-| 0.5   (gamma window) | 2.11 × 10⁻³⁴            | 1.0546 × 10⁻³⁴ |
-| 10⁻³               | 1.05 × 10⁻³¹            | 1.0546 × 10⁻³⁴ |
-| 10⁻⁶               | 1.05 × 10⁻²⁸            | 1.0546 × 10⁻³⁴ |
+For a coherent superposition spread over `N` tubulins the mission's threshold
+form is `E = ħ / (t·√N)`, i.e. the predicted coherence/reduction time is
 
-The product is constant to machine precision — matching `orEnergy_mul_time`.
+    t(E, N) = ħ / (E · √N).
 
-## 2. Inverse square-root tubulin scaling `t(N) = ℏ / (E·√N)`
+## 2. Small-case table of `t(E, N)` at the thermal energy scale
 
-Fix `E = 10⁻²¹` J (≈ thermal `kT` at body temperature). Then:
+Thermal energy at body temperature `T = 310 K`:
+`E = k_B·T = 1.380649×10⁻²³ · 310 ≈ 4.28×10⁻²¹ J`.
 
-| N       | √N       | t(N) (s)   | t(N)/t(N₀) |
-|---------|----------|------------|------------|
-| 10⁴     | 10²      | 1.05 × 10⁻¹⁵ | 1     |
-| 4·10⁴   | 2·10²    | 5.27 × 10⁻¹⁶ | 1/2   |
-| 16·10⁴  | 4·10²    | 2.64 × 10⁻¹⁶ | 1/4   |
+| N (tubulins) | √N        | E·√N (J)     | t = ħ/(E·√N) (s) |
+|--------------|-----------|--------------|------------------|
+| 1            | 1         | 4.28e-21     | 2.46e-14         |
+| 10⁴          | 100       | 4.28e-19     | 2.46e-16         |
+| 10⁸          | 1.0e4     | 4.28e-17     | 2.46e-18         |
+| 10¹¹         | 3.16e5    | 1.35e-15     | 7.8e-20          |
+| 10¹⁴         | 1.0e7     | 4.28e-14     | 2.46e-21         |
 
-Quadrupling `N` halves `t`, confirming `cohTime_sqrt_scaling` (`t(k²N)=t(N)/k`).
+Observations, all reflected in the Lean theorems:
 
-## 3. Whole-brain estimate (`cohTime_wholeBrain_bound`)
+* `t(E, N)` is **strictly decreasing in N** (`cohTime_strictAnti_N`).
+* `t(E, N) → 0` as `N → ∞` (`cohTime_tendsto_zero`).
+* At the biologically-relevant `N = 10¹¹`, `t ≈ 8×10⁻²⁰ s`, i.e. **below
+  `10⁻¹⁸ s`** — the exact rational bound proved in `orchOR_too_short`.
 
-For `N = 10¹¹`, `√N ≈ 3.16 × 10⁵`. With `ℏ ≤ 2 × 10⁻³⁴` and `E ≥ 10⁻²¹`:
+## 3. Comparison with the "conscious moment" timescale
 
-    t ≤ (2 × 10⁻³⁴) / (10⁻²¹ · 3.16 × 10⁵) ≈ 6.3 × 10⁻¹⁹ s  <  10⁻¹⁷ s.
+Gamma synchrony / a conscious moment sits at `t_γ ≈ 25 ms … 500 ms`, i.e.
+`t_γ ≈ 0.5 s`. The ratio at `N = 10¹¹` is
 
-This is ~16 orders of magnitude below the ~0.5 s gamma window — the decoherence
-catastrophe, and the exact inequality proved formally.
+    t_γ / t ≈ 0.5 / 8×10⁻²⁰ ≈ 6×10¹⁸,
 
-## 4. Decoherence limit (`cohTime_tendsto_zero`)
+more than eighteen orders of magnitude. A microtubule superposition at body
+temperature cannot survive anywhere near long enough to "orchestrate" a conscious
+event. This is the quantitative content of the standard (Tegmark) objection and
+is captured by `orchOR_shorter_than_gamma` (`t < 0.5 s`).
 
-Sampling `t(N)` for `N = 10⁴, 10⁶, …, 10¹²` gives a strictly decreasing sequence
-tending to `0`, consistent with the proved `Tendsto … (𝓝 0)`.
+> Note on the description's "10⁻³³ s": that figure follows from a *different*
+> choice of the collapse energy (e.g. a full gravitational self-energy of the
+> displaced tubulin mass rather than the thermal scale used above). The exact
+> exponent is model-dependent; the robust, model-independent conclusion — proved
+> here — is that the coherence time is astronomically shorter than the conscious
+> timescale and vanishes as `N` grows.
 
-## 5. Non-enumerability
+## 4. Non-computability (the Penrose "understanding is non-algorithmic" side)
 
-No counterexample hunt applies: `no_configuration_enumeration` is the Cantor
-diagonal, valid for every type, so the claim is universal rather than empirical.
+* There are only **countably many** algorithms — Mathlib's `Nat.Partrec.Code` is
+  a countable type.
+* There are **uncountably many** boolean behaviours `ℕ → Bool` (Cantor diagonal).
+* Therefore some behaviour is **not computable** by any Turing machine
+  (`exists_noncomputable_behavior`).
+
+Small diagonal check: for any finite listing of behaviours `b₀, b₁, …`, the
+behaviour `d(n) = ¬ bₙ(n)` differs from every `bₙ` at input `n`, so it is never
+listed. This is the finite shadow of `no_surj_nat_behaviors`.
+
+## 5. Counterexample hunt
+
+* Monotonicity `cohTime_strictAnti_N`: tested over the table above — strictly
+  decreasing, no counterexample.
+* Inverse identities `cohTime_thresholdEnergy` / `thresholdEnergy_cohTime`:
+  verified symbolically (each is an exact field identity for positive inputs).
+* No counterexample to the diagonal claim exists — it is a theorem.
