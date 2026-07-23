@@ -14,7 +14,7 @@ VERSION_FILES=(
 CURRENT_VERSION=""
 for f in "${VERSION_FILES[@]}"; do
     if [ -f "$f" ]; then
-        CURRENT_VERSION=$(grep -oP 'id="version-badge">v\K[0-9]+\.[0-9]+\.[0-9]+' "$f" 2>/dev/null || true)
+        CURRENT_VERSION=$(grep -oP 'id="version-badge">v\K[0-9]+\.[0-9]+' "$f" 2>/dev/null || true)
         if [ -n "$CURRENT_VERSION" ]; then
             break
         fi
@@ -22,17 +22,16 @@ for f in "${VERSION_FILES[@]}"; do
 done
 
 if [ -z "$CURRENT_VERSION" ]; then
-    # No version found, start at 0.0.1
-    NEW_VERSION="0.0.1"
+    NEW_VERSION="4.0"
 else
-    # Bump the patch number (x.y.z -> x.y.(z+1))
-    IFS='.' read -r major minor patch <<< "$CURRENT_VERSION"
-    patch=$((patch + 1))
-    NEW_VERSION="${major}.${minor}.${patch}"
+    # Bump the minor number (MAJOR.MINOR -> MAJOR.(MINOR+1))
+    IFS='.' read -r major minor <<< "$CURRENT_VERSION"
+    minor=$((minor + 1))
+    NEW_VERSION="${major}.${minor}"
 fi
 
 # Update all version files
-NOW_TIMESTAMP=$(date +"%Y-%m-%d %H:%M:%S")
+NOW_TIMESTAMP=$(date +"%m%d%y %H:%M")
 for f in "${VERSION_FILES[@]}"; do
     if [ -f "$f" ]; then
         # Update or insert the updated date/time badge right before the version badge
@@ -43,19 +42,19 @@ for f in "${VERSION_FILES[@]}"; do
         fi
 
         # Replace the version in the version-badge span
-        sed -i "s/id=\"version-badge\">v[0-9]\+\.[0-9]\+\.[0-9]\+</id=\"version-badge\">v${NEW_VERSION}</g" "$f"
+        sed -i "s/id=\"version-badge\">v[0-9]\+\.[0-9]\+/id=\"version-badge\">v${NEW_VERSION}/g" "$f"
 
         # Update cache-bust query strings on CSS and JS files
-        sed -i "s/style\.css?v=[0-9]\+\.[0-9]\+\.[0-9]\+/style.css?v=${NEW_VERSION}/g" "$f"
-        sed -i "s/packages\.js?v=[0-9]\+\.[0-9]\+\.[0-9]\+/packages.js?v=${NEW_VERSION}/g" "$f"
-        sed -i "s/pyodide-runner\.js?v=[0-9]\+\.[0-9]\+\.[0-9]\+/pyodide-runner.js?v=${NEW_VERSION}/g" "$f" || true
-        sed -i "s/lightbox\.js?v=[0-9]\+\.[0-9]\+\.[0-9]\+/lightbox.js?v=${NEW_VERSION}/g" "$f" || true
+        sed -i "s/style\.css?v=[0-9]\+\.[0-9]\+/style.css?v=${NEW_VERSION}/g" "$f"
+        sed -i "s/packages\.js?v=[0-9]\+\.[0-9]\+/packages.js?v=${NEW_VERSION}/g" "$f"
+        sed -i "s/pyodide-runner\.js?v=[0-9]\+\.[0-9]\+/pyodide-runner.js?v=${NEW_VERSION}/g" "$f" || true
+        sed -i "s/lightbox\.js?v=[0-9]\+\.[0-9]\+/lightbox.js?v=${NEW_VERSION}/g" "$f" || true
 
         git add "$f"
     fi
 done
 
-echo "[pre-commit] Version bumped: v${CURRENT_VERSION:-0.0.0} → v${NEW_VERSION}"
+echo "[pre-commit] Version bumped: v${CURRENT_VERSION:-4.0} → v${NEW_VERSION}"
 
 # Update the catalog-only branch (Catalog/ lean files only + README) automatically.
 # This is best-effort: a failure here should not block the main commit.

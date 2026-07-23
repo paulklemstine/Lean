@@ -188,31 +188,33 @@ body {
 }
 
 .version-badge {
-    font-size: 0.55em;
+    font-size: 0.42em;
     font-weight: 500;
     font-family: 'Fira Code', monospace;
     background: rgba(136, 68, 255, 0.15);
     color: var(--accent-color, #7c3aed);
     -webkit-text-fill-color: var(--accent-color, #7c3aed);
-    padding: 2px 6px;
-    border-radius: 4px;
+    padding: 1px 4px;
+    border-radius: 3px;
     vertical-align: middle;
-    margin-left: 6px;
-    letter-spacing: 0.02em;
+    margin-left: 3px;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
 }
 
 .updated-badge {
-    font-size: 0.55em;
+    font-size: 0.42em;
     font-weight: 500;
     font-family: 'Fira Code', monospace;
     background: rgba(255, 255, 255, 0.06);
     color: var(--text-muted, #94a3b8);
     -webkit-text-fill-color: var(--text-muted, #94a3b8);
-    padding: 2px 6px;
-    border-radius: 4px;
+    padding: 1px 4px;
+    border-radius: 3px;
     vertical-align: middle;
-    margin-left: 6px;
-    letter-spacing: 0.02em;
+    margin-left: 3px;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
 }
 
 .header-controls {
