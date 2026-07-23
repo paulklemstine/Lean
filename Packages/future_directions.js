@@ -2757,7 +2757,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Aperiodicity and subword complexity in the binary expansion of powers of three"
   },
   {
-    "consumed_by_exp_id": "40432087",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Several families of incommensurable noncompact hyperbolic Coxeter polytopes' and formalize its key results. Abstract: We classify all 141 finite-volume hyperbolic Coxeter five-dimensional polytopes with eight facets, of which 125 are noncompact. Using maximal-cusp density and a noncompact analog of Bogachev-Douba-Raimbault's argument, we construct infinitely many pairwise incommensurable noncompact Coxeter polytopes in dimensions 4, 5, 6, 7, and 9, with the number of commensurability classes growing at least exponentially in volume.",
     "domains": [
       "Bridges"
@@ -2766,7 +2766,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14715v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-17T08:20:29.584439+00:00",
     "title": "ArXiv paper: Several families of incommensurable noncompact hyperbolic Coxeter polytopes"
   },
