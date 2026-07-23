@@ -1520,7 +1520,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bridge-NumberTheory-ML: Arithmetic Geometry of Transformer Weight Lattices"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2f76a8a3",
     "description": "Building on cycle 4920904c (Q=0.800), which proved 46 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Erdos-Renyi random graph G(n, p) has n vertices where each edge appears independently with probability p. At p = log(n)/n, G(n,p) becomes connected. But what if p is COMPLEX? Define G(n, z) where z is a complex number: each edge (i,j) appears with 'probability' z, meaning the edge weight is z in",
     "domains": [
       "Logic"
@@ -1529,7 +1529,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "4920904c",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-18T12:32:18.786765+00:00",
     "title": "Deepening: Erdos-Renyi on Acid: Random Graphs That Hallucinate"
   },
@@ -2282,7 +2282,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Local flag algebras"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "46e197e9",
     "description": "Investigate the ArXiv paper 'Recursive Formula for the Equations of Hessenberg Varieties' and formalize its key results. Abstract: Hessenberg varieties are subvarieties of the flag variety, defined by containment conditions on flags with respect to a linear operator. The study of these varieties lies in the intersection of algebraic geometry, combinatorics, and representation theory. In this paper, we develop an algebro-geometric procedure for determining the closed subvariety structure of a Hessenberg variety $\\mathcal{H}(X,h)$ in the flag variety for any linear operator $X$ and Hessenberg function $h$, by imposing a partial order on the Hessenberg functions and analyzing the relation of the corresponding Hessenberg varieties. In particular, we give a concrete recursive formula for determining all equations cutting out a given Hessenberg variety in each Schubert cell. As an application, we provide an alternative geometric proof of Tymoczko's results on the existence of affine pavings of a given Hessenberg variety and on the dimension count of its cells.",
     "domains": [
       "Geometry",
@@ -2292,7 +2292,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12261v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T19:37:25.793116+00:00",
     "title": "ArXiv paper: Recursive Formula for the Equations of Hessenberg Varieties"
   },
@@ -4346,7 +4346,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The K\u0151vari-S\u00f3s-Tur\u00e1n Conjecture for GF(q)-representable Matroids: Sharp Asymptotic Bound"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "beffe971",
     "description": "For every fixed integer k \u2265 5, let G be a uniformly random simple, connected, k-regular graph on n vertices. Let d\u2080 = \u230ag/2\u230b where g = n - k + 1 is the genus of G. Then almost surely (as n \u2192 \u221e), for every pair of non-negative integers r\u2080, d\u2080 satisfying \u03c1(g,r\u2080,d\u2080) \u2265 0, there exists a divisor D on G of degree d\u2080 and rank at least r\u2080.",
     "domains": [
       "Pythagorean",
@@ -4356,7 +4356,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.15213v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-17T14:08:38.389554+00:00",
     "title": "Almost Sure Brill-Noether Existence at Half-Canonical Degree for Random Regular Graphs"
   },
@@ -4533,7 +4533,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: On Generalized von Neumann Inverse Graphs of Finite Commutative Regular Rings"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d27cbbd7",
     "description": "Investigate the ArXiv paper 'Nonnegative Bakry--\u00c9mery Curvature on Bounded-Degree Graphs Implies Volume Doubling and Poincar\u00e9 Inequalities' and formalize its key results. Abstract: We prove that every connected simple graph of bounded degree satisfying the classical dimension-free Bakry--\u00c9mery condition $\\mathrm{CD}(0,\\infty)$ for the unnormalised Laplacian is volume doubling and supports, at all integer graph scales, a scale-invariant $L^2$-Poincar\u00e9 inequality with dilation two, with constants depending only on the maximum degree. This settles the polynomial-growth conjecture of Cushing, Liu, and Peyerimhoff in a stronger form. The main novelty is a dimension-free adaptation of the graph-theoretic modified nonlinear heat-flow method introduced by M\u00fcnch and extended to infinite weighted graphs by Pajot and Russ: point-mass consequences of $\u0393_2\\geq0$ and positive-resolvent smoothing replace any global $\\mathrm{CD}(0,n)$ reduction, while diffusive exit-time control and finite-volume localisation yield the Poincar\u00e9 inequality.",
     "domains": [
       "Pythagorean",
@@ -4543,7 +4543,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.15522v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-20T03:35:25.814685+00:00",
     "title": "ArXiv paper: Nonnegative Bakry--\u00c9mery Curvature on Bounded-Degree Graphs Implies Volume Doubling and Poincar\u00e9 Inequalities"
   },
@@ -4828,7 +4828,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The formal result in `AffineDuality.lean` isolates a precise bridge between fini"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "eb2592c6",
     "description": "# Future Directions: Recurrence in Cognitive Dynamics\n\n## 1. Observation-invariant recurrence spectra\n\n**Conjecture.** For compact metric cognitive systems related by a topological conjugacy, the exact-period spectrum, topological entropy, and existence of Li\u2013Yorke scrambled sets are simultaneously invariant; under a merely finite-to-one observation map, exact periods can only decrease by divisibility.\n\nThe key insight is that faithful semiconjugacy already preserves exact period pointwise, while loss of injectivity is the precise mechanism by which an observed cycle can collapse. **Why now?** The finite-state embedding and exact-period transport results isolate the hypotheses needed to extend recurrence invariance from individual states to global entropy and chaos.\n\n## 2. Measured recurrence instead of point density\n\n**Conjecture.** In a parametrized family of cognitive observation models, lifetime recurrence incidence is determined by the measure of an observation-thickened recurrent set, not by the cardinality or topological density of periodic points; the two quantities can vary independently even among maps with dense periodic points.\n\nThe key insight is that population incidence is probabilistic, whereas density of periodic points is topological and carries no canonical percentage. **Why now?** The contraction counterexample rules out continuity as a sufficient explanation, and the faithful-observation theorem supplies a principled way to state how measurement changes recurrence.\n\n## 3. Period-three forcing with cognitive observability\n\n**Conjecture.** Let a continuous interval map have an exact period-three orbit and let an observation map separate the three orbit states by a fixed positive margin. Then there is a quantitative lower bound, depending only on that margin and a modulus of continuity, for the number of distinguishable finite observation words of length `n`, growing exponentially in `n`.\n\nThe key insight is that period three should force symbolic complexity only when the observation process can distinguish the forced orbit structure. **Why now?** Exact period three has been converted into an explicit three-state embedding, making quantitative separation the natural next hypothesis rather than an implicit assumption.\n\n## 4. Logistic parameter windows and robust recurrence\n\n**Conjecture.** Near the parameter `r = 3.83`, the logistic family admits an open parameter interval with an attracting exact three-cycle whose basin has positive Lebesgue measure, while the fixed-point set remains measure zero throughout that interval.\n\nThe key insight is that robust observed recurrence should be modeled through basin measure and attraction, not through the density of the periodic points themselves. **Why now?** The exact fixed states and critical value at `3.83` are known algebraically, so the remaining problem is a falsifiable stability and basin-measure calculation.\n\n## 5. Tropical drift as a recurrence obstruction\n\n**Conjecture.** For an irreducible min-plus cognitive transition matrix, a tropical eigenstate is periodic in the ordinary state space exactly when its eigenvalue is zero; modulo additive constants, every tropical eigenstate is fixed, and eventual projective recurrence is governed by the cyclicity of the critical graph.\n\nThe key insight is that a tropical eigenvalue records linear drift, so quotienting by global activation offset separates genuine recurrence from uniform translation. **Why now?** Zero-eigenvalue recurrence and the full iterate drift formula are already established, leaving critical-graph cyclicity as the concrete bridge from tropical spectral theory to periodic cognition.\n",
     "domains": [
       "Algebra",
@@ -4838,7 +4838,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "5102d77c",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-17T18:22:04.054428+00:00",
     "title": "**Conjecture.** For compact metric cognitive systems related by a topological co"
   },
