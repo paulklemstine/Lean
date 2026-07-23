@@ -4361,7 +4361,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The K\u0151vari-S\u00f3s-Tur\u00e1n Conjecture for GF(q)-representable Matroids: Sharp Asymptotic Bound"
   },
   {
-    "consumed_by_exp_id": "beffe971",
+    "consumed_by_exp_id": "",
     "description": "For every fixed integer k \u2265 5, let G be a uniformly random simple, connected, k-regular graph on n vertices. Let d\u2080 = \u230ag/2\u230b where g = n - k + 1 is the genus of G. Then almost surely (as n \u2192 \u221e), for every pair of non-negative integers r\u2080, d\u2080 satisfying \u03c1(g,r\u2080,d\u2080) \u2265 0, there exists a divisor D on G of degree d\u2080 and rank at least r\u2080.",
     "domains": [
       "Pythagorean",
@@ -4371,7 +4371,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.15213v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-17T14:08:38.389554+00:00",
     "title": "Almost Sure Brill-Noether Existence at Half-Canonical Degree for Random Regular Graphs"
   },
@@ -4766,21 +4766,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-17T18:03:33.034163+00:00",
     "title": "Close Proofs: Holographic Primes: The Prime Number AdS/CFT Correspondence"
-  },
-  {
-    "consumed_by_exp_id": "ec11492d",
-    "description": "# Future directions\n\nThis development formalizes the finite coordinate core of Curtin's *Generalizations of nets and Latin squares* (arXiv:2607.10890v1): column- and row-Latin matrices, orthogonality, cooperative pairs and systems, coordinate reticulations, svelte arrays, unique cross-line intersections, the grid-coordinate characterizations of Lemma 7.5, and the `m*n` cardinality consequence of Theorem 3.1.\n\nNatural next steps are:\n\n1. **Partition-level incidence structures.** Connect the coordinate-fibre representation here to a literal structure whose lines are finite sets and whose families are `Set.PairwiseDisjoint` covers. Prove both representations equivalent, including all seven clauses of Theorem 3.1.\n2. **Full inverse correspondence.** Package the maps between ordered reticulations, svelte semi-orthogonal arrays, and normalized cooperative systems as equivalences, proving Theorems 6.2, 6.3, 7.7, and 7.8 at structure level rather than only the forward encodings established here.\n3. **Multiplicity and foundations.** Model multisets of line families, then formalize repetition-free reticulations and Proposition 4.1.\n4. **Parastrophy and isotopy.** Define the permutation actions from Sections 9 and 10 and prove that they preserve the cooperative and reticulation axioms.\n5. **Constructions.** Formalize prolongation, splicing, and direct products from Sections 12\u201314, with formulas for their parameters.\n6. **Classical specializations.** Build translations from nets, mixed orthogonal arrays, mutually orthogonal Latin squares, and bireversible Mealy automata, recovering Propositions 3.6 and 6.6 and Theorem 7.3.\n7. **Finite search.** Add executable enumeration of small repetition-free systems up to isotopy, together with kernel-checked certificates for any reported counts.\n",
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_0222",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "8b90ccda",
-    "status": "in_progress",
-    "timestamp": "2026-07-17T13:12:10.340274+00:00",
-    "title": "This development formalizes the finite coordinate core of Curtin's *Generalizati"
   },
   {
     "consumed_by_exp_id": "",
@@ -6957,7 +6942,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "**Conjecture.** Let a periodic Born-probability sequence have period `k`. For ev"
   },
   {
-    "consumed_by_exp_id": "6c18f01c",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions: Arithmetic Coherence Transitions\n\nThe conjectures below are ranked by expected scientific impact. Each proposal separates a measurable arithmetic statistic from the choice of a phenomenological transition law.\n\n## 1. Higher-rank Langlands percolation\n\n**Conjecture.** For a fixed global field and bounded ramification, form a bipartite graph whose vertices are rank-two automorphic representations and compatible rank-two Galois representations, with edges supplied by independently established local-global compatibility results. After normalization by the number of admissible local types, the largest-component density has a nonzero limiting value precisely above a universal critical mean degree.\n\n**The key insight is...** higher-rank reciprocity should be studied as a growing compatibility graph, so that global organization is measured by component structure rather than by a raw theorem count.\n\n**Why now?** The cyclotomic rank-one model shows exactly how an arithmetic counting law can be transported into a threshold parameter, while modern databases provide sufficiently structured local data to make the rank-two graph falsifiable.\n\n## 2. Arithmetic universality of critical exponents\n\n**Conjecture.** Across families of number fields ordered by discriminant, coherence parameters built from normalized reciprocity graphs fall into finitely many universality classes: tree-like compatibility graphs have critical exponent `1`, while symmetry-breaking character models have exponent `1/2`.\n\n**The key insight is...** the exponent should depend on the local geometry of the connection network, not on the names or historical origins of its arithmetic objects.\n\n**Why now?** Two exact mean-field laws already distinguish linear percolation onset from square-root symmetry-breaking onset, giving concrete competing predictions that arithmetic datasets can separate.\n\n## 3. A derived, rather than selected, number-theory threshold\n\n**Conjecture.** There is a canonical weighting of cross-field implications between Langlands theory and arithmetic geometry for which the susceptibility\u2014expected increase in the largest coherent component after adding one verified connection\u2014has a unique maximum at an effective edge count between `8,000` and `12,000`.\n\n**The key insight is...** a critical threshold is scientifically meaningful only if it can be recovered as a peak in susceptibility, rather than inserted as an external constant.\n\n**Why now?** The exact conductor cutoff derived from a chosen ten-thousand-edge parameter isolates the missing empirical task and supplies a sharp null model against which a measured threshold can be compared.\n\n## 4. Totient-driven cascades beyond prime conductors\n\n**Conjecture.** In the cyclotomic rank-one proxy, conductors crossing a fixed coherence threshold occur in clustered cascades governed by the distribution of Euler's totient: for every sufficiently large `T`, every interval `[T, T + T^(3/4)]` contains conductors on both sides of the condition `\u03c6(n) > T`.\n\n**The key insight is...** composite conductors replace the monotone prime law `p - 1` by the irregular multiplicative statistic `\u03c6(n)`, turning a single cutoff into an arithmetic intermittency phenomenon.\n\n**Why now?** The prime-conductor phase diagram is exact and monotone; extending it to composite conductors gives an immediate, falsifiable test of whether arithmetic fluctuations can model punctuated transitions.\n\n## 5. Stability under order-parameter deformation\n\n**Conjecture.** Let `F : \u211d\u22650 \u2192 \u211d\u22650` be continuous, monotone, zero exactly at zero, and regularly varying at zero with index `\u03b1 > 0`. Replacing square-root coherence by `F(max(x-c,0))` preserves the exact arithmetic activation boundary, while changing only the critical exponent to `\u03b1`.\n\n**The key insight is...** the location of the transition is order-theoretic, whereas its near-critical scaling is analytic; these two features should be proved and tested independently.\n\n**Why now?** The current cyclotomic classification already separates threshold inequalities from square-root scaling, making robustness under alternative response laws the natural next structural test.\n",
     "domains": [
       "Algebra",
@@ -6967,7 +6952,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "2f321176",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-20T20:48:29.755518+00:00",
     "title": "The conjectures below are ranked by expected scientific impact. Each proposal se"
   },
@@ -7793,6 +7778,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-23T20:28:41.148428+00:00",
     "title": "1. **Universal pentagon theorem.** The concrete 5-cycle instance is now formaliz"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Orthogonal families over the coordinate framework\n\nThis cycle specialized the coordinate/incidence framework for generalized nets\nto the classical square case and established the Euler\u2013MacNeish ceiling: a\nfamily of pairwise-orthogonal reduced Latin squares of order `n` has at most\n`n \u2212 1` members, with the ceiling attained at order three. The pivot argument at\nthe heart of the proof \u2014 inspecting only two grid cells \u2014 suggests several bold,\ntestable next steps.\n\n## Conjecture 1 \u2014 Reduction is a free normalization\n\n**Statement.** Every family of pairwise-orthogonal Latin squares of order `n` is\nequivalent, under independent symbol relabellings of each square, to a family of\n*reduced* squares of the same size, and the equivalence preserves orthogonality.\nConsequently the `n \u2212 1` ceiling holds for *arbitrary* (not necessarily reduced)\nfamilies.\n\n**The key insight is** that orthogonality is invariant under relabelling the\nsymbol alphabet of each square separately, because it is a statement about the\n*fibres* of the coordinate maps rather than about the symbols attached to them;\nreduction is just the choice of relabelling that sends the first row to the\nidentity.\n\n**Why now?** The pivot proof already localizes the whole argument to two cells,\nso the only missing ingredient is a clean lemma that relabelling is a symmetry of\nthe incidence structure \u2014 a small, self-contained addition to the framework that\nimmediately upgrades the ceiling from reduced families to all families.\n\n## Conjecture 2 \u2014 The window bound generalizes to nets\n\n**Statement.** For a generalized net with `m` weft classes and `n` warp classes,\nthe maximum number of pairwise-orthogonal parallel classes that can be adjoined\nis controlled by the number of distinct symbols appearing in a *single bounded\nwindow* of the coordinate grid, generalizing the pivot count from a single cell\nto an `r \u00d7 s` block.\n\n**The key insight is** that the pivot obstruction \u2014 distinct nonzero symbols in\none column \u2014 is the smallest instance of a general phenomenon: orthogonality\nforces injectivity of a \"local fingerprint\" map, and larger windows yield sharper\nceilings for higher-dimensional nets.\n\n**Why now?** The proof here demonstrates that a two-cell window already yields the\nsharp classical bound; extending the fingerprint to a block is a natural,\nmechanically checkable escalation that has not been isolated before at this level\nof generality.\n\n## Conjecture 3 \u2014 Tightness is exactly the prime-power spectrum\n\n**Statement.** Within the coordinate framework, a family attaining the full\n`n \u2212 1` ceiling exists if and only if there is a coordinate system on the grid\ncarrying an affine-plane structure of order `n`; combined with the classical\ntheory this forces `n` to be a prime power (with the known exceptions `n = 6` and\nthe still-open `n = 10` on the impossibility side).\n\n**The key insight is** that a complete set of `n \u2212 1` MOLS is interchangeable\nwith a finite affine plane, and the coordinate/reticulation language makes the\nplane's parallel classes literally the fibres of the coordinate maps, turning\n\"tightness\" into \"existence of a coordinatizing algebra\".\n\n**Why now?** With the ceiling and a concrete tight witness both in hand, the\nframework is ready to host the equivalence between complete MOLS families and\naffine planes, closing the loop between the incidence axioms and classical\ndesign theory.\n\n## Conjecture 4 \u2014 Parastrophy acts freely on saturated families\n\n**Statement.** The parastrophy (coordinate-permutation) action introduced for\nreticulations restricts to an action on the set of ceiling-saturating families,\nand this action is free whenever `n > 2`; in particular the number of saturated\nfamilies up to parastrophy is a divisor-controlled fraction of the total count.\n\n**The key insight is** that a saturated family pins down all six coordinate roles\nsimultaneously, leaving no nontrivial coordinate permutation that fixes it, so the\nsymmetry group acts without fixed points once the order exceeds the degenerate\ncase.\n\n**Why now?** The pivot proof exposes exactly which coordinate roles are forced by\nsaturation, giving a concrete handle on the stabilizer of a family \u2014 the first\nstep toward an orbit count for small orders.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0619",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "ec11492d",
+    "status": "available",
+    "timestamp": "2026-07-23T22:26:04.074432+00:00",
+    "title": "This cycle specialized the coordinate/incidence framework for generalized nets"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Arithmetic Coherence after Deformation Stability\n\n## 1. Higher-rank compatibility percolation with a deformation-invariant boundary\n\nFor a fixed global field and bounded ramification, form a bipartite graph of rank-two\nautomorphic and Galois representations using independently established local-global\ncompatibilities.  After normalization by admissible local types, conjecture that the\nlargest-component density becomes nonzero above a universal critical mean degree, and that\nthis boundary is unchanged by every continuous monotone zero-reflecting observable applied\nto the density.\n\n**The key insight is...** graph formation and measurement should be separated: compatibility\ndetermines whether a giant component exists, while the observable controls only how its size\nis reported.\n\n**Why now?** The cyclotomic rank-one model now admits an exact separation between arithmetic\nthreshold and response law, supplying a null model for testing the same separation in\nhigher-rank datasets.\n\n## 2. Arithmetic universality from exact local homogeneity\n\nAcross number-field families ordered by discriminant, conjecture that coherence observables\nfall into finitely many universality classes characterized by a local homogeneity identity:\ntree-like compatibility networks have exponent `1`, symmetry-breaking character models have\nexponent `1/2`, and multicritical families realize a discrete sequence of higher rational\nexponents.\n\n**The key insight is...** an exponent should be inferred from rescaling around the boundary,\nnot from the arithmetic name of the underlying objects.\n\n**Why now?** Exact power-response rescaling shows that boundary location and exponent can be\nvaried independently, making it possible to distinguish genuine geometric universality from\na chosen measurement law.\n\n## 3. Susceptibility-derived cyclotomic thresholds\n\nAssign weights to verified implications among automorphic, Galois, and arithmetic-geometric\nobjects, and define susceptibility as the expected increase in the largest coherent component\nafter one additional verified compatibility.  Conjecture that a canonical normalization\nproduces a unique susceptibility maximum, stable under zero-reflecting deformations of the\ncomponent-density observable.\n\n**The key insight is...** a scientifically meaningful threshold should be recoverable from a\npeak response in the connection data and should not move when the reporting scale changes.\n\n**Why now?** The exact deformation-invariance theorem isolates observable choice as a\nnon-source of boundary movement, so empirical threshold variation can be attributed to graph\nconstruction or weighting instead.\n\n## 4. Totient intermittency in short conductor windows\n\nConjecture that there is an exponent `\u03b8<1` such that, for every sufficiently large `T`, the\nwindow `[T,T+T^\u03b8]` contains conductors `m,n` with `\u03c6(m)\u2264T<\u03c6(n)`, and that this remains true\nafter restricting to prescribed squarefree factorization patterns.\n\n**The key insight is...** composite conductors turn monotone prime activation into an\nintermittent multiplicative process, while deformation stability guarantees that every\nzero-reflecting order parameter detects the same crossings.\n\n**Why now?** The response law has been removed as a confounding variable; the remaining\nquestion is a concrete short-interval problem about Euler's totient and controlled\nfactorization types.\n\n## 5. Regular variation beyond exact powers\n\nLet `F` be continuous, monotone, zero-reflecting, and regularly varying at zero with positive\nindex `\u03b1`.  Conjecture that threshold excess composed with `F` has an asymptotic rescaling\nratio `F(a t)/F(t) \u2192 a^\u03b1` uniformly for `a` in compact positive intervals, including after\nsubstitution of normalized arithmetic statistics approaching criticality.\n\n**The key insight is...** exact power homogeneity should extend to asymptotic homogeneity,\nwith the activation boundary controlled order-theoretically and the exponent controlled by\nregular variation.\n\n**Why now?** Exact power laws establish the rigid base case and the abstract boundary theorem\nalready handles arbitrary zero-reflecting responses, leaving uniform asymptotic rescaling as\nthe precise missing bridge.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0620",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "6c18f01c",
+    "status": "available",
+    "timestamp": "2026-07-23T22:26:17.957498+00:00",
+    "title": "For a fixed global field and bounded ramification, form a bipartite graph of ran"
   },
   {
     "consumed_by_exp_id": "",
