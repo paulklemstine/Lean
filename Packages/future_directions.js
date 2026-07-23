@@ -1520,7 +1520,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bridge-NumberTheory-ML: Arithmetic Geometry of Transformer Weight Lattices"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2f76a8a3",
     "description": "Building on cycle 4920904c (Q=0.800), which proved 46 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Erdos-Renyi random graph G(n, p) has n vertices where each edge appears independently with probability p. At p = log(n)/n, G(n,p) becomes connected. But what if p is COMPLEX? Define G(n, z) where z is a complex number: each edge (i,j) appears with 'probability' z, meaning the edge weight is z in",
     "domains": [
       "Logic"
@@ -1529,7 +1529,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "4920904c",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-18T12:32:18.786765+00:00",
     "title": "Deepening: Erdos-Renyi on Acid: Random Graphs That Hallucinate"
   },
