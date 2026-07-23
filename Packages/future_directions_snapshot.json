@@ -19,6 +19,160 @@
     "title": "Deepening: Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalizing spacetime topologies where causality breaks down into self-consistent bootstrap loops under Novikov Self-Consistency conditions.",
+    "domain_bridges": [
+      "Physics <-> Topology"
+    ],
+    "domains": [
+      "Physics",
+      "Geometry"
+    ],
+    "id": "scifi_chronos_917ffaf0",
+    "lineage_refs": [],
+    "priority_score": 0.95,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "manual_scifi_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:03:07.517079+00:00",
+    "title": "Chronos-Boundary: Non-Causality & Bootstrap Spacetime"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Encryption keys hidden inside 6D Calabi-Yau manifolds where decryption requires solving topological wormhole mirror maps across parallel dimensions.",
+    "domain_bridges": [
+      "Cryptography <-> Geometry"
+    ],
+    "domains": [
+      "Cryptography",
+      "Geometry"
+    ],
+    "id": "scifi_hyper_wormhole_0f7531a4",
+    "lineage_refs": [],
+    "priority_score": 0.95,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "manual_scifi_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:03:07.636652+00:00",
+    "title": "Hyper-Wormhole: Calabi-Yau Mirror Symmetry Cryptography"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Proving that no information is ever lost when quantum branchings split reality—maintaining a universal total entropy conservation law across the multiverse.",
+    "domain_bridges": [
+      "Physics <-> Computation"
+    ],
+    "domains": [
+      "Physics",
+      "Computation"
+    ],
+    "id": "scifi_multiverse_4e52337f",
+    "lineage_refs": [],
+    "priority_score": 0.95,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "manual_scifi_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:03:07.682943+00:00",
+    "title": "Multiverse-Entropy: Cross-Branch Information Preservation"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Neural networks operating in quantum superposition where memories and activation states exist in entangled Hilbert manifolds until observation.",
+    "domain_bridges": [
+      "MachineLearning <-> Physics"
+    ],
+    "domains": [
+      "MachineLearning",
+      "Physics"
+    ],
+    "id": "scifi_quantum_mind_3b9d253b",
+    "lineage_refs": [],
+    "priority_score": 0.95,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "manual_scifi_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:03:07.590430+00:00",
+    "title": "Quantum-Mind: Non-Euclidean Hilbert-Space Consciousness"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Communicating information backward across time horizons via non-local entangled Bell-pair collapse without classical speed-of-light delays.",
+    "domain_bridges": [
+      "Logic <-> Physics"
+    ],
+    "domains": [
+      "Logic",
+      "Physics"
+    ],
+    "id": "scifi_retro_teleport_8d0f7125",
+    "lineage_refs": [],
+    "priority_score": 0.95,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "manual_scifi_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:03:07.823451+00:00",
+    "title": "Retro-Teleport: Non-Local Temporal State Transfer"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Proving the theoretical boundary where a microscopic Maxwell Demon uses min-plus tropical algebra to harvest zero-point energy directly from quantum vacuum fluctuations.",
+    "domain_bridges": [
+      "Physics <-> Tropical"
+    ],
+    "domains": [
+      "Physics",
+      "Tropical"
+    ],
+    "id": "scifi_vacuum_energy_932e7ae5",
+    "lineage_refs": [],
+    "priority_score": 0.95,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "manual_scifi_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:03:07.729980+00:00",
+    "title": "Maxwell-Demon-Zero: Tropical Vacuum Energy Bounds"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Proving the existence of a universal cellular automaton organism that reconstructs its own complete code in a single mathematical neural activation step.",
+    "domain_bridges": [
+      "EML <-> Computation"
+    ],
+    "domains": [
+      "Applications",
+      "Computation"
+    ],
+    "id": "scifi_von_neumann_8850482b",
+    "lineage_refs": [],
+    "priority_score": 0.95,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "manual_scifi_injection",
+    "status": "available",
+    "timestamp": "2026-07-23T20:03:07.775512+00:00",
+    "title": "Von-Neumann-Genesis: Single-Operator Self-Replicating Code"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
