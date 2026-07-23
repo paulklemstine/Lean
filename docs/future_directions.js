@@ -3222,6 +3222,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Automorphism groups of curves with simple Jacobians' and formalize its key results. Abstract: We classify all automorphism groups of smooth, projective, connected curves over an algebraically closed field of characteristic $0$ with simple Jacobians. For every nontrivial group in this classification, we construct a family of curves with that automorphism group and prove that a density-one set of members has simple Jacobian. These families yield infinitely many new examples of unlikely intersections in the moduli spaces of principally polarized abelian varieties.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0612",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.20397v1",
+    "status": "available",
+    "timestamp": "2026-07-23T03:52:00.842614+00:00",
+    "title": "ArXiv paper: Automorphism groups of curves with simple Jacobians"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'A Matrix-Degree Obstruction to Rational Generation of Boolean-Lattice Pseudo-Roots' and formalize its key results. Abstract: For the neighborhood seed associated with the four-vertex path $P_4$, the diamond operations do not recover all Boolean-lattice pseudo-roots. The corresponding question for unrestricted rational operations in the free skew field is subtler: the seed map has an invertible linearization and therefore a unique formal inverse near every generic scalar point. We prove that this formal inverse is not free rational. A symmetric one-parameter curve of $2 \\times 2$ matrix outputs has a formal inverse whose coefficient field contains an element of degree three over $\\mathbb{Q}(t)$. An exact elimination in a quadratic Pauli algebra produces the irreducible cubic. Its conjugate inverse branches are unramified, forcing the generic matrix degree of the seed map to be at least three in every size $n \\ge 2$. This contradicts the degree-one consequence of any free rational inverse. The same matrix-degree argument, without specializing a hypothetical inverse, extends the obstruction to every graph conta",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0612",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.20248v1",
+    "status": "available",
+    "timestamp": "2026-07-23T03:52:03.926649+00:00",
+    "title": "ArXiv paper: A Matrix-Degree Obstruction to Rational Generation of Boolean-Lattice Pseudo-Roots"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle dcd7a4b2 (Q=0.750) proved 0 theorems in Tropical but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION \u2014 simulta",
     "domains": [
       "Tropical"
