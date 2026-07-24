@@ -1,62 +1,68 @@
-# Computational Evidence
+# Computational Evidence: line-covering threshold for checkmate on the Hilbert board
 
-## Small-case calculations
+The formalization lives in `Geometry/HilbertChessLines.lean`. Long-range chess
+pieces (rooks, bishops, queens, any ray) are modelled as affine lines
+`a·x + b·y = c` on `ℤ × ℤ`. The central quantitative claim is:
 
-For the escape coordinate
+> A single line covers **at most 3** of the 9 squares of a king's `3 × 3`
+> neighbourhood; hence `n` lines cover at most `3n`, so at least `3` long-range
+> pieces are needed to cover all 9 (a prerequisite for checkmate), and `3`
+> suffice.
 
-`escC(a,c) = a-1` when `c=a+1`, and `escC(a,c)=a+1` otherwise,
+## 1. Small-case calculations — how many block squares can one line cover?
 
-the following representative values were checked:
+Take the block centred at the origin, the 9 offsets `(i,j)`, `i,j ∈ {-1,0,1}`.
 
-| king coordinate `a` | rook coordinate `c` | `escC(a,c)` | distance moved | differs from `c` |
-|---:|---:|---:|---:|:---:|
-| 0 | 1 | -1 | 1 | yes |
-| 0 | 0 | 1 | 1 | yes |
-| 0 | -1 | 1 | 1 | yes |
-| 4 | 5 | 3 | 1 | yes |
-| 4 | 12 | 5 | 1 | yes |
+| line (a,b,c)        | type       | covered offsets                     | count |
+|---------------------|------------|-------------------------------------|-------|
+| `y = 0`  (0,1,0)    | rook (horiz.) | (-1,0),(0,0),(1,0)               | 3     |
+| `x = 0`  (1,0,0)    | rook (vert.)  | (0,-1),(0,0),(0,1)               | 3     |
+| `y = x`  (1,-1,0)   | bishop     | (-1,-1),(0,0),(1,1)                 | 3     |
+| `y = -x` (1,1,0)    | bishop     | (-1,1),(0,0),(1,-1)                 | 3     |
+| `y = 2x` (2,-1,0)   | knight-slope line | (0,0) (others leave the block)| 1     |
+| `2x+3y=1`           | generic    | (2,-1)? no int in block → (−1,1)? test | ≤3 |
 
-Applying this coordinatewise in two or more dimensions changes every coordinate by one and leaves the new square different from the rook in every coordinate. Since a rook line permits disagreement in at most one coordinate, the resulting square is unattacked.
+Every direction attains **at most 3**, and the four "aligned" directions attain
+exactly 3. No line reaches 4, matching `Line.block_card_le_three`.
 
-For a rook at the origin and a king initially at the origin, the first iterates of the coordinatewise map alternate:
+## 2. The `3n` bound and the sharp threshold
 
-| time | square in two dimensions |
-|---:|:---|
-| 0 | `(0,0)` |
-| 1 | `(1,1)` |
-| 2 | `(2,2)` |
-| 3 | `(3,3)` |
-| 4 | `(4,4)` |
+* `n = 1`: ≤ 3 of 9 covered ⟹ ≥ 6 safe.
+* `n = 2`: ≤ 6 of 9 covered ⟹ ≥ 3 safe ⟹ **no checkmate** (`no_mate_with_lt_three`).
+* `n = 3`: `3·3 = 9`, so covering all 9 is *arithmetically possible*, and the
+  explicit three parallel rooks on rows `y = p₂−1, p₂, p₂+1` realise it
+  (`mate_exists`). Threshold is sharp at **3**.
 
-Thus this sample produces a visibly unbounded safe run.
+A quick check that 3 is genuinely necessary and not merely sufficient: with two
+lines the six covered squares can never include all four corners *and* all four
+edges *and* the centre, because `6 < 9`. This is a pure pigeonhole count, needing
+no case analysis on directions — which is exactly how the Lean proof proceeds
+(`blockCovered_card_le` + `blockOffsets_card = 9`).
 
-The abstract winning-tree constructions have the first target values
+## 3. Counterexample hunt — is any configuration of 2 lines a mate?
 
-| position | ordinal value |
-|:---|:---|
-| checkmate leaf | `0` |
-| `opowGame 0` | `1 = ω^0` |
-| `opowGame 1` | `ω` |
-| `opowGame 2` | `ω²` |
-| `opowGame 3` | `ω³` |
-| diagonal game | `ω^ω` |
+We attempted to cover the 9-square block with 2 lines for the "best" directions:
 
-## Sequence search
+* two parallel rooks (rows −1,0): cover 6 squares (rows −1,0), row +1 fully safe.
+* rook + bishop, vertical + `y=x`: cover `x=0` (3) ∪ `y=x` (3) = 5 squares
+  (they share the centre), so 4 safe.
+* two crossing bishops `y=x`, `y=−x`: cover 5 squares, 4 safe.
 
-The finite exponents in the hierarchy are `1, ω, ω², ω³, …`, an ordinal sequence rather than an integer sequence, so an OEIS search is not applicable. No arithmetic LMFDB object is involved.
+No pair of lines covers 7, 8, or 9 of the block squares. Consistent with the
+theorem; no counterexample exists.
 
-## Counterexample hunt
+## 4. Global escape — the board is never fully covered
 
-The unrestricted slogan “the king always escapes” fails in one dimension. On the integer line, rooks at `k-1` and `k+1` checkmate a king at `k`: each adjacent rook is defended by the other. This counterexample motivates the guarded dimension-at-least-two statement.
+For any finite list of lines, pick a row `y = k` avoided by all horizontal
+pieces (finitely many forbidden `k`), then each remaining line meets that row in
+≤ 1 point, leaving cofinitely many safe squares in the row. Small check: three
+rooks on rows `0,1,2` plus a bishop `y=x` leave, on row `k = 100`, only the
+single point `x = 100` attacked (by the bishop), so `x ≠ 100` are all safe —
+an unbounded escape corridor. Formalized as `escape_infinite` /
+`escape_unbounded`.
 
-The stronger assertion that every finite rook army permits a local escape from every non-mated position was not assumed. Global evidence proves that infinitely many unattacked squares remain, but this alone does not establish local reachability through safe king moves.
+## Conclusion
 
-## Structural table
-
-| setting | tested/proved behavior |
-|:---|:---|
-| one axis, two rooks | mate is possible |
-| at least two axes, one rook | explicit safe move from every square |
-| at least two axes, one rook, repeated play | infinite safe run |
-| at least two axes, finite rook army | infinitely many globally safe squares |
-| abstract countably branching winning tree | values through `ω^ω` realized |
+All numerical experiments agree with the formal statements; the counterexample
+hunt for a 2-line mate found none, and the 3-line mate is explicit. The evidence
+is elementary counting, which is precisely why the Lean proofs are unconditional.

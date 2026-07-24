@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "fc5e97aa",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions\n\n## 1. Stable exponents under dependency extraction\n\n**Conjecture.** For a fixed, versioned mathematical corpus, the tail exponent of theorem reuse remains within a narrow interval",
-      "quality_score": 0.76,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-18T15:01:35",
-      "title": "Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
-    },
-    {
       "cycle_id": "beeab68d",
       "domain": "Physics",
       "key_insight": "# Future directions\n\n## Completed foundation\n\n`Catalog/Physics/CliqueSpectralExtremal.lean` now gives a complete, independently compiling formal development of the multipartite counting and balancing",
@@ -2501,6 +2491,16 @@
       "theorem_count": 12,
       "timestamp": "2026-07-24T15:52:16",
       "title": "L-Function-Zeroes: Explicit Bounds on Low-Lying Zeroes of Automorphic L-Functions"
+    },
+    {
+      "cycle_id": "4ffa8161",
+      "domain": "Logic",
+      "key_insight": "# Future Directions — Transfinite Computation with Cellular Automata on ω²\n\n## Current state\n\n`Catalog/Applications/OrdinalCellularAutomata/TransfiniteComputation.lean`\ndevelops a two-layer semantics",
+      "quality_score": 0.6,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-24T17:59:57",
+      "title": "Close Proofs: Cellular Automata at the Ordinals: Transfinite Computation"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-24T15:52:16",
+  "last_updated": "2026-07-24T17:59:57",
   "open_questions": [
     {
       "context": "+    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; +    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; +    ∀ i < k, c i = ",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "d4bc25af",
-        "quality": 0.65,
-        "theorems": 9,
-        "title": "ArXiv paper: Efficient Hamilton covers and linear arboricity of random graphs"
-      },
-      {
         "cycle_id": "79f58a3a",
         "quality": 0.72,
         "theorems": 0,
@@ -3513,6 +3507,12 @@
         "quality": 0.57,
         "theorems": 9,
         "title": "Avoidance of t-fold sumsets in dense subsets of [n]"
+      },
+      {
+        "cycle_id": "4ffa8161",
+        "quality": 0.6,
+        "theorems": 0,
+        "title": "Close Proofs: Cellular Automata at the Ordinals: Transfinite Computation"
       }
     ],
     "MachineLearning": [

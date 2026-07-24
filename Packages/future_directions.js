@@ -14505,6 +14505,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Transfinite Computation with Cellular Automata on \u03c9\u00b2\n\n## Current state\n\n`Catalog/Applications/OrdinalCellularAutomata/TransfiniteComputation.lean`\ndevelops a two-layer semantics for cellular dynamics indexed by the order type\n`\u03c9\u00b2` (pairs `(block, tick)` in lexicographic order):\n\n- **Successor layer.** An arbitrary state transition system supplies the\n  successor update; Rule 110 (`rule110Step`) is the concrete instance, and it is\n  shown to remain radius-one local at transfinite times (`rule110Step_local`).\n- **Limit layer.** A history functional selects the state at each block\n  boundary. `predicateLimit` writes a chosen Boolean bit at cell 0.\n\nKey theorems (all `sorry`-free, axioms limited to `propext`, `Classical.choice`,\n`Quot.sound`):\n\n- `omegaSquaredRun_succ`, `omegaSquaredRun_limit`, `omegaSquaredRun_eq_iterate` \u2014\n  structural laws of the transfinite run.\n- `scheduledOmegaRun_boundary`, `boundaryTrace_scheduled` \u2014 boundary read-out is\n  faithful to the schedule.\n- `scheduledOmegaRun_injective` \u2014 distinct schedules give distinct histories.\n- `no_predicate_enumeration`, `no_history_enumeration` \u2014 Cantor diagonalisation:\n  neither Boolean predicates nor transfinite histories are countably enumerable.\n- `continuum_scheduled_histories` \u2014 **cross-domain bridge**: the space of\n  scheduled Rule 110 histories has cardinality exactly `\ud835\udd20 = 2^{\u2135\u2080}`, tying\n  symbolic dynamics / ordinal recursion to cardinal arithmetic.\n\n## Honest scope of the \"super-Turing\" claim\n\nThe results prove *oracle capacity*: once arbitrary history functionals are\nadmitted at limits, the fixed radius-one successor law hosts a faithful copy of\nthe entire Boolean predicate space. They do **not** claim Rule 110 manufactures\nan undecidable predicate from computable data \u2014 `predicateLimit` receives `P` as\nexternal data and need not be computable.\n\n## Open directions\n\n1. **Canonical limit rules.** Replace the scheduled `predicateLimit` by an\n   intrinsic `liminf`/`limsup` convention on the cell history and characterise\n   which predicates are then realisable. Conjecture: a computable limsup rule\n   still exceeds ordinary Turing power (this is the \"super-Turing from a\n   computable convention\" hypothesis, currently open).\n\n2. **Infinite Time Turing Machines (ITTM).** Simulate an ITTM transition system\n   block-for-block by `omegaSquaredRun`, then push to an instruction-level\n   encoding. The abstract transition-system simulation is within reach; the\n   machine encoding is the substantial open step.\n\n3. **Ordinal universality of Rule 110.** Prove/refute that Rule 110 with a fixed\n   canonical limit rule is universal for ordinal computation up to a specified\n   ordinal height.\n\n4. **Conservative finite embedding.** Formalise that every finite Rule 110\n   computation embeds into an `\u03c9\u00b2` run as block 0 (a `sorry`-free conservativity\n   theorem), making the transfinite model a genuine extension.\n\n5. **Higher ordinals.** Generalise from `\u03c9\u00b2` to `\u03c9^n` and `\u03c9^\u03c9` by iterating the\n   two-layer construction, and relate the reachable predicate classes to the\n   ordinal height (a hyperarithmetic/analytical-hierarchy connection).\n\n6. **Cardinality sharpening.** Extend `continuum_scheduled_histories` to the full\n   history space (arbitrary functionals, not just Boolean schedules) and locate\n   its cardinality in the cardinal hierarchy.\n",
+    "domains": [
+      "Logic",
+      "Pythagorean"
+    ],
+    "id": "fd_0704",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "4ffa8161",
+    "status": "available",
+    "timestamp": "2026-07-24T17:59:53.227087+00:00",
+    "title": "`Catalog/Applications/OrdinalCellularAutomata/TransfiniteComputation.lean`"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist \u2014 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 \u2014 they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures \u2014 combinatorial digit problems that are easy to state but may be as hard as factoring.",
     "domains": [
       "Novelty",
@@ -15006,20 +15021,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Crystallographic Groups and Music: The 17 Wallpaper Groups of Rhythm"
-  },
-  {
-    "consumed_by_exp_id": "4ffa8161",
-    "description": "Cycle a88a4e5d (Q=0.626) proved 18 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Prove that cellular automata can perform transfinite computations when run on ordinals instead of N. Formalize a Rule 110 analog on omega-squared and prove it achieves super-Turing computation. Connec",
-    "domains": [
-      "Applications"
-    ],
-    "id": "sorry_fill_a88a4e5d_285a4c01",
-    "priority_score": 0.6756666666666666,
-    "research_mode": "team",
-    "source_exp_id": "a88a4e5d",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T11:52:43.410408+00:00",
-    "title": "Close Proofs: Cellular Automata at the Ordinals: Transfinite Computation"
   },
   {
     "consumed_by_exp_id": "",

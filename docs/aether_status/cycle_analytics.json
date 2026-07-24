@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-24T15:52:17.402819+00:00",
+  "last_updated": "2026-07-24T17:59:58.261542+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -35163,6 +35163,7 @@
       "outcome_quality": 0.63,
       "phase": "A_only",
       "phase_a_prompt_version": "v28",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v28",
@@ -35205,6 +35206,7 @@
       "outcome_quality": 0.52,
       "phase": "A_only",
       "phase_a_prompt_version": "v25",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v25",
@@ -35247,6 +35249,7 @@
       "outcome_quality": 0.46,
       "phase": "A_only",
       "phase_a_prompt_version": "v24",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v24",
@@ -35275,6 +35278,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-24T15:52:17.292383+00:00",
       "title": "L-Function-Zeroes: Explicit Bounds on Low-Lying Zeroes of Automorphic L-Functions"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Logic",
+      "duration_seconds": 2277.090723514557,
+      "end_time": 1784915983.4221945,
+      "files_integrated": 4,
+      "job_id": "4ffa8161",
+      "outcome_quality": 0.6,
+      "phase": "complete",
+      "phase_a_prompt_version": "v27",
+      "phase_a_quality_score": 0.6,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v27",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.75,
+        "composite": 0.4525,
+        "cross_domain": 0.5,
+        "grade": "partial",
+        "importance": 0.55,
+        "novelty": 0.55,
+        "proof_depth": 0.6,
+        "usefulness": 0.6
+      },
+      "quality_score": 0.6,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1784913706.331471,
+      "strategy_count": 0,
+      "theorem_count": 0,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-24T17:59:58.093286+00:00",
+      "title": "Close Proofs: Cellular Automata at the Ordinals: Transfinite Computation"
     }
   ]
 }
