@@ -1,5 +1,5 @@
 {
-  "title": "Counterfactual Number Theory: What If Primes Were Random?",
+  "title": "Counterfactual Number Theory: What If Primes Were Random? (Part II)",
   "domain": "Applications",
   "description": "A probabilistic model in which the primes are replaced by a random subset of the integers of density 1/log n, with a zero-one dictionary showing the random primes are infinite almost surely iff the prime-density series diverges.",
   "authors": [

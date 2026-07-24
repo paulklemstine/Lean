@@ -1,5 +1,5 @@
 {
-  "title": "Spectral Line-Locking in Fixed-Amplitude Complex-Weighted Undirected Graphs",
+  "title": "Spectral Line-Locking in Fixed-Amplitude Complex-Weighted Undirected Graphs (Part I: Foundation)",
   "domain": "NumberTheory",
   "description": "For an undirected graph whose present edges all share a single complex amplitude z, the weighted adjacency matrix factors as z times a real symmetric matrix, forcing its entire spectrum onto the line R*z. This is the exact obstruction to circular-law (disk-filling) spectral behaviour, complemented by determinant/trace invariants and a sharp complete-graph outlier bound.",
   "authors": [

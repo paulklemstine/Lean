@@ -1,5 +1,5 @@
 {
-  "title": "Real-Rootedness of the Square of the Eulerian Triangle",
+  "title": "Real-Rootedness of the Square of the Eulerian Triangle (Part II)",
   "domain": "Cryptography",
   "description": "We prove that the row polynomials B_n of the squared Eulerian triangle are nonnegative combinations of Eulerian polynomials, have only strictly negative real roots for every n, and are fully real-rooted for all n up to 10, breaking the integer-bracket obstruction that first appears at n=8.",
   "authors": [

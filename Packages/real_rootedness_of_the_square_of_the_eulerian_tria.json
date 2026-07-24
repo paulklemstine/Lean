@@ -1,5 +1,5 @@
 {
-  "title": "Real-Rootedness of the Square of the Eulerian Triangle",
+  "title": "Real-Rootedness of the Square of the Eulerian Triangle (Part I)",
   "domain": "Novelty",
   "description": "Squaring the Eulerian triangle as a matrix yields row polynomials B_n(x) = sum_k (sum_j A(n,j) A(j,k)) x^k; these are proved real-rooted for every n <= 7, extending the known real-rootedness of the Pascal, Stirling, and Narayana squares to the Eulerian case.",
   "authors": [

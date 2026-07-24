@@ -1,5 +1,5 @@
 {
-  "title": "The Algebra of Forgetting: Finite Memory and Observable Quotients",
+  "title": "The Algebra of Forgetting: Finite Memory and Observable Quotients (Part I)",
   "domain": "Novelty",
   "description": "Compositional memories turn streams into a quotient algebra: finite memories must merge distinct histories, erased streams form a submonoid, and the observable states are exactly the quotient by indistinguishability. Targeted symbol deletion realizes this structure and satisfies a unique factorization principle.",
   "authors": [

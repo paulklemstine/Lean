@@ -1,5 +1,5 @@
 {
-  "title": "Spectral Line-Locking in Fixed-Amplitude Complex-Weighted Undirected Graphs",
+  "title": "Spectral Line-Locking in Fixed-Amplitude Complex-Weighted Undirected Graphs (Part II: Generalizations)",
   "domain": "Computation",
   "description": "In the fixed-amplitude model, where every edge of an undirected graph carries one common complex weight z, the entire spectrum of the weighted adjacency matrix z*B collapses onto the line R*z; the model also obeys clean trace and determinant laws and exhibits a mean-direction eigenvalue that escapes the naive spectral radius.",
   "authors": [

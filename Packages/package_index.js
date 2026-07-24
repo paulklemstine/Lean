@@ -56,7 +56,7 @@ window.PACKAGE_INDEX = [
     "quality": "partial",
     "quality_score": 0.55,
     "quality_tier": "bronze",
-    "title": "Spectral Line-Locking in Fixed-Amplitude Complex-Weighted Undirected Graphs"
+    "title": "Spectral Line-Locking in Fixed-Amplitude Complex-Weighted Undirected Graphs (Part II: Generalizations)"
   },
   {
     "date": "2026-07-24T19:54:30Z",
@@ -89,7 +89,7 @@ window.PACKAGE_INDEX = [
     "quality": "substantial",
     "quality_score": 0.7,
     "quality_tier": "silver",
-    "title": "Spectral Line-Locking in Fixed-Amplitude Complex-Weighted Undirected Graphs"
+    "title": "Spectral Line-Locking in Fixed-Amplitude Complex-Weighted Undirected Graphs (Part I: Foundation)"
   },
   {
     "date": "2026-07-23T22:18:08Z",
@@ -342,7 +342,7 @@ window.PACKAGE_INDEX = [
     "quality": "substantial",
     "quality_score": 0.79,
     "quality_tier": "silver",
-    "title": "The Algebra of Forgetting: Finite Memory and Observable Quotients"
+    "title": "The Algebra of Forgetting: Finite Memory and Observable Quotients (Part II)"
   },
   {
     "date": "2026-07-20T05:36:25Z",
@@ -364,7 +364,7 @@ window.PACKAGE_INDEX = [
     "quality": "substantial",
     "quality_score": 0.74,
     "quality_tier": "silver",
-    "title": "The Algebra of Forgetting: Finite Memory and Observable Quotients"
+    "title": "The Algebra of Forgetting: Finite Memory and Observable Quotients (Part I)"
   },
   {
     "date": "2026-07-19T19:23:32-05:00",
@@ -2256,7 +2256,7 @@ window.PACKAGE_INDEX = [
     "quality": "substantial",
     "quality_score": 0.83,
     "quality_tier": "silver",
-    "title": "Isomorphisms of Meaning: When Structures Collide"
+    "title": "Isomorphisms of Meaning: When Structures Collide (Part II)"
   },
   {
     "date": "2026-07-13T05:55:19-05:00",
@@ -3752,7 +3752,7 @@ window.PACKAGE_INDEX = [
     "quality": "substantial",
     "quality_score": 0.82,
     "quality_tier": "silver",
-    "title": "Counterfactual Number Theory: What If Primes Were Random?"
+    "title": "Counterfactual Number Theory: What If Primes Were Random? (Part II)"
   },
   {
     "date": "2026-07-11T06:08:32-05:00",
@@ -3862,7 +3862,7 @@ window.PACKAGE_INDEX = [
     "quality": "substantial",
     "quality_score": 0.7,
     "quality_tier": "silver",
-    "title": "Counterfactual Number Theory: What If Primes Were Random?"
+    "title": "Counterfactual Number Theory: What If Primes Were Random? (Part I)"
   },
   {
     "date": "2026-07-11T03:51:34-05:00",
@@ -4170,7 +4170,7 @@ window.PACKAGE_INDEX = [
     "quality": "substantial",
     "quality_score": 0.72,
     "quality_tier": "silver",
-    "title": "Isomorphisms of Meaning: When Structures Collide"
+    "title": "Isomorphisms of Meaning: When Structures Collide (Part I)"
   },
   {
     "date": "2026-07-10T16:41:36-05:00",
@@ -4269,7 +4269,7 @@ window.PACKAGE_INDEX = [
     "quality": "unrated",
     "quality_score": null,
     "quality_tier": "unrated",
-    "title": "Real-Rootedness of the Square of the Eulerian Triangle"
+    "title": "Real-Rootedness of the Square of the Eulerian Triangle (Part II)"
   },
   {
     "date": "2026-07-10T12:24:06-05:00",
@@ -4962,7 +4962,7 @@ window.PACKAGE_INDEX = [
     "quality": "substantial",
     "quality_score": 0.82,
     "quality_tier": "silver",
-    "title": "Real-Rootedness of the Square of the Eulerian Triangle"
+    "title": "Real-Rootedness of the Square of the Eulerian Triangle (Part I)"
   },
   {
     "date": "2026-07-04T06:31:24-05:00",
@@ -5294,7 +5294,7 @@ window.PACKAGE_DB_INDEX = {
     "source_exp_ids": [
       "2607.11194v1"
     ],
-    "title": "The Algebra of Forgetting: Finite Memory and Observable Quotients"
+    "title": "The Algebra of Forgetting: Finite Memory and Observable Quotients (Part I)"
   },
   "arxiv_paper_on_the_maximum_size_of_b_3_free_famili.json": {
     "domain": "Algebra",
@@ -5926,7 +5926,7 @@ window.PACKAGE_DB_INDEX = {
     "source_exp_ids": [
       "seed"
     ],
-    "title": "Counterfactual Number Theory: What If Primes Were Random?"
+    "title": "Counterfactual Number Theory: What If Primes Were Random? (Part I)"
   },
   "cryptography_from_chaos_encrypting_with_the_logist.json": {
     "domain": "Algebra",
@@ -6006,7 +6006,7 @@ window.PACKAGE_DB_INDEX = {
     "source_exp_ids": [
       "7881a56b"
     ],
-    "title": "The Algebra of Forgetting: Finite Memory and Observable Quotients"
+    "title": "The Algebra of Forgetting: Finite Memory and Observable Quotients (Part II)"
   },
   "deepening_asymptotic_clique_to_clique_density_boun.json": {
     "domain": "Applications",
@@ -6094,7 +6094,7 @@ window.PACKAGE_DB_INDEX = {
     "source_exp_ids": [
       "21228762"
     ],
-    "title": "Counterfactual Number Theory: What If Primes Were Random?"
+    "title": "Counterfactual Number Theory: What If Primes Were Random? (Part II)"
   },
   "deepening_cryptography_from_chaos_encrypting_with_.json": {
     "domain": "Bridges",
@@ -6134,7 +6134,7 @@ window.PACKAGE_DB_INDEX = {
     "source_exp_ids": [
       "4920904c"
     ],
-    "title": "Spectral Line-Locking in Fixed-Amplitude Complex-Weighted Undirected Graphs"
+    "title": "Spectral Line-Locking in Fixed-Amplitude Complex-Weighted Undirected Graphs (Part I: Foundation)"
   },
   "deepening_exact_avdtotal_chromatic_number_of_centr.json": {
     "domain": "Novelty",
@@ -6262,7 +6262,7 @@ window.PACKAGE_DB_INDEX = {
     "source_exp_ids": [
       "f9bf2df0"
     ],
-    "title": "Isomorphisms of Meaning: When Structures Collide"
+    "title": "Isomorphisms of Meaning: When Structures Collide (Part II)"
   },
   "deepening_knots_and_lattices_the_alexander_polynom.json": {
     "domain": "Novelty",
@@ -6414,7 +6414,7 @@ window.PACKAGE_DB_INDEX = {
     "source_exp_ids": [
       "8c745e9f"
     ],
-    "title": "Real-Rootedness of the Square of the Eulerian Triangle"
+    "title": "Real-Rootedness of the Square of the Eulerian Triangle (Part II)"
   },
   "deepening_rucker_infinity_and_the_mind__formalizin.json": {
     "domain": "Applications",
@@ -7318,7 +7318,7 @@ window.PACKAGE_DB_INDEX = {
     "source_exp_ids": [
       "seed"
     ],
-    "title": "Isomorphisms of Meaning: When Structures Collide"
+    "title": "Isomorphisms of Meaning: When Structures Collide (Part I)"
   },
   "knots_and_lattices_the_alexander_polynomial_as_a_l.json": {
     "domain": "Geometry",
@@ -7662,7 +7662,7 @@ window.PACKAGE_DB_INDEX = {
     "source_exp_ids": [
       "2607.01572v1"
     ],
-    "title": "Real-Rootedness of the Square of the Eulerian Triangle"
+    "title": "Real-Rootedness of the Square of the Eulerian Triangle (Part I)"
   },
   "recursive_decomposition_isomorphism_for_general_m_.json": {
     "domain": "Applications",
@@ -8502,7 +8502,7 @@ window.PACKAGE_DB_INDEX = {
     "source_exp_ids": [
       "2607.21494v1"
     ],
-    "title": "Spectral Line-Locking in Fixed-Amplitude Complex-Weighted Undirected Graphs"
+    "title": "Spectral Line-Locking in Fixed-Amplitude Complex-Weighted Undirected Graphs (Part II: Generalizations)"
   },
   "this_cycle_deepens_the_formalization_of_dungs_abst.json": {
     "domain": "Novelty",
