@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "d3ef6e43",
-      "domain": "Probability",
-      "key_insight": "# Future directions\n\nThe completed Lean development proves the local arithmetic dictionary for the quadratic\ncharacter `χ_D(p) = (D/p)`: ramification gives color `0`, and unramified primes split into",
-      "quality_score": 0.51,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-07-18T11:59:36",
-      "title": "Langlands for Toddlers: Galois Groups as Shapes, Automorphic Forms as Colors"
-    },
-    {
       "cycle_id": "5df99ff8",
       "domain": "Tropical",
       "key_insight": "# Future Directions\n\n## What is proved\n\n`Catalog/Tropical/AperiodicMonotile/HierarchicalSpectrum.lean` develops a self-contained abstract hierarchy criterion. A translation period of a configuration d",
@@ -2501,6 +2491,16 @@
       "theorem_count": 7,
       "timestamp": "2026-07-24T04:50:39",
       "title": "**Conjecture.** In the random graph process, with probability tending to one, th"
+    },
+    {
+      "cycle_id": "29ba074c",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions — Pythagorean Energy Spectrum\n\nThe file `Catalog/Pythagorean/PythagoreanEnergySpectrum.lean` proves, with no\n`sorry` and only the standard axioms (`propext`, `Classical.choice`, `Q",
+      "quality_score": 0.6,
+      "sorry_count": 1,
+      "theorem_count": 24,
+      "timestamp": "2026-07-24T06:47:46",
+      "title": "Pythagorean-Energy-Spectrum: Gradient Descent Factoring on the Berggren Tree"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-24T04:50:39",
+  "last_updated": "2026-07-24T06:47:46",
   "open_questions": [
-    {
-      "context": "-    sorry+  have hchecked := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩); -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun ",
-      "cycle_id": "463376b0",
-      "domain": "NumberTheory",
-      "sorry_count": 3,
-      "timestamp": "2026-07-17T09:08:07"
-    },
     {
       "context": "+    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; +    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; +    ∀ i < k, c i = ",
       "cycle_id": "47f9b94d",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 3,
       "timestamp": "2026-07-24T04:50:24"
+    },
+    {
+      "context": "-    sorry+  -- Finite case: extract from computational verification",
+      "cycle_id": "29ba074c",
+      "domain": "NumberTheory",
+      "sorry_count": 1,
+      "timestamp": "2026-07-24T06:47:46"
     }
   ],
   "research_threads": {
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "717f7483",
-        "quality": 0.75,
-        "theorems": 19,
-        "title": "Godel's Casino: Incomplete but Winnable Games"
-      },
-      {
         "cycle_id": "0ebc2749",
         "quality": 0.77,
         "theorems": 0,
@@ -3699,6 +3693,12 @@
         "quality": 0.75,
         "theorems": 19,
         "title": "Moonshot: The Mathematics of Dyson's Intelligence Explosion"
+      },
+      {
+        "cycle_id": "29ba074c",
+        "quality": 0.6,
+        "theorems": 24,
+        "title": "Pythagorean-Energy-Spectrum: Gradient Descent Factoring on the Berggren Tree"
       }
     ],
     "Physics": [
