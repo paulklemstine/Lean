@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-23T23:52:15.230074+00:00",
+  "last_updated": "2026-07-24T01:27:37.781766+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -34258,6 +34258,7 @@
       "outcome_quality": 0.55,
       "phase": "A_only",
       "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v19c",
@@ -34300,6 +34301,7 @@
       "outcome_quality": 0.66,
       "phase": "A_only",
       "phase_a_prompt_version": "v19d",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v19d",
@@ -34328,6 +34330,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-23T23:52:15.130334+00:00",
       "title": "1. **Internal Cartesian-closed formulation.** Generalize the type-level Lawvere "
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Logic",
+      "duration_seconds": 1165.7521708011627,
+      "end_time": 1784856446.809489,
+      "files_integrated": 4,
+      "job_id": "2f76a8a3",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.7,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.55,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.9,
+        "composite": 0.516,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.6,
+        "novelty": 0.68,
+        "proof_depth": 0.72,
+        "usefulness": 0.66
+      },
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1784855281.0573182,
+      "strategy_count": 0,
+      "theorem_count": 6,
+      "theorem_novelty_disproof": 1,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 5,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-24T01:27:37.685571+00:00",
+      "title": "Deepening: Erdos-Renyi on Acid: Random Graphs That Hallucinate"
     }
   ]
 }
