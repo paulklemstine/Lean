@@ -853,17 +853,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Navier-Stokes Existence and Smoothness"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "81b94eec",
     "description": "Prove that the rank of an elliptic curve equals the order of vanishing of its L-function at s=1. Formalize the BSD formula including the regulator, Tate-Shafarevich group, and Tamagawa numbers.",
     "domains": [
       "NumberTheory",
       "Algebra"
     ],
     "id": "seed_017",
+    "phase": "A",
     "priority_score": 0.94,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Birch and Swinnerton-Dyer Conjecture"
   },
@@ -1800,16 +1801,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Ramsey-Bounds: Exponential Bounds for Diagonal Ramsey Numbers"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "04a61ead",
     "description": "Proves conformal invariance of chordal SLE_\u03ba interfaces in simply connected planar domains.",
     "domains": [
       "Probability"
     ],
     "id": "dir_50_47_b33c0bd5",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "batch_50_injection",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-23T20:05:24.653256+00:00",
     "title": "SLE-Interface: Schramm-Loewner Evolution Conformal Invariance"
   },
@@ -8672,17 +8674,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Resurgent Lambert series from Feynman and beyond"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f853fcd6",
     "description": "Investigate the ArXiv paper 'Matroid correspondence' and formalize its key results. Abstract: Motivated by algebraic correspondences and linear operators associated with volume and Lorentzian polynomials, we introduce matroid correspondences and their polymatroid analogues. A matroid correspondence defines a functor between poset categories of matroids whose morphisms are matroid quotients, and various standard functors, including deletion, contraction, free extension, truncation, intersection, union, and pullback, arise in this way. We show that these correspondences preserve representability and algebraicity under natural hypotheses. In the polymatroid setting, we establish compatibility with multisymmetric lifts. Finally, we relate this construction to the supports of linear operators with Lorentzian symbols.",
     "domains": [
       "Algebra",
       "Bridges"
     ],
     "id": "fd_0137",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.13783v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T17:27:41.805947+00:00",
     "title": "ArXiv paper: Matroid correspondence"
   },

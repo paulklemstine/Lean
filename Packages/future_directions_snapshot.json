@@ -1154,7 +1154,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "81b94eec",
     "description": "Prove that the rank of an elliptic curve equals the order of vanishing of its L-function at s=1. Formalize the BSD formula including the regulator, Tate-Shafarevich group, and Tamagawa numbers.",
     "domain_bridges": [],
     "domains": [
@@ -1167,7 +1167,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Birch and Swinnerton-Dyer Conjecture"
   },
@@ -2425,7 +2425,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "04a61ead",
     "description": "Proves conformal invariance of chordal SLE_κ interfaces in simply connected planar domains.",
     "domain_bridges": [],
     "domains": [
@@ -2437,7 +2437,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "batch_50_injection",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-23T20:05:24.653256+00:00",
     "title": "SLE-Interface: Schramm-Loewner Evolution Conformal Invariance"
   },
