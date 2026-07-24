@@ -4362,7 +4362,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem With"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cc3b4f99",
     "description": "Cycle 0daa61af (Q=0.720) proved 18 theorems in Tropical but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The AdS/CFT correspondence says that a gravitational theory in the bulk of anti-de Sitter space is equivalent to a conformal field theory on the boundary. What if prime numbers have a holographic dual",
     "domains": [
       "Tropical"
@@ -4371,7 +4371,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.77,
     "research_mode": "team",
     "source_exp_id": "0daa61af",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-17T18:03:33.034163+00:00",
     "title": "Close Proofs: Holographic Primes: The Prime Number AdS/CFT Correspondence"
   },
@@ -6711,7 +6711,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "team",
     "source_exp_id": "b519e277",
     "status": "available",
-    "timestamp": "2026-07-24T14:20:04.417073+00:00",
+    "timestamp": "2026-07-24T14:12:24.278822+00:00",
     "title": "The certified census of fundamental discriminants with `|D| \u2264 1000` \u2014 exactly `6"
   },
   {
