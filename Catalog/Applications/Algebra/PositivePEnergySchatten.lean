@@ -40,7 +40,7 @@ Synthesis (PI): positive p-energy of a bipartite graph = ½ · Schatten p-energy
 question is a Schatten-norm minimisation over connected bipartite graphs.
 -/
 import Mathlib
-import Catalog.Probability.PositivePEnergyBipartiteBalance
+import Probability.PositivePEnergyBipartiteBalance
 
 open Real Finset
 

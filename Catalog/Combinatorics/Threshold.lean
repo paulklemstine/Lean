@@ -1,6 +1,6 @@
 import Mathlib
-import Catalog.Novelty.OrderParameter
-import Catalog.Novelty.Dimension
+import Novelty.OrderParameter
+import Novelty.Dimension
 
 /-!
 # Threshold laws in counted proof spaces

@@ -55,9 +55,9 @@ Synthesis (PI):
   it.
 -/
 import Mathlib
-import Catalog.Novelty.PhantomTopology
-import Catalog.Novelty.PhantomTopologyCollapse
-import Catalog.Novelty.PhantomCofiniteZariski
+import Novelty.PhantomTopology
+import Novelty.PhantomTopologyCollapse
+import Novelty.PhantomCofiniteZariski
 
 open Set
 

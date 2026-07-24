@@ -1,5 +1,5 @@
 import Mathlib
-import Catalog.Novelty.ErrorMitigation
+import Novelty.ErrorMitigation
 
 /-!
 # Betti-count recovery from noisy barcodes

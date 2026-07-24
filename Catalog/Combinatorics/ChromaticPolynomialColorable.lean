@@ -42,7 +42,7 @@ chromatic-polynomial side (`descFactorial q n > 0 ↔ n ≤ q`) yet recovers the
 -- !-- End Lab Notes -- !--
 -/
 
-import Catalog.Combinatorics.ChromaticPolynomial
+import Combinatorics.ChromaticPolynomial
 
 namespace Catalog.Combinatorics.ChromaticPolynomial
 

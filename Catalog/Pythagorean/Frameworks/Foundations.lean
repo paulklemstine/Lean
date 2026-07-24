@@ -7,6 +7,9 @@ Domain: Pythagorean/Frameworks
 Declarations: 39
 -/
 
+/-- A Pythagorean quadruple: the spatial sum of squares equals the square of `d`. -/
+def IsPythagoreanQuadruple (a b c d : ℤ) : Prop := a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2
+
 /-- Kinetic energy of a quadruple: the spatial sum of squares. -/
 def kineticEnergy (a b c : ℤ) : ℤ := a ^ 2 + b ^ 2 + c ^ 2
 
@@ -226,6 +229,16 @@ theorem quadruple_scale (a b c d k : ℤ) (h : IsPythagoreanQuadruple a b c d) :
 theorem quadruple_neg_a (a b c d : ℤ) (h : IsPythagoreanQuadruple a b c d) :
     IsPythagoreanQuadruple (-a) b c d := by
   unfold IsPythagoreanQuadruple at *; nlinarith [sq_nonneg a]
+
+/-- **Euler's four-square identity**: the product of two sums of four squares is again a
+sum of four squares.  This is the norm-multiplicativity of the Lipschitz quaternions. -/
+theorem euler_four_square_identity (a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄ : ℤ) :
+    (a₁ ^ 2 + a₂ ^ 2 + a₃ ^ 2 + a₄ ^ 2) * (b₁ ^ 2 + b₂ ^ 2 + b₃ ^ 2 + b₄ ^ 2) =
+      (a₁ * b₁ + a₂ * b₂ + a₃ * b₃ + a₄ * b₄) ^ 2 +
+      (a₁ * b₂ - a₂ * b₁ + a₃ * b₄ - a₄ * b₃) ^ 2 +
+      (a₁ * b₃ - a₂ * b₄ - a₃ * b₁ + a₄ * b₂) ^ 2 +
+      (a₁ * b₄ + a₂ * b₃ - a₃ * b₂ - a₄ * b₁) ^ 2 := by
+  ring
 
 #check @collision_example_d9_rep1
 #check @collision_example_d9_rep2

@@ -45,8 +45,8 @@ strictly at `q ≥ 2`, recorded in `FUTURE_DIRECTIONS.md`.
 -- !-- Lab Notes -- !--
 -/
 import Mathlib
-import Catalog.Novelty.GrassmannDegreeOne
-import Catalog.Novelty.Binomial
+import Novelty.GrassmannDegreeOne
+import Novelty.Binomial
 
 namespace GrassmannClassicalLimit
 

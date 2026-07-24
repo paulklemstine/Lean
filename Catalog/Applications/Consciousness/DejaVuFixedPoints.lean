@@ -1,5 +1,5 @@
-import Catalog.Tropical.DejaVuDynamics.PeriodicPoints
-import Catalog.Applications.Consciousness.IntegratedInformation
+import Tropical.DejaVuDynamics.PeriodicPoints
+import Applications.Consciousness.IntegratedInformation
 
 /-!
 # Recurrence, observation, and finite cognitive cycles

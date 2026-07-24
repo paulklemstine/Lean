@@ -69,9 +69,9 @@ Critique (Critic): The bounds are non-vacuous (`card ≥ 1`, `log card ≥ 0`), 
 -/
 
 import Mathlib
-import Catalog.Tropical.MeasureTheory.Basic
-import Catalog.Tropical.MeasureTheory.LargeDeviations
-import Catalog.Tropical.NeuralNetworks.NDimLogSumExp
+import Tropical.MeasureTheory.Basic
+import Tropical.MeasureTheory.LargeDeviations
+import Tropical.NeuralNetworks.NDimLogSumExp
 
 namespace TropicalLDP.Laplace
 

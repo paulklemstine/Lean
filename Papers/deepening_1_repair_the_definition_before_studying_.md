@@ -1,28 +1,59 @@
-# Computational evidence: globally repaired anti-Fibonacci rule
+# Computational Evidence: Repaired Anti-Fibonacci → Squares & Pythagorean Triples
 
-## Small cases
+## Object
 
-The repaired rule starts at 1, requires the next term to be larger, and excludes every sum of two terms already seen (repeated summands allowed).
+The **repaired anti-Fibonacci rule** (from `Logic.RepairedAntiFibonacciClassification`)
+is the greedy process: start at `a 0 = 1`; at each step take the *least* value
+strictly greater than the current term that is not a sum of two previously seen
+terms. The earlier cycle proved rigidity: the unique trajectory is
 
-| stage | previous values | excluded relevant sums | least larger admissible value |
-|---:|---|---|---:|
-| 0 | 1 | 2 | 3 |
-| 1 | 1, 3 | 2, 4, 6 | 5 |
-| 2 | 1, 3, 5 | 2, 4, 6, 8, 10 | 7 |
-| 3 | 1, 3, 5, 7 | 2, 4, 6, 8, 10, 12, 14 | 9 |
-| 4 | 1, 3, 5, 7, 9 | all even values from 2 through 18 | 11 |
+```
+a n = 2n + 1     →     1, 3, 5, 7, 9, 11, 13, ...
+```
 
-Thus the observed values are `1, 3, 5, 7, 9, 11, 13, ...`.
+## 1. Small-case calculations
 
-## Sequence identification
+Terms `a n = 2n+1`:
 
-This is the sequence of positive odd integers. No OEIS lookup is needed for the proof, and no external sequence identification is used.
+| n      | 0 | 1 | 2 | 3 | 4 | 5  | 6  |
+|--------|---|---|---|---|---|----|----|
+| a n    | 1 | 3 | 5 | 7 | 9 | 11 | 13 |
 
-## Counterexample hunt
+Partial sums `S n = ∑_{k<n} a k`:
 
-The proposed exact law is `a(n) = 2n+1`. At each tested stage through the table above:
+| n   | 0 | 1 | 2 | 3 | 4  | 5  | 6  | 7  |
+|-----|---|---|---|---|----|----|----|----|
+| S n | 0 | 1 | 4 | 9 | 16 | 25 | 36 | 49 |
 
-* every prior pair sum is even, so the next odd integer is admissible;
-* the sole intervening integer is even and equals `1 + a(n)`, so it is forbidden.
+So `S n = n²` exactly — the ancient identity "sum of the first n odd numbers is a
+perfect square", here *derived from* the greedy dynamics rather than assumed.
 
-No counterexample appears. The Lean development proves these two observations for every natural-number stage and derives uniqueness, rather than relying on the finite test.
+Consecutive-square gaps: `a n = (n+1)² − n²`.
+
+## 2. OEIS
+
+- Trajectory `1, 3, 5, 7, 9, ...` = odd numbers, **A005408**.
+- Partial sums `0, 1, 4, 9, 16, 25, ...` = squares, **A000290**.
+
+## 3. Pythagorean bridge
+
+Each term is the odd leg of a Pythagorean triple `(a n, 2n²+2n, 2n²+2n+1)`:
+
+| n | a n | even leg 2n²+2n | hyp 2n²+2n+1 | check                         |
+|---|-----|-----------------|--------------|-------------------------------|
+| 1 | 3   | 4               | 5            | 3²+4²=9+16=25=5²              |
+| 2 | 5   | 12              | 13           | 5²+12²=25+144=169=13²         |
+| 3 | 7   | 24              | 25           | 7²+24²=49+576=625=25²         |
+| 4 | 9   | 40              | 41           | 9²+40²=81+1600=1681=41²       |
+
+Even leg and hypotenuse are consecutive integers, so each is a *primitive* triple,
+and `(a n)² = (even leg) + (hypotenuse)` (odd-leg parametrisation). This is the
+classic list of primitive triples with consecutive leg/hypotenuse, **A005408 /
+A046092 / A001844**.
+
+## 4. Counterexample hunt
+
+The proven statements are `a n = 2n+1` corollaries verified for all sampled `n`
+above with no exception; the closed form makes every claim an algebraic identity,
+so no counterexample exists. Formalised in
+`Bridges/RepairedAntiFibonacciSquares.lean` (builds `sorry`-free).

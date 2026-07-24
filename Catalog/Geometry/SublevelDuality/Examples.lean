@@ -1,6 +1,6 @@
 import Mathlib
-import Catalog.Geometry.SublevelDuality.Homogeneous
-import Catalog.Geometry.SublevelDuality.Duality
+import Geometry.SublevelDuality.Homogeneous
+import Geometry.SublevelDuality.Duality
 
 /-
 # A concrete, non-vacuous instance of the RC sublevel duality

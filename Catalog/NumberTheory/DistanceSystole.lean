@@ -1,5 +1,5 @@
 import Mathlib
-import Catalog.Novelty.DiscreteCubicalHomotopyBridge
+import Novelty.DiscreteCubicalHomotopyBridge
 
 /-!
 # Homological code distance and combinatorial systoles

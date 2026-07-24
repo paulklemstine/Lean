@@ -1,5 +1,5 @@
-import Catalog.Computation.ReversibleSortingBennett
-import Catalog.Computation.FactorialNumberSystem
+import Computation.ReversibleSortingBennett
+import Computation.FactorialNumberSystem
 
 /-!
 # Sorting: decision-tree entropy, reversible history, and Landauer work
@@ -111,10 +111,12 @@ theorem factorial_controls_comparisons_entropy_and_history
     Nat.clog 2 n.factorial ≤ t.height ∧
     infoErased (sortingFunction n) = Real.logb 2 n.factorial ∧
     n.factorial ≤ Fintype.card Aux := by
-      refine' ⟨ comparison_lower_bound t n hs, _, _ ⟩;
-      · convert sorting_info_erased n;
-      · convert sorting_history_lower_bound n Aux e hc using 1;
-        simp +decide [ Fintype.card_perm ]
+  refine ⟨comparison_lower_bound t n hs, ?_, ?_⟩
+  · unfold infoErased sortingFunction
+    norm_num [Fintype.card_perm]
+    rw [Finset.image_const] <;> aesop
+  · have h := sorting_history_lower_bound n Aux e hc
+    simpa [Fintype.card_perm] using h
 
 /-
 **Exact Landauer scale for sorting.** With natural logarithms, erasing the unknown
@@ -123,8 +125,14 @@ the change of base in `log₂(n!)`.
 -/
 theorem sorting_landauer_gap_exact (n : ℕ) (kT : ℝ) :
     landauerGap (sortingFunction n) kT = kT * Real.log n.factorial := by
-      convert congr_arg _ ( sorting_info_erased n ) using 1;
-      unfold landauerCost; rw [ Real.logb ] ; ring; norm_num;
+  have hmid : infoErased (sortingFunction n) = Real.logb 2 (n.factorial) := by
+    unfold infoErased sortingFunction
+    norm_num [Fintype.card_perm]
+    rw [Finset.image_const] <;> aesop
+  unfold landauerGap landauerCost
+  rw [hmid, Real.logb]
+  have h2 : Real.log 2 ≠ 0 := (Real.log_pos (by norm_num)).ne'
+  field_simp
 
 /-
 The Landauer work assigned to irreversible sorting is unchanged when redundant

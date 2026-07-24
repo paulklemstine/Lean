@@ -64,17 +64,17 @@ def c5edges (v : Fin 5 → V) : Finset (Sym2 V) :=
 def IsFiveCycle (s : Finset (Sym2 V)) : Prop :=
   ∃ v : Fin 5 → V, Function.Injective v ∧ s = c5edges v
 
+omit [Fintype V] in
 /-- The edge map `i ↦ s(v i, v (i+1))` is injective on `Fin 5` when `v` is injective: hence a
 5-cycle has exactly `5` edges. -/
-omit [Fintype V] in
 lemma c5edges_card {v : Fin 5 → V} (hv : Function.Injective v) :
     (c5edges v).card = 5 := by
   rw [c5edges, Finset.card_image_of_injective]
   · rfl
   · simp +decide [Function.Injective, hv.eq_iff]
 
-/-- Each vertex lies on an even number (in fact `0` or `2`) of the edges of a 5-cycle. -/
 omit [Fintype V] in
+/-- Each vertex lies on an even number (in fact `0` or `2`) of the edges of a 5-cycle. -/
 lemma c5edges_even_incidence {v : Fin 5 → V} (hv : Function.Injective v) (w : V) :
     Even ((c5edges v).filter (fun e => w ∈ e)).card := by
   by_cases hw : ∃ i : Fin 5, v i = w <;> simp_all +decide [c5edges]

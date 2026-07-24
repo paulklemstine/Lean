@@ -1,4 +1,4 @@
-import Catalog.Applications.CellularAutomataVariety.Basic
+import Applications.CellularAutomataVariety.Basic
 
 /-!
 # Fixed-point counts and the refutation of the complexity–dimension conjecture

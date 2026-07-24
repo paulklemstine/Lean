@@ -35,7 +35,7 @@ Failure analysis: the only subtlety is that `IntersectionForm` bundles a proof
 -/
 
 import Mathlib
-import Catalog.Applications.SmoothPoincare.IntersectionForms
+import Applications.SmoothPoincare.IntersectionForms
 
 open Matrix
 

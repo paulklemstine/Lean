@@ -27,7 +27,7 @@ statements:
   Synthesis (Stage 5): a thin, reusable consequence layer demonstrating that the
     catalog result composes cleanly with Mathlib's modular and finite-sum API.
 -/
-import Catalog.Logic.FermatLittleFive
+import Logic.FermatLittleFive
 
 namespace Catalog.Logic.FermatLittleFive
 

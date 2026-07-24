@@ -1,5 +1,5 @@
-import Catalog.Computation.MixedRadixNumberSystem
-import Catalog.Computation.FactorialNumberSystem
+import Computation.MixedRadixNumberSystem
+import Computation.FactorialNumberSystem
 
 /-!
 # Bridge: the factorial number system is a mixed-radix system

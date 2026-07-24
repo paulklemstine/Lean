@@ -56,7 +56,7 @@ variable {s : Finset ι} {v : ι → F}
 
 /-- The Shamir reconstruction coefficient of participant `i`: the value at the secret point
 `0` of the `i`-th Lagrange basis polynomial.  Depends only on the nodes `v` over `s`. -/
-def lagrangeCoeff (s : Finset ι) (v : ι → F) (i : ι) : F :=
+noncomputable def lagrangeCoeff (s : Finset ι) (v : ι → F) (i : ι) : F :=
   (Lagrange.basis s v i).eval 0
 
 /-

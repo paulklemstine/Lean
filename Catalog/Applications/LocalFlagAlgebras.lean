@@ -1,5 +1,5 @@
 import Mathlib
-import Catalog.Novelty.GreedyDegreeColoring
+import Novelty.GreedyDegreeColoring
 
 /-!
 # Local flag algebras: maximum-degree normalisation

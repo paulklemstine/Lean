@@ -1,6 +1,6 @@
 import Mathlib
-import Catalog.Novelty.PrimeZetaAbscissa
-import Catalog.Novelty.ImaginaryQuadraticPrimeZeta
+import Novelty.PrimeZetaAbscissa
+import Novelty.ImaginaryQuadraticPrimeZeta
 
 /-!
 # Abscissa bracket for a general imaginary quadratic prime-ideal zeta function
