@@ -1,4 +1,4 @@
-import Applications.MicroscopicWeighting.Examples
+import Catalog.Applications.MicroscopicWeighting.Examples
 
 /-!
 # Geometric tie-in: sign of `μ` versus extreme points

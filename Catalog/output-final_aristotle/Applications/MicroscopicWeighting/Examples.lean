@@ -1,4 +1,4 @@
-import Applications.MicroscopicWeighting.Core
+import Catalog.Applications.MicroscopicWeighting.Core
 
 /-!
 # Concrete microscopic weightings and the sign characterisation

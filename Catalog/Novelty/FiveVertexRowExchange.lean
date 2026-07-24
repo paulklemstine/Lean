@@ -71,9 +71,9 @@ section General
 
 variable {R : Type*} [NormedRing R] [CompleteSpace R]
 
-omit [CompleteSpace R] in
 /-- An involution conjugating a commuting element fixes each of its powers:
 `u * xⁿ * u = xⁿ` whenever `u * u = 1` and `u * x = x * u`. -/
+omit [CompleteSpace R] in
 theorem conj_pow_eq (u x : R) (hu : u * u = 1) (hc : u * x = x * u) (n : ℕ) :
     u * x ^ n * u = x ^ n := by
   have hci : u * x ^ n = x ^ n * u := (Commute.pow_right (Commute.symm hc).symm n)
@@ -155,18 +155,18 @@ omit [CompleteSpace R] in
 @[simp] theorem prodDown_succ (M : ℕ → R) (m : ℕ) :
     prodDown M (m + 1) = M m * prodDown M m := rfl
 
-omit [CompleteSpace R] in
 /-- Geometric tail bound on the half-strip product norm under eventual contraction. -/
+omit [CompleteSpace R] in
 theorem norm_prodDown_le_tail (M : ℕ → R) (c : ℝ) (N : ℕ) (hc0 : 0 ≤ c)
     (hN : ∀ k, N ≤ k → ‖M k‖ ≤ c) :
     ∀ m, N ≤ m → ‖prodDown M m‖ ≤ ‖prodDown M N‖ * c ^ (m - N) := by
   intro m hm; induction' hm with m hm ih <;> simp_all +decide
   exact le_trans ( norm_mul_le _ _ ) ( by rw [ Nat.succ_sub hm, pow_succ' ] ; nlinarith [ hN m hm, norm_nonneg ( prodDown M m ) ] )
 
-omit [CompleteSpace R] in
 /-- **Eventual contraction collapses the half-strip product.**
 If the transfer operators satisfy a uniform contraction bound `‖M k‖ ≤ c < 1` for all `k ≥ N`,
 then the accumulated product norm tends to `0`. -/
+omit [CompleteSpace R] in
 theorem prodDown_tendsto_zero (M : ℕ → R) (c : ℝ) (N : ℕ) (hc : c < 1)
     (hN : ∀ k, N ≤ k → ‖M k‖ ≤ c) :
     Filter.Tendsto (fun m => ‖prodDown M m‖) Filter.atTop (nhds 0) := by

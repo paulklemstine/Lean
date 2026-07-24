@@ -62,8 +62,8 @@ Critique (Critic): `tiltedMeasure` is a genuine reweighting (not a rename), the
 -/
 
 import Mathlib
-import Tropical.MeasureTheory.Basic
-import Tropical.MeasureTheory.LargeDeviations
+import Catalog.Tropical.MeasureTheory.Basic
+import Catalog.Tropical.MeasureTheory.LargeDeviations
 
 namespace TropicalLDP.Tilting
 

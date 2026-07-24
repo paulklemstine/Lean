@@ -92,7 +92,8 @@ pathEdges equals length - 1 for nonempty lists.
 -/
 theorem pathEdges_eq {α : Type*} (a : α) (rest : List α) :
     pathEdges (a :: rest) = rest.length := by
-  simp [pathEdges]
+  induction' rest with b rest ihizing a <;> simp_all +arith +decide [ pathEdges ];
+  cases rest <;> simp_all +arith +decide [ pathEdges ]
 
 /-
 Path cost is bounded above by maxWeight × number of edges.

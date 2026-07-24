@@ -1,5 +1,5 @@
 import Mathlib
-import MachineLearning.ResNetLipschitz
+import MachineLearning.SelfImproving.ResNetLipschitz
 
 /-! # Discrete Gronwall Bridge
 

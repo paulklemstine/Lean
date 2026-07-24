@@ -1,5 +1,5 @@
-import Novelty.StrongChromaticBipartite
-import Novelty.RiordanRowSumFibonacci
+import Catalog.Combinatorics.StrongChromaticBipartite
+import Catalog.Novelty.RiordanRowSumFibonacci
 
 /-!
 # Bridge: the strong chromatic index of Fibonacci-sized complete bipartite graphs

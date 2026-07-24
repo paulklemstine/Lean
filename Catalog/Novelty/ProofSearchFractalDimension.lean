@@ -1,4 +1,4 @@
-import Algebra.TruthFractalDimensionDeepening
+import Catalog.Algebra.TruthFractalDimensionDeepening
 
 /-!
 # Fractal Dimension of Proof Search

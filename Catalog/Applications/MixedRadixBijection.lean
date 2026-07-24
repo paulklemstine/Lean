@@ -1,5 +1,5 @@
-import Computation.MixedRadixNumberSystem
-import Computation.FactorialNumberSystem
+import Catalog.Computation.MixedRadixNumberSystem
+import Catalog.Computation.FactorialNumberSystem
 
 /-!
 # The mixed-radix bijection and its concrete instances

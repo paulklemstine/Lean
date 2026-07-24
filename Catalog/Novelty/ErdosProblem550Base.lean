@@ -33,7 +33,7 @@ Synthesis (PI): The base case `R(T,K_{1,1}) = n` is exact and pairs with the gen
   multipartite containment lemmas to frame the inductive structure of Erdős 550.
 -/
 
-import Novelty.ErdosProblem550Chvatal
+import Catalog.Novelty.ErdosProblem550Chvatal
 
 open SimpleGraph
 

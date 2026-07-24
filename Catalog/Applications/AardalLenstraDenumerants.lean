@@ -1,5 +1,5 @@
 import Mathlib
-import Applications.MixedRadixBijection
+import Catalog.Applications.MixedRadixBijection
 
 /-!
 # Aardal–Lenstra denumerants: lattice compression identities

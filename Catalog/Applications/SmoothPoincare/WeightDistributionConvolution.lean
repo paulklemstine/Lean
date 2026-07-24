@@ -70,7 +70,7 @@ Synthesis (PI): `(wexact, ∗)` (Cauchy convolution) is the exact monoid law for
 -/
 
 import Mathlib
-import Applications.SmoothPoincare.CumulativeWeightConvolution
+import Catalog.Applications.SmoothPoincare.CumulativeWeightConvolution
 
 open scoped BigOperators
 

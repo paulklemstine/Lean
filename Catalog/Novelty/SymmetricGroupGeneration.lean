@@ -64,9 +64,9 @@ generate `G`. -/
 noncomputable def bothInPairs (H : Subgroup G) : Finset (G × G) :=
   Finset.univ.filter fun p : G × G => p.1 ∈ H ∧ p.2 ∈ H
 
-omit [DecidableEq G] in
 /-- The "both in `H`" pairs are in bijection with `H × H`, so there are exactly
 `|H|²` of them. -/
+omit [DecidableEq G] in
 theorem bothInPairs_card (H : Subgroup G) :
     (bothInPairs H).card = Fintype.card H ^ 2 := by
   convert Fintype.card_prod (H : Set G) (H : Set G) using 1

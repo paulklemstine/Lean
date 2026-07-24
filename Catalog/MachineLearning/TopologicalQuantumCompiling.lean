@@ -1,6 +1,6 @@
 import Mathlib
-import Cryptography.BraidGroup
-import Bridges.GroupTheoryBridge
+import Catalog.Cryptography.BraidGroup
+import Catalog.Bridges.GroupTheoryBridge
 
 /-! # Topological Quantum Compiling: Algebraic and Topological Certificates
 

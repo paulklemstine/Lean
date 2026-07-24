@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Aristotle (Harmonic)
 -/
 import Mathlib
-import Novelty.Z2CoindexSuspension
+import Catalog.Novelty.Z2CoindexSuspension
 
 /-!
 # Deepening: suspension is a functor and the sharp excess of the ℤ₂-coindex

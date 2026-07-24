@@ -1,6 +1,6 @@
 import Mathlib
-import Applications.LagrangeRatioSpectrum.Core
-import Applications.ContinuedFractions.DiophantineApproximation
+import Catalog.Applications.LagrangeRatioSpectrum.Core
+import Catalog.Applications.ContinuedFractions.DiophantineApproximation
 
 /-!
 # Bridging Diophantine approximation and the Lagrange constant

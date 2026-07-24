@@ -51,7 +51,7 @@ structural isomorphism.  This cleanly separates invariance of truth from invaria
 -/
 
 import Mathlib
-import Applications.MultiverseModalForcing
+import Catalog.Applications.MultiverseModalForcing
 
 namespace IsomorphismsOfMeaning
 

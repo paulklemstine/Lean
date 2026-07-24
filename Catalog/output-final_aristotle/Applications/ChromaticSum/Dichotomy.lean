@@ -30,7 +30,7 @@ for the Chromatic Sum problem on forest‑free graphs.
 -/
 
 import Mathlib
-import Applications.ChromaticSum.Defs
+import Catalog.Applications.ChromaticSum.Defs
 
 open Finset
 

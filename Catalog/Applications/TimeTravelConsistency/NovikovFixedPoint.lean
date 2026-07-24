@@ -1,5 +1,5 @@
 import Mathlib
-import Geometry.FiniteContraction
+import Catalog.Geometry.FiniteContraction
 
 /-!
 # Time-travel consistency as a fixed-point theorem

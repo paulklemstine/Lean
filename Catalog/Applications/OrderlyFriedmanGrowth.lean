@@ -1,5 +1,5 @@
 import Mathlib
-import Bridges.ElementaryNumberTheoryBridge
+import Catalog.Bridges.ElementaryNumberTheoryBridge
 
 /-!
 # Orderly Friedman numbers

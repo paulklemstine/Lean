@@ -17,7 +17,7 @@ vector; the absence of monochromatic copies is verified by a finite computation
 -/
 
 import Mathlib
-import Applications.GallaiHomothetyNumber
+import Catalog.Applications.GallaiHomothetyNumber
 
 open Finset
 

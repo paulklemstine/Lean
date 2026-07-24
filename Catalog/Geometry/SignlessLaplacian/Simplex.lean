@@ -25,7 +25,7 @@
   Synthesis: confirms sharpness; equality for general joins is left to
     `FUTURE_DIRECTIONS.md`.
 -/
-import Geometry.SignlessLaplacian.Core
+import Catalog.Geometry.SignlessLaplacian.Core
 
 open Finset BigOperators
 

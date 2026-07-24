@@ -43,7 +43,7 @@ Critique (Critic): the example is genuinely non-vacuous — `gapMeasure` is a bo
 -/
 
 import Mathlib
-import Tropical.MeasureTheory.LargeDeviations
+import Catalog.Tropical.MeasureTheory.LargeDeviations
 
 namespace TropicalLDP.DualityGap
 

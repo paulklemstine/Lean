@@ -1,5 +1,5 @@
 import Mathlib
-import Algebra.VietorisRipsCliqueExtremalDeepening
+import Catalog.Algebra.VietorisRipsCliqueExtremalDeepening
 
 /-!
 # Co-citation complexes and the limits of polynomial Betti growth

@@ -1,5 +1,5 @@
 import Mathlib
-import Novelty.PartialCube
+import Catalog.Novelty.PartialCube
 
 /-!
 # Face flags underlying magnitude homology of tope graphs

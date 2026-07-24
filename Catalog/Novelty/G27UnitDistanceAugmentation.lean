@@ -1,7 +1,7 @@
 import Mathlib
-import Novelty.UnitDistanceGraph
-import Novelty.IndependenceRatioChromatic
-import Novelty.G27CriticalAugmentation
+import Catalog.Novelty.UnitDistanceGraph
+import Catalog.Novelty.IndependenceRatioChromatic
+import Catalog.Novelty.G27CriticalAugmentation
 
 /-!
 # The critical two-vertex augmentation, realised geometrically
