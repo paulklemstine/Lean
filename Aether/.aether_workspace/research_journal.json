@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "fb82936b",
-      "domain": "Physics",
-      "key_insight": "# Future Directions\n\n- Replace the parity-normalized action model by an explicit cubical set whose vertices are recipes, edges are elementary substitutions, and higher cubes encode commuting independe",
-      "quality_score": 0.63,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-07-18T14:44:03",
-      "title": "Homotopy Type Theory of Cooking Recipes: Paths Between Dishes"
-    },
-    {
       "cycle_id": "64b7f63b",
       "domain": "Combinatorics",
       "key_insight": "# Future Directions\n\n1. **Variable branching alphabets.** Generalize binary profiles to a fixed `b`-ary alphabet and prove that normalization by `log b` again bounds dimension by `1` and realizes rati",
@@ -2501,6 +2491,16 @@
       "theorem_count": 16,
       "timestamp": "2026-07-24T14:54:57",
       "title": "ArXiv paper: On Agreement Subtrees in Multiple Pylogenetic Trees"
+    },
+    {
+      "cycle_id": "86d1611f",
+      "domain": "Applications",
+      "key_insight": "# Future directions — Escher staircases, cycle 1\n\n## What this cycle adds\n\nThe previous cycle established, over a **field** `k`:\n\n* `k[x₀, x₁, …]` (countably many variables) has an Escher staircase",
+      "quality_score": 0.63,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-07-24T15:52:00",
+      "title": "The original proposal mixes two different notions. The files now separate them."
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-24T14:54:57",
+  "last_updated": "2026-07-24T15:52:00",
   "open_questions": [
     {
       "context": "+    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; +    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; +    ∀ i < k, c i = ",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "606f7bdd",
-        "quality": 0.73,
-        "theorems": 11,
-        "title": "Zombies and Qualia: Mathematics of Subjective Experience"
-      },
-      {
         "cycle_id": "671e7568",
         "quality": 0.67,
         "theorems": 25,
@@ -3141,6 +3135,12 @@
         "quality": 0.63,
         "theorems": 20,
         "title": "The completed Lean development proves the local arithmetic dictionary for the qu"
+      },
+      {
+        "cycle_id": "86d1611f",
+        "quality": 0.63,
+        "theorems": 15,
+        "title": "The original proposal mixes two different notions. The files now separate them."
       }
     ],
     "Bridges": [
