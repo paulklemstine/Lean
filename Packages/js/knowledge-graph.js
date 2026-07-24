@@ -2036,12 +2036,6 @@
         nodeMap[node.id] = node;
     };
 
-    // Fast-forward simulation to let nodes settle into graceful positions
-    for (let i = 0; i < 300; i++) {
-        time += 0.016;
-        simulate();
-    }
-
     // Resize handler
     window.addEventListener('resize', resize);
 
