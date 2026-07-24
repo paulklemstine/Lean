@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "5df99ff8",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions\n\n## What is proved\n\n`Catalog/Tropical/AperiodicMonotile/HierarchicalSpectrum.lean` develops a self-contained abstract hierarchy criterion. A translation period of a configuration d",
-      "quality_score": 0.57,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-07-18T12:15:53",
-      "title": "The Aperiodic Monotile: One Shape to Tile Them All"
-    },
-    {
       "cycle_id": "fff627f3",
       "domain": "Pythagorean",
       "key_insight": "# Future Directions\n\n## 1. Baire-category classification of convergent prime rearrangements\n\n**Conjecture.** In the pointwise topology on the infinite symmetric group, the set of permutations for whic",
@@ -2501,6 +2491,16 @@
       "theorem_count": 24,
       "timestamp": "2026-07-24T06:47:46",
       "title": "Pythagorean-Energy-Spectrum: Gradient Descent Factoring on the Berggren Tree"
+    },
+    {
+      "cycle_id": "c760f6fc",
+      "domain": "Shared",
+      "key_insight": "# Future directions — the fractal geometry of the truth space\n\nThe formal development studies a precise surrogate for \"the space of mathematical truth\": binary\nstreams `ℕ → Bool` encode successive ans",
+      "quality_score": 0.63,
+      "sorry_count": 0,
+      "theorem_count": 18,
+      "timestamp": "2026-07-24T06:47:55",
+      "title": "The formal development studies a precise surrogate for “the space of mathematica"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-24T06:47:46",
+  "last_updated": "2026-07-24T06:47:55",
   "open_questions": [
     {
       "context": "+    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; +    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; +    ∀ i < k, c i = ",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "186c9eac",
-        "quality": 0.68,
-        "theorems": 0,
-        "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
-      },
-      {
         "cycle_id": "e456357e",
         "quality": 0.7,
         "theorems": 11,
@@ -3947,6 +3941,12 @@
         "quality": 0.64,
         "theorems": 4,
         "title": "Close Proofs: Non-Desarguesian Worlds: Geometry Without Desargues"
+      },
+      {
+        "cycle_id": "c760f6fc",
+        "quality": 0.63,
+        "theorems": 18,
+        "title": "The formal development studies a precise surrogate for “the space of mathematica"
       }
     ],
     "Tropical": [
