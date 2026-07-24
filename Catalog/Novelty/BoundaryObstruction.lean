@@ -83,7 +83,7 @@ lemma incoherenceIndex_le_addOrderOf {N : ℕ} [NeZero N] (F : Frame N)
   · refine' ⟨ _, _, _ ⟩;
     · exact List.ne_nil_of_length_pos ( by rw [ List.length_replicate ] ; exact addOrderOf_pos a );
     · exact fun x hx => by rw [ List.eq_of_mem_replicate hx ] ; exact ha;
-    · simp +decide [ addOrderOf_nsmul_eq_zero ];
+    · rw [List.sum_replicate]; exact addOrderOf_nsmul_eq_zero a;
   · norm_num
 
 /-

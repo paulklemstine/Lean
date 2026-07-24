@@ -1,4 +1,4 @@
-import Catalog.Applications.Core
+import Applications.Core
 
 /-!
 # Multiple agreement subtrees: gluing, counting, and threshold transfer

@@ -1,5 +1,5 @@
 import Mathlib
-import Catalog.Cryptography.NoetherianCertification
+import Cryptography.NoetherianCertification
 
 /-!
 # Divisibility staircases and the ascending-chain obstruction

@@ -1,5 +1,5 @@
-import Catalog.Novelty.AntiFibonacciSumSpectrum
-import Catalog.Novelty.RiordanRowSumFibonacci
+import Novelty.AntiFibonacciSumSpectrum
+import Novelty.RiordanRowSumFibonacci
 
 /-!
 # Anti-Fibonacci research synthesis: square sums and corrected growth

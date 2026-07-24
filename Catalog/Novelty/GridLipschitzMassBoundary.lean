@@ -33,7 +33,7 @@ Critique (Critic): The witness is genuinely admissible (constant ⇒ 1-Lipschitz
 Synthesis (PI): Confirms the extremal bound is exactly the anchored statement;
   the un-anchored version is false, with an explicit diverging witness.
 -/
-import Catalog.Novelty.GridLipschitzMass
+import Novelty.GridLipschitzMass
 
 open Finset
 

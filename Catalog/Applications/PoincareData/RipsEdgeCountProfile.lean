@@ -26,7 +26,7 @@
   The monotonicity statement `edgeCountProfile_mono` is the clean order-theoretic
   replacement for the awkward "tropical monotonicity" packaging considered earlier.
 -/
-import Catalog.Applications.PoincareData.MetricFiltration
+import Applications.PoincareData.MetricFiltration
 
 open Finset Set
 

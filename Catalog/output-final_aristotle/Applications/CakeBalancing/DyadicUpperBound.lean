@@ -1,4 +1,4 @@
-import Catalog.Applications.CakeBalancing.Basic
+import Applications.CakeBalancing.Basic
 
 /-!
 # A universal upper bound for the cake-balancing ratio: the bisection strategy

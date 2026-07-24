@@ -137,8 +137,8 @@ theorem pushforward_id [DecidableEq ι] (v : ι → ℝ) : pushforward id v = v 
   unfold pushforward
   simp
 
-/-- Functor composition law: pushforward of a composite is the composite of pushforwards. -/
 omit [Fintype μ] in
+/-- Functor composition law: pushforward of a composite is the composite of pushforwards. -/
 theorem pushforward_comp (f : ι → κ) (g : κ → μ) (v : ι → ℝ) :
     pushforward (g ∘ f) v = pushforward g (pushforward f v) := by
   unfold pushforward

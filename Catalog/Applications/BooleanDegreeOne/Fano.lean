@@ -27,7 +27,7 @@ one functions on `J_2(3,2)`.
 --   case against which the `q ≥ 3` non-existence conjecture must be tested.
 -- !-- end Lab Notes -- !--
 -/
-import Catalog.Applications.BooleanDegreeOne.Core
+import Applications.BooleanDegreeOne.Core
 
 namespace Catalog.Applications.BooleanDegreeOne.Fano
 

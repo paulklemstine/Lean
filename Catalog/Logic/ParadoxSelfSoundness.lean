@@ -1,4 +1,4 @@
-import Logic.ParadoxSelfSoundness
+import Mathlib
 
 /-!
 # Paradoxes as Theorems — A Concrete Six-Element Paraconsistent Witness Model
@@ -35,6 +35,55 @@ the precise finite facts below: three distinct provable gluts coexist, every pro
 sentence is designated (self-soundness), explosion is rejected by an explicit
 counterexample, and the inconsistency degree (number of gluts) is exactly three.
 -/
+
+/-! ## The abstract paraconsistent framework -/
+
+/-- Belnap's four truth values: `T` (true only), `F` (false only), `B` (both / glut),
+`N` (neither / gap). -/
+inductive BelnapVal
+  | T | F | B | N
+  deriving DecidableEq, Repr
+
+namespace BelnapVal
+
+/-- Belnap negation: swaps `T`/`F`, and fixes the glut `B` and the gap `N`. -/
+def neg : BelnapVal → BelnapVal
+  | T => F
+  | F => T
+  | B => B
+  | N => N
+
+/-- A value is designated (at-least-true) iff it is `T` or the glut `B`. -/
+def isTrue : BelnapVal → Bool
+  | T => true
+  | F => false
+  | B => true
+  | N => false
+
+end BelnapVal
+
+/-- A paraconsistent theory on a sentence type `S`: a Belnap truth assignment
+together with a syntactic negation. -/
+structure ParaconsistentTheory (S : Type*) where
+  /-- The Belnap truth-value assignment. -/
+  truth : S → BelnapVal
+  /-- The syntactic negation on sentences. -/
+  sentNeg : S → S
+
+/-- A set of sentences is sound for a theory if every member is designated
+(at-least-true). -/
+def ParaconsistentTheory.isSound {S : Type*} (T : ParaconsistentTheory S) (P : Set S) : Prop :=
+  ∀ s ∈ P, (T.truth s).isTrue = true
+
+/-- A theory has explosion if from any glut-valued sentence every sentence becomes
+designated (the paraconsistent failure the model is built to avoid). -/
+def HasExplosion (S : Type*) (T : ParaconsistentTheory S) : Prop :=
+  ∀ a b : S, T.truth a = BelnapVal.B → (T.truth b).isTrue = true
+
+/-- The inconsistency degree of a theory over a finite sentence type: the number of
+glut-valued sentences. -/
+def inconsistencyDegree {S : Type*} [Fintype S] (T : ParaconsistentTheory S) : ℕ :=
+  (Finset.univ.filter (fun s => T.truth s = BelnapVal.B)).card
 
 open BelnapVal
 

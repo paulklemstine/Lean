@@ -23,7 +23,7 @@ cheap colour is spent.
 -/
 
 import Mathlib
-import Catalog.Applications.ChromaticSum.Defs
+import Applications.ChromaticSum.Defs
 
 open Finset
 

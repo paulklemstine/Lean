@@ -1,4 +1,4 @@
-import Catalog.Novelty.FranklUnionClosed
+import Novelty.FranklUnionClosed
 
 /-!
 # Frankl's conjecture for a three-element universe

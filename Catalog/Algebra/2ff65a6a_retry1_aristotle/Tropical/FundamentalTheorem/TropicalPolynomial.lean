@@ -1,4 +1,4 @@
-import Tropical.FundamentalTheorem.Basic
+import Algebra.«2ff65a6a_retry1_aristotle».Tropical.FundamentalTheorem.Basic
 
 /-!
 # Tropical polynomials via the tropical semiring, and their piecewise-linear structure

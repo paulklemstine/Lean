@@ -2,7 +2,7 @@
 Copyright (c) 2026.
 Released under Apache 2.0 license.
 -/
-import Catalog.Cryptography.BraidGroup
+import Cryptography.BraidGroup
 
 /-!
 # Cognitive braids and cyclotomic signatures

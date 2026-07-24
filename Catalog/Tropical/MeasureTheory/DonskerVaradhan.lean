@@ -57,8 +57,8 @@ Critique (Critic): `relEnt` is a genuine functional (not a rename), the Gibbs
 -/
 
 import Mathlib
-import Catalog.Tropical.MeasureTheory.Basic
-import Catalog.Tropical.MeasureTheory.LargeDeviations
+import Tropical.MeasureTheory.Basic
+import Tropical.MeasureTheory.LargeDeviations
 
 namespace TropicalLDP.DonskerVaradhan
 

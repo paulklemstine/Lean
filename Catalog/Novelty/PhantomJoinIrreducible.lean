@@ -76,9 +76,9 @@ Synthesis (PI):
   structure" — but some structures refuse to be measured apart.
 -/
 import Mathlib
-import Catalog.Novelty.PhantomTopology
-import Catalog.Novelty.PhantomTopologyCollapse
-import Catalog.Geometry.PhantomTopologyNonMetrizable
+import Novelty.PhantomTopology
+import Novelty.PhantomTopologyCollapse
+import Geometry.PhantomTopologyNonMetrizable
 
 open Set
 

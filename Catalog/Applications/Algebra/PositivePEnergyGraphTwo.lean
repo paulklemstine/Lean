@@ -45,7 +45,7 @@ Synthesis (PI): squared adjacency energy IS twice the edge count; path-minimalit
 spanning-tree bound transported through the spectral theorem.
 -/
 import Mathlib
-import Catalog.Probability.PositivePEnergyPathMinimal
+import Probability.PositivePEnergyPathMinimal
 
 open scoped Matrix
 open Matrix Finset

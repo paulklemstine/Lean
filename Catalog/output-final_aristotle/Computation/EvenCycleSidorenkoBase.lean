@@ -50,7 +50,7 @@ Synthesis (PI): Two sharp spectral seeds — valid for *all* symmetric weighting
   even-cycle tensor transfer principle, generate an entire closed class of Sidorenko graphons.
 -/
 import Mathlib
-import Catalog.Computation.TensorAmplificationSidorenko
+import Computation.TensorAmplificationSidorenko
 
 open Matrix BigOperators
 open scoped Kronecker

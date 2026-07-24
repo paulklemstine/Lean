@@ -1,5 +1,5 @@
 import Mathlib
-import MachineLearning.SelfImproving.ResNetLipschitz
+import MachineLearning.ResNetLipschitz
 
 /-! # Certified L∞ Robustness for Residual Networks
 

@@ -25,7 +25,7 @@ The large solution `n = -2000`, `t = 70` lives in the `5 ∣ n` branch:
 `(-400)·(-2401) = 25·14⁴`.
 -/
 import Mathlib
-import Catalog.Combinatorics.FourteenGonalFourthPower
+import Combinatorics.FourteenGonalFourthPower
 
 namespace Catalog.Combinatorics.FourteenGonal
 

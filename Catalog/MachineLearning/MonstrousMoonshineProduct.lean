@@ -1,5 +1,5 @@
 import Mathlib
-import Catalog.Algebra.SnCharacterTable.ConjClassCount
+import Algebra.SnCharacterTable.ConjClassCount
 
 /-!
 # Products of normalized McKay--Thompson type series

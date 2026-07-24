@@ -1,5 +1,5 @@
-import Catalog.MachineLearning.LocalGlobalGeometry
-import Catalog.Pythagorean.CircleMethodDensity
+import MachineLearning.LocalGlobalGeometry
+import Pythagorean.CircleMethodDensity
 
 /-!
 # 1729 as a Sum of Three Nonzero Cubes

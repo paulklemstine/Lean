@@ -1,5 +1,5 @@
 import Mathlib
-import Catalog.Novelty.NeuralCoding
+import Novelty.NeuralCoding
 
 /-!
 # Error-Correcting Neural Codes II: the Singleton Bound and Robust Capacity

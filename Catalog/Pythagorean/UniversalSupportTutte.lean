@@ -388,6 +388,7 @@ end UniversalSupportTutte
 
 -- !-- Merged from SupportTutteUniversal.lean (auto-dedup) -- !--
 
+/-!
 We develop a universal deletion–contraction invariant for finite support sets
 (subsets of `ℕ^ι` with a finite ground set). This extends classical Tutte
 polynomial theory from matroids to general M-convex supports.
@@ -404,6 +405,7 @@ This file builds on the support-minor infrastructure in
 `Catalog/Pythagorean/SupportMinorTheory.lean`, extending the
 `SupportTutteInvariant` framework and `minor_step_card_le` theorem
 to a full universal factorization result.
+-/
 namespace SupportTutte
 variable {ι : Type*} [DecidableEq ι] [LinearOrder ι]
 /-! ## Part 1: Ground Support Structure -/
@@ -413,6 +415,7 @@ structure GroundSupport (ι : Type*) [DecidableEq ι] where
   /-- The support: a finite set of exponent vectors. -/
   supp : Finset (ι →₀ ℕ)
   /-- The ground set: coordinates that may carry nonzero values. -/
+  ground : Finset ι
   /-- Every nonzero coordinate of every support element lies in the ground set. -/
   supp_ground : ∀ m ∈ supp, ∀ i, m i ≠ 0 → i ∈ ground
 namespace GroundSupport
@@ -475,9 +478,16 @@ theorem contract_ground_card_lt (S : GroundSupport ι) {e : ι} (he : e ∈ S.gr
   simp; exact card_erase_lt_of_mem he
 /-! ## Part 4: Support Activity Data -/
 /-- **Support activity data**: records the count of different element types
+    encountered along a minor-decomposition tree. -/
+structure SupportActivityData where
   /-- Number of loop-type coordinates. -/
+  loops : ℕ
   /-- Number of coloop-type coordinates. -/
+  coloops : ℕ
   /-- Number of ordinary coordinates. -/
+  ordinary : ℕ
+  deriving Repr, DecidableEq
+
 /-- Total elements processed. -/
 def SupportActivityData.total (d : SupportActivityData) : ℕ :=
   d.loops + d.coloops + d.ordinary
@@ -514,12 +524,12 @@ theorem supportTutteEval_empty [CommSemiring R] (a b : R) (S : GroundSupport ι)
     supportTutteEval a b S = 1 := by
   rw [supportTutteEval]; simp [hempty]
 /-! ## Part 6: Uniqueness Theorem (Universality) -/
-**Uniqueness of the canonical Support-Tutte invariant.**
+/-- **Uniqueness of the canonical Support-Tutte invariant.**
     Any function `F : GroundSupport ι → R` satisfying the same deletion–contraction
     recurrence (at the canonical minimum element) with the same base case agrees
     with `supportTutteEval a b` on all ground supports.
     This is the core universality result: the deletion–contraction recurrence
-    together with the base case **uniquely determines** the invariant.
+    together with the base case **uniquely determines** the invariant. -/
 theorem supportTutte_unique [CommSemiring R] (a b : R)
     (F : GroundSupport ι → R)
     (hbase : ∀ S : GroundSupport ι, ¬S.ground.Nonempty → F S = 1)
@@ -527,10 +537,23 @@ theorem supportTutte_unique [CommSemiring R] (a b : R)
       F S = a * F (S.delete (S.ground.min' hne)) +
             b * F (S.contract (S.ground.min' hne))) :
     ∀ S : GroundSupport ι, F S = supportTutteEval a b S := by
-  intros S
-  by_cases hne : S.ground.Nonempty;
-  · induction' n : S.ground.card using Nat.strong_induction_on with n ih generalizing S;
-  · rw [ hbase S hne, supportTutteEval_empty a b S hne ]
+  have aux : ∀ n : ℕ, ∀ S : GroundSupport ι, S.ground.card = n →
+      F S = supportTutteEval a b S := by
+    intro n
+    induction n using Nat.strong_induction_on with
+    | _ n ih =>
+      intro S hS
+      by_cases hne : S.ground.Nonempty
+      · have he : S.ground.min' hne ∈ S.ground := S.ground.min'_mem hne
+        have hcard : (S.delete (S.ground.min' hne)).ground.card < S.ground.card :=
+          S.delete_ground_card_lt he
+        have hcard' : (S.contract (S.ground.min' hne)).ground.card < S.ground.card :=
+          S.contract_ground_card_lt he
+        rw [hS] at hcard hcard'
+        rw [hrec S hne, supportTutteEval_eq_rec a b S hne,
+            ih _ hcard _ rfl, ih _ hcard' _ rfl]
+      · rw [hbase S hne, supportTutteEval_empty a b S hne]
+  exact fun S => aux _ S rfl
 /-! ## Part 7: Direct Sum and Multiplicativity -/
 /-- **Direct sum** of two ground supports with disjoint ground sets. -/
 noncomputable def directSum (S T : GroundSupport ι)
@@ -548,9 +571,9 @@ noncomputable def directSum (S T : GroundSupport ι)
       exact mem_union_right _ (T.supp_ground t hst.2 i hti)
     · exact mem_union_left _ (S.supp_ground s hst.1 i hsi)
 /-! ## Part 8: Coefficient Invariance and Specialization Theorems -/
-**Scaling lemma**: evaluating at `(c * a, c * b)` scales the Tutte evaluation
+/-- **Scaling lemma**: evaluating at `(c * a, c * b)` scales the Tutte evaluation
     by `c` at each recursion step. For single-ground-element supports, this gives
-    `supportTutteEval (c*a) (c*b) S = c * supportTutteEval a b S`.
+    `supportTutteEval (c*a) (c*b) S = c * supportTutteEval a b S`. -/
 theorem supportTutteEval_singleton_ground [CommSemiring R] (a b : R)
     (S : GroundSupport ι) (e : ι) (hground : S.ground = {e}) :
     supportTutteEval a b S =
@@ -558,31 +581,30 @@ theorem supportTutteEval_singleton_ground [CommSemiring R] (a b : R)
       b * supportTutteEval a b (S.contract e) := by
   convert supportTutteEval_eq_rec a b S _;
   all_goals norm_num [ hground ]
-**Functoriality**: the Tutte evaluation depends only on the ground set
+/-- **Functoriality**: the Tutte evaluation depends only on the ground set
     and the support data, not on the proof of the `supp_ground` constraint.
-    Two ground supports with the same `supp` and `ground` give the same evaluation.
+    Two ground supports with the same `supp` and `ground` give the same evaluation. -/
 theorem supportTutteEval_ext [CommSemiring R] (a b : R)
     (S T : GroundSupport ι)
     (hs : S.supp = T.supp) (hg : S.ground = T.ground) :
     supportTutteEval a b S = supportTutteEval a b T := by
-  unfold supportTutteEval;
-  split_ifs <;> simp_all +decide [ GroundSupport.delete, GroundSupport.contract ];
-  · unfold GroundSupport.minCoordVal; aesop;
-Helper: deletion at a dead coordinate preserves the support.
+  have heq : S = T := by cases S; cases T; simp_all
+  rw [heq]
+/-- Helper: deletion at a dead coordinate preserves the support. -/
 theorem delete_supp_of_dead (S : GroundSupport ι) (e : ι)
     (he_dead : ∀ m ∈ S.supp, m e = 0) :
     (S.delete e).supp = S.supp := by
   exact Finset.filter_true_of_mem he_dead
-Helper: contraction at a dead coordinate preserves the support
-    (when the support is nonempty, min is 0 so shift is trivial).
+/-- Helper: contraction at a dead coordinate preserves the support
+    (when the support is nonempty, min is 0 so shift is trivial). -/
 theorem contract_supp_of_dead (S : GroundSupport ι) (e : ι)
     (he_dead : ∀ m ∈ S.supp, m e = 0) :
     (S.contract e).supp = S.supp := by
   unfold GroundSupport.contract;
   unfold GroundSupport.minCoordVal;
   split_ifs <;> simp_all +decide [ Finset.inf'_eq_csInf_image ]
-**Monotonicity in ground set**: adding a dead coordinate (not used by any
-    support element) multiplies the evaluation by `(a + b)`.
+/-- **Monotonicity in ground set**: adding a dead coordinate (not used by any
+    support element) multiplies the evaluation by `(a + b)`. -/
 theorem supportTutteEval_add_dead_coord [CommSemiring R] (a b : R)
     (S : GroundSupport ι) (e : ι)
     (he_not_in : e ∉ S.ground)
@@ -594,78 +616,66 @@ theorem supportTutteEval_add_dead_coord [CommSemiring R] (a b : R)
          · subst hie; exact absurd (he_dead m hm) hi
          · exact Finset.mem_insert.mpr (Or.inr (S.supp_ground m hm i hi))⟩ =
     (a + b) * supportTutteEval a b S := by
-  revert he_not_in he_dead;
-  -- By induction on the size of the ground set.
-  induction' hS : S.ground.card using Nat.strong_induction_on with k ih generalizing S;
-  by_cases hS_empty : S.ground.Nonempty;
-  · intro he_not_in he_dead
-    by_cases he_min : e ≤ S.ground.min' hS_empty;
-    · rw [ supportTutteEval_eq_rec ];
-      rw [ show ( insert e S.ground ).min' ( Finset.insert_nonempty e S.ground ) = e from ?_ ];
-      · rw [ add_mul ];
-        congr! 2;
-        · apply supportTutteEval_ext;
-          · exact delete_supp_of_dead _ _ he_dead;
-          · simp +decide [ GroundSupport.delete, he_not_in ];
-        · apply supportTutteEval_ext;
-          · apply contract_supp_of_dead;
-            exact he_dead;
-          · ext i; simp [GroundSupport.contract];
-            exact fun hi => by rintro rfl; exact he_not_in hi;
-      · refine' le_antisymm _ _ <;> simp +decide [ *, Finset.min' ];
-        exact fun x hx => le_trans he_min ( Finset.min'_le _ _ hx );
-    · have h_delete : supportTutteEval a b (⟨S.supp.filter (fun m => m (S.ground.min' hS_empty) = 0), insert e (S.ground.erase (S.ground.min' hS_empty)), by
-        grind +qlia⟩) = (a + b) * supportTutteEval a b (S.delete (S.ground.min' hS_empty)) := by
-        convert ih _ _ _ _ _ _ using 1;
-        any_goals simp +decide [ *, GroundSupport.delete ];
-        exact k - 1;
-        · grind +qlia;
-        · rw [ ← hS, Finset.card_erase_of_mem ( Finset.min'_mem _ hS_empty ) ];
-        · exact fun m hm hm' => he_dead m hm
-      generalize_proofs at *;
-      have h_contract : supportTutteEval a b (⟨(S.supp.filter (fun m => m (S.ground.min' hS_empty) = S.minCoordVal (S.ground.min' hS_empty))).image (fun m => m - Finsupp.single (S.ground.min' hS_empty) (S.minCoordVal (S.ground.min' hS_empty))), insert e (S.ground.erase (S.ground.min' hS_empty)), by
-        simp +decide [ Finsupp.single_apply ];
-        rintro m x hx hx' rfl i hi;
-        by_cases hi' : i = S.ground.min' hS_empty <;> simp_all +decide [ Finsupp.single_apply ];
-        exact?⟩) = (a + b) * supportTutteEval a b (S.contract (S.ground.min' hS_empty)) := by
-        convert ih ( S.ground.erase ( S.ground.min' hS_empty ) |> Finset.card ) _ _ _ _ _ using 1;
-        any_goals tauto;
-        · rw [ ← hS ];
-          exact Finset.card_lt_card ( Finset.erase_ssubset ( Finset.min'_mem _ hS_empty ) );
-        · simp +decide [ GroundSupport.contract, he_not_in ];
-        · simp +decide [ GroundSupport.contract ];
-          rintro m x hx hx' rfl; simp +decide [ hx', he_dead x hx ] ;
-      generalize_proofs at *;
-      unfold supportTutteEval; simp +decide [ hS_empty, he_min ] ;
-      rw [ show ( insert e S.ground ).min' ( Finset.nonempty_of_ne_empty ( by aesop ) ) = S.ground.min' hS_empty from ?_ ];
-      · convert congr_arg₂ ( · + · ) ( congr_arg ( fun x => a * x ) h_delete ) ( congr_arg ( fun x => b * x ) h_contract ) using 1 ; ring!;
-        · congr! 2;
-          · congr! 1;
-            congr! 1;
-            ext; simp [GroundSupport.delete];
-          · congr! 1;
-            congr! 1;
-            ext; simp [GroundSupport.contract];
-        · ring!;
-  · simp_all +decide [ Finset.not_nonempty_iff_eq_empty ];
-    intro he_dead
-    simp [supportTutteEval, hS_empty]
+  have hpow : ∀ T : GroundSupport ι,
+    supportTutteEval a b T = (a + b) ^ T.ground.card := by
+    intro T
+    have aux : ∀ n : ℕ, ∀ T : GroundSupport ι, T.ground.card = n →
+        supportTutteEval a b T = (a + b) ^ n := by
+      intro n
+      induction n using Nat.strong_induction_on with
+      | _ n ih =>
+        intro T hT
+        by_cases hne : T.ground.Nonempty
+        · have he : T.ground.min' hne ∈ T.ground := T.ground.min'_mem hne
+          have h1 : 1 ≤ n := hT ▸ Finset.card_pos.mpr hne
+          have hdc : (T.delete (T.ground.min' hne)).ground.card = n - 1 := by
+            rw [delete_ground, Finset.card_erase_of_mem he, hT]
+          have hcc : (T.contract (T.ground.min' hne)).ground.card = n - 1 := by
+            rw [contract_ground, Finset.card_erase_of_mem he, hT]
+          have hlt : n - 1 < n := by omega
+          rw [supportTutteEval_eq_rec a b T hne, ih _ hlt _ hdc, ih _ hlt _ hcc,
+              ← add_mul, ← pow_succ']
+          congr 1
+          omega
+        · have h0 : n = 0 := by
+            rw [← hT, Finset.card_eq_zero, Finset.not_nonempty_iff_eq_empty.mp hne]
+          rw [supportTutteEval_empty a b T hne, h0, pow_zero]
+    simpa using aux _ T rfl
+  rw [hpow, hpow]
+  show (a + b) ^ (insert e S.ground).card = (a + b) * (a + b) ^ S.ground.card
+  rw [Finset.card_insert_of_notMem he_not_in, pow_succ]
+  ring
 /-! ## Part 9: The Power Law Theorem -/
-**Power law**: the uniform-coefficient Support-Tutte evaluation equals
+/-- **Power law**: the uniform-coefficient Support-Tutte evaluation equals
     `(a + b) ^ |ground|`. This reveals that uniform deletion–contraction
     coefficients erase all support structure, motivating case-dependent
     coefficients (loops vs coloops vs ordinary elements) for richer invariants.
-    The proof is by strong induction on `|ground|`.
+    The proof is by strong induction on `|ground|`. -/
 theorem supportTutteEval_eq_pow [CommSemiring R] (a b : R)
     (S : GroundSupport ι) :
     supportTutteEval a b S = (a + b) ^ S.ground.card := by
-  induction' n : S.ground.card using Nat.strong_induction_on with n ih generalizing S;
-  by_cases hne : S.ground.Nonempty;
-  · have h_ind : supportTutteEval a b (S.delete (S.ground.min' hne)) = (a + b) ^ (S.ground.card - 1) ∧ supportTutteEval a b (S.contract (S.ground.min' hne)) = (a + b) ^ (S.ground.card - 1) := by
-    rw [ ← n, supportTutteEval_eq_rec a b S hne, h_ind.1, h_ind.2 ];
-    rw [ ← add_mul, ← pow_succ', Nat.sub_add_cancel ( Finset.card_pos.mpr hne ) ];
-  · rw [ ← n, Finset.not_nonempty_iff_eq_empty.mp hne, supportTutteEval_empty ] ; simp +decide;
-    exact hne
+  have aux : ∀ n : ℕ, ∀ S : GroundSupport ι, S.ground.card = n →
+      supportTutteEval a b S = (a + b) ^ n := by
+    intro n
+    induction n using Nat.strong_induction_on with
+    | _ n ih =>
+      intro S hS
+      by_cases hne : S.ground.Nonempty
+      · have he : S.ground.min' hne ∈ S.ground := S.ground.min'_mem hne
+        have h1 : 1 ≤ n := hS ▸ Finset.card_pos.mpr hne
+        have hdc : (S.delete (S.ground.min' hne)).ground.card = n - 1 := by
+          rw [delete_ground, Finset.card_erase_of_mem he, hS]
+        have hcc : (S.contract (S.ground.min' hne)).ground.card = n - 1 := by
+          rw [contract_ground, Finset.card_erase_of_mem he, hS]
+        have hlt : n - 1 < n := by omega
+        rw [supportTutteEval_eq_rec a b S hne, ih _ hlt _ hdc, ih _ hlt _ hcc,
+            ← add_mul, ← pow_succ']
+        congr 1
+        omega
+      · have h0 : n = 0 := by
+          rw [← hS, Finset.card_eq_zero, Finset.not_nonempty_iff_eq_empty.mp hne]
+        rw [supportTutteEval_empty a b S hne, h0, pow_zero]
+  simpa using aux _ S rfl
 end GroundSupport
 /-! ## Part 10: Invariant Specification -/
 /-- A **support-Tutte invariant specification**: bundles an invariant with its
