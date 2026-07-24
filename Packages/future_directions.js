@@ -6762,17 +6762,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Convexity and Linear Programming"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a4e412f3",
     "description": "Solve the happy end problem for arbitrary n: determine the minimum number of points in general position in the plane that guarantee a convex n-gon. Formalize the Erd\u0151s\u2013Szekeres theorem and improve known bounds.",
     "domains": [
       "Geometry",
       "Combinatorics"
     ],
     "id": "seed_010",
+    "phase": "A",
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Happy End Problem"
   },
