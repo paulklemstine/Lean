@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "44b2da31",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions: Chromatic Thresholds and Social-Network Palettes\n\n## 1. Clique minors as chromatic vanishing certificates\n\n**Conjecture.** If a finite graph contains a complete graph on `t` verti",
-      "quality_score": 0.71,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-18T15:18:15",
-      "title": "Graph Coloring with Emotions: The Chromatic Polynomial Meets Psychology"
-    },
-    {
       "cycle_id": "6e1376aa",
       "domain": "Novelty",
       "key_insight": "# Future directions\n\n1. **Finite multimode superpositions.** Extend `winding_mul_zpow` from two modes to a `Finset`-indexed product, proving that the winding is the integer-weighted sum of all compone",
@@ -2501,6 +2491,16 @@
       "theorem_count": 20,
       "timestamp": "2026-07-24T19:54:32",
       "title": "Cybernetic-Symbiosis: Optimal Co-Evolution Bounds of Human-AI Neural Interfaces"
+    },
+    {
+      "cycle_id": "6bb52b3a",
+      "domain": "Computation",
+      "key_insight": "# Future Directions: Reticulations, Cooperative Systems, and the Geometry of Orthogonality\n\nThe results in `ReticulationMOLS.lean` establish, in full generality, the sharp bound that a\nset of mutually",
+      "quality_score": 0.6,
+      "sorry_count": 1,
+      "theorem_count": 12,
+      "timestamp": "2026-07-24T19:54:45",
+      "title": "ArXiv paper: Generalizations of nets and Latin squares"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-24T19:54:32",
+  "last_updated": "2026-07-24T19:54:45",
   "open_questions": [
-    {
-      "context": "+    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; +    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; +    ∀ i < k, c i = ",
-      "cycle_id": "47f9b94d",
-      "domain": "Computation",
-      "sorry_count": 3,
-      "timestamp": "2026-07-17T09:24:10"
-    },
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnUpper⟩); -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i ",
       "cycle_id": "5f139cd0",
@@ -3016,6 +3009,13 @@
       "domain": "NumberTheory",
       "sorry_count": 1,
       "timestamp": "2026-07-24T06:47:46"
+    },
+    {
+      "context": "-    sorry+  -- Extract a witness from the computational verification of the primitive part.",
+      "cycle_id": "6bb52b3a",
+      "domain": "Computation",
+      "sorry_count": 1,
+      "timestamp": "2026-07-24T19:54:45"
     }
   ],
   "research_threads": {
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "47f9b94d",
-        "quality": 0.78,
-        "theorems": 4,
-        "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
-      },
-      {
         "cycle_id": "e9a483ed",
         "quality": 0.76,
         "theorems": 8,
@@ -3327,6 +3321,12 @@
         "quality": 0.7,
         "theorems": 6,
         "title": "ArXiv paper: A few remarks on the Baez-Duarte Criterion"
+      },
+      {
+        "cycle_id": "6bb52b3a",
+        "quality": 0.6,
+        "theorems": 12,
+        "title": "ArXiv paper: Generalizations of nets and Latin squares"
       }
     ],
     "Cryptography": [

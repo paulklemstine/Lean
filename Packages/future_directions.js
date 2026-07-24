@@ -1137,7 +1137,7 @@ window.FUTURE_DIRECTIONS = [
       "NumberTheory"
     ],
     "id": "seed_252",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.93,
     "research_mode": "team",
     "source_exp_id": "seed",
@@ -8877,22 +8877,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Tur\u00e1n-Type Bounds for Graphs Containing Large $F$-Sparse Sets"
   },
   {
-    "consumed_by_exp_id": "6bb52b3a",
-    "description": "Investigate the ArXiv paper 'Generalizations of nets and Latin squares' and formalize its key results. Abstract: We examine combinatorial structures which generalize $(k,n)$-nets, orthogonal arrays, and mutually orthogonal Latin squares. By a reticulation we mean of a point set and two collections (types) of families of lines such that two lines of different types meet in exactly one point and each family of lines partitions the point set. The number of points incident with any line depends only upon the type of the line, and every point is incident with the same number of lines of a given type. Each choice of one line family of each type leads to an arrangement of the points into a rectangular grid. Recording the line containing a given point in the corresponding position of an array gives to a generalization of sets of mutually orthogonal Latin squares, dubbed a cooperative system. A cooperative system consists of a collection of column-Latin matrices and a collection of row-Latin matrices such that each column-Latin matrix is orthogonal to each row-Latin matrix. Recording lines which contain a",
-    "domains": [
-      "Algebra",
-      "MachineLearning"
-    ],
-    "id": "fd_0121",
-    "phase": "B",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.10890v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-16T14:59:52.606942+00:00",
-    "title": "ArXiv paper: Generalizations of nets and Latin squares"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Greenberg's $\u03bc=0$ conjecture for lisse sheaves over global function fields' and formalize its key results. Abstract: Let $K$ be a global function field of characteristic $p>0$ and $\\ell\\neq p$ be a prime number. We study Selmer groups over a $\\mathbb{Z}_\\ell$-extension $K_\\infty/K$. For a lisse $\\mathbb Z_\\ell$-sheaf we prove that the Pontryagin dual of the associated Selmer group is a finitely generated torsion module over the Iwasawa algebra and has $\u03bc$-invariant equal to zero. This gives a positive-characteristic, prime to $p$, analogue of Greenberg's $\u03bc=0$ conjecture. Our result applies in particular to abelian varieties, fine Selmer groups, and adjoint representations. We also prove an analogue of the weak Leopoldt conjecture in this context over $K_\\infty$, and deduce that the framed deformation ring of a residual representation is a formal power series ring. The same conclusion holds for the unframed deformation ring if the residual representation has no non-scalar endomorphisms.",
     "domains": [
@@ -10731,7 +10715,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "id": "seed_344",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
@@ -14525,6 +14509,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: Reticulations, Cooperative Systems, and the Geometry of Orthogonality\n\nThe results in `ReticulationMOLS.lean` establish, in full generality, the sharp bound that a\nset of mutually orthogonal Latin squares of order `n` contains at most `n \u2212 1` members, together\nwith the relabeling symmetries and an existence construction. Building on that cycle, we propose\nthe following bold, testable conjectures.\n\n## 1. A corner-tag bound for cooperative systems\n\n**Conjecture.** In a cooperative system consisting of `a` row-Latin matrices and `b` column-Latin\nmatrices of order `n`, in which every row-Latin matrix is orthogonal to every column-Latin matrix,\nthe product `a \u00b7 b` is bounded by `(n \u2212 1)\u00b2` \u2014 with equality forcing both families to be complete\nsets of MOLS coordinatizing the same net.\n\nThe key insight is that the corner-tag construction is *bipartite*: a row-Latin matrix is tagged by\nthe column of its first row matching the `(1,0)` entry, while a column-Latin matrix is tagged\ndually by the row of its first column; cross-orthogonality forces the two tag families to inject\ninto disjoint nonzero index sets, and the multiplicative bound follows from combining the two\none-sided injections.\n\nWhy now? The one-sided sharp bound `n \u2212 1` has just been pinned down with an elementary\ninjection that never uses field structure; the same injection has an unused dual direction, and\nexploiting both simultaneously is the natural next step precisely because cooperative systems\nare the objects that separate the two Latin conditions the classical theory always bundled together.\n\n## 2. Reticulations are equivalent to transversal designs of bipartite type\n\n**Conjecture.** Reticulations with two line-types of degrees `(r, s)` are in explicit,\ndegree-preserving bijection with a bipartite refinement of transversal designs `TD(k, n)`, under\nwhich the \"each family partitions the point set\" axiom corresponds to resolvability and the\n\"lines of different types meet in exactly one point\" axiom corresponds to the transversal property.\n\nThe key insight is that a choice of one line-family per type is exactly a grid coordinatization,\nso the incidence data of a reticulation is a pair of resolutions whose blocks pairwise meet once \u2014\nwhich is the defining incidence pattern of a resolvable transversal design read on two axes at once.\n\nWhy now? With the grid/coordinatization step formalized as the passage from lines to arrays, the\nincidence axioms become statements about injective pairing maps of the kind already handled by the\northogonality machinery, making the bijection checkable rather than merely analogical.\n\n## 3. Deletion stability of the MOLS bound under symbol contraction\n\n**Conjecture.** If a set of MOLS of order `n` attains the bound `n \u2212 1`, then deleting one symbol\n(and the cells containing it) yields a structure whose completion number is exactly `n \u2212 2`, so the\nbound degrades by exactly one under contraction; conversely no order-`n` family can lose two units\nof capacity from a single symbol deletion.\n\nThe key insight is that the corner tag lands in the punctured index set `{1, \u2026, n \u2212 1}`, and\nremoving a symbol removes exactly one admissible tag value, so the capacity is controlled linearly\nby the number of surviving tags rather than by any global algebraic invariant.\n\nWhy now? The proof of the main bound isolates the tag set as the *only* obstruction to adding more\nsquares; once that set is identified explicitly, its behaviour under deletion becomes a finite,\ndirectly verifiable perturbation argument.\n\n## 4. A spectral certificate for non-existence at order 6\n\n**Conjecture.** The failure of two orthogonal Latin squares to exist at order 6 (Euler's officers)\nadmits a certificate in the form of a `0/1` pairing-incidence matrix whose failure to be a\npermutation matrix is detected by a single parity invariant of the corner-tag graph, and this\ninvariant vanishes for every prime-power order.\n\nThe key insight is that orthogonality is exactly bijectivity of the pairing map, so non-existence\nis a statement that a specific square `0/1` matrix cannot be a permutation matrix \u2014 a condition an\ninteger invariant of its support graph can certify.\n\nWhy now? Having recast orthogonality as bijectivity of an explicit finite map, obstructions to that\nbijectivity become linear-algebraic invariants that can be computed uniformly across orders, opening\na route to a conceptual (rather than case-checked) explanation of the order-6 anomaly.\n",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_0707",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "6bb52b3a",
+    "status": "available",
+    "timestamp": "2026-07-24T19:54:41.901992+00:00",
+    "title": "The results in `ReticulationMOLS.lean` establish, in full generality, the sharp "
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist \u2014 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 \u2014 they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures \u2014 combinatorial digit problems that are easy to state but may be as hard as factoring.",
     "domains": [
       "Novelty",
@@ -15090,6 +15089,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-24T06:47:46.532440+00:00",
     "title": "Close Proofs: Pythagorean-Energy-Spectrum: Gradient Descent Factoring on the Berggre"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 6bb52b3a (Q=0.600) proved 12 theorems in Computation but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'Generalizations of nets and Latin squares' and formalize its key results. Abstract: We examine combinatorial structures which generalize $(k,n)$-nets, orthogonal arrays, a",
+    "domains": [
+      "Computation"
+    ],
+    "id": "sorry_fill_6bb52b3a_dd787004",
+    "priority_score": 0.65,
+    "research_mode": "team",
+    "source_exp_id": "6bb52b3a",
+    "status": "available",
+    "timestamp": "2026-07-24T19:54:45.598786+00:00",
+    "title": "Close Proofs: ArXiv paper: Generalizations of nets and Latin squares"
   },
   {
     "consumed_by_exp_id": "",
