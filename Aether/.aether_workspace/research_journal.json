@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "115a4ee3",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\n## 1. Entropy dimension for genuinely submultiplicative search languages\n\n**Conjecture.** Let `N(n)` be the number of successful prefixes of length `n` in a finitely branching sea",
-      "quality_score": 0.78,
-      "sorry_count": 1,
-      "theorem_count": 11,
-      "timestamp": "2026-07-18T13:38:23",
-      "title": "Deepening: Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
-    },
-    {
       "cycle_id": "7328a55d",
       "domain": "Bridges",
       "key_insight": "# Future Directions\n\nThe formal results show that the proposed Hausdorff-dimension conjectures are false: the prime set is countable, and every countable set has zero Hausdorff measure in every positi",
@@ -2501,6 +2491,16 @@
       "theorem_count": 20,
       "timestamp": "2026-07-24T14:20:08",
       "title": "The completed Lean development proves the local arithmetic dictionary for the qu"
+    },
+    {
+      "cycle_id": "b873ab80",
+      "domain": "Physics",
+      "key_insight": "# Future Directions: Metric and Thermodynamic Limits of Physical Oracles\n\nThis cycle turned the qualitative capacity obstruction for exact oracle loading\ninto quantitative resource inequalities, by tr",
+      "quality_score": 0.62,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-24T14:41:20",
+      "title": "**Conjecture.** For every family of devices that exactly resolves the first `n` "
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-24T14:20:08",
+  "last_updated": "2026-07-24T14:41:20",
   "open_questions": [
     {
       "context": "+    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; +    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; +    ∀ i < k, c i = ",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "f0f3cf3d",
-        "quality": 0.56,
-        "theorems": 10,
-        "title": "The Prime Number Crossword: Filling the Gaps in the Primes"
-      },
-      {
         "cycle_id": "fb82936b",
         "quality": 0.63,
         "theorems": 10,
@@ -3761,6 +3755,12 @@
         "quality": 0.62,
         "theorems": 7,
         "title": "**Conjecture.** In the random graph process, with probability tending to one, th"
+      },
+      {
+        "cycle_id": "b873ab80",
+        "quality": 0.62,
+        "theorems": 14,
+        "title": "**Conjecture.** For every family of devices that exactly resolves the first `n` "
       }
     ],
     "Probability": [

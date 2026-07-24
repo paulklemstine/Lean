@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-24T14:20:08.516524+00:00",
+  "last_updated": "2026-07-24T14:41:27.102656+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -35034,6 +35034,7 @@
       "outcome_quality": 0.63,
       "phase": "A_only",
       "phase_a_prompt_version": "v19",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v19",
@@ -35062,6 +35063,48 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-24T14:20:08.447288+00:00",
       "title": "The completed Lean development proves the local arithmetic dictionary for the qu"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Physics",
+      "duration_seconds": 3250.5152158737183,
+      "end_time": 1784904051.945149,
+      "files_integrated": 2,
+      "job_id": "b873ab80",
+      "outcome_quality": 0.62,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v19b",
+      "phase_b_skip_reason": "low_quality_near_miss",
+      "phase_b_skipped": true,
+      "prompt_version": "v19b",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.55,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.8,
+        "composite": 0.4705,
+        "cross_domain": 0.5,
+        "grade": "partial",
+        "importance": 0.55,
+        "novelty": 0.6,
+        "proof_depth": 0.62,
+        "usefulness": 0.6
+      },
+      "quality_score": 0.62,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1784900801.429933,
+      "strategy_count": 0,
+      "theorem_count": 14,
+      "theorem_novelty_disproof": 1,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 7,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-24T14:41:27.037401+00:00",
+      "title": "**Conjecture.** For every family of devices that exactly resolves the first `n` "
     }
   ]
 }
