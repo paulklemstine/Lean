@@ -1460,6 +1460,29 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
     _print_tick_report(extractor, completed_jobs, remaining, queued_remaining)
 
 
+def _merge_direction_objects(d_ours: dict, d_theirs: dict) -> dict:
+    merged = dict(d_ours)
+    for k, v in d_theirs.items():
+        if k not in merged or merged[k] is None or merged[k] == "" or merged[k] == 0:
+            merged[k] = v
+        elif k == "attempt_count":
+            merged[k] = max(int(d_ours.get(k, 0) or 0), int(d_theirs.get(k, 0) or 0))
+        elif k == "outcome_quality":
+            merged[k] = max(float(d_ours.get(k, 0.0) or 0.0), float(d_theirs.get(k, 0.0) or 0.0))
+        elif k == "consumed_by_exp_id":
+            merged[k] = d_ours.get(k) or d_theirs.get(k) or ""
+        elif k in ("last_attempt_time", "last_reviewed_at"):
+            t_ours = str(d_ours.get(k) or "")
+            t_theirs = str(d_theirs.get(k) or "")
+            merged[k] = max(t_ours, t_theirs)
+        elif k in ("cleanup_review_count", "decomposition_depth"):
+            merged[k] = max(int(d_ours.get(k, 0) or 0), int(d_theirs.get(k, 0) or 0))
+        elif isinstance(v, list) and isinstance(merged.get(k), list):
+            combined = merged[k] + [x for x in v if x not in merged[k]]
+            merged[k] = combined
+    return merged
+
+
 def resolve_json_conflict(file_path: Path) -> bool:
     import json
     from datetime import datetime
@@ -1467,12 +1490,12 @@ def resolve_json_conflict(file_path: Path) -> bool:
         content = file_path.read_text(encoding="utf-8", errors="replace")
         if "<<<<<<<" not in content:
             return True
-        
+
         ours_lines = []
         theirs_lines = []
         in_conflict = False
         in_theirs = False
-        
+
         for line in content.splitlines():
             if line.startswith("<<<<<<<"):
                 in_conflict = True
@@ -1491,15 +1514,34 @@ def resolve_json_conflict(file_path: Path) -> bool:
                 else:
                     ours_lines.append(line)
                     theirs_lines.append(line)
-        
-        ours_json = json.loads("\n".join(ours_lines))
-        theirs_json = json.loads("\n".join(theirs_lines))
-        
+
+        try:
+            ours_json = json.loads("\n".join(ours_lines))
+        except Exception:
+            ours_json = {}
+        try:
+            theirs_json = json.loads("\n".join(theirs_lines))
+        except Exception:
+            theirs_json = {}
+
+        if not ours_json and not theirs_json:
+            subprocess.run(["git", "checkout", "--ours", str(file_path)], capture_output=True)
+            print(f"[GitResolve] Fallback checkout --ours for {file_path.name}")
+            return True
+
         merged_directions = {}
-        for item in ours_json.get("directions", []) + theirs_json.get("directions", []):
-            key = item.get("id") or item.get("timestamp") or str(item)
-            merged_directions[key] = item
-            
+        for item in ours_json.get("directions", []):
+            if isinstance(item, dict):
+                key = item.get("id") or item.get("timestamp") or str(item)
+                merged_directions[key] = item
+        for item in theirs_json.get("directions", []):
+            if isinstance(item, dict):
+                key = item.get("id") or item.get("timestamp") or str(item)
+                if key in merged_directions:
+                    merged_directions[key] = _merge_direction_objects(merged_directions[key], item)
+                else:
+                    merged_directions[key] = item
+
         def get_timestamp(item):
             t = item.get("timestamp")
             if isinstance(t, (int, float)):
@@ -1510,40 +1552,60 @@ def resolve_json_conflict(file_path: Path) -> bool:
                 except Exception:
                     pass
             return 0
-            
+
         sorted_directions = sorted(merged_directions.values(), key=get_timestamp)
-        
+
         merged_syntheses = {}
-        merged_syntheses.update(ours_json.get("cycle_syntheses", {}))
-        merged_syntheses.update(theirs_json.get("cycle_syntheses", {}))
-        
+        if isinstance(ours_json.get("cycle_syntheses"), dict):
+            merged_syntheses.update(ours_json["cycle_syntheses"])
+        if isinstance(theirs_json.get("cycle_syntheses"), dict):
+            merged_syntheses.update(theirs_json["cycle_syntheses"])
+
         final_json = {
             "cycle_syntheses": merged_syntheses,
             "directions": sorted_directions
         }
-        
+
         file_path.write_text(json.dumps(final_json, indent=2) + "\n", encoding="utf-8")
         print(f"[GitResolve] Resolved JSON conflict for {file_path.name}")
         return True
     except Exception as e:
         print(f"[GitResolve] Failed to resolve JSON conflict for {file_path}: {e}")
-        return False
+        subprocess.run(["git", "checkout", "--ours", str(file_path)], capture_output=True)
+        return True
+
+
+def _merge_jsonl_record(rec_ours: dict, rec_theirs: dict) -> dict:
+    merged = dict(rec_ours)
+    for k, v in rec_theirs.items():
+        if k not in merged or merged[k] is None or merged[k] == "":
+            merged[k] = v
+        elif k in ("quality_score", "priority_score"):
+            merged[k] = max(float(rec_ours.get(k, 0.0) or 0.0), float(rec_theirs.get(k, 0.0) or 0.0))
+        elif k in ("proof_text", "lean_code", "code"):
+            str_o = str(rec_ours.get(k, ""))
+            str_t = str(v)
+            if len(str_t) > len(str_o):
+                merged[k] = str_t
+        elif k == "status":
+            if str(v).lower() in ("success", "integrated", "verified", "complete"):
+                merged[k] = v
+    return merged
 
 
 def resolve_jsonl_conflict(file_path: Path) -> bool:
     import json
-    import re
     from datetime import datetime
     try:
         content = file_path.read_text(encoding="utf-8", errors="replace")
         if "<<<<<<<" not in content:
             return True
-        
+
         ours_lines = []
         theirs_lines = []
         in_conflict = False
         in_theirs = False
-        
+
         for line in content.splitlines():
             if line.startswith("<<<<<<<"):
                 in_conflict = True
@@ -1562,7 +1624,7 @@ def resolve_jsonl_conflict(file_path: Path) -> bool:
                 else:
                     ours_lines.append(line)
                     theirs_lines.append(line)
-        
+
         def parse_lines(lines):
             parsed = []
             for l in lines:
@@ -1577,12 +1639,17 @@ def resolve_jsonl_conflict(file_path: Path) -> bool:
 
         ours_json = parse_lines(ours_lines)
         theirs_json = parse_lines(theirs_lines)
-        
+
         merged = {}
         for item in ours_json + theirs_json:
+            if not isinstance(item, dict):
+                continue
             key = item.get("experiment_id") or item.get("exp_id") or item.get("timestamp") or str(item)
-            merged[key] = item
-            
+            if key in merged:
+                merged[key] = _merge_jsonl_record(merged[key], item)
+            else:
+                merged[key] = item
+
         def get_timestamp(item):
             t = item.get("timestamp")
             if isinstance(t, (int, float)):
@@ -1593,15 +1660,71 @@ def resolve_jsonl_conflict(file_path: Path) -> bool:
                 except Exception:
                     pass
             return 0
-            
+
         sorted_items = sorted(merged.values(), key=get_timestamp)
-        
+
         file_path.write_text("\n".join(json.dumps(item) for item in sorted_items) + "\n", encoding="utf-8")
         print(f"[GitResolve] Resolved JSONL conflict for {file_path.name}")
         return True
     except Exception as e:
         print(f"[GitResolve] Failed to resolve JSONL conflict for {file_path}: {e}")
-        return False
+        subprocess.run(["git", "checkout", "--ours", str(file_path)], capture_output=True)
+        return True
+
+
+def resolve_generic_json_conflict(file_path: Path) -> bool:
+    import json
+    try:
+        content = file_path.read_text(encoding="utf-8", errors="replace")
+        if "<<<<<<<" not in content:
+            return True
+
+        ours_lines = []
+        theirs_lines = []
+        in_conflict = False
+        in_theirs = False
+
+        for line in content.splitlines():
+            if line.startswith("<<<<<<<"):
+                in_conflict = True
+                in_theirs = False
+            elif line.startswith("======="):
+                in_theirs = True
+            elif line.startswith(">>>>>>>"):
+                in_conflict = False
+                in_theirs = False
+            else:
+                if in_conflict:
+                    if in_theirs:
+                        theirs_lines.append(line)
+                    else:
+                        ours_lines.append(line)
+                else:
+                    ours_lines.append(line)
+                    theirs_lines.append(line)
+
+        try:
+            ours_obj = json.loads("\n".join(ours_lines))
+            theirs_obj = json.loads("\n".join(theirs_lines))
+        except Exception:
+            subprocess.run(["git", "checkout", "--ours", str(file_path)], capture_output=True)
+            return True
+
+        if isinstance(ours_obj, dict) and isinstance(theirs_obj, dict):
+            merged = dict(ours_obj)
+            merged.update(theirs_obj)
+        elif isinstance(ours_obj, list) and isinstance(theirs_obj, list):
+            merged = ours_obj + [x for x in theirs_obj if x not in ours_obj]
+        else:
+            merged = ours_obj
+
+        file_path.write_text(json.dumps(merged, indent=2) + "\n", encoding="utf-8")
+        print(f"[GitResolve] Resolved generic JSON conflict for {file_path.name}")
+        return True
+    except Exception as e:
+        print(f"[GitResolve] Failed generic JSON conflict for {file_path}: {e}")
+        subprocess.run(["git", "checkout", "--ours", str(file_path)], capture_output=True)
+        return True
 
 
 def resolve_lean_conflict(file_path: Path) -> bool:
@@ -1610,42 +1733,47 @@ def resolve_lean_conflict(file_path: Path) -> bool:
         content = file_path.read_text(encoding="utf-8", errors="replace")
         if "<<<<<<<" not in content:
             return True
-            
+
         pattern = re.compile(r"<<<<<<<[^\n]*\n(.*?)\n=======\n(.*?)\n>>>>>>>[^\n]*", re.DOTALL)
-        
+
         def replace_block(match):
             ours = match.group(1)
             theirs = match.group(2)
-            
+
             ours_sorries = ours.count("sorry")
             theirs_sorries = theirs.count("sorry")
-            
+
             if theirs_sorries < ours_sorries:
                 return theirs
             elif ours_sorries < theirs_sorries:
                 return ours
             else:
                 return theirs if len(theirs) >= len(ours) else ours
-                
+
         new_content = pattern.sub(replace_block, content)
+        if "<<<<<<<" in new_content:
+            subprocess.run(["git", "checkout", "--ours", str(file_path)], capture_output=True)
+            print(f"[GitResolve] Fallback checkout --ours for Lean file {file_path.name}")
+            return True
+
         file_path.write_text(new_content, encoding="utf-8")
         print(f"[GitResolve] Resolved Lean conflict for {file_path.name} (sorry-minimization)")
         return True
     except Exception as e:
         print(f"[GitResolve] Failed to resolve Lean conflict for {file_path}: {e}")
-        return False
+        subprocess.run(["git", "checkout", "--ours", str(file_path)], capture_output=True)
+        return True
 
 
 def resolve_all_conflicts() -> bool:
     """Identify and programmatically resolve all conflicts in the workspace."""
-    # Find all conflicted files via git status
     result = subprocess.run(
         ["git", "status", "--porcelain"],
         cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=30
     )
     if result.returncode != 0:
         return False
-        
+
     resolved_any = False
     for line in result.stdout.splitlines():
         if line.startswith("UU ") or line.startswith("AA ") or line.startswith("UD ") or line.startswith("DU ") or line.startswith("AU ") or line.startswith("UA "):
@@ -1653,7 +1781,7 @@ def resolve_all_conflicts() -> bool:
             file_path = REPO_ROOT / path_str
             if not file_path.exists():
                 continue
-                
+
             success = False
             if file_path.name == "future_directions.json":
                 success = resolve_json_conflict(file_path)
@@ -1667,20 +1795,22 @@ def resolve_all_conflicts() -> bool:
                     success = True
                 except Exception:
                     pass
+            elif file_path.suffix == ".json":
+                success = resolve_generic_json_conflict(file_path)
             else:
                 r = subprocess.run(
                     ["git", "checkout", "--ours", path_str],
                     cwd=str(REPO_ROOT), capture_output=True, timeout=10
                 )
                 success = r.returncode == 0
-                
+
             if success:
                 subprocess.run(
                     ["git", "add", path_str],
                     cwd=str(REPO_ROOT), capture_output=True, timeout=10
                 )
                 resolved_any = True
-                
+
     return resolved_any
 
 def _clean_stale_git_locks() -> bool:
@@ -1832,21 +1962,29 @@ def rebuild_commit_push() -> bool:
             ["git", "ls-files", "--unmerged"],
             cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=10
         )
-        return bool(result.stdout.strip())
+        if result.stdout.strip():
+            return True
+        grep_res = subprocess.run(
+            ["git", "grep", "-l", "^<<<<<<< "],
+            cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=15
+        )
+        return bool(grep_res.stdout.strip())
 
-    def _regenerate_index_if_needed():
+    def _regenerate_index_if_needed(force=False):
         """Regenerate package_index.js and rsync to docs if conflict markers found
-        in any auto-generated website file."""
+        in any auto-generated website file or force=True."""
         pkg_idx = PACKAGES_DIR / "package_index.js"
         fd_js = PACKAGES_DIR / "future_directions.js"
         fd_json = PACKAGES_DIR / "future_directions.json"
-        found_conflict = False
-        for path in [pkg_idx, fd_js, fd_json]:
-            if path.exists():
-                content = path.read_text(errors="ignore")
-                if "<<<<<<" in content or ">>>>>>" in content:
-                    print(f"[Tick] Conflict markers found in {path.name}, regenerating...")
-                    found_conflict = True
+        found_conflict = force
+        if not found_conflict:
+            for path in [pkg_idx, fd_js, fd_json]:
+                if path.exists():
+                    content = path.read_text(errors="ignore")
+                    if "<<<<<<<" in content or ">>>>>>>" in content:
+                        print(f"[Tick] Conflict markers found in {path.name}, regenerating...")
+                        found_conflict = True
+                        break
         if found_conflict:
             r = subprocess.run(
                 [sys.executable, "update_index.py"],
@@ -1972,7 +2110,7 @@ def rebuild_commit_push() -> bool:
             print("[Tick] Merge conflict detected — running programmatic resolvers")
             if _has_conflict_markers():
                 resolve_all_conflicts()
-                _regenerate_index_if_needed()
+                _regenerate_index_if_needed(force=True)
                 
                 # Check if conflicts were successfully resolved
                 if not _has_conflict_markers():
@@ -2030,7 +2168,7 @@ def rebuild_commit_push() -> bool:
             if pop_res.returncode != 0:
                 print("[Tick] Stash pop conflict — auto-resolving stash programmatically")
                 resolve_all_conflicts()
-                _regenerate_index_if_needed()
+                _regenerate_index_if_needed(force=True)
                 subprocess.run(["git", "add", "-A"], cwd=str(REPO_ROOT), capture_output=True, timeout=120)
                 subprocess.run(
                     ["git", "-c", "core.editor=true", "commit", "--no-edit", "-m", "Auto-resolve stash conflict"],
