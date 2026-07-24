@@ -440,6 +440,7 @@ window.FUTURE_DIRECTIONS = [
       "Applications"
     ],
     "id": "scifi_50_22_049203ff",
+    "phase": "A",
     "priority_score": 0.95,
     "research_mode": "team",
     "source_exp_id": "scifi_50_injection",
@@ -7077,6 +7078,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "id": "seed_200",
+    "phase": "A",
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
@@ -8896,6 +8898,7 @@ window.FUTURE_DIRECTIONS = [
       "MachineLearning"
     ],
     "id": "fd_0121",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.10890v1",
@@ -10694,6 +10697,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "id": "seed_259",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
@@ -14621,6 +14625,7 @@ window.FUTURE_DIRECTIONS = [
       "NumberTheory"
     ],
     "id": "sorry_fill_2f321176_54d54749",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "2f321176",

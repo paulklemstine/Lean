@@ -25,7 +25,11 @@ window.renderDirectionCards = function(container, directions, detailIdPrefix) {
         const priorityPct = Math.round(d.priority_score * 100);
         const priorityColor = d.priority_score >= 0.9 ? '#f44336' : d.priority_score >= 0.8 ? '#ff9800' : '#ffc107';
         const statusColor = statusColors[d.status] || '#9e9e9e';
-        const statusLabel = statusLabels[d.status] || d.status;
+        let statusLabel = statusLabels[d.status] || d.status;
+        if (d.status === 'in_progress') {
+            const phaseTag = d.phase ? (String(d.phase).startsWith('Phase') ? d.phase : `Phase ${d.phase}`) : 'Phase A';
+            statusLabel = `In Progress (${phaseTag})`;
+        }
         const domainTags = (d.domains || []).map(dm =>
             `<span class="direction-domain-tag">${escapeHTML(dm)}</span>`
         ).join('');
@@ -45,6 +49,7 @@ window.renderDirectionCards = function(container, directions, detailIdPrefix) {
                 <p class="direction-card-desc">${escapeHTML(shortDesc)}</p>
                 <div class="direction-card-details hidden" id="${detailIdPrefix}${d.id}">
                     <p class="direction-card-full-desc">${escapeHTML(d.description)}</p>
+                    ${d.status === 'in_progress' ? `<div class="direction-detail-row"><strong>Phase:</strong> ${escapeHTML(d.phase ? (String(d.phase).startsWith('Phase') ? d.phase : 'Phase ' + d.phase) : 'Phase A')}</div>` : ''}
                     ${d.research_mode ? `<div class="direction-detail-row"><strong>Mode:</strong> ${escapeHTML(d.research_mode)}</div>` : ''}
                     ${d.consumed_by_exp_id ? `<div class="direction-detail-row"><strong>Active Experiment:</strong> ${escapeHTML(d.consumed_by_exp_id)}</div>` : ''}
                     <div class="direction-detail-row"><strong>Source:</strong> ${escapeHTML(d.source_exp_id)}</div>

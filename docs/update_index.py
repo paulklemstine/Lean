@@ -579,24 +579,63 @@ def append_future_directions(script_dir, fd_js_path, catalog_root=None):
         except Exception as e:
             print(f"Warning: failed to copy future_directions.json: {e}")
 
+    # Load inflight jobs mapping to lookup phase for in_progress directions
+    inflight_phases = {}
+    inflight_paths = [
+        os.path.join(repo_root, "Aether", ".aether_workspace", "inflight_jobs.json"),
+        os.path.join(script_dir, "aether_status", "inflight_jobs.json"),
+        os.path.abspath(os.path.join(script_dir, "..", "docs", "aether_status", "inflight_jobs.json")),
+    ]
+    for ip in inflight_paths:
+        if os.path.exists(ip):
+            try:
+                with open(ip, 'r', encoding='utf-8') as f:
+                    ij_data = json.load(f)
+                items = []
+                if isinstance(ij_data, list):
+                    items = ij_data
+                elif isinstance(ij_data, dict):
+                    items = [j for j in ij_data.values() if isinstance(j, dict)]
+                for j in items:
+                    if isinstance(j, dict):
+                        ph = j.get("phase") or "A"
+                        if j.get("direction_id"):
+                            inflight_phases[j["direction_id"]] = ph
+                        if j.get("exp_id"):
+                            inflight_phases[j["exp_id"]] = ph
+                        if j.get("job_id"):
+                            inflight_phases[j["job_id"]] = ph
+            except Exception:
+                pass
+
     # Filter out completed/pruned directions (no need to ship stale data)
     directions = [d for d in directions if d.get("status") not in ("completed", "pruned")]
 
     # Transform to display-friendly format, sorted by priority descending
     display_dirs = []
     for d in directions:
-        display_dirs.append({
-            "id": d.get("id", ""),
+        d_status = d.get("status", "available")
+        d_id = d.get("id", "")
+        d_exp = d.get("consumed_by_exp_id", "")
+        phase = d.get("phase")
+        if not phase and d_status == "in_progress":
+            phase = inflight_phases.get(d_id) or inflight_phases.get(d_exp) or "A"
+
+        item = {
+            "id": d_id,
             "title": d.get("title", ""),
             "description": d.get("description", ""),
             "domains": d.get("domains", []),
             "priority_score": d.get("priority_score", 0),
-            "status": d.get("status", "available"),
+            "status": d_status,
             "research_mode": d.get("research_mode", ""),
             "source_exp_id": d.get("source_exp_id", ""),
-            "consumed_by_exp_id": d.get("consumed_by_exp_id", ""),
+            "consumed_by_exp_id": d_exp,
             "timestamp": d.get("timestamp", ""),
-        })
+        }
+        if phase:
+            item["phase"] = phase
+        display_dirs.append(item)
 
     display_dirs.sort(key=lambda x: (-x["priority_score"], x.get("id", "")))
 
