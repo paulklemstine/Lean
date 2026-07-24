@@ -1546,7 +1546,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1f866dac",
     "description": "Formalize the p-adic Langlands correspondence for GL₂(Q_p): establish a bijection between irreducible unitary Banach representations and 2-dimensional Galois representations. Prove the Colmez functor realization.",
     "domain_bridges": [],
     "domains": [
@@ -1559,7 +1559,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "p-adic Langlands for GL₂(Q_p)"
   },
@@ -1947,25 +1947,6 @@
     "status": "available",
     "timestamp": "2026-07-23T20:05:22.433476+00:00",
     "title": "Modular-Galois: Formalizing Serre's Conjectures for Low Weight Representations"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "2a754509",
-    "description": "Derives density estimates and explicit zero-free regions for families of automorphic L-functions near the critical line ℜ(s) = 1/2.",
-    "domain_bridges": [],
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "dir_50_03_d9e2ce95",
-    "lineage_refs": [],
-    "priority_score": 0.9,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "batch_50_injection",
-    "status": "in_progress",
-    "timestamp": "2026-07-23T20:05:22.485425+00:00",
-    "title": "L-Function-Zeroes: Explicit Bounds on Low-Lying Zeroes of Automorphic L-Functions"
   },
   {
     "ambition_level": "extension",
@@ -13877,7 +13858,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cb7978a9",
     "description": "# Future Directions: complex-weighted undirected random graphs\n\nThis cycle deepened the theory of the fixed-amplitude model, where every present edge\nof an undirected graph carries a single common complex weight `z`.  The central new\nresult is *spectral line-locking*: for a symmetric edge relation and nonzero `z`,\nevery eigenvalue of the weighted adjacency matrix is `z` times a real number, so the\nentire spectrum collapses onto the one-dimensional line `ℝ·z`.  We also established\nthe global multiplicative invariants (determinant scales by `zⁿ`, loopless trace\nvanishes) and showed that the complete-graph mean-direction eigenvalue `(n-1)z`\nescapes the naive radius `√n·‖z‖` for every order `n ≥ 3`.  These findings suggest\nthe following bold, testable conjectures.\n\n## 1. Two-dimensional spectra require broken phase symmetry\n\n**Conjecture.** If the edges of a random graph carry *independent* complex phases\n(each present edge `(i,j)` weighted by an independent unit-modulus random variable,\nwith `w_{ji} = \\overline{w_{ij}}` relaxed to genuine independence), then the empirical\nspectral distribution of the normalized adjacency matrix converges, as `n → ∞`, to a\nrotationally invariant law supported on a full two-dimensional disk — in sharp\ncontrast to the line-locked fixed-amplitude model.\n\nThe key insight is that line-locking is caused entirely by the scalar–Hermitian\nfactorization `z·B`: all randomness sits inside a single Hermitian matrix, and one\ncomplex scalar can only rotate and dilate a real spectrum. Breaking the shared phase\nis therefore both necessary and, conjecturally, sufficient to recover circular-law\nbehaviour.\n\nWhy now? The exact obstruction has been isolated in closed form, so the search for a\ncircular law can be aimed precisely at the models that violate the factorization,\nrather than at the undirected fixed-amplitude model where no such law can exist.\n\n## 2. A phase-transition threshold for the mean-direction outlier\n\n**Conjecture.** For the fixed-amplitude Erdős–Rényi model `G(n, p)` with weight `z`,\nthere is a sharp threshold `p*(n)` such that above it the largest-modulus eigenvalue\nis asymptotically `p·(n-1)·|z|` (the mean-direction outlier), while the bulk stays\nwithin radius `2√{np(1-p)}·|z|`; the outlier separates from the bulk exactly when\n`p·(n-1) > 2√{np(1-p)}`.\n\nThe key insight is that the deterministic complete-graph computation `(n-1)z` is the\n`p → 1` endpoint of a family of expected row sums `p·(n-1)`, and the outlier/bulk\nseparation is governed by comparing this expected row sum with the semicircle radius\nof the centered indicator matrix.\n\nWhy now? Both endpoints are already understood — the deterministic outlier for the\ncomplete graph and the row-sum disk bound scaled by `|z|` — so the remaining task is\nto interpolate them across `p`, a concrete and falsifiable analytic problem.\n\n## 3. Reality of Rayleigh quotients characterizes the line-locked class\n\n**Conjecture.** Among all weighting schemes assigning a complex number to each edge of\na fixed graph, the weighted adjacency matrix has its full spectrum confined to a\nsingle complex line through the origin *if and only if* the scheme is a complex\nscalar multiple of a Hermitian matrix; equivalently, if and only if the Rayleigh\nquotient `⟨v, A v⟩` is a fixed complex multiple of a real number for all `v`.\n\nThe key insight is that reality of the Hermitian Rayleigh quotient is exactly what\npins each eigenvalue to the line, so the converse should hold: line confinement of\nthe whole spectrum forces the matrix back into the scalar-Hermitian class.\n\nWhy now? The forward direction is now established in full, and its proof is entirely\nRayleigh-quotient based, which hands over the precise algebraic invariant whose\nconverse can be attacked directly.\n\n## 4. Determinant zeros track the underlying combinatorics\n\n**Conjecture.** The weighted determinant `det(z·B) = zⁿ·det(B)` vanishes for a fixed\nnonzero `z` if and only if the underlying graph has no perfect matching of a certain\nsigned type; consequently, for random `G(n, p)` the probability that the weighted\nmatrix is singular exhibits the same threshold as the appearance of an isolated\nvertex, independent of `z`.\n\nThe key insight is that the complex amplitude is a global unit that cannot create or\ndestroy singularity — singularity is a purely combinatorial property of the indicator\nmatrix `B`, so all `z`-dependence factors out through `zⁿ`.\n\nWhy now? The clean determinant factorization makes the `z`-independence of singularity\nexplicit, reducing a question about complex-weighted matrices to a classical question\nabout zero-one matrices with known threshold behaviour.\n",
     "domain_bridges": [],
     "domains": [
@@ -13891,7 +13872,7 @@
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
     "source_exp_id": "2607.21494v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-24T01:27:41.468731+00:00",
     "title": "This cycle deepened the theory of the fixed-amplitude model, where every present"
   },
@@ -14454,7 +14435,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "78cd863a",
     "description": "Prove that for every n, there exists a number that can be expressed as a sum of two cubes in n different ways (Taxicab(n) exists). Compute Taxicab(3) and Taxacab(4). Prove bounds on the growth rate of Taxicab(n).",
     "domain_bridges": [],
     "domains": [
@@ -14467,7 +14448,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Taxicab Number Generalizations: Hardy-Ramanujan Numbers"
   },
@@ -15078,25 +15059,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "cc3b4f99",
-    "description": "Cycle 0daa61af (Q=0.720) proved 18 theorems in Tropical but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The AdS/CFT correspondence says that a gravitational theory in the bulk of anti-de Sitter space is equivalent to a conformal field theory on the boundary. What if prime numbers have a holographic dual",
-    "domain_bridges": [],
-    "domains": [
-      "Tropical"
-    ],
-    "id": "sorry_fill_0daa61af_c80f4ace",
-    "lineage_refs": [],
-    "priority_score": 0.77,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "0daa61af",
-    "status": "in_progress",
-    "timestamp": "2026-07-17T18:03:33.034163+00:00",
-    "title": "Close Proofs: Holographic Primes: The Prime Number AdS/CFT Correspondence"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Derive an analytic form for the square site percolation threshold. Formalize bond vs site percolation, prove known exact thresholds for triangular lattices, and connect to conformal invariance.",
     "domain_bridges": [],
@@ -15443,26 +15405,6 @@
     "status": "available",
     "timestamp": "2026-07-18T00:59:46.557936+00:00",
     "title": "`Catalog/Applications/HyperbolicNumberTheory/CayleyPythagoreanBridge.lean` gives"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "86d1611f",
-    "description": "# Future directions\n\n## What the formal development establishes\n\nThe original proposal mixes two different notions. The files now separate them.\n\n1. In `Pythagorean/EscherStaircases.lean`, an ascending chain indexed by `ℕ` has\n   intersection equal to its first term:\n\n   \\[\n   I_0 \\subseteq I_1 \\subseteq I_2 \\subseteq \\cdots\n   \\quad\\Longrightarrow\\quad\n   \\bigcap_n I_n=I_0.\n   \\]\n\n   Moreover, zero belongs to every ideal and hence to every intersection of ideals.\n   Thus merely requiring the intersection to contain zero does not define an\n   additional “looping” phenomenon.\n\n2. The proposed divisibility family has the containment direction reversed.\n   Divisibility by `2^(n+1)` is stronger than divisibility by `2^n`. The ideals\n   `(2^n)` in `ℤ` are proved to form a strictly descending chain with zero\n   intersection. `Catalog/Algebra/EscherDivisibilityDisproof.lean` proves the same\n   strict reversal for the pointwise divisibility ideals in the function ring\n   `ℤ → ℤ`.\n\n3. `Catalog/Algebra/EscherStaircase.lean` adopts the coherent replacement\n\n   \\[\n   \\operatorname{EscherStaircase}(R)\n   \\;:\\!\\!\\Longleftrightarrow\\;\n   \\exists I:\\mathbb N\\to\\operatorname{Ideal}(R),\\; I\\text{ is strictly increasing}.\n   \\]\n\n   It proves that this is equivalent to failure of `IsNoetherianRing`. It also\n   constructs an explicit staircase in the product ring `ℕ → ℤ`, beginning at the\n   zero ideal, and proves that the p-adic integers admit no such staircase.\n\n4. `Catalog/Algebra/EscherStaircasePolynomial.lean` constructs the strict chain\n\n   \\[\n   (0) \\subsetneq (x_0) \\subsetneq (x_0,x_1) \\subsetneq \\cdots\n   \\]\n\n   in the countably generated polynomial ring. Its strictness is certified by a\n   specialization homomorphism that kills the old variables but not the new one.\n   The file concludes that this polynomial ring is not Noetherian.\n\n5. `Catalog/Algebra/EscherStaircaseHilbert.lean` proves the complementary Hilbert\n   basis results: polynomial rings in finitely many variables over a field, and the\n   ordinary univariate polynomial ring, admit no Escher staircase. It packages this\n   with the countably generated example as a finite/countable-variable dichotomy.\n\nThese results are complete Lean proofs. They do **not** establish a numerical\n“Escher height”: under the coherent existence definition, the invariant is a\nNoetherian/non-Noetherian dichotomy rather than Krull dimension.\n\n## Status of the original examples\n\n### Integer-valued polynomials\n\nFor\n\n\\[\nJ_n=\\{f\\in\\operatorname{Int}(\\mathbb Z):f(\\mathbb Z)\\subseteq 2^n\\mathbb Z\\},\n\\]\n\none has `J_(n+1) ⊆ J_n`, not the reverse. Constant polynomials witness strictness:\nthe constant `2^n` belongs to `J_n` but not to `J_(n+1)`. Consequently this family\ncannot witness failure of the ascending chain condition. A direct Lean construction\nof `Int(ℤ)` remains worthwhile, but it would formalize a descending filtration, not\nthe claimed ascending staircase.\n\n### Finitely many polynomial variables\n\nFor a field `k`, `k[x₁,…,xₙ]` is Noetherian, so it has no infinite strictly\nascending chain of ideals. Its Krull dimension is `n`, but that is a separate\ninvariant defined using chains of prime ideals. Calling this number an Escher height\nwould require a new definition and proofs that the definition agrees with Krull\ndimension.\n\n### All algebraic integers\n\nThe requested numerical height is not currently well-defined. A meaningful future\nproject should first choose one of the established invariants below and only then\nstudy the ring of all algebraic integers.\n\n## Concrete continuation projects\n\n1. **Formalize integer-valued polynomials.** Define `Int(ℤ)` as the subring of\n   `ℚ[X]` whose elements take integral values on integers. Define the value-\n   divisibility ideals, prove they are antitone and strictly decreasing using\n   constants, and prove their intersection is zero by evaluation and polynomial\n   extensionality.\n\n2. **Develop Krull dimension independently.** Use strict chains of prime ideals and\n   connect finite-variable polynomial rings to the standard dimension theorem. This\n   is the mathematically appropriate interpretation of the number of variables.\n\n3. **Study adic separation.** For an ideal `I`, investigate `⋂ n, I^n = 0`. The\n   formalized powers-of-two theorem is the elementary model. General continuations\n   include separated filtrations and Krull-intersection hypotheses.\n\n4. **Generalize explicit non-Noetherian witnesses.** Extend the variable-ideal\n   construction from a countable variable set to arbitrary infinite index types,\n   extracting a countable sequence of distinct variables under suitable choice or\n   embedding assumptions.\n\n5. **Analyze algebraic integers with a precise target.** Possible targets include\n   explicit ascending chains witnessing non-Noetherianity, prime-ideal chains for\n   Krull dimension, or descending valuation filtrations. These should not be merged\n   into one invariant without a theorem relating them.\n\nThe formal development therefore resolves the logical inconsistency in the original\nstaircase and supplies rigorous replacements: failure of ACC for ascending chains,\nKrull dimension for prime chains, and adic separation for descending powers.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Logic"
-    ],
-    "id": "fd_0253",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "406a341d",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T01:16:29.364161+00:00",
-    "title": "The original proposal mixes two different notions. The files now separate them."
   },
   {
     "ambition_level": "extension",
@@ -19424,6 +19366,65 @@
     "status": "available",
     "timestamp": "2026-07-24T14:54:54.287291+00:00",
     "title": "This cycle isolated the *quantitative core* of the many-tree Maximum Agreement S"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future directions — Escher staircases, cycle 1\n\n## What this cycle adds\n\nThe previous cycle established, over a **field** `k`:\n\n* `k[x₀, x₁, …]` (countably many variables) has an Escher staircase\n  (`escherStaircase_mvPolynomial_nat`);\n* `k[x₀, …, x_{n-1}]` and `k[X]` (finitely many variables) have none\n  (`not_escherStaircase_mvPolynomial_fin`, `not_escherStaircase_polynomial`);\n* the resulting finite/countable dichotomy (`escher_dichotomy_mvPolynomial`).\n\nThis cycle removes both restrictions — the base need not be a field, and the variable\ntype need not be `ℕ` — and pins down the criterion exactly. The new file is\n`Algebra/EscherStaircaseInfinite.lean`.\n\n### New theorems\n\n1. **`X_not_mem_span_image'`** — the separating-homomorphism non-membership lemma over\n   an arbitrary *nontrivial commutative ring* `R` and an arbitrary index type `σ`:\n   `X j ∉ ⟨{X i : i ∈ s}⟩` when `j ∉ s`. This is the sole non-order-theoretic input,\n   generalised from the field/`ℕ` case.\n\n2. **`escherStaircase_mvPolynomial_of_infinite`** — for *any* nontrivial `R` and *any*\n   infinite `σ`, `MvPolynomial σ R` has an Escher staircase, built by pulling the\n   variable chain back along `Infinite.natEmbedding σ`. It still loops back to `⊥`\n   (`varIdealEmb_iInf_eq_bot`). Corollary `not_isNoetherianRing_mvPolynomial_of_infinite`.\n\n3. **`escherStaircase_mvPolynomial_iff_infinite`** — the sharp criterion: for a\n   nontrivial *Noetherian* base `R`,\n   `EscherStaircase (MvPolynomial σ R) ↔ Infinite σ`.\n   This subsumes Hilbert's basis theorem (finite ⇒ no staircase) and the explicit\n   construction (infinite ⇒ staircase), for *any* Noetherian base, not just a field.\n\n4. **`escherStaircase_mvPolynomial_of_base`** — the orthogonal source: if the base `R`\n   itself has an Escher staircase, so does `MvPolynomial σ R` for *every* `σ` (via the\n   surjection `constantCoeff : MvPolynomial σ R ↠ R` and the fact that quotients of\n   Noetherian rings are Noetherian).\n\n5. **`escherStaircase_mvPolynomial_of_infinite_or_base`** — the combined statement:\n   over a nontrivial base, a staircase exists whenever *either* there are infinitely\n   many variables *or* the base already has one.\n\nThe upshot: for polynomial rings the existence of an Escher staircase has exactly two\nindependent sources — infinitely many variables, or a non-Noetherian base — and over a\nNoetherian base it is governed purely by the cardinality of the variable set.\n\n## Where to go next\n\n1. **Integer-valued polynomials `Int(ℤ)`.** Still the most concrete open item: define\n   the subring of `ℚ[X]` taking integer values on `ℤ`, the value-divisibility ideals\n   `Jₙ = {f : f(ℤ) ⊆ 2ⁿℤ}`, and prove they form a strictly *descending* filtration with\n   zero intersection (a separated filtration, not an ascending staircase). The\n   `EscherDivisibilityDisproof` file already models the reversal in `ℤ → ℤ`.\n\n2. **Adic separation.** For an ideal `I`, study `⋂ n, Iⁿ`. The staircases here loop\n   back to `⊥` trivially because they *start* at `⊥`; the genuinely interesting\n   separation phenomenon is the descending `Iⁿ` filtration and the Krull intersection\n   theorem.\n\n3. **Krull dimension.** The \"number of variables\" is properly captured by prime-ideal\n   chains, a strictly stronger invariant than the Noetherian/non-Noetherian dichotomy\n   proved here. Connecting `k[x₁,…,xₙ]` to Krull dimension `n` is the natural sequel.\n\n4. **Uncountable staircases.** The construction here uses a countable subchain of an\n   infinite `σ`. A finer invariant would track the *length* (an ordinal / cardinal) of\n   the longest strictly ascending chain, distinguishing e.g. `ℕ`-many from `ℝ`-many\n   variables.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_0701",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "86d1611f",
+    "status": "available",
+    "timestamp": "2026-07-24T15:51:57.357146+00:00",
+    "title": "The previous cycle established, over a **field** `k`:"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Holographic Primes / Tropical Dequantization\n\n## What this cycle added\n\nThe finite prime hologram in `Catalog/Tropical/HolographicPrimes.lean` already\nproved the exact boundary/bulk factorization and the tropical (zero-temperature)\nvacuum theorem. This cycle extended it with a self-contained chain of\nquantitative results, all fully proved (no `sorry`, standard axioms only):\n\n1. `boundaryPartition_pos` — strict positivity of the boundary (Euler-product)\n   presentation.\n2. `bulkPartition_pos` — strict positivity of the bulk Gibbs sum, obtained from\n   (1) *through* the holographic factorization (chain link).\n3. `bulkPartition_ge_one` — unconditional vacuum lower bound `1 ≤ Z`.\n4. `log_bulkPartition_nonneg` — corollary: the bulk free energy `log Z ≥ 0`.\n5. `bulkPartition_ge_exp_neg_ground` — the sharp Boltzmann bound\n   `exp(-β · E_ground) ≤ Z`, where `E_ground` is exactly the tropical partition\n   function. This is the quantitative bridge from the bulk Gibbs sum to its\n   tropical dequantization.\n6. `bulkPartition_zero_cutoff`, `bulkPartition_beta_zero` — the `N=0` and `β=0`\n   boundary limits.\n7. `prime_bulkPartition_pos`, `prime_bulkPartition_ge_one` — specialization to the\n   prime boundary; the latter re-derives `1 ≤ Z` from the sharp bound (5) and the\n   prime tropical vacuum (`prime_tropical_vacuum`), tying the chain together.\n\n## Natural next steps\n\n- **Two-sided free-energy bounds.** Complement (5) with an upper bound\n  `Z ≤ (N+1)^{|I|} · exp(-β · E_ground)` for `β ≥ 0`, giving\n  `E_ground - (|I| log(N+1))/β ≤ -(1/β) log Z ≤ E_ground`, i.e. an explicit\n  finite-size approach of the free energy to the tropical ground energy\n  (Hypothesis 3 in the file's lab notes, currently only asserted heuristically).\n- **Monotonicity in the cutoff.** `bulkPartition E N β ≤ bulkPartition E (N+1) β`\n  for `β ≥ 0` and `E ≥ 0`, and convergence of the normalized log partition.\n- **Derivative / energy identities.** Express the mean occupation\n  `-∂/∂β log Z` as a Gibbs average and relate its `β → ∞` limit to the tropical\n  ground configuration.\n- **Global step (hard, conjectural).** The file deliberately stops before the\n  completed zeta functional equation and any GUE/AdS statement; these require\n  analytic continuation and spectral input absent from the finite factorization.\n\n## Out-of-scope note\n\nThe only genuine `sorry` remaining anywhere in the repository is in\n`Catalog/Shared/CarmichaelProof.lean` (the `n > 10000` tail of Carmichael's\nprimitive-divisor theorem for Fibonacci numbers). It is unrelated to the Tropical\nHolographic Primes development and was left untouched.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0702",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "cc3b4f99",
+    "status": "available",
+    "timestamp": "2026-07-24T15:52:04.527515+00:00",
+    "title": "The finite prime hologram in `Catalog/Tropical/HolographicPrimes.lean` already"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe file `Catalog/NumberTheory/LowLyingZeros.lean` isolates two analytic mechanisms\nthat control the low-lying zeros of automorphic `L`-functions: the de la Vallée Poussin\npositivity and functional-equation symmetry about the critical line. Natural extensions:\n\n1. **From finite sums to genuine Dirichlet series.** Replace the finite\n   `dirichletCosSum` by a convergent series `∑ b_n λ_n^{-σ} cos(t log λ_n)` and derive the\n   `3-4-1` positivity for `ℜ log L(s)` on `ℜ(s) = 1`. This requires the Euler product /\n   logarithm of an `L`-function with nonnegative Dirichlet coefficients (e.g. `ζ`, and\n   `L(s, π × π̃)` for cuspidal `π`).\n\n2. **Explicit zero-free region.** Combine the positivity with an upper bound\n   `|L'/L|` near a putative zero `β + iγ` to produce a quantitative region\n   `β < 1 - c/log(|γ|+2)` and make the constant `c` explicit, following de la Vallée\n   Poussin / Kadiri-style effective constants.\n\n3. **Density estimates.** Formalize a Jensen/Littlewood zero-counting bound in a box and\n   turn `zero_reflect_iff` into a statement counting symmetric zero pairs off the critical\n   line, giving `N(σ, T)` density estimates for families.\n\n4. **The functional equation itself.** Derive `zero_reflect_iff`'s hypothesis from a\n   completed `L`-function `Λ(s) = Q^s Γ-factors · L(s)` and its automorphic functional\n   equation, rather than assuming it, once Mathlib has the analytic continuation of\n   `GL(n)` `L`-functions.\n\n5. **Sharp equality analysis.** Use `three_four_one_cos_eq_zero_iff` to characterize the\n   extremal spectra where the positivity is tight, connecting to the location of the\n   nearest low-lying zero.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0703",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "2a754509",
+    "status": "available",
+    "timestamp": "2026-07-24T15:52:12.163045+00:00",
+    "title": "The file `Catalog/NumberTheory/LowLyingZeros.lean` isolates two analytic mechani"
   },
   {
     "ambition_level": "extension",

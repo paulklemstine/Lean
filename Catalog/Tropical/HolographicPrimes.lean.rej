@@ -1,0 +1,104 @@
+--- HolographicPrimes.lean
++++ HolographicPrimes.lean
+@@ -176,4 +176,101 @@
+     tropicalPartitionFunction (bulkHamiltonian (primeEnergy x) N) = 0 := by
+   convert tropical_bulk_ground_eq_zero ( primeEnergy x ) ( fun p => primeEnergy_nonneg x p ) N
+ 
++/-
++## Positivity, ground-state bounds, and the bulk/tropical bridge
++
++The results below extend the finite hologram with a chain of quantitative
++facts, each building on the previous ones and on the factorization theorem:
++positivity of the two partition presentations, an unconditional lower bound of
++`1`, the sharp Boltzmann lower bound in terms of the tropical (zero-temperature)
++ground energy, and their specialization to the prime boundary.
++-/
++
++/-- The boundary partition function is strictly positive: it is a finite product
++of finite sums of positive Boltzmann weights. -/
++theorem boundaryPartition_pos (E : I → ℝ) (N : ℕ) (β : ℝ) :
++    0 < boundaryPartition E N β := by
++  unfold boundaryPartition
++  refine Finset.prod_pos (fun i _ => ?_)
++  refine Finset.sum_pos (fun n _ => Real.exp_pos _) ?_
++  exact Finset.univ_nonempty
++
++/-- The bulk Gibbs partition sum is strictly positive.  This is obtained from
++`boundaryPartition_pos` through the holographic factorization. -/
++theorem bulkPartition_pos (E : I → ℝ) (N : ℕ) (β : ℝ) :
++    0 < bulkPartition E N β := by
++  rw [← finite_holographic_factorization]
++  exact boundaryPartition_pos E N β
++
++/-- **Unconditional vacuum lower bound.**  The vacuum profile contributes a
++Boltzmann weight of exactly `1`, and every other profile contributes a positive
++weight, so the bulk partition sum is at least `1` for all energies and all
++temperatures. -/
++theorem bulkPartition_ge_one (E : I → ℝ) (N : ℕ) (β : ℝ) :
++    1 ≤ bulkPartition E N β := by
++  unfold bulkPartition
++  have hle := Finset.single_le_sum
++    (f := fun a : Occupation I N => Real.exp (-β * bulkHamiltonian E N a))
++    (fun a _ => (Real.exp_pos _).le) (Finset.mem_univ (fun _ => 0))
++  simpa [bulkHamiltonian_vacuum] using hle
++
++/-- The bulk free energy `log Z` is nonnegative, a direct consequence of the
++vacuum lower bound. -/
++theorem log_bulkPartition_nonneg (E : I → ℝ) (N : ℕ) (β : ℝ) :
++    0 ≤ Real.log (bulkPartition E N β) :=
++  Real.log_nonneg (bulkPartition_ge_one E N β)
++
++/-- **Sharp ground-state Boltzmann bound.**  The bulk partition sum dominates the
++Boltzmann weight of the tropical ground state `exp(-β · E_ground)`, where
++`E_ground = ⨅ σ, H σ` is exactly the tropical (zero-temperature) partition
++function.  This is the quantitative bridge between the bulk Gibbs sum and its
++tropical dequantization. -/
++theorem bulkPartition_ge_exp_neg_ground (E : I → ℝ) (N : ℕ) (β : ℝ) :
++    Real.exp (-β * tropicalPartitionFunction (bulkHamiltonian E N)) ≤
++      bulkPartition E N β := by
++  obtain ⟨σ₀, -, hσ₀⟩ :=
++    Finset.exists_min_image (Finset.univ : Finset (Occupation I N))
++      (bulkHamiltonian E N) ⟨(fun _ => 0), Finset.mem_univ _⟩
++  have hground : tropicalPartitionFunction (bulkHamiltonian E N) =
++      bulkHamiltonian E N σ₀ := by
++    unfold tropicalPartitionFunction
++    refine le_antisymm (ciInf_le (Finite.bddBelow_range _) σ₀) ?_
++    exact le_ciInf fun b => hσ₀ b (Finset.mem_univ b)
++  rw [hground]
++  exact Finset.single_le_sum
++    (f := fun a : Occupation I N => Real.exp (-β * bulkHamiltonian E N a))
++    (fun a _ => (Real.exp_pos _).le) (Finset.mem_univ σ₀)
++
++/-- At cutoff `N = 0` the only occupation profile is the vacuum, so the bulk
++partition sum collapses to `1`. -/
++theorem bulkPartition_zero_cutoff (E : I → ℝ) (β : ℝ) :
++    bulkPartition E 0 β = 1 := by
++  haveI : Subsingleton (I → Fin (0 + 1)) :=
++    ⟨fun a b => funext fun i => Fin.ext (by omega)⟩
++  unfold bulkPartition
++  rw [Fintype.sum_subsingleton _ (fun _ => 0)]
++  simp [bulkHamiltonian_vacuum]
++
++/-- At infinite temperature (`β = 0`) every profile has Boltzmann weight `1`, so
++the bulk partition sum counts the occupation states. -/
++theorem bulkPartition_beta_zero (E : I → ℝ) (N : ℕ) :
++    bulkPartition E N 0 = (Fintype.card (Occupation I N) : ℝ) := by
++  unfold bulkPartition
++  simp [Finset.card_univ]
++
++/-- The prime bulk partition sum is strictly positive. -/
++theorem prime_bulkPartition_pos (x N : ℕ) (β : ℝ) :
++    0 < bulkPartition (primeEnergy x) N β :=
++  bulkPartition_pos _ _ _
++
++/-- **Prime vacuum stability, quantitative form.**  Combining the sharp
++ground-state bound with the prime tropical vacuum theorem
++(`prime_tropical_vacuum`, whose ground energy is `0`), the prime bulk partition
++sum is at least `exp 0 = 1` at every finite cutoff and temperature. -/
++theorem prime_bulkPartition_ge_one (x N : ℕ) (β : ℝ) :
++    (1 : ℝ) ≤ bulkPartition (primeEnergy x) N β := by
++  have h := bulkPartition_ge_exp_neg_ground (primeEnergy x) N β
++  rw [prime_tropical_vacuum] at h
++  simpa using h
++
+ 

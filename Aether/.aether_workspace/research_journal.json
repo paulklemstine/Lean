@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "c83ba873",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\n## 1. Adaptive-submodularity criterion for greedy posterior voting\n\n**Conjecture.** In a finite social-deduction game whose information states form a belief-state Markov process,",
-      "quality_score": 0.75,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-18T14:44:29",
-      "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
-    },
-    {
       "cycle_id": "fc5e97aa",
       "domain": "Bridges",
       "key_insight": "# Future Directions\n\n## 1. Stable exponents under dependency extraction\n\n**Conjecture.** For a fixed, versioned mathematical corpus, the tail exponent of theorem reuse remains within a narrow interval",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-24T15:52:08",
       "title": "Close Proofs: Holographic Primes: The Prime Number AdS/CFT Correspondence"
+    },
+    {
+      "cycle_id": "2a754509",
+      "domain": "NumberTheory",
+      "key_insight": "# Future directions\n\nThe file `Catalog/NumberTheory/LowLyingZeros.lean` isolates two analytic mechanisms\nthat control the low-lying zeros of automorphic `L`-functions: the de la Vallée Poussin\npositiv",
+      "quality_score": 0.46,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-07-24T15:52:16",
+      "title": "L-Function-Zeroes: Explicit Bounds on Low-Lying Zeroes of Automorphic L-Functions"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-24T15:52:08",
+  "last_updated": "2026-07-24T15:52:16",
   "open_questions": [
     {
       "context": "+    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; +    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; +    ∀ i < k, c i = ",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "c2f98a25",
-        "quality": 0.64,
-        "theorems": 9,
-        "title": "Quantum Groups from Number Theory: The Riemann Hypothesis as a Representation Pr"
-      },
-      {
         "cycle_id": "ea7d1cf2",
         "quality": 0.71,
         "theorems": 0,
@@ -3699,6 +3693,12 @@
         "quality": 0.618,
         "theorems": 14,
         "title": "ArXiv paper: A memorial tribute: Adriano Garsia (1928--2024)"
+      },
+      {
+        "cycle_id": "2a754509",
+        "quality": 0.46,
+        "theorems": 12,
+        "title": "L-Function-Zeroes: Explicit Bounds on Low-Lying Zeroes of Automorphic L-Function"
       }
     ],
     "Physics": [
