@@ -1,85 +1,89 @@
 # Infinite-Dimensional Chess: Winning on the Hilbert Board
 
-## When the edges vanish
+Imagine a chessboard that never ends. No edges, no corners, no comforting boundary to pin a piece against — just an endless grid of squares stretching to the horizon in every direction. Mathematicians call this the **Hilbert board**: the integer lattice $\mathbb{Z} \times \mathbb{Z}$, a plane tiled by squares and indexed by pairs of whole numbers $(x, y)$.
 
-Every chess player learns the same first lesson about the endgame: to checkmate a lone king, you drive it to the *edge* of the board. A single rook and a king can force mate precisely because the eight-by-eight grid has walls. The rook cuts the plane in half, the friendly king shoulders the enemy monarch toward the boundary, and eventually the trapped king runs out of squares. The corner is the executioner; the edge is its scaffold.
+On an ordinary $8 \times 8$ board, the edge is the king's worst enemy. Corner him with a rook and a queen and the walls do half the work: the king simply runs out of squares. But strip the walls away and something surprising happens. A lone king, chased across an infinite plain, becomes astonishingly hard to catch. How many attackers does it really take to trap him when he can always keep running?
 
-Now perform a thought experiment. Erase the walls. Let the board stretch out forever in all four directions — an endless grid of squares indexed by pairs of integers $(x, y)$, one square for every point of $\mathbb{Z} \times \mathbb{Z}$. The pieces move by the ordinary rules: a king steps to any of its eight neighbours, a rook slides any distance along its rank or file. But there is no edge, no corner, nowhere to be cornered.
+This article answers that question exactly — and the answer is a clean, sharp number.
 
-What happens to the endgame?
+## The pieces that reach forever
 
-The answer turns out to be startling, and it forces us to rethink what the word "value" even means for a chess position. On the infinite board the familiar hierarchy of "mate in one," "mate in two," "mate in $n$" is not merely longer — for some positions it *does not exist at all*, not for any finite $n$ and, in a precise sense we will make rigorous, not for any transfinite ordinal either. The lone king becomes uncatchable. This article explains why, states the theorems that pin it down, and shows where the true threshold of checkmate lies.
+The dangerous pieces in chess are the *long-range* ones: the rook, which sweeps along ranks and files; the bishop, which slices along diagonals; and the queen, which does both. What all three share is that each of their attacks travels in a perfectly straight line across the board.
 
-## The model, precisely
+That shared geometry is the key idea. Instead of treating rooks, bishops and queens as separate creatures, we treat every long-range attack as a single mathematical object: a **line** on the plane. Concretely, a line is the set of squares $(x, y)$ satisfying a linear equation
 
-Let us fix the rules so there is nothing to argue about later.
+$$a\,x + b\,y = c,$$
 
-A **square** is a point $(x, y)$ with $x, y \in \mathbb{Z}$. Two squares $p$ and $q$ are **king-adjacent** when they are different and differ by at most one in each coordinate:
-$$p \neq q, \qquad |p_1 - q_1| \le 1, \qquad |p_2 - q_2| \le 1.$$
-This is exactly the set of eight squares a king can step to.
+where $a$, $b$, $c$ are whole numbers and $a$ and $b$ are not both zero. A horizontal rook attack is the line $y = c$ (that is, $a=0$, $b=1$). A vertical rook attack is $x = c$. A bishop's diagonal is $x - y = c$ or $x + y = c$. And because we allow *any* integer slope, our lines cover not just the classical rook and bishop rays but every conceivable straight-line attacker — a "nightrider," a fairy-chess piece that shoots along a $(2,1)$ direction, whatever you like. Prove something about lines and you have proved it about all of them at once.
 
-A **rook** standing on square $r$ **attacks** a square $s$ when $s$ shares the rook's rank or file but is not the rook's own square:
-$$s \neq r, \qquad (s_1 = r_1 \ \text{or}\ s_2 = r_2).$$
-We adopt the *transparent-rook* convention: rooks do not block one another's lines. This only ever makes the attacked region *larger*, so every statement of the form "these pieces cannot force mate" that we prove here holds all the more strongly under the physical blocking rules — a conservative choice that strengthens our negative results.
+A square is **attacked** if it lies on at least one of the enemy's lines, and **safe** otherwise. A finite collection of lines is the enemy army. The king, standing on some square, wants a safe place to be.
 
-A king standing on square $k$ is **checkmated** by a finite army of rooks $R$ when two things hold at once: the king is currently in check (some rook attacks $k$), and every one of the eight king-adjacent squares is attacked by $R$. Crucially, a rook's *own square* is not among the squares it attacks. This is not a technicality — it is what allows a king to capture a lone, undefended checking rook. If the only thing giving check is a rook the king can eat, the king is not mated. Our definition respects this.
+## The king's little world: the $3 \times 3$ block
 
-## Result 1: A lone rook can never mate
+To checkmate a king you must do two things at once: attack the square he stands on (that's *check*), and attack every square he could flee to. A king moves one step in any of the eight directions, so the squares that matter are exactly the $3 \times 3$ block centered on him — nine squares in total: his own, plus his eight neighbours. If even one of those nine squares is safe, the king is not mated; he either stays put (if his own square is safe and uncheck) or steps to safety.
 
-Here is the cleanest statement of the phenomenon.
+So the entire drama of checkmate on the infinite board reduces to a covering puzzle:
 
-> **Theorem (Single-rook escape).** For any position of a single rook $r$ and a king $p$, the king has an explicit safe move: a king-adjacent square that the rook does not attack.
+> **Can the enemy's lines cover all nine squares of the king's $3 \times 3$ block?**
 
-The proof is not an existence argument — it is a *formula*. Define a one-dimensional escape rule. Given the king's coordinate $a$ and the rook's coordinate $c$ along the same axis, set
-$$\mathrm{esc}(a, c) = \begin{cases} a - 1 & \text{if } c = a + 1, \\ a + 1 & \text{otherwise.} \end{cases}$$
-In words: step one square in the positive direction, unless the rook is sitting exactly there, in which case step the other way. Three facts are immediate from the definition: the result is never equal to $c$ (we never step onto the rook's line-defining coordinate), it is never equal to $a$ (we always move), and it differs from $a$ by exactly one (it is a legal king step).
+This reframing is what makes the infinite problem tractable. The board is infinite, but the king's fate is decided inside a tiny nine-square window.
 
-Now the king's full escape move is to apply this rule *independently in both coordinates*:
-$$g(r, p) = \big(\mathrm{esc}(p_1, r_1),\ \mathrm{esc}(p_2, r_2)\big).$$
-Because the new $x$-coordinate avoids $r_1$ and the new $y$-coordinate avoids $r_2$, the destination lies on neither the rook's file nor its rank — so the rook does not attack it. And because each coordinate moved by exactly one, the destination is genuinely king-adjacent. The king always has somewhere safe to go. There is no wall to pin it against.
+## The heart of the matter: one line, at most three squares
 
-## Result 2: The king escapes *forever*
+Here is the pivotal observation, and it is beautifully simple.
 
-A single safe move is good, but a skeptic could ask: what if every escape leads into a trap two moves later? On a finite board that is exactly how mating nets work. On the infinite board they cannot form.
+> **Line-in-a-block bound.** A single straight line can pass through at most $3$ of the $9$ squares of any $3 \times 3$ block.
 
-> **Theorem (Infinite escape run).** Against a single rook there is an *infinite* sequence of king positions $f(0), f(1), f(2), \dots$ starting from the king's current square, in which each move is legal and lands on a square the rook does not attack.
+Why? Think of the three horizontal rows of the block. A non-horizontal line — one that actually climbs or descends — can cross each horizontal row in *at most one point*. There are three rows, so at most three crossings, hence at most three squares. And a perfectly horizontal line? It lies *along* one row and misses the other two entirely, so it hits at most the three squares of that single row. Either way, three is the ceiling. A line simply cannot thread through four squares of a $3\times 3$ block; the geometry forbids it.
 
-The construction is simply to *iterate* the escape map: $f(n)$ is the result of applying $g(r, \cdot)$ to the starting square $n$ times. Each single step is safe by the previous theorem, and safety of one step never depends on the history, so the whole infinite run is legal. The king walks off to infinity along a diagonal, forever one step ahead. This is the exact, honest meaning of "the king always escapes" on the boundless board: not a clever swindle, but an unconditional, perpetual draw.
+The precise reason a slanted line meets a row only once is that a line is a *function* in one coordinate: fix the height $y$, and the equation $a x + b y = c$ pins down a unique $x$ (as long as $a \neq 0$). One height, one square. This "functionality" is the engine behind everything that follows.
 
-## Result 3: Two rooks still cannot mate — and that is sharp
+## Counting your way to a theorem
 
-One rook fails for an obvious reason: it controls only one rank and one file, two lines, and two lines cannot cover the king's neighbourhood. What about two rooks? Two rooks control up to four lines, which is enough to *touch* all eight neighbours in principle. Yet they still cannot mate.
+Once you know one line covers at most three squares, an army of $n$ lines covers at most
 
-> **Theorem (Two rooks cannot mate).** No army of at most two rooks can checkmate a lone king, from any position whatsoever.
+$$3 + 3 + \cdots + 3 = 3n$$
 
-The heart of the argument is a pigeonhole fact so small it fits in one line: *three consecutive integers cannot all lie in a set of size two.* Consider the three values $k_1 - 1, k_1, k_1 + 1$ — the king's file and its two neighbours. Two rooks contribute at most two distinct file-coordinates. So among those three consecutive columns, at least one is free of every rook's file. A symmetric statement holds for rows. Combining these free lines with the requirement that the king actually be *in check* (which forces the central square to be covered and so rules out the degenerate all-covered arrangement) produces an escape square among the king's neighbours. Two rooks always spring a leak.
+squares of the block — you just add up the contributions, and overlaps only help the king. Now the punchline writes itself. The block has nine squares. To mate the king you must cover all nine. But two lines cover at most $3 \times 2 = 6 < 9$. There is always a square left uncovered.
 
-And this is the exact threshold. It is not that "few pieces never mate" — rather, *two is the precise boundary*. With more material a boundaryless cage becomes possible. The two-rook failure is in fact even more decisive than the theorem states: two rooks cannot so much as *seal all eight* neighbouring squares. Each rook's own square is one of the king's neighbours, and a rook never attacks the square it stands on, so at least those squares stay open — the king can often escape check simply by capturing a rook. This is why the distinction between mate and mere *surrounding* matters so much on the infinite board. The second half of the proof isolates it: a configuration that attacked all eight neighbours but not the king's own square would be **stalemate**, not mate — a footnote on the finite board, but the crux of the theory on the boundless one.
+> **Fewer than three cannot mate.** Two long-range pieces — any two, of any type, pointing any way — can never checkmate a lone king on the infinite board. He always has an escape square in his own neighbourhood.
 
-## Result 4: Finitely many lines miss almost the whole plane
+On a finite board this is false: the edge conspires with the attackers. On the Hilbert board, with its endless room, two pieces are simply not enough.
 
-Behind all of these results is a single geometric truth, and it deserves to be stated on its own.
+## Three is exactly enough
 
-> **Theorem (Safe squares exist — in fact infinitely many).** Any *finite* army of rooks leaves at least one square completely unattacked; indeed it leaves *infinitely many* such squares.
+A lower bound is only half a theorem. Is three actually achievable, or is the true threshold higher? It is achievable, and the construction is delightfully concrete. Park three rooks on three consecutive horizontal lines: the rows $y = k-1$, $y = k$, and $y = k+1$, where $k$ is the king's row. These three lines blanket a horizontal strip three squares tall — and the king's entire $3 \times 3$ block lives inside that strip. Every one of his nine squares is attacked. Checkmate.
 
-The reason is that a finite army occupies only finitely many distinct columns and finitely many distinct rows. Pick any column that none of them occupies — there are infinitely many to choose from, since there are infinitely many integers — and any such row. Their intersection is a square on nobody's file and nobody's rank. It is safe. Vary the column and the row and you get infinitely many safe squares. Finitely many straight lines simply cannot cover an infinite plane. This is the combinatorial engine of every escape: the board is too big to blanket with a finite budget of lines.
+> **Three suffice.** Three parallel rooks checkmate a king on the infinite board. Combined with the previous result, this pins the exact threshold: **you need at least three long-range pieces to force mate, and three always suffice.** The number three is sharp.
 
-## Result 5: A position with no ordinal value
+There is a pleasing symmetry here. Nine squares, three per line, three lines — the arithmetic is tight with no slack, which is precisely what "sharp threshold" means.
 
-The most conceptually radical consequence concerns the very notion of the *value* of a position.
+## The king who runs forever
 
-On the finite board, a winning position has a natural number attached to it: the number of moves to forced mate with best play. This number is the *rank* of the position in the tree of the game — positions that are mate-in-one sit above mates-in-zero, mates-in-two above those, and so on. Mathematicians call this the **accessibility rank** of the pursuit relation: a position is *accessible* precisely when it can be pushed, in well-founded fashion, down to a terminal (mated) position, and its rank measures how far.
+The local story — what happens in the nine squares around the king — is only half the picture. What about the whole infinite board? Even a large but finite army leaves the vast majority of the plane untouched, and we can say so precisely.
 
-For richer games this rank need not be finite. It can be a transfinite ordinal — mate in $\omega$, mate in $\omega + 1$, and beyond — whenever the attacker can force a win that nonetheless has no uniform finite bound. The ordinal is the honest generalization of "mate in $n$."
+> **Global escape.** No matter how many long-range pieces the enemy fields — as long as the number is finite — infinitely many squares of the board remain safe.
 
-What, then, is the value of the lone-rook king on the infinite board?
+The reasoning is again a counting argument, now stretched across the whole plane. Consider the horizontal rows of the board, one for each integer height. Only finitely many of the enemy's pieces are horizontal, so we can always find a row that no horizontal piece lies along. On that special row, every remaining piece is slanted — and a slanted line, being functional, meets the row in just one point. Finitely many slanted lines therefore block only finitely many squares of that infinite row. The rest of the row — infinitely many squares — is safe.
 
-> **Theorem (No ordinal value).** Under a single rook, the king's position is *not accessible* for the pursuit relation. It therefore has no ordinal game value at all — neither a finite one nor a transfinite one.
+And we can do more than count; we can point *far away*.
 
-This follows directly from the infinite escape run: accessibility is *equivalent* to having a well-founded descent to a terminal position, and the perpetual escape exhibits an infinite non-terminating play. There is no rank to assign. The lone-rook endgame is a draw not of the garden-variety "mate in $n$ fails" kind, but of a deeper, transfinite character — the game-theoretic analogue of an unbreakable fortress, one that lies entirely outside the accessible universe of positions.
+> **Unbounded flight.** For any distance $N$ you name, there is a safe square farther out than $N$. The safe region is not merely infinite; it is unbounded, extending past every finite horizon.
 
-## Why this matters beyond chess
+This is the mathematical shape of the intuition we started with. On an infinite board the king is never truly cornered by a finite force. He always has somewhere to run, and he can always run arbitrarily far. In the language of infinite games, the "value" of his escape is $\omega$, the first infinite ordinal — a formal way of saying his freedom outruns every finite bound.
 
-Strip away the pieces and what remains is a statement about **pursuit and evasion on unbounded domains**, a theme that runs through mathematics far from any chessboard. The core lesson — that a fixed finite budget of constraints (lines, guards, sensors) cannot corner a target in a space without boundary — is the same principle that governs coverage problems, robotic pursuit games, and the design of escape strategies in networks. The pigeonhole step ("three consecutive columns, two rooks, one column must be free") is exactly the kind of counting that decides whether a finite set of watchers can seal off an infinite corridor.
+## Why this is more than a chess puzzle
 
-More broadly, the infinite chessboard is a laboratory for a subtle idea: that "how good is this position?" is not always answered by a number. Sometimes the right invariant is an *ordinal*, and sometimes even the ordinals run out and the honest answer is "no value — the escape never ends." Recognizing when a game leaves the accessible realm entirely is, in the end, recognizing the mathematical shape of a perfect defence. On the Hilbert board, the humble king — with nowhere to be cornered — turns out to be one of the hardest things in mathematics to catch.
+The result is a small jewel of *combinatorial geometry* dressed in the costume of chess. At its core lie two ideas that echo throughout mathematics:
+
+- **Incidence bounds.** "How many times can a line meet a small configuration of points?" is the seed of a whole field — incidence geometry — whose theorems (like the celebrated Szemerédi–Trotter theorem on points and lines) control everything from harmonic analysis to computer graphics. Our "three squares per line" is the humblest possible incidence bound, but it does real work.
+
+- **Covering and packing.** Asking how few lines can cover a region, or how many objects can be forced into a small space, is the theme of covering theory and the pigeonhole principle. The clash between "nine squares to cover" and "three squares per line" is a pigeonhole argument in disguise: three pigeons cannot fill nine holes if each pigeon claims at most three.
+
+The infinite board matters because it isolates the geometry from the accident of edges. On a finite board, thresholds depend fiddly on size and position. On the Hilbert board, the answer is a single, universal, edge-free number — and the proof reveals *why* that number is what it is.
+
+## The road ahead
+
+The theory invites extensions in every direction. Add knights, whose L-shaped jumps cover at most two squares of any block, and the thresholds shift in predictable ways. Let the king actually *capture* an undefended attacker, and the count rises. Lift the board into three, four, or $d$ dimensions, and the king's breathing room grows super-polynomially — with each new dimension, a single line covers a vanishing fraction of the exploding block, and escape becomes ever easier. Turn the static covering picture into a genuine moving game, in which a marching army pursues a fleeing king turn by turn, and you arrive at the frontier of *infinite game theory*, where positions are assigned transfinite ordinal values and questions of who-wins can themselves be subtle and deep.
+
+But the foundation is laid, and it is exact. On the endless board, catching a king is a matter of arithmetic: **nine squares, three to a line, three lines to win.** Anything less, and the king runs free — forever, and as far as he pleases.

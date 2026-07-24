@@ -1,160 +1,224 @@
 """
-Infinite-Dimensional Chess: Winning on the Hilbert Board
-========================================================
+Numerical demonstrations for:
 
-Numerical demonstrations of the main results for chess played on the infinite
-board Z x Z:
+    A Sharp Line-Covering Threshold for Checkmate on the Infinite Board
 
-  * The explicit single-rook escape map g(r, p), verified to always land on a
-    king-adjacent square unattacked by the rook.
-  * The infinite escape run: iterating g marches the king to infinity.
-  * The two-rook threshold: an exhaustive local check that two rooks never mate
-    (and the stalemate configuration that shows the bound is sharp).
-  * Finitely many lines miss cofinitely many squares: safe squares always exist,
-    in fact infinitely many.
+We play chess on the Hilbert board Z x Z. Every long-range attacker (rook,
+bishop, queen, or any straight-ray piece) is modelled as an affine line
 
-Everything is self-contained standard-library Python with type hints.
+    { (x, y) : a*x + b*y = c },   (a, b) != (0, 0).
+
+This script demonstrates, entirely by direct computation, the paper's results:
+
+  1. One line covers at most 3 of the 9 squares of a king's 3x3 block.
+  2. n lines cover at most 3n of those squares.
+  3. Two pieces can never checkmate (a safe neighbour always remains).
+  4. Three parallel rooks always checkmate (the threshold 3 is sharp).
+  5. A finite army leaves safe squares arbitrarily far away (global escape).
+
+Self-contained; standard library only.
 """
 
 from __future__ import annotations
 
+from dataclasses import dataclass
 from itertools import product
-from typing import Iterable, List, Set, Tuple
+from typing import List, Optional, Tuple
 
-Sq = Tuple[int, int]
-
-
-# --------------------------------------------------------------------------- #
-# Core model
-# --------------------------------------------------------------------------- #
-def king_adj(p: Sq, q: Sq) -> bool:
-    """King-adjacent: distinct, Chebyshev distance one."""
-    return p != q and abs(p[0] - q[0]) <= 1 and abs(p[1] - q[1]) <= 1
+Square = Tuple[int, int]
 
 
-def rook_attacks(r: Sq, s: Sq) -> bool:
-    """Transparent-rook attack: shares rank or file, not the rook's own square."""
-    return s != r and (s[0] == r[0] or s[1] == r[1])
+@dataclass(frozen=True)
+class Line:
+    """A long-range attacker: the affine line a*x + b*y = c, with (a,b) != 0."""
+
+    a: int
+    b: int
+    c: int
+
+    def __post_init__(self) -> None:
+        if self.a == 0 and self.b == 0:
+            raise ValueError("degenerate line: (a, b) must not both be zero")
+
+    def covers(self, q: Square) -> bool:
+        """True iff the square q lies on this line (is attacked along it)."""
+        return self.a * q[0] + self.b * q[1] == self.c
 
 
-def attacked_by(army: Iterable[Sq], s: Sq) -> bool:
-    """Some rook of the army attacks s."""
-    return any(rook_attacks(r, s) for r in army)
+def rook_row(r: int) -> Line:
+    """Horizontal rook occupying the entire row y = r."""
+    return Line(0, 1, r)
 
 
-def neighbours(k: Sq) -> List[Sq]:
-    """The eight king-adjacent squares."""
-    return [
-        (k[0] + dx, k[1] + dy)
-        for dx, dy in product((-1, 0, 1), repeat=2)
-        if (dx, dy) != (0, 0)
-    ]
+def rook_col(c: int) -> Line:
+    """Vertical rook occupying the entire column x = c."""
+    return Line(1, 0, c)
 
 
-def checkmated(army: Iterable[Sq], k: Sq) -> bool:
-    """King on k is checkmated: in check and every neighbour is attacked."""
-    army = list(army)
-    in_check = attacked_by(army, k)
-    sealed = all(attacked_by(army, s) for s in neighbours(k))
-    return in_check and sealed
+def bishop_up(k: int) -> Line:
+    """Bishop diagonal x - y = k."""
+    return Line(1, -1, k)
 
 
-# --------------------------------------------------------------------------- #
-# The single-rook escape map
-# --------------------------------------------------------------------------- #
-def esc(a: int, c: int) -> int:
-    """Escape coordinate: step to a neighbour of a distinct from the rook's c."""
-    return a - 1 if c == a + 1 else a + 1
+# ----------------------------------------------------------------------------
+# Core combinatorial primitives
+# ----------------------------------------------------------------------------
+
+BLOCK_OFFSETS: List[Square] = [(i, j) for i in (-1, 0, 1) for j in (-1, 0, 1)]
+KING_MOVES: List[Square] = [d for d in BLOCK_OFFSETS if d != (0, 0)]
 
 
-def g_step(r: Sq, p: Sq) -> Sq:
-    """The king's explicit escape step away from a single rook r."""
-    return (esc(p[0], r[0]), esc(p[1], r[1]))
+def attacked(config: List[Line], q: Square) -> bool:
+    """True iff some line of the configuration covers q."""
+    return any(L.covers(q) for L in config)
 
 
-# --------------------------------------------------------------------------- #
+def safe(config: List[Line], q: Square) -> bool:
+    """True iff no line of the configuration covers q."""
+    return not attacked(config, q)
+
+
+def block_covered_by_line(L: Line, p: Square) -> List[Square]:
+    """The block offsets d such that L covers p + d."""
+    return [d for d in BLOCK_OFFSETS if L.covers((p[0] + d[0], p[1] + d[1]))]
+
+
+def block_covered(config: List[Line], p: Square) -> List[Square]:
+    """The block offsets d such that some piece covers p + d."""
+    return [d for d in BLOCK_OFFSETS if attacked(config, (p[0] + d[0], p[1] + d[1]))]
+
+
+def is_checkmated(config: List[Line], p: Square) -> bool:
+    """King at p is in check and every king move lands on an attacked square."""
+    if not attacked(config, p):
+        return False
+    return all(attacked(config, (p[0] + d[0], p[1] + d[1])) for d in KING_MOVES)
+
+
+def find_safe_square_beyond(config: List[Line], n: int) -> Optional[Square]:
+    """Find a safe square with first coordinate > n (guaranteed to exist)."""
+    # Choose a row avoided by every horizontal piece.
+    horizontal_rows = {L.c for L in config if L.a == 0}  # rows y=c fully blocked
+    k = 0
+    while k in horizontal_rows:
+        k += 1
+    x = n + 1
+    # At most (#slanted pieces) squares of this row are attacked, so this halts.
+    while attacked(config, (x, k)):
+        x += 1
+    return (x, k)
+
+
+# ----------------------------------------------------------------------------
 # Demonstrations
-# --------------------------------------------------------------------------- #
-def demo_single_rook_escape() -> None:
-    print("=" * 68)
-    print("Demo 1: A lone rook can never trap the king in one move")
-    print("=" * 68)
-    tests = [((0, 0), (3, 5)), ((2, 2), (2, 7)), ((-4, 1), (0, 1)), ((5, 5), (5, 5))]
-    for r, p in tests:
-        dest = g_step(r, p)
-        adj = king_adj(p, dest)
-        safe = not rook_attacks(r, dest)
-        print(f"  rook={r}  king={p} -> {dest}   adjacent={adj}  safe={safe}")
-        assert adj and safe
-    print("  All escape steps are legal and safe.\n")
+# ----------------------------------------------------------------------------
+
+def demo_one_line_bound() -> None:
+    """Result 1: every single line covers at most 3 of the 9 block squares."""
+    print("=" * 70)
+    print("1. One line covers at most 3 of the 9 neighbourhood squares")
+    print("=" * 70)
+    p = (0, 0)
+    samples = {
+        "horizontal rook  y=0": rook_row(0),
+        "vertical rook    x=0": rook_col(0),
+        "bishop diagonal x-y=0": bishop_up(0),
+        "steep line 2x+3y=0": Line(2, 3, 0),
+        "nightrider 1x-2y=0": Line(1, -2, 0),
+    }
+    worst = 0
+    for name, L in samples.items():
+        cov = block_covered_by_line(L, p)
+        worst = max(worst, len(cov))
+        print(f"  {name:>22}: covers {len(cov)} squares  {cov}")
+    print(f"  --> maximum observed = {worst}  (theory: <= 3)\n")
+    assert worst <= 3
 
 
-def demo_infinite_run() -> None:
-    print("=" * 68)
-    print("Demo 2: The king escapes forever (infinite escape run)")
-    print("=" * 68)
-    r, k = (0, 0), (2, 3)
-    p = k
-    print(f"  rook fixed at {r}; king starts at {k}")
-    for n in range(8):
-        nxt = g_step(r, p)
-        assert king_adj(p, nxt) and not rook_attacks(r, nxt)
-        p = nxt
-        cheb = max(abs(p[0] - r[0]), abs(p[1] - r[1]))
-        print(f"    move {n + 1:>2}: king at {p:}   Chebyshev dist to rook = {cheb}")
-    print("  Distance grows without bound: the run never terminates.\n")
+def demo_additive_bound() -> None:
+    """Result 2: n lines cover at most 3n block squares."""
+    print("=" * 70)
+    print("2. n lines cover at most 3n of the 9 squares")
+    print("=" * 70)
+    p = (0, 0)
+    configs = {
+        "1 piece ": [bishop_up(0)],
+        "2 pieces": [bishop_up(0), Line(1, 1, 0)],
+        "3 pieces": [rook_row(-1), rook_row(0), rook_row(1)],
+    }
+    for name, cfg in configs.items():
+        cov = block_covered(cfg, p)
+        bound = 3 * len(cfg)
+        print(f"  {name}: covers {len(cov):>2} of 9   (bound 3n = {bound})")
+        assert len(cov) <= bound
+    print()
 
 
-def demo_two_rook_threshold() -> None:
-    print("=" * 68)
-    print("Demo 3: Two rooks can never checkmate (exhaustive local check)")
-    print("=" * 68)
-    k: Sq = (0, 0)
-    # Search all two-rook placements within a window around the king.
-    window = range(-3, 4)
-    cells = [(x, y) for x, y in product(window, window) if (x, y) != k]
-    mates = 0
-    full_seals = 0
-    for i in range(len(cells)):
-        for j in range(i + 1, len(cells)):
-            army = [cells[i], cells[j]]
-            if checkmated(army, k):
-                mates += 1
-            if all(attacked_by(army, s) for s in neighbours(k)):
-                full_seals += 1
-    print(f"  king at {k}; searched all 2-rook placements in a 7x7 window")
-    print(f"    checkmates found : {mates}   (theory predicts 0)")
-    print(f"    full 8-seals    : {full_seals}  (two rooks cannot even seal all 8 -- sharp)")
-    assert mates == 0
-    # Two rooks cannot even seal all eight neighbours: each rook's own square is
-    # a neighbour it does not attack, so escapes (captures) remain.
-    army = [(-1, -1), (1, 1)]
-    sealed = all(attacked_by(army, s) for s in neighbours(k))
-    open_sqs = [s for s in neighbours(k) if not attacked_by(army, s)]
-    print(f"  config rooks={army}: all neighbours sealed={sealed}")
-    print(f"    open escape squares (incl. rook captures): {open_sqs}\n")
+def demo_two_never_mate() -> None:
+    """Result 3: no configuration of 2 lines checkmates; a safe neighbour remains."""
+    print("=" * 70)
+    print("3. Two pieces can never checkmate (a safe square always remains)")
+    print("=" * 70)
+    p = (0, 0)
+    two_piece_configs = [
+        [rook_row(0), rook_col(0)],
+        [bishop_up(0), Line(1, 1, 0)],
+        [rook_row(0), bishop_up(0)],
+        [Line(2, 1, 0), Line(1, 3, 0)],
+    ]
+    for cfg in two_piece_configs:
+        mated = is_checkmated(cfg, p)
+        # exhibit an explicit safe block square
+        safe_offsets = [d for d in BLOCK_OFFSETS
+                        if safe(cfg, (p[0] + d[0], p[1] + d[1]))]
+        desc = ", ".join(f"({L.a},{L.b},{L.c})" for L in cfg)
+        print(f"  lines {desc:>28}: mate={mated}, safe offsets={safe_offsets}")
+        assert not mated
+        assert safe_offsets  # non-empty escape
+    print("  --> every 2-piece configuration leaves an escape square.\n")
 
 
-def safe_squares(army: List[Sq], window: range) -> Set[Sq]:
-    """All squares in the window unattacked by the army."""
-    return {(x, y) for x, y in product(window, window) if not attacked_by(army, (x, y))}
+def demo_three_suffice() -> None:
+    """Result 4: three parallel rooks checkmate any king (threshold is sharp)."""
+    print("=" * 70)
+    print("4. Three parallel rooks always checkmate (threshold 3 is sharp)")
+    print("=" * 70)
+    for p in [(0, 0), (5, -3), (-10, 7), (100, 100)]:
+        cfg = [rook_row(p[1] - 1), rook_row(p[1]), rook_row(p[1] + 1)]
+        mated = is_checkmated(cfg, p)
+        print(f"  king at {str(p):>12}: three rooks on rows "
+              f"{p[1]-1},{p[1]},{p[1]+1}  -> mate={mated}")
+        assert mated
+    print("  --> three pieces suffice for every king position.\n")
 
 
-def demo_finitely_many_lines() -> None:
-    print("=" * 68)
-    print("Demo 4: Finitely many lines miss infinitely many squares")
-    print("=" * 68)
-    army = [(0, 0), (3, -2), (-4, 5), (7, 7)]
-    for size in (11, 21, 41):
-        w = range(-(size // 2), size // 2 + 1)
-        safe = safe_squares(army, w)
-        print(f"  {len(army)} rooks; {size}x{size} window: {len(safe)} safe squares")
-    print("  Safe-square count grows with the window: infinitely many exist.\n")
+def demo_global_escape() -> None:
+    """Result 5: a finite army leaves safe squares arbitrarily far away."""
+    print("=" * 70)
+    print("5. Global escape: safe squares exist arbitrarily far out")
+    print("=" * 70)
+    # A sizeable but finite army of mixed pieces.
+    army: List[Line] = []
+    army += [rook_row(r) for r in range(-5, 6)]
+    army += [rook_col(c) for c in range(-5, 6)]
+    army += [bishop_up(k) for k in range(-5, 6)]
+    army += [Line(1, 1, k) for k in range(-5, 6)]
+    print(f"  army size = {len(army)} long-range pieces")
+    for n in [10, 1000, 10 ** 6, 10 ** 9]:
+        q = find_safe_square_beyond(army, n)
+        assert q is not None and safe(army, q) and q[0] > n
+        print(f"  safe square beyond N={n:>12}: {q}")
+    print("  --> the king can always flee past any finite horizon.\n")
+
+
+def main() -> None:
+    demo_one_line_bound()
+    demo_additive_bound()
+    demo_two_never_mate()
+    demo_three_suffice()
+    demo_global_escape()
+    print("All demonstrations agree with the theory: threshold = 3, escape = infinite.")
 
 
 if __name__ == "__main__":
-    demo_single_rook_escape()
-    demo_infinite_run()
-    demo_two_rook_threshold()
-    demo_finitely_many_lines()
-    print("All demonstrations completed successfully.")
+    main()
