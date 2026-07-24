@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "ea7d1cf2",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions\n\n## 1. Arithmetic persistence of weighted homology\n\n**Conjecture.** Let a smooth projective surface and a normal-crossings cell model be\ndefined over a number field. Outside a fini",
-      "quality_score": 0.71,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-20T03:35:18",
-      "title": "Speculative: Topological Quantum Error Correction from Mathematical Structures"
-    },
-    {
       "cycle_id": "e3542946",
       "domain": "MachineLearning",
       "key_insight": "# Future Directions\n\n## 1. Quantitative Complexity–Dissipation Tradeoff\n\n**Conjecture.** For a family of finite decision processes with bounded error, any\nimplementation whose expected running time is",
@@ -499,19 +489,19 @@
       "theorem_count": 6,
       "timestamp": "2026-07-24T01:27:37",
       "title": "Deepening: Erdos-Renyi on Acid: Random Graphs That Hallucinate"
+    },
+    {
+      "cycle_id": "a4e412f3",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions — Happy-End / Erdős–Szekeres\n\n`Geometry/ErdosSzekeresCupCap.lean` gives a complete, self-contained proof of the\nErdős–Szekeres **cup–cap theorem** with the sharp bound `C(k+l-4,k-2",
+      "quality_score": 0.75,
+      "sorry_count": 1,
+      "theorem_count": 43,
+      "timestamp": "2026-07-24T23:24:45",
+      "title": "Happy End Problem"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "091f8315",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\n## 1. Quantified prediction from the angle-doubling coordinate\n\nFor every fixed bit-extraction rule with finitely many interval boundaries, determine\nwhether a polynomial-time pre",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 46,
-      "timestamp": "2026-07-18T19:30:11",
-      "title": "Cryptography from Chaos: Encrypting with the Logistic Map"
-    },
     {
       "cycle_id": "d13e4521",
       "domain": "MachineLearning",
@@ -2501,27 +2491,19 @@
       "theorem_count": 13,
       "timestamp": "2026-07-24T23:24:26",
       "title": "Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
+    },
+    {
+      "cycle_id": "a4e412f3",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions — Happy-End / Erdős–Szekeres\n\n`Geometry/ErdosSzekeresCupCap.lean` gives a complete, self-contained proof of the\nErdős–Szekeres **cup–cap theorem** with the sharp bound `C(k+l-4,k-2",
+      "quality_score": 0.75,
+      "sorry_count": 1,
+      "theorem_count": 43,
+      "timestamp": "2026-07-24T23:24:45",
+      "title": "Happy End Problem"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "4d85ad7f",
-      "domain": "MachineLearning",
-      "name": "localFrame_fromLocalFrame",
-      "quality": 0.74
-    },
-    {
-      "cycle_id": "4d85ad7f",
-      "domain": "MachineLearning",
-      "name": "fromLocalFrame_localFrame",
-      "quality": 0.74
-    },
-    {
-      "cycle_id": "4d85ad7f",
-      "domain": "MachineLearning",
-      "name": "metricQ_eq_minkowski_after_shear",
-      "quality": 0.74
-    },
     {
       "cycle_id": "4bc3344b",
       "domain": "MachineLearning",
@@ -2803,17 +2785,28 @@
       "domain": "Logic",
       "name": "isHermitian_eigenvalue_real",
       "quality": 0.7
+    },
+    {
+      "cycle_id": "a4e412f3",
+      "domain": "Geometry",
+      "name": "in",
+      "quality": 0.75
+    },
+    {
+      "cycle_id": "a4e412f3",
+      "domain": "Geometry",
+      "name": "for",
+      "quality": 0.75
+    },
+    {
+      "cycle_id": "a4e412f3",
+      "domain": "Geometry",
+      "name": "cupTurns_cons2",
+      "quality": 0.75
     }
   ],
-  "last_updated": "2026-07-24T23:24:26",
+  "last_updated": "2026-07-24T23:24:45",
   "open_questions": [
-    {
-      "context": "+    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; +    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; +    ∀ i < k, c i = ",
-      "cycle_id": "535698fb",
-      "domain": "Applications",
-      "sorry_count": 3,
-      "timestamp": "2026-07-17T12:07:38"
-    },
     {
       "context": "+    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; +    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; +    ∀ i < k, c i = ",
       "cycle_id": "d1663b23",
@@ -3016,6 +3009,13 @@
       "domain": "Computation",
       "sorry_count": 1,
       "timestamp": "2026-07-24T21:32:33"
+    },
+    {
+      "context": "This file gives a **complete, self-contained proof** of that theorem (0 `sorry`s).",
+      "cycle_id": "a4e412f3",
+      "domain": "Geometry",
+      "sorry_count": 1,
+      "timestamp": "2026-07-24T23:24:45"
     }
   ],
   "research_threads": {
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "5961ca02",
-        "quality": 0.69,
-        "theorems": 20,
-        "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
-      },
-      {
         "cycle_id": "3603d4d1",
         "quality": 0.5663199999999999,
         "theorems": 0,
@@ -3451,6 +3445,12 @@
         "quality": 0.57,
         "theorems": 30,
         "title": "Infinite-Dimensional Chess: Winning on the Hilbert Board"
+      },
+      {
+        "cycle_id": "a4e412f3",
+        "quality": 0.75,
+        "theorems": 43,
+        "title": "Happy End Problem"
       }
     ],
     "Logic": [
