@@ -25174,7 +25174,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "0e007163",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -25201,7 +25201,7 @@
       "source": "",
       "source_exp_id": "279ae676",
       "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/279ae676",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "th_8e01233a",
       "timestamp": "2026-07-21T18:47:57.053400+00:00",
       "title": "Future directions from cycle 279ae676"
