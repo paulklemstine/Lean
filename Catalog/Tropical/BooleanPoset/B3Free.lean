@@ -1,5 +1,5 @@
 import Mathlib
-import Algebra.HypercubeRegularity
+import Catalog.Algebra.HypercubeRegularity
 
 /-!
 # Rank windows avoiding weak Boolean cubes

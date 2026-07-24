@@ -40,8 +40,8 @@ conjecture for arbitrary graphs in the regime, nor the equality/extremality clau
 recorded in `FUTURE_DIRECTIONS.md`.
 -- !-- Lab Notes -- !--
 -/
-import Applications.RainbowTriangle.Defs
-import Applications.RainbowTriangle.Bound
+import Catalog.Applications.RainbowTriangle.Defs
+import Catalog.Applications.RainbowTriangle.Bound
 
 open Finset SimpleGraph
 
@@ -50,8 +50,8 @@ namespace EdgeColoring
 
 variable {V : Type*} {C : Type*} [Fintype V] [DecidableEq V] [DecidableEq C]
 
-open Classical in
 /-- The **rainbow-triangle count** `rt(G)`: the number of `3`-cliques that are rainbow. -/
+open Classical in
 noncomputable def rtCount (E : EdgeColoring V C) [DecidableRel E.G.Adj] : ℕ :=
   ((E.G.cliqueFinset 3).filter (E.IsRainbowTriangleSet)).card
 

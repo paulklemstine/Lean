@@ -51,7 +51,7 @@ uniformly.
 -- !-- end Lab Notes -- !--
 -/
 import Mathlib
-import Tropical.CayleyEmbedding.PetersenTropicalCayley
+import Catalog.Tropical.CayleyEmbedding.PetersenTropicalCayley
 
 open SimpleGraph
 

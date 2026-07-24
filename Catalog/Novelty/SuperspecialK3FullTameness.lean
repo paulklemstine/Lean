@@ -34,8 +34,8 @@ Synthesis (PI): global tameness of `#Aut(X)` for `p > 11` is now a theorem in th
 classification's standing hypothesis and setting up the future-direction conjecture that, additionally,
 `[G : G_s] = 1`.
 -/
-import Novelty.SuperspecialK3Symplectic
-import Novelty.MukaiTameness
+import Catalog.Novelty.SuperspecialK3Symplectic
+import Catalog.Novelty.MukaiTameness
 
 namespace SuperspecialK3Symplectic
 

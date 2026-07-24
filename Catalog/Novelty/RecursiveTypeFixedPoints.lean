@@ -1,5 +1,5 @@
 import Mathlib
-import Logic.StrangeLoops.Core
+import Catalog.Logic.StrangeLoops.Core
 
 /-!
 # Recursive Type Fixed Points and Diagonal Boundaries

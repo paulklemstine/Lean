@@ -1,4 +1,4 @@
-import Novelty.PermutationAgreement
+import Catalog.Novelty.PermutationAgreement
 
 /-!
 # A large extremal `t`-intersecting family of permutations

@@ -1,4 +1,4 @@
-import Combinatorics.QuantumWalkPeriodicityMixing
+import Catalog.Combinatorics.QuantumWalkPeriodicityMixing
 
 /-!
 # Cesàro mixing for periodic quantum walks

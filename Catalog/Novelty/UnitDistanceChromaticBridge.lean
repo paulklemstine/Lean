@@ -1,6 +1,6 @@
 import Mathlib
-import Novelty.IndependenceRatioChromatic
-import Novelty.UnitDistanceGraph
+import Catalog.Novelty.IndependenceRatioChromatic
+import Catalog.Novelty.UnitDistanceGraph
 
 /-!
 # From planar unit-distance graphs to colouring lower bounds

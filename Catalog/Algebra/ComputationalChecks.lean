@@ -3,7 +3,7 @@ Small, kernel-checked instances supporting the exact first-moment bridge.  These
 are supplementary; the general theorem is proved structurally in
 `FixedPointRootBridge.lean` rather than by finite computation.
 -/
-import Algebra.FixedPointRootBridge
+import StochasticGalois.FixedPointRootBridge
 
 open Finset Equiv
 open scoped BigOperators

@@ -36,7 +36,7 @@ which holds because a positive edge count forces a nonempty vertex type.
 -/
 
 import Mathlib
-import Applications.SemiInducedStars.Basic
+import Catalog.Applications.SemiInducedStars.Basic
 
 namespace SemiInducedStars
 

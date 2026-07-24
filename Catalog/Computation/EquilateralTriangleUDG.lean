@@ -16,7 +16,7 @@ Hence their unit-distance graph is the complete graph `K₃`.  It is `4`-coloura
 graph genuinely lies strictly above the `1/4` threshold.
 -/
 import Mathlib
-import Computation.UnitDistanceIndependenceRatio
+import Catalog.Computation.UnitDistanceIndependenceRatio
 
 open Finset SimpleGraph EuclideanSpace
 open Catalog.Computation.UnitDistanceIndependenceRatio

@@ -45,8 +45,8 @@ for a cosmic census: a faithful arithmetic code, not merely finitely many local 
 -- !-- End Lab Notes -- !--
 -/
 
-import Novelty.AnalyticCensus
-import NumberTheory.Langlands.HeckeFactorization
+import Catalog.Novelty.AnalyticCensus
+import Catalog.NumberTheory.Langlands.HeckeFactorization
 
 open LSeries Complex
 

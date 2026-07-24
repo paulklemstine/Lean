@@ -1,7 +1,7 @@
 import Mathlib
-import Novelty.IndependenceRatioChromatic
-import Novelty.UnitDistanceGraph
-import Novelty.UnitDistanceChromaticBridge
+import Catalog.Novelty.IndependenceRatioChromatic
+import Catalog.Novelty.UnitDistanceGraph
+import Catalog.Novelty.UnitDistanceChromaticBridge
 
 /-!
 # The critical two-vertex augmentation of a `27`-vertex unit-distance graph

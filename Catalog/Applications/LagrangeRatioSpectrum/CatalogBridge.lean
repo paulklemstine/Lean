@@ -1,5 +1,5 @@
-import Applications.LagrangeRatioSpectrum.DilationBound
-import NumberTheory.Irrationality
+import Catalog.Applications.LagrangeRatioSpectrum.DilationBound
+import Catalog.NumberTheory.Irrationality
 
 /-!
 # Bridge: badly approximable numbers are irrational

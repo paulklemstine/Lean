@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "a7676cc9",
-      "domain": "Applications",
-      "key_insight": "# Future directions\n\n## What is formalized\n\n`Core.lean` gives a self-contained ordinal analysis of explicit countably branching winning game trees. It constructs:\n\n- `omegaGame`, with value exactly `ω",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-18T10:22:08",
-      "title": "Infinite Chess: Checkmate in Omega Moves"
-    },
-    {
       "cycle_id": "21c08839",
       "domain": "Cryptography",
       "key_insight": "# Future Directions: Self-Improving Cryptographic Certificates\n\n## 1. Confluence of audited certificate refinement\n\n**Conjecture.** For every certificate tree, augmenting redundant-restatement elimina",
@@ -2501,6 +2491,16 @@
       "theorem_count": 13,
       "timestamp": "2026-07-24T03:52:25",
       "title": "Future directions from cycle 279ae676"
+    },
+    {
+      "cycle_id": "b648d8e5",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nThis cycle deepened the \"repaired anti-Fibonacci\" line of work by building an\nexplicit **cross-domain connector** in\n`Bridges/RepairedAntiFibonacciSquares.lean`, on top of the rig",
+      "quality_score": 0.6,
+      "sorry_count": 3,
+      "theorem_count": 1636,
+      "timestamp": "2026-07-24T04:50:24",
+      "title": "Deepening: 1. **Repair the definition before studying asymptotics.** The literal rule exclu"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-24T03:52:25",
+  "last_updated": "2026-07-24T04:50:24",
   "open_questions": [
-    {
-      "context": "",
-      "cycle_id": "57f0b740",
-      "domain": "Logic",
-      "sorry_count": 1,
-      "timestamp": "2026-07-17T05:57:49"
-    },
     {
       "context": "-    sorry+  have hchecked := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩); -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun ",
       "cycle_id": "463376b0",
@@ -3016,6 +3009,13 @@
       "domain": "Shared",
       "sorry_count": 2,
       "timestamp": "2026-07-22T16:54:21"
+    },
+    {
+      "context": "(sieve mechanism) form a coherent, sorry-free slice of the Maynard–Tao framework.; +    `fib_carmichael_large` — which relied on an unproven (`sorry`-backed) tail of; -    sorry+  -- Extract from the ",
+      "cycle_id": "b648d8e5",
+      "domain": "Applications",
+      "sorry_count": 3,
+      "timestamp": "2026-07-24T04:50:24"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "3dea732a",
-        "quality": 0.78,
-        "theorems": 0,
-        "title": "Time Travel Consistency: Novikov's Principle as a Fixed-Point Theorem"
-      },
-      {
         "cycle_id": "93551ae8",
         "quality": 0.65,
         "theorems": 10,
@@ -3141,6 +3135,12 @@
         "quality": 0.77,
         "theorems": 7,
         "title": "**Conjecture.** Let a family of decision procedures on inputs of length `n` irre"
+      },
+      {
+        "cycle_id": "b648d8e5",
+        "quality": 0.6,
+        "theorems": 1636,
+        "title": "Deepening: 1. **Repair the definition before studying asymptotics.** The literal"
       }
     ],
     "Bridges": [

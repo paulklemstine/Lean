@@ -1,4 +1,4 @@
-import Computation.ReversibleSortingBennett
+import Catalog.Computation.ReversibleSortingBennett
 
 /-!
 # Reversible dynamics of one-dimensional cellular automata

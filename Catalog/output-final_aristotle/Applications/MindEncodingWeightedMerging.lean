@@ -1,5 +1,5 @@
 import Mathlib
-import Applications.MindEncodingRefined
+import Catalog.Applications.MindEncodingRefined
 
 /-!
 # Digital Immortality III: Graded Synapses and the Combinatorics of Merging Minds

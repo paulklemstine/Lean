@@ -1,5 +1,5 @@
 import Mathlib
-import Novelty.PrimeZetaAbscissa
+import Catalog.Novelty.PrimeZetaAbscissa
 
 /-!
 # The prime-ideal zeta function of an imaginary quadratic field (the Gaussian case)

@@ -1,4 +1,4 @@
-import Applications.CellularAutomataVariety.Basic
+import Catalog.Applications.CellularAutomataVariety.Basic
 
 /-!
 # Bridge: Rule 90, the Fibonacci companion matrix, and the Pisano period

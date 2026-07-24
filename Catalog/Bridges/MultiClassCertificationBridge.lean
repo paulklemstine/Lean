@@ -1,5 +1,5 @@
 import Mathlib
-import MachineLearning.ResNetLipschitz
+import MachineLearning.SelfImproving.ResNetLipschitz
 
 /-! # Multi-Class Certified Robustness for Neural Networks
 

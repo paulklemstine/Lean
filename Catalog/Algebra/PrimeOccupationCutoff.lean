@@ -1,4 +1,4 @@
-import Algebra.HolographicPrimes
+import Catalog.Algebra.HolographicPrimes
 
 /-!
 # Quantitative occupation-cutoff errors for finite prime partitions

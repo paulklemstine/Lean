@@ -1,4 +1,4 @@
-import Probability.FermatLittleFive
+import Catalog.Probability.FermatLittleFive
 
 /-!
 # Extensions of the divisibility `5 ∣ a ^ 5 - a`

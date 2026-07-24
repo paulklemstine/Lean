@@ -53,7 +53,7 @@ Synthesis (PI):
   while 2 strict observers suffice and are needed for the Euclidean line.
 -/
 import Mathlib
-import Novelty.PhantomTopology
+import Catalog.Novelty.PhantomTopology
 
 open Set Phantom
 

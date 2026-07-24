@@ -1,4 +1,4 @@
-import Logic.RootedPathIrregularity.Contrarian
+import Catalog.Logic.RootedPathIrregularity.Contrarian
 
 /-!
 # Rooted-path profiles and affine separation
