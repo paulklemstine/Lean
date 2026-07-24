@@ -70,6 +70,30 @@ def extract_visualization(data, viz_name, pkg_slug, viz_index, viz_dir):
 
     return None
 
+def load_all_git_creation_dates(catalog_root, target_dir="docs"):
+    """Run a single git log command to extract creation ISO dates for all files."""
+    dates = {}
+    try:
+        import subprocess
+        res = subprocess.run(
+            ["git", "log", "--diff-filter=A", "--name-only", "--format=COMMIT_DATE:%aI", "--", target_dir],
+            capture_output=True, text=True, cwd=catalog_root
+        )
+        if res.returncode == 0:
+            current_date = None
+            for line in res.stdout.splitlines():
+                line = line.strip()
+                if not line:
+                    continue
+                if line.startswith("COMMIT_DATE:"):
+                    current_date = line[len("COMMIT_DATE:"):].strip()
+                elif current_date:
+                    norm = os.path.normpath(line)
+                    dates[norm] = current_date
+    except Exception:
+        pass
+    return dates
+
 def get_creation_date(filename, catalog_root):
     """Get the date a file was first committed to git, falling back to mtime."""
     try:
@@ -176,6 +200,9 @@ def update_index():
     # Load quality scores from autoresearch data
     quality_scores = load_quality_scores()
 
+    # Load all git creation dates in batch for 100% stability and speed
+    git_creation_dates = load_all_git_creation_dates(catalog_root, "docs")
+
     for f in json_files:
         try:
             with open(f, 'r', encoding='utf-8-sig') as file:
@@ -189,9 +216,9 @@ def update_index():
             print(f"Skipping {f}: not a package object (got {type(data).__name__})")
             continue
 
-        # Use date from JSON package (populated during AETHER integration)
-        # Fall back to git creation date, then file mtime
-        date_str = data.get("date") or get_creation_date(f, catalog_root)
+        # Determine stable git creation date (or JSON/mtime fallback)
+        rel_f = os.path.normpath(os.path.relpath(os.path.abspath(f), catalog_root))
+        date_str = git_creation_dates.get(rel_f) or data.get("date") or get_creation_date(f, catalog_root)
 
         pkg_slug = f.replace('.json', '')
 
@@ -320,12 +347,13 @@ def update_index():
             "domain": data.get("domain", "General"),
         }
 
-    # Assign package numbers based on date-ascending order (oldest = 1, newest = N)
-    package_index.sort(key=lambda x: x["date"])
+    # Assign package numbers based on deterministic date-ascending order (oldest = 1, newest = N)
+    # Primary key: ISO creation date, Secondary key: filename (ensures 100% stable sorting)
+    package_index.sort(key=lambda x: (x["date"], x["filename"]))
     for i, pkg in enumerate(package_index):
         pkg["pkg_num"] = i + 1
-    # Then sort descending for display (newest first)
-    package_index.sort(key=lambda x: x["date"], reverse=True)
+    # Then sort descending for display (newest first), with filename secondary key
+    package_index.sort(key=lambda x: (x["date"], x["filename"]), reverse=True)
 
     js_content = f"""// AUTO-GENERATED FILE. DO NOT EDIT.
 // Lightweight index for sidebar, graph, and lineage links.
