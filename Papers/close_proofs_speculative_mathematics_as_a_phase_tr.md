@@ -1,50 +1,78 @@
-# Computational Evidence
+# Computational Evidence: Tropical Phase-Transition Order Parameter
 
-## Bridge results (factorial ⊂ mixed-radix)
+We model a phase transition in mathematical coherence by the **tropical
+(max-plus) binomial**
 
-The three closed placeholders assert that the factorial number system is the
-mixed-radix system with bases `b i = i + 1`. Small-case checks of the running
-product `∏_{i<k}(i+1)` against `k!`:
+```
+order κ c x = max(κ·(x − c), 0)
+```
 
-| k | ∏_{i<k}(i+1) | k! |
-|---|--------------|----|
-| 0 | 1            | 1  |
-| 1 | 1            | 1  |
-| 2 | 2            | 2  |
-| 3 | 6            | 6  |
-| 4 | 24           | 24 |
-| 5 | 120          | 120|
+with coupling `κ ≥ 0`, critical connectivity `c`, and control parameter `x`
+(number/density of cross-field connections). This is the evaluation of a tropical
+polynomial with two monomials: `κ·(x−c)` and the tropical zero `0`.
 
-These agree, confirming the place-value identity `value_eq`. Validity: a digit is
-factoradic-valid at position `i` iff `c i ≤ i`, i.e. `c i < i + 1`, matching
-mixed-radix validity for base `i + 1` (`valid_iff`). Uniqueness then transports
-verbatim (`factorial_value_unique_via_mixed`).
+## 1. Small-case calculations (κ = 1, c = 3)
 
-## Sharp-threshold capacity
+| x   | κ·(x−c) | order(x) = max(·, 0) |
+|-----|---------|----------------------|
+| 0   | −3      | 0                    |
+| 1   | −2      | 0                    |
+| 2   | −1      | 0                    |
+| 3   | 0       | 0   (critical point) |
+| 4   | 1       | 1                    |
+| 5   | 2       | 2                    |
+| 6   | 3       | 3                    |
 
-For bases `b i = 2` (binary) the capacity is `radixProd b k = 2^k`. Critical
-length to reach a target `T` (least `k` with `2^k ≥ T`):
+Observations matching the proved theorems:
 
-| T   | critical length τ | 2^(τ-1) | 2^τ |
-|-----|-------------------|---------|-----|
-| 1   | 0                 | —       | 1   |
-| 2   | 1                 | 1       | 2   |
-| 5   | 3                 | 4       | 8   |
-| 100 | 7                 | 64      | 128 |
-| 1000| 10                | 512     | 1024|
+* Below `c = 3` the parameter is identically `0` (`order_eq_zero_of_le`).
+* At `c = 3` it is exactly `0` (`order_at_critical`).
+* Above `c` it equals `κ·(x−c)` and is strictly increasing
+  (`order_eq_of_ge`, `order_strictMonoOn_above`).
 
-In every row the capacity is strictly below `T` for all lengths `< τ` and at least
-`T` for all lengths `≥ τ`: a single sharp jump, matching
-`capacity_sharp_threshold`.
+## 2. Convexity / kink (second-order transition)
 
-## Counterexample hunt
+Slopes of `order` (κ = 1, c = 3):
 
-- Monotonicity is necessary for `active_eq_Ici`: the non-monotone predicate
-  `P n := (n = 1)` has active set `{1}`, which is not an up-set, so no threshold
-  description holds. This is why monotonicity is retained as an explicit
-  hypothesis rather than dropped.
-- Degenerate transition: `P 0` true gives threshold `0` with an empty subcritical
-  phase; the theorems remain correct (they quantify over `k < 0`, vacuously).
+```
+left of c:  slope 0
+right of c: slope 1
+```
 
-No counterexample was found to any stated theorem; all are proved unconditionally
-under their hypotheses.
+The slope jumps from `0` to `κ` at `x = c`: the graph is continuous but has a
+**kink**, the hallmark of a continuous (second-order) transition. Being the max
+of two affine functions, `order` is convex on all of ℝ (`order_convexOn`). The
+kink locus `{x = c}` is exactly the tropical hypersurface of the binomial.
+
+## 3. Lipschitz sanity check (κ = 2, c = 0)
+
+`order(x) = max(2x, 0)`. Sample `|order(x) − order(y)|` vs `|κ||x − y|`:
+
+| x  | y  | \|order(x)−order(y)\| | \|κ\|·\|x−y\| |
+|----|----|-----------------------|---------------|
+| 3  | 1  | 4                     | 4             |
+| 1  | −1 | 2                     | 4             |
+| −1 | −3 | 0                     | 4             |
+
+Always `≤`, with equality when both points lie in the active region — consistent
+with `order_lipschitz`.
+
+## 4. Counterexample hunt
+
+* Dropping `κ ≥ 0` breaks `order_eq_zero_of_le`: with `κ = −1, c = 0, x = −1` we
+  get `order = max(1, 0) = 1 ≠ 0`. Hence the nonnegativity hypothesis on `κ` is
+  necessary, and it is retained.
+* Convexity (`order_convexOn`) and the Lipschitz bound (`order_lipschitz`) were
+  tested with negative `κ` too and hold there — indeed both are stated without
+  sign hypotheses on `κ`, matching the tests.
+
+## 5. Sequence note
+
+The integer samples of `order` with `κ = c = 1` starting at `x = 0` give
+`0, 0, 1, 2, 3, 4, …` — the ReLU/positive-part sequence, OEIS
+[A004526]-adjacent shifted ramps; nothing surprising, it is simply the discrete
+ramp function. No deeper sequence structure is claimed.
+
+All qualitative observations above are what the Lean theorems in
+`TropicalPhaseTransition.lean` prove rigorously (with axioms limited to
+`propext`, `Classical.choice`, `Quot.sound`).
