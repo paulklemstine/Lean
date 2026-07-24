@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "c49f6946",
-      "domain": "Probability",
-      "key_insight": "# Future directions\n\n## Scope and interpretation\n\nThe proposed “cake” language does not by itself define a mathematical category, an isomorphism relation, a moduli functor, or a probability distributi",
-      "quality_score": 0.62,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-18T09:54:25",
-      "title": "The Fundamental Theorem of Cakes: Algebraic Geometry of Baking"
-    },
-    {
       "cycle_id": "c3aba433",
       "domain": "Novelty",
       "key_insight": "# Future Directions: The 1729 Cubic Surface\n\n## 1. Complete the integral-point census at moderate height\n\n**Conjecture.** Up to permutation, the only nonzero integral solutions of\n\\(x^3+y^3+z^3=1729\\)",
@@ -2501,6 +2491,16 @@
       "theorem_count": 11,
       "timestamp": "2026-07-24T02:40:38",
       "title": "**Conjecture.** For a finite family of bad events with dependency degree at most"
+    },
+    {
+      "cycle_id": "5a4bc860",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Novikov-Fixed-Point\n\n`Catalog/Novelty/NovikovFixedPoint.lean` formalises the **Novikov Self-Consistency\nPrinciple** for causally loop-closed spacetimes as a Banach fixed-point th",
+      "quality_score": 0.58,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-24T02:40:44",
+      "title": "Novikov-Fixed-Point: Existence of Unique Solutions for Causally Loop-Closed Spacetimes"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-24T02:40:38",
+  "last_updated": "2026-07-24T02:40:44",
   "open_questions": [
     {
       "context": "",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "cb3d5d14",
-        "quality": 0.8,
-        "theorems": 0,
-        "title": "Self-Modifying Code That Cannot Be Stopped"
-      },
-      {
         "cycle_id": "14bbfbeb",
         "quality": 0.62,
         "theorems": 16,
@@ -3637,6 +3631,12 @@
         "quality": 0.67,
         "theorems": 11,
         "title": "**Conjecture.** For a finite family of bad events with dependency degree at most"
+      },
+      {
+        "cycle_id": "5a4bc860",
+        "quality": 0.58,
+        "theorems": 9,
+        "title": "Novikov-Fixed-Point: Existence of Unique Solutions for Causally Loop-Closed Spac"
       }
     ],
     "NumberTheory": [
