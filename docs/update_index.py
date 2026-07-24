@@ -70,7 +70,7 @@ def extract_visualization(data, viz_name, pkg_slug, viz_index, viz_dir):
 
     return None
 
-def load_all_git_creation_dates(catalog_root, target_dir="docs"):
+def load_all_git_creation_dates(catalog_root, target_dir="Packages"):
     """Run a single git log command to extract creation ISO dates for all files."""
     dates = {}
     try:
@@ -201,7 +201,7 @@ def update_index():
     quality_scores = load_quality_scores()
 
     # Load all git creation dates in batch for 100% stability and speed
-    git_creation_dates = load_all_git_creation_dates(catalog_root, "docs")
+    git_creation_dates = load_all_git_creation_dates(catalog_root, "Packages")
 
     for f in json_files:
         try:

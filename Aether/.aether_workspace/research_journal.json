@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "2170ccdf",
-      "domain": "Algebra",
-      "key_insight": "# Future directions\n\n1. **Full Frobenius factorization dictionary.** Formalize that an irreducible factor of\ndegree `d` corresponds to a `d`-cycle of Frobenius on the geometric roots, including\nmultip",
-      "quality_score": 0.74,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-18T17:57:41",
-      "title": "Stochastic Galois Theory: Random Permutations Have Generic Galois Groups"
-    },
-    {
       "cycle_id": "57f5aa5e",
       "domain": "Applications",
       "key_insight": "# Future Directions: Tropical Cryptocurrency\n\n## 1. Exact recession dimension of generic fibers\n\n**Conjecture.** For a generic family of `r` min-plus keys on `k` coordinates with `r < k`, every nonemp",
@@ -2501,6 +2491,16 @@
       "theorem_count": 14,
       "timestamp": "2026-07-24T21:31:55",
       "title": "Close Proofs: Speculative: Mathematics as a Phase Transition"
+    },
+    {
+      "cycle_id": "1f866dac",
+      "domain": "Bridges",
+      "key_insight": "# Future directions: p-adic Langlands for GL₂(ℚ_p)\n\nThe Lean file `PadicLanglandsGL2.lean` establishes a self-contained chain of\nresults around the two sides of the p-adic Langlands correspondence for",
+      "quality_score": 0.63,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-07-24T21:32:13",
+      "title": "p-adic Langlands for GL₂(Q_p)"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-24T21:31:55",
+  "last_updated": "2026-07-24T21:32:13",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnUpper⟩); -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i ",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "fc5e97aa",
-        "quality": 0.76,
-        "theorems": 0,
-        "title": "Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
-      },
-      {
         "cycle_id": "bcb31ca6",
         "quality": 0.83,
         "theorems": 0,
@@ -3203,6 +3197,12 @@
         "quality": 0.73,
         "theorems": 20,
         "title": "The motivating fixed-length claim was **disproved**, not proved. With a finite a"
+      },
+      {
+        "cycle_id": "1f866dac",
+        "quality": 0.63,
+        "theorems": 12,
+        "title": "p-adic Langlands for GL₂(Q_p)"
       }
     ],
     "Combinatorics": [

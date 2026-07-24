@@ -1116,22 +1116,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Riemann Hypothesis: Zero-Free Regions"
   },
   {
-    "consumed_by_exp_id": "1f866dac",
-    "description": "Formalize the p-adic Langlands correspondence for GL\u2082(Q_p): establish a bijection between irreducible unitary Banach representations and 2-dimensional Galois representations. Prove the Colmez functor realization.",
-    "domains": [
-      "Bridges",
-      "NumberTheory"
-    ],
-    "id": "seed_252",
-    "phase": "B",
-    "priority_score": 0.93,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "p-adic Langlands for GL\u2082(Q_p)"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle b31f2cf9 (Q=0.830), which proved 21 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize 'strange loops' \u2014 hierarchical levels that fold back on themselves. Define: a strange loop in a formal system F is a formula phi such that phi asserts its own provability or unprovability. Prove: G\u00f6del's incompleteness theorem IS a strange loop (the G\u00f6del sentence G says 'G is not provable",
     "domains": [
@@ -9792,17 +9776,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Aperiodicity and subword complexity in the binary expansion of powers of three"
   },
   {
-    "consumed_by_exp_id": "41e2ee03",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Several families of incommensurable noncompact hyperbolic Coxeter polytopes' and formalize its key results. Abstract: We classify all 141 finite-volume hyperbolic Coxeter five-dimensional polytopes with eight facets, of which 125 are noncompact. Using maximal-cusp density and a noncompact analog of Bogachev-Douba-Raimbault's argument, we construct infinitely many pairwise incommensurable noncompact Coxeter polytopes in dimensions 4, 5, 6, 7, and 9, with the number of commensurability classes growing at least exponentially in volume.",
     "domains": [
       "Bridges"
     ],
     "id": "fd_0208",
-    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14715v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-17T08:20:29.584439+00:00",
     "title": "ArXiv paper: Several families of incommensurable noncompact hyperbolic Coxeter polytopes"
   },
@@ -11407,18 +11390,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Future directions from cycle 1992c474"
   },
   {
-    "consumed_by_exp_id": "e8a20d63",
+    "consumed_by_exp_id": "",
     "description": "# Future directions\n\n## What is proved now\n\n`Heegner163.lean` gives a kernel-checked elementary chain connecting Euler's\nquadratic polynomial to the discriminants 43, 67, and 163. It proves the sharp\nprime runs, the exact discriminant calculations, the exact cube-plus-744 integer\nidentities, their modular consequences, and that 163 is the maximum of the\nexplicit nine-element Heegner list.\n\n## Highest-priority missing mathematics\n\n1. **Do not treat the proposed uniqueness statement as established.** The claim\n   that 163 is the unique natural `n` for which `exp (\u03c0 * sqrt n)` is within\n   `10\u207b\u2076` of an integer needs careful qualification and a counterexample search.\n   Any rigorous theorem should specify a bounded range or add structural\n   hypotheses. Equidistribution heuristics make an unrestricted uniqueness claim\n   particularly implausible.\n\n2. **Certified transcendental bounds.** Develop interval bounds for `Real.pi`,\n   `Real.sqrt`, and `Real.exp` strong enough to prove\n   `|exp (\u03c0 * sqrt 43) - 884736744| < 10\u207b\u2076`, the analogous claim for 67, and the\n   much tighter estimate for 163. A reusable route is range reduction plus Taylor\n   bounds with rational endpoints, rather than trusting floating-point output.\n\n3. **The modular bridge.** Formalize the upper-half-plane `j`-invariant and its\n   `q`-expansion, then prove a tail estimate connecting a singular modulus to the\n   corresponding near-integer. The exact cube identities in the current file are\n   intended as the arithmetic endpoints for this bridge.\n\n4. **Class numbers.** Define the relevant imaginary quadratic orders and prove\n   the class-number-one statements for the nine listed discriminants. This would\n   replace the current finite list definition with a mathematically characterized\n   predicate.\n\n5. **Stark\u2013Heegner theorem.** The genuinely unbounded assertion that these are\n   all class-number-one imaginary quadratic fields requires deep analytic number\n   theory. It must not be inferred from `max_of_heegner_list`, which only computes\n   the maximum of an explicitly supplied finite set.\n\n6. **Rabinowitsch's criterion.** A useful intermediate target is the equivalence\n   between class number one for discriminant `1 - 4p` and primality of\n   `n\u00b2 + n + p` throughout `0 \u2264 n \u2264 p - 2`. The forward computational instances\n   for `p = 11, 17, 41` are already available here.\n",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
     "id": "fd_0257",
-    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "e1956901",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-18T02:47:18.481788+00:00",
     "title": "`Heegner163.lean` gives a kernel-checked elementary chain connecting Euler's"
   },
@@ -13342,18 +13324,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "The accompanying Lean development proves the finite algebraic core of homologica"
   },
   {
-    "consumed_by_exp_id": "920a890c",
+    "consumed_by_exp_id": "",
     "description": "# Future directions\n\nThe formal development establishes a concrete genuinely non-strict bicategory: its chosen 1-cell composition has bracketings equal to `5` and `7`, while an invertible associator connects them, and the pentagon and triangle coherence laws hold. It also proves that no `Bicategory.Strict` structure can exist for this fixed composition.\n\nNatural continuations include:\n\n1. **General codiscrete construction.** Package the construction for every unital magma, proving that codiscrete hom-categories turn arbitrary unit and associativity defects into coherent invertible 2-cells.\n2. **Nontrivial 2-cell coherence.** Replace `PUnit` 2-cells by a nontrivial group of automorphisms. Then the pentagon becomes an actual cocycle equation rather than following from subsingleton elimination.\n3. **Skeletal obstruction.** Formalize the relationship between associators in one-object bicategories and normalized group-cohomological 3-cocycles, including the criterion for strictification without changing the underlying 1-cells.\n4. **Biequivalence versus equality.** Prove a strictification result at the level of biequivalence, contrasting it with `no_strict_structure`, which rules out strictness on the fixed data but not replacement by an equivalent strict 2-category.\n5. **Higher coherence.** Develop tricategorical analogues where coherence between associators is itself witnessed by invertible 3-cells. This is the appropriate formal setting for the broader \u201cevery coherent loop-tolerant structure forms a higher category\u201d direction; that sweeping claim requires precise dimensions and coherence axioms before it is a theorem.\n6. **Computational exploration.** Enumerate small finite unital magmas and classify their associativity defects. For the present infinite example, the relevant small calculation is already kernel-checked in `left_bracketing_value` and `right_bracketing_value`, so a separate empirical evidence stage would add no confidence to the proved claim.\n",
     "domains": [
       "Logic",
       "Algebra"
     ],
     "id": "fd_0532",
-    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "3d25b5ad",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-20T23:22:24.198252+00:00",
     "title": "The formal development establishes a concrete genuinely non-strict bicategory: i"
   },
@@ -14457,6 +14438,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: Tropical Phase-Transition Models\n\nThe file `TropicalPhaseTransition.lean` proves a self-contained chain of results\nabout the tropical order parameter `order \u03ba c x = max(\u03ba\u00b7(x \u2212 c), 0)`,\nculminating in convexity, an explicit Lipschitz bound, and a qualitative\nphase-transition dichotomy. Natural extensions:\n\n## 1. Multi-monomial tropical polynomials\nGeneralise from the binomial to a genuine tropical polynomial\n`p(x) = max_{i} (a_i + b_i \u00b7 x)` over a finite index set. Targets:\n* convexity from `ConvexOn.sup`/`Finset.sup'` of affine pieces;\n* the number of linear regions (\"phases\") equals the number of monomials on the\n  upper hull \u2014 a discrete order parameter counting reorganisations;\n* the breakpoints (tropical hypersurface) as the finite set of transition\n  connectivities.\n\n## 2. Critical exponents\nThe companion file `Physics/MathematicsPhaseTransition.lean` uses a `\u221a` order\nparameter (mean-field exponent `1/2`). A unified treatment would parametrise the\nexponent `\u03b2` via `order_\u03b2 \u03ba c x = (\u03ba \u00b7 max(x\u2212c,0))^\u03b2` and prove monotonicity of\nthe transition sharpness in `\u03b2`, recovering the tropical (`\u03b2 = 1`) and\nmean-field (`\u03b2 = 1/2`) cases as instances.\n\n## 3. Two-parameter / anisotropic transitions\nReplace the scalar `x` by a vector of cross-field connectivities and study\n`max(\u27e8\u03ba, x \u2212 c\u27e9, 0)`; convexity persists, and the transition set becomes a\nhyperplane. Connect to sub/super-level sets and to Legendre duality (the tropical\nanalogue of the Fenchel transform, already touched in `Tropical/FenchelMoreau.lean`).\n\n## 4. Dynamics / percolation link\nCouple `x` to a discrete-time process `x_{n+1} = f(x_n)` and prove that crossing\n`c` is an absorbing\u2192active transition, tying the tropical order parameter to the\npercolation/branching-survival picture in `Physics/` and `Novelty/`.\n\n## 5. Quantitative continuity\nStrengthen `order_lipschitz` to differentiability away from `c` and one-sided\nderivatives at `c` (left derivative `0`, right derivative `\u03ba`), formalising the\n\"kink = second-order transition\" statement analytically.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0709",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "edb35a0b",
+    "status": "available",
+    "timestamp": "2026-07-24T21:31:51.957007+00:00",
+    "title": "The file `TropicalPhaseTransition.lean` proves a self-contained chain of results"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions: p-adic Langlands for GL\u2082(\u211a_p)\n\nThe Lean file `PadicLanglandsGL2.lean` establishes a self-contained chain of\nresults around the two sides of the p-adic Langlands correspondence for\n`GL\u2082(\u211a_p)`. This note records what is proved and the natural next steps toward\nthe full statement (a bijection between irreducible unitary Banach\nrepresentations and 2-dimensional Galois representations, realised by Colmez's\nMontreal functor).\n\n## What is proved (the current chain)\n\n1. **`matrix_two_cayley_hamilton`** \u2014 `M * M = tr M \u2022 M - det M \u2022 1` for `2\u00d72`\n   matrices. This is the characteristic-polynomial relation, the algebraic\n   heart of the \"trace of Frobenius / determinant\" data of a 2-dimensional\n   representation.\n2. **`matrix_two_adjugate`** \u2014 `M * (tr M \u2022 1 - M) = det M \u2022 1`, deduced from (1);\n   it exhibits the inverse of an element of `GL\u2082` explicitly.\n3. **`diagGL` / `diagGL_det` / `det_surjective`** \u2014 the determinant\n   `GL\u2082(K) \u2192* K\u02e3` is a surjective homomorphism (the `GL\u2082 \u21a0 GL\u2081` map).\n4. **`mem_det_ker_iff`** \u2014 `ker det` is exactly `SL\u2082(K)`.\n5. **`detCharCorrespondence`** (+ `detCharCorrespondence_comp`,\n   `detChar_injective`) \u2014 a bijection between characters `K\u02e3 \u2192* A` and\n   characters `GL\u2082(K) \u2192* A` trivial on `SL\u2082(K)`. This is the abelian (`GL\u2081`)\n   shadow of the correspondence: twisting characters of `GL\u2082` are precisely\n   characters of `K\u02e3`.\n6. **`scalarGL` / `scalarGL_det` / `scalarGL_comm`** \u2014 the central scalar\n   embedding `K\u02e3 \u2192* GL\u2082(K)`, its determinant (the squaring map), and centrality.\n7. **`twistRep` / `twistRep_det`** \u2014 twisting a 2-dimensional representation by a\n   character `\u03c7` multiplies the determinant character by `\u03c7\u00b2`\n   (`det(\u03c7 \u2297 \u03c1) = \u03c7\u00b2 \u00b7 det \u03c1`), the standard Galois-side twisting compatibility.\n8. **p-adic specialisations** (`padic_det_surjective`,\n   `padic_matrix_two_cayley_hamilton`, `padicDetCharCorrespondence`,\n   `padic_twistRep_det`) \u2014 the above instantiated at `K = \u211a_p = Padic p`.\n\nAll results are proved from Mathlib with only the standard axioms\n(`propext`, `Classical.choice`, `Quot.sound`).\n\n## Mathematical context\n\n- The `detCharCorrespondence` is genuinely the local Langlands correspondence\n  for `GL\u2081`: characters of `\u211a_p\u02e3` (which, under local class field theory, are\n  characters of the abelianised Weil group) match the abelian characters of\n  `GL\u2082(\u211a_p)`. The p-adic correspondence for `GL\u2082` refines this by attaching\n  2-dimensional objects; the determinant/central-character compatibility encoded\n  by `twistRep_det` and `detRep` is one of its defining constraints.\n- The Cayley\u2013Hamilton identity is the shadow of the fact that a 2-dimensional\n  Galois representation is controlled by the trace and determinant of Frobenius\n  (its characteristic polynomial).\n\n## Next steps toward the full correspondence\n\n1. **Topologise the objects.** Introduce the Banach/`p`-adic topology: unitary\n   `\u211a_p`-Banach representations of `GL\u2082(\u211a_p)` and their unit balls; continuous\n   2-dimensional Galois representations. Mathlib has `Padic`, normed spaces and\n   completions; the representation-theoretic packaging is missing.\n2. **(\u03c6, \u0393)-modules.** Define \u00e9tale `(\u03c6, \u0393)`-modules over the Robba ring / over\n   `\ud835\udcd4 = \u2124_p((T))`, and the equivalence with Galois representations\n   (Fontaine's theorem). This is the target category of Colmez's functor.\n3. **The Colmez / Montreal functor.** Construct the functor from smooth/Banach\n   `GL\u2082(\u211a_p)`-representations to `(\u03c6, \u0393)`-modules (via the action of the mirabolic\n   subgroup on `\ud835\udcde_{\u2130}`), and prove it is exact and compatible with central\n   characters \u2014 the compatibility `twistRep_det` is a finite-level instance of\n   the required behaviour.\n4. **Irreducibility and the bijection.** Prove that the functor sends irreducible\n   unitary Banach representations to irreducible 2-dimensional representations\n   and is a bijection on isomorphism classes.\n\nEach step is a substantial development; the present file supplies the\nfinite-dimensional linear-algebra and character-theoretic foundations\n(determinant surjectivity, the `GL\u2081` correspondence, twist compatibility,\nCayley\u2013Hamilton) on which they rest.\n",
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_0710",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "1f866dac",
+    "status": "available",
+    "timestamp": "2026-07-24T21:32:09.698091+00:00",
+    "title": "The Lean file `PadicLanglandsGL2.lean` establishes a self-contained chain of"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist \u2014 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 \u2014 they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures \u2014 combinatorial digit problems that are easy to state but may be as hard as factoring.",
     "domains": [
       "Novelty",
@@ -14550,21 +14561,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-20T20:48:35.754087+00:00",
     "title": "Close Proofs: The Fractal Dimension of Mathematical Truth"
-  },
-  {
-    "consumed_by_exp_id": "edb35a0b",
-    "description": "Cycle 2f321176 (Q=0.700) proved 7 theorems in NumberTheory but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conjecture that mathematical discovery undergoes phase transitions: long periods of incremental progress punctuated by sudden reorganizations (like percolation transitions). Formalize this using stati",
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "sorry_fill_2f321176_54d54749",
-    "phase": "A",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "2f321176",
-    "status": "in_progress",
-    "timestamp": "2026-07-20T20:48:31.251527+00:00",
-    "title": "Close Proofs: Speculative: Mathematics as a Phase Transition"
   },
   {
     "consumed_by_exp_id": "",
