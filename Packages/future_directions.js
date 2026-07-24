@@ -7198,7 +7198,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Let two prefix-free encodings of the same deductive system translate into one an"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0e007163",
     "description": "# Future Directions\n\n- Develop Hartogs' theorem over an explicit axiomatic set theory without assuming a global choice principle. The present `HartogsType` formulation is type-theoretic and uses Mathlib's cardinal infrastructure; it establishes the characteristic non-embedding theorem but is not a metatheoretic independence proof.\n- Formalize the statement that `aleph 1` is the least uncountable cardinal in terms of countability predicates on types, and connect this characterization to the successor-cardinal presentation proved here.\n- Add equivalent formulations of the continuum hypothesis: every infinite subset of the reals is countable or equinumerous with the reals, and the absence of cardinals strictly between `aleph0` and `continuum`.\n- Extend the finite successor-step theorem for `beth` to transfinite limit stages and prove comparison results between the full `aleph` and `beth` hierarchies.\n- Define inaccessible, measurable, strongly compact, and supercompact cardinals after establishing the required filters, ultrafilters, elementary embeddings, and universe bookkeeping. Their relative consistency hierarchy cannot be proved merely from the definitions; faithful consistency-strength results require an explicit formal metatheory, models of set theory, and carefully stated background assumptions.\n",
     "domains": [
       "Logic"
@@ -7207,7 +7207,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "279ae676",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-21T18:47:57.053400+00:00",
     "title": "Future directions from cycle 279ae676"
   },
