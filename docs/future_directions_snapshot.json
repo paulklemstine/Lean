@@ -345,25 +345,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Proves that crystalline lattice computation arrays exhibit zero error propagation when subject to high-energy cosmic radiation damage.",
-    "domain_bridges": [],
-    "domains": [
-      "Computation"
-    ],
-    "id": "scifi_50_09_c5ff40fc",
-    "lineage_refs": [],
-    "priority_score": 0.95,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "scifi_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:07:57.246362+00:00",
-    "title": "Alien-Monolith-Substrate: Self-Repairing Crystal Computing Manifolds"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Formalizes the theoretical maximum information density limit for quadruple-stranded synthetic genetic storage systems.",
     "domain_bridges": [],
     "domains": [
@@ -573,44 +554,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Proves the existence of a self-replicating code parasite that mutates its own source AST while preserving its core payload behavior across all executions.",
-    "domain_bridges": [],
-    "domains": [
-      "Computation"
-    ],
-    "id": "scifi_50_21_bbe41bbc",
-    "lineage_refs": [],
-    "priority_score": 0.95,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "scifi_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:07:57.835983+00:00",
-    "title": "Von-Neumann-Parasite: Self-Modifying Viral Automata in Distributed Catalogs"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Proves Thompson's Reflections on Trusting Trust attack for recursive compiler self-replication with zero detection footprint.",
-    "domain_bridges": [],
-    "domains": [
-      "Computation"
-    ],
-    "id": "scifi_50_23_f707c8e9",
-    "lineage_refs": [],
-    "priority_score": 0.95,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "scifi_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:07:57.936092+00:00",
-    "title": "Sentient-Compiler: Recursive Compiler Self-Awareness & Defense Exploits"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Formalizes visual pattern sequences that trigger specific optogenetic neuron activation patterns in biological retinas.",
     "domain_bridges": [],
     "domains": [
@@ -625,25 +568,6 @@
     "status": "available",
     "timestamp": "2026-07-23T20:07:57.985799+00:00",
     "title": "Biological-Neural-Virus: Zero-Day Optogenetic Code Exploits"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Proves that an automated code immune system can detect and isolate arbitrary unknown malicious self-modifying AST mutations.",
-    "domain_bridges": [],
-    "domains": [
-      "Computation"
-    ],
-    "id": "scifi_50_25_7b48bc2f",
-    "lineage_refs": [],
-    "priority_score": 0.95,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "scifi_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:07:58.034919+00:00",
-    "title": "Algorithmic-Immune-System: Autonomous Code Parasite Neutralization"
   },
   {
     "ambition_level": "extension",
@@ -686,7 +610,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d6b505de",
     "description": "Proves that total entropy across all parallel branches of the multiverse strictly increases, even when single branches experience local decreases.",
     "domain_bridges": [],
     "domains": [
@@ -698,7 +622,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "scifi_50_injection",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-23T20:07:58.185729+00:00",
     "title": "Cross-Reality-Entropy: Second Law of Thermodynamics for Multiversal Ensembles"
   },
@@ -777,25 +701,6 @@
     "status": "available",
     "timestamp": "2026-07-23T20:07:58.381373+00:00",
     "title": "Casimir-Anti-Matter-Drive: Net Propulsion Force from Asymmetric Quantum Vacuum Plates"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Derives Lloyd's ultimate physical computational limit for a 1-kilogram micro black hole processing quantum information.",
-    "domain_bridges": [],
-    "domains": [
-      "Computation"
-    ],
-    "id": "scifi_50_33_310e6d9d",
-    "lineage_refs": [],
-    "priority_score": 0.95,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "scifi_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:07:58.431503+00:00",
-    "title": "Micro-Singularity-Computer: Maximum Calculation Density of Subatomic Black Holes"
   },
   {
     "ambition_level": "extension",
@@ -1005,25 +910,6 @@
     "status": "available",
     "timestamp": "2026-07-23T20:07:59.026142+00:00",
     "title": "EML-Non-Archimedean: p-Adic Field Generalizations of EML Neural Nets"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Formally proves computational limits of Infinite Time Turing Machines (ITTMs) accessing hyper-arithmetical halting oracles.",
-    "domain_bridges": [],
-    "domains": [
-      "Computation"
-    ],
-    "id": "scifi_50_46_242a3323",
-    "lineage_refs": [],
-    "priority_score": 0.95,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "scifi_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:07:59.079513+00:00",
-    "title": "Non-Computable-Oracle: Exploiting Halting Oracle Paradoxes in Infinite Time Turing Machines"
   },
   {
     "ambition_level": "extension",
@@ -1243,25 +1129,6 @@
     "status": "available",
     "timestamp": "2026-07-24T14:34:16.697733+00:00",
     "title": "Riemann Zeta: Zero-Free Regions and Density Estimates"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle e24b36f0 (Q=0.840), which proved 45 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize arithmetic in exotic number bases: negative bases (negabinary), complex bases (base i-1), irrational bases (base phi — the golden ratio). Prove: every integer has a unique representation in base (-2) (negabinary). Show: base phi (golden ratio) represents integers using only digits 0 and 1 ",
-    "domain_bridges": [],
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "push_e24b36f0_f306ed30",
-    "lineage_refs": [],
-    "priority_score": 0.94,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "e24b36f0",
-    "status": "available",
-    "timestamp": "2026-07-22T09:46:30.052991+00:00",
-    "title": "Deepening: Moonshot: Alien Number Systems — Mathematics Beyond Base-10"
   },
   {
     "ambition_level": "extension",
@@ -1856,63 +1723,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Establishes spectral gap bounds for integer solutions to non-homogeneous quadratic forms using lattice reduction and theta series expansion.",
-    "domain_bridges": [],
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "dir_50_01_6e769e03",
-    "lineage_refs": [],
-    "priority_score": 0.9,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "batch_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:05:22.341698+00:00",
-    "title": "Diophantine-Lattice: Spectral Bounds on Non-Homogeneous Quadratic Forms"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Proves modularity of two-dimensional odd irreducible Galois representations over finite fields for low weight and level conditions.",
-    "domain_bridges": [],
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "dir_50_02_a8910ce7",
-    "lineage_refs": [],
-    "priority_score": 0.9,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "batch_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:05:22.433476+00:00",
-    "title": "Modular-Galois: Formalizing Serre's Conjectures for Low Weight Representations"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Constructs the fundamental curve of p-adic Hodge theory and proves its topological properties as a Noetherian scheme of dimension 1.",
-    "domain_bridges": [],
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "dir_50_04_367ec1ed",
-    "lineage_refs": [],
-    "priority_score": 0.9,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "batch_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:05:22.535498+00:00",
-    "title": "p-Adic-Hodge: Formal Construction of Fargues-Fontaine Curves"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Formalizes the Berggren-Pell tree of primitive Pythagorean triples as an isometric automorphism group over hyperbolic space.",
     "domain_bridges": [],
     "domains": [
@@ -2122,63 +1932,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Formalizes Håstad's Switching Lemma to prove exponential size lower bounds for constant-depth Boolean circuits computing the parity function.",
-    "domain_bridges": [],
-    "domains": [
-      "Computation"
-    ],
-    "id": "dir_50_16_44cdb76c",
-    "lineage_refs": [],
-    "priority_score": 0.9,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "batch_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:05:23.124595+00:00",
-    "title": "Circuit-Lower-Bounds: AC0 Parity Lower Bound via Håstad Switching Lemma"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Formalizes Shamir's Theorem establishing equality between Interactive Proof complexity class (IP) and Polynomial Space (PSPACE).",
-    "domain_bridges": [],
-    "domains": [
-      "Computation"
-    ],
-    "id": "dir_50_17_9984330b",
-    "lineage_refs": [],
-    "priority_score": 0.9,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "batch_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:05:23.178773+00:00",
-    "title": "Interactive-Proofs: Formal Proof that IP = PSPACE"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Proves the Probabilistically Checkable Proofs (PCP) theorem for 3SAT, establishing NP-hardness of (7/8 + ε)-approximation.",
-    "domain_bridges": [],
-    "domains": [
-      "Computation"
-    ],
-    "id": "dir_50_18_a416dd77",
-    "lineage_refs": [],
-    "priority_score": 0.9,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "batch_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:05:23.227519+00:00",
-    "title": "PCP-Theorem: Hardness of Approximation for Max-3SAT"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Formally proves perfect completeness, knowledge soundness, and zero-knowledge properties of Quadratic Arithmetic Program (QAP) based zk-SNARKs.",
     "domain_bridges": [],
     "domains": [
@@ -2193,25 +1946,6 @@
     "status": "available",
     "timestamp": "2026-07-23T20:05:23.277230+00:00",
     "title": "Zero-Knowledge: Soundness and Completeness of zk-SNARK Circuits"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Proves that BQP is not contained in NP relative to a random oracle with probability 1.",
-    "domain_bridges": [],
-    "domains": [
-      "Computation"
-    ],
-    "id": "dir_50_20_fca69e6b",
-    "lineage_refs": [],
-    "priority_score": 0.9,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "batch_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:05:23.325238+00:00",
-    "title": "Quantum-Complexity: BQP Separation Bounds relative to Random Oracles"
   },
   {
     "ambition_level": "extension",
@@ -3012,7 +2746,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f90ec3a1",
     "description": "Prove that any sufficiently powerful formal system necessarily contains strange loops: statements that refer to their own unprovability. Formalize Gödel's first incompleteness theorem as a fixed-point in the lattice of provability predicates. Explore whether consciousness arises from tangled hierarchies of self-referential symbols.",
     "domain_bridges": [],
     "domains": [
@@ -3026,7 +2760,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Strange Loops: Self-Reference and Gödel's Incompleteness"
   },
@@ -4768,25 +4502,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Building on cycle e9a483ed (Q=0.760), which proved 8 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: L-functions are the DNA of mathematics — each one encodes deep arithmetic information. But how many L-functions ARE there? The L-function universe is vast: (1) The Riemann zeta function (1 L-function), (2) Dirichlet L-functions (countably many), (3) L-functions of elliptic curves (uncountably many, ",
-    "domain_bridges": [],
-    "domains": [
-      "Computation"
-    ],
-    "id": "push_e9a483ed_ee30e1cf",
-    "lineage_refs": [],
-    "priority_score": 0.86,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "e9a483ed",
-    "status": "available",
-    "timestamp": "2026-07-18T06:23:02.846306+00:00",
-    "title": "Deepening: The L-Function Universe: A Cosmic Census of All L-Functions"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Building on cycle ee626e30 (Q=0.760), which proved 14 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The shadowing lemma says that near an approximate orbit of a chaotic system, there exists a true orbit. In other words, every 'almost correct' trajectory of a chaotic map has a 'truly correct' trajectory nearby. This means that numerical errors in chaotic simulations are not bugs — they are SHADOWS ",
     "domain_bridges": [],
     "domains": [
@@ -5867,25 +5582,6 @@
     "status": "available",
     "timestamp": "2026-07-24T14:34:16.697851+00:00",
     "title": "Algebraic Coding Theory: BCH and Reed-Solomon"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 227d6015 (Q=0.750), which proved 19 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Freeman Dyson's idea that intelligence grows without limit in the deep future. Define: 'intelligence growth rate' as the rate at which a civilization discovers new theorems. Prove: if the growth rate is superexponential (faster than 2^(2^n)), then the civilization discovers ALL theorems of",
-    "domain_bridges": [],
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "push_227d6015_c2607b53",
-    "lineage_refs": [],
-    "priority_score": 0.85,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "227d6015",
-    "status": "available",
-    "timestamp": "2026-07-22T14:30:05.202834+00:00",
-    "title": "Deepening: Moonshot: The Mathematics of Dyson's Intelligence Explosion"
   },
   {
     "ambition_level": "extension",
@@ -13035,7 +12731,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "41e2ee03",
     "description": "Investigate the ArXiv paper 'Several families of incommensurable noncompact hyperbolic Coxeter polytopes' and formalize its key results. Abstract: We classify all 141 finite-volume hyperbolic Coxeter five-dimensional polytopes with eight facets, of which 125 are noncompact. Using maximal-cusp density and a noncompact analog of Bogachev-Douba-Raimbault's argument, we construct infinitely many pairwise incommensurable noncompact Coxeter polytopes in dimensions 4, 5, 6, 7, and 9, with the number of commensurability classes growing at least exponentially in volume.",
     "domain_bridges": [],
     "domains": [
@@ -13047,7 +12743,7 @@
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
     "source_exp_id": "2607.14715v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-17T08:20:29.584439+00:00",
     "title": "ArXiv paper: Several families of incommensurable noncompact hyperbolic Coxeter polytopes"
   },
@@ -17830,7 +17526,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "920a890c",
     "description": "# Future directions\n\nThe formal development establishes a concrete genuinely non-strict bicategory: its chosen 1-cell composition has bracketings equal to `5` and `7`, while an invertible associator connects them, and the pentagon and triangle coherence laws hold. It also proves that no `Bicategory.Strict` structure can exist for this fixed composition.\n\nNatural continuations include:\n\n1. **General codiscrete construction.** Package the construction for every unital magma, proving that codiscrete hom-categories turn arbitrary unit and associativity defects into coherent invertible 2-cells.\n2. **Nontrivial 2-cell coherence.** Replace `PUnit` 2-cells by a nontrivial group of automorphisms. Then the pentagon becomes an actual cocycle equation rather than following from subsingleton elimination.\n3. **Skeletal obstruction.** Formalize the relationship between associators in one-object bicategories and normalized group-cohomological 3-cocycles, including the criterion for strictification without changing the underlying 1-cells.\n4. **Biequivalence versus equality.** Prove a strictification result at the level of biequivalence, contrasting it with `no_strict_structure`, which rules out strictness on the fixed data but not replacement by an equivalent strict 2-category.\n5. **Higher coherence.** Develop tricategorical analogues where coherence between associators is itself witnessed by invertible 3-cells. This is the appropriate formal setting for the broader “every coherent loop-tolerant structure forms a higher category” direction; that sweeping claim requires precise dimensions and coherence axioms before it is a theorem.\n6. **Computational exploration.** Enumerate small finite unital magmas and classify their associativity defects. For the present infinite example, the relevant small calculation is already kernel-checked in `left_bracketing_value` and `right_bracketing_value`, so a separate empirical evidence stage would add no confidence to the proved claim.\n",
     "domain_bridges": [],
     "domains": [
@@ -17843,7 +17539,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "3d25b5ad",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-20T23:22:24.198252+00:00",
     "title": "The formal development establishes a concrete genuinely non-strict bicategory: i"
   },
@@ -18171,26 +17867,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "# Future directions\n\n## Scope and interpretation\n\nThe formal development in `Catalog/Algebra/RuckerWetware.lean` treats wetware as a deterministic discrete dynamical system. Its strongest results are exact within that model:\n\n- every typed function can be realized in one step when the state type, encoder, and decoder may depend on the function;\n- every orbit on a finite state space has a periodic tail;\n- consequently, no observation of such an orbit can be injective over time;\n- deterministic transition tables have information cost `n log₂ n`, whereas arbitrary binary connection matrices have cost `n²`;\n- the ratio of those costs tends to zero.\n\nThese are model-relative theorems. In particular, the energy definitions measure description length in bits, not physical thermodynamic energy. The universality theorem is an exact realization theorem, but it is not yet a compiler from a standard Turing-machine formalization into a fixed neural architecture.\n\n## Natural next theorems\n\n1. **Uniform Turing-machine simulation.** Import or define a concrete Turing-machine model, encode configurations in one fixed wetware state family, and prove a commuting simulation diagram for each transition. A useful final theorem would preserve halting and output, with an explicit neuron and time overhead.\n\n2. **Resource-aware realization.** Strengthen `Computes` with bounds on state dimension, runtime, precision, and fan-in. The current existential encoder/decoder can contain the whole function, so it deliberately says nothing about implementation efficiency.\n\n3. **Physical energy model.** Replace configuration-description length by a transition cost, such as the number of state changes or a weighted dissipation functional. Prove upper and lower asymptotic bounds under explicit architecture assumptions. This would separate the proved combinatorial comparison from claims about actual silicon or neural tissue.\n\n4. **Quantitative finite-state recurrence.** For a state space of cardinality `N`, prove that a collision occurs among the first `N + 1` states and obtain `start < N` and `period ≤ N`. The current periodic-tail theorem establishes existence but does not expose these sharp bounds.\n\n5. **Robust continuous dynamics.** Model a neural manifold with a continuous or Lipschitz flow and a decoding partition. Determine which computations survive perturbations. Robustness and finite observational precision are likely to recover discrete computability restrictions.\n\n6. **Super-Turing hypothesis as a precise separation.** Define representations of inputs and outputs, effective initial conditions, admissible real constants, observation precision, and time bounds. Without these restrictions, a continuous system may hide a noncomputable set in an initial condition or parameter rather than compute it. A meaningful conjecture should distinguish oracle information from dynamics.\n\n7. **No-hypercomputation corollaries.** Extend `no_injective_observed_orbit` from natural-valued observations to arbitrary codomains and prove that every observed trace of a finite deterministic system is eventually periodic. Derive impossibility results for traces known to be aperiodic.\n\n## Evidence note\n\nSeparate ad-hoc computational evidence was unnecessary for the principal universal claims: the finite configuration counts are proved symbolically, and exact benchmark instances for two and four neurons are kernel-checked as `energy_two` and `energy_four`. No OEIS sequence is relevant to these closed-form counts. A broader empirical study would only become meaningful after choosing a physical transition-energy model.",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_0574",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "28edcf45",
-    "status": "available",
-    "timestamp": "2026-07-21T22:19:13.963072+00:00",
-    "title": "The formal development in `Catalog/Algebra/RuckerWetware.lean` treats wetware as"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "# Future Directions\n\n## 1. A syntactic GEB equivalence preserving substitution\n\nConstruct explicit formal, graphical, and contrapuntal syntax categories whose morphisms encode substitution, visual completion, and reversible musical transformation. Conjecture that a nontrivial full subcategory of each admits equivalences preserving a common self-application operation, and that the resulting diagonal witnesses agree under those equivalences.\n\nThe key insight is that preservation of a binary evaluation table, rather than a bare bijection of artifacts, is exactly what makes fixed points transport.\n\nWhy now? The conditional transport theorem isolates the complete interface that concrete domain models must implement, while the failed bare-bijection conjecture identifies the principal obstruction.\n\n## 2. Choice independence from unique semantic fixed points\n\nConjecture that if every endomorphism in a designated semantic class has at most one fixed point, then all diagonal codes for the same endomorphism yield one common value, even when the codes themselves are unrelated by a domain isomorphism. Seek natural ordered or metric semantic domains where this uniqueness follows from contraction or guardedness.\n\nThe key insight is that the present construction separates two sources of ambiguity: presentation transport is canonical, but arbitrary universal codes need not choose the same fixed point.\n\nWhy now? The fixed-point factorization proves invariance along structure-preserving maps and precisely exposes uniqueness as the missing hypothesis for global code independence.\n\n## 3. A graded Lawvere theorem for partial universality\n\nDefine a hierarchy in which an evaluation table represents only predicates of bounded syntactic, geometric, or musical complexity. Conjecture that diagonal fixed points persist exactly when the represented class is closed under composition with the chosen semantic endomorphism and under diagonal evaluation. Determine the minimal closure axioms and exhibit sharp finite counterexamples when either closure condition is removed.\n\nThe key insight is that full surjectivity is stronger than the diagonal proof uses; only representability of a particular composite is essential.\n\nWhy now? Boolean universality is impossible, so a graded theory of representable fragments offers a testable route to concrete finite models without weakening the fixed-point mechanism into metaphor.\n\n## 4. Obstruction spectra for finite semantic domains\n\nFor each finite semantic set `B`, classify the largest family of endomorphisms `F ⊆ (B → B)` for which a single presentation can represent every diagonal composite associated with `F`. Conjecture that maximal families are controlled by the directed graph of fixed points of the transformation monoid generated by `F`.\n\nThe key insight is that Boolean negation fails because it is fixed-point-free, suggesting that obstruction is governed by transformation-monoid structure rather than cardinality alone.\n\nWhy now? The universal Boolean impossibility theorem supplies the first sharp negative case, and finite transformation monoids make exhaustive testing and structural classification feasible.\n\n## 5. Naturality under weaker simulations\n\nReplace evaluation-preserving equivalences by retractions, embeddings, or bisimulations. Conjecture that embeddings preserve fixed points in one direction, retractions lift them under an explicit coherence law, and bisimulations preserve only observational equivalence of `Y` values rather than literal equality.\n\nThe key insight is that exact isomorphism yields equality because both arguments of evaluation are preserved simultaneously; weakening either preservation law should produce a graded notion of fixed-point transport.\n\nWhy now? The current naturality theorem gives the strongest endpoint, from which each coherence condition can be removed independently and tested by counterexample.\n",
     "domain_bridges": [],
     "domains": [
@@ -18291,26 +17967,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "# Future directions\n\n## 1. Extract an explicit partition-refinement algorithm\n\n`FiniteStateIdentity.lean` proves decidability by reducing trace equivalence to a search over finite Boolean relations. A stronger development would implement the standard greatest-fixed-point refinement algorithm on `Finset (S × T)`, prove that it terminates, prove it computes the greatest bisimulation, and establish a polynomial running-time bound. This would turn the existence-level decision procedure into executable verified code.\n\n## 2. Bound the length of distinguishing experiments\n\nFor machines with state sets `S` and `T`, inequivalent initial states should admit a distinguishing word whose length is bounded in terms of `|S| · |T|`. Formalizing this would sharpen decidability into a finite test suite theorem and connect the positive finite-state result directly to `no_finite_test`, which shows that no fixed finite suite works for arbitrary functions on an infinite input type.\n\n## 3. Minimize finite person models\n\nDefine observational equivalence between states of one machine, quotient by it, and prove the quotient is behaviorally equivalent and minimal. A uniqueness theorem for reachable minimal models would precisely identify the substrate-independent information retained by the Lifebox semantics.\n\n## 4. Add richer interaction semantics\n\nThe current Moore-machine model returns the observation at the final state after a finite input history. Natural extensions include Mealy outputs at every transition, infinite streams, probabilistic transition kernels, nondeterministic systems, and approximate equivalence under a metric on outputs. Each requires a corresponding bisimulation theorem and an analysis of when equivalence remains decidable.\n\n## 5. Separate quantum no-cloning from undecidability\n\n`LifeboxInformationIdentity.lean` proves the algebraic no-cloning theorem for a two-dimensional state space. No-cloning does not imply undecidability. A valid undecidability theorem would require a precise model of quantum programs, an equivalence predicate, and a reduction from a known undecidable problem. Future work should formalize such a programming-language semantics rather than infer computability consequences from a physical non-copying theorem.\n\n## 6. Formalize genuine Kolmogorov complexity\n\nThe current counting theorem concerns fixed-length bit-vectors, not machine-dependent Kolmogorov complexity. A faithful next step is to define a partial universal description machine, plain or prefix-free complexity, and conditional statements of the form: if an identity has a description of length at most `B`, then its complexity is at most `B` up to the chosen encoding overhead. The numerical `10^15` bound is an external empirical conjecture and cannot be derived from the abstract information model alone.\n\n## 7. Relate identity encodings categorically\n\nThe proved surjective-input and injective-output invariance laws suggest organizing person models and information-preserving encodings into a category. Behavioral equivalence could then be studied as a congruence, with products representing combined observation channels and quotients representing substrate erasure.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_0593",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "ea214ad9",
-    "status": "available",
-    "timestamp": "2026-07-22T04:48:45.278911+00:00",
-    "title": "`FiniteStateIdentity.lean` proves decidability by reducing trace equivalence to "
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "# Future Directions\n\n## 1. Value-dependent gluing of lattice slices\n\nFor every positive profile and every admissible integer coordinate value, determine an\nexplicit transformed profile whose parking-function polytope is affinely isomorphic\nto the corresponding labelled-coordinate slice. The conjecture is falsifiable by\ncomparing the predicted profile with all lattice points in dimensions at most six.\n\nThe key insight is that rank deletion is exact inside each sorted chamber, while the\nfixed coordinate value determines which ranks can contain the deleted coordinate and\ntherefore how adjacent chambers must glue.\n\nWhy now? The rank-deletion theorem isolates the local operation, and the observed\nnonconstant slice counts identify precisely why a value-independent deletion rule\ncannot suffice.\n\n## 2. Shelling explanation for magic positivity\n\nThe sorted-chamber decomposition admits a shelling in which every restriction face\ncontributes a polynomial with nonnegative coefficients in the natural partial-sum\nvariables. Consequently, summing the local contributions yields coefficientwise\npositivity of the multivariate lattice-point polynomial and of its Ehrhart\nspecializations.\n\nThe key insight is that permutation chambers convert global convex geometry into\nrank inequalities, while rank deletion should organize their intersections into a\nrecursive shelling.\n\nWhy now? Profile monotonicity and chamber deletion supply the two local compatibility\nrelations needed to formulate an inductive shelling criterion.\n\n## 3. Integer decomposition compatible with affine dilation\n\nEvery lattice point in the `t`-fold affine dilation about the all-ones vector is a sum,\nafter the corresponding translation, of `t` lattice points from the original\nparking-function polytope. This predicts the integer-decomposition property uniformly\nfor all positive generalized parking profiles.\n\nThe key insight is that affine dilation preserves the full sorted inequality system,\nso a decomposition theorem can be sought rank by rank rather than in ambient\ncoordinates.\n\nWhy now? Affine transport has been established at the level of parking vectors and\nprofiles; the remaining testable step is a constructive decomposition of integral\npoints in the convex hull.\n\n## 4. Structured parking-profile improvement for SIS\n\nWhen the columns of a modular syndrome matrix are monotone with respect to a parking\nprofile, the number of parking vectors—not the cardinality of the surrounding cube—\ncontrols collision existence, yielding strictly smaller infinity-norm witnesses for\nan infinite family of rectangular matrices.\n\nThe key insight is that parking vectors form a highly structured search region whose\npermutation symmetry may retain enough entropy for pigeonhole collisions while using\nfar fewer extreme coordinates than a cube.\n\nWhy now? The box-based modular-kernel bridge gives a baseline bound, and the enumerated\nparking counts provide concrete thresholds against which the proposed improvement can\nbe tested.\n\n## 5. Deletion recursion as a valuation identity\n\nThe lattice-point enumerator of a generalized parking-function polytope satisfies a\ndelete-and-contract recursion over cumulative profiles, and this recursion extends to\na valuative invariant on the associated generalized permutohedral subdivision.\n\nThe key insight is that coordinate slicing is a discrete valuation operation, while\nrank deletion identifies its chamberwise contraction rule.\n\nWhy now? Small-case slice tables already display a stable recursive stratification;\nan explicit gluing theorem would turn that evidence into a precise valuation formula.\n",
     "domain_bridges": [],
     "domains": [
@@ -18351,26 +18007,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "# Future directions\n\n## What is proved here\n\nThe Lean development establishes a reusable discrete CRN semantics and an exact compiler for deterministic finite-state transition systems. Each state is represented by one molecule, each transition by a unary reaction, and arbitrary finite traces are simulated exactly while total molecular count remains one.\n\nIt also proves an end-to-end preparation-cost theorem. In the stated model, preparing `n` molecular candidates costs `p*n`, testing all candidates takes one parallel round, and `p ≥ 1`. Sequential search then costs at most twice molecular search, including candidate spaces of size `2^k`.\n\nFinally, it formalizes an assumption-explicit information-capacity lower bound: if complexity `k` fits in volume `v` at `b` bits per volume unit, then `k ≤ b*v`, equivalently `ceil(k/b) ≤ v` when `b > 0`.\n\n## Next formal steps\n\n1. **Autonomous CRN execution.** Replace the externally scheduled `runCompiled` semantics with a transition relation over reaction multisets, then prove that exactly one compiled reaction is enabled at every reachable one-hot population.\n2. **Bounded Turing machines.** Define tapes of bounded length and compile complete machine configurations into species. The finite-state compiler in this directory should then yield exact simulation up to the tape bound.\n3. **Unbounded universality.** Add a representation of counters or tapes by molecular counts and prove simulation of a known universal register machine. This is the substantial missing step toward a genuine CRN Turing-completeness theorem.\n4. **Mass-action kinetics.** Connect discrete firings to stochastic or deterministic mass-action semantics. Exact trajectory simulation will require a carefully stated encoding and observation theorem; ordinary differential-equation trajectories should not be conflated with discrete reaction traces.\n5. **Kolmogorov complexity.** Fix a universal description language and a compiler from descriptions to CRNs. Prove lower bounds from finite encoding capacity and upper bounds from compiler size. The current file proves only the generic capacity implication, not proportionality of physical volume and Kolmogorov complexity.\n6. **Preparation-aware complexity models.** Generalize the linear preparation model to bounded-rate synthesis, copying, routing, and readout. Identify assumptions under which constant-factor, polynomial, or larger speedups are possible.\n7. **NP search.** Formalize candidate generation and verification separately. The present theorem applies to exhaustive candidate preparation; it does not prove a complexity-theoretic lower bound for every possible molecular algorithm.\n8. **Empirical DNA claims.** Storage density (`10^18` bits per cubic micrometer) and throughput (`10^15` operations/second) need experimentally justified parameters and unit-aware physical models. They are deliberately not asserted as theorems here.\n\n## Scope warning\n\nThe broad claim that mass-action CRNs are Turing-complete depends strongly on the precise CRN semantics, admissible concentrations/counts, error model, and output convention. Likewise, a universal physical-volume/Kolmogorov proportionality theorem is false without encoding-capacity and compiler assumptions. Future statements should retain these assumptions explicitly.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Computation",
-      "Algebra"
-    ],
-    "id": "fd_0596",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "47ca7342",
-    "status": "available",
-    "timestamp": "2026-07-22T06:54:39.673753+00:00",
-    "title": "The Lean development establishes a reusable discrete CRN semantics and an exact "
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "# Future Directions\n\n## 1. Locally finite orbit-triangular decomposition on the Tits cone\n\n**Conjecture.** For every symmetrizable Kac–Moody root datum and twisting weight, the shifted Chinta–Gunnells averages form a topological Schauder basis of the invariant holomorphic functions on every Weyl-stable compact subset of the interior of the complexified Tits cone, when coefficients are ordered by dominance.\n\nThe key insight is that the finite orbit-indicator decomposition should persist as a locally finite triangular expansion once orbit support is replaced by dominance-controlled analytic support. **Why now?** The finite theorem isolates uniqueness from analytic continuation, making the exact convergence statement that remains to be established both visible and testable.\n\n## 2. Dominance graph criterion beyond simply-laced type\n\n**Conjecture.** For every symmetrizable generalized Cartan matrix, the dominant labels occurring in the decomposition admit a finite collection of weighted-degree inequalities on the oriented multiple-bond Dynkin graph, generalizing the simply-laced criterion `degree(i) + degree_D(i) ≥ 2`.\n\nThe key insight is that coroot pairings turn root sums into weighted in-degrees, so non-simply-laced dominance should remain local after edge multiplicities and symmetrizers are incorporated. **Why now?** A complete simply-laced criterion is available as an anchor, and the weighted formulation can be tested immediately on rank-two finite and affine matrices.\n\n## 3. Hecke-idempotent interpretation of twisted averaging\n\n**Conjecture.** After localization away from the metaplectic denominator, the twisted Chinta–Gunnells averaging operator is an idempotent in a completed unequal-parameter Hecke algebra, and its image is exactly the space appearing in the decomposition theorem.\n\nThe key insight is that finite Reynolds projection and twisted Weyl averaging share the same projection geometry, while the cocycle should deform the group algebra into a Hecke-type completion. **Why now?** The finite idempotence theorem identifies the algebraic identity that the localized cocycle must satisfy and separates it from all convergence questions.\n\n## 4. Affine extra functional equations from diagram-lattice symmetry\n\n**Conjecture.** In affine type, every functional equation of a fundamental-weight-twisted average that does not arise from the affine Weyl group is induced by an automorphism of the extended Dynkin diagram combined with a translation in the coweight lattice; in type `Ã₁`, this mechanism generates all extra equations.\n\nThe key insight is that the unexplained equations should be symmetries of the extended root datum rather than accidental identities of rational functions. **Why now?** The explicit `Ã₁` equations provide a minimal falsifiable test, while the orbit viewpoint predicts precisely how such a symmetry must permute decomposition coefficients.\n\n## 5. Function-field coefficient positivity and crystal multiplicities\n\n**Conjecture.** After a uniform power-of-`q` renormalization, every coefficient in the dominant-weight decomposition of the rational-function-field multiple Dirichlet series is a polynomial in `q` with nonnegative integer coefficients, and its value at `q = 1` is a weight multiplicity in the highest-weight module determined by the twisting parameter.\n\nThe key insight is that dominant labels already come from a highest-weight module, suggesting that arithmetic coefficients refine crystal multiplicities rather than merely being indexed by them. **Why now?** The decomposition theorem supplies canonical coefficients, so positivity can be tested in low-rank finite and affine examples without ambiguity about normalization or basis choice.\n",
     "domain_bridges": [],
     "domains": [
@@ -18406,46 +18042,6 @@
     "status": "available",
     "timestamp": "2026-07-22T09:46:18.771154+00:00",
     "title": "Construct a Boolean-valued universe whose generic quotients instantiate the abst"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions for Exotic Positional Arithmetic\n\n## 1. Canonical binary expansions in imaginary quadratic rings\n\n**Conjecture.** Classify all quadratic algebraic integers `β` of norm two for which the digit set `{0,1}` gives unique finite expansions of every element of the ambient imaginary quadratic integer ring. The classification should be expressible through the geometry of a finite exceptional region for norm descent.\n\nThe key insight is that the proved base `i − 1` theorem reduces the infinite lattice to parity extraction, strict norm decrease, and five exceptional points; the same three-part mechanism should distinguish the successful quadratic radices.\n\n**Why now?** Complete negabinary and Gaussian base theorems provide one-dimensional and two-dimensional models, making a uniform classification both concrete and falsifiable.\n\n## 2. A transducer between Zeckendorf and phinary normal forms\n\n**Conjecture.** There is a terminating, confluent finite-state rewrite system that converts every Zeckendorf representation into a finite base-`φ` expansion with digits `0` and `1`, no adjacent ones, and bounded negative support; its output is canonical among expansions satisfying a fixed endpoint convention.\n\nThe key insight is that both systems normalize by the same local relation, `011 ↔ 100`, but Zeckendorf indices and phinary exponents impose different boundary conditions.\n\n**Why now?** Uniqueness of nonconsecutive Fibonacci sums and the golden-ratio carry law are established independently, making confluence and endpoint control the remaining testable bridge.\n\n## 3. Negative-base uniqueness over Euclidean domains\n\n**Conjecture.** Let `R` be a Euclidean domain and let `β ∈ R` have finite residue ring. If a complete residue digit set contains zero and admits a strictly decreasing Euclidean digit-extraction map outside a finite exceptional set, then every element of `R` has a canonical finite base-`β` expansion; uniqueness is equivalent to uniqueness of residues at every extraction step.\n\nThe key insight is that existence and uniqueness separate cleanly: descent proves termination, while residue injectivity peels equal expansions one digit at a time.\n\n**Why now?** Negabinary arithmetic supplies the complete one-dimensional model, while complex bases provide immediate nontrivial test cases over `ℤ[i]`.\n\n## 4. Carry complexity as a radix-selection invariant\n\n**Conjecture.** Among canonical radix systems of fixed residue alphabet size, the expected number of local rewrites required to normalize the sum of two length-`n` random numerals has a linear asymptotic whose coefficient is determined by the stationary distribution of a finite carry automaton.\n\nThe key insight is that an alien civilization's preferred base may be governed less by numeral length than by normalization cost, which can be modeled as an ergodic statistic of carry states.\n\n**Why now?** Mixed-radix Horner evaluation, negabinary parity extraction, and phinary rewriting offer three sharply different systems on which the proposed invariant can be calculated and compared.\n\n## 5. Prime-pattern invariance under computable radix changes\n\n**Conjecture.** No computable positional radix system with bounded digits, unique finite normal forms, and finite-state addition can make primality eventually recognizable by a regular language of digit strings.\n\nThe key insight is that a genuinely “simple” prime pattern should be defined by automata-theoretic complexity rather than visual appearance; closure properties of automatic sets should then conflict with the multiplicative irregularity of the primes.\n\n**Why now?** The explicit canonical systems developed here make the admissibility, uniqueness, and finite-state hypotheses precise enough to separate meaningful prime-pattern claims from coordinate artifacts such as spiral plots.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Computation",
-      "Algebra"
-    ],
-    "id": "fd_0599",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "e24b36f0",
-    "status": "available",
-    "timestamp": "2026-07-22T09:46:27.142706+00:00",
-    "title": "**Conjecture.** Classify all quadratic algebraic integers `β` of norm two for wh"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions: Tangled Hierarchies in Type Theory\n\n## 1. Rankability Characterizes Predicative Dependency\n\n**Conjecture.** Every countable dependency relation that is well-founded and has finite predecessor sets admits a rank into the natural numbers that strictly decreases along dependency edges; without finite branching, ordinal-valued ranks are necessary and sufficient.\n\nThe key insight is that absence of cycles is weaker than the existence of a numerical level assignment, while finite branching may bridge that gap by bounding the height below each node.\n\n**Why now?** The finite-cycle obstruction isolates rank descent as the mechanism behind untangled hierarchies, making the precise boundary between natural and transfinite ranks directly testable.\n\n## 2. Coherent Universe Transport Forms No Semantic Cycle\n\n**Conjecture.** Any finite diagram generated solely by universe lifts, projections, products, and dependent sums admits a normalization in which every closed transport loop acts as the identity on represented values, while the syntactic level graph remains acyclic.\n\nThe key insight is that reversible presentation changes can create closed paths among representations without creating reverse edges in the strict universe ordering.\n\n**Why now?** One- and two-step lift coherence already separate value transport from level dependency; extending this to a compositional language would determine exactly how far apparent tangles can be normalized away.\n\n## 3. Impredicative Self-Coding Forces a Lawvere Fixed Point\n\n**Conjecture.** In any extensional dependent calculus with an internal code type closed under dependent products, a decoding operation that represents every predicate on codes entails a fixed point for every endomorphism of truth values.\n\nThe key insight is that the dangerous ingredient is not self-membership alone but point-surjective semantic evaluation, which converts diagonal substitution into a universal fixed-point principle.\n\n**Why now?** The predicate-space diagonal obstruction identifies a compact interface whose derivability can be tested independently across proposed impredicative calculi.\n\n## 4. A Minimal Girard Boundary\n\n**Conjecture.** There is a smallest combination of dependent products, self-typing universes, and extensionality principles sufficient to derive contradiction, and removing any one component yields a model with normalization.\n\nThe key insight is that “Type in Type” packages several closure principles; isolating the minimal contradictory fragment would distinguish genuine hierarchy collapse from harmless recursive syntax.\n\n**Why now?** The current separation between well-founded levels, reversible lifting, and universal semantic representation supplies three independently variable axes for a sharp minimality analysis.\n\n## 5. Ordinal Height Measures the Cost of Untangling\n\n**Conjecture.** For every well-founded dependency network, the least ordinal rank strictly decreasing along edges is invariant under edge subdivision and nonincreasing under semantics-preserving quotient maps; moreover, it exactly measures the minimum hierarchy height required to eliminate all apparent cycles.\n\nThe key insight is that untangling may be quantified by ordinal height rather than treated as a binary property, linking dependency analysis to termination complexity.\n\n**Why now?** Natural-valued ranks already prohibit every finite cycle, and the next testable step is to determine whether least ordinal ranks behave functorially under standard transformations of dependency networks.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_0600",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "3511fbf3",
-    "status": "available",
-    "timestamp": "2026-07-22T09:46:33.641785+00:00",
-    "title": "**Conjecture.** Every countable dependency relation that is well-founded and has"
   },
   {
     "ambition_level": "extension",
@@ -18646,26 +18242,6 @@
     "status": "available",
     "timestamp": "2026-07-23T02:29:54.150505+00:00",
     "title": "Future directions from cycle 6622cac1"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\n## From two-point risk to distributional lower bounds\n\nThe proved two-state theorem is a local obstruction. A next step is to integrate it over couplings of states whose functional observations are close but whose experiential values are separated. This should produce lower bounds for expected reconstruction loss in terms of an optimal-transport discrepancy between experiential and functional geometries.\n\n## Sharp constants and minimax reconstruction\n\nThe factor `1/2` comes from distributing a hidden contrast across two reconstruction errors. Characterizing equality, and then optimizing over Lipschitz decoders, would turn the bound into a minimax theorem. Finite metric spaces provide a tractable first setting, where the decoder problem can be compared with metric extension and facility-location problems.\n\n## Noisy and randomized decoders\n\nA randomized reconstruction is naturally a Markov kernel from functional observations to distributions on experiences. Replacing metric loss by Wasserstein loss should retain the same triangle-inequality obstruction. Formalizing this would connect hidden fibres to statistical experiments and data-processing inequalities.\n\n## Nontrivial coverings\n\nThe robust inequality does not require a globally split state space. It can therefore be applied locally to nontrivial finite coverings. A complementary topological development should construct an explicit connected two-sheeted cover and prove that it has local sheet swaps but no continuous global fibrewise choice of the opposite sheet.\n\n## Effective reconstruction\n\nThe present result bounds accuracy once a decoder is supplied. The definability question asks when a decoder exists computably. A useful next theorem would separate fibre constancy from uniform effective representative selection on the range of the functional map.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_0614",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "642478f0",
-    "status": "available",
-    "timestamp": "2026-07-23T18:45:53.914887+00:00",
-    "title": "The proved two-state theorem is a local obstruction. A next step is to integrate"
   },
   {
     "ambition_level": "extension",
@@ -19074,26 +18650,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "# Future Directions: Wigner Semicircle Law\n\nThis development establishes the two pillars of the moment-method proof of the\nWigner semicircle law and bridges them:\n\n1. **Combinatorial side** (`Moments.lean`): the moments of the standard\n   semicircle distribution are the Catalan numbers, satisfying the Catalan/Wigner\n   moment recurrence, the central-binomial closed form, and the `4^k` growth\n   bound (Carleman determinacy).\n2. **Analytic side** (`Density.lean`): the radius-1 semicircle density is a\n   genuine probability density (nonnegative, symmetric, integrates to 1) with\n   mean 0 and variance 1/4.\n3. **Bridge** (`Bridge.lean`): the rescaled Catalan moments match the directly\n   computed integrals of the density (0th, 1st, 2nd moments).\n\n## Natural next steps\n\n- **General even moment integral.** Prove\n  `∫_{-1}^{1} x^{2k} √(1-x²) dx = π · C_k / 4^{k+1}` for all `k` (currently only\n  `k = 0, 1` are done via `integral_sqrt_one_sub_sq` and the sin-substitution).\n  A reduction/recurrence via integration by parts or the Beta function\n  (`Real.Gamma`/`betaIntegral` in Mathlib) would give the full moment sequence of\n  the density, closing the loop with `scaledMoment` for every `k`.\n\n- **Uniqueness via moments (Carleman).** Formalize that a probability measure on\n  a bounded interval is determined by its moments, then combine with\n  `scMoment_le_four_pow` to conclude the semicircle law is the unique measure\n  with these moments.\n\n- **Empirical spectral distribution.** Define the empirical spectral measure\n  `μ_N = (1/N) Σ δ_{λ_i}` of an `N×N` symmetric matrix from its eigenvalues, and\n  its moments `(1/N) tr(M^k)`.\n\n- **Expected traces → Catalan.** For a Wigner ensemble, prove\n  `lim_{N→∞} E[(1/N) tr(W_N^{2k})] = C_k` and the odd traces `→ 0` by the\n  non-crossing pair-partition enumeration; the recurrence `scMoment_recurrence`\n  is the target identity.\n\n- **Weak convergence.** Assemble the moment convergence plus determinacy into\n  weak convergence `μ_N ⇒ semicircle`, the full statement of Wigner's theorem.\n\n- **Concentration.** Strengthen convergence in expectation to almost-sure /\n  in-probability convergence via variance bounds on the traces.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_0641",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "30631f2b",
-    "status": "available",
-    "timestamp": "2026-07-24T12:04:01.061037+00:00",
-    "title": "This development establishes the two pillars of the moment-method proof of the"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "# Future Directions — Ranks of elliptic curves twisted by quadratic forms\n\nThe results developed in this cycle isolate the elementary backbone of the twisted\nfamily `E^d : d y² = x³ + a x + b`: the fibres of the surface `(1 + t²) y² = f(x)`\nare precisely the quadratic twists of the base curve by the parameters `d = 1 + t²`,\nevery such parameter is a sum of two squares, and the set of admissible parameters\nis multiplicatively closed and infinite. The following conjectures push this\nstructural picture toward the analytic rank statements it is meant to support.\n\n## 1. Root-number stratification of the sum-of-two-squares family\n\n**Conjecture.** Among the twists `E^d` with `d` a squarefree sum of two squares, the\nsign of the functional equation (the root number) takes each value `±1` on a set of\npositive density, and the density of `d` with root number `-1` is bounded away from\nboth `0` and `1`.\n\n*The key insight is* that the sum-of-two-squares condition is a union of arithmetic\nprogressions cut out by splitting behaviour at the primes `p ≡ 3 (mod 4)`, and the\nlocal root numbers of `E^d` are themselves governed by congruence conditions on `d`;\nthe two systems of congruences are independent enough that neither can force the\nglobal sign.\n\n*Why now?* The multiplicative closure and infinitude of the parameter set are now on\nfirm footing, so the density questions can be phrased entirely in terms of the\nmonoid of sum-of-two-squares integers rather than the geometry of the surface.\n\n## 2. Positive proportion of rank exactly one\n\n**Conjecture.** For a fixed base curve `E`, a positive proportion of the\nsum-of-two-squares twists `E^d` with root number `-1` have analytic rank exactly `1`\n(hence algebraic rank `1` by the theorem of Gross–Zagier–Kolyvagin).\n\n*The key insight is* that the first moment of the derivative `L'(E^d, 1)` over the\nsum-of-two-squares family is strictly positive while the second moment is bounded,\nso a Cauchy–Schwarz argument forces a positive proportion of nonvanishing\nderivatives — precisely the lower-derivative contribution omitted in earlier work.\n\n*Why now?* The twist–standard-model isomorphism makes it possible to transport point\nconstructions on `(1+t²)y² = f(x)` directly to the Weierstrass model, giving explicit\ncandidate generators whose heights can be estimated against the derivative moments.\n\n## 3. A closed multiplicative structure on rank-one twists\n\n**Conjecture.** If `E^{d₁}` and `E^{d₂}` both have rank one with generators of\ncontrolled height, then for a positive proportion of pairs `(d₁, d₂)` the composite\ntwist `E^{d₁ d₂}` again has rank one, exhibiting the rank-one locus as \"almost closed\"\nunder the Brahmagupta–Fibonacci product of parameters.\n\n*The key insight is* that the sum-of-two-squares parameters form a monoid under the\nBrahmagupta–Fibonacci identity, and the twist coefficients compose as\n`(a d₁² , b d₁³)` then `(·) d₂` = `(a (d₁d₂)², b (d₁d₂)³)`, so the arithmetic of the\nparameters and the geometry of the twists are compatible semigroup actions.\n\n*Why now?* Both the parameter monoid and the coefficient composition law are now\nexplicit and verified, turning a vague \"twists compose\" slogan into a precise\nstatement about a semigroup action whose orbits can be sampled.\n\n## 4. Effective infinitude with a height window\n\n**Conjecture.** For every `X` large, the number of squarefree sum-of-two-squares\nparameters `d ≤ X` for which `E^d` has rank one is at least `c · X / (\\log X)^{1/2}`\nfor an explicit constant `c = c(E) > 0`.\n\n*The key insight is* that the count of sum-of-two-squares integers up to `X` already\nhas the Landau order `X / (\\log X)^{1/2}`, and the rank-one proportion from\nConjecture 2 is positive, so the two effective inputs multiply.\n\n*Why now?* The infinitude of the parameter set is established; upgrading it to an\neffective window only requires attaching the (already conjectural) positive\nproportion, isolating a single missing analytic estimate.\n\n## 5. Quadratic-form twists beyond `1 + t²`\n\n**Conjecture.** For any positive-definite binary quadratic form `Q(u, v)` of\ndiscriminant `-4`, the family of twists `E^{Q(u,v)}` realizes rank one infinitely\noften, and the resulting surface `Q(u,v) y² = f(x)` is birational to\n`(1 + t²) y² = f(x)` over the field generated by the form's automorphisms.\n\n*The key insight is* that every form of discriminant `-4` is `\\mathrm{SL}_2(\\mathbb{Z})`-equivalent\nto `u² + v²`, so the norm form `1 + t²` is not special — it is the canonical\nrepresentative of an entire equivalence class of quadratic-form twists.\n\n*Why now?* With the `1 + t²` case reduced to the sum-of-two-squares monoid, the\nequivalence of forms gives an immediate, testable generalization whose only new\ningredient is the class-number-one structure of discriminant `-4`.\n",
     "domain_bridges": [],
     "domains": [
@@ -19289,26 +18845,6 @@
     "status": "available",
     "timestamp": "2026-07-24T19:54:41.901992+00:00",
     "title": "The results in `ReticulationMOLS.lean` establish, in full generality, the sharp "
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions: complex-weighted undirected random graphs\n\nThis cycle deepened the theory of the **fixed-amplitude model**, where every present\nedge of an undirected graph carries a single common complex weight `z`. The weighted\nadjacency matrix factors as `z • B`, with `B` the Hermitian `0/1` indicator matrix of\nthe symmetric edge relation.\n\nThe Lean development in `Computation/FixedAmplitudeSpectrum.lean` establishes, as a\nself-contained chain, the algebraic core that motivates the conjectures below. Every\nstatement is fully proved (no `sorry`, only the standard axioms `propext`,\n`Classical.choice`, `Quot.sound`).\n\n## What is formalized this cycle\n\nThe file builds one long chain in which each step feeds the next:\n\n1. `real_of_im_zero` — a complex number with vanishing imaginary part equals its real part.\n2. `rayleigh_hermitian_real` — the Hermitian Rayleigh quotient `⟨v, B v⟩ = star v ⬝ᵥ B *ᵥ v`\n   is real. (Uses step 1 and the Hermitian quadratic-form lemma.)\n3. `rayleigh_scaled` — scaling the matrix by `z` scales the Rayleigh quotient by `z`.\n4. `rayleigh_scaled_real` — hence `⟨v, (z•B) v⟩ = z · (real)`. (Uses 2 and 3.)\n5. **`line_locking`** — the central theorem: for Hermitian `B`, every eigenvalue `μ` of\n   the weighted matrix `z • B` satisfies `μ = z · r` with `r : ℝ`. The whole spectrum\n   collapses onto the one-dimensional line `ℝ · z ⊆ ℂ`. (Uses 2 and 3.)\n6. `spectrum_on_line` — restatement of line-locking as membership in the line\n   `{ (r : ℂ) • z | r : ℝ }`. (Uses 5.)\n7. `trace_weighted`, `trace_weighted_loopless` — `tr(z•B) = z · tr B`, vanishing for a\n   loopless graph (zero diagonal), for every weight.\n8. `det_weighted` — the global multiplicative invariant `det(z•B) = zⁿ · det B`.\n9. `weighted_singular_iff` — for `z ≠ 0`, singularity of `z•B` is a purely combinatorial\n   property of `B`: `det(z•B) = 0 ↔ det B = 0`, independent of `z`. (Uses 8.)\n10. `Kgraph`, `Kgraph_isHermitian`, `Kgraph_loopless`, `Kgraph_mulVec_ones` — the complete\n    graph `Kₙ` indicator matrix: Hermitian, loopless, with constant row sum `n − 1`.\n11. `complete_eigenvalue`, `complete_eigenvalue_on_line` — the all-ones (mean-direction)\n    vector is an eigenvector of `z • Kₙ` with eigenvalue `(n−1)·z`, which lies on `ℝ · z`.\n12. `sqrt_lt_pred`, **`complete_outlier_escapes`** — for every order `n ≥ 3` and nonzero\n    `z`, the mean-direction eigenvalue has modulus `(n−1)‖z‖ > √n · ‖z‖`, so it escapes\n    the naive radius `√n · ‖z‖`. (Uses 10 and 11.)\n\nTogether these give the \"line-locking + global invariants + outlier\" package in complete,\nmachine-checked form, which is exactly the closed-form obstruction the conjectures below\nbuild on.\n\n## 1. Two-dimensional spectra require broken phase symmetry\n\n**Conjecture.** If the edges carry *independent* complex phases (relaxing\n`w_{ji} = conj(w_{ij})` to genuine independence), the empirical spectral distribution of\nthe normalized adjacency matrix converges, as `n → ∞`, to a rotationally invariant law on\na full two-dimensional disk — in sharp contrast to the line-locked fixed-amplitude model.\n\nThe formalized `line_locking` and `rayleigh_scaled` pin down *why*: line-locking is caused\nentirely by the scalar–Hermitian factorization `z • B`. All randomness sits in a single\nHermitian matrix, and one complex scalar can only rotate and dilate a real spectrum.\nBreaking the shared phase destroys the factorization, and is conjecturally what recovers\ncircular-law behaviour.\n\n## 2. A phase-transition threshold for the mean-direction outlier\n\n**Conjecture.** For fixed-amplitude `G(n, p)` with weight `z` there is a sharp threshold\n`p*(n)` above which the largest-modulus eigenvalue is asymptotically `p·(n−1)·|z|` (the\nmean-direction outlier), while the bulk stays within radius `2√{np(1−p)}·|z|`; separation\noccurs exactly when `p·(n−1) > 2√{np(1−p)}`.\n\nThe formalized endpoints are `complete_eigenvalue` (the deterministic `(n−1)·z` at `p = 1`)\nand `complete_outlier_escapes` (the outlier vs. `√n·‖z‖` gap). The remaining task is to\ninterpolate the expected row sum `p·(n−1)` against the semicircle radius across `p`.\n\n## 3. Reality of Rayleigh quotients characterizes the line-locked class\n\n**Conjecture.** A weighted adjacency matrix has its full spectrum confined to a single\ncomplex line through the origin *iff* the weighting is a complex scalar multiple of a\nHermitian matrix; equivalently, iff the Rayleigh quotient `⟨v, A v⟩` is a fixed complex\nmultiple of a real number for all `v`.\n\nThe forward direction is exactly `rayleigh_scaled_real` ⟹ `line_locking`, now established\nin full: reality of the Hermitian Rayleigh quotient pins each eigenvalue to the line. The\nopen part is the converse — that line confinement forces the scalar–Hermitian form.\n\n## 4. Determinant zeros track the underlying combinatorics\n\n**Conjecture.** `det(z·B) = zⁿ·det(B)` vanishes for fixed nonzero `z` iff `B` has no\nperfect matching of a certain signed type; consequently for `G(n, p)` the probability of\nsingularity has the same threshold as the appearance of an isolated vertex, independent\nof `z`.\n\nThe formalized `det_weighted` and `weighted_singular_iff` make the `z`-independence\nexplicit: the complex amplitude is a global unit that can neither create nor destroy\nsingularity, reducing the question to classical zero-one matrix theory.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_0708",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "cb7978a9",
-    "status": "available",
-    "timestamp": "2026-07-24T19:54:50.243437+00:00",
-    "title": "This cycle deepened the theory of the **fixed-amplitude model**, where every pre"
   },
   {
     "ambition_level": "extension",
@@ -19975,25 +19511,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Cycle 78cd863a (Q=0.635) proved 9 theorems in Computation but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Prove that for every n, there exists a number that can be expressed as a sum of two cubes in n different ways (Taxicab(n) exists). Compute Taxicab(3) and Taxacab(4). Prove bounds on the growth rate of",
-    "domain_bridges": [],
-    "domains": [
-      "Computation"
-    ],
-    "id": "sorry_fill_78cd863a_00929069",
-    "lineage_refs": [],
-    "priority_score": 0.68498,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "78cd863a",
-    "status": "available",
-    "timestamp": "2026-07-24T21:32:33.353319+00:00",
-    "title": "Close Proofs: Taxicab Number Generalizations: Hardy-Ramanujan Numbers"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "A cake is a smooth projective variety over R: it has a base (a smooth manifold with boundary), frosting (a sheaf of sections supported on the boundary), and layers (a stratification by codimension). The Fundamental Theorem of Cakes states: every cake C is uniquely determined (up to isomorphism of flavor) by its base B, its frosting sheaf F, and its layer stratification L. The frosting sheaf is a locally free sheaf of rank 1 (the cake has uniform frosting thickness) supported on the boundary of the base. The stratification is a flag of subvarieties C = L_0 > L_1 > ... > L_k = {point} where L_i has codimension i and represents the i-th layer. Conjecture: the moduli space of cakes of genus g (g = number of cherries on top) has dimension 3g-3 for g >= 2, mirroring the moduli space of Riemann surfaces. The cherry number g corresponds to the first Betti number of the cake surface, and the moduli are the positions of the g cherries on the surface. Test: enumerate all topologically distinct cakes with g <= 5 cherries and verify that the moduli space has dimension 3g-3. Compute the Teichmuller space of cakes by varying the cherry positions. Impact: cakes are algebraic varieties, and the mathematics of cake decoration IS the mathematics of moduli spaces.",
     "domain_bridges": [],
     "domains": [
@@ -20097,44 +19614,6 @@
     "status": "available",
     "timestamp": "",
     "title": "The Fermi Paradox as a Pigeonhole Principle: Why We Are Alone"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Cycle 29ba074c (Q=0.600) proved 24 theorems in NumberTheory but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formally proves existence and strict convexity of an energy spectrum functional E(a,b,c; N) over Berggren tree paths that guides a deterministic path to a non-trivial factor of N.",
-    "domain_bridges": [],
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "sorry_fill_29ba074c_5136a953",
-    "lineage_refs": [],
-    "priority_score": 0.65,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "29ba074c",
-    "status": "available",
-    "timestamp": "2026-07-24T06:47:46.532440+00:00",
-    "title": "Close Proofs: Pythagorean-Energy-Spectrum: Gradient Descent Factoring on the Berggre"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Cycle 6bb52b3a (Q=0.600) proved 12 theorems in Computation but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'Generalizations of nets and Latin squares' and formalize its key results. Abstract: We examine combinatorial structures which generalize $(k,n)$-nets, orthogonal arrays, a",
-    "domain_bridges": [],
-    "domains": [
-      "Computation"
-    ],
-    "id": "sorry_fill_6bb52b3a_dd787004",
-    "lineage_refs": [],
-    "priority_score": 0.65,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "6bb52b3a",
-    "status": "available",
-    "timestamp": "2026-07-24T19:54:45.598786+00:00",
-    "title": "Close Proofs: ArXiv paper: Generalizations of nets and Latin squares"
   },
   {
     "ambition_level": "extension",

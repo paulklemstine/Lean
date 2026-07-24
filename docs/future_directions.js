@@ -448,16 +448,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Timeline-Divergence: Lyapunov Exponents of Quantum History Splitting"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d6b505de",
     "description": "Proves that total entropy across all parallel branches of the multiverse strictly increases, even when single branches experience local decreases.",
     "domains": [
       "Physics"
     ],
     "id": "scifi_50_28_2ebff485",
+    "phase": "A",
     "priority_score": 0.95,
     "research_mode": "team",
     "source_exp_id": "scifi_50_injection",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-23T20:07:58.185729+00:00",
     "title": "Cross-Reality-Entropy: Second Law of Thermodynamics for Multiversal Ensembles"
   },
@@ -2040,7 +2041,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "One-Way Functions: Existence and Hierarchy"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f90ec3a1",
     "description": "Prove that any sufficiently powerful formal system necessarily contains strange loops: statements that refer to their own unprovability. Formalize G\u00f6del's first incompleteness theorem as a fixed-point in the lattice of provability predicates. Explore whether consciousness arises from tangled hierarchies of self-referential symbols.",
     "domains": [
       "Novelty",
@@ -2048,10 +2049,11 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "id": "seed_253",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Strange Loops: Self-Reference and G\u00f6del's Incompleteness"
   },
@@ -9552,16 +9554,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Aperiodicity and subword complexity in the binary expansion of powers of three"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "41e2ee03",
     "description": "Investigate the ArXiv paper 'Several families of incommensurable noncompact hyperbolic Coxeter polytopes' and formalize its key results. Abstract: We classify all 141 finite-volume hyperbolic Coxeter five-dimensional polytopes with eight facets, of which 125 are noncompact. Using maximal-cusp density and a noncompact analog of Bogachev-Douba-Raimbault's argument, we construct infinitely many pairwise incommensurable noncompact Coxeter polytopes in dimensions 4, 5, 6, 7, and 9, with the number of commensurability classes growing at least exponentially in volume.",
     "domains": [
       "Bridges"
     ],
     "id": "fd_0208",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14715v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-17T08:20:29.584439+00:00",
     "title": "ArXiv paper: Several families of incommensurable noncompact hyperbolic Coxeter polytopes"
   },
@@ -13084,17 +13087,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "The accompanying Lean development proves the finite algebraic core of homologica"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "920a890c",
     "description": "# Future directions\n\nThe formal development establishes a concrete genuinely non-strict bicategory: its chosen 1-cell composition has bracketings equal to `5` and `7`, while an invertible associator connects them, and the pentagon and triangle coherence laws hold. It also proves that no `Bicategory.Strict` structure can exist for this fixed composition.\n\nNatural continuations include:\n\n1. **General codiscrete construction.** Package the construction for every unital magma, proving that codiscrete hom-categories turn arbitrary unit and associativity defects into coherent invertible 2-cells.\n2. **Nontrivial 2-cell coherence.** Replace `PUnit` 2-cells by a nontrivial group of automorphisms. Then the pentagon becomes an actual cocycle equation rather than following from subsingleton elimination.\n3. **Skeletal obstruction.** Formalize the relationship between associators in one-object bicategories and normalized group-cohomological 3-cocycles, including the criterion for strictification without changing the underlying 1-cells.\n4. **Biequivalence versus equality.** Prove a strictification result at the level of biequivalence, contrasting it with `no_strict_structure`, which rules out strictness on the fixed data but not replacement by an equivalent strict 2-category.\n5. **Higher coherence.** Develop tricategorical analogues where coherence between associators is itself witnessed by invertible 3-cells. This is the appropriate formal setting for the broader \u201cevery coherent loop-tolerant structure forms a higher category\u201d direction; that sweeping claim requires precise dimensions and coherence axioms before it is a theorem.\n6. **Computational exploration.** Enumerate small finite unital magmas and classify their associativity defects. For the present infinite example, the relevant small calculation is already kernel-checked in `left_bracketing_value` and `right_bracketing_value`, so a separate empirical evidence stage would add no confidence to the proved claim.\n",
     "domains": [
       "Logic",
       "Algebra"
     ],
     "id": "fd_0532",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "3d25b5ad",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-20T23:22:24.198252+00:00",
     "title": "The formal development establishes a concrete genuinely non-strict bicategory: i"
   },
