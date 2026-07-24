@@ -1154,7 +1154,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "81b94eec",
     "description": "Prove that the rank of an elliptic curve equals the order of vanishing of its L-function at s=1. Formalize the BSD formula including the regulator, Tate-Shafarevich group, and Tamagawa numbers.",
     "domain_bridges": [],
     "domains": [
@@ -1167,7 +1167,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Birch and Swinnerton-Dyer Conjecture"
   },
@@ -2425,7 +2425,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "04a61ead",
     "description": "Proves conformal invariance of chordal SLE_κ interfaces in simply connected planar domains.",
     "domain_bridges": [],
     "domains": [
@@ -2437,7 +2437,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "batch_50_injection",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-23T20:05:24.653256+00:00",
     "title": "SLE-Interface: Schramm-Loewner Evolution Conformal Invariance"
   },
@@ -11551,7 +11551,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f853fcd6",
     "description": "Investigate the ArXiv paper 'Matroid correspondence' and formalize its key results. Abstract: Motivated by algebraic correspondences and linear operators associated with volume and Lorentzian polynomials, we introduce matroid correspondences and their polymatroid analogues. A matroid correspondence defines a functor between poset categories of matroids whose morphisms are matroid quotients, and various standard functors, including deletion, contraction, free extension, truncation, intersection, union, and pullback, arise in this way. We show that these correspondences preserve representability and algebraicity under natural hypotheses. In the polymatroid setting, we establish compatibility with multisymmetric lifts. Finally, we relate this construction to the supports of linear operators with Lorentzian symbols.",
     "domain_bridges": [],
     "domains": [
@@ -11564,7 +11564,7 @@
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
     "source_exp_id": "2607.13783v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T17:27:41.805947+00:00",
     "title": "ArXiv paper: Matroid correspondence"
   },
@@ -12652,7 +12652,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "41e2ee03",
     "description": "Investigate the ArXiv paper 'Several families of incommensurable noncompact hyperbolic Coxeter polytopes' and formalize its key results. Abstract: We classify all 141 finite-volume hyperbolic Coxeter five-dimensional polytopes with eight facets, of which 125 are noncompact. Using maximal-cusp density and a noncompact analog of Bogachev-Douba-Raimbault's argument, we construct infinitely many pairwise incommensurable noncompact Coxeter polytopes in dimensions 4, 5, 6, 7, and 9, with the number of commensurability classes growing at least exponentially in volume.",
     "domain_bridges": [],
     "domains": [
@@ -12664,7 +12664,7 @@
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
     "source_exp_id": "2607.14715v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-17T08:20:29.584439+00:00",
     "title": "ArXiv paper: Several families of incommensurable noncompact hyperbolic Coxeter polytopes"
   },
@@ -14690,7 +14690,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6296b01e",
     "description": "# Future Directions: Recurrence in Cognitive Dynamics\n\n## 1. Observation-invariant recurrence spectra\n\n**Conjecture.** For compact metric cognitive systems related by a topological conjugacy, the exact-period spectrum, topological entropy, and existence of Li–Yorke scrambled sets are simultaneously invariant; under a merely finite-to-one observation map, exact periods can only decrease by divisibility.\n\nThe key insight is that faithful semiconjugacy already preserves exact period pointwise, while loss of injectivity is the precise mechanism by which an observed cycle can collapse. **Why now?** The finite-state embedding and exact-period transport results isolate the hypotheses needed to extend recurrence invariance from individual states to global entropy and chaos.\n\n## 2. Measured recurrence instead of point density\n\n**Conjecture.** In a parametrized family of cognitive observation models, lifetime recurrence incidence is determined by the measure of an observation-thickened recurrent set, not by the cardinality or topological density of periodic points; the two quantities can vary independently even among maps with dense periodic points.\n\nThe key insight is that population incidence is probabilistic, whereas density of periodic points is topological and carries no canonical percentage. **Why now?** The contraction counterexample rules out continuity as a sufficient explanation, and the faithful-observation theorem supplies a principled way to state how measurement changes recurrence.\n\n## 3. Period-three forcing with cognitive observability\n\n**Conjecture.** Let a continuous interval map have an exact period-three orbit and let an observation map separate the three orbit states by a fixed positive margin. Then there is a quantitative lower bound, depending only on that margin and a modulus of continuity, for the number of distinguishable finite observation words of length `n`, growing exponentially in `n`.\n\nThe key insight is that period three should force symbolic complexity only when the observation process can distinguish the forced orbit structure. **Why now?** Exact period three has been converted into an explicit three-state embedding, making quantitative separation the natural next hypothesis rather than an implicit assumption.\n\n## 4. Logistic parameter windows and robust recurrence\n\n**Conjecture.** Near the parameter `r = 3.83`, the logistic family admits an open parameter interval with an attracting exact three-cycle whose basin has positive Lebesgue measure, while the fixed-point set remains measure zero throughout that interval.\n\nThe key insight is that robust observed recurrence should be modeled through basin measure and attraction, not through the density of the periodic points themselves. **Why now?** The exact fixed states and critical value at `3.83` are known algebraically, so the remaining problem is a falsifiable stability and basin-measure calculation.\n\n## 5. Tropical drift as a recurrence obstruction\n\n**Conjecture.** For an irreducible min-plus cognitive transition matrix, a tropical eigenstate is periodic in the ordinary state space exactly when its eigenvalue is zero; modulo additive constants, every tropical eigenstate is fixed, and eventual projective recurrence is governed by the cyclicity of the critical graph.\n\nThe key insight is that a tropical eigenvalue records linear drift, so quotienting by global activation offset separates genuine recurrence from uniform translation. **Why now?** Zero-eigenvalue recurrence and the full iterate drift formula are already established, leaving critical-graph cyclicity as the concrete bridge from tropical spectral theory to periodic cognition.\n",
     "domain_bridges": [],
     "domains": [
@@ -14703,7 +14703,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "5102d77c",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-17T18:22:04.054428+00:00",
     "title": "**Conjecture.** For compact metric cognitive systems related by a topological co"
   },

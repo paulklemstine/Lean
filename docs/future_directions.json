@@ -10141,7 +10141,7 @@
       "catalog_references": [],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "41e2ee03",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -10168,7 +10168,7 @@
       "source": "",
       "source_exp_id": "2607.14715v1",
       "source_path": "http://arxiv.org/abs/2607.14715v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-17T08:20:29.584439+00:00",
       "title": "ArXiv paper: Several families of incommensurable noncompact hyperbolic Coxeter polytopes"
@@ -11412,11 +11412,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 2,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "6296b01e",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -11429,7 +11429,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0238",
-      "last_attempt_time": "2026-07-23T22:18:40.104566+00:00",
+      "last_attempt_time": "2026-07-24T23:25:24.785256+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -11444,7 +11444,7 @@
       "source": "",
       "source_exp_id": "5102d77c",
       "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/5102d77c",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "th_79e5a4d0",
       "timestamp": "2026-07-17T18:22:04.054428+00:00",
       "title": "**Conjecture.** For compact metric cognitive systems related by a topological co"
@@ -52785,6 +52785,7 @@
     "famous_subtask",
     "cross_domain_bridge",
     "famous_subtask",
-    "famous_subtask"
+    "famous_subtask",
+    "abduction_followup"
   ]
 }
