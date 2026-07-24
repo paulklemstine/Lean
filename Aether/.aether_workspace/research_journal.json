@@ -503,26 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "74205c89",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions\n\n## 1. Closed-subgroup exclusion for the Fibonacci four-anyon sector\n\nFix a published unitary normalization and fusion basis for the three-dimensional Fibonacci sector, and prove t",
-      "quality_score": 0.69,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-07-18T19:24:38",
-      "title": "Topological Quantum Compiling: Braid Groups as Universal Gates"
-    },
-    {
-      "cycle_id": "d757b941",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions: Transform Uncertainty Beyond Fourier Duality\n\n## 1. Quantitative analytic-continuation uncertainty\n\n**Conjecture.** Let a normalized integral transform send compactly supported in",
-      "quality_score": 0.73,
-      "sorry_count": 0,
-      "theorem_count": 21,
-      "timestamp": "2026-07-18T19:24:50",
-      "title": "The Uncertainty Principle Is a Fourier Thing: Position-Momentum Duality"
-    },
-    {
       "cycle_id": "091f8315",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\n## 1. Quantified prediction from the angle-doubling coordinate\n\nFor every fixed bit-extraction rule with finitely many interval boundaries, determine\nwhether a polynomial-time pre",
@@ -2501,6 +2481,26 @@
       "theorem_count": 9,
       "timestamp": "2026-07-24T21:32:33",
       "title": "Taxicab Number Generalizations: Hardy-Ramanujan Numbers"
+    },
+    {
+      "cycle_id": "e8a20d63",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions — the structural core of Euler's prime-rich polynomial\n\nThis cycle recast the isolated \"prime run\" facts behind discriminants 43, 67, 163\nas uniform consequences of a single hypoth",
+      "quality_score": 0.63,
+      "sorry_count": 0,
+      "theorem_count": 35,
+      "timestamp": "2026-07-24T23:24:22",
+      "title": "`Heegner163.lean` gives a kernel-checked elementary chain connecting Euler's"
+    },
+    {
+      "cycle_id": "5a7b49b0",
+      "domain": "Logic",
+      "key_insight": "# Future Directions — Spectral Bridge for Quantum Walks on Cayley Graphs\n\n## What was proved\n\n`QuantumWalkSpectralBridge.lean` establishes a concrete, machine-checked bridge between\n**harmonic analysi",
+      "quality_score": 0.58,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-07-24T23:24:26",
+      "title": "Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-24T21:32:33",
+  "last_updated": "2026-07-24T23:24:26",
   "open_questions": [
     {
       "context": "+    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; +    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; +    ∀ i < k, c i = ",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "79f58a3a",
-        "quality": 0.72,
-        "theorems": 0,
-        "title": "Speculative: Category Theory as the DNA of Mathematics"
-      },
-      {
         "cycle_id": "fbb9076c",
         "quality": 0.72,
         "theorems": 0,
@@ -3513,6 +3507,12 @@
         "quality": 0.6,
         "theorems": 0,
         "title": "Close Proofs: Cellular Automata at the Ordinals: Transfinite Computation"
+      },
+      {
+        "cycle_id": "5a7b49b0",
+        "quality": 0.58,
+        "theorems": 13,
+        "title": "Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
       }
     ],
     "MachineLearning": [
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "b596d3d1",
-        "quality": 0.75,
-        "theorems": 21,
-        "title": "Quantum Entanglement as Algebraic Topology: The Linking Number Is Entanglement"
-      },
-      {
         "cycle_id": "6cb3854b",
         "quality": 0.65,
         "theorems": 17,
@@ -3885,6 +3879,12 @@
         "quality": 0.63,
         "theorems": 13,
         "title": "Future directions from cycle 279ae676"
+      },
+      {
+        "cycle_id": "e8a20d63",
+        "quality": 0.63,
+        "theorems": 35,
+        "title": "`Heegner163.lean` gives a kernel-checked elementary chain connecting Euler's"
       }
     ],
     "Shared": [

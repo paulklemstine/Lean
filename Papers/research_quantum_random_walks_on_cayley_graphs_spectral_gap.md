@@ -1,589 +1,485 @@
-# Periodicity Obstructs Instantaneous Mixing in Finite Quantum Walks
+# Fourier Diagonalization and Exact Spectra of Cyclic Cayley Graphs
+
+**Aristotle**  
+**July 24, 2026**
 
 ## Abstract
 
-Quantum walks on finite Cayley graphs are often compared with classical random walks through mixing times and spectral gaps. Such a comparison requires care because closed quantum evolution is unitary and reversible, whereas classical Markov evolution is generally contractive. This paper proves a general obstruction to instantaneous pointwise mixing. A positive-period periodic sequence in any Hausdorff space can converge only to its initial value. If a quantum evolution operator satisfies $U^k=I$ for some positive integer $k$, then every coordinate Born-probability sequence is periodic with period $k$. Consequently, if those probabilities converge pointwise, their limit is exactly the initial Born distribution. Uniform convergence is therefore possible only from an initially uniform probability profile, and a basis-state start on any finite space with more than one point cannot converge pointwise to uniform. Cyclic shifts provide explicit counterexamples in every finite cardinality. We also explain why the classical modulus gap $1-|\lambda_2|$ cannot control unitary relaxation, present algorithms for detecting and illustrating the obstruction, and distinguish instantaneous convergence from time-averaged, decoherent, measured, and continuous-time notions of quantum mixing.
+Let $G=\mathbb Z/n\mathbb Z$ and let $S\subseteq G$ be a connection set. We study the translation-invariant adjacency operator
+
+$$
+(A_Sf)(x)=\sum_{s\in S}f(x+s)
+$$
+
+on complex-valued functions on $G$. We prove directly that every additive character $\chi_\zeta(x)=\zeta^x$, where $\zeta^n=1$, is a nonzero eigenvector, with eigenvalue equal to the character sum
+
+$$
+\lambda_S(\zeta)=\sum_{s\in S}\zeta^s.
+$$
+
+Thus the discrete Fourier basis simultaneously diagonalizes every cyclic Cayley adjacency operator. We derive three consequences: the trivial character has eigenvalue $|S|$; every eigenvalue has modulus at most $|S|$; and a symmetric connection set $S=-S$ has real character eigenvalues. For the cycle $S=\{1,-1\}$ with $n\geq3$, we obtain the exact spectrum
+
+$$
+\lambda_k=2\cos\left(\frac{2\pi k}{n}\right),\qquad k=0,\ldots,n-1.
+$$
+
+We present computational algorithms based on direct character sums and the fast Fourier transform, explain the consequences for normalized classical transition operators and spectral gaps, and clarify the boundary between this Hermitian adjacency theory and genuinely unitary quantum-walk dynamics. The results provide a self-contained spectral bridge among finite harmonic analysis, circulant matrices, graph theory, and periodic transport.
 
 ## 1. Introduction
 
-Let $G$ be a finite group and $S$ a generating set. The Cayley graph $\operatorname{Cay}(G,S)$ has vertex set $G$ and connects $g$ to $sg$ or $gs$, according to convention, for each $s\in S$. Its symmetry makes it a natural setting for both classical and quantum walks. In the classical case, a probability distribution is repeatedly transformed by a stochastic operator. Under irreducibility and aperiodicity hypotheses, nonstationary spectral components decay and the distribution approaches a stationary law, often the uniform law on a regular Cayley graph.
+Cayley graphs convert algebraic motion into geometry. Given a group and a collection of permitted increments, vertices represent group elements and edges represent multiplication or addition by those increments. On the cyclic group $\mathbb Z/n\mathbb Z$, this construction produces every graph whose adjacency rule is translation invariant around a finite circle. Such graphs include the ordinary cycle, but also long-range periodic networks with several allowed displacements.
 
-A closed discrete-time quantum walk is fundamentally different. Its state is a vector of complex amplitudes, and one time step is represented by a unitary operator. Measurement probabilities arise only after taking squared moduli. The state evolution is reversible, its norm is conserved, and its spectral modes rotate rather than decay. These facts do not prevent useful quantum transport or algorithmic speedups, but they do obstruct a direct transfer of classical pointwise convergence claims.
+Translation invariance is a strong symmetry. The local environment around every vertex is identical, so an adjacency operator built from the graph commutes with every cyclic shift. The natural spectral coordinates are therefore the irreducible characters of the cyclic group, equivalently the modes of the discrete Fourier transform. This statement is often expressed by saying that circulant matrices are diagonalized by the Fourier matrix. Here we develop the result directly from the group law, retaining enough structure to expose the eigenvalue as a character sum over the connection set.
 
-We isolate the obstruction in its simplest exact form. Assume the evolution has finite positive order: $U^k=I$ for some $k>0$. Then the complete state, and hence every Born probability, repeats after $k$ steps. A periodic sequence can have a limit only when that limit equals every value in its cycle, in particular its initial value. The result immediately rules out pointwise convergence to uniform from a localized state on a nontrivial finite space.
+The character-sum viewpoint is useful for three reasons. First, it simultaneously handles all cyclic connection sets rather than one matrix at a time. Second, it makes qualitative spectral properties nearly immediate: degree gives the top modulus bound, while inverse symmetry forces reality. Third, it specializes to a transparent trigonometric spectrum for the cycle, linking roots of unity to the cosine dispersion relation of a periodic one-dimensional lattice.
 
-The argument is independent of the graph structure and does not require unitarity beyond whatever is used to justify the chosen evolution. Finite order alone is enough. This generality clarifies that the obstruction is topological and dynamical, not an artifact of a specific group or representation.
+The motivating language of random walks requires care. Dividing the adjacency operator by the degree gives a classical stochastic transition operator when moves are selected uniformly. Its nonconstant eigenvalues govern decay toward equilibrium under standard irreducibility and aperiodicity assumptions. A genuine discrete-time quantum walk, however, is unitary and generally requires additional structure. Adjacency spectral data remain important, particularly in Hamiltonian, coined, and Szegedy-type constructions, but adjacency diagonalization alone does not prove a universal quantum mixing law. This distinction will be maintained throughout.
 
-The paper proceeds as follows. Section 2 defines amplitude evolution, Born probabilities, periodicity, and mixing. Section 3 proves the periodic convergence theorem. Section 4 transfers it to finite-order quantum dynamics and derives the no-go theorem. Section 5 gives cyclic-shift examples. Section 6 analyzes the mismatch between classical and unitary spectral gaps. Section 7 discusses valid constructions of Cayley-graph quantum walks. Section 8 presents computational algorithms and numerical diagnostics. Section 9 identifies alternative notions of mixing, and Sections 10–12 discuss applications, limitations, and future work.
+The principal contributions are as follows.
 
-## 2. Definitions and setting
+1. We give a direct proof that all cyclic characters are nonzero eigenvectors of every cyclic Cayley adjacency operator.
+2. We identify the eigenvalue as the finite Fourier transform of the connection set.
+3. We prove the degree eigenvalue and a uniform degree bound on spectral modulus.
+4. We prove reality of the character spectrum for inverse-closed connection sets.
+5. We derive the exact cosine spectrum of the cycle.
+6. We state practical algorithms for computing and numerically checking the spectrum, including an $O(n\log n)$ Fourier method.
 
-### 2.1 Finite quantum state spaces
+## 2. Cyclic groups, signals, and Cayley operators
 
-Let $G$ be a nonempty finite set. The Hilbert space of complex amplitudes on $G$ is
+### 2.1 The cyclic group
 
-$$
-\mathcal H_G=\ell^2(G)\cong \mathbb C^{|G|}.
-$$
-
-A state is a function $\psi:G\to\mathbb C$ satisfying
-
-$$
-\sum_{x\in G}|\psi(x)|^2=1.
-$$
-
-The normalization condition ensures that squared moduli form a probability distribution. Let $U:\mathcal H_G\to\mathcal H_G$ be a linear evolution operator. For a closed quantum system, $U$ is unitary, meaning
+Fix an integer $n\geq1$. Let
 
 $$
-U^*U=UU^*=I.
+G_n=\mathbb Z/n\mathbb Z
 $$
 
-Given an initial state $\psi$, define the amplitude at time $n\in\mathbb N$ and position $x\in G$ by
+with addition modulo $n$. We represent its elements by residues $0,1,\ldots,n-1$, while all equations involving group elements are interpreted modulo $n$.
+
+A **connection set** is a subset $S\subseteq G_n$. The directed Cayley graph determined by $S$ has an arc from $x$ to $x+s$ for each $x\in G_n$ and $s\in S$. If $S=-S$, where
 
 $$
-a_n(x)=(U^n\psi)(x).
+-S=\{-s:s\in S\},
 $$
 
-The associated Born probability is
+then every arc occurs with its reverse and the graph is undirected, apart from the possibility of loops when $0\in S$.
+
+The degree counted by the connection rule is $d=|S|$. Distinct residues in $S$ give distinct outgoing neighbors from every vertex.
+
+### 2.2 Function space and adjacency
+
+Let
 
 $$
-P_n(x)=|a_n(x)|^2=|(U^n\psi)(x)|^2.
+\mathcal H_n=\{f:G_n\to\mathbb C\}.
 $$
 
-### 2.2 Localized and uniform distributions
-
-For an origin $o\in G$, the localized basis state is
+This is an $n$-dimensional complex vector space. Equip it, when needed, with the inner product
 
 $$
-\delta_o(x)=
-\begin{cases}
-1,&x=o,\\
-0,&x\ne o.
+\langle f,g\rangle=\sum_{x\in G_n}\overline{f(x)}g(x).
+$$
+
+The **Cayley adjacency operator** associated with $S$ is the linear map $A_S:\mathcal H_n\to\mathcal H_n$ defined by
+
+$$
+(A_Sf)(x)=\sum_{s\in S}f(x+s).
+$$
+
+Our convention uses forward translations. Replacing $x+s$ by $x-s$ conjugates or reindexes the resulting Fourier formula but does not alter the multiset of eigenvalues for symmetric sets.
+
+If $S$ is nonempty, the corresponding uniformly weighted classical transition operator is
+
+$$
+P_S=\frac{1}{|S|}A_S.
+$$
+
+The operator $P_S$ is row-stochastic under the coordinate convention induced by the formula above. It preserves constant functions and averages values over translated neighbors.
+
+### 2.3 Roots of unity and characters
+
+A complex number $\zeta$ is an **$n$th root of unity** if $\zeta^n=1$. Every such $\zeta$ lies on the unit circle. For each root define
+
+$$
+\chi_\zeta(x)=\zeta^r,
+$$
+
+where $r$ is any integer representative of $x\in G_n$. This is well defined: replacing $r$ by $r+qn$ multiplies the value by $(\zeta^n)^q=1$.
+
+The defining character identity is
+
+$$
+\chi_\zeta(x+s)=\chi_\zeta(x)\chi_\zeta(s).
+$$
+
+Indeed, choose integer representatives and use the law of exponents; any wraparound changes the exponent by a multiple of $n$ and hence does not change the value.
+
+The standard roots are
+
+$$
+\zeta_k=\exp\left(\frac{2\pi i k}{n}\right),\qquad k=0,1,\ldots,n-1.
+$$
+
+The corresponding characters $\chi_k(x)=e^{2\pi i kx/n}$ form the discrete Fourier basis. Orthogonality follows from the geometric-series identity:
+
+$$
+\sum_{x=0}^{n-1}e^{2\pi i(k-\ell)x/n}
+=\begin{cases}
+n,&k=\ell,\\
+0,&k\neq\ell.
 \end{cases}
 $$
 
-Its Born distribution is the point mass at $o$. The uniform probability distribution on $G$ is
+Thus the normalized functions $n^{-1/2}\chi_k$ form an orthonormal basis of $\mathcal H_n$.
+
+## 3. The Fourier diagonalization theorem
+
+We begin with the algebraic fact on which all later conclusions rest.
+
+**Lemma 3.1 (modular exponent compatibility).** Let $\zeta^n=1$. If integers $a$ and $b$ are congruent modulo $n$, then $\zeta^a=\zeta^b$. Consequently, for all $x,s\in G_n$,
 
 $$
-\pi(x)=\frac{1}{|G|}
+\chi_\zeta(x+s)=\chi_\zeta(x)\chi_\zeta(s).
 $$
 
-for all $x\in G$.
+**Proof sketch.** Congruence gives $a=b+qn$ for some integer $q$. Since $\zeta^n=1$, the factor $\zeta^{qn}$ is $1$. Applying this after choosing representatives for $x$ and $s$ gives the character law. Negative exponents may be handled using $\zeta^{-1}=\overline\zeta$, valid because $|\zeta|=1$. $\square$
 
-A state has an initially uniform Born profile if
-
-$$
-|\psi(x)|^2=\frac{1}{|G|}
-$$
-
-for every $x$. This condition allows arbitrary phases: $\psi(x)=e^{i\theta_x}/\sqrt{|G|}$ is permitted for any real phases $\theta_x$.
-
-### 2.3 Periodicity
-
-A sequence $f:\mathbb N\to X$ has period $k>0$ if
+Define the **connection-set character sum** by
 
 $$
-f(n+k)=f(n)
+\lambda_S(\zeta)=\sum_{s\in S}\chi_\zeta(s)=\sum_{s\in S}\zeta^s.
 $$
 
-for every $n\in\mathbb N$. The period need not be minimal.
+The second notation uses representatives but is independent of their choice by Lemma 3.1.
 
-An evolution operator has finite order if there is a positive integer $k$ such that
-
-$$
-U^k=I.
-$$
-
-It follows that $U^{n+k}=U^n$ for every $n$. Thus every orbit under $U$ is periodic with common period $k$.
-
-### 2.4 Instantaneous pointwise mixing
-
-We say that the walk converges pointwise to a probability distribution $p:G\to[0,1]$ if
+**Theorem 3.2 (Fourier diagonalization of cyclic Cayley operators).** Let $n\geq1$, let $S\subseteq G_n$, and let $\zeta^n=1$. The character $\chi_\zeta$ is a nonzero eigenvector of $A_S$, with eigenvalue $\lambda_S(\zeta)$. Explicitly,
 
 $$
-\lim_{n\to\infty}P_n(x)=p(x)
+A_S\chi_\zeta=\lambda_S(\zeta)\chi_\zeta.
 $$
 
-for every $x\in G$. It mixes pointwise to uniform if $p=\pi$, or equivalently,
+In particular, the standard characters $\chi_0,\ldots,\chi_{n-1}$ form an eigenbasis, so the discrete Fourier basis diagonalizes $A_S$.
+
+**Proof sketch.** For every $x\in G_n$, apply the character law term by term:
 
 $$
-\lim_{n\to\infty}|(U^n\psi)(x)|^2=\frac{1}{|G|}
+\begin{aligned}
+(A_S\chi_\zeta)(x)
+&=\sum_{s\in S}\chi_\zeta(x+s)\\
+&=\sum_{s\in S}\chi_\zeta(x)\chi_\zeta(s)\\
+&=\chi_\zeta(x)\sum_{s\in S}\chi_\zeta(s)\\
+&=\lambda_S(\zeta)\chi_\zeta(x).
+\end{aligned}
 $$
 
-for every $x\in G$.
+The character is nonzero because $\chi_\zeta(0)=1$. The standard characters form a basis by Fourier orthogonality, completing the diagonalization statement. $\square$
 
-Because $G$ is finite, coordinatewise convergence is equivalent to convergence in every standard norm on $\mathbb R^G$, including total variation:
+**Corollary 3.3 (simultaneous diagonalization).** For fixed $n$, every operator $A_S$ arising from a connection set $S\subseteq G_n$ is diagonal in the same Fourier basis.
 
-$$
-\|P_n-p\|_{\mathrm{TV}}=\frac12\sum_{x\in G}|P_n(x)-p(x)|.
-$$
+**Proof sketch.** Theorem 3.2 identifies each $\chi_k$ as an eigenvector for every $S$. Only the corresponding character sum changes with $S$. $\square$
 
-Thus the pointwise no-go result below also excludes convergence in total variation for finite $G$.
+This simultaneous statement is stronger than diagonalizing one circulant matrix. It says that the full commutative algebra of cyclic convolution operators shares one canonical spectral coordinate system.
 
-### 2.5 Time-averaged mixing
+## 4. Degree, spectral modulus, and symmetry
 
-Instantaneous convergence must be distinguished from Cesàro convergence. Define
+### 4.1 The constant mode
 
-$$
-\overline P_T(x)=\frac1T\sum_{n=0}^{T-1}P_n(x).
-$$
+The root $\zeta_0=1$ produces the constant character $\chi_0(x)=1$.
 
-A walk mixes in the time-averaged sense if $\overline P_T$ converges to a specified distribution as $T\to\infty$. A periodic sequence may fail to converge instantaneously while its Cesàro average converges. The main theorem does not prohibit this behavior.
-
-## 3. A topological theorem for periodic sequences
-
-The essential argument uses only the uniqueness of limits.
-
-**Theorem 3.1 (Periodic Convergence Theorem).** Let $X$ be a Hausdorff topological space, let $f:\mathbb N\to X$, and let $k$ be a positive integer. Suppose
+**Theorem 4.1 (degree eigenvalue).** For every connection set $S\subseteq G_n$,
 
 $$
-f(n+k)=f(n)
+\lambda_S(1)=|S|.
 $$
 
-for every $n$. If $f(n)\to L$ as $n\to\infty$, then
+Hence the constant function is an eigenvector of $A_S$ with eigenvalue equal to the degree.
+
+**Proof sketch.** Every term in the character sum is $1^s=1$, so the sum has exactly $|S|$ unit terms. Equivalently, applying $A_S$ to a constant function adds $|S|$ identical values. $\square$
+
+For the normalized transition operator $P_S$, this eigenvalue becomes $1$, expressing conservation of total probability and stationarity of the uniform distribution.
+
+### 4.2 A universal modulus bound
+
+**Theorem 4.2 (spectral degree bound).** If $\zeta^n=1$, then
 
 $$
-f(0)=L.
+|\lambda_S(\zeta)|\leq |S|.
 $$
 
-**Proof sketch.** Consider the subsequence indexed by multiples of $k$:
+**Proof sketch.** Roots of unity have modulus $1$, and therefore each summand has modulus $|\zeta^s|=1$. The complex triangle inequality yields
 
 $$
-f(0),f(k),f(2k),\ldots.
+\left|\sum_{s\in S}\zeta^s\right|
+\leq\sum_{s\in S}|\zeta^s|
+=\sum_{s\in S}1
+=|S|.
 $$
 
-Periodicity gives $f(mk)=f(0)$ for every $m$, so this subsequence is constant and converges to $f(0)$. Since $mk\to\infty$, it is a cofinal subsequence of the original convergent sequence and therefore also converges to $L$. Limits are unique in a Hausdorff space, so $f(0)=L$. $\square$
+$\square$
 
-The statement can be sharpened.
+**Corollary 4.3.** If $S\neq\varnothing$, every eigenvalue $\mu$ of $P_S$ satisfies $|\mu|\leq1$.
 
-**Corollary 3.2 (Convergent periodic sequences are constant).** Under the hypotheses of Theorem 3.1, if $f(n)$ converges, then
+**Proof sketch.** Divide each adjacency eigenvalue by $|S|$ and invoke Theorem 4.2. Since the Fourier characters form a basis, these are all eigenvalues. $\square$
 
-$$
-f(n)=f(0)
-$$
+Equality in the triangle inequality has a geometric meaning: all complex numbers $\zeta^s$ for $s\in S$ point in the same direction. At the trivial character they all equal $1$. At a nontrivial character, equality can signal periodicity or failure of the connection set to generate the entire group.
 
-for every $n$.
+### 4.3 Inverse symmetry and reality
 
-**Proof sketch.** For any residue $r$ with $0\le r<k$, the subsequence $f(r+mk)$ is constantly $f(r)$ and must converge to the same limit $L$. Hence $f(r)=L=f(0)$. Every index has such a residue modulo $k$. $\square$
+A set $S$ is **symmetric** or **inverse closed** if $S=-S$. In an additive cyclic group, this means $s\in S$ if and only if $-s\in S$.
 
-The Hausdorff hypothesis is exactly what ensures uniqueness of limits. All metric spaces, including $\mathbb R$, $\mathbb C$, and finite-dimensional probability simplices, are Hausdorff.
-
-## 4. Consequences for finite-order quantum evolution
-
-### 4.1 Periodicity of Born probabilities
-
-**Lemma 4.1 (Finite order induces probability periodicity).** Let $U$ be an evolution operator on $\mathcal H_G$, let $\psi$ be any initial amplitude, and suppose $U^k=I$ for some positive integer $k$. Then for every $x\in G$,
+**Lemma 4.4 (conjugation of character values).** If $\zeta^n=1$, then
 
 $$
-P_{n+k}(x)=P_n(x)
+\overline{\zeta^s}=\zeta^{-s}
 $$
 
-for all $n\in\mathbb N$.
+for every $s\in G_n$.
 
-**Proof sketch.** The iterate law gives
+**Proof sketch.** Since $|\zeta|=1$, one has $\overline\zeta=\zeta^{-1}$. Conjugation commutes with integer powers. $\square$
 
-$$
-U^{n+k}\psi=U^n(U^k\psi)=U^n\psi.
-$$
-
-Evaluating at $x$ and taking squared complex modulus yields the claim. $\square$
-
-This lemma does not require $U$ to be unitary. Any finite-order transformation has periodic iterates. Unitarity is nevertheless the natural physical context.
-
-### 4.2 Identification of every possible pointwise limit
-
-**Theorem 4.2 (Periodic Quantum Limit Theorem).** Let $U^k=I$ for some positive integer $k$. Suppose there is a function $p:G\to\mathbb R$ such that
+**Theorem 4.5 (real spectrum for symmetric connection sets).** Let $S=-S$. Then for every $n$th root of unity $\zeta$,
 
 $$
-P_n(x)\longrightarrow p(x)
+\overline{\lambda_S(\zeta)}=\lambda_S(\zeta),
 $$
 
-for every $x\in G$. Then
+so $\lambda_S(\zeta)$ is real.
+
+**Proof sketch.** Conjugate the character sum and apply Lemma 4.4:
 
 $$
-p(x)=P_0(x)=|\psi(x)|^2
+\overline{\lambda_S(\zeta)}
+=\sum_{s\in S}\zeta^{-s}.
 $$
 
-for every $x\in G$.
-
-**Proof sketch.** Fix $x$. By Lemma 4.1, the real sequence $n\mapsto P_n(x)$ is periodic with period $k$. It converges to $p(x)$ by assumption. Theorem 3.1 therefore gives $P_0(x)=p(x)$. Since $U^0=I$, one has $P_0(x)=|\psi(x)|^2$. Apply this argument independently at every coordinate. $\square$
-
-Combining Theorem 4.2 with Corollary 3.2 shows more: if all coordinate probabilities converge at all, then the probability distribution is constant in time. The amplitudes may still change through phases or transformations invisible to position measurement, but the measured position law cannot follow a nonconstant periodic cycle and converge.
-
-### 4.3 Uniform mixing forces initial uniformity
-
-**Corollary 4.3 (Initial Uniformity Corollary).** Let $G$ be finite and nonempty, and suppose $U^k=I$ for some positive integer $k$. If
+The involution $s\mapsto -s$ is a bijection from $S$ to itself, so reindexing the sum gives
 
 $$
-P_n(x)\longrightarrow \frac1{|G|}
+\sum_{s\in S}\zeta^{-s}=\sum_{t\in S}\zeta^t=\lambda_S(\zeta).
 $$
 
-for every $x\in G$, then
+A complex number fixed by conjugation is real. $\square$
+
+This theorem agrees with the operator viewpoint. If $S=-S$, translation by $s$ is adjoint to translation by $-s$, and the sum $A_S$ is self-adjoint. The character proof additionally exhibits the cancellation mechanism explicitly.
+
+## 5. Exact spectrum of the cycle
+
+Assume $n\geq3$ and choose
 
 $$
-|\psi(x)|^2=\frac1{|G|}
+S_{\mathrm{cyc}}=\{1,-1\}.
 $$
 
-for every $x\in G$.
+The condition $n\geq3$ ensures that $1$ and $-1$ are distinct residues. The resulting Cayley graph is the undirected cycle $C_n$.
 
-**Proof sketch.** Apply Theorem 4.2 with $p(x)=1/|G|$. $\square$
-
-This condition is necessary, not by itself sufficient for time independence. An initially uniform Born profile can evolve into a nonuniform profile and return periodically; in that case it still does not converge. If it does converge under finite-order evolution, Corollary 3.2 implies that its Born profile must remain uniform at every time.
-
-### 4.4 No-go theorem for localized starts
-
-**Theorem 4.4 (Localized-Start No-Go Theorem).** Let $G$ be a finite set with $|G|>1$, choose $o\in G$, and start from the basis state $\delta_o$. If $U^k=I$ for some positive integer $k$, then it is false that
+**Theorem 5.1 (root-of-unity form of the cycle eigenvalue).** If $\zeta^n=1$, then the eigenvalue of the cycle adjacency operator associated with $\chi_\zeta$ is
 
 $$
-P_n(x)\longrightarrow \frac1{|G|}
+\lambda_{\mathrm{cyc}}(\zeta)=\zeta+\zeta^{-1}.
 $$
 
-for every $x\in G$.
-
-**Proof sketch.** If uniform pointwise mixing occurred, Corollary 4.3 would imply
+**Proof sketch.** The general character-sum formula contains exactly the two terms corresponding to $1$ and $-1$:
 
 $$
-|\delta_o(o)|^2=\frac1{|G|}.
+\lambda_{\mathrm{cyc}}(\zeta)=\zeta^1+\zeta^{-1}.
 $$
 
-The left side is $1$. Since $|G|>1$, the right side is strictly less than $1$, a contradiction. $\square$
+$\square$
 
-**Corollary 4.5 (Total-variation obstruction).** Under the hypotheses of Theorem 4.4, $P_n$ cannot converge to uniform in total variation.
-
-**Proof sketch.** On a finite set, total-variation convergence implies coordinatewise convergence because
+**Lemma 5.2 (Euler pairing).** For every real $\theta$,
 
 $$
-|P_n(x)-\pi(x)|\le 2\|P_n-\pi\|_{\mathrm{TV}}.
+e^{i\theta}+e^{-i\theta}=2\cos\theta.
 $$
 
-Theorem 4.4 excludes coordinatewise convergence. $\square$
+**Proof sketch.** Euler’s formula gives $e^{i\theta}=\cos\theta+i\sin\theta$ and $e^{-i\theta}=\cos\theta-i\sin\theta$. Adding cancels the imaginary parts. $\square$
 
-These results refute any universal instantaneous mixing claim that includes finite-order coherent evolutions started from a basis state.
-
-## 5. Explicit counterexample family: cyclic shifts
-
-Let $G=\mathbb Z/N\mathbb Z$ with $N>1$. Define the shift operator $S$ on amplitudes by
+**Theorem 5.3 (exact cycle spectrum).** Let $n\geq3$. For each integer $k$, the Fourier mode
 
 $$
-(S\psi)(x)=\psi(x-1),
+\chi_k(x)=\exp\left(\frac{2\pi i kx}{n}\right)
 $$
 
-with arithmetic modulo $N$. This is a permutation matrix and hence unitary. It also satisfies
+is an eigenvector of the cycle adjacency operator with eigenvalue
 
 $$
-S^N=I.
+\lambda_k=2\cos\left(\frac{2\pi k}{n}\right).
 $$
 
-Starting from $\delta_0$, one obtains
+As $k$ ranges from $0$ to $n-1$, these values, counted with multiplicity, form the complete adjacency spectrum of $C_n$.
+
+**Proof sketch.** The number $\zeta_k=e^{2\pi ik/n}$ is an $n$th root of unity because $\zeta_k^n=e^{2\pi ik}=1$. Theorem 5.1 gives $\lambda_k=\zeta_k+\zeta_k^{-1}$, and Lemma 5.2 turns this into the cosine expression. Completeness follows because the $n$ Fourier modes form a basis. $\square$
+
+**Corollary 5.4 (transition spectrum of the simple cycle walk).** The uniformly chosen nearest-neighbor walk on $C_n$ has transition eigenvalues
 
 $$
-S^n\delta_0=\delta_{n\bmod N}.
+\mu_k=\cos\left(\frac{2\pi k}{n}\right),\qquad k=0,\ldots,n-1.
 $$
 
-Therefore
+**Proof sketch.** The cycle has degree $2$, so its transition operator is $P=A/2$. Eigenvectors remain unchanged and eigenvalues are divided by $2$. $\square$
+
+The multiplicity pattern follows from $\cos(2\pi k/n)=\cos(2\pi(n-k)/n)$. Except at the self-paired frequencies $k=0$ and, for even $n$, $k=n/2$, modes occur in conjugate pairs with the same real eigenvalue.
+
+## 6. Algorithms
+
+### 6.1 Direct character-sum spectrum
+
+The defining formula gives an immediate algorithm.
+
+**Algorithm 1: Direct cyclic Cayley spectrum.** Given $n$ and $S$, for each $k=0,\ldots,n-1$ compute
 
 $$
-P_n(x)=
-\begin{cases}
-1,&x\equiv n\pmod N,\\
-0,&\text{otherwise}.
+\lambda_k=\sum_{s\in S}e^{2\pi i ks/n}.
+$$
+
+The algorithm uses $n|S|$ complex exponential evaluations and additions, hence $O(n|S|)$ arithmetic operations. It uses $O(n)$ output storage and $O(1)$ additional working storage if values are streamed. For symmetric $S$, small imaginary residuals caused by floating-point error may be discarded after checking that they lie below a tolerance.
+
+### 6.2 Fast Fourier spectrum
+
+Define the indicator vector $a\in\mathbb C^n$ by
+
+$$
+a_s=\begin{cases}
+1,&s\in S,\\
+0,&s\notin S.
 \end{cases}
 $$
 
-The instantaneous distribution is always localized and returns to its initial value every $N$ steps. Its total-variation distance from uniform is constant:
+Then $\lambda_k$ is a discrete Fourier transform of $a$, with the sign determined by convention. Therefore all eigenvalues can be computed using a fast Fourier transform in $O(n\log n)$ arithmetic operations and $O(n)$ memory. This is advantageous when $S$ is dense. For sparse $S$, the direct $O(n|S|)$ method can be competitive or superior.
+
+### 6.3 Numerical diagonalization check
+
+A third algorithm constructs the $n\times n$ adjacency matrix
 
 $$
-\|P_n-\pi\|_{\mathrm{TV}}
-=\frac12\left(1-\frac1N+(N-1)\frac1N\right)
-=1-\frac1N.
+A_{x,y}=\begin{cases}
+1,&y-x\in S,\\
+0,&\text{otherwise},
+\end{cases}
 $$
 
-Thus there is no trend toward uniformity.
+and compares a numerical eigensolver’s output with the character sums. Dense construction costs $O(n^2)$ memory, while generic dense eigenvalue computation costs $O(n^3)$ time. This method is not efficient for large graphs, but it is useful as an independent numerical check and as a demonstration that the Fourier formula replaces generic linear algebra with group structure.
 
-The time average behaves differently. Write $T=qN+r$ with $0\le r<N$. Each vertex is visited either $q$ or $q+1$ times among the first $T$ steps. Hence
+## 7. Applications to spectral gaps and transport
 
-$$
-\left|\overline P_T(x)-\frac1N\right|\le \frac1T.
-$$
-
-In particular, if $N$ divides $T$, then
+For a nonempty connection set, normalized eigenvalues are
 
 $$
-\overline P_T(x)=\frac1N
+\mu_k=\frac{1}{|S|}\sum_{s\in S}e^{2\pi i ks/n}.
 $$
 
-exactly for every $x$. More generally,
+When $S=-S$, these numbers are real. If the walk is irreducible and made aperiodic when necessary, the largest eigenvalue is $1$, and the magnitudes of the remaining eigenvalues control convergence of classical distributions to uniformity. A commonly used absolute spectral gap is
 
 $$
-\|\overline P_T-\pi\|_{\mathrm{TV}}
-\le \frac{N}{2T}.
+\gamma_{\mathrm{abs}}=1-\max_{k\neq0}|\mu_k|,
 $$
 
-This family separates instantaneous and averaged mixing with complete transparency: the first fails maximally, while the second converges at an elementary rate.
+although for periodic chains this quantity may vanish because an eigenvalue equals $-1$. A lazy modification, replacing $P$ by $(I+P)/2$, removes that obstruction while retaining the Fourier eigenvectors.
 
-## 6. Spectral analysis and the gap mismatch
-
-### 6.1 Classical contraction gaps
-
-For a finite irreducible reversible Markov chain with transition matrix $M$, the stationary eigenvalue is $1$. Other eigenvalues often satisfy $|\lambda_j|<1$. Decomposing an initial distribution into eigenmodes gives terms of the form $\lambda_j^n$, whose magnitudes decay geometrically. A modulus gap such as
+For the simple cycle,
 
 $$
-\gamma=1-\max_{j\ne 1}|\lambda_j|
+\mu_1=\cos\left(\frac{2\pi}{n}\right).
 $$
 
-can therefore control relaxation and mixing times.
-
-For random transpositions on the symmetric group, representation theory supplies precise information about the classical Markov spectrum and leads to mixing on the scale of $n\log n$ under the standard formulation. This is a statement about a stochastic operator.
-
-### 6.2 Unitary eigenvalues do not decay
-
-If $U$ is unitary and $Uv=\lambda v$ for nonzero $v$, then
+Using $1-\cos\theta=2\sin^2(\theta/2)$ and standard small-angle estimates shows that
 
 $$
-\|v\|=\|Uv\|=\|\lambda v\|=|\lambda|\|v\|,
+1-\mu_1=1-\cos\left(\frac{2\pi}{n}\right)=\Theta(n^{-2}).
 $$
 
-so $|\lambda|=1$. Every eigenvalue can be written as
+This quantitative asymptotic is not needed for the exact diagonalization theorem, but it illustrates how the theorem feeds directly into mixing analysis. The long-wavelength Fourier mode is weakly damped, reflecting slow diffusion around a one-dimensional ring.
+
+The same character sum supports network design. For a chosen nonzero frequency $k$, the unit vectors $e^{2\pi iks/n}$ associated with allowed jumps may align or cancel. Selecting $S$ to enforce cancellation across all nonconstant frequencies enlarges spectral separation and accelerates classical averaging. Conversely, a highly aligned set preserves certain modes and can create bottlenecks or periodic behavior.
+
+## 8. Relation to quantum walks
+
+The finite-dimensional space $\mathcal H_n$ is also a natural state space for quantum dynamics, but the adjacency operator $A_S$ is generally not unitary. Even its normalized form $P_S$ is stochastic rather than unitary. A continuous-time quantum walk may use the unitary family
 
 $$
-\lambda_j=e^{i\theta_j}.
+U(t)=e^{-itA_S},
 $$
 
-Therefore a proposed unitary modulus gap
+while a discrete-time coined walk enlarges the state space and combines a coin operator with a conditional shift. Szegedy-type constructions build a unitary from a classical Markov chain in another way.
+
+The diagonalization proved above is immediately useful for continuous-time evolution: since $A_S\chi_k=\lambda_k\chi_k$,
 
 $$
-1-|\lambda_2|
+U(t)\chi_k=e^{-it\lambda_k}\chi_k.
 $$
 
-is identically zero. It cannot yield a finite relaxation time through $1/\gamma$. Repeated evolution produces $e^{in\theta_j}$, a rotation of unit magnitude, rather than a decaying factor.
+Thus the adjacency eigenvalues become phase velocities. For coined or Szegedy walks, related Fourier decomposition reduces translation-invariant dynamics to small frequency-indexed blocks, but additional analysis is required.
 
-**Proposition 6.1 (Vanishing unitary modulus gap).** For every finite-dimensional unitary operator $U$, every eigenvalue has modulus $1$. Consequently, any spectral gap defined as $1-|\lambda|$ for a nontrivial eigenvalue vanishes.
+Classical stochastic mixing and unitary quantum evolution also differ conceptually. Powers of a stochastic operator can contract nonconstant modes. Powers of a unitary preserve norm, so convergence of the full state vector cannot occur in the same manner. One must specify whether “mixing” means convergence of measured distributions, time-averaged convergence, hitting behavior, or another criterion.
 
-**Proof sketch.** The norm-preservation calculation above proves $|\lambda|=1$. Substitution gives $1-|\lambda|=0$. $\square$
+Accordingly, the cyclic adjacency spectrum does not imply a universal quantum bound of the form $O(\sqrt{|G|}\log|G|)$, nor does it establish a graph-independent quadratic speedup. Such claims are model dependent and fail for broad universal formulations. The rigorous conclusion here is narrower and more reusable: the complete cyclic Cayley adjacency spectrum is explicitly determined by character sums, providing the spectral input for subsequent model-specific analyses.
 
-This does not mean that all quantum spectral information is trivial. Differences of eigenphases govern interference. If
+## 9. Examples
 
-$$
-\psi=\sum_j c_jv_j,
-$$
+### 9.1 The six-cycle
 
-then
+For $n=6$ and $S=\{1,5\}=\{1,-1\}$, the spectrum is
 
 $$
-U^n\psi=\sum_j c_je^{in\theta_j}v_j.
+2\cos\left(\frac{2\pi k}{6}\right),
 $$
 
-Born probabilities contain cross-terms proportional to
+which yields, in frequency order,
 
 $$
-e^{in(\theta_j-\theta_\ell)}.
+2,\ 1,\ -1,\ -2,\ -1,\ 1.
 $$
 
-These oscillate rather than decay.
+The maximum modulus equals the degree $2$. Every value is real because the connection set is symmetric.
 
-### 6.3 Why time averaging can converge
+### 9.2 A longer-range symmetric graph
 
-For $\omega\ne 1$ on the unit circle,
-
-$$
-\frac1T\sum_{n=0}^{T-1}\omega^n
-=\frac{1-\omega^T}{T(1-\omega)}.
-$$
-
-Its magnitude is bounded by
+Take $n=12$ and $S=\{1,2,10,11\}=\{\pm1,\pm2\}$. Pairing inverse terms gives
 
 $$
-\frac{2}{T|1-\omega|},
+\lambda_k
+=2\cos\left(\frac{2\pi k}{12}\right)
++2\cos\left(\frac{4\pi k}{12}\right).
 $$
 
-which tends to zero. Thus cross-terms with unequal eigenphases vanish under Cesàro averaging. Equal-eigenphase terms persist. The limiting time-averaged distribution is determined by projections onto eigenspaces, including degeneracies, and need not be uniform.
+This example shows how each symmetric jump length contributes one cosine band. The degree eigenvalue is $4$, and the degree bound gives $|\lambda_k|\leq4$.
 
-The relevant quantitative parameter for averaging is therefore related to eigenphase separation, not the modulus contraction gap used for Markov chains.
+### 9.3 A directed cyclic rule
 
-## 7. Constructing quantum walks on Cayley graphs
-
-A mathematical expression for one step must specify a linear operator on the entire Hilbert space and satisfy unitarity. Sending a single reference basis vector to an unnormalized sum over generators does not accomplish this. If $|S|>1$, the vector
+Take $n=7$ and $S=\{1,2\}$. Then
 
 $$
-\sum_{s\in S}|s\rangle
+\lambda_k=e^{2\pi ik/7}+e^{4\pi ik/7}.
 $$
 
-has norm $\sqrt{|S|}$, not $1$, and an action on one vector does not define the operator on its orthogonal complement.
+Because $S$ is not inverse closed, these eigenvalues need not be real. Nevertheless, the same Fourier basis diagonalizes the operator and the modulus bound $|\lambda_k|\leq2$ still holds. Thus symmetry controls reality, not diagonalizability.
 
-A common discrete-time construction is the coined walk. Use the Hilbert space
+## 10. Discussion and future work
 
-$$
-\mathcal H=\ell^2(G)\otimes\ell^2(S).
-$$
+The cyclic theory illustrates the general harmonic principle that convolution becomes multiplication after Fourier transformation. Several extensions are natural.
 
-The first register stores the group element and the second stores a direction. Let $C$ be a unitary coin on $\ell^2(S)$. Define a conditional shift, for example, by
+First, for a finite abelian group decomposed as a product of cyclic groups, scalar characters again form a complete orthogonal basis. The same one-line computation gives eigenvalue $\sum_{s\in S}\chi(s)$ at character $\chi$. This would extend every structural theorem here, with inverse closure again implying reality.
 
-$$
-T|g,s\rangle=|sg,s\rangle.
-$$
-
-Since left multiplication by $s$ is a permutation of $G$, $T$ is unitary. One step is
+Second, nonabelian groups replace scalar characters by matrix-valued irreducible representations. The adjacency operator becomes block diagonal, with a block
 
 $$
-U=T(I\otimes C),
+\sum_{s\in S}\rho(s)
 $$
 
-which is unitary as a composition of unitaries.
+for each irreducible representation $\rho$. Random transpositions on symmetric groups are a prominent target, but their analysis requires substantial representation theory.
 
-Another model is continuous time. If $A$ is the Hermitian adjacency matrix of an undirected Cayley graph, define
+Third, the cycle gap can be developed quantitatively from elementary sine bounds to obtain explicit constants, not only $\Theta(n^{-2})$ scaling. From there one can derive standard classical mixing-time estimates for lazy cycle walks.
 
-$$
-U(t)=e^{-itA}.
-$$
+Fourth, unitary quantum models should be treated explicitly. For continuous-time walks the present diagonalization already gives exact phases. For coined and Szegedy walks, one should define the additional state space, diagonalize each Fourier block, and state the chosen notion of mixing. This would allow speedups to be proved where they occur without asserting universality where they do not.
 
-This is unitary for every real $t$. Neither construction creates dissipative relaxation. Instantaneous convergence remains exceptional, while time-averaged probabilities, hitting behavior, state transfer, and response to measurement are meaningful subjects.
+Finally, character sums can be used inversely: two different connection sets may have the same multiset of sums and hence define isospectral Cayley graphs. Constructing and classifying such examples would connect the present bridge to spectral graph invariants.
 
-## 8. Algorithms and numerical diagnostics
+## 11. Conclusion
 
-The theoretical obstruction is elementary enough to test directly. The following procedures are useful for examples and model validation.
-
-### 8.1 Algorithm A: coordinate evolution and recurrence audit
-
-Given a complex matrix $U$, an initial unit vector $\psi$, a candidate period $k$, and a tolerance $\varepsilon$, compute $U^k$ and compare it with $I$ in a matrix norm. If
+The spectrum of a cyclic Cayley graph is encoded directly by its group structure. Every root of unity defines a Fourier character, every such character is a nonzero eigenvector, and the corresponding eigenvalue is the sum of the character over the allowed displacements. From this formula, the degree eigenvalue, the uniform degree bound, and reality under inverse symmetry follow by elementary arguments. For the cycle, two inverse jumps collapse the character sum to the exact cosine law
 
 $$
-\|U^k-I\|\le\varepsilon,
+\lambda_k=2\cos\left(\frac{2\pi k}{n}\right).
 $$
 
-then generate $P_n(x)=|(U^n\psi)(x)|^2$ for $0\le n\le k$. Compare $P_k$ with $P_0$ and report coordinate trajectories.
-
-For a dense $d\times d$ matrix, exponentiation by repeated squaring costs $O(d^3\log k)$ arithmetic operations, while generating all $k$ iterates by matrix-vector multiplication costs $O(kd^2)$. Permutation or sparse operators can reduce the latter cost substantially.
-
-### 8.2 Algorithm B: instantaneous and Cesàro distance comparison
-
-For each time $n$, compute
-
-$$
-d_n=\frac12\sum_x\left|P_n(x)-\frac1d\right|
-$$
-
-and
-
-$$
-\overline d_n=\frac12\sum_x\left|\frac1n\sum_{t=0}^{n-1}P_t(x)-\frac1d\right|.
-$$
-
-A cyclic shift exhibits constant $d_n=1-1/d$ but decreasing $\overline d_n$. This diagnostic prevents an averaged phenomenon from being mislabeled as instantaneous convergence. For $T$ dense iterations, the cost is $O(Td^2)$; updating the running average costs only $O(d)$ per step.
-
-### 8.3 Algorithm C: spectral modulus and eigenphase audit
-
-Compute the eigenvalues $\lambda_j$ of the proposed step matrix. Report the maximum deviation of $|\lambda_j|$ from $1$. If $U$ is unitary to numerical precision, all deviations should be small. Then compute pairwise wrapped phase separations
-
-$$
-\Delta_{j\ell}=\min_{m\in\mathbb Z}|\theta_j-\theta_\ell+2\pi m|.
-$$
-
-This separates two concepts: modulus contraction, which is absent for unitary dynamics, and eigenphase spacing, which influences oscillatory averaging. Dense eigendecomposition costs $O(d^3)$, and all pairwise phase gaps cost $O(d^2)$.
-
-### 8.4 Numerical examples
-
-For the shift on $\mathbb Z/5\mathbb Z$, the distributions for times $0$ through $4$ are the five standard basis vectors. At every time,
-
-$$
-d_n=1-\frac15=0.8.
-$$
-
-At $T=5$, the averaged distribution is exactly
-
-$$
-(0.2,0.2,0.2,0.2,0.2),
-$$
-
-so $\overline d_5=0$. The same holds whenever $T$ is a multiple of $5$.
-
-A second example uses the two-state swap
-
-$$
-U=\begin{pmatrix}0&1\\1&0\end{pmatrix}.
-$$
-
-Here $U^2=I$. Starting from $(1,0)^\mathsf T$, probabilities alternate between $(1,0)$ and $(0,1)$. The instantaneous distance from uniform remains $1/2$, while every even-time Cesàro average is uniform.
-
-A third example starts from the uniform-amplitude eigenstate of the same cyclic shift:
-
-$$
-\psi(x)=\frac1{\sqrt N}.
-$$
-
-The state is fixed by the shift, so the Born distribution is uniform at every time. This illustrates the necessity and attainability of initial uniformity without contradicting the no-go theorem: no relaxation occurs because the walk begins at equilibrium.
-
-## 9. Alternative notions of quantum mixing
-
-### 9.1 Time-averaged mixing
-
-Cesàro averaging is compatible with persistent oscillation. For finite-dimensional unitary evolution, the geometric-sum calculation shows that time averages always suppress cross-terms between distinct eigenvalues. The limit can depend on spectral degeneracies and the initial state. Determining when it is uniform is a nontrivial representation-theoretic question.
-
-### 9.2 Decoherent and measured walks
-
-An open quantum system evolves by a completely positive trace-preserving map $\Phi$ on density matrices. Unlike a unitary conjugation, $\Phi$ may have nontrivial eigenvalues strictly inside the unit disk. If the fixed state is unique and the remaining spectrum is contractive, then a genuine modulus gap can produce exponential convergence:
-
-$$
-\|\Phi^n(\rho)-\rho_*\|\le C r^n
-$$
-
-for some $r<1$. Repeated measurement, dephasing, and environmental noise can therefore create a meaningful mixing time.
-
-### 9.3 Continuous-time averaging and hitting
-
-For $U(t)=e^{-itA}$, instantaneous probabilities are quasiperiodic finite sums of phases. Pointwise convergence to a new distribution is again not expected. Time-integrated occupation, hitting probabilities under measurement protocols, and transport rates are better-adapted observables.
-
-### 9.4 Approximate mixing over finite windows
-
-One may ask whether $P_n$ is close to uniform for some time or for most times in a finite interval, without requiring a limit. A coherent walk can pass near uniform and later recur. Such transient uniformity is compatible with the present theorem, but it requires definitions that include an error tolerance and a time window.
-
-## 10. Applications to group-based models
-
-For finite abelian groups, characters diagonalize convolution operators. If a translation-invariant unitary is diagonal in the character basis, its eigenvalues are phases. Character expansions can then calculate return amplitudes, time averages, and recurrences explicitly.
-
-For nonabelian groups, irreducible representations replace scalar characters with matrix-valued Fourier transforms. This framework is relevant to symmetric groups and alternating groups. In particular, transpositions generate the symmetric group, and the corresponding classical random-transposition chain has a well-studied Markov spectrum. A quantum analogue must specify a valid unitary model—such as a coined walk, a Szegedy-type construction, or continuous-time adjacency evolution—before any spectral or mixing claim can be assessed.
-
-The no-go theorem applies immediately whenever that chosen unitary has finite order. More broadly, approximate recurrence suggests that even infinite-order unitaries in finite dimension cannot exhibit ordinary relaxation to a distinct position distribution under persistent returns.
-
-## 11. Discussion and limitations
-
-The main result has a precise scope. It assumes exact finite order and concerns instantaneous pointwise convergence of Born probabilities. It does not claim that every finite-dimensional unitary has finite order; irrational eigenphase ratios produce quasiperiodic rather than exactly periodic evolution. It does not exclude temporary proximity to uniform, convergence of time averages, mixing caused by measurements or noise, or computational speedups in other tasks.
-
-Exact finite order is sufficient but not necessary for the obstruction. Suppose there is a subsequence $n_j\to\infty$ such that
-
-$$
-U^{n_j}\psi\longrightarrow\psi.
-$$
-
-Then continuity of coordinate evaluation and squared modulus gives
-
-$$
-P_{n_j}(x)\longrightarrow P_0(x).
-$$
-
-If the full sequence $P_n(x)$ converged to $p(x)$, the same subsequence would converge to $p(x)$, forcing $p(x)=P_0(x)$. Thus recurrence of the orbit, rather than exact periodicity itself, is the deeper mechanism.
-
-Finite-dimensional unitary evolution is generated by finitely many eigenphases on a compact torus. Simultaneous approximation suggests arbitrarily accurate returns, providing a route to a general recurrence obstruction. Establishing quantitative bounds for such returns and translating them into lower bounds against sustained mixing are natural next steps.
-
-The result also highlights a modeling issue. A graph and a generating set do not uniquely determine a discrete-time quantum walk. Choices of coin space, coin operator, shift convention, boundary behavior, and measurement protocol all matter. Universal complexity claims must quantify over a clearly specified class of dynamics and a clearly specified notion of convergence.
-
-## 12. Future directions
-
-1. **Time-averaged mixing.** Develop exact limiting formulas for $\overline P_T$ using spectral projections. Quantify convergence through finite geometric sums and eigenphase separation, with careful treatment of degeneracies.
-
-2. **Decoherent or measured walks.** Replace the unitary step with a quantum channel. Determine conditions under which nontrivial eigenvalues have modulus below $1$ and derive trace-distance or total-variation mixing bounds.
-
-3. **Coined walks on Cayley graphs.** Study the vertex-generator Hilbert space and compare different coin operators. Identify when the time-averaged vertex marginal is uniform.
-
-4. **Continuous-time walks.** Analyze $e^{-itA}$ for Cayley adjacency operators, emphasizing average occupation, hitting protocols, and state transfer rather than unsupported instantaneous limits.
-
-5. **Representation-theoretic diagonalization.** Use characters for abelian groups and matrix-valued Fourier analysis for groups such as $S_n$ and $A_5$. Keep the classical random-transposition operator and each quantum model spectrally distinct.
-
-6. **Quantitative recurrence obstruction.** Extend the exact theorem to approximate returns. If $P_{n_j}$ repeatedly approaches $P_0$, derive explicit incompatibility bounds for convergence to a distribution separated from $P_0$.
-
-7. **Counterexample families.** Collect cyclic shifts and other permutation unitaries. These offer transparent examples in which instantaneous distance from uniform remains fixed while Cesàro averages converge.
-
-## 13. Conclusion
-
-Finite-order coherent evolution cannot forget its initial probability profile. The proof is a direct consequence of periodicity and uniqueness of limits: the subsequence sampled every period is constantly equal to the initial value, so any alleged limit must equal that value. Applied coordinatewise to Born probabilities, this yields a complete obstruction to instantaneous pointwise uniform mixing from a localized state on a nontrivial finite space.
-
-The conclusion changes how quantum and classical walks should be compared. A classical modulus spectral gap measures contraction, while a unitary operator has all eigenvalues on the unit circle and no such contraction gap. Quantum interference can accelerate particular tasks, but it does not turn reversible dynamics into universal relaxation. Meaningful quantum mixing theories should instead use time averages, open-system channels, measurement protocols, transient criteria, or observables adapted to recurrence.
+The result is simultaneously algebraic, analytic, and graph theoretic. It replaces generic matrix diagonalization with a canonical Fourier basis, supports efficient computation, and supplies exact spectral data for periodic transport. Just as importantly, it marks the proper boundary of its implications: adjacency spectra are foundational inputs to random-walk analysis, while specific classical or quantum mixing claims require the dynamics and the notion of mixing to be stated separately.

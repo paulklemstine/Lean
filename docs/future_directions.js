@@ -6786,7 +6786,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "id": "seed_200",
-    "phase": "B",
+    "phase": "complete",
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
@@ -9554,17 +9554,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Aperiodicity and subword complexity in the binary expansion of powers of three"
   },
   {
-    "consumed_by_exp_id": "41e2ee03",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Several families of incommensurable noncompact hyperbolic Coxeter polytopes' and formalize its key results. Abstract: We classify all 141 finite-volume hyperbolic Coxeter five-dimensional polytopes with eight facets, of which 125 are noncompact. Using maximal-cusp density and a noncompact analog of Bogachev-Douba-Raimbault's argument, we construct infinitely many pairwise incommensurable noncompact Coxeter polytopes in dimensions 4, 5, 6, 7, and 9, with the number of commensurability classes growing at least exponentially in volume.",
     "domains": [
       "Bridges"
     ],
     "id": "fd_0208",
-    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14715v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-17T08:20:29.584439+00:00",
     "title": "ArXiv paper: Several families of incommensurable noncompact hyperbolic Coxeter polytopes"
   },
@@ -13087,18 +13086,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "The accompanying Lean development proves the finite algebraic core of homologica"
   },
   {
-    "consumed_by_exp_id": "920a890c",
+    "consumed_by_exp_id": "",
     "description": "# Future directions\n\nThe formal development establishes a concrete genuinely non-strict bicategory: its chosen 1-cell composition has bracketings equal to `5` and `7`, while an invertible associator connects them, and the pentagon and triangle coherence laws hold. It also proves that no `Bicategory.Strict` structure can exist for this fixed composition.\n\nNatural continuations include:\n\n1. **General codiscrete construction.** Package the construction for every unital magma, proving that codiscrete hom-categories turn arbitrary unit and associativity defects into coherent invertible 2-cells.\n2. **Nontrivial 2-cell coherence.** Replace `PUnit` 2-cells by a nontrivial group of automorphisms. Then the pentagon becomes an actual cocycle equation rather than following from subsingleton elimination.\n3. **Skeletal obstruction.** Formalize the relationship between associators in one-object bicategories and normalized group-cohomological 3-cocycles, including the criterion for strictification without changing the underlying 1-cells.\n4. **Biequivalence versus equality.** Prove a strictification result at the level of biequivalence, contrasting it with `no_strict_structure`, which rules out strictness on the fixed data but not replacement by an equivalent strict 2-category.\n5. **Higher coherence.** Develop tricategorical analogues where coherence between associators is itself witnessed by invertible 3-cells. This is the appropriate formal setting for the broader \u201cevery coherent loop-tolerant structure forms a higher category\u201d direction; that sweeping claim requires precise dimensions and coherence axioms before it is a theorem.\n6. **Computational exploration.** Enumerate small finite unital magmas and classify their associativity defects. For the present infinite example, the relevant small calculation is already kernel-checked in `left_bracketing_value` and `right_bracketing_value`, so a separate empirical evidence stage would add no confidence to the proved claim.\n",
     "domains": [
       "Logic",
       "Algebra"
     ],
     "id": "fd_0532",
-    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "3d25b5ad",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-20T23:22:24.198252+00:00",
     "title": "The formal development establishes a concrete genuinely non-strict bicategory: i"
   },
@@ -14124,6 +14122,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-24T21:32:19.516529+00:00",
     "title": "Derived from the current cycle's findings on Hardy\u2013Ramanujan taxicab numbers."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 the structural core of Euler's prime-rich polynomial\n\nThis cycle recast the isolated \"prime run\" facts behind discriminants 43, 67, 163\nas uniform consequences of a single hypothesis (`p` admits a sharp Euler run):\nsuch a `p` is prime, forms a twin-prime pair `(p, p+2)`, and packs exactly `p-1`\ndistinct primes into `[p, p\u00b2)`. The following conjectures push that structural\nviewpoint further.\n\n## Conjecture 1 \u2014 Full arithmetic ladder of a sharp run\nFor a prime `p` with a sharp Euler run, every shifted value `p + k(k+1)` is prime\nfor `0 \u2264 k \u2264 p - 2`, and these are the `p-1` distinct primes of the packing.\n**The key insight is** that the run is not a random list but the image of the\nconvex sequence `k \u21a6 k(k+1)`, so its combinatorial structure (gaps `2, 4, 6, \u2026`)\nis forced, not incidental.\n**Why now?** The twin-prime case is already proved uniformly; extending index `1`\nto arbitrary `k` needs only the same one-line value extraction, making the whole\nladder immediately reachable.\n\n## Conjecture 2 \u2014 Density lower bound from a sharp run\nA sharp run for `p` forces `\u03c0(p\u00b2) \u2265 \u03c0(p) + (p - 1) - (number of run values \u2264 p)`,\ni.e. long runs make the prime-counting function provably large on `[p, p\u00b2)`.\n**The key insight is** that a certified packing of `p-1` primes below `p\u00b2` is a\nconstructive lower bound on prime density, independent of any analytic estimate.\n**Why now?** The packing set and its cardinality are already formalized; turning\nthe finite set into a `\u03c0` bound is a `Finset`-to-`Nat.primesBelow` translation.\n\n## Conjecture 3 \u2014 Twin-prime obstruction to long runs\nIf `p \u2265 3` admits a sharp run but `(p, p+2)` is not a twin pair, contradiction;\nhence \"twin failure\" is a certificate that the run breaks early. Quantitatively,\nthe earliest composite `f_p(n)` is controlled by the smallest prime `q` with\n`f_p(n) \u2261 0 (mod q)`.\n**The key insight is** that run length is governed by modular obstructions, so\neach small prime `q` deletes a predictable residue class of indices.\n**Why now?** The boundary obstruction `f_p(p-1) = p\u00b2` is already the `q = p` case;\ngeneralizing to arbitrary `q` is the natural next modular step.\n\n## Conjecture 4 \u2014 Rabinowitsch equivalence (the deep target)\nFor prime `p`, a sharp Euler run of full length `p - 2` holds **iff** the\nimaginary quadratic order of discriminant `1 - 4p` has class number one.\n**The key insight is** that the elementary forward packing statement and the\nclass-number side meet through the theory of reduced binary quadratic forms, where\nrepresentability by the principal form is exactly primality of the polynomial.\n**Why now?** The forward computational instances (`p = 11, 17, 41`) are settled;\nthe missing direction is a self-contained finiteness statement about reduced\nforms that is within reach of an explicit formalization.\n\n## Conjecture 5 \u2014 Bounded near-integer uniqueness\nWithin a fixed range `n \u2264 N`, `163` is the unique `n` for which `exp(\u03c0\u221an)` is\nwithin `10\u207b\u2076` of an integer, once certified interval bounds for `\u03c0`, `\u221a`, and\n`exp` are available; the unrestricted claim is false by equidistribution.\n**The key insight is** that the near-integer phenomenon is an arithmetic accident\nof the `q`-expansion tail, so a *bounded* uniqueness statement is the only honest\nformalizable version.\n**Why now?** Reusable rational-endpoint interval arithmetic for `exp` and `\u221a`\nmakes the `43/67/163` estimates tractable, converting a heuristic into a checked,\nrange-qualified theorem.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0712",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "e8a20d63",
+    "status": "available",
+    "timestamp": "2026-07-24T23:24:18.336392+00:00",
+    "title": "This cycle recast the isolated \"prime run\" facts behind discriminants 43, 67, 16"
   },
   {
     "consumed_by_exp_id": "",
