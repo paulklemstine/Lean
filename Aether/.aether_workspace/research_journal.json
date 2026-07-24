@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "12b45ad4",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\nThe completed baseline is `Novelty/RecipeBarycenterBridge.lean`: for every nonempty finite menu with positive verification times, the aggregate cooking-to-verification ratio is th",
-      "quality_score": 0.69,
-      "sorry_count": 0,
-      "theorem_count": 57,
-      "timestamp": "2026-07-18T09:37:50",
-      "title": "The P vs NP of Cooking: Computational Complexity of Recipes"
-    },
-    {
       "cycle_id": "c49f6946",
       "domain": "Probability",
       "key_insight": "# Future directions\n\n## Scope and interpretation\n\nThe proposed “cake” language does not by itself define a mathematical category, an isomorphism relation, a moduli functor, or a probability distributi",
@@ -2501,6 +2491,16 @@
       "theorem_count": 12,
       "timestamp": "2026-07-24T02:19:34",
       "title": "**Conjecture.** For every strictly convex radiator-cost function, every finite s"
+    },
+    {
+      "cycle_id": "a9c9c0c1",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nResearch thread `th_0d5dcecd`, cycle 1 (root direction `fd_0391`).\n\n## What was proved this cycle\n\nThe file `Novelty/RamseyProbabilistic.lean` formalizes the classical **first-mom",
+      "quality_score": 0.67,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-24T02:40:38",
+      "title": "**Conjecture.** For a finite family of bad events with dependency degree at most"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-24T02:19:34",
+  "last_updated": "2026-07-24T02:40:38",
   "open_questions": [
     {
       "context": "",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "7286e7be",
-        "quality": 0.74,
-        "theorems": 0,
-        "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
-      },
-      {
         "cycle_id": "cb3d5d14",
         "quality": 0.8,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.55,
         "theorems": 10,
         "title": "ArXiv paper: Online Beck--Fiala Down to Logarithmic Sparsity"
+      },
+      {
+        "cycle_id": "a9c9c0c1",
+        "quality": 0.67,
+        "theorems": 11,
+        "title": "**Conjecture.** For a finite family of bad events with dependency degree at most"
       }
     ],
     "NumberTheory": [
