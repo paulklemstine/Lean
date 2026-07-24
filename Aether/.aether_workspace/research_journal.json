@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "57f5aa5e",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Tropical Cryptocurrency\n\n## 1. Exact recession dimension of generic fibers\n\n**Conjecture.** For a generic family of `r` min-plus keys on `k` coordinates with `r < k`, every nonemp",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-18T19:01:52",
-      "title": "Deepening: Tropical Cryptocurrency: Mining on the Min-Plus Semiring"
-    },
-    {
       "cycle_id": "74205c89",
       "domain": "MachineLearning",
       "key_insight": "# Future Directions\n\n## 1. Closed-subgroup exclusion for the Fibonacci four-anyon sector\n\nFix a published unitary normalization and fusion basis for the three-dimensional Fibonacci sector, and prove t",
@@ -2501,6 +2491,16 @@
       "theorem_count": 12,
       "timestamp": "2026-07-24T21:32:13",
       "title": "p-adic Langlands for GL₂(Q_p)"
+    },
+    {
+      "cycle_id": "78cd863a",
+      "domain": "Computation",
+      "key_insight": "# Future Directions: Taxicab Number Generalizations\n\nDerived from the current cycle's findings on Hardy–Ramanujan taxicab numbers.\n\n## 1. Unbounded representation counts (existence of Taxicab(n) for a",
+      "quality_score": 0.63498,
+      "sorry_count": 1,
+      "theorem_count": 9,
+      "timestamp": "2026-07-24T21:32:33",
+      "title": "Taxicab Number Generalizations: Hardy-Ramanujan Numbers"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-24T21:32:13",
+  "last_updated": "2026-07-24T21:32:33",
   "open_questions": [
-    {
-      "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnUpper⟩); -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i ",
-      "cycle_id": "5f139cd0",
-      "domain": "Applications",
-      "sorry_count": 3,
-      "timestamp": "2026-07-17T11:50:23"
-    },
     {
       "context": "+    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; +    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; +    ∀ i < k, c i = ",
       "cycle_id": "535698fb",
@@ -3016,6 +3009,13 @@
       "domain": "Computation",
       "sorry_count": 1,
       "timestamp": "2026-07-24T19:54:45"
+    },
+    {
+      "context": "-    sorry+  -- On the certified range, extract the primitive divisor from the",
+      "cycle_id": "78cd863a",
+      "domain": "Computation",
+      "sorry_count": 1,
+      "timestamp": "2026-07-24T21:32:33"
     }
   ],
   "research_threads": {
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "7a438864",
-        "quality": 0.66,
-        "theorems": 14,
-        "title": "The Fermi Paradox as a Pigeonhole Principle: Why We Are Alone"
-      },
-      {
         "cycle_id": "f59cf451",
         "quality": 0.63,
         "theorems": 16,
@@ -3327,6 +3321,12 @@
         "quality": 0.55,
         "theorems": 18,
         "title": "This cycle deepened the theory of the fixed-amplitude model, where every present"
+      },
+      {
+        "cycle_id": "78cd863a",
+        "quality": 0.63498,
+        "theorems": 9,
+        "title": "Taxicab Number Generalizations: Hardy-Ramanujan Numbers"
       }
     ],
     "Cryptography": [
