@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "6e1b10f7",
-      "domain": "Applications",
-      "key_insight": "# Future directions\n\nThe formal result in `Catalog/Bridges/GraphZetaPrimeCycle.lean` isolates one adjacency-eigenvalue factor of the Bass–Ihara determinant and proves three parts of the graph-zeta dic",
-      "quality_score": 0.74,
-      "sorry_count": 0,
-      "theorem_count": 46,
-      "timestamp": "2026-07-18T15:35:58",
-      "title": "The Zeta Function of a Graph: Number Theory on Networks"
-    },
-    {
       "cycle_id": "2170ccdf",
       "domain": "Algebra",
       "key_insight": "# Future directions\n\n1. **Full Frobenius factorization dictionary.** Formalize that an irreducible factor of\ndegree `d` corresponds to a `d`-cycle of Frobenius on the geometric roots, including\nmultip",
@@ -2501,6 +2491,16 @@
       "theorem_count": 18,
       "timestamp": "2026-07-24T19:55:02",
       "title": "This cycle deepened the theory of the fixed-amplitude model, where every present"
+    },
+    {
+      "cycle_id": "edb35a0b",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions: Tropical Phase-Transition Models\n\nThe file `TropicalPhaseTransition.lean` proves a self-contained chain of results\nabout the tropical order parameter `order κ c x = max(κ·(x − c),",
+      "quality_score": 0.5,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-24T21:31:55",
+      "title": "Close Proofs: Speculative: Mathematics as a Phase Transition"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-24T19:55:02",
+  "last_updated": "2026-07-24T21:31:55",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnUpper⟩); -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i ",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "4dee9bd5",
-        "quality": 0.65,
-        "theorems": 14,
-        "title": "ArXiv paper: The chromatic number of 3-stable Kneser graphs"
-      },
-      {
         "cycle_id": "408bb225",
         "quality": 0.76,
         "theorems": 12,
@@ -4009,6 +4003,12 @@
         "quality": 0.74,
         "theorems": 31,
         "title": "Rucker: Saucer Wisdom — Non-Human Mathematical Intuition"
+      },
+      {
+        "cycle_id": "edb35a0b",
+        "quality": 0.5,
+        "theorems": 14,
+        "title": "Close Proofs: Speculative: Mathematics as a Phase Transition"
       }
     ]
   }
