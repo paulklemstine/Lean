@@ -7953,20 +7953,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Record compositions of alternating permutations and noncommutative symmetric functions"
   },
   {
-    "consumed_by_exp_id": "2153ae5a",
-    "description": "Investigate the ArXiv paper 'On Agreement Subtrees in Multiple Pylogenetic Trees' and formalize its key results. Abstract: Snir and Yuster [Discrete Appl. Math. 347 (2026) 160--171] asked for the least number $h(k)$ such that $k$ unrooted binary phylogenetic trees on the same $h(k)$ leaves always share a common quartet. We give a new upper bound for the $k$-tree version of the Maximum Agreement Subtree problem, namely an upper bound for the number of leaves, on which $k$ unrooted binary phylogenetic trees always share a common induced binary subtree on $n$ leaves, which is a four-times iterated exponential function. For $h(k)$, this implies a four-times iterated exponential upper bound. We also set an exponential lower bound for $h(k)$.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0041",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.12778v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-15T13:43:20.804355+00:00",
-    "title": "ArXiv paper: On Agreement Subtrees in Multiple Pylogenetic Trees"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Genus and Gonality of Small Curves, Dynamical Uniform Boundedness, and Bifurcation' and formalize its key results. Abstract: We prove the Gonality Conjecture in arithmetic dynamics: for any non-isotrivial one-parameter algebraic family of rational maps on $\\mathbb{P}^1$, the gonality of distinct dynatomic curves tends to infinity. More generally, outside the flexible Latt\u00e8s family, every small sequence of horizontal curves has gonality tending to infinity, and its genus grows superlinearly with its degree over the parameter curve. We also obtain higher-dimensional analogues under natural bifurcation and multiplier-genericity hypotheses. As applications, we prove uniform boundedness results for iterated preimages over number fields and geometric uniform boundedness results for preperiodic points over function fields. The proof combines arithmetic equidistribution, woven currents, and bifurcation theory; the bifurcation mechanism is what forces the growth of genus and gonality.",
     "domains": [
@@ -10714,7 +10700,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Grokking: Phase Transitions in Learning"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "06d71b6e",
     "description": "Formalize chess played on an infinite board. Prove that the king can always escape on an infinite board and determine which finite-piece configurations are forced mates. Develop a theory of infinite combinatorial game value and prove its relationship to ordinal game values.",
     "domains": [
       "Novelty",
@@ -10725,7 +10711,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Infinite-Dimensional Chess: Winning on the Hilbert Board"
   },
@@ -14500,6 +14486,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-24T14:20:04.417073+00:00",
     "title": "The certified census of fundamental discriminants with `|D| \u2264 1000` \u2014 exactly `6"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Counting, Pigeonhole, and the Tower behind Multiple-Tree Agreement Subtrees\n\nThis cycle isolated the *quantitative core* of the many-tree Maximum Agreement Subtree\nproblem for unrooted binary phylogenetic trees: the induced split system of a tree on `a`\nretained leaves is one of at most `2^(2^a)` possibilities, and once the number of trees\nexceeds this double exponential, two trees induce identical systems on those leaves. This\n\"atomic step\" is the recursion that, iterated four times, produces the four-times iterated\nexponential upper bound of Snir and Yuster. Below are bold, falsifiable directions derived\nfrom the surviving results and the failure analysis.\n\n## 1. The pigeonhole threshold is height-exact, not merely form-exact\n**Conjecture.** For every retained-leaf count `a`, there is a family of exactly `2^(2^a)`\ntrees that are pairwise distinct on the `a` leaves, so the strict inequality in the\npigeonhole pivot cannot be relaxed to an equality at *any* level of the tower.\n*The key insight is* that the double powerset of the retained leaves is realizable by\ngenuine binary topologies once `a` is large enough, so the counting bound is achieved and\nnot merely dominated. *Why now?* The atomic counting step has been cleanly separated from\nthe analytic bookkeeping, so its sharpness can be probed level by level rather than only\nthrough the final four-fold estimate.\n\n## 2. Compatibility collapses the double exponential to a single exponential\n**Conjecture.** Restricting attention to split systems arising from *binary compatible*\ntrees replaces the `2^(2^a)` count of arbitrary systems by a single exponential `c^a`,\nlowering the height of the tower needed to force a common quartet.\n*The key insight is* that displayed splits of a binary tree are pairwise compatible, so the\nrealizable systems form a laminar family whose size is exponential, not doubly exponential.\n*Why now?* The containment and counting layers are shape-agnostic, which pinpoints exactly\nwhere a compatibility hypothesis must enter to shrink the bound.\n\n## 3. Every level of the tower is a self-similar sub-problem\n**Conjecture.** Forcing a common induced subtree on `n` leaves among `k` trees reduces to\nforcing one on `f(n)` leaves among `g(k)` trees, with `f` and `g` each governed by a single\nexponential, so the four-fold iterate is the minimal number of self-reductions reaching a\nquartet.\n*The key insight is* that the pigeonhole pivot converts \"many trees on few leaves\" into\n\"fewer trees that agree on those leaves\", which is a strictly smaller instance of the same\nproblem. *Why now?* The tower arithmetic (strict monotonicity in height, monotonicity in\nbase) is now available to make \"minimal number of self-reductions\" a precise, testable\nclaim.\n\n## 4. An exponential lower bound for the common-quartet threshold `h(k)`\n**Conjecture.** There is a constant `c > 1` and, for infinitely many `k`, a family of `k`\ntrees on `c^k` leaves that share no common quartet, matching the exponential lower bound in\nform.\n*The key insight is* that random or algebraically structured packings of quartet signatures\navoid agreement, so the double-exponential counting upper bound and an exponential lower\nbound bracket `h(k)` from both sides. *Why now?* With the upper-bound recursion formalized,\nthe remaining gap is exactly the construction witnessing the lower bound, making it the\nnatural next target.\n\n## 5. Extremal families for small `k` fall into finitely many relabelling orbits\n**Conjecture.** For each fixed small `k`, the tree families that realize the threshold\n`h(k)` (no common quartet on `h(k)-1` leaves) form finitely many explicit orbits under\nleaf relabelling.\n*The key insight is* that the counting bound restricts the number of distinct induced\nsystems, so extremal configurations are forced into a finite catalogue that can be\nenumerated. *Why now?* The finite-information counting layer gives an a priori bound on the\nsearch space, turning the classification into a finite \u2014 hence decidable \u2014 problem.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0700",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "2153ae5a",
+    "status": "available",
+    "timestamp": "2026-07-24T14:54:54.287291+00:00",
+    "title": "This cycle isolated the *quantitative core* of the many-tree Maximum Agreement S"
   },
   {
     "consumed_by_exp_id": "",

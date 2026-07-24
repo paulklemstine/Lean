@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "7328a55d",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions\n\nThe formal results show that the proposed Hausdorff-dimension conjectures are false: the prime set is countable, and every countable set has zero Hausdorff measure in every positi",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-07-18T13:54:59",
-      "title": "Fractal Number Theory: Hausdorff Dimension of Prime Distributions"
-    },
-    {
       "cycle_id": "fb82936b",
       "domain": "Physics",
       "key_insight": "# Future Directions\n\n- Replace the parity-normalized action model by an explicit cubical set whose vertices are recipes, edges are elementary substitutions, and higher cubes encode commuting independe",
@@ -2501,6 +2491,16 @@
       "theorem_count": 14,
       "timestamp": "2026-07-24T14:41:20",
       "title": "**Conjecture.** For every family of devices that exactly resolves the first `n` "
+    },
+    {
+      "cycle_id": "2153ae5a",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Counting, Pigeonhole, and the Tower behind Multiple-Tree Agreement Subtrees\n\nThis cycle isolated the *quantitative core* of the many-tree Maximum Agreement Subtree\nproblem for unr",
+      "quality_score": 0.64,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-07-24T14:54:57",
+      "title": "ArXiv paper: On Agreement Subtrees in Multiple Pylogenetic Trees"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-24T14:41:20",
+  "last_updated": "2026-07-24T14:54:57",
   "open_questions": [
     {
       "context": "+    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; +    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; +    ∀ i < k, c i = ",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "955187b3",
-        "quality": 0.68,
-        "theorems": 20,
-        "title": "The Mega-Sphere: All Dimensions at Once"
-      },
-      {
         "cycle_id": "3df39c71",
         "quality": 0.72,
         "theorems": 13,
@@ -3637,6 +3631,12 @@
         "quality": 0.66,
         "theorems": 13,
         "title": "Close Proofs: ArXiv paper: Reproducing the k-copwin Algorithm: Theory vs. Implem"
+      },
+      {
+        "cycle_id": "2153ae5a",
+        "quality": 0.64,
+        "theorems": 16,
+        "title": "ArXiv paper: On Agreement Subtrees in Multiple Pylogenetic Trees"
       }
     ],
     "NumberTheory": [
