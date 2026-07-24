@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-24T09:42:17.773858+00:00",
+  "last_updated": "2026-07-24T12:04:06.094231+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -34819,6 +34819,7 @@
       "outcome_quality": 0.618,
       "phase": "A_only",
       "phase_a_prompt_version": "v28",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v28",
@@ -34861,6 +34862,7 @@
       "outcome_quality": 0.58,
       "phase": "A_only",
       "phase_a_prompt_version": "v28",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v28",
@@ -34889,6 +34891,48 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-24T09:42:17.648020+00:00",
       "title": "The completed development has two complementary formalizations. `Catalog/NumberT"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "MachineLearning",
+      "duration_seconds": 8514.529172897339,
+      "end_time": 1784894617.8626814,
+      "files_integrated": 4,
+      "job_id": "30631f2b",
+      "outcome_quality": 0.57,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v25",
+      "phase_b_skip_reason": "low_quality_near_miss",
+      "phase_b_skipped": true,
+      "prompt_version": "v25",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.7,
+        "composite": 0.435,
+        "cross_domain": 0.5,
+        "grade": "partial",
+        "importance": 0.65,
+        "novelty": 0.4,
+        "proof_depth": 0.55,
+        "usefulness": 0.6
+      },
+      "quality_score": 0.57,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1784886103.3335085,
+      "strategy_count": 0,
+      "theorem_count": 21,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 21,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-24T12:04:05.995249+00:00",
+      "title": "Random-Matrix: Wigner Semicircle Law Convergence for Wigner Ensembles"
     }
   ]
 }

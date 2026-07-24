@@ -1239,20 +1239,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "SLE-Interface: Schramm-Loewner Evolution Conformal Invariance"
   },
   {
-    "consumed_by_exp_id": "30631f2b",
-    "description": "Formalizes weak convergence of empirical spectral measures of symmetric random matrices to the Wigner semicircle distribution.",
-    "domains": [
-      "Probability"
-    ],
-    "id": "dir_50_48_def390d1",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "batch_50_injection",
-    "status": "in_progress",
-    "timestamp": "2026-07-23T20:05:24.703443+00:00",
-    "title": "Random-Matrix: Wigner Semicircle Law Convergence for Wigner Ensembles"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Proves the Alon-Boppana theorem establishing lower bounds \u03bb_2 \u2265 2\u221a(d-1) - o(1) for the second largest eigenvalue of d-regular graphs.",
     "domains": [
@@ -4854,7 +4840,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "**Conjecture.** For every certificate tree, augmenting redundant-restatement eli"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b519e277",
     "description": "# Future directions\n\nThe completed Lean development proves the local arithmetic dictionary for the quadratic\ncharacter `\u03c7_D(p) = (D/p)`: ramification gives color `0`, and unramified primes split into\nsquare/color `1` and nonsquare/color `-1` cases. It is uniform in every integer parameter\n`D` and every prime `p`, so it applies in particular to every fundamental discriminant with\nabsolute value at most 1000.\n\nThe original mission's global claims are substantially larger than this local core. A faithful\nnext phase should proceed as follows.\n\n1. **Fundamental discriminants.** Define the predicate characterizing quadratic-field\n   discriminants (`D \u2261 1 mod 4` and squarefree, or `D = 4m` with the standard congruence\n   and squarefreeness conditions), and prove uniqueness of the quadratic field attached to\n   each such `D`.\n2. **Certified bounded enumeration.** Construct a finite list of all fundamental\n   discriminants satisfying `|D| \u2264 1000`, prove soundness and completeness of that list,\n   and derive the exact count in Lean. This is the missing part of the proposed bounded test;\n   no unchecked count is asserted here.\n3. **Global Dirichlet characters.** Package the Kronecker symbol `n \u21a6 (D/n)` as a Mathlib\n   `DirichletCharacter`, including the prime `2` and composite moduli. Prove its conductor is\n   `|D|` for fundamental `D` and connect evaluation at odd primes to `quadraticColor`.\n4. **Quadratic fields and Frobenius.** Formalize the quadratic extension `\u211a(\u221aD)`, identify\n   its Galois group with a two-element group, and prove the Frobenius splitting criterion at\n   every unramified prime. This would turn the local Legendre-symbol classification into an\n   explicit shape-to-color statement.\n5. **Injectivity and surjectivity in the quadratic case.** Prove distinct fundamental\n   discriminants yield distinct primitive quadratic Dirichlet characters, and conversely\n   classify primitive quadratic characters by fundamental discriminants. This is the precise\n   finite-order degree-one correspondence relevant to quadratic fields.\n6. **Scope correction for higher rank.** The broad statement in the prompt\u2014an unrestricted\n   bijection between all irreducible representations of `Gal(\u211a\u0304/\u211a)` and cuspidal automorphic\n   representations of `GL_n`\u2014should not be used as a theorem without the customary\n   continuity, semisimplicity, ramification, algebraicity, and compatibility hypotheses.\n   Likewise, the modularity theorem concerns elliptic curves (and associated suitable\n   two-dimensional representations), not every conceivable `n = 2` representation.\n\nNo OEIS sequence is needed for the uniform local theorem. If the certified bounded\nfundamental-discriminant enumeration is completed, its ordered list or counting function can\nthen be compared against a relevant external sequence.\n",
     "domains": [
       "Algebra",
@@ -4864,7 +4850,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "d3ef6e43",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-18T11:59:31.909422+00:00",
     "title": "The completed Lean development proves the local arithmetic dictionary for the qu"
   },
@@ -6711,6 +6697,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-24T09:42:12.917260+00:00",
     "title": "Earlier cycles settled the **deterministic** game: complementing a world negates"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Wigner Semicircle Law\n\nThis development establishes the two pillars of the moment-method proof of the\nWigner semicircle law and bridges them:\n\n1. **Combinatorial side** (`Moments.lean`): the moments of the standard\n   semicircle distribution are the Catalan numbers, satisfying the Catalan/Wigner\n   moment recurrence, the central-binomial closed form, and the `4^k` growth\n   bound (Carleman determinacy).\n2. **Analytic side** (`Density.lean`): the radius-1 semicircle density is a\n   genuine probability density (nonnegative, symmetric, integrates to 1) with\n   mean 0 and variance 1/4.\n3. **Bridge** (`Bridge.lean`): the rescaled Catalan moments match the directly\n   computed integrals of the density (0th, 1st, 2nd moments).\n\n## Natural next steps\n\n- **General even moment integral.** Prove\n  `\u222b_{-1}^{1} x^{2k} \u221a(1-x\u00b2) dx = \u03c0 \u00b7 C_k / 4^{k+1}` for all `k` (currently only\n  `k = 0, 1` are done via `integral_sqrt_one_sub_sq` and the sin-substitution).\n  A reduction/recurrence via integration by parts or the Beta function\n  (`Real.Gamma`/`betaIntegral` in Mathlib) would give the full moment sequence of\n  the density, closing the loop with `scaledMoment` for every `k`.\n\n- **Uniqueness via moments (Carleman).** Formalize that a probability measure on\n  a bounded interval is determined by its moments, then combine with\n  `scMoment_le_four_pow` to conclude the semicircle law is the unique measure\n  with these moments.\n\n- **Empirical spectral distribution.** Define the empirical spectral measure\n  `\u03bc_N = (1/N) \u03a3 \u03b4_{\u03bb_i}` of an `N\u00d7N` symmetric matrix from its eigenvalues, and\n  its moments `(1/N) tr(M^k)`.\n\n- **Expected traces \u2192 Catalan.** For a Wigner ensemble, prove\n  `lim_{N\u2192\u221e} E[(1/N) tr(W_N^{2k})] = C_k` and the odd traces `\u2192 0` by the\n  non-crossing pair-partition enumeration; the recurrence `scMoment_recurrence`\n  is the target identity.\n\n- **Weak convergence.** Assemble the moment convergence plus determinacy into\n  weak convergence `\u03bc_N \u21d2 semicircle`, the full statement of Wigner's theorem.\n\n- **Concentration.** Strengthen convergence in expectation to almost-sure /\n  in-probability convergence via variance bounds on the traces.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0641",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "30631f2b",
+    "status": "available",
+    "timestamp": "2026-07-24T12:04:01.061037+00:00",
+    "title": "This development establishes the two pillars of the moment-method proof of the"
   },
   {
     "consumed_by_exp_id": "",

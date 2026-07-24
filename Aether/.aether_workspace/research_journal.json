@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "154045db",
-      "domain": "Shared",
-      "key_insight": "# Future Directions: Jigsaw Complexity and Topology\n\n## 1. Geometric NP-completeness with four-sided pieces\n\nConjecture: deciding whether a finite multiset of non-rotatable square pieces with flat, ta",
-      "quality_score": 0.74,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-07-18T12:48:43",
-      "title": "The Mathematics of Jigsaw Puzzles: NP-Completeness and Topology"
-    },
-    {
       "cycle_id": "b596d3d1",
       "domain": "Pythagorean",
       "key_insight": "# Future Directions: Geometry Beyond Integer Linking\n\n## 1. A real-valued Hopf-geometric concurrence functional\n\nThere exists a canonically normalized real-valued functional on the quaternionic Hopf g",
@@ -2501,6 +2491,16 @@
       "theorem_count": 24,
       "timestamp": "2026-07-24T09:42:17",
       "title": "The completed development has two complementary formalizations. `Catalog/NumberT"
+    },
+    {
+      "cycle_id": "30631f2b",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions: Wigner Semicircle Law\n\nThis development establishes the two pillars of the moment-method proof of the\nWigner semicircle law and bridges them:\n\n1. **Combinatorial side** (`Moments.",
+      "quality_score": 0.57,
+      "sorry_count": 0,
+      "theorem_count": 21,
+      "timestamp": "2026-07-24T12:04:05",
+      "title": "Random-Matrix: Wigner Semicircle Law Convergence for Wigner Ensembles"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-24T09:42:17",
+  "last_updated": "2026-07-24T12:04:05",
   "open_questions": [
     {
       "context": "+    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; +    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; +    ∀ i < k, c i = ",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "d13e4521",
-        "quality": 0.74,
-        "theorems": 0,
-        "title": "Persistent Homology of Prime Numbers: The Topology of Arithmetic"
-      },
-      {
         "cycle_id": "4c2c71e5",
         "quality": 0.8,
         "theorems": 46,
@@ -3575,6 +3569,12 @@
         "quality": 0.77,
         "theorems": 0,
         "title": "The conjectures below are ranked by expected scientific impact. Each proposal se"
+      },
+      {
+        "cycle_id": "30631f2b",
+        "quality": 0.57,
+        "theorems": 21,
+        "title": "Random-Matrix: Wigner Semicircle Law Convergence for Wigner Ensembles"
       }
     ],
     "Novelty": [

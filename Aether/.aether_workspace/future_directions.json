@@ -14277,11 +14277,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "b519e277",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -14294,7 +14294,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0310",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-24T12:04:20.576473+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -14309,7 +14309,7 @@
       "source": "",
       "source_exp_id": "d3ef6e43",
       "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/d3ef6e43_retry1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "th_05a3c76a",
       "timestamp": "2026-07-18T11:59:31.909422+00:00",
       "title": "The completed Lean development proves the local arithmetic dictionary for the qu"
@@ -32467,6 +32467,7 @@
     "cross_domain_bridge",
     "cross_domain_bridge",
     "abduction_followup",
-    "cross_domain_bridge"
+    "cross_domain_bridge",
+    "abduction_followup"
   ]
 }
