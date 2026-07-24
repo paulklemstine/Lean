@@ -10,6 +10,16 @@ VERSION_FILES=(
     "docs/index.html"
 )
 
+# Guard: Check for any unresolved merge conflicts before modifying version files
+for f in "${VERSION_FILES[@]}"; do
+    if [ -f "$f" ]; then
+        if grep -q '<<<<<<<' "$f" || grep -q '>>>>>>>' "$f"; then
+            echo "[pre-commit] Error: $f contains unresolved merge conflict markers. Aborting." >&2
+            exit 1
+        fi
+    fi
+done
+
 # Find the first file that has a version badge and read current version
 CURRENT_VERSION=""
 for f in "${VERSION_FILES[@]}"; do
@@ -42,13 +52,13 @@ for f in "${VERSION_FILES[@]}"; do
         fi
 
         # Replace the version in the version-badge span
-        sed -i "s/id=\"version-badge\">v[0-9]\+\.[0-9]\+/id=\"version-badge\">v${NEW_VERSION}/g" "$f"
+        sed -i "s/id=\"version-badge\">v[0-9.]\+/id=\"version-badge\">v${NEW_VERSION}/g" "$f"
 
         # Update cache-bust query strings on CSS and JS files
-        sed -i "s/style\.css?v=[0-9]\+\.[0-9]\+/style.css?v=${NEW_VERSION}/g" "$f"
-        sed -i "s/packages\.js?v=[0-9]\+\.[0-9]\+/packages.js?v=${NEW_VERSION}/g" "$f"
-        sed -i "s/pyodide-runner\.js?v=[0-9]\+\.[0-9]\+/pyodide-runner.js?v=${NEW_VERSION}/g" "$f" || true
-        sed -i "s/lightbox\.js?v=[0-9]\+\.[0-9]\+/lightbox.js?v=${NEW_VERSION}/g" "$f" || true
+        sed -i "s/style\.css?v=[0-9.]\+/style.css?v=${NEW_VERSION}/g" "$f"
+        sed -i "s/packages\.js?v=[0-9.]\+/packages.js?v=${NEW_VERSION}/g" "$f"
+        sed -i "s/pyodide-runner\.js?v=[0-9.]\+/pyodide-runner.js?v=${NEW_VERSION}/g" "$f" || true
+        sed -i "s/lightbox\.js?v=[0-9.]\+/lightbox.js?v=${NEW_VERSION}/g" "$f" || true
 
         git add "$f"
     fi
