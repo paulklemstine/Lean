@@ -6532,7 +6532,7 @@ window.FUTURE_DIRECTIONS = [
       "Combinatorics"
     ],
     "id": "seed_010",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
