@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "c3aba433",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: The 1729 Cubic Surface\n\n## 1. Complete the integral-point census at moderate height\n\n**Conjecture.** Up to permutation, the only nonzero integral solutions of\n\\(x^3+y^3+z^3=1729\\)",
-      "quality_score": 0.68,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-07-18T10:21:55",
-      "title": "Ramanujan's Taxicab Number as a Sum of Three Cubes: 1729 Revisited"
-    },
-    {
       "cycle_id": "0ebc2749",
       "domain": "NumberTheory",
       "key_insight": "# Future directions\n\nThe present development settles the algebraic core: exact period classifies all return times, a primitive orbit has the expected number of distinct points, and every positive crit",
@@ -2501,6 +2491,16 @@
       "theorem_count": 9,
       "timestamp": "2026-07-24T02:40:44",
       "title": "Novikov-Fixed-Point: Existence of Unique Solutions for Causally Loop-Closed Spacetimes"
+    },
+    {
+      "cycle_id": "08b12f3b",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — The Spine of the Supersingular 2-Isogeny Graph\n\nThe results in `SupersingularSpinePath.lean` pin down the distance, eccentricity, diameter\nand mean-diameter functions of the path",
+      "quality_score": 0.63,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-07-24T03:52:16",
+      "title": "ArXiv paper: The Spine: A Supersingular Highway"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-24T02:40:44",
+  "last_updated": "2026-07-24T03:52:16",
   "open_questions": [
     {
       "context": "",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "14bbfbeb",
-        "quality": 0.62,
-        "theorems": 16,
-        "title": "Fermat Near-Misses in the Twilight Zone"
-      },
-      {
         "cycle_id": "b44b7357",
         "quality": 0.75,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.58,
         "theorems": 9,
         "title": "Novikov-Fixed-Point: Existence of Unique Solutions for Causally Loop-Closed Spac"
+      },
+      {
+        "cycle_id": "08b12f3b",
+        "quality": 0.63,
+        "theorems": 16,
+        "title": "ArXiv paper: The Spine: A Supersingular Highway"
       }
     ],
     "NumberTheory": [
