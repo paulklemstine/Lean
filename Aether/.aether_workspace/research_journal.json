@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "21c08839",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions: Self-Improving Cryptographic Certificates\n\n## 1. Confluence of audited certificate refinement\n\n**Conjecture.** For every certificate tree, augmenting redundant-restatement elimina",
-      "quality_score": 0.73,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-18T10:39:19",
-      "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
-    },
-    {
       "cycle_id": "d3ef6e43",
       "domain": "Probability",
       "key_insight": "# Future directions\n\nThe completed Lean development proves the local arithmetic dictionary for the quadratic\ncharacter `χ_D(p) = (D/p)`: ramification gives color `0`, and unramified primes split into",
@@ -2501,6 +2491,16 @@
       "theorem_count": 1636,
       "timestamp": "2026-07-24T04:50:24",
       "title": "Deepening: 1. **Repair the definition before studying asymptotics.** The literal rule exclu"
+    },
+    {
+      "cycle_id": "66a73fad",
+      "domain": "Physics",
+      "key_insight": "# Future Directions — Optimal Hamilton Covers\n\nThe deterministic incidence-capacity obstruction — that any cover of a graph by\ntwo-regular spanning layers uses at least `⌈Δ/2⌉` layers, with a per-vert",
+      "quality_score": 0.62,
+      "sorry_count": 0,
+      "theorem_count": 7,
+      "timestamp": "2026-07-24T04:50:39",
+      "title": "**Conjecture.** In the random graph process, with probability tending to one, th"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-24T04:50:24",
+  "last_updated": "2026-07-24T04:50:39",
   "open_questions": [
     {
       "context": "-    sorry+  have hchecked := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩); -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun ",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "3aa7c983",
-        "quality": 0.62,
-        "theorems": 13,
-        "title": "Impossibility Results for Fun: Things That Cannot Be Done (But We Try Anyway)"
-      },
-      {
         "cycle_id": "f0f3cf3d",
         "quality": 0.56,
         "theorems": 10,
@@ -3761,6 +3755,12 @@
         "quality": 0.7,
         "theorems": 24,
         "title": "ArXiv paper: On Matrix Product Factorization in Association Schemes"
+      },
+      {
+        "cycle_id": "66a73fad",
+        "quality": 0.62,
+        "theorems": 7,
+        "title": "**Conjecture.** In the random graph process, with probability tending to one, th"
       }
     ],
     "Probability": [
