@@ -18,16 +18,34 @@ window.renderDirectionCards = function(container, directions, detailIdPrefix) {
         );
     }
 
-    const statusColors = { available: '#4caf50', in_progress: '#2196f3' };
+    const statusColors = {
+        available: '#4caf50',
+        in_progress_A: '#1e88e5',
+        in_progress_B: '#8e24aa',
+        in_progress: '#1e88e5'
+    };
     const statusLabels = { available: 'Available', in_progress: 'In Progress' };
 
     container.innerHTML = directions.map(d => {
         const priorityPct = Math.round(d.priority_score * 100);
         const priorityColor = d.priority_score >= 0.9 ? '#f44336' : d.priority_score >= 0.8 ? '#ff9800' : '#ffc107';
-        const statusColor = statusColors[d.status] || '#9e9e9e';
+        
+        let statusKey = d.status;
+        let phaseTag = 'Phase A';
+        if (d.status === 'in_progress') {
+            const rawPhase = d.phase ? String(d.phase).toUpperCase() : 'A';
+            if (rawPhase.includes('B')) {
+                statusKey = 'in_progress_B';
+                phaseTag = 'Phase B';
+            } else {
+                statusKey = 'in_progress_A';
+                phaseTag = 'Phase A';
+            }
+        }
+
+        const statusColor = statusColors[statusKey] || statusColors[d.status] || '#9e9e9e';
         let statusLabel = statusLabels[d.status] || d.status;
         if (d.status === 'in_progress') {
-            const phaseTag = d.phase ? (String(d.phase).startsWith('Phase') ? d.phase : `Phase ${d.phase}`) : 'Phase A';
             statusLabel = `In Progress (${phaseTag})`;
         }
         const domainTags = (d.domains || []).map(dm =>
