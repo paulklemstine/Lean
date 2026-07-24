@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "64b7f63b",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions\n\n1. **Variable branching alphabets.** Generalize binary profiles to a fixed `b`-ary alphabet and prove that normalization by `log b` again bounds dimension by `1` and realizes rati",
-      "quality_score": 0.73,
-      "sorry_count": 0,
-      "theorem_count": 65,
-      "timestamp": "2026-07-18T14:44:12",
-      "title": "Close Proofs: Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
-    },
-    {
       "cycle_id": "c83ba873",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\n## 1. Adaptive-submodularity criterion for greedy posterior voting\n\n**Conjecture.** In a finite social-deduction game whose information states form a belief-state Markov process,",
@@ -2501,6 +2491,16 @@
       "theorem_count": 15,
       "timestamp": "2026-07-24T15:52:00",
       "title": "The original proposal mixes two different notions. The files now separate them."
+    },
+    {
+      "cycle_id": "cc3b4f99",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Holographic Primes / Tropical Dequantization\n\n## What this cycle added\n\nThe finite prime hologram in `Catalog/Tropical/HolographicPrimes.lean` already\nproved the exact boundary/b",
+      "quality_score": 0.52,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-24T15:52:08",
+      "title": "Close Proofs: Holographic Primes: The Prime Number AdS/CFT Correspondence"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-24T15:52:00",
+  "last_updated": "2026-07-24T15:52:08",
   "open_questions": [
     {
       "context": "+    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; +    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; +    ∀ i < k, c i = ",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "671e7568",
-        "quality": 0.67,
-        "theorems": 25,
-        "title": "The Oracle's Burden: How Much Knowledge Is Too Much?"
-      },
-      {
         "cycle_id": "ca6fc5a2",
         "quality": 0.72,
         "theorems": 32,
@@ -3141,6 +3135,12 @@
         "quality": 0.63,
         "theorems": 15,
         "title": "The original proposal mixes two different notions. The files now separate them."
+      },
+      {
+        "cycle_id": "cc3b4f99",
+        "quality": 0.52,
+        "theorems": 0,
+        "title": "Close Proofs: Holographic Primes: The Prime Number AdS/CFT Correspondence"
       }
     ],
     "Bridges": [
