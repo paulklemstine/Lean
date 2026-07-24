@@ -507,7 +507,7 @@ def _check_core_file_changes(pre_pull_hashes: Dict[str, str]) -> bool:
 
 
 
-async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: int = 3) -> None:
+async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: int = 0) -> None:
     """Run one tick inside a single event loop, with a cross-process lock.
 
     Only one process can execute a tick at a time. This prevents the local
@@ -549,7 +549,7 @@ async def _safe_get_active_jobs_count(aristotle_client) -> int:
         return -1
 
 
-async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: int = 3) -> None:
+async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: int = 0) -> None:
     """Run one tick inside a single event loop.
 
     novelty_slots: number of dispatch slots reserved for novelty/wild directions
@@ -1359,19 +1359,26 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
         current_inflight = max(local_inflight, server_running) if server_running >= 0 else local_inflight
         slots_available = max(0, max_inflight - current_inflight)
 
-        standard_slots = max(0, slots_available - novelty_slots)
-        wild_slots = min(novelty_slots, slots_available)
-        print(f"[Tick] {slots_available} dispatch slots available ({standard_slots} standard, {wild_slots} novelty)")
+        if novelty_slots > 0:
+            standard_slots = max(0, slots_available - novelty_slots)
+            wild_slots = min(novelty_slots, slots_available)
+            print(f"[Tick] {slots_available} dispatch slots available ({standard_slots} standard, {wild_slots} novelty)")
+        else:
+            standard_slots = slots_available
+            wild_slots = 0
+            print(f"[Tick] {slots_available} dispatch slots available")
 
         queue_full = False
 
-        # Dispatch standard directions
+        # Dispatch standard/unrestricted directions
         for _ in range(standard_slots):
             if queue_full:
                 break
             job = None
             try:
-                job = extractor.discover(domain_filter=None, exclude_domains=["Novelty"] + saturated_domains)
+                # When novelty_slots is 0, do not exclude Novelty from candidate directions
+                excluded = saturated_domains if novelty_slots == 0 else (["Novelty"] + saturated_domains)
+                job = extractor.discover(domain_filter=None, exclude_domains=excluded)
                 job = await extractor.dispatch_async(job)
                 if job.project_id:
                     extractor.inflight[job.project_id] = job
@@ -1393,7 +1400,7 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                 else:
                     print(f"[Tick] Dispatch error before discovery: {e}")
 
-        # Dispatch novelty/wild directions
+        # Dispatch novelty/wild directions if explicitly requested via novelty_slots
         for _ in range(wild_slots):
             if queue_full:
                 break
@@ -2316,8 +2323,8 @@ class Tee:
 def main():
     parser = argparse.ArgumentParser(description="Aether Tick: one-shot CI pipeline step")
     parser.add_argument("--max-inflight", type=int, default=9)
-    parser.add_argument("--novelty-slots", type=int, default=3,
-                        help="Number of dispatch slots reserved for novelty/wild directions (default: 3)")
+    parser.add_argument("--novelty-slots", type=int, default=0,
+                        help="Number of dispatch slots reserved for novelty/wild directions (default: 0)")
     parser.add_argument("--config", type=str, default=None)
     parser.add_argument("--ollama-cloud", action="store_true")
     parser.add_argument("--loop", action="store_true",
