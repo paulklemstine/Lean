@@ -356,7 +356,7 @@ window.PACKAGE_INDEX = [
     "title": "Computational Complexity as Physical Law: Collapse Without Free Erasure"
   },
   {
-    "date": "2026-07-19T21:08:16-05:00",
+    "date": "2026-07-20T02:08:16Z",
     "domain": "Novelty",
     "exp_id": "c1b3f8da",
     "filename": "arxiv_paper_on_small_doubling_in_right_ordered_gro.json",
@@ -367,7 +367,7 @@ window.PACKAGE_INDEX = [
     "title": "The Algebra of Forgetting: Finite Memory and Observable Quotients (Part I)"
   },
   {
-    "date": "2026-07-19T19:23:32-05:00",
+    "date": "2026-07-20T00:23:32Z",
     "domain": "Cryptography",
     "exp_id": "27f58424",
     "filename": "close_proofs_self_modifying_code_that_cannot_be_st.json",
@@ -378,7 +378,7 @@ window.PACKAGE_INDEX = [
     "title": "Self-Modifying Termination, Diagonal Fixed Points, and Algebraic Forgetting"
   },
   {
-    "date": "2026-07-19T19:23:23-05:00",
+    "date": "2026-07-20T00:23:23Z",
     "domain": "Geometry",
     "exp_id": "fd569acd",
     "filename": "borges_library_of_babel_combinatorics_of_everythin.json",
@@ -389,7 +389,7 @@ window.PACKAGE_INDEX = [
     "title": "The Finite Library of Babel: Topology and Incompressibility"
   },
   {
-    "date": "2026-07-19T17:38:32-05:00",
+    "date": "2026-07-19T22:38:32Z",
     "domain": "Geometry",
     "exp_id": "d5fe8eb3",
     "filename": "zombies_and_qualia_mathematics_of_subjective_exper.json",
@@ -400,7 +400,7 @@ window.PACKAGE_INDEX = [
     "title": "Functional Fibres, Zombie Twins, and Labelled Incompleteness"
   },
   {
-    "date": "2026-07-19T15:44:09-05:00",
+    "date": "2026-07-19T20:44:09Z",
     "domain": "Pythagorean",
     "exp_id": "3dea732a",
     "filename": "time_travel_consistency_novikovs_principle_as_a_fi.json",
@@ -411,7 +411,7 @@ window.PACKAGE_INDEX = [
     "title": "Time Travel Consistency: Novikov\u2019s Principle as a Fixed-Point Theorem"
   },
   {
-    "date": "2026-07-19T12:32:47-05:00",
+    "date": "2026-07-19T17:32:47Z",
     "domain": "Pythagorean",
     "exp_id": "cf6c2cd9",
     "filename": "surreal_topology_open_sets_at_infinity.json",
@@ -422,7 +422,7 @@ window.PACKAGE_INDEX = [
     "title": "Surreal Topology: Open Sets at Infinity"
   },
   {
-    "date": "2026-07-19T12:15:38-05:00",
+    "date": "2026-07-19T17:15:38Z",
     "domain": "Novelty",
     "exp_id": "7881a56b",
     "filename": "arxiv_paper_reproducing_the_k_copwin_algorithm_the.json",
@@ -433,7 +433,7 @@ window.PACKAGE_INDEX = [
     "title": "Backward Attractors for Practical k-Copwin Recognition"
   },
   {
-    "date": "2026-07-19T11:07:18-05:00",
+    "date": "2026-07-19T16:07:18Z",
     "domain": "Shared",
     "exp_id": "8d3b0867",
     "filename": "deepening_the_thermodynamics_of_sorting_entropy_an.json",
@@ -444,7 +444,7 @@ window.PACKAGE_INDEX = [
     "title": "The Thermodynamics of Sorting: Entropy, Reversible History, and Computational Work"
   },
   {
-    "date": "2026-07-19T11:07:09-05:00",
+    "date": "2026-07-19T16:07:09Z",
     "domain": "Applications",
     "exp_id": "2d8c7907",
     "filename": "memory_editing_when_forgetting_is_a_mathematical_o.json",
@@ -455,7 +455,7 @@ window.PACKAGE_INDEX = [
     "title": "Memory Editing: When Forgetting Is a Mathematical Operation"
   },
   {
-    "date": "2026-07-19T04:14:55-05:00",
+    "date": "2026-07-19T09:14:55Z",
     "domain": "Speculative",
     "exp_id": "d1a99009",
     "filename": "information_theoretic_limits_of_proof_search_how_h.json",
@@ -466,7 +466,7 @@ window.PACKAGE_INDEX = [
     "title": "Information-Theoretic Limits of Finite Derivation Search"
   },
   {
-    "date": "2026-07-19T03:21:35-05:00",
+    "date": "2026-07-19T08:21:35Z",
     "domain": "Novelty",
     "exp_id": "91c16818",
     "filename": "sheaf_theoretic_data_integration_when_databases_fo.json",
@@ -477,7 +477,7 @@ window.PACKAGE_INDEX = [
     "title": "Sheaf-Theoretic Data Integration: Completion, Dependence, and Imputation"
   },
   {
-    "date": "2026-07-18T23:29:08-05:00",
+    "date": "2026-07-19T04:29:08Z",
     "domain": "Algebra",
     "exp_id": "fa73eeee",
     "filename": "conjecture_there_is_a_natural_joint_scaling_of_the.json",
@@ -488,7 +488,7 @@ window.PACKAGE_INDEX = [
     "title": "Exact Two-Cutoff Bounds for Prime Occupation Partitions"
   },
   {
-    "date": "2026-07-18T19:44:58-05:00",
+    "date": "2026-07-19T00:44:58Z",
     "domain": "Algebra",
     "exp_id": "ae36b246",
     "filename": "arxiv_paper_on_the_maximum_size_of_b_3_free_famili.json",
@@ -499,7 +499,7 @@ window.PACKAGE_INDEX = [
     "title": "Calibrated Algebraic Detectors: Eisenstein Norms, Braid Writhe, and Fibonacci Divisors"
   },
   {
-    "date": "2026-07-18T17:22:39-05:00",
+    "date": "2026-07-18T22:22:39Z",
     "domain": "Speculative",
     "exp_id": "ac79ade1",
     "filename": "1_intrinsic_curvature_identification_the_proved_cu.json",
@@ -510,7 +510,7 @@ window.PACKAGE_INDEX = [
     "title": "Intrinsic Curvature of the Anisotropic Split Plane"
   },
   {
-    "date": "2026-07-18T14:01:49-05:00",
+    "date": "2026-07-18T19:01:49Z",
     "domain": "Novelty",
     "exp_id": "57f5aa5e",
     "filename": "deepening_tropical_cryptocurrency_mining_on_the_mi.json",
@@ -521,7 +521,7 @@ window.PACKAGE_INDEX = [
     "title": "Universal Collision Rays in Min-Plus Cryptocurrency Digests"
   },
   {
-    "date": "2026-07-18T09:44:08-05:00",
+    "date": "2026-07-18T14:44:08Z",
     "domain": "Shared",
     "exp_id": "64b7f63b",
     "filename": "close_proofs_fractal_dimension_of_proof_search_how.json",
@@ -532,7 +532,7 @@ window.PACKAGE_INDEX = [
     "title": "The Fractal Geometry of Binary Search Trees"
   },
   {
-    "date": "2026-07-18T08:54:55-05:00",
+    "date": "2026-07-18T13:54:55Z",
     "domain": "Bridges",
     "exp_id": "7328a55d",
     "filename": "fractal_number_theory_hausdorff_dimension_of_prime.json",
@@ -543,7 +543,7 @@ window.PACKAGE_INDEX = [
     "title": "Countability and the Hausdorff Geometry of Logarithmic Prime Coordinates"
   },
   {
-    "date": "2026-07-18T08:38:20-05:00",
+    "date": "2026-07-18T13:38:20Z",
     "domain": "Applications",
     "exp_id": "115a4ee3",
     "filename": "deepening_fractal_dimension_of_proof_search_how_ha.json",
@@ -554,7 +554,7 @@ window.PACKAGE_INDEX = [
     "title": "Relative Entropy Dimension of Nonstationary Search Trees"
   },
   {
-    "date": "2026-07-18T08:21:31-05:00",
+    "date": "2026-07-18T13:21:31Z",
     "domain": "Algebra",
     "exp_id": "b596d3d1",
     "filename": "quantum_entanglement_as_algebraic_topology_the_lin.json",
@@ -565,7 +565,7 @@ window.PACKAGE_INDEX = [
     "title": "Concurrence Beyond Linking Numbers: The Exterior Algebra of Two-Qubit Entanglement"
   },
   {
-    "date": "2026-07-18T07:32:15-05:00",
+    "date": "2026-07-18T12:32:15Z",
     "domain": "Logic",
     "exp_id": "4920904c",
     "filename": "erdos_renyi_on_acid_random_graphs_that_hallucinate.json",
@@ -576,7 +576,7 @@ window.PACKAGE_INDEX = [
     "title": "Erd\u0151s\u2013R\u00e9nyi on Acid: Phase Locking in Complex-Weighted Random Graphs"
   },
   {
-    "date": "2026-07-18T03:49:04-05:00",
+    "date": "2026-07-18T08:49:04Z",
     "domain": "Algebra",
     "exp_id": "f25f9735",
     "filename": "gravity_from_information_spacetime_as_a_quantum_er.json",
@@ -587,7 +587,7 @@ window.PACKAGE_INDEX = [
     "title": "Geometric Defect and Logical Capacity in Spacetime-Code Dictionaries"
   },
   {
-    "date": "2026-07-18T02:29:13-05:00",
+    "date": "2026-07-18T07:29:13Z",
     "domain": "Speculative",
     "exp_id": "70b6aa60",
     "filename": "the_l_function_oracle_what_if_we_could_compute_l_f.json",
@@ -598,7 +598,7 @@ window.PACKAGE_INDEX = [
     "title": "The L-Function Oracle: From Exact Evaluation to Global Certification"
   },
   {
-    "date": "2026-07-17T23:11:20-05:00",
+    "date": "2026-07-18T04:11:20Z",
     "domain": "Geometry",
     "exp_id": "f0aa5907",
     "filename": "the_monster_groups_secret_message_moonshine_beyond.json",
@@ -609,7 +609,7 @@ window.PACKAGE_INDEX = [
     "title": "The Monster Group\u2019s Secret Message: Pole Aggregation and Character Reconstruction"
   },
   {
-    "date": "2026-07-17T22:54:55-05:00",
+    "date": "2026-07-18T03:54:55Z",
     "domain": "Geometry",
     "exp_id": "ee626e30",
     "filename": "chaos_as_a_computable_shadow_the_shadowing_lemma_f.json",
@@ -620,7 +620,7 @@ window.PACKAGE_INDEX = [
     "title": "Chaos as a Computable Shadow: Finite-Horizon Certificates for Real Programs"
   },
   {
-    "date": "2026-07-17T13:03:29-05:00",
+    "date": "2026-07-17T18:03:29Z",
     "domain": "Speculative",
     "exp_id": "0daa61af",
     "filename": "holographic_primes_the_prime_number_adscft_corresp.json",
@@ -631,7 +631,7 @@ window.PACKAGE_INDEX = [
     "title": "Holographic Primes: Finite Euler Products and Tropical Vacua"
   },
   {
-    "date": "2026-07-17T08:45:47-05:00",
+    "date": "2026-07-17T13:45:47Z",
     "domain": "Shared",
     "exp_id": "87b73bf0",
     "filename": "the_sound_of_pi_musical_structure_in_transcendenta.json",
@@ -642,7 +642,7 @@ window.PACKAGE_INDEX = [
     "title": "The Sound of Pi: Autocorrelation, Energy, and Fourier Structure in Digit Melodies"
   },
   {
-    "date": "2026-07-17T08:29:13-05:00",
+    "date": "2026-07-17T13:29:13Z",
     "domain": "Algebra",
     "exp_id": "d1663b23",
     "filename": "arxiv_paper_a_minimal_modularity_lifting_theorem_f.json",
@@ -653,7 +653,7 @@ window.PACKAGE_INDEX = [
     "title": "The Algebraic Core of Minimal Modularity Lifting for Genus-Two Siegel Forms"
   },
   {
-    "date": "2026-07-17T08:12:12-05:00",
+    "date": "2026-07-17T13:12:12Z",
     "domain": "Pythagorean",
     "exp_id": "6bb52b3a",
     "filename": "arxiv_paper_generalizations_of_nets_and_latin_squa.json",
@@ -664,7 +664,7 @@ window.PACKAGE_INDEX = [
     "title": "Generalizations of Nets and Latin Squares: The Sharp MOLS Bound via Corner Tagging"
   },
   {
-    "date": "2026-07-17T07:07:45-05:00",
+    "date": "2026-07-17T12:07:45Z",
     "domain": "Algebra",
     "exp_id": "ad5825e2",
     "filename": "the_periodic_table_of_finite_groups_chemistry_meet.json",
@@ -675,7 +675,7 @@ window.PACKAGE_INDEX = [
     "title": "Beyond Order and Exponent: A Periodic Table of Finite Groups"
   },
   {
-    "date": "2026-07-17T06:50:03-05:00",
+    "date": "2026-07-17T11:50:03Z",
     "domain": "Tropical",
     "exp_id": "408bb225",
     "filename": "the_mathematics_of_deja_vu_fixed_points_in_conscio.json",
@@ -686,7 +686,7 @@ window.PACKAGE_INDEX = [
     "title": "The Mathematics of D\u00e9j\u00e0 Vu: Recurrence and Tropical Spectral Drift"
   },
   {
-    "date": "2026-07-17T03:35:53-05:00",
+    "date": "2026-07-17T08:35:53Z",
     "domain": "Novelty",
     "exp_id": "6da0544e",
     "filename": "arxiv_paper_record_compositions_of_alternating_per.json",
@@ -697,7 +697,7 @@ window.PACKAGE_INDEX = [
     "title": "Finite Assemblies for Record Compositions of Alternating Permutations"
   },
   {
-    "date": "2026-07-17T02:48:39-05:00",
+    "date": "2026-07-17T07:48:39Z",
     "domain": "Algebra",
     "exp_id": "fe20b520",
     "filename": "arxiv_paper_limit_laws_for_component_pruned_sparse.json",
@@ -708,7 +708,7 @@ window.PACKAGE_INDEX = [
     "title": "Finite-State Spectra and the Limits of Component Pruning"
   },
   {
-    "date": "2026-07-17T01:13:52-05:00",
+    "date": "2026-07-17T06:13:52Z",
     "domain": "Algebra",
     "exp_id": "e2a481c0",
     "filename": "arxiv_paper_contractions_and_applications_of_cryst.json",
@@ -719,7 +719,7 @@ window.PACKAGE_INDEX = [
     "title": "Contraction Calculus for Crystal Skeletons"
   },
   {
-    "date": "2026-07-16T05:37:14-05:00",
+    "date": "2026-07-16T10:37:14Z",
     "domain": "Applications",
     "exp_id": "d1512647",
     "filename": "arxiv_paper_a_64_rectangle_counterexample_to_wegne.json",
@@ -730,7 +730,7 @@ window.PACKAGE_INDEX = [
     "title": "Bounded-Fiber Certificates for a 64-Rectangle Counterexample"
   },
   {
-    "date": "2026-07-16T03:27:39-05:00",
+    "date": "2026-07-16T08:27:39Z",
     "domain": "Novelty",
     "exp_id": "7d82c497",
     "filename": "arxiv_paper_fractal_uncertainty_principle_over_mat.json",
@@ -741,7 +741,7 @@ window.PACKAGE_INDEX = [
     "title": "A Finite-Scale Fractal Uncertainty Principle on Prime-Power Trees"
   },
   {
-    "date": "2026-07-16T02:23:23-05:00",
+    "date": "2026-07-16T07:23:23Z",
     "domain": "Pythagorean",
     "exp_id": "b71e4678",
     "filename": "arxiv_paper_from_roots_to_paths_graphs_simultaneou.json",
@@ -752,7 +752,7 @@ window.PACKAGE_INDEX = [
     "title": "Affine Separation and Compensation in Rooted and Ordinary Path Irregularity"
   },
   {
-    "date": "2026-07-16T02:07:07-05:00",
+    "date": "2026-07-16T07:07:07Z",
     "domain": "Shared",
     "exp_id": "cca295e6",
     "filename": "arxiv_paper_hypergraph_turan_with_bounded_matching.json",
@@ -763,7 +763,7 @@ window.PACKAGE_INDEX = [
     "title": "Pair-Star Hypergraphs with Bounded Matching Number"
   },
   {
-    "date": "2026-07-16T00:47:41-05:00",
+    "date": "2026-07-16T05:47:41Z",
     "domain": "Pythagorean",
     "exp_id": "4e53cd7c",
     "filename": "arxiv_paper_moment_based_ppt_criteria_for_random_b.json",
@@ -774,7 +774,7 @@ window.PACKAGE_INDEX = [
     "title": "Shifted Hankel Moment Certificates for Partial-Transpose Negativity"
   },
   {
-    "date": "2026-07-16T00:47:41-05:00",
+    "date": "2026-07-16T05:47:41Z",
     "domain": "Novelty",
     "exp_id": "499d98ab",
     "filename": "arxiv_paper_learning_the_graphical_nature_of_symme.json",
@@ -785,7 +785,7 @@ window.PACKAGE_INDEX = [
     "title": "Relative Geometry in Finite Cayley Graphs"
   },
   {
-    "date": "2026-07-16T00:47:14-05:00",
+    "date": "2026-07-16T05:47:14Z",
     "domain": "Novelty",
     "exp_id": "5759ba2d",
     "filename": "arxiv_paper_the_chromatic_number_of_3_stable_knese.json",
@@ -796,7 +796,7 @@ window.PACKAGE_INDEX = [
     "title": "Packing Rigidity and Canonical Colorings of 3-Stable Kneser Graphs"
   },
   {
-    "date": "2026-07-16T00:31:26-05:00",
+    "date": "2026-07-16T05:31:26Z",
     "domain": "Applications",
     "exp_id": "352675e9",
     "filename": "arxiv_paper_ray_and_end_spaces_characterizations_a.json",
@@ -807,7 +807,7 @@ window.PACKAGE_INDEX = [
     "title": "Coordinate Ray Spaces and Prime-Adic Cluster Trees"
   },
   {
-    "date": "2026-07-16T00:14:45-05:00",
+    "date": "2026-07-16T05:14:45Z",
     "domain": "Algebra",
     "exp_id": "bcfc30de",
     "filename": "non_well_founded_proofs_proofs_that_reference_them.json",
@@ -818,7 +818,7 @@ window.PACKAGE_INDEX = [
     "title": "Guarded Circular Proof Graphs: Ordinal Descent and the Limits of Self-Reference"
   },
   {
-    "date": "2026-07-15T22:35:47-05:00",
+    "date": "2026-07-16T03:35:47Z",
     "domain": "Physics",
     "exp_id": "57481379",
     "filename": "arxiv_paper_quantum_latin_squares_of_order_six_wit.json",
@@ -829,7 +829,7 @@ window.PACKAGE_INDEX = [
     "title": "Quantum Latin Squares of Order Six: Nineteen, Twenty-One, and Twenty-Three Rays"
   },
   {
-    "date": "2026-07-15T22:00:37-05:00",
+    "date": "2026-07-16T03:00:37Z",
     "domain": "Novelty",
     "exp_id": "e2f5c991",
     "filename": "arxiv_paper_claw_free_cubic_graphs_and_zero_forcin.json",
@@ -840,7 +840,7 @@ window.PACKAGE_INDEX = [
     "title": "Local Propagation and Weighted Harmonic Uniqueness in Claw-Free Cubic Graphs"
   },
   {
-    "date": "2026-07-15T20:42:47-05:00",
+    "date": "2026-07-16T01:42:47Z",
     "domain": "MachineLearning",
     "exp_id": "f4980b02",
     "filename": "arxiv_paper_counting_oriented_spanning_trees_in_ge.json",
@@ -851,7 +851,7 @@ window.PACKAGE_INDEX = [
     "title": "Invariant Laplacian Splitting for Weighted Generalized Join Digraphs"
   },
   {
-    "date": "2026-07-15T16:42:38-05:00",
+    "date": "2026-07-15T21:42:38Z",
     "domain": "Applications",
     "exp_id": "dd61fafb",
     "filename": "arxiv_paper_improving_upper_bounds_for_the_maximum.json",
@@ -862,7 +862,7 @@ window.PACKAGE_INDEX = [
     "title": "Upper-Bound-Driven Reductions for Maximum Clique"
   },
   {
-    "date": "2026-07-15T03:21:43-05:00",
+    "date": "2026-07-15T08:21:43Z",
     "domain": "Pythagorean",
     "exp_id": "cf605784",
     "filename": "close_proofs_this_cycle_promoted_the_component_cou.json",
@@ -873,7 +873,7 @@ window.PACKAGE_INDEX = [
     "title": "Component-Count Antitonicity and the Order Theory of Graph Toughness"
   },
   {
-    "date": "2026-07-15T01:16:54-05:00",
+    "date": "2026-07-15T06:16:54Z",
     "domain": "Geometry",
     "exp_id": "d4584015",
     "filename": "arxiv_paper_adjoint_bloch__kato_selmer_groups_of_r.json",
@@ -884,7 +884,7 @@ window.PACKAGE_INDEX = [
     "title": "Adjoint Selmer Vanishing as Infinitesimal Rigidity"
   },
   {
-    "date": "2026-07-15T00:59:14-05:00",
+    "date": "2026-07-15T05:59:14Z",
     "domain": "Applications",
     "exp_id": "b1453a16",
     "filename": "this_cycle_adds_argumentationkernelgamelean_a_self.json",
@@ -895,7 +895,7 @@ window.PACKAGE_INDEX = [
     "title": "Stable Argumentation, Directed Kernels, and Terminating Games"
   },
   {
-    "date": "2026-07-15T00:59:02-05:00",
+    "date": "2026-07-15T05:59:02Z",
     "domain": "Applications",
     "exp_id": "7385ba7c",
     "filename": "deepening_for_every_natural_number_k_the_factorial.json",
@@ -906,7 +906,7 @@ window.PACKAGE_INDEX = [
     "title": "Factorial Coordinates for Finite Permutations"
   },
   {
-    "date": "2026-07-15T00:40:51-05:00",
+    "date": "2026-07-15T05:40:51Z",
     "domain": "Applications",
     "exp_id": "e72af703",
     "filename": "close_proofs_for_every_natural_number_k_the_factor.json",
@@ -917,7 +917,7 @@ window.PACKAGE_INDEX = [
     "title": "Equivariant Factorial Codes for Permutations"
   },
   {
-    "date": "2026-07-15T00:22:56-05:00",
+    "date": "2026-07-15T05:22:56Z",
     "domain": "Computation",
     "exp_id": "bd321901",
     "filename": "deepening_two_parameter_picture_of_witness_complex.json",
@@ -928,7 +928,7 @@ window.PACKAGE_INDEX = [
     "title": "Intrinsic Witness Complexity: Minimal Downward-Closed Certificates"
   },
   {
-    "date": "2026-07-15T00:13:01-05:00",
+    "date": "2026-07-15T05:13:01Z",
     "domain": "Speculative",
     "exp_id": "98ba1a43",
     "filename": "the_file_tangledsoundnesslean_develops_the_semanti.json",
@@ -939,7 +939,7 @@ window.PACKAGE_INDEX = [
     "title": "Strict Consistency Reflection and Finite Towers of Proof-Theoretic Strength"
   },
   {
-    "date": "2026-07-15T00:02:39-05:00",
+    "date": "2026-07-15T05:02:39Z",
     "domain": "NumberTheory",
     "exp_id": "582560af",
     "filename": "the_results_of_this_cycle_establish_that_the_euler.json",
@@ -950,7 +950,7 @@ window.PACKAGE_INDEX = [
     "title": "Dimensional Euler Signs as Fourier Characters of Parity"
   },
   {
-    "date": "2026-07-15T00:02:29-05:00",
+    "date": "2026-07-15T05:02:29Z",
     "domain": "Physics",
     "exp_id": "22a6ce83",
     "filename": "this_cycle_closed_the_two_sided_estimate_for_the_o.json",
@@ -961,7 +961,7 @@ window.PACKAGE_INDEX = [
     "title": "Cubic Spectral Gaps in a One-Dimensional Swap Model"
   },
   {
-    "date": "2026-07-14T23:08:46-05:00",
+    "date": "2026-07-15T04:08:46Z",
     "domain": "Novelty",
     "exp_id": "0ee2f71b",
     "filename": "deepening_the_optimal_portion_ratio__equals_1__.json",
@@ -972,7 +972,7 @@ window.PACKAGE_INDEX = [
     "title": "The Cake\u2013Plastic Spectral Bridge"
   },
   {
-    "date": "2026-07-14T23:08:42-05:00",
+    "date": "2026-07-15T04:08:42Z",
     "domain": "Novelty",
     "exp_id": "ca1c3afc",
     "filename": "for_every_natural_number_k_the_factorial_code_spac.json",
@@ -983,7 +983,7 @@ window.PACKAGE_INDEX = [
     "title": "Factorial Coordinates and the Stage-Four CRT Obstruction"
   },
   {
-    "date": "2026-07-14T23:08:32-05:00",
+    "date": "2026-07-15T04:08:32Z",
     "domain": "Shared",
     "exp_id": "42e1a665",
     "filename": "close_proofs_bypassed.json",
@@ -994,7 +994,7 @@ window.PACKAGE_INDEX = [
     "title": "New Prime Footprints in Fibonacci Numbers and the Mixed-Radix Factorial Bridge"
   },
   {
-    "date": "2026-07-14T22:47:00-05:00",
+    "date": "2026-07-15T03:47:00Z",
     "domain": "MachineLearning",
     "exp_id": "dc502c2d",
     "filename": "this_cycle_deepens_the_theory_of_two_player_well_f.json",
@@ -1005,7 +1005,7 @@ window.PACKAGE_INDEX = [
     "title": "Disjunctive Sums and the Transfinite Mirror Principle"
   },
   {
-    "date": "2026-07-14T22:46:47-05:00",
+    "date": "2026-07-15T03:46:47Z",
     "domain": "Shared",
     "exp_id": "7ea29a05",
     "filename": "this_cycle_promoted_the_component_count_toughness_.json",
@@ -1016,7 +1016,7 @@ window.PACKAGE_INDEX = [
     "title": "Tough Networks and Exact Induced Thresholds"
   },
   {
-    "date": "2026-07-14T22:10:51-05:00",
+    "date": "2026-07-15T03:10:51Z",
     "domain": "Tropical",
     "exp_id": "f243395d",
     "filename": "this_cycle_recast_analogy_making_between_two_order.json",
@@ -1027,7 +1027,7 @@ window.PACKAGE_INDEX = [
     "title": "Shadows, Cliques, and Primitive Divisors"
   },
   {
-    "date": "2026-07-14T21:33:41-05:00",
+    "date": "2026-07-15T02:33:41Z",
     "domain": "Applications",
     "exp_id": "6097a507",
     "filename": "deepening_the_prior_cycle_cosetguessworklean_prove.json",
@@ -1038,7 +1038,7 @@ window.PACKAGE_INDEX = [
     "title": "Exact Finite-Length Prefactors for Uniform Guesswork"
   },
   {
-    "date": "2026-07-14T21:32:41-05:00",
+    "date": "2026-07-15T02:32:41Z",
     "domain": "Applications",
     "exp_id": "4b27af05",
     "filename": "deepening_bruhat_order_preserves_closure_relations.json",
@@ -1049,7 +1049,7 @@ window.PACKAGE_INDEX = [
     "title": "Graph-Supported Closure Orders and Clique Shadows"
   },
   {
-    "date": "2026-07-14T21:32:30-05:00",
+    "date": "2026-07-15T02:32:30Z",
     "domain": "Applications",
     "exp_id": "ef5b75b5",
     "filename": "topological_charge_of_an_orbital_angular_momentum_.json",
@@ -1060,7 +1060,7 @@ window.PACKAGE_INDEX = [
     "title": "Logarithmic Lifts and the Topological Charge of Knotted Light"
   },
   {
-    "date": "2026-07-14T21:32:30-05:00",
+    "date": "2026-07-15T02:32:30Z",
     "domain": "Applications",
     "exp_id": "da85fe77",
     "filename": "deepening_the_file_catalogspeculativeautoresearchm.json",
@@ -1071,7 +1071,7 @@ window.PACKAGE_INDEX = [
     "title": "Factorial Coordinates and Clique Shadows"
   },
   {
-    "date": "2026-07-14T21:31:59-05:00",
+    "date": "2026-07-15T02:31:59Z",
     "domain": "Applications",
     "exp_id": "9243b8b5",
     "filename": "close_proofs_the_mission_asked_to_interrogate_the_.json",
@@ -1082,7 +1082,7 @@ window.PACKAGE_INDEX = [
     "title": "Pair-to-Edge Thresholds and the Triangle Shadow Principle"
   },
   {
-    "date": "2026-07-14T21:11:29-05:00",
+    "date": "2026-07-15T02:11:29Z",
     "domain": "Computation",
     "exp_id": "37f1d216",
     "filename": "two_parameter_picture_of_witness_complexity_for_th.json",
@@ -1093,7 +1093,7 @@ window.PACKAGE_INDEX = [
     "title": "Boolean-Cube Attachments and Linear Witness Complexity"
   },
   {
-    "date": "2026-07-14T20:49:39-05:00",
+    "date": "2026-07-15T01:49:39Z",
     "domain": "Applications",
     "exp_id": "41e1526b",
     "filename": "deepening_asymptotic_clique_to_clique_density_boun.json",
@@ -1104,7 +1104,7 @@ window.PACKAGE_INDEX = [
     "title": "Iterated Shadows and Exact Clique-to-Clique Thresholds"
   },
   {
-    "date": "2026-07-14T20:49:29-05:00",
+    "date": "2026-07-15T01:49:29Z",
     "domain": "Algebra",
     "exp_id": "86efe295",
     "filename": "deepening_this_project_formalizes_a_cross_domain_c.json",
@@ -1115,7 +1115,7 @@ window.PACKAGE_INDEX = [
     "title": "Extremal Rigidity in Vietoris\u2013Rips Clique Counts"
   },
   {
-    "date": "2026-07-14T20:03:26-05:00",
+    "date": "2026-07-15T01:03:26Z",
     "domain": "Novelty",
     "exp_id": "99a1b43f",
     "filename": "spectral_transfer_sharpness_for_trees_beyond_the_s.json",
@@ -1126,7 +1126,7 @@ window.PACKAGE_INDEX = [
     "title": "Sharp Five-Vertex Path Densities in Symmetric Weighted Networks"
   },
   {
-    "date": "2026-07-14T19:44:22-05:00",
+    "date": "2026-07-15T00:44:22Z",
     "domain": "Speculative",
     "exp_id": "c4f680cf",
     "filename": "deepening_the_file_cataloglogictimetravelcausalcon.json",
@@ -1137,7 +1137,7 @@ window.PACKAGE_INDEX = [
     "title": "Recurrence, Symmetry, and Consistency in Causal Loops"
   },
   {
-    "date": "2026-07-14T19:44:02-05:00",
+    "date": "2026-07-15T00:44:02Z",
     "domain": "Speculative",
     "exp_id": "dbf870e8",
     "filename": "close_proofs_speculative_topological_quantum_error.json",
@@ -1148,7 +1148,7 @@ window.PACKAGE_INDEX = [
     "title": "Mixed-Radix Factorials and Primitive Divisors of Fibonacci Numbers"
   },
   {
-    "date": "2026-07-14T19:43:26-05:00",
+    "date": "2026-07-15T00:43:26Z",
     "domain": "Novelty",
     "exp_id": "c23e4bea",
     "filename": "deepening_constructive_lower_bound_half_of_the_co_.json",
@@ -1159,7 +1159,7 @@ window.PACKAGE_INDEX = [
     "title": "Coindex Classification and the Sharp Join Law for Antipodal Systems"
   },
   {
-    "date": "2026-07-14T19:43:26-05:00",
+    "date": "2026-07-15T00:43:26Z",
     "domain": "Novelty",
     "exp_id": "cc9e6854",
     "filename": "close_proofs_the_file_catalognoveltyz2coindexsuspe.json",
@@ -1170,7 +1170,7 @@ window.PACKAGE_INDEX = [
     "title": "Antipodes, Coordinate Axes, and Sharp Coindex under Suspension"
   },
   {
-    "date": "2026-07-14T19:42:53-05:00",
+    "date": "2026-07-15T00:42:53Z",
     "domain": "Speculative",
     "exp_id": "50098ece",
     "filename": "close_proofs_the_prior_cycle_cosetguessworklean_pr.json",
@@ -1181,7 +1181,7 @@ window.PACKAGE_INDEX = [
     "title": "Running Products and Primitive Parts"
   },
   {
-    "date": "2026-07-14T19:42:25-05:00",
+    "date": "2026-07-15T00:42:25Z",
     "domain": "Novelty",
     "exp_id": "71637775",
     "filename": "close_proofs_constructive_lower_bound_half_of_the_.json",
@@ -1192,7 +1192,7 @@ window.PACKAGE_INDEX = [
     "title": "Finite Join Laws for the \u2124\u2082 Co-Index"
   },
   {
-    "date": "2026-07-14T18:30:30-05:00",
+    "date": "2026-07-14T23:30:30Z",
     "domain": "Applications",
     "exp_id": "0e4c0a6c",
     "filename": "these_conjectures_are_distilled_from_the_current_c.json",
@@ -1203,7 +1203,7 @@ window.PACKAGE_INDEX = [
     "title": "Canonical Digit Streams and Carry-Free Addition in Mixed-Radix Systems"
   },
   {
-    "date": "2026-07-14T18:12:01-05:00",
+    "date": "2026-07-14T23:12:01Z",
     "domain": "Applications",
     "exp_id": "ccd67871",
     "filename": "deepening_working_with_a_selfcontained_model_of_to.json",
@@ -1214,7 +1214,7 @@ window.PACKAGE_INDEX = [
     "title": "The Order Bound for Distinguishing Total Colourings of Central Graphs"
   },
   {
-    "date": "2026-07-14T18:11:55-05:00",
+    "date": "2026-07-14T23:11:55Z",
     "domain": "Applications",
     "exp_id": "a25c6e48",
     "filename": "knottedlightlean_formalizes_the_topological_charge.json",
@@ -1225,7 +1225,7 @@ window.PACKAGE_INDEX = [
     "title": "The Winding Number as the Topological Charge of Knotted Light"
   },
   {
-    "date": "2026-07-14T18:11:43-05:00",
+    "date": "2026-07-14T23:11:43Z",
     "domain": "Applications",
     "exp_id": "1207283c",
     "filename": "the_verified_cycle_established_that_the_maximal_nu.json",
@@ -1236,7 +1236,7 @@ window.PACKAGE_INDEX = [
     "title": "The Two-Layer Structure of the Maximal Good-Manifold Count in an n-Nice Polytope"
   },
   {
-    "date": "2026-07-14T17:54:04-05:00",
+    "date": "2026-07-14T22:54:04Z",
     "domain": "Applications",
     "exp_id": "10dfa4e0",
     "filename": "the_file_catalognoveltyz2coindexsuspensionlean_dev.json",
@@ -1247,7 +1247,7 @@ window.PACKAGE_INDEX = [
     "title": "The Z2-Coindex of Combinatorial Spheres: Exact Suspension and Join Laws via Coordinate-Axis Injections"
   },
   {
-    "date": "2026-07-14T17:53:54-05:00",
+    "date": "2026-07-14T22:53:54Z",
     "domain": "Novelty",
     "exp_id": "a46f1a93",
     "filename": "deepening_sharp_threshold_characterization_for_sei.json",
@@ -1258,7 +1258,7 @@ window.PACKAGE_INDEX = [
     "title": "Sharp Threshold Characterization for Seidel Energy Increase in Complete Bipartite Graphs Under Two Independent Edge Deletions"
   },
   {
-    "date": "2026-07-14T17:36:51-05:00",
+    "date": "2026-07-14T22:36:51Z",
     "domain": "Physics",
     "exp_id": "3c80004e",
     "filename": "constructive_lower_bound_half_of_the_co_index_theo.json",
@@ -1269,7 +1269,7 @@ window.PACKAGE_INDEX = [
     "title": "Extensive Co-Index Laws for Finite Antipodal Composite Systems"
   },
   {
-    "date": "2026-07-14T17:36:19-05:00",
+    "date": "2026-07-14T22:36:19Z",
     "domain": "Novelty",
     "exp_id": "8ceb2563",
     "filename": "the_prior_cycle_cosetguessworklean_proved_the_exac.json",
@@ -1280,7 +1280,7 @@ window.PACKAGE_INDEX = [
     "title": "The q-ary Exact Coset-Guessing Exponent at the Maximal-Entropy Source"
   },
   {
-    "date": "2026-07-14T16:57:53-05:00",
+    "date": "2026-07-14T21:57:53Z",
     "domain": "Novelty",
     "exp_id": "9a38651d",
     "filename": "the_file_cataloglogictimetravelcausalconsistencyle.json",
@@ -1291,7 +1291,7 @@ window.PACKAGE_INDEX = [
     "title": "Causal Loops and the Novikov Self-Consistency Principle: A Contrarian Fixed-Point Analysis"
   },
   {
-    "date": "2026-07-14T16:57:42-05:00",
+    "date": "2026-07-14T21:57:42Z",
     "domain": "Novelty",
     "exp_id": "daf8e94d",
     "filename": "working_with_a_selfcontained_model_of_total_colour.json",
@@ -1302,7 +1302,7 @@ window.PACKAGE_INDEX = [
     "title": "The Extremal Regime of AVD-Total Colourings of Central Graphs of Regular Graphs"
   },
   {
-    "date": "2026-07-14T16:05:13-05:00",
+    "date": "2026-07-14T21:05:13Z",
     "domain": "Novelty",
     "exp_id": "0725f80e",
     "filename": "deepening_this_cycle_isolated_a_single_scalar_inva.json",
@@ -1313,7 +1313,7 @@ window.PACKAGE_INDEX = [
     "title": "The M\u00f6bius Discriminant: A Scalar Invariant for Log-Convexity and Hankel Dynamics of Recurrence Sequences"
   },
   {
-    "date": "2026-07-14T15:27:55-05:00",
+    "date": "2026-07-14T20:27:55Z",
     "domain": "Novelty",
     "exp_id": "ef88d58c",
     "filename": "deepening_extension_of_matsunos_formula_for_non_va.json",
@@ -1324,7 +1324,7 @@ window.PACKAGE_INDEX = [
     "title": "Deepening Matsuno's Formula: A Polynomial Realization of the mu-Corrected Sharp/Flat lambda-Difference"
   },
   {
-    "date": "2026-07-14T15:10:13-05:00",
+    "date": "2026-07-14T20:10:13Z",
     "domain": "Novelty",
     "exp_id": "1e9bf31c",
     "filename": "deepening_this_cycle_formalizes_in_lean_4_with_mat.json",
@@ -1335,7 +1335,7 @@ window.PACKAGE_INDEX = [
     "title": "The Modal Logic of Forcing is S4.2: An Asymmetric Separation from S5"
   },
   {
-    "date": "2026-07-14T15:09:44-05:00",
+    "date": "2026-07-14T20:09:44Z",
     "domain": "Applications",
     "exp_id": "19e0135d",
     "filename": "this_cycle_established_unconditionally_that_the_va.json",
@@ -1346,7 +1346,7 @@ window.PACKAGE_INDEX = [
     "title": "Universality of the Cubic Spectral-Gap Exponent for Weighted Swap Chains"
   },
   {
-    "date": "2026-07-14T14:51:25-05:00",
+    "date": "2026-07-14T19:51:25Z",
     "domain": "Applications",
     "exp_id": "45e15555",
     "filename": "colorful_carathodory_theorem_for_spanning_k_trees_.json",
@@ -1357,7 +1357,7 @@ window.PACKAGE_INDEX = [
     "title": "Colorful Carath\u00e9odory over Spanning k-Trees: Polynomial-Size Witnesses"
   },
   {
-    "date": "2026-07-14T14:16:04-05:00",
+    "date": "2026-07-14T19:16:04Z",
     "domain": "Novelty",
     "exp_id": "14656387",
     "filename": "this_cycle_isolated_a_single_scalar_invariant__the.json",
@@ -1368,7 +1368,7 @@ window.PACKAGE_INDEX = [
     "title": "The Mobius Discriminant: An Exact Sign-and-Size Law for the Log-Behaviour of Combinatorial Totals"
   },
   {
-    "date": "2026-07-14T13:39:52-05:00",
+    "date": "2026-07-14T18:39:52Z",
     "domain": "Novelty",
     "exp_id": "07d73c91",
     "filename": "this_cycle_formalizes_in_lean_4_with_mathlib_the_c.json",
@@ -1379,7 +1379,7 @@ window.PACKAGE_INDEX = [
     "title": "The Modal Logic and Alexandrov Topology of the Forcing Multiverse"
   },
   {
-    "date": "2026-07-14T13:22:17-05:00",
+    "date": "2026-07-14T18:22:17Z",
     "domain": "Novelty",
     "exp_id": "5b1c1bd3",
     "filename": "deepening_sperners_lemma_implies_nash_equilibria_c.json",
@@ -1390,7 +1390,7 @@ window.PACKAGE_INDEX = [
     "title": "Sperner's Lemma as an Exact Signed Count: Combinatorial Fixed Points and Nash Equilibria"
   },
   {
-    "date": "2026-07-14T12:47:15-05:00",
+    "date": "2026-07-14T17:47:15Z",
     "domain": "Applications",
     "exp_id": "44ee6caf",
     "filename": "deepening_consciousness_as_emergent_fixed_point.json",
@@ -1401,7 +1401,7 @@ window.PACKAGE_INDEX = [
     "title": "Consciousness as an Emergent Fixed Point: Diagonal, Relational, and Order-Theoretic Faces of Self-Reference"
   },
   {
-    "date": "2026-07-14T12:12:57-05:00",
+    "date": "2026-07-14T17:12:57Z",
     "domain": "Novelty",
     "exp_id": "a3c4f06b",
     "filename": "deepening_exact_exponent_for_constrained_coset_gue.json",
@@ -1412,7 +1412,7 @@ window.PACKAGE_INDEX = [
     "title": "Deepening: Exact Exponent for Constrained Coset Guesswork"
   },
   {
-    "date": "2026-07-14T11:54:34-05:00",
+    "date": "2026-07-14T16:54:34Z",
     "domain": "Novelty",
     "exp_id": "2360ad91",
     "filename": "deepening_surveillance_networks_information_theore.json",
@@ -1423,7 +1423,7 @@ window.PACKAGE_INDEX = [
     "title": "Bounded-Error Surveillance and a Sharp Rate-Distortion Law for Finite Dynamic Networks"
   },
   {
-    "date": "2026-07-14T11:16:30-05:00",
+    "date": "2026-07-14T16:16:30Z",
     "domain": "Novelty",
     "exp_id": "6e1376aa",
     "filename": "deepening_the_topology_of_knotted_light_how_laser_.json",
@@ -1434,7 +1434,7 @@ window.PACKAGE_INDEX = [
     "title": "The Arithmetic of Knotted Light: Integer Winding Laws for Optical Modes"
   },
   {
-    "date": "2026-07-14T10:58:23-05:00",
+    "date": "2026-07-14T15:58:23Z",
     "domain": "Novelty",
     "exp_id": "16f220a2",
     "filename": "deepening_this_cycle_established_with_no_finitenes.json",
@@ -1445,7 +1445,7 @@ window.PACKAGE_INDEX = [
     "title": "The Kernel/Game Bridge: Unifying Stable Argumentation, Digraph Kernels, and Combinatorial Games"
   },
   {
-    "date": "2026-07-14T10:58:11-05:00",
+    "date": "2026-07-14T15:58:11Z",
     "domain": "Novelty",
     "exp_id": "202302de",
     "filename": "this_cycle_formalized_in_hoggatttotalslean_the_sha.json",
@@ -1456,7 +1456,7 @@ window.PACKAGE_INDEX = [
     "title": "The M\u00f6bius Discriminant: A Sign-Indexed Trichotomy for Log-Behavior of Combinatorial Totals"
   },
   {
-    "date": "2026-07-14T10:41:10-05:00",
+    "date": "2026-07-14T15:41:10Z",
     "domain": "Applications",
     "exp_id": "2c734846",
     "filename": "close_proofs_tangled_hierarchies_proof_systems_tha.json",
@@ -1467,7 +1467,7 @@ window.PACKAGE_INDEX = [
     "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
   },
   {
-    "date": "2026-07-14T09:32:49-05:00",
+    "date": "2026-07-14T14:32:49Z",
     "domain": "Novelty",
     "exp_id": "656eecef",
     "filename": "deepening_cone_colorful_carathodory_theorem.json",
@@ -1478,7 +1478,7 @@ window.PACKAGE_INDEX = [
     "title": "Deepening: The Cone Colorful Caratheodory Theorem in General Dimension"
   },
   {
-    "date": "2026-07-14T09:15:30-05:00",
+    "date": "2026-07-14T14:15:30Z",
     "domain": "Novelty",
     "exp_id": "d2eb77e2",
     "filename": "additive__geometric__analytic_scaffolding_around_t.json",
@@ -1489,7 +1489,7 @@ window.PACKAGE_INDEX = [
     "title": "The Sumset Exponent Surface: Asymptotics and Monotonicity of Sharp Sumset Bounds in L1 Balls"
   },
   {
-    "date": "2026-07-14T09:13:41-05:00",
+    "date": "2026-07-14T14:13:41Z",
     "domain": "Novelty",
     "exp_id": "479516dd",
     "filename": "deepening_bypassed.json",
@@ -1500,7 +1500,7 @@ window.PACKAGE_INDEX = [
     "title": "A Fibonacci-Pythagorean Bridge and the Index-Level Law of Strong Divisibility Sequences"
   },
   {
-    "date": "2026-07-14T09:13:13-05:00",
+    "date": "2026-07-14T14:13:13Z",
     "domain": "Applications",
     "exp_id": "c5cfd9ce",
     "filename": "deepening_negative_dimensional_topology_what_lives.json",
@@ -1511,7 +1511,7 @@ window.PACKAGE_INDEX = [
     "title": "Negative-Dimensional Topology: The Euler Characteristic Below Zero"
   },
   {
-    "date": "2026-07-14T08:19:47-05:00",
+    "date": "2026-07-14T13:19:47Z",
     "domain": "Novelty",
     "exp_id": "bd6ccec1",
     "filename": "this_cycle_established_with_no_finiteness_or_well_.json",
@@ -1522,7 +1522,7 @@ window.PACKAGE_INDEX = [
     "title": "The Meet-Semilattice of Complete Extensions in Abstract Argumentation"
   },
   {
-    "date": "2026-07-14T08:00:41-05:00",
+    "date": "2026-07-14T13:00:41Z",
     "domain": "Computation",
     "exp_id": "0c7f8736",
     "filename": "close_proofs_maximum_determinant_bound_for_44_unim.json",
@@ -1533,7 +1533,7 @@ window.PACKAGE_INDEX = [
     "title": "One Theory of Counting: The Factorial Number System as a Mixed-Radix Instance"
   },
   {
-    "date": "2026-07-14T06:17:01-05:00",
+    "date": "2026-07-14T11:17:01Z",
     "domain": "Applications",
     "exp_id": "bce13597",
     "filename": "the_previous_cycle_established_the_suspension_towe.json",
@@ -1544,7 +1544,7 @@ window.PACKAGE_INDEX = [
     "title": "The Exact Enumeration of Antipodal Maps of Cross-Polytope Spheres"
   },
   {
-    "date": "2026-07-14T05:59:47-05:00",
+    "date": "2026-07-14T10:59:47Z",
     "domain": "Applications",
     "exp_id": "ef403dbc",
     "filename": "deepening_whites_quadratic_exchange_conjecture_par.json",
@@ -1555,7 +1555,7 @@ window.PACKAGE_INDEX = [
     "title": "A Compositional Theory of Quadratic Basis Exchange, with a Complete Solution in Rank One"
   },
   {
-    "date": "2026-07-14T05:25:27-05:00",
+    "date": "2026-07-14T10:25:27Z",
     "domain": "Novelty",
     "exp_id": "c4aa235b",
     "filename": "deepening_exact_avdtotal_chromatic_number_of_centr.json",
@@ -1566,7 +1566,7 @@ window.PACKAGE_INDEX = [
     "title": "The Sharp Order-Driven Bound for AVD-Total Colourings of Central Graphs"
   },
   {
-    "date": "2026-07-14T05:08:32-05:00",
+    "date": "2026-07-14T10:08:32Z",
     "domain": "Novelty",
     "exp_id": "6e60d0a1",
     "filename": "close_proofs_suspension_tower_sk_of_a_free__comple.json",
@@ -1577,7 +1577,7 @@ window.PACKAGE_INDEX = [
     "title": "The Suspension Tower of Free Z2-Complexes and the Excess Spectrum of the Cross-Polytope Spheres"
   },
   {
-    "date": "2026-07-14T04:16:59-05:00",
+    "date": "2026-07-14T09:16:59Z",
     "domain": "Applications",
     "exp_id": "b6231f58",
     "filename": "deepening_this_cycle_deepened_the_combinatorial_co.json",
@@ -1588,7 +1588,7 @@ window.PACKAGE_INDEX = [
     "title": "The Modal Logic of Forcing: An S4.2 Kripke Semantics for the Set-Theoretic Multiverse"
   },
   {
-    "date": "2026-07-14T03:58:08-05:00",
+    "date": "2026-07-14T08:58:08Z",
     "domain": "Novelty",
     "exp_id": "482ba253",
     "filename": "deepening_suspension_tower_sk_of_a_free__complex_a.json",
@@ -1599,7 +1599,7 @@ window.PACKAGE_INDEX = [
     "title": "Enumerative Rigidity of Antipodal Maps Between Octahedral Spheres"
   },
   {
-    "date": "2026-07-14T03:40:14-05:00",
+    "date": "2026-07-14T08:40:14Z",
     "domain": "Applications",
     "exp_id": "80f7c124",
     "filename": "elementary_spectral_moment_foundations_of_seidel.json",
@@ -1610,7 +1610,7 @@ window.PACKAGE_INDEX = [
     "title": "Triangle Holonomy and the Cubic Seidel Moment"
   },
   {
-    "date": "2026-07-14T03:40:03-05:00",
+    "date": "2026-07-14T08:40:03Z",
     "domain": "Applications",
     "exp_id": "13e584ca",
     "filename": "deepening_sharp_lower_bounds_for_sumsets_in_l_ball.json",
@@ -1621,7 +1621,7 @@ window.PACKAGE_INDEX = [
     "title": "Sharp Lower Bounds for Sumsets in Intervals and Boxes of the Integer Lattice"
   },
   {
-    "date": "2026-07-14T03:39:55-05:00",
+    "date": "2026-07-14T08:39:55Z",
     "domain": "Applications",
     "exp_id": "0a1d0253",
     "filename": "the_file_catalogapplicationsmatsunomuextensionlean.json",
@@ -1632,7 +1632,7 @@ window.PACKAGE_INDEX = [
     "title": "Sharp/Flat Supersingular Degree Sequences at a General Prime"
   },
   {
-    "date": "2026-07-14T03:39:44-05:00",
+    "date": "2026-07-14T08:39:44Z",
     "domain": "Applications",
     "exp_id": "efa2b99e",
     "filename": "reusable_toughness_toolkit_centered_on_the_compone.json",
@@ -1643,7 +1643,7 @@ window.PACKAGE_INDEX = [
     "title": "Toughness as an Order-Monotone Invariant: A Component-Count Toolkit"
   },
   {
-    "date": "2026-07-14T02:29:57-05:00",
+    "date": "2026-07-14T07:29:57Z",
     "domain": "Novelty",
     "exp_id": "769cd692",
     "filename": "suspension_tower_sk_of_a_free__complex_as.json",
@@ -1654,7 +1654,7 @@ window.PACKAGE_INDEX = [
     "title": "The Suspension Tower of Free Z/2-Complexes: Dimension Law, Facet Enumeration, and an Iterated Borsuk-Ulam Obstruction"
   },
   {
-    "date": "2026-07-14T02:29:34-05:00",
+    "date": "2026-07-14T07:29:34Z",
     "domain": "Novelty",
     "exp_id": "b97ab468",
     "filename": "this_project_formalizes_a_cross_domain_connector_v.json",
@@ -1665,7 +1665,7 @@ window.PACKAGE_INDEX = [
     "title": "A Sharp sqrt(2) Threshold for the Vietoris-Rips Complex of the Standard Simplex"
   },
   {
-    "date": "2026-07-14T01:53:54-05:00",
+    "date": "2026-07-14T06:53:54Z",
     "domain": "Novelty",
     "exp_id": "0abd0edb",
     "filename": "close_proofs_exact_avdtotal_chromatic_number_of_ce.json",
@@ -1676,7 +1676,7 @@ window.PACKAGE_INDEX = [
     "title": "Close Proofs: Exact AVD-Total Chromatic Lower Bounds for Central Graphs of Regular Graphs"
   },
   {
-    "date": "2026-07-14T01:35:19-05:00",
+    "date": "2026-07-14T06:35:19Z",
     "domain": "Novelty",
     "exp_id": "30ef4e5b",
     "filename": "close_proofs_sharp_lower_bounds_for_sumsets_in_l_b.json",
@@ -1687,7 +1687,7 @@ window.PACKAGE_INDEX = [
     "title": "Sharp Lower Bounds for Sumsets in L1 Balls in Z^d"
   },
   {
-    "date": "2026-07-14T01:34:55-05:00",
+    "date": "2026-07-14T06:34:55Z",
     "domain": "Applications",
     "exp_id": "189556db",
     "filename": "close_proofs_matsunoiwasawabridgelean_builds_a_sel.json",
@@ -1698,7 +1698,7 @@ window.PACKAGE_INDEX = [
     "title": "The Kernel-Cover Characterization of the Weighted Davenport Constant"
   },
   {
-    "date": "2026-07-14T01:17:07-05:00",
+    "date": "2026-07-14T06:17:07Z",
     "domain": "Novelty",
     "exp_id": "86411247",
     "filename": "this_cycle_deepened_the_combinatorial_core_of_the_.json",
@@ -1709,7 +1709,7 @@ window.PACKAGE_INDEX = [
     "title": "The Modal Logic of the Forcing Multiverse: S4.2, Buttons and Switches, and the Genericity of Independence"
   },
   {
-    "date": "2026-07-14T00:59:57-05:00",
+    "date": "2026-07-14T05:59:57Z",
     "domain": "Applications",
     "exp_id": "797ab793",
     "filename": "deepening_this_cycle_established_unconditionally_t.json",
@@ -1720,7 +1720,7 @@ window.PACKAGE_INDEX = [
     "title": "The Functorial Excess of the Z2-Coindex under Suspension"
   },
   {
-    "date": "2026-07-14T00:59:34-05:00",
+    "date": "2026-07-14T05:59:34Z",
     "domain": "Applications",
     "exp_id": "33954867",
     "filename": "this_cycle_isolated_and_proved_the_arithmetic_resi.json",
@@ -1731,7 +1731,7 @@ window.PACKAGE_INDEX = [
     "title": "The Arithmetic Residue of E4^2 = E8: Sharp Divisor-Sum Congruences"
   },
   {
-    "date": "2026-07-14T00:23:50-05:00",
+    "date": "2026-07-14T05:23:50Z",
     "domain": "Applications",
     "exp_id": "2758a31c",
     "filename": "deepening_matsunoiwasawabridgelean_builds_a_self_c.json",
@@ -1742,7 +1742,7 @@ window.PACKAGE_INDEX = [
     "title": "The Iwasawa Invariant Pair as a Monoid Homomorphism: A Bridge to Valuation Theory"
   },
   {
-    "date": "2026-07-13T23:50:23-05:00",
+    "date": "2026-07-14T04:50:23Z",
     "domain": "Novelty",
     "exp_id": "bec8fe46",
     "filename": "close_proofs_tight_spectral_gap_exponent_for_the_f.json",
@@ -1753,7 +1753,7 @@ window.PACKAGE_INDEX = [
     "title": "Close Proofs: A Tight Cubic Spectral Gap for Swap Reconfiguration Chains"
   },
   {
-    "date": "2026-07-13T22:41:34-05:00",
+    "date": "2026-07-14T03:41:34Z",
     "domain": "Novelty",
     "exp_id": "7acc7a45",
     "filename": "close_proofs_this_cycle_established_unconditionall.json",
@@ -1764,7 +1764,7 @@ window.PACKAGE_INDEX = [
     "title": "The Z\u2082-Coindex Under Suspension: A Constructive Lower-Bound Theory for Free Z\u2082-Complexes"
   },
   {
-    "date": "2026-07-13T22:41:34-05:00",
+    "date": "2026-07-14T03:41:34Z",
     "domain": "Novelty",
     "exp_id": "11762aec",
     "filename": "close_proofs_minimally_1tough_k__p_free_graphs_are.json",
@@ -1775,7 +1775,7 @@ window.PACKAGE_INDEX = [
     "title": "Close Proofs: Minimally 1-Tough (K1 u P4)-Free Graphs are Hamiltonian"
   },
   {
-    "date": "2026-07-13T22:40:37-05:00",
+    "date": "2026-07-14T03:40:37Z",
     "domain": "Novelty",
     "exp_id": "c923638c",
     "filename": "matsunoiwasawabridgelean_builds_a_self_contained_a.json",
@@ -1786,7 +1786,7 @@ window.PACKAGE_INDEX = [
     "title": "The Sharp/Flat lambda-Difference under Quadratic Twist as a mu-Proportional Correction"
   },
   {
-    "date": "2026-07-13T22:04:35-05:00",
+    "date": "2026-07-14T03:04:35Z",
     "domain": "Applications",
     "exp_id": "30210199",
     "filename": "close_proofs_moonshot_alien_number_systems__mathem.json",
@@ -1797,7 +1797,7 @@ window.PACKAGE_INDEX = [
     "title": "Alien Number Systems: Unique Representation of the Gaussian Integers in the Complex Base i - 1"
   },
   {
-    "date": "2026-07-13T22:03:44-05:00",
+    "date": "2026-07-14T03:03:44Z",
     "domain": "Applications",
     "exp_id": "0782e3ca",
     "filename": "asymptotic_expansion_of_weighted_riesz_means_for_s.json",
@@ -1808,7 +1808,7 @@ window.PACKAGE_INDEX = [
     "title": "Asymptotic Expansion of Weighted Riesz Means: A Transfer Principle and Power--Logarithm Model Laws"
   },
   {
-    "date": "2026-07-13T21:10:31-05:00",
+    "date": "2026-07-14T02:10:31Z",
     "domain": "Novelty",
     "exp_id": "cf19c51c",
     "filename": "this_cycle_established_unconditionally_the_constru.json",
@@ -1819,7 +1819,7 @@ window.PACKAGE_INDEX = [
     "title": "The Suspension Tower of Free \u2124\u2082-Complexes and an Iterated Borsuk\u2013Ulam Obstruction"
   },
   {
-    "date": "2026-07-13T20:53:33-05:00",
+    "date": "2026-07-14T01:53:33Z",
     "domain": "Novelty",
     "exp_id": "6af180ae",
     "filename": "deepening_generalized_multinomial_convolution_iden.json",
@@ -1830,7 +1830,7 @@ window.PACKAGE_INDEX = [
     "title": "A Generalized Multinomial Convolution Identity for Latin Rectangle Enumeration"
   },
   {
-    "date": "2026-07-13T20:53:24-05:00",
+    "date": "2026-07-14T01:53:24Z",
     "domain": "Applications",
     "exp_id": "3903c2d7",
     "filename": "bypassed.json",
@@ -1841,7 +1841,7 @@ window.PACKAGE_INDEX = [
     "title": "The Golden Right Triangle: Fibonacci Pythagorean Triples"
   },
   {
-    "date": "2026-07-13T20:17:44-05:00",
+    "date": "2026-07-14T01:17:44Z",
     "domain": "Applications",
     "exp_id": "ae9bfe48",
     "filename": "cographs_are_generalized_spectrally_closed.json",
@@ -1852,7 +1852,7 @@ window.PACKAGE_INDEX = [
     "title": "Cographs Are a Self-Complementary Hereditary Class: Foundations for Generalized Spectral Closure"
   },
   {
-    "date": "2026-07-13T20:17:01-05:00",
+    "date": "2026-07-14T01:17:01Z",
     "domain": "Novelty",
     "exp_id": "ea3218f3",
     "filename": "minimally_1tough_k__p_free_graphs_are_hamiltonian.json",
@@ -1863,7 +1863,7 @@ window.PACKAGE_INDEX = [
     "title": "Minimally 1-Tough (K1 u P4)-Free Graphs and a Component-Count Toolkit Toward Hamiltonicity"
   },
   {
-    "date": "2026-07-13T20:16:49-05:00",
+    "date": "2026-07-14T01:16:49Z",
     "domain": "Novelty",
     "exp_id": "1bd2f770",
     "filename": "tight_spectral_gap_exponent_for_the_fixed_genus_ch.json",
@@ -1874,7 +1874,7 @@ window.PACKAGE_INDEX = [
     "title": "Tight Cubic Spectral-Gap Scaling for Chord-Swap Reconfiguration Chains"
   },
   {
-    "date": "2026-07-13T20:00:10-05:00",
+    "date": "2026-07-14T01:00:10Z",
     "domain": "Novelty",
     "exp_id": "28ee7277",
     "filename": "deepening_hofstadter_i_am_a_strange_loop__consciou.json",
@@ -1885,7 +1885,7 @@ window.PACKAGE_INDEX = [
     "title": "The Blind Spot Has Measurable Size: A Counting Theorem for Self-Modelling Systems"
   },
   {
-    "date": "2026-07-13T18:31:43-05:00",
+    "date": "2026-07-13T23:31:43Z",
     "domain": "Applications",
     "exp_id": "664b3442",
     "filename": "deepening_moonshot_time_travel_logic__formalizing_.json",
@@ -1896,7 +1896,7 @@ window.PACKAGE_INDEX = [
     "title": "Time-Travel Logic: A Fixed-Point Theory of Causal Consistency"
   },
   {
-    "date": "2026-07-13T18:31:33-05:00",
+    "date": "2026-07-13T23:31:33Z",
     "domain": "Applications",
     "exp_id": "a0f7e73c",
     "filename": "sharp_dichotomy_for_the_total_d_hoggatt_numbers.json",
@@ -1907,7 +1907,7 @@ window.PACKAGE_INDEX = [
     "title": "Sharp Dichotomy for the Total d-Hoggatt Numbers: Log-Linearity vs. Strict Log-Convexity"
   },
   {
-    "date": "2026-07-13T18:13:46-05:00",
+    "date": "2026-07-13T23:13:46Z",
     "domain": "Applications",
     "exp_id": "beca1e55",
     "filename": "deepening_transfinite_game_theory_games_that_last_.json",
@@ -1918,7 +1918,7 @@ window.PACKAGE_INDEX = [
     "title": "Transfinite Game Theory, Deepened: The Disjunctive Sum of Well-Founded Games"
   },
   {
-    "date": "2026-07-13T18:13:22-05:00",
+    "date": "2026-07-13T23:13:22Z",
     "domain": "Applications",
     "exp_id": "117d6517",
     "filename": "deepening_hofstadter_fluid_concepts_and_creative_a.json",
@@ -1929,7 +1929,7 @@ window.PACKAGE_INDEX = [
     "title": "Analogy as an Adjoint Operation: Galois Connections, Closure, Fidelity, and the Tropical Residual"
   },
   {
-    "date": "2026-07-13T16:24:37-05:00",
+    "date": "2026-07-13T21:24:37Z",
     "domain": "Applications",
     "exp_id": "5fd927d4",
     "filename": "close_proofs_the_category_theory_of_jokes_universa.json",
@@ -1940,7 +1940,7 @@ window.PACKAGE_INDEX = [
     "title": "The Algebra of Surprise: A Categorical Theory of Humor"
   },
   {
-    "date": "2026-07-13T16:24:20-05:00",
+    "date": "2026-07-13T21:24:20Z",
     "domain": "Applications",
     "exp_id": "49ddee39",
     "filename": "close_proofs_sharp_maximal_excess_of_co_index_unde.json",
@@ -1951,7 +1951,7 @@ window.PACKAGE_INDEX = [
     "title": "Join Superadditivity of the Z2 Co-index: Sharp Maximal Excess Under Suspension"
   },
   {
-    "date": "2026-07-13T15:48:18-05:00",
+    "date": "2026-07-13T20:48:18Z",
     "domain": "Applications",
     "exp_id": "ce15dd8e",
     "filename": "close_proofs_the_uncanny_valley_of_mathematics_whe.json",
@@ -1962,7 +1962,7 @@ window.PACKAGE_INDEX = [
     "title": "The Uncanny Valley of Mathematics: A Cubic Model of Almost-Human Acceptance"
   },
   {
-    "date": "2026-07-13T15:14:35-05:00",
+    "date": "2026-07-13T20:14:35Z",
     "domain": "Applications",
     "exp_id": "c81e5afa",
     "filename": "close_proofs_the_file_catalogspeculativeautoresear.json",
@@ -1973,7 +1973,7 @@ window.PACKAGE_INDEX = [
     "title": "The Factorial Number System as a Mixed-Radix System: A Unified Uniqueness Theory"
   },
   {
-    "date": "2026-07-13T14:24:19-05:00",
+    "date": "2026-07-13T19:24:19Z",
     "domain": "Applications",
     "exp_id": "6e7a2b5e",
     "filename": "deepening_previous_cycles_formalized_dungs_abstrac.json",
@@ -1984,7 +1984,7 @@ window.PACKAGE_INDEX = [
     "title": "The Topology of Argumentation: The Fundamental Lemma and Preferred = Maximal Complete Extensions"
   },
   {
-    "date": "2026-07-13T14:23:59-05:00",
+    "date": "2026-07-13T19:23:59Z",
     "domain": "Applications",
     "exp_id": "c0577eb2",
     "filename": "deepening_exact_topological_conjugacy_between_the_.json",
@@ -1995,7 +1995,7 @@ window.PACKAGE_INDEX = [
     "title": "The Logistic Map Is a Chebyshev Polynomial: An Exact Bridge Between Chaos and Orthogonal Polynomials"
   },
   {
-    "date": "2026-07-13T14:07:06-05:00",
+    "date": "2026-07-13T19:07:06Z",
     "domain": "Novelty",
     "exp_id": "d954b0de",
     "filename": "seidel_energy_strictly_increases_under_edge_deleti.json",
@@ -2006,7 +2006,7 @@ window.PACKAGE_INDEX = [
     "title": "Seidel Energy Strictly Increases Under Edge Deletion in Turan Graphs"
   },
   {
-    "date": "2026-07-13T13:50:02-05:00",
+    "date": "2026-07-13T18:50:02Z",
     "domain": "Novelty",
     "exp_id": "d31b8b8b",
     "filename": "sharp_maximal_excess_of_co_index_under_suspension_.json",
@@ -2017,7 +2017,7 @@ window.PACKAGE_INDEX = [
     "title": "Sharp Maximal Excess of the Z2-Co-index under Suspension"
   },
   {
-    "date": "2026-07-13T12:59:22-05:00",
+    "date": "2026-07-13T17:59:22Z",
     "domain": "Applications",
     "exp_id": "ddc0d02e",
     "filename": "deepening_proofs_as_dags_the_directed_acyclic_grap.json",
@@ -2028,7 +2028,7 @@ window.PACKAGE_INDEX = [
     "title": "Proofs as DAGs: The Topological Structure of Proof Dependency Graphs"
   },
   {
-    "date": "2026-07-13T12:26:15-05:00",
+    "date": "2026-07-13T17:26:15Z",
     "domain": "Novelty",
     "exp_id": "e6dfc1d4",
     "filename": "extension_of_matsunos_formula_for_non_vanishing__i.json",
@@ -2039,7 +2039,7 @@ window.PACKAGE_INDEX = [
     "title": "Extension of Matsuno's Formula for Non-Vanishing mu-Invariants"
   },
   {
-    "date": "2026-07-13T12:09:29-05:00",
+    "date": "2026-07-13T17:09:29Z",
     "domain": "Novelty",
     "exp_id": "b222c758",
     "filename": "deepening_rucker_saucer_wisdom__non_human_mathemat.json",
@@ -2050,7 +2050,7 @@ window.PACKAGE_INDEX = [
     "title": "Universal Mathematics: The Invariant Core Shared by Every Consistent Theory"
   },
   {
-    "date": "2026-07-13T11:51:33-05:00",
+    "date": "2026-07-13T16:51:33Z",
     "domain": "Applications",
     "exp_id": "adcea684",
     "filename": "sharp_lower_bounds_for_sumsets_in_l_balls_in_.json",
@@ -2061,7 +2061,7 @@ window.PACKAGE_INDEX = [
     "title": "Sharp Lower Bounds for Sumsets in L\u2081 Balls in \u2124\u1d48"
   },
   {
-    "date": "2026-07-13T11:32:35-05:00",
+    "date": "2026-07-13T16:32:35Z",
     "domain": "Novelty",
     "exp_id": "ac37e9f5",
     "filename": "exact_topological_conjugacy_between_the_smooth_log.json",
@@ -2072,7 +2072,7 @@ window.PACKAGE_INDEX = [
     "title": "Exact Topological Conjugacy between the Logistic and Tent Maps: Transfer of the Periodic-Orbit Skeleton"
   },
   {
-    "date": "2026-07-13T11:32:26-05:00",
+    "date": "2026-07-13T16:32:26Z",
     "domain": "Novelty",
     "exp_id": "24c0b42e",
     "filename": "fyodorov_hiary_keating_conjecture_for_the_riemann_.json",
@@ -2083,7 +2083,7 @@ window.PACKAGE_INDEX = [
     "title": "The Gumbel Law and Extreme-Value Convergence: The Analytic Backbone of the Fyodorov-Hiary-Keating Conjecture"
   },
   {
-    "date": "2026-07-13T11:16:05-05:00",
+    "date": "2026-07-13T16:16:05Z",
     "domain": "Applications",
     "exp_id": "f347bf96",
     "filename": "deepening_maximum_determinant_bound_for_44_unimodu.json",
@@ -2094,7 +2094,7 @@ window.PACKAGE_INDEX = [
     "title": "Maximum Determinant of 4x4 Matrices with Bounded Entries"
   },
   {
-    "date": "2026-07-13T10:24:06-05:00",
+    "date": "2026-07-13T15:24:06Z",
     "domain": "Applications",
     "exp_id": "e3aaa465",
     "filename": "universality_of_transfer_functions_among_accumulat.json",
@@ -2105,7 +2105,7 @@ window.PACKAGE_INDEX = [
     "title": "Universality of Transfer Functions Among Accumulation Points"
   },
   {
-    "date": "2026-07-13T09:51:37-05:00",
+    "date": "2026-07-13T14:51:37Z",
     "domain": "Applications",
     "exp_id": "5acf2050",
     "filename": "deepening_that_the_geometry_surrounding_the_hopf_f.json",
@@ -2116,7 +2116,7 @@ window.PACKAGE_INDEX = [
     "title": "The Four-Dimensional Compass: The Hermitian Witness Reconstructs the Quaternionic Hopf Fibration"
   },
   {
-    "date": "2026-07-13T09:34:26-05:00",
+    "date": "2026-07-13T14:34:26Z",
     "domain": "Novelty",
     "exp_id": "2aaaa5f9",
     "filename": "deepening_explicit_exponential_lower_bound_for_vie.json",
@@ -2127,7 +2127,7 @@ window.PACKAGE_INDEX = [
     "title": "Below the sqrt(2) Threshold: A Vietoris-Rips / Extremal-Graph / Information-Theory Bridge"
   },
   {
-    "date": "2026-07-13T09:02:01-05:00",
+    "date": "2026-07-13T14:02:01Z",
     "domain": "Applications",
     "exp_id": "0568e201",
     "filename": "deepening_edge_spectral_supersaturation_for_triang.json",
@@ -2138,7 +2138,7 @@ window.PACKAGE_INDEX = [
     "title": "Edge-Spectral Supersaturation for Triangles via Trace Bridges"
   },
   {
-    "date": "2026-07-13T08:44:15-05:00",
+    "date": "2026-07-13T13:44:15Z",
     "domain": "Novelty",
     "exp_id": "a71dcffe",
     "filename": "the_cycle_established_that_the_atomic_alldifferent.json",
@@ -2149,7 +2149,7 @@ window.PACKAGE_INDEX = [
     "title": "The AllDifferent Satisfiability Threshold: Enumerative, Order-Theoretic, and Chromatic Faces of a Sharp Phase Transition"
   },
   {
-    "date": "2026-07-13T08:43:54-05:00",
+    "date": "2026-07-13T13:43:54Z",
     "domain": "Applications",
     "exp_id": "e0843845",
     "filename": "the_file_catalogspeculativeautoresearchmixedradixf.json",
@@ -2160,7 +2160,7 @@ window.PACKAGE_INDEX = [
     "title": "One Rule for Every Number System: The Mixed-Radix Bijection and the Factorial Bridge"
   },
   {
-    "date": "2026-07-13T08:26:09-05:00",
+    "date": "2026-07-13T13:26:09Z",
     "domain": "Novelty",
     "exp_id": "9f2f3b13",
     "filename": "that_the_geometry_surrounding_the_hopf_fibration_i.json",
@@ -2171,7 +2171,7 @@ window.PACKAGE_INDEX = [
     "title": "The Fourth Dimension as a Composition-Algebra Playground"
   },
   {
-    "date": "2026-07-13T07:53:40-05:00",
+    "date": "2026-07-13T12:53:40Z",
     "domain": "Applications",
     "exp_id": "e8b8d594",
     "filename": "maximum_determinant_bound_for_44_unimodular_matric.json",
@@ -2182,7 +2182,7 @@ window.PACKAGE_INDEX = [
     "title": "Maximum Determinant of 4x4 Bounded-Entry Integer Matrices"
   },
   {
-    "date": "2026-07-13T07:35:22-05:00",
+    "date": "2026-07-13T12:35:22Z",
     "domain": "Applications",
     "exp_id": "ad71c64c",
     "filename": "full_brouwers_laplacian_conjecture_equality_charac.json",
@@ -2193,7 +2193,7 @@ window.PACKAGE_INDEX = [
     "title": "Full Brouwer's Laplacian Conjecture Equality Characterization"
   },
   {
-    "date": "2026-07-13T07:34:49-05:00",
+    "date": "2026-07-13T12:34:49Z",
     "domain": "Novelty",
     "exp_id": "290f55e0",
     "filename": "deepening_knots_and_lattices_the_alexander_polynom.json",
@@ -2204,7 +2204,7 @@ window.PACKAGE_INDEX = [
     "title": "Knots and Lattices: The Alexander Polynomial as a Signed State Sum"
   },
   {
-    "date": "2026-07-13T07:18:13-05:00",
+    "date": "2026-07-13T12:18:13Z",
     "domain": "Novelty",
     "exp_id": "a1dac228",
     "filename": "close_proofs_edge_spectral_supersaturation_for_tri.json",
@@ -2215,7 +2215,7 @@ window.PACKAGE_INDEX = [
     "title": "Edge-Spectral Supersaturation for Triangles"
   },
   {
-    "date": "2026-07-13T07:17:24-05:00",
+    "date": "2026-07-13T12:17:24Z",
     "domain": "Applications",
     "exp_id": "ad0affd1",
     "filename": "explicit_exponential_lower_bound_for_vietoris_rips.json",
@@ -2226,7 +2226,7 @@ window.PACKAGE_INDEX = [
     "title": "Explicit Exponential Lower Bound for Vietoris-Rips Approximations Below the sqrt(2) Threshold"
   },
   {
-    "date": "2026-07-13T07:00:59-05:00",
+    "date": "2026-07-13T12:00:59Z",
     "domain": "Applications",
     "exp_id": "191c7579",
     "filename": "this_cycle_deepened_the_singleton_hypergraph_tight.json",
@@ -2237,7 +2237,7 @@ window.PACKAGE_INDEX = [
     "title": "The Isolation Lemma Bridge: Exact Strict-Minimum Counts and Vanishing Ties"
   },
   {
-    "date": "2026-07-13T06:12:10-05:00",
+    "date": "2026-07-13T11:12:10Z",
     "domain": "Applications",
     "exp_id": "59a15132",
     "filename": "power_of_two_characterisation_of_1_pairwise_reflec.json",
@@ -2248,7 +2248,7 @@ window.PACKAGE_INDEX = [
     "title": "Power-of-Two Characterization of Pairwise Reflection Symmetric Latin Squares"
   },
   {
-    "date": "2026-07-13T06:12:01-05:00",
+    "date": "2026-07-13T11:12:01Z",
     "domain": "Applications",
     "exp_id": "4cfd5e43",
     "filename": "deepening_isomorphisms_of_meaning_when_structures_.json",
@@ -2259,7 +2259,7 @@ window.PACKAGE_INDEX = [
     "title": "Isomorphisms of Meaning: When Structures Collide (Part II)"
   },
   {
-    "date": "2026-07-13T05:55:19-05:00",
+    "date": "2026-07-13T10:55:19Z",
     "domain": "Applications",
     "exp_id": "2f683b2c",
     "filename": "generalized_mertens_function_recursion_identity.json",
@@ -2270,7 +2270,7 @@ window.PACKAGE_INDEX = [
     "title": "Generalized Mertens Function Recursion Identity"
   },
   {
-    "date": "2026-07-13T05:55:09-05:00",
+    "date": "2026-07-13T10:55:09Z",
     "domain": "Tropical",
     "exp_id": "167aed7f",
     "filename": "this_project_formalizes_an_abstract_model_agnostic.json",
@@ -2281,7 +2281,7 @@ window.PACKAGE_INDEX = [
     "title": "A Tropical Calculus for the Set-Theoretic Multiverse"
   },
   {
-    "date": "2026-07-13T05:38:59-05:00",
+    "date": "2026-07-13T10:38:59Z",
     "domain": "Applications",
     "exp_id": "86e0e034",
     "filename": "the_mission_asked_to_interrogate_the_claim.json",
@@ -2292,7 +2292,7 @@ window.PACKAGE_INDEX = [
     "title": "Connected Components Govern the L^p Threshold for Pattern Counts in Locally Dense Graphs"
   },
   {
-    "date": "2026-07-13T05:22:35-05:00",
+    "date": "2026-07-13T10:22:35Z",
     "domain": "Novelty",
     "exp_id": "3f303e8a",
     "filename": "close_proofs_these_conjectures_grow_out_of_the_cyc.json",
@@ -2303,7 +2303,7 @@ window.PACKAGE_INDEX = [
     "title": "One Family of Number Systems: Mixed-Radix Numeration and Primitive Prime Divisors of Fibonacci Numbers"
   },
   {
-    "date": "2026-07-13T04:49:35-05:00",
+    "date": "2026-07-13T09:49:35Z",
     "domain": "Applications",
     "exp_id": "3e1dd178",
     "filename": "deepening_rucker_the_fourth_dimension_as_a_mathema.json",
@@ -2314,7 +2314,7 @@ window.PACKAGE_INDEX = [
     "title": "The Fourth Dimension as a Mathematical Playground"
   },
   {
-    "date": "2026-07-13T04:49:25-05:00",
+    "date": "2026-07-13T09:49:25Z",
     "domain": "Novelty",
     "exp_id": "17340490",
     "filename": "close_proofs_the_topology_of_knotted_light_how_las.json",
@@ -2325,7 +2325,7 @@ window.PACKAGE_INDEX = [
     "title": "The Topology of Knotted Light: The Winding Number of Orbital-Angular-Momentum Beams"
   },
   {
-    "date": "2026-07-13T03:59:57-05:00",
+    "date": "2026-07-13T08:59:57Z",
     "domain": "Novelty",
     "exp_id": "9da8e56c",
     "filename": "hirzebruchriemannroch_identity_for_the_integral_ta.json",
@@ -2336,7 +2336,7 @@ window.PACKAGE_INDEX = [
     "title": "Hirzebruch\u2013Riemann\u2013Roch Identity for the Integral Tangent Class of the Boolean Matroid"
   },
   {
-    "date": "2026-07-13T03:43:46-05:00",
+    "date": "2026-07-13T08:43:46Z",
     "domain": "Applications",
     "exp_id": "0557da65",
     "filename": "deepening_rucker_infinity_and_the_mind__formalizin.json",
@@ -2347,7 +2347,7 @@ window.PACKAGE_INDEX = [
     "title": "Cantor's Hierarchy of Infinities: Different Sizes of the Infinite"
   },
   {
-    "date": "2026-07-13T03:26:41-05:00",
+    "date": "2026-07-13T08:26:41Z",
     "domain": "Novelty",
     "exp_id": "1a598f10",
     "filename": "deepening_functional_equations_enforce_primitivity.json",
@@ -2358,7 +2358,7 @@ window.PACKAGE_INDEX = [
     "title": "Functional Equations Enforce Primitivity: A Root-Number Reciprocity Law"
   },
   {
-    "date": "2026-07-13T03:26:00-05:00",
+    "date": "2026-07-13T08:26:00Z",
     "domain": "Novelty",
     "exp_id": "d31b185d",
     "filename": "deepening_that_a_type_which_fully_quantifies_over_.json",
@@ -2369,7 +2369,7 @@ window.PACKAGE_INDEX = [
     "title": "The Diagonal Core of Self-Reference: Why No Type Can Quantify Over Itself"
   },
   {
-    "date": "2026-07-13T03:08:04-05:00",
+    "date": "2026-07-13T08:08:04Z",
     "domain": "Novelty",
     "exp_id": "7547cdb0",
     "filename": "deepening_moonshot_multiverse_set_theory__mathemat.json",
@@ -2380,7 +2380,7 @@ window.PACKAGE_INDEX = [
     "title": "The Modal Logic of Forcing in a Combinatorial Multiverse"
   },
   {
-    "date": "2026-07-13T03:07:28-05:00",
+    "date": "2026-07-13T08:07:28Z",
     "domain": "Applications",
     "exp_id": "b08004d1",
     "filename": "failure_of_lp_relaxation_of_knrs_conjecture_below_.json",
@@ -2391,7 +2391,7 @@ window.PACKAGE_INDEX = [
     "title": "Failure of the L^p Relaxation of the KNRS Conjecture Below Threshold p"
   },
   {
-    "date": "2026-07-13T02:18:13-05:00",
+    "date": "2026-07-13T07:18:13Z",
     "domain": "Novelty",
     "exp_id": "6ed40476",
     "filename": "deepening_stability_of_the_sharp_diagonal_spectral.json",
@@ -2402,7 +2402,7 @@ window.PACKAGE_INDEX = [
     "title": "The Sharp Diagonal Correlation Inequality on the Discrete Cube"
   },
   {
-    "date": "2026-07-13T02:01:24-05:00",
+    "date": "2026-07-13T07:01:24Z",
     "domain": "Novelty",
     "exp_id": "02c1616a",
     "filename": "functional_equations_enforce_primitivity_of_coeffi.json",
@@ -2413,7 +2413,7 @@ window.PACKAGE_INDEX = [
     "title": "Functional Equations Enforce Primitivity of Coefficients"
   },
   {
-    "date": "2026-07-13T02:01:15-05:00",
+    "date": "2026-07-13T07:01:15Z",
     "domain": "Applications",
     "exp_id": "111bebcc",
     "filename": "constant_residue_of_labeled_poset_counts_modulo_4.json",
@@ -2424,7 +2424,7 @@ window.PACKAGE_INDEX = [
     "title": "Constant Residue of Labeled Poset Counts Modulo 4"
   },
   {
-    "date": "2026-07-13T01:44:54-05:00",
+    "date": "2026-07-13T06:44:54Z",
     "domain": "Novelty",
     "exp_id": "05e37ec1",
     "filename": "deepening_stone_duality_for_machine_learning_neura.json",
@@ -2435,7 +2435,7 @@ window.PACKAGE_INDEX = [
     "title": "Stone Duality for Neural Networks: Activation Patterns as a Boolean Algebra"
   },
   {
-    "date": "2026-07-13T01:26:49-05:00",
+    "date": "2026-07-13T06:26:49Z",
     "domain": "Applications",
     "exp_id": "5b802ccf",
     "filename": "previous_cycles_formalized_dungs_abstract_argument.json",
@@ -2446,7 +2446,7 @@ window.PACKAGE_INDEX = [
     "title": "Well-Founded Argumentation Frameworks Have a Unique Complete Extension"
   },
   {
-    "date": "2026-07-13T00:54:30-05:00",
+    "date": "2026-07-13T05:54:30Z",
     "domain": "Novelty",
     "exp_id": "291fcce1",
     "filename": "deepening_number_of_gl102_orbits_of_boolean_cubic_.json",
@@ -2457,7 +2457,7 @@ window.PACKAGE_INDEX = [
     "title": "A Sharp Structural Window for the Number of GL(10,2)-Orbits of Boolean Cubic Forms"
   },
   {
-    "date": "2026-07-13T00:18:46-05:00",
+    "date": "2026-07-13T05:18:46Z",
     "domain": "Novelty",
     "exp_id": "96ae8e1e",
     "filename": "generalized_variance_formula_for_digit_expansions_.json",
@@ -2468,7 +2468,7 @@ window.PACKAGE_INDEX = [
     "title": "A Generalized Variance Formula for the Digits of 1/p in Any Base"
   },
   {
-    "date": "2026-07-13T00:18:46-05:00",
+    "date": "2026-07-13T05:18:46Z",
     "domain": "Applications",
     "exp_id": "ca370926",
     "filename": "factorization_of_cyclotomic_gauss_sum_matrix.json",
@@ -2479,7 +2479,7 @@ window.PACKAGE_INDEX = [
     "title": "Factorization of the Cyclotomic Gauss-Sum Matrix"
   },
   {
-    "date": "2026-07-13T00:18:28-05:00",
+    "date": "2026-07-13T05:18:28Z",
     "domain": "Applications",
     "exp_id": "8e89241b",
     "filename": "asymptotic_alternating_sign_conjecture_for_andrews.json",
@@ -2490,7 +2490,7 @@ window.PACKAGE_INDEX = [
     "title": "Asymptotic Alternating Signs of Andrews-type q-Series Coefficients"
   },
   {
-    "date": "2026-07-12T23:46:19-05:00",
+    "date": "2026-07-13T04:46:19Z",
     "domain": "Applications",
     "exp_id": "b659b436",
     "filename": "deepening_the_uncanny_valley_of_mathematics_when_p.json",
@@ -2501,7 +2501,7 @@ window.PACKAGE_INDEX = [
     "title": "The Uncanny Valley of Prime-Generating Polynomials"
   },
   {
-    "date": "2026-07-12T23:13:45-05:00",
+    "date": "2026-07-13T04:13:45Z",
     "domain": "Novelty",
     "exp_id": "4bfb0f7c",
     "filename": "deepening_moonshot_dyson_sphere_mathematics__energ.json",
@@ -2512,7 +2512,7 @@ window.PACKAGE_INDEX = [
     "title": "Dyson Sphere Mathematics: The Exact Optimization Theory of Stellar Energy Collection"
   },
   {
-    "date": "2026-07-12T22:56:58-05:00",
+    "date": "2026-07-13T03:56:58Z",
     "domain": "Novelty",
     "exp_id": "53d4816b",
     "filename": "deepening_cellular_automata_as_algebraic_geometry_.json",
@@ -2523,7 +2523,7 @@ window.PACKAGE_INDEX = [
     "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
   },
   {
-    "date": "2026-07-12T22:38:40-05:00",
+    "date": "2026-07-13T03:38:40Z",
     "domain": "Applications",
     "exp_id": "d4192a75",
     "filename": "equivalence_of_oddomorphism_and_split_off_minor.json",
@@ -2534,7 +2534,7 @@ window.PACKAGE_INDEX = [
     "title": "Oddomorphisms of Finite Graphs and the Split-Off Minor Correspondence"
   },
   {
-    "date": "2026-07-12T22:02:05-05:00",
+    "date": "2026-07-13T03:02:05Z",
     "domain": "Applications",
     "exp_id": "32285b55",
     "filename": "gamma_positivity_of_symmetric_edge_polytopes_for_s.json",
@@ -2545,7 +2545,7 @@ window.PACKAGE_INDEX = [
     "title": "Gamma-Positivity of Symmetric Edge Polytopes for Series-Parallel Graphs with at Most Four Paths"
   },
   {
-    "date": "2026-07-12T21:42:22-05:00",
+    "date": "2026-07-13T02:42:22Z",
     "domain": "Novelty",
     "exp_id": "5b1ced03",
     "filename": "characterization_of_limit_points_below_the_golden_.json",
@@ -2556,7 +2556,7 @@ window.PACKAGE_INDEX = [
     "title": "Characterization of Limit Points Below the Golden-Ratio Threshold for Largest Matching Roots"
   },
   {
-    "date": "2026-07-12T21:41:57-05:00",
+    "date": "2026-07-13T02:41:57Z",
     "domain": "Applications",
     "exp_id": "ffec372c",
     "filename": "deepening_minimalobstructions_to_total_rainbow_for.json",
@@ -2567,7 +2567,7 @@ window.PACKAGE_INDEX = [
     "title": "Rainbow Forest Obstructions: Weak Duality and the Lattice of Witnesses"
   },
   {
-    "date": "2026-07-12T21:21:32-05:00",
+    "date": "2026-07-13T02:21:32Z",
     "domain": "Novelty",
     "exp_id": "7362296f",
     "filename": "close_proofs_number_of_gl102_orbits_of_boolean_cub.json",
@@ -2578,7 +2578,7 @@ window.PACKAGE_INDEX = [
     "title": "Counting GL(10,2)-Orbits of Boolean Cubic Forms in Ten Variables"
   },
   {
-    "date": "2026-07-12T21:01:50-05:00",
+    "date": "2026-07-13T02:01:50Z",
     "domain": "Applications",
     "exp_id": "48b25c91",
     "filename": "these_conjectures_grow_out_of_the_cycles_core_find.json",
@@ -2589,7 +2589,7 @@ window.PACKAGE_INDEX = [
     "title": "The Thermodynamic Horizon of Discovery"
   },
   {
-    "date": "2026-07-12T20:25:53-05:00",
+    "date": "2026-07-13T01:25:53Z",
     "domain": "Novelty",
     "exp_id": "3959b92d",
     "filename": "close_proofs_bayesian_werewolf_optimal_strategy_fo.json",
@@ -2600,7 +2600,7 @@ window.PACKAGE_INDEX = [
     "title": "Bayesian Werewolf: A Combinatorial Bridge to Vandermonde's Convolution"
   },
   {
-    "date": "2026-07-12T20:24:48-05:00",
+    "date": "2026-07-13T01:24:48Z",
     "domain": "Novelty",
     "exp_id": "cbbd1369",
     "filename": "generalized_giampietro_darmon_factorization_for_ar.json",
@@ -2611,7 +2611,7 @@ window.PACKAGE_INDEX = [
     "title": "Generalized Giampietro\u2013Darmon Factorization for Arbitrary Genus"
   },
   {
-    "date": "2026-07-12T20:24:21-05:00",
+    "date": "2026-07-13T01:24:21Z",
     "domain": "Novelty",
     "exp_id": "97b9c756",
     "filename": "deepening_siegel_weil_identity_for_the_e_lattice_t.json",
@@ -2622,7 +2622,7 @@ window.PACKAGE_INDEX = [
     "title": "Deepening the Siegel-Weil Identity for the E8 Theta Series: A Universal Hecke Convolution Law for Divisor-Power Sums"
   },
   {
-    "date": "2026-07-12T20:06:02-05:00",
+    "date": "2026-07-13T01:06:02Z",
     "domain": "Applications",
     "exp_id": "1abce342",
     "filename": "the_optimal_portion_ratio__equals_1__.json",
@@ -2633,7 +2633,7 @@ window.PACKAGE_INDEX = [
     "title": "The Optimal Portion Ratio \u03bc\u2082 = 1 + \u03c1"
   },
   {
-    "date": "2026-07-12T19:45:10-05:00",
+    "date": "2026-07-13T00:45:10Z",
     "domain": "Applications",
     "exp_id": "28bb3270",
     "filename": "close_proofs_siegel_weil_identity_for_the_e_lattic.json",
@@ -2644,7 +2644,7 @@ window.PACKAGE_INDEX = [
     "title": "The Siegel\u2013Weil Identity for the E8 Lattice Theta Series"
   },
   {
-    "date": "2026-07-12T19:09:55-05:00",
+    "date": "2026-07-13T00:09:55Z",
     "domain": "Novelty",
     "exp_id": "909a0259",
     "filename": "deepening_the_opposite_semicube_helly_property_cha.json",
@@ -2655,7 +2655,7 @@ window.PACKAGE_INDEX = [
     "title": "Harmonic-Even Balance and the Opposite-Semicube Helly Property of Partial Cubes"
   },
   {
-    "date": "2026-07-12T18:52:39-05:00",
+    "date": "2026-07-12T23:52:39Z",
     "domain": "Applications",
     "exp_id": "86966da0",
     "filename": "that_a_type_which_fully_quantifies_over_itself_.json",
@@ -2666,7 +2666,7 @@ window.PACKAGE_INDEX = [
     "title": "The Reflective Tower: Cross-Level Separation and the Truncation Dichotomy"
   },
   {
-    "date": "2026-07-12T18:51:51-05:00",
+    "date": "2026-07-12T23:51:51Z",
     "domain": "Novelty",
     "exp_id": "0242f406",
     "filename": "close_proofs_the_opposite_semicube_helly_property_.json",
@@ -2677,7 +2677,7 @@ window.PACKAGE_INDEX = [
     "title": "The Opposite-Semicube Helly Property Characterizes Harmonic-Evenness of Product Partial Cubes"
   },
   {
-    "date": "2026-07-12T18:31:57-05:00",
+    "date": "2026-07-12T23:31:57Z",
     "domain": "Novelty",
     "exp_id": "82394822",
     "filename": "number_of_gl102_orbits_of_boolean_cubic_forms_in_1.json",
@@ -2688,7 +2688,7 @@ window.PACKAGE_INDEX = [
     "title": "Number of GL(10,2)-Orbits of Boolean Cubic Forms in Ten Variables"
   },
   {
-    "date": "2026-07-12T18:31:44-05:00",
+    "date": "2026-07-12T23:31:44Z",
     "domain": "Novelty",
     "exp_id": "00319e93",
     "filename": "deepening_this_cycle_deepens_the_probabilistic_met.json",
@@ -2699,7 +2699,7 @@ window.PACKAGE_INDEX = [
     "title": "Property B: Two-Colorability of Sparse Uniform Hypergraphs and the Erd\u0151s Bound m(k) \u2265 2^{k-1}"
   },
   {
-    "date": "2026-07-12T18:31:07-05:00",
+    "date": "2026-07-12T23:31:07Z",
     "domain": "Applications",
     "exp_id": "4d87b490",
     "filename": "deepening_thermodynamicsofprooflean__the_positive_.json",
@@ -2710,7 +2710,7 @@ window.PACKAGE_INDEX = [
     "title": "The Kernel Law: An Exact Thermodynamics of Structure-Preserving Inference"
   },
   {
-    "date": "2026-07-12T18:12:38-05:00",
+    "date": "2026-07-12T23:12:38Z",
     "domain": "Novelty",
     "exp_id": "26646791",
     "filename": "close_proofs_recursive_decomposition_of_greedy_tam.json",
@@ -2721,7 +2721,7 @@ window.PACKAGE_INDEX = [
     "title": "Close Proofs: Recursive Decomposition of Greedy Tamari Intervals via Dyck Path Structure"
   },
   {
-    "date": "2026-07-12T18:12:29-05:00",
+    "date": "2026-07-12T23:12:29Z",
     "domain": "Applications",
     "exp_id": "f3fa6ca4",
     "filename": "siegel_weil_identity_for_the_e_lattice_theta_serie.json",
@@ -2732,7 +2732,7 @@ window.PACKAGE_INDEX = [
     "title": "Siegel-Weil Identity for the E8 Lattice Theta Series and its Sharp E4^2 = E8 Congruence"
   },
   {
-    "date": "2026-07-12T16:59:35-05:00",
+    "date": "2026-07-12T21:59:35Z",
     "domain": "Novelty",
     "exp_id": "0c4e7ae8",
     "filename": "this_cycle_deepens_the_probabilistic_method_develo.json",
@@ -2743,7 +2743,7 @@ window.PACKAGE_INDEX = [
     "title": "Property B and the Erdos Extremal Function m(k): Exact Values m(1)=1 and m(2)=3"
   },
   {
-    "date": "2026-07-12T16:59:06-05:00",
+    "date": "2026-07-12T21:59:06Z",
     "domain": "Applications",
     "exp_id": "82155f74",
     "filename": "stability_of_the_sharp_diagonal_spectral_correlati.json",
@@ -2754,7 +2754,7 @@ window.PACKAGE_INDEX = [
     "title": "Stability of the Sharp Diagonal Spectral Correlation Inequality for Monotone Boolean Functions"
   },
   {
-    "date": "2026-07-12T16:41:54-05:00",
+    "date": "2026-07-12T21:41:54Z",
     "domain": "Novelty",
     "exp_id": "bcff067f",
     "filename": "recursive_decomposition_of_greedy_tamari_intervals.json",
@@ -2765,7 +2765,7 @@ window.PACKAGE_INDEX = [
     "title": "Three Faces of the Same Number: A Constructive Bridge Between Plane Trees, Binary Trees, and Dyck Paths"
   },
   {
-    "date": "2026-07-12T16:41:27-05:00",
+    "date": "2026-07-12T21:41:27Z",
     "domain": "Novelty",
     "exp_id": "eb025541",
     "filename": "thermodynamicsofprooflean__the_positive_theory.json",
@@ -2776,7 +2776,7 @@ window.PACKAGE_INDEX = [
     "title": "Thermodynamics of Mathematical Proof: A Second Law for Derivations"
   },
   {
-    "date": "2026-07-12T15:14:22-05:00",
+    "date": "2026-07-12T20:14:22Z",
     "domain": "Novelty",
     "exp_id": "d95af58e",
     "filename": "deepening_anti_mathematics_what_if_all_axioms_were.json",
@@ -2787,7 +2787,7 @@ window.PACKAGE_INDEX = [
     "title": "Anti-Mathematics: The Finite Universe Where Choice Is a Theorem"
   },
   {
-    "date": "2026-07-12T14:56:41-05:00",
+    "date": "2026-07-12T19:56:41Z",
     "domain": "Applications",
     "exp_id": "167b800e",
     "filename": "deepening_the_hodge_conjecture_for_neural_networks.json",
@@ -2798,7 +2798,7 @@ window.PACKAGE_INDEX = [
     "title": "The Euler-Poincare Principle for Neural Decision Surfaces"
   },
   {
-    "date": "2026-07-12T14:56:31-05:00",
+    "date": "2026-07-12T19:56:31Z",
     "domain": "Applications",
     "exp_id": "44b2d089",
     "filename": "deepening_the_cycle_established_a_compact_algebrai.json",
@@ -2809,7 +2809,7 @@ window.PACKAGE_INDEX = [
     "title": "The Fourth Dimension as a Composition-Algebra Playground: Deepening the Algebraic Core of Four-Dimensional Geometry"
   },
   {
-    "date": "2026-07-12T13:49:04-05:00",
+    "date": "2026-07-12T18:49:04Z",
     "domain": "Applications",
     "exp_id": "1f9ea620",
     "filename": "deepening_moonshot_the_last_theorem__formalizing_t.json",
@@ -2820,7 +2820,7 @@ window.PACKAGE_INDEX = [
     "title": "The Last Theorem: The Arithmetic of the Discoverable and the Heat Death of Mathematics"
   },
   {
-    "date": "2026-07-12T13:31:03-05:00",
+    "date": "2026-07-12T18:31:03Z",
     "domain": "Novelty",
     "exp_id": "91f941b6",
     "filename": "deepening_the_periodic_table_is_a_lie_elements_as_.json",
@@ -2831,7 +2831,7 @@ window.PACKAGE_INDEX = [
     "title": "The Periodic Table as a Spectrum: Elements as Eigenvalues of a Self-Adjoint Operator"
   },
   {
-    "date": "2026-07-12T13:30:53-05:00",
+    "date": "2026-07-12T18:30:53Z",
     "domain": "Novelty",
     "exp_id": "0fe20e26",
     "filename": "close_proofs_the_hodge_conjecture_for_neural_netwo.json",
@@ -2842,7 +2842,7 @@ window.PACKAGE_INDEX = [
     "title": "Algebraic Cycles in Neural Decision Surfaces: An Exact Betti-Rank Formula and Width Calculus"
   },
   {
-    "date": "2026-07-12T13:13:29-05:00",
+    "date": "2026-07-12T18:13:29Z",
     "domain": "Novelty",
     "exp_id": "867d1ba2",
     "filename": "deepening_this_cycle_deepens_the_formalization_of_.json",
@@ -2853,7 +2853,7 @@ window.PACKAGE_INDEX = [
     "title": "The Grounded Extension is the Least Complete Extension"
   },
   {
-    "date": "2026-07-12T12:55:59-05:00",
+    "date": "2026-07-12T17:55:59Z",
     "domain": "Novelty",
     "exp_id": "0bd39924",
     "filename": "delta_petrie_schur_positivity.json",
@@ -2864,7 +2864,7 @@ window.PACKAGE_INDEX = [
     "title": "Delta-Petrie Schur Positivity: A Cyclotomic Divisibility Criterion"
   },
   {
-    "date": "2026-07-12T12:38:42-05:00",
+    "date": "2026-07-12T17:38:42Z",
     "domain": "Applications",
     "exp_id": "6fce3466",
     "filename": "deepening_this_project_formalises_the_mission_caus.json",
@@ -2875,7 +2875,7 @@ window.PACKAGE_INDEX = [
     "title": "Strictification of the Reassociation Groupoid: The Free Monoid as the Skeleton of Coherent Bracketing"
   },
   {
-    "date": "2026-07-12T12:21:35-05:00",
+    "date": "2026-07-12T17:21:35Z",
     "domain": "Applications",
     "exp_id": "766b6e47",
     "filename": "irreducibility_of_mod_p_reductions_of_crystalline_.json",
@@ -2886,7 +2886,7 @@ window.PACKAGE_INDEX = [
     "title": "Irreducibility of mod p Reductions of Crystalline Representations at Fractional Slope and Even Weight"
   },
   {
-    "date": "2026-07-12T12:21:05-05:00",
+    "date": "2026-07-12T17:21:05Z",
     "domain": "Novelty",
     "exp_id": "00880e6f",
     "filename": "the_cycle_established_a_compact_algebraic_core_for.json",
@@ -2897,7 +2897,7 @@ window.PACKAGE_INDEX = [
     "title": "A Compact Algebraic Core for Four-Dimensional Geometry"
   },
   {
-    "date": "2026-07-12T11:46:37-05:00",
+    "date": "2026-07-12T16:46:37Z",
     "domain": "Novelty",
     "exp_id": "ddbb821f",
     "filename": "this_cycle_deepens_the_formalization_of_dungs_abst.json",
@@ -2908,7 +2908,7 @@ window.PACKAGE_INDEX = [
     "title": "The Existence Gap for Stable Extensions in Abstract Argumentation"
   },
   {
-    "date": "2026-07-12T11:46:20-05:00",
+    "date": "2026-07-12T16:46:20Z",
     "domain": "Applications",
     "exp_id": "b6e3f70d",
     "filename": "close_proofs_tightness_of_the_isolation_lemma_boun.json",
@@ -2919,7 +2919,7 @@ window.PACKAGE_INDEX = [
     "title": "Close Proofs: Tightness of the Isolation Lemma Bound for Arbitrary Edge Offsets"
   },
   {
-    "date": "2026-07-12T11:46:11-05:00",
+    "date": "2026-07-12T16:46:11Z",
     "domain": "Applications",
     "exp_id": "c81fdc47",
     "filename": "bruhat_order_preserves_closure_relations_for_b_orb.json",
@@ -2930,7 +2930,7 @@ window.PACKAGE_INDEX = [
     "title": "Bruhat Order Preserves Closure Relations for Orbit Strata on Products of Flag Manifolds"
   },
   {
-    "date": "2026-07-12T10:55:07-05:00",
+    "date": "2026-07-12T15:55:07Z",
     "domain": "Novelty",
     "exp_id": "3cdfbb0e",
     "filename": "deepening_automatic_sequences_and_the_halting_prob.json",
@@ -2941,7 +2941,7 @@ window.PACKAGE_INDEX = [
     "title": "Automatic Sequences and the Finite-Kernel Criterion: A Composition-Law Foundation"
   },
   {
-    "date": "2026-07-12T10:37:49-05:00",
+    "date": "2026-07-12T15:37:49Z",
     "domain": "Novelty",
     "exp_id": "494cab2e",
     "filename": "this_project_formalises_the_mission_causal_loops_i.json",
@@ -2952,7 +2952,7 @@ window.PACKAGE_INDEX = [
     "title": "Monoidal Strictification of the Parenthesization Category"
   },
   {
-    "date": "2026-07-12T10:20:34-05:00",
+    "date": "2026-07-12T15:20:34Z",
     "domain": "Novelty",
     "exp_id": "919ceb1f",
     "filename": "deepening_tightness_of_the_isolation_lemma_bound_f.json",
@@ -2963,7 +2963,7 @@ window.PACKAGE_INDEX = [
     "title": "Tightness of the Isolation-Lemma Bound for Arbitrary Edge Offsets"
   },
   {
-    "date": "2026-07-12T10:03:11-05:00",
+    "date": "2026-07-12T15:03:11Z",
     "domain": "Applications",
     "exp_id": "3dfad72d",
     "filename": "characterizing_finite_posets_whose_probabilistic_p.json",
@@ -2974,7 +2974,7 @@ window.PACKAGE_INDEX = [
     "title": "Characterizing Finite Posets Whose Probabilistic Powerdomain Is an RB-Domain"
   },
   {
-    "date": "2026-07-12T10:02:54-05:00",
+    "date": "2026-07-12T15:02:54Z",
     "domain": "Applications",
     "exp_id": "b35b4ce5",
     "filename": "asymptotic_clique_to_clique_density_bound.json",
@@ -2985,7 +2985,7 @@ window.PACKAGE_INDEX = [
     "title": "The Democracy of Cliques: An Exact Clique-to-Clique Density Bound"
   },
   {
-    "date": "2026-07-12T10:02:45-05:00",
+    "date": "2026-07-12T15:02:45Z",
     "domain": "Applications",
     "exp_id": "edd57dbd",
     "filename": "deepening_the_lean_development_catalogmachinelearn.json",
@@ -2996,7 +2996,7 @@ window.PACKAGE_INDEX = [
     "title": "The Divisor Factorization of Torus-Knot OAM Spectra"
   },
   {
-    "date": "2026-07-12T09:10:45-05:00",
+    "date": "2026-07-12T14:10:45Z",
     "domain": "Novelty",
     "exp_id": "f8254dbf",
     "filename": "deepening_this_project_formalizes_from_first_princ.json",
@@ -3007,7 +3007,7 @@ window.PACKAGE_INDEX = [
     "title": "The Topology of Argumentation V: Stable Extensions, the Semantic Hierarchy, and an Euler Correspondence"
   },
   {
-    "date": "2026-07-12T09:10:37-05:00",
+    "date": "2026-07-12T14:10:37Z",
     "domain": "Applications",
     "exp_id": "d019c88a",
     "filename": "exact_dictionary_logical_qubits__middle_homology.json",
@@ -3018,7 +3018,7 @@ window.PACKAGE_INDEX = [
     "title": "Logical Qubits as Middle Homology: An Exact Dictionary for CSS Quantum Codes"
   },
   {
-    "date": "2026-07-12T08:53:34-05:00",
+    "date": "2026-07-12T13:53:34Z",
     "domain": "Applications",
     "exp_id": "bc831bad",
     "filename": "deepening_neuralcodinglean_builds_a_self_contained.json",
@@ -3029,7 +3029,7 @@ window.PACKAGE_INDEX = [
     "title": "Energy Concentration in Dense Neural Codes: A Metabolic Law of Large Numbers"
   },
   {
-    "date": "2026-07-12T08:35:30-05:00",
+    "date": "2026-07-12T13:35:30Z",
     "domain": "Novelty",
     "exp_id": "73c84a79",
     "filename": "tightness_of_the_isolation_lemma_bound_for_arbitra.json",
@@ -3040,7 +3040,7 @@ window.PACKAGE_INDEX = [
     "title": "Tightness of the Isolation Lemma Bound for Arbitrary Edge Offsets"
   },
   {
-    "date": "2026-07-12T08:18:06-05:00",
+    "date": "2026-07-12T13:18:06Z",
     "domain": "Computation",
     "exp_id": "8cebc683",
     "filename": "close_proofs_the_mandelbrot_sets_secret_number_the.json",
@@ -3051,7 +3051,7 @@ window.PACKAGE_INDEX = [
     "title": "The Escape Radius: How a Circle of Radius Two Cages the Mandelbrot Set"
   },
   {
-    "date": "2026-07-12T08:00:51-05:00",
+    "date": "2026-07-12T13:00:51Z",
     "domain": "Applications",
     "exp_id": "f3dfcf44",
     "filename": "the_file_phasetransitioncurieweisslean_proves_that.json",
@@ -3062,7 +3062,7 @@ window.PACKAGE_INDEX = [
     "title": "A Universal Order-Parameter Threshold: From Mean-Field Magnetism to Branching Survival"
   },
   {
-    "date": "2026-07-12T07:43:35-05:00",
+    "date": "2026-07-12T12:43:35Z",
     "domain": "Applications",
     "exp_id": "16e4b1d9",
     "filename": "this_project_formalizes_in_cryptographyramanujanor.json",
@@ -3073,7 +3073,7 @@ window.PACKAGE_INDEX = [
     "title": "Diagonalization as Topological Genericity: A Baire-Category Bridge for Ramanujan Oracles"
   },
   {
-    "date": "2026-07-12T06:53:18-05:00",
+    "date": "2026-07-12T11:53:18Z",
     "domain": "Novelty",
     "exp_id": "812631ed",
     "filename": "neuralcodinglean_builds_a_self_contained_chain_of_.json",
@@ -3084,7 +3084,7 @@ window.PACKAGE_INDEX = [
     "title": "The Capacity of Robust Neural Codes: Doubling Laws, Sparse Efficiency, and the Singleton Ceiling"
   },
   {
-    "date": "2026-07-12T06:35:57-05:00",
+    "date": "2026-07-12T11:35:57Z",
     "domain": "Novelty",
     "exp_id": "25c7a40e",
     "filename": "deepening_the_mandelbrot_sets_secret_number_theory.json",
@@ -3095,7 +3095,7 @@ window.PACKAGE_INDEX = [
     "title": "The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence, the Doubling Map, and Farey-Fibonacci Bulb Ordering"
   },
   {
-    "date": "2026-07-12T06:18:31-05:00",
+    "date": "2026-07-12T11:18:31Z",
     "domain": "Novelty",
     "exp_id": "0930ae42",
     "filename": "the_lean_development_catalogmachinelearningknotted.json",
@@ -3106,7 +3106,7 @@ window.PACKAGE_INDEX = [
     "title": "The Cyclotomic Bridge for Torus-Knot Orbital-Angular-Momentum Spectra"
   },
   {
-    "date": "2026-07-12T06:18:23-05:00",
+    "date": "2026-07-12T11:18:23Z",
     "domain": "Novelty",
     "exp_id": "e618ea1a",
     "filename": "this_project_formalizes_from_first_principles_in_l.json",
@@ -3117,7 +3117,7 @@ window.PACKAGE_INDEX = [
     "title": "The Topology of Symmetric Argumentation: Facets, Grounded Extensions, and the Euler Bridge"
   },
   {
-    "date": "2026-07-12T05:44:22-05:00",
+    "date": "2026-07-12T10:44:22Z",
     "domain": "Novelty",
     "exp_id": "a6691c84",
     "filename": "deepening_the_p_vs_np_of_sudoku_phase_transitions_.json",
@@ -3128,7 +3128,7 @@ window.PACKAGE_INDEX = [
     "title": "The Constraint-Satisfaction Threshold of Sudoku: A Sharp Phase Transition Across Order, Enumeration, and Colouring"
   },
   {
-    "date": "2026-07-12T05:27:05-05:00",
+    "date": "2026-07-12T10:27:05Z",
     "domain": "Novelty",
     "exp_id": "53945fe2",
     "filename": "deepening_formalizing_the_probabilistic_method_erd.json",
@@ -3139,7 +3139,7 @@ window.PACKAGE_INDEX = [
     "title": "Property B: The First-Moment Threshold for Hypergraph Two-Colorability"
   },
   {
-    "date": "2026-07-12T05:26:57-05:00",
+    "date": "2026-07-12T10:26:57Z",
     "domain": "Applications",
     "exp_id": "b290e3a0",
     "filename": "deepening_upper_bound_conjecture_for_the_cake_bala.json",
@@ -3150,7 +3150,7 @@ window.PACKAGE_INDEX = [
     "title": "The Cake-Balancing Ratio: Windowed Imbalance and a Universal Bound for Bisection Sequences"
   },
   {
-    "date": "2026-07-12T05:09:50-05:00",
+    "date": "2026-07-12T10:09:50Z",
     "domain": "Applications",
     "exp_id": "b2384a8a",
     "filename": "limit_distribution_of_descendants_in_random_d_dags.json",
@@ -3161,7 +3161,7 @@ window.PACKAGE_INDEX = [
     "title": "Gamma-Poisson Duality and the Integer-Shape Descendant Limit Law for Random d-DAGs"
   },
   {
-    "date": "2026-07-12T04:36:13-05:00",
+    "date": "2026-07-12T09:36:13Z",
     "domain": "MachineLearning",
     "exp_id": "c3fe1d06",
     "filename": "deepening_that_the_zero_dimensional_persistent_hom.json",
@@ -3172,7 +3172,7 @@ window.PACKAGE_INDEX = [
     "title": "The Shape of the Primes: Zero-Dimensional Persistent Homology of the Prime Point Cloud"
   },
   {
-    "date": "2026-07-12T04:01:50-05:00",
+    "date": "2026-07-12T09:01:50Z",
     "domain": "MachineLearning",
     "exp_id": "e978b5fe",
     "filename": "whites_quadratic_exchange_conjecture_part_3.json",
@@ -3183,7 +3183,7 @@ window.PACKAGE_INDEX = [
     "title": "White's Quadratic Exchange Conjecture: The Element Census as Exchange Invariant"
   },
   {
-    "date": "2026-07-12T03:27:35-05:00",
+    "date": "2026-07-12T08:27:35Z",
     "domain": "Novelty",
     "exp_id": "62dd551b",
     "filename": "deepening_aleph_1_surface_geometry_between_dimensi.json",
@@ -3194,7 +3194,7 @@ window.PACKAGE_INDEX = [
     "title": "The Aleph-One Surface: Geometry Between the Dimensions"
   },
   {
-    "date": "2026-07-12T03:27:26-05:00",
+    "date": "2026-07-12T08:27:26Z",
     "domain": "Applications",
     "exp_id": "c1de826b",
     "filename": "deepening_moonshot_brain_computer_interface_mathem.json",
@@ -3205,7 +3205,7 @@ window.PACKAGE_INDEX = [
     "title": "Error-Correcting Neural Codes and the Sphere-Packing Bound"
   },
   {
-    "date": "2026-07-12T02:53:37-05:00",
+    "date": "2026-07-12T07:53:37Z",
     "domain": "Applications",
     "exp_id": "b88b4225",
     "filename": "categorifying_the_quantum_binomial_product_rule_vi.json",
@@ -3216,7 +3216,7 @@ window.PACKAGE_INDEX = [
     "title": "Categorifying the Quantum Binomial Product Rule via Filtrations of Plethystic Modules"
   },
   {
-    "date": "2026-07-12T02:36:34-05:00",
+    "date": "2026-07-12T07:36:34Z",
     "domain": "Applications",
     "exp_id": "71e324bf",
     "filename": "exact_avdtotal_chromatic_number_of_central_graphs_.json",
@@ -3227,7 +3227,7 @@ window.PACKAGE_INDEX = [
     "title": "Exact AVD-Total Chromatic Number of Central Graphs of Regular Graphs"
   },
   {
-    "date": "2026-07-12T02:19:28-05:00",
+    "date": "2026-07-12T07:19:28Z",
     "domain": "MachineLearning",
     "exp_id": "e2c082ff",
     "filename": "lower_bounds_on_clique_densities_using_generalized.json",
@@ -3238,7 +3238,7 @@ window.PACKAGE_INDEX = [
     "title": "Lower Bounds on Clique Densities via Codegrees and the Inclusion-Exclusion Inverse"
   },
   {
-    "date": "2026-07-12T01:11:31-05:00",
+    "date": "2026-07-12T06:11:31Z",
     "domain": "Novelty",
     "exp_id": "24111e1f",
     "filename": "moonshot_the_last_theorem__formalizing_the_heat_de.json",
@@ -3249,7 +3249,7 @@ window.PACKAGE_INDEX = [
     "title": "The Last Theorem: Countable Mathematics at the Thermodynamic Horizon"
   },
   {
-    "date": "2026-07-12T00:20:52-05:00",
+    "date": "2026-07-12T05:20:52Z",
     "domain": "Novelty",
     "exp_id": "ef2405bd",
     "filename": "moonshot_brain_computer_interface_mathematics__neu.json",
@@ -3260,7 +3260,7 @@ window.PACKAGE_INDEX = [
     "title": "Neural Coding Theorems: Capacity, Energy, Precision, and Dimension of Binary Population Codes"
   },
   {
-    "date": "2026-07-12T00:03:50-05:00",
+    "date": "2026-07-12T05:03:50Z",
     "domain": "Applications",
     "exp_id": "c016fced",
     "filename": "deepening_infinite_dimensional_chess_winning_on_th.json",
@@ -3271,7 +3271,7 @@ window.PACKAGE_INDEX = [
     "title": "Infinite-Dimensional Chess: Winning on the Hilbert Board"
   },
   {
-    "date": "2026-07-11T23:46:23-05:00",
+    "date": "2026-07-12T04:46:23Z",
     "domain": "Applications",
     "exp_id": "245dd564",
     "filename": "rucker_mind_tools__mathematics_as_cognitive_extens.json",
@@ -3282,7 +3282,7 @@ window.PACKAGE_INDEX = [
     "title": "Mind Tools: Mathematics as Cognitive Extension"
   },
   {
-    "date": "2026-07-11T23:28:57-05:00",
+    "date": "2026-07-12T04:28:57Z",
     "domain": "Logic",
     "exp_id": "e6201bf5",
     "filename": "moonshot_quantum_consciousness__penrose_hameroff_o.json",
@@ -3293,7 +3293,7 @@ window.PACKAGE_INDEX = [
     "title": "Objective Reduction Timescales and the Non-Computability of Consciousness"
   },
   {
-    "date": "2026-07-11T22:38:35-05:00",
+    "date": "2026-07-12T03:38:35Z",
     "domain": "Applications",
     "exp_id": "08eba531",
     "filename": "moonshot_nanotechnology_computation__molecular_com.json",
@@ -3304,7 +3304,7 @@ window.PACKAGE_INDEX = [
     "title": "Formal Limits of Molecular Computing: Reaction Networks, Parallelism, and Storage"
   },
   {
-    "date": "2026-07-11T22:38:26-05:00",
+    "date": "2026-07-12T03:38:26Z",
     "domain": "Tropical",
     "exp_id": "538f30a2",
     "filename": "moonshot_multiverse_set_theory__mathematics_across.json",
@@ -3315,7 +3315,7 @@ window.PACKAGE_INDEX = [
     "title": "Multiverse Set Theory: Mathematics Across Branches"
   },
   {
-    "date": "2026-07-11T22:21:34-05:00",
+    "date": "2026-07-12T03:21:34Z",
     "domain": "NumberTheory",
     "exp_id": "e24b36f0",
     "filename": "moonshot_alien_number_systems__mathematics_beyond_.json",
@@ -3326,7 +3326,7 @@ window.PACKAGE_INDEX = [
     "title": "Alien Number Systems: Canonical Arithmetic Beyond Base Ten"
   },
   {
-    "date": "2026-07-11T22:02:21-05:00",
+    "date": "2026-07-12T03:02:21Z",
     "domain": "Computation",
     "exp_id": "3511fbf3",
     "filename": "hofstadter_tangled_hierarchies_in_type_theory.json",
@@ -3337,7 +3337,7 @@ window.PACKAGE_INDEX = [
     "title": "The Ladder, the Loop, and the Diagonal: Tangled Hierarchies in Type Theory"
   },
   {
-    "date": "2026-07-11T21:27:56-05:00",
+    "date": "2026-07-12T02:27:56Z",
     "domain": "Novelty",
     "exp_id": "3e4f1b52",
     "filename": "moonshot_time_travel_logic__formalizing_causal_con.json",
@@ -3348,7 +3348,7 @@ window.PACKAGE_INDEX = [
     "title": "Time-Travel Logic: Fixed Points, Causal Loops, and Branching Histories"
   },
   {
-    "date": "2026-07-11T21:10:50-05:00",
+    "date": "2026-07-12T02:10:50Z",
     "domain": "Tropical",
     "exp_id": "fb4de3e5",
     "filename": "hofstadter_fluid_concepts_and_creative_analogies__.json",
@@ -3359,7 +3359,7 @@ window.PACKAGE_INDEX = [
     "title": "Analogy as a Mathematical Operation: Fidelity, Adjoint Structure, and Tropical Optimization"
   },
   {
-    "date": "2026-07-11T20:53:39-05:00",
+    "date": "2026-07-12T01:53:39Z",
     "domain": "Applications",
     "exp_id": "3dce6722",
     "filename": "moonshot_dyson_sphere_mathematics__energy_collecti.json",
@@ -3370,7 +3370,7 @@ window.PACKAGE_INDEX = [
     "title": "Geometry, Thermal Optimization, and Computation in an Ideal Dyson Swarm"
   },
   {
-    "date": "2026-07-11T20:03:30-05:00",
+    "date": "2026-07-12T01:03:30Z",
     "domain": "Tropical",
     "exp_id": "09546bb0",
     "filename": "rucker_saucer_wisdom__non_human_mathematical_intui.json",
@@ -3381,7 +3381,7 @@ window.PACKAGE_INDEX = [
     "title": "Saucer Wisdom: Universal Mathematics, Alien Primes, and Tropical Irreducibility"
   },
   {
-    "date": "2026-07-11T19:46:42-05:00",
+    "date": "2026-07-12T00:46:42Z",
     "domain": "MachineLearning",
     "exp_id": "4bc3344b",
     "filename": "hofstadter_i_am_a_strange_loop__consciousness_as_s.json",
@@ -3392,7 +3392,7 @@ window.PACKAGE_INDEX = [
     "title": "Inspectable Self-Models and the Mathematics of Strange Loops"
   },
   {
-    "date": "2026-07-11T19:29:49-05:00",
+    "date": "2026-07-12T00:29:49Z",
     "domain": "Pythagorean",
     "exp_id": "b4ccc3c5",
     "filename": "atkin_lehner_genus_zero_criterion_for_giampietro_d.json",
@@ -3403,7 +3403,7 @@ window.PACKAGE_INDEX = [
     "title": "Atkin-Lehner Genus Zero Criterion for Giampietro-Darmon Factorization"
   },
   {
-    "date": "2026-07-11T19:29:32-05:00",
+    "date": "2026-07-12T00:29:32Z",
     "domain": "Shared",
     "exp_id": "0268a2b5",
     "filename": "rucker_the_fourth_dimension_as_a_mathematical_play.json",
@@ -3414,7 +3414,7 @@ window.PACKAGE_INDEX = [
     "title": "Rucker\u2019s Fourth Dimension: Hopf Circles and Geometric Symmetry"
   },
   {
-    "date": "2026-07-11T19:29:25-05:00",
+    "date": "2026-07-12T00:29:25Z",
     "domain": "Logic",
     "exp_id": "11a0fcb2",
     "filename": "rucker_spacetime_donuts__topology_of_the_universe.json",
@@ -3425,7 +3425,7 @@ window.PACKAGE_INDEX = [
     "title": "Spacetime Donuts: Wrapping, Geodesics, and Causality on the Three-Torus"
   },
   {
-    "date": "2026-07-11T18:55:45-05:00",
+    "date": "2026-07-11T23:55:45Z",
     "domain": "Applications",
     "exp_id": "ea214ad9",
     "filename": "rucker_the_lifebox__information_theoretic_identity.json",
@@ -3436,7 +3436,7 @@ window.PACKAGE_INDEX = [
     "title": "The Lifebox: Information-Theoretic Identity in Finite Systems"
   },
   {
-    "date": "2026-07-11T18:38:54-05:00",
+    "date": "2026-07-11T23:38:54Z",
     "domain": "Cryptography",
     "exp_id": "7b741692",
     "filename": "deepening_speculative_ramanujan_style_intuition_as.json",
@@ -3447,7 +3447,7 @@ window.PACKAGE_INDEX = [
     "title": "Ramanujan Oracles Cannot Be Computable: A Counting Argument"
   },
   {
-    "date": "2026-07-11T18:05:10-05:00",
+    "date": "2026-07-11T23:05:10Z",
     "domain": "Geometry",
     "exp_id": "9af0a04a",
     "filename": "rucker_wetware__biological_computation_and_its_mat.json",
@@ -3458,7 +3458,7 @@ window.PACKAGE_INDEX = [
     "title": "Wetware: Biological Computation and the Information Cost of Determinism"
   },
   {
-    "date": "2026-07-11T17:48:14-05:00",
+    "date": "2026-07-11T22:48:14Z",
     "domain": "Novelty",
     "exp_id": "279ae676",
     "filename": "rucker_infinity_and_the_mind__formalizing_differen.json",
@@ -3469,7 +3469,7 @@ window.PACKAGE_INDEX = [
     "title": "A Ladder with No Last Rung: Cantor, Aleph, Beth, and Hartogs"
   },
   {
-    "date": "2026-07-11T17:48:02-05:00",
+    "date": "2026-07-11T22:48:02Z",
     "domain": "Shared",
     "exp_id": "95b84694",
     "filename": "speculative_anti_gravity_mathematics__theorems_tha.json",
@@ -3480,7 +3480,7 @@ window.PACKAGE_INDEX = [
     "title": "Anti-Gravity Theorems in Finite Dependency Spaces"
   },
   {
-    "date": "2026-07-11T17:47:55-05:00",
+    "date": "2026-07-11T22:47:55Z",
     "domain": "Algebra",
     "exp_id": "a06d4115",
     "filename": "this_project_builds_a_self_contained_machine_check.json",
@@ -3491,7 +3491,7 @@ window.PACKAGE_INDEX = [
     "title": "Negative-Dimensional Topology: The Euler Characteristic, Poincar\u00e9 Duality, and a Refined Invariant"
   },
   {
-    "date": "2026-07-11T17:30:51-05:00",
+    "date": "2026-07-11T22:30:51Z",
     "domain": "Shared",
     "exp_id": "29aa9d96",
     "filename": "deepening_speculative_mathematics_as_a_phase_trans.json",
@@ -3502,7 +3502,7 @@ window.PACKAGE_INDEX = [
     "title": "Mathematics as a Phase Transition: The Curie-Weiss Order Parameter"
   },
   {
-    "date": "2026-07-11T17:13:53-05:00",
+    "date": "2026-07-11T22:13:53Z",
     "domain": "Shared",
     "exp_id": "cd0075c8",
     "filename": "speculative_consciousness_as_fixed_points_of_recur.json",
@@ -3513,7 +3513,7 @@ window.PACKAGE_INDEX = [
     "title": "Propositional Self-Reference as a Collapse Principle"
   },
   {
-    "date": "2026-07-11T15:51:01-05:00",
+    "date": "2026-07-11T20:51:01Z",
     "domain": "Novelty",
     "exp_id": "8e111703",
     "filename": "speculative_ramanujan_style_intuition_as_formaliza.json",
@@ -3524,7 +3524,7 @@ window.PACKAGE_INDEX = [
     "title": "Reliable Intuition as a Non-Computable Resource: Counting and Coding Barriers to a Ramanujan Oracle"
   },
   {
-    "date": "2026-07-11T15:17:54-05:00",
+    "date": "2026-07-11T20:17:54Z",
     "domain": "Applications",
     "exp_id": "0a5d3cfa",
     "filename": "close_proofs_speculative_mathematics_as_a_phase_tr.json",
@@ -3535,7 +3535,7 @@ window.PACKAGE_INDEX = [
     "title": "Sharp Arithmetic Transitions in the Fibonacci Sequence: A Lifting-the-Exponent Law"
   },
   {
-    "date": "2026-07-11T14:10:37-05:00",
+    "date": "2026-07-11T19:10:37Z",
     "domain": "Shared",
     "exp_id": "ea7d1cf2",
     "filename": "speculative_topological_quantum_error_correction_f.json",
@@ -3546,7 +3546,7 @@ window.PACKAGE_INDEX = [
     "title": "Weighted Homology, Code Distance, and Combinatorial Systoles"
   },
   {
-    "date": "2026-07-11T13:54:02-05:00",
+    "date": "2026-07-11T18:54:02Z",
     "domain": "Algebra",
     "exp_id": "c37c01fa",
     "filename": "deepening_the_fractal_dimension_of_mathematical_tr.json",
@@ -3557,7 +3557,7 @@ window.PACKAGE_INDEX = [
     "title": "Deepening: The Fractal Dimension of Mathematical Truth"
   },
   {
-    "date": "2026-07-11T13:37:13-05:00",
+    "date": "2026-07-11T18:37:13Z",
     "domain": "MachineLearning",
     "exp_id": "dac5bc28",
     "filename": "close_proofs_reflective_type_theory_proving_things.json",
@@ -3568,7 +3568,7 @@ window.PACKAGE_INDEX = [
     "title": "Reflective Provability: When 'Provable but Not Provably Provable' Is Possible"
   },
   {
-    "date": "2026-07-11T13:04:12-05:00",
+    "date": "2026-07-11T18:04:12Z",
     "domain": "Applications",
     "exp_id": "f6949247",
     "filename": "chromatic_sum_complexity_dichotomy_for_forest_forb.json",
@@ -3579,7 +3579,7 @@ window.PACKAGE_INDEX = [
     "title": "The Chromatic Sum of Finite Graphs: Foundations, Exact Formulas, and Contrarian Counterexamples"
   },
   {
-    "date": "2026-07-11T12:47:20-05:00",
+    "date": "2026-07-11T17:47:20Z",
     "domain": "Novelty",
     "exp_id": "4eef1c33",
     "filename": "deepening_the_mega_sphere_all_dimensions_at_once.json",
@@ -3590,7 +3590,7 @@ window.PACKAGE_INDEX = [
     "title": "The Mega-Sphere: Encoding All Dimensions in a Single Object"
   },
   {
-    "date": "2026-07-11T11:57:25-05:00",
+    "date": "2026-07-11T16:57:25Z",
     "domain": "Applications",
     "exp_id": "8fb1d399",
     "filename": "the_oracles_burden_how_much_knowledge_is_too_much.json",
@@ -3601,7 +3601,7 @@ window.PACKAGE_INDEX = [
     "title": "The Oracle's Burden: Relativized Computability and the Strictness of the Turing-Jump Hierarchy"
   },
   {
-    "date": "2026-07-11T11:23:15-05:00",
+    "date": "2026-07-11T16:23:15Z",
     "domain": "Shared",
     "exp_id": "2fdbedee",
     "filename": "speculative_theorems_as_phase_transitions_in_proof.json",
@@ -3612,7 +3612,7 @@ window.PACKAGE_INDEX = [
     "title": "Counted Proof Spaces: Entropy, Sparsity, and Critical Indices"
   },
   {
-    "date": "2026-07-11T10:33:27-05:00",
+    "date": "2026-07-11T15:33:27Z",
     "domain": "Applications",
     "exp_id": "f8dd2b6a",
     "filename": "deepening_causal_loops_in_category_theory_when_com.json",
@@ -3623,7 +3623,7 @@ window.PACKAGE_INDEX = [
     "title": "Causal Loops in Category Theory: Controlled Failure of Associativity"
   },
   {
-    "date": "2026-07-11T10:33:15-05:00",
+    "date": "2026-07-11T15:33:15Z",
     "domain": "Novelty",
     "exp_id": "c67f6099",
     "filename": "speculative_mathematics_as_a_phase_transition.json",
@@ -3634,7 +3634,7 @@ window.PACKAGE_INDEX = [
     "title": "Order Parameters and Critical Thresholds: Two Exactly-Solvable Mean-Field Phase Transitions"
   },
   {
-    "date": "2026-07-11T10:33:07-05:00",
+    "date": "2026-07-11T15:33:07Z",
     "domain": "Pythagorean",
     "exp_id": "1a27f9f3",
     "filename": "the_fractal_dimension_of_mathematical_truth.json",
@@ -3645,7 +3645,7 @@ window.PACKAGE_INDEX = [
     "title": "The Fractal Dimension of a Locally Constrained Truth Language"
   },
   {
-    "date": "2026-07-11T09:28:05-05:00",
+    "date": "2026-07-11T14:28:05Z",
     "domain": "Novelty",
     "exp_id": "dfaaa130",
     "filename": "the_mega_sphere_all_dimensions_at_once.json",
@@ -3656,7 +3656,7 @@ window.PACKAGE_INDEX = [
     "title": "The Mega-Sphere: All Dimensions at Once"
   },
   {
-    "date": "2026-07-11T09:11:20-05:00",
+    "date": "2026-07-11T14:11:20Z",
     "domain": "Novelty",
     "exp_id": "c3787823",
     "filename": "deepening_aboriginal_kinship_as_group_theory_dream.json",
@@ -3667,7 +3667,7 @@ window.PACKAGE_INDEX = [
     "title": "Dreamtime Algebra, Deepened: Kinship Systems as (Z/2)^n and their Symmetry Group GL(n, F_2)"
   },
   {
-    "date": "2026-07-11T09:11:12-05:00",
+    "date": "2026-07-11T14:11:12Z",
     "domain": "Pythagorean",
     "exp_id": "53d02dfc",
     "filename": "reflective_type_theory_proving_things_about_provin.json",
@@ -3678,7 +3678,7 @@ window.PACKAGE_INDEX = [
     "title": "Reflective Type Theory and the Modal Fixed-Point Language"
   },
   {
-    "date": "2026-07-11T08:38:29-05:00",
+    "date": "2026-07-11T13:38:29Z",
     "domain": "Novelty",
     "exp_id": "1e86ff35",
     "filename": "deepening_paradoxes_as_theorems_liar_berry_and_rus.json",
@@ -3689,7 +3689,7 @@ window.PACKAGE_INDEX = [
     "title": "Paradoxes as Theorems: The Lawvere Diagonal Bridge and a Consistent Paraconsistent Witness"
   },
   {
-    "date": "2026-07-11T08:38:22-05:00",
+    "date": "2026-07-11T13:38:22Z",
     "domain": "Algebra",
     "exp_id": "c930e14b",
     "filename": "infinite_games_against_death_immortality_strategie.json",
@@ -3700,7 +3700,7 @@ window.PACKAGE_INDEX = [
     "title": "Infinite Games Against Death: Immortality Strategies"
   },
   {
-    "date": "2026-07-11T08:21:42-05:00",
+    "date": "2026-07-11T13:21:42Z",
     "domain": "Geometry",
     "exp_id": "3d25b5ad",
     "filename": "causal_loops_in_category_theory_when_composition_l.json",
@@ -3711,7 +3711,7 @@ window.PACKAGE_INDEX = [
     "title": "Causal Loops in Category Theory: A Concrete Genuinely Non-Strict Bicategory"
   },
   {
-    "date": "2026-07-11T07:48:34-05:00",
+    "date": "2026-07-11T12:48:34Z",
     "domain": "Pythagorean",
     "exp_id": "238d5b60",
     "filename": "aleph_1_surface_geometry_between_dimensions.json",
@@ -3722,7 +3722,7 @@ window.PACKAGE_INDEX = [
     "title": "Geometry Beyond Every Finite Dimension"
   },
   {
-    "date": "2026-07-11T06:59:09-05:00",
+    "date": "2026-07-11T11:59:09Z",
     "domain": "Novelty",
     "exp_id": "2c395553",
     "filename": "aboriginal_kinship_as_group_theory_dreamtime_algeb.json",
@@ -3733,7 +3733,7 @@ window.PACKAGE_INDEX = [
     "title": "Dreamtime Algebra: Aboriginal Kinship Systems as Finite Groups"
   },
   {
-    "date": "2026-07-11T06:59:02-05:00",
+    "date": "2026-07-11T11:59:02Z",
     "domain": "Applications",
     "exp_id": "a0852bd7",
     "filename": "anti_mathematics_what_if_all_axioms_were_negated.json",
@@ -3744,7 +3744,7 @@ window.PACKAGE_INDEX = [
     "title": "Anti-Mathematics: Concrete Models for the Negated Axioms of Set Theory"
   },
   {
-    "date": "2026-07-11T06:42:26-05:00",
+    "date": "2026-07-11T11:42:26Z",
     "domain": "Applications",
     "exp_id": "d4a0469f",
     "filename": "deepening_counterfactual_number_theory_what_if_pri.json",
@@ -3755,7 +3755,7 @@ window.PACKAGE_INDEX = [
     "title": "Counterfactual Number Theory: What If Primes Were Random? (Part II)"
   },
   {
-    "date": "2026-07-11T06:08:32-05:00",
+    "date": "2026-07-11T11:08:32Z",
     "domain": "Applications",
     "exp_id": "fb4f44b5",
     "filename": "sharp_threshold_characterization_for_seidel_energy.json",
@@ -3766,7 +3766,7 @@ window.PACKAGE_INDEX = [
     "title": "A Sharp Threshold for the Seidel-Energy Increase of Complete Bipartite Graphs Under Edge Deletion"
   },
   {
-    "date": "2026-07-11T05:50:02-05:00",
+    "date": "2026-07-11T10:50:02Z",
     "domain": "Novelty",
     "exp_id": "3dc9cabc",
     "filename": "deepening_transreal_arithmetic_computing_beyond_pl.json",
@@ -3777,7 +3777,7 @@ window.PACKAGE_INDEX = [
     "title": "Transreal Arithmetic: Computing Beyond Plus-and-Minus Infinity"
   },
   {
-    "date": "2026-07-11T05:49:37-05:00",
+    "date": "2026-07-11T10:49:37Z",
     "domain": "Novelty",
     "exp_id": "1978e429",
     "filename": "close_proofs_paradoxes_as_theorems_liar_berry_and_.json",
@@ -3788,7 +3788,7 @@ window.PACKAGE_INDEX = [
     "title": "Paradoxes as Theorems: The Liar, Berry, and Russell Made Consistent"
   },
   {
-    "date": "2026-07-11T05:14:41-05:00",
+    "date": "2026-07-11T10:14:41Z",
     "domain": "Shared",
     "exp_id": "fbb9076c",
     "filename": "thermodynamics_of_mathematical_proof.json",
@@ -3799,7 +3799,7 @@ window.PACKAGE_INDEX = [
     "title": "Thermodynamics of Mathematical Proof"
   },
   {
-    "date": "2026-07-11T05:14:34-05:00",
+    "date": "2026-07-11T10:14:34Z",
     "domain": "Applications",
     "exp_id": "f9466ee5",
     "filename": "finiteness_conjecture_for_semisimple_geometric_rep.json",
@@ -3810,7 +3810,7 @@ window.PACKAGE_INDEX = [
     "title": "Finiteness of Semisimple Geometric Representations of Ramified Fundamental Groups"
   },
   {
-    "date": "2026-07-11T04:58:02-05:00",
+    "date": "2026-07-11T09:58:02Z",
     "domain": "Applications",
     "exp_id": "f85e4d43",
     "filename": "the_file_catalognoveltymindencodingrefinedlean_dev.json",
@@ -3821,7 +3821,7 @@ window.PACKAGE_INDEX = [
     "title": "Graded Connectomes and the Combinatorics of Merged Minds"
   },
   {
-    "date": "2026-07-11T04:25:10-05:00",
+    "date": "2026-07-11T09:25:10Z",
     "domain": "Novelty",
     "exp_id": "ea473918",
     "filename": "deepening_the_unreasonable_effectiveness_of_wrong_.json",
@@ -3832,7 +3832,7 @@ window.PACKAGE_INDEX = [
     "title": "The Unreasonable Effectiveness of Wrong Theories: A Geometric Meta-Theory of Predictive Superiority"
   },
   {
-    "date": "2026-07-11T04:25:03-05:00",
+    "date": "2026-07-11T09:25:03Z",
     "domain": "Applications",
     "exp_id": "1c874912",
     "filename": "deepening_digital_immortality_can_a_mind_be_encode.json",
@@ -3843,7 +3843,7 @@ window.PACKAGE_INDEX = [
     "title": "The Information Cost of a Connectome: Tight Quadratic Bounds on Encoding a Mind"
   },
   {
-    "date": "2026-07-11T03:51:46-05:00",
+    "date": "2026-07-11T08:51:46Z",
     "domain": "Geometry",
     "exp_id": "9fc00121",
     "filename": "computational_complexity_of_alien_civilizations.json",
@@ -3854,7 +3854,7 @@ window.PACKAGE_INDEX = [
     "title": "Substrate-Invariant Computational Complexity"
   },
   {
-    "date": "2026-07-11T03:51:40-05:00",
+    "date": "2026-07-11T08:51:40Z",
     "domain": "Geometry",
     "exp_id": "4c40ce69",
     "filename": "counterfactual_number_theory_what_if_primes_were_r.json",
@@ -3865,7 +3865,7 @@ window.PACKAGE_INDEX = [
     "title": "Counterfactual Number Theory: What If Primes Were Random? (Part I)"
   },
   {
-    "date": "2026-07-11T03:51:34-05:00",
+    "date": "2026-07-11T08:51:34Z",
     "domain": "Geometry",
     "exp_id": "ca6fc5a2",
     "filename": "paradoxes_as_theorems_liar_berry_and_russell_made_.json",
@@ -3876,7 +3876,7 @@ window.PACKAGE_INDEX = [
     "title": "Paradoxes as Theorems: Contradiction Without Collapse"
   },
   {
-    "date": "2026-07-11T03:51:22-05:00",
+    "date": "2026-07-11T08:51:22Z",
     "domain": "Computation",
     "exp_id": "af530f4e",
     "filename": "hypercomputation_computing_the_uncomputable.json",
@@ -3887,7 +3887,7 @@ window.PACKAGE_INDEX = [
     "title": "Hypercomputation: Diagonal Oracles and the Cost of Exact Information"
   },
   {
-    "date": "2026-07-11T03:02:40-05:00",
+    "date": "2026-07-11T08:02:40Z",
     "domain": "Applications",
     "exp_id": "0250199a",
     "filename": "close_proofs_digital_immortality_can_a_mind_be_enc.json",
@@ -3898,7 +3898,7 @@ window.PACKAGE_INDEX = [
     "title": "Digital Immortality: The Arithmetic of Encoding a Mind"
   },
   {
-    "date": "2026-07-11T02:45:57-05:00",
+    "date": "2026-07-11T07:45:57Z",
     "domain": "Novelty",
     "exp_id": "5e3f6a63",
     "filename": "the_unreasonable_effectiveness_of_wrong_theories.json",
@@ -3909,7 +3909,7 @@ window.PACKAGE_INDEX = [
     "title": "The Unreasonable Effectiveness of Wrong Theories: A Perturbative Geometry of Theory-Space"
   },
   {
-    "date": "2026-07-11T02:29:18-05:00",
+    "date": "2026-07-11T07:29:18Z",
     "domain": "Applications",
     "exp_id": "f57636f1",
     "filename": "deepening_the_topology_of_impossible_objects_esche.json",
@@ -3920,7 +3920,7 @@ window.PACKAGE_INDEX = [
     "title": "The Topology of Impossible Objects: The First Cohomology of a Cyclic Figure"
   },
   {
-    "date": "2026-07-11T02:12:49-05:00",
+    "date": "2026-07-11T07:12:49Z",
     "domain": "Novelty",
     "exp_id": "f3c4c6a5",
     "filename": "deepening_dream_logic_non_monotone_reasoning_where.json",
@@ -3931,7 +3931,7 @@ window.PACKAGE_INDEX = [
     "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
   },
   {
-    "date": "2026-07-11T01:56:17-05:00",
+    "date": "2026-07-11T06:56:17Z",
     "domain": "Novelty",
     "exp_id": "f0c42e84",
     "filename": "deepening_non_desarguesian_worlds_geometry_without.json",
@@ -3942,7 +3942,7 @@ window.PACKAGE_INDEX = [
     "title": "Non-Desarguesian Worlds at Order Nine: Hall Systems, Dickson Nearfields, and the Quaternion Group"
   },
   {
-    "date": "2026-07-11T01:39:41-05:00",
+    "date": "2026-07-11T06:39:41Z",
     "domain": "Shared",
     "exp_id": "493ee817",
     "filename": "close_proofs_transreal_arithmetic_computing_beyond.json",
@@ -3953,7 +3953,7 @@ window.PACKAGE_INDEX = [
     "title": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
   },
   {
-    "date": "2026-07-11T01:39:33-05:00",
+    "date": "2026-07-11T06:39:33Z",
     "domain": "Applications",
     "exp_id": "6e208619",
     "filename": "upper_bound_conjecture_for_the_cake_balancing_rati.json",
@@ -3964,7 +3964,7 @@ window.PACKAGE_INDEX = [
     "title": "Balancing Ratios of Circular Partitions: Windowing Monotonicity and Full-Period Balance"
   },
   {
-    "date": "2026-07-11T01:06:41-05:00",
+    "date": "2026-07-11T06:06:41Z",
     "domain": "Applications",
     "exp_id": "46d2d021",
     "filename": "deepening_self_modifying_code_that_cannot_be_stopp.json",
@@ -3975,7 +3975,7 @@ window.PACKAGE_INDEX = [
     "title": "Deepening the Halting Problem: A Fixed-Point Bridge from Lawvere and Cantor to Self-Modifying Code"
   },
   {
-    "date": "2026-07-11T00:18:13-05:00",
+    "date": "2026-07-11T05:18:13Z",
     "domain": "Novelty",
     "exp_id": "fec9de1f",
     "filename": "digital_immortality_can_a_mind_be_encoded.json",
@@ -3986,7 +3986,7 @@ window.PACKAGE_INDEX = [
     "title": "Digital Immortality: Information-Theoretic Bounds on Mind Uploading"
   },
   {
-    "date": "2026-07-10T23:29:51-05:00",
+    "date": "2026-07-11T04:29:51Z",
     "domain": "Geometry",
     "exp_id": "7286e7be",
     "filename": "dream_logic_non_monotone_reasoning_where_contradic.json",
@@ -3997,7 +3997,7 @@ window.PACKAGE_INDEX = [
     "title": "Dream Logic: Local Contradiction, Revision, and Algebraic Forgetting"
   },
   {
-    "date": "2026-07-10T23:29:30-05:00",
+    "date": "2026-07-11T04:29:30Z",
     "domain": "Applications",
     "exp_id": "39ced9f7",
     "filename": "improved_adhesion_bound_in_coarse_block_cutvertex_.json",
@@ -4008,7 +4008,7 @@ window.PACKAGE_INDEX = [
     "title": "Improved Adhesion Bound in Coarse Block\u2013Cutvertex Tree-Decompositions"
   },
   {
-    "date": "2026-07-10T22:40:49-05:00",
+    "date": "2026-07-11T03:40:49Z",
     "domain": "Applications",
     "exp_id": "d5e79e07",
     "filename": "the_topology_of_impossible_objects_escher_stairs_a.json",
@@ -4019,7 +4019,7 @@ window.PACKAGE_INDEX = [
     "title": "Gauge-Invariant Obstructions to Periodic Impossible Figures"
   },
   {
-    "date": "2026-07-10T21:51:26-05:00",
+    "date": "2026-07-11T02:51:26Z",
     "domain": "Applications",
     "exp_id": "08430233",
     "filename": "cellular_automata_at_the_ordinals_transfinite_comp.json",
@@ -4030,7 +4030,7 @@ window.PACKAGE_INDEX = [
     "title": "Cellular Automata at the Ordinals: Transfinite Computation"
   },
   {
-    "date": "2026-07-10T21:51:15-05:00",
+    "date": "2026-07-11T02:51:15Z",
     "domain": "Applications",
     "exp_id": "a547c760",
     "filename": "sign_characterization_of_microscopic_weighting_on_.json",
@@ -4041,7 +4041,7 @@ window.PACKAGE_INDEX = [
     "title": "Sign Characterization of Microscopic Weighting on Euclidean Subsets"
   },
   {
-    "date": "2026-07-10T21:51:08-05:00",
+    "date": "2026-07-11T02:51:08Z",
     "domain": "Novelty",
     "exp_id": "0be793c6",
     "filename": "non_desarguesian_worlds_geometry_without_desargues.json",
@@ -4052,7 +4052,7 @@ window.PACKAGE_INDEX = [
     "title": "Non-Desarguesian Worlds: The Dickson Nearfield of Order 9 and its Plane"
   },
   {
-    "date": "2026-07-10T21:34:49-05:00",
+    "date": "2026-07-11T02:34:49Z",
     "domain": "Novelty",
     "exp_id": "d0217292",
     "filename": "negative_dimensional_topology_what_lives_in_dimens.json",
@@ -4063,7 +4063,7 @@ window.PACKAGE_INDEX = [
     "title": "Negative-Dimensional Topology: Euler Parity Beyond Dimension Zero"
   },
   {
-    "date": "2026-07-10T21:34:29-05:00",
+    "date": "2026-07-11T02:34:29Z",
     "domain": "Applications",
     "exp_id": "0bde247f",
     "filename": "social_credit_scores_as_topological_invariants.json",
@@ -4074,7 +4074,7 @@ window.PACKAGE_INDEX = [
     "title": "Social Credit Scores as Topological Invariants"
   },
   {
-    "date": "2026-07-10T20:28:54-05:00",
+    "date": "2026-07-11T01:28:54Z",
     "domain": "Novelty",
     "exp_id": "473442d5",
     "filename": "deepening_the_l_function_universe_a_cosmic_census_.json",
@@ -4085,7 +4085,7 @@ window.PACKAGE_INDEX = [
     "title": "The Analytic L-Function Census: Rigidity, Exactness, and Countability of Dirichlet Series"
   },
   {
-    "date": "2026-07-10T20:28:48-05:00",
+    "date": "2026-07-11T01:28:48Z",
     "domain": "Applications",
     "exp_id": "2ca6565f",
     "filename": "surveillance_networks_information_theoretic_undete.json",
@@ -4096,7 +4096,7 @@ window.PACKAGE_INDEX = [
     "title": "Surveillance Networks: Information-Theoretic Undetectability"
   },
   {
-    "date": "2026-07-10T20:12:15-05:00",
+    "date": "2026-07-11T01:12:15Z",
     "domain": "Bridges",
     "exp_id": "fd7d55eb",
     "filename": "deepening_the_combinatorics_of_compiler_optimizati.json",
@@ -4107,7 +4107,7 @@ window.PACKAGE_INDEX = [
     "title": "Chordal Interference Graphs Are Perfect: Optimal Register Allocation for SSA Programs"
   },
   {
-    "date": "2026-07-10T19:40:06-05:00",
+    "date": "2026-07-11T00:40:06Z",
     "domain": "Geometry",
     "exp_id": "06d71b6e",
     "filename": "infinite_dimensional_chess_winning_on_the_hilbert_.json",
@@ -4118,7 +4118,7 @@ window.PACKAGE_INDEX = [
     "title": "Infinite-Dimensional Chess: The Sharp Line-Covering Threshold for Checkmate on the Hilbert Board"
   },
   {
-    "date": "2026-07-10T19:39:59-05:00",
+    "date": "2026-07-11T00:39:59Z",
     "domain": "Logic",
     "exp_id": "0981cb8f",
     "filename": "consciousness_as_emergent_fixed_point.json",
@@ -4129,7 +4129,7 @@ window.PACKAGE_INDEX = [
     "title": "Self-Reference as a Fixed Point: The Diagonal Behind Lawvere, Cantor, Tarski, and Yoneda"
   },
   {
-    "date": "2026-07-10T19:23:23-05:00",
+    "date": "2026-07-11T00:23:23Z",
     "domain": "MachineLearning",
     "exp_id": "d0bff55a",
     "filename": "transfinite_game_theory_games_that_last_forever.json",
@@ -4140,7 +4140,7 @@ window.PACKAGE_INDEX = [
     "title": "Transfinite Game Theory: Determinacy of Well-Founded Games"
   },
   {
-    "date": "2026-07-10T19:06:59-05:00",
+    "date": "2026-07-11T00:06:59Z",
     "domain": "Logic",
     "exp_id": "478ae68b",
     "filename": "strange_loops_self_reference_and_gdels_incompleten.json",
@@ -4151,7 +4151,7 @@ window.PACKAGE_INDEX = [
     "title": "Strange Loops: Self-Reference from the Liar Paradox to Non-Vacuous G\u00f6delian Incompleteness"
   },
   {
-    "date": "2026-07-10T18:50:28-05:00",
+    "date": "2026-07-10T23:50:28Z",
     "domain": "Logic",
     "exp_id": "5a7b49b0",
     "filename": "quantum_random_walks_on_cayley_graphs_spectral_gap.json",
@@ -4162,7 +4162,7 @@ window.PACKAGE_INDEX = [
     "title": "Fourier Spectra of Cyclic Cayley Graphs"
   },
   {
-    "date": "2026-07-10T17:14:05-05:00",
+    "date": "2026-07-10T22:14:05Z",
     "domain": "Computation",
     "exp_id": "198023c0",
     "filename": "isomorphisms_of_meaning_when_structures_collide.json",
@@ -4173,7 +4173,7 @@ window.PACKAGE_INDEX = [
     "title": "Isomorphisms of Meaning: When Structures Collide (Part I)"
   },
   {
-    "date": "2026-07-10T16:41:36-05:00",
+    "date": "2026-07-10T21:41:36Z",
     "domain": "Algebra",
     "exp_id": "c58345ac",
     "filename": "the_hodge_conjecture_for_neural_networks_algebraic.json",
@@ -4184,7 +4184,7 @@ window.PACKAGE_INDEX = [
     "title": "Cellular Homology of Piecewise-Linear Neural Decision Surfaces"
   },
   {
-    "date": "2026-07-10T16:09:00-05:00",
+    "date": "2026-07-10T21:09:00Z",
     "domain": "Physics",
     "exp_id": "a6f348ea",
     "filename": "stone_duality_for_machine_learning_neural_networks.json",
@@ -4195,7 +4195,7 @@ window.PACKAGE_INDEX = [
     "title": "Stone Duality for Neural Networks: Activation Patterns as a Finite Boolean Algebra"
   },
   {
-    "date": "2026-07-10T15:52:45-05:00",
+    "date": "2026-07-10T20:52:45Z",
     "domain": "Novelty",
     "exp_id": "735120d5",
     "filename": "the_uncanny_valley_of_mathematics_when_proofs_are_.json",
@@ -4206,7 +4206,7 @@ window.PACKAGE_INDEX = [
     "title": "The Uncanny Valley of Mathematics: Discrete Confidence Profiles"
   },
   {
-    "date": "2026-07-10T15:20:20-05:00",
+    "date": "2026-07-10T20:20:20Z",
     "domain": "Speculative",
     "exp_id": "192fa110",
     "filename": "the_combinatorics_of_compiler_optimization_registe.json",
@@ -4217,7 +4217,7 @@ window.PACKAGE_INDEX = [
     "title": "Structural Register Allocation: Chordal Coloring and Spill Certificates"
   },
   {
-    "date": "2026-07-10T14:32:07-05:00",
+    "date": "2026-07-10T19:32:07Z",
     "domain": "Algebra",
     "exp_id": "08d3e2eb",
     "filename": "formalizing_the_probabilistic_method_erdos_meets_l.json",
@@ -4228,7 +4228,7 @@ window.PACKAGE_INDEX = [
     "title": "Counting the Impossible Away: Finite Avoidance and Extremal Graphs"
   },
   {
-    "date": "2026-07-10T14:15:50-05:00",
+    "date": "2026-07-10T19:15:50Z",
     "domain": "Novelty",
     "exp_id": "90792fe8",
     "filename": "deepening_algebraic_geometry_of_neural_networks_va.json",
@@ -4239,7 +4239,7 @@ window.PACKAGE_INDEX = [
     "title": "The Algebraic Geometry of ReLU Decision Boundaries: A Depth-Free Tropical Correspondence and an Explicit Boundary Variety"
   },
   {
-    "date": "2026-07-10T13:12:04-05:00",
+    "date": "2026-07-10T18:12:04Z",
     "domain": "Speculative",
     "exp_id": "6fa68166",
     "filename": "the_topology_of_argumentation_why_debates_have_hol.json",
@@ -4250,7 +4250,7 @@ window.PACKAGE_INDEX = [
     "title": "The Topology of Argumentation: Preferred Semantics and Its Simplicial Closure"
   },
   {
-    "date": "2026-07-10T12:56:00-05:00",
+    "date": "2026-07-10T17:56:00Z",
     "domain": "Shared",
     "exp_id": "3d209fc8",
     "filename": "that_the_zero_dimensional_persistent_homology_of_t.json",
@@ -4261,7 +4261,7 @@ window.PACKAGE_INDEX = [
     "title": "The Topology of Arithmetic: Quantitative Invariants of the Prime Barcode"
   },
   {
-    "date": "2026-07-10T12:24:12-05:00",
+    "date": "2026-07-10T17:24:12Z",
     "domain": "Cryptography",
     "exp_id": "49853bf7",
     "filename": "deepening_real_rootedness_of_the_square_of_the_eul.json",
@@ -4272,7 +4272,7 @@ window.PACKAGE_INDEX = [
     "title": "Real-Rootedness of the Square of the Eulerian Triangle (Part II)"
   },
   {
-    "date": "2026-07-10T12:24:06-05:00",
+    "date": "2026-07-10T17:24:06Z",
     "domain": "Computation",
     "exp_id": "5125e235",
     "filename": "deepening_conjecture_on_leading_term_cancellation.json",
@@ -4283,7 +4283,7 @@ window.PACKAGE_INDEX = [
     "title": "The Moment Spectrum and the Dimension of the Leading-Term Cancellation Space"
   },
   {
-    "date": "2026-07-10T11:36:44-05:00",
+    "date": "2026-07-10T16:36:44Z",
     "domain": "Computation",
     "exp_id": "cc0903e0",
     "filename": "categorification_of_entropy_the_information_loss_o.json",
@@ -4294,7 +4294,7 @@ window.PACKAGE_INDEX = [
     "title": "Functorial Information Loss: Entropy and Fibers of Finite Object Maps"
   },
   {
-    "date": "2026-07-10T11:20:33-05:00",
+    "date": "2026-07-10T16:20:33Z",
     "domain": "Bridges",
     "exp_id": "bcb31ca6",
     "filename": "deepening_cryptography_from_chaos_encrypting_with_.json",
@@ -4305,7 +4305,7 @@ window.PACKAGE_INDEX = [
     "title": "The Future Has Many Pasts: Binary Preimage Trees of the Logistic Map"
   },
   {
-    "date": "2026-07-10T10:48:54-05:00",
+    "date": "2026-07-10T15:48:54Z",
     "domain": "Computation",
     "exp_id": "d00870b3",
     "filename": "the_ramsey_theory_of_dna_subsequence_avoidance_in_.json",
@@ -4316,7 +4316,7 @@ window.PACKAGE_INDEX = [
     "title": "The Ramsey Theory of DNA: Forced Repetition in Finite Genetic Alphabets"
   },
   {
-    "date": "2026-07-10T10:32:58-05:00",
+    "date": "2026-07-10T15:32:58Z",
     "domain": "Computation",
     "exp_id": "f5358691",
     "filename": "persistent_cycles_in_randomized_graphs_via_hyperst.json",
@@ -4327,7 +4327,7 @@ window.PACKAGE_INDEX = [
     "title": "Persistent Cycles in Randomized Graphs via Hyperstable Structural Constraints"
   },
   {
-    "date": "2026-07-10T09:32:33-05:00",
+    "date": "2026-07-10T14:32:33Z",
     "domain": "Geometry",
     "exp_id": "76d5023e",
     "filename": "knots_and_lattices_the_alexander_polynomial_as_a_l.json",
@@ -4338,7 +4338,7 @@ window.PACKAGE_INDEX = [
     "title": "Knots and Lattices: Positivity and Signed Alexander State Sums"
   },
   {
-    "date": "2026-07-10T09:16:27-05:00",
+    "date": "2026-07-10T14:16:27Z",
     "domain": "Computation",
     "exp_id": "9867adb2",
     "filename": "algebraic_geometry_of_neural_networks_varieties_of.json",
@@ -4349,7 +4349,7 @@ window.PACKAGE_INDEX = [
     "title": "Tropical Dequantization and Decision Stability in Max-Affine Neural Networks"
   },
   {
-    "date": "2026-07-10T09:00:15-05:00",
+    "date": "2026-07-10T14:00:15Z",
     "domain": "Applications",
     "exp_id": "6c565e60",
     "filename": "galois_theory_of_cellular_automata_which_rules_hav.json",
@@ -4360,7 +4360,7 @@ window.PACKAGE_INDEX = [
     "title": "Galois Theory of Cellular Automata: Which Rules Have Reversible Dynamics?"
   },
   {
-    "date": "2026-07-10T08:28:07-05:00",
+    "date": "2026-07-10T13:28:07Z",
     "domain": "Computation",
     "exp_id": "ef699512",
     "filename": "crystallographic_groups_and_music_the_17_wallpaper.json",
@@ -4371,7 +4371,7 @@ window.PACKAGE_INDEX = [
     "title": "Symmetry Quotients and the Information Capacity of Rhythm"
   },
   {
-    "date": "2026-07-10T08:11:42-05:00",
+    "date": "2026-07-10T13:11:42Z",
     "domain": "NumberTheory",
     "exp_id": "bb33d4fa",
     "filename": "minimalobstructions_to_total_rainbow_forests_fail_.json",
@@ -4382,7 +4382,7 @@ window.PACKAGE_INDEX = [
     "title": "Minimal Obstructions to Total Rainbow Forests: An Edge-Deletion Analysis"
   },
   {
-    "date": "2026-07-10T07:23:26-05:00",
+    "date": "2026-07-10T12:23:26Z",
     "domain": "Applications",
     "exp_id": "6528f137",
     "filename": "deepening_stochastic_galois_theory_random_permutat.json",
@@ -4393,7 +4393,7 @@ window.PACKAGE_INDEX = [
     "title": "Stochastic Galois Theory over Finite Fields: An Exact First-Moment Dictionary Between Random Polynomials and Random Permutations"
   },
   {
-    "date": "2026-07-10T07:07:27-05:00",
+    "date": "2026-07-10T12:07:27Z",
     "domain": "Novelty",
     "exp_id": "c22096e0",
     "filename": "precise_threshold_for_vertexramsey_property_in_ran.json",
@@ -4404,7 +4404,7 @@ window.PACKAGE_INDEX = [
     "title": "The Exact Vertex-Ramsey Threshold for Clique Families on Complete Graphs"
   },
   {
-    "date": "2026-07-10T06:50:25-05:00",
+    "date": "2026-07-10T11:50:25Z",
     "domain": "Applications",
     "exp_id": "df72d5fe",
     "filename": "deepening_persistent_homology_of_prime_numbers_the.json",
@@ -4415,7 +4415,7 @@ window.PACKAGE_INDEX = [
     "title": "Persistent Homology of the Prime Point Cloud: The Topology of Arithmetic"
   },
   {
-    "date": "2026-07-10T06:34:40-05:00",
+    "date": "2026-07-10T11:34:40Z",
     "domain": "Algebra",
     "exp_id": "4c2c71e5",
     "filename": "the_fourier_analysis_of_collatz_spectral_gaps_in_t.json",
@@ -4426,7 +4426,7 @@ window.PACKAGE_INDEX = [
     "title": "The Fourier Analysis of Collatz: A Continuity Obstruction to Global Spectral Gaps"
   },
   {
-    "date": "2026-07-10T06:34:40-05:00",
+    "date": "2026-07-10T11:34:40Z",
     "domain": "Shared",
     "exp_id": "cf69678e",
     "filename": "the_arithmetic_of_games_surreal_numbers_as_number_.json",
@@ -4437,7 +4437,7 @@ window.PACKAGE_INDEX = [
     "title": "The Arithmetic of Games: Finite Surreals and the Dyadic Ring"
   },
   {
-    "date": "2026-07-10T06:34:40-05:00",
+    "date": "2026-07-10T11:34:40Z",
     "domain": "Novelty",
     "exp_id": "9f734f3e",
     "filename": "deepening_turings_flowers_morphogenesis_as_algebra.json",
@@ -4448,7 +4448,7 @@ window.PACKAGE_INDEX = [
     "title": "Turing's Flowers: The General Conic Classification of Morphogenesis"
   },
   {
-    "date": "2026-07-10T06:34:40-05:00",
+    "date": "2026-07-10T11:34:40Z",
     "domain": "Applications",
     "exp_id": "25448d9e",
     "filename": "close_proofs_turings_flowers_morphogenesis_as_alge.json",
@@ -4459,7 +4459,7 @@ window.PACKAGE_INDEX = [
     "title": "Turing's Flowers: Morphogenesis as Algebraic Geometry"
   },
   {
-    "date": "2026-07-10T05:30:24-05:00",
+    "date": "2026-07-10T10:30:24Z",
     "domain": "Computation",
     "exp_id": "7bc47166",
     "filename": "the_thermodynamics_of_sorting_entropy_and_computat.json",
@@ -4470,7 +4470,7 @@ window.PACKAGE_INDEX = [
     "title": "The Thermodynamics of Sorting: Factorial Entropy, Reversible History, and Computational Work"
   },
   {
-    "date": "2026-07-10T05:30:24-05:00",
+    "date": "2026-07-10T10:30:24Z",
     "domain": "Applications",
     "exp_id": "9b14e09c",
     "filename": "deepening_the_mathematics_of_jigsaw_puzzles_np_com.json",
@@ -4481,7 +4481,7 @@ window.PACKAGE_INDEX = [
     "title": "The Mathematics of Jigsaw Puzzles: NP-Completeness, Conservation, and Symmetry"
   },
   {
-    "date": "2026-07-10T05:30:24-05:00",
+    "date": "2026-07-10T10:30:24Z",
     "domain": "Novelty",
     "exp_id": "b0a297ce",
     "filename": "close_proofs_the_zeta_function_of_a_graph_number_t.json",
@@ -4492,7 +4492,7 @@ window.PACKAGE_INDEX = [
     "title": "The Zeta Function of a Graph: Number Theory on Networks"
   },
   {
-    "date": "2026-07-10T04:42:34-05:00",
+    "date": "2026-07-10T09:42:34Z",
     "domain": "Algebra",
     "exp_id": "eb62b00a",
     "filename": "matroid_minors_and_the_graph_theorem_robertson_sey.json",
@@ -4503,7 +4503,7 @@ window.PACKAGE_INDEX = [
     "title": "Canonical Forbidden-Minor Bases from Well-Quasi-Ordering"
   },
   {
-    "date": "2026-07-10T04:42:34-05:00",
+    "date": "2026-07-10T09:42:34Z",
     "domain": "Novelty",
     "exp_id": "8b2bab35",
     "filename": "deepening_graph_coloring_with_emotions_the_chromat.json",
@@ -4514,7 +4514,7 @@ window.PACKAGE_INDEX = [
     "title": "Graph Coloring with Emotions: The Chromatic Polynomial of the Friendship Graph"
   },
   {
-    "date": "2026-07-10T04:10:28-05:00",
+    "date": "2026-07-10T09:10:28Z",
     "domain": "Shared",
     "exp_id": "cf73743c",
     "filename": "quantum_error_correction_from_homological_algebra_.json",
@@ -4525,7 +4525,7 @@ window.PACKAGE_INDEX = [
     "title": "CSS Quantum Codes as Homology: The Hypercube Graph Test"
   },
   {
-    "date": "2026-07-10T04:10:28-05:00",
+    "date": "2026-07-10T09:10:28Z",
     "domain": "Algebra",
     "exp_id": "091f8315",
     "filename": "cryptography_from_chaos_encrypting_with_the_logist.json",
@@ -4536,7 +4536,7 @@ window.PACKAGE_INDEX = [
     "title": "Structural Cryptanalysis of the Parameter-Four Logistic Map"
   },
   {
-    "date": "2026-07-10T03:54:25-05:00",
+    "date": "2026-07-10T08:54:25Z",
     "domain": "Applications",
     "exp_id": "9c1224fc",
     "filename": "topological_quantum_compiling_braid_groups_as_univ.json",
@@ -4547,7 +4547,7 @@ window.PACKAGE_INDEX = [
     "title": "Topological Quantum Compiling: Braid Groups as Universal Gates"
   },
   {
-    "date": "2026-07-10T03:22:16-05:00",
+    "date": "2026-07-10T08:22:16Z",
     "domain": "Shared",
     "exp_id": "2170ccdf",
     "filename": "stochastic_galois_theory_random_permutations_have_.json",
@@ -4558,7 +4558,7 @@ window.PACKAGE_INDEX = [
     "title": "Roots, Fixed Points, and the Finite-Field Correction to Stochastic Galois Theory"
   },
   {
-    "date": "2026-07-10T03:06:12-05:00",
+    "date": "2026-07-10T08:06:12Z",
     "domain": "Novelty",
     "exp_id": "cbc5314c",
     "filename": "the_p_vs_np_of_sudoku_phase_transitions_in_constra.json",
@@ -4569,7 +4569,7 @@ window.PACKAGE_INDEX = [
     "title": "Sudoku Constraint Graphs and the Limits of Density-Only Phase Transitions"
   },
   {
-    "date": "2026-07-10T02:49:41-05:00",
+    "date": "2026-07-10T07:49:41Z",
     "domain": "Applications",
     "exp_id": "9696343b",
     "filename": "persistent_homology_of_musical_harmony_the_topolog.json",
@@ -4580,7 +4580,7 @@ window.PACKAGE_INDEX = [
     "title": "The Topology of Harmony: Cyclic Structure of Musical Intervals and the Circle of Fifths"
   },
   {
-    "date": "2026-07-10T02:33:52-05:00",
+    "date": "2026-07-10T07:33:52Z",
     "domain": "Novelty",
     "exp_id": "4936bb72",
     "filename": "deepening_the_zeta_function_of_a_graph_number_theo.json",
@@ -4591,7 +4591,7 @@ window.PACKAGE_INDEX = [
     "title": "Number Theory on Networks: The Spectral-Arithmetic Dictionary of the Ihara Zeta Function"
   },
   {
-    "date": "2026-07-10T02:17:47-05:00",
+    "date": "2026-07-10T07:17:47Z",
     "domain": "MachineLearning",
     "exp_id": "d13e4521",
     "filename": "persistent_homology_of_prime_numbers_the_topology_.json",
@@ -4602,7 +4602,7 @@ window.PACKAGE_INDEX = [
     "title": "Persistent Connectivity of Prime Point Clouds"
   },
   {
-    "date": "2026-07-10T02:17:47-05:00",
+    "date": "2026-07-10T07:17:47Z",
     "domain": "Geometry",
     "exp_id": "44b2da31",
     "filename": "graph_coloring_with_emotions_the_chromatic_polynom.json",
@@ -4613,7 +4613,7 @@ window.PACKAGE_INDEX = [
     "title": "Chromatic Positivity Thresholds for Emotion-Labeled Friendship Networks"
   },
   {
-    "date": "2026-07-10T02:01:45-05:00",
+    "date": "2026-07-10T07:01:45Z",
     "domain": "Applications",
     "exp_id": "996ff4be",
     "filename": "the_category_theory_of_jokes_universal_properties_.json",
@@ -4624,7 +4624,7 @@ window.PACKAGE_INDEX = [
     "title": "The Metric Geometry of Surprise: Humor as a Diameter Invariant"
   },
   {
-    "date": "2026-07-10T00:18:43-05:00",
+    "date": "2026-07-10T05:18:43Z",
     "domain": "Applications",
     "exp_id": "c83ba873",
     "filename": "bayesian_werewolf_optimal_strategy_for_social_dedu.json",
@@ -4635,7 +4635,7 @@ window.PACKAGE_INDEX = [
     "title": "Bayesian Werewolf: Optimal Voting, Continuation Value, and Spin Symmetry"
   },
   {
-    "date": "2026-07-10T00:01:06-05:00",
+    "date": "2026-07-10T05:01:06Z",
     "domain": "Bridges",
     "exp_id": "6e1b10f7",
     "filename": "the_zeta_function_of_a_graph_number_theory_on_netw.json",
@@ -4646,7 +4646,7 @@ window.PACKAGE_INDEX = [
     "title": "The Zeta Function of a Graph: Local Factors and Critical Circles"
   },
   {
-    "date": "2026-07-10T00:01:06-05:00",
+    "date": "2026-07-10T05:01:06Z",
     "domain": "Applications",
     "exp_id": "dd8b10c1",
     "filename": "the_fundamental_theorem_of_cakes_algebraic_geometr.json",
@@ -4657,7 +4657,7 @@ window.PACKAGE_INDEX = [
     "title": "The Fundamental Theorem of Cakes: The Arithmetic Backbone of the Moduli of Decorated Surfaces"
   },
   {
-    "date": "2026-07-09T23:43:40-05:00",
+    "date": "2026-07-10T04:43:40Z",
     "domain": "Bridges",
     "exp_id": "fc5e97aa",
     "filename": "proofs_as_dags_the_directed_acyclic_graph_structur.json",
@@ -4668,7 +4668,7 @@ window.PACKAGE_INDEX = [
     "title": "Ranked Dependency Networks: Hierarchy, Width, and Robustness"
   },
   {
-    "date": "2026-07-09T22:17:03-05:00",
+    "date": "2026-07-10T03:17:03Z",
     "domain": "Physics",
     "exp_id": "4d9b342d",
     "filename": "homotopy_type_theory_of_cooking_recipes_paths_betw.json",
@@ -4679,7 +4679,7 @@ window.PACKAGE_INDEX = [
     "title": "Homotopy of Recipes: The Eckmann-Hilton Bridge from Topology to Algebra"
   },
   {
-    "date": "2026-07-09T21:59:28-05:00",
+    "date": "2026-07-10T02:59:28Z",
     "domain": "MachineLearning",
     "exp_id": "6490730e",
     "filename": "generalized_multinomial_convolution_identity_for_l.json",
@@ -4690,7 +4690,7 @@ window.PACKAGE_INDEX = [
     "title": "Generalized Multinomial Convolution Identity for Latin Rectangle Enumeration"
   },
   {
-    "date": "2026-07-09T21:41:50-05:00",
+    "date": "2026-07-10T02:41:50Z",
     "domain": "Algebra",
     "exp_id": "f86cfe8a",
     "filename": "the_topology_of_knotted_light_how_laser_beams_get_.json",
@@ -4701,7 +4701,7 @@ window.PACKAGE_INDEX = [
     "title": "The Topology of Knotted Light: Alexander Spectra and Modular Angular Channels"
   },
   {
-    "date": "2026-07-09T21:24:33-05:00",
+    "date": "2026-07-10T02:24:33Z",
     "domain": "Shared",
     "exp_id": "154045db",
     "filename": "the_mathematics_of_jigsaw_puzzles_np_completeness_.json",
@@ -4712,7 +4712,7 @@ window.PACKAGE_INDEX = [
     "title": "Logic in Every Piece: Exact Solution Spaces and Tab\u2013Blank Symmetry"
   },
   {
-    "date": "2026-07-09T20:31:44-05:00",
+    "date": "2026-07-10T01:31:44Z",
     "domain": "Applications",
     "exp_id": "794fdf29",
     "filename": "equivalence_of_vanishing_cyclically_covering_codim.json",
@@ -4723,7 +4723,7 @@ window.PACKAGE_INDEX = [
     "title": "The Covering\u2013Coding Bridge: Vanishing Cyclic Covering Codimension and Full-Weight Cyclic Codes"
   },
   {
-    "date": "2026-07-09T20:14:19-05:00",
+    "date": "2026-07-10T01:14:19Z",
     "domain": "Applications",
     "exp_id": "a7676cc9",
     "filename": "infinite_chess_checkmate_in_omega_moves.json",
@@ -4734,7 +4734,7 @@ window.PACKAGE_INDEX = [
     "title": "Infinite Chess: Exact Transfinite Game Values Through \u03c9^\u03c9"
   },
   {
-    "date": "2026-07-09T19:56:50-05:00",
+    "date": "2026-07-10T00:56:50Z",
     "domain": "Computation",
     "exp_id": "0ebc2749",
     "filename": "the_mandelbrot_sets_secret_number_theory_quadratic.json",
@@ -4745,7 +4745,7 @@ window.PACKAGE_INDEX = [
     "title": "Arithmetic Rigidity in Quadratic Recurrence"
   },
   {
-    "date": "2026-07-09T19:39:18-05:00",
+    "date": "2026-07-10T00:39:18Z",
     "domain": "Logic",
     "exp_id": "acc2ac17",
     "filename": "the_p_vs_np_of_cooking_computational_complexity_of.json",
@@ -4756,7 +4756,7 @@ window.PACKAGE_INDEX = [
     "title": "The P vs NP of Cooking: A Complexity Theory of Recipes"
   },
   {
-    "date": "2026-07-09T19:04:06-05:00",
+    "date": "2026-07-10T00:04:06Z",
     "domain": "Cryptography",
     "exp_id": "f48abc37",
     "filename": "the_periodic_table_is_a_lie_elements_as_eigenvalue.json",
@@ -4767,7 +4767,7 @@ window.PACKAGE_INDEX = [
     "title": "Spectral Shell Models of Atomic and Nuclear Periodicity"
   },
   {
-    "date": "2026-07-09T19:04:06-05:00",
+    "date": "2026-07-10T00:04:06Z",
     "domain": "Pythagorean",
     "exp_id": "fff627f3",
     "filename": "hilberts_hotel_for_primes_an_infinite_hotel_where_.json",
@@ -4778,7 +4778,7 @@ window.PACKAGE_INDEX = [
     "title": "Hilbert\u2019s Hotel for Primes: Dense Asymptotically Invisible Rearrangements"
   },
   {
-    "date": "2026-07-09T19:04:06-05:00",
+    "date": "2026-07-10T00:04:06Z",
     "domain": "Novelty",
     "exp_id": "18410e31",
     "filename": "fractal_dimension_of_proof_search_how_hard_is_it_t.json",
@@ -4789,7 +4789,7 @@ window.PACKAGE_INDEX = [
     "title": "Fractal Geometry of Search Trees"
   },
   {
-    "date": "2026-07-09T17:34:11-05:00",
+    "date": "2026-07-09T22:34:11Z",
     "domain": "Algebra",
     "exp_id": "643186e8",
     "filename": "tropical_dreams_the_field_with_one_element_meets_t.json",
@@ -4800,7 +4800,7 @@ window.PACKAGE_INDEX = [
     "title": "Tropical Dreams: The Field with One Element Meets Tropical Geometry"
   },
   {
-    "date": "2026-07-09T17:34:11-05:00",
+    "date": "2026-07-09T22:34:11Z",
     "domain": "Applications",
     "exp_id": "71fc60c7",
     "filename": "cellular_automata_as_algebraic_geometry_wolframs_r.json",
@@ -4811,7 +4811,7 @@ window.PACKAGE_INDEX = [
     "title": "Cellular Automata as Algebraic Geometry: Boolean Fixed Points and Their Limits"
   },
   {
-    "date": "2026-07-09T16:05:44-05:00",
+    "date": "2026-07-09T21:05:44Z",
     "domain": "Computation",
     "exp_id": "c2c03fe8",
     "filename": "tensor_amplification_and_spectral_transfer_for_sid.json",
@@ -4822,7 +4822,7 @@ window.PACKAGE_INDEX = [
     "title": "Tensor Amplification and Spectral Transfer for Sidorenko-Type Inequalities"
   },
   {
-    "date": "2026-07-09T15:47:53-05:00",
+    "date": "2026-07-09T20:47:53Z",
     "domain": "Novelty",
     "exp_id": "6c21e233",
     "filename": "total_positivity_of_the_interval_subdivision_trans.json",
@@ -4833,7 +4833,7 @@ window.PACKAGE_INDEX = [
     "title": "Total Positivity of the Interval Subdivision Transformation Matrix"
   },
   {
-    "date": "2026-07-09T15:30:14-05:00",
+    "date": "2026-07-09T20:30:14Z",
     "domain": "Tropical",
     "exp_id": "26e5c4d5",
     "filename": "monochromatic_pythagorean_triples_in_every_level_s.json",
@@ -4844,7 +4844,7 @@ window.PACKAGE_INDEX = [
     "title": "Monochromatic Pythagorean Triples in Every Level Set of a Completely Multiplicative Coloring"
   },
   {
-    "date": "2026-07-09T14:55:01-05:00",
+    "date": "2026-07-09T19:55:01Z",
     "domain": "Novelty",
     "exp_id": "2cd42066",
     "filename": "conditional_refinement_of_pages_theorem_on_landau_.json",
@@ -4855,7 +4855,7 @@ window.PACKAGE_INDEX = [
     "title": "Conditional Refinement of Page's Theorem on Landau-Siegel Zeros: The Repulsion-to-Uniqueness Principle"
   },
   {
-    "date": "2026-07-09T14:54:57-05:00",
+    "date": "2026-07-09T19:54:57Z",
     "domain": "Applications",
     "exp_id": "ee7062d3",
     "filename": "local_to_global_kkl_theorem_for_simplicial_complex.json",
@@ -4866,7 +4866,7 @@ window.PACKAGE_INDEX = [
     "title": "A Local-to-Global KKL Theorem for Partite Simplicial Complexes over an Arbitrary Alphabet"
   },
   {
-    "date": "2026-07-09T14:54:49-05:00",
+    "date": "2026-07-09T19:54:49Z",
     "domain": "Bridges",
     "exp_id": "6b4ee47d",
     "filename": "upper_bound_on_generalized_turn_number_exn_k_ab_k_.json",
@@ -4877,7 +4877,7 @@ window.PACKAGE_INDEX = [
     "title": "A Cubic Upper Bound for the Generalized Turan Number ex(n, K_{a,b}, K_{3,b+1})"
   },
   {
-    "date": "2026-07-09T06:46:06-05:00",
+    "date": "2026-07-09T11:46:06Z",
     "domain": "Algebra",
     "exp_id": "e9a483ed",
     "filename": "the_l_function_universe_a_cosmic_census_of_all_l_f.json",
@@ -4888,7 +4888,7 @@ window.PACKAGE_INDEX = [
     "title": "The L-Function Census: Faithful Codes and the Limits of Finite Observation"
   },
   {
-    "date": "2026-07-09T03:55:47-05:00",
+    "date": "2026-07-09T08:55:47Z",
     "domain": "Cryptography",
     "exp_id": "21c08839",
     "filename": "self_improving_proofs_proofs_that_get_simpler_over.json",
@@ -4899,7 +4899,7 @@ window.PACKAGE_INDEX = [
     "title": "Self-Improving Cryptographic Certificates"
   },
   {
-    "date": "2026-07-08T20:06:05-05:00",
+    "date": "2026-07-09T01:06:05Z",
     "domain": "NumberTheory",
     "exp_id": "717f7483",
     "filename": "godels_casino_incomplete_but_winnable_games.json",
@@ -4910,7 +4910,7 @@ window.PACKAGE_INDEX = [
     "title": "G\u00f6del\u2019s Casino: Incomplete but Winnable Games?"
   },
   {
-    "date": "2026-07-08T16:35:34-05:00",
+    "date": "2026-07-08T21:35:34Z",
     "domain": "Tropical",
     "exp_id": "65eb2137",
     "filename": "impossible_geometries_where_parallel_lines_converg.json",
@@ -4921,7 +4921,7 @@ window.PACKAGE_INDEX = [
     "title": "The Geometry That Refused to Split: Curvature of an Anisotropic Hyperbolic-Cosine Plane"
   },
   {
-    "date": "2026-07-08T12:49:54-05:00",
+    "date": "2026-07-08T17:49:54Z",
     "domain": "Geometry",
     "exp_id": "ad1766b1",
     "filename": "arithmetic_on_the_moebius_band_a_number_system_wit.json",
@@ -4932,7 +4932,7 @@ window.PACKAGE_INDEX = [
     "title": "Arithmetic on the M\u00f6bius Band: Quotient Obstructions and a Graded Repair"
   },
   {
-    "date": "2026-07-07T17:10:06-05:00",
+    "date": "2026-07-07T22:10:06Z",
     "domain": "Novelty",
     "exp_id": "61c22649",
     "filename": "the_opposite_semicube_helly_property_characterizes.json",
@@ -4943,7 +4943,7 @@ window.PACKAGE_INDEX = [
     "title": "The Opposite-Semicube Helly Property and Harmonic-Evenness of Cartesian Products of Partial Cubes"
   },
   {
-    "date": "2026-07-07T06:35:25-05:00",
+    "date": "2026-07-07T11:35:25Z",
     "domain": "Applications",
     "exp_id": "477f7787",
     "filename": "conjecture_balanced_graphs_coincide_with_hereditar.json",
@@ -4954,7 +4954,7 @@ window.PACKAGE_INDEX = [
     "title": "The Octahedron Bridge: Balanced Clique Matrices and Clique-Helly Graphs"
   },
   {
-    "date": "2026-07-06T14:09:21-05:00",
+    "date": "2026-07-06T19:09:21Z",
     "domain": "Novelty",
     "exp_id": "8c745e9f",
     "filename": "real_rootedness_of_the_square_of_the_eulerian_tria.json",
@@ -4965,7 +4965,7 @@ window.PACKAGE_INDEX = [
     "title": "Real-Rootedness of the Square of the Eulerian Triangle (Part I)"
   },
   {
-    "date": "2026-07-04T06:31:24-05:00",
+    "date": "2026-07-04T11:31:24Z",
     "domain": "Applications",
     "exp_id": "465c6137",
     "filename": "recursive_decomposition_isomorphism_for_general_m_.json",
@@ -4976,7 +4976,7 @@ window.PACKAGE_INDEX = [
     "title": "Fuss-Catalan Element Counts and Interval Numbers for the m-Tamari / (m+1)-Constellation Correspondence"
   },
   {
-    "date": "2026-07-03T16:09:55-05:00",
+    "date": "2026-07-03T21:09:55Z",
     "domain": "Algebra",
     "exp_id": "47f9b94d",
     "filename": "escher_staircases_in_algebra_infinite_ascending_ch.json",
@@ -4987,7 +4987,7 @@ window.PACKAGE_INDEX = [
     "title": "Escher Staircases in Commutative Algebra"
   },
   {
-    "date": "2026-07-03T07:55:55-05:00",
+    "date": "2026-07-03T12:55:55Z",
     "domain": "Novelty",
     "exp_id": "18617733",
     "filename": "vampire_numbers_and_other_numerical_monsters_a_bes.json",
@@ -4998,7 +4998,7 @@ window.PACKAGE_INDEX = [
     "title": "Vampire Numbers and the Modular Unit Curve"
   },
   {
-    "date": "2026-07-03T00:53:52-05:00",
+    "date": "2026-07-03T05:53:52Z",
     "domain": "Pythagorean",
     "exp_id": "186c9eac",
     "filename": "dark_mathematics_theorems_that_exist_but_cannot_be.json",
@@ -5009,7 +5009,7 @@ window.PACKAGE_INDEX = [
     "title": "Dark Existence and Finite-Tag Amplification"
   },
   {
-    "date": "2026-07-02T23:31:23-05:00",
+    "date": "2026-07-03T04:31:23Z",
     "domain": "Shared",
     "exp_id": "e456357e",
     "filename": "the_anti_fibonacci_sequence_numbers_that_avoid_the.json",
@@ -5020,7 +5020,7 @@ window.PACKAGE_INDEX = [
     "title": "The Anti-Fibonacci Paradox: When Avoiding One Sum Collapses a Sequence"
   },
   {
-    "date": "2026-07-02T09:13:46-05:00",
+    "date": "2026-07-02T14:13:46Z",
     "domain": "Algebra",
     "exp_id": "1003d095",
     "filename": "zero_knowledge_theorem_proving_i_can_prove_fermats.json",
@@ -5031,7 +5031,7 @@ window.PACKAGE_INDEX = [
     "title": "Affine Zero-Knowledge Protocols for Hidden Mathematical Witnesses"
   },
   {
-    "date": "2026-07-02T07:22:46-05:00",
+    "date": "2026-07-02T12:22:46Z",
     "domain": "Speculative",
     "exp_id": "535698fb",
     "filename": "hyperbolic_number_theory_arithmetic_on_the_poincar.json",
@@ -5042,7 +5042,7 @@ window.PACKAGE_INDEX = [
     "title": "Hyperbolic Number Theory: The Modular Integer Orbit in the Poincare Disk"
   },
   {
-    "date": "2026-07-02T03:56:29-05:00",
+    "date": "2026-07-02T08:56:29Z",
     "domain": "Applications",
     "exp_id": "d09018a9",
     "filename": "oeis_sequence_maximal_number_of_good_manifolds_in_.json",
@@ -5053,7 +5053,7 @@ window.PACKAGE_INDEX = [
     "title": "Good Manifolds in an n-Nice Polytope: A Doubling Law with a 2-adic Fingerprint"
   },
   {
-    "date": "2026-07-02T02:32:02-05:00",
+    "date": "2026-07-02T07:32:02Z",
     "domain": "Algebra",
     "exp_id": "dfbea393",
     "filename": "quantum_surreal_numbers_superposition_of_all_real_.json",
@@ -5064,7 +5064,7 @@ window.PACKAGE_INDEX = [
     "title": "Quantum Surreal States and Standard-Part Measurement"
   },
   {
-    "date": "2026-06-29T10:19:30-05:00",
+    "date": "2026-06-29T15:19:30Z",
     "domain": "Applications",
     "exp_id": "2c002c80",
     "filename": "sperners_lemma_implies_nash_equilibria_combinatori.json",
@@ -5075,7 +5075,7 @@ window.PACKAGE_INDEX = [
     "title": "Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theory"
   },
   {
-    "date": "2026-06-29T10:19:30-05:00",
+    "date": "2026-06-29T15:19:30Z",
     "domain": "Applications",
     "exp_id": "c5a6c2ed",
     "filename": "oeis_sequence_orderly_friedman_numbers_or_good_or_.json",

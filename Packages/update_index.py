@@ -70,6 +70,21 @@ def extract_visualization(data, viz_name, pkg_slug, viz_index, viz_dir):
 
     return None
 
+def normalize_iso_date(date_str):
+    """Normalize any ISO 8601 date string to clean UTC format: YYYY-MM-DDTHH:MM:SSZ."""
+    if not date_str:
+        return "1970-01-01T00:00:00Z"
+    try:
+        from datetime import datetime, timezone
+        s = str(date_str).strip()
+        if s.endswith("Z"):
+            s = s[:-1] + "+00:00"
+        dt = datetime.fromisoformat(s)
+        dt_utc = dt.astimezone(timezone.utc)
+        return dt_utc.strftime('%Y-%m-%dT%H:%M:%SZ')
+    except Exception:
+        return str(date_str)
+
 def load_all_git_creation_dates(catalog_root, target_dir="Packages"):
     """Run a single git log command to extract creation ISO dates for all files."""
     dates = {}
@@ -86,7 +101,7 @@ def load_all_git_creation_dates(catalog_root, target_dir="Packages"):
                 if not line:
                     continue
                 if line.startswith("COMMIT_DATE:"):
-                    current_date = line[len("COMMIT_DATE:"):].strip()
+                    current_date = normalize_iso_date(line[len("COMMIT_DATE:"):].strip())
                 elif current_date:
                     norm = os.path.normpath(line)
                     dates[norm] = current_date
@@ -106,15 +121,7 @@ def get_creation_date(filename, catalog_root):
         )
         if result.returncode == 0 and result.stdout.strip():
             date_iso = result.stdout.strip().split('\n')[0]
-            # Convert ISO 8601 to a display-friendly format
-            # e.g. "2026-05-11T09:36:52-05:00" -> "2026-05-11T14:36:52Z"
-            from datetime import datetime, timezone
-            try:
-                dt = datetime.fromisoformat(date_iso)
-                dt_utc = dt.astimezone(timezone.utc)
-                return dt_utc.strftime('%Y-%m-%dT%H:%M:%SZ')
-            except Exception:
-                return date_iso
+            return normalize_iso_date(date_iso)
     except Exception:
         pass
     # Fallback to file modification time
@@ -218,7 +225,7 @@ def update_index():
 
         # Determine stable git creation date (or JSON/mtime fallback)
         rel_f = os.path.normpath(os.path.relpath(os.path.abspath(f), catalog_root))
-        date_str = git_creation_dates.get(rel_f) or data.get("date") or get_creation_date(f, catalog_root)
+        date_str = normalize_iso_date(git_creation_dates.get(rel_f) or data.get("date") or get_creation_date(f, catalog_root))
 
         pkg_slug = f.replace('.json', '')
 
