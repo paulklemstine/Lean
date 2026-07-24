@@ -134,7 +134,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Temporal-Entropy-Reversal: Local Second-Law Violation inside Closed Timelike Horizons"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5a4bc860",
     "description": "Formalizes the Novikov Self-Consistency Principle as a Banach fixed-point theorem on compact pseudo-Riemannian manifolds.",
     "domains": [
       "Geometry"
@@ -143,7 +143,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.95,
     "research_mode": "team",
     "source_exp_id": "scifi_50_injection",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-23T20:07:56.998880+00:00",
     "title": "Novikov-Fixed-Point: Existence of Unique Solutions for Causally Loop-Closed Spacetimes"
   },
@@ -4231,7 +4231,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Several families of incommensurable noncompact hyperbolic Coxeter polytopes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "08b12f3b",
     "description": "Investigate the ArXiv paper 'The Spine: A Supersingular Highway' and formalize its key results. Abstract: We consider the structure of the spine of the supersingular $\\ell$-isogeny graph for one of the cases which arXiv:2502.03613 was not able to fully describe, $\\ell = 2$ and $p = 71, 119\\pmod{120}$. We find the distance, eccentricity, and diameter functions, of the components of the spine without the non-trivial edge not defined over $\\mathbb{F}_p$. Using these functions, we find the mean diameter of the spine and show how this value distinguishes the different structures of the spine. Thus, allowing us to use explicit computations to provide heuristics on the behavior of the spine's structure as $p$ varies.",
     "domains": [
       "Bridges"
@@ -4240,7 +4240,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14572v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-17T09:24:18.119678+00:00",
     "title": "ArXiv paper: The Spine: A Supersingular Highway"
   },
@@ -4709,6 +4709,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-23T03:52:03.926649+00:00",
     "title": "ArXiv paper: A Matrix-Degree Obstruction to Rational Generation of Boolean-Lattice Pseudo-Roots"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Homotopy types of intervals in corank-three higher Bruhat orders' and formalize its key results. Abstract: We prove Reiner's conjecture for higher Bruhat orders in corank 3: the facial intervals of B(n,n-3) are precisely the spherical intervals, and all other intervals are contractible.",
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_0625",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.21420v1",
+    "status": "available",
+    "timestamp": "2026-07-24T01:08:17.095027+00:00",
+    "title": "ArXiv paper: Homotopy types of intervals in corank-three higher Bruhat orders"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'An $O(t\\log^2 t)$ Bound for $k$-Connected Subgraphs in Dense $K_t$-Minor-Free Graphs' and formalize its key results. Abstract: Delcourt and Postle reduced the Linear Hadwiger Conjecture to coloring $K_t$-minor-free graphs on $O(t\\log^4 t)$ vertices. An important theorem in their proof process asserts that every sufficiently dense $K_t$-minor-free graph contains a small, highly connected subgraph. In this paper, we show that such a subgraph can be chosen to be smaller. More precisely, there exists an integer constant $C \\ge 1$ such that, for all integers $t \\ge 3$ and $k \\ge t$, every $K_t$-minor-free graph $G$ with $d(G) \\ge Ck$ contains a nonempty $k$-connected subgraph $H$ satisfying $v(H) \\le C^2 t\\log^2 t$. Thus the structural bound improves from $O(t\\log^3 t)$ to $O(t\\log^2 t)$, and the graphs occurring in the reduction have order $O(t\\log^3 t)$ rather than $O(t\\log^4 t)$.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0626",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.21222v1",
+    "status": "available",
+    "timestamp": "2026-07-24T01:08:25.206927+00:00",
+    "title": "ArXiv paper: An $O(t\\log^2 t)$ Bound for $k$-Connected Subgraphs in Dense $K_t$-Minor-Free Graphs"
   },
   {
     "consumed_by_exp_id": "",
@@ -7271,7 +7301,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Construct explicit formal, graphical, and contrapuntal syntax categories whose m"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "66a73fad",
     "description": "# Future Directions\n\n## 1. Optimal-cover hitting time\n\n**Conjecture.** In the random graph process, with probability tending to one, the first graph whose minimum degree is two is also the first graph whose edges admit a Hamilton cover of size `\u2308\u0394/2\u2309`.\n\nThe key insight is that the deterministic incidence-capacity obstruction becomes sharp as soon as the process supplies enough global connectivity to extend every controlled forest system.\n\n**Why now?** The local parity theorem identifies exactly the zero-or-one incidence defect that an extension procedure must absorb, reducing the hitting-time question to a structured global completion problem.\n\n## 2. Punctured optimal covers realize linear arboricity\n\n**Conjecture.** Throughout the Hamiltonian range of the binomial random graph, every minimum-size Hamilton cover admits a choice of one edge from each cycle such that the punctured Hamilton paths, together with at most one additional linear forest, form an optimal linear-forest decomposition.\n\nThe key insight is that puncturing preserves coverage away from a transversal, while the parity-controlled local excess should allow the transversal edges to be routed without increasing the asymptotically sharp number of layers.\n\n**Why now?** The deterministic puncturing theorem isolates the only edges that can be lost, making the remaining question a concrete transversal-selection and rerouting problem.\n\n## 3. Spectral reserved-structure criterion\n\n**Conjecture.** There are absolute constants `c,C > 0` such that every sufficiently large graph with minimum degree at least `C log n`, normalized second eigenvalue at most `c`, and robust sparse-cut expansion admits a Hamilton cover of size `\u2308\u0394/2\u2309`.\n\nThe key insight is that a spectral reservoir could replace probabilistic exposure in the forest-extension argument, converting pseudorandom Hamilton completion into a deterministic theorem.\n\n**Why now?** The incidence-code equality case gives the exact local target, so a spectral criterion need only guarantee simultaneous global extension while preserving the prescribed parity defects.\n\n## 4. Stability of near-optimal covers\n\n**Conjecture.** If a family of two-regular spanning layers covers a graph using `\u2308\u0394/2\u2309 + k` layers, then at every maximum-degree vertex its total repeated-incidence multiplicity is at most `2k + 1`; moreover, for pseudorandom graphs this local bound forces the cover to differ from an optimal cover in only `O(kn)` edge-layer incidences.\n\nThe key insight is that excess layer count translates exactly into local coding slack, suggesting a stability bridge from arithmetic capacity to global edit distance.\n\n**Why now?** The proved parity law settles the equality case and indicates the precise linear error term that should govern the near-equality regime.\n",
     "domains": [
       "Computation",
@@ -7281,7 +7311,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "decbe545",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-22T00:14:23.064740+00:00",
     "title": "**Conjecture.** In the random graph process, with probability tending to one, th"
   },
