@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "7a438864",
-      "domain": "Computation",
-      "key_insight": "# Future directions\n\n1. **Heterogeneous planets.** Generalize the equal-rate formula `(1-p)^N` to `∏ i, (1-pᵢ)` and prove `1 - ∏ i, (1-pᵢ) ≤ ∑ i, pᵢ` over finite populations.\n2. **Dependence without i",
-      "quality_score": 0.66,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-18T13:38:14",
-      "title": "The Fermi Paradox as a Pigeonhole Principle: Why We Are Alone"
-    },
-    {
       "cycle_id": "115a4ee3",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\n## 1. Entropy dimension for genuinely submultiplicative search languages\n\n**Conjecture.** Let `N(n)` be the number of successful prefixes of length `n` in a finitely branching sea",
@@ -2501,6 +2491,16 @@
       "theorem_count": 9,
       "timestamp": "2026-07-24T13:46:59",
       "title": "Avoidance of t-fold sumsets in dense subsets of [n]"
+    },
+    {
+      "cycle_id": "b519e277",
+      "domain": "Applications",
+      "key_insight": "# Future directions\n\nThe certified census of fundamental discriminants with `|D| ≤ 1000` — exactly `608`, split as\n`303` positive and `305` negative — turns a heuristic bounded test into a proven fini",
+      "quality_score": 0.63,
+      "sorry_count": 0,
+      "theorem_count": 20,
+      "timestamp": "2026-07-24T14:20:08",
+      "title": "The completed Lean development proves the local arithmetic dictionary for the qu"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-24T13:46:59",
+  "last_updated": "2026-07-24T14:20:08",
   "open_questions": [
     {
       "context": "+    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; +    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; +    ∀ i < k, c i = ",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "c231497c",
-        "quality": 0.69,
-        "theorems": 22,
-        "title": "Quantum Proofs of Classical Theorems"
-      },
-      {
         "cycle_id": "606f7bdd",
         "quality": 0.73,
         "theorems": 11,
@@ -3141,6 +3135,12 @@
         "quality": 0.57,
         "theorems": 16,
         "title": "ArXiv paper: Ranks of Elliptic Curves Twisted by Quadratic Forms"
+      },
+      {
+        "cycle_id": "b519e277",
+        "quality": 0.63,
+        "theorems": 20,
+        "title": "The completed Lean development proves the local arithmetic dictionary for the qu"
       }
     ],
     "Bridges": [
