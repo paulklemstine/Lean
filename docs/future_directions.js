@@ -645,20 +645,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Proves existence of shortest continuous paths connecting arbitrary points in non-convex infinite-dimensional Hilbert space obstacle domains.",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "scifi_50_38_f1e05ea5",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "scifi_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:07:58.676038+00:00",
-    "title": "Hilbert-Space-Maze: Infinite-Dimensional Trajectory Solvability"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Formalizes motion of rigid bodies traversing non-orientable Klein bottle manifolds where chirality flips upon complete loop traversal.",
     "domains": [
       "Geometry"
@@ -3591,20 +3577,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 8280a2b4 (Q=0.760), which proved 14 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Riemann-Roch theorem for graphs (Baker-Norine, 2007) states that for a divisor D on a graph G, l(D) - l(K_G - D) = deg(D) + 1 - g(G) where l(D) is the rank of D, K_G is the canonical divisor, and g(G) is the genus (cyclomatic number). The chip-firing game is a combinatorial model: vertices hold ",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "push_8280a2b4_941745de",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "8280a2b4",
-    "status": "available",
-    "timestamp": "2026-07-19T06:30:57.793286+00:00",
-    "title": "Deepening: The Riemann-Roch Theorem for Graphs: Chip-Firing and the Canonical Divisor"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle e9a483ed (Q=0.760), which proved 8 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: L-functions are the DNA of mathematics \u2014 each one encodes deep arithmetic information. But how many L-functions ARE there? The L-function universe is vast: (1) The Riemann zeta function (1 L-function), (2) Dirichlet L-functions (countably many), (3) L-functions of elliptic curves (uncountably many, ",
     "domains": [
       "Computation"
@@ -3630,20 +3602,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-18T03:54:54.432626+00:00",
     "title": "Deepening: Chaos as a Computable Shadow: The Shadowing Lemma for Real Programs"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle fa73eeee (Q=0.760), which proved 11 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\n## 1. Renormalized removal of both cutoffs\n\n**Conjecture.** There is a natural joint scaling of the prime cutoff `x`, occupation cutoff `N`, and inverse temperature `\u03b2 > 1` under which the finite bulk occupation partition converges locally uniformly to the Euler product for the ",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "push_fa73eeee_906369d7",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "fa73eeee",
-    "status": "available",
-    "timestamp": "2026-07-19T04:29:12.043456+00:00",
-    "title": "Deepening: **Conjecture.** There is a natural joint scaling of the prime cutoff `x`, occupa"
   },
   {
     "consumed_by_exp_id": "",
@@ -10286,23 +10244,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: An $O(t\\log^2 t)$ Bound for $k$-Connected Subgraphs in Dense $K_t$-Minor-Free Graphs"
   },
   {
-    "consumed_by_exp_id": "cb7978a9",
-    "description": "# Future Directions: complex-weighted undirected random graphs\n\nThis cycle deepened the theory of the fixed-amplitude model, where every present edge\nof an undirected graph carries a single common complex weight `z`.  The central new\nresult is *spectral line-locking*: for a symmetric edge relation and nonzero `z`,\nevery eigenvalue of the weighted adjacency matrix is `z` times a real number, so the\nentire spectrum collapses onto the one-dimensional line `\u211d\u00b7z`.  We also established\nthe global multiplicative invariants (determinant scales by `z\u207f`, loopless trace\nvanishes) and showed that the complete-graph mean-direction eigenvalue `(n-1)z`\nescapes the naive radius `\u221an\u00b7\u2016z\u2016` for every order `n \u2265 3`.  These findings suggest\nthe following bold, testable conjectures.\n\n## 1. Two-dimensional spectra require broken phase symmetry\n\n**Conjecture.** If the edges of a random graph carry *independent* complex phases\n(each present edge `(i,j)` weighted by an independent unit-modulus random variable,\nwith `w_{ji} = \\overline{w_{ij}}` relaxed to genuine independence), then the empirical\nspectral distribution of the normalized adjacency matrix converges, as `n \u2192 \u221e`, to a\nrotationally invariant law supported on a full two-dimensional disk \u2014 in sharp\ncontrast to the line-locked fixed-amplitude model.\n\nThe key insight is that line-locking is caused entirely by the scalar\u2013Hermitian\nfactorization `z\u00b7B`: all randomness sits inside a single Hermitian matrix, and one\ncomplex scalar can only rotate and dilate a real spectrum. Breaking the shared phase\nis therefore both necessary and, conjecturally, sufficient to recover circular-law\nbehaviour.\n\nWhy now? The exact obstruction has been isolated in closed form, so the search for a\ncircular law can be aimed precisely at the models that violate the factorization,\nrather than at the undirected fixed-amplitude model where no such law can exist.\n\n## 2. A phase-transition threshold for the mean-direction outlier\n\n**Conjecture.** For the fixed-amplitude Erd\u0151s\u2013R\u00e9nyi model `G(n, p)` with weight `z`,\nthere is a sharp threshold `p*(n)` such that above it the largest-modulus eigenvalue\nis asymptotically `p\u00b7(n-1)\u00b7|z|` (the mean-direction outlier), while the bulk stays\nwithin radius `2\u221a{np(1-p)}\u00b7|z|`; the outlier separates from the bulk exactly when\n`p\u00b7(n-1) > 2\u221a{np(1-p)}`.\n\nThe key insight is that the deterministic complete-graph computation `(n-1)z` is the\n`p \u2192 1` endpoint of a family of expected row sums `p\u00b7(n-1)`, and the outlier/bulk\nseparation is governed by comparing this expected row sum with the semicircle radius\nof the centered indicator matrix.\n\nWhy now? Both endpoints are already understood \u2014 the deterministic outlier for the\ncomplete graph and the row-sum disk bound scaled by `|z|` \u2014 so the remaining task is\nto interpolate them across `p`, a concrete and falsifiable analytic problem.\n\n## 3. Reality of Rayleigh quotients characterizes the line-locked class\n\n**Conjecture.** Among all weighting schemes assigning a complex number to each edge of\na fixed graph, the weighted adjacency matrix has its full spectrum confined to a\nsingle complex line through the origin *if and only if* the scheme is a complex\nscalar multiple of a Hermitian matrix; equivalently, if and only if the Rayleigh\nquotient `\u27e8v, A v\u27e9` is a fixed complex multiple of a real number for all `v`.\n\nThe key insight is that reality of the Hermitian Rayleigh quotient is exactly what\npins each eigenvalue to the line, so the converse should hold: line confinement of\nthe whole spectrum forces the matrix back into the scalar-Hermitian class.\n\nWhy now? The forward direction is now established in full, and its proof is entirely\nRayleigh-quotient based, which hands over the precise algebraic invariant whose\nconverse can be attacked directly.\n\n## 4. Determinant zeros track the underlying combinatorics\n\n**Conjecture.** The weighted determinant `det(z\u00b7B) = z\u207f\u00b7det(B)` vanishes for a fixed\nnonzero `z` if and only if the underlying graph has no perfect matching of a certain\nsigned type; consequently, for random `G(n, p)` the probability that the weighted\nmatrix is singular exhibits the same threshold as the appearance of an isolated\nvertex, independent of `z`.\n\nThe key insight is that the complex amplitude is a global unit that cannot create or\ndestroy singularity \u2014 singularity is a purely combinatorial property of the indicator\nmatrix `B`, so all `z`-dependence factors out through `z\u207f`.\n\nWhy now? The clean determinant factorization makes the `z`-independence of singularity\nexplicit, reducing a question about complex-weighted matrices to a classical question\nabout zero-one matrices with known threshold behaviour.\n",
-    "domains": [
-      "Algebra",
-      "Physics",
-      "Computation"
-    ],
-    "id": "fd_0627",
-    "phase": "B",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.21494v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-24T01:27:41.468731+00:00",
-    "title": "This cycle deepened the theory of the fixed-amplitude model, where every present"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Fatness and Flatness' and formalize its key results. Abstract: Fat minors are the metric analog of graph minors that are tailored to the analysis of metric (edge-weighted) graphs and, more generally, metric spaces having a suitable notion of shortest paths. Despite a large interest in this notion, not much is known about the structure of metric graphs excluding a fixed fat minor. We prove that if a metric graph $G$ excludes a fixed graph $H$ as a $\u03b4$-fat minor, for some $\u03b4>0$, then $G$ enjoys the metric analog of flatness (aka uniform quasi-wideness) - a structural property from the field of Sparsity. In essence, our flatness result says that for any $\u03b1\\geq \u03b2$ large enough compared to $\u03b4$, in every large enough set $A$ in $G$ one can find a sizable subset $B$ that becomes $\u03b1$-scattered after removing a bounded number of balls of radius $\u03b2$. We call this property drill-flatness. Notably, the proof only relies on excluding shallow fat minors: every branch set has radius at most $2\u03b1$. As a corollary, we prove that metric graphs that exclude a fixed $",
     "domains": [
@@ -14028,20 +13969,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\nThis project formalizes the one-dimensional online primitive underlying the paper\n*\"Online Beck\u2013Fiala Down to Logarithmic Sparsity\"* \u2014 the compactly supported,\nonline self-balancing walk \u2014 in `Catalog/Novelty/OnlineBeckFialaWalk.lean`.\n\nNatural extensions, in rough order of difficulty:\n\n1. **Discrete Beck\u2013Fiala matrices, column sparsity `d = 1`.** Formalize a\n   `{0,1}` matrix with at most one nonzero per column (disjoint sets) and prove the\n   offline discrepancy bound `\u2264 1` via a balanced per-set coloring.\n\n2. **Classical offline Beck\u2013Fiala theorem `disc \u2264 2d \u2212 1`.** The floating-variables\n   / linear-algebra dimension argument: iterate over an active-constraint subspace of\n   positive dimension until a variable freezes at `\u00b11`. Requires finite-dimensional\n   linear algebra over `\u211d` and an incidence-counting lemma\n   (`#active constraints < #floating variables`).\n\n3. **Higher-dimensional online prefix discrepancy.** The heart of the paper: a\n   Metropolis fixed-point walk achieving prefix discrepancy `O(\u221ad)` for\n   `d \u2265 log(T)^{1+o(1)}`. This is a substantial research-level formalization target.\n\n4. **The `\u03c9(\u221ad)` online lower bound** for `d = o(log T)`, establishing optimality of\n   the online result, and the corollary resolving online vector balancing in the\n   Spencer setting.\n",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "fd_0615",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "f14d2570",
-    "status": "available",
-    "timestamp": "2026-07-23T18:45:59.367683+00:00",
-    "title": "This project formalizes the one-dimensional online primitive underlying the pape"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "# Future directions\n\nThe repaired repeated-summand rule is now completely classified: its unique trajectory is `a n = 2n + 1`. The formal development also proves strict monotonicity, identifies its range with all odd natural numbers, and gives the exact cardinality of every finite prefix. The following are the main remaining extensions.\n\n1. **Distinct-summand repair.** Replace repeated-index pair sums by sums from distinct earlier indices. Determine the resulting greedy trajectory and classify its growth.\n2. **Higher-order forbidden sums.** Forbid sums of exactly `r` earlier values (with or without repetition). Establish existence, uniqueness, and quantitative growth as a function of `r`.\n3. **Alternative seeds.** Start from an arbitrary positive seed instead of one. Classify when the process becomes an arithmetic progression and when transient behavior persists.\n4. **Finite-prefix sumset structure.** Prove exact descriptions and cardinalities for the restricted pair-sum sets of the canonical trajectory.\n5. **Asymptotic density.** Upgrade the exact range classification to a filter-based proof that the value set has natural density `1/2`.\n6. **Stability under weakened greediness.** Study trajectories that select any admissible value within a fixed additive error of the least one, and bound their lower and upper densities.\n",
     "domains": [
       "Pythagorean",
@@ -14450,20 +14377,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future directions\n\nThe file `Catalog/NumberTheory/LowLyingZeros.lean` isolates two analytic mechanisms\nthat control the low-lying zeros of automorphic `L`-functions: the de la Vall\u00e9e Poussin\npositivity and functional-equation symmetry about the critical line. Natural extensions:\n\n1. **From finite sums to genuine Dirichlet series.** Replace the finite\n   `dirichletCosSum` by a convergent series `\u2211 b_n \u03bb_n^{-\u03c3} cos(t log \u03bb_n)` and derive the\n   `3-4-1` positivity for `\u211c log L(s)` on `\u211c(s) = 1`. This requires the Euler product /\n   logarithm of an `L`-function with nonnegative Dirichlet coefficients (e.g. `\u03b6`, and\n   `L(s, \u03c0 \u00d7 \u03c0\u0303)` for cuspidal `\u03c0`).\n\n2. **Explicit zero-free region.** Combine the positivity with an upper bound\n   `|L'/L|` near a putative zero `\u03b2 + i\u03b3` to produce a quantitative region\n   `\u03b2 < 1 - c/log(|\u03b3|+2)` and make the constant `c` explicit, following de la Vall\u00e9e\n   Poussin / Kadiri-style effective constants.\n\n3. **Density estimates.** Formalize a Jensen/Littlewood zero-counting bound in a box and\n   turn `zero_reflect_iff` into a statement counting symmetric zero pairs off the critical\n   line, giving `N(\u03c3, T)` density estimates for families.\n\n4. **The functional equation itself.** Derive `zero_reflect_iff`'s hypothesis from a\n   completed `L`-function `\u039b(s) = Q^s \u0393-factors \u00b7 L(s)` and its automorphic functional\n   equation, rather than assuming it, once Mathlib has the analytic continuation of\n   `GL(n)` `L`-functions.\n\n5. **Sharp equality analysis.** Use `three_four_one_cos_eq_zero_iff` to characterize the\n   extremal spectra where the positivity is tight, connecting to the location of the\n   nearest low-lying zero.\n",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "fd_0703",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "2a754509",
-    "status": "available",
-    "timestamp": "2026-07-24T15:52:12.163045+00:00",
-    "title": "The file `Catalog/NumberTheory/LowLyingZeros.lean` isolates two analytic mechani"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "# Future Directions \u2014 Transfinite Computation with Cellular Automata on \u03c9\u00b2\n\n## Current state\n\n`Catalog/Applications/OrdinalCellularAutomata/TransfiniteComputation.lean`\ndevelops a two-layer semantics for cellular dynamics indexed by the order type\n`\u03c9\u00b2` (pairs `(block, tick)` in lexicographic order):\n\n- **Successor layer.** An arbitrary state transition system supplies the\n  successor update; Rule 110 (`rule110Step`) is the concrete instance, and it is\n  shown to remain radius-one local at transfinite times (`rule110Step_local`).\n- **Limit layer.** A history functional selects the state at each block\n  boundary. `predicateLimit` writes a chosen Boolean bit at cell 0.\n\nKey theorems (all `sorry`-free, axioms limited to `propext`, `Classical.choice`,\n`Quot.sound`):\n\n- `omegaSquaredRun_succ`, `omegaSquaredRun_limit`, `omegaSquaredRun_eq_iterate` \u2014\n  structural laws of the transfinite run.\n- `scheduledOmegaRun_boundary`, `boundaryTrace_scheduled` \u2014 boundary read-out is\n  faithful to the schedule.\n- `scheduledOmegaRun_injective` \u2014 distinct schedules give distinct histories.\n- `no_predicate_enumeration`, `no_history_enumeration` \u2014 Cantor diagonalisation:\n  neither Boolean predicates nor transfinite histories are countably enumerable.\n- `continuum_scheduled_histories` \u2014 **cross-domain bridge**: the space of\n  scheduled Rule 110 histories has cardinality exactly `\ud835\udd20 = 2^{\u2135\u2080}`, tying\n  symbolic dynamics / ordinal recursion to cardinal arithmetic.\n\n## Honest scope of the \"super-Turing\" claim\n\nThe results prove *oracle capacity*: once arbitrary history functionals are\nadmitted at limits, the fixed radius-one successor law hosts a faithful copy of\nthe entire Boolean predicate space. They do **not** claim Rule 110 manufactures\nan undecidable predicate from computable data \u2014 `predicateLimit` receives `P` as\nexternal data and need not be computable.\n\n## Open directions\n\n1. **Canonical limit rules.** Replace the scheduled `predicateLimit` by an\n   intrinsic `liminf`/`limsup` convention on the cell history and characterise\n   which predicates are then realisable. Conjecture: a computable limsup rule\n   still exceeds ordinary Turing power (this is the \"super-Turing from a\n   computable convention\" hypothesis, currently open).\n\n2. **Infinite Time Turing Machines (ITTM).** Simulate an ITTM transition system\n   block-for-block by `omegaSquaredRun`, then push to an instruction-level\n   encoding. The abstract transition-system simulation is within reach; the\n   machine encoding is the substantial open step.\n\n3. **Ordinal universality of Rule 110.** Prove/refute that Rule 110 with a fixed\n   canonical limit rule is universal for ordinal computation up to a specified\n   ordinal height.\n\n4. **Conservative finite embedding.** Formalise that every finite Rule 110\n   computation embeds into an `\u03c9\u00b2` run as block 0 (a `sorry`-free conservativity\n   theorem), making the transfinite model a genuine extension.\n\n5. **Higher ordinals.** Generalise from `\u03c9\u00b2` to `\u03c9^n` and `\u03c9^\u03c9` by iterating the\n   two-layer construction, and relate the reachable predicate classes to the\n   ordinal height (a hyperarithmetic/analytical-hierarchy connection).\n\n6. **Cardinality sharpening.** Extend `continuum_scheduled_histories` to the full\n   history space (arbitrary functionals, not just Boolean schedules) and locate\n   its cardinality in the cardinal hierarchy.\n",
     "domains": [
       "Logic",
@@ -14521,6 +14434,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-24T19:54:41.901992+00:00",
     "title": "The results in `ReticulationMOLS.lean` establish, in full generality, the sharp "
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: complex-weighted undirected random graphs\n\nThis cycle deepened the theory of the **fixed-amplitude model**, where every present\nedge of an undirected graph carries a single common complex weight `z`. The weighted\nadjacency matrix factors as `z \u2022 B`, with `B` the Hermitian `0/1` indicator matrix of\nthe symmetric edge relation.\n\nThe Lean development in `Computation/FixedAmplitudeSpectrum.lean` establishes, as a\nself-contained chain, the algebraic core that motivates the conjectures below. Every\nstatement is fully proved (no `sorry`, only the standard axioms `propext`,\n`Classical.choice`, `Quot.sound`).\n\n## What is formalized this cycle\n\nThe file builds one long chain in which each step feeds the next:\n\n1. `real_of_im_zero` \u2014 a complex number with vanishing imaginary part equals its real part.\n2. `rayleigh_hermitian_real` \u2014 the Hermitian Rayleigh quotient `\u27e8v, B v\u27e9 = star v \u2b1d\u1d65 B *\u1d65 v`\n   is real. (Uses step 1 and the Hermitian quadratic-form lemma.)\n3. `rayleigh_scaled` \u2014 scaling the matrix by `z` scales the Rayleigh quotient by `z`.\n4. `rayleigh_scaled_real` \u2014 hence `\u27e8v, (z\u2022B) v\u27e9 = z \u00b7 (real)`. (Uses 2 and 3.)\n5. **`line_locking`** \u2014 the central theorem: for Hermitian `B`, every eigenvalue `\u03bc` of\n   the weighted matrix `z \u2022 B` satisfies `\u03bc = z \u00b7 r` with `r : \u211d`. The whole spectrum\n   collapses onto the one-dimensional line `\u211d \u00b7 z \u2286 \u2102`. (Uses 2 and 3.)\n6. `spectrum_on_line` \u2014 restatement of line-locking as membership in the line\n   `{ (r : \u2102) \u2022 z | r : \u211d }`. (Uses 5.)\n7. `trace_weighted`, `trace_weighted_loopless` \u2014 `tr(z\u2022B) = z \u00b7 tr B`, vanishing for a\n   loopless graph (zero diagonal), for every weight.\n8. `det_weighted` \u2014 the global multiplicative invariant `det(z\u2022B) = z\u207f \u00b7 det B`.\n9. `weighted_singular_iff` \u2014 for `z \u2260 0`, singularity of `z\u2022B` is a purely combinatorial\n   property of `B`: `det(z\u2022B) = 0 \u2194 det B = 0`, independent of `z`. (Uses 8.)\n10. `Kgraph`, `Kgraph_isHermitian`, `Kgraph_loopless`, `Kgraph_mulVec_ones` \u2014 the complete\n    graph `K\u2099` indicator matrix: Hermitian, loopless, with constant row sum `n \u2212 1`.\n11. `complete_eigenvalue`, `complete_eigenvalue_on_line` \u2014 the all-ones (mean-direction)\n    vector is an eigenvector of `z \u2022 K\u2099` with eigenvalue `(n\u22121)\u00b7z`, which lies on `\u211d \u00b7 z`.\n12. `sqrt_lt_pred`, **`complete_outlier_escapes`** \u2014 for every order `n \u2265 3` and nonzero\n    `z`, the mean-direction eigenvalue has modulus `(n\u22121)\u2016z\u2016 > \u221an \u00b7 \u2016z\u2016`, so it escapes\n    the naive radius `\u221an \u00b7 \u2016z\u2016`. (Uses 10 and 11.)\n\nTogether these give the \"line-locking + global invariants + outlier\" package in complete,\nmachine-checked form, which is exactly the closed-form obstruction the conjectures below\nbuild on.\n\n## 1. Two-dimensional spectra require broken phase symmetry\n\n**Conjecture.** If the edges carry *independent* complex phases (relaxing\n`w_{ji} = conj(w_{ij})` to genuine independence), the empirical spectral distribution of\nthe normalized adjacency matrix converges, as `n \u2192 \u221e`, to a rotationally invariant law on\na full two-dimensional disk \u2014 in sharp contrast to the line-locked fixed-amplitude model.\n\nThe formalized `line_locking` and `rayleigh_scaled` pin down *why*: line-locking is caused\nentirely by the scalar\u2013Hermitian factorization `z \u2022 B`. All randomness sits in a single\nHermitian matrix, and one complex scalar can only rotate and dilate a real spectrum.\nBreaking the shared phase destroys the factorization, and is conjecturally what recovers\ncircular-law behaviour.\n\n## 2. A phase-transition threshold for the mean-direction outlier\n\n**Conjecture.** For fixed-amplitude `G(n, p)` with weight `z` there is a sharp threshold\n`p*(n)` above which the largest-modulus eigenvalue is asymptotically `p\u00b7(n\u22121)\u00b7|z|` (the\nmean-direction outlier), while the bulk stays within radius `2\u221a{np(1\u2212p)}\u00b7|z|`; separation\noccurs exactly when `p\u00b7(n\u22121) > 2\u221a{np(1\u2212p)}`.\n\nThe formalized endpoints are `complete_eigenvalue` (the deterministic `(n\u22121)\u00b7z` at `p = 1`)\nand `complete_outlier_escapes` (the outlier vs. `\u221an\u00b7\u2016z\u2016` gap). The remaining task is to\ninterpolate the expected row sum `p\u00b7(n\u22121)` against the semicircle radius across `p`.\n\n## 3. Reality of Rayleigh quotients characterizes the line-locked class\n\n**Conjecture.** A weighted adjacency matrix has its full spectrum confined to a single\ncomplex line through the origin *iff* the weighting is a complex scalar multiple of a\nHermitian matrix; equivalently, iff the Rayleigh quotient `\u27e8v, A v\u27e9` is a fixed complex\nmultiple of a real number for all `v`.\n\nThe forward direction is exactly `rayleigh_scaled_real` \u27f9 `line_locking`, now established\nin full: reality of the Hermitian Rayleigh quotient pins each eigenvalue to the line. The\nopen part is the converse \u2014 that line confinement forces the scalar\u2013Hermitian form.\n\n## 4. Determinant zeros track the underlying combinatorics\n\n**Conjecture.** `det(z\u00b7B) = z\u207f\u00b7det(B)` vanishes for fixed nonzero `z` iff `B` has no\nperfect matching of a certain signed type; consequently for `G(n, p)` the probability of\nsingularity has the same threshold as the appearance of an isolated vertex, independent\nof `z`.\n\nThe formalized `det_weighted` and `weighted_singular_iff` make the `z`-independence\nexplicit: the complex amplitude is a global unit that can neither create nor destroy\nsingularity, reducing the question to classical zero-one matrix theory.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0708",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "cb7978a9",
+    "status": "available",
+    "timestamp": "2026-07-24T19:54:50.243437+00:00",
+    "title": "This cycle deepened the theory of the **fixed-amplitude model**, where every pre"
   },
   {
     "consumed_by_exp_id": "",

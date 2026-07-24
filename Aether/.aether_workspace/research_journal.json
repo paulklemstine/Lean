@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "6e1376aa",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\n1. **Finite multimode superpositions.** Extend `winding_mul_zpow` from two modes to a `Finset`-indexed product, proving that the winding is the integer-weighted sum of all compone",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-18T15:35:26",
-      "title": "Deepening: The Topology of Knotted Light: How Laser Beams Get Tangled"
-    },
-    {
       "cycle_id": "6e1b10f7",
       "domain": "Applications",
       "key_insight": "# Future directions\n\nThe formal result in `Catalog/Bridges/GraphZetaPrimeCycle.lean` isolates one adjacency-eigenvalue factor of the Bass–Ihara determinant and proves three parts of the graph-zeta dic",
@@ -2501,6 +2491,16 @@
       "theorem_count": 12,
       "timestamp": "2026-07-24T19:54:45",
       "title": "ArXiv paper: Generalizations of nets and Latin squares"
+    },
+    {
+      "cycle_id": "cb7978a9",
+      "domain": "Computation",
+      "key_insight": "# Future Directions: complex-weighted undirected random graphs\n\nThis cycle deepened the theory of the **fixed-amplitude model**, where every present\nedge of an undirected graph carries a single common",
+      "quality_score": 0.55,
+      "sorry_count": 0,
+      "theorem_count": 18,
+      "timestamp": "2026-07-24T19:55:02",
+      "title": "This cycle deepened the theory of the fixed-amplitude model, where every present"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-24T19:54:45",
+  "last_updated": "2026-07-24T19:55:02",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnUpper⟩); -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i ",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "e9a483ed",
-        "quality": 0.76,
-        "theorems": 8,
-        "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
-      },
-      {
         "cycle_id": "7a438864",
         "quality": 0.66,
         "theorems": 14,
@@ -3327,6 +3321,12 @@
         "quality": 0.6,
         "theorems": 12,
         "title": "ArXiv paper: Generalizations of nets and Latin squares"
+      },
+      {
+        "cycle_id": "cb7978a9",
+        "quality": 0.55,
+        "theorems": 18,
+        "title": "This cycle deepened the theory of the fixed-amplitude model, where every present"
       }
     ],
     "Cryptography": [
