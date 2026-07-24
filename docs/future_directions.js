@@ -4362,7 +4362,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem With"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cc3b4f99",
     "description": "Cycle 0daa61af (Q=0.720) proved 18 theorems in Tropical but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The AdS/CFT correspondence says that a gravitational theory in the bulk of anti-de Sitter space is equivalent to a conformal field theory on the boundary. What if prime numbers have a holographic dual",
     "domains": [
       "Tropical"
@@ -4371,7 +4371,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.77,
     "research_mode": "team",
     "source_exp_id": "0daa61af",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-17T18:03:33.034163+00:00",
     "title": "Close Proofs: Holographic Primes: The Prime Number AdS/CFT Correspondence"
   },
@@ -4809,21 +4809,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-18T10:39:14.961320+00:00",
     "title": "**Conjecture.** For every certificate tree, augmenting redundant-restatement eli"
-  },
-  {
-    "consumed_by_exp_id": "b519e277",
-    "description": "# Future directions\n\nThe completed Lean development proves the local arithmetic dictionary for the quadratic\ncharacter `\u03c7_D(p) = (D/p)`: ramification gives color `0`, and unramified primes split into\nsquare/color `1` and nonsquare/color `-1` cases. It is uniform in every integer parameter\n`D` and every prime `p`, so it applies in particular to every fundamental discriminant with\nabsolute value at most 1000.\n\nThe original mission's global claims are substantially larger than this local core. A faithful\nnext phase should proceed as follows.\n\n1. **Fundamental discriminants.** Define the predicate characterizing quadratic-field\n   discriminants (`D \u2261 1 mod 4` and squarefree, or `D = 4m` with the standard congruence\n   and squarefreeness conditions), and prove uniqueness of the quadratic field attached to\n   each such `D`.\n2. **Certified bounded enumeration.** Construct a finite list of all fundamental\n   discriminants satisfying `|D| \u2264 1000`, prove soundness and completeness of that list,\n   and derive the exact count in Lean. This is the missing part of the proposed bounded test;\n   no unchecked count is asserted here.\n3. **Global Dirichlet characters.** Package the Kronecker symbol `n \u21a6 (D/n)` as a Mathlib\n   `DirichletCharacter`, including the prime `2` and composite moduli. Prove its conductor is\n   `|D|` for fundamental `D` and connect evaluation at odd primes to `quadraticColor`.\n4. **Quadratic fields and Frobenius.** Formalize the quadratic extension `\u211a(\u221aD)`, identify\n   its Galois group with a two-element group, and prove the Frobenius splitting criterion at\n   every unramified prime. This would turn the local Legendre-symbol classification into an\n   explicit shape-to-color statement.\n5. **Injectivity and surjectivity in the quadratic case.** Prove distinct fundamental\n   discriminants yield distinct primitive quadratic Dirichlet characters, and conversely\n   classify primitive quadratic characters by fundamental discriminants. This is the precise\n   finite-order degree-one correspondence relevant to quadratic fields.\n6. **Scope correction for higher rank.** The broad statement in the prompt\u2014an unrestricted\n   bijection between all irreducible representations of `Gal(\u211a\u0304/\u211a)` and cuspidal automorphic\n   representations of `GL_n`\u2014should not be used as a theorem without the customary\n   continuity, semisimplicity, ramification, algebraicity, and compatibility hypotheses.\n   Likewise, the modularity theorem concerns elliptic curves (and associated suitable\n   two-dimensional representations), not every conceivable `n = 2` representation.\n\nNo OEIS sequence is needed for the uniform local theorem. If the certified bounded\nfundamental-discriminant enumeration is completed, its ordered list or counting function can\nthen be compared against a relevant external sequence.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0310",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "d3ef6e43",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T11:59:31.909422+00:00",
-    "title": "The completed Lean development proves the local arithmetic dictionary for the qu"
   },
   {
     "consumed_by_exp_id": "",
@@ -6713,6 +6698,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-24T13:46:55.923072+00:00",
     "title": "The results established here pin down the *sharp linear* growth of iterated"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe certified census of fundamental discriminants with `|D| \u2264 1000` \u2014 exactly `608`, split as\n`303` positive and `305` negative \u2014 turns a heuristic bounded test into a proven finite\nstatement, wired to the uniform local color dictionary `\u03c7_D(p) = (D/p)`. The following\nconjectures extend that arithmetic layer.\n\n## 1. The counting function is asymptotically `6/\u03c0\u00b2 \u00b7 N` per sign\n\n**Conjecture.** Let `F\u207a(N)` and `F\u207b(N)` count fundamental discriminants in `(0, N]` and\n`[-N, 0)` respectively. Then both `F\u207a(N)/N` and `F\u207b(N)/N` converge to `6/\u03c0\u00b2`, and the exact\nvalue at `N = 1000` (`303` and `305`) already sits within the expected error band.\n\n*The key insight is* that fundamental discriminants are governed by a squarefree sieve on a\nfixed union of residue classes modulo `16`, so their density is the squarefree density `6/\u03c0\u00b2`\ndistributed evenly across the admissible classes.\n\n*Why now?* The predicate is now decidable and its finite counts are certified, so the density\nclaim can be tested against exact data at successively larger bounds and then attacked with a\nsquarefree-density argument rather than assumed.\n\n## 2. Sign symmetry is a lower-order phenomenon\n\n**Conjecture.** The discrepancy `F\u207a(N) \u2212 F\u207b(N)` is bounded in absolute value by a slowly\ngrowing function (conjecturally `O(\u221aN)`), so the two signs stay nearly balanced; at `N = 1000`\nthe discrepancy is only `2`.\n\n*The key insight is* that the sign of a fundamental discriminant is decoupled from its\nsquarefree class structure except through the single congruence that distinguishes\n`D \u2261 1 (mod 4)` from `D = 4m`, making a large systematic imbalance impossible.\n\n*Why now?* With both signed counts certified, the discrepancy can be tabulated exactly and its\ngrowth rate probed empirically before a proof is attempted.\n\n## 3. Tame ramification characterises the odd branch\n\n**Established.** A fundamental discriminant is squarefree if and only if it lies in the\n`D \u2261 1 (mod 4)` branch: the even branch always carries a factor of `4`, so the prime `2`\nramifies wildly there, while the odd branch is squarefree and hence tamely ramified at every\nodd prime divisor.\n\n**Conjecture (remaining refinement).** This branch dichotomy upgrades to a prime-by-prime\nstatement: for every fundamental discriminant, the primes that ramify tamely (dividing `D`\nexactly once) are precisely the odd prime divisors, with the prime `2` the unique wildly\nramifying prime, occurring exactly in the `D = 4m` branch.\n\n*The key insight is* that the factor of `4` in the even branch is the sole obstruction to\nsquarefreeness, so squarefreeness is a clean binary invariant separating the two branches.\n\n*Why now?* The local color dictionary already detects ramification (color `0`) uniformly; the\ntame/wild distinction is the missing refinement that upgrades \"ramified\" to a prime-by-prime\nstatement, and the odd branch has just been shown to be squarefree.\n\n## 4. The census determines the field census bijectively\n\n**Conjecture.** The map sending a fundamental discriminant `D` to the quadratic field\n`\u211a(\u221aD)` is a bijection onto the set of quadratic fields; hence the count `608` equals the\nnumber of quadratic fields `\u211a(\u221ad)` whose discriminant has absolute value at most `1000`.\n\n*The key insight is* that a quadratic field is determined by its discriminant, and every\nfundamental discriminant arises from exactly one field, so counting discriminants counts\nfields with no double-counting.\n\n*Why now?* The discriminant side of this bijection is now enumerated and certified; only the\nfield-theoretic uniqueness statement remains, making the correspondence a concrete finite\ntarget rather than an asymptotic one.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0644",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "b519e277",
+    "status": "available",
+    "timestamp": "2026-07-24T14:12:24.278822+00:00",
+    "title": "The certified census of fundamental discriminants with `|D| \u2264 1000` \u2014 exactly `6"
   },
   {
     "consumed_by_exp_id": "",

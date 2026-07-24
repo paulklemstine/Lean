@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-24T13:46:59.939547+00:00",
+  "last_updated": "2026-07-24T14:12:28.589631+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -34991,6 +34991,7 @@
       "outcome_quality": 0.57,
       "phase": "A_only",
       "phase_a_prompt_version": "v19",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v19",
@@ -35019,6 +35020,48 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-24T13:46:59.834403+00:00",
       "title": "Avoidance of t-fold sumsets in dense subsets of [n]"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Applications",
+      "duration_seconds": 1526.2996764183044,
+      "end_time": 1784902333.3523006,
+      "files_integrated": 2,
+      "job_id": "b519e277",
+      "outcome_quality": 0.63,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v19",
+      "phase_b_skip_reason": "low_quality_near_miss",
+      "phase_b_skipped": true,
+      "prompt_version": "v19",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.55,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.85,
+        "composite": 0.48,
+        "cross_domain": 0.5,
+        "grade": "partial",
+        "importance": 0.6,
+        "novelty": 0.55,
+        "proof_depth": 0.6,
+        "usefulness": 0.7
+      },
+      "quality_score": 0.63,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1784900807.0526242,
+      "strategy_count": 0,
+      "theorem_count": 20,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 14,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-24T14:12:28.491481+00:00",
+      "title": "The completed Lean development proves the local arithmetic dictionary for the qu"
     }
   ]
 }
