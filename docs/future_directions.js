@@ -440,6 +440,7 @@ window.FUTURE_DIRECTIONS = [
       "Applications"
     ],
     "id": "scifi_50_22_049203ff",
+    "phase": "A",
     "priority_score": 0.95,
     "research_mode": "team",
     "source_exp_id": "scifi_50_injection",
@@ -1151,6 +1152,7 @@ window.FUTURE_DIRECTIONS = [
       "NumberTheory"
     ],
     "id": "seed_252",
+    "phase": "A",
     "priority_score": 0.93,
     "research_mode": "team",
     "source_exp_id": "seed",
@@ -7077,6 +7079,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "id": "seed_200",
+    "phase": "A",
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
@@ -8896,6 +8899,7 @@ window.FUTURE_DIRECTIONS = [
       "MachineLearning"
     ],
     "id": "fd_0121",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.10890v1",
@@ -10321,6 +10325,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "id": "fd_0627",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.21494v1",
@@ -10686,22 +10691,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Grokking: Phase Transitions in Learning"
   },
   {
-    "consumed_by_exp_id": "06d71b6e",
-    "description": "Formalize chess played on an infinite board. Prove that the king can always escape on an infinite board and determine which finite-piece configurations are forced mates. Develop a theory of infinite combinatorial game value and prove its relationship to ordinal game values.",
-    "domains": [
-      "Novelty",
-      "Computation",
-      "Logic"
-    ],
-    "id": "seed_259",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Infinite-Dimensional Chess: Winning on the Hilbert Board"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize the mathematical conditions under which impossible figures (Penrose triangles, Escher stairs) can exist as manifolds. Prove that every non-orientable 3-manifold contains an embedded Penrose triangle as a smoothly immersed surface. Classify which impossible figures are realizable as developable surfaces.",
     "domains": [
@@ -10757,6 +10746,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "id": "seed_344",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
@@ -11504,7 +11494,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Future directions from cycle 1992c474"
   },
   {
-    "consumed_by_exp_id": "e8a20d63",
+    "consumed_by_exp_id": "",
     "description": "# Future directions\n\n## What is proved now\n\n`Heegner163.lean` gives a kernel-checked elementary chain connecting Euler's\nquadratic polynomial to the discriminants 43, 67, and 163. It proves the sharp\nprime runs, the exact discriminant calculations, the exact cube-plus-744 integer\nidentities, their modular consequences, and that 163 is the maximum of the\nexplicit nine-element Heegner list.\n\n## Highest-priority missing mathematics\n\n1. **Do not treat the proposed uniqueness statement as established.** The claim\n   that 163 is the unique natural `n` for which `exp (\u03c0 * sqrt n)` is within\n   `10\u207b\u2076` of an integer needs careful qualification and a counterexample search.\n   Any rigorous theorem should specify a bounded range or add structural\n   hypotheses. Equidistribution heuristics make an unrestricted uniqueness claim\n   particularly implausible.\n\n2. **Certified transcendental bounds.** Develop interval bounds for `Real.pi`,\n   `Real.sqrt`, and `Real.exp` strong enough to prove\n   `|exp (\u03c0 * sqrt 43) - 884736744| < 10\u207b\u2076`, the analogous claim for 67, and the\n   much tighter estimate for 163. A reusable route is range reduction plus Taylor\n   bounds with rational endpoints, rather than trusting floating-point output.\n\n3. **The modular bridge.** Formalize the upper-half-plane `j`-invariant and its\n   `q`-expansion, then prove a tail estimate connecting a singular modulus to the\n   corresponding near-integer. The exact cube identities in the current file are\n   intended as the arithmetic endpoints for this bridge.\n\n4. **Class numbers.** Define the relevant imaginary quadratic orders and prove\n   the class-number-one statements for the nine listed discriminants. This would\n   replace the current finite list definition with a mathematically characterized\n   predicate.\n\n5. **Stark\u2013Heegner theorem.** The genuinely unbounded assertion that these are\n   all class-number-one imaginary quadratic fields requires deep analytic number\n   theory. It must not be inferred from `max_of_heegner_list`, which only computes\n   the maximum of an explicitly supplied finite set.\n\n6. **Rabinowitsch's criterion.** A useful intermediate target is the equivalence\n   between class number one for discriminant `1 - 4p` and primality of\n   `n\u00b2 + n + p` throughout `0 \u2264 n \u2264 p - 2`. The forward computational instances\n   for `p = 11, 17, 41` are already available here.\n",
     "domains": [
       "Pythagorean",
@@ -11514,7 +11504,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "e1956901",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-18T02:47:18.481788+00:00",
     "title": "`Heegner163.lean` gives a kernel-checked elementary chain connecting Euler's"
   },
@@ -14520,6 +14510,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n`Geometry/HilbertChessLines.lean` develops a self-contained theory of long-range\n(rook / bishop / queen / arbitrary-ray) attackers on the infinite Hilbert board\n`\u2124 \u00d7 \u2124`, modelled uniformly as affine lines `a\u00b7x + b\u00b7y = c`. The chain of\nresults proves a **sharp threshold**: at most 3 of a king's 9 neighbourhood\nsquares can be covered by one line, so \u2265 3 long-range pieces are required to\ncheckmate, exactly 3 suffice, and any finite army leaves infinitely many safe\nsquares (global escape).\n\nNatural extensions, roughly in increasing difficulty:\n\n1. **Occupancy and capture.** The current `Checkmated` predicate ignores whether\n   an attacked neighbour is defended (capturable). Refine it to the true chess\n   condition (a piece may be captured if undefended) and re-derive the threshold;\n   the count `3` should rise once undefended attackers can be taken.\n\n2. **Non-linear pieces.** Add knights (a fixed 8-point attack pattern) and kings\n   as attackers. Knights cover at most 2 of any `3 \u00d7 3` block, so mixed\n   configurations give refined thresholds; a general \"attacker footprint\" API\n   would unify lines and jumps.\n\n3. **Higher-dimensional Hilbert boards.** Lift the whole development to\n   `\u2124^(d+2)`. A single axis line covers `3` of the `3^(d+2)` block squares, so\n   the escape margin grows super-polynomially in `d` \u2014 the fleeing king gains\n   room with every added dimension.\n\n4. **Dynamic (game-tree) escape.** Prove the genuinely game-theoretic statement:\n   against a *moving* finite army the lone king has an infinite legal run\n   (a strategy, not just a static safe square). This connects the static\n   covering bounds here to pursuit games.\n\n5. **Ordinal game values.** Assign transfinite game values to Hilbert-board\n   positions and prove the escape value is `\u03c9` (unbounded flight), linking the\n   `escape_unbounded` corridor to the Evans\u2013Hamkins ordinal analysis of infinite\n   chess. Mathlib's `Ordinal` / `PGame` provide the target objects.\n\n6. **Sharp mate constructions.** Characterise *all* 3-piece checkmate patterns\n   (up to the board's symmetry group), not just the parallel-rook witness, and\n   determine which piece types can participate.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0705",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "06d71b6e",
+    "status": "available",
+    "timestamp": "2026-07-24T19:01:48.664937+00:00",
+    "title": "`Geometry/HilbertChessLines.lean` develops a self-contained theory of long-range"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist \u2014 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 \u2014 they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures \u2014 combinatorial digit problems that are easy to state but may be as hard as factoring.",
     "domains": [
       "Novelty",
@@ -14621,6 +14626,7 @@ window.FUTURE_DIRECTIONS = [
       "NumberTheory"
     ],
     "id": "sorry_fill_2f321176_54d54749",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "2f321176",

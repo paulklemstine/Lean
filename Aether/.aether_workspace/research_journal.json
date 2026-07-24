@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "beeab68d",
-      "domain": "Physics",
-      "key_insight": "# Future directions\n\n## Completed foundation\n\n`Catalog/Physics/CliqueSpectralExtremal.lean` now gives a complete, independently compiling formal development of the multipartite counting and balancing",
-      "quality_score": 0.65,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-07-18T15:17:57",
-      "title": "ArXiv paper: Clique spectral extremal problem on disjoint color-critical graphs"
-    },
-    {
       "cycle_id": "9b57ae5c",
       "domain": "Geometry",
       "key_insight": "# Future Directions: Algebraic Geometry of Morphogenetic Surrogates\n\n## 1. Interaction-hypergraph degree law\n\nFor affine spatial modes coupled by a polynomial interaction law, the degree of the result",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-24T17:59:57",
       "title": "Close Proofs: Cellular Automata at the Ordinals: Transfinite Computation"
+    },
+    {
+      "cycle_id": "06d71b6e",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions\n\n`Geometry/HilbertChessLines.lean` develops a self-contained theory of long-range\n(rook / bishop / queen / arbitrary-ray) attackers on the infinite Hilbert board\n`ℤ × ℤ`, modelled",
+      "quality_score": 0.57,
+      "sorry_count": 0,
+      "theorem_count": 30,
+      "timestamp": "2026-07-24T19:01:52",
+      "title": "Infinite-Dimensional Chess: Winning on the Hilbert Board"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-24T17:59:57",
+  "last_updated": "2026-07-24T19:01:52",
   "open_questions": [
     {
       "context": "+    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; +    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; +    ∀ i < k, c i = ",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "44b2da31",
-        "quality": 0.71,
-        "theorems": 0,
-        "title": "Graph Coloring with Emotions: The Chromatic Polynomial Meets Psychology"
-      },
-      {
         "cycle_id": "5961ca02",
         "quality": 0.69,
         "theorems": 20,
@@ -3451,6 +3445,12 @@
         "quality": 0.65,
         "theorems": 12,
         "title": "**Conjecture.** For every strictly convex radiator-cost function, every finite s"
+      },
+      {
+        "cycle_id": "06d71b6e",
+        "quality": 0.57,
+        "theorems": 30,
+        "title": "Infinite-Dimensional Chess: Winning on the Hilbert Board"
       }
     ],
     "Logic": [
