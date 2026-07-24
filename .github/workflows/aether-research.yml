@@ -12,6 +12,7 @@ on:
 permissions:
   contents: write
   actions: write
+  issues: write
 
 concurrency:
   group: aether-research
@@ -22,6 +23,8 @@ env:
   PYTHONUNBUFFERED: '1'
   # Force HuggingFace to download to the workspace so we can track its size, if you use it.
   HF_HOME: ${{ github.workspace }}/.hf_cache
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
   research:
@@ -78,6 +81,8 @@ jobs:
           POLLINATIONS_API_KEY: ${{ secrets.POLLINATIONS_API_KEY }}
           OLLAMA_API_KEY: ${{ secrets.OLLAMA_API_KEY }}
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: cd Aether && python3 aether_tick.py --max-inflight ${{ env.AETHER_MAX_INFLIGHT }} --ollama-cloud
 
       - name: "Check space after Aether tick"
@@ -86,6 +91,11 @@ jobs:
           df -h
           echo "Finding largest directories in workspace:"
           du -ah --max-depth=2 | sort -rh | head -n 15
+
+      - name: Update website index
+        run: |
+          cd Packages && python3 update_index.py
+          cd ../docs && python3 update_index.py
 
       - name: Commit and push all changes
         run: |
@@ -109,6 +119,3 @@ jobs:
           # The local pre-commit hook may have already pushed catalog-lean.
           # Force-push is safe because the branch is fully derived from master.
           git push --force origin catalog-lean || true
-
-      - name: Update website index
-        run: cd Packages && python3 update_index.py
