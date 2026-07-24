@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "4920904c",
-      "domain": "Logic",
-      "key_insight": "# Future Directions: Complex-Weighted Random Graph Spectra\n\n## 1. Directed fixed-amplitude circular law\nLet each ordered off-diagonal edge be present independently with probability `p`, give every pre",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 46,
-      "timestamp": "2026-07-18T12:32:18",
-      "title": "Erdos-Renyi on Acid: Random Graphs That Hallucinate"
-    },
-    {
       "cycle_id": "f86cfe8a",
       "domain": "Novelty",
       "key_insight": "# Future Directions: Alexander Spectra of Knotted Light\n\n## 1. Composite torus knots split into cyclotomic spectral strata\n\n**Conjecture.** For every odd positive integer `n`, the angular spectrum sel",
@@ -2501,6 +2491,16 @@
       "theorem_count": 13,
       "timestamp": "2026-07-24T06:48:03",
       "title": "Close Proofs: ArXiv paper: Reproducing the k-copwin Algorithm: Theory vs. Implementa"
+    },
+    {
+      "cycle_id": "3984694e",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions — Gaussian binomial coefficients\n\nCompanion to `GarsiaQBinomial.lean`, part of the memorial-tribute exploration for\n*Adriano Garsia (1928–2024)*, whose lifelong subject was the com",
+      "quality_score": 0.618,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-24T09:42:09",
+      "title": "ArXiv paper: A memorial tribute: Adriano Garsia (1928--2024)"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-24T06:48:03",
+  "last_updated": "2026-07-24T09:42:09",
   "open_questions": [
     {
       "context": "+    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; +    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; +    ∀ i < k, c i = ",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "0ebc2749",
-        "quality": 0.77,
-        "theorems": 0,
-        "title": "The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
-      },
-      {
         "cycle_id": "c2f98a25",
         "quality": 0.64,
         "theorems": 9,
@@ -3699,6 +3693,12 @@
         "quality": 0.6,
         "theorems": 24,
         "title": "Pythagorean-Energy-Spectrum: Gradient Descent Factoring on the Berggren Tree"
+      },
+      {
+        "cycle_id": "3984694e",
+        "quality": 0.618,
+        "theorems": 14,
+        "title": "ArXiv paper: A memorial tribute: Adriano Garsia (1928--2024)"
       }
     ],
     "Physics": [
