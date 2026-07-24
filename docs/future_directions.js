@@ -434,21 +434,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Von-Neumann-Parasite: Self-Modifying Viral Automata in Distributed Catalogs"
   },
   {
-    "consumed_by_exp_id": "68dd266b",
-    "description": "Proves the convergence rate of mutual adaptive feedback loops between biological motor cortex signals and synthetic BCI decoders.",
-    "domains": [
-      "Applications"
-    ],
-    "id": "scifi_50_22_049203ff",
-    "phase": "B",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "scifi_50_injection",
-    "status": "in_progress",
-    "timestamp": "2026-07-23T20:07:57.888096+00:00",
-    "title": "Cybernetic-Symbiosis: Optimal Co-Evolution Bounds of Human-AI Neural Interfaces"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Proves Thompson's Reflections on Trusting Trust attack for recursive compiler self-replication with zero detection footprint.",
     "domains": [
@@ -11494,18 +11479,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Future directions from cycle 1992c474"
   },
   {
-    "consumed_by_exp_id": "e8a20d63",
+    "consumed_by_exp_id": "",
     "description": "# Future directions\n\n## What is proved now\n\n`Heegner163.lean` gives a kernel-checked elementary chain connecting Euler's\nquadratic polynomial to the discriminants 43, 67, and 163. It proves the sharp\nprime runs, the exact discriminant calculations, the exact cube-plus-744 integer\nidentities, their modular consequences, and that 163 is the maximum of the\nexplicit nine-element Heegner list.\n\n## Highest-priority missing mathematics\n\n1. **Do not treat the proposed uniqueness statement as established.** The claim\n   that 163 is the unique natural `n` for which `exp (\u03c0 * sqrt n)` is within\n   `10\u207b\u2076` of an integer needs careful qualification and a counterexample search.\n   Any rigorous theorem should specify a bounded range or add structural\n   hypotheses. Equidistribution heuristics make an unrestricted uniqueness claim\n   particularly implausible.\n\n2. **Certified transcendental bounds.** Develop interval bounds for `Real.pi`,\n   `Real.sqrt`, and `Real.exp` strong enough to prove\n   `|exp (\u03c0 * sqrt 43) - 884736744| < 10\u207b\u2076`, the analogous claim for 67, and the\n   much tighter estimate for 163. A reusable route is range reduction plus Taylor\n   bounds with rational endpoints, rather than trusting floating-point output.\n\n3. **The modular bridge.** Formalize the upper-half-plane `j`-invariant and its\n   `q`-expansion, then prove a tail estimate connecting a singular modulus to the\n   corresponding near-integer. The exact cube identities in the current file are\n   intended as the arithmetic endpoints for this bridge.\n\n4. **Class numbers.** Define the relevant imaginary quadratic orders and prove\n   the class-number-one statements for the nine listed discriminants. This would\n   replace the current finite list definition with a mathematically characterized\n   predicate.\n\n5. **Stark\u2013Heegner theorem.** The genuinely unbounded assertion that these are\n   all class-number-one imaginary quadratic fields requires deep analytic number\n   theory. It must not be inferred from `max_of_heegner_list`, which only computes\n   the maximum of an explicitly supplied finite set.\n\n6. **Rabinowitsch's criterion.** A useful intermediate target is the equivalence\n   between class number one for discriminant `1 - 4p` and primality of\n   `n\u00b2 + n + p` throughout `0 \u2264 n \u2264 p - 2`. The forward computational instances\n   for `p = 11, 17, 41` are already available here.\n",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
     "id": "fd_0257",
-    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "e1956901",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-18T02:47:18.481788+00:00",
     "title": "`Heegner163.lean` gives a kernel-checked elementary chain connecting Euler's"
   },
@@ -13429,18 +13413,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "The accompanying Lean development proves the finite algebraic core of homologica"
   },
   {
-    "consumed_by_exp_id": "920a890c",
+    "consumed_by_exp_id": "",
     "description": "# Future directions\n\nThe formal development establishes a concrete genuinely non-strict bicategory: its chosen 1-cell composition has bracketings equal to `5` and `7`, while an invertible associator connects them, and the pentagon and triangle coherence laws hold. It also proves that no `Bicategory.Strict` structure can exist for this fixed composition.\n\nNatural continuations include:\n\n1. **General codiscrete construction.** Package the construction for every unital magma, proving that codiscrete hom-categories turn arbitrary unit and associativity defects into coherent invertible 2-cells.\n2. **Nontrivial 2-cell coherence.** Replace `PUnit` 2-cells by a nontrivial group of automorphisms. Then the pentagon becomes an actual cocycle equation rather than following from subsingleton elimination.\n3. **Skeletal obstruction.** Formalize the relationship between associators in one-object bicategories and normalized group-cohomological 3-cocycles, including the criterion for strictification without changing the underlying 1-cells.\n4. **Biequivalence versus equality.** Prove a strictification result at the level of biequivalence, contrasting it with `no_strict_structure`, which rules out strictness on the fixed data but not replacement by an equivalent strict 2-category.\n5. **Higher coherence.** Develop tricategorical analogues where coherence between associators is itself witnessed by invertible 3-cells. This is the appropriate formal setting for the broader \u201cevery coherent loop-tolerant structure forms a higher category\u201d direction; that sweeping claim requires precise dimensions and coherence axioms before it is a theorem.\n6. **Computational exploration.** Enumerate small finite unital magmas and classify their associativity defects. For the present infinite example, the relevant small calculation is already kernel-checked in `left_bracketing_value` and `right_bracketing_value`, so a separate empirical evidence stage would add no confidence to the proved claim.\n",
     "domains": [
       "Logic",
       "Algebra"
     ],
     "id": "fd_0532",
-    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "3d25b5ad",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-20T23:22:24.198252+00:00",
     "title": "The formal development establishes a concrete genuinely non-strict bicategory: i"
   },
@@ -14524,6 +14507,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-24T19:01:48.664937+00:00",
     "title": "`Geometry/HilbertChessLines.lean` develops a self-contained theory of long-range"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Cybernetic-Symbiosis co-adaptation bounds\n\nThe file `Catalog/Physics/CyberneticSymbiosis.lean` proves a complete, sharp convergence theory\nfor a scalar two-party mutual-adaptation loop (biological signal \u2194 synthetic decoder). Natural\nextensions:\n\n## 1. Vector / multichannel interfaces\nLift the scalar signal to `EuclideanSpace \u211d (Fin d)` (multi-electrode motor cortex). The\ndisagreement recursion `e(n+1) = (1 - a - b) e(n)` is componentwise identical, so\n`\u2016e(n)\u2016 = |1 - a - b|^n \u2016e(0)\u2016`. The interesting generalisation is **channel-dependent gains**\n`a, b : matrices`, where the contraction factor becomes the spectral radius `\u03c1(I - A - B)` and the\nconvergence criterion is `\u03c1 < 1`. This connects to Mathlib's `Matrix` / operator-norm API.\n\n## 2. Time-varying and stochastic gains\nReplace constant `a, b` by sequences `a\u2099, b\u2099` (annealing schedules) and prove convergence under\n`\u220f\u2099 |1 - a\u2099 - b\u2099| \u2192 0`, or almost-sure convergence when the gains carry observation noise\n(Robbins\u2013Monro / stochastic-approximation regime).\n\n## 3. Nonlinear decoders\nModel the decoder update as a general contraction `T` on a complete metric space and connect the\npresent exact-rate results to Mathlib's `ContractingWith` / Banach fixed point, quantifying how the\nlinear rate `|1 - a - b|` degrades to the Lipschitz constant of `T`.\n\n## 4. Optimal-gain / regret formulation\nFormalise the critical-damping optimum (`a + b = 1`, rate `0`) as the solution of an explicit\nminimisation `argmin_{a,b} |1 - a - b|`, and study a regret/energy trade-off penalising large gains\n(realistic BCIs cannot use arbitrarily aggressive updates).\n\n## 5. Stability window as a phase diagram\nThe results establish the sharp trichotomy in the total gain `s = a + b`:\nconverge (`0 < s < 2`), oscillate (`s = 2`), diverge (`s > 2` or `s < 0`). A future file could\npackage this as a single classification theorem and relate it to control-theoretic stability\nmargins.\n",
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_0706",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "68dd266b",
+    "status": "available",
+    "timestamp": "2026-07-24T19:54:29.084076+00:00",
+    "title": "The file `Catalog/Physics/CyberneticSymbiosis.lean` proves a complete, sharp con"
   },
   {
     "consumed_by_exp_id": "",
