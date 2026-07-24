@@ -9016,27 +9016,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "5a7b49b0",
-    "description": "A quantum random walk on a group G is defined by a unitary operator U = sum_{g in S} |g><0| (where S is a generating set) acting on the Hilbert space l^2(G). The walk is periodic if U^k = I for some k, and mixing if the probability distribution P_n(g) = |<g|U^n|0>|^2 converges to the uniform distribution on G. Conjecture: for the Cayley graph Cay(G, S) where G is a finite group and S is a symmetric generating set, the quantum walk mixes in O(sqrt(|G|) * log(|G|)) steps, which is quadratically faster than the classical random walk (which takes O(|G|^2) steps for the spectral gap to kick in). The mixing time is determined by the spectral gap of U: tau_mix ~ 1/gap where gap = 1 - |lambda_2| and lambda_2 is the second-largest eigenvalue of U. Conjecture: for Cay(G, S) with S = the set of transpositions in S_n, the spectral gap of U is Omega(1/n), giving a mixing time of O(n * log(n)). This matches the known classical mixing time of O(n * log(n)) for the random transposition walk on S_n. The quantum advantage comes from the quadratically faster convergence of the probability distribution, not from the spectral gap. Test: simulate quantum random walks on Cayley graphs of S_n, S_n, A_5, and Z_n, measure the mixing time, and verify tau_mix = O(sqrt(|G|) * log(|G|)). Impact: quantum random walks mix quadratically faster than classical random walks on Cayley graphs. The quadratic speedup is universal.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Algebra",
-      "Computation"
-    ],
-    "id": "seed_200",
-    "lineage_refs": [],
-    "priority_score": 0.82,
-    "proof_strategy": "Define quantum random walk on Cay(G, S): the state space is l^2(G), the unitary operator is U = sum_{s in S} |s><0| (or more precisely, U = DFT_G * V where V is the coin operator). The continuous-time walk: H = sum_{s in S} (|0><s| + |s><0|) (the adjacency matrix of Cay(G, S) as a Hamiltonian). The evolution: |psi(t)> = e^{-iHt}|psi(0)>. The probability of being at g at time t: P_t(g) = |<g|e^{-iHt}|0>|^2. The mixing time: tau_mix = min{t : max_g |P_t(g) - 1/|G|| < epsilon}. For the continuous-time walk on Cay(Z_n, {+1, -1}): H is the circulant matrix with eigenvalues lambda_k = 2*cos(2*pi*k/n). The spectral gap is |lambda_1 - lambda_0| = 2 - 2*cos(2*pi/n) ~ 4*pi^2/n^2 for large n. Mixing time: tau_mix ~ n^2/(4*pi^2) * log(n). Classical mixing time: tau_classical ~ n^2 * log(n). So the quantum walk has the SAME mixing time as the classical walk! The quadratic speedup conjecture is WRONG for the continuous-time walk. The correct statement: for the discrete-time coined walk, the quantum walk reaches a 'limiting distribution' (not uniform, but periodic) in O(sqrt(|G|)) steps. The quantum walk does NOT mix to uniform — it oscillates. The 'mixing' is in the sense of time-averaged distribution, which converges in O(sqrt(|G|)) steps. Test: simulate discrete-time quantum walk on Cay(Z_n, {+1, -1}) and Cay(S_n, transpositions), measure time-averaged distribution, verify convergence in O(sqrt(|G|)).",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Determine all integer solutions to n! + 1 = m². Only three solutions are known (n=4,5,7). Formalize the connection to the ABC conjecture and explore bounds on the spacing between Brown numbers.",
     "domain_bridges": [],
@@ -18925,6 +18904,26 @@
     "status": "available",
     "timestamp": "2026-07-24T23:24:18.336392+00:00",
     "title": "This cycle recast the isolated \"prime run\" facts behind discriminants 43, 67, 16"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Spectral Bridge for Quantum Walks on Cayley Graphs\n\n## What was proved\n\n`QuantumWalkSpectralBridge.lean` establishes a concrete, machine-checked bridge between\n**harmonic analysis / representation theory of finite abelian groups** and **spectral graph\ntheory**, in the setting of (quantum) random walks on Cayley graphs of `ZMod n`:\n\n* `char_is_eigenvector` — the additive characters `x ↦ ζ^x` (Fourier basis) simultaneously\n  diagonalise *every* Cayley/circulant adjacency operator, with eigenvalue the character sum\n  `∑_{s∈S} ζ^s`.\n* `eigenvalue_perron` — the trivial character gives the Perron eigenvalue = degree `|S|`.\n* `norm_eigenvalue_le` — every eigenvalue is bounded in modulus by the degree.\n* `eigenvalue_real` — a symmetric connection set yields a real spectrum (Hermitian walk operator).\n* `cycle_eigenvalue` / `cycle_spectrum` — the `n`-cycle has spectrum `2·cos(2πk/n)`.\n\nThese are exactly the spectral data that control the *spectral gap* `1 - |λ₂|` of a walk operator,\nwhich is the quantity the motivating conjecture ties to mixing time.\n\n## Natural next steps\n\n1. **Spectral gap of the cycle, quantitatively.** Prove `1 - cos(2π/n) = Θ(1/n²)` and derive the\n   classical mixing-time scaling `τ_mix = Θ(n² log n)` for the simple random walk on the cycle.\n   This needs the elementary estimate `1 - cos θ = 2 sin²(θ/2)` together with `2θ/π ≤ sin θ ≤ θ`.\n\n2. **General finite abelian groups.** Extend `char_is_eigenvector` from `ZMod n` to an arbitrary\n   finite abelian `G ≅ ∏ ZMod nᵢ`, using the Pontryagin dual `Ĝ`. The eigenvalue at character\n   `χ` is `∑_{s∈S} χ(s)`; the proof is the same character computation componentwise.\n\n3. **Non-abelian Cayley graphs.** For `G` non-abelian the adjacency operator block-diagonalises\n   over irreducible representations: each irrep `ρ` of dimension `d_ρ` contributes the block\n   `∑_{s∈S} ρ(s)`, and eigenvalues are the eigenvalues of these matrices. Formalising this for\n   `S_n` with `S =` transpositions (the random-transposition walk, `gap = Θ(1/n)`) would connect\n   directly to the mission's `S_n` conjecture, but requires substantial representation-theory API.\n\n4. **Quantum walk unitary vs. classical stochastic operator.** The file treats the (Hermitian)\n   adjacency/transition operator. A genuine *quantum* walk uses a unitary `U`; formalising the\n   coined/Szegedy walk and relating `|⟨g|U^n|0⟩|²` to the spectral decomposition of `U` would let\n   one state the quadratic-speedup mixing claims precisely (they are known to be **model- and\n   graph-dependent**, and the universal `O(√|G| log|G|)` claim in the mission statement is *not*\n   true in general — it fails already for the cycle, whose quantum mixing is `Θ(n)`, i.e. linear,\n   not `Θ(√n)`).\n\n5. **Isospectrality / Cayley graph invariants.** Use the character-sum eigenvalue formula to build\n   families of isospectral non-isomorphic Cayley graphs, a classical application of this bridge.\n\n## Caveat on the original conjecture\n\nThe blanket claim \"quantum walks mix in `O(√|G| log|G|)` — the quadratic speedup is universal\" is\nfalse as stated: mixing of quantum walks is not monotone and depends on the coin/graph. The robust,\nprovable core — and what is formalised here — is the *spectral bridge* itself: characters\ndiagonalise Cayley operators, symmetric sets give real spectra, and the cycle spectrum is\n`2cos(2πk/n)`. These are the correct foundations on which any rigorous mixing-time statement rests.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0713",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "5a7b49b0",
+    "status": "available",
+    "timestamp": "2026-07-24T23:24:25.929602+00:00",
+    "title": "`QuantumWalkSpectralBridge.lean` establishes a concrete, machine-checked bridge "
   },
   {
     "ambition_level": "extension",
