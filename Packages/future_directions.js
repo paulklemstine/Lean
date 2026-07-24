@@ -18,21 +18,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum-Pythagorean-Walk: Polynomial Time Integer Factorization via Tree Resonance"
   },
   {
-    "consumed_by_exp_id": "29ba074c",
-    "description": "Formally proves existence and strict convexity of an energy spectrum functional E(a,b,c; N) over Berggren tree paths that guides a deterministic path to a non-trivial factor of N.",
-    "domains": [
-      "Pythagorean",
-      "NumberTheory"
-    ],
-    "id": "pyth_factor_energy_fa724b81",
-    "priority_score": 0.98,
-    "research_mode": "team",
-    "source_exp_id": "pythagorean_factorization_breakthrough",
-    "status": "in_progress",
-    "timestamp": "2026-07-23T20:10:45.687109+00:00",
-    "title": "Pythagorean-Energy-Spectrum: Gradient Descent Factoring on the Berggren Tree"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Derives exact spectral eigenvalue distributions of Berggren tree generator matrices M1, M2, M3 mod N proving that resonant energy frequencies align with prime factors of N = p * q.",
     "domains": [
@@ -316,7 +301,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Von-Neumann-Parasite: Self-Modifying Viral Automata in Distributed Catalogs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "68dd266b",
     "description": "Proves the convergence rate of mutual adaptive feedback loops between biological motor cortex signals and synthetic BCI decoders.",
     "domains": [
       "Applications"
@@ -325,7 +310,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.95,
     "research_mode": "team",
     "source_exp_id": "scifi_50_injection",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-23T20:07:57.888096+00:00",
     "title": "Cybernetic-Symbiosis: Optimal Co-Evolution Bounds of Human-AI Neural Interfaces"
   },
@@ -1492,20 +1477,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Rucker: The Lifebox \u2014 Information-Theoretic Identity"
   },
   {
-    "consumed_by_exp_id": "b853373a",
-    "description": "Cycle dd6a308e (Q=0.790) proved 11 theorems in Pythagorean but left 13 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Building on cycle 7881a56b (Q=0.790), which proved 16 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "sorry_fill_dd6a308e_dfbcebfe",
-    "priority_score": 0.8400000000000001,
-    "research_mode": "team",
-    "source_exp_id": "dd6a308e",
-    "status": "in_progress",
-    "timestamp": "2026-07-20T09:41:55.293921+00:00",
-    "title": "Close Proofs: ArXiv paper: Reproducing the k-copwin Algorithm: Theory vs. Implementa"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Magnitude homology of tope graphs' and formalize its key results. Abstract: We completely determine the magnitude homology of tope graphs of real hyperplane arrangements. Their ranks can be described as the Hilbert functions of the Stanley--Reisner rings of certain simplicial complexes naturally associated with the arrangements. For Coxeter arrangements, this gives a computation of the magnitude homology of the Cayley graph of the corresponding Coxeter group. We also prove the homological reciprocity for central arrangements conjectured by Koizumi--Liu. The proof combines poset combinatorics, the Edelman--Walker theorem, and Alexander duality.",
     "domains": [
@@ -1681,7 +1652,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Large sets of mutually orthogonal quantum Latin squares"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b4f06498",
     "description": "Investigate the ArXiv paper 'Ranks of Elliptic Curves Twisted by Quadratic Forms' and formalize its key results. Abstract: Let $E$ be an elliptic curve over $\\mathbb{Q}$ and let $E^d$ be its twist by the quadratic character $\u03c7_d$. We prove there are infinitely many twists $d$ which are sums of two squares such that $E^d$ has rank $1$. This result is achieved using moments of derivatives of modular $L$-functions, and particularly captures the lower derivatives which were left out in the work of Munshi. Such a result, in particular, also gives us information on the elliptic fibration $(1+t^2)y^2=f(x)$, where $f(x)$ is a cubic polynomial.",
     "domains": [
       "Algebra",
@@ -1691,7 +1662,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.13000v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T13:25:37.164415+00:00",
     "title": "ArXiv paper: Ranks of Elliptic Curves Twisted by Quadratic Forms"
   },
@@ -4023,7 +3994,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Rainbow Arithmetic Progression Threshold Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ec157a87",
     "description": "For any integer t \u2265 2 and any fixed \u03b4 \u2208 (0,1), there exists a constant C = C(t,\u03b4) > 0 such that for all sufficiently large n, there exists a subset S \u2286 [n] with |S| \u2265 \u03b4n such that for all A\u2081, \u2026, A_t \u2286 \u2115 satisfying min_i |A_i| \u2265 C (log n / log(1/\u03b4))^{1/(t-1)}, the t-fold sumset A\u2081 + \u22ef + A_t is not contained in S. This generalizes the main result of the paper (which proves the t=2 case with C \u2248 3) to higher-order sumsets.",
     "domains": [
       "Bridges"
@@ -4032,7 +4003,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.15269v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-17T13:03:31.081362+00:00",
     "title": "Avoidance of t-fold sumsets in dense subsets of [n]"
   },
@@ -6141,21 +6112,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "**Conjecture.** Let a periodic Born-probability sequence have period `k`. For ev"
   },
   {
-    "consumed_by_exp_id": "c760f6fc",
-    "description": "# Future directions\n\nThe formal development studies a precise surrogate for \u201cthe space of mathematical truth\u201d: binary streams encode successive answers, prefix agreement supplies Cantor scales, and the local rule forbids adjacent positive answers. This golden-mean language is nontrivial enough to exhibit a genuine intermediate dimension while remaining amenable to complete kernel-checked proofs.\n\n## Results established\n\n* The admissible depth-`n` cylinders are generated by `truthWords`.\n* Every generated cylinder has length `n`, and its two recursive branches are disjoint.\n* Their exact number is `Nat.fib (n + 2)`.\n* Every finite admissible pattern extends to an infinite locally consistent stream.\n* For `n \u2265 2`, `2^(n/2) \u2264 |truthWords n| < 2^n`, a direct sparse-but-nonnegligible growth certificate.\n* The density contracts quantitatively over two levels.\n* The entropy/box-dimension parameter `log \u03c6 / log 2` is strictly between `0` and `1`.\n\n## Natural next steps\n\n1. Define the actual Cantor ultrametric from first disagreement and prove its metric axioms. Relate radius-`2\u207b\u207f` balls exactly to `AgreeTo n`.\n2. Instantiate Mathlib's covering-number definitions and prove that the upper and lower box dimensions both equal `log \u03c6 / log 2`. This requires converting exact Fibonacci counts into a logarithmic limit.\n3. Generalize from the forbidden block `11` to arbitrary finite forbidden languages. Their cylinder counts are governed by finite adjacency matrices; Perron\u2013Frobenius theory should identify dimension as `log \u03c1(A) / log 2`.\n4. Separate syntax from semantics: fix an explicit prefix-free encoding of formulas and a theory, then study the stream of theoremhood bits. Any unconditional claim about \u201call mathematical truth\u201d depends critically on these choices.\n5. Formalize computability only after fixing an effective coding and proof system. The broad claim that truth dimension is uncomputable is not meaningful without such data and is false for the decidable golden-mean model proved here.\n6. For a genuine Chaitin-style direction, define prefix-free machines, halting domains, and finite Omega approximants. Prove monotonicity and convergence first; machine-dependent randomness or uncomputability requires substantial computability and algorithmic-information infrastructure.\n\nThe present file deliberately does not claim a connection to Chaitin's Omega: such a statement would require machine-specific definitions absent from the prompt and should not be inferred merely from Fibonacci growth.\n",
-    "domains": [
-      "Computation",
-      "Logic"
-    ],
-    "id": "fd_0525",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "1a27f9f3",
-    "status": "in_progress",
-    "timestamp": "2026-07-20T20:48:34.501636+00:00",
-    "title": "The formal development studies a precise surrogate for \u201cthe space of mathematica"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "# Future directions\n\n- Replace the illustrative rational census by an audited dataset and use `fitness_lt_iff_cross_product` as the exact validation criterion. In particular, the labels \u201cZFC\u201d and \u201cZFC plus large cardinals\u201d do not determine connection counts or proof density without an explicit measurement protocol.\n- Generalize fitness from one scalar to a partially ordered vector of explanatory reach, theorem production, consistency strength, and axiom cost. This would distinguish profiles that the scalar product identifies.\n- Derive competitive exclusion from an explicit resource model rather than encoding unique occupancy in `NicheAllocation`. A useful next model would assign resource-demand vectors and prove exclusion under strict scarcity and equilibrium assumptions.\n- Study stochastic evolution with a supermartingale Lyapunov function, replacing deterministic bounded stabilization by almost-sure convergence.\n- Connect theory profiles to a finite graph whose edges are interpretation, conservativity, or transfer theorems, so that `connections` is computed from formal data rather than supplied as a field.\n- Investigate coexistence: the formal counterexample shows that equal scalar fitness need not imply equal profiles, so a richer niche definition may support stable polymorphic equilibria rather than exclusion.\n",
     "domains": [
@@ -6712,6 +6668,51 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Pythagorean Energy Spectrum\n\nThe file `Catalog/Pythagorean/PythagoreanEnergySpectrum.lean` proves, with no\n`sorry` and only the standard axioms (`propext`, `Classical.choice`, `Quot.sound`):\n\n- **Fermat's difference-of-squares criterion** (`composite_iff_diff_squares`): an odd\n  `N` is composite **iff** the hyperbola `s\u00b2 = N + t\u00b2` carries a non-trivial integer\n  point, with explicit factor extraction (`factor_from_repr`, `cofactor_from_repr`).\n- **The energy functional** `E N s = s\u00b2 \u2212 N`: strict convexity on `\u211d`\n  (`energy_strictConvexOn`), strict monotonicity on `[0,\u221e)` (`energy_strictMonoOn`),\n  its value at a factor pair (`energy_at_factor`), and the fact that descending it\n  reaches the most balanced factorization first (`balanced_minimizes_energy`,\n  `energy_lt_of_more_balanced`).\n- **The Berggren bridge**: the three tree maps preserve the Pythagorean relation\n  (`bergA_pyth`, `bergB_pyth`, `bergC_pyth`), strictly grow the hypotenuse\n  (`bergA_hyp_grow`), and every triple yields a difference-of-squares factorization\n  of a leg square (`leg_sq_factorization`).\n- **A deterministic factoring algorithm** `fermatSearch : \u2115 \u2192 Option (\u2115 \u00d7 \u2115)` that\n  scans the energy-spectrum abscissae in order of increasing energy and returns the\n  first difference-of-squares factor pair, proved correct in both directions:\n  `fermatSearch_sound` (every returned pair is a genuine proper factorization\n  `d * e = N` with `1 < d < N`) and `fermatSearch_complete` (for every odd composite\n  `N` the search succeeds).\n\n## Natural next theorems\n\n1. **Deterministic termination of the scan. \u2014 Done.** The bounded search is now\n   formalized as the computable function `fermatSearch : \u2115 \u2192 Option (\u2115 \u00d7 \u2115)`, together\n   with its soundness (`fermatSearch_sound`) and completeness (`fermatSearch_complete`)\n   theorems, upgrading the *existence* criterion to a *correct algorithm* theorem.\n   Remaining refinements: extract the returned `t` as an explicit `Nat.sqrt`-based\n   witness, and show `fermatSearch` returns `none` exactly on primes and prime powers'\n   trivial-only cases.\n\n2. **Complexity of the descent.** Prove that for `N = p\u00b7q` with `|p \u2212 q|` small\n   (balanced semiprimes) the number of scanned abscissae is `O(|p\u2212q|\u00b2/\u221aN)`, giving a\n   formal statement of why Fermat/energy descent is fast on balanced RSA-like moduli\n   and slow otherwise. This is the honest \"guides a deterministic path to a factor\"\n   quantitative claim.\n\n3. **Full Berggren generation.** Combine with the existing\n   `Catalog/Pythagorean/BerggrenCompleteness.lean` to show that the leg-square\n   factorizations obtained from the Berggren subtree rooted at a triple with leg `a`\n   enumerate exactly the factorizations of `a\u00b2`, linking tree depth to divisor\n   structure.\n\n4. **Coprimality / primitivity transport.** Prove the Berggren maps preserve\n   `gcd = 1` (unimodularity of the underlying integer matrices), so the bridge maps\n   *primitive* triples to *primitive* triples, sharpening `leg_sq_factorization` to a\n   statement about `radical(a)`.\n\n5. **Real-analytic optimization view.** Lift `balanced_minimizes_energy` to a genuine\n   `argmin` statement over the finite candidate set of valid abscissae using\n   Mathlib's `IsMinOn` / `StrictConvexOn.lt_of_ne`, making the \"gradient descent on a\n   convex spectrum\" reading a literal Lean theorem about the minimizer.\n\n6. **Generalization to `x\u00b2 \u2212 D y\u00b2 = N`.** The same convex-energy machinery applies to\n   the Pell-conjugate forms; a uniform treatment would connect this file to the\n   `QuadraticReciprocity` and continued-fraction material elsewhere in the catalog.\n",
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_0636",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "29ba074c",
+    "status": "available",
+    "timestamp": "2026-07-24T06:47:41.751294+00:00",
+    "title": "The file `Catalog/Pythagorean/PythagoreanEnergySpectrum.lean` proves, with no"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions \u2014 the fractal geometry of the truth space\n\nThe formal development studies a precise surrogate for \"the space of mathematical truth\": binary\nstreams `\u2115 \u2192 Bool` encode successive answers, prefix agreement supplies Cantor scales, and the\nlocal rule forbids adjacent positive answers (the golden-mean subshift). This language is\nnontrivial enough to exhibit a genuine intermediate dimension while remaining amenable to\ncomplete, kernel-checked proofs.\n\n## Results established (cumulative)\n\n### Cycle 0 \u2014 combinatorics of cylinders (`Catalog/Combinatorics/FractalTruth.lean`)\n* The admissible depth-`n` cylinders are generated by `truthWords`.\n* Every generated cylinder has length `n`, and its two recursive branches are disjoint.\n* Their exact number is `Nat.fib (n + 2)`.\n* Every finite admissible pattern extends to an infinite locally consistent stream.\n* For `n \u2265 2`, `2^(n/2) \u2264 |truthWords n| < 2^n` (sparse-but-nonnegligible growth).\n* The density contracts quantitatively over two levels.\n* The entropy / box-dimension parameter `log \u03c6 / log 2` is strictly between `0` and `1`.\n\n### Cycle 1 \u2014 the Cantor ultrametric (`Catalog/Combinatorics/FractalTruthMetric.lean`)\nThis cycle carries out **natural next step #1**: it builds the actual Cantor metric coming from\nthe first index of disagreement and proves its metric axioms, then pins down the metric/scale\ndictionary exactly. The file is a self-contained chain in which each theorem feeds the next.\n\n* `AgreeTo n x y` \u2014 prefix agreement on the first `n` coordinates; reflexive, symmetric,\n  transitive, antitone in `n`, and `agreeTo_all_iff_eq`: agreement at all depths \u21d4 equality.\n* `firstDiff x y := sInf {k | x k \u2260 y k}` \u2014 the first disagreement index, with\n  `firstDiff_spec` (genuine disagreement there), `agreeTo_firstDiff` (agreement strictly before),\n  `firstDiff_comm`, and the key bridge\n  `agreeTo_iff_le_firstDiff : x \u2260 y \u2192 (AgreeTo n x y \u2194 n \u2264 firstDiff x y)`.\n* `cantorDist x y := if x = y then 0 else 2 ^ (-firstDiff x y)` \u2014 with\n  `cantorDist_self`, `cantorDist_nonneg`, `cantorDist_pos_of_ne`, `cantorDist_comm`,\n  and `eq_of_cantorDist_eq_zero`.\n* **`cantorDist_le_iff_agreeTo`** \u2014 the closed ball of radius `2\u207b\u207f` about `x` is *exactly* the\n  prefix-agreement class `{y | AgreeTo n x y}`. This is the precise bridge between the metric\n  scale and the Cycle-0 cylinder structure (whose depth-`n` classes number `fib (n+2)`).\n* **`cantorDist_ultra`** \u2014 the ultrametric (strong triangle) inequality\n  `d(x,z) \u2264 max (d(x,y)) (d(y,z))`, from which `cantorDist_triangle` follows.\n* A `MetricSpace` instance on the type synonym `Cantor := \u2115 \u2192 Bool`, assembled from the above.\n\nAll Cycle-1 results are `sorry`-free and depend only on the standard axioms\n`propext, Classical.choice, Quot.sound`.\n\n## Natural next steps\n\n1. **Box dimension as a limit.** With `cantorDist_le_iff_agreeTo` in hand, a minimal cover of the\n   golden-mean set at scale `2\u207b\u207f` uses exactly `fib (n+2)` balls. Convert the exact Fibonacci\n   counts into a logarithmic limit `log (fib (n+2)) / (n log 2) \u2192 log \u03c6 / log 2` and feed it into\n   Mathlib's covering-number / box-dimension definitions to prove upper and lower box dimensions\n   coincide with `truthDimension`.\n2. **Completeness / compactness.** Prove `(Cantor, cantorDist)` is complete and totally bounded\n   (hence compact): every `AgreeTo`-class of radius `2\u207b\u207f` is covered by finitely many, and Cauchy\n   sequences stabilize coordinatewise. Then show the golden-mean subshift is a closed subset.\n3. **Forbidden-block generalization.** Replace `11` by an arbitrary finite forbidden language.\n   Cylinder counts are governed by finite adjacency matrices; Perron\u2013Frobenius theory should\n   identify the dimension as `log \u03c1(A) / log 2`.\n4. **Syntax vs. semantics.** Fix an explicit prefix-free encoding of formulas and a theory, then\n   study the stream of theoremhood bits. Any unconditional claim about \"all mathematical truth\"\n   depends critically on these choices.\n5. **Computability.** Only after fixing an effective coding and proof system. The broad claim that\n   truth dimension is uncomputable is not meaningful without such data and is false for the\n   decidable golden-mean model proved here.\n6. **Chaitin-style direction.** Define prefix-free machines, halting domains, and finite Omega\n   approximants; prove monotonicity and convergence first.\n\nThe present development deliberately does not claim a connection to Chaitin's Omega: such a\nstatement would require machine-specific definitions absent from the prompt and should not be\ninferred merely from Fibonacci growth.\n",
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "fd_0637",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "c760f6fc",
+    "status": "available",
+    "timestamp": "2026-07-24T06:47:50.315069+00:00",
+    "title": "The formal development studies a precise surrogate for \"the space of mathematica"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis cycle proved a cross-domain bridge in\n`Catalog/Bridges/CopwinKnasterTarski.lean`:\n\n> The kernel produced by finite cop-win pruning (a contracting, monotone update\n> `F : Finset \u03b1 \u2192 Finset \u03b1`) equals \u2014 after coercion \u2014 the Knaster\u2013Tarski\n> greatest fixed point `OrderHom.gfp (G F S)` of an associated monotone\n> endomorphism of the complete lattice `Set \u03b1`. Moreover this abstract greatest\n> fixed point is *computed* by the concrete pruning loop within `|S|` rounds\n> (`gfp_computed_by_finite_iteration`).\n\nThis connects **finite combinatorics / algorithm termination** with\n**order-theoretic fixed-point theory (Knaster\u2013Tarski)**.\n\n## Natural extensions\n\n1. **Least fixed points and the dual game.** Mirror the development with\n   *expanding* monotone updates and `OrderHom.lfp`, modeling saturation-style\n   algorithms (adding candidates until closure). The dual bridge\n   `lfp = \u2191(closure kernel)` should follow the same pattern.\n\n2. **Well-founded infinite candidate spaces.** Replace `Finset \u03b1` by a\n   candidate space with a well-founded strict-subset relation. The termination\n   argument uses only strict cardinality descent; a well-founded ranking should\n   recover a transfinite stabilization ordinal and a bridge to `gfp` on the\n   ambient complete lattice.\n\n3. **Quantitative round complexity.** The `|S|` bound is sharp for one-deletion\n   updates but loose for realistic cop-win pruning. Bounding the number of\n   *effective* rounds by structural graph parameters (treewidth, cop number)\n   would sharpen the algorithmic side.\n\n4. **Product / multi-cop games.** Extend to product state spaces modeling the\n   `k`-cop game directly, and show the kernel corresponds to the set of\n   `k`-cop-win positions, connecting the fixed-point bridge to pursuit-evasion\n   semantics.\n\n5. **Effectivity of `gfp`.** `OrderHom.gfp` is noncomputable; the bridge already\n   supplies an explicit finite computation. Packaging this as a verified\n   executable decision procedure for membership in `gfp` is a concrete\n   software-verification target.\n",
+    "domains": [
+      "Computation",
+      "Bridges"
+    ],
+    "id": "fd_0638",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "b853373a",
+    "status": "available",
+    "timestamp": "2026-07-24T06:47:58.579997+00:00",
+    "title": "Cross-domain bridge in"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle 1a27f9f3 (Q=0.700) proved 15 theorems in Combinatorics but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Define a natural metric on the space of all mathematical statements and prove that the set of true statements has a fractal dimension. Show that this dimension is strictly between 0 and 1 (truth is sp",
     "domains": [
       "Combinatorics"
@@ -6807,6 +6808,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-19T11:52:43.410408+00:00",
     "title": "Close Proofs: Cellular Automata at the Ordinals: Transfinite Computation"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 29ba074c (Q=0.600) proved 24 theorems in NumberTheory but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formally proves existence and strict convexity of an energy spectrum functional E(a,b,c; N) over Berggren tree paths that guides a deterministic path to a non-trivial factor of N.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "sorry_fill_29ba074c_5136a953",
+    "priority_score": 0.65,
+    "research_mode": "team",
+    "source_exp_id": "29ba074c",
+    "status": "available",
+    "timestamp": "2026-07-24T06:47:46.532440+00:00",
+    "title": "Close Proofs: Pythagorean-Energy-Spectrum: Gradient Descent Factoring on the Berggre"
   },
   {
     "consumed_by_exp_id": "",

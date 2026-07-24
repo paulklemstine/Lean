@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "fff627f3",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions\n\n## 1. Baire-category classification of convergent prime rearrangements\n\n**Conjecture.** In the pointwise topology on the infinite symmetric group, the set of permutations for whic",
-      "quality_score": 0.77,
-      "sorry_count": 0,
-      "theorem_count": 7,
-      "timestamp": "2026-07-18T12:16:03",
-      "title": "Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
-    },
-    {
       "cycle_id": "4920904c",
       "domain": "Logic",
       "key_insight": "# Future Directions: Complex-Weighted Random Graph Spectra\n\n## 1. Directed fixed-amplitude circular law\nLet each ordered off-diagonal edge be present independently with probability `p`, give every pre",
@@ -2501,6 +2491,16 @@
       "theorem_count": 18,
       "timestamp": "2026-07-24T06:47:55",
       "title": "The formal development studies a precise surrogate for “the space of mathematica"
+    },
+    {
+      "cycle_id": "b853373a",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nThis cycle proved a cross-domain bridge in\n`Catalog/Bridges/CopwinKnasterTarski.lean`:\n\n> The kernel produced by finite cop-win pruning (a contracting, monotone update\n> `F : Fins",
+      "quality_score": 0.66,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-07-24T06:48:03",
+      "title": "Close Proofs: ArXiv paper: Reproducing the k-copwin Algorithm: Theory vs. Implementa"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-24T06:47:55",
+  "last_updated": "2026-07-24T06:48:03",
   "open_questions": [
     {
       "context": "+    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; +    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; +    ∀ i < k, c i = ",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "b44b7357",
-        "quality": 0.75,
-        "theorems": 0,
-        "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
-      },
-      {
         "cycle_id": "955187b3",
         "quality": 0.68,
         "theorems": 20,
@@ -3637,6 +3631,12 @@
         "quality": 0.63,
         "theorems": 16,
         "title": "ArXiv paper: The Spine: A Supersingular Highway"
+      },
+      {
+        "cycle_id": "b853373a",
+        "quality": 0.66,
+        "theorems": 13,
+        "title": "Close Proofs: ArXiv paper: Reproducing the k-copwin Algorithm: Theory vs. Implem"
       }
     ],
     "NumberTheory": [
