@@ -6525,22 +6525,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Convexity and Linear Programming"
   },
   {
-    "consumed_by_exp_id": "a4e412f3",
-    "description": "Solve the happy end problem for arbitrary n: determine the minimum number of points in general position in the plane that guarantee a convex n-gon. Formalize the Erd\u0151s\u2013Szekeres theorem and improve known bounds.",
-    "domains": [
-      "Geometry",
-      "Combinatorics"
-    ],
-    "id": "seed_010",
-    "phase": "complete",
-    "priority_score": 0.82,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Happy End Problem"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Develop a rigorous axiomatic foundation for physics, particularly for probability and mechanics. Formalize Kolmogorov's axioms, explore constructive quantum mechanics, and connect to topos-theoretic physics.",
     "domains": [
@@ -14135,6 +14119,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-24T23:24:25.929602+00:00",
     "title": "`QuantumWalkSpectralBridge.lean` establishes a concrete, machine-checked bridge "
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Happy-End / Erd\u0151s\u2013Szekeres\n\n`Geometry/ErdosSzekeresCupCap.lean` gives a complete, self-contained proof of the\nErd\u0151s\u2013Szekeres **cup\u2013cap theorem** with the sharp bound `C(k+l-4,k-2)+1`, and\nderives the classical Happy-End upper bound `ES(n) \u2264 C(2n-4,n-2)+1` together with\nits convex-position corollary (`happy_end`).  Natural next steps:\n\n## Lower bound and exact values\n* Formalise the Erd\u0151s\u2013Szekeres **lower** construction `ES(n) \u2265 2^{n-2}+1`\n  (the \"Erd\u0151s\u2013Szekeres configuration\" built from products of small cup/cap sets),\n  giving a two-sided bound in Lean.\n* Verify the exactly-known small values `ES(4)=5`, `ES(5)=9`, `ES(6)=17`\n  (the last requiring the Szekeres\u2013Peters computer proof) as `decide`/search\n  certificates over concrete point configurations.\n\n## Sharpness of the cup\u2013cap bound\n* Prove `C(k+l-4,k-2)` points admitting **no** `k`-cup and **no** `l`-cap exist,\n  i.e. that the threshold in `erdos_szekeres_cupcap` is optimal\n  (the catalog states this as `CupCapTightness`).\n\n## Strengthening the geometric layer\n* Replace the orientation certificate `InConvexPosition` by Mathlib's\n  `Convex`/`convexHull` notion and prove the two agree for finite point sets, so\n  `happy_end` connects directly to mainstream convex geometry.\n* Extend from \"distinct `x`-coordinate\" general position to arbitrary general\n  position by a generic rotation argument.\n\n## Toward modern bounds\n* Formalise T\u00f3th\u2013Valtr's `C(2n-5,n-2)+1` improvement of the upper bound.\n* The Suk `2^{n+o(n)}` bound and the positive-fraction / partition-Ramsey\n  variants remain completely open for formalisation.\n\n## Higher dimensions and variants\n* The `d`-dimensional Happy-End problem (convex position of points in `\u211d^d`).\n* Empty-convex-polygon (Horton sets, the \"empty hexagon\" theorem of\n  Gerken/Nicol\u00e1s) \u2014 a large, currently-unformalised target.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0714",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "a4e412f3",
+    "status": "available",
+    "timestamp": "2026-07-24T23:24:30.561602+00:00",
+    "title": "`Geometry/ErdosSzekeresCupCap.lean` gives a complete, self-contained proof of th"
   },
   {
     "consumed_by_exp_id": "",

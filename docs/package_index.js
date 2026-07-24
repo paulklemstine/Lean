@@ -4,6 +4,17 @@
 
 window.PACKAGE_INDEX = [
   {
+    "date": "2026-07-24T23:24:31Z",
+    "domain": "Speculative",
+    "exp_id": "a4e412f3",
+    "filename": "happy_end_problem.json",
+    "pkg_num": 462,
+    "quality": "unrated",
+    "quality_score": null,
+    "quality_tier": "unrated",
+    "title": "Cups, Caps, and the Happy-End Theorem"
+  },
+  {
     "date": "2026-07-24T23:24:19Z",
     "domain": "Pythagorean",
     "exp_id": "e8a20d63",
@@ -7148,6 +7159,14 @@ window.PACKAGE_DB_INDEX = {
       "seed"
     ],
     "title": "Geometric Defect and Logical Capacity in Spacetime-Code Dictionaries"
+  },
+  "happy_end_problem.json": {
+    "domain": "Speculative",
+    "exp_id": "a4e412f3",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Cups, Caps, and the Happy-End Theorem"
   },
   "heegner163lean_gives_a_kernel_checked_elementary_c.json": {
     "domain": "Pythagorean",
