@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-24T12:46:06.579337+00:00",
+  "last_updated": "2026-07-24T13:46:59.939547+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -34948,6 +34948,7 @@
       "outcome_quality": 0.57,
       "phase": "A_only",
       "phase_a_prompt_version": "v19",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v19",
@@ -34976,6 +34977,48 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-24T12:46:06.480721+00:00",
       "title": "ArXiv paper: Ranks of Elliptic Curves Twisted by Quadratic Forms"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 3,
+      "domain": "Logic",
+      "duration_seconds": 3647.3562145233154,
+      "end_time": 1784900798.118955,
+      "files_integrated": 2,
+      "job_id": "ec157a87",
+      "outcome_quality": 0.57,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v19",
+      "phase_b_skip_reason": "low_quality_near_miss",
+      "phase_b_skipped": true,
+      "prompt_version": "v19",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.7,
+        "composite": 0.44,
+        "cross_domain": 0.5,
+        "grade": "partial",
+        "importance": 0.55,
+        "novelty": 0.45,
+        "proof_depth": 0.6,
+        "usefulness": 0.65
+      },
+      "quality_score": 0.57,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1784897150.7627404,
+      "strategy_count": 0,
+      "theorem_count": 9,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 7,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-24T13:46:59.834403+00:00",
+      "title": "Avoidance of t-fold sumsets in dense subsets of [n]"
     }
   ]
 }

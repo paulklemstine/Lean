@@ -1886,7 +1886,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Record compositions of alternating permutations and noncommutative symmetric functions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2153ae5a",
     "description": "Investigate the ArXiv paper 'On Agreement Subtrees in Multiple Pylogenetic Trees' and formalize its key results. Abstract: Snir and Yuster [Discrete Appl. Math. 347 (2026) 160--171] asked for the least number $h(k)$ such that $k$ unrooted binary phylogenetic trees on the same $h(k)$ leaves always share a common quartet. We give a new upper bound for the $k$-tree version of the Maximum Agreement Subtree problem, namely an upper bound for the number of leaves, on which $k$ unrooted binary phylogenetic trees always share a common induced binary subtree on $n$ leaves, which is a four-times iterated exponential function. For $h(k)$, this implies a four-times iterated exponential upper bound. We also set an exponential lower bound for $h(k)$.",
     "domains": [
       "Bridges"
@@ -1895,7 +1895,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12778v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T13:43:20.804355+00:00",
     "title": "ArXiv paper: On Agreement Subtrees in Multiple Pylogenetic Trees"
   },
@@ -3949,20 +3949,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-17T12:55:09.512961+00:00",
     "title": "Rainbow Arithmetic Progression Threshold Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "ec157a87",
-    "description": "For any integer t \u2265 2 and any fixed \u03b4 \u2208 (0,1), there exists a constant C = C(t,\u03b4) > 0 such that for all sufficiently large n, there exists a subset S \u2286 [n] with |S| \u2265 \u03b4n such that for all A\u2081, \u2026, A_t \u2286 \u2115 satisfying min_i |A_i| \u2265 C (log n / log(1/\u03b4))^{1/(t-1)}, the t-fold sumset A\u2081 + \u22ef + A_t is not contained in S. This generalizes the main result of the paper (which proves the t=2 case with C \u2248 3) to higher-order sumsets.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0220",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.15269v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-17T13:03:31.081362+00:00",
-    "title": "Avoidance of t-fold sumsets in dense subsets of [n]"
   },
   {
     "consumed_by_exp_id": "",
@@ -6712,6 +6698,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-24T12:46:02.174235+00:00",
     "title": "The results developed in this cycle isolate the elementary backbone of the twist"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Avoidance of t-fold sumsets in dense sets\n\nThe results established here pin down the *sharp linear* growth of iterated\nsumsets and the deterministic avoidance regime it induces. The gap between this\nlinear barrier and the conjectural logarithmic threshold frames the following\nbold, testable conjectures.\n\n## Conjecture 1 \u2014 The logarithmic avoidance threshold for t-fold sumsets\n\nFor every integer `t \u2265 2` and every fixed `\u03b4 \u2208 (0,1)` there is a constant\n`C = C(t,\u03b4) > 0` such that, for all large `n`, some set `S \u2286 {1, \u2026, n}` with\n`|S| \u2265 \u03b4n` contains no `t`-fold sumset `A\u2081 + \u22ef + A_t` whose parts all satisfy\n`|A\u1d62| \u2265 C \u00b7 (log n / log(1/\u03b4))^{1/(t\u22121)}`.\n\nThe key insight is that the binding obstruction is not the *size* of the sumset\n(which the arithmetic-progression extremiser keeps merely linear) but the number\nof *distinct* sumset shapes a dense random set can simultaneously swallow; a\nsecond-moment count over shapes, not over tuples, collapses the exponent from\nlinear to `1/(t\u22121)`.\n\nWhy now? The `t = 2` case has just been settled with an explicit small constant,\nand the sharp iterated growth backbone is now available in fully verified form,\nso the induction on `t` finally has a rigorous base and a clean structural step\nto climb.\n\n## Conjecture 2 \u2014 Sharp exponent `1/(t\u22121)` is optimal\n\nThe exponent `1/(t\u22121)` in Conjecture 1 cannot be lowered: for every `t` there is\na density `\u03b4` and arbitrarily large `n` for which *every* `\u03b4n`-dense set contains\nsome `t`-fold sumset with all parts of size `\u2265 c \u00b7 (log n)^{1/(t\u22121) \u2212 o(1)}`.\n\nThe key insight is that a nested arithmetic-progression construction realises a\nsumset with `t\u22121` independent \"growth directions,\" so shrinking the exponent\nbelow `1/(t\u22121)` would force one direction to carry super-logarithmic length,\nwhich a pigeonhole on residues forbids.\n\nWhy now? The extremal examples that saturate the linear backbone (dilated\nsimplices) are exactly the candidates to be perturbed into the logarithmic\nregime, and their growth is now understood exactly.\n\n## Conjecture 3 \u2014 Density\u2013threshold trade-off is a genuine power law\n\nDefine `k*(n, \u03b4, t)` as the least part-size threshold that admits a `\u03b4n`-dense\navoiding set. Then `k*(n, \u03b4, t) = \u0398((log n)^{1/(t\u22121)} \u00b7 (log(1/\u03b4))^{\u22121/(t\u22121)})`\nuniformly for `\u03b4` bounded away from `0` and `1`.\n\nThe key insight is that `log(1/\u03b4)` and `log n` enter only through their ratio,\nbecause both measure \"bits of freedom\" \u2014 one per excluded element, one per\nambient coordinate \u2014 so the threshold must be homogeneous of degree `0` in that\npair after the `(t\u22121)`-th root.\n\nWhy now? The linear backbone already exhibits the exact `1/t`-type scaling in the\npart count `t`, isolating `t` as the correct root index and making the joint\n`(n, \u03b4)` dependence the only remaining unknown.\n\n## Conjecture 4 \u2014 Structural rigidity of near-extremal containers\n\nIf a `\u03b4n`-dense set `S` contains a `t`-fold sumset with parts of size within a\n`(1+o(1))` factor of the threshold, then `S` must contain a long arithmetic\nprogression (of length `n^{\u03a9(1)}`).\n\nThe key insight is that saturating the growth bound forces every summand to be an\narithmetic progression with a common difference, and a dense container of such a\nprogression inherits its structure \u2014 avoidance and rigidity are two faces of the\nsame extremal equation.\n\nWhy now? The equality case of the iterated growth bound is now identified\nexactly (arithmetic progressions), turning a qualitative \"structure vs.\nrandomness\" heuristic into a precise, checkable rigidity statement.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0643",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "ec157a87",
+    "status": "available",
+    "timestamp": "2026-07-24T13:46:55.923072+00:00",
+    "title": "The results established here pin down the *sharp linear* growth of iterated"
   },
   {
     "consumed_by_exp_id": "",

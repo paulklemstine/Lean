@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "26ad8b0e",
-      "domain": "Logic",
-      "key_insight": "# Future directions\n\nThe formalization establishes the foundational deletion-stability theory for complete sets:\nstrong completeness is equivalent to completeness of every tail (and even of all suffic",
-      "quality_score": 0.64,
-      "sorry_count": 0,
-      "theorem_count": 61,
-      "timestamp": "2026-07-18T13:38:04",
-      "title": "ArXiv paper: Strongly complete sets and a conjecture of Erdős"
-    },
-    {
       "cycle_id": "7a438864",
       "domain": "Computation",
       "key_insight": "# Future directions\n\n1. **Heterogeneous planets.** Generalize the equal-rate formula `(1-p)^N` to `∏ i, (1-pᵢ)` and prove `1 - ∏ i, (1-pᵢ) ≤ ∑ i, pᵢ` over finite populations.\n2. **Dependence without i",
@@ -2501,6 +2491,16 @@
       "theorem_count": 16,
       "timestamp": "2026-07-24T12:46:06",
       "title": "ArXiv paper: Ranks of Elliptic Curves Twisted by Quadratic Forms"
+    },
+    {
+      "cycle_id": "ec157a87",
+      "domain": "Logic",
+      "key_insight": "# Future Directions — Avoidance of t-fold sumsets in dense sets\n\nThe results established here pin down the *sharp linear* growth of iterated\nsumsets and the deterministic avoidance regime it induces.",
+      "quality_score": 0.57,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-24T13:46:59",
+      "title": "Avoidance of t-fold sumsets in dense subsets of [n]"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-24T12:46:06",
+  "last_updated": "2026-07-24T13:46:59",
   "open_questions": [
     {
       "context": "+    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; +    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; +    ∀ i < k, c i = ",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "26ad8b0e",
-        "quality": 0.64,
-        "theorems": 61,
-        "title": "ArXiv paper: Strongly complete sets and a conjecture of Erdős"
-      },
-      {
         "cycle_id": "d4bc25af",
         "quality": 0.65,
         "theorems": 9,
@@ -3513,6 +3507,12 @@
         "quality": 0.7,
         "theorems": 6,
         "title": "Deepening: Erdos-Renyi on Acid: Random Graphs That Hallucinate"
+      },
+      {
+        "cycle_id": "ec157a87",
+        "quality": 0.57,
+        "theorems": 9,
+        "title": "Avoidance of t-fold sumsets in dense subsets of [n]"
       }
     ],
     "MachineLearning": [

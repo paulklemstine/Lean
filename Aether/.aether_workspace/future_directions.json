@@ -3469,11 +3469,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 2,
       "catalog_references": [],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "2153ae5a",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -3485,7 +3485,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0041",
-      "last_attempt_time": "2026-07-20T20:49:01.767014+00:00",
+      "last_attempt_time": "2026-07-24T13:47:53.446826+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Bypassed",
       "lineage_refs": [],
@@ -3500,7 +3500,7 @@
       "source": "",
       "source_exp_id": "2607.12778v1",
       "source_path": "http://arxiv.org/abs/2607.12778v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-15T13:43:20.804355+00:00",
       "title": "ArXiv paper: On Agreement Subtrees in Multiple Pylogenetic Trees"
@@ -32551,6 +32551,7 @@
     "abduction_followup",
     "cross_domain_bridge",
     "abduction_followup",
-    "famous_subtask"
+    "famous_subtask",
+    "cross_domain_bridge"
   ]
 }
