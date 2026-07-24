@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "b596d3d1",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions: Geometry Beyond Integer Linking\n\n## 1. A real-valued Hopf-geometric concurrence functional\n\nThere exists a canonically normalized real-valued functional on the quaternionic Hopf g",
-      "quality_score": 0.75,
-      "sorry_count": 0,
-      "theorem_count": 21,
-      "timestamp": "2026-07-18T13:21:34",
-      "title": "Quantum Entanglement as Algebraic Topology: The Linking Number Is Entanglement"
-    },
-    {
       "cycle_id": "26ad8b0e",
       "domain": "Logic",
       "key_insight": "# Future directions\n\nThe formalization establishes the foundational deletion-stability theory for complete sets:\nstrong completeness is equivalent to completeness of every tail (and even of all suffic",
@@ -2501,6 +2491,16 @@
       "theorem_count": 21,
       "timestamp": "2026-07-24T12:04:05",
       "title": "Random-Matrix: Wigner Semicircle Law Convergence for Wigner Ensembles"
+    },
+    {
+      "cycle_id": "b4f06498",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Ranks of elliptic curves twisted by quadratic forms\n\nThe results developed in this cycle isolate the elementary backbone of the twisted\nfamily `E^d : d y² = x³ + a x + b`: the fi",
+      "quality_score": 0.57,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-07-24T12:46:06",
+      "title": "ArXiv paper: Ranks of Elliptic Curves Twisted by Quadratic Forms"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-24T12:04:05",
+  "last_updated": "2026-07-24T12:46:06",
   "open_questions": [
     {
       "context": "+    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; +    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; +    ∀ i < k, c i = ",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "93551ae8",
-        "quality": 0.65,
-        "theorems": 10,
-        "title": "ArXiv paper: On strongly regular signed graphs of higher girth"
-      },
-      {
         "cycle_id": "c231497c",
         "quality": 0.69,
         "theorems": 22,
@@ -3141,6 +3135,12 @@
         "quality": 0.6,
         "theorems": 1636,
         "title": "Deepening: 1. **Repair the definition before studying asymptotics.** The literal"
+      },
+      {
+        "cycle_id": "b4f06498",
+        "quality": 0.57,
+        "theorems": 16,
+        "title": "ArXiv paper: Ranks of Elliptic Curves Twisted by Quadratic Forms"
       }
     ],
     "Bridges": [

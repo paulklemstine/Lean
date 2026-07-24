@@ -125,11 +125,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 2,
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "2a754509",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -141,7 +141,7 @@
       ],
       "github_issue": 0,
       "id": "dir_50_03_d9e2ce95",
-      "last_attempt_time": "2026-07-23T23:13:05.314837+00:00",
+      "last_attempt_time": "2026-07-24T12:46:20.499661+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem automorphic_l_function_zero_density (F : AutomorphicForm GL2) (T : ℝ) : ZeroCountNearCriticalLine F T ≤ Constant * T * Real.log T",
       "lineage_refs": [],
@@ -156,7 +156,7 @@
       "source": "",
       "source_exp_id": "batch_50_injection",
       "source_path": "50_new_research_directions.md",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-23T20:05:22.485425+00:00",
       "title": "L-Function-Zeroes: Explicit Bounds on Low-Lying Zeroes of Automorphic L-Functions"
@@ -32509,6 +32509,7 @@
     "cross_domain_bridge",
     "abduction_followup",
     "cross_domain_bridge",
-    "abduction_followup"
+    "abduction_followup",
+    "famous_subtask"
   ]
 }

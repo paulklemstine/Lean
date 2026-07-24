@@ -679,7 +679,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Modular-Galois: Formalizing Serre's Conjectures for Low Weight Representations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2a754509",
     "description": "Derives density estimates and explicit zero-free regions for families of automorphic L-functions near the critical line \u211c(s) = 1/2.",
     "domains": [
       "NumberTheory"
@@ -688,7 +688,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "batch_50_injection",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-23T20:05:22.485425+00:00",
     "title": "L-Function-Zeroes: Explicit Bounds on Low-Lying Zeroes of Automorphic L-Functions"
   },
@@ -1636,21 +1636,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-15T13:08:22.368965+00:00",
     "title": "ArXiv paper: Large sets of mutually orthogonal quantum Latin squares"
-  },
-  {
-    "consumed_by_exp_id": "b4f06498",
-    "description": "Investigate the ArXiv paper 'Ranks of Elliptic Curves Twisted by Quadratic Forms' and formalize its key results. Abstract: Let $E$ be an elliptic curve over $\\mathbb{Q}$ and let $E^d$ be its twist by the quadratic character $\u03c7_d$. We prove there are infinitely many twists $d$ which are sums of two squares such that $E^d$ has rank $1$. This result is achieved using moments of derivatives of modular $L$-functions, and particularly captures the lower derivatives which were left out in the work of Munshi. Such a result, in particular, also gives us information on the elliptic fibration $(1+t^2)y^2=f(x)$, where $f(x)$ is a cubic polynomial.",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_0023",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.13000v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-15T13:25:37.164415+00:00",
-    "title": "ArXiv paper: Ranks of Elliptic Curves Twisted by Quadratic Forms"
   },
   {
     "consumed_by_exp_id": "",
@@ -6712,6 +6697,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-24T12:04:01.061037+00:00",
     "title": "This development establishes the two pillars of the moment-method proof of the"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Ranks of elliptic curves twisted by quadratic forms\n\nThe results developed in this cycle isolate the elementary backbone of the twisted\nfamily `E^d : d y\u00b2 = x\u00b3 + a x + b`: the fibres of the surface `(1 + t\u00b2) y\u00b2 = f(x)`\nare precisely the quadratic twists of the base curve by the parameters `d = 1 + t\u00b2`,\nevery such parameter is a sum of two squares, and the set of admissible parameters\nis multiplicatively closed and infinite. The following conjectures push this\nstructural picture toward the analytic rank statements it is meant to support.\n\n## 1. Root-number stratification of the sum-of-two-squares family\n\n**Conjecture.** Among the twists `E^d` with `d` a squarefree sum of two squares, the\nsign of the functional equation (the root number) takes each value `\u00b11` on a set of\npositive density, and the density of `d` with root number `-1` is bounded away from\nboth `0` and `1`.\n\n*The key insight is* that the sum-of-two-squares condition is a union of arithmetic\nprogressions cut out by splitting behaviour at the primes `p \u2261 3 (mod 4)`, and the\nlocal root numbers of `E^d` are themselves governed by congruence conditions on `d`;\nthe two systems of congruences are independent enough that neither can force the\nglobal sign.\n\n*Why now?* The multiplicative closure and infinitude of the parameter set are now on\nfirm footing, so the density questions can be phrased entirely in terms of the\nmonoid of sum-of-two-squares integers rather than the geometry of the surface.\n\n## 2. Positive proportion of rank exactly one\n\n**Conjecture.** For a fixed base curve `E`, a positive proportion of the\nsum-of-two-squares twists `E^d` with root number `-1` have analytic rank exactly `1`\n(hence algebraic rank `1` by the theorem of Gross\u2013Zagier\u2013Kolyvagin).\n\n*The key insight is* that the first moment of the derivative `L'(E^d, 1)` over the\nsum-of-two-squares family is strictly positive while the second moment is bounded,\nso a Cauchy\u2013Schwarz argument forces a positive proportion of nonvanishing\nderivatives \u2014 precisely the lower-derivative contribution omitted in earlier work.\n\n*Why now?* The twist\u2013standard-model isomorphism makes it possible to transport point\nconstructions on `(1+t\u00b2)y\u00b2 = f(x)` directly to the Weierstrass model, giving explicit\ncandidate generators whose heights can be estimated against the derivative moments.\n\n## 3. A closed multiplicative structure on rank-one twists\n\n**Conjecture.** If `E^{d\u2081}` and `E^{d\u2082}` both have rank one with generators of\ncontrolled height, then for a positive proportion of pairs `(d\u2081, d\u2082)` the composite\ntwist `E^{d\u2081 d\u2082}` again has rank one, exhibiting the rank-one locus as \"almost closed\"\nunder the Brahmagupta\u2013Fibonacci product of parameters.\n\n*The key insight is* that the sum-of-two-squares parameters form a monoid under the\nBrahmagupta\u2013Fibonacci identity, and the twist coefficients compose as\n`(a d\u2081\u00b2 , b d\u2081\u00b3)` then `(\u00b7) d\u2082` = `(a (d\u2081d\u2082)\u00b2, b (d\u2081d\u2082)\u00b3)`, so the arithmetic of the\nparameters and the geometry of the twists are compatible semigroup actions.\n\n*Why now?* Both the parameter monoid and the coefficient composition law are now\nexplicit and verified, turning a vague \"twists compose\" slogan into a precise\nstatement about a semigroup action whose orbits can be sampled.\n\n## 4. Effective infinitude with a height window\n\n**Conjecture.** For every `X` large, the number of squarefree sum-of-two-squares\nparameters `d \u2264 X` for which `E^d` has rank one is at least `c \u00b7 X / (\\log X)^{1/2}`\nfor an explicit constant `c = c(E) > 0`.\n\n*The key insight is* that the count of sum-of-two-squares integers up to `X` already\nhas the Landau order `X / (\\log X)^{1/2}`, and the rank-one proportion from\nConjecture 2 is positive, so the two effective inputs multiply.\n\n*Why now?* The infinitude of the parameter set is established; upgrading it to an\neffective window only requires attaching the (already conjectural) positive\nproportion, isolating a single missing analytic estimate.\n\n## 5. Quadratic-form twists beyond `1 + t\u00b2`\n\n**Conjecture.** For any positive-definite binary quadratic form `Q(u, v)` of\ndiscriminant `-4`, the family of twists `E^{Q(u,v)}` realizes rank one infinitely\noften, and the resulting surface `Q(u,v) y\u00b2 = f(x)` is birational to\n`(1 + t\u00b2) y\u00b2 = f(x)` over the field generated by the form's automorphisms.\n\n*The key insight is* that every form of discriminant `-4` is `\\mathrm{SL}_2(\\mathbb{Z})`-equivalent\nto `u\u00b2 + v\u00b2`, so the norm form `1 + t\u00b2` is not special \u2014 it is the canonical\nrepresentative of an entire equivalence class of quadratic-form twists.\n\n*Why now?* With the `1 + t\u00b2` case reduced to the sum-of-two-squares monoid, the\nequivalence of forms gives an immediate, testable generalization whose only new\ningredient is the class-number-one structure of discriminant `-4`.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0642",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "b4f06498",
+    "status": "available",
+    "timestamp": "2026-07-24T12:46:02.174235+00:00",
+    "title": "The results developed in this cycle isolate the elementary backbone of the twist"
   },
   {
     "consumed_by_exp_id": "",

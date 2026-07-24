@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-24T12:04:06.094231+00:00",
+  "last_updated": "2026-07-24T12:46:06.579337+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -34905,6 +34905,7 @@
       "outcome_quality": 0.57,
       "phase": "A_only",
       "phase_a_prompt_version": "v25",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v25",
@@ -34933,6 +34934,48 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-24T12:04:05.995249+00:00",
       "title": "Random-Matrix: Wigner Semicircle Law Convergence for Wigner Ensembles"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Applications",
+      "duration_seconds": 2523.59632229805,
+      "end_time": 1784897146.9092696,
+      "files_integrated": 2,
+      "job_id": "b4f06498",
+      "outcome_quality": 0.57,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v19",
+      "phase_b_skip_reason": "low_quality_near_miss",
+      "phase_b_skipped": true,
+      "prompt_version": "v19",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.6,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.6,
+        "composite": 0.44,
+        "cross_domain": 0.5,
+        "grade": "partial",
+        "importance": 0.55,
+        "novelty": 0.5,
+        "proof_depth": 0.55,
+        "usefulness": 0.6
+      },
+      "quality_score": 0.57,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1784894623.3129473,
+      "strategy_count": 0,
+      "theorem_count": 16,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 12,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-24T12:46:06.480721+00:00",
+      "title": "ArXiv paper: Ranks of Elliptic Curves Twisted by Quadratic Forms"
     }
   ]
 }
