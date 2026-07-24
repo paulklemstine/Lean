@@ -429,7 +429,6 @@ CORE_FILES = [
     "Aether/lineage_extractor.py",
     "Aether/seed_directions.py",
     "Aether/cycle_analytics.py",
-    "Aether/catalog_pruner.py",
 ]
 
 
