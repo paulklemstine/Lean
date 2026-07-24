@@ -440,7 +440,7 @@ window.FUTURE_DIRECTIONS = [
       "Applications"
     ],
     "id": "scifi_50_22_049203ff",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.95,
     "research_mode": "team",
     "source_exp_id": "scifi_50_injection",
@@ -8899,7 +8899,7 @@ window.FUTURE_DIRECTIONS = [
       "MachineLearning"
     ],
     "id": "fd_0121",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.10890v1",
@@ -10325,7 +10325,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "id": "fd_0627",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.21494v1",
@@ -11494,17 +11494,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Future directions from cycle 1992c474"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e8a20d63",
     "description": "# Future directions\n\n## What is proved now\n\n`Heegner163.lean` gives a kernel-checked elementary chain connecting Euler's\nquadratic polynomial to the discriminants 43, 67, and 163. It proves the sharp\nprime runs, the exact discriminant calculations, the exact cube-plus-744 integer\nidentities, their modular consequences, and that 163 is the maximum of the\nexplicit nine-element Heegner list.\n\n## Highest-priority missing mathematics\n\n1. **Do not treat the proposed uniqueness statement as established.** The claim\n   that 163 is the unique natural `n` for which `exp (\u03c0 * sqrt n)` is within\n   `10\u207b\u2076` of an integer needs careful qualification and a counterexample search.\n   Any rigorous theorem should specify a bounded range or add structural\n   hypotheses. Equidistribution heuristics make an unrestricted uniqueness claim\n   particularly implausible.\n\n2. **Certified transcendental bounds.** Develop interval bounds for `Real.pi`,\n   `Real.sqrt`, and `Real.exp` strong enough to prove\n   `|exp (\u03c0 * sqrt 43) - 884736744| < 10\u207b\u2076`, the analogous claim for 67, and the\n   much tighter estimate for 163. A reusable route is range reduction plus Taylor\n   bounds with rational endpoints, rather than trusting floating-point output.\n\n3. **The modular bridge.** Formalize the upper-half-plane `j`-invariant and its\n   `q`-expansion, then prove a tail estimate connecting a singular modulus to the\n   corresponding near-integer. The exact cube identities in the current file are\n   intended as the arithmetic endpoints for this bridge.\n\n4. **Class numbers.** Define the relevant imaginary quadratic orders and prove\n   the class-number-one statements for the nine listed discriminants. This would\n   replace the current finite list definition with a mathematically characterized\n   predicate.\n\n5. **Stark\u2013Heegner theorem.** The genuinely unbounded assertion that these are\n   all class-number-one imaginary quadratic fields requires deep analytic number\n   theory. It must not be inferred from `max_of_heegner_list`, which only computes\n   the maximum of an explicitly supplied finite set.\n\n6. **Rabinowitsch's criterion.** A useful intermediate target is the equivalence\n   between class number one for discriminant `1 - 4p` and primality of\n   `n\u00b2 + n + p` throughout `0 \u2264 n \u2264 p - 2`. The forward computational instances\n   for `p = 11, 17, 41` are already available here.\n",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
     "id": "fd_0257",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "e1956901",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-18T02:47:18.481788+00:00",
     "title": "`Heegner163.lean` gives a kernel-checked elementary chain connecting Euler's"
   },
@@ -13428,17 +13429,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "The accompanying Lean development proves the finite algebraic core of homologica"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "920a890c",
     "description": "# Future directions\n\nThe formal development establishes a concrete genuinely non-strict bicategory: its chosen 1-cell composition has bracketings equal to `5` and `7`, while an invertible associator connects them, and the pentagon and triangle coherence laws hold. It also proves that no `Bicategory.Strict` structure can exist for this fixed composition.\n\nNatural continuations include:\n\n1. **General codiscrete construction.** Package the construction for every unital magma, proving that codiscrete hom-categories turn arbitrary unit and associativity defects into coherent invertible 2-cells.\n2. **Nontrivial 2-cell coherence.** Replace `PUnit` 2-cells by a nontrivial group of automorphisms. Then the pentagon becomes an actual cocycle equation rather than following from subsingleton elimination.\n3. **Skeletal obstruction.** Formalize the relationship between associators in one-object bicategories and normalized group-cohomological 3-cocycles, including the criterion for strictification without changing the underlying 1-cells.\n4. **Biequivalence versus equality.** Prove a strictification result at the level of biequivalence, contrasting it with `no_strict_structure`, which rules out strictness on the fixed data but not replacement by an equivalent strict 2-category.\n5. **Higher coherence.** Develop tricategorical analogues where coherence between associators is itself witnessed by invertible 3-cells. This is the appropriate formal setting for the broader \u201cevery coherent loop-tolerant structure forms a higher category\u201d direction; that sweeping claim requires precise dimensions and coherence axioms before it is a theorem.\n6. **Computational exploration.** Enumerate small finite unital magmas and classify their associativity defects. For the present infinite example, the relevant small calculation is already kernel-checked in `left_bracketing_value` and `right_bracketing_value`, so a separate empirical evidence stage would add no confidence to the proved claim.\n",
     "domains": [
       "Logic",
       "Algebra"
     ],
     "id": "fd_0532",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "3d25b5ad",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-20T23:22:24.198252+00:00",
     "title": "The formal development establishes a concrete genuinely non-strict bicategory: i"
   },
