@@ -66,10 +66,11 @@ jobs:
       - name: Write Pollinations key file
         run: echo "${{ secrets.POLLINATIONS_API_KEY }}" > Aether/.aether_workspace/pollinations_api_key
 
-      - name: Configure Git
+      - name: Configure Git and install hooks
         run: |
           git config user.name "paul klemstine"
           git config user.email "paulklemstine@gmail.com"
+          bash Aether/.aether_workspace/git-hooks/install-hooks.sh
 
       - name: Run Aether tick
         env:
@@ -90,6 +91,7 @@ jobs:
         run: |
           git config user.name "paul klemstine"
           git config user.email "paulklemstine@gmail.com"
+          bash Aether/.aether_workspace/git-hooks/install-hooks.sh
 
           # SAFETY MEASURE: Ensure we aren't staging hidden cache folders or massive models
           # If your script downloaded a 10GB file, git add -A will crash the runner here.
