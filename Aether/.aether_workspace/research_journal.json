@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "f48abc37",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions: Spectral Shell Models of the Periodic Table\n\n## 1. Spin–orbit splitting recovers the nuclear magic sequence\n\nConstruct a finite-dimensional shell Hamiltonian whose oscillator term",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 23,
-      "timestamp": "2026-07-18T09:21:36",
-      "title": "The Periodic Table Is a Lie: Elements as Eigenvalues of Spacetime"
-    },
-    {
       "cycle_id": "12b45ad4",
       "domain": "Novelty",
       "key_insight": "# Future directions\n\nThe completed baseline is `Novelty/RecipeBarycenterBridge.lean`: for every nonempty finite menu with positive verification times, the aggregate cooking-to-verification ratio is th",
@@ -2501,6 +2491,16 @@
       "theorem_count": 6,
       "timestamp": "2026-07-24T01:27:37",
       "title": "Deepening: Erdos-Renyi on Acid: Random Graphs That Hallucinate"
+    },
+    {
+      "cycle_id": "82236c9f",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions: Convex Radiator Laws and Swarm Thermodynamics\n\nThis cycle established that the equal-area optimum of a finite radiating swarm is\nnot special to a quadratic cost, but follows from",
+      "quality_score": 0.65,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-07-24T02:19:34",
+      "title": "**Conjecture.** For every strictly convex radiator-cost function, every finite s"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-24T01:27:37",
+  "last_updated": "2026-07-24T02:19:34",
   "open_questions": [
     {
       "context": "",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "9b57ae5c",
-        "quality": 0.69,
-        "theorems": 58,
-        "title": "Turing's Flowers: Morphogenesis as Algebraic Geometry"
-      },
-      {
         "cycle_id": "44b2da31",
         "quality": 0.71,
         "theorems": 0,
@@ -3451,6 +3445,12 @@
         "quality": 0.66,
         "theorems": 9,
         "title": "ArXiv paper: A decomposition of Weyl group multiple Dirichlet series for symmetr"
+      },
+      {
+        "cycle_id": "82236c9f",
+        "quality": 0.65,
+        "theorems": 12,
+        "title": "**Conjecture.** For every strictly convex radiator-cost function, every finite s"
       }
     ],
     "Logic": [

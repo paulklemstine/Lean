@@ -835,25 +835,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Proves existence of shortest continuous paths connecting arbitrary points in non-convex infinite-dimensional Hilbert space obstacle domains.",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra"
-    ],
-    "id": "scifi_50_38_f1e05ea5",
-    "lineage_refs": [],
-    "priority_score": 0.95,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "scifi_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:07:58.676038+00:00",
-    "title": "Hilbert-Space-Maze: Infinite-Dimensional Trajectory Solvability"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Formalizes motion of rigid bodies traversing non-orientable Klein bottle manifolds where chirality flips upon complete loop traversal.",
     "domain_bridges": [],
     "domains": [
@@ -2203,25 +2184,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 8280a2b4 (Q=0.760), which proved 14 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Riemann-Roch theorem for graphs (Baker-Norine, 2007) states that for a divisor D on a graph G, l(D) - l(K_G - D) = deg(D) + 1 - g(G) where l(D) is the rank of D, K_G is the canonical divisor, and g(G) is the genus (cyclomatic number). The chip-firing game is a combinatorial model: vertices hold ",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra"
-    ],
-    "id": "push_8280a2b4_941745de",
-    "lineage_refs": [],
-    "priority_score": 0.86,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "8280a2b4",
-    "status": "available",
-    "timestamp": "2026-07-19T06:30:57.793286+00:00",
-    "title": "Deepening: The Riemann-Roch Theorem for Graphs: Chip-Firing and the Canonical Divisor"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Building on cycle e9a483ed (Q=0.760), which proved 8 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: L-functions are the DNA of mathematics — each one encodes deep arithmetic information. But how many L-functions ARE there? The L-function universe is vast: (1) The Riemann zeta function (1 L-function), (2) Dirichlet L-functions (countably many), (3) L-functions of elliptic curves (uncountably many, ",
     "domain_bridges": [],
     "domains": [
@@ -2255,25 +2217,6 @@
     "status": "available",
     "timestamp": "2026-07-18T03:54:54.432626+00:00",
     "title": "Deepening: Chaos as a Computable Shadow: The Shadowing Lemma for Real Programs"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle fa73eeee (Q=0.760), which proved 11 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\n## 1. Renormalized removal of both cutoffs\n\n**Conjecture.** There is a natural joint scaling of the prime cutoff `x`, occupation cutoff `N`, and inverse temperature `β > 1` under which the finite bulk occupation partition converges locally uniformly to the Euler product for the ",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra"
-    ],
-    "id": "push_fa73eeee_906369d7",
-    "lineage_refs": [],
-    "priority_score": 0.86,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "fa73eeee",
-    "status": "available",
-    "timestamp": "2026-07-19T04:29:12.043456+00:00",
-    "title": "Deepening: **Conjecture.** There is a natural joint scaling of the prime cutoff `x`, occupa"
   },
   {
     "ambition_level": "extension",
@@ -10205,26 +10148,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "82236c9f",
-    "description": "# Future Directions: Dyson-Swarm Thermodynamic Optimization\n\n## 1. Strictly convex radiator laws\n\n**Conjecture.** For every strictly convex radiator-cost function, every finite swarm with fixed total collecting area has a unique cost-minimizing allocation, namely equal area per collector; moreover, the minimum decreases monotonically when any collector is split into two independently radiating collectors.\n\nThe key insight is that the proved quadratic result is a variance inequality, while equal partition should follow more broadly from strict convexity and majorization.\n\n**Why now?** The quadratic model isolates the exact structural step that must be replaced by Jensen's inequality, making the generalization both testable and directly comparable with the established optimum.\n\n## 2. Joint collection–radiation optimization\n\n**Conjecture.** In an isotropic star model with positive collector temperatures, Stefan–Boltzmann emission, and a fixed material budget, the power-maximizing swarm has a computable optimal orbital radius at which intercepted power and radiative rejection constraints are simultaneously tight.\n\nThe key insight is that collecting area enters linearly, incident flux falls as inverse radius squared, and thermal emission grows as the fourth power of temperature, creating a constrained extremum rather than an unconditional preference for the smallest orbit.\n\n**Why now?** The present separation of geometry from thermal concentration supplies the two sides of the optimization, while an explicit radiation law would connect them without changing the resource-accounting layer.\n\n## 3. Occlusion-aware swarm capacity\n\n**Conjecture.** For collectors on finitely many spherical shells with bounded angular overlap, maximum captured luminosity is characterized by a submodular coverage function, and greedy placement achieves a universal constant-factor approximation while respecting per-collector thermal limits.\n\nThe key insight is that projected areas add only in the no-occlusion idealization; once shadows overlap, the lost flux behaves like a coverage penalty rather than a linear cost.\n\n**Why now?** The exact full-area theorem identifies additivity as the model's sharp boundary, so overlap is the first geometric correction that can falsify naive area accounting.\n\n## 4. Finite-time Landauer capacity at one astronomical unit\n\n**Conjecture.** Given stellar luminosity, operating duration, positive reservoir temperature, and a specified reversible overhead, the maximum number of irreversible bit erasures is bounded above and below by explicit expressions that agree asymptotically to first order in accumulated energy.\n\nThe key insight is that a radius alone cannot determine information capacity; a meaningful estimate must combine intercepted power, duration, temperature, and entropy loss.\n\n**Why now?** The calibrated bit-capacity theorem exposes every missing premise in the informal `10^50` estimate, allowing each physical parameter to be varied and empirically challenged.\n\n## 5. Reversible-computation frontier\n\n**Conjecture.** Under a fixed stellar power budget and bounded memory, any computation with sustained throughput above the irreversible Landauer rate must exhibit a quantitatively increasing fraction of logically reversible transitions, with a sharp tradeoff between memory reuse and heat rejection.\n\nThe key insight is that deterministic entropy loss is nonnegative and vanishes for injective transitions, so extreme throughput should force computation toward reversible dynamics rather than merely toward smaller devices.\n\n**Why now?** The entropy inequality and the energetic throughput bound are available in a common resource model; the remaining challenge is to introduce time, memory reuse, and a compositional transition system.",
-    "domain_bridges": [],
-    "domains": [
-      "Geometry",
-      "Algebra"
-    ],
-    "id": "fd_0601",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "3dce6722",
-    "status": "in_progress",
-    "timestamp": "2026-07-22T12:13:53.710531+00:00",
-    "title": "**Conjecture.** For every strictly convex radiator-cost function, every finite s"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "# Future directions\n\n1. Replace natural-number theorem codes by a concrete recursively enumerable syntax for first-order set theory, with a proof-checking predicate and explicit enumeration of derivations.\n2. Separate theorems, true sentences, and semantic predicates. The present diagonal barrier concerns all `ℕ → Prop`; transferring it to arithmetic truth requires a satisfaction relation and a formal undefinability theorem.\n3. Formalize incompleteness with the hypotheses it actually needs: effective axiomatizability, consistency or soundness, and enough represented arithmetic. A discovery-rate bound alone has no Gödel consequence.\n4. Generalize `finite_corpus_common_deadline` to compact topological families and compare genuine compactness with the invalid inference from finite proofs to a finite deadline for infinitely many theorems.\n5. Add resource costs for proof search and verification, rather than only counting output. A Bekenstein-style model should specify a time horizon, operations per step, memory, and whether the cap is instantaneous or cumulative.\n6. Study fair schedules under arbitrary positive rate profiles and construct exact-rate disjoint batches using prefix sums.\n7. Replace classical `Prop` predicates in the semantic diagonal theorem by computable Boolean predicates. The naive diagonal is then computable only relative to a sufficiently strong evaluator, leading naturally to Turing jumps and oracle-relative discovery.\n",
     "domain_bridges": [],
@@ -10446,25 +10369,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\nThis project formalizes the one-dimensional online primitive underlying the paper\n*\"Online Beck–Fiala Down to Logarithmic Sparsity\"* — the compactly supported,\nonline self-balancing walk — in `Catalog/Novelty/OnlineBeckFialaWalk.lean`.\n\nNatural extensions, in rough order of difficulty:\n\n1. **Discrete Beck–Fiala matrices, column sparsity `d = 1`.** Formalize a\n   `{0,1}` matrix with at most one nonzero per column (disjoint sets) and prove the\n   offline discrepancy bound `≤ 1` via a balanced per-set coloring.\n\n2. **Classical offline Beck–Fiala theorem `disc ≤ 2d − 1`.** The floating-variables\n   / linear-algebra dimension argument: iterate over an active-constraint subspace of\n   positive dimension until a variable freezes at `±1`. Requires finite-dimensional\n   linear algebra over `ℝ` and an incidence-counting lemma\n   (`#active constraints < #floating variables`).\n\n3. **Higher-dimensional online prefix discrepancy.** The heart of the paper: a\n   Metropolis fixed-point walk achieving prefix discrepancy `O(√d)` for\n   `d ≥ log(T)^{1+o(1)}`. This is a substantial research-level formalization target.\n\n4. **The `ω(√d)` online lower bound** for `d = o(log T)`, establishing optimality of\n   the online result, and the corollary resolving online vector balancing in the\n   Spencer setting.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra"
-    ],
-    "id": "fd_0615",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "f14d2570",
-    "status": "available",
-    "timestamp": "2026-07-23T18:45:59.367683+00:00",
-    "title": "This project formalizes the one-dimensional online primitive underlying the pape"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "# Future directions\n\nThe repaired repeated-summand rule is now completely classified: its unique trajectory is `a n = 2n + 1`. The formal development also proves strict monotonicity, identifies its range with all odd natural numbers, and gives the exact cardinality of every finite prefix. The following are the main remaining extensions.\n\n1. **Distinct-summand repair.** Replace repeated-index pair sums by sums from distinct earlier indices. Determine the resulting greedy trajectory and classify its growth.\n2. **Higher-order forbidden sums.** Forbid sums of exactly `r` earlier values (with or without repetition). Establish existence, uniqueness, and quantitative growth as a function of `r`.\n3. **Alternative seeds.** Start from an arbitrary positive seed instead of one. Classify when the process becomes an arithmetic progression and when transient behavior persists.\n4. **Finite-prefix sumset structure.** Prove exact descriptions and cardinalities for the restricted pair-sum sets of the canonical trajectory.\n5. **Asymptotic density.** Upgrade the exact range classification to a filter-based proof that the value set has natural density `1/2`.\n6. **Stability under weakened greediness.** Study trajectories that select any admissible value within a fixed additive error of the least one, and bound their lower and upper densities.\n",
     "domain_bridges": [],
     "domains": [
@@ -10645,6 +10549,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: Convex Radiator Laws and Swarm Thermodynamics\n\nThis cycle established that the equal-area optimum of a finite radiating swarm is\nnot special to a quadratic cost, but follows from convexity alone: for any\nstrictly convex radiator-cost law, the uniform allocation is the *unique*\ncost minimizer at fixed total area, and subdividing a collector into independent\nradiators lowers the cost whenever an idle collector is not penalized. The\nfollowing conjectures push this structural picture further.\n\n## 1. Temperature-weighted radiator optimality\n\n**Conjecture.** For a strictly convex radiator-cost law and collectors carrying\nprescribed positive weights (view factors, emissivities, or reservoir\ntemperatures), the unique cost-minimizing allocation at fixed total area assigns\narea to each collector in proportion to a weight-dependent share, and the optimum\ndegenerates to the equal-area rule exactly when the weights coincide.\n\nThe key insight is that unequal collectors correspond to a *weighted* Jensen\ninequality, whose equality case forces every collector to sit at a common\nweighted center of mass rather than at a common area — so the equal-area law is\nthe isotropic shadow of a more general proportional-allocation law.\n\n**Why now?** The unweighted optimum and its uniqueness are settled, isolating the\nequality case as the single ingredient that must be re-derived with weights; this\nmakes the weighted generalization a direct and falsifiable next step.\n\n## 2. Quantitative splitting gain\n\n**Conjecture.** For a strictly convex, twice-differentiable radiator law with\n`f(0) ≤ 0`, the cost reduction from splitting a collector of area `a` into `k`\nequal independent radiators is bounded below by an explicit expression in the\nmodulus of strict convexity of `f` on `[0, a]`, and this bound is asymptotically\nsharp as `k → ∞`.\n\nThe key insight is that the splitting law is currently qualitative (strict\ndecrease), but the size of the decrease is governed by how strongly `f` curves;\na modulus-of-convexity estimate converts the sign statement into a rate.\n\n**Why now?** The qualitative splitting law is proved and its exact hypothesis\n(`f(0) ≤ 0`) identified, so the remaining question is purely quantitative and can\nbe tested against closed-form curvature bounds for standard cost laws.\n\n## 3. Majorization dominance of allocations\n\n**Conjecture.** Given two swarms of equal total area whose area vectors are\ncomparable in the majorization order, the more spread-out (more majorizing) swarm\nhas the larger total cost for *every* convex radiator law, and strictly larger for\nevery strictly convex law unless the two allocations are permutations of each\nother.\n\nThe key insight is that the equal-area optimum is the bottom element of the\nmajorization order, so the scalar optimality theorem should lift to a full order\nisomorphism between allocation spread and cost, unifying every convex law at once.\n\n**Why now?** The equal-area minimum is the extreme case of exactly this order;\nproving the general monotone comparison would subsume the current result and\nconnect swarm design to the classical theory of Schur-convex functions.\n\n## 4. Joint area–temperature power optimization\n\n**Conjecture.** In an isotropic stellar model where each collector radiates by a\nStefan–Boltzmann law at its own temperature under a fixed material budget, the\nnet-power-maximizing swarm splits its material into equal-temperature collectors,\nand the optimal common temperature is the unique root of an explicit balance\nbetween intercepted flux and re-radiated power.\n\nThe key insight is that intercepted power is linear in area while thermal\nrejection is convex in temperature, so the joint optimum couples the equal-area\nprinciple of this cycle with a one-dimensional convex temperature trade-off.\n\n**Why now?** The area side of the optimization (equal allocation) is now on firm\nground; supplying an explicit radiation law closes the loop without disturbing the\nresource-accounting layer, yielding a fully constrained extremum.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Pythagorean"
+    ],
+    "id": "fd_0629",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "82236c9f",
+    "status": "available",
+    "timestamp": "2026-07-24T02:19:33.132859+00:00",
+    "title": "That the equal-area optimum of a finite radiating swarm i"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Cycle 1a27f9f3 (Q=0.700) proved 15 theorems in Combinatorics but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Define a natural metric on the space of all mathematical statements and prove that the set of true statements has a fractal dimension. Show that this dimension is strictly between 0 and 1 (truth is sp",
     "domain_bridges": [],
     "domains": [
@@ -10663,7 +10587,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "edb35a0b",
     "description": "Cycle 2f321176 (Q=0.700) proved 7 theorems in NumberTheory but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conjecture that mathematical discovery undergoes phase transitions: long periods of incremental progress punctuated by sudden reorganizations (like percolation transitions). Formalize this using stati",
     "domain_bridges": [],
     "domains": [
@@ -10675,7 +10599,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "2f321176",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-20T20:48:31.251527+00:00",
     "title": "Close Proofs: Speculative: Mathematics as a Phase Transition"
   },

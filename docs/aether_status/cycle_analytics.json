@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-24T01:27:37.781766+00:00",
+  "last_updated": "2026-07-24T02:19:35.175627+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -34373,6 +34373,48 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-24T01:27:37.685571+00:00",
       "title": "Deepening: Erdos-Renyi on Acid: Random Graphs That Hallucinate"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Geometry",
+      "duration_seconds": 3105.0338695049286,
+      "end_time": 1784859537.442883,
+      "files_integrated": 4,
+      "job_id": "82236c9f",
+      "outcome_quality": 0.65,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v19a",
+      "phase_b_skip_reason": "low_quality_near_miss",
+      "phase_b_skipped": true,
+      "prompt_version": "v19a",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.55,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.8,
+        "composite": 0.4875,
+        "cross_domain": 0.5,
+        "grade": "partial",
+        "importance": 0.55,
+        "novelty": 0.6,
+        "proof_depth": 0.7,
+        "usefulness": 0.65
+      },
+      "quality_score": 0.65,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1784856432.4090135,
+      "strategy_count": 0,
+      "theorem_count": 12,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 9,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-24T02:19:35.048585+00:00",
+      "title": "**Conjecture.** For every strictly convex radiator-cost function, every finite s"
     }
   ]
 }
