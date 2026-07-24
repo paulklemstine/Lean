@@ -80,12 +80,16 @@ window.renderDirectionCards = function(container, directions, detailIdPrefix) {
     container.querySelectorAll('.direction-card-expand').forEach(btn => {
         btn.addEventListener('click', () => {
             const id = btn.dataset.id;
+            const card = btn.closest('.direction-card');
             const details = container.querySelector('#' + detailIdPrefix + id);
+            const desc = card ? card.querySelector('.direction-card-desc') : null;
             if (details.classList.contains('hidden')) {
                 details.classList.remove('hidden');
+                if (desc) desc.classList.add('hidden');
                 btn.textContent = 'Hide Details';
             } else {
                 details.classList.add('hidden');
+                if (desc) desc.classList.remove('hidden');
                 btn.textContent = 'Show Details';
             }
         });
