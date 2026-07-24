@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "0ebc2749",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions\n\nThe present development settles the algebraic core: exact period classifies all return times, a primitive orbit has the expected number of distinct points, and every positive crit",
-      "quality_score": 0.77,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-18T10:22:04",
-      "title": "The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
-    },
-    {
       "cycle_id": "a7676cc9",
       "domain": "Applications",
       "key_insight": "# Future directions\n\n## What is formalized\n\n`Core.lean` gives a self-contained ordinal analysis of explicit countably branching winning game trees. It constructs:\n\n- `omegaGame`, with value exactly `ω",
@@ -2501,6 +2491,16 @@
       "theorem_count": 16,
       "timestamp": "2026-07-24T03:52:16",
       "title": "ArXiv paper: The Spine: A Supersingular Highway"
+    },
+    {
+      "cycle_id": "0e007163",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions: the fine structure of the transfinite cardinal hierarchy\n\nThis cycle pinned the Continuum Hypothesis to a single successor step, gave it\nthree equivalent faces (the successor form",
+      "quality_score": 0.63,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-07-24T03:52:25",
+      "title": "Future directions from cycle 279ae676"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-24T03:52:16",
+  "last_updated": "2026-07-24T03:52:25",
   "open_questions": [
     {
       "context": "",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "fff627f3",
-        "quality": 0.77,
-        "theorems": 7,
-        "title": "Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
-      },
-      {
         "cycle_id": "b596d3d1",
         "quality": 0.75,
         "theorems": 21,
@@ -3885,6 +3879,12 @@
         "quality": 0.55,
         "theorems": 11,
         "title": "**Conjecture.** For a chordal interference graph with nonnegative vertex spill c"
+      },
+      {
+        "cycle_id": "0e007163",
+        "quality": 0.63,
+        "theorems": 13,
+        "title": "Future directions from cycle 279ae676"
       }
     ],
     "Shared": [

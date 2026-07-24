@@ -1708,7 +1708,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "30631f2b",
     "description": "Formalizes weak convergence of empirical spectral measures of symmetric random matrices to the Wigner semicircle distribution.",
     "domain_bridges": [],
     "domains": [
@@ -1720,7 +1720,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "batch_50_injection",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-23T20:05:24.703443+00:00",
     "title": "Random-Matrix: Wigner Semicircle Law Convergence for Wigner Ensembles"
   },
@@ -5347,25 +5347,6 @@
     "title": "ArXiv paper: Several families of incommensurable noncompact hyperbolic Coxeter polytopes"
   },
   {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "08b12f3b",
-    "description": "Investigate the ArXiv paper 'The Spine: A Supersingular Highway' and formalize its key results. Abstract: We consider the structure of the spine of the supersingular $\\ell$-isogeny graph for one of the cases which arXiv:2502.03613 was not able to fully describe, $\\ell = 2$ and $p = 71, 119\\pmod{120}$. We find the distance, eccentricity, and diameter functions, of the components of the spine without the non-trivial edge not defined over $\\mathbb{F}_p$. Using these functions, we find the mean diameter of the spine and show how this value distinguishes the different structures of the spine. Thus, allowing us to use explicit computations to provide heuristics on the behavior of the spine's structure as $p$ varies.",
-    "domain_bridges": [],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0209",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.14572v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-17T09:24:18.119678+00:00",
-    "title": "ArXiv paper: The Spine: A Supersingular Highway"
-  },
-  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "Erdős sumset conjecture",
@@ -6092,6 +6073,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'The Frankl--Tokushige product conjectures for $r$-cross-intersecting families' and formalize its key results. Abstract: We settle the uniform and biased product conjectures of Frankl and Tokushige for $r$-cross-intersecting families. Let $r\\geq2$, let $0\\leq k_i\\leq(r-1)n/r$, and let $\\mathcal{F}_i\\subseteq\\binom{[n]}{k_i}$ be $r$-cross-intersecting. We prove the sharp inequality $$\\prod_{i=1}^r\\frac{|\\mathcal{F}_i|}{\\binom{n}{k_i}}\\leq \\prod_{i=1}^r\\frac{k_i}{n},$$ with equality attained by the corresponding levels of a common $1$-star. As a consequence, we obtain the analogous $p_i$-biased measure theorem for $0\\leq p_i\\leq(r-1)/r$, $$ \\prod_{i=1}^rμ_{p_i}(\\mathcal{F}_i)\\leq \\prod_{i=1}^r p_i.$$The main difficulty is that unequal parameters do not determine a single common target level; instead, the target levels $\\ell_1,\\ldots,\\ell_r$ must satisfy $\\sum_{i=1}^r \\ell_i=(r-1)n$. We overcome this asymmetry in three steps. An ordered-partition coupling gives a sharp additive inequality for every such choice of target levels. A star-calibrated upper-shadow inequality relates the density of a family on its",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0632",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2607.21589v1",
+    "status": "available",
+    "timestamp": "2026-07-24T03:52:32.415502+00:00",
+    "title": "ArXiv paper: The Frankl--Tokushige product conjectures for $r$-cross-intersecting families"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Cycle dcd7a4b2 (Q=0.750) proved 0 theorems in Tropical but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION — simulta",
     "domain_bridges": [],
     "domains": [
@@ -6508,7 +6509,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "73ec6b88",
     "description": "# Future directions\n\n## What was established\n\nThe completed development has two complementary formalizations. `Catalog/NumberTheory/GodelCasino.lean` studies finite sequences of unit bets and their accuracy probabilities. `Catalog/output-final_aristotle/Logic/GodelCasino.lean` studies statements as Boolean-valued functions on a finite space of possible worlds, with uniform expected profit and optimal betting.\n\nTogether they establish the following conclusions.\n\n1. **No unconditional winning strategy.** For every deterministic Boolean strategy and every world, complementing all truth values negates the total payoff. Hence no strategy wins strictly in both worlds, every strategy has a world with nonpositive payoff, and the direct adversarial world forces the exact payoff `-n`.\n2. **Sharp conditional expected-profit criterion.** If `p i` is the probability that prediction `i` is correct, expected payoff is\n   `2 * (∑ i, p i) - n`. It is positive exactly when aggregate accuracy exceeds `n/2`. A per-card lower bound `q` yields payoff at least `n(2q-1)`. Thus accuracy at least `2/3` yields at least `n/3`, and the 1000-card constant-accuracy instance has expected payoff exactly `1000/3`.\n3. **Known versus unresolved cards.** If `d` cards are predicted with certainty and `u` cards are fair guesses, expected payoff is exactly `d`; uncertainty itself supplies no positive edge.\n4. **Finite possible-world semantics.** Valid and unsatisfiable statements can be bet on with expected profit `1`, while balanced statements have expected and optimal profit `0`. An explicit balanced independent statement on the two-world space `Bool` therefore refutes a universal `1/3` lower bound. Abstract proof-system soundness suffices to recover the positive result for provable statements.\n\n## Interpretation of the original conjecture\n\nThe unconditional conjecture does not follow merely from logical independence. Independence from a formal theory does not assign a probability distribution or give the player predictive information. Moreover, statements whose truth values vary between models do not have a single model-independent Boolean settlement rule unless a semantics or distinguished model is specified. The claimed “one third of arithmetic statements” also requires a precise encoding, size measure, sampling distribution, and proved density theorem; the arithmetic hierarchy alone does not provide that fraction.\n\nThe formal results identify the missing assumption exactly: positive expected profit requires aggregate prediction accuracy strictly greater than one half. The proposed `1/3` profit per round follows from `2/3` accuracy, but logical decidability or independence by itself does not establish that accuracy.\n\n## Further formalization\n\n- Define a probability space of encoded formulas, a settlement semantics, and a measurable strategy, then lift the finite rational calculation to Mathlib expectation.\n- Formalize randomized strategies and prove a minimax/no-free-lunch theorem against complement-symmetric distributions.\n- Introduce abstention, asymmetric odds, transaction costs, and calibration; derive the corresponding sharp profitability threshold.\n- Choose a concrete Gödel coding and bounded formula language. Enumerate formulas by code length and replace the unsupported density assertion with experimentally measured finite proportions and, if possible, asymptotic theorems.\n- Distinguish syntactic provability, standard-model arithmetic truth, and truth in a selected set-theoretic model. Any casino settlement rule must choose one explicitly.\n- Model conservative extensions only after defining what payoff they generate; conservativity is a relation between theories, not a Boolean prediction of an undecided sentence.\n",
     "domain_bridges": [],
     "domains": [
@@ -6521,7 +6522,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "717f7483",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-18T06:56:46.945502+00:00",
     "title": "The completed development has two complementary formalizations. `Catalog/NumberT"
   },
@@ -8667,25 +8668,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "0e007163",
-    "description": "# Future Directions\n\n- Develop Hartogs' theorem over an explicit axiomatic set theory without assuming a global choice principle. The present `HartogsType` formulation is type-theoretic and uses Mathlib's cardinal infrastructure; it establishes the characteristic non-embedding theorem but is not a metatheoretic independence proof.\n- Formalize the statement that `aleph 1` is the least uncountable cardinal in terms of countability predicates on types, and connect this characterization to the successor-cardinal presentation proved here.\n- Add equivalent formulations of the continuum hypothesis: every infinite subset of the reals is countable or equinumerous with the reals, and the absence of cardinals strictly between `aleph0` and `continuum`.\n- Extend the finite successor-step theorem for `beth` to transfinite limit stages and prove comparison results between the full `aleph` and `beth` hierarchies.\n- Define inaccessible, measurable, strongly compact, and supercompact cardinals after establishing the required filters, ultrafilters, elementary embeddings, and universe bookkeeping. Their relative consistency hierarchy cannot be proved merely from the definitions; faithful consistency-strength results require an explicit formal metatheory, models of set theory, and carefully stated background assumptions.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Logic"
-    ],
-    "id": "fd_0563",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "279ae676",
-    "status": "in_progress",
-    "timestamp": "2026-07-21T18:47:57.053400+00:00",
-    "title": "Future directions from cycle 279ae676"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "# Future Directions for Snake-in-the-Box Records\n\n## 1. Asymptotic density of induced hypercube paths\n\n**Conjecture.** There is an absolute constant `c > 0` such that every sufficiently large hypercube `Q_n` contains a snake with at least `c · 2^n` edges.\n\nThe key insight is that chordlessness can be viewed as a distance-two condition on each parity-separated subsequence, while consecutive vertices retain the local freedom of a Gray code. This suggests combining large binary codes with controlled bridges between their codewords.\n\n**Why now?** The new records through dimension thirteen have densities that remain substantial, and the distance-two code extraction isolates a concrete structure on which probabilistic nibble or local-lemma methods can act.\n\n## 2. Rigidity near the Boolean-cube ceiling\n\n**Conjecture.** For every `n ≥ 3`, a snake in `Q_n` omits at least `2^(n-2)` vertices.\n\nThe key insight is that a path using nearly every cube vertex would force most unused cube edges to become forbidden chords. Regularity then turns chordlessness into a severe edge-boundary constraint, potentially accessible through cube isoperimetry.\n\n**Why now?** The universal counting ceiling is easy, but the record data lie far below it. Quantifying the unavoidable gap is the natural next structural problem and would connect the census to edge-isoperimetric stability.\n\n## 3. Completeness of the dimension-nine census\n\n**Conjecture.** Every length-191 snake in `Q_9` is equivalent, under coordinate permutation, translation, and path reversal, to one of the 131 reported classes.\n\nThe key insight is that fixing an initial transition pattern should break the full cube symmetry, after which chordlessness and the distance-two constraints may force a finite collection of canonical extensions.\n\n**Why now?** Repeated searches found exactly the same 131 classes, making this a sharply falsifiable classification statement with a finite certificate target rather than an open-ended optimization claim.\n\n## 4. Product constructions with bounded chord repair\n\n**Conjecture.** There is an absolute constant `C` such that snakes of lengths `L` in `Q_m` and `K` in `Q_n` can be combined into a snake in `Q_(m+n)` of length at least `(L+1)(K+1) - C(L+K)`.\n\nThe key insight is that Cartesian products naturally create long grid walks, and all offending chords are localized near changes between factors. A bounded family of separator coordinates may repair those interfaces without destroying the multiplicative main term.\n\n**Why now?** Record searches currently proceed dimension by dimension. A successful product theorem would turn isolated records into systematic lower bounds in higher dimensions and would explain which transition motifs transfer across dimensions.\n\n## 5. Random extension threshold for long snakes\n\n**Conjecture.** For a uniformly chosen endpoint extension among currently legal coordinate flips, the probability that a greedy snake in `Q_n` survives for `2^(α n)` steps has a sharp threshold at a constant `α` strictly greater than one half.\n\nThe key insight is that each accepted vertex excludes a radius-one neighborhood from future nonconsecutive use, so the extension process resembles random sequential adsorption with highly structured overlaps in the Hamming cube.\n\n**Why now?** The census supplies long trajectories and many inequivalent optima, while the coding interpretation identifies the correct exclusion geometry. Together they make survival probabilities and overlap corrections measurable and mathematically testable.\n",
     "domain_bridges": [],
@@ -9237,6 +9219,25 @@
     "status": "available",
     "timestamp": "2026-07-20T09:41:43.432388+00:00",
     "title": "Close Proofs: Speculative: Number Theory as Music Theory"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_0633",
+    "lineage_refs": [],
+    "priority_score": 0.7,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "oeis:212351",
+    "status": "available",
+    "timestamp": "2026-07-24T03:52:35.414462+00:00",
+    "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
   },
   {
     "ambition_level": "extension",
