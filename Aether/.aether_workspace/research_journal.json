@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "f86cfe8a",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Alexander Spectra of Knotted Light\n\n## 1. Composite torus knots split into cyclotomic spectral strata\n\n**Conjecture.** For every odd positive integer `n`, the angular spectrum sel",
-      "quality_score": 0.76,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-07-18T12:48:40",
-      "title": "The Topology of Knotted Light: How Laser Beams Get Tangled"
-    },
-    {
       "cycle_id": "154045db",
       "domain": "Shared",
       "key_insight": "# Future Directions: Jigsaw Complexity and Topology\n\n## 1. Geometric NP-completeness with four-sided pieces\n\nConjecture: deciding whether a finite multiset of non-rotatable square pieces with flat, ta",
@@ -2501,6 +2491,16 @@
       "theorem_count": 14,
       "timestamp": "2026-07-24T09:42:09",
       "title": "ArXiv paper: A memorial tribute: Adriano Garsia (1928--2024)"
+    },
+    {
+      "cycle_id": "73ec6b88",
+      "domain": "Probability",
+      "key_insight": "# Future Directions — Gödel's Casino, Cycle 1: Randomized Strategies and the Minimax Value\n\n## What this cycle adds\n\nEarlier cycles settled the **deterministic** game: complementing a world negates\nth",
+      "quality_score": 0.58,
+      "sorry_count": 0,
+      "theorem_count": 24,
+      "timestamp": "2026-07-24T09:42:17",
+      "title": "The completed development has two complementary formalizations. `Catalog/NumberT"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-24T09:42:09",
+  "last_updated": "2026-07-24T09:42:17",
   "open_questions": [
     {
       "context": "+    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; +    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; +    ∀ i < k, c i = ",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "fcbd747f",
-        "quality": 0.61,
-        "theorems": 18,
-        "title": "ArXiv paper: On the maximum size of $B_3$-free families"
-      },
-      {
         "cycle_id": "e2a481c0",
         "quality": 0.65,
         "theorems": 4,
@@ -3823,6 +3817,12 @@
         "quality": 0.77,
         "theorems": 3,
         "title": "Conjecture: there are natural state spaces in which functional observation forms"
+      },
+      {
+        "cycle_id": "73ec6b88",
+        "quality": 0.58,
+        "theorems": 24,
+        "title": "The completed development has two complementary formalizations. `Catalog/NumberT"
       }
     ],
     "Pythagorean": [

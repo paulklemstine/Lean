@@ -2879,7 +2879,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Tur\u00e1n-Type Bounds for Graphs Containing Large $F$-Sparse Sets"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6bb52b3a",
     "description": "Investigate the ArXiv paper 'Generalizations of nets and Latin squares' and formalize its key results. Abstract: We examine combinatorial structures which generalize $(k,n)$-nets, orthogonal arrays, and mutually orthogonal Latin squares. By a reticulation we mean of a point set and two collections (types) of families of lines such that two lines of different types meet in exactly one point and each family of lines partitions the point set. The number of points incident with any line depends only upon the type of the line, and every point is incident with the same number of lines of a given type. Each choice of one line family of each type leads to an arrangement of the points into a rectangular grid. Recording the line containing a given point in the corresponding position of an array gives to a generalization of sets of mutually orthogonal Latin squares, dubbed a cooperative system. A cooperative system consists of a collection of column-Latin matrices and a collection of row-Latin matrices such that each column-Latin matrix is orthogonal to each row-Latin matrix. Recording lines which contain a",
     "domains": [
       "Algebra",
@@ -2889,7 +2889,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.10890v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T14:59:52.606942+00:00",
     "title": "ArXiv paper: Generalizations of nets and Latin squares"
   },
@@ -3761,20 +3761,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-17T10:58:50.694164+00:00",
     "title": "ArXiv paper: Measures and generalizations of dual Littlewood identities"
-  },
-  {
-    "consumed_by_exp_id": "3984694e",
-    "description": "Investigate the ArXiv paper 'A memorial tribute: Adriano Garsia (1928--2024)' and formalize its key results. Abstract: Adriano Mario Garsia was born in Tunis on August 20, 1928, to a Tunisian-Italian family. He lived on a farm there until the end of World War II, then moved to Rome. After finishing high school, he was sent to the United States to live with relatives in Woyming and eventually made his way to California, becoming a student of Charles Loewner at Stanford in the early 1950s. Following his Ph.D., Adriano held positions at MIT, the University of Minnesota, and Caltech before joining the nascent mathematics department at the University of California, San Diego, in 1966 where he spent the remainder of his career. He passed away in San Diego on October 6, 2024, at the age of 96.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0198",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.14184v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-17T12:24:24.101681+00:00",
-    "title": "ArXiv paper: A memorial tribute: Adriano Garsia (1928--2024)"
   },
   {
     "consumed_by_exp_id": "",
@@ -4701,21 +4687,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-18T06:39:49.078146+00:00",
     "title": "1. **Repair the definition before studying asymptotics.** The literal rule exclu"
-  },
-  {
-    "consumed_by_exp_id": "73ec6b88",
-    "description": "# Future directions\n\n## What was established\n\nThe completed development has two complementary formalizations. `Catalog/NumberTheory/GodelCasino.lean` studies finite sequences of unit bets and their accuracy probabilities. `Catalog/output-final_aristotle/Logic/GodelCasino.lean` studies statements as Boolean-valued functions on a finite space of possible worlds, with uniform expected profit and optimal betting.\n\nTogether they establish the following conclusions.\n\n1. **No unconditional winning strategy.** For every deterministic Boolean strategy and every world, complementing all truth values negates the total payoff. Hence no strategy wins strictly in both worlds, every strategy has a world with nonpositive payoff, and the direct adversarial world forces the exact payoff `-n`.\n2. **Sharp conditional expected-profit criterion.** If `p i` is the probability that prediction `i` is correct, expected payoff is\n   `2 * (\u2211 i, p i) - n`. It is positive exactly when aggregate accuracy exceeds `n/2`. A per-card lower bound `q` yields payoff at least `n(2q-1)`. Thus accuracy at least `2/3` yields at least `n/3`, and the 1000-card constant-accuracy instance has expected payoff exactly `1000/3`.\n3. **Known versus unresolved cards.** If `d` cards are predicted with certainty and `u` cards are fair guesses, expected payoff is exactly `d`; uncertainty itself supplies no positive edge.\n4. **Finite possible-world semantics.** Valid and unsatisfiable statements can be bet on with expected profit `1`, while balanced statements have expected and optimal profit `0`. An explicit balanced independent statement on the two-world space `Bool` therefore refutes a universal `1/3` lower bound. Abstract proof-system soundness suffices to recover the positive result for provable statements.\n\n## Interpretation of the original conjecture\n\nThe unconditional conjecture does not follow merely from logical independence. Independence from a formal theory does not assign a probability distribution or give the player predictive information. Moreover, statements whose truth values vary between models do not have a single model-independent Boolean settlement rule unless a semantics or distinguished model is specified. The claimed \u201cone third of arithmetic statements\u201d also requires a precise encoding, size measure, sampling distribution, and proved density theorem; the arithmetic hierarchy alone does not provide that fraction.\n\nThe formal results identify the missing assumption exactly: positive expected profit requires aggregate prediction accuracy strictly greater than one half. The proposed `1/3` profit per round follows from `2/3` accuracy, but logical decidability or independence by itself does not establish that accuracy.\n\n## Further formalization\n\n- Define a probability space of encoded formulas, a settlement semantics, and a measurable strategy, then lift the finite rational calculation to Mathlib expectation.\n- Formalize randomized strategies and prove a minimax/no-free-lunch theorem against complement-symmetric distributions.\n- Introduce abstention, asymmetric odds, transaction costs, and calibration; derive the corresponding sharp profitability threshold.\n- Choose a concrete G\u00f6del coding and bounded formula language. Enumerate formulas by code length and replace the unsupported density assertion with experimentally measured finite proportions and, if possible, asymptotic theorems.\n- Distinguish syntactic provability, standard-model arithmetic truth, and truth in a selected set-theoretic model. Any casino settlement rule must choose one explicitly.\n- Model conservative extensions only after defining what payoff they generate; conservativity is a relation between theories, not a Boolean prediction of an undecided sentence.\n",
-    "domains": [
-      "Computation",
-      "Logic"
-    ],
-    "id": "fd_0283",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "717f7483",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T06:56:46.945502+00:00",
-    "title": "The completed development has two complementary formalizations. `Catalog/NumberT"
   },
   {
     "consumed_by_exp_id": "",
@@ -5917,7 +5888,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The formal development establishes three robust conclusions for precise counterf"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b873ab80",
     "description": "# Future Directions: Hypercomputation and Physical Information\n\n## 1. Quantitative energy\u2013precision tradeoff\n\n**Conjecture.** For every family of devices that exactly resolves the first `n` bits of an arbitrary oracle, any physical model with at most `E` energy and spatial volume `V` must satisfy a lower bound of the form `E/V \u00b7 log(1/\u03b5) \u2265 c n`, where `\u03b5` is its distinguishability scale and `c > 0` depends only on the model\u2019s noise law.\n\nThe key insight is that exact oracle loading is an injective encoding problem, so its qualitative cardinality obstruction should admit a metric packing refinement. **Why now?** The present infinite-capacity theorem identifies the correct injection; adding a physically justified packing bound would turn it into a falsifiable resource inequality.\n\n## 2. Robust hypercomputation under noisy queries\n\n**Conjecture.** An oracle evaluator whose independent answer error is bounded away from zero cannot decide the halting predicate with uniformly bounded error using finitely many repeated queries unless the oracle supplies a verifiable certificate relation unavailable to the base program table.\n\nThe key insight is that repeating an uncheckable semantic answer amplifies consistency but not correctness against systematic oracle corruption. **Why now?** The finite-transcript ambiguity theorem isolates exactly the missing information and suggests a sharp separation between stochastic noise and adversarially indistinguishable alternatives.\n\n## 3. Arithmetical hierarchy of iterated physical oracles\n\n**Conjecture.** A tower of `k` exact oracle loaders, where level `j+1` answers halting questions for machines equipped with level `j`, realizes the first `k` Turing jumps, and no lower level essentially computes the next level\u2019s anti-diagonal predicate.\n\nThe key insight is that the accidental-versus-essential distinction iterates: each external oracle becomes part of the next machine model, after which diagonalization applies again. **Why now?** The one-level separation is established in a form that can be recursively parameterized by oracle semantics.\n\n## 4. Topological precision obstruction\n\n**Conjecture.** If physical states form a compact metric space and every oracle bit is read by a continuous Boolean-valued observable, then no continuous loader from Cantor space can encode all binary oracles while maintaining a uniform positive readout margin at every coordinate.\n\nThe key insight is that cardinality alone does not exclude continuum-sized compact state spaces, whereas uniform robustness should force an impossible infinite packing. **Why now?** The current result pinpoints cardinality as too coarse for analog systems and identifies uniform distinguishability as the natural next hypothesis.\n\n## 5. Thermodynamic bridge for exact oracle erasure\n\n**Conjecture.** In any finite approximation storing `n` independent oracle bits with a uniform prior, resetting the loader state incurs entropy loss at least `n log 2`; consequently, any reversible realization must export at least `n` bits of side information.\n\nThe key insight is that oracle capacity and Landauer cost are two views of the same injective encoding: loading preserves distinctions, while erasure collapses them. **Why now?** Exact-loader injectivity can be combined directly with the existing deterministic entropy data-processing framework to obtain a quantitative thermodynamic bridge.\n",
     "domains": [
       "Computation",
@@ -5927,7 +5898,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "af530f4e",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T20:08:38.889514+00:00",
     "title": "**Conjecture.** For every family of devices that exactly resolves the first `n` "
   },
@@ -6710,6 +6681,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-24T06:47:58.579997+00:00",
     "title": "Cross-domain bridge in"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Gaussian binomial coefficients\n\nCompanion to `GarsiaQBinomial.lean`, part of the memorial-tribute exploration for\n*Adriano Garsia (1928\u20132024)*, whose lifelong subject was the combinatorics of\n**q-analogs**.  The file develops the Gaussian binomial coefficients `\u27e6n,k\u27e7_q`\nfrom their q-Pascal recurrence and proves:\n\n* vanishing for `k > n` (`qBinom_eq_zero_of_lt`);\n* the diagonal `\u27e6n,n\u27e7 = 1` (`qBinom_self`);\n* `\u27e6n,1\u27e7 = [n]_q` (`qBinom_one_right`);\n* the **dual q-Pascal recurrence** (`qBinom_pascal'`);\n* the **symmetry** `\u27e6n,k\u27e7 = \u27e6n,n-k\u27e7` (`qBinom_symm`);\n* the **q = 1 specialization** to `Nat.choose` (`qBinom_eval_one`);\n* the corollary recovering classical binomial symmetry (`choose_symm_from_q`);\n* additivity of the q-integers `[a+b]_q = [a]_q + q^a\u00b7[b]_q` (`qNat_add`);\n* the **q-factorial product formula** `\u27e6n,k\u27e7_q \u00b7 [k]_q! \u00b7 [n-k]_q! = [n]_q!`\n  (`qFactorial_product`), together with `[n]_q! \u2192 n!` at `q = 1`\n  (`qFactorial_eval_one`) and its classical corollary\n  `C(n,k)\u00b7k!\u00b7(n-k)! = n!` (`choose_mul_factorial_from_q`).\n\n## Completed since the first draft\n\nItem 3 below (the **q-factorial product formula**) has now been fully proved in\n`GarsiaQBinomial.lean`, over `\u2124[q]` and with no division, via induction on `n`\nusing the defining q-Pascal recurrence and the q-integer additivity\n`[j+1]_q + q^{j+1}\u00b7[n-j]_q = [n+1]_q`.  Evaluating it at `q = 1` recovers the\nclassical identity `C(n,k)\u00b7k!\u00b7(n-k)! = n!`.  The remaining items (1, 2, 4, 5, 6)\nare still open.\n\n## Natural next steps\n\n1. **Degree formula.** Prove `natDegree (qBinom n k) = k\u00b7(n-k)` for `k \u2264 n`, and\n   that the constant term is `1`.  Together with `qBinom_symm` this shows the\n   coefficient sequence is a *palindrome* of length `k(n-k)+1`.\n\n2. **Positivity / integrality of coefficients.** Show every coefficient of\n   `qBinom n k` is a non-negative integer (they count partitions inside a\n   `k \u00d7 (n-k)` box).  This is the bridge from the algebraic q-Pascal recurrence\n   to the combinatorial interpretation.\n\n3. **q-factorial product formula.** *(Done \u2014 see `qFactorial_product`.)*\n   Introduce `[n]_q! = \u220f_{i=1}^n [i]_q` and prove\n   `[k]_q! \u00b7 [n-k]_q! \u00b7 qBinom n k = [n]_q!` (an identity in `\u2124[q]`, avoiding\n   division).  This is the q-analog of `k!(n-k)!\u00b7C(n,k) = n!`.\n\n4. **q-Vandermonde / q-binomial theorem.** Prove\n   `\u27e6m+n, k\u27e7_q = \u2211_j q^{(m-j)(k-j)} \u27e6m,j\u27e7_q \u27e6n,k-j\u27e7_q`, the q-Vandermonde\n   convolution, and the q-binomial theorem\n   `\u220f_{i=0}^{n-1}(1 + q^i x) = \u2211_k q^{k(k-1)/2} \u27e6n,k\u27e7_q x^k`.\n\n5. **Cyclic sieving.** The pair (`\u27e6n,k\u27e7_q`, the cyclic action on `k`-subsets)\n   exhibits the cyclic sieving phenomenon; formalizing even small cases would be\n   a first step toward Reiner\u2013Stanton\u2013White theory.\n\n6. **Toward Garsia's own work.** The Gaussian binomials are the degree-one shadow\n   of Macdonald polynomials and of the `(q,t)`-Catalan numbers\n   `C_n(q,t)`.  A long-range goal is a formal definition of `C_n(q,t)` and a proof\n   of `C_n(q,1) = ` the q-Catalan number, connecting back to the shuffle theory\n   Garsia pioneered.\n\n## Notes on the proofs\n\nThe symmetry theorem is the mathematical heart of the file.  It is proved by\ninduction on `n`, using the defining recurrence on one side and the dual\nrecurrence `qBinom_pascal'` on the other; `qBinom_pascal'` itself is proved by a\nseparate induction that splits on whether the lower index is strictly below the\ndiagonal (a genuine `q`-algebraic identity) or on it (where both sides collapse\nto `1`).  The **q-factorial product formula** is proved by an analogous induction\non `n`: the interior step expands both q-factorials, applies the two inductive\nhypotheses, and closes with a single `linear_combination` whose only non-ring\ninput is the q-integer additivity `[j+1]_q + q^{j+1}\u00b7[n-j]_q = [n+1]_q`\n(`qNat_add`).  All results are established over `\u2124[q]` with no `sorry` and only\nthe standard axioms `propext`, `Classical.choice`, `Quot.sound`.\n",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_0639",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "3984694e",
+    "status": "available",
+    "timestamp": "2026-07-24T09:42:04.385406+00:00",
+    "title": "Companion to `GarsiaQBinomial.lean`, part of the memorial-tribute exploration fo"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 G\u00f6del's Casino, Cycle 1: Randomized Strategies and the Minimax Value\n\n## What this cycle adds\n\nEarlier cycles settled the **deterministic** game: complementing a world negates\nthe payoff (no unconditional winning strategy), and expected profit is positive\nexactly when aggregate accuracy exceeds `1/2`. This cycle formalizes the next\nitem on the \"Further formalization\" list \u2014 **randomized strategies** \u2014 and\nproves the accompanying **minimax / no-free-lunch** theorem, together with the\nsharp information-theoretic profitability threshold.\n\nThe new development is `Catalog/Probability/GodelCasinoRandomized.lean`\n(self-contained, `import Mathlib`, no `sorry`, no extra axioms). A statement is a\nBoolean function `s` on a finite world space `W`; a randomized strategy is the\nprobability `r \u2208 [0,1]` of betting `true`; a prior over worlds is `\u03bc : W \u2192 \u211a`.\n\n### Main theorems\n\n1. `randPayoff_eq` \u2014 per-world expected payoff is `2r-1` (true) / `1-2r` (false).\n2. `randPayoff_half` \u2014 the **fair coin** `r = 1/2` pays exactly `0` in every\n   world: a strategy that never loses and never wins.\n3. `expRand_eq` \u2014 the exact **bilinear closed form**\n   `expRand \u03bc s r = (2r-1)\u00b7(trueMass \u2212 falseMass)`; and `expRand_normalized`\n   rewrites this as `(2r-1)\u00b7(2\u03c0-1)` for a probability prior with true-probability\n   `\u03c0`.\n4. `symmetric_prior_zero` \u2014 **randomized no-free-lunch.** A prior admitting a\n   truth-flipping, mass-preserving involution (a complement-symmetric prior)\n   forces expected profit `0` for *every* strategy. Incompleteness modelled this\n   way yields no edge, even with randomization.\n5. `no_benefit_randomization` + `optimal_pure_value` + `expRand_le_optimal` \u2014\n   **pure play is optimal**; the optimal value is `|trueMass \u2212 falseMass|`.\n   Randomizing never helps a player who knows the prior.\n6. `edge_iff_asymmetric` \u2014 **edge iff information.** A positive-expectation\n   strategy exists *iff* the prior is asymmetric between truth and falsehood.\n7. `deckValue_nonneg`, `deckValue_card_le` \u2014 the optimal value of a deck is the\n   sum of per-card imbalances: nonnegative and dominated card by card.\n8. `two_world_no_edge` \u2014 the balanced two-world casino (`W = Bool`, `s = id`,\n   uniform prior) admits no positive-expectation strategy at all, recovering the\n   contrarian verdict of the earlier possible-world file for randomized play.\n\n### Interpretation\n\nThe randomized analysis sharpens the earlier conclusion. The value of the game\nis governed entirely by the prior's **truth\u2013falsehood imbalance** `trueMass \u2212\nfalseMass`. Randomization changes nothing: an informed player should bet the more\nlikely value deterministically, and a symmetric prior (the natural betting model\nof \"pure logical independence, no distributional information\") drives every\nstrategy to exactly zero. This is the minimax value: the player can always secure\n`0` with the fair coin, and an adversary who keeps the prior symmetric can hold\nthe player to `0`.\n\n## Directions not yet formalized (open for the next cycle)\n\n- **Full measure-theoretic lift.** Replace the finite rational prior by a\n  Mathlib `PMF`/`Measure` on an infinite world space and re-derive\n  `expRand_eq` as a genuine expectation, connecting to `MeasureTheory.integral`.\n- **Sequential / adaptive play and calibration.** Model a player who updates a\n  posterior across rounds; state and prove a regret or calibration bound. The\n  present static bilinear form is the per-round building block.\n- **Asymmetric odds and transaction costs.** With payoff `+a` for a correct bet\n  and `-b` for an incorrect one, the closed form becomes affine with a shifted\n  break-even threshold `\u03c0* = b/(a+b)`; formalize the resulting sharp threshold\n  and re-prove `edge_iff_asymmetric` in that generality.\n- **Abstention.** Add a third action \"pass\" (payoff `0`); characterize when\n  abstention strictly dominates and compute the optimal value.\n- **Minimax as a theorem, not a pair of facts.** State the game explicitly as a\n  two-player zero-sum game and prove `value = 0` via a genuine minimax equality\n  (e.g. from Mathlib's convexity/`sInf`\u2013`sSup` interchange), rather than the\n  matched upper/lower bounds provided here.\n- **Concrete G\u00f6del coding.** The unresolved density question (\"one third of\n  arithmetic statements\") still requires a fixed encoding, a size measure, a\n  sampling distribution, and a proved density theorem; the arithmetic hierarchy\n  alone supplies none of these. The present framework shows precisely what such a\n  distribution would have to violate (symmetry) to produce a positive edge.\n",
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "fd_0640",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "73ec6b88",
+    "status": "available",
+    "timestamp": "2026-07-24T09:42:12.917260+00:00",
+    "title": "Earlier cycles settled the **deterministic** game: complementing a world negates"
   },
   {
     "consumed_by_exp_id": "",
