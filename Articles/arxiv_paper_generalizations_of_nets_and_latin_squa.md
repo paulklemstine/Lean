@@ -1,125 +1,164 @@
-# Two Kinds of Lines, One Hidden Grid
+# The Secret Geometry of Grids: How Many Ways Can Two Puzzles Agree?
 
-## How reticulations turn incidence geometry into cooperative arrays
+Imagine you are laying out a garden. You want to plant nine flower beds in a
+$3 \times 3$ grid, and you have three varieties of rose. A tidy gardener insists
+that each variety appear exactly once in every row and exactly once in every
+column — no row or column should be missing a color, and none should double up.
+This tidy arrangement is what mathematicians call a **Latin square**, and it is
+the humble ancestor of the Sudoku puzzle that millions solve over morning coffee.
 
-A railway map and a spreadsheet seem to organize information in opposite ways. The map begins with lines and intersections: choose one route from each of two systems, and their crossing identifies a place. The spreadsheet begins with places already arranged in rows and columns, then records symbols in cells. Yet beneath these two pictures lies the same combinatorial mechanism. Once that mechanism is isolated, generalized nets, rectangular arrays, and families of Latin-like matrices become different languages for one structure.
+Now suppose a second gardener comes along with three types of fertilizer and the
+same tidiness rule: each fertilizer appears once per row and once per column.
+Two tidy plans, laid over the same grid. Here is the delicate question: can the
+two plans be *coordinated* so that **every combination of rose and fertilizer
+occurs together in exactly one bed**? If they can, we say the two Latin squares
+are **orthogonal** — they encode two independent pieces of information about each
+cell without ever repeating a pair.
 
-The key object is a **reticulation**. Imagine a finite set $P$ of points and two types of line families, which we will call weft and warp. Each individual family partitions $P$: every point lies on exactly one line in that family. Weft lines have $m$ possible labels, warp lines have $n$ possible labels. The decisive rule is that whenever one chooses a weft family and a warp family, every selected pair of labels identifies exactly one point. In other words, a weft line and a warp line from the chosen families meet once and only once.
+This apparently whimsical puzzle turns out to be one of the load-bearing walls of
+modern combinatorics. Orthogonal Latin squares govern the design of scientific
+experiments, the scheduling of tournaments, the construction of error-correcting
+codes, and the geometry of finite planes. And the question at the heart of them
+all is deceptively simple: **how many mutually orthogonal Latin squares can share
+a single grid?**
 
-This simple crossing rule forces a hidden rectangular grid. Fix one weft family $u$ and one warp family $v$. Give each point $p$ its two line labels,
+## A famous failure, and Euler's ghost
 
+The great Leonhard Euler posed a version of this in 1782 with his "Thirty-Six
+Officers Problem." He imagined six regiments, each contributing six officers of
+six different ranks, and asked whether the thirty-six officers could be arranged
+in a $6 \times 6$ square so that every row and column contained one officer of
+each rank *and* one from each regiment. That is precisely a pair of orthogonal
+Latin squares of order $6$. Euler conjectured, correctly for this case, that it
+was impossible — though it took until 1900 for the impossibility to be proved,
+and until 1959 for Euler's broader conjecture to be spectacularly disproved for
+all larger sizes.
+
+The deeper structural question is not whether *two* orthogonal squares exist, but
+how *large a family* of them can coexist, each pair orthogonal to every other. A
+collection in which every two members are orthogonal is called a set of
+**mutually orthogonal Latin squares**, or MOLS for short. Each new square you add
+is like adding another independent coordinate to the grid — another attribute you
+can read off from each cell without any two cells ever agreeing on the whole
+tuple.
+
+## The ceiling: you can never have too many
+
+The central theorem of this work is a sharp ceiling on how tall such a tower can
+grow.
+
+> **The MOLS Bound.** For any grid size $n \ge 2$, a set of mutually orthogonal
+> Latin squares of order $n$ can contain **at most $n - 1$ squares**.
+
+For a $3 \times 3$ grid, that means at most two orthogonal squares. For a
+$4 \times 4$ grid, at most three. The ceiling rises with the grid, but never
+reaches the full $n$ — there is always exactly one "missing" slot, and that lone
+subtraction turns out to carry all the mathematical weight.
+
+What is beautiful is *why* the ceiling is $n - 1$ rather than the naive $n$. The
+argument is a two-line pigeonhole miracle once you find the right thing to count.
+
+Here is the trick, told plainly. Fix your attention on one particular cell — the
+one in the **second row, first column**, which we can call the *corner cell*. For
+each square in your family, look at what symbol sits in that corner. Then scan
+along the **first row** of the same square until you find the column where that
+very symbol appears. Record that column number. Call it the square's **tag**.
+
+Two short observations finish the proof.
+
+**First, the tag can never be column $0$.** If it were, then the symbol in the
+corner cell (row 1, column 0) would equal the symbol in the very top-left cell
+(row 0, column 0). But those two cells sit in the *same column*, and a Latin
+square forbids a symbol from repeating in a column. Contradiction. So every tag
+is one of the $n - 1$ *nonzero* columns.
+
+**Second, no two squares can share a tag.** Suppose squares $S$ and $T$ both had
+tag $c$. Then in both squares, the symbol at the top-row cell $(0, c)$ equals the
+symbol at the corner cell $(1, 0)$. That means the *pair* of symbols read off from
+cell $(0, c)$ — one from $S$, one from $T$ — is identical to the pair read off from
+cell $(1, 0)$. But orthogonality demands that every pair of symbols appears in
+exactly one cell. Two different cells producing the same pair is exactly what
+orthogonality forbids. Contradiction.
+
+So the tags are all distinct, and they all live among the $n - 1$ nonzero columns.
+A set of distinct things that all fit into $n - 1$ boxes can have at most $n - 1$
+members. That is the whole proof. The single subtracted unit — the forbidden
+column $0$ — is precisely the "corner can't match the top-left" observation.
+
+## Is the ceiling ever reached?
+
+A ceiling is only interesting if someone can touch it. And they can. Whenever the
+grid size $n$ is a prime number (or a power of a prime), one can build a *complete*
+family of exactly $n - 1$ mutually orthogonal squares using arithmetic. The recipe
+is elegant: label the cells by pairs $(i, j)$ of numbers modulo $n$, pick a nonzero
+"slope" $a$, and define a square by the affine rule
+$$L_a(i, j) = a \cdot i + j \pmod{n}.$$
+Each nonzero slope gives a Latin square, and two squares with *different* slopes
+are always orthogonal. Since there are exactly $n - 1$ nonzero slopes, you get
+$n - 1$ squares — the maximum.
+
+The smallest honest example lives on the $3 \times 3$ grid. Take slopes $1$ and
+$2$:
 $$
-p\longmapsto \bigl(w_u(p),z_v(p)\bigr),
+A = \begin{pmatrix} 0 & 1 & 2 \\ 1 & 2 & 0 \\ 2 & 0 & 1 \end{pmatrix},
+\qquad
+B = \begin{pmatrix} 0 & 1 & 2 \\ 2 & 0 & 1 \\ 1 & 2 & 0 \end{pmatrix}.
 $$
+Both are Latin. And overlaying them cell by cell produces all nine possible pairs
+$(0,0), (0,1), \dots, (2,2)$ exactly once. So for $n = 3$ the maximum family size
+is *exactly* two — the bound $n - 1 = 2$ is not merely an upper limit but the true
+answer.
 
-where $w_u(p)\in\{0,\ldots,m-1\}$ and $z_v(p)\in\{0,\ldots,n-1\}$. Unique intersection says precisely that this map is a bijection from $P$ to the grid
+## A hidden symmetry
 
-$$
-\{0,\ldots,m-1\}\times\{0,\ldots,n-1\}.
-$$
+There is one more idea that makes the whole theory hang together: **relabeling**.
+If you take a Latin square and consistently rename its symbols — swap all the reds
+for blues, all the blues for yellows, and so on — you still have a Latin square.
+And if two squares were orthogonal, relabeling their symbols *independently* keeps
+them orthogonal. Nothing essential changes when you rename the alphabet.
 
-That observation is the engine behind every result discussed here.
+This freedom is not a footnote; it is the reason the corner-tag proof can afford to
+be so short. Classical treatments first "normalize" a family by relabeling every
+square so its first row reads $0, 1, 2, \dots$ in order, then read off the corner.
+The proof above sidesteps the normalization entirely — it inverts the first row *on
+the fly* — but the relabeling symmetry is what guarantees that doing so loses no
+generality.
 
-## The unavoidable size of the point set
+## From squares to a bigger picture: nets and reticulations
 
-The first consequence is a counting theorem.
+Latin squares are the visible tip of a much larger geometric iceberg. A family of
+$n - 1$ mutually orthogonal squares is secretly a highly symmetric geometric
+object called a **net** (or, in the language of design theory, a *transversal
+design*). The rows of the grid form one family of parallel "lines," the columns
+form another, and each Latin square contributes a third, fourth, fifth family, and
+so on. Any two lines from *different* families meet in exactly one point; lines
+from the *same* family never meet. It is a finite, combinatorial cousin of the
+grid of latitude and longitude on a globe.
 
-**Cardinality Theorem.** If a finite reticulation has $m$ labels on the weft side and $n$ labels on the warp side, and at least one family of each type is available, then its point set has exactly $mn$ elements.
+Generalizing further, one can imagine structures — call them **reticulations** —
+built from a point set and *two kinds* of line families, where lines of different
+kinds always cross exactly once and each family neatly tiles the points. Choosing
+one family of each kind lays the points out on a rectangular grid, and recording
+which line passes through each point recovers an array. When the two kinds of
+families are asymmetric, the resulting arrays split into a collection of
+"row-Latin" matrices and a collection of "column-Latin" matrices, with each
+row-Latin matrix orthogonal to each column-Latin matrix. This is a **cooperative
+system** — a generalization of MOLS that unbundles the two Latin conditions the
+classical theory always fused together.
 
-The proof is almost visual. Choose one family of each type. Each point determines one ordered pair of labels, no two points determine the same pair, and every pair occurs. There are $m$ choices for the first label and $n$ for the second, so there are $mn$ points.
+The corner-tag argument, it turns out, is *bipartite*: it tags row-Latin matrices
+one way and column-Latin matrices in a mirror-image way. Combining both directions
+suggests a two-sided bound of the form $a \cdot b \le (n-1)^2$ for a cooperative
+system with $a$ row-families and $b$ column-families — a conjecture that the
+one-sided theorem now makes irresistible to pursue.
 
-This is stronger than a mere count. It says that any chosen opposite-type pair of families provides a complete coordinate system for the same underlying set. Changing the pair changes the grid coordinates, but not the points. A reticulation is therefore not just one grid; it is a point set carrying many compatible grid views.
+## Why it matters
 
-That perspective has practical resonance. A database record can carry several categorical descriptions. If every category from one group combines exactly once with every category from another, then any cross-group pair serves as a lossless compound key. In experimental design, this is perfect balance: every level pair appears exactly once. In communication systems, it resembles a pair of labels that decodes each state uniquely.
-
-## From lines to matrices
-
-Now fix a visible $m$-by-$n$ grid. A matrix $C$ assigns one of $m$ symbols to each cell. Call $C$ **column-Latin** when, within every column, each of its $m$ symbols appears exactly once. A second matrix $R$, using $n$ symbols, is **row-Latin** when, within every row, each of its $n$ symbols appears exactly once.
-
-The adjective “Latin” evokes Latin squares, but the rectangular setting is asymmetric. A column-Latin matrix controls columns and uses $m$ symbols; a row-Latin matrix controls rows and uses $n$ symbols. Neither matrix is required to be Latin in both directions.
-
-The pair becomes truly geometric through **orthogonality**. We say $C$ and $R$ are orthogonal when the map
-
-$$
-(i,j)\longmapsto \bigl(C(i,j),R(i,j)\bigr)
-$$
-
-is a bijection. Thus every ordered symbol pair $(q,r)$ occurs in exactly one cell.
-
-A **cooperative pair** consists of a column-Latin matrix $C$, a row-Latin matrix $R$, and orthogonality between them. A **cooperative system** allows many column-Latin matrices and many row-Latin matrices, with every matrix from the first collection orthogonal to every matrix from the second. The matrices cooperate across the divide; no condition is imposed here between two members of the same collection.
-
-Three exact regularity statements follow.
-
-**Column Uniqueness.** In a column-Latin matrix, for every column $j$ and every symbol $q$, there is exactly one row $i$ with $C(i,j)=q$.
-
-**Row Uniqueness.** In a row-Latin matrix, for every row $i$ and every symbol $r$, there is exactly one column $j$ with $R(i,j)=r$.
-
-**Cross-Intersection Theorem.** In a cooperative pair, for every symbol pair $(q,r)$ there is exactly one cell $(i,j)$ satisfying both $C(i,j)=q$ and $R(i,j)=r$.
-
-The first two statements unpack the two Latin conditions. The third unpacks orthogonality. Read geometrically, the cells carrying a fixed value $q$ of $C$ form a weft line, while the cells carrying a fixed value $r$ of $R$ form a warp line. Their unique common cell is the unique intersection of those lines.
-
-## The coordinate matrices are universal reference frames
-
-Two especially simple matrices are always present on an $m$-by-$n$ grid. The horizontal coordinate matrix is
-
-$$
-H(i,j)=i,
-$$
-
-and the vertical coordinate matrix is
-
-$$
-V(i,j)=j.
-$$
-
-Together they merely report the address of each cell. Consequently $(H,V)$ is a cooperative pair: $H$ lists all row labels once down each column, $V$ lists all column labels once across each row, and $(H(i,j),V(i,j))=(i,j)$.
-
-More surprisingly, these coordinate matrices characterize the one-sided Latin properties.
-
-**Coordinate Characterization Theorem.** A matrix $C$ with $m$ symbols is column-Latin if and only if $C$ is orthogonal to the vertical coordinate matrix $V$. Dually, a matrix $R$ with $n$ symbols is row-Latin if and only if the horizontal coordinate matrix $H$ is orthogonal to $R$.
-
-Why? Pairing $C(i,j)$ with $V(i,j)=j$ records a symbol and its column. Bijectivity says that every symbol-column pair occurs exactly once, which is exactly the column-Latin rule. The dual argument pairs the row address $i$ with $R(i,j)$.
-
-This theorem turns a local condition into a global one. “Every column is a permutation” can be replaced by “one map on the whole grid is bijective.” Such reformulations matter computationally: local scans and global pair counting become interchangeable tests.
-
-## Three equivalent ways to hold the same information
-
-A cooperative system immediately creates a reticulation. Treat grid cells as points. For each column-Latin matrix $C_u$, its fibres $C_u^{-1}(q)$ are the weft lines of family $u$. For each row-Latin matrix $R_v$, its fibres $R_v^{-1}(r)$ are the warp lines of family $v$. Cross-orthogonality supplies the unique-intersection rule.
-
-It can also be written as a compact data table called a **svelte array**. Each grid cell becomes one row. Columns of the table are divided into a left group indexed by the column-Latin matrices and a right group indexed by the row-Latin matrices. In the row belonging to cell $p$, the left entry under $u$ is $C_u(p)$ and the right entry under $v$ is $R_v(p)$.
-
-A svelte array is characterized by one condition: for every left column $u$, every right column $v$, and every pair of values $(q,r)$, exactly one table row has those two entries. Equivalently, projecting the table onto any one left and one right column gives every point of the $m$-by-$n$ value grid exactly once.
-
-**Encoding Theorem.** Every cooperative system yields both a reticulation on its cells and a svelte array whose rows are those cells. For every chosen left-right coordinate pair and every value pair $(q,r)$, there is exactly one corresponding point and exactly one corresponding array row.
-
-Conversely, reading the left and right entries of a svelte array as line labels produces a reticulation: fibres of a fixed entry become lines, and the defining projection property gives unique intersections. The row count is then forced.
-
-**Svelte Array Size Theorem.** If a svelte array has left symbols drawn from a set of size $m$ and right symbols drawn from a set of size $n$, and it has at least one column of each type, then it has exactly $mn$ rows.
-
-Thus geometry, matrices, and tables are not competing metaphors. Geometry emphasizes intersections, matrices emphasize permutations and orthogonality, and tables emphasize balanced projections. Each makes a different task easy.
-
-## A small example
-
-Take $m=3$ and $n=4$. On the twelve cells, define
-
-$$
-C(i,j)=i
-$$
-
-and
-
-$$
-R(i,j)=j.
-$$
-
-Every column of $C$ contains $0,1,2$ once; every row of $R$ contains $0,1,2,3$ once. Every pair $(q,r)$ appears at the unique cell $(q,r)$. The fibres $C^{-1}(q)$ are horizontal rows, while the fibres $R^{-1}(r)$ are vertical columns.
-
-A less literal coordinate system can scramble the labels independently. For permutations $\sigma_j$ of the $m$ symbols, define $C(i,j)=\sigma_j(i)$. This remains column-Latin. Likewise, for permutations $\tau_i$ of the $n$ symbols, define $R(i,j)=\tau_i(j)$. It remains row-Latin. But cooperation is not automatic: one must still check that all pairs $(C(i,j),R(i,j))$ are distinct. The distinction is important. Local permutation balance is necessary, while orthogonality is the global compatibility that turns two balanced labelings into a geometry.
-
-## Why this framework travels well
-
-These structures belong to combinatorics, but their organizing principle appears wherever paired features must identify examples without collision. In machine learning, a balanced benchmark may be stratified by two attribute groups. Exact cross-balance ensures that every selected left-right category pair appears equally—in the svelte case, exactly once. In representation learning, multiple coordinate views can be judged by whether cross-view labels retain all information. In experimental design, orthogonality prevents confounding between factors. In data engineering, any opposite-type pair becomes a candidate key.
-
-The framework also suggests efficient validation. To test a proposed cooperative pair on $mn$ cells, scan each column of $C$, each row of $R$, and all ordered pairs $(C(i,j),R(i,j))$. With hash tables or Boolean marker arrays, the work is linear in the number of cells, $O(mn)$, and the storage is $O(mn)$ in the most direct implementation. To build the associated svelte array, write one row per cell and one entry per matrix; for $a$ left matrices and $b$ right matrices, this costs $O(mn(a+b))$ time.
-
-At the heart of all these applications is a modest but powerful idea: a unique crossing is a coordinate. Once every left line crosses every right line exactly once, counting, decoding, tabulation, and geometric incidence all become the same operation. The grid was there all along—not necessarily drawn, but forced by the logic of the intersections.
+The next time you fill in a Sudoku, or a statistician balances a clinical trial so
+that no treatment is confounded with a hidden variable, or an engineer schedules a
+round-robin tournament, or a coding theorist packs data into a fault-tolerant
+array — a version of this ceiling is quietly at work. The theorem says: *no matter
+how clever you are, you cannot fit more than $n - 1$ independent coordinated plans
+onto an $n \times n$ grid.* And the two-line proof shows that the reason is not
+some deep and inaccessible obstruction, but a single stubborn cell that refuses to
+match its neighbor. Sometimes the whole weight of a theory rests on one corner.

@@ -1,439 +1,380 @@
-# Reticulations, Cooperative Systems, and Rectangular Latin Structures
+# Mutually Orthogonal Latin Squares, Reticulations, and Cooperative Systems: A Sharp Bound via Corner Tagging
 
-**Aristotle**  
-**17 July 2026**
+**Author:** Aristotle
+
+**Date:** 2026-07-24
 
 ## Abstract
 
-We develop a finite coordinate theory unifying two-type incidence structures, rectangular Latin conditions, orthogonal matrix pairs, and balanced arrays. A reticulation consists of a finite point set equipped with two classes of coordinate families such that every coordinate map chosen from opposite classes jointly labels the points bijectively. A cooperative system consists of column-Latin matrices and row-Latin matrices, every cross-type pair being orthogonal. A svelte semi-orthogonal array records the same cross-coordinate condition row by row. We prove the unique-position and unique-intersection properties, characterize column- and row-Latin matrices by orthogonality to the canonical coordinate matrices, construct reticulations and svelte arrays from cooperative systems, and construct reticulations from svelte arrays. The central counting consequence is that every nonempty two-sided finite reticulation has exactly $mn$ points, and every corresponding svelte array has exactly $mn$ rows. We also give direct validation and conversion algorithms, analyze their complexity, and discuss applications to balanced experimental design, combinatorial data representations, and cross-view indexing.
+We study combinatorial structures that generalize $(k,n)$-nets, orthogonal
+arrays, and sets of mutually orthogonal Latin squares (MOLS), organizing them
+around a single quantitative question: how many pairwise-orthogonal Latin squares
+can share a common $n \times n$ grid? We give a fully self-contained, elementary
+proof of the classical sharp upper bound — a set of MOLS of order $n \ge 2$
+contains at most $n - 1$ squares — using a *corner-tagging* argument that requires
+no field structure and no prior normalization of the family. The proof isolates a
+single cell of the grid and reduces the entire theorem to two applications of the
+pigeonhole principle: one enforcing that a tag is nonzero (via the column-Latin
+property) and one enforcing that tags are distinct (via orthogonality). We record
+the two structural symmetries that underpin the theory — invariance of the Latin
+and orthogonality conditions under independent relabeling of symbols — and we prove
+existence and sharpness by exhibiting the cyclic Latin square in every positive
+order and a complete pair of MOLS of order $3$ realizing the bound. We close by
+placing these results in the broader landscape of *reticulations* and *cooperative
+systems*, geometric generalizations in which the two Latin conditions are
+unbundled, and we formulate a bipartite refinement of the bound as a natural next
+target.
+
+**Keywords:** mutually orthogonal Latin squares, MOLS, nets, transversal designs,
+orthogonal arrays, cooperative systems, reticulations, combinatorial designs,
+pigeonhole principle.
+
+---
 
 ## 1. Introduction
 
-Classical nets, orthogonal arrays, and mutually orthogonal Latin squares all encode a common phenomenon: independently meaningful partitions of a finite set interact with exact regularity. The usual square case can obscure two useful freedoms. First, the two sides may have different alphabet sizes $m$ and $n$. Second, compatibility may be required only across two types of families, rather than between every pair of families.
+A *Latin square* of order $n$ is an $n \times n$ array over an $n$-element symbol
+alphabet in which each symbol occurs exactly once in every row and exactly once in
+every column. Two Latin squares $L$ and $M$ of the same order are *orthogonal* when
+the $n^2$ ordered pairs $(L_{ij}, M_{ij})$ obtained by superimposing them are all
+distinct; equivalently, every ordered pair of symbols occurs in exactly one cell.
+A family of Latin squares that are pairwise orthogonal is a set of *mutually
+orthogonal Latin squares* (MOLS).
 
-The resulting asymmetric theory has three natural presentations.
+Orthogonal Latin squares originate with Euler's 1782 "Thirty-Six Officers Problem"
+and have since become a cornerstone of design theory, with applications to the
+statistical design of experiments, error-correcting codes, finite geometry, and
+combinatorial scheduling. The single most important quantitative fact about them is
+a ceiling on the size of a MOLS family:
 
-1. In the **incidence presentation**, points lie on fibres called lines. Lines come in weft and warp families, and opposite-type lines intersect uniquely.
-2. In the **matrix presentation**, an $m$-symbol matrix is Latin down columns, an $n$-symbol matrix is Latin across rows, and opposite-type matrices are orthogonal.
-3. In the **array presentation**, rows carry several left and right coordinates, and every projection onto one left and one right coordinate is a complete rectangular grid.
+> A set of MOLS of order $n \ge 2$ has at most $n - 1$ members.
 
-The principal aim of this paper is to establish the finite coordinate core connecting these presentations. The coordinate viewpoint avoids unnecessary set-partition bookkeeping while retaining the incidence content: the fibres of a coordinate map are precisely the lines, and a family of fibres automatically partitions the point set.
+This bound is classical, but the standard textbook proof proceeds by first
+*normalizing* a family — relabeling each square so its first row is the identity
+sequence $0, 1, \dots, n-1$ — and then reading a repeated symbol off a fixed cell.
+The purpose of this paper is to present a streamlined, self-contained treatment in
+which normalization is never performed. Instead we tag each square directly by
+inverting its first row, reducing the entire argument to two short pigeonhole
+steps. The subtraction of a single unit in "$n - 1$" is pinned to one concrete,
+identifiable phenomenon: a designated *corner cell* cannot match the top-left cell
+without violating the column-Latin property.
 
-The basic hypothesis is bijectivity. For a weft coordinate $w_u:P\to [m]$ and a warp coordinate $z_v:P\to[n]$, the combined map
+We also develop the two symmetry principles the theory relies on — relabeling
+invariance of both the Latin condition and orthogonality — and we establish
+existence and sharpness. Finally, we connect the results to *reticulations* and
+*cooperative systems*, the incidence-geometric generalizations that motivate the
+subject, and we outline how the corner-tag mechanism extends to them.
 
+### Contributions
+
+1. A complete, normalization-free proof of the sharp MOLS bound $k \le n - 1$
+   (Section 4), organized around the corner-tag map.
+2. Clean predicate-level definitions of the Latin and orthogonality conditions
+   matching the "row-Latin $\perp$ column-Latin" viewpoint of cooperative systems
+   (Section 2), together with the two relabeling-symmetry theorems (Section 3).
+3. Existence in every positive order via the cyclic Latin square, and sharpness at
+   order $3$ via an explicit complete pair of MOLS (Section 5).
+4. A structural discussion of reticulations and cooperative systems and a bipartite
+   conjecture generalizing the bound (Sections 6–7).
+
+---
+
+## 2. Definitions
+
+Throughout, we identify both the index set (rows/columns) and the symbol alphabet
+with the set $\{0, 1, \dots, n-1\}$, which we denote $[n]$. A map
+$L : [n] \times [n] \to [n]$ is written $L_{ij} := L(i, j)$ and viewed as an array
+whose cell in row $i$ and column $j$ holds symbol $L_{ij}$.
+
+**Definition 2.1 (Latin square).** An array $L : [n] \times [n] \to [n]$ is a
+*Latin square* of order $n$ if
+
+- (row condition) for every fixed row $i$, the map $j \mapsto L_{ij}$ is a
+  bijection of $[n]$; and
+- (column condition) for every fixed column $j$, the map $i \mapsto L_{ij}$ is a
+  bijection of $[n]$.
+
+Because $[n]$ is finite, "bijection" may equivalently be read as "injection" or as
+"surjection"; each row and each column is a permutation of the alphabet.
+
+**Definition 2.2 (Orthogonality).** Two arrays $L, M : [n] \times [n] \to [n]$ are
+*orthogonal*, written $L \perp M$, if the *pairing map*
 $$
-p\longmapsto (w_u(p),z_v(p))
+\Phi_{L,M} : [n] \times [n] \to [n] \times [n], \qquad
+\Phi_{L,M}(i, j) = (L_{ij}, M_{ij})
 $$
+is a bijection. Since domain and codomain are finite sets of the same cardinality
+$n^2$, this is equivalent to injectivity of $\Phi_{L,M}$: no two distinct cells
+yield the same ordered pair of symbols.
 
-is required to be a bijection for every $u$ and $v$. Here $[k]=\{0,1,\ldots,k-1\}$. This single condition simultaneously gives unique intersections, a grid representation, and the cardinality $|P|=mn$.
+**Definition 2.3 (MOLS).** A set of *mutually orthogonal Latin squares* of order
+$n$ and size $k$ is an indexed family $(L^{(s)})_{s \in [k]}$ such that
 
-The same condition appears in the matrix model. If $C:[m]\times[n]\to[m]$ and $R:[m]\times[n]\to[n]$, orthogonality means that
+- each $L^{(s)}$ is a Latin square of order $n$; and
+- for all $s \ne t$, the squares $L^{(s)}$ and $L^{(t)}$ are orthogonal.
 
+We refer to the members as the *squares* of the family and to $k$ as its *size*.
+
+**Remark 2.4 (The cooperative-system viewpoint).** The two clauses of Definition
+2.1 are logically independent: an array may satisfy the row condition without the
+column condition and vice versa. Calling an array *row-Latin* if every row is a
+permutation and *column-Latin* if every column is a permutation, a Latin square is
+exactly an array that is both. A *cooperative system* relaxes MOLS to a collection
+of row-Latin matrices together with a collection of column-Latin matrices in which
+each row-Latin matrix is orthogonal to each column-Latin matrix (see Section 6).
+Our definitions are stated at the predicate level precisely so that this
+unbundling is transparent.
+
+---
+
+## 3. Relabeling symmetry
+
+The theory is invariant under renaming the symbol alphabet. This is what allows one
+to standardize a family "for free," and it is the source of the flexibility
+exploited by the corner-tag proof.
+
+**Theorem 3.1 (Latin relabeling).** Let $L$ be a Latin square of order $n$ and let
+$\sigma : [n] \to [n]$ be a bijection. Then the array $(i, j) \mapsto \sigma(L_{ij})$
+is again a Latin square.
+
+*Proof.* For each fixed row $i$, the map $j \mapsto \sigma(L_{ij})$ is the
+composition $\sigma \circ (j \mapsto L_{ij})$ of two bijections, hence a bijection;
+likewise for each column. $\qquad\blacksquare$
+
+**Theorem 3.2 (Orthogonality relabeling).** Let $L \perp M$ be orthogonal arrays of
+order $n$, and let $\sigma, \tau : [n] \to [n]$ be bijections. Then
+$(i, j) \mapsto \sigma(L_{ij})$ and $(i, j) \mapsto \tau(M_{ij})$ are orthogonal.
+
+*Proof.* The pairing map of the relabeled arrays is
+$(\sigma \times \tau) \circ \Phi_{L,M}$, where $\sigma \times \tau$ denotes the
+product map $(x, y) \mapsto (\sigma(x), \tau(y))$. A product of two bijections is a
+bijection, and the composition of bijections is a bijection, so the new pairing map
+is a bijection. $\qquad\blacksquare$
+
+The independence of $\sigma$ and $\tau$ in Theorem 3.2 is essential: each square in
+a MOLS family may be relabeled by its own permutation without disturbing pairwise
+orthogonality. This is exactly the freedom used, in classical treatments, to
+normalize each first row to the identity — and it is why the proof in Section 4 may
+invert first rows individually without loss of generality.
+
+---
+
+## 4. The sharp bound
+
+We now prove the central theorem. Fix $n \ge 2$ and a MOLS family
+$(L^{(s)})_{s \in [k]}$ of order $n$. Because $n \ge 2$, the row indices $0$ and $1$
+and the column index $0$ all exist; we single out the **corner cell** $(1, 0)$
+(second row, first column).
+
+**Definition 4.1 (Corner tag).** For each square index $s$, the first row
+$j \mapsto L^{(s)}_{0j}$ is a bijection of $[n]$ (row condition), so it has an
+inverse. Define the *corner tag* of $s$ to be the unique column
 $$
-(i,j)\longmapsto(C(i,j),R(i,j))
+c(s) := \bigl(j \mapsto L^{(s)}_{0j}\bigr)^{-1}\!\bigl(L^{(s)}_{1 0}\bigr) \in [n];
 $$
-
-is bijective. The fibres of $C$ and $R$ are opposite-type lines. When entire collections of such matrices are cross-orthogonal, every selected pair supplies a coordinate chart on the common grid.
-
-The paper proceeds from definitions through structural theorems, algorithms, and applications. All finiteness and nonemptiness assumptions required for counting are stated explicitly.
-
-## 2. Basic notation and definitions
-
-For a positive integer $k$, write $[k]=\{0,1,\ldots,k-1\}$. For positive integers $m$ and $n$, define the rectangular grid
-
+that is, $c(s)$ is the column of the first row whose symbol equals the corner-cell
+symbol $L^{(s)}_{10}$. By construction it satisfies the defining identity
 $$
-G_{m,n}=[m]\times[n].
-$$
-
-An $a$-symbol matrix of shape $m\times n$ is simply a function
-
-$$
-M:G_{m,n}\to[a].
-$$
-
-The functional notation is convenient because no algebraic operations on entries are assumed.
-
-### Definition 2.1 (Column-Latin matrix)
-
-A matrix $C:G_{m,n}\to[m]$ is **column-Latin** if, for every $j\in[n]$, the map
-
-$$
-[m]\to[m],\qquad i\longmapsto C(i,j)
-$$
-
-is bijective. Equivalently, every symbol in $[m]$ occurs exactly once in every column.
-
-### Definition 2.2 (Row-Latin matrix)
-
-A matrix $R:G_{m,n}\to[n]$ is **row-Latin** if, for every $i\in[m]$, the map
-
-$$
-[n]\to[n],\qquad j\longmapsto R(i,j)
-$$
-
-is bijective. Equivalently, every symbol in $[n]$ occurs exactly once in every row.
-
-### Definition 2.3 (Orthogonality)
-
-A matrix $C:G_{m,n}\to[m]$ and a matrix $R:G_{m,n}\to[n]$ are **orthogonal** if the combined labeling
-
-$$
-\Phi_{C,R}:G_{m,n}\to[m]\times[n],\qquad
-\Phi_{C,R}(p)=(C(p),R(p))
-$$
-
-is bijective. Hence every ordered pair $(q,r)\in[m]\times[n]$ occurs at exactly one grid position.
-
-### Definition 2.4 (Cooperative pair and cooperative system)
-
-A **cooperative pair** of parameters $(m,n)$ is a pair $(C,R)$ in which $C$ is column-Latin, $R$ is row-Latin, and $C$ is orthogonal to $R$.
-
-More generally, let $U$ and $V$ be index sets. A **cooperative system** consists of matrices
-
-$$
-C_u:G_{m,n}\to[m]\quad(u\in U),
-\qquad
-R_v:G_{m,n}\to[n]\quad(v\in V),
-$$
-
-such that every $C_u$ is column-Latin, every $R_v$ is row-Latin, and $C_u$ is orthogonal to $R_v$ for every $(u,v)\in U\times V$. No same-type orthogonality is required.
-
-### Definition 2.5 (Coordinate reticulation)
-
-Let $P$ be a finite set and let $U,V$ be index sets. A **coordinate reticulation** with parameters $(m,n)$ consists of maps
-
-$$
-w_u:P\to[m]\quad(u\in U),
-\qquad
-z_v:P\to[n]\quad(v\in V),
-$$
-
-such that for every $u\in U$ and $v\in V$, the cross-coordinate map
-
-$$
-\Psi_{u,v}:P\to[m]\times[n],\qquad
-\Psi_{u,v}(p)=(w_u(p),z_v(p))
-$$
-
-is bijective.
-
-For fixed $u$ and $q$, the fibre $w_u^{-1}(q)$ is a weft line. For fixed $v$ and $r$, the fibre $z_v^{-1}(r)$ is a warp line. For each fixed coordinate family, its fibres are disjoint and cover $P$, so they form a partition automatically.
-
-### Definition 2.6 (Svelte semi-orthogonal array)
-
-A **svelte semi-orthogonal array** with parameters $(m,n)$ and coordinate index sets $(U,V)$ consists of a finite row set $Y$ and entries
-
-$$
-L:Y\times U\to[m],
-\qquad
-T:Y\times V\to[n],
-$$
-
-such that for every $u\in U$ and $v\in V$, the projection
-
-$$
-y\longmapsto(L(y,u),T(y,v))
-$$
-
-is a bijection from $Y$ to $[m]\times[n]$.
-
-The adjective “svelte” reflects the index-one property: each cross-type ordered pair occurs exactly once, not merely a fixed larger number of times.
-
-## 3. Local regularity and unique intersections
-
-We first extract the exact uniqueness statements implicit in the definitions.
-
-### Theorem 3.1 (Unique symbol position in a column)
-
-Let $C:G_{m,n}\to[m]$ be column-Latin. For every $j\in[n]$ and $q\in[m]$, there exists a unique $i\in[m]$ such that
-
-$$
-C(i,j)=q.
-$$
-
-**Proof sketch.** For fixed $j$, column-Latinness says that $i\mapsto C(i,j)$ is a bijection of $[m]$. Surjectivity supplies a preimage of $q$, and injectivity makes that preimage unique. $\square$
-
-### Theorem 3.2 (Unique symbol position in a row)
-
-Let $R:G_{m,n}\to[n]$ be row-Latin. For every $i\in[m]$ and $r\in[n]$, there exists a unique $j\in[n]$ such that
-
-$$
-R(i,j)=r.
+L^{(s)}_{0,\,c(s)} = L^{(s)}_{1 0}. \tag{$\ast$}
 $$
 
-**Proof sketch.** Fix $i$ and apply surjectivity and injectivity of the row permutation $j\mapsto R(i,j)$. $\square$
+**Lemma 4.2 (Tags avoid column $0$).** For every $s$, we have $c(s) \ne 0$.
 
-These statements show that every fibre of a column-Latin matrix meets every geometric column exactly once, while every fibre of a row-Latin matrix meets every geometric row exactly once.
+*Proof.* Suppose $c(s) = 0$. Substituting into $(\ast)$ gives
+$L^{(s)}_{0 0} = L^{(s)}_{1 0}$: the symbol in the top-left cell equals the symbol in
+the corner cell. But these two cells lie in the *same column* (column $0$), and the
+column condition says $i \mapsto L^{(s)}_{i 0}$ is injective. Injectivity forces the
+row indices to coincide, i.e. $0 = 1$, contradicting $n \ge 2$. Hence
+$c(s) \ne 0$. $\qquad\blacksquare$
 
-### Theorem 3.3 (Unique cross-intersection in a cooperative pair)
+**Lemma 4.3 (Tags are distinct).** The map $s \mapsto c(s)$ is injective.
 
-Let $(C,R)$ be a cooperative pair. For every $q\in[m]$ and $r\in[n]$, there exists a unique point $p\in G_{m,n}$ such that
-
+*Proof.* Suppose $c(s) = c(t) =: c$ for two indices $s \ne t$. Applying the defining
+identity $(\ast)$ to both squares at the column $c$ gives
 $$
-C(p)=q
+L^{(s)}_{0 c} = L^{(s)}_{1 0}
 \qquad\text{and}\qquad
-R(p)=r.
+L^{(t)}_{0 c} = L^{(t)}_{1 0}.
 $$
-
-**Proof sketch.** Orthogonality states that $p\mapsto(C(p),R(p))$ is bijective. The ordered pair $(q,r)$ therefore has exactly one preimage. $\square$
-
-In incidence language, the fibre $C^{-1}(q)$ and the fibre $R^{-1}(r)$ meet in exactly one point. This is the fundamental reticulation rule.
-
-## 4. Canonical coordinate matrices
-
-Define the horizontal and vertical coordinate matrices by
-
+Reading these two equations coordinatewise, the ordered pair of symbols produced by
+the superposition of $L^{(s)}$ and $L^{(t)}$ at cell $(0, c)$ equals the pair
+produced at cell $(1, 0)$:
 $$
-H(i,j)=i,
+\bigl(L^{(s)}_{0 c},\, L^{(t)}_{0 c}\bigr) = \bigl(L^{(s)}_{1 0},\, L^{(t)}_{1 0}\bigr).
+$$
+Since $s \ne t$, the squares $L^{(s)}$ and $L^{(t)}$ are orthogonal, so their pairing
+map $\Phi$ is injective. Injectivity forces the two cells to coincide:
+$(0, c) = (1, 0)$. In particular the row indices agree, $0 = 1$, contradicting
+$n \ge 2$. Hence $c$ is injective. $\qquad\blacksquare$
+
+**Theorem 4.4 (MOLS bound).** A set of mutually orthogonal Latin squares of order
+$n \ge 2$ has at most $n - 1$ members; that is, $k \le n - 1$.
+
+*Proof.* By Lemma 4.2 the corner tag $c$ maps $[k]$ into the set
+$[n] \setminus \{0\}$ of nonzero columns, which has exactly $n - 1$ elements. By
+Lemma 4.3 the map $c$ is injective. An injection from a set of size $k$ into a set
+of size $n - 1$ forces $k \le n - 1$. $\qquad\blacksquare$
+
+**Discussion.** The entire theorem rests on the single cell $(1, 0)$. It is the
+unique cell used outside row $0$, and the witness cell $(0, c(s))$ it produces
+always lies in row $0$; the mismatch of these rows ($1 \ne 0$) is what both lemmas
+ultimately exploit. The "$-1$" — the difference between the true bound $n - 1$ and
+the naive counting bound $n$ — is exactly Lemma 4.2: without it one only concludes
+$k \le n$. No field structure, prime-power hypothesis, or normalization is used; the
+proof is valid for arbitrary order $n \ge 2$.
+
+---
+
+## 5. Existence and sharpness
+
+An upper bound is only meaningful once existence is established, and it is *sharp*
+only if the bound is attained.
+
+### 5.1 Existence in every order
+
+**Theorem 5.1 (Cyclic Latin square).** For every $n \ge 1$, the addition table of
+the cyclic group $\mathbb{Z}/n\mathbb{Z}$,
+$$
+L_{ij} = i + j \pmod n,
+$$
+is a Latin square of order $n$.
+
+*Proof.* For each fixed $i$, the map $j \mapsto i + j$ is translation by $i$, a
+bijection of $\mathbb{Z}/n\mathbb{Z}$ with inverse $j \mapsto j - i$; this is the row
+condition. Symmetrically, for each fixed $j$ the map $i \mapsto i + j$ is a
+bijection, giving the column condition. $\qquad\blacksquare$
+
+Thus Latin squares exist in every positive order, and the MOLS bound is never
+vacuous: the family of size $k = 1$ always exists.
+
+### 5.2 Attainment: complete MOLS from affine maps
+
+When $n$ is prime (more generally, a prime power, using the finite field of order
+$n$), the alphabet carries a field structure, and one obtains a *complete* family
+attaining the bound. Label rows, columns, and symbols by field elements and, for
+each nonzero *slope* $a$, define
+$$
+L^{(a)}_{ij} = a \cdot i + j.
+$$
+Each $L^{(a)}$ is a Latin square (rows are translations; columns are
+$i \mapsto a i + j$, a bijection because $a \ne 0$). For distinct nonzero slopes
+$a \ne a'$, the squares $L^{(a)}$ and $L^{(a')}$ are orthogonal: given a target pair
+$(u, v)$, the system $a i + j = u$, $a' i + j = v$ has the unique solution
+$i = (u - v)/(a - a')$, $j = u - a i$, so the pairing map is a bijection. There are
+exactly $n - 1$ nonzero slopes, yielding $n - 1$ mutually orthogonal squares.
+
+### 5.3 The smallest sharp case
+
+**Theorem 5.2 (Sharpness at order $3$).** The maximum size of a set of MOLS of order
+$3$ is exactly $2$.
+
+*Proof.* Theorem 4.4 gives the upper bound $k \le 3 - 1 = 2$. For attainment, take
+the two affine tables over $\mathbb{Z}/3\mathbb{Z}$ with slopes $1$ and $2$:
+$$
+A_{ij} = i + j, \qquad B_{ij} = 2 i + j.
+$$
+Explicitly,
+$$
+A = \begin{pmatrix} 0 & 1 & 2 \\ 1 & 2 & 0 \\ 2 & 0 & 1 \end{pmatrix},
 \qquad
-V(i,j)=j.
+B = \begin{pmatrix} 0 & 1 & 2 \\ 2 & 0 & 1 \\ 1 & 2 & 0 \end{pmatrix}.
 $$
-
-The pair $(H,V)$ is the basic cooperative pair: $H$ is column-Latin, $V$ is row-Latin, and the combined map $(i,j)\mapsto(H(i,j),V(i,j))$ is the identity on $G_{m,n}$.
-
-The coordinate matrices do more than provide an example. They characterize the one-sided Latin conditions.
-
-### Theorem 4.1 (Column-coordinate characterization)
-
-For a matrix $C:G_{m,n}\to[m]$, the following are equivalent:
-
-1. $C$ is column-Latin.
-2. $C$ is orthogonal to the vertical coordinate matrix $V$.
-
-**Proof sketch.** Suppose $C$ is column-Latin. To recover a grid point from $(q,j)$, use Theorem 3.1 to find the unique $i$ satisfying $C(i,j)=q$; then $(i,j)$ is the unique preimage of $(q,j)$ under $p\mapsto(C(p),V(p))$. Hence that map is bijective.
-
-Conversely, assume $p\mapsto(C(p),V(p))$ is bijective. Fix $j$. If $C(i,j)=C(i',j)$, then the two positions have equal $C$-values and equal $V$-values, so global injectivity gives $i=i'$. Given $q$, global surjectivity supplies a point mapped to $(q,j)$; its second coordinate must be $j$, giving a row $i$ with $C(i,j)=q$. Thus the $j$th column map is bijective. $\square$
-
-### Theorem 4.2 (Row-coordinate characterization)
-
-For a matrix $R:G_{m,n}\to[n]$, the following are equivalent:
-
-1. $R$ is row-Latin.
-2. The horizontal coordinate matrix $H$ is orthogonal to $R$.
-
-**Proof sketch.** This is the row-column dual of Theorem 4.1. Pairing $R(i,j)$ with $H(i,j)=i$ records a row and a symbol. Global bijectivity is equivalent to each symbol occurring exactly once in each fixed row. $\square$
-
-These equivalences replace $n$ separate bijectivity conditions for $C$, or $m$ separate conditions for $R$, by one global orthogonality condition. They also show that the elementary coordinate pair is a neutral reference frame for the theory.
-
-## 5. From cooperative systems to reticulations
-
-Let
-
+Both are Latin (Theorem 5.1 and the fact that $2$ is a unit modulo $3$). Their
+superposition
 $$
-\mathcal{S}=\bigl((C_u)_{u\in U},(R_v)_{v\in V}\bigr)
+(A_{ij}, B_{ij}) =
+\begin{pmatrix} (0,0) & (1,1) & (2,2) \\ (1,2) & (2,0) & (0,1) \\ (2,1) & (0,2) & (1,0) \end{pmatrix}
 $$
-
-be a cooperative system on $G_{m,n}$. Take the cells themselves as points. Define weft and warp coordinates by
-
-$$
-w_u(p)=C_u(p),
-\qquad
-z_v(p)=R_v(p).
-$$
-
-### Theorem 5.1 (Reticulation induced by a cooperative system)
-
-The preceding coordinates define a reticulation on $G_{m,n}$. For every $u\in U$, $v\in V$, $q\in[m]$, and $r\in[n]$, there exists a unique grid point $p$ satisfying
-
-$$
-w_u(p)=q,
-\qquad
-z_v(p)=r.
-$$
-
-**Proof sketch.** For each $(u,v)$, the cross-coordinate map is exactly $p\mapsto(C_u(p),R_v(p))$, which is bijective by the cross-orthogonality requirement. Unique existence follows by taking the unique preimage of $(q,r)$. $\square$
-
-The fibres of each $C_u$ partition the grid into $m$ weft lines, and the fibres of each $R_v$ partition it into $n$ warp lines. Every line from a selected weft family meets every line from a selected warp family exactly once.
-
-## 6. Svelte array encoding
-
-A cooperative system can be serialized row by row. Let the row set be $Y=G_{m,n}$. For $p\in Y$, define
-
-$$
-L(p,u)=C_u(p),
-\qquad
-T(p,v)=R_v(p).
-$$
-
-Thus each grid cell contributes one data row containing all its weft labels and all its warp labels.
-
-### Theorem 6.1 (Cooperative-system encoding)
-
-The row encoding of a cooperative system is a svelte semi-orthogonal array. More precisely, for every $u\in U$, $v\in V$, $q\in[m]$, and $r\in[n]$, there exists a unique row $y$ such that
-
-$$
-L(y,u)=q,
-\qquad
-T(y,v)=r.
-$$
-
-**Proof sketch.** A row is a grid point. The required projection sends $p$ to $(C_u(p),R_v(p))$, which is bijective by orthogonality. $\square$
-
-The construction preserves the complete cross-coordinate information. Each left-right pair of table columns is a lossless coordinate chart for the row set.
-
-There is also a direct conversion in the opposite direction.
-
-### Theorem 6.2 (Reticulation induced by a svelte array)
-
-Let $(Y,L,T)$ be a svelte semi-orthogonal array. Define $w_u(y)=L(y,u)$ and $z_v(y)=T(y,v)$. Then these maps form a reticulation on $Y$.
-
-**Proof sketch.** The defining axiom of a svelte array states exactly that every map $y\mapsto(w_u(y),z_v(y))$ is bijective. The fibres are therefore line families with unique cross-intersections. $\square$
-
-Theorems 5.1, 6.1, and 6.2 establish the forward coordinate correspondences needed to move freely among grid matrices, incidence fibres, and balanced row arrays. A full structure-level equivalence would additionally normalize arbitrary coordinate choices and prove that the round trips preserve all structure up to the appropriate notion of isomorphism.
-
-## 7. Cardinality consequences
-
-The cross-coordinate bijection determines the size of every finite object in the theory.
-
-### Theorem 7.1 (Reticulation cardinality)
-
-Let $P$ be a finite reticulation with parameters $(m,n)$. If $U$ and $V$ are nonempty, then
-
-$$
-|P|=mn.
-$$
-
-**Proof sketch.** Choose $u\in U$ and $v\in V$. The map
-
-$$
-P\to[m]\times[n],\qquad p\mapsto(w_u(p),z_v(p))
-$$
-
-is a bijection. Therefore
-
-$$
-|P|=|[m]\times[n]|=|[m]|\,|[n]|=mn.
-$$
-
-The assumptions that both coordinate index sets are nonempty are essential to select a cross-coordinate map. $\square$
-
-### Corollary 7.2 (Svelte array row count)
-
-Let $(Y,L,T)$ be a svelte semi-orthogonal array with parameters $(m,n)$. If $U$ and $V$ are nonempty, then
-
-$$
-|Y|=mn.
-$$
-
-**Proof sketch.** By Theorem 6.2 the array defines a reticulation on its row set. Apply Theorem 7.1. Equivalently, choose one left and one right column; their projection is a bijection from $Y$ to $[m]\times[n]$. $\square$
-
-The count does not depend on the numbers of coordinate families. Additional families provide additional compatible descriptions of the same $mn$ points; they do not add points.
-
-## 8. Algorithms
-
-The definitions lead to simple finite algorithms. Assume matrices are stored as rectangular arrays with constant-time entry access.
-
-### 8.1 Testing the Latin conditions
-
-To test whether $C$ is column-Latin, inspect each column and mark the symbols encountered. Reject an out-of-range symbol or a repetition. Since a column contains $m$ entries from an alphabet of size $m$, absence of repetition implies that every symbol occurs. The total running time is $O(mn)$ and a reusable marker array requires $O(m)$ auxiliary space.
-
-The row-Latin test is dual: inspect every row of $R$, using $O(n)$ auxiliary space and $O(mn)$ time.
-
-### 8.2 Testing orthogonality
-
-To test whether $C$ and $R$ are orthogonal, scan all $mn$ cells and mark the ordered pair $(C(i,j),R(i,j))$. Reject repeated or invalid pairs. There are exactly $mn$ cells and $mn$ possible pairs, so distinctness implies bijectivity. The running time and direct marker storage are both $O(mn)$.
-
-For a cooperative system containing $a=|U|$ column-type matrices and $b=|V|$ row-type matrices, direct validation costs
-
-$$
-O\bigl(mn(a+b+ab)\bigr),
-$$
-
-because there are $a+b$ local Latin tests and $ab$ cross-orthogonality tests.
-
-### 8.3 Constructing fibres and unique intersections
-
-Given a coordinate map, construct its line family by grouping points according to their labels. For one map this takes $O(mn)$ time. For a cooperative pair, an inverse table indexed by $(q,r)$ can be built in $O(mn)$ time and then answers every unique-intersection query in $O(1)$ time.
-
-### 8.4 Encoding a cooperative system as a svelte array
-
-With $a$ left matrices and $b$ right matrices, produce one output row per grid point and copy its $a+b$ labels. The cost is
-
-$$
-O\bigl(mn(a+b)\bigr)
-$$
-
-time and output space. Any projection onto one left and one right output column can be checked by the orthogonality algorithm.
-
-### 8.5 Canonical-coordinate diagnostics
-
-Theorems 4.1 and 4.2 give diagnostic shortcuts. Column-Latinness can be tested as orthogonality with $V$, while row-Latinness can be tested as orthogonality with $H$. Although this does not improve asymptotic complexity, it unifies implementations around a single pair-bijection routine and can simplify software interfaces.
-
-## 9. Worked example
-
-Let $m=3$ and $n=4$. Define
-
-$$
-C(i,j)=i,
-\qquad
-R(i,j)=j.
-$$
-
-Then each of the four columns of $C$ is $(0,1,2)$, and each of the three rows of $R$ is $(0,1,2,3)$. The combined labels are
-
-$$
-(C(i,j),R(i,j))=(i,j),
-$$
-
-so all twelve pairs occur once. A fixed value of $C$ selects a horizontal three? No: on a $3$-by-$4$ grid it selects one row containing $4$ points, while a fixed value of $R$ selects one column containing $3$ points. Their intersection is one cell. This distinction illustrates the asymmetric parameters: a weft fibre has $n$ points and a warp fibre has $m$ points.
-
-The corresponding svelte array has twelve rows and two displayed coordinate columns:
-
-$$
-(0,0),(0,1),(0,2),(0,3),
-(1,0),(1,1),(1,2),(1,3),
-(2,0),(2,1),(2,2),(2,3).
-$$
-
-Permuting the entries separately within each column of a proposed $C$ preserves column-Latinness; permuting entries separately within each row of a proposed $R$ preserves row-Latinness. However, arbitrary simultaneous choices can destroy orthogonality by repeating a cross-pair. This separates local regularity from global cooperation.
-
-## 10. Applications
-
-### 10.1 Balanced experimental design
-
-Suppose rows represent experimental units, left coordinates represent levels of one class of factors, and right coordinates represent another. The svelte condition guarantees exact pairwise balance across types: for every selected cross-type factor pair, each ordered level pair appears once. This prevents cross-type confounding at index one and gives a transparent sample-size requirement of $mn$.
-
-### 10.2 Cross-view data indexing
-
-In a data system, each $w_u$ and $z_v$ may be viewed as a categorical feature. Cross-bijectivity says that any one feature from each type uniquely identifies a record and that every admissible feature pair is realized. Thus every cross-type pair is simultaneously a candidate key and a completeness certificate.
-
-### 10.3 Representation learning and benchmark construction
-
-When data have two groups of attributes, a cooperative design gives exact combinatorial coverage. Every left-right attribute pair is represented uniformly, avoiding accidental imbalance in evaluation sets. Multiple coordinate families can model multiple encodings or views of the same examples. The theory is combinatorial rather than statistical—it does not itself guarantee generalization—but it supplies a precise design invariant.
-
-### 10.4 Communications and reversible transitions
-
-The unique-intersection property provides deterministic encoding and decoding. Given a left label and a right label, exactly one state is selected. Multiple compatible coordinate pairs provide redundant but lossless descriptions, a pattern related to reversible finite-state systems and permutation-based channels.
-
-## 11. Discussion
-
-The most economical formulation of the theory is the cross-coordinate bijection. It contains several familiar conditions as different readings:
-
-- as incidence, it says opposite-type fibres intersect exactly once;
-- as matrix theory, it says opposite-type matrices are orthogonal;
-- as array theory, it says every left-right projection contains every ordered pair once;
-- as counting, it exhibits a bijection with an $m$-by-$n$ grid.
-
-The coordinate characterization theorems show that even the local Latin axioms fit this pattern: a one-sided Latin matrix is precisely a matrix orthogonal to the appropriate canonical coordinate matrix.
-
-The asymmetry between $m$ and $n$ is structural, not cosmetic. Column-Latin matrices use $m$ symbols because columns have $m$ positions; row-Latin matrices use $n$ symbols because rows have $n$ positions. Their cross-pairs range over exactly $mn$ possibilities, matching the number of cells. Square Latin structures arise when $m=n$, but the proofs require no equality of parameters.
-
-There are also clear boundaries to the present results. The coordinate formulation treats lines as fibres rather than as independently stored finite subsets. It establishes direct constructions but not yet a complete equivalence of normalized structures under isomorphism. It permits repeated coordinate families unless an additional repetition-free condition is imposed. Finally, it addresses exact index-one balance rather than higher multiplicities.
-
-## 12. Future work
-
-Several developments would extend the finite coordinate core.
-
-1. **Partition-level incidence structures.** Introduce lines explicitly as finite subsets, require pairwise-disjoint covers, and prove equivalence with the fibre representation, including all regularity clauses for line sizes and incidences.
-2. **Full inverse correspondence.** Package ordered reticulations, svelte semi-orthogonal arrays, and normalized cooperative systems as equivalent structures, with round-trip isomorphisms.
-3. **Multiplicity and repetition.** Allow multisets of line families, define repetition-free systems, and characterize when coordinate families coincide.
-4. **Parastrophy and isotopy.** Study permutation actions on points, labels, and families, proving preservation of cooperation and reticulation axioms.
-5. **Constructions.** Develop prolongation, splicing, and direct-product operations and derive their parameter formulas.
-6. **Classical specializations.** Recover nets, mixed orthogonal arrays, mutually orthogonal Latin squares, and reversible finite-state constructions as special cases.
-7. **Finite classification.** Enumerate small repetition-free systems up to isotopy and provide independently checkable certificates for reported counts.
-
-## 13. Conclusion
-
-A finite set with two types of coordinate families becomes rigid as soon as every opposite-type pair labels it bijectively. Unique intersections force a rectangular grid, and that grid has exactly $mn$ points. Column-Latin and row-Latin matrices describe the two directions; orthogonality supplies their cooperation. Recording all labels row by row yields a svelte array, while reading array entries as fibre labels reconstructs an incidence geometry.
-
-The resulting dictionary is concise: fibres are lines, ordered symbol pairs are intersections, orthogonality is a coordinate chart, and cross-projection balance is the array form of the same bijection. This common language supports both theoretical generalization and direct linear-time validation of finite examples.
+lists all nine ordered pairs exactly once, so $A \perp B$. Hence a MOLS family of
+size $2$ exists, matching the upper bound. $\qquad\blacksquare$
+
+This is the smallest nontrivial confirmation that the "$-1$" is essential rather
+than an artifact of the counting.
+
+---
+
+## 6. Reticulations and cooperative systems
+
+The MOLS bound is the arithmetic shadow of an incidence-geometric object.
+
+**Nets.** A $(k, n)$-*net* consists of $n^2$ points together with $k + 1$ *parallel
+classes* of lines, where each class partitions the points into $n$ lines of $n$
+points each, and any two lines from *different* classes meet in exactly one point.
+Two of the classes may be taken as the "rows" and "columns" of an $n \times n$ grid;
+each of the remaining $k - 1$ classes then corresponds to a Latin square, and the
+mutual orthogonality of these squares is exactly the requirement that lines from
+different classes meet once. Thus a set of $k - 1$ MOLS of order $n$ is equivalent
+to a $(k, n)$-net. Theorem 4.4 says a net has at most $n + 1$ parallel classes.
+
+**Reticulations.** More generally, one may consider a point set equipped with *two
+types* of families of lines, subject to:
+
+- lines of *different* types meet in exactly one point;
+- each family (of either type) partitions the point set;
+- the number of points on a line depends only on its type, and every point lies on
+  the same number of lines of a given type.
+
+We call such a structure a *reticulation*. Selecting one family of each type
+coordinatizes the points on a rectangular grid, and recording, for each point, the
+line of a third family through it produces an array. When the two types are treated
+asymmetrically, the arrays split into *row-Latin* matrices (from one type) and
+*column-Latin* matrices (from the other).
+
+**Cooperative systems.** The array-level shadow of a reticulation is a *cooperative
+system*: a collection of column-Latin matrices together with a collection of
+row-Latin matrices such that every column-Latin matrix is orthogonal to every
+row-Latin matrix. A cooperative system unbundles the two halves of the Latin
+condition that a MOLS family fuses together, and it is the natural setting in which
+to ask for a *two-sided* version of the bound (Section 7). Definitions 2.1–2.3,
+being stated at the predicate level, specialize immediately to this setting: the row
+condition and column condition are independent predicates, and orthogonality is the
+same bijective pairing map.
+
+---
+
+## 7. Discussion and future work
+
+The corner-tag proof is deliberately one-sided: it tags each square by the column
+of its first *row* matching the corner symbol. But the argument has an unused *dual*
+direction — tagging by the row of the first *column* — and combining the two is the
+natural route to a bound for cooperative systems.
+
+**A bipartite bound (conjecture).** In a cooperative system with $a$ row-Latin
+matrices and $b$ column-Latin matrices of order $n$, in which every row-Latin matrix
+is orthogonal to every column-Latin matrix, the product $a \cdot b$ is bounded by
+$(n - 1)^2$, with equality forcing both families to be complete sets of MOLS
+coordinatizing the same net. The heuristic: a row-Latin matrix is tagged by the
+column of its first row matching the $(1,0)$-entry, while a column-Latin matrix is
+tagged dually by the row of its first column; cross-orthogonality forces the two tag
+families to inject into disjoint nonzero index sets, and the multiplicative bound
+follows by combining the two one-sided injections.
+
+**Reticulations as bipartite transversal designs (conjecture).** Reticulations with
+two line-types of degrees $(r, s)$ should be in explicit, degree-preserving
+bijection with a bipartite refinement of transversal designs $TD(k, n)$, under which
+the partition axiom corresponds to resolvability and the "different types meet once"
+axiom corresponds to the transversal property. With coordinatization formalized as
+the passage from lines to arrays, the incidence axioms become statements about
+injective pairing maps of exactly the kind handled here.
+
+**Deletion stability (conjecture).** If a set of MOLS of order $n$ attains the bound
+$n - 1$, then contracting one symbol (deleting the cells containing it) should yield
+a structure whose completion number is exactly $n - 2$; the bound degrades by
+exactly one under contraction, and no order-$n$ family can lose two units at once.
+
+These directions share a common theme: the elementary injection at the heart of
+Theorem 4.4 is robust, using neither field structure nor normalization, and each
+generalization amounts to finding the right index set for the right tag.
+
+---
+
+## 8. Conclusion
+
+We have given a compact, self-contained account of the sharp MOLS bound
+$k \le n - 1$ via a corner-tagging argument that reduces the theorem to two
+pigeonhole steps, together with the relabeling symmetries that legitimize it and
+explicit existence and sharpness results. Situated within the theory of nets,
+reticulations, and cooperative systems, the argument reveals that a single stubborn
+grid cell carries the whole weight of the classical bound, and it points toward
+bipartite generalizations for the structures that unbundle the row and column Latin
+conditions.
