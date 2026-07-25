@@ -2367,7 +2367,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "04a61ead",
+    "consumed_by_exp_id": "",
     "description": "Proves conformal invariance of chordal SLE_κ interfaces in simply connected planar domains.",
     "domain_bridges": [],
     "domains": [
@@ -2379,7 +2379,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "batch_50_injection",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-23T20:05:24.653256+00:00",
     "title": "SLE-Interface: Schramm-Loewner Evolution Conformal Invariance"
   },
@@ -11066,26 +11066,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "f853fcd6",
-    "description": "Investigate the ArXiv paper 'Matroid correspondence' and formalize its key results. Abstract: Motivated by algebraic correspondences and linear operators associated with volume and Lorentzian polynomials, we introduce matroid correspondences and their polymatroid analogues. A matroid correspondence defines a functor between poset categories of matroids whose morphisms are matroid quotients, and various standard functors, including deletion, contraction, free extension, truncation, intersection, union, and pullback, arise in this way. We show that these correspondences preserve representability and algebraicity under natural hypotheses. In the polymatroid setting, we establish compatibility with multisymmetric lifts. Finally, we relate this construction to the supports of linear operators with Lorentzian symbols.",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Bridges"
-    ],
-    "id": "fd_0137",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.13783v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-16T17:27:41.805947+00:00",
-    "title": "ArXiv paper: Matroid correspondence"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Independent Sets in Multiset Profile Graphs via Weighted Local Covers' and formalize its key results. Abstract: The discrete simplex consists of the nonnegative integer vectors $a=(a_1,\\ldots,a_q)$ whose coordinates sum to $d$. Equivalently, its vertices are the multiplicity profiles of size-$d$ multisets over $q$ symbols. Two vertices are adjacent when one is obtained from the other by decreasing one coordinate by one and increasing another coordinate by one. We study the maximum size $α_q(d)$ of an independent set in this graph. Our upper bounds cover the graph by translated smaller graphs and assign them nonnegative weights. For fixed $q$, the weights depend on only finitely many capped profiles, so one finite rational linear system can prove a bound for every sufficiently large $d$. The method gives new proofs of the known cases $q=3$ and $q=4$ and determines $α_q(d)$ exactly for $q=5$ and $q=7$ in every degree. It also determines the largest classes of natural additive colorings for general $q$. In the opposite regime, with $d$ fixed and $q$ growing, it solves degree five for $q\\ge7$, gives",
     "domain_bridges": [],
@@ -14847,6 +14827,26 @@
     "status": "available",
     "timestamp": "2026-07-25T09:20:38.898832+00:00",
     "title": "`Logic/StrangeLoops.lean` proves the abstract semantic core of the first incompl"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Matroid Correspondences\n\n## 1. Representability transfer through linear correspondences\n\nLet a matroid correspondence be induced by a linear relation between two finite-dimensional vector configurations over a field. If every fibre is obtained by restriction, projection, and addition of freely placed vectors, then universal pullback along the correspondence preserves representability over that field.\n\nThe key insight is that the order-extension law should admit a linear witness whose projections simultaneously certify both the quotient relation and representability.\n\nWhy now? The order-theoretic pullback theorem isolates the exact functorial step, so the remaining question is a sharply delimited lifting problem for linear representations.\n\n## 2. Algebraicity under dominant rational correspondences\n\nFor algebraic matroids over a fixed base field, a correspondence induced by a dominant rational correspondence of irreducible varieties preserves algebraicity whenever the generic fibres are geometrically integral.\n\nThe key insight is that extension of quotient witnesses should be governed by specialization of transcendence bases along generic fibres.\n\nWhy now? Universal pullback already transports the relevant lower-set structure; geometric integrality is a testable condition intended to prevent new algebraic dependencies from appearing in a fibre.\n\n## 3. Multisymmetric lifts commute with polymatroid pullback\n\nFor every integral polymatroid correspondence satisfying the exchange-extension law, multisymmetric lift commutes with universal pullback, up to canonical relabelling of the cloned ground set.\n\nThe key insight is that cloning an element converts integer rank increments into ordinary exchange steps, and the extension witnesses should lift clone by clone.\n\nWhy now? The relational composition and intersection laws identify the coherence conditions that any proposed clone-level construction must satisfy, providing several independent falsification tests.\n\n## 4. Lorentzian symbols generate order correspondences\n\nThe support relation of every multihomogeneous linear operator with Lorentzian symbol defines an order correspondence between the quotient orders of the matroids carried by homogeneous Lorentzian supports.\n\nThe key insight is that the M-convex exchange property of a Lorentzian support should supply exactly the upward extension witness required by the correspondence law.\n\nWhy now? The abstract extension axiom has been separated from representability and polynomial coefficients, making it possible to test the conjecture first on supports and only afterward recover analytic positivity.\n\n## 5. Finite obstruction transport without ambient well-quasi-ordering\n\nSuppose a matroid correspondence has finite fibres and a finite lifting property for strict minors. Then the pullback of every class with finitely many excluded minors also has finitely many excluded minors, without assuming that the entire source minor order is well-quasi-ordered.\n\nThe key insight is that each target obstruction should have only finitely many minimal source lifts, and all source obstructions should arise among those lifts.\n\nWhy now? The established intersection result shows that global well-quasi-ordering is not always necessary; finite lifting is a concrete local replacement whose necessity can be probed by explicit correspondences.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0721",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "f853fcd6",
+    "status": "available",
+    "timestamp": "2026-07-25T09:20:46.739115+00:00",
+    "title": "Let a matroid correspondence be induced by a linear relation between two finite-"
   },
   {
     "ambition_level": "extension",

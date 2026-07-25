@@ -2367,7 +2367,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "04a61ead",
+    "consumed_by_exp_id": "",
     "description": "Proves conformal invariance of chordal SLE_κ interfaces in simply connected planar domains.",
     "domain_bridges": [],
     "domains": [
@@ -2379,7 +2379,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "batch_50_injection",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-23T20:05:24.653256+00:00",
     "title": "SLE-Interface: Schramm-Loewner Evolution Conformal Invariance"
   },

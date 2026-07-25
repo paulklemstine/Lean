@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "dd6a308e",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions for Finite Cop-Win Elimination\n\n## 1. Order-independent asynchronous elimination\n\n**Conjecture.** Let a finite candidate system be governed by a monotone contracting parallel updat",
-      "quality_score": 0.79,
-      "sorry_count": 13,
-      "theorem_count": 11,
-      "timestamp": "2026-07-20T09:41:55",
-      "title": "Deepening: ArXiv paper: Reproducing the k-copwin Algorithm: Theory vs. Implementation"
-    },
-    {
       "cycle_id": "d14aad94",
       "domain": "MachineLearning",
       "key_insight": "# Future Directions: Proof Complexity and Thermodynamic Cost\n\n## 1. Computable-bound escape for shortest proofs\n\nFix a sound, computably axiomatized theory capable of elementary arithmetic and a prefi",
@@ -499,19 +489,19 @@
       "theorem_count": 14,
       "timestamp": "2026-07-25T09:20:47",
       "title": "ArXiv paper: Matroid correspondence"
+    },
+    {
+      "cycle_id": "6296b01e",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions: Recurrence under Observation\n\n## Established bridge\n\n`Bridges/ObservationPeriodDivisibility.lean` connects discrete dynamical\nrecurrence with elementary number theory.  A semiconj",
+      "quality_score": 0.75,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-07-25T09:20:56",
+      "title": "**Conjecture.** For compact metric cognitive systems related by a topological co"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "cf69678e",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions\n\n## What was established\n\n`Algebra/SurrealDyadic.lean` formalizes the canonical dyadic part of the surreal hierarchy.\n\n* The canonical pre-game for `2⁻ⁿ` has birthday exactly `n +",
-      "quality_score": 0.75,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-19T00:44:51",
-      "title": "The Arithmetic of Games: Surreal Numbers as Number Fields"
-    },
     {
       "cycle_id": "ae36b246",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 14,
       "timestamp": "2026-07-25T09:20:47",
       "title": "ArXiv paper: Matroid correspondence"
+    },
+    {
+      "cycle_id": "6296b01e",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions: Recurrence under Observation\n\n## Established bridge\n\n`Bridges/ObservationPeriodDivisibility.lean` connects discrete dynamical\nrecurrence with elementary number theory.  A semiconj",
+      "quality_score": 0.75,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-07-25T09:20:56",
+      "title": "**Conjecture.** For compact metric cognitive systems related by a topological co"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "09546bb0",
-      "domain": "Tropical",
-      "name": "of",
-      "quality": 0.74
-    },
-    {
-      "cycle_id": "09546bb0",
-      "domain": "Tropical",
-      "name": "of",
-      "quality": 0.74
-    },
-    {
-      "cycle_id": "09546bb0",
-      "domain": "Tropical",
-      "name": "of",
-      "quality": 0.74
-    },
     {
       "cycle_id": "ea214ad9",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Bridges",
       "name": "pull_comp",
       "quality": 0.73
+    },
+    {
+      "cycle_id": "6296b01e",
+      "domain": "Algebra",
+      "name": "observed_minimalPeriod_dvd",
+      "quality": 0.75
+    },
+    {
+      "cycle_id": "6296b01e",
+      "domain": "Algebra",
+      "name": "periodicPt_reflect_of_injective",
+      "quality": 0.75
+    },
+    {
+      "cycle_id": "6296b01e",
+      "domain": "Algebra",
+      "name": "minimalPeriod_eq_of_injective",
+      "quality": 0.75
     }
   ],
-  "last_updated": "2026-07-25T09:20:47",
+  "last_updated": "2026-07-25T09:20:56",
   "open_questions": [
     {
       "context": "+    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; +    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; +    ∀ i < k, c i = ",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "cbc5314c",
-        "quality": 0.8,
-        "theorems": 0,
-        "title": "The P vs NP of Sudoku: Phase Transitions in Constraint Satisfaction"
-      },
-      {
         "cycle_id": "ac79ade1",
         "quality": 0.75,
         "theorems": 0,
@@ -3079,6 +3073,12 @@
         "quality": 0.43,
         "theorems": 11,
         "title": "Birch and Swinnerton-Dyer Conjecture"
+      },
+      {
+        "cycle_id": "6296b01e",
+        "quality": 0.75,
+        "theorems": 6,
+        "title": "**Conjecture.** For compact metric cognitive systems related by a topological co"
       }
     ],
     "Applications": [
