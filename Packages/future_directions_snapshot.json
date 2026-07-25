@@ -6032,27 +6032,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "1aa4bedd",
-    "description": "Formalize the PAC-Bayes framework in Lean 4. Prove the Catoni bound and McAllester bound. Apply to neural networks via Gaussian perturbation priors. Prove that PAC-Bayes bounds are asymptotically tight for linear classifiers.",
-    "domain_bridges": [],
-    "domains": [
-      "MachineLearning",
-      "Probability",
-      "Computation"
-    ],
-    "id": "fd_0685",
-    "lineage_refs": [],
-    "priority_score": 0.84,
-    "proof_strategy": "",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-24T14:34:16.697831+00:00",
-    "title": "PAC-Bayes Generalization Bounds"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Formalize the Fisher information metric on parametric statistical models. Prove the Cramér-Rao bound as a geometric statement. Construct the alpha-connections and prove the dually flat structure. Apply to exponential families.",
     "domain_bridges": [],
@@ -11750,26 +11729,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "aa1e249d",
-    "description": "Investigate the ArXiv paper 'The Endpoint Cardinality of Discrete Cube Skeleta' and formalize its key results. Abstract: We determine the minimum order of a finite lattice set that contains a filled axis-parallel cube skeleton about every point of some $N$-point set of centers. For fixed integers $0\\leq k<n$, the answer for $N$ centers is $N^{1-(n-k)/(2n^2)}$, up to constants depending on $n$ and $k$. Thornton proved every smaller exponent and gave a construction of this order; the endpoint lower bound was left open when $k\\geq1$. Our proof combines a midpoint estimate, a labelled form of Shearer's projection inequality, and a strong induction that balances large and small radii without a dyadic pigeonhole loss. In particular, a lattice set containing a square boundary about each of $N$ centers has at least a constant times $N^{7/8}$ points.",
-    "domain_bridges": [],
-    "domains": [
-      "Cryptography",
-      "Logic"
-    ],
-    "id": "fd_0495",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.15502v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-20T03:19:42.598123+00:00",
-    "title": "ArXiv paper: The Endpoint Cardinality of Discrete Cube Skeleta"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Alternative Entropy Bounds for Perfect Matchings in Bipartite Graphs' and formalize its key results. Abstract: We refine Radhakrishnan's entropy proof of the Brégman-Minc bound by introducing a terminal-set framework in which selected vertices are revealed last. This gives new degree-sensitive upper bounds for the number of perfect matchings in bipartite graphs and an explicit formula for single-vertex terminal sets. The bounds recover the standard Brégman equality family and improve the estimate for certain nonuniform degree sequences. We also obtain a $C_4$-free refinement complementary to the edge-count bound of Araujo, Balogh and Wang.",
     "domain_bridges": [],
@@ -14193,6 +14152,46 @@
     "status": "available",
     "timestamp": "2026-07-25T10:53:07.911660+00:00",
     "title": "For every nonexceptional composite index, the primitive part of the correspondin"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## What is formally established\n\nThe accompanying Lean files isolate three rigorous components related to *The\nEndpoint Cardinality of Discrete Cube Skeleta*:\n\n1. **Discrete midpoint injection.** Labelled left/right endpoints determine an\n   integer center because their sum is twice the center.\n2. **The complete one-dimensional endpoint bound.** If a finite lattice set\n   contains the two endpoints of a positive-radius interval about each point of\n   a finite center set, then `|centers| ≤ |points|²`.\n3. **A labelled two-coordinate projection bound.** A finite set of labelled\n   pairs has size at most the product of the sizes of its coordinate\n   projections; the same is proved for any jointly injective pair of labels.\n\nThe exponent formula from the paper is also checked at `(n,k)=(2,1)`, yielding\n`1-(2-1)/(2·2²)=7/8`.\n\n## Contrarian conjectures tested\n\n* **Disproved:** every one-dimensional endpoint cover obeys the stronger linear\n  bound `|centers| ≤ |points|`.  The certified example uses four endpoints and\n  covers six centers.\n* **Disproved:** the product in the two-coordinate projection inequality can be\n  replaced by the maximum projection cardinality.  The full `2 × 2` relation\n  has four objects and two labels in either coordinate.\n* **Proved:** despite the failed linear strengthening, the universal quadratic\n  endpoint bound does hold in dimension one.\n\n## Next formalization milestones\n\nThe present work does **not** claim a formal proof of the paper's full endpoint\nlower bound for arbitrary `0 ≤ k < n`, nor of the square-boundary `N^(7/8)`\nlower bound.  Reaching those results faithfully requires the following layers:\n\n1. Define axis-parallel `k`-faces and filled cube skeleta in `ℤ^n`, preferably\n   with coordinates indexed by `Fin n` and face directions represented by\n   finite coordinate sets.\n2. Generalize the labelled projection theorem to a finite hypergraph cover of\n   coordinate labels (the full finite Shearer inequality).\n3. Formalize the paper's midpoint multiplicity estimate, including all labels\n   needed to recover centers without accidental quotienting.\n4. Encode the large-radius/small-radius induction with an explicit\n   well-founded measure, avoiding dyadic pigeonholing.\n5. Derive the arbitrary `(n,k)` exponent and then specialize to square\n   boundaries.\n\nA useful intermediate target is the two-dimensional vertex case (`n=2,k=0`),\nwhich exercises coordinate bookkeeping and midpoint estimates without filled\nedges.  After that, the square-boundary case (`n=2,k=1`) is the first genuinely\nendpoint-sensitive test of the strong induction.\n\n## Cryptographic connection\n\nThe labelled projection lemmas are directly reusable in analyses where a set\nof transcripts or keys is encoded by several partial views: jointly\nidentifying views bound the transcript population by the product of the view\nalphabets.  The explicit counterexample warns that replacing this product by a\nsingle largest view is unsound without additional independence or structural\nhypotheses.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Cryptography",
+      "Pythagorean"
+    ],
+    "id": "fd_0726",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "aa1e249d",
+    "status": "available",
+    "timestamp": "2026-07-25T14:09:47.358166+00:00",
+    "title": "The accompanying Lean files isolate three rigorous components related to *The"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe current development establishes the finite-space variational core of PAC--Bayes, including the exact Gibbs-tilt identity, posterior-uniform change of measure, an exponential-moment-to-risk theorem, scalar properties of the McAllester and Catoni formulas, and an independently compilable Gaussian specialization with explicit isotropic KL and asymptotic complexity results. Natural next steps are:\n\n1. **Measure-theoretic change of measure.** Lift the finite theorem to probability measures on measurable hypothesis spaces using Radon--Nikodym derivatives and extended-real relative entropy. This should also remove the present strict-positivity restriction by treating zero prior mass through absolute continuity.\n2. **Sample-level McAllester theorem.** Formalize i.i.d. bounded losses, prove the required exponential-moment estimate (for example through Hoeffding's lemma), and combine it with Markov's inequality and the variational theorem to obtain one high-probability event that holds uniformly over all posteriors.\n3. **Sample-level Catoni theorem.** Derive Catoni's nonlinear transform from the Bernoulli exponential-moment inequality, prove monotonicity of its inverse, and optimize the inverse-temperature parameter rather than taking the scalar certificate as input.\n4. **Measure-level Gaussian perturbations.** Connect the proved closed-form isotropic Gaussian KL expression to Mathlib probability measures by deriving it from Gaussian densities, then insert it into a sample-level PAC--Bayes theorem for randomized neural-network predictors.\n5. **Derandomization and margin control.** Relate perturbation-averaged neural-network loss to the loss of a deterministic network using explicit layerwise or spectral perturbation bounds.\n6. **Linear-classifier tightness.** Under a precisely stated data model and margin/noise assumptions, prove matching lower and upper asymptotic rates. The existing square-root penalty convergence proves only a consistency ingredient and does not establish a matching lower bound.\n7. **Sharper finite-space interfaces.** Generalize the finite API from strictly positive real-valued mass functions to probability mass functions with support conditions, and package the Gibbs posterior as a normalized finite probability distribution.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "fd_0727",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "1aa4bedd",
+    "status": "available",
+    "timestamp": "2026-07-25T14:09:54.890453+00:00",
+    "title": "The current development establishes the finite-space variational core of PAC--Ba"
   },
   {
     "ambition_level": "extension",

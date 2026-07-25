@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "fd569acd",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions\n\n## Results established\n\nThe finite Hamming Library of length `L` over `A` symbols has exactly `A^L` points and is homeomorphic to `Fin (A^L)` with its discrete topology. Singleton",
-      "quality_score": 0.76,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-20T15:09:40",
-      "title": "Borges' Library of Babel: Combinatorics of Everything"
-    },
-    {
       "cycle_id": "d0cb2642",
       "domain": "NumberTheory",
       "key_insight": "# Future directions\n\n1. **Joint distributions and correlated cards.**  The expected payoff of additive unit bets depends only on marginals.  Formalize a finite probability space and prove this margina",
@@ -499,19 +489,19 @@
       "theorem_count": 4,
       "timestamp": "2026-07-25T10:53:08",
       "title": "[Reset] Fresh approach in Shared"
+    },
+    {
+      "cycle_id": "1aa4bedd",
+      "domain": "Probability",
+      "key_insight": "# Future directions\n\nThe current development establishes the finite-space variational core of PAC--Bayes, including the exact Gibbs-tilt identity, posterior-uniform change of measure, an exponential-m",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-25T14:09:59",
+      "title": "PAC-Bayes Generalization Bounds"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "99a8a1e3",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions\n\nThe formal results establish the one-dimensional Borsuk–Ulam kernel and also show why it is not, by itself, Arrow's theorem.\n\n1. **Formalize the actual Arrow domain.** Define fini",
-      "quality_score": 0.66,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-07-19T02:07:43",
-      "title": "The Borsuk-Ulam Theorem Implies Arrow's Impossibility: Social Choice Is Topology"
-    },
     {
       "cycle_id": "20c9506b",
       "domain": "Physics",
@@ -2501,6 +2491,16 @@
       "theorem_count": 11,
       "timestamp": "2026-07-25T14:09:51",
       "title": "ArXiv paper: The Endpoint Cardinality of Discrete Cube Skeleta"
+    },
+    {
+      "cycle_id": "1aa4bedd",
+      "domain": "Probability",
+      "key_insight": "# Future directions\n\nThe current development establishes the finite-space variational core of PAC--Bayes, including the exact Gibbs-tilt identity, posterior-uniform change of measure, an exponential-m",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-25T14:09:59",
+      "title": "PAC-Bayes Generalization Bounds"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-25T14:09:51",
+  "last_updated": "2026-07-25T14:09:59",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "e2a481c0",
-        "quality": 0.65,
-        "theorems": 4,
-        "title": "ArXiv paper: Contractions and applications of crystal skeletons: Young quasisymm"
-      },
-      {
         "cycle_id": "c49f6946",
         "quality": 0.62,
         "theorems": 15,
@@ -3823,6 +3817,12 @@
         "quality": 0.58,
         "theorems": 24,
         "title": "The completed development has two complementary formalizations. `Catalog/NumberT"
+      },
+      {
+        "cycle_id": "1aa4bedd",
+        "quality": 0.7,
+        "theorems": 0,
+        "title": "PAC-Bayes Generalization Bounds"
       }
     ],
     "Pythagorean": [

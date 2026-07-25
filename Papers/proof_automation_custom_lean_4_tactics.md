@@ -1,52 +1,26 @@
-# Computational Evidence — Proof Automation: Custom Tactics
+# Computational Evidence
 
-This note records the small-case checks that guided the three tactic-soundness
-theorems before they were formalized.
+## Small cases
 
-## 1. `tropical_simp` (max-plus semiring)
+The reflected trial-division procedure was evaluated by Lean while proving the closed examples in `Catalog/Logic/ProofAutomation/CustomTactics.lean`:
 
-Max-plus convention: addition `a ⊕ b = max a b`, multiplication `a ⊙ b = a + b`.
+| Input | Boolean result represented by the theorem | Mathematical result |
+|---:|:---:|:---|
+| 97 | `true` | `Nat.Prime 97` |
+| 91 | `false` | `¬ Nat.Prime 91` |
 
-**Distributivity** `a ⊙ (b ⊕ c) = (a ⊙ b) ⊕ (a ⊙ c)`, i.e. `a + max b c = max (a+b) (a+c)`:
+For 91, the search range includes 7 and `7 ∣ 91`, giving a concrete rejection witness. For 97, exhaustive divisors `2 ≤ d < 97` are rejected by kernel evaluation after applying the proved equivalence `trialPrime_correct`.
 
-| a | b | c | a+max(b,c) | max(a+b,a+c) |
-|---|---|---|-----------|--------------|
-| 3 | 1 | 5 | 8 | 8 |
-| 3 | 5 | 1 | 8 | 8 |
-| -2| 4 | 4 | 2 | 2 |
+The tropical examples exercise nested distribution and absorption symbolically rather than by numerical sampling. The spectral result is universal and is checked from an arbitrary eigen-equation, so random floating-point eigenvalue calculations would add little assurance beyond the formal theorem.
 
-**Tropical Horner** `max(a₀, a₁+x, a₂+2x) = a₀ ⊕ x⊙(a₁ ⊕ x⊙a₂)`:
-with `a₀=0, a₁=1, a₂=2, x=3`:
-- LHS `= max(0, 1+3, 2+6) = max(0,4,8) = 8`.
-- RHS `= max(0, 3 + max(1, 3+2)) = max(0, 3 + max(1,5)) = max(0, 3+5) = 8`. ✓
+## OEIS search
 
-All sampled cases match; the identity is exact (no approximation), consistent
-with the algebraic proof via `max_add_add_left`.
+No integer sequence is conjectured or introduced, so an OEIS search is not applicable.
 
-## 2. `number_theory_decide` (trial-division primality)
+## Counterexample hunt
 
-Definition tested: `trialPrime n = (2 ≤ n) ∧ (no d with 2 ≤ d < n divides n)`.
+The principal universal claims are algebraic identities or theorem-backed implications. Lean checks them for arbitrary inputs. In particular, the spectral theorem requires a nonzero eigenvector and a uniform row-sum hypothesis; the proof uses both, avoiding the empty/vacuous eigenvector case. No counterexample was found, and all claims in the Lean file compile.
 
-- `trialPrime` on `2..30` returns exactly `{2,3,5,7,11,13,17,19,23,29}` — the
-  primes below 30. The count of primes below 100 is 25, matching `π(100)=25`.
-- Composite spot-checks: `91 = 7·13`, `65 = 5·13`, `1 = 1` all return `false`.
-- Edge cases: `trialPrime 0 = false`, `trialPrime 1 = false` (both fail `2 ≤ n`),
-  `trialPrime 2 = true` (empty divisor range).
+## Tables or plots
 
-No counterexample to `trialPrime n = true ↔ Nat.Prime n` was found on `0..500`,
-which motivated the formal soundness proof via `Nat.prime_def_lt'`.
-
-## 3. `spectral_bound` (row-sum eigenvalue estimate)
-
-Claim tested: any real eigenvalue `λ` of `A` satisfies `|λ| ≤ maxᵢ Σⱼ |Aᵢⱼ|`.
-
-- `A = [[2,1],[1,2]]`: eigenvalues `3, 1`; row sums both `3`; bound `3` holds
-  and is tight at `λ=3`.
-- `A = [[0,1],[-2,-3]]`: eigenvalues `-1,-2`; row sums `1` and `5`; bound `5`
-  holds (`|−2| ≤ 5`).
-- `A = [[5,0],[0,-4]]`: eigenvalues `5,-4`; row sums `5,4`; bound `5` holds and
-  is attained.
-
-Every sampled matrix satisfies `|λ| ≤ max row sum`, and the bound is attained by
-diagonal matrices, confirming it is the best possible uniform row-sum bound.
-This is the elementary (spectral-radius) half of the Gershgorin circle theorem.
+No plot is relevant: min-plus normalization is symbolic, primality evidence is discrete, and the spectral theorem supplies an exact inequality rather than an empirical approximation.
