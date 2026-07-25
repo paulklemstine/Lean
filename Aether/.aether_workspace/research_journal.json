@@ -503,26 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "cbc5314c",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions: Sudoku Ensembles, Thresholds, and Complexity\n\n## 1. Proof-complexity peak for independently assigned clues\n\nFix an ensemble in which a uniformly chosen set of cells receives indep",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-18T21:00:09",
-      "title": "The P vs NP of Sudoku: Phase Transitions in Constraint Satisfaction"
-    },
-    {
-      "cycle_id": "6cb3854b",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions\n\n## Result obtained\n\n`Pythagorean/UniversalHumor.lean` formalizes a finite, non-vacuous bridge between category theory and metric optimization. For a setup with resolutions `Fin (n",
-      "quality_score": 0.65,
-      "sorry_count": 0,
-      "theorem_count": 17,
-      "timestamp": "2026-07-18T22:06:07",
-      "title": "The Category Theory of Jokes: Universal Properties of Humor"
-    },
-    {
       "cycle_id": "ac79ade1",
       "domain": "Algebra",
       "key_insight": "# Future Directions\n\n## 1. Global completeness of the anisotropic plane\n\n**Conjecture.** Every maximal geodesic of the metric\n\\(\\cosh(y)^{-2}dx^2+\\cosh(x)^2dy^2\\) is defined for all real time.\n\nThe ke",
@@ -2501,6 +2481,26 @@
       "theorem_count": 18,
       "timestamp": "2026-07-25T00:24:53",
       "title": "The formal development establishes a concrete genuinely non-strict bicategory: i"
+    },
+    {
+      "cycle_id": "41e2ee03",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — Commensurability Invariants and Volume Growth\n\nThese conjectures arise from the separation-and-counting principle developed here:\na commensurability invariant turns distinct geom",
+      "quality_score": 0.63,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-25T02:35:09",
+      "title": "ArXiv paper: Several families of incommensurable noncompact hyperbolic Coxeter polytopes"
+    },
+    {
+      "cycle_id": "d05d57b6",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions: Arbitrary-Modulus Lattice Learning\n\nThis cycle established that affine rerandomisation over an arbitrary modulus is\ncontrolled by the unit structure of `ℤ_q`: the map `x ↦ a·x + b",
+      "quality_score": 0.68,
+      "sorry_count": 0,
+      "theorem_count": 21,
+      "timestamp": "2026-07-25T02:35:13",
+      "title": "Lattice-LWE: Formal Equivalence Between Decision-LWE and Search-LWE"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.75
     }
   ],
-  "last_updated": "2026-07-25T00:24:53",
+  "last_updated": "2026-07-25T02:35:13",
   "open_questions": [
     {
       "context": "+    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; +    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; +    ∀ i < k, c i = ",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "bcb31ca6",
-        "quality": 0.83,
-        "theorems": 0,
-        "title": "Deepening: Cryptography from Chaos: Encrypting with the Logistic Map"
-      },
-      {
         "cycle_id": "eb62b00a",
         "quality": 0.7,
         "theorems": 0,
@@ -3203,6 +3197,12 @@
         "quality": 0.63,
         "theorems": 12,
         "title": "p-adic Langlands for GL₂(Q_p)"
+      },
+      {
+        "cycle_id": "41e2ee03",
+        "quality": 0.63,
+        "theorems": 0,
+        "title": "ArXiv paper: Several families of incommensurable noncompact hyperbolic Coxeter p"
       }
     ],
     "Combinatorics": [
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "f48abc37",
-        "quality": 0.7,
-        "theorems": 23,
-        "title": "The Periodic Table Is a Lie: Elements as Eigenvalues of Spacetime"
-      },
-      {
         "cycle_id": "21c08839",
         "quality": 0.73,
         "theorems": 0,
@@ -3389,6 +3383,12 @@
         "quality": 0.68,
         "theorems": 8,
         "title": "This development formalizes the finite coordinate core of Curtin's *Generalizati"
+      },
+      {
+        "cycle_id": "d05d57b6",
+        "quality": 0.68,
+        "theorems": 21,
+        "title": "Lattice-LWE: Formal Equivalence Between Decision-LWE and Search-LWE"
       }
     ],
     "Geometry": [

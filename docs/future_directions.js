@@ -959,7 +959,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Twin Prime Conjecture"
   },
   {
-    "consumed_by_exp_id": "872b26ee",
+    "consumed_by_exp_id": "",
     "description": "The key insight is that the Collatz map T(n) = n/2 if n even, 3n+1 if n odd, appears to be a one-way function: easy to compute forward (polynomial time), intractable to invert (finding a preimage requires exponential search). Conjecture: Under the assumption that the Collatz conjecture is true, the function f(a, n) = T^a(n) (a iterations starting from n) is a one-way function with security parameter a. The inversion problem \u2014 given (a, f(a,n)), find n \u2014 requires O(2^{a/log(a)}) steps. Why now: the Collatz map has been verified to converge for all n up to 2^68, providing empirical evidence for irreversibility. Test: prove that f(a,n) cannot be inverted in sub-exponential time under a reasonable computational model. Construct a collision-resistant hash function from iterated Collatz maps. Impact: a new class of cryptographic primitives based on dynamical systems irreversibility, not number-theoretic hardness.",
     "domains": [
       "Cryptography",
@@ -967,11 +967,10 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "id": "seed_097",
-    "phase": "A",
     "priority_score": 0.93,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "",
     "title": "Cryptography from the Collatz Conjecture: One-Way Functions from Iterated Maps"
   },
@@ -13558,6 +13557,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-25T00:24:49.438823+00:00",
     "title": "Sharp dichotomy for one-object codiscrete bicategories:"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Commensurability Invariants and Volume Growth\n\nThese conjectures arise from the separation-and-counting principle developed here:\na commensurability invariant turns distinct geometric data into a lower bound on\ncommensurability classes, while a linearly bounded size parameter can support an\nexponentially large family.\n\n## 1. Binary cusp-density separation in dimensions 4, 5, 6, 7, and 9\n\n**Conjecture.** For each `d \u2208 {4, 5, 6, 7, 9}`, there are constants `A_d, B_d > 0`\nand, for every `n`, a family `(P_w)_{w \u2208 {0,1}^n}` of finite-volume noncompact\nhyperbolic Coxeter `d`-polytopes such that `vol(P_w) \u2264 A_d n + B_d` and the maximal\ncusp densities of the `P_w` are pairwise distinct.\n\n*The key insight is* that a binary local choice repeated at `n` controlled sites\nwould produce `2^n` invariant values, and the counting bridge would then turn\nthose values into `2^n` distinct commensurability classes.\n\n*Why now?* The classified five-dimensional examples and the known constructions\nin the five listed dimensions supply explicit cusp pieces on which the required\nbinary replacement and its volume cost can be calculated.\n\n## 2. Entropy controls the optimal growth exponent\n\n**Conjecture.** Suppose a Coxeter-polytope construction admits a finite alphabet\nof cusp modifications with additive volume costs and an invariant that recovers\nthe modification word up to subexponentially many ambiguities. Then the logarithmic\ngrowth rate of commensurability classes per unit volume equals the weighted\ncombinatorial entropy of that alphabet.\n\n*The key insight is* that the abstract inequality `# invariant values \u2264 # classes`\nis sharp when the invariant decodes the construction word; unequal volume costs\nreplace ordinary word entropy by its weighted analogue.\n\n*Why now?* The finite classified stock of cusp types makes both the alphabet and\nits volume weights explicit, so the predicted exponent can be compared against\nactual enumerations rather than treated only qualitatively.\n\n## 3. Certifiable Gram-matrix realization\n\n**Conjecture.** For each fixed dimension and number of facets, finite-volume\nhyperbolic Coxeter polytopes admit a finite realization certificate consisting of\na Coxeter Gram matrix of Lorentzian signature together with explicit elliptic and\nparabolic certificates for the finite and ideal vertex links; validity of the\ncertificate is equivalent to geometric realizability.\n\n*The key insight is* that the local entry restriction `-1 < -cos(\u03c0/m) \u2264 0` can be\ncombined with signature data and link-by-link finite or affine Coxeter conditions,\nseparating numerical matrix checks from the global incidence structure.\n\n*Why now?* The eight-facet classification gives a finite and demanding test set\ncontaining both compact and noncompact cases, including ideal vertices where a\nrealization criterion must account for parabolic links.\n\n## 4. Dimension-tagged disjointness of the constructed families\n\n**Conjecture.** Let `N_d(V)` count commensurability classes represented by the\nconstructed noncompact Coxeter `d`-polytopes of volume at most `V`. For every\nfinite set of dimensions `D`, the union count is exactly\n`\u2211_{d \u2208 D} N_d(V)` and has exponential rate equal to the maximum of the\nindividual rates.\n\n*The key insight is* that commensurable finite-volume hyperbolic orbifolds have\nthe same dimension, so dimension itself tags disjoint collections; exponential\nasymptotics for a finite disjoint union are governed by the largest exponent.\n\n*Why now?* Parallel constructions are available in dimensions 4, 5, 6, 7, and 9,\nallowing their counting functions and growth constants to be studied in one\nuniform framework.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0716",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "41e2ee03",
+    "status": "available",
+    "timestamp": "2026-07-25T02:35:05.426529+00:00",
+    "title": "These conjectures arise from the separation-and-counting principle developed her"
   },
   {
     "consumed_by_exp_id": "",
