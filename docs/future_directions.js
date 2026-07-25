@@ -6917,7 +6917,7 @@ window.FUTURE_DIRECTIONS = [
       "Tropical"
     ],
     "id": "fd_0089",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.10922v1",
@@ -8308,17 +8308,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Erd\u0151s\u2013Straus Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a31e0b39",
     "description": "Prove Conway's Game of Life is Turing complete via a direct constructive embedding. Formalize cellular automata in Lean 4 and establish complexity bounds on the simulation overhead.",
     "domains": [
       "Computation",
       "Speculative"
     ],
     "id": "seed_059",
+    "phase": "A",
     "priority_score": 0.77,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Game of Life Universality"
   },
