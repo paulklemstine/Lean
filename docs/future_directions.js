@@ -4128,6 +4128,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 6296b01e (Q=0.750), which proved 6 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Recurrence in Cognitive Dynamics\n\n## 1. Observation-invariant recurrence spectra\n\n**Conjecture.** For compact metric cognitive systems related by a topological conjugacy, the exact-period spectrum, topological entropy, and existence of Li\u2013Yorke scrambled sets are simultaneously ",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "push_6296b01e_efaf5aa9",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "6296b01e",
+    "status": "available",
+    "timestamp": "2026-07-25T09:20:57.058783+00:00",
+    "title": "Deepening: **Conjecture.** For compact metric cognitive systems related by a topological co"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 71fc60c7 (Q=0.750), which proved 23 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Elementary cellular automata (ECAs) are the 256 rules that update a 1D binary array based on its 3-cell neighborhood. Rule 110 is Turing-complete. But ECAs can also be viewed as polynomial maps over GF(2): the state s = (s_0, s_1, ..., s_{n-1}) is a vector over GF(2), and the update rule is s -> f(s",
     "domains": [
       "Applications"
@@ -10276,22 +10290,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision Surfaces"
   },
   {
-    "consumed_by_exp_id": "6296b01e",
-    "description": "# Future Directions: Recurrence in Cognitive Dynamics\n\n## 1. Observation-invariant recurrence spectra\n\n**Conjecture.** For compact metric cognitive systems related by a topological conjugacy, the exact-period spectrum, topological entropy, and existence of Li\u2013Yorke scrambled sets are simultaneously invariant; under a merely finite-to-one observation map, exact periods can only decrease by divisibility.\n\nThe key insight is that faithful semiconjugacy already preserves exact period pointwise, while loss of injectivity is the precise mechanism by which an observed cycle can collapse. **Why now?** The finite-state embedding and exact-period transport results isolate the hypotheses needed to extend recurrence invariance from individual states to global entropy and chaos.\n\n## 2. Measured recurrence instead of point density\n\n**Conjecture.** In a parametrized family of cognitive observation models, lifetime recurrence incidence is determined by the measure of an observation-thickened recurrent set, not by the cardinality or topological density of periodic points; the two quantities can vary independently even among maps with dense periodic points.\n\nThe key insight is that population incidence is probabilistic, whereas density of periodic points is topological and carries no canonical percentage. **Why now?** The contraction counterexample rules out continuity as a sufficient explanation, and the faithful-observation theorem supplies a principled way to state how measurement changes recurrence.\n\n## 3. Period-three forcing with cognitive observability\n\n**Conjecture.** Let a continuous interval map have an exact period-three orbit and let an observation map separate the three orbit states by a fixed positive margin. Then there is a quantitative lower bound, depending only on that margin and a modulus of continuity, for the number of distinguishable finite observation words of length `n`, growing exponentially in `n`.\n\nThe key insight is that period three should force symbolic complexity only when the observation process can distinguish the forced orbit structure. **Why now?** Exact period three has been converted into an explicit three-state embedding, making quantitative separation the natural next hypothesis rather than an implicit assumption.\n\n## 4. Logistic parameter windows and robust recurrence\n\n**Conjecture.** Near the parameter `r = 3.83`, the logistic family admits an open parameter interval with an attracting exact three-cycle whose basin has positive Lebesgue measure, while the fixed-point set remains measure zero throughout that interval.\n\nThe key insight is that robust observed recurrence should be modeled through basin measure and attraction, not through the density of the periodic points themselves. **Why now?** The exact fixed states and critical value at `3.83` are known algebraically, so the remaining problem is a falsifiable stability and basin-measure calculation.\n\n## 5. Tropical drift as a recurrence obstruction\n\n**Conjecture.** For an irreducible min-plus cognitive transition matrix, a tropical eigenstate is periodic in the ordinary state space exactly when its eigenvalue is zero; modulo additive constants, every tropical eigenstate is fixed, and eventual projective recurrence is governed by the cyclicity of the critical graph.\n\nThe key insight is that a tropical eigenvalue records linear drift, so quotienting by global activation offset separates genuine recurrence from uniform translation. **Why now?** Zero-eigenvalue recurrence and the full iterate drift formula are already established, leaving critical-graph cyclicity as the concrete bridge from tropical spectral theory to periodic cognition.\n",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_0238",
-    "phase": "B",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "5102d77c",
-    "status": "in_progress",
-    "timestamp": "2026-07-17T18:22:04.054428+00:00",
-    "title": "**Conjecture.** For compact metric cognitive systems related by a topological co"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "# Future Directions: A Periodic Table of Finite Groups\n\n## 1. Extension fingerprints refine composition columns\n\n**Conjecture.** Among groups of order at most 2000, the multiset of composition factors together with the directed incidence data of complemented chief factors separates substantially more isomorphism classes than composition factors together with derived length and nilpotency class.\n\nThe key insight is that the order-six collision is caused not by missing factor sizes, but by missing information about how factors act on one another. A compact extension fingerprint should therefore be a more chemically meaningful \u201cvalence shell\u201d than a single integer.\n\n**Why now?** The factor-ledger obstruction precisely identifies what the first axis remembers and the order-six example isolates the smallest missing interaction. This makes a finite, falsifiable census comparison possible.\n\n## 2. Solvability is the maximal robust composition-factor property\n\n**Conjecture.** For finite groups, every property determined solely by the multiset of composition factors and invariant under replacing each solvable factor by another cyclic factor of the same prime order factors through the dichotomy \u201call factors are cyclic of prime order\u201d versus \u201cat least one factor is nonabelian simple.\u201d\n\nThe key insight is that solvability genuinely belongs to composition-factor chemistry, whereas commutativity, nilpotency, derived length, and automorphism-group order depend on extension data.\n\n**Why now?** The present obstruction cleanly separates factor data from multiplication data, allowing the boundary of composition-determined properties to be formulated rather than inferred from isolated examples.\n\n## 3. Minimal extension data for square-free atomic numbers\n\n**Conjecture.** For groups of square-free order, the composition-factor multiset together with the action graph whose arrows record nontrivial conjugation actions determines the isomorphism type.\n\nThe key insight is that all composition factors then have distinct prime orders, so multiplicity ambiguities disappear and the remaining chemistry should be encoded by which prime-order layers act on which others.\n\n**Why now?** Atomic number six shows exactly one nontrivial action distinguishes the cyclic and symmetric cases. Square-free orders offer the next broad family in which this mechanism can be tested without repeated-factor complications.\n\n## 4. A predictive bound from action complexity to derived length\n\n**Conjecture.** There is a universal function bounding the derived length of a finite solvable group by the height and maximum strongly connected component size of a suitably defined chief-factor action graph; for square-free order, the bound can be taken to be one plus the longest directed path.\n\nThe key insight is that derived length is not visible in the factor ledger, but each commutator layer should require a chain of nontrivial actions between factor layers.\n\n**Why now?** Replacing the failed one-column periodic law with a two-axis model suggests a quantitative prediction rather than merely a classification label.\n\n## 5. Information-theoretic optimality of periodic-table invariants\n\n**Conjecture.** Any invariant that distinguishes all finite groups of order at most `N` must encode asymptotically more information than the prime-factor ledger and any bounded list of scalar invariants; an extension-action encoding can achieve this lower bound up to a polynomial factor in description length.\n\nThe key insight is that the enormous number of groups at prime-power orders arises from extension choices invisible to composition factors, so classification can be viewed as a compression problem constrained by group cohomology.\n\n**Why now?** The smallest collision already proves that scalar chemistry is lossy. A census up to 2000 can compare concrete encoding lengths and expose which structural descriptors scale with the true diversity of groups.\n",
     "domains": [
@@ -11084,6 +11082,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-25T09:20:46.739115+00:00",
     "title": "Let a matroid correspondence be induced by a linear relation between two finite-"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Recurrence under Observation\n\n## Established bridge\n\n`Bridges/ObservationPeriodDivisibility.lean` connects discrete dynamical\nrecurrence with elementary number theory.  A semiconjugate observation sends\nthe minimal period of each state to a divisor of its original minimal period.\nThus loss of observational information has an arithmetic signature.  Injective\nobservations preserve the period exactly.  For prime periods, divisor rigidity\nsharpens the statement to a dichotomy: the observed orbit is either still a\nprime cycle or has collapsed to a fixed point.\n\nNotably, the divisor result does not require compactness, a metric, continuity,\nor finite fibers; it is an algebraic consequence of semiconjugacy.  Those\nhypotheses become relevant for genuinely global invariants such as entropy and\nscrambled sets.\n\n## Next formal targets\n\n1. **Spectrum-level transport.** Define the exact-period spectrum as the set of\n   positive minimal periods.  Prove equality under bijective semiconjugacy and\n   inclusion into the divisor closure under arbitrary semiconjugacy.\n2. **Entropy under conjugacy.** Connect a chosen Mathlib definition of\n   topological entropy to homeomorphic conjugacy, first for compact metric\n   spaces and then for finite-to-one factor maps.\n3. **Li\u2013Yorke transport.** Formalize proximal and frequently separated pairs;\n   show that uniform equivalences transport scrambled sets.\n4. **Sharp realization.** For every `d \u2223 n`, construct an explicit quotient of\n   an `n`-cycle whose observed minimal period is exactly `d`, proving the\n   divisor theorem is best possible.\n5. **Tropical analogue.** Treat additive drift as a cocycle and compare its\n   vanishing with ordinary periodicity, while projectivization quotients out\n   the drift.  This may provide a second instance of observation-induced\n   recurrence collapse.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0722",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "6296b01e",
+    "status": "available",
+    "timestamp": "2026-07-25T09:20:56.392083+00:00",
+    "title": "`Bridges/ObservationPeriodDivisibility.lean` connects discrete dynamical"
   },
   {
     "consumed_by_exp_id": "",
