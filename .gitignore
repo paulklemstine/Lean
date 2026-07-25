@@ -61,7 +61,10 @@ __pycache__/
 .DS_Store
 *.swp
 *.swo
-*~
+# Large files & Tools output
+/Tools/output/
+/Catalog/Speculative/AutoResearch/CarmichaelStandalone.lean
+
 .hf_cache/
 .hf_cache/
 Aether/.aether_workspace/logs/
