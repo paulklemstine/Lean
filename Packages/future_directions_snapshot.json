@@ -7854,7 +7854,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "7277c96e",
+    "consumed_by_exp_id": "",
     "description": "Prove that if A^x + B^y = C^z where A,B,C,x,y,z are positive integers with x,y,z > 2, then A,B,C share a common prime factor. Formalize the connection to Fermat-Catalan and ABC conjecture.",
     "domain_bridges": [],
     "domains": [
@@ -7866,7 +7866,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "",
     "title": "Beal's Conjecture"
   },
@@ -9181,26 +9181,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "7b875dce",
-    "description": "Investigate the ArXiv paper 'Properties of the Tropical Characteristic Polynomial of Symmetric Matrices' and formalize its key results. Abstract: We investigate the combinatorial structure of the tropical characteristic polynomial of symmetric matrices using the tropical permanents of their principal submatrices. We establish new inequalities for the leading coefficients of the tropical characteristic polynomial, revealing concavity properties of the coefficient sequence and yielding necessary conditions for a sequence to arise as the coefficient sequence of the tropical characteristic polynomial of a symmetric matrix. These results provide a deeper understanding of the structure of tropical characteristic polynomials associated with symmetric matrices.",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Tropical"
-    ],
-    "id": "fd_0089",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.10922v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-16T14:59:48.946358+00:00",
-    "title": "ArXiv paper: Properties of the Tropical Characteristic Polynomial of Symmetric Matrices"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Kloosterman sign changes with moduli having at most five prime factors' and formalize its key results. Abstract: On square-free moduli $q\\in(X,2X]$ having at most five prime factors, we prove that each sign of the normalized Kloosterman sum $\\operatorname{Kl}(1;q)$ occurs $\\gg X/\\log X$ times. This improves the recent unconditional result of Zhang and Zhong for moduli with at most six prime factors. Building on their analytic estimates and optimized Selberg sieve, we replace their truncated divisor penalty by a geometric half-weight. The new weight retains the $P_5$ exclusion threshold and is a positive linear combination of two standard two-parameter truncated divisor weights, so the Zhang--Zhong transference argument applies without alteration. After transference, the relevant pointwise coefficient is reduced from $5/16$ to $5/32$, which yields a positive final sieve margin.",
     "domain_bridges": [],
@@ -9762,62 +9742,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
-      "Erdős sumset conjecture",
-      "Szemerédi's theorem",
-      "Probabilistic method in combinatorics"
-    ],
-    "consumed_by_exp_id": "",
-    "description": "We conjecture that the constant 3 appearing in the threshold (3+o(1))(log n)/(log(1/δ)) for sumset avoidance in δ-dense subsets of [n] is optimal. Specifically, for any fixed δ ∈ (0,1) and any ε > 0, there should exist arbitrarily large n such that every subset S ⊆ [n] with |S| ≥ δn necessarily contains some sumset A+B where A,B ⊆ ℕ satisfy min{|A|,|B|} ≥ (3-ε)(log n)/(log(1/δ)). This would establish that the random construction used in the paper cannot be improved asymptotically.",
-    "domain_bridges": [
-      "Discrete probability theory",
-      "Extremal set theory",
-      "Asymptotic combinatorics"
-    ],
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0212",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "The conjecture would likely require a constructive approach or refined probabilistic analysis. One strategy would be to explicitly construct, for each ε > 0, a family of sets S (perhaps deterministic or using altered probability distributions) where every sumset A+B with min{|A|,|B|} ≥ (3-ε)(log n)/(log(1/δ)) must intersect the complement of S. A second approach would use the second moment method or concentration inequalities to show that random sets with density δ cannot avoid all such large sumsets when the threshold drops below 3(log n)/(log(1/δ)).",
-    "research_mode": "team",
-    "source_exp_id": "2607.15269v1",
-    "status": "available",
-    "timestamp": "2026-07-17T12:29:49.501452+00:00",
-    "title": "Optimality of the Constant 3 in Dense Sets Without Large Sumsets"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "https://arxiv.org/abs/2109.13305",
-      "https://arxiv.org/abs/2206.10289",
-      "https://arxiv.org/abs/2307.06441"
-    ],
-    "consumed_by_exp_id": "",
-    "description": "For every fixed density δ∈(0,1) and every integer t≥2 there is a constant C(t,δ)>0 such that for all sufficiently large n one can find a subset S⊂[n] of size at least δn that contains no t‑fold sumset A₁+⋯+A_t with each |A_i|≥C(t,δ)·(log n)/(log(1/δ))^{1/(t−1)}.  This conjecture generalises the extremal result of Serra‑Szegedy and the recent construction for t=2, and it is compatible with the lower‑bound phenomenon proved by Hernández‑and‑Hetzel.",
-    "domain_bridges": [
-      "Finite combinatorics",
-      "Ramsey theory",
-      "Probabilistic method"
-    ],
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0214",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Use the probabilistic method: select each element of [n] independently with probability δ to form a random set S.  For any fixed t‑tuple of subsets A₁,…,A_t ⊂ ℕ with |A_i| ≥ C·(log n)/(log(1/δ))^{1/(t−1)}, the sumset A₁+⋯+A_t is a set of size at least exp(Ω(log n)) = n^{Ω(1)} in the worst case.  A Chernoff bound shows that the probability that all these sum‑elements lie outside S is at most exp(−Ω(δ·|A₁+⋯+A_t|)).  A union bound over all such t‑tuples (there are at most n^{tC(log n)/(log(1/δ))}) keeps the failure probability bounded away from 1 if C is chosen small enough.  Thus with positive probability S satisfies the desired property, proving existence.  A deterministic construction could be obtained by the method of conditional expectations.",
-    "research_mode": "team",
-    "source_exp_id": "2607.15269v1",
-    "status": "available",
-    "timestamp": "2026-07-17T12:35:07.930478+00:00",
-    "title": "Existence of Dense Sets without Large t‑Fold Sumsets"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
       "Hernández and Hetzel 2026+growth",
       "Kra, Moreira, Richter, Robertson 2025"
     ],
@@ -9898,35 +9822,6 @@
     "title": "Rainbow Arithmetic Progression Threshold Conjecture"
   },
   {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "Kővári–Sós–Turán theorem (KST)",
-      "Bose–Burton theorem",
-      "Erdős–Stone theorem for matroids",
-      "Sidon sets in vector spaces"
-    ],
-    "consumed_by_exp_id": "",
-    "description": "For all integers s,t with 2 ≤ s ≤ t and prime power q, any simple rank-n GF(q)-representable matroid with no M(K_{s,t})-restriction satisfies |E(M)| ≤ (c_{q,s,t} + o(1))·q^{(1-1/s)n} for a constant c_{q,s,t}, and this bound is tight. In particular, for binary matroids (q=2) with no M(K_{2,t})-restriction, the maximum number of elements is exactly Θ_t(2^{n/2}).",
-    "domain_bridges": [
-      "extremal graph theory ↔ extremal matroid theory",
-      "forbidden substructure problems in graphs ↔ forbidden restrictions in matroids",
-      "asymptotic extremal functions with geometric constraints"
-    ],
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0221",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "The paper establishes the O-q,s,t bound. The conjecture adds: (1) matching lower bounds via explicit constructions (generalizing binary Sidon sets to arbitrary GF(q)), (2) precise asymptotic equivalence rather than big-O notation. Approach combines Fourier-analytic counting over finite fields, spectral methods on representable matroids, and extremal combinatorics of partial geometries.",
-    "research_mode": "team",
-    "source_exp_id": "2607.15226v1",
-    "status": "available",
-    "timestamp": "2026-07-17T13:04:27.023831+00:00",
-    "title": "The Kővari-Sós-Turán Conjecture for GF(q)-representable Matroids: Sharp Asymptotic Bound"
-  },
-  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "Hernandez and Hetzel's recent result on sharp bounds",
@@ -9950,60 +9845,6 @@
     "status": "available",
     "timestamp": "2026-07-17T14:09:12.716043+00:00",
     "title": "Dense Sets Without Large Sumsets"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
-      "Baker's Brill-Noether theory on graphs (2008)",
-      "Cheeger inequality in spectral graph theory",
-      "covering radius in periodic sets"
-    ],
-    "consumed_by_exp_id": "",
-    "description": "For sufficiently large connected k-regular graphs, if the Cheeger constant of a periodic set with respect to the energy quadratic form exceeds a logarithmic threshold, then the asymptotic Brill-Noether conjecture holds at the half-canonical degree up to a constant factor.",
-    "domain_bridges": [
-      "spectral expansion properties to divisor class existence",
-      "geometry of numbers techniques to graph combinatorics"
-    ],
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0241",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Demonstrate that the Cheeger bound enforces sufficient expansion in the energy form, enabling the construction of required divisors via covering radius arguments and periodicity.",
-    "research_mode": "team",
-    "source_exp_id": "2607.15213v1",
-    "status": "available",
-    "timestamp": "2026-07-17T23:12:05.059062+00:00",
-    "title": "Cheeger Inequality Implies Asymptotic Brill-Noether Existence at Half-Canonical Degree"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
-      "JLMNR",
-      "CFS"
-    ],
-    "consumed_by_exp_id": "",
-    "description": "The minimum integer t such that every equinumerous t-coloring of [t·n] contains a rainbow k-term arithmetic progression is bounded above by a quadratic function of k; i.e., there exists a constant C such that for all sufficiently large k, T_k ≤ C·k^2.",
-    "domain_bridges": [
-      "Ramsey Theory",
-      "Additive Combinatorics",
-      "Finite Coloring"
-    ],
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0242",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Disprove by constructing, for arbitrarily large k, an equinumerous coloring of an interval of length O(k^2) that contains no rainbow k-term arithmetic progression, showing that any O(k^2) bound fails.",
-    "research_mode": "team",
-    "source_exp_id": "2607.15116v1",
-    "status": "available",
-    "timestamp": "2026-07-17T23:12:29.709802+00:00",
-    "title": "Conjecture: T_k = O(k^2)"
   },
   {
     "ambition_level": "grand_challenge",
@@ -10208,46 +10049,6 @@
     "status": "available",
     "timestamp": "2026-07-24T14:34:16.697796+00:00",
     "title": "Frankl's Union-Closed Conjecture: Partial Results"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Adjacency-degree algebras and spectral determination of graphs' and formalize its key results. Abstract: McKay proved that the spectra of all polynomial functions of the adjacency matrix $A$ and the diagonal degree matrix $D$ determine a tree. We prove a principal version of this theorem. Let $\\mathcal A(G)=\\langle I,A_G,D_G\\rangle$ and let $M_G=\\mathcal A(G)\\mathbf1$ be the cyclic module generated by the all-ones vector. For connected graphs the ideal $\\mathcal A(G)J\\mathcal A(G)$, where $J=\\mathbf1\\mathbf1^T$, acts on $M_G$ as the full endomorphism algebra. We show that every forest satisfies $M_G=U_G$, the automorphism-orbit module, and that the induced algebra on the orbit quotient of a tree is a full matrix algebra. It follows that the scalar moments $\\mathbf1^Tw(A_T,D_T)\\mathbf1$ determine every tree. For general graphs these moments are degree-decorated caterpillar homomorphism counts. The resulting moment-rigidity class lies inside the amenable, compact, refinable hierarchy of color refinement, and its first small-order failures are ten-vertex integral switchings invisible to $M_G",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Physics"
-    ],
-    "id": "fd_0735",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.21494v1",
-    "status": "available",
-    "timestamp": "2026-07-25T18:17:40.769572+00:00",
-    "title": "ArXiv paper: Adjacency-degree algebras and spectral determination of graphs"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'The Frankl--Tokushige product conjectures for $r$-cross-intersecting families' and formalize its key results. Abstract: We settle the uniform and biased product conjectures of Frankl and Tokushige for $r$-cross-intersecting families. Let $r\\geq2$, let $0\\leq k_i\\leq(r-1)n/r$, and let $\\mathcal{F}_i\\subseteq\\binom{[n]}{k_i}$ be $r$-cross-intersecting. We prove the sharp inequality $$\\prod_{i=1}^r\\frac{|\\mathcal{F}_i|}{\\binom{n}{k_i}}\\leq \\prod_{i=1}^r\\frac{k_i}{n},$$ with equality attained by the corresponding levels of a common $1$-star. As a consequence, we obtain the analogous $p_i$-biased measure theorem for $0\\leq p_i\\leq(r-1)/r$, $$ \\prod_{i=1}^rμ_{p_i}(\\mathcal{F}_i)\\leq \\prod_{i=1}^r p_i.$$The main difficulty is that unequal parameters do not determine a single common target level; instead, the target levels $\\ell_1,\\ldots,\\ell_r$ must satisfy $\\sum_{i=1}^r \\ell_i=(r-1)n$. We overcome this asymmetry in three steps. An ordered-partition coupling gives a sharp additive inequality for every such choice of target levels. A star-calibrated upper-shadow inequality relates the density of a family on its",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0736",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.21589v1",
-    "status": "available",
-    "timestamp": "2026-07-25T18:17:43.826009+00:00",
-    "title": "ArXiv paper: The Frankl--Tokushige product conjectures for $r$-cross-intersecting families"
   },
   {
     "ambition_level": "extension",
@@ -11141,7 +10942,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "a31e0b39",
+    "consumed_by_exp_id": "",
     "description": "Prove Conway's Game of Life is Turing complete via a direct constructive embedding. Formalize cellular automata in Lean 4 and establish complexity bounds on the simulation overhead.",
     "domain_bridges": [],
     "domains": [
@@ -11154,7 +10955,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "",
     "title": "Game of Life Universality"
   },
