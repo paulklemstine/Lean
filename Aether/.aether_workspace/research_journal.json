@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "ac79ade1",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions\n\n## 1. Global completeness of the anisotropic plane\n\n**Conjecture.** Every maximal geodesic of the metric\n\\(\\cosh(y)^{-2}dx^2+\\cosh(x)^2dy^2\\) is defined for all real time.\n\nThe ke",
-      "quality_score": 0.75,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-18T22:22:43",
-      "title": "1. **Intrinsic curvature identification.** The proved curvature formula"
-    },
-    {
       "cycle_id": "f2f32f44",
       "domain": "Combinatorics",
       "key_insight": "# Future Directions\n\n## Status of the motivating conjecture\n\nThe literal conjecture in the prompt is not a well-defined ordinary Lebesgue-Fourier-transform statement. The formal result `dirichletTone_",
@@ -2501,6 +2491,16 @@
       "theorem_count": 21,
       "timestamp": "2026-07-25T02:35:13",
       "title": "Lattice-LWE: Formal Equivalence Between Decision-LWE and Search-LWE"
+    },
+    {
+      "cycle_id": "81b94eec",
+      "domain": "Algebra",
+      "key_insight": "# Future directions\n\n## Completed foundation\n\n`Algebra/BSD/LeadingCoefficient.lean` is a complete, independently compiling formal\nfoundation for consequences of the Birch--Swinnerton-Dyer leading-coef",
+      "quality_score": 0.43,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-25T06:37:04",
+      "title": "Birch and Swinnerton-Dyer Conjecture"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.75
     }
   ],
-  "last_updated": "2026-07-25T02:35:13",
+  "last_updated": "2026-07-25T06:37:04",
   "open_questions": [
     {
       "context": "+    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; +    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; +    ∀ i < k, c i = ",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "2170ccdf",
-        "quality": 0.74,
-        "theorems": 0,
-        "title": "Stochastic Galois Theory: Random Permutations Have Generic Galois Groups"
-      },
-      {
         "cycle_id": "cbc5314c",
         "quality": 0.8,
         "theorems": 0,
@@ -3079,6 +3073,12 @@
         "quality": 0.75,
         "theorems": 0,
         "title": "Speculative: Tropical Mathematics of Social Choice"
+      },
+      {
+        "cycle_id": "81b94eec",
+        "quality": 0.43,
+        "theorems": 11,
+        "title": "Birch and Swinnerton-Dyer Conjecture"
       }
     ],
     "Applications": [
