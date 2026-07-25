@@ -3,7 +3,7 @@ Copyright (c) 2026 Harmonic. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Aristotle (Harmonic)
 -/
-import Novelty.Z2CoindexSuspension
+import Novelty.GraphTheory.Z2CoindexSuspension
 
 /-!
 # The suspension tower `Sᵏ(K)` of a free `ℤ₂`-complex

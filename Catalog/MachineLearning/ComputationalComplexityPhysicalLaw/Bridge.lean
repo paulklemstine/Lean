@@ -1,5 +1,5 @@
-import Logic.PvsNPFoundations
-import Physics.LandauerSecondLaw
+import Logic.PVsNp.PvsNPFoundations
+import Physics.InformationTheory.LandauerSecondLaw
 
 /-!
 # Computational Complexity and Thermodynamic Irreversibility

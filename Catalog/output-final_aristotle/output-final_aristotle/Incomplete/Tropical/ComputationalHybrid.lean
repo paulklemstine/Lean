@@ -1,7 +1,7 @@
 import Mathlib
-import Logic.Defs
+import Logic.GraphTheory.Defs
 import Tropical.HardnessRandomness.HybridArgument
-import Tropical.PRGSecurity
+import Tropical.TropicalAlgebra.PRGSecurity
 
 set_option linter.unusedVariables false
 

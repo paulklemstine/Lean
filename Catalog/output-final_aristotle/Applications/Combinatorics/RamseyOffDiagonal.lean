@@ -23,7 +23,7 @@ values do not isolate:
 -/
 
 import Mathlib
-import Applications.RamseyFourFour
+import output-final_aristotle.Applications.Algebra.RamseyFourFour
 
 open scoped Classical
 open SimpleGraph Finset

@@ -30,7 +30,7 @@ initial value.
 
 import Mathlib
 import Physics.NavierStokes.EnergyMethod
-import Physics.TropicalDiffusionRegularity
+import Physics.PosetTheory.TropicalDiffusionRegularity
 
 namespace NavierStokes
 

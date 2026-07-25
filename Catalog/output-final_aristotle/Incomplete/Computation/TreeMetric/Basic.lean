@@ -21,7 +21,7 @@ and the LBTree distance function.
 * Buneman, P. (1971). The recovery of trees from measures of dissimilarity.
 -/
 
-import Logic.Defs
+import Logic.GraphTheory.Defs
 
 open scoped Matrix
 open Classical

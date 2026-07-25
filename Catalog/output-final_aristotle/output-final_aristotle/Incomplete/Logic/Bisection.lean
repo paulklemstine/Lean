@@ -6,7 +6,7 @@ certified bisection. The key result: for every precision level `n`,
 we can compute an interval of width `≤ (b-a)/2^n` containing a sign change,
 and a point whose residual `|f x|` is bounded by the continuity modulus.
 -/
-import Novelty.Basic
+import Novelty.PosetTheory.Basic
 
 open Set
 

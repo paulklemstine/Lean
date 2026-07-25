@@ -3,7 +3,7 @@ Copyright (c) 2026 Harmonic. All rights reserved.
 Released under Apache 2.0 license.
 -/
 import Mathlib
-import Bridges.SumsetL1BallSharpDim1
+import output-final_aristotle.Bridges.SumsetL1BallSharpDim1
 
 /-!
 # A sumset lower bound for boxes / L₁-balls in higher dimensions

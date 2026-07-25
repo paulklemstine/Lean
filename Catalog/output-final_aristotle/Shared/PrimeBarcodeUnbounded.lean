@@ -60,7 +60,7 @@ merge scale for the full infinite cloud.
 -- !-- end Lab Notes -- !--
 -/
 import Mathlib
-import Shared.PrimeBarcodeInvariants
+import Shared.NumberTheory.PrimeBarcodeInvariants
 
 open scoped Classical
 open Filter

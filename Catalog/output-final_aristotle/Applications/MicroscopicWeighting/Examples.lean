@@ -1,4 +1,4 @@
-import Catalog.Applications.MicroscopicWeighting.Core
+import Logic.StrangeLoops.Core
 
 /-!
 # Concrete microscopic weightings and the sign characterisation

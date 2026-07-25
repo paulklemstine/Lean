@@ -9,8 +9,8 @@ Copyright (c) 2025. All rights reserved.
 -/
 
 import Mathlib
-import Bridges.Foundations
-import Tropical.Representation
+import Bridges.PosetTheory.Foundations
+import Tropical.PosetTheory.Representation
 
 open TropicalRiesz
 

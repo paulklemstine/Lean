@@ -32,7 +32,7 @@ Synthesis (PI): these give the determinant of the K3 Néron–Severi lattice
   S_K(2N) as 16 N⁴ D_K, a testable bridge to lattice-polarised K3 geometry.
 -/
 import Mathlib
-import Applications.HermitianBianchiDiscriminant
+import Applications.Algebra.HermitianBianchiDiscriminant
 
 open Matrix
 

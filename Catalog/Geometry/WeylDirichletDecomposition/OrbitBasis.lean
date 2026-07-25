@@ -1,5 +1,5 @@
 import Mathlib
-import Novelty.RhoDominantCartan
+import Novelty.NeuralCoding.RhoDominantCartan
 
 /-!
 # Orbit-basis decomposition for Weyl-invariant functions

@@ -43,7 +43,7 @@ inverse-limit thesis, certified.
 -- !-- Lab Notes -- !--
 -/
 import Mathlib
-import Catalog.Physics.CechContextualityCore
+import Catalog.Physics.PosetTheory.CechContextualityCore
 import Catalog.Applications.StrangeAttractors.DyadicSolenoid
 
 namespace StrangeAttractors

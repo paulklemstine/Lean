@@ -1,5 +1,5 @@
 import Mathlib
-import Physics.ConsciousFixedPoints
+import Physics.HilbertSpace.ConsciousFixedPoints
 
 /-!
 # Objective Reduction Timescales and the Non-Computability of Consciousness

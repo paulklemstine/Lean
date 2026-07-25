@@ -1,4 +1,4 @@
-import Novelty.Basic
+import Novelty.PosetTheory.Basic
 
 /-!
 # Tropical Action Spectrum — Spectral Theorems

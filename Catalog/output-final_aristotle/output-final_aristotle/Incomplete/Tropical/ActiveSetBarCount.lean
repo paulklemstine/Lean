@@ -24,7 +24,7 @@ ambient geometry. The key results are:
 Builds on `Tropical.PersistentHomology.Defs` and `Tropical.PersistentHomology.Theorems`.
 -/
 
-import Logic.Defs
+import Logic.GraphTheory.Defs
 import Tropical.PersistentHomology.Theorems
 import Mathlib
 

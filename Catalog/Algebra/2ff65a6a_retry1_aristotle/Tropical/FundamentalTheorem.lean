@@ -1,7 +1,7 @@
-import Algebra.«2ff65a6a_retry1_aristotle».Tropical.FundamentalTheorem.Basic
-import Algebra.«2ff65a6a_retry1_aristotle».Tropical.FundamentalTheorem.TropicalPolynomial
-import Algebra.«2ff65a6a_retry1_aristotle».Tropical.FundamentalTheorem.Kapranov
-import Algebra.«2ff65a6a_retry1_aristotle».Tropical.FundamentalTheorem.Bezout
+import Logic.BasicMonotoneCircuit.Basic
+import Algebra.2ff65a6a_retry1_aristotle.Tropical.FundamentalTheorem.TropicalPolynomial
+import Algebra.2ff65a6a_retry1_aristotle.Tropical.FundamentalTheorem.Kapranov
+import Algebra.2ff65a6a_retry1_aristotle.Tropical.FundamentalTheorem.Bezout
 
 /-!
 # Tropical geometry: the connection between varieties and their tropicalizations

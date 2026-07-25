@@ -11,7 +11,7 @@ Copyright (c) 2025. All rights reserved.
 * `dressian_ne_tropicalGrassmannian_rank3` — Dr(3,7) ≠ Trop(Gr(3,7))
 -/
 
-import Logic.Defs
+import Logic.GraphTheory.Defs
 import Tropical.Grassmannian.FanoAlgebra
 
 open Finset Matrix

@@ -1,5 +1,5 @@
 import Mathlib
-import Physics.AngularMomentum
+import Physics.HilbertSpace.AngularMomentum
 
 /-!
 # Elements as Eigenvalues: Shell Structure of a Diagonal Hamiltonian

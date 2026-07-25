@@ -1,4 +1,4 @@
-import Computation.TropicalLife.Basic
+import Logic.BasicMonotoneCircuit.Basic
 import Computation.TropicalLife.StillLife
 
 /-!

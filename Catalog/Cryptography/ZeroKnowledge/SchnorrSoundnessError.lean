@@ -1,5 +1,5 @@
 import Mathlib
-import Cryptography.SchnorrIdentification
+import Cryptography.NumberTheory.SchnorrIdentification
 
 /-!
 # The exact soundness error of the Schnorr Σ-protocol is `1/p`

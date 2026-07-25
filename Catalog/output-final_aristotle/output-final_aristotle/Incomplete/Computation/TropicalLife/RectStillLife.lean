@@ -1,4 +1,4 @@
-import Novelty.Basic
+import Novelty.PosetTheory.Basic
 import Computation.TropicalLife.StillLife
 
 /-!

@@ -1,5 +1,5 @@
 import Mathlib
-import Applications.SurfaceCodeHomology
+import Applications.QuantumSystems.SurfaceCodeHomology
 
 /-!
 # Euler characteristic in negative dimensions

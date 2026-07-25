@@ -25,7 +25,7 @@ representation.  This yields, for every `k`, a Sidon set of cardinality `k`.
 Sidon set, B_2 set, explicit construction, powers of two, binary representation
 -/
 import Mathlib
-import Novelty.Core
+import Logic.StrangeLoops.Core
 
 open Finset
 

@@ -192,3 +192,4 @@ theorem hamming_length_div_four_general : (4 : ℕ) ∣ 8 :=
 
 end Codes
 end SmoothPoincare
+end through every point of `C`; the all-ones vector is the obstruction class whose

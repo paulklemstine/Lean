@@ -63,7 +63,7 @@ The abstract engine is instantiated on concrete transforms:
   open subset vanishes identically (`laplace_uncertainty`, `strip_uncertainty`).
 -/
 import Mathlib
-import Bridges.BesselInequalityBridge
+import Bridges.BesselInequalityBridge.BesselInequalityBridge
 
 open Complex Filter Topology MeasureTheory Set Function
 

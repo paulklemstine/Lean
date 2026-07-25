@@ -65,7 +65,7 @@ Synthesis: `ν₂(t₅ n)` is a block-constant function of `⌊n/4⌋`; its `v=0
 -/
 
 import Mathlib
-import MachineLearning.ThueMorsePower.ThueMorse
+import output-final_aristotle.MachineLearning.ThueMorsePower.ThueMorse
 
 namespace ThueMorsePower
 

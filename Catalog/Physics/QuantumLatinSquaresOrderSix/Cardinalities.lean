@@ -1,5 +1,5 @@
 import Physics.QuantumLatinSquaresOrderSix.SchurBound
-import Physics.LatinPatternCount
+import Physics.PosetTheory.LatinPatternCount
 
 /-!
 # Cardinality certificates for the 19, 21, and 23 constructions

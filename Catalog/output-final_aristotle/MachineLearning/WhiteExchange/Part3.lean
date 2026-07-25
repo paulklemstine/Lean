@@ -2,8 +2,8 @@
 Copyright (c) 2026 Harmonic. All rights reserved.
 Released under Apache 2.0 license.
 -/
-import MachineLearning.WhiteExchange.Basic
-import MachineLearning.WhiteExchange.Uniform
+import Logic.BasicMonotoneCircuit.Basic
+import output-final_aristotle.MachineLearning.WhiteExchange.Uniform
 
 /-!
 # White's quadratic exchange conjecture, Part 3 — deepening

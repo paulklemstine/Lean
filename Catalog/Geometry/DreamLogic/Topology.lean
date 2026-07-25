@@ -1,7 +1,7 @@
 import Mathlib
-import Speculative.BenfordQuadratic.Defs
-import Speculative.BenfordQuadratic.Bounds
-import Speculative.BenfordQuadratic.Convergence
+import Logic.GraphTheory.Defs
+import Novelty.AFLMatching.Bounds
+import Geometry.InformationTheory.Convergence
 
 /-!
 # Benford Reduction and Torus Dynamics

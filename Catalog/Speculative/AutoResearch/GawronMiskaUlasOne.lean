@@ -1,4 +1,4 @@
-import Logic.GawronMiskaUlasBase
+import Logic.NumberTheory.GawronMiskaUlasBase
 
 /-!
 # The exponent `m = 1` is bounded: necessity of `m ≥ 2`

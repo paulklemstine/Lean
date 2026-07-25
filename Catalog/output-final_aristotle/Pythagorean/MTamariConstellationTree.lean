@@ -1,5 +1,5 @@
 import Mathlib
-import Pythagorean.GeneratingTreeIso
+import output-final_aristotle.Applications.MTamariConstellationGeneralM.GeneratingTreeIso
 
 /-!
 # A concrete generating-tree isomorphism: the base layer of the

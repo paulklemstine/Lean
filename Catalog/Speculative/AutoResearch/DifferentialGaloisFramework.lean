@@ -1,8 +1,8 @@
 import Mathlib
-import EML.EMLRiccatiTransform
-import EML.EMLDifferentialGalois
-import EML.EMLWronskianGalois
-import EML.EMLAiryRiccati
+import EML.PosetTheory.EMLRiccatiTransform
+import EML.PosetTheory.EMLDifferentialGalois
+import EML.PosetTheory.EMLWronskianGalois
+import EML.PosetTheory.EMLAiryRiccati
 
 /-!
 # A Formal Framework for the Algebra–Geometry Gap in Differential Galois Theory

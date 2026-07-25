@@ -1,4 +1,4 @@
-import Applications.FangMultiset
+import Applications.Combinatorics.FangMultiset
 
 /-!
 # Congruence Consequences of the Digit-Multiset Framework

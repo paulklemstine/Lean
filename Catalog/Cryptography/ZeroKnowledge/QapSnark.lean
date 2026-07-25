@@ -1,5 +1,5 @@
 import Mathlib
-import Bridges.SumcheckSoundness
+import Bridges.GraphTheory.SumcheckSoundness
 
 /-!
 # A Simplified zk-SNARK Circuit and Its Soundness

@@ -229,3 +229,4 @@ theorem betti_le_activation_mono {L : ℕ} {w w' : Fin L → ℕ}
 end Synthesis
 
 end HodgeCycles
+end — an *algebraic cycle* — so the analogue of the Hodge problem is

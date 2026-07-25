@@ -1,5 +1,5 @@
 import Mathlib
-import Speculative.AutoResearch.SurfaceCodeHomology
+import Applications.QuantumSystems.SurfaceCodeHomology
 
 /-!
 # Code Distance as the Homological Systole

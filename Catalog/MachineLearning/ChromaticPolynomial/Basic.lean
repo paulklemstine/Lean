@@ -1,5 +1,5 @@
 import Mathlib
-import Speculative.ChromaticPolynomial.Defs
+import Logic.GraphTheory.Defs
 
 /-!
 # Chromatic Polynomial — Structural Properties

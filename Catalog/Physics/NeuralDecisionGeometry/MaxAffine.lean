@@ -1,5 +1,5 @@
 import Mathlib
-import Bridges.ConvexTropicalBridge
+import Bridges.TropicalAlgebra.ConvexTropicalBridge
 
 /-! # Max-affine neural decision geometry
 

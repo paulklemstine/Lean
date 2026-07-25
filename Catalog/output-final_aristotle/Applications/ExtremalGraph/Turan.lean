@@ -20,7 +20,7 @@ edge count `SimpleGraph.card_edgeFinset_turanGraph`, and the looser
   bound with the *Ramsey* arrow relation `R(3,3) = 6`.
 -/
 import Mathlib
-import Applications.Ramsey
+import Applications.Combinatorics.Ramsey
 
 open Finset Fintype SimpleGraph
 

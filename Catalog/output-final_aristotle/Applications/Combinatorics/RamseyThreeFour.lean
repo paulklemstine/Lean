@@ -21,7 +21,7 @@ degrees `9·3 = 27` is odd while it must equal twice the number of red edges.
 -/
 
 import Mathlib
-import Applications.Ramsey
+import Applications.Combinatorics.Ramsey
 
 open scoped Classical
 open SimpleGraph Finset

@@ -1306,10 +1306,15 @@ Research mode: {concept.research_mode}
         Tier 2: Fast BM25 Keyword Search across remaining Catalog .lean files
         Tier 3: Transitive Import Closure Resolution (Guarantees zero broken Lean imports)
         """
-        all_catalog_lean = [
-            f for f in self.catalog_root.rglob("*.lean")
-            if ".lake" not in f.parts and "Attic" not in f.parts and "FINAL" not in f.parts and not (f.is_symlink() and not f.resolve().exists())
-        ]
+        now = time.time()
+        if not hasattr(self, '_catalog_lean_cache') or (now - getattr(self, '_catalog_lean_cache_time', 0)) > 60.0:
+            self._catalog_lean_cache = [
+                f for f in self.catalog_root.rglob("*.lean")
+                if ".lake" not in f.parts and "Attic" not in f.parts and "FINAL" not in f.parts and not (f.is_symlink() and not f.resolve().exists())
+            ]
+            self._catalog_lean_cache_time = now
+
+        all_catalog_lean = self._catalog_lean_cache
 
         if not all_catalog_lean:
             return []
@@ -1399,19 +1404,31 @@ Research mode: {concept.research_mode}
         if not keywords or not files:
             return [(f, 0.0) for f in files]
 
+        if not hasattr(self, '_token_cache'):
+            self._token_cache = {}
+
         doc_tokens = {}
+        doc_token_sets = {}
         doc_lengths = {}
         total_len = 0
         
         for f in files:
             try:
-                content = f.read_text(encoding='utf-8', errors='ignore')
-                tokens = self._extract_search_keywords(content)
+                mtime = f.stat().st_mtime
+                if f in self._token_cache and self._token_cache[f][0] == mtime:
+                    tokens, token_set = self._token_cache[f][1], self._token_cache[f][2]
+                else:
+                    content = f.read_text(encoding='utf-8', errors='ignore')
+                    tokens = self._extract_search_keywords(content)
+                    token_set = set(tokens)
+                    self._token_cache[f] = (mtime, tokens, token_set)
                 doc_tokens[f] = tokens
+                doc_token_sets[f] = token_set
                 doc_lengths[f] = len(tokens)
                 total_len += len(tokens)
             except Exception:
                 doc_tokens[f] = []
+                doc_token_sets[f] = set()
                 doc_lengths[f] = 0
 
         N = len(files)
@@ -1420,7 +1437,7 @@ Research mode: {concept.research_mode}
 
         kw_df = {}
         for kw in set(keywords):
-            df = sum(1 for f in files if kw in doc_tokens[f])
+            df = sum(1 for f in files if kw in doc_token_sets[f])
             kw_df[kw] = df
 
         scores = []

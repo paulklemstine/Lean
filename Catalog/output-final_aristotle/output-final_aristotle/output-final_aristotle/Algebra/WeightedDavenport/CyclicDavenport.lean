@@ -38,7 +38,7 @@ Davenport constant `D(ℤ/m)` — is exactly `m`:
 -- Synthesis: the kernel-cover reformulation is faithful and recovers the
 --   classical `D(ℤ/m) = m`, confirming the conjecture on the cyclic base case.
 -/
-import Novelty.Core
+import Logic.StrangeLoops.Core
 
 open scoped BigOperators
 

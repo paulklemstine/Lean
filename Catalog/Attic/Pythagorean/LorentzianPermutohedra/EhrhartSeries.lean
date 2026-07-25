@@ -3,7 +3,7 @@ Copyright (c) 2025 Harmonic. All rights reserved.
 Released under Apache 2.0 license.
 -/
 import Mathlib
-import Pythagorean.LorentzianPermutohedra.Defs
+import Logic.GraphTheory.Defs
 import Pythagorean.LorentzianPermutohedra.EhrhartIDP
 
 /-!

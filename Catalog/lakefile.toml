@@ -1,5 +1,5 @@
 name = "CatalogBuild"
-defaultTargets = ["Algebra", "Bridges", "Computation", "Cryptography", "EML", "Geometry", "Logic", "MachineLearning", "Physics", "Pythagorean", "Shared", "Speculative", "Tropical"]
+defaultTargets = ["Algebra", "Applications", "Bridges", "Combinatorics", "Computation", "Cryptography", "EML", "Geometry", "Logic", "MachineLearning", "Novelty", "NumberTheory", "Physics", "Probability", "Pythagorean", "Shared", "Speculative", "Tropical"]
 
 [[require]]
 name = "mathlib"
@@ -11,8 +11,16 @@ name = "Algebra"
 globs = ["Algebra.+"]
 
 [[lean_lib]]
+name = "Applications"
+globs = ["Applications.+"]
+
+[[lean_lib]]
 name = "Bridges"
 globs = ["Bridges.+"]
+
+[[lean_lib]]
+name = "Combinatorics"
+globs = ["Combinatorics.+"]
 
 [[lean_lib]]
 name = "Computation"
@@ -39,8 +47,20 @@ name = "MachineLearning"
 globs = ["MachineLearning.+"]
 
 [[lean_lib]]
+name = "Novelty"
+globs = ["Novelty.+"]
+
+[[lean_lib]]
+name = "NumberTheory"
+globs = ["NumberTheory.+"]
+
+[[lean_lib]]
 name = "Physics"
 globs = ["Physics.+"]
+
+[[lean_lib]]
+name = "Probability"
+globs = ["Probability.+"]
 
 [[lean_lib]]
 name = "Pythagorean"

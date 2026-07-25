@@ -1,5 +1,5 @@
 import Mathlib
-import Catalog.Applications.MultiverseModalForcing
+import Catalog.Applications.ProofTheoryAndLogic.MultiverseModalForcing
 
 /-!
 # Anti-axioms as finite relational set universes

@@ -1,0 +1,1 @@
+../../Geometry/StereographicPersistence/Theorems.lean

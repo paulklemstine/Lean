@@ -1,5 +1,5 @@
 import Applications.NoveltyCertification.Packing
-import Applications.RankOfApparition
+import Applications.Pythagorean.RankOfApparition
 
 /-!
 # Certified Novelty Detection — a catalog-driven novelty stream from primitive divisors

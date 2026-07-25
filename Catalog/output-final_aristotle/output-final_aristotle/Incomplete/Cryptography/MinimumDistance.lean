@@ -3,8 +3,8 @@ Copyright (c) 2025 Harmonic. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 -/
 import Mathlib
-import Logic.Defs
-import Cryptography.ReedMuller.SchwartzZippel
+import Logic.GraphTheory.Defs
+import .lake.packages.mathlib.Mathlib.Algebra.MvPolynomial.SchwartzZippel
 
 /-!
 # Exact Minimum Distance of Reed–Muller Codes

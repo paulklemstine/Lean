@@ -48,7 +48,7 @@ Synthesis (PI): anabelomorphic equivalence of the abelian GL(1) datum is exactly
 `(p, f)`, and this is strictly stronger than equality of `(p, e·f)` — ramification is invisible to
 degree but visible to the residue torus.
 -/
-import Applications.Anabelomorphic.Core
+import Logic.StrangeLoops.Core
 
 namespace Anabel
 

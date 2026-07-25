@@ -1,4 +1,4 @@
-import Applications.MindTools.Basic
+import Logic.BasicMonotoneCircuit.Basic
 import Mathlib.Order.OrderIsoNat
 
 /-!

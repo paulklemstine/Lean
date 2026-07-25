@@ -1,5 +1,5 @@
 import Mathlib
-import Logic.Multiverse.ModalFrame
+import output-final_aristotle.Logic.Multiverse.ModalFrame
 
 /-!
 # The Alexandrov Topology of the Forcing Multiverse

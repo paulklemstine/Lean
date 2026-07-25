@@ -1,5 +1,5 @@
-import Bridges.ProofSearchFractalDimension
-import Bridges.SubadditiveSequenceBridge
+import Novelty.InformationTheory.ProofSearchFractalDimension
+import Bridges.InformationTheory.SubadditiveSequenceBridge
 
 /-! # Proof-Search Entropy: a Bridge to Fekete's Subadditive Theory
 

@@ -1,0 +1,1 @@
+../../Bridges/Speculative/AutoResearch/AlgebraTropicalCryptography/TropicalHankelOneWayDuality.lean

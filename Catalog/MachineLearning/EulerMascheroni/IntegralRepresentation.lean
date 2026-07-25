@@ -1,5 +1,5 @@
 import Catalog.MachineLearning.EulerMascheroni.SeriesRepresentation
-import Catalog.NumberTheory.Irrationality
+import Catalog.NumberTheory.PosetTheory.Irrationality
 
 /-!
 # An integral representation of the Euler–Mascheroni constant

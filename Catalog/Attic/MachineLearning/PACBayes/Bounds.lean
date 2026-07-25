@@ -29,7 +29,7 @@ family with inverse temperature λ, connecting PAC-Bayes to statistical
 mechanics (the posterior is a Gibbs measure, KL is free-energy excess).
 -/
 import Mathlib
-import MachineLearning.PACBayes.Defs
+import Logic.GraphTheory.Defs
 
 open Real BigOperators Finset Filter
 

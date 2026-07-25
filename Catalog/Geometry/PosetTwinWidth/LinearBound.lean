@@ -4,8 +4,8 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Aristotle (Harmonic)
 -/
 import Mathlib
-import Combinatorics.List.NonCircular
-import Graph.TwinWidth.Contractions
+import Geometry.PosetTheory.NonCircular
+import Geometry.PosetTheory.Contractions
 
 /-!
 # A linear contraction sequence for finite posets of bounded width

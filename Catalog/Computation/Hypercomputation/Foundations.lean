@@ -1,5 +1,5 @@
 import Mathlib
-import Computation.SelfModifyingHalt
+import Computation.Computation.SelfModifyingHalt
 
 /-!
 # Hypercomputation, Diagonal Oracles, and Physical Resolution
