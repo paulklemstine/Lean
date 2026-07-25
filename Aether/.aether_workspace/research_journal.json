@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "20c9506b",
-      "domain": "Physics",
-      "key_insight": "# Future Directions\n\n## Status of the proposed claim\n\nNo known theorem establishes that the ordinary Collatz conjecture is independent of Peano Arithmetic, equivalent to `Con(PA)`, or that its stoppin",
-      "quality_score": 0.69,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-19T02:08:05",
-      "title": "The Collatz Conjecture Is Undecidable: What If 3n+1 Can't Be Proved?"
-    },
-    {
       "cycle_id": "eb62b00a",
       "domain": "Bridges",
       "key_insight": "# Future Directions\n\n- Formalize matrix representability of finite matroids over `ZMod 3` and prove that it is preserved by deletion and contraction.\n- Connect the abstract theorem `matroid_wqo_gives_",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-25T14:09:59",
       "title": "PAC-Bayes Generalization Bounds"
+    },
+    {
+      "cycle_id": "1163ea67",
+      "domain": "Probability",
+      "key_insight": "# Future directions\n\nThe formal result in `SharpBridge.lean` develops the exact analytic and geometric algebra of entropy power in every positive dimension. It proves that entropy power is the square",
+      "quality_score": 0.68,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-25T14:10:26",
+      "title": "Entropy Power Inequality: Sharp Version"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-25T14:09:59",
+  "last_updated": "2026-07-25T14:10:26",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "c49f6946",
-        "quality": 0.62,
-        "theorems": 15,
-        "title": "The Fundamental Theorem of Cakes: Algebraic Geometry of Baking"
-      },
-      {
         "cycle_id": "d3ef6e43",
         "quality": 0.51,
         "theorems": 13,
@@ -3823,6 +3817,12 @@
         "quality": 0.7,
         "theorems": 0,
         "title": "PAC-Bayes Generalization Bounds"
+      },
+      {
+        "cycle_id": "1163ea67",
+        "quality": 0.68,
+        "theorems": 0,
+        "title": "Entropy Power Inequality: Sharp Version"
       }
     ],
     "Pythagorean": [
