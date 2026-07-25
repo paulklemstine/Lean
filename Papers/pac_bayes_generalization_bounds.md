@@ -1,0 +1,3 @@
+# Why a separate computational-evidence stage was skipped
+
+The central result is a symbolic variational inequality over an arbitrary finite hypothesis type, arbitrary strictly positive prior and posterior weights, and an arbitrary real observable. Small numerical cases cannot validate the universal logarithmic and exponential identities in a meaningful way. The development instead proves the inequality kernel-checkably from finite-sum algebra and standard real-analysis inequalities. The accompanying asymptotic theorem is likewise a general limit statement rather than a finite conjectural sequence.

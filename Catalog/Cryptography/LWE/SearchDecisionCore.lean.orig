@@ -145,14 +145,14 @@ theorem regev_rounding_bit0 (q : ℝ) (e : ℝ)
 /-- **Rounding correctness — bit 1**: Encoding q/2 + error stays near q/2.
 This is the key inequality ensuring decryption correctness:
 the noisy encoding of 1 stays in the interval (q/4, 3q/4). -/
-theorem regev_rounding_bit1 (q : ℝ) (e : ℝ) (hq : 0 < q)
+theorem regev_rounding_bit1 (q : ℝ) (e : ℝ)
     (he : |e| < q / 4) :
     q / 4 < q / 2 + e ∧ q / 2 + e < 3 * q / 4 := by
   rw [abs_lt] at he; constructor <;> linarith
 
 /-- **Separation between encoded bits**: Distance between encoding of 0
 (at e) and encoding of 1 (at q/2 + e') is at least q/2 - |e| - |e'|. -/
-theorem encoding_separation (q : ℝ) (e e' : ℝ) (hq : 0 < q)
+theorem encoding_separation (q : ℝ) (e e' : ℝ)
     (he : |e| < q / 4) (he' : |e'| < q / 4) :
     0 < q / 2 - |e| - |e'| := by
   linarith
@@ -161,7 +161,7 @@ theorem encoding_separation (q : ℝ) (e e' : ℝ) (hq : 0 < q)
 is within q/4 of the intended codeword μ·(q/2), so decryption
 correctly recovers μ. -/
 theorem regev_encryption_rounding_correctness
-    (q : ℝ) (e : ℝ) (μ : ℝ) (hq : 0 < q)
+    (q : ℝ) (e : ℝ) (μ : ℝ)
     (he : |e| < q / 4) :
     |μ * (q / 2) + e - μ * (q / 2)| < q / 4 := by
   simp [he]
