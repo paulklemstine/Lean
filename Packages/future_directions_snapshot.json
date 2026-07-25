@@ -2425,25 +2425,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "04a61ead",
-    "description": "Proves conformal invariance of chordal SLE_κ interfaces in simply connected planar domains.",
-    "domain_bridges": [],
-    "domains": [
-      "Probability"
-    ],
-    "id": "dir_50_47_b33c0bd5",
-    "lineage_refs": [],
-    "priority_score": 0.9,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "batch_50_injection",
-    "status": "in_progress",
-    "timestamp": "2026-07-23T20:05:24.653256+00:00",
-    "title": "SLE-Interface: Schramm-Loewner Evolution Conformal Invariance"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Proves the Alon-Boppana theorem establishing lower bounds λ_2 ≥ 2√(d-1) - o(1) for the second largest eigenvalue of d-regular graphs.",
     "domain_bridges": [],
@@ -12652,7 +12633,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "41e2ee03",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Several families of incommensurable noncompact hyperbolic Coxeter polytopes' and formalize its key results. Abstract: We classify all 141 finite-volume hyperbolic Coxeter five-dimensional polytopes with eight facets, of which 125 are noncompact. Using maximal-cusp density and a noncompact analog of Bogachev-Douba-Raimbault's argument, we construct infinitely many pairwise incommensurable noncompact Coxeter polytopes in dimensions 4, 5, 6, 7, and 9, with the number of commensurability classes growing at least exponentially in volume.",
     "domain_bridges": [],
     "domains": [
@@ -12664,7 +12645,7 @@
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
     "source_exp_id": "2607.14715v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-17T08:20:29.584439+00:00",
     "title": "ArXiv paper: Several families of incommensurable noncompact hyperbolic Coxeter polytopes"
   },
@@ -18128,6 +18109,26 @@
     "status": "available",
     "timestamp": "2026-07-24T23:24:30.561602+00:00",
     "title": "`Geometry/ErdosSzekeresCupCap.lean` gives a complete, self-contained proof of th"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis cycle established a sharp dichotomy for one-object codiscrete bicategories: the codiscrete\nbicategory attached to a unital magma is strict exactly when the magma is associative. The\nconstruction is now uniform across all unital magmas, and the associator is exhibited as a genuine\nobstruction rather than an artefact of a hand-picked example. The following conjectures push the\ninquiry toward richer 2-cell structure, cohomological invariants, and the biequivalence-level\npicture.\n\n## 1. Nontrivial 2-cells promote the pentagon to a cocycle equation\n\n**Conjecture.** Replace the codiscrete hom-categories by hom-groupoids whose automorphism group is\na fixed abelian group `A`. Then a one-object bicategory on a unital magma is determined, up to the\nappropriate equivalence, by a choice of associator valued in `A`, and the pentagon identity becomes\nexactly the normalized 3-cocycle condition on that associator; strictifiability without changing the\n1-cells corresponds to the associator being a 3-coboundary.\n\nThe key insight is that codiscreteness collapses the pentagon to a triviality, so the *only* way the\npentagon can carry information is to enlarge the 2-cells; once the automorphisms form a nontrivial\ngroup, the associator stops being unique and its coherence is precisely a cocycle constraint.\n\nWhy now? The uniform magma-indexed construction of this cycle isolates the associator as the single\ndegree of freedom, making it the natural place to inject nontrivial 2-cell data and read off the\nresulting coherence equation cleanly.\n\n## 2. The strictification obstruction is a group-cohomology class\n\n**Conjecture.** For a one-object bicategory whose 1-cells form a group and whose 2-cells form a\nfixed abelian coefficient group, the obstruction to strictification without altering the 1-cells is\na well-defined class in the third cohomology group of the 1-cell group with the given coefficients;\nit vanishes if and only if a strict structure exists on the fixed composition.\n\nThe key insight is that the associativity defect measured in this cycle is the degree-zero shadow of\na higher invariant: when the underlying operation is associative the class is zero (recovering the\nstrictness side of the dichotomy), and a nonzero class is the precise reason a nonassociative or\nnoncoboundary associator resists strictification.\n\nWhy now? Having proved that strictness is equivalent to associativity in the codiscrete (trivial\ncoefficient) case, the natural next quantity is the invariant that survives when the coefficients are\nno longer trivial, and cohomology is its expected home.\n\n## 3. Strictification up to biequivalence, contrasted with strictness on fixed data\n\n**Conjecture.** Every one-object codiscrete bicategory on a unital magma is biequivalent to a strict\n2-category, even when — as in the nonassociative case — it admits no strict structure on its own\nfixed composition.\n\nThe key insight is that the negative result of this cycle rules out strictness only for the *given*\n1-cell composition, and biequivalence is permitted to replace that composition; the tension between\n\"no strict structure here\" and \"equivalent to something strict\" is exactly the difference between\nequality and equivalence of composites.\n\nWhy now? The dichotomy proved this cycle draws a hard line at strictness-on-fixed-data, which makes\nthe complementary equivalence-level statement precise and worth separating from it explicitly.\n\n## 4. A magma-indexed functor and its full-faithfulness threshold\n\n**Conjecture.** The assignment sending a unital magma to its codiscrete one-object bicategory extends\nto a functor from unital magmas (with unit-preserving multiplicative maps) to bicategories and\npseudofunctors, and this functor is faithful; it is full precisely on the associative locus, mirroring\nthe strictness dichotomy at the level of morphisms rather than objects.\n\nThe key insight is that a structure-level dichotomy (strict iff associative) should have a\nmorphism-level counterpart, and the codiscrete 2-cells force every pseudofunctor between two such\nbicategories to be pinned down by its action on 1-cells.\n\nWhy now? With the object-level construction made uniform and functorial in spirit this cycle, the\nimmediate question is how morphisms of magmas transport, and where the codiscrete rigidity makes the\ntransport an equivalence.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0715",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "920a890c",
+    "status": "available",
+    "timestamp": "2026-07-25T00:24:49.438823+00:00",
+    "title": "Sharp dichotomy for one-object codiscrete bicategories:"
   },
   {
     "ambition_level": "extension",

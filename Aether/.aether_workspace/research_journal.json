@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "d13e4521",
-      "domain": "MachineLearning",
-      "key_insight": "# Future directions\n\n## What is now rigorous\n\n`Catalog/MachineLearning/PrimeRipsTopology.lean` proves a reusable deterministic core for every strictly increasing real point sequence:\n\n1. Rips edges an",
-      "quality_score": 0.74,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-18T19:30:15",
-      "title": "Persistent Homology of Prime Numbers: The Topology of Arithmetic"
-    },
-    {
       "cycle_id": "cbc5314c",
       "domain": "Algebra",
       "key_insight": "# Future Directions: Sudoku Ensembles, Thresholds, and Complexity\n\n## 1. Proof-complexity peak for independently assigned clues\n\nFix an ensemble in which a uniformly chosen set of cells receives indep",
@@ -2501,6 +2491,16 @@
       "theorem_count": 43,
       "timestamp": "2026-07-24T23:24:45",
       "title": "Happy End Problem"
+    },
+    {
+      "cycle_id": "920a890c",
+      "domain": "Logic",
+      "key_insight": "# Future Directions\n\nThis cycle established a sharp dichotomy for one-object codiscrete bicategories: the codiscrete\nbicategory attached to a unital magma is strict exactly when the magma is associati",
+      "quality_score": 0.6,
+      "sorry_count": 0,
+      "theorem_count": 18,
+      "timestamp": "2026-07-25T00:24:53",
+      "title": "The formal development establishes a concrete genuinely non-strict bicategory: i"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.75
     }
   ],
-  "last_updated": "2026-07-24T23:24:45",
+  "last_updated": "2026-07-25T00:24:53",
   "open_questions": [
     {
       "context": "+    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; +    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; +    ∀ i < k, c i = ",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "fbb9076c",
-        "quality": 0.72,
-        "theorems": 0,
-        "title": "Thermodynamics of Mathematical Proof"
-      },
-      {
         "cycle_id": "7fb32c18",
         "quality": 0.65,
         "theorems": 13,
@@ -3513,6 +3507,12 @@
         "quality": 0.58,
         "theorems": 13,
         "title": "Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
+      },
+      {
+        "cycle_id": "920a890c",
+        "quality": 0.6,
+        "theorems": 18,
+        "title": "The formal development establishes a concrete genuinely non-strict bicategory: i"
       }
     ],
     "MachineLearning": [

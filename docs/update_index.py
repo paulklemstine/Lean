@@ -85,7 +85,7 @@ def normalize_iso_date(date_str):
     except Exception:
         return str(date_str)
 
-def load_all_git_creation_dates(catalog_root, target_dir="docs"):
+def load_all_git_creation_dates(catalog_root, target_dir="Packages"):
     """Run a single git log command to extract creation ISO dates for all files."""
     dates = {}
     try:
