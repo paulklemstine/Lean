@@ -3145,22 +3145,33 @@ Research mode: {concept.research_mode}
     @staticmethod
     def _strip_catalog_prefix(path: str) -> str:
         path = path.replace("\\", "/").lstrip("/")
-        prefixes = (
-            "extracted/Catalog/",
-            "Catalog/",
-        )
-        for prefix in prefixes:
-            if path.startswith(prefix):
-                path = path[len(prefix):]
-                break
-        # Strip Aristotle project directory prefixes like 47bf2ccd_aristotle/Bridges/...
-        # Also strip output-final_aristotle/...
-        # These are artifacts of the extraction structure, not real Catalog paths
-        path = re.sub(r'^(?:[0-9a-f]+_aristotle|output-final_aristotle)/', '', path)
-        # Fix doubled paths like Bridges/Catalog/Bridges/X.lean -> Bridges/X.lean
-        # The LLM sometimes generates paths with interior "Catalog/" segments
+        # 1. Strip top-level structural prefixes (e.g. "extracted/Catalog/", "Catalog/", "Bridges/Catalog/", "FINAL/Catalog/")
+        path = re.sub(r'^(?:extracted/Catalog/|Catalog/|Bridges/Catalog/|FINAL/Catalog/|output-final_aristotle/Catalog/|[0-9a-f]+_aristotle/Catalog/)', '', path)
+
+        # 2. Strip Aristotle project / extraction directory prefixes
+        path = re.sub(r'^(?:[0-9a-f]+_aristotle|output-final_aristotle|FINAL)/', '', path)
+
+        # 3. Strip interior '/Catalog/' or '/FINAL/' or leading 'Catalog/' / 'FINAL/'
         while '/Catalog/' in path:
             path = path.replace('/Catalog/', '/')
+        while '/FINAL/' in path:
+            path = path.replace('/FINAL/', '/')
+        if path.startswith('Catalog/'):
+            path = path[len('Catalog/'):]
+        if path.startswith('FINAL/'):
+            path = path[len('FINAL/'):]
+
+        # 4. If path starts with Bridges/<Domain>/... where <Domain> is a known domain other than Bridges
+        # e.g. Bridges/Cryptography/... -> Cryptography/...
+        known_domains = {
+            "Algebra", "Applications", "Combinatorics", "Computation", "Cryptography",
+            "EML", "Geometry", "Logic", "MachineLearning", "Novelty", "NumberTheory",
+            "Physics", "Probability", "Pythagorean", "Shared", "Speculative", "Tropical",
+        }
+        parts = [p for p in path.split('/') if p]
+        if len(parts) >= 2 and parts[0] == "Bridges" and parts[1] in known_domains and parts[1] != "Bridges":
+            path = "/".join(parts[1:])
+
         return path
 
     @staticmethod
@@ -3168,22 +3179,30 @@ Research mode: {concept.research_mode}
         """Remove repeated domain-like segments from paths.
 
         E.g. Bridges/Bridges/X.lean -> Bridges/X.lean
-        Handles cases where the LLM or path computation creates doubled segments.
+             Logic/Catalog/Logic/X.lean -> Logic/X.lean
+             Bridges/Catalog/Cryptography/X.lean -> Cryptography/X.lean
         """
         parts = [p for p in path.replace("\\", "/").split("/") if p]
         if len(parts) < 2:
             return path
         known_domains = {
-            "Algebra", "Applications", "Bridges", "Computation", "Cryptography",
-            "EML", "Geometry", "Logic", "MachineLearning", "Novelty", "Physics",
-            "Pythagorean", "Shared", "Speculative", "Tropical",
+            "Algebra", "Applications", "Bridges", "Combinatorics", "Computation", "Cryptography",
+            "EML", "Geometry", "Logic", "MachineLearning", "Novelty", "NumberTheory", "Physics",
+            "Probability", "Pythagorean", "Shared", "Speculative", "Tropical",
         }
-        deduped = [parts[0]]
-        for i in range(1, len(parts)):
-            # Skip a segment if it's the same domain as the previous segment
-            if parts[i] == deduped[-1] and parts[i] in known_domains:
+        # Filter out interior 'Catalog' or 'FINAL' segments
+        cleaned = [p for p in parts if p not in ("Catalog", "FINAL")]
+        if not cleaned:
+            return path
+
+        deduped = [cleaned[0]]
+        for i in range(1, len(cleaned)):
+            if cleaned[i] == deduped[-1] and cleaned[i] in known_domains:
                 continue
-            deduped.append(parts[i])
+            if len(deduped) == 1 and deduped[0] == "Bridges" and cleaned[i] in known_domains and cleaned[i] != "Bridges":
+                deduped = [cleaned[i]]
+                continue
+            deduped.append(cleaned[i])
         return "/".join(deduped)
 
     @staticmethod
