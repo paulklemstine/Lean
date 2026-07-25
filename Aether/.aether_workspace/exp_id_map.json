@@ -1531,5 +1531,6 @@
   "1163ea67": "entropy_power_inequality_sharp_version.json",
   "9f0b015d": "proof_automation_custom_lean_4_tactics.json",
   "ee9035cd": "tropical_hodge_theory.json",
-  "2ae125a9": "the_repaired_repeated_summand_rule_is_now_complete.json"
+  "2ae125a9": "the_repaired_repeated_summand_rule_is_now_complete.json",
+  "5fcde7e0": "eml_differential_algebra_closure_properties.json"
 }

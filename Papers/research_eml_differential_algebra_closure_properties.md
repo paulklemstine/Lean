@@ -1,480 +1,354 @@
-# Closure Properties of the Log-Free EML Differential Algebra
+# Differential Closure of Rational Exponential–Logarithmic Expressions
 
-**Author:** Aristotle
-**Date:** 2026-06-25
+**Aristotle**  
+**25 July 2026**
 
 ## Abstract
 
-We study the *log-free EML functions* — the smallest class of functions
-$\mathbb{R} \to \mathbb{R}$ containing the constants and the identity and
-closed under addition, multiplication, negation, and the real
-exponential. These are exactly the **exponential polynomials**. We
-formalize them syntactically as an inductive term algebra equipped with an
-evaluation map, a syntactic derivation operator $D$, and a syntactic
-composition (substitution) operator. Our main results are: (i) every EML
-function is $C^\infty$; (ii) the syntactic derivative $D$ is correct, both
-in its pointwise `HasDerivAt` form and in the global `deriv` form; (iii)
-syntactic composition correctly implements function composition; and (iv)
-the EML functions constitute an $\mathbb{R}$-subalgebra of the function
-algebra $\mathbb{R}\to\mathbb{R}$ that is additionally closed under the
-exponential, under composition, and under differentiation — i.e. a
-*commutative differential subalgebra* every member of which is smooth. We
-also delineate the boundaries of the class: it is a ring but not a field
-(reciprocals such as $1/x$ escape), it is closed under differentiation but
-only partially under integration ($e^{x^2}$ has no EML primitive), and it
-is closed under composition but not under functional inverse (the cube map
-has no EML inverse). These boundary phenomena are recast as crisp
-algebraic statements: non-closure under integration is the
-non-surjectivity of $D$, a Liouville-type obstruction internal to the term
-algebra. All positive results are machine-checked.
-
-**Keywords:** exponential polynomial, EML function, differential algebra,
-syntactic derivative, term algebra, smoothness, subalgebra, composition.
-
----
+We study a concrete univariate expression class generated from real constants and the identity by addition, multiplication, reciprocal, exponential, and logarithm. We call its members rational exponential–logarithmic expressions. A recursive semantics assigns a total real-valued function to each expression, while a separate regularity predicate records the points at which the standard reciprocal and logarithmic differentiation rules are valid. We define syntactic substitution and symbolic differentiation and prove two fundamental identities. First, substitution realizes functional composition. Second, at every regular point, evaluation of the symbolic derivative equals the ordinary derivative of the evaluated expression. It follows that represented functions are closed under constants, identity, addition, multiplication, negation, subtraction, pointwise reciprocal, division, composition, exponential, and logarithm, and that globally regular presentations have represented derivatives. Under pointwise operations the represented total functions form a subring; they should not literally be called a field, because a ring of total functions can have zero divisors. We also state the derivative formula for a differentiable inverse branch, emphasizing that analytic invertibility alone does not imply representability in this expression language. Finally, we establish positive integration results for the exponential and for every expression lying in the image of symbolic differentiation, while making no universal antiderivative-closure claim. The framework isolates the exact algebraic, differential, inverse, and integration properties justified by the grammar.
 
 ## 1. Introduction
 
-A recurring question across mathematics asks which operations preserve
-membership in a given family of objects, and which break out of it. For
-polynomials, differentiation and the ring operations stay inside, but the
-exponential does not. For rational functions, differentiation stays
-inside, but the exponential does not. For the "elementary functions" of
-calculus — built with division, logarithms, and roots — differentiation
-stays inside but the class is large and analytically delicate.
+Expressions assembled from rational operations, exponentials, and logarithms occur throughout applied mathematics. Growth laws use exponentials; entropy and likelihood use logarithms; optimization repeatedly composes these functions with affine and rational transformations. A useful symbolic class should remain stable under the operations by which models are assembled and analyzed.
 
-This paper isolates a family sitting precisely between polynomials and the
-full elementary functions: the **log-free EML functions**, equivalently
-the **exponential polynomials**. They are generated from the variable $x$
-and real constants by addition, multiplication, negation, and the
-exponential $\exp$. The family is small enough to admit a complete and
-clean structural analysis, yet large enough to contain analytically
-important functions such as $x^k e^{\lambda x}$ and $e^{x^2}$.
+The phrase “differential field” is often used informally for a class closed under field operations and differentiation. For total real-valued functions, however, this phrase requires care. Pointwise function rings have zero divisors, and reciprocal is total only after a convention at zero. Moreover, logarithms and reciprocals may be assigned total values without being differentiable at their singular points. We therefore separate three issues:
 
-Our approach is to separate *syntax* from *semantics*. We define an
-inductive type of **terms** (finite formula trees), an **evaluation**
-map sending each term to the function it denotes, a **syntactic
-derivation** $D$ that rewrites a term into the term denoting its
-derivative, and a **syntactic composition** that substitutes one term for
-the variable of another. We then prove correctness theorems linking syntax
-to semantics, and derive all closure properties as corollaries. This
-strategy turns analytic closure facts into combinatorial inductions over
-term structure.
+1. **Representability:** whether a function is denoted by an expression in the grammar.
+2. **Regularity:** whether all local differentiation rules used by an expression are valid at a point.
+3. **Algebraic setting:** whether one studies total functions, domain-restricted functions, or germs.
 
-### Contributions
+This separation yields precise closure theorems without overstating them. The proofs are constructive. Algebraic closure is obtained by adjoining an operation to expression trees. Composition is implemented by substitution. Differentiation is a recursive tree transformation whose semantic correctness follows by structural induction.
 
-1. A faithful formalization of the log-free EML term algebra with
-   evaluation, syntactic derivation, and syntactic composition.
-2. A proof that every EML function is $C^\infty$.
-3. Correctness of $D$ in both `HasDerivAt` and `deriv` forms.
-4. Correctness of syntactic composition.
-5. Closure of the EML class under $+$, $\times$, scalar action, $\exp$,
-   composition, and differentiation, packaged as an
-   $\mathbb{R}$-subalgebra of $\mathbb{R}\to\mathbb{R}$ all of whose
-   members are smooth.
-6. A precise account of the boundaries: ring-but-not-field, partial
-   integration closure (Liouville obstruction reframed as
-   non-surjectivity of $D$), and failure of inverse closure.
+The main conclusions are as follows. Represented functions are closed under all constructors, derived field operations, and composition. A globally regular represented function has a represented derivative. Represented total functions form a subring. A represented inverse branch remains represented by assumption and satisfies the usual reciprocal derivative formula when the appropriate inverse identity and differentiability hypotheses hold. The exponential has a represented antiderivative, and every symbolic derivative can be integrated back to its source expression under global regularity. No claim is made that every expression in the class has an antiderivative in the class.
 
----
-
-## 2. The term algebra
+## 2. Expression language and semantics
 
 ### 2.1 Syntax
 
-**Definition 2.1 (Terms).** The type $\mathsf{Term}$ of log-free EML terms
-is generated inductively by the constructors
+**Definition 2.1 (Rational exponential–logarithmic expressions).** The class $\mathcal E$ is the least class satisfying:
+
+1. for every $c\in\mathbb R$, the constant expression $c$ belongs to $\mathcal E$;
+2. the variable expression $X$ belongs to $\mathcal E$;
+3. if $P,Q\in\mathcal E$, then $P+Q$, $PQ$, $P^{-1}$, $\exp(P)$, and $\log(P)$ belong to $\mathcal E$.
+
+The word “rational” refers to closure under the field-forming operations, not to rational coefficients: arbitrary real constants are allowed. Negation, subtraction, and division are abbreviations:
 
 $$
-\mathsf{const} : \mathbb{R} \to \mathsf{Term}, \qquad
-\mathsf{X} : \mathsf{Term},
-$$
-$$
-\mathsf{add},\ \mathsf{mul} : \mathsf{Term} \to \mathsf{Term} \to \mathsf{Term},
-\qquad
-\mathsf{neg},\ \mathsf{exp} : \mathsf{Term} \to \mathsf{Term}.
+-P=(-1)P,\qquad P-Q=P+(-Q),\qquad P/Q=P Q^{-1}.
 $$
 
-A term is a finite tree: leaves are $\mathsf{const}\,c$ (for some real
-$c$) or $\mathsf{X}$; internal nodes are $\mathsf{add}$, $\mathsf{mul}$
-(binary), or $\mathsf{neg}$, $\mathsf{exp}$ (unary).
+### 2.2 Total evaluation
 
-### 2.2 Semantics
-
-**Definition 2.2 (Evaluation).** The evaluation map
-$\mathsf{eval} : \mathsf{Term} \to (\mathbb{R} \to \mathbb{R})$ is defined
-by structural recursion:
+**Definition 2.2 (Evaluation).** For $P\in\mathcal E$, its evaluation $\llbracket P\rrbracket:\mathbb R\to\mathbb R$ is recursively defined by
 
 $$
-\mathsf{eval}(\mathsf{const}\,c) = (x \mapsto c), \qquad
-\mathsf{eval}(\mathsf{X}) = (x \mapsto x),
-$$
-$$
-\mathsf{eval}(\mathsf{add}\,a\,b) = x \mapsto \mathsf{eval}(a)(x) + \mathsf{eval}(b)(x),
-$$
-$$
-\mathsf{eval}(\mathsf{mul}\,a\,b) = x \mapsto \mathsf{eval}(a)(x)\cdot \mathsf{eval}(b)(x),
-$$
-$$
-\mathsf{eval}(\mathsf{neg}\,a) = x \mapsto -\,\mathsf{eval}(a)(x),
-\qquad
-\mathsf{eval}(\mathsf{exp}\,a) = x \mapsto \exp\big(\mathsf{eval}(a)(x)\big).
+\begin{aligned}
+\llbracket c\rrbracket(x)&=c, & \llbracket X\rrbracket(x)&=x,\\
+\llbracket P+Q\rrbracket(x)&=\llbracket P\rrbracket(x)+\llbracket Q\rrbracket(x),
+&\llbracket PQ\rrbracket(x)&=\llbracket P\rrbracket(x)\llbracket Q\rrbracket(x),\\
+\llbracket P^{-1}\rrbracket(x)&=\llbracket P\rrbracket(x)^{-1},
+&\llbracket\exp(P)\rrbracket(x)&=\exp(\llbracket P\rrbracket(x)),\\
+\llbracket\log(P)\rrbracket(x)&=\log(\llbracket P\rrbracket(x)).
+\end{aligned}
 $$
 
-Each defining equation holds definitionally and is recorded as a
-simplification lemma (`eval_const`, `eval_X`, `eval_add`, `eval_mul`,
-`eval_neg`, `eval_exp`).
+Reciprocal and logarithm are interpreted using total real conventions. The results below depend only on the standard identities away from singularities, which are tracked separately.
 
-**Definition 2.3 (EML function).** A function $f : \mathbb{R}\to\mathbb{R}$
-is **EML**, written $\mathrm{IsEML}(f)$, iff there exists a term $t$ with
-$\mathsf{eval}(t) = f$. Equivalently, the EML functions are the image of
-$\mathsf{eval}$.
+**Definition 2.3 (Represented function).** A function $f:\mathbb R\to\mathbb R$ is **EML-representable** if there is an expression $P\in\mathcal E$ such that $f=\llbracket P\rrbracket$ pointwise.
 
-### 2.3 Syntactic derivation
+This is an extensional notion: different expressions may represent the same function.
 
-**Definition 2.4 (Syntactic derivative).** The operator
-$D : \mathsf{Term} \to \mathsf{Term}$ is defined by structural recursion,
-encoding the standard differentiation rules:
+### 2.3 Regularity
 
-$$
-D(\mathsf{const}\,c) = \mathsf{const}\,0, \qquad
-D(\mathsf{X}) = \mathsf{const}\,1,
-$$
-$$
-D(\mathsf{add}\,a\,b) = \mathsf{add}\,(D a)\,(D b),
-$$
-$$
-D(\mathsf{mul}\,a\,b) = \mathsf{add}\,(\mathsf{mul}\,(D a)\,b)\,(\mathsf{mul}\,a\,(D b))
-\quad\text{(product rule)},
-$$
-$$
-D(\mathsf{neg}\,a) = \mathsf{neg}\,(D a),
-\qquad
-D(\mathsf{exp}\,a) = \mathsf{mul}\,(D a)\,(\mathsf{exp}\,a)
-\quad\text{(chain rule)}.
-$$
+**Definition 2.4 (Regularity at a point).** The proposition $\operatorname{Reg}(P,x)$ is defined recursively. Constants and $X$ are regular at every point. The expressions $P+Q$ and $PQ$ are regular at $x$ precisely when both $P$ and $Q$ are regular at $x$. The expression $P^{-1}$ is regular at $x$ when $P$ is regular at $x$ and $\llbracket P\rrbracket(x)\ne0$. The expression $\exp(P)$ is regular at $x$ when $P$ is regular there. Finally, $\log(P)$ is regular at $x$ when $P$ is regular there and $\llbracket P\rrbracket(x)\ne0$.
 
-Crucially, $D$ is an endomorphism of $\mathsf{Term}$: it never leaves the
-syntax. This is the structural reason behind closure under
-differentiation.
+This definition is tailored to the total logarithm convention used in evaluation and to the available derivative rule away from zero. In a domain-sensitive treatment of the conventional real logarithm, one would instead require $\llbracket P\rrbracket(x)>0$ and explicitly track a neighborhood on which the expression is defined.
 
-### 2.4 Syntactic composition
+An expression is **globally regular** if $\operatorname{Reg}(P,x)$ holds for every $x\in\mathbb R$.
 
-**Definition 2.5 (Substitution / composition).** The operator
-$\mathsf{comp} : \mathsf{Term} \to \mathsf{Term} \to \mathsf{Term}$
-substitutes its second argument $t$ for every occurrence of $\mathsf{X}$
-in its first argument $s$:
+## 3. Substitution and composition
+
+**Definition 3.1 (Substitution).** For $P,Q\in\mathcal E$, the substitution $P[Q/X]$ is obtained by replacing every variable leaf $X$ in $P$ by $Q$. Constants remain unchanged, and substitution distributes recursively through every constructor:
 
 $$
-\mathsf{comp}(\mathsf{const}\,c, t) = \mathsf{const}\,c, \qquad
-\mathsf{comp}(\mathsf{X}, t) = t,
-$$
-$$
-\mathsf{comp}(\mathsf{add}\,a\,b, t) = \mathsf{add}\,(\mathsf{comp}(a,t))\,(\mathsf{comp}(b,t)),
-$$
-$$
-\mathsf{comp}(\mathsf{mul}\,a\,b, t) = \mathsf{mul}\,(\mathsf{comp}(a,t))\,(\mathsf{comp}(b,t)),
-$$
-$$
-\mathsf{comp}(\mathsf{neg}\,a, t) = \mathsf{neg}\,(\mathsf{comp}(a,t)),
-\qquad
-\mathsf{comp}(\mathsf{exp}\,a, t) = \mathsf{exp}\,(\mathsf{comp}(a,t)).
+(P_1+P_2)[Q/X]=P_1[Q/X]+P_2[Q/X],
 $$
 
----
+with analogous clauses for products, reciprocal, exponential, and logarithm.
 
-## 3. Main results
-
-### 3.1 Smoothness
-
-**Theorem 3.1 (`contDiff_eval`).** For every term $t$, the function
-$\mathsf{eval}(t)$ is $C^\infty$; that is,
-$\mathrm{ContDiff}\ \mathbb{R}\ \infty\ \mathsf{eval}(t)$.
-
-*Proof sketch.* Structural induction on $t$. The base cases are the
-constant function (smooth) and the identity (smooth). For the inductive
-steps, sums, products, and negations of smooth functions are smooth, and
-the composition of $\exp$ (smooth) with a smooth function is smooth. Each
-step invokes the corresponding closure lemma for $C^\infty$ functions on
-the inductive hypotheses. $\square$
-
-A corollary records smoothness at the level of the function class
-(Theorem 3.8 below).
-
-### 3.2 Correctness of differentiation
-
-**Theorem 3.2 (`hasDerivAt_eval`).** For every term $t$ and every point
-$x \in \mathbb{R}$,
+**Lemma 3.2 (Substitution identity).** For all expressions $P,Q\in\mathcal E$ and every $x\in\mathbb R$,
 
 $$
-\mathrm{HasDerivAt}\ \big(\mathsf{eval}(t)\big)\ \big(\mathsf{eval}(D t)(x)\big)\ x.
+\llbracket P[Q/X]\rrbracket(x)
+=\llbracket P\rrbracket\bigl(\llbracket Q\rrbracket(x)\bigr).
 $$
 
-That is, $\mathsf{eval}(t)$ is differentiable at $x$ with derivative equal
-to the value at $x$ of the function denoted by the syntactic derivative
-$D t$.
-
-*Proof sketch.* Induction on $t$, generalizing over $x$.
-- $\mathsf{const}\,c$: the constant function has derivative $0$, matching
-  $\mathsf{eval}(D(\mathsf{const}\,c)) = \mathsf{eval}(\mathsf{const}\,0) = 0$.
-- $\mathsf{X}$: the identity has derivative $1 = \mathsf{eval}(\mathsf{const}\,1)$.
-- $\mathsf{add}\,a\,b$: apply the sum rule for `HasDerivAt` to the
-  inductive hypotheses for $a$ and $b$.
-- $\mathsf{mul}\,a\,b$: apply the product rule for `HasDerivAt`; the result
-  matches the term $\mathsf{add}(\mathsf{mul}(Da)\,b)(\mathsf{mul}\,a\,(Db))$.
-- $\mathsf{neg}\,a$: apply the negation rule.
-- $\mathsf{exp}\,a$: apply the chain rule for $\exp$ composed with a
-  differentiable function; reorder the product to match
-  $\mathsf{mul}\,(Da)\,(\mathsf{exp}\,a)$. $\square$
-
-**Theorem 3.3 (`deriv_eval`).** For every term $t$ and point $x$,
+**Proof sketch.** Proceed by structural induction on $P$. If $P$ is a constant, both sides equal that constant; if $P=X$, both sides equal $\llbracket Q\rrbracket(x)$. For a composite constructor, apply the induction hypotheses to its immediate subexpressions and then unfold evaluation. For instance, the product case is
 
 $$
-\frac{d}{dx}\,\mathsf{eval}(t)\,(x) = \mathsf{eval}(D t)(x).
+\begin{aligned}
+\llbracket(P_1P_2)[Q/X]\rrbracket(x)
+&=\llbracket P_1[Q/X]\rrbracket(x)\llbracket P_2[Q/X]\rrbracket(x)\\
+&=\llbracket P_1\rrbracket(\llbracket Q\rrbracket(x))
+  \llbracket P_2\rrbracket(\llbracket Q\rrbracket(x))\\
+&=\llbracket P_1P_2\rrbracket(\llbracket Q\rrbracket(x)).
+\end{aligned}
 $$
 
-*Proof sketch.* Immediate from Theorem 3.2: a `HasDerivAt` witness
-determines the value of `deriv`. $\square$
+The other constructors are immediate. $\square$
 
-### 3.3 Correctness of composition
+**Theorem 3.3 (Composition closure).** If $f$ and $g$ are EML-representable, then $f\circ g$ is EML-representable.
 
-**Theorem 3.4 (`eval_comp`).** For all terms $s, t$ and every point $x$,
+**Proof sketch.** Choose expressions $P$ and $Q$ representing $f$ and $g$. By Lemma 3.2, $P[Q/X]$ evaluates to $f(g(x))$ at every $x$. $\square$
+
+## 4. Algebraic closure
+
+**Theorem 4.1 (Primitive closure).** Constant functions and the identity function are EML-representable. If $f$ and $g$ are EML-representable, then the functions
 
 $$
-\mathsf{eval}\big(\mathsf{comp}(s,t)\big)(x) = \mathsf{eval}(s)\big(\mathsf{eval}(t)(x)\big).
+f+g,\qquad fg,\qquad f^{-1},\qquad x\mapsto e^{f(x)},\qquad x\mapsto\log(f(x))
 $$
 
-*Proof sketch.* Induction on $s$. The $\mathsf{const}$ and $\mathsf{X}$
-cases are definitional. The $\mathsf{add}$, $\mathsf{mul}$, $\mathsf{neg}$,
-and $\mathsf{exp}$ cases follow by rewriting with the inductive hypotheses
-and unfolding evaluation. $\square$
+are EML-representable.
 
-### 3.4 Closure properties of the EML class
+**Proof sketch.** A constant is represented by its constant expression and the identity by $X$. Given representatives $P$ and $Q$, the expressions $P+Q$, $PQ$, $P^{-1}$, $\exp(P)$, and $\log(P)$ represent the displayed functions by the definition of evaluation. $\square$
 
-The correctness theorems yield the closure properties as direct
-corollaries. In each, witnessing terms are produced explicitly.
+**Corollary 4.2 (Derived field-operation closure).** If $f$ and $g$ are EML-representable, then so are $-f$, $f-g$, and $f/g$.
 
-**Proposition 3.5 (generators).**
-$\mathrm{IsEML}(x \mapsto c)$ for every constant $c$ (`isEML_const`,
-witness $\mathsf{const}\,c$) and $\mathrm{IsEML}(x \mapsto x)$
-(`isEML_id`, witness $\mathsf{X}$).
+**Proof sketch.** Represent $-f$ as $(-1)f$, subtraction as addition of a negation, and division as multiplication by a reciprocal. $\square$
 
-**Proposition 3.6 (ring and exponential closure).** If
-$\mathrm{IsEML}(f)$ and $\mathrm{IsEML}(g)$ then
-- $\mathrm{IsEML}(f + g)$ (`IsEML.add`, witness $\mathsf{add}\,t_f\,t_g$);
-- $\mathrm{IsEML}(f \cdot g)$ (`IsEML.mul`, witness $\mathsf{mul}\,t_f\,t_g$);
-- $\mathrm{IsEML}(-f)$ (`IsEML.neg`, witness $\mathsf{neg}\,t_f$);
-- $\mathrm{IsEML}(x \mapsto \exp(f(x)))$ (`IsEML.exp`, witness $\mathsf{exp}\,t_f$).
+**Theorem 4.3 (Subring theorem).** The set of EML-representable functions is a subring of the pointwise ring $\mathbb R^{\mathbb R}$.
 
-*Proof sketch.* Extract witnessing terms $t_f, t_g$ from the hypotheses
-and apply the corresponding constructor; the evaluation lemmas of
-Definition 2.2 verify the witness denotes the claimed function. $\square$
+**Proof sketch.** The zero and unit functions are represented by the constants $0$ and $1$. Theorem 4.1 gives closure under addition and multiplication, while Corollary 4.2 gives additive inverses. The inherited pointwise operations obey the ring laws. $\square$
 
-**Proposition 3.7 (composition and differentiation closure).** If
-$\mathrm{IsEML}(f)$ and $\mathrm{IsEML}(g)$ then
-- $\mathrm{IsEML}(x \mapsto f(g(x)))$ (`IsEML.comp`, witness
-  $\mathsf{comp}(t_f, t_g)$, correctness by Theorem 3.4);
-- $\mathrm{IsEML}(\mathrm{deriv}\,f)$ (`IsEML.deriv`, witness $D t_f$,
-  correctness by Theorem 3.3).
+**Remark 4.4 (Why this is not literally a field of total functions).** Reciprocal syntax does not turn the pointwise function ring into a field. The ambient ring $\mathbb R^{\mathbb R}$ has zero divisors: for example, two nonzero functions supported on disjoint subsets have zero product. Also, totalized inversion assigns a value at zeros rather than producing a genuine multiplicative inverse there. A literal differential-field statement should instead be formulated for suitable germs at a regular point or for functions carrying explicit domains, where nonzero elements can be inverted locally under appropriate hypotheses.
 
-*Proof sketch.* For composition, the witness $\mathsf{comp}(t_f, t_g)$
-denotes $x \mapsto f(g(x))$ by `eval_comp`. For differentiation, the
-witness $D t_f$ denotes $\mathrm{deriv}\,f$ pointwise by `deriv_eval`, and
-function extensionality lifts this to an equality of functions. $\square$
+## 5. Symbolic differentiation
 
-### 3.5 The EML subalgebra
+### 5.1 Definition
 
-**Theorem 3.8 (`emlSubalgebra`, `smooth_of_mem_emlSubalgebra`).** The set
-$\{\,f : \mathbb{R}\to\mathbb{R} \mid \mathrm{IsEML}(f)\,\}$ is an
-$\mathbb{R}$-subalgebra of the function algebra $\mathbb{R}\to\mathbb{R}$.
-Concretely it contains $0$ (witness $\mathsf{const}\,0$), $1$ (witness
-$\mathsf{const}\,1$), and the image of every scalar $r$ under the algebra
-map (witness $\mathsf{const}\,r$), and it is closed under addition and
-multiplication by Proposition 3.6. Moreover every member is $C^\infty$:
-for $f \in \mathrm{emlSubalgebra}$,
-$\mathrm{ContDiff}\ \mathbb{R}\ \infty\ f$.
+**Definition 5.1 (Symbolic derivative).** Define $D:\mathcal E\to\mathcal E$ recursively by
 
-*Proof sketch.* The subalgebra axioms are exactly Propositions 3.5–3.6
-specialized to the additive and multiplicative units and the scalar
-embedding. Smoothness of members follows by extracting a witnessing term
-and applying Theorem 3.1. Membership unfolds definitionally to
-$\mathrm{IsEML}$ via `mem_emlSubalgebra_iff`. $\square$
+$$
+D(c)=0,\qquad D(X)=1,
+$$
 
-Combining Theorem 3.8 with Proposition 3.7, the EML functions form a
-**commutative differential subalgebra** of $\mathbb{R}\to\mathbb{R}$:
-closed under the ring operations, the scalar action, the exponential,
-composition, and differentiation, with every member smooth.
+$$
+D(P+Q)=D(P)+D(Q),
+$$
 
----
+$$
+D(PQ)=D(P)Q+P D(Q),
+$$
 
-## 4. Boundaries of the class
+$$
+D(P^{-1})=-D(P)(P^2)^{-1},
+$$
 
-The positive structure above is sharp. We summarize three boundary
-phenomena, which delineate exactly where the closure stops. (These are
-the natural negative companions to the formalized positive results and
-motivate the conjectures of Section 6.)
+$$
+D(\exp(P))=D(P)\exp(P),
+$$
 
-### 4.1 Ring, not field
+$$
+D(\log(P))=D(P)P^{-1}.
+$$
 
-The EML functions are closed under subtraction (combine `IsEML.add` and
-`IsEML.neg`) but **not** under taking reciprocals. The function
-$x \mapsto 1/x$ is not EML: it is undefined at $0$, whereas every EML
-function is total and indeed smooth on all of $\mathbb{R}$ by Theorem 3.1.
-Hence EML is a commutative differential *ring*, not a differential
-*field*. The logarithm is likewise outside the log-free fragment by
-construction (no logarithm constructor), consistent with the name.
+The definition is closed syntactically: $D(P)$ is an expression in $\mathcal E$ whenever $P$ is.
 
-### 4.2 Differentiation in, integration only partially
+### 5.2 Semantic correctness
 
-By Proposition 3.7 the class is closed under $d/dx$. It is **not** closed
-under antidifferentiation. The canonical witness is $e^{x^2}$, which is EML
-($\mathsf{exp}(\mathsf{mul}\,\mathsf{X}\,\mathsf{X})$), yet has no EML
-primitive: any primitive is, up to an additive constant, the error
-function $\int_0^x e^{t^2}\,dt$, which is not an exponential polynomial.
+**Theorem 5.2 (Pointwise correctness of symbolic differentiation).** Let $P\in\mathcal E$ and $x\in\mathbb R$. If $\operatorname{Reg}(P,x)$, then $\llbracket P\rrbracket$ is differentiable at $x$ and
 
-The structural reformulation is striking. Define $\mathrm{HasEMLPrimitive}(f)$
-to mean there exists a term $g$ with $\mathrm{HasDerivAt}\ \mathsf{eval}(g)\ (f(x))\ x$
-for all $x$. By Theorem 3.2 the functions with an EML primitive are exactly
-the image of $\mathsf{eval}\circ D$, i.e. the EML functions that lie in the
-*range of the syntactic derivation $D$*. Non-closure under integration is
-therefore precisely the statement that **$D$ is not surjective** onto EML —
-a Liouville/differential-Galois obstruction rendered as the
-non-surjectivity of an operator on an inductive type.
+$$
+\frac{d}{dx}\llbracket P\rrbracket(x)=\llbracket D(P)\rrbracket(x).
+$$
 
-### 4.3 Composition in, functional inverse out
+More precisely, $\llbracket P\rrbracket$ has derivative $\llbracket D(P)\rrbracket(x)$ at $x$.
 
-By Proposition 3.7 the class is closed under composition. It is **not**
-closed under functional inverse. The cube map $x \mapsto x^3$ is EML
-($\mathsf{mul}\,\mathsf{X}\,(\mathsf{mul}\,\mathsf{X}\,\mathsf{X})$) and a
-bijection of $\mathbb{R}$, but its inverse $x \mapsto x^{1/3}$ is not EML —
-indeed it is not differentiable at $0$, contradicting Theorem 3.1. The
-obstruction is the vanishing of the derivative $3x^2$ at the origin: an
-EML bijection with an EML inverse cannot have a critical point, since the
-inverse-function relation would force the inverse to be non-smooth there.
+**Proof sketch.** Use structural induction on $P$. Constants and the identity use the elementary derivative rules. For sums and products, regularity supplies the induction hypotheses for both children, and the sum and product rules give exactly the evaluation of the corresponding symbolic expression.
 
----
+For $P=R^{-1}$, regularity gives both differentiability of $\llbracket R\rrbracket$ and nonvanishing $\llbracket R\rrbracket(x)\ne0$. The reciprocal rule yields
 
-## 5. Algorithms
+$$
+(\llbracket R\rrbracket^{-1})'(x)
+=-\llbracket D(R)\rrbracket(x)\,\llbracket R\rrbracket(x)^{-2},
+$$
 
-The term algebra is fully computational on the syntactic side (evaluation
-of constants requires real arithmetic, but $D$, $\mathsf{comp}$, and
-structural predicates are decidable rewrites). We highlight the core
-algorithms; full implementations appear in the accompanying `demo.py`.
+which is the evaluation of $D(R^{-1})$.
 
-**Algorithm A — Symbolic differentiation `D`.** Given a term $t$, walk the
-tree bottom-up applying the rules of Definition 2.4. Linear in the size of
-$t$ for $+$, $\mathsf{neg}$, $\exp$; the product rule duplicates each
-factor, so repeated differentiation of $n$-fold products can grow the term
-quadratically per step before simplification. Correctness is Theorem 3.2.
+For $P=\exp(R)$, combine the induction hypothesis with the chain rule:
 
-**Algorithm B — Symbolic composition `comp`.** Given $s, t$, substitute a
-copy of $t$ at each $\mathsf{X}$-leaf of $s$. Time and output size are
-$O(|s|\cdot|t|)$ in the worst case (one copy of $t$ per variable leaf).
-Correctness is Theorem 3.4.
+$$
+(\exp\circ\llbracket R\rrbracket)'(x)
+=\llbracket D(R)\rrbracket(x)e^{\llbracket R\rrbracket(x)}.
+$$
 
-**Algorithm C — Numerical evaluation `eval`.** Given $t$ and a point $x$,
-recursively compute the real value, using the host language's `exp`. Linear
-in $|t|$ per evaluation point. This realizes Definition 2.2 and provides
-the bridge for empirically checking the derivative identity
-$\mathrm{eval}(D t)(x) \approx \big(\mathrm{eval}(t)(x+h)-\mathrm{eval}(t)(x-h)\big)/(2h)$.
+For $P=\log(R)$, regularity provides the required nonvanishing condition, and the logarithmic chain rule gives
 
----
+$$
+(\log\circ\llbracket R\rrbracket)'(x)
+=\llbracket D(R)\rrbracket(x)\llbracket R\rrbracket(x)^{-1}.
+$$
 
-## 6. Applications
+Each result agrees with the recursive definition of $D$. $\square$
 
-- **Linear constant-coefficient ODEs.** Solutions are sums of $x^k
-  e^{\lambda x}$ — all EML. Closure under $d/dx$ guarantees that
-  substituting a candidate solution into the differential operator yields
-  another EML function, enabling purely symbolic verification.
-- **Symbolic differentiation engines.** On the EML fragment, the
-  derivative is always representable (Theorem 3.2), so a differentiator
-  never has to approximate or fail. This is the algebraic backbone of exact
-  automatic differentiation for exponential-polynomial models.
-- **Probability and statistics.** Gaussian densities $e^{-x^2/2}$ are EML;
-  the absence of an EML primitive for $e^{x^2}$ (Section 4.2) is exactly why
-  the normal cumulative distribution function has no elementary closed form.
-- **Growth/decay modeling.** Compound interest, radioactive decay, and
-  linear-system impulse responses live entirely inside the EML world, and
-  inherit its smoothness and differentiation closure.
+**Corollary 5.3 (Differential closure under global regularity).** If $f=\llbracket P\rrbracket$ and $P$ is globally regular, then the ordinary derivative $f'$ is EML-representable, with representative $D(P)$.
 
----
+**Proof sketch.** Apply Theorem 5.2 at every real $x$. Pointwise equality identifies $f'$ with $\llbracket D(P)\rrbracket$. $\square$
 
-## 7. Discussion
+**Theorem 5.4 (Combined closure package).** Let $f=\llbracket P\rrbracket$ for a globally regular expression $P$, and let $g$ be EML-representable. Then $f+g$, $fg$, $f\circ g$, and $f'$ are all EML-representable.
 
-The methodological core is the separation of syntax and semantics. By
-modeling EML functions as an inductive term algebra and proving correctness
-theorems for the syntactic operators $D$ and $\mathsf{comp}$, every
-analytic closure property reduces to a structural induction. This converts
-statements about an infinite family of functions into finite case analyses
-over six constructors. The same architecture explains the boundaries: the
-negative results (no field, partial integration, no inverse) become
-statements about what the syntax *cannot* express or about the
-non-surjectivity of a syntactic operator.
+**Proof sketch.** Apply Theorems 4.1 and 3.3 to the first three functions and Corollary 5.3 to the fourth. $\square$
 
-A subtle point is the asymmetry between differentiation and integration.
-Differentiation is a *total syntactic function* $D$, so closure is
-automatic. Integration is the *relational inverse* of $D$, and closure
-under it is the surjectivity of $D$ — a genuinely harder, Liouville-type
-question. The EML setting strips this classical theme down to its essential
-combinatorial kernel.
+### 5.3 Example
 
----
+Let
 
-## 8. Future directions
+$$
+P(X)=e^{X^2}\log(1+X^2).
+$$
 
-The following research directions extend the present results. Throughout,
-**EML** denotes the log-free fragment (exponential polynomials): the
-smallest class of $\mathbb{R}\to\mathbb{R}$ containing $x$ and the
-constants and closed under $+$, $\times$, and $\exp$.
+Because $1+x^2>0$ for every real $x$, no reciprocal or logarithmic singularity is encountered, so $P$ is globally regular. The recursive rules produce
 
-This cycle established that EML is a commutative differential ring (closed
-under $+$, $\times$, $\circ$, $d/dx$), but not a field ($x^{-1}, \log
-\notin$ EML), not closed under functional inverse ($x^3$ has no EML left
-inverse), and only partially closed under integration.
+$$
+D(P)(X)=2Xe^{X^2}\log(1+X^2)
++e^{X^2}\frac{2X}{1+X^2}.
+$$
 
-**C1. EML is not closed under integration (the Liouville boundary).**
-*Conjecture.* $e^{x^2} \in$ EML, but there is no EML term $g$ with
-$\mathrm{HasDerivAt}\ \mathsf{eval}(g)\ (e^{x^2})\ x$ for all $x$; i.e.
-$\neg\,\mathrm{HasEMLPrimitive}(x \mapsto e^{x^2})$. The key insight is
-that $\mathrm{HasEMLPrimitive}$ is exactly the image of the syntactic
-derivation $D$, so non-closure under integration is the non-surjectivity
-of $D$ onto EML — a differential-Galois/Liouville obstruction phrased as
-non-surjectivity of a syntactic operator on an inductive type. The missing
-ingredient is an algebraic-independence input ("$\mathrm{erf}$ is
-transcendental over the exp-polynomials"), making $e^{x^2}$ a concrete,
-self-contained first target.
+Corollary 5.3 proves that this expression represents the derivative globally.
 
-**C2. EML inverses exist iff the derivative never vanishes.**
-*Conjecture.* For an EML function $f$ that is strictly monotone with
-$f'(x) \neq 0$ for all $x$ and $f$ surjective, $f^{-1}$ is again EML iff
-$f$ is, up to affine change, of the shape $x \mapsto a x + b$ or
-$x \mapsto c\,e^{a x} + b$; in particular the only EML self-bijections of
-$\mathbb{R}$ with EML inverse are the affine maps. The critical-point
-obstruction already isolates the failure (a vanishing derivative); the
-residual question is a rigidity classification of exp-polynomials by
-growth-rate matching of leading exponential terms.
+## 6. Inverse branches
 
-**C3. The differential transcendence degree of EML is infinite.**
-*Conjecture.* The tower $x \prec e^x \prec e^{e^x} \prec \cdots$ is
-differentially algebraically independent over $\mathbb{R}$; consequently
-EML has no finite set of generators as a differential ring. The key
-insight is that each new $\exp$ layer strictly increases an "exp-log
-depth" invariant on the term algebra, and a derivative never increases this
-depth.
+Representability and analytic invertibility are distinct properties. The following result records the exact conclusion available once a represented inverse branch is given.
 
----
+**Theorem 6.1 (Represented two-sided inverse branch).** Suppose $f,g:\mathbb R\to\mathbb R$ are EML-representable and satisfy
 
-## 9. Conclusion
+$$
+g(f(x))=x\quad\text{and}\quad f(g(x))=x
+$$
 
-We gave a complete, machine-checked structural analysis of the log-free
-EML functions. They form a commutative differential $\mathbb{R}$-subalgebra
-of $\mathbb{R}\to\mathbb{R}$ — closed under addition, multiplication,
-scalar action, the exponential, composition, and differentiation — with
-every member $C^\infty$. The correctness of the syntactic derivative and
-of syntactic composition were established as the engine driving these
-closure properties. We further charted the family's boundaries: it is a
-ring but not a field, closed under differentiation but only partially under
-integration, and closed under composition but not under functional
-inverse. The reframing of integration-closure as the surjectivity of a
-syntactic operator situates a classical Liouville-type phenomenon inside a
-finite, fully combinatorial world.
+for every $x$ in the relevant setting. Then $g$ is an EML-representable two-sided inverse of $f$.
+
+**Proof sketch.** Representability of $g$ is one of the hypotheses; the two displayed identities establish that it is genuinely an inverse rather than an unrelated represented function. $\square$
+
+The theorem is intentionally bookkeeping rather than a representability criterion. An analytic inverse function theorem can produce a local inverse from a nonzero derivative, but it does not by itself show that the inverse belongs to a prescribed symbolic language.
+
+**Theorem 6.2 (Derivative of an inverse branch).** Let $f,g:\mathbb R\to\mathbb R$ satisfy $f(g(y))=y$. Fix $x\in\mathbb R$. Assume $f$ is differentiable at $g(x)$ and $g$ is differentiable at $x$. Then
+
+$$
+g'(x)=\bigl(f'(g(x))\bigr)^{-1}.
+$$
+
+**Proof sketch.** The chain rule applied to $f\circ g$ gives
+
+$$
+(f\circ g)'(x)=f'(g(x))g'(x).
+$$
+
+The right-inverse identity says $f\circ g$ is the identity, whose derivative is $1$. Hence
+
+$$
+f'(g(x))g'(x)=1,
+$$
+
+and solving for $g'(x)$ yields the reciprocal formula. The equation itself ensures the necessary nonzero factor. $\square$
+
+**Remark 6.3 (Orientation).** The identity needed at the input $x$ of $g$ is $f(g(x))=x$. The opposite identity $g(f(x))=x$ alone concerns differentiation at a differently parameterized point and is insufficient for this formula on a totalized domain.
+
+**Remark 6.4 (Scope of inverse closure).** If a local inverse branch is separately known to have an EML expression, Theorems 5.2 and 6.2 describe its derivative inside the same language under regularity. A stronger theorem deriving EML representability of an inverse solely from properties of $f$ would require additional syntactic or differential-algebraic hypotheses.
+
+## 7. Integration results and limitations
+
+Differentiation maps expressions to expressions. Integration asks whether a given expression lies in the image of that map, which is a different problem.
+
+**Theorem 7.1 (Exponential antiderivative).** The function $x\mapsto e^x$ has an EML-representable antiderivative, namely itself:
+
+$$
+\frac{d}{dx}e^x=e^x.
+$$
+
+**Proof sketch.** The identity expression is representable; applying the exponential constructor represents $e^x$. The standard exponential derivative rule proves the displayed equality at every real $x$. $\square$
+
+**Theorem 7.2 (Antiderivatives of symbolic derivatives).** Let $P\in\mathcal E$ be globally regular. Then the function
+
+$$
+x\longmapsto\llbracket D(P)\rrbracket(x)
+$$
+
+has the EML-representable antiderivative $F=\llbracket P\rrbracket$. Equivalently,
+
+$$
+F'(x)=\llbracket D(P)\rrbracket(x)
+$$
+
+for every $x\in\mathbb R$.
+
+**Proof sketch.** The function $F$ is represented by $P$. Theorem 5.2, applied at every point using global regularity, identifies its derivative with the evaluation of $D(P)$. $\square$
+
+**Discussion 7.3 (No universal integration closure).** Theorem 7.2 characterizes a guaranteed positive family: expressions already known to have arisen by symbolic differentiation can be integrated back to their sources. It does not prove that every member of $\mathcal E$ lies in the image of $D$ up to semantic equality. A negative theorem would require a rigorous criterion for non-elementary integrability, such as an appropriate form of Liouville theory, and an explicit expression satisfying its obstruction. Therefore the justified conclusion is neither universal closure nor universal failure: integration closure is established for a concrete image class and selected examples, while the general question remains outside the present results.
+
+## 8. Algorithms
+
+### 8.1 Expression evaluation
+
+An expression can be evaluated by a postorder traversal of its tree. At a constant or variable leaf, return the corresponding value. At an internal node, recursively evaluate its children and apply the node operation. If $n$ is the number of tree nodes and arithmetic and transcendental operations are treated as unit-cost, evaluation takes $O(n)$ time and $O(h)$ stack space, where $h$ is tree height.
+
+### 8.2 Symbolic differentiation
+
+The derivative algorithm recursively applies Definition 5.1. Every input node is visited once, but product, reciprocal, exponential, and logarithm rules may copy subexpressions. With immutable directed acyclic graphs and shared references, construction is linear in the graph size before simplification. With naive trees, repeated differentiation can cause substantial expression swell. Semantics-preserving normalization—removing factors of $1$, summands of $0$, and repeated subtrees—is therefore important in practical systems.
+
+### 8.3 Substitution
+
+To form $P[Q/X]$, traverse $P$ and replace each variable leaf with $Q$. Shared representation permits all replacements to reference one copy of $Q$, giving $O(|P|)$ construction time. Naive deep copying costs $O(|P|+k|Q|)$, where $k$ is the number of variable occurrences in $P$.
+
+### 8.4 Regularity checking at a numerical point
+
+A recursive evaluator can return both the value of a subexpression and a Boolean regularity flag. Addition and multiplication combine flags conjunctively. Reciprocal and logarithm additionally test whether the child value is nonzero. This mirrors Definition 2.4 and runs in $O(n)$ time. In floating-point computation, exact zero tests should be replaced by explicit tolerances and reported as numerical diagnostics rather than mathematical proofs of nonvanishing.
+
+## 9. Applications
+
+### 9.1 Optimization and differentiable modeling
+
+Losses involving soft exponential and logarithmic transformations can be assembled compositionally. The closure theorem ensures that a globally regular loss has a derivative in the same expression language. This supports inspectable gradient generation: singular denominators and logarithmic arguments remain explicit rather than hidden in an opaque numerical routine.
+
+### 9.2 Growth, decay, and sensitivity
+
+Models such as
+
+$$
+y(x)=\frac{e^{ax}}{1+be^{ax}}
+$$
+
+are EML expressions whenever $a,b\in\mathbb R$. On regions where the denominator is nonzero, their derivatives are EML expressions. Parameterized growth rates, elasticities, and local sensitivities can therefore be represented in the same vocabulary as the original model.
+
+### 9.3 Probability and information
+
+Log-likelihoods frequently combine sums, products, exponentials, and logarithms. Regularity exposes the exact nonvanishing assumptions required by logarithmic differentiation. Composition closure supports nested transformations, while derivative closure provides symbolic score functions wherever the presentation is regular.
+
+### 9.4 Reusable computation graphs
+
+The grammar may be viewed as a computation graph. Substitution corresponds to graph composition and symbolic differentiation to graph transformation. The semantic theorems guarantee that these graph operations agree with function composition and ordinary differentiation, respectively. This gives a mathematical basis for modular symbolic pipelines.
+
+## 10. Discussion
+
+The expression grammar yields a strong closure package, but its interpretation must remain precise. The algebraic constructors make representability closure unconditional because they are syntactic. Differential closure is conditional because total evaluation and differentiability are different concepts. The recursively defined regularity predicate contains exactly the local nonvanishing information consumed by the proof.
+
+The total-function perspective is convenient for extensional equality and pointwise operations, but it blurs domains. A domain-aware theory would attach an open set to each expression and interpret reciprocal and logarithm only where valid. An alternative is to pass to germs at a regular point. Germs identify functions agreeing on some neighborhood, naturally localize inverse questions, and provide a better home for the phrase “differential field.”
+
+Inverse functions reveal a second boundary. The derivative formula is analytic and follows from composition with the identity. Membership in a symbolic class is algebraic or syntactic and does not follow merely from local existence. Keeping these conclusions separate prevents the inverse function theorem from being asked to prove more than it states.
+
+Integration reveals a third boundary. Symbolic differentiation is a forward structural recursion. Antidifferentiation is an inverse-search problem modulo semantic equality. The positive image theorem is exact and useful, but a complete integration theory would need normalization, equivalence reasoning, and non-integrability certificates.
+
+## 11. Future work
+
+A first extension should replace totalized operations by open domains or germs. This would make local nonvanishing and inversion intrinsic and would support a literal differential-field formulation. A second objective is an exact substitution-regularity theorem relating regularity of $P[Q/X]$ at $x$ to regularity of $Q$ at $x$ and of $P$ at $\llbracket Q\rrbracket(x)$.
+
+Iterated differentiation is another natural development. Defining $D^0(P)=P$ and $D^{n+1}(P)=D(D^n(P))$ should yield representations of higher derivatives whenever the required intermediate regularity conditions hold. For computation, simplification and normalization procedures should be proved semantics-preserving to control expression growth and aid equality testing.
+
+The most substantive analytic extension is a genuine inverse-representability criterion: identify hypotheses under which a locally defined inverse branch remains EML-representable. Finally, an integration-obstruction theorem should isolate a concrete EML expression with no EML antiderivative using a suitable differential-algebraic form of Liouville’s theorem.
+
+## 12. Conclusion
+
+Rational exponential–logarithmic expressions form a stable symbolic universe under constants, identity, algebraic operations, exponential, logarithm, and composition. Their represented total functions constitute a subring. A recursive symbolic derivative stays in the grammar and agrees with ordinary differentiation at every regular point, yielding global differential closure for globally regular presentations. Represented inverse branches satisfy the standard reciprocal derivative formula, but analytic inversion alone does not guarantee symbolic representability. Integration is positively resolved for exponential and for the image of symbolic differentiation, without an unjustified universal closure claim.
+
+The resulting theory is both constructive and bounded. It supplies direct algorithms for composition and differentiation, while clearly identifying the roles of singularities, domains, inverse representability, and integration obstructions. Those boundaries are not defects; they are the information needed to turn an informal “closed under calculus” slogan into an exact mathematical statement.
