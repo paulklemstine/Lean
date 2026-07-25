@@ -3969,7 +3969,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "id": "seed_305",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
