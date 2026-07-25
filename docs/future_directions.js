@@ -2589,17 +2589,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Entanglement Monogamy: CKW Inequality"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "92c4b5fc",
     "description": "Prove that the tropical compactification of the moduli space of curves M_g is a toric variety whose boundary divisors correspond to tropical curves. Formalize the connection between the Deligne-Mumford compactification and the tropical moduli space.",
     "domains": [
       "Tropical",
       "Geometry"
     ],
     "id": "seed_317",
+    "phase": "A",
     "priority_score": 0.87,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Tropical Compactification of Moduli Spaces"
   },
@@ -3881,17 +3882,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Kaplansky's Conjectures"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "311c4349",
     "description": "Prove edge universality for random matrix ensembles beyond Gaussian cases. Formalize Tracy-Widom distribution convergence and the Airy kernel.",
     "domains": [
       "Probability",
       "Algebra"
     ],
     "id": "seed_227",
+    "phase": "A",
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Random Matrices: Edge Universality"
   },
