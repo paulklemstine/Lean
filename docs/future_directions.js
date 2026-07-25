@@ -440,7 +440,7 @@ window.FUTURE_DIRECTIONS = [
       "Physics"
     ],
     "id": "scifi_50_28_2ebff485",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.95,
     "research_mode": "team",
     "source_exp_id": "scifi_50_injection",
