@@ -4,7 +4,7 @@
 
 window.PACKAGE_INDEX = [
   {
-    "date": "2026-07-25T20:16:35Z",
+    "date": "2026-07-25T20:18:46Z",
     "domain": "NumberTheory",
     "exp_id": "7277c96e",
     "filename": "beals_conjecture.json",
