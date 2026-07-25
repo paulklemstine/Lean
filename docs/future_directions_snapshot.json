@@ -11141,7 +11141,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a31e0b39",
     "description": "Prove Conway's Game of Life is Turing complete via a direct constructive embedding. Formalize cellular automata in Lean 4 and establish complexity bounds on the simulation overhead.",
     "domain_bridges": [],
     "domains": [
@@ -11154,7 +11154,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Game of Life Universality"
   },
