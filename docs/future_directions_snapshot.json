@@ -2860,26 +2860,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "8110b227",
-    "description": "Prove the stability theorem for persistent homology: the bottleneck distance between persistence diagrams is bounded by the Gromov-Hausdorff distance between the underlying spaces. Formalize the persistent homology pipeline and verify on concrete point cloud data.",
-    "domain_bridges": [],
-    "domains": [
-      "Computation",
-      "Geometry"
-    ],
-    "id": "seed_322",
-    "lineage_refs": [],
-    "priority_score": 0.88,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Topological Data Analysis: Persistent Homology Stability"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Prove that specific EML numbers (like exp(exp(1)) + log(2)) are transcendental over Q. Formalize Schanuel's conjecture for EML functions and prove conditional results: if Schanuel's conjecture holds, then the class of EML numbers equals the class of EL numbers.",
     "domain_bridges": [],
@@ -7854,7 +7834,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "7277c96e",
+    "consumed_by_exp_id": "",
     "description": "Prove that if A^x + B^y = C^z where A,B,C,x,y,z are positive integers with x,y,z > 2, then A,B,C share a common prime factor. Formalize the connection to Fermat-Catalan and ABC conjecture.",
     "domain_bridges": [],
     "domains": [
@@ -7866,7 +7846,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "",
     "title": "Beal's Conjecture"
   },
@@ -10982,7 +10962,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "a31e0b39",
+    "consumed_by_exp_id": "",
     "description": "Prove Conway's Game of Life is Turing complete via a direct constructive embedding. Formalize cellular automata in Lean 4 and establish complexity bounds on the simulation overhead.",
     "domain_bridges": [],
     "domains": [
@@ -10995,7 +10975,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "",
     "title": "Game of Life Universality"
   },
@@ -11877,6 +11857,26 @@
     "status": "available",
     "timestamp": "2026-07-25T14:09:47.358166+00:00",
     "title": "The accompanying Lean files isolate three rigorous components related to *The"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Persistent Homology Stability\n\n## 1. Diagonal-completed bottleneck stability for arbitrary finite clouds\n\nFor finite metric spaces of unequal cardinality, enrich each persistence diagram with diagonal points and prove that every correspondence of distortion at most `δ` induces a partial matching of cost at most `δ/2` under the radius convention `d ≤ 2r`.\n\nThe key insight is that unmatched homology classes should be charged to the diagonal by half their lifetime, while correspondence fibers control the matched classes.\n\nWhy now? The finite equal-cardinality matching theorem isolates the exact order-theoretic ingredient; extending the matching space is the remaining obstruction to a full finite-cloud theorem.\n\n## 2. Minimum-spanning-forest realization of zero-dimensional persistence\n\nFor every finite pseudometric space, prove that the multiset of finite death times in zeroth Vietoris--Rips persistence is exactly half the multiset of edge weights selected by Kruskal's algorithm, including repeated distances and zero-length identifications.\n\nThe key insight is that both constructions record precisely the thresholds at which connected components merge, so a rank invariant should identify them without choosing a unique spanning tree.\n\nWhy now? The certified-tree stability result already proves the metric estimate once this combinatorial realization is available.\n\n## 3. Gromov--Hausdorff stability through optimal finite correspondences\n\nFor nonempty finite metric spaces, prove that the bottleneck distance between their zero-dimensional persistence diagrams is bounded by their Gromov--Hausdorff distance when Rips scale is measured as radius, and characterize all equality cases with two or three points.\n\nThe key insight is that Gromov--Hausdorff distance is half the least correspondence distortion, exactly matching the half-distortion shift in the Rips interleaving.\n\nWhy now? The sharp two-point calculation demonstrates that the normalization is correct and that equality already occurs in the smallest nontrivial example.\n\n## 4. Functorial higher-dimensional stability from contiguity\n\nFor each homological degree and coefficient field, construct maps between finite Rips complexes from a correspondence, prove that different selections from a correspondence are contiguous, and derive interleaved persistence modules whose diagrams satisfy the same stability bound.\n\nThe key insight is that contiguity removes the noncanonical choice of representatives in a correspondence and turns a metric estimate into equality of induced homology maps.\n\nWhy now? The edge-level interleaving supplies the simplexwise inequalities; what remains is a coherent algebraic-topological transport theorem.\n\n## 5. Robust stability under interval-valued distance measurements\n\nGiven lower and upper confidence bounds for every pairwise distance, prove computable upper and lower envelopes for zero-dimensional persistence diagrams and a bottleneck error bound controlled by the maximum interval width.\n\nThe key insight is that monotonicity of connected components can sandwich every admissible Rips filtration between two extremal filtrations.\n\nWhy now? This converts the abstract stability mechanism into a directly testable uncertainty certificate for noisy point-cloud data.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0729",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "8110b227",
+    "status": "available",
+    "timestamp": "2026-07-25T21:17:22.305986+00:00",
+    "title": "For finite metric spaces of unequal cardinality, enrich each persistence diagram"
   },
   {
     "ambition_level": "extension",

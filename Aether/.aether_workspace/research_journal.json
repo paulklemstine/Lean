@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "08d3e2eb",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\n## 1. The symmetric local lemma from finite survivor ratios\n\n**Conjecture.** For a finite family of bad events with dependency degree at most `d`, uniform probability at most `p`,",
-      "quality_score": 0.75,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-19T05:39:29",
-      "title": "Formalizing the Probabilistic Method: Erdos Meets Lean"
-    },
-    {
       "cycle_id": "cc0903e0",
       "domain": "Tropical",
       "key_insight": "# Future Directions: Functorial Information Loss\n\n## 1. A chain rule for composable finite functors\n\nFor composable functors between finite skeletal categories, define object loss from the uniform dis",
@@ -2501,6 +2491,16 @@
       "theorem_count": 22,
       "timestamp": "2026-07-25T20:16:46",
       "title": "Tropical Compactification of Moduli Spaces"
+    },
+    {
+      "cycle_id": "8110b227",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions: Persistent Homology Stability\n\n## 1. Diagonal-completed bottleneck stability for arbitrary finite clouds\n\nFor finite metric spaces of unequal cardinality, enrich each persistence",
+      "quality_score": 0.66,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-07-25T21:17:29",
+      "title": "Topological Data Analysis: Persistent Homology Stability"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-25T20:16:46",
+  "last_updated": "2026-07-25T21:17:29",
   "open_questions": [
     {
       "context": "",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "3603d4d1",
-        "quality": 0.5663199999999999,
-        "theorems": 0,
-        "title": "Transfinite Game Theory: Games That Last Forever"
-      },
-      {
         "cycle_id": "65e81f6c",
         "quality": 0.8,
         "theorems": 0,
@@ -3451,6 +3445,12 @@
         "quality": 0.75,
         "theorems": 43,
         "title": "Happy End Problem"
+      },
+      {
+        "cycle_id": "8110b227",
+        "quality": 0.66,
+        "theorems": 12,
+        "title": "Topological Data Analysis: Persistent Homology Stability"
       }
     ],
     "Logic": [
