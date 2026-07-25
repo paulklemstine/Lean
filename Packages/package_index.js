@@ -4,7 +4,7 @@
 
 window.PACKAGE_INDEX = [
   {
-    "date": "2026-07-25T09:20:53Z",
+    "date": "2026-07-25T09:20:58Z",
     "domain": "Bridges",
     "exp_id": "6296b01e",
     "filename": "conjecture_for_compact_metric_cognitive_systems_re.json",
@@ -5157,9 +5157,9 @@ window.PACKAGE_INDEX = [
     "exp_id": "872b26ee",
     "filename": "cryptography_from_the_collatz_conjecture_one_way_f.json",
     "pkg_num": 1,
-    "quality": "unrated",
-    "quality_score": null,
-    "quality_tier": "unrated",
+    "quality": "substantial",
+    "quality_score": 0.79,
+    "quality_tier": "silver",
     "title": "Explicit Inversion and Persistent Collisions in Iterated Collatz Maps"
   }
 ];
@@ -15557,8 +15557,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "cryptography_from_the_collatz_conjecture_one_way_f",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.79,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Explicit Inversion and Persistent Collisions in Iterated Collatz Maps"
     }
