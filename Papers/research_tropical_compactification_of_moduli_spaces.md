@@ -1,316 +1,495 @@
-# Tropical Compactification of Moduli Spaces: Formalized Foundations in Harmonic Analysis, Chip-Firing, and Divisor Theory on Graphs
+# Boundary Incidence and Tropical Cone Complexes in Moduli of Curves
 
 ## Abstract
 
-We present a formally verified mathematical framework establishing the foundational connections between tropical geometry and the compactification of moduli spaces of curves. The central contribution is a suite of rigorously proved theorems that link harmonic functions on finite graphs, chip-firing equivalence, and tropical divisor theory — the three pillars supporting the tropical approach to understanding boundary strata of the moduli space $\mathcal{M}_g$. Our main results include: (1) a harmonic uniqueness theorem under a separation hypothesis that guarantees rigid determination of functions by boundary data; (2) a complete algebraic characterization of firing equivalence as an equivalence relation with the restricted Laplacian image forming a subgroup; (3) a tropical rigidity theorem showing that tree attachments propagate chip-firing uniqueness; (4) foundational tropical divisor theory on trees including the triviality of the genus-zero Picard group; and (5) a verified connection between difference constraint feasibility and negative cycle detection via tropical Bellman-Ford theory. These results provide the combinatorial and algebraic infrastructure for the correspondence between boundary divisors of the tropical compactification and tropical curves.
-
-**Keywords:** tropical geometry, moduli spaces, chip-firing, graph Laplacian, harmonic functions, divisor theory, Deligne-Mumford compactification, tropical curves, critical group, Bellman-Ford
-
----
+We develop a self-contained combinatorial criterion comparing a normal-crossings boundary chart with a tropical cone chart. The input consists of boundary divisors, tropical rays, downward-closed families of incident collections, and a divisor–ray bijection preserving simultaneous incidence. From this hypothesis we prove that elementwise transport is an order isomorphism of the complete face posets. It preserves cardinality, inclusion, unions, intersections, codimension, and singleton incidence; it identifies the associated abstract simplicial complexes and restricts to an order isomorphism on the link of every face. We then study numerical signatures of connected weighted dual graphs. Both non-loop contraction, which removes one edge and one vertex, and loop contraction, which removes one edge and increases total vertex weight by one, preserve arithmetic genus and fixed-marking complexity. Every finite sequence of genus-preserving contractions therefore remains in the same genus component. These results isolate the combinatorial content needed to compare Deligne–Mumford boundary strata with tropical moduli. They establish a local toroidal blueprint, while also showing why incidence data alone do not imply a global toric realization: integral lattices, transition monoids, automorphisms, and monodromy remain additional global data.
 
 ## 1. Introduction
 
-### 1.1 Background and Motivation
+The moduli space $M_g$ parametrizes smooth curves of genus $g$. Families of smooth curves naturally acquire singular limits, most notably nodal curves. Adding stable nodal curves yields the Deligne–Mumford compactification, whose boundary is stratified according to the combinatorial type of the singular curve. A boundary divisor corresponds locally to imposing one nodal equation; intersections of divisors correspond to imposing several compatible nodes.
 
-The moduli space $\mathcal{M}_g$ of smooth algebraic curves of genus $g$ is a central object in algebraic geometry, with deep connections to number theory, string theory, and topology. Its Deligne-Mumford compactification $\overline{\mathcal{M}}_g$ adds stable nodal curves as boundary strata, yielding a proper moduli space whose boundary encodes the degeneration behavior of families of curves.
+Tropical moduli records related information in polyhedral form. A tropical curve is represented by a weighted graph with edge lengths, and a combinatorial graph type determines a cone of length assignments. Setting selected lengths to zero contracts edges and passes to faces of that cone. Boundary strata and tropical cones therefore carry parallel specialization structures.
 
-Tropical geometry offers a combinatorial shadow of this rich story. A tropical curve is a metric graph — a finite graph with edge lengths — and the *tropical moduli space* $M_g^{\text{trop}}$ parametrizes tropical curves of genus $g$. The foundational insight, developed by Mikhalkin [1], Gathmann-Kerber-Markwig [2], and others, is that the boundary structure of $\overline{\mathcal{M}}_g$ is faithfully reflected in the combinatorics of $M_g^{\text{trop}}$: boundary divisors correspond to tropical curves, and the toric structure of the compactification is governed by the fan structure of the tropical moduli space.
+The purpose of this paper is to identify exactly which local hypothesis makes the parallel precise. We do not assume that a compactification has already been realized as a global toric variety. Instead, we begin with finite combinatorial charts and ask what follows from a divisor–ray correspondence that preserves every simultaneous incidence relation.
 
-Making this correspondence rigorous requires establishing precise algebraic and combinatorial foundations: the behavior of harmonic functions on graphs, the structure of chip-firing equivalence classes, and the theory of divisors on tropical curves. This paper presents formally verified proofs of the key results in this program.
+The answer is comprehensive at the simplicial level. The whole face poset is determined, not merely its vertices or maximal faces. The correspondence preserves intersections, unions, ranks, and links. Thus all data visible to the dual boundary complex agree with the tropical ray complex. A complementary graph calculation proves that the specialization operation underlying passage to cone faces preserves arithmetic genus, both for ordinary edges and loops.
 
-### 1.2 Overview of Results
+This formulation also separates local and global issues. A compatible family of such charts is naturally toroidal when its integral monoids glue. To be globally toric, however, the cone complex must admit one fan realization in a common lattice with compatible embeddings and no obstructing monodromy. The present results establish the incidence-theoretic core and identify the extra structures that cannot be inferred from incidence alone.
 
-Our formalized results span three interconnected domains:
+## 2. Boundary charts and tropical charts
 
-**I. Canonical Tropical Kernel Theory** (`Catalog/Bridges/CanonicalKernelTheorems.lean`): We define the graph Laplacian, harmonic functions on subsets, and chip-firing equivalence, and prove structural theorems including harmonic uniqueness, leaf rigidity, and the subgroup property of the restricted Laplacian image.
+Let $D$ be a finite or locally finite set of labels for irreducible boundary divisors in a fixed chart. We work with finite subsets of $D$.
 
-**II. Tropical Divisor Theory** (`Catalog/Tropical/DivisorTheory.lean`): We formalize divisors on graphs, principal divisors, linear equivalence, and prove the triviality of the Picard group on trees — the genus-zero base case of tropical Riemann-Roch.
+**Definition 2.1 (Boundary face family).** A boundary face family is a collection $\mathcal B$ of finite subsets of $D$ satisfying:
 
-**III. Tropical Optimization** (`Catalog/Tropical/Core.lean`, `Catalog/Tropical/BellmanFord.lean`): We establish the min-plus algebraic framework, prove the Bellman optimality recursion, and verify the equivalence between difference constraint feasibility and negative cycle absence.
+1. $\varnothing\in\mathcal B$;
+2. if $S\in\mathcal B$ and $T\subseteq S$, then $T\in\mathcal B$.
 
-### 1.3 Organization
+Geometrically, $S\in\mathcal B$ means that the divisors indexed by $S$ have a common stratum. Downward closure expresses the fact that forgetting some incidence conditions cannot destroy an existing intersection.
 
-Section 2 presents the core definitions. Section 3 develops the harmonic kernel theory and the uniqueness theorem. Section 4 covers firing equivalence and the subgroup structure. Section 5 treats tree attachments and tropical rigidity. Section 6 develops divisor theory on trees. Section 7 presents the Bellman-Ford connection. Section 8 discusses applications and future directions.
+Let $R$ be a set of labels for rays in a tropical cone chart.
 
----
+**Definition 2.2 (Tropical face family).** A tropical face family is a collection $\mathcal T$ of finite subsets of $R$ satisfying:
 
-## 2. Core Definitions
+1. $\varnothing\in\mathcal T$;
+2. if $U\in\mathcal T$ and $V\subseteq U$, then $V\in\mathcal T$.
 
-### 2.1 The Graph Laplacian
+The interpretation is that $U\in\mathcal T$ precisely when the rays in $U$ occur together in a common simplicial cone.
 
-Let $G = (V, E)$ be a finite simple graph with vertex set $V$ and edge set $E$. The *combinatorial graph Laplacian* is the matrix $L(G) \in \mathbb{Z}^{V \times V}$ defined by:
+**Definition 2.3 (Compatible boundary–ray atlas).** A compatible boundary–ray atlas is a tuple
 
-$$L(G)_{v,w} = \begin{cases} \deg(v) & \text{if } v = w \\ -1 & \text{if } v \sim w \\ 0 & \text{otherwise} \end{cases}$$
+$$
+(D,R,\mathcal B,\mathcal T,\phi)
+$$
 
-This is formalized as `graphLap'` in `Catalog/Bridges/CanonicalKernelTheorems.lean`. Two fundamental properties are verified:
+in which $\mathcal B$ and $\mathcal T$ are boundary and tropical face families and $\phi:D\to R$ is a bijection satisfying, for every finite $S\subseteq D$,
 
-**Theorem 2.1** (Row-Sum-Zero, `graphLap'_row_sum_zero`). *For every vertex $i \in V$, $\sum_{j \in V} L(G)_{i,j} = 0$.*
+$$
+S\in\mathcal B\quad\Longleftrightarrow\quad \phi(S)\in\mathcal T,
+$$
 
-**Theorem 2.2** (Symmetry, `graphLap'_symmetric`). *For all vertices $i, j \in V$, $L(G)_{i,j} = L(G)_{j,i}$.*
+where
 
-### 2.2 Harmonic Functions on Subsets
+$$
+\phi(S)=\{\phi(d):d\in S\}.
+$$
 
-**Definition 2.3** (`IsHarmonicOn`). A function $f : V \to \mathbb{Z}$ is *harmonic on* a subset $S \subseteq V$ if for every $v \in S$:
-$$\sum_{w \in V} L(G)_{v,w} \cdot f(w) = 0.$$
+The equivalence is the essential incidence hypothesis. A bijection between individual divisors and rays would not suffice: it could send an intersecting pair of divisors to rays that never share a cone. Compatibility requires agreement in every rank.
 
-This is the discrete analogue of the Laplace equation $\Delta f = 0$. The condition states that the weighted average of $f$ over the neighbors of $v$ equals $f(v)$ itself.
+**Definition 2.4 (Transport and reverse transport).** Define
 
-**Definition 2.4** (`NormalizedOn`). A function $f$ is *normalized on* $S$ if $\sum_{v \in S} f(v) = 0$.
+$$
+\Phi(S)=\{\phi(d):d\in S\},\qquad
+\Psi(U)=\{\phi^{-1}(r):r\in U\}.
+$$
 
-**Definition 2.5** (`SeparatedOn`). The subset $S$ satisfies the *separation hypothesis* in $G$ if: whenever $f, g : V \to \mathbb{Z}$ are both harmonic on $S$, both normalized on $S$, and agree on every vertex of $S$, then $f = g$ globally.
+These maps act on all finite subsets, whether or not they are faces.
 
-### 2.3 Chip-Firing Equivalence
+## 3. Elementary transport identities
 
-**Definition 2.6** (`FiringEquivalentOn`). Two functions $f, g : V \to \mathbb{Z}$ are *firing-equivalent on* $S$ if there exists $c : V \to \mathbb{Z}$ with $\text{supp}(c) \subseteq S$ such that for all $v$:
-$$g(v) = f(v) + \sum_{w \in V} L(G)_{v,w} \cdot c(w).$$
+We first record the set-theoretic facts from which the structural conclusions follow.
 
-The function $c$ records which vertices fire and how many times; the Laplacian then redistributes chips accordingly.
+**Lemma 3.1 (Cardinality preservation).** For every finite $S\subseteq D$,
 
-### 2.4 Tree Attachments
+$$
+|\Phi(S)|=|S|.
+$$
 
-**Definition 2.7** (`IsTreeAttachmentAlong`). A subset $T \subseteq V$ is a *tree attachment along* $S$ if:
-1. $S \cap T = \emptyset$ (disjointness);
-2. Every vertex in $T$ has at most one neighbor in $S$ (single attachment);
-3. The induced subgraph on $T$ is acyclic (forest property).
+**Proof sketch.** The restriction of the injective map $\phi$ to $S$ is a bijection from $S$ onto $\Phi(S)$. Therefore the two finite sets have equal cardinality. $\square$
 
-### 2.5 Additional Structures
+**Lemma 3.2 (Mutual inverses).** For every finite $S\subseteq D$ and $U\subseteq R$,
 
-The *restricted Laplacian image* on $S$ (`RestrictedLaplacianImage`) is the set of functions $h : V \to \mathbb{Z}$ that arise as $L \cdot c$ for some $c$ supported on $S$. The *harmonic kernel* on $S$ (`harmonicKernel`) is $\{f : V \to \mathbb{Z} \mid f \text{ is harmonic on } S\}$.
+$$
+\Psi(\Phi(S))=S,
+\qquad
+\Phi(\Psi(U))=U.
+$$
 
----
+**Proof sketch.** Membership in the first set is equivalent to being $\phi^{-1}(\phi(d))$ for some $d\in S$, hence to membership in $S$. The second identity is symmetric. $\square$
 
-## 3. Harmonic Kernel Theory
+**Lemma 3.3 (Order preservation and reflection).** For finite $S,T\subseteq D$,
 
-### 3.1 Algebraic Closure Properties
+$$
+\Phi(S)\subseteq\Phi(T)
+\quad\Longleftrightarrow\quad
+S\subseteq T.
+$$
 
-The harmonic kernel is a $\mathbb{Z}$-submodule of the function space $\mathbb{Z}^V$.
+**Proof sketch.** If $S\subseteq T$, elementwise transport gives the forward inclusion. Conversely, if $d\in S$, then $\phi(d)\in\Phi(S)\subseteq\Phi(T)$. Injectivity of $\phi$ forces $d\in T$. $\square$
 
-**Theorem 3.1** (`constant_isHarmonicOn`). *Constant functions are harmonic on any subset $S$.*
+**Lemma 3.4 (Boolean operations).** For finite $S,T\subseteq D$,
 
-*Proof sketch.* For $f \equiv c$, the Laplacian sum becomes $c \cdot \sum_w L(G)_{v,w} = c \cdot 0 = 0$ by the row-sum-zero property. $\square$
+$$
+\Phi(S\cap T)=\Phi(S)\cap\Phi(T),
+$$
 
-**Theorem 3.2** (`isHarmonicOn_add`). *If $f$ and $g$ are harmonic on $S$, then $f + g$ is harmonic on $S$.*
+and
 
-*Proof sketch.* By linearity of the sum: $\sum_w L_{v,w}(f(w) + g(w)) = \sum_w L_{v,w} f(w) + \sum_w L_{v,w} g(w) = 0 + 0 = 0$. $\square$
+$$
+\Phi(S\cup T)=\Phi(S)\cup\Phi(T).
+$$
 
-**Theorem 3.3** (`isHarmonicOn_neg`, `isHarmonicOn_sub`). *Negation and subtraction preserve harmonicity.*
+**Proof sketch.** Transport under any function preserves unions. It preserves intersections when the function is injective: if a transported element lies in both images, injectivity identifies its two preimages. $\square$
 
-**Theorem 3.4** (`isHarmonicOn_smul`). *Scalar multiples of harmonic functions are harmonic.*
+These statements reveal the role of bijectivity. Without injectivity, distinct divisors could collapse to one ray, changing cardinalities and codimensions. Without surjectivity, reverse transport would not cover every tropical face. Without incidence compatibility, transport would not restrict to the face families.
 
-**Theorem 3.5** (`harmonic_constant_shift`). *Shifting a harmonic function by a constant preserves harmonicity.*
+## 4. Complete face-poset correspondence
 
-### 3.2 Normalization Properties
+Equip $\mathcal B$ and $\mathcal T$ with the partial order of inclusion.
 
-**Theorem 3.6** (`normalizedOn_zero`, `normalizedOn_add`, `normalizedOn_neg`). *The zero function is normalized, and the set of normalized functions is closed under addition and negation.*
+**Theorem 4.1 (Boundary-stratum criterion).** For every finite collection $S\subseteq D$, the corresponding boundary stratum exists if and only if the rays $\Phi(S)$ form a tropical face:
 
-### 3.3 The Core Uniqueness Theorem
+$$
+S\in\mathcal B\quad\Longleftrightarrow\quad\Phi(S)\in\mathcal T.
+$$
 
-**Theorem 3.7** (Harmonic Uniqueness, `harmonic_normalized_unique`). *Let $G$ be a finite graph and $S$ a subset satisfying the separation hypothesis. If $f, g : V \to \mathbb{Z}$ are both harmonic on $S$, both normalized on $S$, and agree on every vertex of $S$, then $f = g$.*
+**Proof sketch.** This is precisely the incidence compatibility condition, stated geometrically. $\square$
 
-This is a direct consequence of the separation hypothesis by definition, but its significance lies in establishing that under appropriate geometric conditions on $S$, the Dirichlet problem on the discrete graph has a unique solution. This uniqueness is the combinatorial analogue of the uniqueness theorem for harmonic functions in classical potential theory, and it controls the local structure of boundary strata in the tropical moduli space.
+**Theorem 4.2 (Face-Poset Correspondence Theorem).** For a compatible boundary–ray atlas, transport restricts to an order isomorphism
 
-### 3.4 Leaf Rigidity
+$$
+\Phi:(\mathcal B,\subseteq)\overset{\sim}{\longrightarrow}(\mathcal T,\subseteq),
+$$
 
-**Theorem 3.8** (Harmonic Leaf Rigidity, `harmonic_at_leaf_eq_neighbor`). *If $v$ is a leaf of $G$ (i.e., $\deg(v) = 1$) with unique neighbor $w$, and $f$ satisfies the Laplacian equation at $v$, then $f(v) = f(w)$.*
+with inverse $\Psi$.
 
-*Proof sketch.* Since $v$ has degree 1, the Laplacian equation at $v$ becomes:
-$$\deg(v) \cdot f(v) - f(w) = f(v) - f(w) = 0,$$
-where the sum over non-adjacent vertices contributes zero. $\square$
+**Proof sketch.** Theorem 4.1 shows that $\Phi$ maps $\mathcal B$ into $\mathcal T$. Applying the same equivalence to $\Psi(U)$ and using Lemma 3.2 shows that $\Psi$ maps $\mathcal T$ into $\mathcal B$. Lemma 3.2 makes the restrictions inverse bijections, and Lemma 3.3 proves that both order and order reflection are preserved. $\square$
 
-This result is the discrete analogue of the classical fact that harmonic functions are constant along "tentacles" of a domain — thin appendages with a single exit.
+The theorem identifies every stratum and every specialization relation. It is stronger than a comparison of maximal strata: all intermediate faces and all chains correspond.
 
----
+**Corollary 4.3 (Divisor–ray correspondence).** For every $d\in D$, the singleton $\{d\}$ is a boundary face if and only if $\{\phi(d)\}$ is a tropical face.
 
-## 4. Firing Equivalence and Subgroup Structure
+**Proof sketch.** Apply Theorem 4.1 to the singleton set. $\square$
 
-### 4.1 Equivalence Relation
+**Corollary 4.4 (Codimension–ray-count equality).** If a boundary face $S$ has simplicial codimension measured by its number of local boundary equations, then the corresponding tropical face has the same number of rays:
 
-**Theorem 4.1** (`firingEquiv_refl`). *Firing equivalence is reflexive: $f$ is firing-equivalent to itself via $c = 0$.*
+$$
+\operatorname{codim}(S)=|S|=|\Phi(S)|.
+$$
 
-**Theorem 4.2** (`firingEquiv_symm`). *Firing equivalence is symmetric: if $g = f + L \cdot c$, then $f = g + L \cdot (-c)$.*
+**Proof sketch.** The first equality is the normal-crossings local model; the second is Lemma 3.1. In a simplicial cone, the number of independent generating rays is its cone dimension. $\square$
 
-**Theorem 4.3** (`firingEquiv_trans`). *Firing equivalence is transitive: if $g = f + L \cdot c_1$ and $h = g + L \cdot c_2$, then $h = f + L \cdot (c_1 + c_2)$.*
+**Corollary 4.5 (Preservation of meets and compatible joins).** For boundary faces $S,T$,
 
-Together, these establish that firing equivalence is a genuine equivalence relation on $\mathbb{Z}^V$. The quotient $\mathbb{Z}^V / {\sim_S}$ is the *restricted critical group* on $S$, the tropical analogue of the Jacobian restricted to a subset.
+$$
+\Phi(S\cap T)=\Phi(S)\cap\Phi(T).
+$$
 
-### 4.2 Equivalence Modulo Constants
+If $S\cup T$ is also a boundary face, then
 
-**Theorem 4.4** (`equivModConst_refl`, `equivModConst_symm`, `equivModConst_trans`). *Equivalence modulo constants is an equivalence relation.*
+$$
+\Phi(S\cup T)=\Phi(S)\cup\Phi(T)
+$$
 
-**Theorem 4.5** (`equivModConst_of_constant`). *Every constant function is equivalent to zero modulo constants.*
+is the corresponding tropical face.
 
-### 4.3 Restricted Laplacian Image
+**Proof sketch.** Use Lemma 3.4 and incidence compatibility. $\square$
 
-**Theorem 4.6** (`restrictedLaplacianImage_zero`). *The zero function is in the restricted Laplacian image.*
+## 5. Dual complexes and links
 
-**Theorem 4.7** (`restrictedLaplacianImage_add`). *The restricted Laplacian image is closed under addition.*
+The face families naturally define abstract simplicial complexes.
 
-**Theorem 4.8** (`restrictedLaplacianImage_neg`). *The restricted Laplacian image is closed under negation.*
+**Definition 5.1 (Dual boundary complex).** The dual boundary complex $\Delta_{\partial}$ has vertex set consisting of the boundary labels that occur in at least one boundary face, and its simplices are the nonempty members of $\mathcal B$. Equivalently, one may include the empty simplex and regard all of $\mathcal B$ as its face set.
 
-These three results establish that $\text{Im}(L|_S)$ is a subgroup of $\mathbb{Z}^V$, providing the denominator for the critical group quotient $\mathbb{Z}^V / \text{Im}(L|_S)$.
+**Definition 5.2 (Tropical ray complex).** The tropical ray complex $\Delta_{\mathrm{trop}}$ has vertices the rays that occur in tropical faces and face set $\mathcal T$.
 
----
+Downward closure ensures that both are abstract simplicial complexes. Notice that no geometric realization has yet been chosen; these are incidence objects.
 
-## 5. Tropical Rigidity and Tree Attachments
+**Theorem 5.3 (Dual-Complex Correspondence).** The vertex bijection $\phi:D\to R$ induces an isomorphism of abstract simplicial complexes
 
-### 5.1 Laplacian Support Splitting
+$$
+\Delta_{\partial}\cong\Delta_{\mathrm{trop}}.
+$$
 
-**Theorem 5.1** (`laplacian_image_complement_at_S`). *If $c$ vanishes on $S$, then for $v \in S$:*
-$$\sum_{w \in V} L_{v,w} \cdot c(w) = \sum_{w \notin S} L_{v,w} \cdot c(w).$$
+A finite set is a simplex on the boundary side exactly when its image is a simplex on the tropical side.
 
-This splitting result shows that the Laplacian image at vertices in $S$ depends only on the firing outside $S$, enabling the decomposition of chip-firing dynamics by support.
+**Proof sketch.** The map is bijective on vertices, and Theorem 4.1 identifies the face sets. Its inverse is induced by $\phi^{-1}$. $\square$
 
-### 5.2 The Tree Attachment Rigidity Theorem
+To compare neighborhoods of strata, we use links.
 
-**Theorem 5.2** (Tropical Rigidity, `harmonic_tree_attachment_forces_unique_firing`). *Let $G$ be a connected graph, $S$ a subset satisfying the separation hypothesis, and $T$ a tree attachment along $S$. If $f$ and $g$ are harmonic on $S \cup T$ and agree on $S$, then $f$ and $g$ are firing-equivalent on $S \cup T$.*
+**Definition 5.4 (Link).** Let $\sigma$ be a face of an abstract simplicial complex $\Delta$. Its link is
 
-*Proof sketch.* The proof proceeds by contradiction. Assume the functions are not firing-equivalent; then their difference $f - g$ (suitably normalized) is a nontrivial harmonic function that vanishes on $S$, contradicting the separation hypothesis. The key step uses the tree structure to propagate the harmonic constraint: by leaf rigidity (Theorem 3.8), the values propagate inward from the leaves of $T$ toward $S$, and the single-attachment condition ensures no interference. $\square$
+$$
+\operatorname{Lk}_{\Delta}(\sigma)
+=
+\{\tau:\tau\cap\sigma=\varnothing,
+\ \tau\cup\sigma\in\Delta\}.
+$$
 
-This is the central bridge theorem: it translates tropical rigidity (the combinatorial constraint from the tree structure) into chip-firing uniqueness (the algebraic statement about equivalence classes). In the context of moduli spaces, it shows that boundary divisors corresponding to tree-like degenerations are completely determined by interior data — they carry no independent moduli.
+The link records directions transverse to $\sigma$ that remain compatible with it.
 
----
+**Theorem 5.5 (Link Correspondence Theorem).** For every boundary face $\sigma\in\mathcal B$, transport induces an order isomorphism
 
-## 6. Tropical Divisor Theory on Trees
+$$
+\operatorname{Lk}_{\Delta_{\partial}}(\sigma)
+\overset{\sim}{\longrightarrow}
+\operatorname{Lk}_{\Delta_{\mathrm{trop}}}(\Phi(\sigma)).
+$$
 
-### 6.1 Definitions
+**Proof sketch.** Let $\tau$ be in the boundary link. Injectivity of $\phi$ gives
 
-A *divisor* on a graph $G = (V, E)$ is a function $D : V \to \mathbb{Z}$. The *degree* of $D$ is $\deg(D) = \sum_{v \in V} D(v)$. The *principal divisor* of a function $f : V \to \mathbb{Z}$ is:
-$$\text{div}(f)(v) = \sum_{w \in N(v)} (f(w) - f(v)).$$
+$$
+\tau\cap\sigma=\varnothing
+\quad\Longleftrightarrow\quad
+\Phi(\tau)\cap\Phi(\sigma)=\varnothing.
+$$
 
-Two divisors $D_1$ and $D_2$ are *linearly equivalent* if $D_2 = D_1 + \text{div}(f)$ for some $f$. A divisor is *effective* if $D(v) \geq 0$ for all $v$.
+Lemma 3.4 and incidence compatibility give
 
-### 6.2 Fundamental Results
+$$
+\tau\cup\sigma\in\mathcal B
+\quad\Longleftrightarrow\quad
+\Phi(\tau)\cup\Phi(\sigma)\in\mathcal T.
+$$
 
-The following results are formalized in `Catalog/Tropical/DivisorTheory.lean`:
+Thus $\Phi(\tau)$ lies in the tropical link. Reverse transport proves surjectivity, while Lemma 3.3 identifies the inclusion orders. $\square$
 
-**Theorem 6.1** (`principal_degree_zero`). *Every principal divisor has degree zero.*
+The theorem says that the comparison is stable under localization at every stratum. It captures all immediate and iterated specialization directions near that stratum.
 
-*Proof sketch.* $\deg(\text{div}(f)) = \sum_v \sum_{w \sim v} (f(w) - f(v))$. Each edge $\{v, w\}$ contributes $(f(w) - f(v))$ from vertex $v$ and $(f(v) - f(w))$ from vertex $w$; these cancel. $\square$
+## 6. Weighted dual graphs and arithmetic genus
 
-**Theorem 6.2** (`linear_equiv_preserves_degree`). *Linear equivalence preserves divisor degree.*
+We now describe the combinatorial types associated with nodal curves.
 
-**Theorem 6.3** (`degree_zero_principal_tree`). *On a tree, every degree-zero divisor is principal.*
+**Definition 6.1 (Weighted dual signature).** The numerical signature of a connected weighted dual graph is a quadruple
 
-This is the key genus-zero result: the tropical Picard group $\text{Pic}^0(T)$ of a tree $T$ is trivial. In the classical world, this corresponds to the fact that a smooth rational curve has trivial Jacobian variety.
+$$
+G=(V,E,W,N)\in\mathbb N^4,
+$$
 
-**Theorem 6.4** (`tree_divisor_equiv_singleton`). *Every divisor on a tree is linearly equivalent to a divisor concentrated at a single vertex.*
+where $V$ is the number of vertices, $E$ the number of edges, $W$ the sum of all vertex weights, and $N$ the number of marked legs.
 
-**Theorem 6.5** (`tree_degree_nonneg_has_effective_representative`). *On a tree, every divisor of nonnegative degree has an effective representative.*
+The full graph carries adjacency and automorphism data not present in the signature. The signature is nevertheless sufficient for genus calculations.
 
-This is a discrete Riemann-Roch phenomenon: the space of effective divisors in a given linear equivalence class is nonempty whenever the degree is nonnegative, mirroring the classical result for rational curves.
+**Definition 6.2 (Arithmetic genus).** For a connected weighted dual graph, define
 
----
+$$
+g(G)=W+E+1-V.
+$$
 
-## 7. Tropical Optimization: The Bellman-Ford Connection
+The term $E+1-V$ is the first Betti number of a connected underlying graph, and $W$ adds the genera attached to vertices. The connectedness assumption ensures $E+1-V\ge 0$ in the unweighted graph; more generally, the numerical condition
 
-### 7.1 Min-Plus Algebraic Framework
+$$
+V\le W+E+1
+$$
 
-The min-plus (tropical) semiring $(\mathbb{R} \cup \{+\infty\}, \min, +)$ provides the algebraic foundation for shortest-path computation. The formalized results in `Catalog/Tropical/Core.lean` establish:
+ensures that the displayed nonnegative formula behaves as ordinary integer subtraction.
 
-**Theorem 7.1** (`plus_distributes_over_min`). *Addition distributes over minimum: $a + \min(b, c) = \min(a + b, a + c)$.*
+**Definition 6.3 (Augmented marked complexity).** Define
 
-**Theorem 7.2** (`value_le_pathCost`). *The tropical value function is a lower bound on any valid accepting path cost (soundness of the Bellman recursion).*
+$$
+A(G)=2g(G)+N.
+$$
 
-### 7.2 Difference Constraints and Negative Cycles
+For fixed $N$, preserving $A$ is equivalent to preserving $g$. The usual stability expression $2g-2+N$ differs from $A$ by $2$, so the same contraction invariance applies to it whenever interpreted integrally.
 
-**Theorem 7.3** (`no_neg_cycle_of_feasible`, `Catalog/Tropical/BellmanFord.lean`). *If a difference constraint system $\{x(i) \leq a_{ij} + x(j)\}$ is feasible, then the associated weighted graph has no negative-weight cycle.*
+### 6.1 Non-loop contraction
 
-*Proof sketch.* Given a feasible assignment $x$ and a cycle $v_0 \to v_1 \to \cdots \to v_k = v_0$, summing the constraints around the cycle yields $0 \leq \sum_{t} w_t$, contradicting the assumption that $\sum w_t < 0$. $\square$
+A non-loop edge joins distinct vertices. Contracting it merges its endpoints and removes that edge.
 
-This connects tropical linear algebra to combinatorial optimization and, through the tropical determinant, to the geometry of tropical polytopes forming the cells of the tropical moduli space.
+**Definition 6.4 (Non-loop contraction).** For $V\ge2$ and $E\ge1$, set
 
----
+$$
+C_{\mathrm{nl}}(V,E,W,N)=(V-1,E-1,W,N).
+$$
 
-## 8. Proof Techniques and Methodology
+**Theorem 6.5 (Genus invariance under non-loop contraction).** Suppose $V\ge2$, $E\ge1$, and $V\le W+E+1$. Then
 
-### 8.1 Formal Verification Strategy
+$$
+g(C_{\mathrm{nl}}(G))=g(G).
+$$
 
-The results in this paper were developed using a systematic approach to formalization that merits discussion, as the proof techniques illuminate the mathematical content.
+**Proof sketch.** Direct substitution yields
 
-The graph Laplacian properties (Theorems 2.1–2.2) are established through direct computation with the defining matrix. The row-sum-zero property, for instance, follows by partitioning the sum over columns into the diagonal entry and off-diagonal entries, then using the fact that the diagonal entry equals the degree (i.e., the count of adjacent vertices). Symmetry follows from the symmetry of the adjacency relation in simple graphs.
+$$
+\begin{aligned}
+g(C_{\mathrm{nl}}(G))
+&=W+(E-1)+1-(V-1)\\
+&=W+E+1-V\\
+&=g(G).
+\end{aligned}
+$$
 
-The harmonic closure properties (Section 3.1) exploit the linearity of the Laplacian operator. The key observation is that harmonicity is a *linear* condition: the map $f \mapsto (v \mapsto \sum_w L_{v,w} f(w))$ is a linear operator on $\mathbb{Z}^V$, and its kernel is therefore a submodule. Each closure property (Theorems 3.1–3.5) follows from a corresponding property of linear maps applied to this kernel.
+The lower bounds ensure the decrements are genuine, and the connectedness inequality avoids truncation artifacts. $\square$
 
-The firing equivalence results (Section 4) use a direct algebraic approach. Reflexivity uses the zero vector; symmetry uses negation of the firing vector; transitivity uses addition. The proofs are short but establish the critical fact that the quotient $\mathbb{Z}^V / \text{Im}(L|_S)$ is well-defined.
+### 6.2 Loop contraction
 
-The leaf rigidity theorem (Theorem 3.8) uses a careful analysis of the Laplacian sum at a degree-1 vertex. The proof relies on the fact that the neighbor finset of a degree-1 vertex is a singleton, which is established through `Finset.card_eq_one`. The sum then reduces to a single term, yielding the equation $f(v) - f(w) = 0$.
+A loop contributes one cycle at a single vertex. Contracting it removes one edge while converting that cycle contribution into one additional unit of vertex weight.
 
-The tree attachment theorem (Theorem 5.2) employs a proof by contradiction. It uses the separation hypothesis to derive that the difference $f - g$ must be trivial, leveraging the structural constraints imposed by the tree attachment to rule out nontrivial harmonic extensions.
+**Definition 6.6 (Loop contraction).** For $E\ge1$, set
 
-### 8.2 Algebraic vs. Combinatorial Perspectives
+$$
+C_{\ell}(V,E,W,N)=(V,E-1,W+1,N).
+$$
 
-A recurring theme in this work is the interplay between algebraic and combinatorial viewpoints. The *algebraic* perspective treats chip-firing as quotient group theory: the critical group is the cokernel of the Laplacian, and firing equivalence is simply membership in a coset of the Laplacian image. The *combinatorial* perspective treats chip-firing as a game on graphs, with explicit moves and strategies.
+**Theorem 6.7 (Genus invariance under loop contraction).** Suppose $E\ge1$ and $V\le W+E+1$. Then
 
-The formalization bridges these perspectives. For instance, Theorem 5.2 starts from combinatorial hypotheses (tree attachment, connectivity) but reaches an algebraic conclusion (firing equivalence). The proof passes through the separation hypothesis, which is itself a hybrid condition: it is stated algebraically (uniqueness of solutions) but has combinatorial content (the subset "sees" enough of the graph to determine global behavior).
+$$
+g(C_{\ell}(G))=g(G).
+$$
 
-This duality is central to the tropical moduli space story. The boundary of $\overline{\mathcal{M}}_g$ is described combinatorially (by dual graphs of stable curves) but has algebraic structure (it is a divisor with normal crossings). The tropical theory provides the common language that makes both descriptions compatible.
+**Proof sketch.** Again,
 
-### 8.3 Connections to Matroid Theory
+$$
+\begin{aligned}
+g(C_{\ell}(G))
+&=(W+1)+(E-1)+1-V\\
+&=W+E+1-V\\
+&=g(G).
+\end{aligned}
+$$
 
-The restricted Laplacian image and its subgroup structure (Theorems 4.6–4.8) connect to the theory of regular matroids. The graph Laplacian defines a regular matroid, and the restricted Laplacian image is related to the circuit space of this matroid restricted to the subset $S$. The subgroup property corresponds to the fact that the circuit space of a matroid is a vector space (over any field, or a free module over $\mathbb{Z}$).
+The lost cycle has been transferred exactly into vertex weight. $\square$
 
-This connection suggests extensions to non-graphical regular matroids, where the notion of "chip-firing" generalizes to operations on the circuit lattice. Such extensions would connect to the theory of tropical linear spaces and their moduli.
+**Corollary 6.8 (Complexity invariance).** Under the hypotheses of Theorem 6.5 or Theorem 6.7,
 
-### 8.4 Computational Complexity Considerations
+$$
+A(C_{\mathrm{nl}}(G))=A(G),
+\qquad
+A(C_{\ell}(G))=A(G),
+$$
 
-The Bellman-Ford connection (Section 7) has important computational implications. The feasibility of difference constraint systems can be decided in $O(VE)$ time using the Bellman-Ford algorithm, and the formalized correctness proof (Theorem 7.3) ensures that any implementation following this algorithm produces correct results.
+respectively.
 
-For the moduli space application, this means that the combinatorial data of a tropical curve (edge lengths satisfying balancing conditions) can be checked efficiently. The tropical moduli space $M_g^{\text{trop}}$ is a polyhedral complex, and membership in each cell is determined by a system of linear inequalities — precisely the difference constraints that the Bellman-Ford algorithm handles.
+**Proof sketch.** Both contractions preserve $g$ and leave $N$ unchanged. Substitute into $A=2g+N$. $\square$
 
-## 9. Discussion and Future Directions
+**Theorem 6.9 (Finite specialization invariance).** Let $F$ be any operation on weighted dual signatures satisfying
 
-### 9.1 Connections to Classical Theory
+$$
+g(F(G))=g(G)
+$$
 
-The results formalized here provide the discrete combinatorial layer of the correspondence between the Deligne-Mumford compactification $\overline{\mathcal{M}}_g$ and the tropical moduli space $M_g^{\text{trop}}$. The key dictionary is:
+for every admissible $G$. Then for every integer $m\ge0$,
 
-| Classical | Tropical/Combinatorial |
-|---|---|
-| Smooth curve of genus $g$ | Metric graph of genus $g$ |
-| Jacobian variety | Critical group |
-| Principal divisors | Chip-firing moves |
-| Linear equivalence | Firing equivalence |
-| Harmonic forms | Harmonic functions on graphs |
-| Boundary stratum | Tropical curve type |
-| Toric variety structure | Fan of tropical moduli |
+$$
+g(F^m(G))=g(G).
+$$
 
-The harmonic uniqueness theorem (Theorem 3.7) corresponds to the rigidity of boundary data in the toric compactification. The tree attachment theorem (Theorem 5.2) shows that genus-zero boundary strata contribute no independent moduli. The divisor theory results (Section 6) establish the genus-zero base case of the inductive structure.
+More generally, any finite sequence in which each individual step is an admissible loop or non-loop contraction preserves genus and marked complexity.
 
-### 9.2 Future Directions
+**Proof sketch.** Induct on $m$. The case $m=0$ is immediate. If the statement holds after $m$ steps, then applying one further genus-preserving step gives
 
-Several compelling extensions emerge from this foundation:
+$$
+g(F^{m+1}(G))=g(F(F^m(G)))=g(F^m(G))=g(G).
+$$
 
-1. **Tropical Genus Non-Negativity.** The graph genus $|E| - |V| + c$ should be non-negative for any finite graph, following from the spanning tree bound. This would complete the foundational theory and unlock results about tropical curve degenerations.
+For a heterogeneous sequence, the same induction uses the invariance of the selected step at each stage. $\square$
 
-2. **General Bellman-Ford Matrix Powers.** The verified 2-step and 3-step cases suggest a general statement: the $(i,j)$ entry of $A^k$ in the min-plus algebra equals the minimum weight of a $k$-step walk. This would yield a fully certified Bellman-Ford correctness proof.
+## 7. Algorithms
 
-3. **Tropical Determinant Optimality.** The tropical determinant $\bigoplus_\sigma \bigodot_i A_{i,\sigma(i)}$ should achieve its infimum when all entries are finite, connecting to the Hungarian algorithm.
+The proofs lead directly to finite algorithms for comparing charts and simulating graph specialization.
 
-4. **Tropical Rank Separation.** Tropical matrices may have tropical rank exceeding their dimension — a phenomenon with no classical analogue, with implications for the geometry of tropical varieties.
+### 7.1 Incidence-atlas validation
 
----
+Given finite sets $D$ and $R$, a proposed bijection $\phi$, and explicit face families $\mathcal B$ and $\mathcal T$, validation proceeds as follows:
 
-## References
+1. check that $\phi$ is bijective;
+2. check that each family contains the empty face;
+3. for each listed face, check that every subset is listed;
+4. for every finite $S\subseteq D$, compare membership of $S$ in $\mathcal B$ with membership of $\Phi(S)$ in $\mathcal T$.
 
-[1] G. Mikhalkin. "Enumerative tropical algebraic geometry in $\mathbb{R}^2$." *J. Amer. Math. Soc.* 18 (2005), 313–377.
+If $|D|=n$ and face families are represented by hash sets, exhaustive validation takes $O(n2^n)$ time: there are $2^n$ candidate subsets and transporting each costs at most $O(n)$. When the families are given by maximal faces, downward closure may be generated first; the worst-case output remains exponential because an $n$-simplex has $2^n$ faces.
 
-[2] A. Gathmann, M. Kerber, H. Markwig. "Tropical fans and the moduli spaces of tropical curves." *Compos. Math.* 145 (2009), 173–195.
+Once validation succeeds, the face-poset isomorphism is computed simply by elementwise transport. A single face of size $k$ is transported in $O(k)$ expected time with hashed labels. Intersections and unions can likewise be computed in linear expected time in the input sizes.
 
-[3] M. Baker, S. Norine. "Riemann-Roch and Abel-Jacobi theory on a finite graph." *Adv. Math.* 215 (2007), 766–788.
+### 7.2 Link extraction
 
-[4] D. Abramovich, L. Caporaso, S. Payne. "The tropicalization of the moduli space of curves." *Ann. Sci. Éc. Norm. Supér.* 48 (2015), 765–809.
+For a fixed face $\sigma$, scan the face family and retain precisely the faces $\tau$ satisfying
 
-[5] L. Caporaso. "Algebraic and tropical curves: comparing their moduli spaces." In: *Handbook of Moduli*, Vol. I, 119–160, Adv. Lect. Math. 24, Int. Press, 2013.
+$$
+\tau\cap\sigma=\varnothing,
+\qquad
+\tau\cup\sigma\in\mathcal B.
+$$
 
-[6] D. Dhar. "Self-organized critical state of sandpile automaton models." *Phys. Rev. Lett.* 64 (1990), 1613–1616.
+With hashed faces, each test takes $O(|\tau|+|\sigma|)$ expected time. Theorem 5.5 guarantees that transporting the resulting list produces exactly the tropical link; it is unnecessary to recompute the link independently except as a consistency check.
 
----
+### 7.3 Genus-preserving contraction
 
-## Appendix: File Reference
+For each contraction request, inspect whether it is a loop. A non-loop step decrements $V$ and $E$; a loop step decrements $E$ and increments $W$. In either case $N$ is unchanged. Each update and invariant check uses constant arithmetic time, so a sequence of $m$ contractions runs in $O(m)$ time and $O(1)$ auxiliary space if only the current signature is retained.
 
-| File | Contents |
-|---|---|
-| `Catalog/Bridges/CanonicalKernelDefs.lean` | Core definitions: harmonicity, normalization, separation, firing equivalence |
-| `Catalog/Bridges/CanonicalKernelTheorems.lean` | All structural theorems: uniqueness, leaf rigidity, subgroup properties, tree attachment |
-| `Catalog/Tropical/DivisorTheory.lean` | Divisor theory on trees: principal divisors, linear equivalence, Picard group triviality |
-| `Catalog/Tropical/Core.lean` | Tropical DP framework: Bellman optimality, min-plus distributivity |
-| `Catalog/Tropical/BellmanFord.lean` | Difference constraints: feasibility ↔ no negative cycles |
+## 8. Worked example
+
+Let
+
+$$
+D=\{a,b,c,d\},\qquad R=\{\rho_a,\rho_b,\rho_c,\rho_d\},
+$$
+
+with $\phi(x)=\rho_x$. Suppose the maximal boundary faces are
+
+$$
+\{a,b,c\},\qquad \{b,c,d\},
+$$
+
+and $\mathcal B$ contains these and every subset. Define $\mathcal T$ to consist of every subset of
+
+$$
+\{\rho_a,\rho_b,\rho_c\},\qquad
+\{\rho_b,\rho_c,\rho_d\}.
+$$
+
+The atlas is compatible by construction. The two maximal strata map to the two maximal tropical faces. Their intersection is
+
+$$
+\{a,b,c\}\cap\{b,c,d\}=\{b,c\},
+$$
+
+and transport gives
+
+$$
+\{\rho_a,\rho_b,\rho_c\}\cap
+\{\rho_b,\rho_c,\rho_d\}
+=\{\rho_b,\rho_c\}.
+$$
+
+Fix $\sigma=\{b\}$. The face $\{a\}$ belongs to its link because it is disjoint from $\{b\}$ and $\{a,b\}$ is a face. The face $\{d\}$ also belongs to the link, while $\{a,d\}$ does not because $\{a,b,d\}$ is contained in neither maximal face. The transported link around $\{\rho_b\}$ has exactly the same pattern.
+
+For the graph calculation, start with
+
+$$
+G_0=(V,E,W,N)=(4,6,2,3).
+$$
+
+Then
+
+$$
+g(G_0)=2+6+1-4=5,
+\qquad
+A(G_0)=2\cdot5+3=13.
+$$
+
+A non-loop contraction gives
+
+$$
+G_1=(3,5,2,3),
+$$
+
+and $g(G_1)=5$, $A(G_1)=13$. A loop contraction gives
+
+$$
+G_2=(3,4,3,3),
+$$
+
+again with $g(G_2)=5$ and $A(G_2)=13$. The specialization moves through graph types while remaining in the genus-$5$, three-marked component.
+
+## 9. Geometric interpretation and limitations
+
+For a stable nodal curve, vertices of the weighted dual graph represent irreducible components, vertex weights record component genera, edges record nodes, and legs record markings. Smoothing or specializing nodes changes the graph by contractions. Theorems 6.5–6.9 show numerically that these operations preserve total arithmetic genus.
+
+On the boundary side, collections of nodes define intersections of boundary divisors. On the tropical side, edge-length coordinates define rays and cones. If a geometric construction supplies a compatible boundary–ray atlas, Theorems 4.2, 5.3, and 5.5 identify the entire incidence skeleton and all local links. This is the precise combinatorial connection between a Deligne–Mumford boundary chart and a tropical moduli chart.
+
+The hypothesis is substantial. It is not a construction of the compactification, nor does it imply smoothness, representability, or stack-theoretic equivalence. In particular, an abstract simplicial complex forgets stabilizer groups of curves and automorphisms of weighted graphs. A stack-sensitive comparison should retain those isotropy groups.
+
+Likewise, the conclusion is locally toroidal rather than automatically globally toric. A cone complex can have the same face poset as a fan without embedding globally into a single lattice. Transition maps may carry integral monodromy; local lattices may fail to glue; distinct cones may have nontrivial automorphisms. A global toric variety requires one coherent fan realization. Thus the face-poset theorem proves everything visible at the incidence level while sharply exposing the missing lattice and monodromy data.
+
+## 10. Applications
+
+The first application is a verification principle for proposed tropicalizations of boundary charts. Rather than compare strata one dimension at a time, it suffices to establish a bijection on divisors and the incidence equivalence for arbitrary finite collections. All poset, codimension, complex, and link comparisons then follow functorially.
+
+The second application is computational. Finite incidence tables can be transported directly, and local links need only be computed on one side. This reduces duplicated calculations in examples of low-genus moduli spaces.
+
+The third application concerns degeneration algorithms. A graph simplification routine based on admissible contractions can certify at each step that genus and marking count remain fixed. Loop and non-loop edges require different updates, but both preserve the same invariant.
+
+The fourth application is conceptual. The decomposition separates three levels of structure:
+
+1. **Incidence:** face posets and simplicial complexes;
+2. **Integral geometry:** lattices, monoids, and balancing weights;
+3. **Stack structure:** automorphisms and isotropy.
+
+The current criterion completely handles the first level and supplies the genus invariant needed for specialization. This organization makes subsequent global questions more precise.
+
+## 11. Future work
+
+A first direction is stacky cone reconstruction. Stable weighted graphs of genus $g$ with $n$ legs form a category generated by edge contractions and graph automorphisms. The expectation is that this category reconstructs the extended tropical moduli space and matches the specialization category of Deligne–Mumford boundary strata. Genus-preserving contractions supply the morphisms, while automorphisms retain isotropy omitted by an ordinary simplicial complex.
+
+A second direction is a toroidal compactification criterion. Compatible boundary–ray atlases should yield a toroidal object when transition maps preserve integral monoids. Global toricity should be equivalent to the existence of a single fan realization with compatible lattice embeddings and trivial monodromy.
+
+A third direction is link recursion. The link of the cone indexed by a stable weighted graph is expected to decompose as a join of local deformation complexes attached to vertices and a contraction complex for remaining edges. Such a result would expose product structure hidden by the abstract link correspondence.
+
+A fourth direction is balancing. Boundary intersection multiplicities should transport to integral weights satisfying tropical balancing at codimension-two cones. This would strengthen the incidence correspondence into a statement about tropical cycles and numerical intersection theory.
+
+## 12. Conclusion
+
+A divisor–ray bijection preserving all finite incidence relations determines far more than a correspondence of generators. It identifies complete specialization posets, preserves ranks and set operations, matches dual and tropical simplicial complexes, and identifies the link around every face. Weighted graph contractions provide the compatible dynamics: non-loop contraction trades one edge for one vertex, loop contraction trades one edge for one unit of weight, and both preserve arithmetic genus and marked complexity.
+
+Together these results give a reusable local criterion for comparing boundary strata in compactified moduli of curves with cones in tropical moduli. They establish the full combinatorial blueprint while respecting the distinction between that blueprint and a global toric realization. The next layer is therefore clear: enrich incidence with integral lattices, monodromy, automorphisms, and balancing weights.

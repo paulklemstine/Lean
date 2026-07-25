@@ -1902,7 +1902,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Mobius Arithmetic: Number Theory on the Mobius Band"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ce71f394",
     "description": "The EML operator class (finite compositions of exp, log, +, *) has remarkable closure properties. Conjecture: The class of EML functions is closed under differentiation, and the derivative of any EML function of composition depth d is an EML function of composition depth at most d+1. Moreover, the derivative has a canonical EML chain rule form: (exp(h) * log(g))' = exp(h) * log(g) * (h' + g'/g). This factorization is the key structural insight: the derivative of an EML function factors through the original function itself, multiplied by a simple expression involving only the inner functions and their derivatives. This is stronger than the general Leibniz rule because the EML structure forces the derivative into a canonical form. For depth-d EML functions, the derivative can be written recursively as f' = f * (h'_1 + g'_1/g_1) where each h'_i and g'_i are depth-(d-1) EML functions. Test: compute the 3rd derivative of f(x) = exp(x^2) * log(x+1) and verify it can be written as an EML expression. Impact: establishes that EML functions form a differential algebra, enabling automatic EML differentiation for verified numerical computation.",
     "domains": [
       "EML",
@@ -1910,10 +1910,11 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "id": "seed_085",
+    "phase": "A",
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "EML Differential Calculus: Chain Rules for exp-log Compositions"
   },
@@ -2572,17 +2573,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Compactification of Moduli Spaces"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "25e8f86d",
     "description": "Prove that in the infinite-width limit, neural network training under gradient descent converges to kernel regression with the Neural Tangent Kernel (NTK). Formalize the NTK as the Gram matrix of Jacobians and prove it stays nearly constant during training for small learning rates.",
     "domains": [
       "MachineLearning",
       "Computation"
     ],
     "id": "seed_327",
+    "phase": "A",
     "priority_score": 0.87,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Neural Tangent Kernel: Convergence of Gradient Descent"
   },
@@ -3721,7 +3723,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Universal Approximation"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7b86dab6",
     "description": "Inspired by the AdS/CFT correspondence, formalize a mathematical holographic principle: a theorem about n-dimensional structures (the bulk) has a dual (shorter) proof in (n-1)-dimensional boundary terms. Conjecture: Every proof by induction on a well-founded order of rank n has an equivalent proof by coinduction on the n-1 boundary. Test: find a concrete theorem (e.g., finite Ramsey) and show its inductive proof in R^n maps to a coinductive proof on S^{n-1}. Impact: a new holographic proof theory connecting algebraic topology to proof complexity.",
     "domains": [
       "Physics",
@@ -3729,10 +3731,11 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "id": "seed_062",
+    "phase": "A",
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Holographic Mathematics: Bulk-Boundary Proof Duality"
   },
@@ -4977,17 +4980,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Generalization Bounds: Rademacher Complexity of Neural Networks"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "830d234a",
     "description": "Formalize the policy gradient theorem: the gradient of the expected return equals E[psi(s,a) * Q^pi(s,a)] where psi is the score function. Prove that policy gradient methods converge to a local optimum under the compatible function approximation theorem. Show that the variance of the gradient estimate is O(1/epsilon) for epsilon-greedy exploration.",
     "domains": [
       "MachineLearning",
       "Computation"
     ],
     "id": "seed_378",
+    "phase": "A",
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "ML Reinforcement Learning: Convergence of Policy Gradient Methods"
   },
@@ -7512,6 +7516,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-24T14:34:16.697796+00:00",
     "title": "Frankl's Union-Closed Conjecture: Partial Results"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Adjacency-degree algebras and spectral determination of graphs' and formalize its key results. Abstract: McKay proved that the spectra of all polynomial functions of the adjacency matrix $A$ and the diagonal degree matrix $D$ determine a tree. We prove a principal version of this theorem. Let $\\mathcal A(G)=\\langle I,A_G,D_G\\rangle$ and let $M_G=\\mathcal A(G)\\mathbf1$ be the cyclic module generated by the all-ones vector. For connected graphs the ideal $\\mathcal A(G)J\\mathcal A(G)$, where $J=\\mathbf1\\mathbf1^T$, acts on $M_G$ as the full endomorphism algebra. We show that every forest satisfies $M_G=U_G$, the automorphism-orbit module, and that the induced algebra on the orbit quotient of a tree is a full matrix algebra. It follows that the scalar moments $\\mathbf1^Tw(A_T,D_T)\\mathbf1$ determine every tree. For general graphs these moments are degree-decorated caterpillar homomorphism counts. The resulting moment-rigidity class lies inside the amenable, compact, refinable hierarchy of color refinement, and its first small-order failures are ten-vertex integral switchings invisible to $M_G",
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_0727",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.21494v1",
+    "status": "available",
+    "timestamp": "2026-07-25T20:17:38.908463+00:00",
+    "title": "ArXiv paper: Adjacency-degree algebras and spectral determination of graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'The Frankl--Tokushige product conjectures for $r$-cross-intersecting families' and formalize its key results. Abstract: We settle the uniform and biased product conjectures of Frankl and Tokushige for $r$-cross-intersecting families. Let $r\\geq2$, let $0\\leq k_i\\leq(r-1)n/r$, and let $\\mathcal{F}_i\\subseteq\\binom{[n]}{k_i}$ be $r$-cross-intersecting. We prove the sharp inequality $$\\prod_{i=1}^r\\frac{|\\mathcal{F}_i|}{\\binom{n}{k_i}}\\leq \\prod_{i=1}^r\\frac{k_i}{n},$$ with equality attained by the corresponding levels of a common $1$-star. As a consequence, we obtain the analogous $p_i$-biased measure theorem for $0\\leq p_i\\leq(r-1)/r$, $$ \\prod_{i=1}^r\u03bc_{p_i}(\\mathcal{F}_i)\\leq \\prod_{i=1}^r p_i.$$The main difficulty is that unequal parameters do not determine a single common target level; instead, the target levels $\\ell_1,\\ldots,\\ell_r$ must satisfy $\\sum_{i=1}^r \\ell_i=(r-1)n$. We overcome this asymmetry in three steps. An ordered-partition coupling gives a sharp additive inequality for every such choice of target levels. A star-calibrated upper-shadow inequality relates the density of a family on its",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0728",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.21589v1",
+    "status": "available",
+    "timestamp": "2026-07-25T20:17:42.160869+00:00",
+    "title": "ArXiv paper: The Frankl--Tokushige product conjectures for $r$-cross-intersecting families"
   },
   {
     "consumed_by_exp_id": "",

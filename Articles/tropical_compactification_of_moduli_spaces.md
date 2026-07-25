@@ -1,65 +1,156 @@
-# The Hidden Geometry of Networks: How Tropical Mathematics Reveals the Architecture of Moduli Spaces
+# When Curves Break, Tropical Geometry Draws the Blueprint
 
-## A Quiet Revolution in Shape Space
+A smooth curve can degenerate. A narrow neck pinches until it becomes a node; several components meet; a family that once looked continuous arrives at the edge of its parameter space. Algebraic geometers organize all smooth curves of genus $g$ into a moduli space, traditionally denoted $M_g$. To understand families that approach singular limits, they enlarge it by adding stable nodal curves. The resulting boundary is not an arbitrary fringe. It has a precise incidence pattern, and that pattern can be read as tropical geometry.
 
-Imagine you have a rubber band stretched between pins on a corkboard. You can slide the pins around, deform the band, and the shape changes smoothly. Now imagine doing this with every possible curve of a given complexity — every loop, every pretzel, every surface with a fixed number of holes. The space of all such shapes is called a *moduli space*, and understanding its boundaries — what happens when shapes degenerate, when holes collapse, when curves pinch — is one of the deepest problems in modern mathematics.
+Tropical geometry replaces parts of an algebraic curve by a weighted graph whose edges carry lengths. The graph is not merely a sketch. Vertices represent irreducible components, vertex weights record their intrinsic genera, edges represent nodes, and legs can record marked points. Letting an edge length tend to zero contracts that edge, exactly as smoothing or specializing a node changes the combinatorial type of a curve.
 
-For decades, algebraic geometers have studied these boundaries using the towering machinery of the Deligne-Mumford compactification, a celebrated construction that adds "degenerate curves" to fill in the missing boundary of the moduli space. But a remarkable parallel story has been unfolding in a seemingly unrelated corner of mathematics: tropical geometry, where the smooth world of curves is replaced by networks of sticks — graphs, in the mathematical sense — and the rich calculus of algebraic geometry is replaced by the stark arithmetic of minimum and addition.
+The central result developed here is a local bridge between these two pictures. Whenever boundary divisors and tropical rays are matched bijectively, and whenever a collection of divisors meets exactly when the corresponding rays lie in a common tropical cone, the *entire* boundary incidence structure agrees with the tropical cone structure. Strata, dimensions, intersections, specialization order, and links all correspond. A second result shows why this comparison remains inside a fixed genus: every admissible edge contraction preserves the arithmetic genus of the weighted graph.
 
-The bridge between these worlds turns out to rest on a surprisingly concrete foundation: the behavior of *harmonic functions on graphs* and the chip-firing game, a simple combinatorial process where tokens are redistributed along edges. The results described here establish, with machine-verified certainty, that this bridge is structurally sound — that the tropical world faithfully captures the essential architecture of classical moduli spaces.
+This is powerful, but it must be stated with care. Incidence data alone establish a combinatorial and local toroidal correspondence. They do not by themselves prove that a compactification is one global toric variety. A global toric realization additionally requires compatible lattices, integral gluing, and the absence of monodromy. The distinction is not technical housekeeping; it identifies exactly what remains after the combinatorics has been solved.
 
-## Chips, Graphs, and the Music of Redistribution
+## Two atlases for one boundary
 
-Picture a network — say, five cities connected by roads. Each city starts with some number of chips (think of them as units of currency, or energy, or political capital). A city can "fire": it sends one chip along each road to its neighbors, losing as many chips as it has connections. This is the *chip-firing game*, introduced by Dhar in statistical physics and independently by Baker and Norine in their landmark work connecting graph theory to algebraic geometry.
+Imagine a finite boundary chart with a set $D$ of irreducible boundary divisors. A finite subset $S\subseteq D$ is called a **boundary face** when all divisors in $S$ meet in a common stratum. The empty set is included, and every subset of a boundary face is again a boundary face.
 
-The central question is: when do two chip configurations represent "the same" state? The answer involves the *graph Laplacian*, a matrix that encodes the network's connectivity. Two configurations are equivalent — "firing-equivalent" — if one can be transformed into the other by a sequence of firings. The equivalence classes form a finite abelian group called the *critical group* or *Jacobian* of the graph, and this group is the tropical analogue of the Jacobian variety of an algebraic curve.
+Now take a tropical cone chart with a set $R$ of rays. A finite subset $T\subseteq R$ is a **tropical face** when its rays lie in a common cone. Again, the empty set is a face, and taking a subset preserves the face property.
 
-The results formalized here (see `Catalog/Bridges/CanonicalKernelTheorems.lean`) establish the rigorous algebraic foundations of this correspondence. The *firing equivalence relation* is shown to be a genuine equivalence relation — reflexive, symmetric, and transitive — which may sound routine but is the bedrock on which the entire theory stands. The *restricted Laplacian image*, which captures all possible chip redistributions within a chosen subset of the network, is proven to form a subgroup: it contains zero, is closed under addition, and closed under negation. This means the chip-firing lattice has exactly the right algebraic structure to serve as the discrete analogue of the space of principal divisors on a curve.
+Suppose there is a bijection
 
-## The Uniqueness Theorem: When the Network Sees Everything
+$$
+\phi:D\longrightarrow R
+$$
 
-The crown jewel of the formalized results is the *harmonic uniqueness theorem under separation*. Here is the key idea: a function on the vertices of a graph is called *harmonic* if, at every vertex in a chosen subset, it satisfies a discrete version of Laplace's equation — the value at the vertex equals the average of its neighbors' values, weighted by the graph Laplacian.
+such that, for every finite $S\subseteq D$,
 
-The *separation hypothesis* says that if two harmonic functions agree on a subset and are both "mean-zero" (normalized), then they must agree everywhere. This is a powerful rigidity statement: it means the subset "sees" the entire graph. Under this hypothesis, harmonic functions are uniquely determined by their boundary values — exactly mirroring the classical uniqueness theorem for harmonic functions in potential theory.
+$$
+S\text{ is a boundary face}\quad\Longleftrightarrow\quad
+\phi(S)\text{ is a tropical face}.
+$$
 
-Why does this matter for moduli spaces? Because the boundary of the tropical moduli space is built from graphs (tropical curves), and the behavior of functions on these graphs — how they extend, how they are constrained by boundary data — controls the geometry of the compactification. The uniqueness theorem ensures that the tropical boundary has no redundancy: each boundary stratum is uniquely determined by its combinatorial data.
+This single equivalence is the atlas compatibility condition. It says more than “individual divisors correspond to individual rays.” It says all simultaneous incidences agree.
 
-## Leaves, Trees, and the Propagation of Rigidity
+Transporting a collection means applying $\phi$ to each member:
 
-A particularly elegant result concerns *leaf rigidity*: if a vertex in a graph has only one neighbor (it's a "leaf"), then any harmonic function must take the same value at the leaf as at its sole neighbor. This is the discrete analogue of the fact that a harmonic function on a domain must be constant along any "tentacle" — a thin appendage with only one exit.
+$$
+\Phi(S)=\{\phi(d):d\in S\}.
+$$
 
-This result propagates through tree structures. The formalization proves that if a tree is attached to a subset of the graph (a "tree attachment"), then harmonic rigidity forces chip-firing uniqueness throughout the combined structure. In the language of tropical moduli spaces, this means that the boundary divisors corresponding to tree-like degenerations of curves are completely controlled by the interior data. The trees don't add any new degrees of freedom — they are rigidly determined.
+Because $\phi$ is bijective, transport has an inverse. It also preserves cardinality, inclusion, unions, and intersections:
 
-This is formalized as the theorem `harmonic_tree_attachment_forces_unique_firing` in `Catalog/Bridges/CanonicalKernelTheorems.lean`, which states: under the separation hypothesis, if two harmonic functions agree on a base set and the complement is a tree attachment, then the functions are firing-equivalent on the entire union. This is the precise statement that tree-like boundary strata of the tropical moduli space carry no independent moduli.
+$$
+|\Phi(S)|=|S|,
+$$
 
-## Divisors, Degrees, and the Tropical Picard Group
+$$
+\Phi(S)\subseteq\Phi(T)\Longleftrightarrow S\subseteq T,
+$$
 
-In a parallel development (see `Catalog/Tropical/DivisorTheory.lean`), the formalization establishes the foundations of tropical divisor theory on trees. A *divisor* on a graph is simply an integer-valued function on its vertices — recording how many "chips" sit at each point. The *degree* of a divisor is the total number of chips. A *principal divisor* is the Laplacian of some function, representing a chip-firing move.
+$$
+\Phi(S\cap T)=\Phi(S)\cap\Phi(T),\qquad
+\Phi(S\cup T)=\Phi(S)\cup\Phi(T).
+$$
 
-Two divisors are *linearly equivalent* if they differ by a principal divisor. The formalized results show that linear equivalence preserves degree, that it is a genuine equivalence relation, and — crucially — that on a tree, every degree-zero divisor is principal. This last statement means the tropical Picard group of a tree is trivial: the Jacobian of a tree is the trivial group. In the classical world, this corresponds to the fact that a rational curve (genus zero) has trivial Jacobian.
+These elementary-looking identities carry the main geometric message.
 
-The formalization also proves that on a tree, every divisor of nonneg degree has an *effective representative* — a linearly equivalent divisor with no negative values. This is a discrete Riemann-Roch phenomenon, and it is the foundation for the combinatorial proof of the Baker-Norine theorem.
+## The face-poset theorem
 
-## The Bellman-Ford Connection: Optimization Meets Geometry
+A **face poset** is the collection of all faces ordered by inclusion. Inclusion records specialization: imposing more boundary equations moves to a deeper stratum, while passing to a subface forgets some equations.
 
-The tropical framework extends naturally to optimization. The formalized results include a rigorous treatment of the *Bellman-Ford algorithm* through the lens of tropical algebra (see `Catalog/Tropical/Core.lean` and `Catalog/Tropical/BellmanFord.lean`). The key insight is that shortest path computation is tropical matrix multiplication: the min-plus semiring replaces ordinary arithmetic, and matrix powers compute multi-step optimal paths.
+**Face-Poset Correspondence Theorem.** *For compatible boundary and tropical charts as above, elementwise transport $S\mapsto\Phi(S)$ is an order isomorphism from the complete boundary face poset to the complete tropical face poset.*
 
-The formalization proves the fundamental theorem connecting difference constraint systems to negative cycle detection: a system of inequalities of the form *x(i) ≤ a + x(j)* is feasible if and only if the associated weighted graph has no negative-weight cycle. This is the tropical analogue of linear programming feasibility, and it connects the algebraic theory of tropical matrices to the geometric theory of tropical polytopes and, ultimately, to the combinatorics of the tropical moduli space.
+The proof is short enough to see in one glance. Compatibility says transport takes boundary faces to tropical faces. The inverse bijection takes tropical faces back. Bijectivity makes the two operations inverse, and preservation of inclusion makes them an order isomorphism.
 
-## Why It Matters: The Big Picture
+Several consequences arrive at once.
 
-The classical Deligne-Mumford compactification of the moduli space of curves is one of the most important constructions in algebraic geometry. It governs string theory amplitudes, enumerative geometry, and the topology of surface bundles. But its construction is technically formidable, involving stable curves, dual graphs, and elaborate deformation theory.
+First, a boundary stratum exists if and only if its rays span a tropical face. Second, a single boundary divisor occurs if and only if its corresponding tropical ray occurs. Third, intersections and unions of labels agree under transport. Fourth, the number of independent local boundary equations equals the number of rays in the corresponding simplicial cone. Thus, if a stratum is cut out by $k$ boundary divisors, its tropical face has $k$ rays:
 
-The tropical approach offers a parallel path: replace curves by graphs, replace algebraic functions by piecewise-linear functions, replace the Jacobian variety by the critical group. The results formalized here show that this parallel path is not merely an analogy — it is a rigorous mathematical correspondence, with the combinatorial structures faithfully encoding the geometric ones.
+$$
+\operatorname{codim}(S)=|S|=|\Phi(S)|.
+$$
 
-The boundary divisors of the tropical compactification correspond to tropical curves — graphs with specified edge lengths and genus constraints. The harmonic uniqueness theorem ensures these boundary strata are well-defined. The leaf rigidity and tree attachment results show that tree-like degenerations are completely controlled. The divisor theory on trees establishes the genus-zero base case. And the Bellman-Ford connection provides the computational engine for exploring these structures algorithmically.
+This is the codimension–ray-count equality.
 
-Together, these results form the mathematical foundation for understanding how the moduli space of curves compactifies through the tropical lens — a story where the deep geometry of algebraic curves meets the concrete combinatorics of graphs, and where chip-firing games on networks illuminate the architecture of one of mathematics' most profound spaces.
+The same statement can be packaged topologically. The **dual boundary complex** has one vertex for each boundary divisor and one simplex for each nonempty simultaneous intersection. The **tropical ray complex** has one vertex for each tropical ray and one simplex for each collection lying in a common cone. The compatibility condition identifies their simplices exactly. Consequently the two abstract simplicial complexes are isomorphic.
 
-## Looking Ahead
+## Looking around a stratum
 
-The formalized foundations open several compelling directions. The graph genus formula `|E| - |V| + c` should always be non-negative — a statement equivalent to the spanning tree bound — and proving this would complete the foundational theory of tropical curve degenerations. The Bellman-Ford matrix power interpretation, verified for 2-step and 3-step paths, awaits generalization to arbitrary step counts, which would yield a fully certified correctness proof for the algorithm. And the tropical determinant, shown to equal the algebraic tropical determinant, should achieve its infimum for matrices with finite entries — connecting tropical algebra to the Hungarian algorithm for optimal assignment.
+A global matching can conceal local mistakes, so one should zoom in. Fix a boundary face $\sigma$. Its **link** consists of faces $\tau$ disjoint from $\sigma$ for which $\tau\cup\sigma$ is still a face. Intuitively, the link records all new degeneration directions available near the chosen stratum without repeating directions already imposed.
 
-Perhaps most intriguingly, the separation between tropical rank and classical rank — the possibility that tropical matrices can have rank exceeding their dimension — hints at fundamentally new phenomena in tropical linear algebra, with implications for the geometry of tropical varieties and the combinatorics of the moduli space boundary.
+**Link Correspondence Theorem.** *Transport induces an order isomorphism between the link of every boundary face $\sigma$ and the link of the tropical face $\Phi(\sigma)$.*
 
-The mathematics is precise. The proofs are verified. And the bridge between the tropical and classical worlds grows ever stronger.
+Indeed, a bijection preserves disjointness, while compatibility and preservation of unions give
+
+$$
+\tau\cup\sigma\text{ is a boundary face}
+\Longleftrightarrow
+\Phi(\tau)\cup\Phi(\sigma)\text{ is a tropical face}.
+$$
+
+So the comparison is not only global. Every neighborhood in the incidence complex has the same combinatorial specialization directions on both sides.
+
+## Why contraction does not change genus
+
+The bridge to curves needs one more ingredient. A connected weighted dual graph can be summarized numerically by four nonnegative integers:
+
+- $V$, the number of vertices;
+- $E$, the number of edges;
+- $W$, the sum of the vertex weights;
+- $N$, the number of marked legs.
+
+Its arithmetic genus is
+
+$$
+g=W+E+1-V.
+$$
+
+Its marked stability complexity may be recorded as
+
+$$
+C=2g+N,
+$$
+
+which differs from the familiar $2g-2+N$ only by a constant shift and avoids irrelevant subtraction issues in nonnegative arithmetic.
+
+There are two local edge contractions.
+
+For a non-loop edge joining two distinct vertices, contraction merges those vertices and deletes the edge:
+
+$$
+(V,E,W,N)\longmapsto(V-1,E-1,W,N).
+$$
+
+Provided the graph has at least two vertices and at least one edge, direct substitution gives
+
+$$
+W+(E-1)+1-(V-1)=W+E+1-V=g.
+$$
+
+For a loop, contraction deletes the loop and adds one unit to the weight of its vertex:
+
+$$
+(V,E,W,N)\longmapsto(V,E-1,W+1,N).
+$$
+
+Again,
+
+$$
+(W+1)+(E-1)+1-V=W+E+1-V=g.
+$$
+
+**Genus-Preservation Theorem.** *Every admissible non-loop or loop contraction of a connected weighted dual graph preserves arithmetic genus and the number of legs; hence it preserves $C=2g+N$.*
+
+Repeated contractions preserve genus as well: if every step preserves $g$, induction on the number of steps shows that any finite chain does. This is the numerical mechanism ensuring that tropical specialization stays in the same fixed-genus, fixed-marking component.
+
+As an example, take $(V,E,W,N)=(4,6,2,3)$. Then $g=2+6+1-4=5$. A non-loop contraction produces $(3,5,2,3)$, still of genus $5$. A subsequent loop contraction produces $(3,4,3,3)$, again of genus $5$. The graph changes, but the moduli problem does not.
+
+## From local agreement to global geometry
+
+The results clarify what a tropical compactification statement truly requires. At the simplicial level, compatible divisor–ray atlases settle everything visible through incidence: faces, strata, links, codimensions, and specialization. They give a rigorous local criterion for identifying the boundary complex of a stable-curve compactification with a tropical moduli complex.
+
+But “toroidal” and “toric” are not synonyms. A toroidal space is locally modeled on toric charts. A globally toric variety must arise from a single fan in a common lattice. Incidence alone does not remember lattice embeddings, transition monoids, automorphism groups, or monodromy around loops in the cone complex. Therefore the correct conclusion is conditional and structural: compatible atlases provide the full combinatorial skeleton of the desired compactification; a global toric conclusion requires additional global gluing data.
+
+That boundary matters far beyond moduli theory. Degeneration methods appear in enumerative geometry, mirror symmetry, non-Archimedean geometry, and the study of singular limits in mathematical physics. Whenever a complicated geometric family breaks into combinatorial pieces, one asks whether the pieces retain enough information to reconstruct how the family fits together. Here the answer is precise: a bijection on elementary directions is insufficient, but a bijection preserving *all simultaneous incidence* recovers the complete face architecture.
+
+There is also a practical lesson for computation. One may store a chart as a finite table of compatible subsets. After checking the incidence equivalence once, there is no need to compare codimensions, links, and specialization chains separately: each is transported automatically. A graph-specialization program likewise needs only two constant-time updates. For a non-loop it subtracts one from both $V$ and $E$; for a loop it subtracts one from $E$ and adds one to $W$. The invariant $g=W+E+1-V$ becomes a simple diagnostic that detects an invalid update immediately.
+
+The emerging picture is vivid. A nodal curve leaves behind a weighted graph. Each node becomes an edge; each boundary divisor becomes a ray; each compatible cluster of degenerations becomes a cone. Contracting edges moves to faces without changing genus. The boundary and the tropical world are therefore not merely analogous drawings. Under the atlas compatibility condition, they are the same combinatorial blueprint, viewed once through algebraic degeneration and once through polyhedral geometry.
