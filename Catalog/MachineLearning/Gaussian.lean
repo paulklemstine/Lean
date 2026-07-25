@@ -26,46 +26,13 @@ This decomposition is fundamental to information geometry: KL is the
 Bregman divergence of the log-partition function on the natural parameter space.
 -/
 import Mathlib
+import MachineLearning.PACBayes.Defs
 
 open Real BigOperators Finset Filter
 
 noncomputable section
 
 namespace PACBayes
-
-/-- The scalar McAllester upper bound, included here so this file is independently
-compilable. -/
-def mcAllesterBound (empRisk kl : ℝ) (n : ℕ) (δ : ℝ) : ℝ :=
-  empRisk + Real.sqrt ((kl + Real.log (2 * Real.sqrt n / δ)) /
-    (2 * ((n : ℝ) - 1)))
-
-/-- Closed form for the KL divergence between isotropic Gaussian perturbations
-`N(w, σq² I)` and `N(0, σp² I)`, where `normW = ‖w‖`. -/
-def gaussianKLDiv (d : ℕ) (normW σq σp : ℝ) : ℝ :=
-  normW ^ 2 / (2 * σp ^ 2) +
-    (d : ℝ) / 2 * (σq ^ 2 / σp ^ 2 - 1 - Real.log (σq ^ 2 / σp ^ 2))
-
-/-- Equal-variance Gaussian mean-shift complexity. -/
-def gaussianShiftKL (_d : ℕ) (normW σ : ℝ) : ℝ :=
-  normW ^ 2 / (2 * σ ^ 2)
-
-/-- Data carried by a computed scalar PAC--Bayes certificate. -/
-structure GaussianPacBayesCertificate where
-  empRisk : ℝ
-  complexity : ℝ
-  bound : ℝ
-  valid : empRisk + complexity ≤ bound
-
-/-- The McAllester certificate obtained by inserting the Gaussian KL formula.
-Its `complexity` field is the nonnegative square-root penalty. -/
-def gaussianPacBayesCertificate
-    (n d : ℕ) (δ _lam σp σq empRisk normw : ℝ) : GaussianPacBayesCertificate where
-  empRisk := empRisk
-  complexity := Real.sqrt ((gaussianKLDiv d normw σq σp +
-    Real.log (2 * Real.sqrt n / δ)) / (2 * ((n : ℝ) - 1)))
-  bound := mcAllesterBound empRisk (gaussianKLDiv d normw σq σp) n δ
-  valid := by
-    simp [mcAllesterBound]
 
 /-! ## Section 1: Gaussian KL Properties -/
 

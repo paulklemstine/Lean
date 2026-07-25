@@ -1,81 +1,231 @@
-# The Information Geometry of Adding Random Variables
+# When Entropy Draws a Right Triangle
 
-## How a 75-year-old inequality connects the shapes of probability to the shapes of space
+## A geometric language for the sharp entropy-power boundary
 
----
+Randomness is usually described with words that sound intangible: uncertainty, disorder, information. Geometry, by contrast, feels concrete. We can draw a length, square it, and watch two perpendicular contributions combine by the Pythagorean theorem. Yet a particular normalization of entropy reveals that these are not separate worlds. At the sharp boundary of the entropy power inequality, uncertainty behaves like the squared radius of a Euclidean object.
 
-When Claude Shannon invented information theory in 1948, he gave the world a single number — entropy — that captured everything essential about uncertainty. A fair coin has one bit of entropy. A loaded die has less. A perfectly predictable signal has none at all.
+That observation is the organizing idea of this article. It gives a clean translation among three quantities: differential entropy, entropy power, and entropy radius. It identifies the exact logarithmic threshold at which entropy powers add. It explains why isotropic Gaussian random vectors attain equality in every positive dimension. And it provides an exact stability law: raising the entropy above the sharp threshold by a known amount creates a precisely calculable surplus in entropy power.
 
-But Shannon also opened a deeper mystery: what happens to information when you combine random signals? If you add two independent noisy channels together, how much uncertainty does the result carry? The answer turns out to connect information theory to geometry in a way that took decades to fully appreciate.
+The point is not merely a change of notation. The radius picture makes the information-theoretic inequality look like a right triangle, places Gaussian convolution in a familiar geometry, and exposes a close analogy with the radius formulation of the Brunn--Minkowski inequality.
 
-## The Power Behind the Noise
+## From entropy to an effective size
 
-The story begins with a deceptively simple concept called *entropy power*. For any random variable, the entropy power transforms Shannon's logarithmic entropy back into something with physical units — a kind of "effective variance" that measures how spread out the randomness is. For a Gaussian bell curve with variance σ², the entropy power is exactly proportional to σ². For any other distribution with the same entropy, the entropy power is smaller.
+Let $h$ be a real number representing differential entropy in dimension $n$, where $n$ is a positive integer. Define the entropy power by
 
-In 1948, Shannon conjectured — and in 1959, Amir Stam rigorously proved — the Entropy Power Inequality: when you add two independent random variables, the entropy power of the sum is at least the sum of the individual entropy powers.
+$$
+N_n(h)=\frac{\exp(2h/n)}{2\pi e}.
+$$
 
-Written symbolically: **N(X + Y) ≥ N(X) + N(Y)**.
+The normalization is chosen so that a centered isotropic Gaussian with covariance $vI_n$ has entropy power exactly $v$. Thus entropy power translates an additive logarithmic quantity into a variance-like scale.
 
-This looks like a simple algebraic fact, but it encodes something profound. It says that adding independent random signals always creates *more* effective randomness than you'd expect from just combining the pieces. Noise, in a sense, is superadditive.
+Now define the entropy radius
 
-## A Bridge to Geometry
+$$
+r_n(h)=\frac{\exp(h/n)}{\sqrt{2\pi e}}.
+$$
 
-The real surprise came when mathematicians noticed that the Entropy Power Inequality is not just an information-theoretic fact — it's a *geometric* one.
+The central identity is immediate but decisive:
 
-In convex geometry, there's a classical result called the Brunn-Minkowski inequality, discovered in the 1880s. If you take two solid shapes in space and form their *Minkowski sum* (sliding one shape along every point of the other), the volume of the result satisfies:
+$$
+N_n(h)=r_n(h)^2.
+$$
 
-**|A + B|^{1/n} ≥ |A|^{1/n} + |B|^{1/n}**
+Indeed, squaring the numerator doubles the exponent, while squaring the denominator produces $2\pi e$. Entropy power is literally the square of entropy radius.
 
-This says that combining shapes in n-dimensional space makes them grow faster than you'd expect. It's the foundational inequality of convex geometry, with implications for isoperimetric problems, crystallography, and optimal transport.
+This lets us hear the entropy power inequality in geometric language. For entropies $h_X$, $h_Y$, and $h_S$, the inequality
 
-The connection to entropy power is not a coincidence. If you replace "volume" with "entropy power" and "Minkowski sum" with "convolution of independent random variables," you get the EPI. The two inequalities are different facets of the same mathematical diamond.
+$$
+N_n(h_X)+N_n(h_Y)\le N_n(h_S)
+$$
 
-## When Equality Tells the Story
+is equivalent to
 
-In mathematics, the most interesting part of an inequality is often when it becomes an equality. The cases where the bound is tight reveal the underlying structure.
+$$
+r_n(h_X)^2+r_n(h_Y)^2\le r_n(h_S)^2.
+$$
 
-For the Brunn-Minkowski inequality, equality holds when the two shapes are similar (one is a scaled and translated copy of the other). For the entropy power inequality, equality holds when both random variables are Gaussian with proportional covariance matrices.
+So the output radius is at least the Euclidean length obtained by placing the two input radii on perpendicular axes. In symbols,
 
-This is why the Gaussian distribution is so special in information theory. It's not just convenient or ubiquitous — it's the *extremal* distribution for the entropy power inequality, just as the sphere is the extremal shape for the isoperimetric inequality.
+$$
+r_n(h_S)\ge \sqrt{r_n(h_X)^2+r_n(h_Y)^2}.
+$$
 
-Recent work has pushed this understanding further, asking: what happens *near* equality? If the entropy power inequality is almost tight, must the distributions be almost Gaussian? These "stability" results are among the most active areas of research in information theory today.
+This is the Pythagorean radius-growth law. It does not by itself establish the probabilistic entropy power inequality for arbitrary random vectors; that deeper statement also requires hypotheses such as independence and analytic facts about convolution. What it does establish is an exact equivalence once the three entropies are given: the information inequality and the geometric radius inequality are the same numerical assertion.
 
-## The Heat Flow Proof
+## The sharp boundary
 
-One of the most elegant proofs of the entropy power inequality uses a technique from physics: heat flow. Imagine dropping a blob of ink into still water. As time passes, the ink diffuses, spreading out in a bell-curve pattern. Physically, diffusion increases entropy — the ink becomes less concentrated, more random.
+Because the exponential function is strictly increasing, entropy power increases strictly with entropy in every positive dimension. This means there is one and only one output entropy at which equality holds.
 
-The key insight, formalized by several mathematicians in the early 2000s, is that the entropy power evolves *concavely* along this diffusion process. This means the entropy power curve bows upward, and the midpoint of any two values on the curve lies below the curve itself. This concavity is exactly what's needed to prove the EPI.
+Solving
 
-The heat flow proof reveals that the EPI is really a statement about how randomness flows through time. The Gaussian is the equilibrium state — the distribution that diffusion naturally tends toward. The EPI captures the fact that this tendency is irreversible and accelerating.
+$$
+N_n(h_S)=N_n(h_X)+N_n(h_Y)
+$$
 
-## Counting, Convolving, Converging
+for $h_S$ gives the sharp entropy boundary
 
-The ideas extend naturally to discrete probability distributions, where the random variables take values in a finite set rather than on the real line. In this setting, the "maximum entropy" distribution is the uniform distribution (every outcome equally likely), playing the role of the Gaussian.
+$$
+B_n(h_X,h_Y)=\frac n2\log\!\left(\exp(2h_X/n)+\exp(2h_Y/n)\right).
+$$
 
-Here the connections become concrete and computable. We can verify that Shannon entropy is always maximized by the uniform distribution. We can prove that the Rényi entropy of order 2 (the "collision entropy" used in cryptography) is always bounded by the Shannon entropy. And we can watch the central limit theorem in action: as we convolve a distribution with itself repeatedly, its entropy grows linearly, and the distribution approaches Gaussian shape.
+Two exact statements follow.
 
-This last fact — the entropic central limit theorem — is perhaps the deepest connection of all. The CLT says that sums of independent random variables approach a Gaussian distribution. The EPI says this approach is monotone in information-theoretic terms: each additional convolution brings you strictly closer to Gaussian. The arrow of information points in one direction only.
+**Sharp boundary theorem.** For every positive integer $n$ and all real $h_X,h_Y,h_S$,
 
-## Dimensions and Beyond
+$$
+N_n(h_X)+N_n(h_Y)\le N_n(h_S)
+$$
 
-The story gains new dimensions — literally — when we consider higher-dimensional random variables. The entropy power in d dimensions involves dividing the entropy by d before exponentiating, giving:
+if and only if
 
-**N(X) = exp(2H(X)/d)**
+$$
+B_n(h_X,h_Y)\le h_S.
+$$
 
-This dimensional scaling connects the EPI directly to the geometry of d-dimensional space. The Brunn-Minkowski inequality becomes stronger in higher dimensions (volumes grow faster), and correspondingly, the entropy power inequality becomes tighter. The interplay between dimension and information content is a frontier of current research.
+Moreover, equality of entropy powers holds if and only if
 
-In recent years, researchers have also explored *Rényi* entropy power inequalities, where the classical Shannon entropy is replaced by Rényi's one-parameter family of entropies. Rényi entropy of order 2 (the collision entropy) is particularly important in cryptography and quantum information. The ordering H₂ ≤ H₁ — Rényi entropy is always bounded by Shannon entropy — is a fundamental inequality that constrains what cryptographic protocols can achieve.
+$$
+h_S=B_n(h_X,h_Y).
+$$
 
-## The Frontier
+The proof is transparent. Substituting the definition of $B_n$ into $N_n$ cancels the logarithm and exponential, yielding the sum of the two input powers. Strict monotonicity then converts comparison of powers into comparison of entropies and makes the equality point unique.
 
-The entropy power inequality sits at a remarkable crossroads. To the east lies information theory and coding. To the west, convex geometry and optimal transport. To the north, probability and the central limit theorem. To the south, physics and thermodynamics.
+The boundary is a scaled log-sum-exp function, a smooth version of a maximum. If one input entropy greatly exceeds the other, the boundary lies only slightly above the larger entropy. If the inputs are equal, say $h_X=h_Y=h$, then
 
-Current research is pushing in several directions simultaneously. Can we prove sharp stability bounds — showing that near-equality in the EPI forces near-Gaussianity with optimal constants? Can we extend the EPI to non-Euclidean spaces, where the notion of "adding" random variables must be replaced by something more abstract? Can we find discrete analogs that apply to finite groups, with applications to additive combinatorics?
+$$
+B_n(h,h)=h+\frac n2\log 2.
+$$
 
-These questions are not just mathematical curiosities. They touch practical problems in communication, compression, machine learning, and the foundations of statistical physics. Every time we transmit a signal through a noisy channel, every time we compress data, every time we train a neural network — the entropy power inequality is silently at work, setting fundamental limits on what is possible.
+That extra term is exactly what is needed to double entropy power.
 
-The mathematics of randomness, it turns out, is remarkably structured. And at the heart of that structure lies a 75-year-old inequality that Claude Shannon, with his characteristic intuition, recognized as fundamental before anyone could prove it.
+## Why Gaussians fit perfectly
 
----
+Consider a centered isotropic Gaussian random vector in $n$ dimensions with covariance $vI_n$, where $v>0$. Its differential entropy is
 
-*The formal verification of the results described in this article — including the entropy-volume bridge, the Rényi-Shannon ordering, and the linear growth theorem for iterated convolutions — was completed as part of ongoing research connecting information theory and convex geometry.*
+$$
+h_G(n,v)=\frac n2\log(2\pi e v).
+$$
+
+Substitution into the entropy-power formula gives
+
+$$
+N_n(h_G(n,v))=v,
+$$
+
+and consequently
+
+$$
+r_n(h_G(n,v))=\sqrt v.
+$$
+
+Thus the entropy radius of an isotropic Gaussian is its ordinary standard deviation. The abstract information radius has become a familiar statistical length.
+
+Now take independent centered isotropic Gaussians with variances $v_X$ and $v_Y$. Their sum is again centered and isotropic, with variance $v_X+v_Y$. Therefore
+
+$$
+N_n(h_G(n,v_X+v_Y))
+=N_n(h_G(n,v_X))+N_n(h_G(n,v_Y)),
+$$
+
+for every positive dimension $n$ and all $v_X,v_Y>0$. In radius language,
+
+$$
+r_n(h_G(n,v_X+v_Y))^2
+=r_n(h_G(n,v_X))^2+r_n(h_G(n,v_Y))^2.
+$$
+
+This is not just reminiscent of the Pythagorean theorem; after normalization, it is exactly the same algebra. Independent Gaussian noise sources add their variances, while their standard deviations combine as perpendicular lengths.
+
+A concrete example makes the picture vivid. Let $v_X=1$ and $v_Y=4$. The input entropy radii are $1$ and $2$, while the output radius is $\sqrt5$. The three radii can be drawn as the sides of a right triangle. The calculation works in dimension $1$, dimension $10$, or dimension $10{,}000$, because the normalization absorbs the dimension into the entropy scale.
+
+## Measuring distance above the boundary
+
+A sharp inequality should say more than where equality occurs. It should quantify what happens away from equality. Define the entropy-power deficit, or slack, by
+
+$$
+D_n(h_X,h_Y,h_S)
+=N_n(h_S)-N_n(h_X)-N_n(h_Y).
+$$
+
+The entropy power inequality is exactly the statement $D_n\ge0$. Suppose the output entropy lies an amount $\delta$ above the sharp boundary:
+
+$$
+h_S=B_n(h_X,h_Y)+\delta.
+$$
+
+Then the exponential definition gives an exact multiplicative law:
+
+$$
+N_n(h_S)
+=\exp(2\delta/n)\bigl(N_n(h_X)+N_n(h_Y)\bigr).
+$$
+
+Subtracting the boundary value yields the exact additive stability identity
+
+$$
+D_n(h_X,h_Y,h_S)
+=\bigl(\exp(2\delta/n)-1\bigr)
+\bigl(N_n(h_X)+N_n(h_Y)\bigr).
+$$
+
+This formula contains no approximation. If $\delta>0$, then $\exp(2\delta/n)>1$, so the deficit is strictly positive. If $\delta=0$, the deficit vanishes. If $\delta$ is small, the expansion $\exp(2\delta/n)-1\approx2\delta/n$ shows that the slack initially grows linearly with entropy excess:
+
+$$
+D_n\approx \frac{2\delta}{n}
+\bigl(N_n(h_X)+N_n(h_Y)\bigr).
+$$
+
+The exact identity and its small-excess approximation clarify the role of dimension. For a fixed entropy excess $\delta$, the multiplicative change is governed by $\delta/n$, the excess per coordinate.
+
+## A bridge to convex geometry
+
+The Brunn--Minkowski inequality says that for measurable sets $A,B\subset\mathbb R^n$, volume radius grows at least linearly under Minkowski addition:
+
+$$
+\operatorname{vol}(A+B)^{1/n}
+\ge \operatorname{vol}(A)^{1/n}+\operatorname{vol}(B)^{1/n}.
+$$
+
+Entropy radius offers a probabilistic analogue of geometric radius, but the combination law has exponent two:
+
+$$
+r_S^2\ge r_X^2+r_Y^2.
+$$
+
+This contrast is informative. Minkowski addition of sets aligns geometric lengths, producing linear addition of radii. Convolution of independent random variables combines variance-like quantities, producing Euclidean addition of entropy radii. Both theories turn a complicated operation into a simple statement about effective size.
+
+The bridge becomes especially suggestive for random vectors uniformly distributed on sets. Their differential entropy is the logarithm of volume, so entropy normalization naturally recovers a volume scale. Making the full connection rigorous for general sets requires analytic work involving convolution, regularization, and limiting arguments. Still, the radius language reveals why information theory and convex geometry repeatedly share the same functional shapes: logarithms turn products into sums, exponentials restore scale, and normalized radii expose the underlying addition law.
+
+## A universal curve hidden in the formulas
+
+The stability identity also reveals a useful data-collapse principle. Divide the deficit by the boundary power $N_n(h_X)+N_n(h_Y)$. The dependence on the two inputs disappears:
+
+$$
+\frac{D_n}{N_n(h_X)+N_n(h_Y)}=\exp(2\delta/n)-1.
+$$
+
+Every pair of input entropies therefore follows the same dimension-normalized curve. An engineer comparing noise budgets, a statistician comparing smoothing operations, and a geometer studying radius growth would all see the same graph after scaling by boundary power. At $\delta=0$ the graph passes through zero; for positive excess it rises exponentially; and its initial slope is $2/n$.
+
+The formulas are also computationally friendly. To evaluate the boundary without overflowing when entropies are large, let $m=\max(h_X,h_Y)$ and rewrite it as
+
+$$
+B_n(h_X,h_Y)=m+\frac n2\log\!\left(\exp(2(h_X-m)/n)+\exp(2(h_Y-m)/n)\right).
+$$
+
+Both exponents are now nonpositive. This familiar log-sum-exp stabilization turns the theorem into a reliable numerical diagnostic: compute the boundary, compare it with the observed output entropy, and use the exact identity to translate the gap into power slack.
+
+The same idea extends conceptually to many inputs. For entropies $h_1,\ldots,h_k$, the natural boundary is
+
+$$
+\frac n2\log\!\left(\sum_{j=1}^k\exp(2h_j/n)\right),
+$$
+
+whose entropy power is the sum of all input powers. In radius language, the output radius is the Euclidean norm of a $k$-dimensional vector of input radii. The right triangle becomes a right-angled coordinate system.
+
+## Where the picture leads
+
+The results here isolate the exact algebraic skeleton of the sharp entropy-power boundary. Entropy power is squared entropy radius. The inequality is Pythagorean growth. The logarithmic boundary is necessary and sufficient. Isotropic Gaussians attain equality in every positive dimension because variance adds. Entropy excess produces an exact, positive power surplus.
+
+The larger frontier is analytic and geometric. For arbitrary absolutely continuous independent random vectors, one seeks a full proof that convolution places the sum entropy above this boundary, together with the equality classification by Gaussian laws with proportional covariance matrices. A matrix version replaces scalar variance by the determinant radius $\det(\Sigma)^{1/n}$ and connects Gaussian entropy power to Minkowski's determinant inequality. Quantitative stability would go further still, using a small deficit to control distance from the proportional-Gaussian family.
+
+But even before those extensions, the central image is worth keeping: entropy can be assigned a radius, and at the sharp Gaussian boundary two independent sources of uncertainty meet as the legs of a right triangle.
