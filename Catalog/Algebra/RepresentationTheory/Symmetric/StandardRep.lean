@@ -6,7 +6,7 @@ This file defines the standard representation of `S_n` and proves
 that the permutation character decomposes as trivial + standard.
 -/
 import Mathlib
-import Algebra.RepresentationTheory.Symmetric.PermutationRep
+-- import Algebra.RepresentationTheory.Symmetric.PermutationRep
 
 open Finset
 

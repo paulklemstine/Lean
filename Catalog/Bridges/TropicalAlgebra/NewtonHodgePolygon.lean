@@ -1,5 +1,5 @@
 import Mathlib
-import Bridges.NewtonHodgeDefs
+-- import Bridges.NewtonHodgeDefs
 
 /-!
 # Newton-Hodge Polygon Theorems for the p-adic Langlands Correspondence

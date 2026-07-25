@@ -11,7 +11,7 @@ corresponding closure property for tropically recognizable functions.
 
 import Mathlib
 import Logic.GraphTheory.Defs
-import .lake.packages.mathlib.Mathlib.Algebra.Category.ModuleCat.Algebra
+import Mathlib.Algebra.Category.ModuleCat.Algebra
 
 namespace TropicalMSO
 

@@ -2,7 +2,7 @@ import Logic.BasicMonotoneCircuit.Basic
 import Logic.HilbertSpace.AdvancedTheorems
 import MachineLearning.ShefferFunction.Lean.GeneralIteratedSoftplus
 import MachineLearning.ShefferFunction.Lean.ShefferAlgebra
-import EML.Lean.SoftplusBasic
+-- import EML.Lean.SoftplusBasic
 import Mathlib
 
 /-! # CatalogBuild.MachineLearning.ShefferFunction.OrbitDynamics

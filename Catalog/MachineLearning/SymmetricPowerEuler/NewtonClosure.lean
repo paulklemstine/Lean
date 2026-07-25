@@ -5,7 +5,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 import Mathlib
 import Logic.GraphTheory.Defs
 import MachineLearning.SymmetricPowerEuler.Recurrence
-import .lake.packages.mathlib.Mathlib.Probability.Kernel.Invariance
+import Mathlib.Probability.Kernel.Invariance
 
 /-!
 # Newton Closure for Symmetric-Power Weights

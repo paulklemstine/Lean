@@ -3,8 +3,8 @@ Copyright (c) 2024 Harmonic. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 -/
 import Mathlib
-import Catalog.Physics.AbstractAlgebra.NoetherConservation
-import Catalog.Physics.PosetTheory.DiscreteNoetherConverse
+import Physics.AbstractAlgebra.NoetherConservation
+import Physics.PosetTheory.DiscreteNoetherConverse
 
 /-!
 # Bridge: Continuous Noether Charges Sample to Discrete Conservation Laws

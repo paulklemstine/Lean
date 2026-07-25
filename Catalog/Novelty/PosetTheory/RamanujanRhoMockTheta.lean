@@ -1,5 +1,5 @@
 import Mathlib
-import Catalog.Novelty.PosetTheory.RamanujanRhoFactorization
+import Novelty.PosetTheory.RamanujanRhoFactorization
 
 /-!
 # Coefficients of Ramanujan's third order mock theta function ρ(q): a finite sign law

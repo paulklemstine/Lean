@@ -1,8 +1,8 @@
 import Mathlib
-import Catalog.Logic.ProofComplexity.SimulationPreorder
-import Catalog.Logic.ProofComplexity.SimulationDegrees
-import Catalog.Logic.ProofComplexity.DegreeLattice
-import Catalog.Logic.ProofComplexity.OrderType
+import Logic.ProofComplexity.SimulationPreorder
+import Logic.ProofComplexity.SimulationDegrees
+import Logic.ProofComplexity.DegreeLattice
+import Logic.ProofComplexity.OrderType
 
 /-! # The p-degrees have a least element but **no greatest element**
 

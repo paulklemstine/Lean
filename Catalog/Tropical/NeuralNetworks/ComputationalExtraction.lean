@@ -1,25 +1,25 @@
 import Lean
-import argparse
-import json
-import logging
-import math
-import numpy
-import os
-import shlex
-import subprocess
-import sys
-import torch
-import traceback
-import os
-import sys
-import json
-import math
-import subprocess
-import shlex
-import traceback
-import argparse
-import logging
-import numpy as np
+-- import argparse
+-- import json
+-- import logging
+-- import math
+-- import numpy
+-- import os
+-- import shlex
+-- import subprocess
+-- import sys
+-- import torch
+-- import traceback
+-- import os
+-- import sys
+-- import json
+-- import math
+-- import subprocess
+-- import shlex
+-- import traceback
+-- import argparse
+-- import logging
+-- import numpy as np
 
 /-! # CatalogBuild.EML.ComputationalExtraction
 
@@ -371,7 +371,7 @@ def crystallize_model(model, rank: int = CRYSTALLIZATION_RANK) -> Dict[str, Any]
 
     Returns a dictionary mapping layer names to (crystallized_weight, metadata).
     \"\"\"
-    import torch
+--     import torch
     engine = CrystallizationEngine(rank=rank)
     crystal_state: Dict[str, Any] = {}
 
@@ -396,7 +396,7 @@ def crystallize_model(model, rank: int = CRYSTALLIZATION_RANK) -> Dict[str, Any]
 
 def generate_with_base_model(tokenizer, model, prompt: str, max_new_tokens: int = 256) -> str:
     \"\"\"Generate text using the base Hugging Face model.\"\"\"
-    import torch
+--     import torch
     inputs = tokenizer(prompt, return_tensors='pt').to(model.device)
     with torch.no_grad():
         outputs = model.generate(

@@ -15,7 +15,7 @@ regime of the porous-set uncertainty phenomenon; the subtler additive-energy
 argument needed for arbitrary fixed porosity is deliberately not assumed.
 -/
 import Mathlib
-import Catalog.Novelty.HilbertSpace.AdditiveCAPadicRenorm
+import Novelty.HilbertSpace.AdditiveCAPadicRenorm
 
 open scoped BigOperators
 

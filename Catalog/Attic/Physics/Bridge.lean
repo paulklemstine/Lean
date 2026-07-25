@@ -27,7 +27,7 @@ This module establishes the formal bridge between:
 -/
 
 import Physics.TropicalThermodynamics.Landauer
-import .lake.packages.mathlib.Mathlib.Combinatorics.Matroid.Circuit
+import Mathlib.Combinatorics.Matroid.Circuit
 
 open Real Set Fintype TropicalCircuit
 

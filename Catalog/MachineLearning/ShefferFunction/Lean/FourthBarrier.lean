@@ -18,7 +18,7 @@ are equivalent questions.
 -/
 
 import Mathlib
-import ShefferAI.Lean.SoftplusBasic
+-- import ShefferAI.Lean.SoftplusBasic
 import MachineLearning.ShefferFunction.Lean.ShefferAlgebra
 import ShefferAI.Lean.AdvancedTheorems
 import ShefferAI.Lean.OpenQuestions

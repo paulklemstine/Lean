@@ -1,7 +1,7 @@
 import Mathlib
-import Catalog.Novelty.NumberTheory.UnitDistanceGraph
-import Catalog.Novelty.RamseyTheory.IndependenceRatioChromatic
-import Catalog.Novelty.RamseyTheory.G27CriticalAugmentation
+import Novelty.NumberTheory.UnitDistanceGraph
+import Novelty.RamseyTheory.IndependenceRatioChromatic
+import Novelty.RamseyTheory.G27CriticalAugmentation
 
 /-!
 # The critical two-vertex augmentation, realised geometrically

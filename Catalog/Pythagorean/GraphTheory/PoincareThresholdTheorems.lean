@@ -12,7 +12,7 @@
   6. **Euler characteristic**: sign pattern
 -/
 import Mathlib
-import Pythagorean.PoincareThresholdDefs
+-- import Pythagorean.PoincareThresholdDefs
 
 open Finset
 

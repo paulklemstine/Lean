@@ -46,7 +46,7 @@ the irrational phase `√2` yields a dense braiding gate (`sqrt2_phase_dense`),
 illustrating cross-use of the catalog result.
 -/
 import Mathlib
-import Catalog.Speculative.AutoResearch.BraidingUniversality
+import Physics.Braidinguniversality.BraidingUniversality
 
 open Matrix
 

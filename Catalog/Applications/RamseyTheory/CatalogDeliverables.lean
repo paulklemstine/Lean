@@ -5,26 +5,26 @@ Building this target compiles every deliverable file end-to-end.
 -/
 
 -- Chromatic polynomial / graph coloring core
-import Catalog.Combinatorics.RamseyTheory.ChromaticPolynomial
-import Catalog.Combinatorics.RamseyTheory.ChromaticPolynomialColorable
-import Catalog.Novelty.RamseyTheory.EmotionalChromaticNumber
+import Combinatorics.RamseyTheory.ChromaticPolynomial
+import Combinatorics.RamseyTheory.ChromaticPolynomialColorable
+import Novelty.RamseyTheory.EmotionalChromaticNumber
 
 -- Additional graph-coloring theorems
-import Catalog.Novelty.GraphTheory.GreedyDegreeColoring
-import Catalog.Novelty.RamseyTheory.IndependenceRatioChromatic
-import Catalog.Novelty.RamseyTheory.StrongChromaticBipartite
-import Catalog.Novelty.NumberTheory.UnitDistanceGraph
-import Catalog.Novelty.RamseyTheory.UnitDistanceChromaticBridge
-import Catalog.Novelty.RamseyTheory.C4FreeDiameter2
-import Catalog.Novelty.GraphTheory.C4FreeDiameter2Coloring
+import Novelty.GraphTheory.GreedyDegreeColoring
+import Novelty.RamseyTheory.IndependenceRatioChromatic
+import Novelty.RamseyTheory.StrongChromaticBipartite
+import Novelty.NumberTheory.UnitDistanceGraph
+import Novelty.RamseyTheory.UnitDistanceChromaticBridge
+import Novelty.RamseyTheory.C4FreeDiameter2
+import Novelty.GraphTheory.C4FreeDiameter2Coloring
 
 -- Cross-domain connector: factorial number system as an instance of mixed-radix
-import Catalog.Computation.NumberTheory.MixedRadixNumberSystem
-import Catalog.Computation.FactorialNumberSystem.FactorialNumberSystem
-import Catalog.Speculative.AutoResearch.MixedRadixFactorialBridge
+import Computation.NumberTheory.MixedRadixNumberSystem
+import Computation.FactorialNumberSystem.FactorialNumberSystem
+import Speculative.AutoResearch.MixedRadixFactorialBridge
 
 -- Cross-domain connector: Fibonacci primitive divisors (Carmichael)
-import Catalog.Shared.NumberTheory.CarmichaelHelper
-import Catalog.Shared.NumberTheory.CarmichaelProof
+import Shared.NumberTheory.CarmichaelHelper
+import Shared.NumberTheory.CarmichaelProof
 import output-final_aristotle.Shared.CarmichaelComposite
-import Catalog.Speculative.NumberTheory.CarmichaelPrimitiveDivisor
+import Speculative.NumberTheory.CarmichaelPrimitiveDivisor

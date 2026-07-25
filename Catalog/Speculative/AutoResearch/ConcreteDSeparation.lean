@@ -42,7 +42,7 @@ contraction axiom.
 -/
 
 import Mathlib
-import Catalog.MachineLearning.PosetTheory.CechComplex
+import MachineLearning.PosetTheory.CechComplex
 
 -- !-- Lab Notebook -- !--
 -- !-- Hypothesis : The graphoid axioms (symmetry, decomposition, weak union,

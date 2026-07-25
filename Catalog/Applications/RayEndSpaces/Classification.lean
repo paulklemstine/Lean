@@ -13,7 +13,7 @@ programme in which the combinatorial witness itself constructs the
 homeomorphism.
 -/
 import Mathlib
-import Catalog.Novelty.NumberTheory.LocalMultiplicityUltrametric
+import Novelty.NumberTheory.LocalMultiplicityUltrametric
 
 open Set
 open GiampietroDarmon

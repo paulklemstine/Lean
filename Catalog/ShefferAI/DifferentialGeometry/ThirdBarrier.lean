@@ -16,7 +16,7 @@ Sheffer expression's derivative converges at +∞ and -∞.
 -/
 
 import Mathlib
-import ShefferAI.Lean.SoftplusBasic
+-- import ShefferAI.Lean.SoftplusBasic
 import MachineLearning.ShefferFunction.Lean.ShefferAlgebra
 import ShefferAI.Lean.AdvancedTheorems
 import MachineLearning.ShefferFunction.Lean.ExtendedTheorems

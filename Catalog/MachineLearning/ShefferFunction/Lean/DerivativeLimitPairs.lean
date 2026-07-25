@@ -18,7 +18,7 @@ The construction uses f(x) = (a-b)·σ(x) + b·x, which achieves:
 -/
 
 import Mathlib
-import ShefferAI.Lean.SoftplusBasic
+-- import ShefferAI.Lean.SoftplusBasic
 import MachineLearning.ShefferFunction.Lean.ShefferAlgebra
 import ShefferAI.Lean.AdvancedTheorems
 import ShefferAI.Lean.OpenQuestions

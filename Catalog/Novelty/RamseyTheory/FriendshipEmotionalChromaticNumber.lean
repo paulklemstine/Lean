@@ -25,8 +25,8 @@ the six-emotion window `[3, 6]`.
   gives `P(F_n, emoChrom (F_n)) = 3 · 2^n`, the number of consistent assignments at the floor.
 -/
 
-import Catalog.Novelty.RamseyTheory.FriendshipChromaticPolynomial
-import Catalog.Novelty.RamseyTheory.EmotionalChromaticNumber
+import Novelty.RamseyTheory.FriendshipChromaticPolynomial
+import Novelty.RamseyTheory.EmotionalChromaticNumber
 
 namespace Catalog.Novelty.FriendshipEmotionalChromaticNumber
 

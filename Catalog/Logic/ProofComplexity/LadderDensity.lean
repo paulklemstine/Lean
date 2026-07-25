@@ -1,7 +1,7 @@
 import Mathlib
-import Catalog.Logic.ProofComplexity.SimulationPreorder
-import Catalog.Logic.ProofComplexity.SimulationDegrees
-import Catalog.Logic.ProofComplexity.DegreeLattice
+import Logic.ProofComplexity.SimulationPreorder
+import Logic.ProofComplexity.SimulationDegrees
+import Logic.ProofComplexity.DegreeLattice
 
 /-! # Density along the whole height ladder of p-degrees
 

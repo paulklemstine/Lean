@@ -5,7 +5,7 @@ We define residual ambiguity after propagation and prove structural
 theorems about the tropical feasibility boundary.
 -/
 import Computation.TropicalSudoku.Propagation
-import .lake.packages.mathlib.MathlibTest.Monotonicity
+import MathlibTest.Monotonicity
 
 open Finset
 

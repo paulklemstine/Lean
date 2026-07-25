@@ -27,7 +27,7 @@ building on the catalog's `prodLinear_coeff_logConcave` result.
 -/
 
 import Mathlib
-import Pythagorean.UltraLogConcaveDefs
+-- import Pythagorean.UltraLogConcaveDefs
 
 open Polynomial Finset BigOperators
 

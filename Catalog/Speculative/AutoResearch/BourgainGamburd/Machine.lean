@@ -1,5 +1,5 @@
 import Mathlib
-import .lake.packages.mathlib.Mathlib.MeasureTheory.Group.Convolution
+import Mathlib.MeasureTheory.Group.Convolution
 import Algebra.BourgainGamburd.SpectralGap
 
 /-!

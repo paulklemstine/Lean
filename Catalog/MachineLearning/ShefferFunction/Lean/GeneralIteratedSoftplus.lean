@@ -12,7 +12,7 @@ vastly generalizing the Q24 result σⁿ(0) = log(n+1).
 -/
 
 import Mathlib
-import ShefferAI.Lean.SoftplusBasic
+-- import ShefferAI.Lean.SoftplusBasic
 import ShefferAI.Lean.AdvancedTheorems
 
 open Real

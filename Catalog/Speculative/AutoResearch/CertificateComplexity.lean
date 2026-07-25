@@ -50,7 +50,7 @@ constructive recognition, algebraic certificates, symbolic complexity
 -/
 
 import Mathlib
-import Catalog.Algebra.GameTheory.MatrixGroupGeneration
+import Algebra.GameTheory.MatrixGroupGeneration
 
 open Polynomial Submodule LinearMap Matrix
 

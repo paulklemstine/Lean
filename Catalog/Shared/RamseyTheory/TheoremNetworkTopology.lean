@@ -1,5 +1,5 @@
 import Mathlib
-import Catalog.Algebra.RamseyTheory.VietorisRipsCliqueExtremalDeepening
+import Algebra.RamseyTheory.VietorisRipsCliqueExtremalDeepening
 
 /-!
 # Co-citation complexes and the limits of polynomial Betti growth

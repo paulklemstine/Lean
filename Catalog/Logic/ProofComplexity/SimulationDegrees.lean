@@ -1,5 +1,5 @@
 import Mathlib
-import Catalog.Logic.ProofComplexity.SimulationPreorder
+import Logic.ProofComplexity.SimulationPreorder
 
 /-! # The poset of p-degrees and a generic separation template
 

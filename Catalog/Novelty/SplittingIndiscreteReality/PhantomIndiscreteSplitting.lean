@@ -69,8 +69,8 @@ Synthesis (PI):
   space is the one that cannot be reconstructed as an agreement of sharper observers.
 -/
 import Mathlib
-import Catalog.Novelty.PosetTheory.PhantomTopology
-import Catalog.Novelty.PosetTheory.PhantomJoinIrreducible
+import Novelty.PosetTheory.PhantomTopology
+import Novelty.PosetTheory.PhantomJoinIrreducible
 
 open Set TopologicalSpace
 

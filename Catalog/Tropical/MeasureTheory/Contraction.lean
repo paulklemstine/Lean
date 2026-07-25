@@ -55,8 +55,8 @@ Critique (Critic): The push-forward is a genuine `IsTropicalProbability` (not a
 -/
 
 import Mathlib
-import Catalog.Tropical.MeasureTheory.Basic
-import Catalog.Tropical.MeasureTheory.LargeDeviations
+import Logic.BasicMonotoneCircuit.Basic
+import Tropical.MeasureTheory.LargeDeviations
 
 namespace TropicalLDP.Contraction
 

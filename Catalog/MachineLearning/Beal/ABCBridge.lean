@@ -22,7 +22,7 @@ These theorems create a formal dependency bridge:
 -/
 import Mathlib
 import Logic.GraphTheory.Defs
-import .lake.packages.mathlib.Mathlib.Order.Radical
+import Mathlib.Order.Radical
 
 open Nat UniqueFactorizationMonoid
 

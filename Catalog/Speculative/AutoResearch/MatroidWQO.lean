@@ -21,7 +21,7 @@ conjecture for matroids.
 -/
 
 import Mathlib
-import Shared.MatroidMinor
+-- import Shared.MatroidMinor
 
 open Finset
 

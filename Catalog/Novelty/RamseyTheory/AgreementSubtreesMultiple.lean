@@ -1,4 +1,4 @@
-import Catalog.Applications.GraphTheory.Core
+import Logic.StrangeLoops.Core
 
 /-!
 # Multiple agreement subtrees: gluing, counting, and threshold transfer

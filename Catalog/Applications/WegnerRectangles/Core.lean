@@ -1,5 +1,5 @@
 import Mathlib
-import Catalog.Geometry.HadwigerDebrunner.Combinatorial
+import Geometry.HadwigerDebrunner.Combinatorial
 
 /-!
 # Combinatorial certificates for rectangle piercing constructions

@@ -40,8 +40,8 @@ conjecture for arbitrary graphs in the regime, nor the equality/extremality clau
 recorded in `FUTURE_DIRECTIONS.md`.
 -- !-- Lab Notes -- !--
 -/
-import Catalog.Applications.RainbowTriangle.Defs
-import Catalog.Applications.RainbowTriangle.Bound
+import Logic.GraphTheory.Defs
+import .lake.packages.mathlib.Mathlib.Combinatorics.SimpleGraph.Regularity.Bound
 
 open Finset SimpleGraph
 

@@ -3,7 +3,7 @@ Copyright (c) 2025. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 -/
 import Mathlib
-import .lake.packages.mathlib.Mathlib.GroupTheory.EckmannHilton
+import Mathlib.GroupTheory.EckmannHilton
 
 set_option autoImplicit false
 

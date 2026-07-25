@@ -1,6 +1,6 @@
 import Mathlib
-import Catalog.Applications.Consciousness.IntegratedInformation
-import Catalog.Logic.MindDiagonalSentences.MindVsGodel
+import Novelty.GameTheory.IntegratedInformation
+import Logic.MindDiagonalSentences.MindVsGodel
 
 /-!
 # Zombies, qualia, and semantic incompleteness

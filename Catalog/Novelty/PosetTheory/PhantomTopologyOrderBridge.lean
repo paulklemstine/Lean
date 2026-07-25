@@ -40,8 +40,8 @@ Critique (Critic): the bridge theorem is not a rename — it equates two
 Synthesis (PI): "reality needs two observers" for `ℝ` is one point of a spectrum:
   every dense endpoint-free chain needs exactly two, discrete chains need one.
 -/
-import Catalog.Novelty.PosetTheory.PhantomTopology
-import Catalog.Novelty.PosetTheory.PhantomTopologyOrderGeneral
+import Novelty.PosetTheory.PhantomTopology
+import Novelty.PosetTheory.PhantomTopologyOrderGeneral
 
 open Set
 

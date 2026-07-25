@@ -5,7 +5,7 @@
   giving the canonical infinite family of orders 2^k.
 -/
 import Logic.BasicMonotoneCircuit.Basic
-import .lake.packages.mathlib.Mathlib.LinearAlgebra.Matrix.Kronecker
+import Mathlib.LinearAlgebra.Matrix.Kronecker
 
 open Matrix Finset BigOperators
 

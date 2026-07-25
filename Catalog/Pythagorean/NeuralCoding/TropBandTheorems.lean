@@ -1,5 +1,5 @@
 import Mathlib
-import Pythagorean.TropBandDefs
+-- import Pythagorean.TropBandDefs
 
 /-!
 # Tropical Band Systems: Main Theorems

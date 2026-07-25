@@ -1,5 +1,5 @@
 import Mathlib
-import Catalog.Tropical.BooleanPoset.B3Free
+import Tropical.BooleanPoset.B3Free
 
 /-!
 # The finite-dimensional construction behind large `B₃`-free families

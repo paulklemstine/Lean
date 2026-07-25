@@ -1,4 +1,4 @@
-import .lake.packages.mathlib.Mathlib.Algebra.GroupWithZero.Divisibility
+import Mathlib.Algebra.GroupWithZero.Divisibility
 
 /-!
 # Longest Common Prefix, Decidability, and Oracle Reductions

@@ -45,7 +45,7 @@
   - `keplerSupportSize` analysis: motivates subdivision-preservation framework
 -/
 import Mathlib
-import Pythagorean.TropicalKAMDefs
+-- import Pythagorean.TropicalKAMDefs
 
 open Finset BigOperators
 

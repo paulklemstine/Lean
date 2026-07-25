@@ -2,7 +2,7 @@
 Copyright (c) 2026 Harmonic. All rights reserved.
 Released under Apache 2.0 license.
 -/
-import EML.CategoryDefs
+-- import EML.CategoryDefs
 
 /-!
 # EML Category Theorems: Categorical and Analytic Structure

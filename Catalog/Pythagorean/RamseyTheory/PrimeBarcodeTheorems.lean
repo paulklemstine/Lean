@@ -12,7 +12,7 @@
   5. Cross-domain bridge: prime gap graph and chromatic properties
 -/
 import Mathlib
-import Pythagorean.PrimeBarcodeDefs
+-- import Pythagorean.PrimeBarcodeDefs
 
 open Finset Nat
 
