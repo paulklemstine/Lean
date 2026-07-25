@@ -1,7 +1,9 @@
 # Why computational evidence was skipped
 
-The result is a purely structural implication between abstract predicates. Its proof uses only the diagonal equivalence, soundness, and truth-functional negation; there is no finite numerical sequence or bounded search whose initial cases would provide meaningful evidence for the universal theorem.
+The claims studied here quantify over abstract propositions and provability predicates rather than over a finite or numerical family. Their decisive content is structural:
 
-Small finite models would also be misleading here. The hypotheses already force an independence witness, while a model declaring every sentence provable cannot satisfy both diagonalization and soundness. Exhaustive tables would therefore only re-evaluate propositional consequences that the Lean proof establishes for arbitrary sentence types.
+- semantic reflection plus a diagonal fixed-point equation implies unprovability;
+- monotonicity constrains comparable fixed points;
+- explicit logical predicates refute stronger conjectures lacking reflection or diagonalization hypotheses.
 
-For these reasons, computational evidence, OEIS searches, and plots are inapplicable. The relevant evidence is kernel checking of the general proof.
+Finite numerical sampling would not provide relevant evidence for these universally quantified metatheorems. The counterexample hunt is instead carried out deductively in Lean by constructing provability operators and proving their advertised properties for all propositions.
