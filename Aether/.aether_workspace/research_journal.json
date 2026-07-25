@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "3d25b5ad",
-      "domain": "Pythagorean",
-      "key_insight": "# Future directions\n\nThe formal development establishes a concrete genuinely non-strict bicategory: its chosen 1-cell composition has bracketings equal to `5` and `7`, while an invertible associator c",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-07-20T23:22:27",
-      "title": "Causal Loops in Category Theory: When Composition Loops Back"
-    },
-    {
       "cycle_id": "82c8c57a",
       "domain": "NumberTheory",
       "key_insight": "# Future Directions: Coherent All-Stage Objects\n\n## 1. Coordinate-deletion limits over arbitrary coefficient objects\n\nLet `A` be an abelian group and let the `n`th stage be `A^{n+1}`, with bonding map",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-25T17:22:56",
       "title": "Spectral Theory: Self-Adjoint Operators"
+    },
+    {
+      "cycle_id": "901b537c",
+      "domain": "Physics",
+      "key_insight": "# Future Directions: From Code Metrics to Emergent Geometry\n\n## 1. Rigidity of Local Tensor-Network Realizations\n\n**Conjecture.** Let a family of bounded-degree stabilizer tensor networks have boundar",
+      "quality_score": 0.77,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-07-25T18:17:21",
+      "title": "Gravity as Quantum Error Correction: Spacetime from Codes"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "76d5023e",
-      "domain": "Physics",
-      "key_insight": "# Future Directions: Signed Lattice Models for Knot Polynomials\n\n## 1. Diagram-local signed path model\n\n**Conjecture.** Every oriented knot diagram with `n` crossings admits a canonically defined forb",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-19T03:55:17",
-      "title": "Knots and Lattices: The Alexander Polynomial as a Lattice Path Count"
-    },
     {
       "cycle_id": "fa73eeee",
       "domain": "Algebra",
@@ -2501,27 +2491,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-25T17:22:56",
       "title": "Spectral Theory: Self-Adjoint Operators"
+    },
+    {
+      "cycle_id": "901b537c",
+      "domain": "Physics",
+      "key_insight": "# Future Directions: From Code Metrics to Emergent Geometry\n\n## 1. Rigidity of Local Tensor-Network Realizations\n\n**Conjecture.** Let a family of bounded-degree stabilizer tensor networks have boundar",
+      "quality_score": 0.77,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-07-25T18:17:21",
+      "title": "Gravity as Quantum Error Correction: Spacetime from Codes"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "227d6015",
-      "domain": "NumberTheory",
-      "name": "discovery",
-      "quality": 0.75
-    },
-    {
-      "cycle_id": "227d6015",
-      "domain": "NumberTheory",
-      "name": "codes",
-      "quality": 0.75
-    },
-    {
-      "cycle_id": "227d6015",
-      "domain": "NumberTheory",
-      "name": "codes",
-      "quality": 0.75
-    },
     {
       "cycle_id": "43fa6482",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Computation",
       "name": "card_badSubsets_le_sum",
       "quality": 0.77
+    },
+    {
+      "cycle_id": "901b537c",
+      "domain": "Physics",
+      "name": "geometric_singleton_bound",
+      "quality": 0.77
+    },
+    {
+      "cycle_id": "901b537c",
+      "domain": "Physics",
+      "name": "saturated_geodesic_capacity",
+      "quality": 0.77
+    },
+    {
+      "cycle_id": "901b537c",
+      "domain": "Physics",
+      "name": "geodesic_identity_iff_s",
+      "quality": 0.77
     }
   ],
-  "last_updated": "2026-07-25T17:22:56",
+  "last_updated": "2026-07-25T18:17:21",
   "open_questions": [
     {
       "context": "",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "76d5023e",
-        "quality": 0.78,
-        "theorems": 0,
-        "title": "Knots and Lattices: The Alexander Polynomial as a Lattice Path Count"
-      },
-      {
         "cycle_id": "28042806",
         "quality": 0.56,
         "theorems": 13,
@@ -3761,6 +3755,12 @@
         "quality": 0.73,
         "theorems": 0,
         "title": "Spectral Theory: Self-Adjoint Operators"
+      },
+      {
+        "cycle_id": "901b537c",
+        "quality": 0.77,
+        "theorems": 12,
+        "title": "Gravity as Quantum Error Correction: Spacetime from Codes"
       }
     ],
     "Probability": [
