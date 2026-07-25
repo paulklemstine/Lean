@@ -1,36 +1,38 @@
-# Theorem Trace (internal — anti-hallucination ledger)
+# Computational evidence
 
-Every claim in `ARTICLE.md` and `RESEARCH_PAPER.md` maps to one of the
-declarations below, extracted verbatim from the Phase A Lean source. No
-result outside this list is stated as proved.
+## Small cases
 
-## Definitions
+The following are exploratory hand-calculation sanity checks, not formally verified numerical claims. Using the finite candidate-set algorithm defined in `FiniteSimulation.lean`, the expected first-generation population counts are:
 
-| Lean name | Mathematical statement | Article | Paper |
-|---|---|---|---|
-| `UnionClosedFamily F` | `∀ s t ∈ F, s ∪ t ∈ F` | §"Closed under merging" | Def. 1 |
-| `IsUpperSetFamily F` | `∀ s ∈ F, s ⊆ t → t ∈ F` | §"Upward-closed worlds" | Def. 2 |
-| `memberCount a F` | `|{s ∈ F : a ∈ s}|` | §"Counting popularity" | Def. 3 |
-| `jointCount a b F` | `|{s ∈ F : a ∈ s ∧ b ∈ s}|` | §"Two at a time" | Def. 4 |
-| `unionCount a b F` | `|{s ∈ F : a ∈ s ∨ b ∈ s}|` | §"Two at a time" | Def. 5 |
-| `unionClosure F` | least union-closed family ⊇ F; sups of nonempty subfamilies | §"Coarse-graining" | Def. 6 |
+| initial pattern | initial population | generation 1 | generation 2 |
+|---|---:|---:|---:|
+| empty | 0 | 0 | 0 |
+| isolated live cell | 1 | 0 | 0 |
+| 2×2 block | 4 | 4 | 4 |
+| three-cell blinker | 3 | 3 | 3 |
 
-## Theorems / lemmas
+These standard examples were used only as informal sanity checks for the B3/S23 definition. The formal result does not rely on them: `finite_simulation_correct_and_bounded` proves the generic finite-support simulation statement.
 
-| Lean name | Statement | Article | Paper |
-|---|---|---|---|
-| `sum_memberCount_eq_sum_card` | `∑ a, memberCount a F = ∑ s ∈ F, s.card` | Theorem A | Thm 1 |
-| `exists_frequent_element_of_avg_card_ge_half` | `F.Nonempty → 2·∑ s∈F, s.card ≥ F.card·card α → ∃ a, 2·memberCount a F ≥ F.card` | Theorem B | Thm 2 |
-| `upset_unionClosed` | `IsUpperSetFamily F → UnionClosedFamily F` | Bridge | Thm 3 |
-| `unionCount_eq` | `(unionCount a b F : ℤ) = memberCount a F + memberCount b F − jointCount a b F` | Inclusion–exclusion | Thm 4 |
-| `subset_unionClosure` | `F ⊆ unionClosure F` | Coarse-graining | Lem 5 |
-| `unionClosure_unionClosed` | `UnionClosedFamily (unionClosure F)` | Coarse-graining | Lem 6 |
-| `sum_card_monotone_under_unionClosure` | `∑ s∈F, s.card ≤ ∑ s∈unionClosure F, s.card` | Theorem C | Thm 7 |
-| `powerset_nonneg_correlation` | `card (Finset α)·jointCount a b univ ≥ memberCount a univ · memberCount b univ` | Theorem D | Thm 8 |
+## OEIS search
 
-Notes:
-- The proof of `powerset_nonneg_correlation` is truncated in the supplied
-  source after establishing the counting lemma
-  `|{t : s ⊆ t}| = 2^(card α − card s)`; the statement is complete and
-  is what we report.
-- Domain recorded as `Novelty` per the concept metadata.
+No OEIS search is relevant. The formal object is a state transition system rather than a single canonical integer sequence.
+
+## Counterexample hunt
+
+The vulnerable point in a finite-support implementation is omission of births outside the current live set. The candidate region therefore includes every live cell and all eight of its neighbors. The proof `globalNext_mem_expansion` rules out such omitted births in general, rather than by bounded testing.
+
+No counterexample was found among the small patterns above. This sentence records exploratory evidence only; the Lean theorem is the verification.
+
+## Bounds table
+
+The theorem proves the deliberately coarse population bound `|S_t| ≤ 9^t |S_0|`:
+
+| t | multiplier `9^t` |
+|---:|---:|
+| 0 | 1 |
+| 1 | 9 |
+| 2 | 81 |
+| 3 | 729 |
+| 4 | 6561 |
+
+The bound counts a cell and its eight candidate neighbors at every generation; overlaps and B3/S23 filtering can only reduce the actual population.
