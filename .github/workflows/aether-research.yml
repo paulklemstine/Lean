@@ -90,7 +90,7 @@ jobs:
         run: |
           df -h
           echo "Finding largest directories in workspace:"
-          (du -ah --max-depth=2 | sort -rh | head -n 15) || true
+          (du -ah --max-depth=2 | sort -rh 2>/dev/null | head -n 15) || true
 
       - name: Update website index
         run: |
