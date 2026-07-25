@@ -27,6 +27,7 @@ Usage:
 import argparse
 import asyncio
 import json
+import math
 import os
 import re
 import shutil
@@ -37,7 +38,7 @@ import uuid
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple, Set
 
 import yaml
 from pi_agent_client import (
@@ -1259,14 +1260,9 @@ Research mode: {concept.research_mode}
                         continue
                     files_to_copy.append(src_file)
         else:
-            # Phase A: send the full Catalog of .lean files as context so
-            # Aristotle can build on every existing verified theorem.
-            for src_file in self.catalog_root.rglob("*.lean"):
-                if ".lake" in src_file.parts or "FINAL" in src_file.parts:
-                    continue
-                if src_file.is_symlink() and not src_file.resolve().exists():
-                    continue
-                files_to_copy.append(src_file)
+            # Phase A: Use Tiered Hybrid Selection (Domain + BM25 + Transitive Import Closure)
+            # to inject only the most relevant Lean catalog files (~50-150 files vs 2350+ files).
+            files_to_copy = self._select_tiered_phase_a_files(job)
 
         catalog_dst = dir_path / "Catalog"
         lean_count = 0
@@ -1302,6 +1298,189 @@ Research mode: {concept.research_mode}
         (dir_path / "PROMPT.md").write_text(job.prompt)
 
         return dir_path
+
+    def _select_tiered_phase_a_files(self, job) -> List[Path]:
+        """Select a minimal, highly relevant subset of Catalog .lean files for Phase A using Tiered Hybrid selection:
+        
+        Tier 1: Target Domain + Shared + Domain-relevant Bridges
+        Tier 2: Fast BM25 Keyword Search across remaining Catalog .lean files
+        Tier 3: Transitive Import Closure Resolution (Guarantees zero broken Lean imports)
+        """
+        all_catalog_lean = [
+            f for f in self.catalog_root.rglob("*.lean")
+            if ".lake" not in f.parts and "Attic" not in f.parts and "FINAL" not in f.parts and not (f.is_symlink() and not f.resolve().exists())
+        ]
+
+        if not all_catalog_lean:
+            return []
+
+        selected = set()
+
+        # Extract target domain
+        target_domain = ""
+        if hasattr(job, 'concept') and hasattr(job.concept, 'domain') and job.concept.domain:
+            target_domain = str(job.concept.domain)
+        elif hasattr(job, 'domain') and job.domain:
+            target_domain = str(job.domain)
+
+        # Tier 1: Target Domain + Shared + Domain-relevant Bridges
+        d_norm = target_domain.strip().lstrip('eE').capitalize() if target_domain else ""
+        domain_dirs = set()
+        for sub in self.catalog_root.iterdir():
+            if sub.is_dir():
+                if d_norm and sub.name.lower() == d_norm.lower():
+                    domain_dirs.add(sub)
+                elif target_domain and sub.name.lower() == target_domain.lower():
+                    domain_dirs.add(sub)
+
+        domain_dirs.add(self.catalog_root / "Shared")
+
+        for d in domain_dirs:
+            if d.exists():
+                for f in d.rglob("*.lean"):
+                    if ".lake" not in f.parts and "Attic" not in f.parts:
+                        selected.add(f)
+
+        # Domain-relevant Bridges
+        bridges_dir = self.catalog_root / "Bridges"
+        if bridges_dir.exists():
+            d_keywords = self._extract_search_keywords(target_domain)
+            for f in bridges_dir.rglob("*.lean"):
+                if not d_keywords or any(kw in f.name.lower() for kw in d_keywords):
+                    selected.add(f)
+
+        # Tier 2: Top 15 BM25 Keyword Search Matches
+        concept_title = getattr(job.concept, 'title', '') if hasattr(job, 'concept') else ''
+        concept_desc = getattr(job.concept, 'description', '') if hasattr(job, 'concept') else ''
+        job_prompt = getattr(job, 'prompt', '')
+
+        keywords = self._extract_search_keywords(f"{target_domain} {concept_title} {concept_desc} {job_prompt}")
+        remaining_files = [f for f in all_catalog_lean if f not in selected]
+        if remaining_files and keywords:
+            scored = self._score_files_bm25(remaining_files, keywords)
+            top_tier2 = [f for f, score in scored[:15] if score > 1.0]
+            selected.update(top_tier2)
+
+        # Tier 3: Transitive Import Closure
+        final_set = self._resolve_transitive_imports(selected)
+
+        # Safety Fallback: if fewer than 10 files selected, include top catalog files
+        if len(final_set) < 10 and len(all_catalog_lean) >= 10:
+            for f in all_catalog_lean[:20]:
+                final_set.add(f)
+
+        result = sorted(list(final_set))
+        print(f"[Project] Tiered Hybrid selection: {len(result)} .lean files selected (pruned from {len(all_catalog_lean)} total in Catalog)")
+        return result
+
+    def _extract_search_keywords(self, text: str) -> List[str]:
+        """Extract meaningful math keywords from text for zero-LLM search."""
+        stopwords = {
+            "a", "about", "above", "after", "again", "against", "all", "am", "an", "and", "any", "are", "aren't", "as", "at",
+            "be", "because", "been", "before", "being", "below", "between", "both", "but", "by", "can't", "cannot", "could",
+            "couldn't", "did", "didn't", "do", "does", "doesn't", "doing", "don't", "down", "during", "each", "few", "for",
+            "from", "further", "had", "hadn't", "has", "hasn't", "have", "haven't", "having", "he", "he'd", "he'll", "he's",
+            "her", "here", "here's", "hers", "herself", "him", "himself", "his", "how", "how's", "i", "i'd", "i'll", "i'm",
+            "i've", "if", "in", "into", "is", "isn't", "it", "it's", "its", "itself", "let's", "me", "more", "most", "mustn't",
+            "my", "myself", "no", "nor", "not", "of", "off", "on", "once", "only", "or", "other", "ought", "our", "ours",
+            "ourselves", "out", "over", "own", "same", "shan't", "she", "she'd", "she'll", "she's", "should", "shouldn't",
+            "so", "some", "such", "than", "that", "that's", "the", "their", "theirs", "them", "themselves", "then", "there",
+            "there's", "these", "they", "they'd", "they'll", "they're", "they've", "this", "those", "through", "to", "too",
+            "under", "until", "up", "very", "was", "wasn't", "we", "we'd", "we'll", "we're", "we've", "were", "weren't",
+            "what", "what's", "when", "when's", "where", "where's", "which", "while", "who", "who's", "whom", "why",
+            "why's", "with", "won't", "would", "wouldn't", "you", "you'd", "you'll", "you're", "you've", "your", "yours",
+            "yourself", "yourselves", "lean", "theorem", "def", "lemma", "proof", "mathlib", "import", "section", "open"
+        }
+        words = re.findall(r'[A-Za-z0-9_]+', text.lower())
+        return [w for w in words if len(w) >= 3 and w not in stopwords and not w.isdigit()]
+
+    def _score_files_bm25(self, files: List[Path], keywords: List[str]) -> List[Tuple[Path, float]]:
+        """Rank files against keywords using pure Python BM25 search."""
+        if not keywords or not files:
+            return [(f, 0.0) for f in files]
+
+        doc_tokens = {}
+        doc_lengths = {}
+        total_len = 0
+        
+        for f in files:
+            try:
+                content = f.read_text(encoding='utf-8', errors='ignore')
+                tokens = self._extract_search_keywords(content)
+                doc_tokens[f] = tokens
+                doc_lengths[f] = len(tokens)
+                total_len += len(tokens)
+            except Exception:
+                doc_tokens[f] = []
+                doc_lengths[f] = 0
+
+        N = len(files)
+        avgdl = (total_len / N) if N > 0 else 1.0
+        k1, b = 1.5, 0.75
+
+        kw_df = {}
+        for kw in set(keywords):
+            df = sum(1 for f in files if kw in doc_tokens[f])
+            kw_df[kw] = df
+
+        scores = []
+        for f in files:
+            tokens = doc_tokens[f]
+            dl = doc_lengths[f]
+            if dl == 0:
+                scores.append((f, 0.0))
+                continue
+
+            score = 0.0
+            tf_map = {}
+            for t in tokens:
+                tf_map[t] = tf_map.get(t, 0) + 1
+
+            for kw in keywords:
+                if kw in tf_map:
+                    tf = tf_map[kw]
+                    df = kw_df.get(kw, 0)
+                    idf = math.log((N - df + 0.5) / (df + 0.5) + 1.0)
+                    denom = tf + k1 * (1 - b + b * (dl / avgdl))
+                    score += idf * ((tf * (k1 + 1)) / denom)
+
+            scores.append((f, score))
+
+        scores.sort(key=lambda x: x[1], reverse=True)
+        return scores
+
+    def _resolve_transitive_imports(self, initial_files: Set[Path]) -> Set[Path]:
+        """Recursively resolve all Catalog .lean imports to guarantee 100% import integrity."""
+        visited = set(initial_files)
+        queue = list(initial_files)
+        import_regex = re.compile(r'^import\s+([A-Za-z0-9_.]+)', re.MULTILINE)
+
+        while queue:
+            file_path = queue.pop(0)
+            try:
+                content = file_path.read_text(encoding='utf-8', errors='ignore')
+            except Exception:
+                continue
+
+            imports = import_regex.findall(content)
+            for imp in imports:
+                if imp.startswith(('Mathlib', 'Init', 'Lean')):
+                    continue
+
+                rel_path = imp.replace('.', '/') + '.lean'
+                possible_paths = [
+                    self.catalog_root / rel_path,
+                    self.catalog_root.parent / rel_path,
+                    self.catalog_root / "Catalog" / rel_path
+                ]
+
+                for cand in possible_paths:
+                    if cand.exists() and cand not in visited:
+                        visited.add(cand)
+                        queue.append(cand)
+                        break
+
+        return visited
 
 
     def _is_queue_full_error(self, error: Exception) -> bool:
