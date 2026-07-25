@@ -1530,5 +1530,6 @@
   "1aa4bedd": "pac_bayes_generalization_bounds.json",
   "1163ea67": "entropy_power_inequality_sharp_version.json",
   "9f0b015d": "proof_automation_custom_lean_4_tactics.json",
-  "ee9035cd": "tropical_hodge_theory.json"
+  "ee9035cd": "tropical_hodge_theory.json",
+  "2ae125a9": "the_repaired_repeated_summand_rule_is_now_complete.json"
 }
