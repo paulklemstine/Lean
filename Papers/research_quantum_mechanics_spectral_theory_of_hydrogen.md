@@ -1,432 +1,418 @@
-# Spectral Theory of the Hydrogen Atom: Energy Levels, Degeneracy, and Selection Rules
+# Spectral Thresholds, Azimuthal Modes, and the Bipartite Graph of Hydrogenic Dipole Transitions
 
-**Author:** Aristotle
-**Date:** 2026-06-26
-**Domain:** Applications (Mathematical Physics)
-
----
+**Aristotle**  
+**July 25, 2026**
 
 ## Abstract
 
-We present a self-contained formal development of the spectral structure of
-the idealized hydrogen atom. Working in Rydberg units, we characterize the
-spectrum of the hydrogen Hamiltonian as the disjoint union of a discrete
-set of Bohr bound-state energies and a continuous ionization half-line,
-$$\sigma(H) = \left\{-\tfrac{1}{n^2} : n \in \mathbb{Z}_{>0}\right\} \cup [0,\infty),$$
-and prove the structural facts that justify this picture: negativity of the
-bound energies, the existence and value of the ground state, strict
-monotonicity of the levels, accumulation at the ionization threshold,
-disjointness of the discrete and continuous parts, and the Rydberg formula
-for emission energies. We then establish the angular structure: the
-azimuthal factor $e^{im\varphi}$ is an eigenfunction of the orbital
-angular-momentum operator $L_z = -i\,\partial_\varphi$ with integer
-eigenvalue $m$, the subshell with orbital number $\ell$ carries exactly
-$2\ell+1$ magnetic substates, and the shell with principal quantum number
-$n$ has total degeneracy $\sum_{\ell=0}^{n-1}(2\ell+1)=n^2$. Finally we
-formalize the electric-dipole selection rule $\Delta\ell=\pm1$,
-$|\Delta m|\le 1$, and prove its principal consequences: the forbidding of
-$\ell$-conserving (in particular $s\to s$) transitions, the mandatory
-orbital-parity flip, symmetry under time reversal, and the allowedness of
-the Lyman-$\alpha$ transition. All results are stated with full
-mathematical rigor and accompanied by proof sketches.
-
----
+We develop a self-contained mathematical model connecting three structural aspects of the hydrogen atom in Rydberg units. First, we study the idealized spectral set consisting of bound energies $E_n=-1/n^2$ for positive integers $n$ together with the scattering continuum $[0,\infty)$. We prove that every bound energy is negative, the levels are strictly increasing, the discrete and continuous portions are disjoint, and zero is an accumulation point of the bound levels. Second, for every integer magnetic quantum number $m$, we analyze the azimuthal mode $\psi_m(\phi)=e^{im\phi}$, prove its $2\pi$-periodicity, compute its derivative, and establish the angular-momentum eigenvalue equation $L_z\psi_m=m\psi_m$ for $L_z=-i\,d/d\phi$. Third, we define an idealized electric-dipole transition graph on orbital states $(\ell,m)$ with $|m|\le\ell$, taking $\Delta\ell=\pm1$ and $|\Delta m|\le1$ as edge conditions. Orbital parity gives a two-coloring of this graph. More generally, a walk of length $k$ from $a$ to $b$ satisfies $(\ell_a+\ell_b)\bmod2=k\bmod2$. It follows that two-step transitions preserve parity and odd closed walks are impossible. We give algorithms for generating finite spectral windows and transition graphs, discuss computational applications, and state precisely the analytic and physical claims that remain outside the model.
 
 ## 1. Introduction
 
-The hydrogen atom occupies a singular place in physics: it is the only
-atom whose Schrödinger equation can be solved exactly in closed form, and
-its spectrum was the proving ground on which the old quantum theory of
-Bohr and the wave mechanics of Schrödinger were validated. Three layers
-of structure organize that spectrum:
-
-1. **The energy levels.** Bound states occur at discrete energies
-   $E_n = -1/n^2$ (in Rydberg units); free (scattering) states fill the
-   continuum $[0,\infty)$.
-2. **Degeneracy.** Each level $n$ comprises $n^2$ distinct orbital states,
-   organized into subshells indexed by an orbital quantum number $\ell$ and
-   magnetic quantum number $m$.
-3. **Selection rules.** Radiative transitions are constrained by
-   conservation of angular momentum and parity; the dominant
-   electric-dipole transitions obey $\Delta\ell=\pm1$, $|\Delta m|\le1$.
-
-This paper develops all three layers as a coherent formal theory. Our aim
-is not to re-derive the radial wavefunctions analytically, but to isolate
-the *arithmetic and analytic invariants* that determine the qualitative
-spectrum and to prove them outright. The reward is a description of
-hydrogen's spectral lines — which levels exist, how degenerate they are,
-and which transitions between them are optically allowed — built from
-elementary, fully verified components.
-
-We work throughout in **Rydberg units**, in which the Bohr ground-state
-energy is normalized to $-1$. This removes all physical constants from the
-formulas and exposes the underlying mathematics. The continuum threshold
-(ionization energy) sits at $E = 0$.
+Hydrogen is the canonical meeting point of spectral analysis, rotational symmetry, and quantum selection rules. Its familiar bound energies exhibit an infinite discrete family converging to the ionization threshold. Its angular wavefunctions are organized by integer quantum numbers. Its spectroscopic transitions are constrained by changes in angular momentum, producing a network with strong combinatorial structure.
 
----
+This paper isolates a rigorous core of that picture. The first component is a set-theoretic spectral model rather than an operator-theoretic spectral theorem. In Rydberg units, define the bound levels by $-1/n^2$ and append the nonnegative continuum. This simple definition already supports nontrivial topological conclusions: the bound levels approach zero, zero belongs to their closure, and the negative discrete part remains disjoint from the continuum.
 
-## 2. The Energy Spectrum
+The second component concerns rotation about the $z$-axis. The complex exponentials $e^{im\phi}$ are periodic exactly in the integer-labeled family relevant here, and differentiation turns their winding number into the eigenvalue of the azimuthal angular-momentum operator.
 
-### 2.1 The Bohr energies
+The third component translates dipole selection rules into graph theory. When an allowed transition changes $\ell$ by one, it necessarily reverses the parity of $\ell$. This makes the transition graph bipartite. Induction extends the edge rule to arbitrary walks: endpoint parity remembers path-length parity. The absence of odd cycles is therefore not an additional assumption but a global consequence of the local transition rule.
 
-**Definition 2.1 (Bohr energy).** For a principal quantum number
-$n \in \mathbb{Z}_{>0}$, the *Bohr energy* is
-$$E_n := -\frac{1}{n^2}.$$
-We treat $E : \mathbb{Z}_{>0} \to \mathbb{R}$ as a real-valued sequence.
+Care is required in interpreting these results. We do not construct the unbounded Coulomb Hamiltonian on $L^2(\mathbb{R}^3)$, prove self-adjointness, or identify its operator spectrum. We do not construct complete spherical harmonics or derive the dipole rules from matrix elements. Instead, we make the model and its boundaries explicit, then prove all conclusions that follow from it.
 
-**Definition 2.2 (Hydrogen spectrum).** The spectrum of the hydrogen
-Hamiltonian $H$ (in Rydberg units) is
-$$\sigma(H) := \left\{E_n : n \in \mathbb{Z}_{>0}\right\} \cup [0,\infty)
-= \left\{-\tfrac{1}{n^2} : n=1,2,3,\dots\right\} \cup [0,\infty).$$
-The first set is the *discrete (point) spectrum* of bound states; the
-half-line $[0,\infty)$ is the *continuous spectrum* of scattering states.
+## 2. Spectral definitions and elementary structure
 
-### 2.2 Structure of the discrete spectrum
+### 2.1 Rydberg normalization
 
-**Theorem 2.3 (`bohrEnergy_neg`).** For every $n \ge 1$, $E_n < 0$.
+Let
 
-*Proof sketch.* $E_n = -1/n^2$ and $1/n^2 > 0$ for $n \ge 1$, hence
-$E_n < 0$. Physically, every bound state has negative total energy
-relative to the dissociation threshold. $\square$
+$$
+\mathbb{N}_{+}=\{1,2,3,\ldots\}
+$$
 
-**Theorem 2.4 (`bohrEnergy_ground`).** $E_1 = -1$.
+be the positive integers. We use Rydberg units, in which the hydrogenic ground-state energy is $-1$ and the ionization threshold is $0$.
 
-*Proof sketch.* Substitute $n=1$: $E_1 = -1/1^2 = -1$. This is the ground
-state energy, the most tightly bound configuration. $\square$
-
-**Theorem 2.5 (`bohrEnergy_ge_neg_one`).** For every $n \ge 1$,
-$E_n \ge -1$, with equality iff $n=1$.
-
-*Proof sketch.* For $n \ge 1$ we have $n^2 \ge 1$, so $0 < 1/n^2 \le 1$,
-hence $-1 \le -1/n^2 < 0$. The atom thus has a finite energy floor; there
-is no infinitely negative state, in contrast to the classical prediction
-of radiative collapse. $\square$
-
-**Theorem 2.6 (`bohrEnergy_strictMono`).** The sequence $n \mapsto E_n$ is
-strictly increasing: $m < n \implies E_m < E_n$.
-
-*Proof sketch.* For $0 < m < n$ we have $m^2 < n^2$, hence
-$1/m^2 > 1/n^2$, hence $-1/m^2 < -1/n^2$, i.e. $E_m < E_n$. The energy
-levels climb monotonically toward the ionization threshold. $\square$
-
-**Theorem 2.7 (`bohrEnergy_tendsto_zero`).** $E_n \to 0$ as
-$n \to \infty$.
-
-*Proof sketch.* $|E_n| = 1/n^2 \to 0$, since $1/n^2$ is a null sequence.
-Thus the levels accumulate at $0$ from below. $\square$
-
-**Theorem 2.8 (`zero_mem_closure_discrete`).** $0$ lies in the closure of
-the discrete spectrum $\{E_n : n \ge 1\}$; equivalently, $0$ is an
-accumulation point of the bound-state energies.
-
-*Proof sketch.* By Theorem 2.7 the sequence $E_n$ converges to $0$ while
-remaining strictly below it (Theorem 2.3), so $0$ is a limit point of the
-discrete set though not a member of it. This is the seam at which the
-discrete ladder meets the continuous spectrum. $\square$
-
-**Theorem 2.9 (`discrete_disjoint_continuous`).** The discrete spectrum and
-the continuous half-line are disjoint:
-$\{E_n : n \ge 1\} \cap [0,\infty) = \varnothing.$
-
-*Proof sketch.* Every $E_n$ is strictly negative (Theorem 2.3), while every
-element of $[0,\infty)$ is non-negative; the two sets cannot intersect.
-Hence the labels "bound" and "scattering" are unambiguous. $\square$
-
-### 2.3 Emission energies and the Rydberg formula
-
-**Theorem 2.10 (`rydberg_formula`).** For $m < n$ the energy of the photon
-emitted in the transition $n \to m$ is
-$$E_{\text{photon}} = E_n - E_m = \frac{1}{m^2} - \frac{1}{n^2}.$$
-
-*Proof sketch.* Direct substitution: $E_n - E_m = (-1/n^2) - (-1/m^2) =
-1/m^2 - 1/n^2$. This recovers the empirical Rydberg formula, the spectral
-law discovered before its theoretical explanation. $\square$
-
-**Theorem 2.11 (`photon_energy_pos`).** For $m < n$ (with $m \ge 1$) the
-emitted photon energy is strictly positive: $E_n - E_m > 0$.
-
-*Proof sketch.* By Theorem 2.6 the sequence is strictly increasing, so
-$m < n \implies E_m < E_n \implies E_n - E_m > 0$. Equivalently
-$1/m^2 - 1/n^2 > 0$ because $m^2 < n^2$. A downward transition releases
-energy. $\square$
-
-**Remark 2.12 (Spectral series).** Fixing the lower level $m$ generates a
-*spectral series*: $m=1$ gives the Lyman series (ultraviolet), $m=2$ the
-Balmer series (visible), $m=3$ the Paschen series (infrared). Each series
-has a *limit* energy $1/m^2$ (the $n \to \infty$ value), and every line in
-the series lies strictly below this limit, since $E_n - E_m = 1/m^2 -
-1/n^2 < 1/m^2$.
-
----
-
-## 3. Angular Structure and Degeneracy
-
-### 3.1 The azimuthal eigenfunctions and $L_z$
-
-**Definition 3.1 (Azimuthal eigenfunction).** For $m \in \mathbb{Z}$ and
-azimuthal angle $\varphi \in \mathbb{R}$, define
-$$\Phi_m(\varphi) := e^{im\varphi} = \exp\!\big((m\varphi)\, i\big) \in \mathbb{C}.$$
-
-This is the angular factor that appears in every separated solution of the
-hydrogen Schrödinger equation; the full spherical harmonic is
-$Y_\ell^m(\theta,\varphi) = \Theta_\ell^m(\theta)\,\Phi_m(\varphi)$.
-
-**Lemma 3.2 (Periodicity).** $\Phi_m(\varphi + 2\pi) = \Phi_m(\varphi)$ for
-every integer $m$.
-
-*Proof sketch.* $e^{im(\varphi+2\pi)} = e^{im\varphi}\,e^{2\pi i m}$ and
-$e^{2\pi i m} = 1$ exactly when $m \in \mathbb{Z}$. Single-valuedness of
-the wavefunction on the circle thus *quantizes* $m$ to the integers.
-$\square$
-
-**Definition 3.3 ($z$-angular-momentum operator).** The $z$-component of
-orbital angular momentum acts on functions of $\varphi$ by
-$$L_z := -i\,\frac{\partial}{\partial \varphi}.$$
-
-**Theorem 3.4 (`azimuthalExp_hasDerivAt`).** $\Phi_m$ is differentiable in
-$\varphi$ with
-$$\frac{d}{d\varphi}\,\Phi_m(\varphi) = i\,m\,\Phi_m(\varphi).$$
-
-*Proof sketch.* Write $\Phi_m(\varphi) = \exp(g(\varphi))$ with
-$g(\varphi) = (m\varphi)\,i$. Then $g'(\varphi) = m\,i$, and by the chain
-rule for the complex exponential,
-$\Phi_m'(\varphi) = g'(\varphi)\,e^{g(\varphi)} = im\,\Phi_m(\varphi)$. The
-only technical content is the bookkeeping of the $\mathbb{R}\to\mathbb{C}$
-coercion in the exponent. $\square$
-
-**Theorem 3.5 ($L_z$ eigenvalue equation, `Lz_eigenvalue`).** For every
-integer $m$ and angle $\varphi$,
-$$L_z \,\Phi_m(\varphi) = -i\,\frac{d}{d\varphi}\Phi_m(\varphi) = m\,\Phi_m(\varphi).$$
-
-*Proof sketch.* By Theorem 3.4 the derivative is $im\,\Phi_m$, so
-$-i \cdot im\,\Phi_m = (-i\cdot i)\,m\,\Phi_m = m\,\Phi_m$, using
-$i^2 = -1$. Thus $\Phi_m$ is an eigenfunction of $L_z$ with eigenvalue the
-integer $m$ — the precise reason $m$ is called the *magnetic quantum
-number*. This is the analytic counterpart of the matrix eigenvalue
-statement for $L_z$ in the $\ell=1$ representation. $\square$
-
-**Remark 3.6 (The integer spectrum of $L_z$).** Combining Lemma 3.2 and
-Theorem 3.5: the eigenvalues of $L_z$ on the space of smooth
-$2\pi$-periodic functions are exactly the integers $\mathbb{Z}$, with
-eigenfunctions $\Phi_m$. Periodicity forces quantization; the eigenvalue
-equation reads off the quantum number.
-
-### 3.2 Orthogonality of the angular basis
-
-The functions $\{\Phi_m\}_{m\in\mathbb{Z}}$ form an orthogonal family on
-the circle:
-$$\int_0^{2\pi} \overline{\Phi_{m_1}(\varphi)}\,\Phi_{m_2}(\varphi)\,d\varphi
-= \begin{cases} 2\pi & m_1 = m_2,\\ 0 & m_1 \ne m_2.\end{cases}$$
-This orthogonality (proved via $\int_0^{2\pi} e^{in\varphi}\,d\varphi = 0$
-for $n \ne 0$) guarantees that distinct magnetic substates are
-independent, and underlies the completeness of the spherical-harmonic
-basis.
-
-### 3.3 Subshell size and shell degeneracy
-
-**Theorem 3.7 (Magnetic count, `subshell_size` / `magnetic_count`).** For
-orbital quantum number $\ell \in \mathbb{N}$, the number of integer
-magnetic quantum numbers $m$ with $-\ell \le m \le \ell$ is
-$$\#\{m \in \mathbb{Z} : -\ell \le m \le \ell\} = 2\ell + 1.$$
-
-*Proof sketch.* The integer interval $[-\ell, \ell]$ has cardinality
-$\ell - (-\ell) + 1 = 2\ell + 1$. Each value of $m$ labels one magnetic
-substate of the subshell. $\square$
-
-**Theorem 3.8 (Shell degeneracy, `shell_degeneracy`).** The total number of
-orbital states in the shell with principal quantum number $n$ is
-$$\sum_{\ell=0}^{n-1} (2\ell + 1) = n^2.$$
-
-*Proof sketch.* Induction on $n$. The base case $n=0$ gives the empty sum
-$0 = 0^2$. For the inductive step, using the hypothesis
-$\sum_{\ell=0}^{k-1}(2\ell+1) = k^2$,
-$$\sum_{\ell=0}^{k}(2\ell+1) = k^2 + (2k+1) = (k+1)^2.$$
-This is the classical identity "the sum of the first $n$ odd numbers is
-$n^2$." Equivalently, $2\ell+1$ is the discrete derivative of $\ell^2$, so
-its partial sums telescope to $n^2$. $\square$
-
-**Corollary 3.9 (Degeneracy structure).** Each shell $n$ decomposes into
-subshells $\ell = 0,1,\dots,n-1$ of sizes $1,3,5,\dots,2n-1$, summing to
-$n^2$. Counting the electron's two spin states doubles this to $2n^2$, the
-maximum occupancy of the $n$-th electron shell — the numerology behind the
-periodic table's row lengths $2, 8, 18, 32, \dots$ (the latter requiring
-the spin factor not formalized here).
-
----
-
-## 4. Selection Rules for Radiative Transitions
-
-### 4.1 The dipole rule
-
-**Definition 4.1 (Dipole-allowed transition, `dipoleAllowed`).** A
-radiative transition between angular states $(\ell, m)$ and $(\ell', m')$
-is *electric-dipole allowed* iff
-$$\big(\ell' = \ell + 1 \;\lor\; \ell = \ell' + 1\big) \;\land\; |m - m'| \le 1.$$
-Equivalently: $\Delta\ell = \pm 1$ and $\Delta m \in \{-1, 0, +1\}$.
-
-This predicate captures the angular-momentum and parity bookkeeping
-imposed by the emission or absorption of a single spin-1 photon.
-
-### 4.2 Consequences
-
-**Theorem 4.2 (No $\ell$-conserving transitions, `dipole_forbids_same_l`).**
-For any $\ell$, $m$, $m'$, the transition $(\ell,m) \to (\ell,m')$ is *not*
-dipole-allowed. In particular $s\to s$ ($\ell:0\to0$) is forbidden.
-
-*Proof sketch.* Allowedness requires $\ell' = \ell + 1$ or
-$\ell = \ell' + 1$. With $\ell' = \ell$ both disjuncts assert
-$\ell = \ell \pm 1$, impossible for natural numbers. $\square$
-
-**Theorem 4.3 (Parity flip, `dipole_parity_flip`).** If $(\ell,m) \to
-(\ell',m')$ is dipole-allowed, then $\ell + \ell'$ is odd.
-
-*Proof sketch.* From $\Delta\ell = \pm 1$ we have $\ell' = \ell + 1$ or
-$\ell = \ell' + 1$; in either case $\ell + \ell' = 2\ell + 1$ or
-$2\ell' + 1$, which is odd. Since orbital parity is $(-1)^\ell$, an odd sum
-$\ell + \ell'$ means the parities of the two states differ: the transition
-flips parity, exactly as required by the odd intrinsic parity of the
-photon. $\square$
-
-**Theorem 4.4 (Symmetry / detailed balance, `dipole_symm`).** The relation
-is symmetric:
-$$\text{dipoleAllowed}(\ell, \ell', m, m') \iff \text{dipoleAllowed}(\ell', \ell, m', m).$$
-
-*Proof sketch.* The $\Delta\ell$ condition is a symmetric disjunction
-($\ell'=\ell+1 \lor \ell=\ell'+1$), and $|m-m'| = |m'-m|$. Swapping initial
-and final states preserves both clauses. This is the kinematic seed of
-detailed balance: emission and absorption obey the same selection rule.
-$\square$
-
-**Theorem 4.5 (Lyman-$\alpha$ is allowed, `lyman_alpha_allowed`).** The
-transition $2p \to 1s$, i.e. $(\ell,m) = (1,0) \to (\ell',m') = (0,0)$, is
-dipole-allowed.
-
-*Proof sketch.* Here $\ell = \ell' + 1$ (since $1 = 0 + 1$) and
-$|m - m'| = 0 \le 1$, so both clauses of Definition 4.1 hold. This is the
-Lyman-$\alpha$ line, hydrogen's strongest ultraviolet emission. $\square$
-
-### 4.3 Physical interpretation
-
-The selection rule is the conservation law of the radiation field made
-combinatorial. A photon is a spin-1 quantum of odd parity; emitting one
-must change the atom's orbital angular momentum by exactly one unit
-($\Delta\ell = \pm 1$) and its $z$-projection by at most one
-($|\Delta m| \le 1$), the three cases $\Delta m \in \{-1,0,+1\}$
-corresponding to the photon's three polarization states. Theorem 4.3
-expresses parity conservation; Theorem 4.2 is its sharpest corollary; and
-Theorem 4.4 expresses microscopic reversibility.
-
----
-
-## 5. Algorithms
-
-The formal theory yields directly executable procedures. We summarize the
-three principal ones.
-
-**Algorithm A (Bohr energies and Rydberg lines).** Given a cutoff $N$,
-tabulate $E_n = -1/n^2$ for $1 \le n \le N$ and all emission energies
-$E_n - E_m = 1/m^2 - 1/n^2$ for $m < n$, grouped into spectral series by
-the lower index $m$. Complexity $O(N^2)$ for the full line list.
-
-**Algorithm B (Degeneracy by direct summation).** Given $n$, compute
-$\sum_{\ell=0}^{n-1}(2\ell+1)$ and verify it equals $n^2$; report the
-subshell decomposition $(1,3,5,\dots,2n-1)$. Complexity $O(n)$ for the sum,
-$O(1)$ via the closed form $n^2$.
-
-**Algorithm C (Selection-rule filter).** Given a set of states
-$(\ell, m)$, enumerate all ordered pairs and retain those satisfying
-$\Delta\ell = \pm1 \land |\Delta m| \le 1$. Complexity $O(S^2)$ for $S$
-states.
-
----
-
-## 6. Applications
-
-- **Astrophysical spectroscopy.** The Rydberg formula (Theorem 2.10) and
-  the selection rules (§4) predict which hydrogen lines appear in stellar
-  and interstellar spectra. Lyman-$\alpha$ (Theorem 4.5) is a primary
-  tracer of neutral hydrogen across cosmological distances.
-- **Atomic clocks and metrology.** The discreteness and disjointness of the
-  spectrum (Theorems 2.6, 2.9) underlie the sharp, well-separated reference
-  frequencies used in precision measurement.
-- **Chemistry and the periodic table.** The $n^2$ degeneracy (Theorem 3.8),
-  doubled by spin, fixes electron-shell capacities and hence the structure
-  of the periodic table (Corollary 3.9).
-- **Laser physics.** Detailed balance (Theorem 4.4) is the kinematic basis
-  for stimulated emission and population-inversion lasing.
-
----
-
-## 7. Discussion
-
-The development isolates a striking fact: the qualitative spectrum of
-hydrogen is governed by elementary arithmetic and single-variable
-analysis. The energy ladder is the negated null sequence $1/n^2$; its
-accumulation at the ionization threshold is the convergence of that
-sequence; the $n^2$ degeneracy is the sum-of-odd-numbers identity; the
-integer angular-momentum spectrum is forced by $2\pi$-periodicity; and the
-selection rules are parity and angular-momentum bookkeeping expressed as
-divisibility and absolute-value inequalities. None of these requires the
-explicit Laguerre or Legendre special functions; they are invariants
-extractable from the *structure* of the eigenvalue problem.
-
-A deliberate idealization is the use of Rydberg units and the modeling of
-the spectrum as a fixed set rather than as the operator spectrum of an
-unbounded self-adjoint Hamiltonian on $L^2(\mathbb{R}^3)$. The set-level
-description (Definition 2.2) captures exactly the physics needed for the
-spectral-line predictions while remaining elementary. Fine structure,
-hyperfine structure, the Lamb shift, and relativistic corrections are
-beyond the present scope, as is electron spin (which would double all
-multiplicities).
-
----
-
-## 8. Future Directions
-
-1. **Order type of the discrete spectrum.** Conjecture: the set
-   $\{-1/n^2 : n \ge 1\}$ is order-isomorphic to $\mathbb{N}$ and its
-   derived set (set of accumulation points) is exactly $\{0\}$. The
-   negation operator turns the monotone null sequence $1/n^2$ into a
-   strictly increasing sequence bounded above by $0$ whose only limit is
-   the supremum; with `bohrEnergy_strictMono` and
-   `zero_mem_closure_discrete` in hand, the missing step is
-   $\text{derivedSet} = \{0\}$.
-
-2. **Two scales of Rydberg gaps.** Conjecture: for every $\varepsilon > 0$
-   there are infinitely many emission energies $E_n - E_m$ within
-   $\varepsilon$ of an accumulation value, yet gaps to the ground state
-   $E_n - E_1$ are bounded below by a positive constant. The $1/n^2$ tail
-   collapses (giving density near $0$) while the $m=1$ series stays away
-   from $0$ because $E_1 = -1$ is isolated.
-
-3. **Uniqueness of the degeneracy lift.** Conjecture: the only $d:
-   \mathbb{N}\to\mathbb{N}$ with $d(n) = \sum_{\ell<n} g(\ell)$ and
-   $g(\ell) = 2\ell+1$ is $d(n) = n^2$; conversely any quadratic degeneracy
-   forces odd-integer subshell multiplicities. This is the telescoping
-   identity $\Delta(n^2) = 2\ell+1$ viewed from both sides.
-
-4. **Selection rule as photon parity obstruction.** Conjecture: a
-   transition $(\ell,m)\to(\ell',m')$ conserves total angular momentum with
-   a spin-1 photon iff `dipoleAllowed`, and every allowed transition
-   strictly flips orbital parity $(-1)^\ell$. The remaining content is to
-   connect $|\Delta m| \le 1$ to the three photon polarization states.
-
-5. **The $L_z$ spectrum is exactly $\mathbb{Z}$.** Conjecture: the
-   eigenvalues of $L_z = -i\,\partial_\varphi$ on smooth $2\pi$-periodic
-   functions are exactly $\mathbb{Z}$, forced by the periodicity proved in
-   `azimuthal_eigenfunction_periodic` and the eigenvalue equation
-   `Lz_eigenvalue`.
-
----
-
-## 9. Conclusion
-
-We have given a complete, self-contained account of the spectral structure
-of the hydrogen atom: the Bohr energy ladder $-1/n^2$ and its fusion with
-the ionization continuum $[0,\infty)$; the $L_z$ eigenvalue equation that
-names the magnetic quantum number; the $2\ell+1$ subshell sizes summing to
-the $n^2$ shell degeneracy; and the electric-dipole selection rules with
-their parity, forbidding, symmetry, and Lyman-$\alpha$ consequences. Every
-statement is elementary in its components yet collectively reconstructs the
-qualitative spectrum of the simplest atom — a demonstration that the music
-of hydrogen is written in arithmetic.
+**Definition 2.1 (Bohr energy).** For $n\in\mathbb{N}_{+}$, the bound-state energy is
+
+$$
+E_n=-\frac{1}{n^2}.
+$$
+
+**Definition 2.2 (Idealized hydrogenic spectral set).** The modeled spectral set is
+
+$$
+\Sigma_{\mathrm H}=\{E_n:n\in\mathbb{N}_{+}\}\cup[0,\infty).
+$$
+
+The subset $\Sigma_{\mathrm b}=\{E_n:n\in\mathbb{N}_{+}\}$ is called the bound portion, and $\Sigma_{\mathrm c}=[0,\infty)$ is called the scattering portion.
+
+The terminology reflects the standard hydrogenic interpretation, but Definition 2.2 is a set model. It is not, by itself, an assertion that $\Sigma_{\mathrm H}$ is the spectrum of a specified self-adjoint operator.
+
+### 2.2 Sign, low levels, and monotonicity
+
+**Theorem 2.3 (Negativity of bound levels).** For every $n\in\mathbb{N}_{+}$,
+
+$$
+E_n<0.
+$$
+
+**Proof sketch.** Since $n>0$, one has $n^2>0$ and therefore $1/n^2>0$. Negating this positive number gives $E_n=-1/n^2<0$. $\square$
+
+**Corollary 2.4 (Ground state and first levels).** The ground-state energy is $E_1=-1$, and the first four bound energies are
+
+$$
+E_1=-1,\qquad E_2=-\frac14,\qquad E_3=-\frac19,\qquad E_4=-\frac1{16}.
+$$
+
+**Proof sketch.** Substitute $n=1,2,3,4$ into Definition 2.1. $\square$
+
+**Theorem 2.5 (Strict ordering).** If $a,b\in\mathbb{N}_{+}$ and $a<b$, then
+
+$$
+E_a<E_b.
+$$
+
+Thus the sequence $n\mapsto E_n$ is strictly increasing.
+
+**Proof sketch.** Positive integers satisfy $a^2<b^2$. Taking positive reciprocals reverses this inequality, so $1/b^2<1/a^2$. Negation reverses it once more, giving $-1/a^2<-1/b^2$. $\square$
+
+The sequence therefore rises toward the ionization threshold. “Increasing” here refers to the usual order on the real line: the values become less negative.
+
+### 2.3 Threshold convergence and closure
+
+**Theorem 2.6 (Threshold limit).** The bound energies converge to zero:
+
+$$
+\lim_{n\to\infty}E_n=0.
+$$
+
+Equivalently,
+
+$$
+\lim_{j\to\infty}-\frac{1}{(j+1)^2}=0.
+$$
+
+**Proof sketch.** Since $(j+1)^2\to\infty$, its reciprocal tends to zero. Multiplication by $-1$ preserves convergence and changes the limit only by a factor of $-1$, leaving zero fixed. More explicitly, for any $\varepsilon>0$, choose $j$ so large that $(j+1)^2>1/\varepsilon$. Then $|E_{j+1}|=1/(j+1)^2<\varepsilon$. $\square$
+
+**Theorem 2.7 (Accumulation at ionization).** Zero belongs to the topological closure of the bound portion $\Sigma_{\mathrm b}$. Equivalently, every open neighborhood of $0$ contains a bound energy.
+
+**Proof sketch.** The sequence $E_{j+1}$ lies entirely in $\Sigma_{\mathrm b}$ and converges to $0$ by Theorem 2.6. A limit of a sequence drawn from a set belongs to that set’s closure. $\square$
+
+It is important to distinguish membership from closure membership. Zero is not equal to $-1/n^2$ for any positive integer $n$, so $0\notin\Sigma_{\mathrm b}$. Nevertheless $0\in\overline{\Sigma_{\mathrm b}}$. In the full modeled set, $0\in\Sigma_{\mathrm c}$.
+
+**Theorem 2.8 (Separation of bound and scattering portions).** The sets $\Sigma_{\mathrm b}$ and $\Sigma_{\mathrm c}$ are disjoint:
+
+$$
+\Sigma_{\mathrm b}\cap\Sigma_{\mathrm c}=\varnothing.
+$$
+
+**Proof sketch.** Every element of $\Sigma_{\mathrm b}$ is negative by Theorem 2.3, whereas every element of $\Sigma_{\mathrm c}=[0,\infty)$ is nonnegative. No real number is both negative and nonnegative. $\square$
+
+Taken together, Theorems 2.6–2.8 describe a discrete family accumulating exactly at the boundary of a disjoint continuum. The distance between the two sets is zero even though their intersection is empty.
+
+## 3. Azimuthal angular-momentum modes
+
+### 3.1 Definition and single-valuedness
+
+Let $\phi\in\mathbb{R}$ denote the azimuthal angle. Although physical angles are identified modulo $2\pi$, it is convenient to define functions on $\mathbb{R}$ and prove periodicity.
+
+**Definition 3.1 (Azimuthal mode).** For an integer $m\in\mathbb{Z}$, define
+
+$$
+\psi_m(\phi)=\exp(im\phi).
+$$
+
+**Theorem 3.2 (Full-rotation periodicity).** For every $m\in\mathbb{Z}$ and $\phi\in\mathbb{R}$,
+
+$$
+\psi_m(\phi+2\pi)=\psi_m(\phi).
+$$
+
+**Proof sketch.** The exponential addition rule gives
+
+$$
+\psi_m(\phi+2\pi)=e^{im\phi}e^{2\pi im}.
+$$
+
+For integer $m$, Euler’s identity implies $e^{2\pi im}=1$. Hence the product equals $e^{im\phi}=\psi_m(\phi)$. $\square$
+
+The integer restriction is the winding condition. The phase completes $m$ signed turns as $\phi$ completes one positive revolution. Negative $m$ reverses the orientation; $m=0$ yields the constant function $1$.
+
+### 3.2 Differentiation and the eigenvalue equation
+
+**Lemma 3.3 (Derivative of an azimuthal mode).** For every integer $m$,
+
+$$
+\frac{d}{d\phi}\psi_m(\phi)=im\psi_m(\phi).
+$$
+
+**Proof sketch.** Apply the chain rule to $e^{im\phi}$. The derivative of the exponent $im\phi$ is $im$, and the complex exponential is its own derivative. $\square$
+
+**Definition 3.4 (Azimuthal angular momentum).** In dimensionless units, define
+
+$$
+L_z=-i\frac{d}{d\phi}.
+$$
+
+Restoring physical units would multiply this operator by $\hbar$.
+
+**Theorem 3.5 (Azimuthal angular-momentum eigenvalue).** For every $m\in\mathbb{Z}$,
+
+$$
+L_z\psi_m=m\psi_m.
+$$
+
+**Proof sketch.** By Lemma 3.3,
+
+$$
+L_z\psi_m=-i(im\psi_m)=m\psi_m,
+$$
+
+because $-i^2=1$. $\square$
+
+This theorem identifies the winding number $m$ with the dimensionless $z$-component angular-momentum eigenvalue. It addresses only the azimuthal factor. A complete spherical harmonic has the form of a normalized polar factor multiplied by $e^{im\phi}$ and additionally satisfies a total-angular-momentum equation with eigenvalue $\ell(\ell+1)$.
+
+## 4. The idealized dipole transition graph
+
+### 4.1 Orbital states and edges
+
+**Definition 4.1 (Orbital state).** An orbital state is a pair
+
+$$
+a=(\ell_a,m_a)
+$$
+
+with $\ell_a\in\mathbb{Z}_{\ge0}$, $m_a\in\mathbb{Z}$, and $|m_a|\le\ell_a$.
+
+The inequality $|m_a|\le\ell_a$ is the standard range condition for magnetic quantum numbers at fixed orbital quantum number.
+
+**Definition 4.2 (Idealized electric-dipole allowedness).** Two orbital states $a=(\ell_a,m_a)$ and $b=(\ell_b,m_b)$ are connected by an allowed transition when
+
+$$
+\bigl(\ell_b=\ell_a+1\ \text{or}\ \ell_a=\ell_b+1\bigr)
+\quad\text{and}\quad
+|m_a-m_b|\le1.
+$$
+
+The first condition is $\Delta\ell=\pm1$. Since $m_a-m_b$ is integral, the second condition is equivalent to $\Delta m\in\{-1,0,1\}$.
+
+This definition encodes the familiar orbital electric-dipole selection rule. It does not derive that rule from the electric-dipole operator or an integral of wavefunctions.
+
+**Proposition 4.3 (Symmetry of allowedness).** If a transition from $a$ to $b$ is allowed, then the transition from $b$ to $a$ is allowed.
+
+**Proof sketch.** The alternative $\ell_b=\ell_a+1$ or $\ell_a=\ell_b+1$ is unchanged when the endpoints are exchanged. Moreover, $|m_a-m_b|=|m_b-m_a|$. $\square$
+
+Thus orbital states can be treated as vertices of an undirected graph, with allowed transitions as edges.
+
+### 4.2 Parity coloring
+
+**Definition 4.4 (Orbital parity color).** Assign to a state $a$ the color
+
+$$
+c(a)=\ell_a\bmod2\in\{0,1\}.
+$$
+
+Color $0$ represents even $\ell$ and color $1$ represents odd $\ell$.
+
+**Theorem 4.5 (Every dipole edge crosses parity).** If $a$ and $b$ are connected by an allowed transition, then
+
+$$
+c(a)\ne c(b).
+$$
+
+**Proof sketch.** Allowedness requires $|\ell_a-\ell_b|=1$. Consecutive integers have opposite parity, so their residues modulo $2$ differ. The magnetic condition plays no role in this parity conclusion. $\square$
+
+**Corollary 4.6 (Bipartiteness).** The idealized dipole transition graph is bipartite. One part consists of states with even $\ell$, and the other consists of states with odd $\ell$.
+
+This graph-theoretic reformulation is useful because bipartiteness is global: a local selection rule at each edge constrains all possible paths and cycles.
+
+## 5. Walk parity and cycle exclusion
+
+### 5.1 Walks
+
+**Definition 5.1 (Dipole walk).** A dipole walk of length $k$ from state $a$ to state $b$ is a sequence of states
+
+$$
+a=v_0,v_1,\ldots,v_k=b
+$$
+
+such that each consecutive pair $v_{j-1},v_j$ is connected by an allowed transition. The length is the number of edges, so the stationary walk from a state to itself has length $0$.
+
+**Theorem 5.2 (Walk-parity law).** Let a dipole walk of length $k$ join states $a=(\ell_a,m_a)$ and $b=(\ell_b,m_b)$. Then
+
+$$
+(\ell_a+\ell_b)\bmod2=k\bmod2.
+$$
+
+Equivalently, the endpoint colors satisfy
+
+$$
+c(b)=c(a)+k\pmod2.
+$$
+
+**Proof sketch.** Proceed by induction on $k$. For $k=0$, the endpoints coincide, and $\ell_a+\ell_a=2\ell_a$ is even. For the induction step, separate the first edge $a\to v_1$ from the remaining walk. The first edge changes $\ell$ by one and therefore flips parity. Increasing the path length from $k$ to $k+1$ also flips its parity. Applying the induction hypothesis to the remaining walk proves that the two sides continue to agree. $\square$
+
+This result may also be viewed as repeated application of Theorem 4.5: each edge toggles one bit, so after $k$ edges that bit has been toggled $k$ times.
+
+### 5.2 Consequences
+
+**Corollary 5.3 (Two-step parity preservation).** If $a\to b\to c$ consists of two allowed transitions, then
+
+$$
+c(a)=c(c).
+$$
+
+**Proof sketch.** Apply Theorem 5.2 with $k=2$. Since $2\bmod2=0$, the endpoints have equal parity. $\square$
+
+**Theorem 5.4 (No odd closed dipole walk).** There is no closed dipole walk of odd length. In particular, the transition graph has no odd cycle.
+
+**Proof sketch.** For a closed walk, $a=b$, so
+
+$$
+(\ell_a+\ell_b)\bmod2=(2\ell_a)\bmod2=0.
+$$
+
+Theorem 5.2 then gives $k\bmod2=0$. Thus $k$ is even, contradicting the assumption that it is odd. $\square$
+
+Theorem 5.4 is equivalent to bipartiteness for an undirected graph, but Theorem 5.2 is stronger as a usable invariant: it tells us the required parity of every path between specified endpoints.
+
+## 6. Algorithms and numerical realization
+
+The preceding results lead naturally to finite computations. Such computations illustrate the theory but do not replace the general arguments.
+
+### 6.1 Bound-spectrum enumeration
+
+Given a cutoff $N\ge1$, compute
+
+$$
+(E_1,E_2,\ldots,E_N)=\left(-1,-\frac14,\ldots,-\frac1{N^2}\right).
+$$
+
+**Algorithm 6.1 (Finite bound-spectrum generator).**
+
+1. Validate that $N$ is a positive integer.
+2. For each $n$ from $1$ through $N$, calculate $-1/n^2$.
+3. Return the ordered list.
+4. Optionally verify strict increase by checking $E_n<E_{n+1}$.
+
+The algorithm takes $O(N)$ time and $O(N)$ output space. If values are streamed rather than stored, auxiliary space is $O(1)$. The threshold convergence can be visualized by plotting the values against $n$ with a horizontal line at $0$.
+
+### 6.2 Finite transition graph construction
+
+Fix $L\ge0$. Generate all orbital states
+
+$$
+V_L=\{(\ell,m):0\le\ell\le L,\ -\ell\le m\le\ell\}.
+$$
+
+The number of vertices is
+
+$$
+|V_L|=\sum_{\ell=0}^{L}(2\ell+1)=(L+1)^2.
+$$
+
+Rather than test every pair of vertices, exploit the selection rule. For each $(\ell,m)$, inspect only states with $\ell+1$ and magnetic labels $m-1,m,m+1$ that remain valid. This generates each undirected edge once. Because each vertex has at most three such forward neighbors, construction takes $O(|V_L|)=O(L^2)$ time and $O(|V_L|+|E_L|)=O(L^2)$ space.
+
+A breadth-first search then finds shortest allowed transition chains. The walk-parity theorem supplies a consistency check: if the endpoints have equal $\ell$ parity, every discovered path length must be even; if they have opposite parity, every path length must be odd.
+
+### 6.3 Azimuthal sampling
+
+For chosen $m$ and sample angles $\phi_j$, compute
+
+$$
+\psi_m(\phi_j)=\cos(m\phi_j)+i\sin(m\phi_j).
+$$
+
+Sampling $P$ angles costs $O(P)$ time and $O(P)$ space if all samples are retained. Numerically one can compare $\psi_m(\phi)$ with $\psi_m(\phi+2\pi)$ and compare $-i(im\psi_m)$ with $m\psi_m$. Floating-point equality should be assessed with a tolerance because numerical approximations to $\pi$ and complex exponentials introduce rounding error.
+
+## 7. Applications and interpretation
+
+### 7.1 Spectral line crowding
+
+The limit $E_n\to0$ explains why levels become crowded near ionization. The adjacent gap is
+
+$$
+E_{n+1}-E_n=\frac{1}{n^2}-\frac{1}{(n+1)^2}
+=\frac{2n+1}{n^2(n+1)^2},
+$$
+
+which is positive and tends to zero. Thus strict ordering coexists with shrinking separation. This behavior is relevant when choosing numerical truncations: a fixed energy resolution resolves fewer distinct levels near threshold.
+
+### 7.2 Rotational symmetry
+
+The relation $L_z\psi_m=m\psi_m$ links periodic geometry to an observable label. Complex exponentials diagonalize differentiation on the circle. The hydrogenic interpretation is one instance of Fourier analysis: integer characters of the circle are eigenfunctions of its infinitesimal rotation generator.
+
+### 7.3 Transition-network pruning
+
+In finite-state searches, parity gives an inexpensive rejection criterion. If a desired route from $a$ to $b$ is required to use exactly $k$ dipole edges, then the route is impossible unless
+
+$$
+(\ell_a+\ell_b)\bmod2=k\bmod2.
+$$
+
+This test is constant-time and can be applied before graph traversal. The absence of odd cycles also permits standard bipartite-graph methods and provides a diagnostic for incorrectly generated edges.
+
+### 7.4 Scope of the physical claims
+
+The spectral statements concern the explicitly defined set $\Sigma_{\mathrm H}$. To identify it with the spectrum of a physical Hamiltonian, one must define
+
+$$
+H=-\Delta-\frac{2}{r}
+$$
+
+as an unbounded self-adjoint operator on $L^2(\mathbb{R}^3)$, specify its domain or construct it through a closed semibounded quadratic form, and analyze both point and continuous spectrum. The singular potential at $r=0$ and behavior at spatial infinity require functional analysis absent from the present set model.
+
+Likewise, Definition 4.2 encodes selection rules. A derivation would define the electric-dipole operator and prove that matrix elements vanish except when the angular conditions hold. Radial overlap can further determine whether an angularly allowed transition has nonzero amplitude. The graph studied here should therefore be read as the graph of transitions allowed by the stated angular rule, not as a complete intensity-weighted spectroscopic network.
+
+## 8. Discussion
+
+### 8.1 Logical independence and synthesis
+
+The three parts of the model are mathematically complementary but logically distinct. The spectral conclusions follow from the real sequence $-1/n^2$ and elementary topology; they do not require angular quantum numbers. The azimuthal eigenvalue equation follows from complex differentiation and periodicity; it does not depend on the energy formula. The graph results follow from integer parity and the chosen edge rule; they do not require either spectral convergence or differentiation.
+
+Their synthesis becomes meaningful when one interprets the labels as aspects of hydrogenic states. A transition may change energy and angular labels simultaneously. The energy difference determines an idealized photon energy, while the graph determines whether the angular labels satisfy the one-step rule. If a transition joins principal levels $n_i$ and $n_f$, then the magnitude of the modeled energy change is
+
+$$
+|E_{n_f}-E_{n_i}|=\left|\frac{1}{n_i^2}-\frac{1}{n_f^2}\right|.
+$$
+
+The present graph does not include $n$, so it cannot by itself attach this weight to an edge. Adding $n$ to each vertex would permit a weighted transition network. One could then ask for shortest paths in number of photons, minimum or maximum total emitted energy under directed decay constraints, or connectivity after radial-overlap conditions are imposed.
+
+### 8.2 Structural theme
+
+The results reveal a common mathematical mechanism: integer data control qualitative structure.
+
+The positive integer $n$ indexes an infinite discrete spectrum and controls its approach to a threshold. The integer $m$ is a winding number that becomes an angular-momentum eigenvalue. The residue of $\ell$ modulo $2$ colors the transition graph and records path-length parity.
+
+The spectral and graph components also display two kinds of boundary behavior. In energy space, the discrete sequence approaches the continuum boundary without entering the continuum. In the transition graph, every edge crosses the boundary between two parity classes, but two edges return to the original class. One is topological accumulation; the other is combinatorial alternation.
+
+The model is intentionally minimal. That minimality makes the logical dependence transparent. Negativity and monotonicity use only arithmetic. Accumulation uses elementary limits and closure. The $L_z$ eigenvalue equation uses the chain rule and $i^2=-1$. Bipartiteness uses only the fact that allowed transitions change $\ell$ by one. No stronger physical assertion is needed for these conclusions.
+
+## 9. Future work
+
+Several extensions would move from this structural model toward a fuller mathematical account of hydrogen.
+
+1. **Coulomb Hamiltonian as an unbounded self-adjoint operator.** Define $H=-\Delta-2/r$ on $L^2(\mathbb{R}^3)$ from a closed semibounded quadratic form, establish self-adjointness, and prove that its operator spectrum is exactly the set modeled here.
+
+2. **Full spherical harmonics.** Construct associated Legendre functions and normalized $Y_\ell^m$, then prove both $L_zY_\ell^m=mY_\ell^m$ and $L^2Y_\ell^m=\ell(\ell+1)Y_\ell^m$. The present result proves the azimuthal factor of the first equation.
+
+3. **Derivation of selection rules.** Define the electric-dipole operator, spherical tensor components, and relevant inner products. Prove vanishing matrix elements using parity and angular orthogonality, so that $\Delta\ell=\pm1$ and $\Delta m\in\{-1,0,1\}$ emerge as theorems rather than edge definitions.
+
+4. **Graph structure beyond bipartiteness.** Add principal quantum numbers and radial overlap conditions to vertices and edges. Study connected components, shortest allowed transition sequences, and weighted paths whose weights are emitted photon energies.
+
+5. **Spectral multiplicity and hidden symmetry.** Develop the Runge–Lenz symmetry and the $\mathfrak{so}(4)$ representation underlying the $n^2$ orbital degeneracy, connecting operator eigenspaces to finite-dimensional representation theory.
+
+## 10. Conclusion
+
+For the idealized hydrogenic set
+
+$$
+\Sigma_{\mathrm H}=\left\{-\frac1{n^2}:n\in\mathbb{N}_{+}\right\}\cup[0,\infty),
+$$
+
+the negative levels are strictly increasing and converge to zero, zero lies in their closure, and the bound and scattering portions are disjoint. For every integer $m$, the periodic mode $e^{im\phi}$ satisfies the dimensionless eigenvalue equation $L_z\psi_m=m\psi_m$. For orbital states obeying $|m|\le\ell$, the idealized dipole rule $\Delta\ell=\pm1$ and $|\Delta m|\le1$ defines a symmetric transition graph. Orbital parity bipartitions that graph, and every walk satisfies
+
+$$
+(\ell_a+\ell_b)\bmod2=k\bmod2.
+$$
+
+Consequently, two-step transitions preserve parity and odd closed walks cannot occur. These results provide a precise bridge from hydrogenic quantum numbers to topology, Fourier modes, and graph invariants while clearly separating the model from the deeper operator theory and matrix-element analysis needed for a complete treatment.
