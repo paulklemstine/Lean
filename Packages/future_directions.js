@@ -2141,17 +2141,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Error Correction Threshold: The Eastin-Knill Theorem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8110b227",
     "description": "Prove the stability theorem for persistent homology: the bottleneck distance between persistence diagrams is bounded by the Gromov-Hausdorff distance between the underlying spaces. Formalize the persistent homology pipeline and verify on concrete point cloud data.",
     "domains": [
       "Computation",
       "Geometry"
     ],
     "id": "seed_322",
+    "phase": "A",
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Topological Data Analysis: Persistent Homology Stability"
   },

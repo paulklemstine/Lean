@@ -2862,7 +2862,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8110b227",
     "description": "Prove the stability theorem for persistent homology: the bottleneck distance between persistence diagrams is bounded by the Gromov-Hausdorff distance between the underlying spaces. Formalize the persistent homology pipeline and verify on concrete point cloud data.",
     "domain_bridges": [],
     "domains": [
@@ -2875,7 +2875,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Topological Data Analysis: Persistent Homology Stability"
   },
@@ -7998,7 +7998,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0d06265a",
     "description": "Define the category EML_Comp where objects are R^n and morphisms are functions computable by finite EML compositions (exp, log, +, *, constants). Conjecture: EML_Comp is a Cartesian closed category with natural numbers object R (the reals). Test: prove closure under composition (trivial), products (pairing), and exponentials (currying via EML parameter sharing). Impact: puts EML computation on firm categorical foundations.",
     "domain_bridges": [],
     "domains": [
@@ -8012,7 +8012,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "EML Category: The Category of EML-Computable Maps"
   },
