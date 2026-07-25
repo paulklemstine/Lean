@@ -2208,7 +2208,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "id": "fd_0662",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.87,
     "research_mode": "prove",
     "source_exp_id": "seed",
@@ -4872,22 +4872,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Diffusion Models as Stochastic Differential Equations"
   },
   {
-    "consumed_by_exp_id": "5fcde7e0",
-    "description": "Prove that the class of EML functions forms a differential field: closed under addition, multiplication, composition, and differentiation. Show that the inverse function theorem for EML functions yields EML inverses. Determine whether EML functions are closed under integration.",
-    "domains": [
-      "EML",
-      "Algebra"
-    ],
-    "id": "seed_337",
-    "phase": "B",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "EML Differential Algebra: Closure Properties"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Prove special cases of Beal's conjecture (A^x + B^y = C^z with x,y,z > 2 implies gcd(A,B,C) > 1). Verify computationally for all values up to 1000. Prove the conjecture when one of x,y,z equals 3 and the other two are at most 5.",
     "domains": [
@@ -5958,17 +5942,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "Euler-Mascheroni Constant Irrationality"
   },
   {
-    "consumed_by_exp_id": "7277c96e",
+    "consumed_by_exp_id": "",
     "description": "Prove that if A^x + B^y = C^z where A,B,C,x,y,z are positive integers with x,y,z > 2, then A,B,C share a common prime factor. Formalize the connection to Fermat-Catalan and ABC conjecture.",
     "domains": [
       "NumberTheory"
     ],
     "id": "seed_036",
-    "phase": "A",
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "",
     "title": "Beal's Conjecture"
   },
@@ -8033,7 +8016,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean"
     ],
     "id": "fd_0170",
-    "phase": "B",
+    "phase": "complete",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.15269v1",
@@ -9949,6 +9932,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-25T14:09:47.358166+00:00",
     "title": "The accompanying Lean files isolate three rigorous components related to *The"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThe completed `Catalog/EML/DifferentialClosure.lean` develops a syntax of rational exponential\u2013logarithmic expressions and proves its main algebraic closure chain. The next useful extensions are:\n\n1. **Domains and germs.** Replace totalized real inverse and logarithm by expressions equipped with open domains, or by germs at regular points. This would make the usual \u201cdifferential field\u201d statement literal: nonzero germs have multiplicative inverses, whereas the ring of total real-valued functions has zero divisors.\n2. **A genuine inverse-function closure criterion.** The current inverse-branch result records and differentiates a branch once an EML representation is supplied. A stronger theorem should identify syntactic or differential-algebraic hypotheses under which a locally defined inverse branch is itself representable. Such a statement cannot follow from the analytic inverse function theorem alone without an additional representability hypothesis.\n3. **Local regularity under substitution.** Prove an exact formula relating `Expr.RegularAt (Expr.subst p q) x` to regularity of `q` at `x` and regularity of `p` at `Expr.eval q x`. This would support a local chain-rule API for composed expressions.\n4. **Iterated differentiation.** Define `Expr.diffIter` and prove by induction that every iterated derivative of a globally regular expression is represented by the corresponding iterated symbolic derivative, subject to regularity of the intermediate expressions.\n5. **Integration obstruction.** The file proves antiderivative closure for expressions already known to be symbolic derivatives, and gives `exp` as a concrete example. It does not claim that every EML expression has an EML antiderivative. A rigorous negative result would require a formal non-elementary-integrability criterion (for example, a suitable fragment of differential algebra/Liouville theory) and an explicit witness.\n6. **Normalization and equality.** Add simplification or normalization procedures for expression syntax and prove them semantics-preserving. This would make generated derivatives substantially smaller and facilitate comparisons between representations.\n\nThe most natural next milestone is the domain/germ formulation, followed by a formal integration-obstruction theorem. Together these would sharpen exactly which sense of \u201cdifferential field\u201d and \u201cclosed under integration\u201d is valid.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0732",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "5fcde7e0",
+    "status": "available",
+    "timestamp": "2026-07-25T16:28:16.297404+00:00",
+    "title": "The completed `Catalog/EML/DifferentialClosure.lean` develops a syntax of ration"
   },
   {
     "consumed_by_exp_id": "",
