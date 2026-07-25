@@ -48,19 +48,22 @@
       "name": "Extended-Euclidean Inversion of a Unit-Affine Map",
       "description": "Tests the necessary and sufficient condition $\\gcd(a,q)=1$, computes a modular inverse by the extended Euclidean algorithm, and evaluates $a^{-1}(y-b)$ modulo $q$. The arithmetic uses $O(\\log q)$ Euclidean divisions and is polynomial in the bit length of $q$.",
       "pseudocode": "INPUT: positive modulus q; integers a, b; output y.\n1. Run EXTENDED-GCD(a,q) to obtain g,u,v with ua+vq=g.\n2. If g ≠ 1, report that the affine map is not invertible.\n3. Set a_inv ← u mod q.\n4. Return a_inv·(y−b) mod q.",
-      "code": "from math import gcd\nfrom typing import Tuple\n\ndef extended_gcd(a: int, b: int) -> Tuple[int,int,int]:\n    if b == 0: return abs(a), 1 if a >= 0 else -1, 0\n    g,x1,y1=extended_gcd(b,a%b)\n    return g,y1,x1-(a//b)*y1\n\ndef affine_inverse(q: int, a: int, b: int, y: int) -> int:\n    if q <= 0: raise ValueError(\"q must be positive\")\n    g,x,_=extended_gcd(a,q)\n    if g != 1: raise ValueError(\"a is not a unit modulo q\")\n    return (x*(y-b)) % q\n"
+      "code": "from math import gcd\nfrom typing import Tuple\n\ndef extended_gcd(a: int, b: int) -> Tuple[int,int,int]:\n    if b == 0: return abs(a), 1 if a >= 0 else -1, 0\n    g,x1,y1=extended_gcd(b,a%b)\n    return g,y1,x1-(a//b)*y1\n\ndef affine_inverse(q: int, a: int, b: int, y: int) -> int:\n    if q <= 0: raise ValueError(\"q must be positive\")\n    g,x,_=extended_gcd(a,q)\n    if g != 1: raise ValueError(\"a is not a unit modulo q\")\n    return (x*(y-b)) % q\n",
+      "code_file": "visualizations/lattice_lwe_formal_equivalence_between_decision_lw_extended_euclidean_inversion_of_a_unit_a.py"
     },
     {
       "name": "Uniform Unit Rejection Sampler",
       "description": "Draws uniform residues and accepts exactly those coprime to $q$. Conditioning a uniform proposal on membership in the unit group gives a uniform unit. Each gcd test is polynomial in $\\log q$; the expected number of proposals is exactly $q/\\varphi(q)$.",
       "pseudocode": "INPUT: positive modulus q and requested count N.\n1. Initialize an empty output list and trial counter 0.\n2. While fewer than N units have been accepted:\n   a. Draw a uniformly from {0,…,q−1}.\n   b. Increment the trial counter.\n   c. If gcd(a,q)=1, append a.\n3. Return the units and trial counter.",
-      "code": "from math import gcd\nfrom random import Random\nfrom typing import List, Tuple\n\ndef sample_units(q: int, count: int, seed: int=0) -> Tuple[List[int],int]:\n    if q <= 0 or count < 0: raise ValueError(\"invalid input\")\n    rng=Random(seed); out: List[int]=[]; trials=0\n    while len(out)<count:\n        trials += 1; a=rng.randrange(q)\n        if gcd(a,q)==1: out.append(a)\n    return out,trials\n"
+      "code": "from math import gcd\nfrom random import Random\nfrom typing import List, Tuple\n\ndef sample_units(q: int, count: int, seed: int=0) -> Tuple[List[int],int]:\n    if q <= 0 or count < 0: raise ValueError(\"invalid input\")\n    rng=Random(seed); out: List[int]=[]; trials=0\n    while len(out)<count:\n        trials += 1; a=rng.randrange(q)\n        if gcd(a,q)==1: out.append(a)\n    return out,trials\n",
+      "code_file": "visualizations/lattice_lwe_formal_equivalence_between_decision_lw_uniform_unit_rejection_sampler.py"
     },
     {
       "name": "Maximum-Contribution Hybrid Witness Extraction",
       "description": "Scans a finite family of real hybrid contributions whose sum is at least $\\delta$, returns a maximum entry, and certifies it exceeds $\\delta/|I|$. The algorithm takes linear time $O(|I|)$ and constant auxiliary space.",
       "pseudocode": "INPUT: delta and nonempty contributions A[0…N−1].\n1. Verify sum(A) ≥ delta.\n2. Find i maximizing A[i] by one linear scan.\n3. Set threshold ← delta/N.\n4. Certify A[i] ≥ threshold by finite averaging.\n5. Return i, A[i], and threshold.",
-      "code": "from typing import Sequence, Tuple\n\ndef largest_hybrid_contribution(delta: float, gaps: Sequence[float]) -> Tuple[int,float,float]:\n    if not gaps: raise ValueError(\"nonempty hybrid required\")\n    if sum(gaps) < delta: raise ValueError(\"total gap is too small\")\n    index=max(range(len(gaps)),key=gaps.__getitem__)\n    threshold=delta/len(gaps)\n    assert gaps[index] >= threshold\n    return index,gaps[index],threshold\n"
+      "code": "from typing import Sequence, Tuple\n\ndef largest_hybrid_contribution(delta: float, gaps: Sequence[float]) -> Tuple[int,float,float]:\n    if not gaps: raise ValueError(\"nonempty hybrid required\")\n    if sum(gaps) < delta: raise ValueError(\"total gap is too small\")\n    index=max(range(len(gaps)),key=gaps.__getitem__)\n    threshold=delta/len(gaps)\n    assert gaps[index] >= threshold\n    return index,gaps[index],threshold\n",
+      "code_file": "visualizations/lattice_lwe_formal_equivalence_between_decision_lw_maximum_contribution_hybrid_witness_extr.py"
     }
   ],
   "visualizations": [

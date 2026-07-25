@@ -2121,25 +2121,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "d05d57b6",
-    "description": "Proves probabilistic polynomial time reduction showing Decision-LWE is as hard as Search-LWE for arbitrary modulus q.",
-    "domain_bridges": [],
-    "domains": [
-      "Cryptography"
-    ],
-    "id": "dir_50_31_8353eea9",
-    "lineage_refs": [],
-    "priority_score": 0.9,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "batch_50_injection",
-    "status": "in_progress",
-    "timestamp": "2026-07-23T20:05:23.864090+00:00",
-    "title": "Lattice-LWE: Formal Equivalence Between Decision-LWE and Search-LWE"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Formally proves upper bounds on ciphertext noise growth during homomorphic evaluation and bootstrapping steps in BGV/BFV FHE schemes.",
     "domain_bridges": [],
@@ -18168,6 +18149,26 @@
     "status": "available",
     "timestamp": "2026-07-25T02:35:05.426529+00:00",
     "title": "These conjectures arise from the separation-and-counting principle developed her"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Arbitrary-Modulus Lattice Learning\n\nThis cycle established that affine rerandomisation over an arbitrary modulus is\ncontrolled by the unit structure of `ℤ_q`: the map `x ↦ a·x + b` is bijective\nexactly when `a` is a unit, the admissible multipliers number `φ(q)`, and both\ninvertibility and this count factor across coprime components. The following\nconjectures isolate the distributional and quantitative steps still needed for a\ncomplete search-to-decision reduction.\n\n## Conjecture 1 — A CRT component retains detectable advantage\n\nLet `q = ∏ᵢ pᵢ^{eᵢ}` be a product of pairwise coprime prime powers. Under the\nCRT identification of samples, every distinguisher with advantage `δ` against\nDecision-LWE modulo `q` induces a distinguisher against Decision-LWE on at least\none prime-power component with advantage at least `δ/r`, where `r` is the number\nof components, provided the error distribution has the corresponding component\nmarginals.\n\n*The key insight is* that replacing the CRT components one at a time gives a\nhybrid chain of length `r`; one adjacent pair must account for at least a\n`1/r` share of the endpoint distinguishing gap.\n\n*Why now?* The algebraic compatibility of units with CRT and the\nmultiplicativity of their count are already established. What remains is to\nlift the finite hybrid argument from real-valued advantage functions to the\nactual sample distributions and their marginals.\n\n## Conjecture 2 — Digitwise search over prime powers\n\nFor `q = pᵉ`, and for error distributions stable under reduction modulo each\n`pᵏ`, a Decision-LWE oracle modulo `q` recovers one base-`p` digit of a secret\ncoordinate per hybrid layer. The resulting search reduction uses `O(e p)`\noracle families per coordinate and loses at most a polynomial factor in `e`\nand `p` in distinguishing advantage.\n\n*The key insight is* that the chain of ideals\n`(p^{e-1}) ⊂ ··· ⊂ (p) ⊂ ℤ_{pᵉ}` has successive quotients isomorphic to\n`ℤ_p`; each layer therefore exposes a field-valued digit while retaining\nunit-affine rerandomisation in the ambient ring.\n\n*Why now?* The prime case supplies the base layer, while the arbitrary-modulus\nunit criterion identifies precisely which affine transformations remain valid\nthrough every lift. A digitwise theorem would connect these two verified\nendpoints.\n\n## Conjecture 3 — Worst-case rerandomisation cost is logarithmic-logarithmic\n\nThere are absolute constants `c, C > 0` such that, for all sufficiently large\n`q`, the unit density satisfies `φ(q)/q ≥ c / log log q`, while infinitely many\n`q` satisfy `φ(q)/q ≤ C / log log q`. Consequently rejection sampling a uniform\nunit multiplier requires `Θ(log log q)` trials in the worst asymptotic families,\nbut only constant expected time for prime powers of a fixed prime.\n\n*The key insight is* that `φ(q)/q = ∏_{p ∣ q}(1 − 1/p)`: adding distinct small\nprime factors is the unique mechanism that drives the density downward, and\nprimorial moduli realise the extremal scale.\n\n*Why now?* The admissible multiplier count is known exactly to be `φ(q)`. Sharp\nnumber-theoretic bounds on this ratio would turn that exact count into a concrete\nruntime analysis for arbitrary-modulus rerandomisation.\n\n## Conjecture 4 — Divisor modulus switching respects unit rerandomisation\n\nSuppose `q' ∣ q`. For a modulus-switching procedure whose algebraic component\nis reduction `ℤ_q → ℤ_{q'}`, every unit-affine rerandomisation modulo `q` descends\nto a unit-affine rerandomisation modulo `q'`. If the rounding error remains below\nthe established decryption threshold, the induced statistical-distance loss is\nbounded solely by the rounding-noise term and not by an additional algebraic\nfailure probability.\n\n*The key insight is* that a unit and its inverse map to mutually inverse\nresidues under the quotient homomorphism, so invertibility survives divisor\nmodulus reduction automatically; only the analytic effect of rounding remains.\n\n*Why now?* The existing noise-growth bound for modulus switching and the unit\ncriterion address the analytic and algebraic halves separately. Their\ncombination would give a correctness theorem for the common divisor-modulus\ncase without imposing primality.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0717",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "d05d57b6",
+    "status": "available",
+    "timestamp": "2026-07-25T02:35:12.810644+00:00",
+    "title": "That affine rerandomisation over an arbitrary modulus is"
   },
   {
     "ambition_level": "extension",

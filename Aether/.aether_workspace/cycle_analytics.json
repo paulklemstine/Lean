@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-25T02:35:13.942512+00:00",
+  "last_updated": "2026-07-25T02:35:14.098228+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -35839,6 +35839,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-25T02:35:13.874419+00:00",
       "title": "ArXiv paper: Several families of incommensurable noncompact hyperbolic Coxeter polytopes"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 3,
+      "domain": "Cryptography",
+      "duration_seconds": 7811.10929775238,
+      "end_time": 1784946897.169546,
+      "files_integrated": 4,
+      "job_id": "d05d57b6",
+      "outcome_quality": 0.68,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.68,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.6,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.85,
+        "composite": 0.5245,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.68,
+        "novelty": 0.7,
+        "proof_depth": 0.62,
+        "usefulness": 0.72
+      },
+      "quality_score": 0.68,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1784939086.0602481,
+      "strategy_count": 0,
+      "theorem_count": 21,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 17,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-25T02:35:13.978120+00:00",
+      "title": "Lattice-LWE: Formal Equivalence Between Decision-LWE and Search-LWE"
     }
   ]
 }
