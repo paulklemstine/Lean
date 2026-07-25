@@ -1,73 +1,167 @@
-# The Hidden Architecture of Computation: How Five Operations Build a Universe
+# The Shape That Parameters Cannot Change
 
-**What if everything your computer calculates — from weather simulations to neural networks — could be traced back to just five primitive operations?**
+## A small language, a large categorical question
 
-In mathematics, the most powerful ideas often come from restricting what you're allowed to do. By limiting yourself to a small toolkit and asking "what can I build?", you discover structures that would be invisible in the unrestricted wilderness. This is the story of one such restriction — and the surprisingly rich universe it reveals.
+Many scientific formulas are assembled from a surprisingly compact kit: real constants, input variables, addition, multiplication, exponentials, and logarithms. These operations describe growth and decay, likelihoods and partition functions, compound interest and information. Call a finite formula built from this kit an **EML expression**, where EML recalls the two nonlinear operations, exponential and logarithm, that supplement ordinary arithmetic.
 
-## Five Operations, Infinite Reach
+At first sight, the collection of all such expressions seems extraordinarily well behaved. One expression can be plugged into another. Several expressions can be bundled into a vector-valued calculation. There are identity calculations that simply return their inputs. These are precisely the ingredients from which category theory builds a world of objects and arrows.
 
-Start with five operations on real numbers: addition, multiplication, the exponential function (e raised to a power), the natural logarithm, and constants. That's it. No division, no trigonometry, no square roots. Just these five building blocks, composed together however you like.
+The natural objects here are finite-dimensional real spaces $\mathbb{R}^n$. An arrow from $\mathbb{R}^n$ to $\mathbb{R}^m$ is an ordered list of $m$ finite EML expressions in $n$ variables. The first expression computes the first output coordinate, the second computes the second, and so on. This creates a clean mathematical universe of finite symbolic computations.
 
-The question is deceptively simple: **What functions can you compute with these five operations?**
+A tempting next step is to claim that this universe supports higher-order computation: programs taking programs as inputs, and a universal evaluator from which every EML expression can be recovered by supplying parameters. Category theory packages that ambition in the language of **exponential objects** and **currying**. Yet there is a simple obstruction. A parameter can change what sits at a leaf of a fixed formula tree, but it cannot make the tree grow a new branch.
 
-The answer turns out to be: far more than you'd expect. The combination of exp and log alone gives you division (via exp(log a - log b) = a/b), all powers and roots (via exp(n · log x) = x^n), and even the fundamental "EML primitive" exp(x) - log(y) that unifies exponential growth with logarithmic compression in a single expression.
+That observation draws a sharp line between first-order composition, which works perfectly, and higher-order universality, which does not follow from parameter sharing alone.
 
-But the real surprise isn't about individual functions. It's about the *structure* that emerges when you study these functions collectively.
+## Expressions are trees
 
-## A Category of Computation
+An EML expression in $n$ variables is constructed recursively. It may be a real constant $c$, one of the variables $x_1,\ldots,x_n$, a sum $a+b$, a product $ab$, an exponential $\exp(a)$, or a logarithm $\log(a)$. Every finite expression therefore has a rooted syntax tree. Constants and variables are leaves; addition and multiplication are binary nodes; exponential and logarithm are unary nodes.
 
-Mathematicians have a name for a collection of objects with maps between them that compose nicely: a **category**. Think of it like a transit system where the "objects" are stations and the "morphisms" are routes. The key property is that you can chain routes: if there's a route from A to B and another from B to C, there's a composed route from A to C.
+For example,
 
-The EML-computable functions form a category. The "stations" are spaces of different dimensions — you can think of them as spreadsheets with different numbers of columns. The "routes" are the functions you can compute using the five operations. The identity function (do nothing) is always available, and composing two EML-computable functions gives another one.
+$$
+\exp(x_1x_2+3)
+$$
 
-This might sound like a trivial observation, but it's the gateway to much deeper structure. Categories don't just organize things — they reveal hidden symmetries and connections.
+has a top exponential node. Beneath it is an addition node, with a multiplication subtree on one side and the constant $3$ on the other. The expression is not merely a real-valued function. It is a finite recipe with a particular internal shape.
 
-## Products: Computing in Parallel
+The **size** $|e|$ of an expression $e$ is the number of nodes in its tree. Thus constants and variables have size $1$; binary operations obey
 
-One of the first surprising properties of this category is that it has **products**. If you can compute a function that produces two outputs and another that produces three, you can combine them into a function that produces all five outputs simultaneously. Mathematically, this is expressed as ℝ^m × ℝ^k = ℝ^(m+k): the product of two computational spaces is just a higher-dimensional space.
+$$
+|a+b|=1+|a|+|b|,
+\qquad
+|ab|=1+|a|+|b|,
+$$
 
-This product structure comes with projection maps (extracting the first or second group of outputs), a diagonal map (duplicating all inputs), and a swap map (rearranging outputs). All of these are themselves EML-computable. The product structure is what makes it possible to build complex computations from simple ones — feeding the output of one module into another, running computations in parallel, sharing parameters across subcomputations.
+and unary operations obey
 
-## The Depth Hierarchy: A Fundamental Limit
+$$
+|\exp(a)|=1+|a|,
+\qquad
+|\log(a)|=1+|a|.
+$$
 
-Perhaps the most striking result concerns the *depth* of computation. Consider the function that applies the exponential k times in a row: exp(exp(exp(...exp(x)...))). With k layers, this creates the "tower function" — numbers that grow inconceivably fast. The tower of height 4, starting from 1, is already e^(e^(e^e)) ≈ 10^(10^(10^6)).
+This modest integer will become the decisive invariant.
 
-We proved that this function has **depth exactly k**: it requires precisely k nested operations to compute, no more and no less. The optimal computation uses k+1 nodes (k exponential operations plus one input variable), and you cannot do better.
+Expressions also have numerical meanings. Given an input vector $x\in\mathbb{R}^n$, evaluate constants as themselves, variables as the corresponding coordinates, and operations by their usual real meanings. To make every expression globally defined, logarithm may be treated as a fixed totalized real operation; the structural results below are independent of the particular convention at nonpositive arguments.
 
-This establishes a **strict depth hierarchy** in EML computation. Functions at depth 5 genuinely cannot be computed at depth 4. There is no clever rearrangement, no shortcut, no algebraic identity that collapses the layers. Each additional layer of exp unlocks genuinely new computational territory.
+## Plugging computations into computations
 
-More precisely, we proved a fundamental inequality: for any EML derivation tree, its depth is strictly less than its node count. A computation can't be deeper than it is wide. This is the EML analog of the circuit complexity result that depth is bounded by size, but here it applies to a specific, concrete class of analytically meaningful functions.
+Suppose $e$ is an expression in variables $y_1,\ldots,y_m$, while $\sigma_1,\ldots,\sigma_m$ are expressions in variables $x_1,\ldots,x_n$. Simultaneous substitution replaces every occurrence of $y_i$ in $e$ by $\sigma_i$. We write the resulting expression as $e[\sigma]$.
 
-## The Log-Affine Bridge: When Multiplication Becomes Addition
+The first fundamental result says that syntax and numerical evaluation agree.
 
-There's a beautiful subcategory hiding inside EML computation: the **log-affine maps**. These are functions of the form f(x) = exp(w₁·log(x₁) + w₂·log(x₂) + ... + c), which look complicated in ordinary coordinates but become delightfully simple in logarithmic coordinates: just a linear function.
+**Substitution Semantics Theorem.** For every expression $e$, substitution list $\sigma$, and input $x\in\mathbb{R}^n$,
 
-Log-affine maps include all power laws (x^α), all geometric means, and all monomial functions. When you multiply two log-affine maps, you get another log-affine map — the weights add and the offsets add. This is the mathematical expression of the familiar rule that "powers multiply by adding exponents."
+$$
+\operatorname{eval}(e[\sigma],x)
+=
+\operatorname{eval}\bigl(e,
+(\operatorname{eval}(\sigma_1,x),\ldots,
+\operatorname{eval}(\sigma_m,x))\bigr).
+$$
 
-The key theorem is that applying the logarithm transforms a log-affine map into an affine (linear plus constant) map. This is a **functor** — a structure-preserving map between categories — from the multiplicative world of log-affine maps to the additive world of linear algebra. It's the categorical articulation of why logarithms are useful: they transform multiplicative complexity into additive simplicity.
+The proof follows the tree of $e$. It is immediate for constants and variables. At a sum or product, apply the result to both children; at an exponential or logarithm, apply it to the single child. In other words, symbolic plugging-in really is ordinary function composition.
 
-This bridge connects EML computation to **tropical geometry**, where the operations "max" and "+" replace the usual "+" and "×". In tropical geometry, straight lines become piecewise-linear curves, and algebraic geometry takes on a combinatorial flavor. The log-affine subcategory is precisely the interface where smooth analysis meets tropical combinatorics.
+Substitution has two further laws. Replacing every variable by itself leaves an expression unchanged. Moreover, two successive rounds of substitution can be merged into one: substituting $\sigma$ into $e$ and then substituting $\tau$ into the result is the same as first substituting $\tau$ into every member of $\sigma$ and then performing a single substitution into $e$.
 
-## Why This Isn't Cartesian Closed
+These facts yield the category laws. The identity arrow on $\mathbb{R}^n$ is the list $(x_1,\ldots,x_n)$. Composition is substitution coordinate by coordinate. Identity arrows act as identities on both sides, and composition is associative. No numerical approximation is involved: these are exact structural equations between finite recipes.
 
-Not everything works perfectly. A natural question is whether the EML category has **exponential objects** — whether you can represent the space of all EML-computable functions from ℝ^n to ℝ^m as a single space ℝ^k. If this were true, the category would be "Cartesian closed," a property that enables higher-order functional programming.
+## Bundling outputs
 
-The answer is no, and the reason is the depth hierarchy itself. Since there are EML-computable functions at every depth k, and each depth level adds genuinely new functions, you would need infinitely many parameters to represent them all. There is no finite k such that ℝ^k contains encodings of all EML maps.
+The same universe also supports pairing. If
 
-This negative result is itself informative: it tells us that EML computation has genuinely unbounded complexity. You can always build more sophisticated functions by going deeper — there is no ceiling.
+$$
+f:\mathbb{R}^n\to\mathbb{R}^m
+\quad\text{and}\quad
+g:\mathbb{R}^n\to\mathbb{R}^k
+$$
 
-## Parameter Sharing: The Currying Theorem
+are represented by lists of expressions, their pairing is the concatenated list
 
-One of the most practically relevant results is **currying**: if a function F(θ, x) is EML-computable on the combined space of parameters θ and inputs x, then for any fixed parameter vector θ₀, the specialized function x ↦ F(θ₀, x) is also EML-computable.
+$$
+\langle f,g\rangle:\mathbb{R}^n\to\mathbb{R}^{m+k},
+\qquad
+x\longmapsto (f(x),g(x)).
+$$
 
-This formalizes a pattern that appears everywhere in machine learning: a neural network with fixed weights computes an EML-computable function of its inputs. The weights are "parameters" that specialize a general family into a specific instance. Currying guarantees that this specialization stays within the EML universe.
+Pairing is stable under preprocessing.
 
-## Looking Forward
+**Pairing–Composition Theorem.** For every EML program $h:\mathbb{R}^a\to\mathbb{R}^b$,
 
-The EML category provides a mathematical framework for studying a specific class of computations that sits at the intersection of analysis, algebra, and computer science. It's broad enough to include most functions encountered in scientific computing — polynomials, exponentials, logarithms, power laws — but structured enough to prove meaningful theorems about complexity and expressiveness.
+$$
+\langle f,g\rangle\circ h
+=
+\langle f\circ h,g\circ h\rangle.
+$$
 
-The depth hierarchy suggests that not all computations are created equal: some genuinely require more layers of nesting than others. The log-affine bridge connects multiplicative phenomena to linear algebra. And the failure of Cartesian closure points to the fundamental richness — and difficulty — of the EML computational universe.
+The reason is transparent: concatenating output coordinates and then substituting into each coordinate gives the same list as substituting separately and concatenating afterward. This is a key equation behind finite products. It confirms that ordinary multi-output data flow fits naturally into the EML setting.
 
-These results put EML computation on firm categorical foundations, transforming it from a collection of useful formulas into a coherent mathematical theory with its own internal logic, its own notion of complexity, and its own surprising connections to geometry and algebra.
+One should distinguish this established pairing law from a complete construction of categorical products. A full product treatment would also specify the two projections and establish their defining uniqueness law. The present results supply the central computational operation and its compatibility with composition, but they do not silently assume the remaining universal property.
 
-In the end, the five operations — addition, multiplication, exp, log, and constants — are not just a toolkit. They are the generators of a mathematical universe whose structure we are only beginning to understand.
+## The dream of one universal template
+
+Higher-order computation asks for more. Given a two-input calculation $F(x,y)$, currying would regard it as a one-input calculation that returns a calculation of $y$. In a Cartesian closed category this is controlled by an exponential object and an evaluation map. Every map $A\times B\to C$ corresponds uniquely to a map $A\to C^B$.
+
+How might this arise for finite EML expressions? A seductive proposal is to choose one evaluator template containing parameter leaves. Different parameter values would specialize the template to different expressions. The template would be fixed; only its leaves would change.
+
+To isolate exactly this proposal, call a substitution a **leaf substitution** when every parameter variable is replaced by an expression of size $1$—that is, by a single constant or a single variable. A template $T$ would be **universal by parameter sharing** if every target expression could be obtained as $T[\sigma]$ for some leaf substitution $\sigma$.
+
+The crucial invariant is immediate but powerful.
+
+**Leaf-Substitution Size Theorem.** If $\sigma$ is a leaf substitution, then
+
+$$
+|T[\sigma]|=|T|.
+$$
+
+The proof again follows the tree. At a parameter leaf, the replacement has size $1$, exactly matching the node it replaces. Every operation node remains in place, so the recursive size equations preserve the total node count.
+
+Parameter sharing can alter labels at the leaves. It cannot alter topology. It cannot add another multiplication, wrap the whole expression in a logarithm, or deepen a chain of exponentials.
+
+## A tower that always escapes
+
+For each nonnegative integer $k$, define an exponential tower $E_k$ by
+
+$$
+E_0=0,
+\qquad
+E_{k+1}=\exp(E_k).
+$$
+
+This is a perfectly legitimate EML expression with any chosen number of ambient input variables, even though it ignores them. Its tree contains one constant leaf and $k$ exponential nodes.
+
+**Exponential-Tower Size Theorem.** For every $k\ge 0$,
+
+$$
+|E_k|=k+1.
+$$
+
+This follows by induction: $E_0$ has one node, and each new exponential adds exactly one.
+
+Now take any proposed finite universal template $T$ and let $s=|T|$. Consider the target $E_s$. Its size is $s+1$. If $T$ produced $E_s$ by leaf parameter sharing, the leaf-substitution theorem would force the result to have size $s$. But identical expression trees must have identical sizes, so one expression would have to have both sizes $s$ and $s+1$. That is impossible.
+
+We obtain the main conclusion.
+
+**Finite-Template Obstruction Theorem.** No fixed finite EML expression template can generate every finite EML expression solely by replacing parameter leaves with constants or variables.
+
+The diagonal flavor of the argument is worth noticing. Whatever finite bound a proposed template presents, the escaping target is built directly from that bound by adding one more operation node. There is no need to estimate enormous numerical values or compare the analytic behavior of functions. The obstruction lives entirely in structural complexity.
+
+## What the obstruction means—and what it does not
+
+The theorem defeats a specific route to currying: a single finite evaluator cannot represent every finite expression merely through shared leaf parameters. Therefore Cartesian closure does not follow from that mechanism.
+
+It does **not** establish that every imaginable category of EML-computable real functions fails to be Cartesian closed. Two expressions with different trees can denote the same function. For example, $x+0$ and $x$ differ syntactically while agreeing numerically. If arrows are identified whenever they compute the same function, tree size no longer descends automatically to the quotient. A stronger impossibility result would need a semantic invariant—perhaps from differential algebra, transcendence theory, model theory, or the complexity of definable families.
+
+Nor does the theorem deny that richer computational worlds can support higher-order structure. A language might include expression codes as data, together with an interpreter; it might use closures, inductive datatypes, partial maps, or represented spaces. But each such choice changes the objects or arrows. Its evaluator and currying law must be constructed explicitly rather than inferred from parameter sharing.
+
+There is also a separate caution about natural numbers. Taking the whole real line $\mathbb{R}$ as a natural-numbers object requires far more than naming $0$ and defining successor by $x\mapsto x+1$. A natural-numbers object must solve a unique recursion problem for every target object and every choice of initial point and step map. The continuous exp–log–arithmetic setting gives no automatic reason for all those recursively specified maps to exist.
+
+## The wider lesson
+
+In applications, parameters are often treated as if enough of them could express any model. The finite-template obstruction reveals the hidden qualifier: parameters move a model within a fixed architecture. They do not, by themselves, create unbounded architecture.
+
+This distinction appears across science. Coefficients tune a differential equation but do not add new state variables. Weights tune a neural network but do not add another layer. Constants specialize a symbolic expression but do not insert another operation node. A family may be broad in numerical behavior while remaining rigid in structural form.
+
+The EML universe therefore has a clean first-order foundation. Substitution supplies exact composition and obeys identity and associativity. Tuples supply multi-output pairing compatible with preprocessing. At the higher-order frontier, however, one finite tree cannot contain all finite trees in its leaves.
+
+That boundary is not a failure of the theory. It is the theory doing its most useful job: separating what follows from the definitions from what requires a genuinely new representation. If universal evaluation is desired, the architecture must be allowed to carry architecture—not just parameters.
