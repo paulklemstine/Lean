@@ -575,7 +575,7 @@
       "depth_estimate": 3,
       "description": "Proves that a single EML exponential-logarithmic activation operator can uniformly approximate any continuous function on compact domains.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Applications"
       ],
@@ -615,7 +615,7 @@
       "depth_estimate": 3,
       "description": "Establishes exact parameter domain bounds ensuring strict monotonicity and positive second derivatives for generalized EML activation functions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Applications"
       ],
@@ -655,7 +655,7 @@
       "depth_estimate": 3,
       "description": "Proves an explicit Lie algebra isomorphism between EML exponential-logarithmic state spaces and continuous scaling transformation groups.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Applications"
       ],
@@ -695,7 +695,7 @@
       "depth_estimate": 3,
       "description": "Calculates exact maximum Lyapunov exponents for recurrent EML systems, establishing non-exploding gradient guarantees.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Applications"
       ],
@@ -735,7 +735,7 @@
       "depth_estimate": 3,
       "description": "Derives upper bounds on the mutual information channel capacity for single EML neurons under Gaussian channel noise.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Applications"
       ],
@@ -6971,7 +6971,7 @@
       "source": "",
       "source_exp_id": "2607.15269v1",
       "source_path": "http://arxiv.org/abs/2607.15269v1",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-07-17T03:09:44.217502+00:00",
       "title": "ArXiv paper: Dense sets without large sumsets"
@@ -20372,7 +20372,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — Transfinite Computation with Cellular Automata on ω²\n\n## Current state\n\n`Catalog/Applications/OrdinalCellularAutomata/TransfiniteComputation.lean`\ndevelops a two-layer semantics for cellular dynamics indexed by the order type\n`ω²` (pairs `(block, tick)` in lexicographic order):\n\n- **Successor layer.** An arbitrary state transition system supplies the\n  successor update; Rule 110 (`rule110Step`) is the concrete instance, and it is\n  shown to remain radius-one local at transfinite times (`rule110Step_local`).\n- **Limit layer.** A history functional selects the state at each block\n  boundary. `predicateLimit` writes a chosen Boolean bit at cell 0.\n\nKey theorems (all `sorry`-free, axioms limited to `propext`, `Classical.choice`,\n`Quot.sound`):\n\n- `omegaSquaredRun_succ`, `omegaSquaredRun_limit`, `omegaSquaredRun_eq_iterate` —\n  structural laws of the transfinite run.\n- `scheduledOmegaRun_boundary`, `boundaryTrace_scheduled` — boundary read-out is\n  faithful to the schedule.\n- `scheduledOmegaRun_injective` — distinct schedules give distinct histories.\n- `no_predicate_enumeration`, `no_history_enumeration` — Cantor diagonalisation:\n  neither Boolean predicates nor transfinite histories are countably enumerable.\n- `continuum_scheduled_histories` — **cross-domain bridge**: the space of\n  scheduled Rule 110 histories has cardinality exactly `𝔠 = 2^{ℵ₀}`, tying\n  symbolic dynamics / ordinal recursion to cardinal arithmetic.\n\n## Honest scope of the \"super-Turing\" claim\n\nThe results prove *oracle capacity*: once arbitrary history functionals are\nadmitted at limits, the fixed radius-one successor law hosts a faithful copy of\nthe entire Boolean predicate space. They do **not** claim Rule 110 manufactures\nan undecidable predicate from computable data — `predicateLimit` receives `P` as\nexternal data and need not be computable.\n\n## Open directions\n\n1. **Canonical limit rules.** Replace the scheduled `predicateLimit` by an\n   intrinsic `liminf`/`limsup` convention on the cell history and characterise\n   which predicates are then realisable. Conjecture: a computable limsup rule\n   still exceeds ordinary Turing power (this is the \"super-Turing from a\n   computable convention\" hypothesis, currently open).\n\n2. **Infinite Time Turing Machines (ITTM).** Simulate an ITTM transition system\n   block-for-block by `omegaSquaredRun`, then push to an instruction-level\n   encoding. The abstract transition-system simulation is within reach; the\n   machine encoding is the substantial open step.\n\n3. **Ordinal universality of Rule 110.** Prove/refute that Rule 110 with a fixed\n   canonical limit rule is universal for ordinal computation up to a specified\n   ordinal height.\n\n4. **Conservative finite embedding.** Formalise that every finite Rule 110\n   computation embeds into an `ω²` run as block 0 (a `sorry`-free conservativity\n   theorem), making the transfinite model a genuine extension.\n\n5. **Higher ordinals.** Generalise from `ω²` to `ω^n` and `ω^ω` by iterating the\n   two-layer construction, and relate the reachable predicate classes to the\n   ordinal height (a hyperarithmetic/analytical-hierarchy connection).\n\n6. **Cardinality sharpening.** Extend `continuum_scheduled_histories` to the full\n   history space (arbitrary functionals, not just Boolean schedules) and locate\n   its cardinality in the cardinal hierarchy.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Logic",
         "Pythagorean"
@@ -20528,13 +20528,54 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [],
-      "category": "",
+      "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
-      "description": "# Future Directions\n\nThe completed `Catalog/EML/DifferentialClosure.lean` develops a syntax of rational exponential–logarithmic expressions and proves its main algebraic closure chain. The next useful extensions are:\n\n1. **Domains and germs.** Replace totalized real inverse and logarithm by expressions equipped with open domains, or by germs at regular points. This would make the usual “differential field” statement literal: nonzero germs have multiplicative inverses, whereas the ring of total real-valued functions has zero divisors.\n2. **A genuine inverse-function closure criterion.** The current inverse-branch result records and differentiates a branch once an EML representation is supplied. A stronger theorem should identify syntactic or differential-algebraic hypotheses under which a locally defined inverse branch is itself representable. Such a statement cannot follow from the analytic inverse function theorem alone without an additional representability hypothesis.\n3. **Local regularity under substitution.** Prove an exact formula relating `Expr.RegularAt (Expr.subst p q) x` to regularity of `q` at `x` and regularity of `p` at `Expr.eval q x`. This would support a local chain-rule API for composed expressions.\n4. **Iterated differentiation.** Define `Expr.diffIter` and prove by induction that every iterated derivative of a globally regular expression is represented by the corresponding iterated symbolic derivative, subject to regularity of the intermediate expressions.\n5. **Integration obstruction.** The file proves antiderivative closure for expressions already known to be symbolic derivatives, and gives `exp` as a concrete example. It does not claim that every EML expression has an EML antiderivative. A rigorous negative result would require a formal non-elementary-integrability criterion (for example, a suitable fragment of differential algebra/Liouville theory) and an explicit witness.\n6. **Normalization and equality.** Add simplification or normalization procedures for expression syntax and prove them semantics-preserving. This would make generated derivatives substantially smaller and facilitate comparisons between representations.\n\nThe most natural next milestone is the domain/germ formulation, followed by a formal integration-obstruction theorem. Together these would sharpen exactly which sense of “differential field” and “closed under integration” is valid.",
+      "description": "Investigate the ArXiv paper 'Adjacency-degree algebras and spectral determination of graphs' and formalize its key results. Abstract: McKay proved that the spectra of all polynomial functions of the adjacency matrix $A$ and the diagonal degree matrix $D$ determine a tree. We prove a principal version of this theorem. Let $\\mathcal A(G)=\\langle I,A_G,D_G\\rangle$ and let $M_G=\\mathcal A(G)\\mathbf1$ be the cyclic module generated by the all-ones vector. For connected graphs the ideal $\\mathcal A(G)J\\mathcal A(G)$, where $J=\\mathbf1\\mathbf1^T$, acts on $M_G$ as the full endomorphism algebra. We show that every forest satisfies $M_G=U_G$, the automorphism-orbit module, and that the induced algebra on the orbit quotient of a tree is a full matrix algebra. It follows that the scalar moments $\\mathbf1^Tw(A_T,D_T)\\mathbf1$ determine every tree. For general graphs these moments are degree-decorated caterpillar homomorphism counts. The resulting moment-rigidity class lies inside the amenable, compact, refinable hierarchy of color refinement, and its first small-order failures are ten-vertex integral switchings invisible to $M_G",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Physics"
+      ],
+      "github_issue": 0,
+      "id": "fd_0732",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "Bypassed",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.21494v1",
+      "source_path": "http://arxiv.org/abs/2607.21494v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-25T16:28:29.003297+00:00",
+      "title": "ArXiv paper: Adjacency-degree algebras and spectral determination of graphs"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Investigate the ArXiv paper 'The Frankl--Tokushige product conjectures for $r$-cross-intersecting families' and formalize its key results. Abstract: We settle the uniform and biased product conjectures of Frankl and Tokushige for $r$-cross-intersecting families. Let $r\\geq2$, let $0\\leq k_i\\leq(r-1)n/r$, and let $\\mathcal{F}_i\\subseteq\\binom{[n]}{k_i}$ be $r$-cross-intersecting. We prove the sharp inequality $$\\prod_{i=1}^r\\frac{|\\mathcal{F}_i|}{\\binom{n}{k_i}}\\leq \\prod_{i=1}^r\\frac{k_i}{n},$$ with equality attained by the corresponding levels of a common $1$-star. As a consequence, we obtain the analogous $p_i$-biased measure theorem for $0\\leq p_i\\leq(r-1)/r$, $$ \\prod_{i=1}^rμ_{p_i}(\\mathcal{F}_i)\\leq \\prod_{i=1}^r p_i.$$The main difficulty is that unequal parameters do not determine a single common target level; instead, the target levels $\\ell_1,\\ldots,\\ell_r$ must satisfy $\\sum_{i=1}^r \\ell_i=(r-1)n$. We overcome this asymmetry in three steps. An ordered-partition coupling gives a sharp additive inequality for every such choice of target levels. A star-calibrated upper-shadow inequality relates the density of a family on its",
       "domain_bridges": [],
       "domain_quality_penalty": 0.0,
       "domains": [
@@ -20542,26 +20583,26 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0732",
+      "id": "fd_0733",
       "last_attempt_time": "",
       "last_reviewed_at": "",
-      "lean_theorem_stub": "",
+      "lean_theorem_stub": "Bypassed",
       "lineage_refs": [],
       "outcome_quality": 0.0,
       "parent_direction": "",
-      "priority_score": 0.75,
-      "proof_strategy": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
       "prune_reason": "",
       "pruned_at": "",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "",
-      "source_exp_id": "5fcde7e0",
-      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/5fcde7e0",
+      "source_exp_id": "2607.21589v1",
+      "source_path": "http://arxiv.org/abs/2607.21589v1",
       "status": "available",
-      "thread_id": "th_6bcb7d78",
-      "timestamp": "2026-07-25T16:28:16.297404+00:00",
-      "title": "The completed `Catalog/EML/DifferentialClosure.lean` develops a syntax of ration"
+      "thread_id": "",
+      "timestamp": "2026-07-25T16:28:32.067332+00:00",
+      "title": "ArXiv paper: The Frankl--Tokushige product conjectures for $r$-cross-intersecting families"
     },
     {
       "ambition_level": "extension",
@@ -20737,7 +20778,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 2d8c7907 (Q=0.760), which proved 11 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize memory as a monoid homomorphism from experience streams to compressed representations. Prove that any such homomorphism satisfying a finite-memory bound must be lossy and that the information loss forms a submonoid. Show that targeted forgetting is equivalent to a quotient construction in ",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Applications"
       ],
@@ -20817,7 +20858,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 3dce6722 (Q=0.770), which proved 21 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the mathematics of a Dyson sphere: a megastructure that completely encloses a star to capture its energy output. Define: the Dyson sphere surface area is 4*pi*R^2 where R is the orbital radius. Prove: the optimal Dyson swarm (many independent collectors) has total collecting area equal to ",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Applications"
       ],
@@ -20857,7 +20898,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 43fa6482 (Q=0.770), which proved 7 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Complexity, Reversibility, and Thermodynamic Cost\n\n## 1. Size-indexed dissipation lower bounds for irreversible decision procedures\n\n**Conjecture.** Let a family of decision procedures on inputs of length `n` irreversibly discard at least `b(n)` unbiased logical bits. Under fini",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Applications"
       ],
@@ -21337,7 +21378,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle ea214ad9 (Q=0.750), which proved 34 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Rucker's 'Lifebox' concept: a person's identity is determined by their information content, not their physical substrate. Define: two systems are 'person-equivalent' if they produce the same outputs for all inputs (functional equivalence). Prove: if the brain is a finite-state automaton, t",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Applications"
       ],
@@ -21499,7 +21540,7 @@
       "domain_bridges": [
         "Pythagorean <-> EML"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Applications"
@@ -21792,7 +21833,7 @@
       "depth_estimate": 3,
       "description": "Formalizes the theoretical maximum information density limit for quadruple-stranded synthetic genetic storage systems.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Applications"
       ],
@@ -22152,7 +22193,7 @@
       "depth_estimate": 3,
       "description": "Formalizes visual pattern sequences that trigger specific optogenetic neuron activation patterns in biological retinas.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Applications"
       ],
@@ -22392,7 +22433,7 @@
       "depth_estimate": 3,
       "description": "Proves that a single EML exponential-logarithmic neuron can represent any multivariate polynomial up to degree D with zero approximation error.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Applications"
       ],
@@ -22432,7 +22473,7 @@
       "depth_estimate": 3,
       "description": "Proves that continuous EML activation manifolds exhibit non-trivial Betti numbers corresponding to complex cognitive states.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Applications"
       ],
@@ -22472,7 +22513,7 @@
       "depth_estimate": 3,
       "description": "Proves uniform convergence of transfinite-depth EML neural networks to well-defined transcendental limit functions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Applications"
       ],
@@ -22512,7 +22553,7 @@
       "depth_estimate": 3,
       "description": "Formalizes the behavior of EML networks near parameter values triggering essential mathematical singularities in exp-log space.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Applications"
       ],
@@ -22552,7 +22593,7 @@
       "depth_estimate": 3,
       "description": "Constructs EML neural networks defined over p-adic number fields, proving convergence under p-adic non-Archimedean norms.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Applications"
       ],
@@ -24055,7 +24096,7 @@
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "7277c96e",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -24082,7 +24123,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "",
       "title": "Beal's Conjecture"
@@ -36568,7 +36609,7 @@
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
-      "outcome_quality": 0.76,
+      "outcome_quality": 0.0,
       "parent_direction": "",
       "priority_score": 0.84,
       "proof_strategy": "",
@@ -53476,14 +53517,13 @@
     }
   ],
   "recent_domain_counts": {
-    "Algebra": 6,
+    "Algebra": 5,
     "Analysis": 1,
     "Applications": 2,
     "Bridges": 3,
     "Combinatorics": 1,
     "Computation": 5,
     "Cryptography": 2,
-    "EML": 1,
     "Geometry": 1,
     "Logic": 4,
     "MachineLearning": 2,
@@ -53496,21 +53536,31 @@
     "Tropical": 1
   },
   "recent_theme_keywords": {
-    "addition": 1,
-    "algebra": 1,
-    "closed": 1,
-    "closure": 1,
+    "**alternative": 1,
+    "**asymptotic": 1,
+    "**distinct-summand": 1,
+    "**higher-order": 1,
+    "**stability": 1,
+    "`1/2`": 1,
+    "additive": 1,
+    "admissible": 1,
+    "arbitrary": 1,
+    "arithmetic": 1,
+    "becomes": 1,
+    "canonical": 1,
+    "cardinalities": 1,
+    "cardinality": 1,
+    "classification": 1,
+    "classified": 1,
     "combinatorial": 2,
     "complete": 5,
-    "composition": 1,
+    "completely": 1,
     "densities": 1,
     "density": 1,
     "density.**": 1,
     "descriptions": 1,
-    "determine": 2,
+    "determine": 1,
     "development": 1,
-    "differential": 1,
-    "differentiation": 1,
     "directions": 1,
     "distinct": 1,
     "earlier": 1,
@@ -53521,15 +53571,13 @@
     "explicit": 3,
     "extensions": 1,
     "family": 2,
-    "field": 1,
     "finite": 2,
     "first": 3,
     "following": 1,
     "forbidden": 1,
     "formal": 1,
     "formalize": 12,
-    "function": 4,
-    "functions": 1,
+    "function": 3,
     "future": 1,
     "greediness.**": 1,
     "greedy": 1,
@@ -53538,14 +53586,10 @@
     "indices": 1,
     "inequality": 2,
     "instead": 1,
-    "integration": 1,
-    "inverse": 1,
-    "inverses": 1,
     "investigate": 4,
     "matrices": 2,
     "matrix": 2,
     "monotonicity": 1,
-    "multiplication": 1,
     "natural": 1,
     "number": 7,
     "numbers": 1,
@@ -53559,7 +53603,6 @@
     "process": 1,
     "progression": 1,
     "proofs": 3,
-    "properties": 1,
     "proved": 4,
     "proves": 4,
     "quantum": 2,
@@ -53580,7 +53623,6 @@
     "structure.**": 1,
     "sumset": 1,
     "symmetric": 2,
-    "theorem": 1,
     "theorems": 3,
     "theory": 4,
     "therefore": 2,
@@ -53592,10 +53634,8 @@
     "unitary": 2,
     "values": 1,
     "weakened": 1,
-    "whether": 1,
     "within": 2,
-    "without": 2,
-    "yields": 1
+    "without": 2
   },
   "selection_log": [
     "famous_subtask",
