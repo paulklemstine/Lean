@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "bb72d587",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions: Complexity, Reversibility, and Thermodynamic Cost\n\n## 1. Size-indexed dissipation lower bounds for irreversible decision procedures\n\n**Conjecture.** Let a family of decision proce",
-      "quality_score": 0.76,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-20T20:48:41",
-      "title": "Speculative: Computational Complexity as Physical Law"
-    },
-    {
       "cycle_id": "3d25b5ad",
       "domain": "Pythagorean",
       "key_insight": "# Future directions\n\nThe formal development establishes a concrete genuinely non-strict bicategory: its chosen 1-cell composition has bracketings equal to `5` and `7`, while an invertible associator c",
@@ -499,19 +489,19 @@
       "theorem_count": 6,
       "timestamp": "2026-07-25T16:28:24",
       "title": "ArXiv paper: Dense sets without large sumsets"
+    },
+    {
+      "cycle_id": "b59af725",
+      "domain": "Physics",
+      "key_insight": "# Future directions\n\n- Extend the extremal Rayleigh results to the full Courant–Fischer hierarchy, indexed by subspace dimension.\n- Develop compact self-adjoint operator theory in infinite-dimensional",
+      "quality_score": 0.73,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-25T17:22:56",
+      "title": "Spectral Theory: Self-Adjoint Operators"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "9867adb2",
-      "domain": "Physics",
-      "key_insight": "# Future Directions: Algebraic Geometry of Neural Decision Boundaries\n\n## 1. Signed tropical-rational normal form\n\n**Conjecture.** Every scalar feed-forward ReLU network admits a depth-preserving repr",
-      "quality_score": 0.75,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-19T03:54:43",
-      "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
-    },
     {
       "cycle_id": "76d5023e",
       "domain": "Physics",
@@ -2501,6 +2491,16 @@
       "theorem_count": 6,
       "timestamp": "2026-07-25T16:28:24",
       "title": "ArXiv paper: Dense sets without large sumsets"
+    },
+    {
+      "cycle_id": "b59af725",
+      "domain": "Physics",
+      "key_insight": "# Future directions\n\n- Extend the extremal Rayleigh results to the full Courant–Fischer hierarchy, indexed by subspace dimension.\n- Develop compact self-adjoint operator theory in infinite-dimensional",
+      "quality_score": 0.73,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-25T17:22:56",
+      "title": "Spectral Theory: Self-Adjoint Operators"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.77
     }
   ],
-  "last_updated": "2026-07-25T16:28:24",
+  "last_updated": "2026-07-25T17:22:56",
   "open_questions": [
     {
       "context": "",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "9867adb2",
-        "quality": 0.75,
-        "theorems": 0,
-        "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
-      },
-      {
         "cycle_id": "76d5023e",
         "quality": 0.78,
         "theorems": 0,
@@ -3761,6 +3755,12 @@
         "quality": 0.7,
         "theorems": 23,
         "title": "Quantum Mechanics: Spectral Theory of Hydrogen"
+      },
+      {
+        "cycle_id": "b59af725",
+        "quality": 0.73,
+        "theorems": 0,
+        "title": "Spectral Theory: Self-Adjoint Operators"
       }
     ],
     "Probability": [

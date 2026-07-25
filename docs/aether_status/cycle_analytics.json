@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-25T16:28:25.328940+00:00",
+  "last_updated": "2026-07-25T17:22:57.159279+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -36613,6 +36613,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-25T16:28:25.200544+00:00",
       "title": "ArXiv paper: Dense sets without large sumsets"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 3,
+      "domain": "Physics",
+      "duration_seconds": 3265.2810764312744,
+      "end_time": 1785000158.3333359,
+      "files_integrated": 4,
+      "job_id": "b59af725",
+      "outcome_quality": 0.73,
+      "phase": "complete",
+      "phase_a_prompt_version": "v24",
+      "phase_a_quality_score": 0.73,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v24",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.68,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.91,
+        "composite": 0.5455,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.86,
+        "novelty": 0.4,
+        "proof_depth": 0.74,
+        "usefulness": 0.82
+      },
+      "quality_score": 0.73,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1784996893.0522594,
+      "strategy_count": 0,
+      "theorem_count": 0,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-25T17:22:57.036572+00:00",
+      "title": "Spectral Theory: Self-Adjoint Operators"
     }
   ]
 }

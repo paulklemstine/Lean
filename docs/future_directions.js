@@ -2200,23 +2200,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Perfect Numbers: Structure of Even Perfects"
   },
   {
-    "consumed_by_exp_id": "b59af725",
-    "description": "Formalize the spectral theorem for bounded self-adjoint operators on Hilbert spaces. Prove the min-max theorem for eigenvalues. Construct the functional calculus and prove the spectral mapping theorem. Apply to quantum mechanical observables.",
-    "domains": [
-      "Analysis",
-      "Physics",
-      "Algebra"
-    ],
-    "id": "fd_0662",
-    "phase": "B",
-    "priority_score": 0.87,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-24T14:34:16.697773+00:00",
-    "title": "Spectral Theory: Self-Adjoint Operators"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize Boolean circuit complexity. Prove Razborov's lower bound: monotone circuits for CLIQUE require exponential size. Formalize the approximation method. Prove the Karchmer-Wigderson connection between circuit depth and communication complexity.",
     "domains": [
@@ -5944,17 +5927,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "Euler-Mascheroni Constant Irrationality"
   },
   {
-    "consumed_by_exp_id": "7277c96e",
+    "consumed_by_exp_id": "",
     "description": "Prove that if A^x + B^y = C^z where A,B,C,x,y,z are positive integers with x,y,z > 2, then A,B,C share a common prime factor. Formalize the connection to Fermat-Catalan and ABC conjecture.",
     "domains": [
       "NumberTheory"
     ],
     "id": "seed_036",
-    "phase": "A",
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "",
     "title": "Beal's Conjecture"
   },
@@ -6599,21 +6581,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Magnitude homology of tope graphs' and formalize its key results. Abstract: We completely determine the magnitude homology of tope graphs of real hyperplane arrangements. Their ranks can be described as the Hilbert functions of the Stanley--Reisner rings of certain simplicial complexes naturally associated with the arrangements. For Coxeter arrangements, this gives a computation of the magnitude homology of the Cayley graph of the corresponding Coxeter group. We also prove the homological reciprocity for central arrangements conjectured by Koizumi--Liu. The proof combines poset combinatorics, the Edelman--Walker theorem, and Alexander duality.",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_0001",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.11863v1",
-    "status": "available",
-    "timestamp": "2026-07-15T06:52:23.069944+00:00",
-    "title": "ArXiv paper: Magnitude homology of tope graphs"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'From roots to paths: graphs simultaneously irregular with respect to rooted and ordinary paths' and formalize its key results. Abstract: Let $P_n$ denote a path on $n$ vertices. A simple finite graph $G$ is called $P_n$-irregular if any two distinct vertices of $G$ belong to a different number of subgraphs of $G$ isomorphic to $P_n$. Alternatively, for a fixed vertex $r$ of $P_n$ (the root), $G$ is called $(P_n)_r$-irregular if any two distinct vertices of $G$ act as the root $r$ in a different number of subgraphs of $G$ isomorphic to $P_n$. This paper proves that for each integer $k \\geq 4$, there exists an infinite family of graphs that are simultaneously $P_n$-irregular and $(P_n)_r$-irregular for every integer $n$ satisfying $4 \\leq n \\leq k$ and every root $r$ of $P_n$. For the path $P_3$, we observe that no nontrivial $(P_3)_r$-irregular graphs exist if $r$ is the central vertex. In contrast, if $r$ is an end-vertex of $P_3$, an infinite collection of graphs is constructed that are both $P_3$-irregular and $(P_3)_r$-irregular. In particular, these results confirm the Strong Conjecture about $F$-irregular graphs fo",
     "domains": [
       "Pythagorean"
@@ -6642,36 +6609,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'The chain replacement of a poset flow' and formalize its key results. Abstract: We introduce the chain replacement of a poset flow: it is obtained by considering the simplicial nerves of the posets of strictly increasing chains in the given poset, ordered by refinement. It maps finite posets to q-cofibrant flows and inclusions of finite posets to q-cofibrations. Using the combinatorial properties of the chain replacement, we prove that pushouts along the chain replacement of an order-reflecting inclusion of finite posets preserve spaces of execution paths. By introducing the Hurewicz model structure on flows (or H-model structure), we deduce the same property for any q-cofibrant replacement of an order-reflecting inclusion of finite posets.",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_0016",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.11639v1",
-    "status": "available",
-    "timestamp": "2026-07-15T08:21:53.852514+00:00",
-    "title": "ArXiv paper: The chain replacement of a poset flow"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Ray and end spaces: characterizations and classification up to homeomorphism' and formalize its key results. Abstract: We provide a combinatorial characterization for pairs of order-theoretic trees with homeomorphic ray spaces, answering an open problem proposed by Kurkofka ad Pitz. This solution is inspired by the introduction of a transfinite topological game, which allows us to characterize not only ray spaces through the existence of winning strategies for one of the players, but also their homeomorphic classes. As applications of these results, we obtain a new topological characterization for graph-theoretic end spaces (thus obtaining yet another solution to a recently solved problem of Diestel), as well as for edge-end spaces and completely ultrametrizable spaces. We also introduce a generalization of the class of ray spaces (which is strict, as witnessed by the Sorgenfrey line). Furthermore, we establish that, for subspaces with cardinality less than continuum of end spaces, the scattered property is equivalent to the property of being, itself, an end space. At last, we determine that ray spaces",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_0018",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.11561v1",
-    "status": "available",
-    "timestamp": "2026-07-15T08:58:28.589423+00:00",
-    "title": "ArXiv paper: Ray and end spaces: characterizations and classification up to homeomorphism"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Even smaller universal posets' and formalize its key results. Abstract: We show that for every $\u03b7>0$ and sufficiently large $n$, there exists a poset of size $2^{(1+\u03b7)n/2}$ containing all the $n$-element posets as induced subposets. This improves a recent result of Bastide, Groenland and Nenadov. Our proof provides a labeling scheme preserving transitivity, inspired by the Boolean lattice. Among other tools, we use the Szemer\u00e9di Regularity Lemma.",
     "domains": [
       "Cryptography",
@@ -6684,21 +6621,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-15T12:33:21.946611+00:00",
     "title": "ArXiv paper: Even smaller universal posets"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Cyclic Projective Orbits on Rational Normal Curves and MDS Codes' and formalize its key results. Abstract: Let \\(A\\) be a cyclic operator on an \\(r\\)-dimensional vector space over a field \\(k\\), and let \\(z\\) be a cyclic vector. Their Krylov code has parity-check matrix \\((z,Az,\\ldots,A^{n-1}z)\\). For \\(r\\ge 3\\) and \\(n\\ge r+3\\), we prove that an MDS orbit segment lies on a rational normal curve precisely when the projective pair \\((A,[z])\\) is conjugate to one arising from the \\((r-1)\\)-st symmetric-power action of \\(\\mathrm{PGL}_2\\). Over finite fields, for companion operators, this gives a complete classification of the generalized Reed--Solomon locus into split semisimple, two nonsplit semisimple, and unipotent families. Over an algebraically closed field \\(k\\), the Zariski closure \\(\\GRSsurf_{r,k}\\) of the semisimple GRS coefficient locus is an irreducible rational surface, generically parameterized two-to-one by a two-dimensional torus of geometric-progression root sets; reversal is the generic ambiguity. The affine quotient of the parameter torus by reversal is the normalization of \\",
-    "domains": [
-      "Geometry",
-      "Algebra"
-    ],
-    "id": "fd_0021",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.12761v1",
-    "status": "available",
-    "timestamp": "2026-07-15T12:51:13.579274+00:00",
-    "title": "ArXiv paper: Cyclic Projective Orbits on Rational Normal Curves and MDS Codes"
   },
   {
     "consumed_by_exp_id": "",
@@ -6731,51 +6653,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'A Proof of Sundaram's Bounded-Interval Higher Lie Positivity Conjecture' and formalize its key results. Abstract: For positive integers $n$ and $M$, Sundaram defined $ F_{n,M}=\\sum_{\\substack{d\\mid n\\\\d\\le M}} Lie_{n/d}[p_d] $ and conjectured that every coefficient in its Schur expansion is a nonnegative integer. We prove the conjecture. The power-sum expansion isolates the contribution of the identity class, and the proof divides Young diagrams at the intrinsic majority threshold. If the first row or first column contains more than half of the boxes, the Bernstein creation formula separates each rectangular-cycle character value into a hook constant and a remainder supported only on short cycles. The restrictions of the trivial and sign characters to the cyclic subgroup evaluate the constants exactly, whereas a uniform binomial contraction controls every distance from the boundary at once. If neither a row nor a column has a majority, Swanson's opposite-hook estimate gives a Catalan-scale lower bound for the dimension. The Fomin--Lulov rectangular-character estimate, together with uniform bounds ",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0025",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.12749v1",
-    "status": "available",
-    "timestamp": "2026-07-15T14:01:07.150782+00:00",
-    "title": "ArXiv paper: A Proof of Sundaram's Bounded-Interval Higher Lie Positivity Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'A universal leading-residue formula for Witten zeta functions' and formalize its key results. Abstract: Let $\u03a6$ be an irreducible crystallographic root system of rank $r$, with Coxeter number $h$, Weyl group $W$, Cartan matrix $C_\u03a6$, and invariant degrees $2=d_1\\leq\\cdots\\leq d_r=h$. We prove that Au's normalized Witten zeta function $\u03be_\u03a6(s)$ has a simple pole at $s=2/h$, with residue $\\mathop{\\rm Res}_{s=2/h}\u03be_\u03a6(s)=\\frac{2(2\u03c0)^{r/2}\\sqrt{\\det C_\u03a6}}{h|W|}\\frac{\\prod_{i=1}^{r-1}\u0393(1-d_i/h)}{\u0393(1-1/h)^r}$. The proof identifies the leading lattice coefficient with a convergent spherical Coxeter-discriminant integral at the critical exponent and evaluates this integral using the boundary pole of the Macdonald--Mehta--Opdam identity. Proper parabolic strata are shown to be strictly subcritical. This establishes Au's gamma-product-shape conjecture and his prediction in type $A_4$. We also obtain a direct, non-Tauberian asymptotic, with an explicit constant for every simple type, for the number of irreducible representations of dimension at most $X$.",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0026",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.12728v1",
-    "status": "available",
-    "timestamp": "2026-07-15T14:18:27.228044+00:00",
-    "title": "ArXiv paper: A universal leading-residue formula for Witten zeta functions"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'M\u00f6bius functions for pseudo-Levi subgroups in finite general linear and symplectic groups' and formalize its key results. Abstract: In this paper, we compute the M\u00f6bius function on the set of pseudo-Levi subgroups containing a fixed maximal torus of two families of finite groups, $GL_n(q)$ and $Sp_{2n}(q)$, for some natural number $n$ and a prime power $q$. The M\u00f6bius function for the set of pseudo-Levi subgroups of a finite group $G$ is important for an explicit evaluation of the formula expressing the decomposition of tensor products of characters, as proved in Theorem 2 of the paper ''Multiplicity of characters of finite reductive groups and Drinfeld doubles'' [arXiv:2512.01432].",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0027",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.12522v1",
-    "status": "available",
-    "timestamp": "2026-07-15T18:44:50.548049+00:00",
-    "title": "ArXiv paper: M\u00f6bius functions for pseudo-Levi subgroups in finite general linear and symplectic groups"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Alternating Extremes in Graceful Labelings of Full Binary Trees and Spider Trees' and formalize its key results. Abstract: We study a pinned form of graceful labeling. For full binary trees, we ask whether some deepest root-to-leaf path can carry the alternating extreme pattern $0,n-1,1,n-2,\\dots$. Such a spine uses the extreme labels and largest differences, forcing all off-spine vertices and edges to use the middle labels and smaller differences, respectively. We prove this pinned-spine conjecture for comb full binary trees, verify it computationally for all rooted non-isomorphic full binary trees through order $23$, and give an example showing that a pinned-spine labeling cannot always be chosen as an $\u03b1$-labeling. For spider trees, we prove a packing theorem for self-matched legs: pairwise disjoint legs based at hub label $1$, at least one of which contains label $0$, can be combined into a graceful spider, with unused labels attached as hub leaves. This yields graceful labelings for mixed-length spiders with sufficiently many leaves. We also report computations using a depth-first search ordered by la",
     "domains": [
       "Pythagorean"
@@ -6801,51 +6678,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-15T19:19:58.832974+00:00",
     "title": "ArXiv paper: On lower bounds for canonical heights of the map $\u03c6(X,Y)=(Y,X+Y^D+b)$"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Solomon zeta functions over arithmetic orders' and formalize its key results. Abstract: We prove an effective version of Solomon's first conjecture for lattices over orders in finite-dimensional semisimple algebras over nonarchimedean local fields. We express the quotient of a partial Solomon zeta function by the corresponding maximal-order zeta function as a finite sum whose terms are determined by finite module-theoretic data and weighted by polynomials defined using the M\u00f6bius function of finite submodule posets. The resulting expression is independent of the chosen maximal overorder. Our proof is purely algebraic and is first formulated for the refined Bushnell--Reiner zeta functions. As an application, we obtain explicit formulas for the Solomon zeta functions of all lattices over $\\mathbb{Z}_p[\\mathbb{Z}/p\\mathbb{Z}]$, including non-projective lattices.",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0030",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.12302v1",
-    "status": "available",
-    "timestamp": "2026-07-15T19:37:22.083812+00:00",
-    "title": "ArXiv paper: Solomon zeta functions over arithmetic orders"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Local statistics and average rank of genus $g$ hyperelliptic curves with a Weierstrass point' and formalize its key results. Abstract: In this paper, we determine the probability that a genus $g$ hyperelliptic curve with a Weierstrass point over a number field has good reduction at a given prime of residue characteristic $>2g+1$. We also obtain analogous probability formulas for several other reduction types, including cases with positive toric or unipotent rank. As an application, assuming the Hasse--Weil conjecture and the generalized Riemann hypothesis, we derive an explicit upper bound for the average analytic rank of genus $g$ hyperelliptic curves with a Weierstrass point.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0031",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.12381v1",
-    "status": "available",
-    "timestamp": "2026-07-15T19:54:33.368042+00:00",
-    "title": "ArXiv paper: Local statistics and average rank of genus $g$ hyperelliptic curves with a Weierstrass point"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Stable Limit DAHA of type $(C^{\\vee},C)$ and Stable Limit Koornwinder Polynomials' and formalize its key results. Abstract: We construct two stable limit representations of the double affine Hecke algebra of type $(C^\\vee,C)$ on the space of almost symmetric Laurent polynomials, namely the positive and negative stable limit representations. Starting from the standard polynomial representation of the finite rank DAHA of type $(C_n^\\vee,C_n)$, we study the asymptotic behavior of the Cherednik operators under the two natural rescalings by positive and negative powers of the parameter $t$. We prove that these rescaled Cherednik operators admit well-defined limits on the ring of almost symmetric Laurent polynomials. This yields stable positive and negative actions of a common stable limit DAHA. The action of the limit Cherednik operators is also proven to be triangular on a natural basis of almost symmetric Laurent polynomials labeled by tuple-partition symbols with respect to the induced Bruhat order. We further construct for each of the two stable limit representations a set of simultaneous eigenfunctions of t",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_0032",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.12276v1",
-    "status": "available",
-    "timestamp": "2026-07-15T20:11:34.288805+00:00",
-    "title": "ArXiv paper: Stable Limit DAHA of type $(C^{\\vee},C)$ and Stable Limit Koornwinder Polynomials"
   },
   {
     "consumed_by_exp_id": "",
@@ -6877,21 +6709,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Kleber's conjecture and complementary products of symmetric functions' and formalize its key results. Abstract: We prove Kleber's rectangular-complement conjecture for Schur functions over an arbitrary commutative ring $R$, showing that, for a fixed rectangle, the products $s_\u03bbs_{\u03bb^\\vee}$, indexed by unordered complementary pairs, are linearly independent in $\u039b_R$. The proof rests on a general independence theorem for componentwise splittings, which asserts that for every partition $\u03b8$, the products $s_\u03b1s_\u03b2$ are linearly independent as $\\{\u03b1,\u03b2\\}$ ranges over unordered pairs of partitions satisfying $\u03b1+\u03b2=\u03b8$. The independence of the products $s_\u03bbs_{\u03bb^\\vee}$ also yields linear independence of the Koike--Terada universal-character products over any field, answering a question of Gao--Orelowitz--Yong. We also prove the analogous result for monomial symmetric functions over fields of characteristic zero, as well as integral linear independence over $\\mathbb{Z}$.",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0035",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.12120v1",
-    "status": "available",
-    "timestamp": "2026-07-15T21:02:35.937376+00:00",
-    "title": "ArXiv paper: Kleber's conjecture and complementary products of symmetric functions"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper '$p$-adic Sum-Product, Projections, and Furstenberg Sets' and formalize its key results. Abstract: Let $p$ be a prime number. We prove the sharp Furstenberg set bound in the $p$-adic plane $\\mathbb{Q}_p^2$: every $(s,t)$-Furstenberg set $E\\subset\\mathbb{Q}_p^2$ satisfies $$ \\dim_H E\\ge \\min\\left\\{s+t,\\frac{3s+t}{2},s+1\\right\\}. $$ This matches the sharp lower bound in the Euclidean plane. We also derive two related consequences: a $p$-adic projection theorem for the maps $\u03c0_\u03b8(x,y)=x+\u03b8y$, together with the corresponding exceptional set estimate giving a $p$-adic analogue of Oberlin's projection question; and a discretized fractal sum-product estimate over $\\mathbb{Q}_p$, showing that sufficiently non-concentrated subsets of $\\mathbb{Z}_p^\\times$ cannot have both small sum set and small product set. The proof follows the projection-theoretic and multiscale machinery developed in the Euclidean works of Orponen-Shmerkin (arXiv:2301.10199) and Ren-Wang (arXiv:2308.08819). The main task is to rebuild this machinery in the non-archimedean setting, and along the way we develop several new $",
     "domains": [
       "Pythagorean",
@@ -6919,80 +6736,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-15T12:33:25.469761+00:00",
     "title": "ArXiv paper: The chromatic number of 3-stable Kneser graphs"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'The Balanced Four-Color Theorem' and formalize its key results. Abstract: We show that every planar graph with $n \\geq 3$ vertices admits a 4-coloring in which each color is used on fewer than $n/2$ vertices. This bound is the best possible. Moreover, such a coloring can be found in $O(n \\log n)$ time. We also extend these results to five or more colors and to graphs on general surfaces.",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_0038",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.13025v1",
-    "status": "available",
-    "timestamp": "2026-07-15T12:51:18.212379+00:00",
-    "title": "ArXiv paper: The Balanced Four-Color Theorem"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Claw-free cubic graphs and zero forcing' and formalize its key results. Abstract: A claw-free cubic graph is a cubic graph with no induced subgraph isomorphic to $K_{1,3}$. The zero forcing process begins with an initial set $S$ of colored vertices. At each step, a colored vertex with exactly one uncolored neighbor forces that neighbor to become colored. If repeated applications of this rule color every vertex of $G$, then $S$ is called a zero forcing set. The minimum cardinality of a zero forcing set is the zero forcing number, denoted by $Z(G)$. In this paper, we answer three open questions posed by Davila and Henning concerning upper bounds on the zero forcing number of claw-free cubic graphs. We characterize the connected claw-free cubic graphs satisfying $Z(G)=\u03b1(G)+1$, where $\u03b1(G)$ is the independence number. In addition, we establish the improved upper bound $Z(G)\\leq \\frac{T}{2}+D+2$ for claw-free cubic graphs with Hamiltonian contraction multigraphs, where $D$ is the number of diamonds and $T$ is the number of triangles in $G$.",
-    "domains": [
-      "Physics"
-    ],
-    "id": "fd_0039",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.12890v1",
-    "status": "available",
-    "timestamp": "2026-07-15T13:08:25.917501+00:00",
-    "title": "ArXiv paper: Claw-free cubic graphs and zero forcing"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Genus and Gonality of Small Curves, Dynamical Uniform Boundedness, and Bifurcation' and formalize its key results. Abstract: We prove the Gonality Conjecture in arithmetic dynamics: for any non-isotrivial one-parameter algebraic family of rational maps on $\\mathbb{P}^1$, the gonality of distinct dynatomic curves tends to infinity. More generally, outside the flexible Latt\u00e8s family, every small sequence of horizontal curves has gonality tending to infinity, and its genus grows superlinearly with its degree over the parameter curve. We also obtain higher-dimensional analogues under natural bifurcation and multiplier-genericity hypotheses. As applications, we prove uniform boundedness results for iterated preimages over number fields and geometric uniform boundedness results for preperiodic points over function fields. The proof combines arithmetic equidistribution, woven currents, and bifurcation theory; the bifurcation mechanism is what forces the growth of genus and gonality.",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0042",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.12561v1",
-    "status": "available",
-    "timestamp": "2026-07-15T14:01:10.734967+00:00",
-    "title": "ArXiv paper: Genus and Gonality of Small Curves, Dynamical Uniform Boundedness, and Bifurcation"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Euler systems and the symmetric square of a Hida family' and formalize its key results. Abstract: Let $p\\geq7$ be a prime number. We build a non-trivial Euler system for the symmetric square of a $p$-adic Hida family of modular forms interpolating the Euler system constructed by Loeffler-Zerbes for the symmetric square of a $p$-ordinary newform. As a second contribution, we prove an algebraic functional equation for dual Selmer groups in this setting. Finally, building on recent work by B\u00fcy\u00fckboduk-Ganguly on functional equations of algebraic (Rankin-Selberg) $p$-adic $L$-functions, we prove a divisibility result towards the Iwasawa main conjecture for the symmetric square of a Hida family.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0043",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.12679v1",
-    "status": "available",
-    "timestamp": "2026-07-15T14:18:31.029430+00:00",
-    "title": "ArXiv paper: Euler systems and the symmetric square of a Hida family"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Recursive Formula for the Equations of Hessenberg Varieties' and formalize its key results. Abstract: Hessenberg varieties are subvarieties of the flag variety, defined by containment conditions on flags with respect to a linear operator. The study of these varieties lies in the intersection of algebraic geometry, combinatorics, and representation theory. In this paper, we develop an algebro-geometric procedure for determining the closed subvariety structure of a Hessenberg variety $\\mathcal{H}(X,h)$ in the flag variety for any linear operator $X$ and Hessenberg function $h$, by imposing a partial order on the Hessenberg functions and analyzing the relation of the corresponding Hessenberg varieties. In particular, we give a concrete recursive formula for determining all equations cutting out a given Hessenberg variety in each Schubert cell. As an application, we provide an alternative geometric proof of Tymoczko's results on the existence of affine pavings of a given Hessenberg variety and on the dimension count of its cells.",
-    "domains": [
-      "Geometry",
-      "Algebra"
-    ],
-    "id": "fd_0047",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.12261v1",
-    "status": "available",
-    "timestamp": "2026-07-15T19:37:25.793116+00:00",
-    "title": "ArXiv paper: Recursive Formula for the Equations of Hessenberg Varieties"
   },
   {
     "consumed_by_exp_id": "",
@@ -7040,21 +6783,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'On the Second Moment of $ L (1/2, \\mathrm{As}(f) \\times \u03c6)$' and formalize its key results. Abstract: Let $\\mathbf{F} = \\mathbf{Q}(\\sqrt D)$ be a real quadratic field. In this paper, we establish a large sieve inequality for the Asai lifts $ \\mathrm{As} (f) $ with $f$ in a Hecke orthonormal basis of the space of Hilbert modular cusp forms of parallel weight $(k, k)$ over $ \\mathbf{F} $. As an application, for a fixed Hecke--Maass cusp form $\u03c6$ over $\\mathbf{Q}$, we prove a non-trivial bound for the second moment of the convoluted central $L$-values $ L (1/2, \\mathrm{As}(f) \\times \u03c6) $ in the $k$-aspect.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0056",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.13484v1",
-    "status": "available",
-    "timestamp": "2026-07-16T03:19:02.464129+00:00",
-    "title": "ArXiv paper: On the Second Moment of $ L (1/2, \\mathrm{As}(f) \\times \u03c6)$"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Domination-packing ratio for planar and unit disk graphs' and formalize its key results. Abstract: The domination number $\u03b3(G)$ of a graph $G$ is the smallest possible size of a vertex set that intersects every radius-$1$ ball of $G$, and the packing number $\u03c1(G)$ is the maximum number of pairwise vertex-disjoint radius-$1$ balls. We prove that $\\frac{\u03b3(G)}{\u03c1(G)}\\le 5$ for every planar graph and $\\frac{\u03b3(G)}{\u03c1(G)} \\le \\frac{18\\sqrt3}\u03c0\\approx 9.924$ for every unit disk graph, thus yielding Erd\u0151s-P\u00f3sa-type bounds for the hypergraph of radius-$1$ balls in the two graph classes. This improves upon results of Guti\u00e9rrez and Paul, and D\u00facz and Gujgiczer, who in turn lowered bounds of Bonamy, Csik\u00f3s, Gujgiczer and Yuditsky, and B\u00f6hme and Mohar. For both graph classes, the best known lower bound on the optimal constant remains $3$.",
     "domains": [
       "Bridges"
@@ -7066,66 +6794,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-16T03:36:34.295975+00:00",
     "title": "ArXiv paper: Domination-packing ratio for planar and unit disk graphs"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Interchange graphs of (0,1)-matrices are maximally Hamiltonian' and formalize its key results. Abstract: For integer vectors R,S let A(R,S) denote the class of (0,1)-matrices with row sum vector R and column sum vector S. Its interchange graph G(R,S) has A(R,S) as its vertex set, two matrices being adjacent when they differ by a single 2 x 2 interchange. Brualdi conjectured that G(R,S) is Hamiltonian for every R,S. We prove the stronger statement that G(R,S) is maximally Hamiltonian: Hamilton-laceable when bipartite, and Hamilton-connected when not. The proof is a structural induction on the number of matrices in the class, organized by the structure theory of interchange graphs. Deleting inactive lines and splitting invariant positions expresses any class as a Cartesian product, reducing the argument to the prime factors. The bipartite classes are products of complete transposition graphs; we settle them together, without induction, by proving they are paired 2-disjoint-path-coverable and hence Hamilton-laceable, using a recent theorem of Coleman, Fischberg, Gong, Harrington and Wong on ",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0059",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.13165v1",
-    "status": "available",
-    "timestamp": "2026-07-16T04:10:50.473848+00:00",
-    "title": "ArXiv paper: Interchange graphs of (0,1)-matrices are maximally Hamiltonian"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Second Order Differential Operators on Graphs' and formalize its key results. Abstract: The commutator of a pair of vector fields on a graph is not a vector field in general, but rather a second order differential operator. We investigate this departure from the classical case of vectors fields on a manifold by examining the geometry of balls of radius two, concentrating on the set of paths of length two connecting a given vertex with the center of the ball. There is a natural surjection from the space of sections of the second tangent bundle to the space of second order differential operators whose kernel reflects the geometry of these balls. Using this map we draw several conclusions about second order differential operators including canonical forms, formulas for their adjoints, and a necessary and sufficient condition for a commutator to be a vector field.",
-    "domains": [
-      "Geometry",
-      "Algebra"
-    ],
-    "id": "fd_0060",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.13266v1",
-    "status": "available",
-    "timestamp": "2026-07-16T04:27:11.074404+00:00",
-    "title": "ArXiv paper: Second Order Differential Operators on Graphs"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'A minimal modularity lifting theorem for Siegel modular forms' and formalize its key results. Abstract: We prove a minimal modularity lifting theorem (in the spirit of Genestier--Tilouine and Pilloni) in the setting of Siegel modular forms of genus two when the residual representation arises from a stable Yoshida lift, that is, an automorphic induction of a nearly ordinary Hilbert modular eigencuspform over a real quadratic field. As applications of the underlying $R=\\mathbb{T}$ theorem, we establish the freeness of a universal minimal ordinary Galois deformation ring over an Iwasawa algebra in two variables along with the uniqueness of Hida families passing through classical $p$-ordinary Siegel modular eigenforms with very regular weights.",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0063",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.13100v1",
-    "status": "available",
-    "timestamp": "2026-07-16T05:15:40.425312+00:00",
-    "title": "ArXiv paper: A minimal modularity lifting theorem for Siegel modular forms"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Learning the Graphical Nature of Symmetries' and formalize its key results. Abstract: Finite groups are rigid algebraic objects, whose Cayley graphs expose a rich network geometry through which group-theoretic structure can be measured, compared, and learned. In this paper, a dataset of $131{,}406$ Cayley graphs is constructed, covering all groups of order at most $767$ except order $512$, recording exact algebraic labels for group properties together with a broad collection of graph, cycle, distance, and spectral statistics. This census aims to provide novel benchmarks for studying how finite-group properties are reflected in Cayley graph observables. It also yields new enumerative contributions: alongside recovering known OEIS sequences for standard group classes, new sequences for monolithic groups and for groups generated by at most three, four, and five elements are contributed to the OEIS. The accompanying network analysis identifies several empirical regularities and formulates testable conjectures, including relationships involving square clustering, Cayley grap",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_0064",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.12026v1",
-    "status": "available",
-    "timestamp": "2026-07-16T05:49:09.739406+00:00",
-    "title": "ArXiv paper: Learning the Graphical Nature of Symmetries"
   },
   {
     "consumed_by_exp_id": "",
@@ -7157,36 +6825,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'The combinatorics of sector renormalization' and formalize its key results. Abstract: The goal of this note is to systematically develop the fundamental arithmetic and combinatorial properties of the sector renormalization operation on rigid rotations. We employ the specific framework of modified continued fractions appropriate for sector renormalization and analyze their properties. By allowing infinite first return times, this framework yields a dynamical compactification characterized by a universal property. We also discuss the corresponding natural extension and introduce the notion of a time (semi-)group. For example, we demonstrate how a bi-infinite tower of sector renormalizations of irrational rotations can be packaged within a single dynamical plane as a cascade of translations. This note will serve as a foundational combinatorial tool for studying the geometric properties of sector renormalizations of holomorphic maps with irrationally indifferent fixed points, particularly neutral quadratic polynomials.",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0072",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.11408v1",
-    "status": "available",
-    "timestamp": "2026-07-16T10:22:21.276285+00:00",
-    "title": "ArXiv paper: The combinatorics of sector renormalization"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Arithmetic Properties for $k$-Color Analogue of Simultaneously $s$-Regular and $t$-Distinct Partitions' and formalize its key results. Abstract: In this article, we discuss general generating functions for partitions of $n$, simultaneously $s$-regular and $t$-distinct in 3-colors. In addition, we obtain infinite families of congruences modulo powers of 3 for specific values of $(\\ell,t)$. For instance, for positive integers $n$ and $k$, we have \\begin{align*} \\sum_{n=o}^{\\infty}RD_3^{3,3}\\left(3^kn+\\frac{3^k+1}{2}\\right)q^n\\equiv0 \\pmod{3^{k+1}}. \\end{align*}",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0073",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.11499v1",
-    "status": "available",
-    "timestamp": "2026-07-16T10:38:16.188646+00:00",
-    "title": "ArXiv paper: Arithmetic Properties for $k$-Color Analogue of Simultaneously $s$-Regular and $t$-Distinct Partitions"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Sufficient conditions for $(K_2 \\cup kK_1)$-free graphs to be Hamilton-connected' and formalize its key results. Abstract: The toughness of a non-complete graph $G$, denoted $\u03c4(G)$, is defined as \\[ \u03c4(G) = \\min\\left\\{ \\frac{|S|}{\u03c9(G-S)} : S \\subseteq V(G),\\ \u03c9(G-S) \\geq 2 \\right\\}, \\] where $\u03c9(G-S)$ is the number of components of $G - S$. For a complete graph $G$, we define $\u03c4(G) = \\infty$. A graph $G$ is $t$-tough if $\u03c4(G) \\geq t$. For a positive integer $k$, a graph $G$ is $(K_2 \\cup kK_1)$-free if it contains no induced subgraph isomorphic to $K_2 \\cup kK_1$. Recently, Liu \\cite{liu} showed that every $2k$-connected $(K_2 \\cup kK_1)$-free graph $G$ with $\u03c4(G) > 1$ is Hamilton-connected. In this paper, we strengthen this result by proving that every $(k+1)$-connected $(K_2 \\cup kK_1)$-free graph $G$ with $\u03c4(G) > 1$ and minimum degree $\u03b4(G) \\geq 2k$ is Hamilton-connected. Moreover, by imposing restrictions to the independence number $\u03b1(G)$, we prove that every $k$-connected $(K_2 \\cup kK_1)$-free graph $G$ of order $n$ with $2k+1 \\leq \u03b1(G) < \\frac{n}{2}$ and $\u03b4(G) \\geq 2k$ is Hamilton-connected, and that t",
     "domains": [
       "Bridges"
@@ -7198,21 +6836,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-16T10:53:48.349640+00:00",
     "title": "ArXiv paper: Sufficient conditions for $(K_2 \\cup kK_1)$-free graphs to be Hamilton-connected"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'On Small Doubling in Right-Ordered Groups and Baumslag-Solitar Groups-II' and formalize its key results. Abstract: Recently, Mohan et al. [Results Math. 80 (2025), No. 4, 122] answered Freiman's $3k-4$ conjecture in right-ordered groups under certain restrictions. In this paper, we take a step further by investigating the structure of nonempty subsets $S$ of a right-ordered group satisfying the small doubling condition $|S^2| = 3|S|-3$. Moreover, we provide a complete characterization of all nonempty finite subsets $S$ of the Baumslag-Solitar group $\\mathrm{BS}(1,q)$ (with $q \\in \\mathbb{Z}$ and $q \\neq -1$) for which $|S^2| = 3|S|-3$ and the identity element is the minimum of $S$.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0076",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.11194v1",
-    "status": "available",
-    "timestamp": "2026-07-16T11:25:22.149755+00:00",
-    "title": "ArXiv paper: On Small Doubling in Right-Ordered Groups and Baumslag-Solitar Groups-II"
   },
   {
     "consumed_by_exp_id": "",
@@ -7245,21 +6868,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Zero-one laws for uniform approximation via Gaussian and Eisenstein integers' and formalize its key results. Abstract: We establish two distinct zero-one laws for the uniform Diophantine approximation of complex numbers by quotients of Gaussian integers and by quotients of Eisenstein integers. Using tools from homogeneous dynamics, we study this problem by reducing to a shrinking target problem on certain homogeneous spaces of $\\mathrm{SL}_2(\\mathbb{C})$. The main novel ingredients include measure estimates on a certain family of neighborhoods of the corresponding critical loci, as well as new disjointness statements to control the short-range mixing contribution. Due to the different nature of the critical loci in the Gaussian and Eisenstein cases, these measure estimates are obtained by rather different arguments.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0080",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.11178v1",
-    "status": "available",
-    "timestamp": "2026-07-16T12:28:46.578649+00:00",
-    "title": "ArXiv paper: Zero-one laws for uniform approximation via Gaussian and Eisenstein integers"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Disproofs of two conjectures concerning nondeficient numbers' and formalize its key results. Abstract: A positive integer $n$ is said to be nondeficient if $\u03c3(n) \\geq 2n$. Letting the positive divisors of a positive integer $n$ be written as $1 = d_0 < d_1 < \\cdots < d_k < d_{k+1} = n$, and letting $\\mathcal{S}$ denote a set of integers, if there exist values $\u03bb_j \\in \\mathcal{S}$ such that $1 + \\sum_{j=1}^{k} \u03bb_j d_j = n$, then $n$ is said to be an $\\mathcal{S}$-perfect number. Ross, in 2024, introduced the study of $\\mathcal{S}$-perfect numbers, and concluded with two conjectures that each concern both $\\{ -1, 1 \\}$-perfect numbers and nondeficient numbers. We disprove both of these conjectures.",
     "domains": [
       "Pythagorean",
@@ -7286,21 +6894,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-16T13:51:47.387924+00:00",
     "title": "ArXiv paper: Positivity and tails of Jacobi theta series"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Neighborhood Complexity and Radius-1 Merge-Width in Monadically Dependent Graph Classes' and formalize its key results. Abstract: Monadic dependence is a proposed structural dividing line for fixed-parameter tractability of first-order model checking on hereditary graph classes. A graph class is \\emph{monadically dependent} if the class of all graphs cannot be interpreted in its vertex-colored members using a fixed first-order formula. We prove two structural consequences of monadic dependence. First, every monadically dependent class has \\emph{almost linear neighborhood complexity}: for every graph $G$ in the class and every set $A\\subseteq V(G)$, the family $\\{N_G(v)\\cap A : v\\in V(G)\\}$ has size $|A|^{1+o(1)}$. Second, every $n$-vertex graph in a monadically dependent class has radius-1 merge-width $n^{o(1)}$. Here, merge-width is the decomposition parameter of Dreier and Toru\u0144czyk based on construction sequences; its radius-$r$ version measures local reachability among parts through already resolved pairs. This settles the radius-1 case of the conjectured connection between monadic dependence and almost bound",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0086",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.10941v1",
-    "status": "available",
-    "timestamp": "2026-07-16T14:08:15.851346+00:00",
-    "title": "ArXiv paper: Neighborhood Complexity and Radius-1 Merge-Width in Monadically Dependent Graph Classes"
   },
   {
     "consumed_by_exp_id": "",
@@ -7364,21 +6957,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Torsion groups of rational elliptic curves over $\\mathbb{Z}_p$-extensions of quadratic fields: the $p\\le 5$ case' and formalize its key results. Abstract: Let $E$ be a rational elliptic curve. We generalize a theorem due to Avc\u0131\\cite{AVCI2026153}, which asserts that for any quadratic field \\(K\\) and prime \\(p>5\\), the equality \\(E(K)_{\\mathrm{tors}} = E(L)_{\\mathrm{tors}}\\) holds for every \\(\\mathbb{Z}_p\\)-extension \\(L/K\\). In this paper, we consider the setting where the \\(\\mathbb{Z}_p\\)-extension \\(L\\) is replaced by the compositum \\(K_{\\infty}\\) of all \\(\\mathbb{Z}_p\\)-extensions of \\(K\\). Under this new setting, we prove the analogous statement for \\(p=5\\), and further provide partial results for the remaining primes \\(p=3\\) and \\(p=2\\).",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0091",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.13514v1",
-    "status": "available",
-    "timestamp": "2026-07-16T02:44:27.391016+00:00",
-    "title": "ArXiv paper: Torsion groups of rational elliptic curves over $\\mathbb{Z}_p$-extensions of quadratic fields: the $p\\le 5$ case"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Further thoughts on dimensions of posets' and formalize its key results. Abstract: We recall the concept of the dimension of a finite poset $P$, and the longstanding conjecture that for all finite nonempty posets $P$ and $Q$, $\\dim(P\\times Q)\\geq\\dim(P)+\\dim(Q)-2.$ We then note two other plausible inequalities, either of which would imply that one. In the final section, writing $P\\preccurlyeq P'$ if, for all $Q,$ $\\dim(P\\times Q)\\leq\\dim(P'\\times Q),$ and writing $P\\approx P'$ if $P\\preccurlyeq P'$ and $P'\\preccurlyeq P,$ we note some results and questions concerning these relations.",
     "domains": [
       "Pythagorean"
@@ -7393,21 +6971,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Graph Puzzles III.1: A Proof of Sabidussi's Compatibility Conjecture' and formalize its key results. Abstract: We prove Sabidussi's compatibility conjecture. Let $G$ be a finite connected multigraph in which every vertex has even degree and the minimum degree is at least four, and let $T$ be a closed trail that traverses every edge exactly once. The edges of $G$ can be partitioned into circuits (connected 2-regular subgraphs) so that no circuit contains the two edges used consecutively anywhere in $T$. In fact, the edges can be four-coloured so that every such pair receives two different colours and the subgraph formed by the edges of each colour has even degree at every vertex. Formalization in Lean 4 is also available in the author's github.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0097",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.13225v1",
-    "status": "available",
-    "timestamp": "2026-07-16T04:27:14.823265+00:00",
-    "title": "ArXiv paper: Graph Puzzles III.1: A Proof of Sabidussi's Compatibility Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'On some structural properties of graphs with non-negative resistance curvature' and formalize its key results. Abstract: A graph is called resistance nonnegative (RN), respectively resistance positive (RP), if it admits positive edge weights such that all vertex resistance curvatures are nonnegative, respectively positive. In this paper, we study the structure of RN and RP graphs in relation to toughness, traceability, and Cartesian products. First, we disprove a conjecture of Fiedler and answer a question of Devriendt in the negative by constructing, for every $n\\ge 11$, an $n$-vertex $1$-tough graph that is not RN. Second, we show that RP graphs need not be traceable by proving that the Thomassen $34$-graph is RP but not traceable. Finally, we resolve a conjecture of Devriendt on grid graphs by proving that all Cartesian products of paths are RN.",
     "domains": [
       "Pythagorean"
@@ -7419,21 +6982,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-16T04:43:23.081658+00:00",
     "title": "ArXiv paper: On some structural properties of graphs with non-negative resistance curvature"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Tropical Circuits with Scalar Multiplication Gates' and formalize its key results. Abstract: We study tropical circuits with scalar multiplication gates, that is, algebraic circuits whose gates implement $\\max$, $+$, or multiplication with a positive constant. For such circuits, we prove exponential size lower bounds for computing maximum weight directed spanning trees and maximum weight bipartite perfect matchings. As a corollary, we obtain an exponential size separation between monotone and non-monotone maxout neural networks, which generalize the popularly used ReLU neural networks. One conclusion from this is that neural network models with enforced convexity constraints, such as input-convex neural networks (ICNNs), sometimes need to be exponentially larger than their unrestricted counterparts in order to express the same functions.",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_0102",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.11540v1",
-    "status": "available",
-    "timestamp": "2026-07-16T08:29:33.287561+00:00",
-    "title": "ArXiv paper: Tropical Circuits with Scalar Multiplication Gates"
   },
   {
     "consumed_by_exp_id": "",
@@ -7466,21 +7014,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Combinatorial interpretation of the coefficients of the order polynomial of fence posets' and formalize its key results. Abstract: Given a fence poset P , we define a new statistic on permutations, denoted by blP, that provides a combinatorial interpretation of the coefficients of the order polynomial of P , answering a question of Ferroni, Morales, and Panova (2025). Using the fact that the base polytope of a lattice path matroid can be decomposed into order polytopes of fence posets, we also obtain a combinatorial interpretation of the coefficients of the Ehrhart polynomial of the base polytope of Schubert matroids, answering a question of Stanley (1999). As an application of this statistic, we establish the first nontrivial lower bound for the linear coefficient of the Ehrhart polynomial of an order polytope. Finally, we conjecture generalizations of this statistic to skew-shape posets and circular fence posets.",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0107",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.11225v1",
-    "status": "available",
-    "timestamp": "2026-07-16T11:09:16.692907+00:00",
-    "title": "ArXiv paper: Combinatorial interpretation of the coefficients of the order polynomial of fence posets"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'A 64-Rectangle Counterexample to Wegner's Conjecture and LP Gaps up to $5/2$' and formalize its key results. Abstract: Wegner conjectured that every finite family $\\mathcal R$ of axis-parallel rectangles satisfies $\u03c4(\\mathcal R)\\le 2\u03bd(\\mathcal R)-1$, where $\u03bd$ is the packing number and $\u03c4$ is the piercing number. Ajwani, Gajjala, Raman, and Ray recently disproved this by constructing a triangle-free counterexample on $2196\\cdot 8^9$ rectangles and, using a computer-assisted package-and-port recursion, obtained a standard LP gap of $17891/8064$ for Maximum Independent Set of Rectangles. We give a simpler and hand-checkable counterexample with $64$ rectangles. It is built from an eight-rectangle gadget whose independent sets inject into four ordered slots; we then use four horizontal and four vertical copies of this gadget to form a triangle-free family with $\u03bd=16$ and $\u03c4\\ge 32$. We use the same horizontal-vertical step to define recursive families of rectangles $P_r$ with $\u03bd(P_r)=4^{2^r}$. For the standard clique, equivalently point, relaxation we obtain a finite gap $73/32$ at $P_3$, improving the prev",
     "domains": [
       "Pythagorean"
@@ -7492,21 +7025,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-16T11:25:26.123465+00:00",
     "title": "ArXiv paper: A 64-Rectangle Counterexample to Wegner's Conjecture and LP Gaps up to $5/2$"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'p-adic Properties of Translated Division Polynomials and Somos Sequences' and formalize its key results. Abstract: In this paper we consider the sequences $(\u03a8_{n}(\\mathbf{P}))_{n\\geq 0}$, $(\u03a6_{n}(\\mathbf{P}))_{n\\geq 0}$ and $(\\overline{\u03a9}\\,_{n}(\\mathbf{P}% ))_{n\\geq 0}$ of values of the translated division polynomials of an elliptic curve $E/K$ evaluated at a point $\\mathbf{P}\\in $ $E(K)^{2}$. We prove that these sequences are purely periodic when $K$ is a finite field. Then we use the periodicity properties of these sequences to prove that certain subsequences of these sequences are $% %TCIMACRO{\\U{2124} }% %BeginExpansion \\mathbb{Z} %EndExpansion _{p}$-Cauchy. Finally, we use this result to prove analogous results for Somos $4$ and Somos $5$ sequences.",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_0109",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.11261v1",
-    "status": "available",
-    "timestamp": "2026-07-16T11:40:59.366781+00:00",
-    "title": "ArXiv paper: p-adic Properties of Translated Division Polynomials and Somos Sequences"
   },
   {
     "consumed_by_exp_id": "",
@@ -7539,36 +7057,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Lattice point counting in Cygan--Kor\u00e1nyi balls on Heisenberg groups' and formalize its key results. Abstract: Lattice point counting in gauge balls on the Heisenberg group $\\mathbb{H}^q$ is a non-commutative analogue of the Euclidean multidimensional sphere problem, initiated by Garg, Nevo and Taylor \\cite[\\textit{Ann. Inst. Fourier}, 2015]{GNT15}. The case of particular interest is when the gauge is taken as the Cygan--Kor\u00e1nyi norm and the error term reads: $$\\mathcal{E}_q(t)=\\#\\left(\\mathbb{Z}^{2 q+1} \\cap \\mathcal{B}_t\\right)-\\operatorname{vol}(\\mathcal{B}_1) \\, t^{2 q+2},$$ with $\\mathcal{B}_t=\\{(v,w)\\in\\mathbb{H}^q: (|v|^4 + w^2)^{1/4} \\le t \\}$, which is closely related to the Gauss circle problem. When $q\\ge3$, Gath \\cite[\\textit{Ann. Sc. Norm. Super. Pisa Cl. Sci.}, 2022]{Gat22} improved upon \\cite[]{GNT15} by showing that $ |\\mathcal{E}_q(t)|\\lesssim t^{2q-1+ 1/3}$ and proposed the conjecture that the optimal order should be $2q-1$. In this paper, through Landau's formula and the $5,6$-th Derivative Tests of van der Corput, we arrive at that $|\\mathcal{E}_q(t)| \\lesssim t^{2 q-1 + 241",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0112",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.10971v1",
-    "status": "available",
-    "timestamp": "2026-07-16T12:28:53.678857+00:00",
-    "title": "ArXiv paper: Lattice point counting in Cygan--Kor\u00e1nyi balls on Heisenberg groups"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Exact Frequencies of Consecutive Quadratic Residue and Nonresidue Patterns Modulo a Prime' and formalize its key results. Abstract: This paper determines the exact frequency of all consecutive sign patterns of lengths two and three formed by the quadratic character modulo an odd prime $p$. Using basic properties of character sums over finite fields, we derive exact counting formulas for pairs $(n, n+1)$ and triples $(n-1, n, n+1)$ exhibiting specific sequence patterns in \\(\\{\\pm 1\\}\\). The frequencies of pairs are classified entirely by \\(p \\pmod 4\\), whereas triples exhibit a more complex dependency on \\(p \\pmod 8\\) and the Jacobsthal sum $T_p=\\sum_{x\\in\\mathbb F_p}\u03c7(x^3-x)$.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0115",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.11068v1",
-    "status": "available",
-    "timestamp": "2026-07-16T13:16:57.481996+00:00",
-    "title": "ArXiv paper: Exact Frequencies of Consecutive Quadratic Residue and Nonresidue Patterns Modulo a Prime"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Higher-Order Congruence for Reciprocal Power Sums and Generalized Lehmer-Type Products' and formalize its key results. Abstract: This paper investigates high-order congruences of reciprocal power sums and Lehmer-type products. Let $n\\geq 1$ with $(n,6)=1$ and $e\\in\\{2,3,4,6\\}$. For the reciprocal square sums \\begin{equation*} S(n)=\\sum_{\\substack{r=1 \\\\ (r,n)=1}}^{\\lfloor n/e \\rfloor}\\frac{1}{r^2} \\end{equation*} we already know the form of the congruence modulo $n$. In this paper, motivated by the known congruences, we first extend these results to certain reciprocal sums of odd order and establish a uniform congruence modulo $n$ for \\begin{equation*} S_m(n)=\\sum_{\\substack{r=1 \\\\ (r,n)=1}}^{\\lfloor n/e \\rfloor}\\frac{1}{r^m} \\end{equation*} We then study the generalized Lehmer-type product \\begin{equation*} \\prod_{d \\mid n}\\binom{kd-1}{\\lfloor d/e \\rfloor}^{\u03bc(n/d)} \\end{equation*} Although congruences modulo $n^3$ for this product have previously been obtained, higher-order congruences do not admit a comparably simple closed form. To address this difficulty, we derive an explicit truncated expansion in terms of",
     "domains": [
       "Pythagorean"
@@ -7580,66 +7068,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-16T13:34:22.310523+00:00",
     "title": "ArXiv paper: Higher-Order Congruence for Reciprocal Power Sums and Generalized Lehmer-Type Products"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Hereditary 2-WQO Graph Classes Have Bounded Clique-Width' and formalize its key results. Abstract: A graph class is $k$-WQO if its $k$-labeled graphs are well-quasi-ordered under label-preserving induced subgraph embeddings. We show that every hereditary graph class that is $2$-WQO has bounded clique-width. Combined with the recent result of Dumas and Lopez, this confirms a long-standing conjecture of Pouzet: A hereditary graph class is $2$-WQO if and only if it is $k$-WQO for all $k\\geq 2$, if and only if it is $\\forall$-WQO, that is, its labeled graphs are well-quasi-ordered for every possible well-quasi-ordered label set. Our proof builds on a recent structure/non-structure dichotomy for the model theoretic notion of monadic dependence by Dreier, M\u00e4hlmann, and Toru\u0144czyk. Through the non-structure characterization by forbidden induced subgraphs, we show that every hereditary $2$-WQO graph class is monadically dependent. Leveraging the Ramsey-theoretic structural properties provided by monadic dependence, we then establish bounded clique-width by ruling out the existence of large w",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0117",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.10939v1",
-    "status": "available",
-    "timestamp": "2026-07-16T13:51:52.058528+00:00",
-    "title": "ArXiv paper: Hereditary 2-WQO Graph Classes Have Bounded Clique-Width"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'The Arithmetic of Semirings Part I: Ideals' and formalize its key results. Abstract: We study ideals in the semiring $\\mathbb{N}$ of natural numbers, with a focus on those which are lost when extending from $\\mathbb{N}$ to $\\mathbb{Z}$. This leads to a new perspective on the classical theory of numerical semigroups, including the introduction of a natural multiplicative structure. We prove that unique factorization of ideals fails in $\\mathbb{N}$ on several levels, introduce a handful of new tropical multiplicative invariants of numerical semigroups, characterize integral closures of ideals in terms of Newton polygons, and analyze the behavior of classical numerical semigroup invariants with respect to the product operation.",
-    "domains": [
-      "Algebra",
-      "Tropical"
-    ],
-    "id": "fd_0118",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.10778v1",
-    "status": "available",
-    "timestamp": "2026-07-16T14:08:19.852831+00:00",
-    "title": "ArXiv paper: The Arithmetic of Semirings Part I: Ideals"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Greenberg's $\u03bc=0$ conjecture for lisse sheaves over global function fields' and formalize its key results. Abstract: Let $K$ be a global function field of characteristic $p>0$ and $\\ell\\neq p$ be a prime number. We study Selmer groups over a $\\mathbb{Z}_\\ell$-extension $K_\\infty/K$. For a lisse $\\mathbb Z_\\ell$-sheaf we prove that the Pontryagin dual of the associated Selmer group is a finitely generated torsion module over the Iwasawa algebra and has $\u03bc$-invariant equal to zero. This gives a positive-characteristic, prime to $p$, analogue of Greenberg's $\u03bc=0$ conjecture. Our result applies in particular to abelian varieties, fine Selmer groups, and adjoint representations. We also prove an analogue of the weak Leopoldt conjecture in this context over $K_\\infty$, and deduce that the framed deformation ring of a residual representation is a formal power series ring. The same conclusion holds for the unframed deformation ring if the residual representation has no non-scalar endomorphisms.",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0122",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.10728v2",
-    "status": "available",
-    "timestamp": "2026-07-16T15:16:11.220023+00:00",
-    "title": "ArXiv paper: Greenberg's $\u03bc=0$ conjecture for lisse sheaves over global function fields"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'The even-uniform hypergraph Moore bound' and formalize its key results. Abstract: The hypergraph Moore bound conjectured by Feige (2008) controls the size of the smallest even cover in a $k$-uniform hypergraph in terms of the average density of hyperedges. An even cover is a set of hyperedges covering each vertex an even number of times, generalizing the notion of a cycle in a graph, so the size of the smallest non-trivial even cover provides a notion of hypergraph girth. Recent work starting from the breakthrough result of Guruswami, Kothari, and Manohar (2022) proved the conjecture up to polylogarithmic factors, whose exponents were later gradually improved. We give a simple proof of Feige's original hypergraph Moore bound conjecture for all even $k\\ge 4$, with no superfluous polylogarithmic factors. Our proof roughly follows the proof of the graph Moore bound, but works with colored walks in a Kikuchi graph built from a hypergraph and controls their growth using a polynomial interpolation method.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0128",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.14068v1",
-    "status": "available",
-    "timestamp": "2026-07-16T15:18:15.196919+00:00",
-    "title": "ArXiv paper: The even-uniform hypergraph Moore bound"
   },
   {
     "consumed_by_exp_id": "",
@@ -7658,36 +7086,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Resurgent Lambert series from Feynman and beyond' and formalize its key results. Abstract: Lambert series of the form $\\sum_{n>0}a(n)q^n/(1-q^n)$ are ubiquitous in mathematical physics. In particular, 2-loop sunrise and 3-loop banana Feynman diagrams yield Lambert series with $a(n)$ of the form $\u03c7(n)/n^s$ where $\u03c7(n)$ is a Dirichlet character. Resurgence concerns the singular limit as $|q|$ approaches 1. In the Feynman cases we can control this limit, obtaining rapidly convergent expressions, since the Lambert series are iterated integrals of holomorphic Eisenstein series twisted by a character. We generalize this result, to include modular resurgent structures found in topological-string observables.",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_0136",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.14020v1",
-    "status": "available",
-    "timestamp": "2026-07-16T17:10:25.387656+00:00",
-    "title": "ArXiv paper: Resurgent Lambert series from Feynman and beyond"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Heat Kernel and Closed Geodesic Asymptotics for Nilpotent Coverings' and formalize its key results. Abstract: We establish all order long-time asymptotic expansions for heat kernels on nilpotent coverings and for prime closed geodesics in fixed central classes of nilpotent quotients of compact hyperbolic surfaces. The exact lattice-side input is the finite-dimensional rational Floquet-Bloch theory of the companion paper: rational Kirillov restrictions give exact finite-dimensional fibers, and a generalized Pytlik functional gives exact Fourier-inversion and normalized-trace identities. At a rational parameter $p/q$ the decomposition is exact, and the fluctuation of the fiber integrand is controlled only by $q$. Hence the large-denominator comparison with the smooth Kirillov or Schr\u00f6dinger normal form is uniform on the rational support of the Pytlik functional; irrational parameters do not enter the rigorous trace argument. For general nilpotent models, coefficient-weighted spectral sums are justified to every fixed order by positive Rockland estimates, the Plancherel-Mellin formula, and a trac",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0139",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.13890v1",
-    "status": "available",
-    "timestamp": "2026-07-16T18:02:11.594209+00:00",
-    "title": "ArXiv paper: Heat Kernel and Closed Geodesic Asymptotics for Nilpotent Coverings"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'The exact minimum total degree threshold for the square of a Hamilton cycle in digraphs' and formalize its key results. Abstract: The P\u00f3sa-Seymour conjecture establishes the minimum degree threshold required to guarantee the presence of the $k$th power of a Hamilton cycle in a graph. Following numerous partial results, Koml\u00f3s, S\u00e1rk\u00f6zy, and Szemer\u00e9di confirmed the conjecture holds for all sufficiently large graphs. Treglown later conjectured the analogous minimum semi-degree threshold for forcing the $k$th power of a Hamilton cycle in a digraph. Subsequently, DeBiasio et al. proposed a conjecture on the minimum total degree threshold for the same problem. In this paper we settle the conjecture of DeBiasio et al. for $k=2$. Specifically, we prove that every sufficiently large $n$-vertex digraph with minimum total degree at least $8n/5-c$ contains the square of a Hamilton cycle, where $c=2$ if $n\\equiv2,4\\pmod 5$, and $c=1$ otherwise.",
     "domains": [
       "Pythagorean"
@@ -7699,36 +7097,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-16T18:19:24.603038+00:00",
     "title": "ArXiv paper: The exact minimum total degree threshold for the square of a Hamilton cycle in digraphs"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Area correlations related to lattice points in discs' and formalize its key results. Abstract: Motivated by the Lester-Wigman vanishing area correlation conjecture for lattice points near the boundary of circles of growing radius, we investigate the dynamics of circle flows on tori (which are related to the motion of a charged particle in a magnetic field on a torus.) We show that an analogue of the vanishing correlation conjecture holds in this setting, i.e., we have \"mixing for the area observable\" despite the flow being essentially integrable. We also determine the probability density function of the areas, in global as well as local regimes.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0142",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.13659v1",
-    "status": "available",
-    "timestamp": "2026-07-16T18:54:15.847944+00:00",
-    "title": "ArXiv paper: Area correlations related to lattice points in discs"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Exact classification of elliptic curves $y^{2}=x^{3}-pqx$ with rank $0$ and trivial $\\Sha[2]$' and formalize its key results. Abstract: For the elliptic curves $E_{p,q}: y^{2}=x^{3}-pqx$ where $p$ and $q$ are distinct odd primes, we establish necessary and sufficient conditions under which rank$\\,E_{p,q}(\\mathbb{Q})$ and $\\dim_{\\mathbb{F}_{2}} \\Sha \\left( E_{p,q}/\\bbQ \\right)[2]$ are both $0$. We do so via a similar characterisation of when the Selmer groups associated with the degree-$2$ isogeny $\u03c6$ and its dual $\\widehat\u03c6$ are both of minimal size, along with results about a cokernel that arises from a related exact sequence.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0143",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.14033v1",
-    "status": "available",
-    "timestamp": "2026-07-16T16:53:13.563266+00:00",
-    "title": "ArXiv paper: Exact classification of elliptic curves $y^{2}=x^{3}-pqx$ with rank $0$ and trivial $\\Sha[2]$"
   },
   {
     "consumed_by_exp_id": "",
@@ -7746,36 +7114,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Transformation Semigroup Perspective on the Magma Monoid' and formalize its key results. Abstract: The monoid of all binary operations was first introduced by H. S. Kim and J. Neggers in 2008. Since then, different aspects and applications of this monoid were studied, while several questions about its semigroup-theoretic properties remain unanswered. We employ a transformation semigroup perspective to fully characterize principal left and right ideals, idempotent and regular elements of this monoid, as well as provide precise combinatorial enumerations of them. This approach gives a general framework for most of the existing results on ideals in the magma monoid. We also answer several open questions posed in the 2023 PhD dissertation of A. Rafieipour. Finally, we correct an error regarding the description of the center of the magma monoid from the 2011 paper of H. F. Fayomi.",
-    "domains": [
-      "Algebra",
-      "Tropical"
-    ],
-    "id": "fd_0146",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.13746v1",
-    "status": "available",
-    "timestamp": "2026-07-16T17:45:08.868122+00:00",
-    "title": "ArXiv paper: Transformation Semigroup Perspective on the Magma Monoid"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Antipodal paths in covers of spheres' and formalize its key results. Abstract: In this note we show that if the sphere $\\mathbb{S}^n$ is covered by $k$ open sets with $n \\geq 2k-2$, then one of these sets contains a path with antipodal endpoints. This is best possible in the sense that the statement fails for $n < 2k-2$. The result can be seen as a spherical analogue of a well-known conjecture of Norine on edge-colourings of the discrete hypercube.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0147",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.13964v1",
-    "status": "available",
-    "timestamp": "2026-07-16T18:02:15.059733+00:00",
-    "title": "ArXiv paper: Antipodal paths in covers of spheres"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'The inversion number of a path-reversed tournament: Resolving a conjecture of Belkhechine, Bouaziz, Boudabbous, and Pouzet' and formalize its key results. Abstract: Let $D$ be a tournament and let $X\\subseteq V(D)$. The inversion of $X$ reverses all arcs whose both endpoints lie in $X$ and leaves every other arc unchanged. A family of inversions is a decycling family if applying all of them produces an acyclic, equivalently transitive, tournament. The inversion number $\\inv(D)$ is the minimum size of such a family. Let $Q_n$ be the tournament on $[n]$ obtained from the natural transitive tournament by reversing precisely the consecutive pairs $12,23,\\ldots,(n-1)n$. Belkhechine, Bouaziz, Boudabbous, and Pouzet conjectured in their unpublished manuscript that a natural path-reversed family has inversion number exactly $\\left\\lfloor(n-1)/2\\right\\rfloor$. The same problem was later recorded by Bang-Jensen, da Silva, and Havet and by Alon, Powierski, Savery, Scott, and Wilmer. In this paper we resolve this conjecture.",
     "domains": [
       "Pythagorean"
@@ -7787,51 +7125,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-16T18:19:27.949802+00:00",
     "title": "ArXiv paper: The inversion number of a path-reversed tournament: Resolving a conjecture of Belkhechine, Bouaziz, Boudabbous, and Pouzet"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Bernoulli determinants and cuspidal subgroups' and formalize its key results. Abstract: We give an explicit formula for the order of the rational cuspidal class group of the modular curve $X_1(N)$ for an arbitrary integer $N$. The proof relies on results of Streng on the group of modular units on $X_1(N)$, and requires computing a certain determinant involving the second Bernoulli polynomial. We also define a higher weight analogue of the cuspidal class group and speculate that its order is related to a similar determinant defined using a higher degree Bernoulli polynomial.",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_0150",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.13536v1",
-    "status": "available",
-    "timestamp": "2026-07-16T18:54:19.202450+00:00",
-    "title": "ArXiv paper: Bernoulli determinants and cuspidal subgroups"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Representability of systems of proportionally modular numerical semigroups' and formalize its key results. Abstract: In this short note we prove that every system of proportionally modular numerical semigroups is representable by a canonical equivariant resolution of a weighted homogeneous surface singularity with rational homology sphere link. The construction starts from the quotient descriptions of proportionally modular numerical semigroups by two-generator numerical semigroups, realizes each quotient by a two-legged canonical equivariant resolution graph, and then glues these graphs with suitable multiplicities.",
-    "domains": [
-      "Geometry",
-      "Algebra"
-    ],
-    "id": "fd_0152",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.13619v1",
-    "status": "available",
-    "timestamp": "2026-07-16T23:55:04.862763+00:00",
-    "title": "ArXiv paper: Representability of systems of proportionally modular numerical semigroups"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Trees with exactly three main eigenvalues' and formalize its key results. Abstract: An eigenvalue of a graph is called main if its eigenspace is not orthogonal to the all-ones vector. Introduced by Cvetkovi\u0107 in the early 1970s and systematically studied by Rowlinson and others, graphs with exactly one or two main eigenvalues are now well understood. However, the classification of graphs with precisely three main eigenvalues remains a challenging open problem in spectral graph theory. This paper provides a complete classification of all trees of diameter 5 with exactly three main eigenvalues. Using equitable partitions, the spectral condition reduces to the unique solvability of linear systems over the rationals, leading to Diophantine equations involving branch lengths and pendant counts. We prove that every such tree is isomorphic either to a symmetric tree $T_r(a)$ or to a member of a parametric family $\\mathcal{T}$ determined by arithmetic divisibility conditions. We also construct an infinite family of such trees with unbounded diameter.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0155",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.13577v1",
-    "status": "available",
-    "timestamp": "2026-07-17T00:50:40.306507+00:00",
-    "title": "ArXiv paper: Trees with exactly three main eigenvalues"
   },
   {
     "consumed_by_exp_id": "",
@@ -7847,21 +7140,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-17T01:25:59.424722+00:00",
     "title": "ArXiv paper: Formality for rigid-analytic spaces satisfying the weight-monodromy conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'The small Davenport constant of the Heisenberg group of order 125' and formalize its key results. Abstract: The small Davenport constant $\\mathsf{d}(G)$ of a finite group $G$ is the maximal length of a product-one-free sequence over $G$. For the exponent-$p$ Heisenberg group $H_{p^3}$ of order $p^3$, Godara and Sarkar proved $\\mathsf{d}(H_{27})=6$ and posed $\\mathsf{d}(H_{p^3})=3p-3$ for every odd prime $p$, leaving $p\\ge5$ open. We settle the first open case: $\\mathsf{d}(H_{125})=12$. The lower bound is the explicit product-one-free sequence $x^4y^4v^4$. For the upper bound we record a product-one criterion that reduces the non-commutative problem to additive combinatorics over $\\mathbb{F}_5^2$, and then reduce \"every length-13 sequence has a product-one subsequence\" to a single finite statement -- a spread bound on quotient multisets -- which we verify by an exhaustive, memory-flat search in C, its verdict independently reproduced by a second search with a different pruning strategy. Every auxiliary lemma is machine-checked. The argument is genuinely $p$-specific: we identify the exact ste",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0157",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.14379v1",
-    "status": "available",
-    "timestamp": "2026-07-17T01:43:06.432576+00:00",
-    "title": "ArXiv paper: The small Davenport constant of the Heisenberg group of order 125"
   },
   {
     "consumed_by_exp_id": "",
@@ -7895,21 +7173,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Generalization of Ramanujan's Continued Fractions for Even Order' and formalize its key results. Abstract: In this paper, we derive three generalized continued fractions of any even order $k$ with the aid of a general continued fraction identity of Ramanujan and we establish general theta function identities for these continued fractions. As an application of continued fraction of order seventy-six, we obtain partition theoretic identities and some vanishing coefficient results.",
-    "domains": [
-      "Algebra",
-      "MachineLearning"
-    ],
-    "id": "fd_0162",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.13600v1",
-    "status": "available",
-    "timestamp": "2026-07-17T00:31:43.190969+00:00",
-    "title": "ArXiv paper: Generalization of Ramanujan's Continued Fractions for Even Order"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Hardness of Vertex Splitting: Cographs, Chordal Graphs, and Beyond' and formalize its key results. Abstract: Vertex splitting replaces a vertex (v) by two nonadjacent vertices whose neighborhoods together equal (N(v)). A split is \\emph{exclusive} if these neighborhoods are disjoint and \\emph{shallow} if no newly created vertex is split again. For a graph property (\u03a0), \\textsc{(\u03a0)-Vertex Splitting} asks whether at most (k) splits can transform a graph (G) into one satisfying (\u03a0). We continue the systematic study of this operation and settle several open problems. First, we prove that \\textsc{Cograph Vertex Splitting} is \\textsf{NP}-complete, even on graphs of girth at least 5, resolving a question of Firbas and Sorge (ISAAC 2024). More generally, \\textsc{(P_t)-free Vertex Splitting} is \\textsf{NP}-complete for every fixed (t\\geq 4). We also prove that \\textsc{Chordal Vertex Splitting} and \\textsc{Unit-Interval Vertex Splitting} are \\textsf{NP}-complete, resolving two questions of Abu-Khzam, Chakraborty, Isenmann, and Oijid (IWOCA 2026). Our hardness results extend to the exclusive and shallow ",
     "domains": [
       "Bridges"
@@ -7939,36 +7202,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'The role of expanders in the spectral geometry of metric graphs' and formalize its key results. Abstract: Expanders are families of graphs that are sparse in edges but dense in connectivity. After reviewing combinatorial and spectral definitions of expanders, we use precise lower bounds on Ramanujan graphs to investigate upper bounds -- and, specifically, the lack thereof -- on the eigenvalues of the Laplacian on \\emph{metric} graphs in terms of volume, diameter, girth, mean distance, and torsional rigidity, among others.",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_0165",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.14312v1",
-    "status": "available",
-    "timestamp": "2026-07-17T01:43:09.960303+00:00",
-    "title": "ArXiv paper: The role of expanders in the spectral geometry of metric graphs"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Cayley Graphs Of Order $pqrs$ Are Hamiltonian' and formalize its key results. Abstract: Assume $ G $ is a finite group with order $ |G| = pqrs $, where $ p $, $ q $, $ r $, and $ s $ are distinct prime numbers. We prove that every connected Cayley graph of $ G $ contains a hamiltonian cycle. Our result drops all restrictions of all previously known results on hamiltonian cycles in Cayley graphs of groups of order $pqrs$.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0166",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.14440v1",
-    "status": "available",
-    "timestamp": "2026-07-17T02:00:29.717066+00:00",
-    "title": "ArXiv paper: Cayley Graphs Of Order $pqrs$ Are Hamiltonian"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Corner Rectangle Visibility Graphs' and formalize its key results. Abstract: We introduce corner rectangle visibility graphs (CRVGs), a combination of two geometrically defined classes of graphs: rectangle visibility graphs (RVGs) and rectangle-of-influence graphs (RIGs). A CRVG has vertices represented by axis-parallel rectangles in the plane, and edges represented by axis-parallel rectangles with one corner at a corner of a vertex-rectangle, an opposite corner at the boundary of another vertex-rectangle, and no vertex-rectangles in their interiors. We also consider CRVGs that only see in one or two directions (south CRVGs and southwest CRVGs). We prove that south CRVGs have at most $\\left[\\frac{n^2}{4}\\right]+n-2$ edges, and this bound is tight. This is the same as the tight edge bound for closed RIGs, but they are different graph classes. We also show that southwest CRVGs have at most $\\left[\\frac{n^2}{3}+\\frac{n}{3}\\right]-1$ edges, and this bound is tight. We prove that CRVGs on $n$ vertices have at most $e$ edges, where $\\lfloor \\frac{3n^2}{8} \\rfloor \\le",
     "domains": [
       "Geometry"
@@ -7980,36 +7213,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-17T02:17:33.618891+00:00",
     "title": "ArXiv paper: Corner Rectangle Visibility Graphs"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Asymptotic Brill-Noether Existence at the Half-Canonical Degree: Energy Pairing, Cheeger Inequality and Covering Radii' and formalize its key results. Abstract: We study asymptotic versions of the Brill-Noether existence conjecture on graphs via techniques inspired by the geometry of numbers. We confirm an asymptotic version of the conjecture at (and near) the half-canonical degree in several well-connected families of graphs. They include expander graphs of even valence, almost-Ramanujan graphs of a fixed valence at least five and certain random graphs. In particular, for any fixed $k \\geq 5$, almost all simple, connected, $k$-regular graphs satisfy the Brill-Noether existence conjecture at the half-canonical degree up to a constant factor. The key tool is a Cheeger-style inequality for the covering radius of a certain periodic set with respect to the energy quadratic form associated with the graph. As an application, we lower bound the diameter of graphs associated with certain dynamical systems called reversal systems. We conclude with a suggestion to tackle the asymptotic version of the conjecture, in general, i.e. beyond half-canonical de",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0168",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.15213v1",
-    "status": "available",
-    "timestamp": "2026-07-17T03:09:40.499550+00:00",
-    "title": "ArXiv paper: Asymptotic Brill-Noether Existence at the Half-Canonical Degree: Energy Pairing, Cheeger Inequality and Covering Radii"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'The order of long rainbow arithmetic progressions' and formalize its key results. Abstract: Let $T_k$ be the minimum positive integer $t$ such that, for every positive integer $n$, every equinumerous $t$-coloring of $[tn]$ contains a rainbow $k$-term arithmetic progression. Jungi\u0107, Licht, Mahdian, Ne\u0161et\u0159il and Radoi\u010di\u0107 conjectured that $T_k=\u0398(k^2)$, while Conlon, Fox and Sudakov proved that $T_k=O(k^2\\log k)$. We prove the matching lower bound $T_k=\u03a9(k^2\\log k)$, and hence $T_k=\u0398(k^2\\log k)$.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0169",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.15116v1",
-    "status": "available",
-    "timestamp": "2026-07-17T03:25:28.901411+00:00",
-    "title": "ArXiv paper: The order of long rainbow arithmetic progressions"
   },
   {
     "consumed_by_exp_id": "",
@@ -8055,21 +7258,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Heilbronn's Problem in the Unit Triangle: Certified Optimal Configurations for up to $n\\le 8$' and formalize its key results. Abstract: We study Heilbronn's triangle problem in the unit right triangle, where $n$ points are placed to maximize the smallest of the $\\binom{n}{3}$ triangle areas they span. We prove a boundary-structure result: unless all three vertices are occupied, some optimal configuration with $n \\ge 5$ has at least four points on the boundary, one edge carrying two of them. With the affine $S_3$ symmetry this fixes four boundary points and $n$ orientation variables in a mixed-integer model that certifies global optimality for all $n \\le 8$, including $n = 7, 8$, where no proof was previously available, closing gaps left by grid search and by branch-and-bound. For $n \\le 7$ we obtain exact optima with explicit configurations. For $n = 8$ the optimum is conjectured to be the real root of a septic obtained by Chen, Zeng and Zhou, which our reconstruction confirms to $250$ digits. We show its Galois group is $S_7$, so on that conjecture no expression in radicals exists.",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0182",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.15021v1",
-    "status": "available",
-    "timestamp": "2026-07-17T06:13:59.285434+00:00",
-    "title": "ArXiv paper: Heilbronn's Problem in the Unit Triangle: Certified Optimal Configurations for up to $n\\le 8$"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Alternating adjacent-sum polytopes: transfer matrices and Ehrhart series' and formalize its key results. Abstract: We study a period-two family of adjacent-sum lattice polytopes whose consecutive-coordinate bounds alternate between $s$ and $s+1$. This provides a simple non-uniform deformation of the classical uniform model while retaining an explicit transfer-matrix structure. The lattice-point counts exhibit a parity split: the odd- and even-dimensional sequences have distinct rational generating functions with a common denominator. The odd-dimensional series satisfies a M\u00f6bius recurrence and admits an arctangent closed form, whereas the even-dimensional series obeys a coupled recurrence. Their common dominant pole determines the exponential growth in both parity classes. For the cyclic model obtained by adding a constraint between the first and last coordinates, the count becomes a matrix trace. The two cyclic parity classes again have rational generating functions with the same denominator; the even-dimensional numerator has a Jacobi-derivative form, while the odd-dimensional one is given by an ",
     "domains": [
       "Cryptography"
@@ -8081,66 +7269,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-17T06:45:30.630076+00:00",
     "title": "ArXiv paper: Alternating adjacent-sum polytopes: transfer matrices and Ehrhart series"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Roman-Type Domination on Convex and Chordal Bipartite Graphs: Algorithms and Hardness' and formalize its key results. Abstract: Roman domination and its variants form an important family of domination-type graph parameters motivated by protection, fault tolerance, and resource allocation. A Roman dominating function of a graph \\(G\\) is a function \\(f:V(G)\\rightarrow\\{0,1,2\\}\\) such that every vertex \\(v\\) with \\(f(v)=0\\) has a neighbour \\(u\\) with \\(f(u)=2\\). The weight of \\(f\\) is \\(w(f)=\\sum_{v\\in V(G)}f(v)\\), and the minimum weight of a Roman dominating function of \\(G\\) is the Roman domination number, denoted by \\(\u03b3_R(G)\\). In this paper, we study four variants of Roman domination on two natural subclasses of bipartite graphs, namely convex bipartite graphs and chordal bipartite graphs. On the positive side, we develop a unified left-to-right dynamic programming framework for Roman-\\(\\{2\\}\\) domination, double Roman domination, perfect Roman domination, and unique response Roman domination on convex bipartite graphs. The algorithms exploit the interval structure of one bipartition class and represent all un",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_0185",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.15026v1",
-    "status": "available",
-    "timestamp": "2026-07-17T07:01:30.942809+00:00",
-    "title": "ArXiv paper: Roman-Type Domination on Convex and Chordal Bipartite Graphs: Algorithms and Hardness"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Equidistribution and the torsor method' and formalize its key results. Abstract: We prove equidistribution and Manin's conjecture for rational points outside the lines on smooth split quintic del Pezzo surfaces over number fields with respect to any anticanonical height. The proof is based on a general theorem that is broadly usable to deduce equidistribution when using the torsor method with several equivalent height functions to treat variants of Manin's problem.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0186",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.14866v1",
-    "status": "available",
-    "timestamp": "2026-07-17T07:17:11.718781+00:00",
-    "title": "ArXiv paper: Equidistribution and the torsor method"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'D-coloring of planar graphs' and formalize its key results. Abstract: A proper edge-coloring of a graph $G$ is a D-coloring if every subgraph isomorphic to $K_4-e$ is rainbow. The minimum number of colors in such a coloring is the D-chromatic index $\u03c7'_D(G)$. Wang conjectured that every planar graph of maximum degree $\u0394\\ge 4$ satisfies $\u03c7'_D(G) \\le 9$ for $\u0394= 4$, $\u03c7'_D(G) \\le 10$ for $\u0394= 5$, and $\u03c7'_D(G) \\le 2\u0394- 1$ for $\u0394\\ge 6$. We prove that every planar graph $G$ satisfies \\[ \u03c7_D'(G) \\leq \\begin{cases} 9, & \u0394(G) \\leq 4, \\\\ 10, & \u0394(G) = 5, \\\\ 2\u0394(G) - 1, & \u0394(G) \\geq 33. \\end{cases} \\] Each bound is best possible in its stated range. Consequently, Wang's conjecture remains open only for $6 \\le \u0394\\le 32$.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0187",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.14837v1",
-    "status": "available",
-    "timestamp": "2026-07-17T07:32:50.518523+00:00",
-    "title": "ArXiv paper: D-coloring of planar graphs"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Acyclic Dichromatic Number of Tournaments: these are the Champions' and formalize its key results. Abstract: The acyclic dichromatic number of an oriented graph is the minimum size of a vertex-partition such that the digraphs induced by any single part are acyclic, and the oriented bipartite graphs between any two parts are acyclic too. We characterize the subtournaments that must appear in every tournament with sufficiently large acyclic dichromatic number, thereby confirming a conjecture of Bang-Jensen, Picasarri-Arrieta, and Yeo and prove that acyclic dichromatic number satisfies a local to global property.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0189",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.14694v1",
-    "status": "available",
-    "timestamp": "2026-07-17T08:04:40.463724+00:00",
-    "title": "ArXiv paper: Acyclic Dichromatic Number of Tournaments: these are the Champions"
   },
   {
     "consumed_by_exp_id": "",
@@ -8173,21 +7301,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'The First Moment of Dirichlet L-functions over Generators of the Character Group' and formalize its key results. Abstract: We evaluate the average of the central values $L(1/2,\u03c7)$ over the generators of the group of Dirichlet characters modulo $q$, as $q\\to\\infty$ through the primes.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0192",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.14612v1",
-    "status": "available",
-    "timestamp": "2026-07-17T08:52:32.545530+00:00",
-    "title": "ArXiv paper: The First Moment of Dirichlet L-functions over Generators of the Character Group"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'The optimal $\u03c7$-bound for $\\{P_6, \\text{dart}, K_4\\}$-free graphs' and formalize its key results. Abstract: A \\textit{diamond} is a graph obtained from \\(K_4\\) by removing an edge, and a \\textit{dart} is a graph obtained from a diamond by adding a pendant edge to a vertex of degree 3. We prove that every $\\{P_6, \\text{dart}, K_4\\}$-free graph is 6-colorable. This improves the previous bound of 7 due to Hong and Xu \\cite{HongXu2025} and resolves their open question on the optimality of the bound. Our result also extends a theorem of Karthick and Mishra~\\cite{KarthickMishra2018}, who proved 6-colorability for the class of \\(\\{P_6, \\text{diamond}, K_4\\}\\)-free graphs.",
     "domains": [
       "Bridges"
@@ -8199,36 +7312,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-17T09:08:14.870404+00:00",
     "title": "ArXiv paper: The optimal $\u03c7$-bound for $\\{P_6, \\text{dart}, K_4\\}$-free graphs"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Multiple Clausen values and deformed Ap\u00e9ry-like series' and formalize its key results. Abstract: With generalized central binomial coefficients $ \\binom{2x}{x}:=\\frac{\u0393(2x+1)}{[\u0393(x+1)]^2}$ defined through Euler's gamma function, we represent deformed Ap\u00e9ry-like series \\[ \\mathscr A_{s,n}:=\\sum_{k=1}^\\infty\\left.\\!\\frac{\\partial^n}{\\partial x^n}\\frac{1}{x^s\\binom{2x}{x}}\\right|_{x=k} \\] by multiple Clausen values (MCVs), which belong to a special class of cyclotomic multiple zeta values (CMZVs) at level $3$. For example, exploiting provable algebraic relations among MCVs, we show that \\[\\mathscr A_{1,5}=-\\frac{9[495L(\u03c7_{-3},6)-30\u03c0^{2}L(\u03c7_{-3},4)-2\u03c0^{4}L(\u03c7_{-3},2)]}{4}\\]and\\[\\mathscr A_{4,4}=\\frac{352\u03b6_{5,3}}{15}+\\frac{752537\u03c0^{8}}{10206000},\\]where $ L(\u03c7_{-3},s):=\\sum_{n=0}^\\infty\\left[(3n+1)^{-s}-(3n+2)^{-s}\\right]$ and $ \u03b6_{5,3}:=\\sum_{m=1}^\\infty\\sum_{n=1}^{m-1}m^{-5}n^{-3}$.",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0194",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.14646v1",
-    "status": "available",
-    "timestamp": "2026-07-17T09:24:14.667974+00:00",
-    "title": "ArXiv paper: Multiple Clausen values and deformed Ap\u00e9ry-like series"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Measures and generalizations of dual Littlewood identities' and formalize its key results. Abstract: We introduce three families of vectors $|\\underline\u03bb^{so}\\rangle$, $|\\underline\u03bb^{sp}\\rangle$ and $|\\underline\u03bb^{o}\\rangle$ parametrized by partitions in the Fock space by using products of adjoint vertex operators. We show that the quotient space of the dual vacuum vector is spanned by the partition vectors indexed by a special family of partitions. The partition-indexed vectors also help us to derive the dual Littlewood identities of types B, C, and D in a new manner associated to the special family of partitions. As an application, we obtain a new free fermionic construction to show that the measures related to dual Littlewood identities introduced by Rains \\cite[Section 7]{Rai2000} and Betea \\cite[Section 3]{Be2020} are determinantal with repect to some explicit correlation kernels. Furthermore we establish a number of generalized Littlewood identities summed over certain restricted partitions by computing the inner products with elements indexed by one-column partitions {or genera",
-    "domains": [
-      "Algebra",
-      "MachineLearning"
-    ],
-    "id": "fd_0197",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.14362v1",
-    "status": "available",
-    "timestamp": "2026-07-17T10:58:50.694164+00:00",
-    "title": "ArXiv paper: Measures and generalizations of dual Littlewood identities"
   },
   {
     "consumed_by_exp_id": "",
@@ -8258,21 +7341,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-17T07:01:34.261580+00:00",
     "title": "ArXiv paper: On the Log-Concavity of the D'Arcais Polynomials for Normalised Functions"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'HJ numbers revisited' and formalize its key results. Abstract: We improve the bounds on the Hales-Jewett numbers to a tower of exponentiations. Earlier it was $WaW$ (that is, iterations of towers which are themselves iterated exponentiations). We improve the inductive step there (induction on the size of the alphabet, $|\u039b|$) to 2-exponentiations, instead of towers. In the longer work in typing, (A) We present this inductive step as a partition theorem in its own right; (but in this preliminary version we make it just serve the bound on HJ numbers). (B) We shall deal with the density version of Hales-Jewett with similar bound. We are also dealing with the Graham-Rothschild Theorem and the Affine Ramsey Theorem and the polynomial case, and give background.",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_0205",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.14732v1",
-    "status": "available",
-    "timestamp": "2026-07-17T07:32:53.951032+00:00",
-    "title": "ArXiv paper: HJ numbers revisited"
   },
   {
     "consumed_by_exp_id": "",
@@ -8507,23 +7575,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions: Agreement Subtrees in Multiple Phylogenetic Trees\n\n## 1. Compatibility-sensitive state compression\n\n**Conjecture.** For each fixed leaf number `a`, the number of restrictions to an `a`-leaf set arising from unrooted binary phylogenetic trees is exponentially smaller, in the exponent, than the crude count of arbitrary families of subsets of those leaves. Moreover, this saving can be expressed through a canonical encoding by compatible quartet signatures.\n\nThe key insight is that edge splits of a tree are pairwise compatible, whereas the powerset bound treats them as independent bits. A canonical compatible encoding should expose the information discarded by that crude estimate.\n\n**Why now?** The restriction algebra and its universal powerset bound isolate compatibility as the only missing ingredient in the counting layer. This gives a precise benchmark against which a sharper state count can be measured.\n\n## 2. Connected-family gluing beyond chains\n\n**Conjecture.** Let a finite hypergraph index subfamilies of phylogenetic trees, with each hyperedge carrying a common induced subtree on the same leaf set. If the intersection graph of the hyperedges is connected, then the union of all indexed trees has that common induced subtree. Conversely, disconnectedness is the only obstruction valid for arbitrary split systems.\n\nThe key insight is that equality of restriction witnesses propagates along overlaps exactly as a locally constant function propagates on a connected space.\n\n**Why now?** Chain gluing establishes the path case. Recasting the result for arbitrary connected overlap graphs would create a reusable local-to-global principle and clarify its relation to sheaf-style consistency.\n\n## 3. Fourfold exponential bound from iterative signature refinement\n\n**Conjecture.** There is an explicit recurrence based on four rounds of compatible-signature refinement whose terminal value bounds the leaf number sufficient to force an `n`-leaf common agreement subtree among `k` unrooted binary phylogenetic trees.\n\nThe key insight is that each refinement round should remove one layer of dependence\u2014leaf placement, split compatibility, tree identity, and family identity\u2014so that four nested exponential losses suffice.\n\n**Why now?** The abstract quartet-transfer theorem already shows that any such MAST bound immediately bounds the common-quartet threshold. What remains is a quantitative compatible-tree argument, not additional threshold logic.\n\n## 4. Exponential lower bound via quartet codes\n\n**Conjecture.** Families of binary phylogenetic trees can be encoded as error-correcting codes in quartet-signature space so that large pairwise distance prevents a common quartet, yielding an exponential lower bound for the least leaf number forcing a common quartet. The optimal exponential rate equals a packing rate in a constrained ternary code.\n\nThe key insight is that each four-leaf set admits three resolved quartet types, while consistency among overlapping quartets imposes code constraints analogous to local parity checks.\n\n**Why now?** The common-agreement predicate supplies an exact equality notion for restrictions. This makes it possible to formulate avoidance as distance in a finite signature space and to compare probabilistic tree constructions with coding-theoretic bounds.\n\n## 5. Exact small-parameter thresholds\n\n**Conjecture.** For every fixed number of trees `k \u2264 4`, the least leaf number forcing a common quartet is attained by a family whose quartet signatures form a maximally distant code, and all extremal families are generated by finitely many relabelling orbits.\n\nThe key insight is that small instances combine hereditary restriction with finite group symmetry, so orbit reduction should replace exhaustive enumeration by a structured classification.\n\n**Why now?** The established heredity and pairwise-characterization results sharply reduce the predicates that a finite search must test, while the coding interpretation suggests which extremal configurations to classify.\n",
-    "domains": [
-      "Computation",
-      "Physics",
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0539",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.18044v1",
-    "status": "available",
-    "timestamp": "2026-07-21T03:53:11.223878+00:00",
-    "title": "**Conjecture.** For each fixed leaf number `a`, the number of restrictions to an"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Homotopy types of intervals in corank-three higher Bruhat orders' and formalize its key results. Abstract: We prove Reiner's conjecture for higher Bruhat orders in corank 3: the facial intervals of B(n,n-3) are precisely the spherical intervals, and all other intervals are contractible.",
     "domains": [
       "Pythagorean",
@@ -8566,36 +7617,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-24T14:34:16.697796+00:00",
     "title": "Frankl's Union-Closed Conjecture: Partial Results"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Adjacency-degree algebras and spectral determination of graphs' and formalize its key results. Abstract: McKay proved that the spectra of all polynomial functions of the adjacency matrix $A$ and the diagonal degree matrix $D$ determine a tree. We prove a principal version of this theorem. Let $\\mathcal A(G)=\\langle I,A_G,D_G\\rangle$ and let $M_G=\\mathcal A(G)\\mathbf1$ be the cyclic module generated by the all-ones vector. For connected graphs the ideal $\\mathcal A(G)J\\mathcal A(G)$, where $J=\\mathbf1\\mathbf1^T$, acts on $M_G$ as the full endomorphism algebra. We show that every forest satisfies $M_G=U_G$, the automorphism-orbit module, and that the induced algebra on the orbit quotient of a tree is a full matrix algebra. It follows that the scalar moments $\\mathbf1^Tw(A_T,D_T)\\mathbf1$ determine every tree. For general graphs these moments are degree-decorated caterpillar homomorphism counts. The resulting moment-rigidity class lies inside the amenable, compact, refinable hierarchy of color refinement, and its first small-order failures are ten-vertex integral switchings invisible to $M_G",
-    "domains": [
-      "Algebra",
-      "Physics"
-    ],
-    "id": "fd_0732",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.21494v1",
-    "status": "available",
-    "timestamp": "2026-07-25T16:28:29.003297+00:00",
-    "title": "ArXiv paper: Adjacency-degree algebras and spectral determination of graphs"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'The Frankl--Tokushige product conjectures for $r$-cross-intersecting families' and formalize its key results. Abstract: We settle the uniform and biased product conjectures of Frankl and Tokushige for $r$-cross-intersecting families. Let $r\\geq2$, let $0\\leq k_i\\leq(r-1)n/r$, and let $\\mathcal{F}_i\\subseteq\\binom{[n]}{k_i}$ be $r$-cross-intersecting. We prove the sharp inequality $$\\prod_{i=1}^r\\frac{|\\mathcal{F}_i|}{\\binom{n}{k_i}}\\leq \\prod_{i=1}^r\\frac{k_i}{n},$$ with equality attained by the corresponding levels of a common $1$-star. As a consequence, we obtain the analogous $p_i$-biased measure theorem for $0\\leq p_i\\leq(r-1)/r$, $$ \\prod_{i=1}^r\u03bc_{p_i}(\\mathcal{F}_i)\\leq \\prod_{i=1}^r p_i.$$The main difficulty is that unequal parameters do not determine a single common target level; instead, the target levels $\\ell_1,\\ldots,\\ell_r$ must satisfy $\\sum_{i=1}^r \\ell_i=(r-1)n$. We overcome this asymmetry in three steps. An ordered-partition coupling gives a sharp additive inequality for every such choice of target levels. A star-calibrated upper-shadow inequality relates the density of a family on its",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0733",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.21589v1",
-    "status": "available",
-    "timestamp": "2026-07-25T16:28:32.067332+00:00",
-    "title": "ArXiv paper: The Frankl--Tokushige product conjectures for $r$-cross-intersecting families"
   },
   {
     "consumed_by_exp_id": "",
