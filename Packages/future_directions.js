@@ -989,7 +989,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Hofstadter: Strange Loops in Formal Systems \u2014 Self-Reference as a Theorem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9f0b015d",
     "description": "Develop custom Lean 4 tactics for common proof patterns in the Catalog: a tropical_simp tactic for min-plus simplification, a number_theory_decide for small cases, and a spectral_bound for eigenvalue estimates. Prove each tactic is sound.",
     "domains": [
       "Logic",
@@ -997,10 +997,11 @@ window.FUTURE_DIRECTIONS = [
       "Bridges"
     ],
     "id": "fd_0697",
+    "phase": "A",
     "priority_score": 0.92,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-24T14:34:16.697852+00:00",
     "title": "Proof Automation: Custom Lean 4 Tactics"
   },
@@ -3530,17 +3531,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Yamabe Problem: Non-Compact Case"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ee9035cd",
     "description": "Prove a tropical analog of the Hodge decomposition. Formalize tropical (p,q)-forms, the tropical Laplacian, and harmonic theory on balanced weighted polyhedral complexes.",
     "domains": [
       "Tropical",
       "Geometry"
     ],
     "id": "seed_242",
+    "phase": "A",
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Tropical Hodge Theory"
   },
@@ -5382,17 +5384,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Diffusion Models as Stochastic Differential Equations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5fcde7e0",
     "description": "Prove that the class of EML functions forms a differential field: closed under addition, multiplication, composition, and differentiation. Show that the inverse function theorem for EML functions yields EML inverses. Determine whether EML functions are closed under integration.",
     "domains": [
       "EML",
       "Algebra"
     ],
     "id": "seed_337",
+    "phase": "A",
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "EML Differential Algebra: Closure Properties"
   },
@@ -8669,17 +8672,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: The order of long rainbow arithmetic progressions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bb3a8583",
     "description": "Investigate the ArXiv paper 'Dense sets without large sumsets' and formalize its key results. Abstract: We prove, for all fixed $0 < \u03b4< 1$, and all sufficiently large $n$, that there exists $S \\subset [n]$ with $|S| \\ge \u03b4n$ such that $A + B \\not \\subset S$ for all ${A, B \\subset \\mathbb{N}}$ satisfying $$\\min\\big\\{|A|, |B|\\big\\} \\ge \\big(3 + o(1)\\big) \\frac{\\log n }{ \\log (1 / \u03b4)}.$$ A very recent result of Hern\u00e1ndez and Hetzel shows that our bound is sharp up to a factor of 3, and together our results settle a conjecture of Kra, Moreira, Richter, and Robertson. In fact, we prove that a $\u03b4$-dense random subset of $[n]$ is a valid choice for $S$ with high probability, and that one can take $n^{-\u03b1} \\le \u03b4\\le 1 - c$ where $c > 0$ is fixed and $\u03b1> 0$ depends only on the $o(1)$ error, answering another question of the same authors in a strong form.",
     "domains": [
       "Computation",
       "Pythagorean"
     ],
     "id": "fd_0170",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.15269v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-17T03:09:44.217502+00:00",
     "title": "ArXiv paper: Dense sets without large sumsets"
   },
@@ -9179,17 +9183,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Improved constant in Erd\u0151s sumset avoidance for dense subsets"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "aa1e249d",
     "description": "Investigate the ArXiv paper 'The Endpoint Cardinality of Discrete Cube Skeleta' and formalize its key results. Abstract: We determine the minimum order of a finite lattice set that contains a filled axis-parallel cube skeleton about every point of some $N$-point set of centers. For fixed integers $0\\leq k<n$, the answer for $N$ centers is $N^{1-(n-k)/(2n^2)}$, up to constants depending on $n$ and $k$. Thornton proved every smaller exponent and gave a construction of this order; the endpoint lower bound was left open when $k\\geq1$. Our proof combines a midpoint estimate, a labelled form of Shearer's projection inequality, and a strong induction that balances large and small radii without a dyadic pigeonhole loss. In particular, a lattice set containing a square boundary about each of $N$ centers has at least a constant times $N^{7/8}$ points.",
     "domains": [
       "Cryptography",
       "Logic"
     ],
     "id": "fd_0495",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.15502v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-20T03:19:42.598123+00:00",
     "title": "ArXiv paper: The Endpoint Cardinality of Discrete Cube Skeleta"
   },
