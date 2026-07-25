@@ -2541,18 +2541,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Entanglement Monogamy: CKW Inequality"
   },
   {
-    "consumed_by_exp_id": "92c4b5fc",
+    "consumed_by_exp_id": "",
     "description": "Prove that the tropical compactification of the moduli space of curves M_g is a toric variety whose boundary divisors correspond to tropical curves. Formalize the connection between the Deligne-Mumford compactification and the tropical moduli space.",
     "domains": [
       "Tropical",
       "Geometry"
     ],
     "id": "seed_317",
-    "phase": "B",
     "priority_score": 0.87,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "",
     "title": "Tropical Compactification of Moduli Spaces"
   },
@@ -4645,17 +4644,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Self-Avoiding Walk: Connective Constant"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "735a1ab0",
     "description": "Prove that neural networks in the lazy regime converge to the NTK solution. Formalize the Jacot-Gabriel-Hongler theorem and prove universality across architectures.",
     "domains": [
       "MachineLearning",
       "Analysis"
     ],
     "id": "seed_244",
+    "phase": "A",
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Neural Tangent Kernel: Convergence"
   },
@@ -5974,23 +5974,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Non-Archimedean Probability via Surreal Numbers"
-  },
-  {
-    "consumed_by_exp_id": "0d06265a",
-    "description": "Define the category EML_Comp where objects are R^n and morphisms are functions computable by finite EML compositions (exp, log, +, *, constants). Conjecture: EML_Comp is a Cartesian closed category with natural numbers object R (the reals). Test: prove closure under composition (trivial), products (pairing), and exponentials (currying via EML parameter sharing). Impact: puts EML computation on firm categorical foundations.",
-    "domains": [
-      "EML",
-      "Algebra",
-      "Logic"
-    ],
-    "id": "seed_073",
-    "phase": "B",
-    "priority_score": 0.82,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "EML Category: The Category of EML-Computable Maps"
   },
   {
     "consumed_by_exp_id": "",
@@ -8205,17 +8188,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Erd\u0151s\u2013Straus Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a31e0b39",
     "description": "Prove Conway's Game of Life is Turing complete via a direct constructive embedding. Formalize cellular automata in Lean 4 and establish complexity bounds on the simulation overhead.",
     "domains": [
       "Computation",
       "Speculative"
     ],
     "id": "seed_059",
+    "phase": "A",
     "priority_score": 0.77,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Game of Life Universality"
   },
