@@ -1,5 +1,5 @@
 import Mathlib
-import Cryptography.SchnorrIdentification
+import Cryptography.NumberTheory.SchnorrIdentification
 
 /-!
 # Schnorr OR-composition (Cramer–Damgård–Schoenmakers)

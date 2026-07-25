@@ -1,6 +1,6 @@
 import Mathlib
-import EML.EMLFirstOrderGroup
-import EML.EMLRiccatiMobius
+import EML.PosetTheory.EMLFirstOrderGroup
+import EML.PosetTheory.EMLRiccatiMobius
 
 /-!
 # The Affine–Projective Solution Structure of the Riccati Equation

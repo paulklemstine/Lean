@@ -1,5 +1,5 @@
 import Mathlib
-import FINAL.CombFoundations
+import Applications.Algebra.CombFoundations
 
 /-!
 # The extended Eulerian number recurrence

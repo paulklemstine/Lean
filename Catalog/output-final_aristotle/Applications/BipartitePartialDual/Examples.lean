@@ -3,8 +3,8 @@ Copyright (c) 2026 Harmonic. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 -/
 import Mathlib
-import Applications.BipartitePartialDual.Characterization
-import Applications.BipartitePartialDual.AllCrossing
+import output-final_aristotle.Applications.BipartitePartialDual.Characterization
+import output-final_aristotle.Applications.BipartitePartialDual.AllCrossing
 
 /-!
 # Worked example: a concrete medial datum with nonempty all-crossing family

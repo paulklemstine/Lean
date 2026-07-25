@@ -1,5 +1,5 @@
 import Mathlib
-import Physics.CategoricalPhysics.Defs
+import Logic.GraphTheory.Defs
 
 /-!
 # Categorical Physics: Main Theorems

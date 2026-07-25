@@ -57,8 +57,8 @@ established per-period bias, which is exactly the reusable infrastructure the
 title asks for.
 -/
 
-import Catalog.Applications.CusickShiftSevenDensity
-import Catalog.Applications.CusickShiftFiveDensity
+import output-final_aristotle.Applications.Logic.CusickShiftSevenDensity
+import output-final_aristotle.Applications.Logic.CusickShiftFiveDensity
 
 open Nat Finset
 

@@ -38,7 +38,7 @@ from the sibling file, so the count genuinely depends on the anabelomorphic stru
 Synthesis (PI): the GL(1) Langlands character count is `gcd(m, q-1)`, an anabelomorphic invariant —
 the "stacky point count" attached to the residue datum.
 -/
-import Applications.Anabelomorphic.Equivalence
+import output-final_aristotle.output-final_aristotle.output-final_aristotle.Applications.Anabelomorphic.Equivalence
 
 namespace Anabel
 

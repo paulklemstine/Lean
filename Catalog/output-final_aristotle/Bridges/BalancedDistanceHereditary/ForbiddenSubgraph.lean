@@ -1,5 +1,5 @@
 import Mathlib
-import Bridges.CombinatorialBridge
+import Bridges.CombinatorialBridge.CombinatorialBridge
 
 /-!
 # The forbidden induced subgraph `3K₂` and its complement `\overline{3K₂}`

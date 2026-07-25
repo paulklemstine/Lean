@@ -1,5 +1,5 @@
 import Mathlib
-import EML.FixedPointConvergence
+import EML.NeuralCoding.FixedPointConvergence
 
 /-!
 # EML Fixed-Point Theorem: The Sharp Asymptotic Convergence Rate

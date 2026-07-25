@@ -28,7 +28,7 @@ subgraph `G_p` and settles them — some are **proved**, one is **disproved**.
   exactly `p · |E|`.  With `p ≈ d / log n` and average degree `d`, this is the
   degree-scaling that makes the `d − εd` cycle-length target plausible.
 -/
-import Computation.PersistentCycles.Retention
+import output-final_aristotle.Computation.PersistentCycles.Retention
 
 open scoped BigOperators
 open Classical

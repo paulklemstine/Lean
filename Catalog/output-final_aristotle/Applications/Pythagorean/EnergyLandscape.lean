@@ -1,6 +1,6 @@
 import Mathlib
-import Shared.E
-import Shared.Sublevel
+import Shared.CatalogbuildSharedE.E
+import Shared.CatalogbuildSharedSublevel.Sublevel
 
 /-! # CatalogBuild.Speculative.EnergyLandscape
 

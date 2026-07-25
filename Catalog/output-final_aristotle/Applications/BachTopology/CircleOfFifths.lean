@@ -24,7 +24,7 @@ Two complementary refinements of the mission:
 -/
 
 import Mathlib
-import Catalog.Applications.BachTopology.IntervalCycles
+import output-final_aristotle.Applications.BachTopology.IntervalCycles
 
 open scoped Classical
 

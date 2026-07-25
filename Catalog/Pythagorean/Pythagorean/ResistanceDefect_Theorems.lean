@@ -1,0 +1,1 @@
+../../Pythagorean/ResistanceDefect/Theorems.lean

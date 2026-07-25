@@ -31,7 +31,7 @@ Concrete corollaries of the three structural results in
 -- !-- Synthesis (PI): together with the base file these delimit exactly where the
 --     `≤ 6` conjecture bites: nonconstant polynomials with mixed degrees. -- !--
 -/
-import Logic.PolynomialDiophantineTuples
+import output-final_aristotle.Logic.PolynomialDiophantineTuples
 
 open Polynomial
 

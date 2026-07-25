@@ -80,3 +80,4 @@ def elDepth : EMLTerm → ℕ
 @[simp] theorem eval_var (x : ℝ) : var.eval x = x := rfl
 
 /-- `exp(log(x)) = x` for positive x. -/
+end EMLTerm

@@ -17,7 +17,7 @@ analytic engine that powers depth hierarchy results.
 analytic circuit lower bounds, certified uniform approximation, depth hierarchy
 -/
 import Mathlib
-import Novelty.Basic
+import Novelty.PosetTheory.Basic
 
 noncomputable section
 

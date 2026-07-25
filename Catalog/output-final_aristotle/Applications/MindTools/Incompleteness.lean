@@ -1,4 +1,4 @@
-import Applications.MindTools.Basic
+import Logic.BasicMonotoneCircuit.Basic
 
 /-!
 # Mind Tools — incompleteness and the existence of mind tools

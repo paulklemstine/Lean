@@ -51,7 +51,7 @@ framework.
 
 import MachineLearning.SheafCohomologyRobustness.Cohomology
 import MachineLearning.SheafCohomologyRobustness.Certificate
-import EML.L2SheafRobustness
+import EML.NeuralCoding.L2SheafRobustness
 
 open BigOperators Finset
 

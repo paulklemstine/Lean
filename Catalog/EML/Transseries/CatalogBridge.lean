@@ -39,7 +39,7 @@ coming from a completely different (Hahn-series) construction.
 -- !-- Lab Notes -- !--
 -/
 import EML.Transseries.Field
-import Applications.TransseriesDefs
+import Applications.Algebra.TransseriesDefs
 
 open HahnSeries Filter Transseries
 

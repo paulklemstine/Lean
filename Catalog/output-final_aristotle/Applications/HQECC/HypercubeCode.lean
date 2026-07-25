@@ -1,4 +1,4 @@
-import Catalog.Applications.HQECC.CSSHomology
+import output-final_aristotle.Applications.HQECC.CSSHomology
 
 /-!
 # The homological code of the hypercube, and the failure of the "1 qubit" law

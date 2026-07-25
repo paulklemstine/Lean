@@ -1,5 +1,5 @@
 import Mathlib
-import Shared.KruskalKatonaShadow
+import Shared.RamseyTheory.KruskalKatonaShadow
 
 /-!
 # Knots and Lattices, I: monotone lattice paths as a combinatorial substrate

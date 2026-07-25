@@ -1,4 +1,4 @@
-import Tropical.StableKneser.Packing
+import Novelty.PosetTheory.Packing
 
 /-!
 # The canonical upper coloring of stable Kneser families

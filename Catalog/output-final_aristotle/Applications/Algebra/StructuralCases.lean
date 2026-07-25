@@ -12,7 +12,7 @@
   * `Frankl.frankl_of_card_le_two` — families with at most 2 members
 -/
 import Mathlib
-import Speculative.Frankl.Defs
+import Logic.GraphTheory.Defs
 
 namespace Frankl
 

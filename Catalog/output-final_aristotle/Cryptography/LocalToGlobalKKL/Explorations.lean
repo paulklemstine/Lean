@@ -1,5 +1,5 @@
 import Mathlib
-import Cryptography.LocalToGlobalKKL.Basic
+import Logic.BasicMonotoneCircuit.Basic
 
 /-!
 # Explorations following the Local-to-Global KKL theorem

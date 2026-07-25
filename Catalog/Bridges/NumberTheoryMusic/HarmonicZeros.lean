@@ -1,5 +1,5 @@
 import Mathlib
-import Bridges.GraphZetaPrimeCycle
+import Bridges.LFunctions.GraphZetaPrimeCycle
 
 /-!
 # Reciprocal-zero harmonics: structural results and a diagnosis

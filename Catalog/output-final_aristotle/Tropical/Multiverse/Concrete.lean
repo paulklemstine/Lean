@@ -2,7 +2,7 @@
 Copyright (c) 2026 Harmonic. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 -/
-import Tropical.Multiverse.Basic
+import Logic.BasicMonotoneCircuit.Basic
 
 /-!
 # A concrete multiverse: CH, V=L and a large cardinal

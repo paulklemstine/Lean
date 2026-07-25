@@ -19,7 +19,7 @@ hence `p | C`. Thus any common prime factor of two bases must divide all three.
 The contrapositive gives: no common prime of all three ⟹ pairwise coprime.
 -/
 import Mathlib
-import Speculative.Beal.Defs
+import Logic.GraphTheory.Defs
 
 open Nat
 

@@ -41,7 +41,7 @@ Critique (Critic): We verify `t₉(8)` two independent ways — via the reduce-b
 -/
 
 import Mathlib
-import MachineLearning.ThueMorsePower.Power5
+import output-final_aristotle.MachineLearning.ThueMorsePower.Power5
 
 namespace ThueMorsePower
 

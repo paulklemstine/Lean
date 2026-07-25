@@ -28,7 +28,7 @@ For r = 3: C(k,3) = k(k-1)(k-2)/6, giving R_3(k,k) > 2^{ck²}.
 For general r: C(k,r) = Θ(k^r/r!), giving R_r(k,k) > 2^{ck^{r-1}}.
 -/
 import Mathlib
-import Applications.HypergraphRamsey.Defs
+import Logic.GraphTheory.Defs
 
 open Finset Nat
 

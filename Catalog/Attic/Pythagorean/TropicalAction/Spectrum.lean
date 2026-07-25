@@ -1,4 +1,4 @@
-import Pythagorean.TropicalAction.Basic
+import Logic.BasicMonotoneCircuit.Basic
 
 /-!
 # Tropical Action Spectrum — Spectral Theorems

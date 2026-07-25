@@ -1,5 +1,5 @@
 import Mathlib
-import Bridges.InnerProductBridge
+import Bridges.AbstractAlgebra.InnerProductBridge
 
 /-!
 # Natural Gradient: Exact Models, Rates, and Geodesic Boundaries

@@ -1,4 +1,4 @@
-import Geometry.NonDesarguesianPlanes
+import Geometry.AbstractAlgebra.NonDesarguesianPlanes
 
 /-!
 # A proof chain for the Hall plane

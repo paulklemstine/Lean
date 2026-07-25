@@ -51,7 +51,7 @@ FAILURE ANALYSIS. `tanh` has no packaged `StrictMono` lemma in Mathlib v4.28.0; 
 it from `Real.arsinh`-style monotonicity of `sinh` together with positivity of `cosh`.
 -/
 import Mathlib
-import EML.ExponentialPolynomialDensity
+import EML.AbstractAlgebra.ExponentialPolynomialDensity
 
 noncomputable section
 

@@ -22,7 +22,7 @@ core obstruction from it.
 -/
 
 import Mathlib
-import Applications.RamseyThreeFour
+import output-final_aristotle.Applications.Combinatorics.RamseyThreeFour
 
 open scoped Classical
 open SimpleGraph Finset

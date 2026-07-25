@@ -71,7 +71,7 @@ digit-sharing factorisations live inside the unit group modulo `b-1`, and in
 binary they avoid powers of two.
 -/
 import Mathlib
-import Applications.CusickSumOfDigits
+import Applications.Computation.CusickSumOfDigits
 
 open Nat
 

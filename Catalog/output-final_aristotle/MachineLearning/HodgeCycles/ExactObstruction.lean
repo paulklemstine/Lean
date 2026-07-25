@@ -131,3 +131,4 @@ theorem maximal_homology_iff_differentials_zero (hd : d₁.comp d₂ = 0) :
 end
 
 end NeuralHodge
+end 

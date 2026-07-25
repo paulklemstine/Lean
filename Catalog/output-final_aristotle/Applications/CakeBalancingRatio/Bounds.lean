@@ -1,4 +1,4 @@
-import Applications.CakeBalancingRatio.Core
+import Logic.StrangeLoops.Core
 
 /-!
 # Balancing ratios of circular partitions — Full-period balance

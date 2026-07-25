@@ -29,7 +29,7 @@ Builds on `Tropical.PersistentHomology.Defs` and catalog results
 `sublevel_mono`, `activeSetComplex_mono`, `tropMax_sublevel_convex`.
 -/
 
-import Logic.Defs
+import Logic.GraphTheory.Defs
 
 open Finset BigOperators Classical Set
 

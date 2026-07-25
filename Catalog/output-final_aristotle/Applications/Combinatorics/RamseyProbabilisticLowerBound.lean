@@ -25,7 +25,7 @@ that if `2·C(n,k) < 2^{C(k,2)}` then some colouring has **no** monochromatic
 -/
 
 import Mathlib
-import Applications.Ramsey
+import Applications.Combinatorics.Ramsey
 
 open scoped Classical
 open Finset SimpleGraph

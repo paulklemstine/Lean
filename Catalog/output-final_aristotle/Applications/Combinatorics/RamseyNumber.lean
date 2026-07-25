@@ -19,10 +19,10 @@ together with the symmetry `R(s,t) = R(t,s)`.
 -/
 
 import Mathlib
-import Applications.Ramsey
-import Applications.RamseyThreeFour
-import Applications.RamseyFourFour
-import Applications.RamseyOffDiagonal
+import Applications.Combinatorics.Ramsey
+import output-final_aristotle.Applications.Combinatorics.RamseyThreeFour
+import output-final_aristotle.Applications.Algebra.RamseyFourFour
+import output-final_aristotle.Applications.Combinatorics.RamseyOffDiagonal
 
 open scoped Classical
 

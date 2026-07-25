@@ -15,7 +15,7 @@ matrix powers in the min-plus semiring exactly characterize walks in directed gr
 -/
 
 import Mathlib
-import Logic.Defs
+import Logic.GraphTheory.Defs
 
 open Tropical Matrix Finset TropicalComplexity
 

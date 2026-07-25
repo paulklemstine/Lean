@@ -30,8 +30,8 @@ functions being the logarithms of the factors.
 ## Lab Notes — see `-- !-- Lab Notes -- !--` block below.
 -/
 import Mathlib
-import Applications.EMLTermAlgebra
-import Applications.KolmogorovArnoldEML
+import Applications.Algebra.EMLTermAlgebra
+import output-final_aristotle.Applications.EML.KolmogorovArnoldEML
 
 open Real Finset
 

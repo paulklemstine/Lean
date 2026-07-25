@@ -4,8 +4,8 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Harmonic Research
 -/
 import Mathlib
-import Logic.Defs
-import Computation.Theorems
+import Logic.GraphTheory.Defs
+import Computation.NeuralCoding.Theorems
 
 /-!
 # Compression Profile of One-Object Categories from Monoids

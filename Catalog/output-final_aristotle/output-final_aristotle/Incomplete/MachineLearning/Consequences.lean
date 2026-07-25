@@ -26,7 +26,7 @@ coordinate individually using `SchanuelProp 1`.
 -/
 
 import Mathlib
-import Logic.Defs
+import Logic.GraphTheory.Defs
 
 open Complex Schanuel
 open scoped BigOperators

@@ -53,8 +53,8 @@ so this file is not self-contained boilerplate.
 loops back to `{0}`; the ℤ dyadic chain is its descending mirror image.
 -- !-- Lab Notes -- !--
 -/
-import Tropical.EscherStaircase.Core
-import Logic.ChainInvariants
+import Logic.StrangeLoops.Core
+import Logic.PosetTheory.ChainInvariants
 
 namespace Escher.BooleanRing
 

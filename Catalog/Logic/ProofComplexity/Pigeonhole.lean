@@ -1,6 +1,6 @@
 import Mathlib
 import Logic.ProofComplexity.Resolution
-import Bridges.PigeonholeInjectionBridge
+import Bridges.PigeonholeInjectionBridge.PigeonholeInjectionBridge
 
 /-!
 # Proof Complexity II: The Pigeonhole Principle as a CNF

@@ -1,5 +1,5 @@
 import Mathlib
-import Logic.ProofSystemCollapse
+import Logic.PosetTheory.ProofSystemCollapse
 
 /-!
 # Logic–Physics Bridge I: Abstract Provability Predicates for Physical Theories

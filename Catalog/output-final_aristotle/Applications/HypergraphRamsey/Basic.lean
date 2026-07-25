@@ -1,5 +1,5 @@
 import Mathlib
-import Applications.HypergraphRamsey.Defs
+import Logic.GraphTheory.Defs
 
 /-!
 # Hypergraph Ramsey Theory: the Stepping-Up recursion (structural form)

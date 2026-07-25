@@ -26,7 +26,7 @@ This decomposition is fundamental to information geometry: KL is the
 Bregman divergence of the log-partition function on the natural parameter space.
 -/
 import Mathlib
-import Logic.Defs
+import Logic.GraphTheory.Defs
 
 open Real BigOperators Finset Filter
 

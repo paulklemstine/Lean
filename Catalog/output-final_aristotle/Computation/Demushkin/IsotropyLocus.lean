@@ -1,5 +1,5 @@
 import Mathlib
-import Computation.Demushkin.CupForm
+import output-final_aristotle.Computation.Demushkin.CupForm
 
 /-!
 # The isotropy locus of a pro-2 Demushkin cup-product form

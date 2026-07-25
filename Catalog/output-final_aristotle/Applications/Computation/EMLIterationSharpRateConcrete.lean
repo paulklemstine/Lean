@@ -1,7 +1,7 @@
 import Mathlib
-import EML.FixedPointConvergence
-import EML.FixedPointConcreteInstance
-import Applications.EMLIterationSharpRate
+import EML.NeuralCoding.FixedPointConvergence
+import EML.PosetTheory.FixedPointConcreteInstance
+import Applications.EML.EMLIterationSharpRate
 
 /-!
 # A Concrete, Certified Sharp Convergence Rate for the EML Iteration

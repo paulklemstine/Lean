@@ -16,7 +16,7 @@
   - `bracket_RIII_invariant`: bracket is invariant under Reidemeister III
 -/
 import Mathlib
-import Logic.Defs
+import Logic.GraphTheory.Defs
 
 namespace Knot
 

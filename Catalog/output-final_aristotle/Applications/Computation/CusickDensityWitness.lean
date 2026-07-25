@@ -48,7 +48,7 @@ NOT to overclaim the asymptotic bound `c_t ≥ 1/2 + 2^{-(2 s₂(t)+1)}`, which
 remains open in this development.
 -/
 
-import Applications.CusickCarryReformulation
+import output-final_aristotle.Applications.Computation.CusickCarryReformulation
 
 open Nat Finset
 

@@ -241,3 +241,6 @@ theorem singleExcludedMinor_iff_obstructions_singleton {C : Set α}
 end WellFounded
 
 end MinorTheory.Novelty
+end .  None of the theorems is vacuous: `excl {H}` always strictly avoids
+
+end `MinorTheory`), which already established the abstract

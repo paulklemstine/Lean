@@ -83,8 +83,8 @@ staircase that exists downstairs vanishes the moment you step up to the overring
 -- !-- Lab Notes -- !--
 -/
 import Mathlib
-import Algebra.EscherStaircase
-import Algebra.EscherStaircasePolynomial
+import Algebra.PosetTheory.EscherStaircase
+import Algebra.PosetTheory.EscherStaircasePolynomial
 
 open Polynomial
 

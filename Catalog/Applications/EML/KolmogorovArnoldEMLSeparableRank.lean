@@ -42,9 +42,9 @@ EML `outerExp` (`exp`) applied to a sum of EML inner `log`s
 ## Lab Notes — see `-- !-- Lab Notes -- !--` blocks below.
 -/
 import Mathlib
-import Catalog.Applications.EMLTermAlgebra
-import Catalog.Applications.KolmogorovArnoldEML
-import Catalog.Applications.KolmogorovArnoldEMLSeparability
+import Applications.Algebra.EMLTermAlgebra
+import output-final_aristotle.Applications.EML.KolmogorovArnoldEML
+import output-final_aristotle.Applications.EML.KolmogorovArnoldEMLSeparability
 
 open Real Matrix Finset
 

@@ -1,5 +1,5 @@
 import Mathlib
-import Pythagorean.AtkinLehnerGroup
+import output-final_aristotle.Pythagorean.AtkinLehnerGroup
 
 /-!
 # The Atkin–Lehner group of divisors as a bundled group and isomorphism

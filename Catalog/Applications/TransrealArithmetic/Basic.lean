@@ -1,5 +1,5 @@
 import Mathlib
-import Bridges.ContinuousFunctionBridge
+import Bridges.PosetTheory.ContinuousFunctionBridge
 
 /-! # Transreal Arithmetic
 

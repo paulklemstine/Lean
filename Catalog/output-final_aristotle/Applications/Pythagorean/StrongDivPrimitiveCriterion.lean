@@ -1,5 +1,5 @@
 import Mathlib
-import Applications.StrongDivisibilitySequences
+import Applications.Pythagorean.StrongDivisibilitySequences
 
 /-! # The strong primitive-divisor criterion: the rank of apparition
 

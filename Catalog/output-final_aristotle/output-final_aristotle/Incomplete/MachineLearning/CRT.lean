@@ -17,7 +17,7 @@ that all modern sieve methods rely on before applying analytic estimates.
 -/
 
 import Mathlib
-import Novelty.Admissible
+import Novelty.NumberTheory.Admissible
 
 open Finset Nat Filter
 

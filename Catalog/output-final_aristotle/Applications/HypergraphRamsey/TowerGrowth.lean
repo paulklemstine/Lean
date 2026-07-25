@@ -35,8 +35,8 @@ This creates the recursive bound:
   R_r(k+r-2, k+r-2) ≤ tower(r-2, 4^k)
 -/
 import Mathlib
-import Applications.HypergraphRamsey.Defs
-import Applications.HypergraphRamsey.Basic
+import Logic.GraphTheory.Defs
+import Logic.BasicMonotoneCircuit.Basic
 
 open Finset Nat
 

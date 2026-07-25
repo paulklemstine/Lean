@@ -14,7 +14,7 @@ The representation `I(f) = max_x(f(x) + w(x))` identifies:
 -/
 
 import Mathlib
-import Bridges.Foundations
+import Bridges.PosetTheory.Foundations
 
 open TropicalRiesz
 

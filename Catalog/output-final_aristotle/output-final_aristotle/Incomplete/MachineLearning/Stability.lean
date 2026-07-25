@@ -1,5 +1,5 @@
 import Mathlib
-import Logic.Defs
+import Logic.GraphTheory.Defs
 
 /-!
 # Top-K Stability Theorems

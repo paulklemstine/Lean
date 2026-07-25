@@ -1,6 +1,6 @@
 import Mathlib
-import Catalog.NumberTheory.GL1Correspondence
-import Catalog.Applications.PGL3CriticalLine
+import Catalog.NumberTheory.PosetTheory.GL1Correspondence
+import output-final_aristotle.Applications.PGL3CriticalLine
 
 /-!
 # Aggregating the critical-line proportion over the family of twists mod `Q`

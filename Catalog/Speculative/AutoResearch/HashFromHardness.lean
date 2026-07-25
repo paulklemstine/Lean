@@ -38,8 +38,8 @@
   collision ⇒ Merkle–Damgård hash collision, all constructive and `sorry`-free.
 -/
 import Mathlib
-import Cryptography.ProductCollisions
-import Cryptography.MerkleDamgard
+import Cryptography.Cryptography.ProductCollisions
+import Cryptography.Cryptography.MerkleDamgard
 
 namespace Cryptography.HashFromHardness
 

@@ -1,4 +1,4 @@
-import Physics.StabilizerBounds
+import Physics.NeuralCoding.StabilizerBounds
 
 /-!
 # Singleton Bounds and Geometric Parameter Dictionaries

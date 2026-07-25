@@ -1,6 +1,6 @@
 import Mathlib
-import Novelty.PrimeZetaAbscissa
-import Novelty.BoundedGaps
+import Novelty.LFunctions.PrimeZetaAbscissa
+import Novelty.NumberTheory.BoundedGaps
 
 /-!
 # A bridge: prime-zeta natural boundary vs. zeta regularization

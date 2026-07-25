@@ -22,8 +22,8 @@ inner function shared across every coordinate ("rank one"), for arbitrary `n`.
 ## Lab Notes — see `-- !-- Lab Notes -- !--` block below.
 -/
 import Mathlib
-import Catalog.Applications.EMLTermAlgebra
-import Catalog.Applications.KolmogorovArnoldEML
+import Applications.Algebra.EMLTermAlgebra
+import output-final_aristotle.Applications.EML.KolmogorovArnoldEML
 
 open Real Finset
 

@@ -18,9 +18,9 @@ into honest numeric inequalities on `R`:
 -/
 
 import Mathlib
-import Applications.RamseyNumber
-import Applications.RamseyDiagonalBound
-import Applications.RamseyProbabilisticLowerBound
+import output-final_aristotle.Applications.Combinatorics.RamseyNumber
+import output-final_aristotle.Applications.Combinatorics.RamseyDiagonalBound
+import Applications.RamseyTheory.RamseyProbabilisticLowerBound
 
 open scoped Classical
 

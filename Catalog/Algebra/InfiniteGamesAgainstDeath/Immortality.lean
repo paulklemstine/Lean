@@ -1,5 +1,5 @@
 import Mathlib
-import Algebra.SurrealDyadic
+import Algebra.PosetTheory.SurrealDyadic
 
 /-!
 # Infinite games against death
