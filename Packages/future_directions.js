@@ -141,48 +141,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Formally proves conditions under which information can exist purely within a closed timelike curve loop without ever having an initial origin (Ontological Paradox).",
-    "domains": [
-      "Physics"
-    ],
-    "id": "scifi_50_01_29d87929",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "scifi_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:07:56.800521+00:00",
-    "title": "Chronos-Bootstrap: Mathematical Proof of Information Creation in Self-Sustaining Time Loops"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Derives non-signaling boundary conditions allowing superluminal tachyon pulses to modulate past quantum states without triggering fatal temporal paradoxes.",
-    "domains": [
-      "Physics"
-    ],
-    "id": "scifi_50_02_3ad177e3",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "scifi_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:07:56.903228+00:00",
-    "title": "Retro-Tachyon: Closed Form Proof for Backward-in-Time Signal Transmission"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Proves that entropy strictly decreases along retro-geodesics within intense Kerr black hole ergospheres.",
-    "domains": [
-      "Physics"
-    ],
-    "id": "scifi_50_03_f636204a",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "scifi_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:07:56.951454+00:00",
-    "title": "Temporal-Entropy-Reversal: Local Second-Law Violation inside Closed Timelike Horizons"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Proves that proper time approaches infinity relative to asymptotic coordinate time for observers falling into extreme Reissner-Nordstr\u00f6m metric wells.",
     "domains": [
       "Geometry"
@@ -211,34 +169,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Derives upper bound on thermodynamic energy extraction from mega-scale orbital solar collection swarms encircling main-sequence stars.",
-    "domains": [
-      "Physics"
-    ],
-    "id": "scifi_50_07_7f5af70a",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "scifi_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:07:57.148370+00:00",
-    "title": "Dyson-Swarm-Thermodynamics: Maximum Radiative Efficiency of Type-II Stellar Enclosures"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Proves exact minimum exotic negative energy density requirements necessary to maintain a stable superluminal Alcubierre warp bubble without collapse.",
-    "domains": [
-      "Physics"
-    ],
-    "id": "scifi_50_08_504c87c2",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "scifi_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:07:57.197972+00:00",
-    "title": "Alcubierre-Metric-Negative-Energy: Formal Stability Bounds for Warp Bubble Geometries"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Formalizes the theoretical maximum information density limit for quadruple-stranded synthetic genetic storage systems.",
     "domains": [
       "Applications"
@@ -250,20 +180,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-23T20:07:57.295846+00:00",
     "title": "Xeno-Genome-Encoding: Universal High-Density DNA Quad-Helix Information Storage"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Proves that a physical system's observable geometric state is strictly conditioned on the topological complexity of the observing neural network (Twilight Zone / Perceptual Reality).",
-    "domains": [
-      "Physics"
-    ],
-    "id": "scifi_50_11_4ed708d9",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "scifi_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:07:57.346612+00:00",
-    "title": "Observer-Dependent-Reality: Collapse Dynamics in Perceptual State Fields"
   },
   {
     "consumed_by_exp_id": "",
@@ -337,20 +253,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Formalizes Giulio Tononi's Integrated Information Theory (Phi) as a continuous scalar field over spacetime manifolds.",
-    "domains": [
-      "Physics"
-    ],
-    "id": "scifi_50_17_06db4784",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "scifi_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:07:57.641289+00:00",
-    "title": "Panpsychist-Field: Continuous Integrated Information Capacity of Spacetime"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Proves that a neural agent's identity vector remains invariant under continuous substrate migration (mind uploading).",
     "domains": [
       "MachineLearning"
@@ -404,118 +306,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-23T20:07:57.985799+00:00",
     "title": "Biological-Neural-Virus: Zero-Day Optogenetic Code Exploits"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalizes theoretical probability bounds for macroscopic quantum tunneling between decohered Everett multiverse branches.",
-    "domains": [
-      "Physics"
-    ],
-    "id": "scifi_50_26_2ac22319",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "scifi_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:07:58.087964+00:00",
-    "title": "Multiverse-Tunneling: Quantum State Transfer Across Parallel Reality Branches"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Calculates maximum divergence rate of macroscopic physical observables following a single quantum measurement event.",
-    "domains": [
-      "Physics"
-    ],
-    "id": "scifi_50_27_617685e1",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "scifi_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:07:58.135517+00:00",
-    "title": "Timeline-Divergence: Lyapunov Exponents of Quantum History Splitting"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalizes the Ekpyrotic universe model where big bang singularities are produced by periodic collisions of 4D branes in 5D bulk space.",
-    "domains": [
-      "Physics"
-    ],
-    "id": "scifi_50_29_8bcea55d",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "scifi_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:07:58.234618+00:00",
-    "title": "Membrane-Collision: Cyclic Cosmology Brane World Oscillations"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Proves the mathematical signature of gravitational energy leaking from our universe into neighboring extra-dimensional branes.",
-    "domains": [
-      "Physics"
-    ],
-    "id": "scifi_50_30_d18cf73c",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "scifi_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:07:58.283500+00:00",
-    "title": "Dimensional-Bleed: Scalar Field Leakage Across Adjacent Parallel Universes"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalizes Wheeler's spacetime foam as a stochastic non-Hausdorff topological space at the Planck scale.",
-    "domains": [
-      "Physics"
-    ],
-    "id": "scifi_50_31_9a4a4839",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "scifi_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:07:58.331772+00:00",
-    "title": "Planck-Foam-Topology: Quantum Fluctuation Geometry at 10^-35 Meters"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Proves the existence of a non-zero net directional force generated by asymmetric Casimir cavity geometry in quantum vacuum.",
-    "domains": [
-      "Physics"
-    ],
-    "id": "scifi_50_32_e2a39ad1",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "scifi_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:07:58.381373+00:00",
-    "title": "Casimir-Anti-Matter-Drive: Net Propulsion Force from Asymmetric Quantum Vacuum Plates"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formally proves that Hawking radiation carries complete quantum information out of an evaporating black hole via subtle page curve correlations.",
-    "domains": [
-      "Physics"
-    ],
-    "id": "scifi_50_34_75857acd",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "scifi_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:07:58.481668+00:00",
-    "title": "Hawking-Information-Retrieval: Unitary S-Matrix Proof for Evaporating Black Holes"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Proves absolute bounds on power extraction rates from zero-point quantum field fluctuations without violating global conservation laws.",
-    "domains": [
-      "Physics"
-    ],
-    "id": "scifi_50_35_f9db249d",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "scifi_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:07:58.529287+00:00",
-    "title": "Zero-Point-Harvesting: Thermodynamic Upper Bound for Vacuum Energy Extraction"
   },
   {
     "consumed_by_exp_id": "",
@@ -1323,76 +1113,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Establishes a non-zero spectrum lower bound for the quantum Yang-Mills Hamiltonian on four-dimensional spherical manifolds.",
-    "domains": [
-      "Physics"
-    ],
-    "id": "dir_50_11_f10f034c",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "batch_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:05:22.879429+00:00",
-    "title": "Yang-Mills-Mass: Mass Gap Lower Bound for Compact Gauge Groups on S^4"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalizes boundary conditions under which trapped surfaces in spacetime guarantee geodesic incompleteness.",
-    "domains": [
-      "Physics"
-    ],
-    "id": "dir_50_12_2be3479c",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "batch_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:05:22.928149+00:00",
-    "title": "Lorentzian-Singularity: Penrose Hawking Singularity Theorem Verification"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Derives the thermodynamic entropy of isolated horizons in stationary black hole spacetimes from quantum microstate counting.",
-    "domains": [
-      "Physics"
-    ],
-    "id": "dir_50_13_7a196f48",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "batch_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:05:22.976652+00:00",
-    "title": "Black-Hole-Entropy: Bekenstein-Hawking Metric Area Law Proof"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Proves the Kolmogorov-Arnold-Moser (KAM) theorem on the persistence of quasi-periodic invariant tori under small Hamiltonian perturbations.",
-    "domains": [
-      "Physics"
-    ],
-    "id": "dir_50_14_b6b1dab3",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "batch_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:05:23.025475+00:00",
-    "title": "Symplectic-Integrable: Formalization of KAM Stability in Hamiltonian Systems"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Constructs an explicit non-trivial Hilbert space operator model satisfying the Wightman axioms for self-interacting scalar quantum fields in two dimensions.",
-    "domains": [
-      "Physics"
-    ],
-    "id": "dir_50_15_dbfbc9be",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "batch_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:05:23.075434+00:00",
-    "title": "Quantum-Field-Axioms: Wightman Axioms Consistency for Scalar Fields in 2D"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Formally proves perfect completeness, knowledge soundness, and zero-knowledge properties of Quadratic Arithmetic Program (QAP) based zk-SNARKs.",
     "domains": [
       "Cryptography"
@@ -1670,76 +1390,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-23T20:05:24.302658+00:00",
     "title": "Tropical-Neural: Duality Between Tropical Polynomials and Deep Neural Networks"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formally proves lower bounds on error thresholds for topological surface codes under depolarizing noise models.",
-    "domains": [
-      "Physics"
-    ],
-    "id": "dir_50_41_eca20dfc",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "batch_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:05:24.351664+00:00",
-    "title": "Quantum-Codes: Surface Code Fault-Tolerance Threshold Verification"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Proves that logarithmic negativity is a strict entanglement monotone under Local Operations and Classical Communication (LOCC).",
-    "domains": [
-      "Physics"
-    ],
-    "id": "dir_50_42_412cc517",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "batch_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:05:24.403391+00:00",
-    "title": "Entanglement-Monotone: Formalization of Logarithmic Negativity Bounds"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Proves Hastings' theorem establishing efficient Matrix Product State (MPS) approximations for ground states of gapped 1D quantum spin chains.",
-    "domains": [
-      "Physics"
-    ],
-    "id": "dir_50_43_0f826b14",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "batch_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:05:24.454819+00:00",
-    "title": "Tensor-Network: Matrix Product State Approximations of 1D Ground States"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Proves necessary and sufficient conditions for quantum EPR steering under uncharacterized local measurements.",
-    "domains": [
-      "Physics"
-    ],
-    "id": "dir_50_44_86226c4f",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "batch_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:05:24.504639+00:00",
-    "title": "Quantum-Steering: Einstein-Podolsky-Rosen Steering Inequalities Verification"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalizes the Lloyd-Shor-Devetak (LSD) theorem for quantum channel capacity defined by regularized coherent information.",
-    "domains": [
-      "Physics"
-    ],
-    "id": "dir_50_45_b65899cb",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "batch_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:05:24.553935+00:00",
-    "title": "Quantum-Capacity: Quantum Channel Coherent Information Bound"
   },
   {
     "consumed_by_exp_id": "",
@@ -7151,21 +6801,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Quantum Latin Squares of Order Six with Cardinalities Nineteen, Twenty-One, and Twenty-Three' and formalize its key results. Abstract: We give three explicit quantum Latin squares of order $6$ with cardinalities $19$, $21$, and $23$, where vectors differing only by a global phase are counted as identical. The first two examples arise from normalized Schur products of columns of complex Hadamard matrices. For cardinality $19$, a Butson-type matrix over eighth roots of unity has the unique nontrivial coincidence $v_{01}=v_{25}=v_{34}$. For cardinality $21$, an explicit member of Karlsson's three-parameter family has $21$ pairwise inequivalent unordered Schur products. To exceed the symmetric Schur-product bound, we give a third, direct-sum construction based on the decomposition $\\C^6=\\C^4\\oplusC^2$. It uses nineteen distinct rays in the four-dimensional summand and four rays in the two-dimensional summand, arranged so that every row and column is an orthonormal basis, yielding cardinality $23$. Together with our earlier constructions of cardinalities $13$, $15$, and $17$ and previously known order-six examples, these r",
-    "domains": [
-      "Algebra",
-      "Physics"
-    ],
-    "id": "fd_0014",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.11800v1",
-    "status": "available",
-    "timestamp": "2026-07-15T07:46:57.950799+00:00",
-    "title": "ArXiv paper: Quantum Latin Squares of Order Six with Cardinalities Nineteen, Twenty-One, and Twenty-Three"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'The chain replacement of a poset flow' and formalize its key results. Abstract: We introduce the chain replacement of a poset flow: it is obtained by considering the simplicial nerves of the posets of strictly increasing chains in the given poset, ordered by refinement. It maps finite posets to q-cofibrant flows and inclusions of finite posets to q-cofibrations. Using the combinatorial properties of the chain replacement, we prove that pushouts along the chain replacement of an order-reflecting inclusion of finite posets preserve spaces of execution paths. By introducing the Hurewicz model structure on flows (or H-model structure), we deduce the same property for any q-cofibrant replacement of an order-reflecting inclusion of finite posets.",
     "domains": [
       "Algebra",
@@ -7931,21 +7566,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Quantum determinants in polynomial time' and formalize its key results. Abstract: We give an algebraic branching program of polynomial size which computes Cayley determinant of right quantum matrices. This is a rare example of an efficient computation of a noncommutative determinant, and the first such example for quantum groups. We extend the results to the $q$-Cayley determinant of $q$-right quantum matrices, as well as to their multiparameter generalization. The proofs are entirely combinatorial, as we relate Cayley, Moore and Valiant determinants using bijections/involutions on words. We then employ the celebrated determinant construction of Mahajan and Vinay (SODA'97), to obtain the results.",
-    "domains": [
-      "Algebra",
-      "Physics"
-    ],
-    "id": "fd_0096",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.13186v1",
-    "status": "available",
-    "timestamp": "2026-07-16T04:10:55.100427+00:00",
-    "title": "ArXiv paper: Quantum determinants in polynomial time"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Graph Puzzles III.1: A Proof of Sabidussi's Compatibility Conjecture' and formalize its key results. Abstract: We prove Sabidussi's compatibility conjecture. Let $G$ be a finite connected multigraph in which every vertex has even degree and the minimum degree is at least four, and let $T$ be a closed trail that traverses every edge exactly once. The edges of $G$ can be partitioned into circuits (connected 2-regular subgraphs) so that no circuit contains the two edges used consecutively anywhere in $T$. In fact, the edges can be four-coloured so that every such pair receives two different colours and the subgraph formed by the edges of each colour has even degree at every vertex. Formalization in Lean 4 is also available in the author's github.",
     "domains": [
       "Pythagorean",
@@ -8448,21 +8068,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Spectral and Additive Combinatorial Methods for Cycles and Absorbing Sets in Lifted-Product Quantum LDPC Codes' and formalize its key results. Abstract: The finite-length performance of quantum low-density parity-check (LDPC) codes under iterative decoding is governed by small substructures of the Tanner graph, principally short cycles and absorbing sets. While the classical theory of these substructures for quasi-cyclic codes is well developed through discrete Fourier transform (DFT) methods, these tools do not directly address the two-block tensor structure $H_X = [\\,\\widetilde{H}_1 \\mid I \\otimes \\widetilde{B}^T\\,]$ of the lifted-product (quasi-cyclic generalised hypergraph product, QC-GHP) codes that dominate current quantum LDPC constructions. In this paper we develop a quantum-specific spectral framework that exploits this structure. At its core is a DFT block-diagonalisation of $H_X H_X^T$ that reduces moment-trace and cycle computations from an $(r_1\\ell)\\times(r_1\\ell)$ matrix to a sum of $\\ell$ small $r_1\\times r_1$ Hermitian matrices, with the second block entering only as a scalar shift. From this result we derive a closed-",
-    "domains": [
-      "Algebra",
-      "Physics"
-    ],
-    "id": "fd_0153",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.13666v1",
-    "status": "available",
-    "timestamp": "2026-07-17T00:13:29.815083+00:00",
-    "title": "ArXiv paper: Spectral and Additive Combinatorial Methods for Cycles and Absorbing Sets in Lifted-Product Quantum LDPC Codes"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Trees with exactly three main eigenvalues' and formalize its key results. Abstract: An eigenvalue of a graph is called main if its eigenspace is not orthogonal to the all-ones vector. Introduced by Cvetkovi\u0107 in the early 1970s and systematically studied by Rowlinson and others, graphs with exactly one or two main eigenvalues are now well understood. However, the classification of graphs with precisely three main eigenvalues remains a challenging open problem in spectral graph theory. This paper provides a complete classification of all trees of diameter 5 with exactly three main eigenvalues. Using equitable partitions, the spectral condition reduces to the unique solvability of linear systems over the rationals, leading to Diophantine equations involving branch lengths and pendant counts. We prove that every such tree is isomorphic either to a symmetric tree $T_r(a)$ or to a member of a parametric family $\\mathcal{T}$ determined by arithmetic divisibility conditions. We also construct an infinite family of such trees with unbounded diameter.",
     "domains": [
       "Pythagorean",
@@ -8950,21 +8555,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Robustness of periodicity in Grover walks under a magnetic vector potential' and formalize its key results. Abstract: We study the effect of magnetic vector potentials on periodic Grover walks on finite graphs. The magnetic vector potential is introduced through the framework of quantum graphs, which induces the Grover walk as a special case. We regard the vector potential as a perturbation of a periodic Grover walk and investigate the robustness of its periodicity. Our analysis reveals that the response to such perturbations depends on the spectral structure of the underlying graph. In particular, when the graph possesses at least one non-simple eigenvalue, we derive a Hermitian matrix that characterizes the robustness of its periodicity. As a consequence, we show that the perturbed dynamics is asymptotically described by a continuous-time quantum walk generated by this Hermitian matrix.",
-    "domains": [
-      "Physics",
-      "Algebra"
-    ],
-    "id": "fd_0206",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.14797v1",
-    "status": "available",
-    "timestamp": "2026-07-17T07:48:54.239145+00:00",
-    "title": "ArXiv paper: Robustness of periodicity in Grover walks under a magnetic vector potential"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Several families of incommensurable noncompact hyperbolic Coxeter polytopes' and formalize its key results. Abstract: We classify all 141 finite-volume hyperbolic Coxeter five-dimensional polytopes with eight facets, of which 125 are noncompact. Using maximal-cusp density and a noncompact analog of Bogachev-Douba-Raimbault's argument, we construct infinitely many pairwise incommensurable noncompact Coxeter polytopes in dimensions 4, 5, 6, 7, and 9, with the number of commensurability classes growing at least exponentially in volume.",
     "domains": [
       "Bridges"
@@ -9315,36 +8905,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-24T14:34:16.697796+00:00",
     "title": "Frankl's Union-Closed Conjecture: Partial Results"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Adjacency-degree algebras and spectral determination of graphs' and formalize its key results. Abstract: McKay proved that the spectra of all polynomial functions of the adjacency matrix $A$ and the diagonal degree matrix $D$ determine a tree. We prove a principal version of this theorem. Let $\\mathcal A(G)=\\langle I,A_G,D_G\\rangle$ and let $M_G=\\mathcal A(G)\\mathbf1$ be the cyclic module generated by the all-ones vector. For connected graphs the ideal $\\mathcal A(G)J\\mathcal A(G)$, where $J=\\mathbf1\\mathbf1^T$, acts on $M_G$ as the full endomorphism algebra. We show that every forest satisfies $M_G=U_G$, the automorphism-orbit module, and that the induced algebra on the orbit quotient of a tree is a full matrix algebra. It follows that the scalar moments $\\mathbf1^Tw(A_T,D_T)\\mathbf1$ determine every tree. For general graphs these moments are degree-decorated caterpillar homomorphism counts. The resulting moment-rigidity class lies inside the amenable, compact, refinable hierarchy of color refinement, and its first small-order failures are ten-vertex integral switchings invisible to $M_G",
-    "domains": [
-      "Algebra",
-      "Physics"
-    ],
-    "id": "fd_0720",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.21494v1",
-    "status": "available",
-    "timestamp": "2026-07-25T09:21:07.477268+00:00",
-    "title": "ArXiv paper: Adjacency-degree algebras and spectral determination of graphs"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'The Frankl--Tokushige product conjectures for $r$-cross-intersecting families' and formalize its key results. Abstract: We settle the uniform and biased product conjectures of Frankl and Tokushige for $r$-cross-intersecting families. Let $r\\geq2$, let $0\\leq k_i\\leq(r-1)n/r$, and let $\\mathcal{F}_i\\subseteq\\binom{[n]}{k_i}$ be $r$-cross-intersecting. We prove the sharp inequality $$\\prod_{i=1}^r\\frac{|\\mathcal{F}_i|}{\\binom{n}{k_i}}\\leq \\prod_{i=1}^r\\frac{k_i}{n},$$ with equality attained by the corresponding levels of a common $1$-star. As a consequence, we obtain the analogous $p_i$-biased measure theorem for $0\\leq p_i\\leq(r-1)/r$, $$ \\prod_{i=1}^r\u03bc_{p_i}(\\mathcal{F}_i)\\leq \\prod_{i=1}^r p_i.$$The main difficulty is that unequal parameters do not determine a single common target level; instead, the target levels $\\ell_1,\\ldots,\\ell_r$ must satisfy $\\sum_{i=1}^r \\ell_i=(r-1)n$. We overcome this asymmetry in three steps. An ordered-partition coupling gives a sharp additive inequality for every such choice of target levels. A star-calibrated upper-shadow inequality relates the density of a family on its",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0721",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.21589v1",
-    "status": "available",
-    "timestamp": "2026-07-25T09:21:10.725340+00:00",
-    "title": "ArXiv paper: The Frankl--Tokushige product conjectures for $r$-cross-intersecting families"
   },
   {
     "consumed_by_exp_id": "",
@@ -10700,21 +10260,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions: Thermodynamics of Mathematical Proof\n\n## 1. Fiber-entropy law for proof normalization\n\nFor every finite terminating normalization system equipped with a probability law on proof terms, the minimum expected irreversible work of normalization equals the expected logarithm of the normalization-fiber size precisely when the conditional law is uniform on each fiber; otherwise the fiber logarithm is a strict upper bound on the Shannon entropy destroyed.\n\nThe key insight is that normalization is a many-to-one map, so its thermodynamic cost should be controlled by conditional entropy rather than raw term count. **Why now?** Exact finite multiplicities and the one-bit Landauer unit are available, making the equality and strictness cases sharply testable on concrete rewrite systems.\n\n## 2. Bennett tradeoff for theorem verification\n\nThere exists a family of finite proof systems for which reversible verification using subexponential auxiliary space necessarily incurs superlinear recomputation time, while irreversible linear-time verification destroys a linear number of transcript bits.\n\nThe key insight is that preserving a verifier transcript avoids erasure but forces a pebbling tradeoff between retained checkpoints and recomputation. **Why now?** The adversarial coverage theorem isolates the information that a verifier must distinguish; adding reversible pebble games can turn this static obstruction into a time-space-energy tradeoff.\n\n## 3. Exponential normalization fibers with short conclusions\n\nThere exists a finitely presented, strongly normalizing proof calculus containing conclusions of length `O(n)` whose shortest normal proofs have `2^n` distinct bounded-length preimages under normalization.\n\nThe key insight is that exponentially many bureaucratic derivations may collapse to one canonical proof even when the theorem and its normal proof remain short. **Why now?** The present binary derivation family supplies the target multiplicity, while an explicit normalization calculus would replace the abstract selection model by a semantic proof transformation.\n\n## 4. Kolmogorov-incompressible proof families\n\nFor infinitely many lengths `n`, some valid proof object of length `n` has prefix-free description complexity at least `n - O(1)`, and every universal verifier that reconstructs such a proof from a shorter certificate must acquire the missing information through either its input transcript or irreversible state changes.\n\nThe key insight is that finite pigeonhole incompressibility should persist under universal prefix-free coding and constrain where verification information can enter. **Why now?** Strict finite compression has already been excluded at each fixed depth; the next test is to obtain a machine-invariant asymptotic formulation with explicit additive constants.\n\n## 5. Compositional Landauer accounting\n\nFor independent proof obligations, minimum erasure work is additive, whereas shared lemmas reduce total work by exactly the mutual information between the obligations' proof distributions.\n\nThe key insight is that lemma reuse acts as statistical dependence, converting the gap between separate and joint verification costs into mutual information. **Why now?** Candidate-space products already produce additive logarithmic counts, and the entropy-loss identity provides a direct route from that combinatorics to a quantitative thermodynamic prediction.\n",
-    "domains": [
-      "Computation",
-      "Physics"
-    ],
-    "id": "fd_0537",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "fbb9076c",
-    "status": "available",
-    "timestamp": "2026-07-21T00:19:42.257809+00:00",
-    "title": "For every finite terminating normalization system equipped with a probability la"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "# Future Directions\n\n## Results established\n\nThe formal development in `Speculative/CategoryDNA.lean` uses a precise minimal semantics:\na theory retains a type of models, and its genome is the discrete category on that type.\nWithin this semantics it proves:\n\n1. **Exact Morita characterization.** Type-level equivalence of model collections is\n   equivalent to categorical equivalence of their genomes.\n2. **Composition.** Morita equivalences compose.\n3. **Classification of one-axiom mutations.** If mutation adjoins a predicate `P` and\n   the evident forgetful functor has a right adjoint, then every old model already\n   satisfies `P`. Conversely, if every model satisfies `P`, the adjunction exists.\n4. **Counterexample to the unrestricted mutation slogan.** The one-model theory\n   mutated by the false axiom has no such right adjoint.\n5. **Positive restricted evolutionary-path result.** Every equivalence of genomes is\n   itself an adjunction step.\n\nThus, under discrete semantics, the proposed mutation principle is not merely\noccasionally false: the existence of the relevant right adjoint is equivalent to the\nnew axiom being semantically redundant.\n\n## Limits and next steps\n\nThe formalization intentionally does not claim that an arbitrary first-order,\nhigher-order, or geometric theory is determined by a bare type of models. Ordinary\ncategories of models have nontrivial homomorphisms, and standard notions of Morita\nequivalence vary with the chosen logic. A stronger continuation should:\n\n- define signatures, syntax, interpretations, and model homomorphisms;\n- distinguish syntactic Morita equivalence from equivalence of model categories;\n- require equivalences compatible with underlying-set or semantic functors when that\n  structure is part of the intended semantics;\n- investigate reflective and coreflective subcategories produced by axioms, where\n  genuine free completions or localizations can supply adjoints;\n- define \u201cquotient step\u201d and \u201cevolutionary path\u201d before attempting the full\n  decomposition conjecture;\n- test whether geometric morphisms, accessible localizations, or sketches give the\n  appropriate nontrivial replacement for the disproved unrestricted slogan.\n\n## Computational-evidence justification\n\nNo separate computational experiment was used. The claims concern universal\nproperties of functors and adjunctions rather than a finite numerical sequence. The\ncounterexample is structural: an adjunction counit in a discrete category would force\na proof of the newly adjoined predicate for every old model. Small-case enumeration\nwould only reproduce the formally proved classification and would not add meaningful\nevidence. Consequently there is no OEIS sequence or informative numerical plot.\n",
     "domains": [
       "Logic",
@@ -10955,36 +10500,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Optimal Hamilton Covers\n\nThe deterministic incidence-capacity obstruction \u2014 that any cover of a graph by\ntwo-regular spanning layers uses at least `\u2308\u0394/2\u2309` layers, with a per-vertex\nparity defect of `\u0394 mod 2` at the optimum \u2014 pins down the exact local target\nthat every achievability result must hit. The following conjectures build on\nthat equality case.\n\n## 1. Optimal-cover hitting time in the random graph process\n\n**Conjecture.** In the random graph process, with probability tending to one,\nthe first graph whose minimum degree reaches two is simultaneously the first\ngraph whose edges admit a two-regular cover of size `\u2308\u0394/2\u2309`.\n\nThe key insight is that the incidence-capacity obstruction is already sharp\nvertex by vertex, so the only remaining question is global: whether the process\nhas supplied enough connectivity to extend every controlled forest system at\nonce. Once minimum degree two removes the last local obstruction, the parity\ndefect that a completion must absorb is uniformly zero or one, leaving no room\nfor a second bottleneck.\n\n**Why now?** The parity law isolates the incidence defect as exactly `\u0394 mod 2`,\nreducing a delicate hitting-time statement to a single structured global\ncompletion problem with a known local budget.\n\n## 2. Punctured optimal covers realize linear arboricity\n\n**Conjecture.** Throughout the Hamiltonian range of the binomial random graph,\nevery minimum-size two-regular cover admits a choice of one edge per cycle such\nthat the resulting paths, together with at most one extra linear forest, form an\noptimal linear-forest decomposition.\n\nThe key insight is that puncturing a cycle removes coverage only along a chosen\ntransversal, and the optimal cover's parity-controlled slack \u2014 at most one unit\nper vertex \u2014 is exactly enough to reroute the transversal edges without adding a\nlayer beyond the asymptotically sharp count.\n\n**Why now?** The equality case shows precisely which edges carry the unit of\nslack, turning the decomposition question into a concrete transversal-selection\nand rerouting problem rather than an open-ended optimization.\n\n## 3. Spectral reserved-structure criterion\n\n**Conjecture.** There are absolute constants `c, C > 0` such that every\nsufficiently large graph with minimum degree at least `C log n`, normalized\nsecond eigenvalue at most `c`, and robust sparse-cut expansion admits a\ntwo-regular cover of size `\u2308\u0394/2\u2309`.\n\nThe key insight is that a spectral reservoir can replace probabilistic edge\nexposure in the forest-extension argument: expansion guarantees the simultaneous\nglobal extensions that randomness usually provides, while the incidence bound\nsupplies the exact local completion target.\n\n**Why now?** Because the local target is now an exact equality with a `0/1`\nparity defect, a spectral criterion need only certify simultaneous global\nextension, converting a probabilistic completion into a deterministic one.\n\n## 4. Stability of near-optimal covers\n\n**Conjecture.** If a family of two-regular spanning layers covers a graph using\n`\u2308\u0394/2\u2309 + k` layers, then at every maximum-degree vertex the total repeated\nincidence multiplicity is at most `2k + 1`; for pseudorandom graphs this local\nbound forces the cover to differ from an optimal one in only `O(kn)` edge-layer\nincidences.\n\nThe key insight is that excess layer count translates linearly into local coding\nslack: each extra layer buys exactly two additional incidences per vertex, so\nthe global edit distance to optimality is controlled by the total slack.\n\n**Why now?** The proved equality case fixes the zero-excess baseline and the\nexact `2` incidences contributed per layer, giving the precise linear error term\nexpected to govern the near-optimal regime.\n",
-    "domains": [
-      "Computation",
-      "Physics"
-    ],
-    "id": "fd_0635",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "66a73fad",
-    "status": "available",
-    "timestamp": "2026-07-24T04:50:30.431766+00:00",
-    "title": "The deterministic incidence-capacity obstruction \u2014 that any cover of a graph by"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Pythagorean Energy Spectrum\n\nThe file `Catalog/Pythagorean/PythagoreanEnergySpectrum.lean` proves, with no\n`sorry` and only the standard axioms (`propext`, `Classical.choice`, `Quot.sound`):\n\n- **Fermat's difference-of-squares criterion** (`composite_iff_diff_squares`): an odd\n  `N` is composite **iff** the hyperbola `s\u00b2 = N + t\u00b2` carries a non-trivial integer\n  point, with explicit factor extraction (`factor_from_repr`, `cofactor_from_repr`).\n- **The energy functional** `E N s = s\u00b2 \u2212 N`: strict convexity on `\u211d`\n  (`energy_strictConvexOn`), strict monotonicity on `[0,\u221e)` (`energy_strictMonoOn`),\n  its value at a factor pair (`energy_at_factor`), and the fact that descending it\n  reaches the most balanced factorization first (`balanced_minimizes_energy`,\n  `energy_lt_of_more_balanced`).\n- **The Berggren bridge**: the three tree maps preserve the Pythagorean relation\n  (`bergA_pyth`, `bergB_pyth`, `bergC_pyth`), strictly grow the hypotenuse\n  (`bergA_hyp_grow`), and every triple yields a difference-of-squares factorization\n  of a leg square (`leg_sq_factorization`).\n- **A deterministic factoring algorithm** `fermatSearch : \u2115 \u2192 Option (\u2115 \u00d7 \u2115)` that\n  scans the energy-spectrum abscissae in order of increasing energy and returns the\n  first difference-of-squares factor pair, proved correct in both directions:\n  `fermatSearch_sound` (every returned pair is a genuine proper factorization\n  `d * e = N` with `1 < d < N`) and `fermatSearch_complete` (for every odd composite\n  `N` the search succeeds).\n\n## Natural next theorems\n\n1. **Deterministic termination of the scan. \u2014 Done.** The bounded search is now\n   formalized as the computable function `fermatSearch : \u2115 \u2192 Option (\u2115 \u00d7 \u2115)`, together\n   with its soundness (`fermatSearch_sound`) and completeness (`fermatSearch_complete`)\n   theorems, upgrading the *existence* criterion to a *correct algorithm* theorem.\n   Remaining refinements: extract the returned `t` as an explicit `Nat.sqrt`-based\n   witness, and show `fermatSearch` returns `none` exactly on primes and prime powers'\n   trivial-only cases.\n\n2. **Complexity of the descent.** Prove that for `N = p\u00b7q` with `|p \u2212 q|` small\n   (balanced semiprimes) the number of scanned abscissae is `O(|p\u2212q|\u00b2/\u221aN)`, giving a\n   formal statement of why Fermat/energy descent is fast on balanced RSA-like moduli\n   and slow otherwise. This is the honest \"guides a deterministic path to a factor\"\n   quantitative claim.\n\n3. **Full Berggren generation.** Combine with the existing\n   `Catalog/Pythagorean/BerggrenCompleteness.lean` to show that the leg-square\n   factorizations obtained from the Berggren subtree rooted at a triple with leg `a`\n   enumerate exactly the factorizations of `a\u00b2`, linking tree depth to divisor\n   structure.\n\n4. **Coprimality / primitivity transport.** Prove the Berggren maps preserve\n   `gcd = 1` (unimodularity of the underlying integer matrices), so the bridge maps\n   *primitive* triples to *primitive* triples, sharpening `leg_sq_factorization` to a\n   statement about `radical(a)`.\n\n5. **Real-analytic optimization view.** Lift `balanced_minimizes_energy` to a genuine\n   `argmin` statement over the finite candidate set of valid abscissae using\n   Mathlib's `IsMinOn` / `StrictConvexOn.lt_of_ne`, making the \"gradient descent on a\n   convex spectrum\" reading a literal Lean theorem about the minimizer.\n\n6. **Generalization to `x\u00b2 \u2212 D y\u00b2 = N`.** The same convex-energy machinery applies to\n   the Pell-conjugate forms; a uniform treatment would connect this file to the\n   `QuadraticReciprocity` and continued-fraction material elsewhere in the catalog.\n",
-    "domains": [
-      "Pythagorean",
-      "Computation"
-    ],
-    "id": "fd_0636",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "29ba074c",
-    "status": "available",
-    "timestamp": "2026-07-24T06:47:41.751294+00:00",
-    "title": "The file `Catalog/Pythagorean/PythagoreanEnergySpectrum.lean` proves, with no"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "# Future Directions\n\nThis cycle proved a cross-domain bridge in\n`Catalog/Bridges/CopwinKnasterTarski.lean`:\n\n> The kernel produced by finite cop-win pruning (a contracting, monotone update\n> `F : Finset \u03b1 \u2192 Finset \u03b1`) equals \u2014 after coercion \u2014 the Knaster\u2013Tarski\n> greatest fixed point `OrderHom.gfp (G F S)` of an associated monotone\n> endomorphism of the complete lattice `Set \u03b1`. Moreover this abstract greatest\n> fixed point is *computed* by the concrete pruning loop within `|S|` rounds\n> (`gfp_computed_by_finite_iteration`).\n\nThis connects **finite combinatorics / algorithm termination** with\n**order-theoretic fixed-point theory (Knaster\u2013Tarski)**.\n\n## Natural extensions\n\n1. **Least fixed points and the dual game.** Mirror the development with\n   *expanding* monotone updates and `OrderHom.lfp`, modeling saturation-style\n   algorithms (adding candidates until closure). The dual bridge\n   `lfp = \u2191(closure kernel)` should follow the same pattern.\n\n2. **Well-founded infinite candidate spaces.** Replace `Finset \u03b1` by a\n   candidate space with a well-founded strict-subset relation. The termination\n   argument uses only strict cardinality descent; a well-founded ranking should\n   recover a transfinite stabilization ordinal and a bridge to `gfp` on the\n   ambient complete lattice.\n\n3. **Quantitative round complexity.** The `|S|` bound is sharp for one-deletion\n   updates but loose for realistic cop-win pruning. Bounding the number of\n   *effective* rounds by structural graph parameters (treewidth, cop number)\n   would sharpen the algorithmic side.\n\n4. **Product / multi-cop games.** Extend to product state spaces modeling the\n   `k`-cop game directly, and show the kernel corresponds to the set of\n   `k`-cop-win positions, connecting the fixed-point bridge to pursuit-evasion\n   semantics.\n\n5. **Effectivity of `gfp`.** `OrderHom.gfp` is noncomputable; the bridge already\n   supplies an explicit finite computation. Packaging this as a verified\n   executable decision procedure for membership in `gfp` is a concrete\n   software-verification target.\n",
     "domains": [
       "Computation",
@@ -11042,21 +10557,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-25T06:37:16.230778+00:00",
     "title": "Let branch weights evolve under a stochastic transport kernel while each branch "
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future directions\n\n1. **Coulomb Hamiltonian as an unbounded self-adjoint operator.** Define\n   `H = -\u0394 - 2/r` on `L\u00b2(\u211d\u00b3)` from a closed semibounded quadratic form, establish\n   self-adjointness, and prove that its operator spectrum is exactly the set\n   modeled here.  The current file deliberately does not claim this analytic\n   identification.\n\n2. **Full spherical harmonics.** Construct associated Legendre functions and\n   normalized `Y_l^m`, then prove both `L_z Y_l^m = m Y_l^m` and\n   `L\u00b2 Y_l^m = l(l+1)Y_l^m`.  This work proves the azimuthal factor of the first\n   equation.\n\n3. **Derive rather than encode selection rules.** Define the electric dipole\n   operator, spherical tensor components, and the relevant inner products.\n   Prove vanishing matrix elements using parity and angular orthogonality, so\n   `\u0394l = \u00b11` and `\u0394m \u2208 {-1,0,1}` emerge as theorems rather than the definition of\n   `DipoleAllowed`.\n\n4. **Graph structure beyond bipartiteness.** Add principal quantum numbers and\n   radial overlap conditions to the vertices and edges.  Study connected\n   components, shortest allowed transition sequences, and weighted paths whose\n   weights are emitted photon energies.\n\n5. **Spectral multiplicity and hidden symmetry.** Formalize the Runge\u2013Lenz\n   symmetry and the `so(4)` representation underlying the `n\u00b2` orbital\n   degeneracy, connecting the operator-theoretic eigenspaces to finite\n   representation theory.\n",
-    "domains": [
-      "Physics",
-      "Algebra"
-    ],
-    "id": "fd_0722",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "928798aa",
-    "status": "available",
-    "timestamp": "2026-07-25T10:53:00.075163+00:00",
-    "title": "1. **Coulomb Hamiltonian as an unbounded self-adjoint operator.** Define"
   },
   {
     "consumed_by_exp_id": "",
