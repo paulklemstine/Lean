@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "4b7e775f",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions: Information Geometry of Optimization\n\n## 1. Curvature-controlled exponential-map descent\n\n**Conjecture.** On a geodesically complete statistical manifold with sectional curvature",
-      "quality_score": 0.73,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-19T06:13:17",
-      "title": "Information Geometry of Optimization: Natural Gradient Follows Geodesics"
-    },
-    {
       "cycle_id": "8280a2b4",
       "domain": "Algebra",
       "key_insight": "# Future Directions: Complete-Graph Divisors and Chip-Firing\n\n## 1. Parking-function proof of complete-graph Riemann–Roch\n\n**Conjecture.** Every divisor class on the complete graph `K_n` has a unique",
@@ -2501,6 +2491,16 @@
       "theorem_count": 22,
       "timestamp": "2026-07-25T22:18:16",
       "title": "Game of Life Universality"
+    },
+    {
+      "cycle_id": "311c4349",
+      "domain": "Probability",
+      "key_insight": "# Future Directions\n\n- Construct the classical Airy function in Lean as the distinguished decaying solution of `y'' = x y`, and prove the integral and Christoffel–Darboux representations of the Airy k",
+      "quality_score": 0.54,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-07-25T23:20:34",
+      "title": "Random Matrices: Edge Universality"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-25T22:18:16",
+  "last_updated": "2026-07-25T23:20:34",
   "open_questions": [
     {
       "context": "",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "d3ef6e43",
-        "quality": 0.51,
-        "theorems": 13,
-        "title": "Langlands for Toddlers: Galois Groups as Shapes, Automorphic Forms as Colors"
-      },
-      {
         "cycle_id": "2eae5d0f",
         "quality": 0.64,
         "theorems": 12,
@@ -3823,6 +3817,12 @@
         "quality": 0.68,
         "theorems": 0,
         "title": "Entropy Power Inequality: Sharp Version"
+      },
+      {
+        "cycle_id": "311c4349",
+        "quality": 0.54,
+        "theorems": 13,
+        "title": "Random Matrices: Edge Universality"
       }
     ],
     "Pythagorean": [

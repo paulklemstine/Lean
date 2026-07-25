@@ -2663,17 +2663,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Homological Algebra: Derived Functors"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "64006a56",
     "description": "Formalize the Euler characteristic for CW complexes. Prove the Gauss-Bonnet theorem for compact surfaces: \u222b K dA = 2\u03c0\u03c7(M). Prove the Poincar\u00e9-Hopf index theorem. Apply to classify surfaces by genus.",
     "domains": [
       "Geometry",
       "Topology"
     ],
     "id": "fd_0667",
+    "phase": "A",
     "priority_score": 0.86,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-24T14:34:16.697786+00:00",
     "title": "Euler Characteristic and Gauss-Bonnet"
   },
@@ -3834,22 +3835,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Kaplansky's Conjectures"
-  },
-  {
-    "consumed_by_exp_id": "311c4349",
-    "description": "Prove edge universality for random matrix ensembles beyond Gaussian cases. Formalize Tracy-Widom distribution convergence and the Airy kernel.",
-    "domains": [
-      "Probability",
-      "Algebra"
-    ],
-    "id": "seed_227",
-    "phase": "A",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Random Matrices: Edge Universality"
   },
   {
     "consumed_by_exp_id": "",
@@ -8896,6 +8881,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-25T22:18:10.774110+00:00",
     "title": "The completed formalization establishes an exact finite-support implementation o"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n- Construct the classical Airy function in Lean as the distinguished decaying solution of `y'' = x y`, and prove the integral and Christoffel\u2013Darboux representations of the Airy kernel.\n- Upgrade `AiryGramApproximation` to quadrature schemes whose kernels converge in Hilbert\u2013Schmidt and trace norm on half-lines.\n- Develop Fredholm determinants of trace-class integral operators and define the Tracy\u2013Widom distribution by `det(I - K_Ai)`.\n- Prove positivity, monotonicity, continuity, and tail estimates for the resulting distribution function.\n- Formalize random Hermitian matrices, ordered eigenvalues, Wigner entry hypotheses, and the `n^(2/3)` soft-edge rescaling.\n- Develop resolvent identities, local semicircle laws, eigenvalue rigidity, and Green-function comparison estimates.\n- Instantiate `edgeCDFConverges_of_sandwich` with comparison ensembles to transfer the Gaussian Tracy\u2013Widom limit to non-Gaussian Wigner ensembles.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0731",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "311c4349",
+    "status": "available",
+    "timestamp": "2026-07-25T23:20:29.072128+00:00",
+    "title": "Future directions from cycle 311c4349"
   },
   {
     "consumed_by_exp_id": "",
