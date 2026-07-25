@@ -2230,22 +2230,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Homotopy Groups of Spheres: Low-Dimensional"
   },
   {
-    "consumed_by_exp_id": "928798aa",
-    "description": "Formalize the hydrogen atom Hamiltonian in Lean 4. Prove the spectrum is {-1/n\u00b2 : n \u2208 \u2115+} \u222a [0,\u221e). Construct the spherical harmonics as eigenfunctions of the angular momentum operator. Prove the selection rules for transitions.",
-    "domains": [
-      "Physics",
-      "Analysis"
-    ],
-    "id": "fd_0680",
-    "phase": "B",
-    "priority_score": 0.88,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-24T14:34:16.697822+00:00",
-    "title": "Quantum Mechanics: Spectral Theory of Hydrogen"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize the group law on elliptic curves over finite fields in Lean 4. Prove associativity via the chord-tangent construction. Implement and verify point multiplication. Prove Hasse's bound: |#E(F_p) - p - 1| \u2264 2\u221ap.",
     "domains": [
@@ -3952,7 +3936,7 @@ window.FUTURE_DIRECTIONS = [
       "Shared"
     ],
     "id": "auto_reset_Shared_98cb9029",
-    "phase": "B",
+    "phase": "complete",
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "auto_reset",
@@ -11059,6 +11043,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-25T06:37:16.230778+00:00",
     "title": "Let branch weights evolve under a stochastic transport kernel while each branch "
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n1. **Coulomb Hamiltonian as an unbounded self-adjoint operator.** Define\n   `H = -\u0394 - 2/r` on `L\u00b2(\u211d\u00b3)` from a closed semibounded quadratic form, establish\n   self-adjointness, and prove that its operator spectrum is exactly the set\n   modeled here.  The current file deliberately does not claim this analytic\n   identification.\n\n2. **Full spherical harmonics.** Construct associated Legendre functions and\n   normalized `Y_l^m`, then prove both `L_z Y_l^m = m Y_l^m` and\n   `L\u00b2 Y_l^m = l(l+1)Y_l^m`.  This work proves the azimuthal factor of the first\n   equation.\n\n3. **Derive rather than encode selection rules.** Define the electric dipole\n   operator, spherical tensor components, and the relevant inner products.\n   Prove vanishing matrix elements using parity and angular orthogonality, so\n   `\u0394l = \u00b11` and `\u0394m \u2208 {-1,0,1}` emerge as theorems rather than the definition of\n   `DipoleAllowed`.\n\n4. **Graph structure beyond bipartiteness.** Add principal quantum numbers and\n   radial overlap conditions to the vertices and edges.  Study connected\n   components, shortest allowed transition sequences, and weighted paths whose\n   weights are emitted photon energies.\n\n5. **Spectral multiplicity and hidden symmetry.** Formalize the Runge\u2013Lenz\n   symmetry and the `so(4)` representation underlying the `n\u00b2` orbital\n   degeneracy, connecting the operator-theoretic eigenspaces to finite\n   representation theory.\n",
+    "domains": [
+      "Physics",
+      "Algebra"
+    ],
+    "id": "fd_0722",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "928798aa",
+    "status": "available",
+    "timestamp": "2026-07-25T10:53:00.075163+00:00",
+    "title": "1. **Coulomb Hamiltonian as an unbounded self-adjoint operator.** Define"
   },
   {
     "consumed_by_exp_id": "",

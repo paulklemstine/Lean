@@ -1,26 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "79f58a3a",
-      "domain": "Logic",
-      "key_insight": "# Future Directions: Theory Genomes and Semantic Evolution\n\n## 1. Localization–Monad–Morita Factorization\n\n**Conjecture.** Every interpretation between essentially algebraic theories whose model funct",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-20T09:42:22",
-      "title": "Speculative: Category Theory as the DNA of Mathematics"
-    },
-    {
-      "cycle_id": "e3b4f2fe",
-      "domain": "Shared",
-      "key_insight": "# Future Directions: Topology of Theorem Networks\n\n## 1. A null model for higher-dimensional citation topology\n\n**Conjecture.** In a sparse random corpus with bounded expected document size and theore",
-      "quality_score": 0.75,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-20T15:09:35",
-      "title": "Speculative: Topological Data Analysis of Theorem Networks"
-    },
-    {
       "cycle_id": "fd569acd",
       "domain": "Bridges",
       "key_insight": "# Future Directions\n\n## Results established\n\nThe finite Hamming Library of length `L` over `A` symbols has exactly `A^L` points and is homeomorphic to `Fin (A^L)` with its discrete topology. Singleton",
@@ -499,29 +479,29 @@
       "theorem_count": 15,
       "timestamp": "2026-07-25T09:21:01",
       "title": "Cryptography from the Collatz Conjecture: One-Way Functions from Iterated Maps"
+    },
+    {
+      "cycle_id": "928798aa",
+      "domain": "Physics",
+      "key_insight": "# Future directions\n\n1. **Coulomb Hamiltonian as an unbounded self-adjoint operator.** Define\n   `H = -Δ - 2/r` on `L²(ℝ³)` from a closed semibounded quadratic form, establish\n   self-adjointness, and",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 23,
+      "timestamp": "2026-07-25T10:53:04",
+      "title": "Quantum Mechanics: Spectral Theory of Hydrogen"
+    },
+    {
+      "cycle_id": "905765f9",
+      "domain": "Shared",
+      "key_insight": "# Future Directions\n\n## 1. Composite-index synchronization through cyclotomic primitive parts\n\nFor every nonexceptional composite index, the primitive part of the corresponding Fibonacci number should",
+      "quality_score": 0.76,
+      "sorry_count": 1,
+      "theorem_count": 4,
+      "timestamp": "2026-07-25T10:53:08",
+      "title": "[Reset] Fresh approach in Shared"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "cf73743c",
-      "domain": "Shared",
-      "key_insight": "# Future directions\n\n1. **State the CSS dictionary with two classical codes precisely.**  The mission's\n   expression `C₁/C₂` requires `C₂ ⊆ C₁`, while the usual CSS commutation condition\n   is formul",
-      "quality_score": 0.75,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-19T00:45:02",
-      "title": "Quantum Error Correction from Homological Algebra: CSS Codes as Cohomology"
-    },
-    {
-      "cycle_id": "7bc47166",
-      "domain": "Shared",
-      "key_insight": "# Future Directions\n\n## 1. Physical comparison gates with explicit reset registers\n\n**Conjecture.** For a comparator network implemented by reversible gates with a designated\nreset protocol, the minim",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-07-19T01:02:46",
-      "title": "The Thermodynamics of Sorting: Entropy and Computational Work"
-    },
     {
       "cycle_id": "f017f3a3",
       "domain": "Applications",
@@ -2501,27 +2481,29 @@
       "theorem_count": 15,
       "timestamp": "2026-07-25T09:21:01",
       "title": "Cryptography from the Collatz Conjecture: One-Way Functions from Iterated Maps"
+    },
+    {
+      "cycle_id": "928798aa",
+      "domain": "Physics",
+      "key_insight": "# Future directions\n\n1. **Coulomb Hamiltonian as an unbounded self-adjoint operator.** Define\n   `H = -Δ - 2/r` on `L²(ℝ³)` from a closed semibounded quadratic form, establish\n   self-adjointness, and",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 23,
+      "timestamp": "2026-07-25T10:53:04",
+      "title": "Quantum Mechanics: Spectral Theory of Hydrogen"
+    },
+    {
+      "cycle_id": "905765f9",
+      "domain": "Shared",
+      "key_insight": "# Future Directions\n\n## 1. Composite-index synchronization through cyclotomic primitive parts\n\nFor every nonexceptional composite index, the primitive part of the corresponding Fibonacci number should",
+      "quality_score": 0.76,
+      "sorry_count": 1,
+      "theorem_count": 4,
+      "timestamp": "2026-07-25T10:53:08",
+      "title": "[Reset] Fresh approach in Shared"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "939843de",
-      "domain": "Cryptography",
-      "name": "at",
-      "quality": 0.71
-    },
-    {
-      "cycle_id": "939843de",
-      "domain": "Cryptography",
-      "name": "for",
-      "quality": 0.71
-    },
-    {
-      "cycle_id": "939843de",
-      "domain": "Cryptography",
-      "name": "parking_has_sorted_chamber",
-      "quality": 0.71
-    },
     {
       "cycle_id": "e24b36f0",
       "domain": "NumberTheory",
@@ -2803,17 +2785,28 @@
       "domain": "NumberTheory",
       "name": "encoding_separation",
       "quality": 0.79
+    },
+    {
+      "cycle_id": "928798aa",
+      "domain": "Physics",
+      "name": "regev_rounding_bit1",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "928798aa",
+      "domain": "Physics",
+      "name": "regev_rounding_bit1",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "928798aa",
+      "domain": "Physics",
+      "name": "encoding_separation",
+      "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-25T09:21:01",
+  "last_updated": "2026-07-25T10:53:08",
   "open_questions": [
-    {
-      "context": "+    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; +    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; +    ∀ i < k, c i = ",
-      "cycle_id": "d1663b23",
-      "domain": "Applications",
-      "sorry_count": 3,
-      "timestamp": "2026-07-17T13:29:16"
-    },
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
       "cycle_id": "dcd7a4b2",
@@ -3016,6 +3009,13 @@
       "domain": "Geometry",
       "sorry_count": 1,
       "timestamp": "2026-07-24T23:24:45"
+    },
+    {
+      "context": "-    sorry+  have hchecked := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
+      "cycle_id": "905765f9",
+      "domain": "Shared",
+      "sorry_count": 1,
+      "timestamp": "2026-07-25T10:53:08"
     }
   ],
   "research_threads": {
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "20c9506b",
-        "quality": 0.69,
-        "theorems": 14,
-        "title": "The Collatz Conjecture Is Undecidable: What If 3n+1 Can't Be Proved?"
-      },
-      {
         "cycle_id": "9867adb2",
         "quality": 0.75,
         "theorems": 0,
@@ -3761,6 +3755,12 @@
         "quality": 0.75,
         "theorems": 0,
         "title": "Cross-Reality-Entropy: Second Law of Thermodynamics for Multiversal Ensembles"
+      },
+      {
+        "cycle_id": "928798aa",
+        "quality": 0.7,
+        "theorems": 23,
+        "title": "Quantum Mechanics: Spectral Theory of Hydrogen"
       }
     ],
     "Probability": [
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "e456357e",
-        "quality": 0.7,
-        "theorems": 11,
-        "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
-      },
-      {
         "cycle_id": "154045db",
         "quality": 0.74,
         "theorems": 19,
@@ -3947,6 +3941,12 @@
         "quality": 0.63,
         "theorems": 18,
         "title": "The formal development studies a precise surrogate for “the space of mathematica"
+      },
+      {
+        "cycle_id": "905765f9",
+        "quality": 0.76,
+        "theorems": 4,
+        "title": "[Reset] Fresh approach in Shared"
       }
     ],
     "Tropical": [
