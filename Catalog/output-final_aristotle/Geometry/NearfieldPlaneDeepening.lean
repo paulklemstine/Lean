@@ -3,7 +3,7 @@ Copyright (c) 2024 Harmonic. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 -/
 import Mathlib
-import Geometry.NonDesarguesianPlanes
+import Geometry.AbstractAlgebra.NonDesarguesianPlanes
 
 /-!
 # The Nearfield Plane of Order 9: A Second Route to Non-Desarguesian Geometry

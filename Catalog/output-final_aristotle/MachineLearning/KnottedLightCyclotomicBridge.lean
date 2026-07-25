@@ -1,5 +1,5 @@
 import Mathlib
-import Tropical.CyclotomicKnotSpectra
+import Tropical.KnotAndBraidTheory.CyclotomicKnotSpectra
 
 /-!
 # Knotted Light II: The Cyclotomic Bridge for Torus-Knot OAM Spectra

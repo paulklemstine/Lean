@@ -19,7 +19,7 @@
 -/
 
 import Mathlib
-import Applications.TransseriesDefs
+import Applications.Algebra.TransseriesDefs
 
 namespace Transseries
 
@@ -61,3 +61,4 @@ theorem exp_rpow_dominates_pow (α : ℝ) (hα : 0 < α) (n : ℕ) :
     exp(exp(x)) / exp(x) → ∞. This is the canonical example of
     depth-2 dominating depth-1.
 -/
+end Transseries

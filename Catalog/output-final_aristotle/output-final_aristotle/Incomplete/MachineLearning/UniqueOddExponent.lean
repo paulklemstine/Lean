@@ -15,7 +15,7 @@ This theorem reframes odd perfect numbers as having exactly one
 API theorem for further structural analysis.
 -/
 import Mathlib
-import Logic.Defs
+import Logic.GraphTheory.Defs
 import Speculative.OddPerfect.SigmaParity
 
 open Finset Nat BigOperators OddPerfect

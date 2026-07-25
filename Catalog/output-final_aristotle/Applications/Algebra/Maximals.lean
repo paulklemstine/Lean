@@ -20,7 +20,7 @@
   for structured families.
 -/
 import Mathlib
-import Speculative.Frankl.Defs
+import Logic.GraphTheory.Defs
 
 namespace Frankl
 

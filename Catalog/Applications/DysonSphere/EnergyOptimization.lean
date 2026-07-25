@@ -1,5 +1,5 @@
 import Mathlib
-import Computation.LandauerLowerBound
+import Computation.NeuralCoding.LandauerLowerBound
 
 /-!
 # Dyson-Swarm Energy Collection and Thermodynamic Computation

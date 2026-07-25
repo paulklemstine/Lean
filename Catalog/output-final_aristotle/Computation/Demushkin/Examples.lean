@@ -1,6 +1,6 @@
 import Mathlib
-import Computation.Demushkin.CupForm
-import Computation.Demushkin.IsotropyLocus
+import output-final_aristotle.Computation.Demushkin.CupForm
+import output-final_aristotle.Computation.Demushkin.IsotropyLocus
 
 /-!
 # Concrete Demushkin cup-product forms over 𝔽₂

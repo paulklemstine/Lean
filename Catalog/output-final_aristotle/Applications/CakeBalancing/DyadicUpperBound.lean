@@ -1,4 +1,4 @@
-import Catalog.Applications.CakeBalancing.Basic
+import Logic.BasicMonotoneCircuit.Basic
 
 /-!
 # A universal upper bound for the cake-balancing ratio: the bisection strategy

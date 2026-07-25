@@ -1,6 +1,6 @@
 import Mathlib
-import Logic.ProofSystemCollapse
-import Novelty.Core
+import Logic.PosetTheory.ProofSystemCollapse
+import Logic.StrangeLoops.Core
 
 /-!
 # Dark Mathematics II: joins amplify darkness, and naive density fails

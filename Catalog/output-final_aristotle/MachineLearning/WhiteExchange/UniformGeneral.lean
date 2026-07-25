@@ -2,9 +2,9 @@
 Copyright (c) 2026 Harmonic. All rights reserved.
 Released under Apache 2.0 license.
 -/
-import MachineLearning.WhiteExchange.Basic
-import MachineLearning.WhiteExchange.Uniform
-import MachineLearning.WhiteExchange.Part3
+import Logic.BasicMonotoneCircuit.Basic
+import output-final_aristotle.MachineLearning.WhiteExchange.Uniform
+import output-final_aristotle.MachineLearning.WhiteExchange.Part3
 
 /-!
 # Uniform matroids realize *all* quadratic exchanges

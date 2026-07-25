@@ -1,5 +1,5 @@
 import Mathlib
-import Cryptography.SchnorrIdentification
+import Cryptography.NumberTheory.SchnorrIdentification
 
 /-!
 # Maurer's unified "preimage of a group homomorphism" Σ-protocol

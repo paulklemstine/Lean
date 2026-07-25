@@ -1,5 +1,5 @@
 import Mathlib
-import Bridges.RingTheoryBridge
+import Bridges.NumberTheory.RingTheoryBridge
 
 /-!
 # Algebraic core of minimal ordinary modularity lifting

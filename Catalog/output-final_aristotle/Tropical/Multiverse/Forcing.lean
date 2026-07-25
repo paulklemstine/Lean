@@ -2,7 +2,7 @@
 Copyright (c) 2026 Harmonic. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 -/
-import Tropical.Multiverse.Concrete
+import output-final_aristotle.Tropical.Multiverse.Concrete
 
 /-!
 # Forcing closure and the failure of a "true" CH

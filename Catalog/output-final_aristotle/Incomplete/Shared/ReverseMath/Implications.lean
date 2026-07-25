@@ -21,7 +21,7 @@ In the standard hierarchy RCA₀ < WKL₀ < ACA₀, these principles satisfy:
 
 We formalize the combinatorial content of these implications in CIC+Classical.
 -/
-import Logic.Defs
+import Logic.GraphTheory.Defs
 
 open Set Filter
 

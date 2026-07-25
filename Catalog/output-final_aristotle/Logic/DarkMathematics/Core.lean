@@ -1,5 +1,5 @@
 import Mathlib
-import Logic.ProofSystemCollapse
+import Logic.PosetTheory.ProofSystemCollapse
 
 /-!
 # Dark Mathematics: a hierarchy of unfindable existence

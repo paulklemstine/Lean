@@ -1,5 +1,5 @@
 import Mathlib
-import MachineLearning.ResNetLipschitz
+import MachineLearning.TropicalAlgebra.ResNetLipschitz
 
 /-!
 # Finite-Horizon Shadowing for Numerical Orbits

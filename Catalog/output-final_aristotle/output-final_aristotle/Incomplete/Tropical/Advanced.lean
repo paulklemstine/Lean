@@ -29,8 +29,8 @@ Connects tropical algebra, thermodynamics, information theory, and
 post-quantum security via worst-case divergence bounds.
 -/
 import Mathlib
-import Logic.Defs
-import Novelty.Core
+import Logic.GraphTheory.Defs
+import Logic.StrangeLoops.Core
 
 open Finset Real BigOperators Classical
 

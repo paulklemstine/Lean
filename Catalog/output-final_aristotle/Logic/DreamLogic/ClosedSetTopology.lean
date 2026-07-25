@@ -124,3 +124,4 @@ the proposition and in its paraconsistent negation are exactly the frontier poin
 theorem frontier_is_glut (A : Set ℝ) (hA : IsClosed A) :
     A ∩ pneg A = frontier A := by
   rw [pneg, closure_compl, frontier, hA.closure_eq, diff_eq]
+end DreamLogic.Topo

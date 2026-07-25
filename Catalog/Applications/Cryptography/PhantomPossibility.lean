@@ -56,7 +56,7 @@ Analysis (Analyst):
   - H2 survives as `possibility_le_observer` (= `iInf_le`).
 -/
 import Mathlib
-import Catalog.Novelty.PhantomTopology
+import Catalog.Novelty.PosetTheory.PhantomTopology
 
 open Set
 

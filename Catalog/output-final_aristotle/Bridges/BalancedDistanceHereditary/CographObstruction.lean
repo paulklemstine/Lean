@@ -1,5 +1,5 @@
 import Mathlib
-import Bridges.BalancedDistanceHereditary.ForbiddenSubgraph
+import output-final_aristotle.Bridges.BalancedDistanceHereditary.ForbiddenSubgraph
 
 /-!
 # `\overline{3K₂}` is a `P₄`-free graph (a cograph) — a genuine obstruction inside

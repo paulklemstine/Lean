@@ -22,7 +22,7 @@ are strictly more expressive than 1-WL color refinement for graph classification
 -/
 
 import Mathlib
-import Pythagorean.TropicalMorse.Defs
+import Logic.GraphTheory.Defs
 
 open Finset BigOperators
 

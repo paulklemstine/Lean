@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Aristotle (Harmonic)
 -/
 import Mathlib
-import Novelty.Z2CoindexEnumeration
+import Novelty.PosetTheory.Z2CoindexEnumeration
 
 /-!
 # The join functor on ℤ₂-maps of combinatorial spheres

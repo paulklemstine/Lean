@@ -1,4 +1,4 @@
-import Physics.SpectralLinkHomology.Core
+import Logic.StrangeLoops.Core
 
 /-!
 # Cones are acyclic: vanishing reduced Euler characteristic

@@ -38,7 +38,7 @@ frequency-sum law only for `0 < n`.
 -- !-- end Lab Notes -- !--
 -/
 import Mathlib
-import Novelty.SequenceLemmas
+import Novelty.PosetTheory.SequenceLemmas
 
 namespace NormalConstants
 

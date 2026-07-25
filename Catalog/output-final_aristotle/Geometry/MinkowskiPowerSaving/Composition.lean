@@ -1,5 +1,5 @@
 import Mathlib
-import Geometry.MinkowskiPowerSaving.PowerSaving
+import output-final_aristotle.Applications.MinkowskiPowerSaving.PowerSaving
 
 /-!
 # Multiplicativity of the power-saving corridor under composition

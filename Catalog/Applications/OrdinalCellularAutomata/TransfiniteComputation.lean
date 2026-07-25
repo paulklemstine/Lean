@@ -1,4 +1,4 @@
-import Catalog.Applications.CellularAutomataGeometry
+import Catalog.Applications.PosetTheory.CellularAutomataGeometry
 
 /-!
 # Cellular dynamics through two ordinal time coordinates

@@ -1,5 +1,5 @@
-import Catalog.Geometry.NonDesarguesianPlanes
-import Catalog.Bridges.FiniteFieldBridge
+import Catalog.Geometry.AbstractAlgebra.NonDesarguesianPlanes
+import Catalog.Bridges.TropicalAlgebra.FiniteFieldBridge
 
 /-!
 # Hall Triple Structures from the Order-Nine Hall Multiplication

@@ -1,4 +1,4 @@
-import BerggrenDynamics.Core
+import Logic.StrangeLoops.Core
 
 /-!
 # The C-ray as Second Extremal Geodesic of the Berggren Tree

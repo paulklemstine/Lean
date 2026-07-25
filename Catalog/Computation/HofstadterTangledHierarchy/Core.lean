@@ -1,6 +1,6 @@
 import Mathlib
 import Logic.StrangeLoops.Core
-import Bridges.WellFoundedInductionBridge
+import Bridges.PosetTheory.WellFoundedInductionBridge
 
 /-!
 # Tangled Hierarchies and Predicative Levels

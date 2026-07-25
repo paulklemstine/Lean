@@ -1,0 +1,1 @@
+../../MachineLearning/CellularAutomataAlgebraicGeometry/Theorems.lean

@@ -1,5 +1,5 @@
 import Mathlib
-import Geometry.FlagComplex
+import Geometry.RamseyTheory.FlagComplex
 
 /-!
 # Sign vectors, hyperplane separation, and the coordinate tope graph

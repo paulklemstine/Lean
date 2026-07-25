@@ -84,7 +84,7 @@ Synthesis (Stage 5):
 -- !-- end Lab Notes -- !--
 -/
 import Mathlib
-import Probability.ShearedWittColimit
+import Probability.GameTheory.ShearedWittColimit
 
 open MvPolynomial
 open scoped BigOperators

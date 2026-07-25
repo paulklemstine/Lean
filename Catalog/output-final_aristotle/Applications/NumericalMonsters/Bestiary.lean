@@ -54,7 +54,7 @@ Synthesis (PI): digit-sharing factorisations obey a conservation law — they si
 exactly at the top of the digit-length window and are therefore "large" products.
 -/
 import Mathlib
-import Applications.NumericalMonsters.VampireDigitInvariants
+import output-final_aristotle.Applications.NumericalMonsters.VampireDigitInvariants
 
 open Nat
 

@@ -1,5 +1,5 @@
 import Mathlib
-import Tropical.CyclotomicKnotSpectra
+import Tropical.KnotAndBraidTheory.CyclotomicKnotSpectra
 
 /-!
 # Knotted Light III: The Divisor Factorization of Torus-Knot OAM Spectra

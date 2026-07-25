@@ -41,3 +41,4 @@ lemma T_gt_of_odd {n : ℕ} (h : Odd n) : T n > n := by
   rw [T_odd h]; omega
 
 end Collatz
+end together with the basic parity evaluation lemmas and the

@@ -1,7 +1,7 @@
 import Mathlib
 import Tropical.EulerMascheroni.SeriesRepresentation
 import Tropical.NeuralNetworks.SoftMaxConvergence
-import EML.AlgebraicMaxClosure
+import EML.TropicalAlgebra.AlgebraicMaxClosure
 
 /-!
 # A Tropical (log-sum-exp) bridge for the Euler–Mascheroni constant

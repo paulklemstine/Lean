@@ -49,7 +49,7 @@
   collision ⇔ claw equivalence as the structural core.
 -/
 import Mathlib
-import Cryptography.MerkleDamgard
+import Cryptography.Cryptography.MerkleDamgard
 
 namespace Cryptography.ClawFreeHash
 

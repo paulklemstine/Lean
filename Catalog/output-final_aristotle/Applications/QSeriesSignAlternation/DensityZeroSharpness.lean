@@ -20,7 +20,7 @@ the exceptional set can be genuinely **infinite** while still having density zer
   infinite, density-zero sign-alternation exceptional set**.
 -/
 import Mathlib
-import Applications.QSeriesSignAlternation.SignAlternation
+import output-final_aristotle.Applications.QSeriesSignAlternation.SignAlternation
 
 open Filter Topology
 

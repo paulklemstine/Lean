@@ -1,5 +1,5 @@
 import Mathlib
-import Logic.DreamLogic.Bilattice
+import output-final_aristotle.Logic.DreamLogic.Bilattice
 
 /-!
 # Dream Logic VI — The Paraconsistent Consequence Relation

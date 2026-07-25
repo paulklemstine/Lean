@@ -1,5 +1,5 @@
 import Mathlib
-import Cryptography.SchnorrIdentification
+import Cryptography.NumberTheory.SchnorrIdentification
 
 /-!
 # The Fiat–Shamir transform of Schnorr (non-interactive identification / signatures)

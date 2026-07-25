@@ -1,5 +1,5 @@
 import Mathlib
-import Bridges.CombinatorialBridge
+import Bridges.CombinatorialBridge.CombinatorialBridge
 
 /-!
 # Girth–Expansion Bridge — Basic definitions

@@ -1,5 +1,5 @@
 import Mathlib
-import MachineLearning.ReLUDepthWidth.Oscillation
+import .lake.packages.mathlib.Mathlib.Analysis.Oscillation
 
 /-!
 # From One Crossing to an Exponential Width Lower Bound

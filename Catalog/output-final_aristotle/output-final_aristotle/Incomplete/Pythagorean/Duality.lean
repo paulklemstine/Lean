@@ -1,5 +1,5 @@
 import Mathlib
-import Novelty.Core
+import Logic.StrangeLoops.Core
 
 /-!
 # Displacement–Hypotenuse Duality and Berggren Tree Structure

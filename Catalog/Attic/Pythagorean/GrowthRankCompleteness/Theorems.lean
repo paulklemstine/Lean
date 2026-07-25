@@ -17,7 +17,7 @@ This upgrades `growthRank` from a syntactic upper bound to a **complete semantic
 invariant** for canonical tower expressions, analogous to degree for polynomials
 or quantifier alternation rank in descriptive complexity.
 -/
-import Pythagorean.GrowthRankCompleteness.Defs
+import Logic.GraphTheory.Defs
 
 noncomputable section
 

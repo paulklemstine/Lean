@@ -36,8 +36,8 @@ Synthesis: Young conjugation and the triangle-map natural-extension involution c
   equal-mass subdomains.
 -/
 import Mathlib
-import Novelty.TriangleMap.YoungConjugation
-import Novelty.TriangleMap.NaturalExtensionInvolution
+import Novelty.PosetTheory.YoungConjugation
+import Novelty.Naturalextensioninvolution.NaturalExtensionInvolution
 
 open MeasureTheory YoungDiagram
 

@@ -57,7 +57,7 @@ Synthesis (Stage 5): the mind/machine asymmetry is `godel_true` (the mind sees `
   into the impossibility of a sound complete self-referential system.
 -/
 import Mathlib
-import Computation.SelfModifyingHalt
+import Computation.Computation.SelfModifyingHalt
 
 open Function
 

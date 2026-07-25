@@ -20,7 +20,7 @@ diagonal value `R(4,4) = 18`.
 -/
 
 import Mathlib
-import Applications.RamseyThreeFour
+import output-final_aristotle.Applications.Combinatorics.RamseyThreeFour
 
 open scoped Classical
 open SimpleGraph Finset

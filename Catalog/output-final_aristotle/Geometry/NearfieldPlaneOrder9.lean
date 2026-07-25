@@ -3,7 +3,7 @@ Copyright (c) 2024 Harmonic. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 -/
 import Mathlib
-import Geometry.QuasifieldAffinePlane
+import output-final_aristotle.Geometry.QuasifieldAffinePlane
 
 /-!
 # The Dickson Nearfield of Order 9 and its Non-Desarguesian Plane

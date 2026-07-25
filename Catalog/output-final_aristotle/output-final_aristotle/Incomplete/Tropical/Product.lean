@@ -24,7 +24,7 @@ in a linearly ordered group — and a combinatorial bijection between product-st
 assignments and pairs of state assignments on tree children.
 -/
 
-import Novelty.Basic
+import Novelty.PosetTheory.Basic
 
 namespace TropicalTreeAutomata
 

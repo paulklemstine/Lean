@@ -67,3 +67,4 @@ theorem circle_connectivity_threshold
     (∀ i : Fin n, dist (X i) (0 : EuclideanSpace ℝ (Fin 2)) = r) →
     ∀ i j : Fin n, dist (X i) (X j) ≤ 2 * r := by
   exact fun X hX i j => by linarith [ hX i, hX j, dist_triangle_right ( X i ) ( X j ) 0 ] ;
+end AbstractSimplicialComplex

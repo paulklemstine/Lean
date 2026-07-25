@@ -36,7 +36,7 @@ On critical nodes, the tropical action achieves the spectral value exactly.
 * R.M. Karp, "A characterization of the minimum cycle mean in a digraph", 1978
 * P. Butkovič, "Max-linear systems: theory and algorithms", 2010
 -/
-import Logic.Defs
+import Logic.GraphTheory.Defs
 
 noncomputable section
 

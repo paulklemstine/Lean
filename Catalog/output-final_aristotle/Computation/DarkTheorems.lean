@@ -85,7 +85,7 @@ SYNTHESIS (PI).
 -/
 
 import Mathlib
-import Computation.SelfModifyingHalt
+import Computation.Computation.SelfModifyingHalt
 
 open scoped Classical
 

@@ -12,7 +12,7 @@
   6. Knuth orbit theory
   7. Falsifiable conjectures with computational tests
 -/
-import MachineLearning.NonDesarguesian.Core
+import Logic.StrangeLoops.Core
 
 open Finset Function
 

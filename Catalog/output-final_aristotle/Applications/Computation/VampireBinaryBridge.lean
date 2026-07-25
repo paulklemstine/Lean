@@ -1,5 +1,5 @@
-import Applications.VampireNumbers
-import Applications.CusickSumOfDigits
+import Novelty.NumberTheory.VampireNumbers
+import Applications.Computation.CusickSumOfDigits
 
 /-!
 # A Bridge: Binary Digit Sums of Vampire Numbers

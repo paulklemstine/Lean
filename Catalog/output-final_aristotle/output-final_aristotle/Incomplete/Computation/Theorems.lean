@@ -35,7 +35,7 @@ layered DAG semantics, assignment obstruction, formal verification
 -/
 
 import Mathlib
-import Logic.Defs
+import Logic.GraphTheory.Defs
 
 namespace TropicalCircuit
 

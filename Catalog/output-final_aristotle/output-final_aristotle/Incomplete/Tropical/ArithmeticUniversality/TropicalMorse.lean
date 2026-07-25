@@ -29,7 +29,7 @@ smooth Morse theory but in a combinatorial, non-differentiable setting.
 -/
 
 import Mathlib
-import Logic.Defs
+import Logic.GraphTheory.Defs
 
 open TropicalLoss
 

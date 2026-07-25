@@ -1,5 +1,5 @@
-import Logic.DreamLogic.FourValued
-import Logic.DreamLogic.ClosedSetTopology
+import output-final_aristotle.Logic.DreamLogic.FourValued
+import output-final_aristotle.Logic.DreamLogic.ClosedSetTopology
 
 /-!
 # Dream Logic III — The Algebra/Topology Correspondence

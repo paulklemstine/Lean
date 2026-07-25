@@ -1,4 +1,4 @@
-import Applications.MindTools.Basic
+import Logic.BasicMonotoneCircuit.Basic
 
 /-!
 # Mind Tools — category theory as a strictly stronger mind tool than set theory

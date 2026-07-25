@@ -100,3 +100,4 @@ theorem dimension_incompleteness_bridge (n k : ℕ) (hk : k < n)
 **Gap Amplification**: If stmtCount grows by factor b while
     provableCount grows by at most factor b, the absolute gap is amplified.
 -/
+end ProofDensitySpace

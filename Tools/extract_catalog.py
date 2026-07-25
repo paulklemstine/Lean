@@ -145,7 +145,9 @@ def path_to_domain(rel_path: str) -> tuple:
     Domains are consolidated into 12 categories via DOMAIN_MAP.
     The subdomain preserves the original domain for granularity.
     """
-    parts = Path(rel_path).parts
+    parts = list(Path(rel_path).parts)
+    if parts and parts[0] == 'Catalog':
+        parts = parts[1:]
     original_domain = parts[0] if parts else ""
     subdomain = parts[1] if len(parts) > 2 else None
     domain = DOMAIN_MAP.get(original_domain, original_domain)

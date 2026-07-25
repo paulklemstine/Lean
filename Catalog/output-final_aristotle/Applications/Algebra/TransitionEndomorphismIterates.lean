@@ -1,5 +1,5 @@
 import Mathlib
-import Applications.TransitionEndomorphism
+import Applications.Algebra.TransitionEndomorphism
 
 /-!
 # Iterates as transition endomorphisms

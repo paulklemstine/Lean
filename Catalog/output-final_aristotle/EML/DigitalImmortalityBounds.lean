@@ -40,7 +40,7 @@ physical representations, otherwise two different minds would be stored identica
 -/
 
 import Mathlib
-import EML.KolmogorovComplexityBound
+import EML.InformationTheory.KolmogorovComplexityBound
 
 open scoped BigOperators
 

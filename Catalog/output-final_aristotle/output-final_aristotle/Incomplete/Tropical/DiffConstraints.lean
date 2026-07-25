@@ -1,5 +1,5 @@
 import Mathlib
-import Novelty.Basic
+import Novelty.PosetTheory.Basic
 
 /-!
 # Tropical Convexity of Difference-Constraint Polyhedra

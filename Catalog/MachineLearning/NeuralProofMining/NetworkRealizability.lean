@@ -60,7 +60,7 @@ only if the input family is empty (`n = 0`), in which case all statements hold
 trivially and truthfully.
 -/
 import Mathlib
-import EML.ExponentialPolynomialDensity
+import EML.AbstractAlgebra.ExponentialPolynomialDensity
 import MachineLearning.NeuralProofMining.SeparatingInterpolation
 
 open ContinuousMap
