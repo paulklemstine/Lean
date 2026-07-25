@@ -959,7 +959,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Twin Prime Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "872b26ee",
     "description": "The key insight is that the Collatz map T(n) = n/2 if n even, 3n+1 if n odd, appears to be a one-way function: easy to compute forward (polynomial time), intractable to invert (finding a preimage requires exponential search). Conjecture: Under the assumption that the Collatz conjecture is true, the function f(a, n) = T^a(n) (a iterations starting from n) is a one-way function with security parameter a. The inversion problem \u2014 given (a, f(a,n)), find n \u2014 requires O(2^{a/log(a)}) steps. Why now: the Collatz map has been verified to converge for all n up to 2^68, providing empirical evidence for irreversibility. Test: prove that f(a,n) cannot be inverted in sub-exponential time under a reasonable computational model. Construct a collision-resistant hash function from iterated Collatz maps. Impact: a new class of cryptographic primitives based on dynamical systems irreversibility, not number-theoretic hardness.",
     "domains": [
       "Cryptography",
@@ -967,10 +967,11 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "id": "seed_097",
+    "phase": "A",
     "priority_score": 0.93,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Cryptography from the Collatz Conjecture: One-Way Functions from Iterated Maps"
   },
@@ -1582,7 +1583,7 @@ window.FUTURE_DIRECTIONS = [
       "Cryptography"
     ],
     "id": "dir_50_31_8353eea9",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "batch_50_injection",
@@ -1799,6 +1800,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-23T20:05:24.603417+00:00",
     "title": "Ramsey-Bounds: Exponential Bounds for Diagonal Ramsey Numbers"
+  },
+  {
+    "consumed_by_exp_id": "04a61ead",
+    "description": "Proves conformal invariance of chordal SLE_\u03ba interfaces in simply connected planar domains.",
+    "domains": [
+      "Probability"
+    ],
+    "id": "dir_50_47_b33c0bd5",
+    "phase": "A",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "batch_50_injection",
+    "status": "in_progress",
+    "timestamp": "2026-07-23T20:05:24.653256+00:00",
+    "title": "SLE-Interface: Schramm-Loewner Evolution Conformal Invariance"
   },
   {
     "consumed_by_exp_id": "",
