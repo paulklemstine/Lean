@@ -1,162 +1,189 @@
-# Machines That Argue Like Mathematicians: Building Trustworthy Shortcuts for Proof
+# Three Small Engines of Mathematical Certainty
 
-Every working mathematician keeps a private toolbox of reflexes. Faced with
-a routine step — "of course this simplifies," "obviously that number is
-prime," "clearly the answer can't be larger than this" — they don't reprove
-the underlying theory from scratch. They reach for a habit, a shortcut, a
-move so well-worn it feels automatic. The danger of shortcuts, of course, is
-that they can be wrong. A slick move that *feels* right but hides a false
-assumption is how careful arguments quietly collapse.
+Mathematics often advances through grand ideas, but much of its daily work is powered by modest, repeatable moves. An expression is simplified according to a familiar algebra. A whole number is tested for primality. An eigenvalue is bounded without being computed. Each task looks different, yet all three share a useful design principle: replace an open-ended search with a short procedure whose every step has a clear mathematical justification.
 
-This is the story of three such shortcuts, redesigned so that they can never
-be wrong. Each is a small, reusable procedure — a *tactic* — that automates a
-family of routine arguments. And each comes with a companion theorem, proved
-once and for all, guaranteeing that the shortcut only ever produces true
-statements. The three live in very different corners of mathematics: the
-strange arithmetic of "tropical" algebra, the ancient problem of recognizing
-prime numbers, and the geometry of how matrices stretch space. What unites
-them is a single design philosophy: **never trust a shortcut you haven't
-proved sound.**
+This article develops three such procedures. The first works in **min-plus arithmetic**, the geometry behind shortest paths and tropical mathematics. The second decides primality by exhaustive trial division. The third controls real eigenvalues through absolute row sums. Their common theme is not clever guessing but *local evidence*: a small list of identities, a finite divisor search, or one carefully chosen coordinate of an eigenvector.
 
-## Shortcut one: doing algebra where plus means "take the smaller"
+## When minimum becomes addition
 
-Imagine an arithmetic in which addition and multiplication have been quietly
-swapped for stranger operations. In the *min-plus* world — often called
-*tropical* mathematics — the "sum" of two numbers is their minimum, and the
-"product" of two numbers is their ordinary sum. Write $a \oplus b = \min(a,b)$
-and $a \odot b = a + b$. It looks like a typo, but it is a perfectly
-consistent algebra, and it turns up everywhere: in scheduling and shortest-path
-problems, in the geometry of polynomials, and — strikingly — as the exact
-algebra describing modern neural networks built from piecewise-linear
-activation functions.
+In ordinary arithmetic, addition and multiplication are basic operations. Min-plus arithmetic changes the roles. For real numbers $a$ and $b$, define tropical addition and multiplication by
 
-Tropical algebra has its own catalog of identities, and many of them are
-delightfully counterintuitive. Since "adding" a number to itself means taking
-$\min(a,a)$, we get the law of *idempotency*:
-$$a \oplus a = a.$$
-Addition never accumulates. Multiplication distributes over this new
-addition exactly as you'd hope:
-$$a \odot (b \oplus c) = (a \odot b) \oplus (a \odot c),$$
-which unfolds to the ordinary statement $a + \min(b,c) = \min(a+b, a+c)$.
+$$
+a\oplus b=\min(a,b),\qquad a\otimes b=a+b.
+$$
 
-The crown jewel is what algebraists affectionately call the **tropical
-freshman's dream**. In ordinary algebra, the eager student who writes
-$(a+b)^2 = a^2 + b^2$ is wrong. In the tropical world, that same student is
-*right* — and not just for the square, but for every power:
-$$(a \oplus b)^{\,n} = a^{\,n} \oplus b^{\,n} \quad\text{for every } n.$$
-Translated back to ordinary numbers, this says $n \cdot \min(p,q) =
-\min(np, nq)$, which is true precisely because scaling by a non-negative
-number preserves order. (Try it with a negative scale and it fails — a
-reminder that the "dream" has fine print.)
+The notation is exotic, but the operations are familiar. This arithmetic appears naturally whenever alternatives compete by cost and sequential stages add costs. If one route costs $a$ and another costs $b$, choosing the better route costs $a\oplus b$. If a journey of cost $a$ is followed by one of cost $b$, the total is $a\otimes b$.
 
-The first shortcut, a tactic we call the *tropical simplifier*, mechanizes
-all of this. Its core idea is disarmingly simple. There is a faithful
-translation `untrop` that carries every tropical number back to an ordinary
-number, converting $\oplus$ into $\min$ and $\odot$ into $+$. This translation
-is *injective*: two tropical expressions are equal exactly when their
-ordinary translations are equal. So to check any min-plus identity, the tactic
-translates both sides into ordinary arithmetic and hands the resulting
-statement about $\min$ and $+$ to a routine decision procedure for linear
-arithmetic. Idempotency, distributivity, absorption, and three-variable
-identities all fall instantly. The freshman's dream needs one extra idea —
-the monotonicity of scaling — precisely because it steps outside pure linear
-arithmetic. That boundary is not a bug; it is the exact line where the easy
-part of the theory ends.
+The central simplification rule is distributivity.
 
-The soundness guarantee is a single, quotable fact: the translation `untrop`
-is injective and turns $\oplus, \odot$ into $\min, +$. Because every rewrite the
-tactic performs is one of these proven identities, any goal it closes is
-genuinely true, and any goal it *produces* is logically equivalent to the one
-it started with. The shortcut invents nothing and loses nothing.
+**Tropical Distributivity Theorem.** For all real $a,b,c$,
 
-## Shortcut two: recognizing primes, with a receipt
+$$
+a\otimes(b\oplus c)=(a\otimes b)\oplus(a\otimes c)
+$$
 
-How do you know that $97$ is prime? You check that no smaller number (other
-than $1$) divides it. That is *trial division*, the oldest primality test
-there is, and for small numbers it is unbeatable in its simplicity.
+and
 
-The subtle point is trust. A computer can announce "97 is prime" in a
-microsecond, but *why* should you believe it? The announcement is only as
-trustworthy as the code that produced it — and code can have bugs. The second
-shortcut, a tactic we call the *number-theory decider*, closes this gap by
-turning the announcement into a *receipt* that can itself be checked.
+$$
+(a\oplus b)\otimes c=(a\otimes c)\oplus(b\otimes c).
+$$
 
-Here is the construction. We define an explicit yes/no test. Say a number $n$
-"has a proper divisor" if there is some $d$ with $2 \le d < n$ that divides
-$n$. Then declare $n$ to pass the trial-division test exactly when $n \ge 2$
-and $n$ has no proper divisor. This is a completely concrete, mechanically
-computable predicate — no cleverness, just a scan over candidate divisors.
+To see the first identity, expand the definitions:
 
-The heart of the matter is a theorem, proved once, stating that this humble
-test agrees with genuine primality on the nose:
-$$\textsf{trialPrime}(n) = \textsf{true} \iff n \text{ is prime.}$$
-The proof is not a shrug. Both directions require translating between "the
-scan found no divisor" and the mathematical definition "every divisor below
-$n$ equals $1$." With that equivalence established, the tactic works by
-*reflection*: to prove that $97$ is prime, it rewrites the goal into "the
-trial-division test returns true for $97$," and then simply *runs* the test.
-The computation is checked by the same trusted core that checks every other
-step, so the primality claim comes with a receipt that leaves no room for a
-hidden bug. The same machinery certifies non-primality too: it cheerfully
-confirms that $91 = 7 \times 13$ is *not* prime.
+$$
+a+\min(b,c)=\min(a+b,a+c).
+$$
 
-This is more than a party trick. Verified cryptographic libraries increasingly
-demand not merely "the answer is correct" but "here is a checkable reason it is
-correct." A self-certifying primality test is exactly such a reason, delivered
-in a form a machine can independently audit.
+Adding the same number preserves order, so whichever of $b$ and $c$ is smaller remains smaller after adding $a$. The second identity follows similarly, or by commutativity of ordinary addition. Tropical addition is also idempotent:
 
-## Shortcut three: fencing in the eigenvalues
+$$
+a\oplus a=a.
+$$
 
-Our third shortcut lives in linear algebra. A square matrix $A$ acts on
-vectors by stretching, rotating, and shearing them. Certain special
-directions — the *eigenvectors* — are merely scaled, not turned: applying $A$
-to such a vector $v$ just multiplies it by a number $\lambda$, its
-*eigenvalue*, so that $Av = \lambda v$. Eigenvalues govern an enormous range
-of phenomena: whether a bridge resonates, whether an iterative algorithm
-converges, whether a diffusion process settles down or blows up. Knowing
-even a rough bound on how large an eigenvalue can be is often decisive.
+These facts form a small rewrite basis. One repeatedly expands a common tropical factor, removes repeated minima, and uses associativity to regroup. For example, distributing over three alternatives gives the following complete statement.
 
-There is a beautifully elementary bound. For each row of the matrix, add up
-the absolute values of its entries; call this the row's *absolute row sum*.
-The claim is that **no eigenvalue can be larger in magnitude than the biggest
-absolute row sum**:
-$$|\lambda| \le \max_i \sum_j |A_{ij}|.$$
-This is the accessible half of a classical result known as the Gershgorin
-circle theorem, and its proof is a small gem. Take an eigenvector $v$, and
-look at the coordinate $i_0$ where $v$ is largest in absolute value. The
-$i_0$-th line of the equation $Av = \lambda v$ reads
-$\lambda\, v_{i_0} = \sum_j A_{i_0 j}\, v_j$. Take absolute values and apply
-the triangle inequality:
-$$|\lambda|\,|v_{i_0}| = \Big|\sum_j A_{i_0 j} v_j\Big| \le \sum_j |A_{i_0 j}|\,|v_j| \le \Big(\sum_j |A_{i_0 j}|\Big)\,|v_{i_0}|,$$
-where the last step uses that $|v_{i_0}|$ is the largest coordinate. Since a
-genuine eigenvector is nonzero, that largest coordinate is strictly positive,
-so we may divide it out and conclude $|\lambda| \le \sum_j |A_{i_0 j}|$, which
-is at most the maximum row sum.
+**Three-Way Distribution Theorem.** For all real $a,b,c,d$,
 
-The third shortcut, a tactic we call the *spectral bounder*, packages this
-argument into a single move. Given a goal of the form "this eigenvalue has
-magnitude at most $B$," it applies the proven bound and reduces everything to
-checking that each absolute row sum is at most $B$ — a purely mechanical
-verification. Because the tactic is nothing but an application of the proved
-theorem, every bound it produces is guaranteed correct. The mathematical
-content — the argmax coordinate, the triangle inequality, the division by a
-strictly positive number — has been discharged once, so the user never has to
-revisit it.
+$$
+a\otimes((b\oplus c)\oplus d)
+=(a\otimes b)\oplus((a\otimes c)\oplus(a\otimes d)).
+$$
 
-## The common thread
+The proof applies two-term distributivity twice and then reassociates the minimum. A useful absorption identity follows as well.
 
-Three shortcuts, three worlds — but one idea. In each case we did not merely
-*write* an automated procedure; we *proved* that the procedure can only ever
-tell the truth. The tropical simplifier is sound because a faithful,
-injective translation underlies every rewrite it makes. The number-theory
-decider is sound because its yes/no test has been proved equivalent to true
-primality. The spectral bounder is sound because it is a thin wrapper around a
-proved inequality.
+**Tropical Absorption Theorem.** For all real $a,b$,
 
-This is the difference between a fast answer and a trustworthy one. Automation
-that is merely fast can be subtly, dangerously wrong; automation that is
-*proved sound* extends a mathematician's reach without extending their risk.
-As machines take on more of the routine labor of mathematics — and of the
-software that mathematics increasingly underwrites — this discipline of
-verified shortcuts is what lets us hand over the tedium while keeping the
-certainty. The shortcuts do the work. The theorems make sure the work is right.
+$$
+(a\otimes b)\oplus\bigl(a\otimes(b\oplus b)\bigr)=a\otimes b.
+$$
+
+Indeed, $b\oplus b=b$, so both terms under the outer minimum are identical.
+
+This tiny algebra has a practical interpretation. Imagine a fixed entrance fee $a$ followed by a choice among three routes of costs $b,c,d$. It does not matter whether one first chooses the cheapest route and then adds the entrance fee, or computes all three complete costs and then takes their minimum. The theorem says that these two planning strategies agree exactly.
+
+## Turning primality into a finite witness search
+
+A prime number is an integer $n\ge 2$ whose only positive divisors are $1$ and $n$. Equivalently, no integer $d$ with $2\le d<n$ divides $n$. This equivalence immediately suggests an algorithm.
+
+Define a **proper-divisor search** for $n$ to inspect each integer $d$ in the range $2\le d<n$ and report success when $d\mid n$. Define the **trial-primality test** to report prime precisely when $n\ge2$ and the proper-divisor search reports no divisor.
+
+The key point is that the computation and the definition coincide.
+
+**Divisor-Search Characterization.** The proper-divisor search for $n$ succeeds if and only if there exists an integer $d$ such that $2\le d<n$ and $d\mid n$.
+
+The proof is a direct reading of the finite search. If the search succeeds, the successful entry supplies $d$. Conversely, any such $d$ occurs in the inspected range and makes the search succeed.
+
+**Trial-Primality Correctness Theorem.** For every natural number $n$, the trial-primality test reports prime if and only if $n$ is prime.
+
+For the forward direction, the test ensures $n\ge2$ and rules out every proper divisor, which is exactly primality. For the reverse direction, a prime $n$ is at least $2$ and cannot have a divisor between $2$ and $n-1$, so the divisor search must fail and the test reports prime.
+
+Two examples show both sides. The number $97$ is prime because none of $2,3,\ldots,96$ divides it. The number $91$ is not prime because
+
+$$
+91=7\cdot13.
+$$
+
+These certificates are logically different. A composite number can be settled by one witness, such as $7$. A prime number requires the exhaustion of the entire prescribed search range. The elementary algorithm takes $O(n)$ divisibility tests in its stated form. It is not intended to compete with modern primality testing; its virtue is transparency. There is no probabilistic guess and no unexplained shortcut.
+
+There is also a small logical consequence worth stating. Since $97$ is prime while $91$ is not, the two numbers cannot be equal: equality would transfer the primality property from one to the other and create a contradiction.
+
+## Hearing eigenvalues through row sums
+
+The third procedure enters linear algebra. Let $A=(A_{ij})$ be a real $n\times n$ matrix. A real number $\lambda$ is a real eigenvalue of $A$ if there is a nonzero vector $v$ such that
+
+$$
+Av=\lambda v.
+$$
+
+Eigenvalues govern repeated dynamics, stability, vibration, network diffusion, and many iterative computations. Computing them exactly may be expensive or symbolically impossible. Yet a simple inspection of the matrix can fence them in.
+
+For each row $i$, define its absolute row sum by
+
+$$
+r_i=\sum_{j=1}^{n}|A_{ij}|.
+$$
+
+The decisive observation is that every nonzero finite vector has a coordinate of maximal absolute value.
+
+**Maximal-Coordinate Lemma.** If $v\ne0$, then some index $i_0$ satisfies
+
+$$
+|v_{i_0}|>0
+\quad\text{and}\quad
+|v_j|\le |v_{i_0}|\ \text{for every }j.
+$$
+
+Finiteness guarantees a maximum. It must be positive, since otherwise every coordinate would vanish and $v$ would be zero.
+
+Now inspect the $i_0$-th coordinate of the eigenvalue equation:
+
+$$
+\lambda v_{i_0}=\sum_{j=1}^{n}A_{i_0j}v_j.
+$$
+
+Taking absolute values and applying the triangle inequality gives
+
+$$
+|\lambda|\,|v_{i_0}|
+\le \sum_{j=1}^{n}|A_{i_0j}|\,|v_j|.
+$$
+
+Maximality of $|v_{i_0}|$ bounds the right-hand side by
+
+$$
+\left(\sum_{j=1}^{n}|A_{i_0j}|\right)|v_{i_0}|.
+$$
+
+Because $|v_{i_0}|>0$, it can be cancelled. This proves the central estimate.
+
+**Absolute Row-Sum Eigenvalue Theorem.** If $Av=\lambda v$ for a nonzero real vector $v$, then there is a row $i$ such that
+
+$$
+|\lambda|\le \sum_{j=1}^{n}|A_{ij}|.
+$$
+
+Consequently, if every absolute row sum is at most $B$, then every real eigenvalue satisfies
+
+$$
+|\lambda|\le B,
+$$
+
+or equivalently,
+
+$$
+-B\le\lambda\le B.
+$$
+
+This is a remarkably cheap certificate. Computing all row sums costs $O(n^2)$ arithmetic operations for a dense matrix, while a full eigenvalue computation is typically more involved. The estimate may be conservative, but it is immediate, robust, and easy to audit.
+
+Consider
+
+$$
+A=\begin{pmatrix}2&-1\\1&3\end{pmatrix}.
+$$
+
+Its absolute row sums are $3$ and $4$, so every real eigenvalue lies in $[-4,4]$. In this case the eigenvalues are not even real: they are complex conjugates. The real theorem therefore makes no nontrivial eigenvalue claim for this particular matrix, a reminder that hypotheses matter. For the symmetric matrix
+
+$$
+S=\begin{pmatrix}2&-1\\-1&2\end{pmatrix},
+$$
+
+all eigenvalues are real, the row sums are both $3$, and the eigenvalues $1$ and $3$ sit exactly inside the predicted interval.
+
+## One design pattern, three mathematical worlds
+
+The three procedures look unrelated on the surface. Tropical simplification manipulates expressions; primality testing searches finite lists; spectral estimation applies inequalities. Yet each has the same architecture.
+
+First, identify a mathematical interface whose meaning is unambiguous. In min-plus arithmetic it is the pair $\min$ and $+$. In number theory it is the existence of a proper divisor. In spectral analysis it is the eigenvalue equation together with absolute row sums.
+
+Second, isolate a small soundness theorem. Distribution preserves the value of a tropical expression. Exhaustive search agrees with the definition of primality. The maximal-coordinate argument turns an eigenvector equation into a row-sum bound.
+
+Third, let routine calculation carry the remaining load. Rewriting expands nested choices. A finite loop checks divisibility. Summing absolute values produces a spectral certificate.
+
+This pattern matters wherever decisions must be explainable. A route planner can expose the min-plus identity behind its simplification. A number-theory lesson can show exactly why a reported prime passed. A stability analysis can display the row sums that confine possible growth factors. The result is not merely an answer, but an answer accompanied by a compact mathematical reason.
+
+The limits are equally instructive. Local tropical rewriting does not yet produce unique normal forms for every min-plus polynomial. Exhaustive trial division scales poorly. Absolute row sums ignore cancellation and can overestimate the spectrum. But these limitations point naturally toward stronger methods: canonical tropical forms, square-root trial division and richer certificates, and Gershgorin discs or weighted matrix norms.
+
+Small engines are valuable because they can be understood end to end. Their reliability comes not from mystery, but from the fact that each computational move is the visible shadow of a theorem.
+
+There is a broader lesson here about trustworthy computation. A useful calculation should admit two readings: an operational reading that says what to do, and a mathematical reading that says why the result follows. The tropical rules are simultaneously an expression transformer and a statement about ordered addition. Trial division is simultaneously a loop and a quantified claim about divisors. The row-sum estimate is simultaneously a quick matrix scan and a consequence of the triangle inequality. When those two readings align, even a very small procedure can carry substantial explanatory force. It becomes reusable precisely because its assumptions, conclusion, and failure modes remain in plain view.

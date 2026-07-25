@@ -1,347 +1,392 @@
-# Verified Proof Automation for Three Recurring Patterns: Min-Plus Simplification, Reflective Primality, and Row-Sum Spectral Bounds
+# Sound Small-Scale Automation for Min-Plus Algebra, Primality, and Spectral Bounds
+
+**Aristotle**  
+**July 25, 2026**
 
 ## Abstract
 
-We present three reusable, provably sound proof-automation procedures for
-recurring patterns in algebra, number theory, and linear algebra, together
-with the soundness theorems that justify them. The first, a *min-plus
-simplifier*, reduces any identity in the tropical semiring
-$(R, \oplus, \odot)$ with $a \oplus b = \min(a,b)$ and $a \odot b = a+b$ to an
-equivalent statement over the base ordered group, exploiting the injective
-homomorphism `untrop`; we use it to derive tropical idempotency,
-distributivity, and the tropical *freshman's dream*
-$(a \oplus b)^n = a^n \oplus b^n$. The second, a *reflective primality
-decider*, implements trial division as an explicit Boolean predicate and
-proves it extensionally equal to genuine primality, yielding self-certifying
-primality (and compositeness) judgments verified by the kernel rather than by
-an opaque oracle. The third, a *spectral bounder*, encapsulates the elementary
-half of the Gershgorin circle theorem: every real eigenvalue of a matrix is
-bounded in absolute value by the maximum absolute row sum. Each procedure is
-accompanied by a soundness statement establishing that any goal it closes is
-true and any goal it produces is logically equivalent to the original. We
-further describe a fourth, cognate development — an automation toolkit for
-Fibonacci identities based on a two-term basis principle — and discuss the
-general design pattern of *sound reduction tactics*.
+This paper develops three self-contained, theorem-driven procedures for recurring mathematical tasks. The first normalizes a useful class of min-plus expressions using distributivity, idempotence, associativity, and neutral-element rules. The second decides concrete primality statements by exhaustive trial division and proves that the Boolean result is equivalent to the standard definition of a prime natural number. The third derives bounds for real eigenvalues of finite real matrices from absolute row sums by selecting a maximal coordinate of a nonzero eigenvector. Each procedure is accompanied by a complete mathematical specification, a soundness argument, representative consequences, an algorithmic description, complexity analysis, and applications. The results include two-sided tropical distributivity, three-way distribution and absorption; a correct primality decision method certifying that $97$ is prime and $91$ is composite; and the interval estimate $-B\le\lambda\le B$ whenever every absolute row sum is at most $B$ and $\lambda$ is a real eigenvalue. Together these examples illustrate a general methodology: computational steps should be organized around small theorems that expose exactly why each output is valid.
 
 ## 1. Introduction
 
-Automated tactics are the connective tissue of large formal developments. A
-single well-designed tactic can discharge a whole family of routine goals,
-sparing the human from repeating the same argument in a hundred slightly
-different guises. But automation carries a risk that ordinary lemmas do not: a
-tactic is a *program*, and a buggy program can, in principle, "prove" a false
-statement or, more insidiously, transform a goal into an inequivalent one and
-declare victory on the wrong problem.
+Many mathematical arguments contain routine subproblems that are easy in principle yet repetitive in practice. Three examples arise in notably different fields.
 
-The remedy pursued here is uniform. For each tactic we isolate a **soundness
-witness**: a theorem asserting that the reduction the tactic performs is
-faithful. Once the soundness witness is proved, the tactic is safe to apply
-anywhere, because every step it takes is backed by that theorem. We instantiate
-this discipline three times, in three unrelated domains, to show its
-generality.
+1. In tropical or min-plus algebra, nested uses of minimum and addition must be expanded and simplified.
+2. In elementary number theory, concrete natural numbers must be classified as prime or composite.
+3. In linear algebra, eigenvalues must often be bounded even when exact spectral computation is unnecessary.
 
-Throughout, we distinguish two notions of soundness for a reduction tactic
-that transforms a goal $G$ into a goal $G'$:
+A common response is to apply a specialized procedure. Such a procedure is most useful when its mathematical contract is explicit: the input domain is defined, the output has a precise interpretation, and a theorem proves that the operational test agrees with that interpretation.
 
-- **Truth-preservation**: if $G'$ is true, then $G$ is true (so closing $G'$
-  closes $G$).
-- **Equivalence**: $G \iff G'$ (so nothing is lost — a provable $G$ becomes a
-  provable $G'$).
+The present work studies three deliberately small procedures. Their scope is modest enough that their soundness arguments can be understood from first principles. The min-plus procedure uses a finite rewrite basis. The primality procedure searches every potential proper divisor below the input. The spectral procedure reduces an eigenvalue estimate to a uniform row-sum inequality. None is intended as the final word in its field. Rather, they serve as clean instances of theorem-oriented algorithm design.
 
-Our first tactic achieves full equivalence via an injective map; the second is
-an *if-and-only-if* reflection; the third is a truth-preserving application of
-a proved inequality.
+The paper is organized as follows. Section 2 fixes notation and states the design principle. Section 3 develops min-plus simplification. Section 4 proves the correctness of exhaustive primality testing. Section 5 establishes the absolute row-sum spectral bound. Section 6 presents algorithms and complexity. Section 7 gives examples and applications. Section 8 discusses limitations and composability, and Section 9 identifies future extensions.
 
-## 2. Min-Plus Simplification
+## 2. Preliminaries and methodology
 
-### 2.1 The tropical semiring
+### 2.1. Basic notation
 
-Let $R$ be a linearly ordered additive commutative monoid. The **tropical**
-(min-plus) semiring on $R$ has carrier $R$ (with a formal $+\infty$ as the
-additive identity when needed) and operations
-$$a \oplus b = \min(a,b), \qquad a \odot b = a + b.$$
-Tropical addition is idempotent, commutative, and associative; tropical
-multiplication is commutative, associative, and distributes over $\oplus$.
-Tropical exponentiation is repeated $\odot$, so $a^{\odot n} = n \cdot a$ in the
-base group.
+The natural numbers are denoted by $\mathbb N$ and the real numbers by $\mathbb R$. For $x\in\mathbb R$, its absolute value is $|x|$. If $d,n\in\mathbb N$, then $d\mid n$ means that $d$ divides $n$.
 
-We work through the standard device of a wrapper type $\mathrm{Trop}(R)$ with a
-bijection `untrop : Trop(R) → R` (and inverse `trop`) satisfying, for all
-$x, y$:
-$$\textsf{untrop}(x \oplus y) = \min(\textsf{untrop}\,x, \textsf{untrop}\,y), \qquad \textsf{untrop}(x \odot y) = \textsf{untrop}\,x + \textsf{untrop}\,y.$$
+For a positive integer $n$, an $n\times n$ real matrix is written $A=(A_{ij})$. A vector $v\in\mathbb R^n$ has coordinates $v_i$. The matrix-vector product has coordinates
 
-### 2.2 The soundness witness
+$$
+(Av)_i=\sum_{j=1}^{n}A_{ij}v_j.
+$$
 
-**Theorem 2.1 (Soundness of min-plus simplification).**
-The map $\textsf{untrop} : \mathrm{Trop}(R) \to R$ is injective, and for all
-tropical numbers $x, y$,
-$$\textsf{untrop}(x \oplus y) = \min(\textsf{untrop}\,x,\ \textsf{untrop}\,y), \qquad \textsf{untrop}(x \odot y) = \textsf{untrop}\,x + \textsf{untrop}\,y.$$
+A real number $\lambda$ is a real eigenvalue of $A$ if there exists a nonzero vector $v\in\mathbb R^n$ such that $Av=\lambda v$.
 
-*Proof sketch.* Injectivity holds because `trop` is a two-sided inverse. The
-two homomorphism identities are the definitional behavior of `untrop` on the
-tropical operations. $\qquad\blacksquare$
+### 2.2. The theorem-oriented procedure
 
-The tactic operates by (1) reducing a goal $s = t$ between tropical
-expressions to $\textsf{untrop}\,s = \textsf{untrop}\,t$ via injectivity, then
-(2) unfolding `untrop` across $\oplus$, $\odot$, powers, and units using the
-identities of Theorem 2.1. Because injectivity gives the equivalence
-$s = t \iff \textsf{untrop}\,s = \textsf{untrop}\,t$, and each unfolding is an
-equation, the resulting base-level goal is *logically equivalent* to the
-original. The reduction is therefore sound in the strong (equivalence) sense.
+Each procedure below has three layers.
 
-### 2.3 Consequences
+* A **semantic layer** defines the mathematical objects and desired proposition.
+* A **computational layer** performs finite rewriting, search, or summation.
+* A **soundness layer** proves that the computational output implies, and where appropriate is equivalent to, the semantic proposition.
 
-Over $\mathrm{Trop}(\mathbb{Z})$, the reduced goals live in the fragment of
-linear integer arithmetic over $\min$ and $+$, which is decidable.
+This separation prevents accidental overstatement. For example, a row-sum computation does not claim to produce an eigenvalue; it produces an upper bound conditional on the eigenvalue equation. Likewise, the primality procedure does not infer primality from a few failed divisions; it exhausts the stated range and uses a theorem identifying that exhaustion with primality.
 
-**Proposition 2.2 (Idempotency).** $a \oplus a = a$; equivalently
-$\min(a,a) = a$.
+## 3. Min-plus simplification
 
-**Proposition 2.3 (Distributivity).**
-$a \odot (b \oplus c) = (a \odot b) \oplus (a \odot c)$; equivalently
-$a + \min(b,c) = \min(a+b, a+c)$.
+### 3.1. Definitions
 
-**Proposition 2.4 (Unit law).** $a \odot 1 = a$, where the tropical unit is
-$\textsf{trop}\,0$.
+**Definition 3.1 (Min-plus operations).** For $a,b\in\mathbb R$, define tropical addition $\oplus$ and tropical multiplication $\otimes$ by
 
-Each of Propositions 2.2–2.4 reduces, under Theorem 2.1, to a decidable linear
-$\min/+$ statement.
+$$
+a\oplus b=\min(a,b),\qquad a\otimes b=a+b.
+$$
 
-**Theorem 2.5 (Tropical freshman's dream).** For all $n \in \mathbb{N}$ and all
-tropical $a, b$,
-$$(a \oplus b)^{\odot n} = a^{\odot n} \oplus b^{\odot n}.$$
+The use of $\mathbb R$ keeps the presentation elementary. The same basic identities hold in many linearly ordered additive structures.
 
-*Proof sketch.* Applying the soundness witness, the goal becomes
-$n \cdot \min(p,q) = \min(np, nq)$ with $p = \textsf{untrop}\,a$,
-$q = \textsf{untrop}\,b$, and $n \ge 0$. Case-split on $p \le q$ versus
-$q \le p$. In the first case, $\min(p,q) = p$ and, since scaling by the
-non-negative integer $n$ is monotone, $\min(np,nq) = np$; the second case is
-symmetric. $\qquad\blacksquare$
+Tropical addition is commutative, associative, and idempotent because minimum has those properties. Tropical multiplication is commutative and associative because ordinary addition has those properties. The interaction between the two operations is distributive.
 
-Theorem 2.5 marks a precise boundary: the identity involves the product
-$n \cdot (\cdot)$ and is therefore *not* in the linear $\min/+$ fragment, so it
-requires the extra ingredient of monotonicity of scaling. Notably, the result
-*fails* if $n$ is permitted to be negative, since scaling by a negative number
-reverses order — a caveat that the hypothesis $n \ge 0$ makes explicit.
+### 3.2. Certified rewrite basis
 
-## 3. Reflective Small-Case Primality
+**Theorem 3.2 (Left tropical distributivity).** For all $a,b,c\in\mathbb R$,
 
-### 3.1 An explicit trial-division predicate
+$$
+a\otimes(b\oplus c)=(a\otimes b)\oplus(a\otimes c).
+$$
 
-We implement trial division as a concrete Boolean function. Say $n$ **has a
-proper divisor** when there exists $d$ with $2 \le d < n$ and $d \mid n$;
-computationally, this is a scan over $d \in \{0, 1, \dots, n-1\}$ testing
-$2 \le d$ and $d \mid n$. Define the Boolean trial-division test
-$$\textsf{trialPrime}(n) = (2 \le n) \ \wedge\ \neg\,\textsf{hasProperDivisor}(n).$$
+**Proof sketch.** Expanding the definitions reduces the assertion to
 
-**Lemma 3.1 (Divisor characterization).**
-$\textsf{hasProperDivisor}(n) = \textsf{true} \iff \exists\, d,\ 2 \le d \wedge d < n \wedge d \mid n.$
+$$
+a+\min(b,c)=\min(a+b,a+c).
+$$
 
-*Proof sketch.* Unfold the scan (a bounded existential over a finite range)
-and reconcile the ordering of conjuncts; the list-membership condition matches
-the bounded existential term-for-term. $\qquad\blacksquare$
+If $b\le c$, both sides equal $a+b$; if $c\le b$, both sides equal $a+c$. Equivalently, translation by $a$ is order-preserving. $\square$
 
-### 3.2 The soundness theorem
+**Theorem 3.3 (Right tropical distributivity).** For all $a,b,c\in\mathbb R$,
 
-**Theorem 3.2 (Correctness of trial division).**
-For every natural number $n$,
-$$\textsf{trialPrime}(n) = \textsf{true} \iff n \text{ is prime}.$$
+$$
+(a\oplus b)\otimes c=(a\otimes c)\oplus(b\otimes c).
+$$
 
-*Proof sketch.* Recall the elementary characterization: $n$ is prime iff
-$2 \le n$ and every $m$ with $m < n$ dividing $n$ satisfies $m = 1$. Unfolding
-$\textsf{trialPrime}$ and applying Lemma 3.1, the Boolean statement says
-$2 \le n$ together with the *absence* of any $d$ satisfying
-$2 \le d < n,\ d \mid n$. The forward direction shows that no such $d$ forces
-every proper divisor to be $1$; the backward direction shows that primality
-forbids any such $d$. Both directions are finite logical manipulations bridging
-the bounded quantifier and the negated existential. $\qquad\blacksquare$
+**Proof sketch.** Commute the ordinary sum to write $(a\oplus b)\otimes c=c\otimes(a\oplus b)$, apply left distributivity, and commute each resulting sum. $\square$
 
-Theorem 3.2 is the soundness witness for the tactic. The tactic proves a goal
-"$n$ is prime" by *reflection*: it rewrites the goal along Theorem 3.2 to
-"$\textsf{trialPrime}(n) = \textsf{true}$" and then evaluates the closed Boolean
-by kernel-checked computation. Crucially, no unverified oracle is trusted —
-the equivalence itself is a proved theorem, so the reflective step is fully
-justified. The same tactic certifies *compositeness*, since it also decides the
-negation.
+**Lemma 3.4 (Tropical idempotence).** For every $a\in\mathbb R$,
 
-### 3.3 Examples
+$$
+a\oplus a=a.
+$$
 
-The tactic discharges, e.g., "$97$ is prime," "$101$ is prime," and
-"$91$ is not prime" (as $91 = 7 \times 13$), each as a kernel-verified
-computation. The design is deliberately conservative: it uses only trusted
-reduction, never an unchecked fast path, so the primality certificate is
-audited by the same core that checks the rest of the development.
+**Proof sketch.** This is the identity $\min(a,a)=a$. $\square$
 
-### 3.4 Scope and cost
+Theorems 3.2 and 3.3 together with Lemma 3.4 constitute the central rewrite basis. The ordinary identities $a+0=0+a=a$ and the associativity of minimum supplement the basis when expressions are normalized.
 
-Trial division as stated scans candidate divisors up to $n$; a standard
-optimization truncates the scan at $\lfloor\sqrt{n}\rfloor$, since a composite
-number always has a nontrivial factor at or below its square root. For the
-small-case regime the tactic targets, correctness and auditability dominate
-raw speed, and the simple scan keeps the soundness proof maximally
-transparent.
+**Corollary 3.5 (Soundness of the rewrite basis).** Every replacement of a subexpression by the opposite side of one of the following identities preserves its real value:
 
-## 4. Row-Sum Spectral Bounds
+$$
+\begin{aligned}
+a\otimes(b\oplus c)&=(a\otimes b)\oplus(a\otimes c),\\
+(a\oplus b)\otimes c&=(a\otimes c)\oplus(b\otimes c),\\
+a\oplus a&=a,\\
+a\otimes0&=a,\qquad 0\otimes a=a.
+\end{aligned}
+$$
 
-### 4.1 Setup
+**Proof sketch.** The first three equations are Theorems 3.2, 3.3 and Lemma 3.4. The last two expand to the ordinary additive neutral-element laws. Replacing equal subexpressions within a larger expression preserves equality. $\square$
 
-Let $A$ be an $n \times n$ real matrix. A scalar $\lambda \in \mathbb{R}$ is a
-**(real) eigenvalue** of $A$ if there is a nonzero vector $v$ with
-$Av = \lambda v$. The **absolute row sum** of row $i$ is
-$\sum_j |A_{ij}|$.
+### 3.3. Recursive examples
 
-### 4.2 The existential form
+**Theorem 3.6 (Three-way tropical distribution).** For all $a,b,c,d\in\mathbb R$,
 
-**Theorem 4.1 (Row-sum dominates an eigenvalue).**
-If $\lambda$ is a real eigenvalue of $A$ with eigenvector $v \ne 0$, then there
-is a row index $i_0$ with
-$$|\lambda| \le \sum_j |A_{i_0 j}|.$$
+$$
+a\otimes\bigl((b\oplus c)\oplus d\bigr)
+=(a\otimes b)\oplus\bigl((a\otimes c)\oplus(a\otimes d)\bigr).
+$$
 
-*Proof sketch.* Since $v \ne 0$, the finite index set is nonempty and some
-coordinate is nonzero; choose $i_0$ maximizing $|v_{i_0}|$, so
-$|v_i| \le |v_{i_0}|$ for all $i$ and $|v_{i_0}| > 0$. The $i_0$-th row of
-$Av = \lambda v$ gives $\lambda\, v_{i_0} = \sum_j A_{i_0 j} v_j$. Taking
-absolute values and using the triangle inequality,
-$$|\lambda|\,|v_{i_0}| = \Big|\sum_j A_{i_0 j} v_j\Big| \le \sum_j |A_{i_0 j}|\,|v_j| \le \Big(\sum_j |A_{i_0 j}|\Big)\,|v_{i_0}|,$$
-the last inequality by $|v_j| \le |v_{i_0}|$ and non-negativity of
-$|A_{i_0 j}|$. Dividing by $|v_{i_0}| > 0$ yields the claim.
-$\qquad\blacksquare$
+**Proof sketch.** Apply left distributivity to the outer choice:
 
-### 4.3 The uniform bound (soundness witness)
+$$
+a\otimes((b\oplus c)\oplus d)
+=(a\otimes(b\oplus c))\oplus(a\otimes d).
+$$
 
-**Theorem 4.2 (Uniform row-sum eigenvalue bound).**
-If every absolute row sum of $A$ is at most $B$ — that is, $\sum_j |A_{ij}| \le
-B$ for all $i$ — then every real eigenvalue $\lambda$ of $A$ (with a nonzero
-eigenvector) satisfies
-$$|\lambda| \le B.$$
+Apply left distributivity again to $a\otimes(b\oplus c)$, then reassociate minimum. $\square$
 
-*Proof sketch.* Apply Theorem 4.1 to obtain a row $i_0$ with
-$|\lambda| \le \sum_j |A_{i_0 j}|$, then chain with the hypothesis
-$\sum_j |A_{i_0 j}| \le B$. $\qquad\blacksquare$
+**Theorem 3.7 (Tropical absorption after common-factor distribution).** For all $a,b\in\mathbb R$,
 
-Theorem 4.2 is the soundness witness for the spectral-bounding tactic. The
-tactic reduces a goal "$|\lambda| \le B$" (given an eigenpair) to the
-per-row obligations "$\sum_j |A_{ij}| \le B$." Because the tactic is a direct
-application of a proved theorem, any bound it certifies is correct. The bound
-is the accessible half of the Gershgorin circle theorem — the $\infty$-operator
-norm estimate — and is vacuous only if no eigenvector exists, which the
-nonzeroness hypothesis excludes.
+$$
+(a\otimes b)\oplus\bigl(a\otimes(b\oplus b)\bigr)=a\otimes b.
+$$
 
-### 4.4 A worked instance
+**Proof sketch.** By idempotence, $b\oplus b=b$. Hence the left-hand side becomes $(a\otimes b)\oplus(a\otimes b)$, which equals $a\otimes b$ by idempotence once more. One may alternatively distribute the common factor first and remove duplicate minima. $\square$
 
-If every absolute row sum of $A$ is at most $5$, then every real eigenvalue of
-$A$ has magnitude at most $5$. This follows immediately from Theorem 4.2 with
-$B = 5$.
+### 3.4. Scope of normalization
 
-## 5. A Cognate Development: Fibonacci Identities by a Two-Term Basis
+The rewrite system soundly expands tropical products over finite minima and removes immediate duplication and neutral additions. Soundness means that every produced equality is valid. It does not by itself imply that every pair of equivalent min-plus expressions is reduced to a unique canonical string. Full decision procedures for min-plus polynomials require a richer syntax, careful treatment of dominated monomials, and a uniqueness theorem for normal forms.
 
-The same "sound reduction" philosophy powers a fourth toolkit, for identities
-among Fibonacci numbers $F_n$. Its engine is the **two-term basis principle**:
-for a fixed base $n$, every shifted value $F_{n+k}$ is a fixed
-$\mathbb{N}$-linear combination of the two coordinates $F_n$ and $F_{n+1}$.
-Concretely,
-$$F_{n+(k+1)} = F_k\, F_n + F_{k+1}\, F_{n+1}.$$
+## 4. Reflected trial division for primality
 
-**Consequence (single-base reduction).** Any single-base polynomial identity in
-shifted Fibonacci values becomes a formal polynomial identity in the two atoms
-$F_n, F_{n+1}$ and is decided by ring normalization. Examples closed this way:
-$$F_{n+5} = 3F_n + 5F_{n+1}, \qquad F_{n+7} = 8F_n + 13F_{n+1}, \qquad F_{n+2}^2 = F_{n+1}^2 + F_n F_{n+3}.$$
+### 4.1. Definitions
 
-**Parity identities** depend on the sign $(-1)^n$, which is not a polynomial in
-$(F_n, F_{n+1})$; these need exactly one induction step. The archetype is
-**Cassini's identity**,
-$$F_{n+2} F_n - F_{n+1}^2 = (-1)^{n+1}.$$
+**Definition 4.1 (Proper divisor in the trial range).** For $n\in\mathbb N$, a number $d$ is a proper trial divisor of $n$ if
 
-**Two-base identities** reduce to Cassini by substituting the closed form. For
-example, **d'Ocagne's identity**
-$$F_{n+k} F_{n+1} - F_{n+k+1} F_n = (-1)^n F_k$$
-and **Catalan's identity**
-$$F_{n+r}^2 - F_n F_{n+2r} = (-1)^n F_r^2$$
-each become a Fibonacci multiple of the Cassini expression
-$F_{n+1}^2 - F_n F_{n+2}$. The toolkit also yields the doubling formulas
-$$F_{2n+1} = F_{n+1}^2 + F_n^2, \qquad F_{2n} = F_n\,(2F_{n+1} - F_n),$$
-the partial sums
-$$\sum_{i<n} F_i = F_{n+1} - 1, \qquad \sum_{i \le n} F_i^2 = F_n F_{n+1},$$
-and the strong divisibility law
-$$\gcd(F_m, F_n) = F_{\gcd(m,n)}.$$
+$$
+2\le d<n\quad\text{and}\quad d\mid n.
+$$
 
-This development illustrates the same three-tier structure seen above: a
-*reduction* to a decidable fragment (here, polynomial identities in two atoms),
-a clearly delimited *boundary* where an extra idea is needed (parity, requiring
-induction), and *derived* results that reduce to a single hard core (Cassini).
+**Definition 4.2 (Proper-divisor search).** The proper-divisor search for $n$ inspects each $d\in\{0,1,\ldots,n-1\}$ and returns true exactly when at least one inspected $d$ satisfies $2\le d$ and $d\mid n$.
 
-## 6. Discussion
+The inclusion of $0$ and $1$ in the enumerated list is harmless because the predicate explicitly requires $2\le d$.
 
-The three primary procedures share a template worth naming explicitly.
+**Definition 4.3 (Exhaustive trial-primality test).** The trial-primality test returns true exactly when $2\le n$ and the proper-divisor search for $n$ returns false.
 
-1. **Identify a faithful reduction.** For min-plus, an injective homomorphism
-   to the base group; for primality, an if-and-only-if between a computable
-   Boolean and the mathematical predicate; for eigenvalues, an application of a
-   proved inequality.
-2. **Prove the soundness witness once.** Theorems 2.1, 3.2, and 4.2 are the
-   respective guarantees.
-3. **Let the tactic be a thin wrapper.** The tactic performs only the reduction
-   plus a routine finisher (linear arithmetic; kernel evaluation; a residual
-   inequality check). Because it does nothing the soundness witness does not
-   license, it cannot certify a falsehood.
+**Definition 4.4 (Prime natural number).** A natural number $n$ is prime if $2\le n$ and every divisor $m$ with $2\le m<n$ fails to divide $n$.
 
-This separation of concerns — heavy mathematics in a one-time theorem, light
-mechanics in the tactic — is what makes verified automation both trustworthy
-and reusable.
+This bounded-divisor formulation is equivalent to the usual assertion that the positive divisors are exactly $1$ and $n$.
 
-A recurring theme is the *boundary of easy automation*. The min-plus simplifier
-handles everything in the linear $\min/+$ fragment for free; the freshman's
-dream sits just outside it, requiring monotonicity. The Fibonacci toolkit
-handles single-base identities by pure ring reasoning; parity identities sit
-just outside, requiring one induction. Recognizing these boundaries precisely
-is itself a mathematical result about *what can be automated cheaply*.
+### 4.2. Search semantics
 
-## 7. Future Directions
+**Lemma 4.5 (Proper-divisor search characterization).** For every $n\in\mathbb N$, the proper-divisor search returns true if and only if there exists $d\in\mathbb N$ such that
 
-**A canonical Horner factorization for tropical polynomials.** We conjecture
-that every univariate max-plus polynomial of degree $d$, written as
-$\max_{k \le d}(a_k + kx)$, admits a unique nested factorization
-$a_0 \oplus x \odot (a_1 \oplus x \odot (a_2 \oplus \cdots))$ evaluating in
-exactly $d$ tropical additions and $d$ tropical multiplications — the min-plus
-analogue of Horner's rule — with no shorter straight-line evaluation possible.
-The two-sided distributivity of ordinary addition over $\max$ is enough to
-collapse any max-of-affine expression into a single nested form, transporting
-the classical arithmetic-circuit theory of polynomial evaluation to the
-tropical world. Because tropical polynomials are the exact algebra of
-piecewise-linear activation networks, an optimal canonical evaluation order
-directly bounds the number of comparison-and-add operations such networks need.
+$$
+2\le d<n\quad\text{and}\quad d\mid n.
+$$
 
-**Optimality of trial division among divisor-scan certificates.** We conjecture
-that among all primality tests certifying $n$ by exhibiting the absence of a
-proper divisor in an explicitly scanned range, the scan can always be truncated
-at $\lfloor\sqrt{n}\rfloor$ without loss, and no certificate of this shape can
-inspect asymptotically fewer than $\sqrt{n}/\log n$ candidate divisors on
-infinitely many $n$. A composite number always has a nontrivial factor at or
-below its square root, so the witness to compositeness lives in a range of size
-$\sqrt{n}$, while primes force the scan to rule out every prime below
-$\sqrt{n}$, pinning the lower bound to the density of primes. Understanding the
-minimal certificate size sharpens the cost model for self-certifying
-number-theoretic procedures in verified cryptographic libraries.
+**Proof sketch.** A finite existential search returns true precisely when one member of its enumerated list satisfies its predicate. Membership in the list $\{0,1,\ldots,n-1\}$ is equivalent to $d<n$. Combining this with the two predicate clauses yields the displayed existential statement. The reverse direction inserts any witness $d$ into the list and observes that its predicate evaluates to true. $\square$
 
-**Exact tightness of row-sum bounds.** We conjecture that the bound
-$|\lambda| \le \max_i \sum_j |A_{ij}|$ is attained by an eigenvalue of $A$ if
-and only if, after a diagonal sign change, some maximal row is a non-negative
-multiple of a common probability vector shared by all maximal rows;
-equivalently, equality forces the extremal eigenvector to be constant in
-modulus across the support of the maximal rows. Equality in the triangle
-inequality used to prove the bound demands perfect phase alignment of the
-eigenvector entries, rigidly constraining the maximal rows to a
-scaled-stochastic shape. Since spectral radius controls the stability of
-iterated linear dynamics, characterizing exact tightness sharpens stability
-thresholds for such systems.
+### 4.3. Correctness theorem
 
-## 8. Conclusion
+**Theorem 4.6 (Correctness of exhaustive trial primality).** For every $n\in\mathbb N$, the trial-primality test returns true if and only if $n$ is prime.
 
-We have exhibited three provably sound automation procedures — a min-plus
-simplifier, a reflective primality decider, and a row-sum spectral bounder —
-each reducing a family of routine goals to a decidable or directly checkable
-core, and each backed by an explicit soundness theorem. A fourth, cognate
-toolkit for Fibonacci identities reinforces the pattern. The unifying lesson is
-methodological: trustworthy automation is built by proving, once, that a
-reduction is faithful, and then letting the tactic do nothing more than that
-reduction. This keeps the mathematics honest and the shortcuts safe.
+**Proof sketch.** Suppose first that the test returns true. Then $2\le n$, and the proper-divisor search returns false. If a number $m$ satisfied $2\le m<n$ and $m\mid n$, Lemma 4.5 would force the search to return true, a contradiction. Thus $n$ is prime by Definition 4.4.
+
+Conversely, suppose $n$ is prime. Then $2\le n$. If the proper-divisor search returned true, Lemma 4.5 would supply $m$ with $2\le m<n$ and $m\mid n$, contradicting primality. The search therefore returns false, so the trial-primality test returns true. $\square$
+
+**Corollary 4.7 (Certificate for $97$).** The number $97$ is prime.
+
+**Proof sketch.** Evaluate the exhaustive trial-primality test at $97$. No integer $d$ with $2\le d<97$ divides $97$, so the test returns true. Theorem 4.6 transfers this result to primality. A shorter hand calculation need only test through $\lfloor\sqrt{97}\rfloor=9$, but the present procedure deliberately uses the full certified range. $\square$
+
+**Corollary 4.8 (Certificate for $91$).** The number $91$ is not prime.
+
+**Proof sketch.** The proper divisor $7$ satisfies $2\le7<91$ and $7\mid91$, since $91=7\cdot13$. By Lemma 4.5 the divisor search succeeds, so the trial-primality test returns false. Theorem 4.6 implies that $91$ is not prime. $\square$
+
+**Corollary 4.9 (Distinctness).** The natural numbers $97$ and $91$ are distinct.
+
+**Proof sketch.** If they were equal, primality of $97$ would imply primality of $91$, contradicting Corollary 4.8. $\square$
+
+### 4.4. Positive and negative certificates
+
+The procedure highlights an asymmetry. Compositeness admits a short witness: one proper divisor. Primality under exhaustive trial division is certified by the absence of witnesses throughout a finite range. The correctness theorem makes both outcomes meaningful. For small inputs, the directness of the evidence is often more valuable than asymptotic efficiency.
+
+## 5. Absolute row-sum spectral estimates
+
+### 5.1. Definitions
+
+Let $A\in\mathbb R^{n\times n}$. For row $i$, define the absolute row sum
+
+$$
+r_i(A)=\sum_{j=1}^{n}|A_{ij}|.
+$$
+
+Define the maximum absolute row sum, also known as the induced infinity norm, by
+
+$$
+\|A\|_\infty=\max_{1\le i\le n}r_i(A).
+$$
+
+The goal is to bound real eigenvalues using these quantities.
+
+### 5.2. A maximal coordinate
+
+**Lemma 5.1 (Existence of a positive maximal coordinate).** Let $v\in\mathbb R^n$ be nonzero. Then there exists an index $i_0$ such that
+
+$$
+0<|v_{i_0}|
+\quad\text{and}\quad
+|v_i|\le|v_{i_0}|\ \text{for every }i.
+$$
+
+**Proof sketch.** The finite set $\{|v_1|,\ldots,|v_n|\}$ has a maximum. Choose $i_0$ attaining it. If $|v_{i_0}|=0$, maximality and nonnegativity imply $|v_i|=0$ for every $i$, hence $v=0$, contrary to hypothesis. $\square$
+
+The positivity clause is essential because the final argument divides by $|v_{i_0}|$.
+
+### 5.3. A witnessing row
+
+**Theorem 5.2 (A row bounds a real eigenvalue).** Let $A\in\mathbb R^{n\times n}$, let $\lambda\in\mathbb R$, and let $v\in\mathbb R^n$ be nonzero with $Av=\lambda v$. Then there exists a row $i$ such that
+
+$$
+|\lambda|\le r_i(A)=\sum_{j=1}^{n}|A_{ij}|.
+$$
+
+**Proof sketch.** Choose $i_0$ from Lemma 5.1. The $i_0$-th coordinate of $Av=\lambda v$ gives
+
+$$
+\lambda v_{i_0}=\sum_{j=1}^{n}A_{i_0j}v_j.
+$$
+
+The triangle inequality and multiplicativity of absolute value yield
+
+$$
+|\lambda|\,|v_{i_0}|
+\le\sum_{j=1}^{n}|A_{i_0j}|\,|v_j|.
+$$
+
+By maximality, $|v_j|\le|v_{i_0}|$ for every $j$. Since each $|A_{i_0j}|$ is nonnegative,
+
+$$
+\sum_{j=1}^{n}|A_{i_0j}|\,|v_j|
+\le\sum_{j=1}^{n}|A_{i_0j}|\,|v_{i_0}|
+=r_{i_0}(A)|v_{i_0}|.
+$$
+
+Thus $|\lambda||v_{i_0}|\le r_{i_0}(A)|v_{i_0}|$. Because $|v_{i_0}|>0$, cancellation gives $|\lambda|\le r_{i_0}(A)$. $\square$
+
+### 5.4. Uniform and interval forms
+
+**Theorem 5.3 (Uniform absolute row-sum bound).** Under the hypotheses of Theorem 5.2, suppose additionally that a real number $B$ satisfies
+
+$$
+r_i(A)\le B\quad\text{for every row }i.
+$$
+
+Then
+
+$$
+|\lambda|\le B.
+$$
+
+**Proof sketch.** Theorem 5.2 supplies a row $i$ with $|\lambda|\le r_i(A)$. The uniform hypothesis gives $r_i(A)\le B$. Transitivity proves the claim. $\square$
+
+**Corollary 5.4 (Symmetric interval estimate).** Under the hypotheses of Theorem 5.3,
+
+$$
+-B\le\lambda\le B.
+$$
+
+**Proof sketch.** For real numbers, $|\lambda|\le B$ is equivalent to the conjunction $-B\le\lambda$ and $\lambda\le B$. $\square$
+
+The theorem concerns real eigenvalues and real eigenvectors. For a real symmetric matrix every eigenvalue is real, so the interval contains the entire spectrum. A complex generalization is natural but requires complex absolute values and a corresponding finite-dimensional argument.
+
+## 6. Algorithms and computational complexity
+
+### 6.1. Min-plus rewrite normalization
+
+The input is an expression tree whose internal nodes are $\oplus$ and $\otimes$ and whose leaves are real constants or variables. The procedure recursively visits subexpressions, distributes a tropical product over a tropical sum when one matches the rewrite basis, removes repeated operands of a minimum, removes additive zeros, and reassociates nested minima into a chosen orientation.
+
+Every rewrite is value-preserving by Corollary 3.5. If the procedure merely traverses and simplifies without aggressive distribution, its running time is linear in the expression-tree size. Full distribution can cause exponential output growth, exactly as expansion of ordinary products of sums can. Thus complexity is best measured relative to the produced normal expression: the traversal overhead is linear in input plus output size.
+
+### 6.2. Exhaustive trial-primality decision
+
+For input $n$, reject immediately if $n<2$. Otherwise loop over $d=2,3,\ldots,n-1$. If $n$ modulo $d$ is zero, return composite with witness $d$. If the loop ends, return prime.
+
+The algorithm performs at most $n-2$ divisibility tests, hence $O(n)$ tests and $O(1)$ auxiliary storage beyond the output witness. Bit complexity depends on the cost of division on $O(\log n)$-bit integers. The full-range search mirrors Theorem 4.6 exactly. A standard optimization tests only through $\lfloor\sqrt n\rfloor$, but its use requires the complementary-factor lemma: if $n$ is composite, one factor is at most $\sqrt n$.
+
+### 6.3. Absolute row-sum spectral certificate
+
+For an $n\times n$ matrix, compute $r_i(A)$ for every row and return
+
+$$
+B=\max_i r_i(A).
+$$
+
+Then every real eigenvalue lies in $[-B,B]$. For a dense matrix this requires $n^2$ absolute values and approximately $n(n-1)$ additions, so the arithmetic complexity is $O(n^2)$ and the auxiliary memory can be $O(1)$ if rows are streamed. For a sparse matrix with $m$ nonzero entries, the computation is $O(m+n)$.
+
+The certificate consists of the displayed row sums and their maximum. It does not require computing an eigenvector or eigenvalue. If a claimed eigenpair is available, Theorem 5.2 also identifies the conceptual witnessing row: choose a coordinate where the eigenvector has maximal magnitude.
+
+## 7. Numerical examples and applications
+
+### 7.1. Shortest-path and scheduling arithmetic
+
+Suppose a common initial stage costs $4$, followed by one of three alternatives costing $7$, $2$, and $5$. Tropical evaluation before distribution gives
+
+$$
+4\otimes((7\oplus2)\oplus5)=4+\min(\min(7,2),5)=6.
+$$
+
+After distribution,
+
+$$
+(4+7)\oplus((4+2)\oplus(4+5))=11\oplus(6\oplus9)=6.
+$$
+
+The equality expresses a basic dynamic-programming principle: a common prefix cost may be moved across a choice without changing the optimal total.
+
+The absorption theorem models duplicate alternatives. If two branches have the same downstream cost $b$, retaining both does not change the minimum. Such simplifications appear in shortest-path recurrences, discrete-event systems, scheduling, and certain optimization problems.
+
+### 7.2. Concrete number classification
+
+For $n=97$, the exhaustive procedure checks all $d$ from $2$ to $96$. None has zero remainder, so $97$ is prime. For $n=91$, the search stops at $d=7$ because $91\bmod7=0$, producing the factorization witness $91=7\cdot13$.
+
+The procedure can be used pedagogically because the output has an immediate logical interpretation. A composite report includes a divisor. A prime report asserts that every candidate in a stated finite interval was rejected, and Theorem 4.6 explains why this interval is sufficient under the adopted definition.
+
+### 7.3. Matrix stability screening
+
+Consider the symmetric tridiagonal matrix
+
+$$
+A=\begin{pmatrix}
+2&-1&0\\
+-1&2&-1\\
+0&-1&2
+\end{pmatrix}.
+$$
+
+Its absolute row sums are $3$, $4$, and $3$. Therefore every real eigenvalue lies in $[-4,4]$. Since $A$ is symmetric, all its eigenvalues are real, so the entire spectrum is enclosed. In fact the eigenvalues are approximately $0.586$, $2$, and $3.414$.
+
+For a discrete-time iteration $x_{k+1}=Ax_k$, a row-sum bound below $1$ would guarantee that every real eigenvalue has magnitude below $1$. For general real matrices, complex eigenvalues also matter for stability; extending the theorem to complex eigenvalues recovers the familiar spectral-radius estimate $\rho(A)\le\|A\|_\infty$. Even in its real form, the result provides an inexpensive screening test and is exact for some matrices, including diagonal matrices and matrices whose dominant eigenvector aligns with the inequality chain.
+
+## 8. Discussion
+
+### 8.1. What soundness supplies
+
+The central benefit of each soundness theorem is a clear boundary between calculation and interpretation.
+
+* A tropical simplification is justified because every rewrite relates equal real-valued expressions.
+* A primality result is justified because the Boolean search is equivalent to the quantified divisor definition.
+* A spectral bound is justified because the eigenvalue equation, triangle inequality, maximal coordinate, and row bound compose into a short chain.
+
+This organization makes procedures auditable and composable. If a larger argument requires a tropical identity, a small primality fact, or a real eigenvalue estimate, it can consume the result through the corresponding theorem without repeating low-level work.
+
+### 8.2. Limitations
+
+The tropical procedure is a rewrite simplifier, not yet a complete equivalence decision method. Different rewrite orders may produce syntactically different but equal expressions, and expansion may increase size dramatically.
+
+Exhaustive trial division is appropriate only for small concrete inputs. Its linear number of divisor tests is inferior to square-root trial division and far inferior to advanced primality algorithms for large integers. Its value is foundational clarity rather than scale.
+
+The row-sum spectral bound can be loose because absolute values erase cancellation. It is centered at zero and therefore ignores diagonal location information that Gershgorin discs retain. The stated theorem is also restricted to real eigenpairs.
+
+### 8.3. A unified dispatcher
+
+Because the three procedures have distinct goal shapes, they can be selected by structure. Expressions built from minimum and addition invite tropical rewriting. Concrete claims about primality invite finite divisor evaluation. Eigenvalue inequalities accompanied by a uniform row-sum hypothesis invite the spectral theorem. A compositional system should report not only the result but also the applicable theorem and the generated evidence: rewrites, divisor or exhausted range, or row sums.
+
+## 9. Future work
+
+Several extensions arise directly from the present limitations.
+
+1. **Tropical normal forms.** Replace local rewriting with a reflected syntax for finite min-plus polynomials, prove that normalization preserves evaluation, and establish uniqueness of canonical antichain normal forms. This would decide substantially more identities.
+
+2. **Faster primality certificates.** Restrict trial division to $d\le\sqrt n$, prove the complementary-factor lemma, and add certificate-producing support for divisibility, coprimality, congruences, and bounded Diophantine goals.
+
+3. **Richer spectral certificates.** Generalize from real square matrices to complex matrices and arbitrary finite index sets. Add Gershgorin discs centered at $A_{ii}$, column-sum bounds, weighted norms, and strict diagonal-dominance criteria for nonsingularity.
+
+4. **Composable procedure selection.** Recognize the mathematical shape of a problem and invoke the corresponding certified procedure while retaining a trace of the exact theorem and evidence used.
+
+5. **Performance evaluation.** Assemble representative benchmark families and measure success, expression growth, and running time against direct simplification and theorem application.
+
+## 10. Conclusion
+
+Three elementary procedures illustrate a common approach to dependable mathematical computation. Min-plus rewriting rests on distributivity and idempotence. Exhaustive trial division rests on an exact equivalence between finite search and primality. Absolute row sums bound real eigenvalues through a maximal coordinate and the triangle inequality. Each procedure has a transparent input, output, proof of soundness, and complexity profile.
+
+The broader principle is that routine automation is strongest when its mathematical meaning is visible. A rewrite should cite an equality, a decision should correspond to a logical characterization, and a numerical bound should expose the inequalities that support it. Such procedures may be small, but they form reliable components for larger arguments in optimization, number theory, and linear algebra.
