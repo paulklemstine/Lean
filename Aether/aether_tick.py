@@ -2056,6 +2056,14 @@ def rebuild_commit_push() -> bool:
             if sf_path.exists():
                 subprocess.run(["git", "add", "-f", sf], cwd=str(REPO_ROOT), capture_output=True, timeout=120)
 
+        # Stage root index and HTML files
+        for _f in ("index.html", "Packages/index.html", "docs/index.html", "README.md"):
+            if (REPO_ROOT / _f).exists():
+                subprocess.run(["git", "add", _f], cwd=str(REPO_ROOT), capture_output=True, timeout=30)
+
+        # Stage all modified tracked files to ensure clean commits without stash conflicts
+        subprocess.run(["git", "add", "-u"], cwd=str(REPO_ROOT), capture_output=True, timeout=60)
+
         diff = subprocess.run(
             ["git", "diff", "--cached", "--quiet"],
             cwd=str(REPO_ROOT), capture_output=True, timeout=120

@@ -90,7 +90,7 @@ jobs:
         run: |
           df -h
           echo "Finding largest directories in workspace:"
-          du -ah --max-depth=2 | sort -rh | head -n 15
+          (du -ah --max-depth=2 | sort -rh | head -n 15) || true
 
       - name: Update website index
         run: |
@@ -112,10 +112,3 @@ jobs:
           git diff --cached --quiet || git commit -m "Aether CI: tick $(date -u +%Y-%m-%dT%H:%MZ)"
           git pull --rebase -X ours origin master || git rebase --abort
           git push
-
-      - name: Update catalog-lean branch
-        run: |
-          bash Aether/.aether_workspace/update-catalog-branch.sh
-          # The local pre-commit hook may have already pushed catalog-lean.
-          # Force-push is safe because the branch is fully derived from master.
-          git push --force origin catalog-lean || true
