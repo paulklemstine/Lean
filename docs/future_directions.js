@@ -4943,7 +4943,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Lambda Calculus: Church-Rosser and Normalization"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1aa4bedd",
     "description": "Formalize the PAC-Bayes framework in Lean 4. Prove the Catoni bound and McAllester bound. Apply to neural networks via Gaussian perturbation priors. Prove that PAC-Bayes bounds are asymptotically tight for linear classifiers.",
     "domains": [
       "MachineLearning",
@@ -4951,10 +4951,11 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "id": "fd_0685",
+    "phase": "A",
     "priority_score": 0.84,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-24T14:34:16.697831+00:00",
     "title": "PAC-Bayes Generalization Bounds"
   },
