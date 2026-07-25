@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "4505be0f",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions\n\n## 1. Sharp remainder bounds for arbitrary observation windows\n\n**Conjecture.** Let a periodic Born-probability sequence have period `k`. For every observation length `N`, its Ces",
-      "quality_score": 0.77,
-      "sorry_count": 0,
-      "theorem_count": 5,
-      "timestamp": "2026-07-20T20:48:25",
-      "title": "Deepening: Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
-    },
-    {
       "cycle_id": "2f321176",
       "domain": "NumberTheory",
       "key_insight": "# Future Directions: Arithmetic Coherence Transitions\n\nThe conjectures below are ranked by expected scientific impact. Each proposal separates a measurable arithmetic statistic from the choice of a ph",
@@ -499,19 +489,19 @@
       "theorem_count": 19,
       "timestamp": "2026-07-25T15:27:37",
       "title": "Proof Automation: Custom Lean 4 Tactics"
+    },
+    {
+      "cycle_id": "2ae125a9",
+      "domain": "Pythagorean",
+      "key_insight": "# Future directions\n\n## 1. Exact restricted sumset intervals\n\nFor the distinct-summand trajectory `1,2,4,7,10,…`, determine an exact union-of-intervals description of the sums formed from the first `n",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 17,
+      "timestamp": "2026-07-25T15:47:33",
+      "title": "The repaired repeated-summand rule is now completely classified: its unique traj"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "4c2c71e5",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions\n\n- Replace the impossible global condition over all irrational frequencies by a condition excluding a fixed neighborhood of the integer resonances. Continuity forces values near th",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 46,
-      "timestamp": "2026-07-19T02:44:51",
-      "title": "The Fourier Analysis of Collatz: Spectral Gaps in the 3n+1 Map"
-    },
     {
       "cycle_id": "c2f98a25",
       "domain": "NumberTheory",
@@ -2501,27 +2491,19 @@
       "theorem_count": 13,
       "timestamp": "2026-07-25T15:27:41",
       "title": "Tropical Hodge Theory"
+    },
+    {
+      "cycle_id": "2ae125a9",
+      "domain": "Pythagorean",
+      "key_insight": "# Future directions\n\n## 1. Exact restricted sumset intervals\n\nFor the distinct-summand trajectory `1,2,4,7,10,…`, determine an exact union-of-intervals description of the sums formed from the first `n",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 17,
+      "timestamp": "2026-07-25T15:47:33",
+      "title": "The repaired repeated-summand rule is now completely classified: its unique traj"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "3511fbf3",
-      "domain": "Computation",
-      "name": "is",
-      "quality": 0.73
-    },
-    {
-      "cycle_id": "3511fbf3",
-      "domain": "Computation",
-      "name": "tangled_iff_two_cycle",
-      "quality": 0.73
-    },
-    {
-      "cycle_id": "3511fbf3",
-      "domain": "Computation",
-      "name": "wellFounded_not_tangled",
-      "quality": 0.73
-    },
     {
       "cycle_id": "3dce6722",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Logic",
       "name": "encoding_separation",
       "quality": 0.74
+    },
+    {
+      "cycle_id": "2ae125a9",
+      "domain": "Pythagorean",
+      "name": "is",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "2ae125a9",
+      "domain": "Pythagorean",
+      "name": "mem_distinctPriorPairSums_iff",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "2ae125a9",
+      "domain": "Pythagorean",
+      "name": "distinctCanonical_zero",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-07-25T15:27:41",
+  "last_updated": "2026-07-25T15:47:33",
   "open_questions": [
     {
       "context": "",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "6cb3854b",
-        "quality": 0.65,
-        "theorems": 17,
-        "title": "The Category Theory of Jokes: Universal Properties of Humor"
-      },
-      {
         "cycle_id": "4b7e775f",
         "quality": 0.73,
         "theorems": 0,
@@ -3885,6 +3879,12 @@
         "quality": 0.63,
         "theorems": 35,
         "title": "`Heegner163.lean` gives a kernel-checked elementary chain connecting Euler's"
+      },
+      {
+        "cycle_id": "2ae125a9",
+        "quality": 0.78,
+        "theorems": 17,
+        "title": "The repaired repeated-summand rule is now completely classified: its unique traj"
       }
     ],
     "Shared": [
