@@ -6019,7 +6019,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Non-Archimedean Probability via Surreal Numbers"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0d06265a",
     "description": "Define the category EML_Comp where objects are R^n and morphisms are functions computable by finite EML compositions (exp, log, +, *, constants). Conjecture: EML_Comp is a Cartesian closed category with natural numbers object R (the reals). Test: prove closure under composition (trivial), products (pairing), and exponentials (currying via EML parameter sharing). Impact: puts EML computation on firm categorical foundations.",
     "domains": [
       "EML",
@@ -6027,10 +6027,11 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "id": "seed_073",
+    "phase": "A",
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "EML Category: The Category of EML-Computable Maps"
   },
