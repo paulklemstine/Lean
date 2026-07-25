@@ -834,7 +834,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Zeta Functions of Directed Graphs and the Graph Riemann Hypothesis"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b42bd325",
     "description": "The AdS/CFT correspondence says that a gravitational theory in the bulk of anti-de Sitter space is equivalent to a conformal field theory on the boundary. What if prime numbers have a holographic dual? Define the prime hologram: for each prime p, define its 'boundary' as the ring Z/pZ and its 'bulk' as the p-adic field Q_p. Conjecture: The Riemann zeta function zeta(s) = prod_p (1 - p^{-s})^{-1} is the holographic partition function: the product over primes (boundary) encodes the same information as the completed zeta function Xi(s) (bulk). The functional equation Xi(s) = Xi(1-s) is the holographic duality: bulk physics at depth s equals boundary physics at depth 1-s. The prime counting function pi(x) ~ x/log(x) is the bulk volume, while the Chebyshev function theta(x) = sum_{p<=x} log(p) is the boundary area. The AdS/CFT dictionary: bulk gravity mode at depth s <-> boundary CFT operator of dimension 1-s. Test: verify that the pair correlation of zeta zeros matches GUE random matrices (bulk = quantum gravity in AdS, boundary = CFT random matrix ensemble). Compute the 'prime partition function' Z(beta) = prod_p (1 - e^{-beta log p})^{-1} and show it equals the bulk partition function. Impact: the Riemann Hypothesis is equivalent to a holographic stability condition \u2014 zeros on the critical line means the bulk geometry is stable against perturbations.",
     "domains": [
       "Novelty",
@@ -843,10 +843,11 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "id": "seed_118",
+    "phase": "A",
     "priority_score": 0.91,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Holographic Primes: The Prime Number AdS/CFT Correspondence"
   },
@@ -8188,18 +8189,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Erd\u0151s\u2013Straus Conjecture"
   },
   {
-    "consumed_by_exp_id": "a31e0b39",
+    "consumed_by_exp_id": "",
     "description": "Prove Conway's Game of Life is Turing complete via a direct constructive embedding. Formalize cellular automata in Lean 4 and establish complexity bounds on the simulation overhead.",
     "domains": [
       "Computation",
       "Speculative"
     ],
     "id": "seed_059",
-    "phase": "A",
     "priority_score": 0.77,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "",
     "title": "Game of Life Universality"
   },
@@ -8881,6 +8881,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-25T21:17:22.305986+00:00",
     "title": "For finite metric spaces of unequal cardinality, enrich each persistence diagram"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe completed formalization establishes an exact finite-support implementation of Conway's B3/S23 transition and an explicit `9^t` population bound. It is not yet a proof of Turing completeness.\n\nNatural next steps, in dependency order:\n\n1. **Sharper geometric bounds.** Define Chebyshev bounding boxes and prove that the occupied region expands by at most one cell in each direction per generation. This should yield a polynomial area bound for bounded initial configurations, sharper than the generic population estimate.\n2. **Translations and spacetime diagrams.** Prove that the Life transition commutes with integer-grid translations, then define periodic motion up to translation.\n3. **Constructive components.** Verify a glider, glider gun, eater, and collision-based signal routing directly under the same global rule.\n4. **Boolean signal semantics.** Assign time windows and spatial ports to patterns, and prove compositional specifications for wires, fanout, delay, crossing, NOT, AND, and OR components.\n5. **Circuit simulation.** Embed finite Boolean circuits with explicit layout, latency, area, and population bounds.\n6. **Unbounded memory.** Construct a clocked tape or register-machine encoding, including initialization, step simulation, noninterference between components, and halting detection.\n7. **Universality theorem.** Compose the verified components into a direct simulation of a fixed universal machine and state precise time/space overhead bounds.\n\nThe principal missing work is therefore the constructive logic-component library and its compositional noninterference proofs, not the underlying cellular-automaton semantics.\n",
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "fd_0730",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "a31e0b39",
+    "status": "available",
+    "timestamp": "2026-07-25T22:18:10.774110+00:00",
+    "title": "The completed formalization establishes an exact finite-support implementation o"
   },
   {
     "consumed_by_exp_id": "",
