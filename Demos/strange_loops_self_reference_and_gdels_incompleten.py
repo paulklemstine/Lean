@@ -1,276 +1,184 @@
-"""
-Strange Loops: numerical and symbolic demonstrations of self-reference results.
+#!/usr/bin/env python3
+"""Finite Boolean demonstrations of strange loops and abstract incompleteness.
 
-This self-contained script illustrates, with concrete finite models, the chain of
-theorems running from the Liar paradox through Lawvere's fixed-point theorem to a
-consistent, non-vacuous Gödel-style provability system and the provability lattice.
-
-Everything is inlined; no third-party dependencies are required.
-
-Run:  python demo.py
+The two Boolean truth values form the implication order False <= True.  A
+unary table P models a provability operator.  This script exhaustively
+classifies all four such operators and checks the finite instances of the
+fixed-point, reflection, consistency, completeness, and antichain results.
 """
 
 from __future__ import annotations
 
+from dataclasses import dataclass
 from itertools import product
-from typing import Callable, Dict, FrozenSet, Iterable, List, Optional, Tuple
+from typing import Callable, Iterable, Sequence
+
+BoolOperator = Callable[[bool], bool]
 
 
-# ---------------------------------------------------------------------------
-# 1. The Liar paradox: (p <-> not p) is unsatisfiable over Booleans.
-# ---------------------------------------------------------------------------
+@dataclass(frozen=True)
+class OperatorReport:
+    """Complete property report for one unary Boolean operator."""
 
-def liar_is_unsatisfiable() -> bool:
-    """Verify by exhaustion that no truth value p satisfies (p iff not p)."""
-    return all((p == (not p)) is False for p in (False, True))
-
-
-# ---------------------------------------------------------------------------
-# 2. No total semantic diagonal: instantiating P = "not True_" yields a Liar.
-# ---------------------------------------------------------------------------
-
-def semantic_diagonal_collapses(
-    sentences: List[int],
-    truth: Callable[[int], bool],
-    diag: Callable[[Callable[[int], bool]], int],
-) -> bool:
-    """
-    Given a finite sentence set, a truth assignment, and a diagonal operator,
-    return True iff the operator FAILS the total-diagonal law for the
-    self-negating predicate P(s) = not truth(s) -- i.e. the naive semantic
-    strange loop is inconsistent (as it must be).
-    """
-    p: Callable[[int], bool] = lambda s: not truth(s)
-    d = diag(p)
-    # The total-diagonal law would require truth(d) == p(d) == (not truth(d)).
-    return truth(d) != (not truth(d)) or truth(d) == (not truth(d))  # always the Liar
+    name: str
+    table: tuple[bool, bool]
+    monotone: bool
+    fixed_points: tuple[bool, ...]
+    syntactically_complete: bool
+    consistent: bool
+    reflective: bool
+    semantically_complete: bool
 
 
-# ---------------------------------------------------------------------------
-# 3. Abstract incompleteness skeleton: T <-> not P, soundness P -> T  ==>  not P, T.
-# ---------------------------------------------------------------------------
-
-def abstract_incompleteness_check() -> List[Tuple[bool, bool, bool, bool]]:
-    """
-    Enumerate all (P, T) truth assignments; among those satisfying the
-    hypotheses (T == (not P)) and (P implies T), confirm the conclusions
-    (not P) and T. Returns the list of consistent (P, T, notP, T) rows.
-    """
-    rows: List[Tuple[bool, bool, bool, bool]] = []
-    for prov, true_ in product((False, True), repeat=2):
-        fix = (true_ == (not prov))            # T <-> not P
-        sound = (not prov) or true_            # P -> T
-        if fix and sound:
-            assert (not prov) and true_, "conclusion must hold under hypotheses"
-            rows.append((prov, true_, not prov, true_))
-    return rows
+def implies(a: bool, b: bool) -> bool:
+    """Return the classical implication a -> b."""
+    return (not a) or b
 
 
-# ---------------------------------------------------------------------------
-# 4. Lawvere's fixed-point theorem on finite sets.
-#    If phi : A -> (A -> B) is point-surjective, every g : B -> B has a fixed point.
-# ---------------------------------------------------------------------------
-
-def all_functions(domain: List[int], codomain: List[int]) -> List[Dict[int, int]]:
-    """Enumerate every function domain -> codomain as a dict."""
-    funcs: List[Dict[int, int]] = []
-    for values in product(codomain, repeat=len(domain)):
-        funcs.append(dict(zip(domain, values)))
-    return funcs
+def operator_from_table(table: tuple[bool, bool]) -> BoolOperator:
+    """Create P with table entries (P(False), P(True))."""
+    return lambda value: table[int(value)]
 
 
-def is_point_surjective(
-    phi: Dict[int, Dict[int, int]], domain: List[int], codomain: List[int]
-) -> bool:
-    """Check that every function domain->codomain is realized as some phi[a]."""
-    realized = {tuple(phi[a][x] for x in domain) for a in domain}
-    return len(realized) == len(codomain) ** len(domain)
+def is_monotone(operator: BoolOperator) -> bool:
+    """Check whether implication a -> b entails P(a) -> P(b)."""
+    return all(
+        not implies(a, b) or implies(operator(a), operator(b))
+        for a, b in product((False, True), repeat=2)
+    )
 
 
-def lawvere_fixed_point(
-    phi: Dict[int, Dict[int, int]],
-    domain: List[int],
-    g: Callable[[int], int],
-) -> Optional[int]:
-    """
-    Construct Lawvere's fixed point b = phi[a0][a0] where a0 codes
-    a |-> g(phi[a][a]).  Returns b with g(b) == b, or None if phi does not
-    realize the required diagonal function.
-    """
-    target = {a: g(phi[a][a]) for a in domain}
-    for a0 in domain:
-        if phi[a0] == target:
-            b = phi[a0][a0]
-            assert g(b) == b, "Lawvere construction must yield a fixed point"
-            return b
+def fixed_points(operator: BoolOperator) -> tuple[bool, ...]:
+    """Find all g satisfying g = not P(g)."""
+    return tuple(g for g in (False, True) if g == (not operator(g)))
+
+
+def is_syntactically_complete(operator: BoolOperator) -> bool:
+    """Check P(a) or P(not a) for each Boolean proposition a."""
+    return all(operator(a) or operator(not a) for a in (False, True))
+
+
+def is_consistent(operator: BoolOperator) -> bool:
+    """Check that falsehood is not certified: not P(False)."""
+    return not operator(False)
+
+
+def is_reflective(operator: BoolOperator) -> bool:
+    """Check semantic reflection P(a) -> a."""
+    return all(implies(operator(a), a) for a in (False, True))
+
+
+def is_semantically_complete(operator: BoolOperator) -> bool:
+    """Check semantic completeness a -> P(a)."""
+    return all(implies(a, operator(a)) for a in (False, True))
+
+
+def classify_operator(name: str, table: tuple[bool, bool]) -> OperatorReport:
+    """Compute every property used in the demonstrations."""
+    operator = operator_from_table(table)
+    return OperatorReport(
+        name=name,
+        table=table,
+        monotone=is_monotone(operator),
+        fixed_points=fixed_points(operator),
+        syntactically_complete=is_syntactically_complete(operator),
+        consistent=is_consistent(operator),
+        reflective=is_reflective(operator),
+        semantically_complete=is_semantically_complete(operator),
+    )
+
+
+def enumerate_boolean_operators() -> tuple[OperatorReport, ...]:
+    """Classify the four unary operators on the Boolean universe."""
+    names = {
+        (False, False): "constantly false",
+        (False, True): "identity",
+        (True, False): "negation",
+        (True, True): "constantly true",
+    }
+    return tuple(classify_operator(names[table], table) for table in names)
+
+
+def antichain_property(operator: BoolOperator) -> bool:
+    """Check that comparable fixed points are equal in the Boolean order."""
+    points = fixed_points(operator)
+    return all(not implies(g, h) or implies(h, g) for g in points for h in points)
+
+
+def reflected_fixed_point_witness(operator: BoolOperator) -> bool | None:
+    """Return a true, uncertified fixed point when reflection supplies one."""
+    if not is_reflective(operator):
+        return None
+    for g in fixed_points(operator):
+        if g and not operator(g):
+            return g
     return None
 
 
-def cantor_no_surjection(n: int) -> bool:
-    """
-    Verify Cantor's theorem for a size-n set A: there is NO surjection
-    A -> (A -> Bool), because |A -> Bool| = 2^n > n for all n >= 0.
-    """
-    return 2 ** n > n
+def verify_key_results(reports: Sequence[OperatorReport]) -> None:
+    """Assert the finite instances and the two explicit countermodels."""
+    by_name = {report.name: report for report in reports}
+
+    identity = by_name["identity"]
+    assert identity.monotone and not identity.fixed_points
+
+    indiscriminate = by_name["constantly true"]
+    assert indiscriminate.monotone
+    assert indiscriminate.fixed_points == (False,)
+    assert indiscriminate.syntactically_complete
+    assert not indiscriminate.consistent
+    assert not indiscriminate.reflective
+
+    for report in reports:
+        operator = operator_from_table(report.table)
+        if report.monotone:
+            assert antichain_property(operator)
+        if report.reflective:
+            assert report.consistent
+            witness = reflected_fixed_point_witness(operator)
+            if report.fixed_points:
+                assert witness is True
+                assert not report.semantically_complete
 
 
-# ---------------------------------------------------------------------------
-# 5. A consistent, inhabited Gödel provability system (the two-sentence model).
-# ---------------------------------------------------------------------------
-
-class ProvabilitySystem:
-    """
-    Minimal consistent provability system over sentences {False, True}.
-
-    - Provable(s)  = False for all s   (nothing is provable)
-    - Holds(b)     = (b is True)       (truth = "equals true")
-    - neg          = boolean negation
-    - G            = True
-    Diagonal fixed point:  Holds(G) <-> not Provable(G)  is  True <-> True.
-    Soundness holds vacuously.
-    """
-
-    def __init__(self) -> None:
-        self.sentences: Tuple[bool, bool] = (False, True)
-        self.G: bool = True
-
-    def provable(self, s: bool) -> bool:
-        return False
-
-    def holds(self, s: bool) -> bool:
-        return s is True
-
-    def neg(self, s: bool) -> bool:
-        return not s
-
-    def is_sound(self) -> bool:
-        return all((not self.provable(s)) or self.holds(s) for s in self.sentences)
-
-    def neg_law(self) -> bool:
-        return all(self.holds(self.neg(s)) == (not self.holds(s)) for s in self.sentences)
-
-    def diagonal_fixed_point(self) -> bool:
-        return self.holds(self.G) == (not self.provable(self.G))
-
-    def goedel_true_unprovable(self) -> Tuple[bool, bool]:
-        """Return (Holds(G), not Provable(G)) -- both should be True."""
-        return self.holds(self.G), not self.provable(self.G)
-
-    def goedel_undecidable(self) -> Tuple[bool, bool]:
-        """Return (not Provable(G), not Provable(neg G)) -- both should be True."""
-        return not self.provable(self.G), not self.provable(self.neg(self.G))
-
-    def consistency_unprovable(self) -> bool:
-        """
-        With Con satisfying Holds(Con) <-> not Provable(G) and the derivability
-        condition Provable(Con) -> Provable(G), Con is unprovable.  Here Con = True.
-        """
-        con = True
-        derivability = (not self.provable(con)) or self.provable(self.G)
-        assert derivability, "derivability condition"
-        return not self.provable(con)
+def yes_no(value: bool) -> str:
+    """Format a Boolean property compactly."""
+    return "yes" if value else "no"
 
 
-# ---------------------------------------------------------------------------
-# 6. The provability lattice: least/greatest fixed points of a monotone map.
-# ---------------------------------------------------------------------------
+def render_table(reports: Iterable[OperatorReport]) -> str:
+    """Render a dependency-free text table."""
+    header = (
+        "operator         P(0),P(1)  mono  fixed points  syntactic complete  "
+        "consistent  reflective  semantic complete"
+    )
+    rows = [header, "-" * len(header)]
+    for report in reports:
+        table = "".join("1" if value else "0" for value in report.table)
+        points = "{" + ",".join("1" if value else "0" for value in report.fixed_points) + "}"
+        rows.append(
+            f"{report.name:<16} {table:^9}  {yes_no(report.monotone):<4}  "
+            f"{points:<12}  {yes_no(report.syntactically_complete):<18}  "
+            f"{yes_no(report.consistent):<10}  {yes_no(report.reflective):<10}  "
+            f"{yes_no(report.semantically_complete)}"
+        )
+    return "\n".join(rows)
 
-Theory = FrozenSet[int]
-
-
-def is_monotone(f: Callable[[Theory], Theory], universe: List[int]) -> bool:
-    """Check monotonicity of f on the powerset lattice of `universe`."""
-    subsets = [frozenset(s) for r in range(len(universe) + 1)
-               for s in _combinations(universe, r)]
-    for a in subsets:
-        for b in subsets:
-            if a <= b and not (f(a) <= f(b)):
-                return False
-    return True
-
-
-def _combinations(items: List[int], r: int) -> Iterable[Tuple[int, ...]]:
-    from itertools import combinations
-    return combinations(items, r)
-
-
-def least_fixed_point(f: Callable[[Theory], Theory]) -> Theory:
-    """Iterate from bottom (empty theory) to reach the least fixed point."""
-    x: Theory = frozenset()
-    while True:
-        nx = f(x)
-        if nx == x:
-            return x
-        x = nx
-
-
-def greatest_fixed_point(f: Callable[[Theory], Theory], universe: List[int]) -> Theory:
-    """Iterate from top (full universe) to reach the greatest fixed point."""
-    x: Theory = frozenset(universe)
-    while True:
-        nx = f(x)
-        if nx == x:
-            return x
-        x = nx
-
-
-# ---------------------------------------------------------------------------
-# Driver
-# ---------------------------------------------------------------------------
 
 def main() -> None:
-    print("=" * 68)
-    print("STRANGE LOOPS: self-reference from the Liar to the provability lattice")
-    print("=" * 68)
-
-    print("\n[1] Liar paradox: (p <-> not p) has no Boolean solution:",
-          liar_is_unsatisfiable())
-
-    print("\n[2] Semantic diagonal collapses to the Liar for P = 'not True_':",
-          semantic_diagonal_collapses([0], lambda s: True, lambda p: 0))
-
-    print("\n[3] Abstract incompleteness skeleton (T <-> not P, P -> T => not P & T):")
-    for prov, true_, notp, t in abstract_incompleteness_check():
-        print(f"    Provable={prov}  True={true_}  =>  notProvable={notp}, True={t}")
-
-    print("\n[4] Lawvere fixed point over A={0,1}, B={0,1}:")
-    domain = [0, 1]
-    codomain = [0, 1]
-    funcs = all_functions(domain, codomain)
-    # A point-surjective phi needs |A| >= |B^A| = 4 > 2, so NONE exists for |A|=2.
-    # Instead demonstrate the guaranteed fixed point of g = identity when it exists,
-    # and Cantor's obstruction to point-surjectivity:
-    print("    #functions A->B =", len(funcs),
-          " ; point-surjective phi possible?", 2 >= len(funcs))
-    for n in range(5):
-        print(f"    Cantor: 2^{n} > {n} ?", cantor_no_surjection(n))
-
-    print("\n[5] Consistent Gödel provability system (two-sentence model):")
-    sysm = ProvabilitySystem()
-    print("    sound:", sysm.is_sound(),
-          "| neg law:", sysm.neg_law(),
-          "| diagonal fixed point:", sysm.diagonal_fixed_point())
-    print("    G true & unprovable:", sysm.goedel_true_unprovable())
-    print("    G undecidable (G, negG both unprovable):", sysm.goedel_undecidable())
-    print("    consistency sentence unprovable:", sysm.consistency_unprovable())
-
-    print("\n[6] Provability lattice on universe {0,1,2}:")
-    universe = [0, 1, 2]
-    # Monotone closure operator: add 1 whenever 0 is present (inference rule 0 |- 1).
-    def close(t: Theory) -> Theory:
-        s = set(t)
-        if 0 in s:
-            s.add(1)
-        return frozenset(s)
-    print("    monotone:", is_monotone(close, universe))
-    lfp = least_fixed_point(close)
-    gfp = greatest_fixed_point(close, universe)
-    print("    least fixed point (provable core):", set(lfp))
-    print("    greatest fixed point (maximal extension):", set(gfp))
-    print("    gap => incompleteness (lfp < gfp):", lfp < gfp,
-          "| missing (true-but-unprovable):", set(gfp) - set(lfp))
-
-    print("\nAll demonstrations completed.")
+    """Run the exhaustive census and print its mathematical interpretation."""
+    reports = enumerate_boolean_operators()
+    verify_key_results(reports)
+    print("BOOLEAN PROVABILITY-OPERATOR CENSUS")
+    print(render_table(reports))
+    print("\nKey observations:")
+    print("1. Identity is monotone but has no solution of g = not P(g).")
+    print("2. Constant truth has fixed point g=0 and is syntactically complete,")
+    print("   but it is inconsistent and fails reflection.")
+    print("3. Every reflective operator is consistent.")
+    print("4. Every reflected fixed point in this census is true and uncertified,")
+    print("   and therefore witnesses failure of semantic completeness.")
+    print("5. Fixed points of every monotone operator pass the antichain audit.")
 
 
 if __name__ == "__main__":
