@@ -5245,25 +5245,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "905765f9",
-    "description": "Domain Shared has declined by 0.164 over recent cycles (recent avg=0.696 vs prior=0.860). Take a completely fresh approach — different proof techniques, new definitions, or a different subfield within this domain. Avoid repeating approaches that have been producing diminishing returns.",
-    "domain_bridges": [],
-    "domains": [
-      "Shared"
-    ],
-    "id": "auto_reset_Shared_98cb9029",
-    "lineage_refs": [],
-    "priority_score": 0.85,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "auto_reset",
-    "status": "in_progress",
-    "timestamp": "2026-07-17T13:45:52.051601+00:00",
-    "title": "[Reset] Fresh approach in Shared"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Determinant values on lattices' and formalize its key results. Abstract: We study the distribution of determinant values on lattices in $\\operatorname{M}_d(\\mathbb R)$ for $d\\ge 2$. Let $Λ<\\operatorname{M}_d(\\mathbb R)$ be a lattice whose elements all have algebraic entries. We prove that if $\\det (Λ)$ is not contained in a scalar multiple of $\\mathbb Z$, then for every $a<b$, $$ \\#\\{v\\inΛ:\\|v\\| <T,\\ a<\\operatorname{det} v<b,\\ \\operatorname{det} v\\ne0\\} \\sim \\frac{C_d}{\\operatorname{covol}(Λ)} (b-a)T^{d(d-1)} $$ as $T\\to \\infty$, where $\\|\\cdot\\|$ is the Frobenius norm and $C_d>0$ depends only on $d$. For such a lattice, under an isotropic noncoincidence hypothesis, automatic for $d=2,3$ and satisfied for all diagonal lattices when $d\\ge 4$, we also obtain an asymptotic formula for the determinant-zero lattice points. The same conclusions hold for the broader class of Diophantine lattices, under the corresponding hypotheses. For $d=2$, our result recovers the Eskin-Margulis-Mozes theorem on the quantitative Oppenheim problem for quadratic forms of signature",
     "domain_bridges": [],
@@ -14808,6 +14789,26 @@
     "status": "available",
     "timestamp": "2026-07-25T10:53:00.075163+00:00",
     "title": "1. **Coulomb Hamiltonian as an unbounded self-adjoint operator.** Define"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## 1. Composite-index synchronization through cyclotomic primitive parts\n\nFor every nonexceptional composite index, the primitive part of the corresponding Fibonacci number should contain a prime whose divisibility locus is exactly the multiples of that index. This would extend finite-family synchronization from prime indices to the full range of Carmichael’s theorem.\n\nThe key insight is that finite gcd transport already converts an exact apparition law for one prime into synchronization over every finite family, so only primitive-prime existence remains quantitative.\n\nWhy now? The finite-meet mechanism has been isolated from the growth argument, allowing cyclotomic estimates to be developed independently and attached at a single interface.\n\n## 2. Lucas-sequence finite-meet transport\n\nEvery nondegenerate Lucas sequence that is a strong divisibility sequence should satisfy a finite gcd transport theorem, with primitive prime divisors inducing exact synchronization laws outside an explicitly classifiable exceptional set.\n\nThe key insight is that induction over finite insertion uses only the binary strong-divisibility identity, while the apparition argument uses only primality and minimality.\n\nWhy now? The Fibonacci proof identifies precisely which components are sequence-independent and which require Lucas-specific arithmetic.\n\n## 3. Finite lcm law for ranks of apparition\n\nFor pairwise coprime moduli whose ranks of apparition exist, the rank of their product should equal the least common multiple of their individual ranks, subject to explicit local conditions at primes dividing the discriminant.\n\nThe key insight is that the proved gcd synchronization is the meet-side shadow of a dual join law on divisibility loci.\n\nWhy now? Exact prime-index apparition gives a clean family of test cases in which the proposed lcm law predicts simultaneous Fibonacci divisibility without additional recurrence calculations.\n\n## 4. Elliptic divisibility synchronization\n\nFor a nontorsion rational point on an elliptic curve, primitive prime divisors of denominator sequences should produce finite-family synchronization under gcd of indices, apart from a finite exceptional set determined by bad reduction.\n\nThe key insight is that the argument requires a strong divisibility law and a primitive divisor, two structures that elliptic divisibility sequences are expected to share with Fibonacci numbers.\n\nWhy now? Separating finite-meet transport from primitive-divisor existence provides a concrete route for testing exactly where bad reduction obstructs the analogy.\n\n## 5. Effective exceptional-set bounds from finite synchronization\n\nThere should be an explicit bound, polynomial in the logarithmic height of the defining recurrence data, beyond which every index admits a synchronizing primitive prime for all finite index families.\n\nThe key insight is that synchronization itself has no quantitative cost once a primitive divisor exists; every effective bound can therefore focus entirely on the growth of the primitive part.\n\nWhy now? The structural theorem turns a potentially many-family assertion into one primitive-divisor estimate, making uniform quantitative bounds testable.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_0723",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "905765f9",
+    "status": "available",
+    "timestamp": "2026-07-25T10:53:07.911660+00:00",
+    "title": "For every nonexceptional composite index, the primitive part of the correspondin"
   },
   {
     "ambition_level": "extension",

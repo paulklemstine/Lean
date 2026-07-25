@@ -46,19 +46,22 @@
       "name": "Index-GCD Compression with Fast-Doubling Fibonacci Evaluation",
       "description": "Computes the gcd of an arbitrary finite Fibonacci family by first folding gcd over the indices and then evaluating only F_g with fast doubling. For r indices bounded by M, the gcd fold uses O(r log M) word-level Euclidean steps, while fast doubling uses O(log g) big-integer multiplications; it avoids constructing every large F_n.",
       "pseudocode": "INPUT finite list S of nonnegative indices\nSET g := 0\nFOR n in S: g := gcd(g,n)\nCOMPUTE (F_g,F_{g+1}) recursively by fast doubling\nRETURN F_g",
-      "code": "from __future__ import annotations\nfrom functools import reduce\nfrom math import gcd\n\ndef fibonacci_pair(n: int) -> tuple[int, int]:\n    if n == 0: return (0, 1)\n    a, b = fibonacci_pair(n // 2)\n    c = a * (2 * b - a)\n    d = a * a + b * b\n    return (d, c + d) if n % 2 else (c, d)\n\ndef fibonacci_family_gcd(indices: list[int]) -> int:\n    g = reduce(gcd, indices, 0)\n    return fibonacci_pair(g)[0]\n"
+      "code": "from __future__ import annotations\nfrom functools import reduce\nfrom math import gcd\n\ndef fibonacci_pair(n: int) -> tuple[int, int]:\n    if n == 0: return (0, 1)\n    a, b = fibonacci_pair(n // 2)\n    c = a * (2 * b - a)\n    d = a * a + b * b\n    return (d, c + d) if n % 2 else (c, d)\n\ndef fibonacci_family_gcd(indices: list[int]) -> int:\n    g = reduce(gcd, indices, 0)\n    return fibonacci_pair(g)[0]\n",
+      "code_file": "visualizations/reset_fresh_approach_in_shared_index_gcd_compression_with_fast_doubling.py"
     },
     {
       "name": "Synchronizing-Prime Divisibility Decision by Index Meet",
       "description": "Decides whether the synchronizing prime p divides the gcd of a finite Fibonacci family without computing p or any Fibonacci value after a valid pair (q,p) is known. It folds gcd over the indices and tests divisibility by q, requiring O(r log M) elementary gcd work and constant additional storage.",
       "pseudocode": "INPUT prime index q and finite index list S\nSET g := gcd(S), with gcd(empty) := 0\nIF g mod q = 0: RETURN true\nELSE: RETURN false",
-      "code": "from __future__ import annotations\nfrom functools import reduce\nfrom math import gcd\n\ndef synchronizing_prime_divides_family_gcd(q: int, indices: list[int]) -> bool:\n    if q <= 0: raise ValueError(\"q must be positive\")\n    return reduce(gcd, indices, 0) % q == 0\n"
+      "code": "from __future__ import annotations\nfrom functools import reduce\nfrom math import gcd\n\ndef synchronizing_prime_divides_family_gcd(q: int, indices: list[int]) -> bool:\n    if q <= 0: raise ValueError(\"q must be positive\")\n    return reduce(gcd, indices, 0) % q == 0\n",
+      "code_file": "visualizations/reset_fresh_approach_in_shared_synchronizing_prime_divisibility_decisio.py"
     },
     {
       "name": "Proper-Divisor Prime-Support Stripping for Fibonacci Primitive Parts",
       "description": "Constructs the primitive remainder of F_n by repeatedly removing every common prime factor shared with F_d for positive proper divisors d of n. A remainder above one supplies a primitive prime divisor. Naive divisor enumeration takes O(n) tests in this reference implementation, Fibonacci evaluation is linear here for clarity, and big-integer gcd and possible factorization dominate practical cost.",
       "pseudocode": "INPUT index n\nSET R := F_n\nENUMERATE positive proper divisors d of n\nFOR each d:\n  WHILE gcd(R,F_d) > 1:\n    R := R / gcd(R,F_d)\nRETURN R; if R>1, any prime factor of R is primitive at n",
-      "code": "from __future__ import annotations\nfrom math import gcd\n\ndef fib(n: int) -> int:\n    a, b = 0, 1\n    for _ in range(n): a, b = b, a + b\n    return a\n\ndef proper_divisors(n: int) -> list[int]:\n    return [d for d in range(1, n) if n % d == 0]\n\ndef strip_prime_support(a: int, b: int) -> int:\n    while (g := gcd(a, b)) > 1: a //= g\n    return a\n\ndef primitive_part(n: int) -> int:\n    remainder = fib(n)\n    for d in proper_divisors(n):\n        remainder = strip_prime_support(remainder, fib(d))\n    return remainder\n"
+      "code": "from __future__ import annotations\nfrom math import gcd\n\ndef fib(n: int) -> int:\n    a, b = 0, 1\n    for _ in range(n): a, b = b, a + b\n    return a\n\ndef proper_divisors(n: int) -> list[int]:\n    return [d for d in range(1, n) if n % d == 0]\n\ndef strip_prime_support(a: int, b: int) -> int:\n    while (g := gcd(a, b)) > 1: a //= g\n    return a\n\ndef primitive_part(n: int) -> int:\n    remainder = fib(n)\n    for d in proper_divisors(n):\n        remainder = strip_prime_support(remainder, fib(d))\n    return remainder\n",
+      "code_file": "visualizations/reset_fresh_approach_in_shared_proper_divisor_prime_support_stripping_f.py"
     }
   ],
   "visualizations": [
