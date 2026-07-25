@@ -1,5 +1,5 @@
-import Catalog.Applications.GraphTheory.Core
-import Catalog.Novelty.RamseyTheory.AgreementSubtreesMultiple
+import Logic.StrangeLoops.Core
+import Novelty.RamseyTheory.AgreementSubtreesMultiple
 
 /-!
 # Counting restrictions and the tower behind multiple-tree agreement subtrees

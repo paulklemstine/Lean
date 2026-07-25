@@ -1,5 +1,5 @@
 import Mathlib
-import Logic.QuantumCayleyWalk.CayleyGraph
+-- import Logic.QuantumCayleyWalk.CayleyGraph
 
 /-!
 # Spectral Gap and Mixing Time Bounds for Random Walks

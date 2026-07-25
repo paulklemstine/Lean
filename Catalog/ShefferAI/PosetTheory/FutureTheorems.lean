@@ -15,7 +15,7 @@ including composition bounds, separation results, and new softplus identities.
 -/
 
 import Mathlib
-import ShefferAI.Lean.SoftplusBasic
+-- import ShefferAI.Lean.SoftplusBasic
 import MachineLearning.ShefferFunction.Lean.ShefferAlgebra
 
 open Real

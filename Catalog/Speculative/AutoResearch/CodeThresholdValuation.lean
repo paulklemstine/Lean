@@ -62,8 +62,8 @@ Failure analysis: the catalog's `UltraNormObj` demands a *multiplicative* norm
 -/
 
 import Mathlib
-import Catalog.Bridges.PosetTheory.CategoricalTropicalUltrametric
-import Catalog.Applications.SmoothPoincare.MinimumDistance
+import Bridges.Catalog.FINAL.Bridges.CategoricalTropicalUltrametric
+import output-final_aristotle.output-final_aristotle.Incomplete.Cryptography.MinimumDistance
 
 open scoped BigOperators
 

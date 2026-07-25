@@ -1,5 +1,5 @@
 import Mathlib
-import Catalog.Bridges.HilbertSpace.HilbertSpaceBridge
+import Bridges.HilbertSpace.HilbertSpaceBridge
 
 /-!
 # Structural bounds for quantum Latin squares of order six

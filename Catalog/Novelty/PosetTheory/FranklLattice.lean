@@ -1,4 +1,4 @@
-import Catalog.Novelty.PosetTheory.FranklUnionClosed
+import Novelty.PosetTheory.FranklUnionClosed
 
 /-!
 # Lattice reformulation and the tight case of Reimer's entropy bound

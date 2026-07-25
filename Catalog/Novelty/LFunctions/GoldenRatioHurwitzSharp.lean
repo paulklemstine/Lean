@@ -1,5 +1,5 @@
 import Mathlib
-import Catalog.Novelty.LFunctions.GoldenRatioApproximation
+import Novelty.LFunctions.GoldenRatioApproximation
 
 /-!
 # The constant `√5` in Hurwitz's theorem is optimal

@@ -1,5 +1,5 @@
 import Logic.BasicMonotoneCircuit.Basic
-import Catalog.Novelty.PosetTheory.RiordanRowSumFibonacci
+import Novelty.PosetTheory.RiordanRowSumFibonacci
 
 /-!
 # Anti-Fibonacci vs. Fibonacci — Exponential Domination

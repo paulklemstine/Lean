@@ -1,5 +1,5 @@
 import Mathlib
-import Catalog.Shared.NumberTheory.CarmichaelComposite
+import output-final_aristotle.Shared.CarmichaelComposite
 
 /-! # Carmichael's Primitive Divisor Theorem for Fibonacci Numbers
 

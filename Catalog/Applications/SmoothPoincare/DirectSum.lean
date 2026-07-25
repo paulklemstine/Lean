@@ -41,7 +41,7 @@ Failure analysis: the `Fin (m+n)` vs `Fin m ⊕ Fin n` indexing requires reindex
 -/
 
 import Mathlib
-import Catalog.Applications.SmoothPoincare.IntersectionForms
+import Applications.SmoothPoincare.IntersectionForms
 
 open Matrix
 open scoped BigOperators

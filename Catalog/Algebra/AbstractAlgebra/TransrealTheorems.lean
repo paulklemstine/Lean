@@ -12,7 +12,7 @@ This file proves the key structural theorems about transreal arithmetic:
 These results characterize the precise algebraic boundary between
 what survives and what collapses when division is made total.
 -/
-import Algebra.TransrealDefs
+-- import Algebra.TransrealDefs
 
 open Classical Transreal
 

@@ -1,4 +1,4 @@
-import Catalog.Algebra.Analysis.TruthFractalDimensionDeepening
+import Algebra.Analysis.TruthFractalDimensionDeepening
 
 /-!
 # Nonstationary Proof Search: Entropy, Products, and Multiscale Composition

@@ -1,7 +1,7 @@
 import Mathlib
-import Catalog.Logic.ProofComplexity.SimulationPreorder
-import Catalog.Logic.ProofComplexity.SimulationDegrees
-import Catalog.Logic.ProofComplexity.DegreeLattice
+import Logic.ProofComplexity.SimulationPreorder
+import Logic.ProofComplexity.SimulationDegrees
+import Logic.ProofComplexity.DegreeLattice
 
 /-! # The order type of the p-degrees: infinite width, a least degree, and density
 

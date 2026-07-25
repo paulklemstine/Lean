@@ -3,7 +3,7 @@ Copyright (c) 2025. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Harmonic
 -/
-import .lake.packages.mathlib.Mathlib.Algebra.Category.ModuleCat.Sheaf
+import Mathlib.Algebra.Category.ModuleCat.Sheaf
 
 /-!
 # Lawvere–Stone Representation for Closure-Generated Proof Semirings

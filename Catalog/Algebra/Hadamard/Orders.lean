@@ -5,7 +5,7 @@
   building infinite families via Kronecker closure.
 -/
 import Algebra.Hadamard.Sylvester
-import .lake.packages.mathlib.Mathlib.LinearAlgebra.Matrix.Kronecker
+import Mathlib.LinearAlgebra.Matrix.Kronecker
 
 open Matrix Finset BigOperators
 

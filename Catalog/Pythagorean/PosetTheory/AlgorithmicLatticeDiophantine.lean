@@ -13,7 +13,7 @@
   5. **Cardinality bound** (`card_l1_box_le`)
 -/
 import Mathlib
-import Pythagorean.TropicalKAMDefs
+-- import Pythagorean.TropicalKAMDefs
 
 open Finset BigOperators
 

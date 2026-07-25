@@ -1,5 +1,5 @@
 import Mathlib
-import Catalog.Novelty.NeuralCoding.NeuralCoding
+import Novelty.NeuralCoding.NeuralCoding
 
 /-!
 # Neural Coding III: the Weight Distribution and Energy Concentration

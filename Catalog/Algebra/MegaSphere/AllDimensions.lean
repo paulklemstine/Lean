@@ -1,6 +1,6 @@
-import Catalog.Novelty.AbstractAlgebra.MegaSphereInverseLimit
-import Catalog.Novelty.PosetTheory.MegaSphereBernoulliDeepening
-import Catalog.Novelty.GraphTheory.MegaSphereStiefelWhitney
+import Novelty.AbstractAlgebra.MegaSphereInverseLimit
+import Novelty.PosetTheory.MegaSphereBernoulliDeepening
+import Novelty.GraphTheory.MegaSphereStiefelWhitney
 
 /-!
 # The Mega-Sphere: a coherent object with all finite stages

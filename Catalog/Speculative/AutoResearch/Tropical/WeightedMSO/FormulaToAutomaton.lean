@@ -13,8 +13,8 @@ we build an explicit min-plus automaton computing the same cost function.
 
 import Mathlib
 import Logic.GraphTheory.Defs
-import .lake.packages.mathlib.Mathlib.Algebra.Category.ModuleCat.Algebra
-import .lake.packages.mathlib.Mathlib.Order.UpperLower.Closure
+import Mathlib.Algebra.Category.ModuleCat.Algebra
+import Mathlib.Order.UpperLower.Closure
 import Tropical.WeightedMSO.ProductAutomaton
 
 namespace TropicalMSO

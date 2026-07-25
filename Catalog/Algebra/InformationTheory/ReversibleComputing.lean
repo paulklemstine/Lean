@@ -20,7 +20,7 @@ Not all ancilla are equal: structured garbage has lower effective thermodynamic 
 -/
 
 import Mathlib
-import Speculative.RankEntropy
+-- import Speculative.RankEntropy
 
 open Real Set Fintype
 

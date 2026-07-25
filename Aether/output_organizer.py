@@ -672,11 +672,15 @@ class OutputOrganizer:
                 reason = "Keyword-heuristic classification"
                 confidence = heuristic_conf
         if is_complete:
-            # Complete proofs go to their domain directory
-            if target_subdir:
-                target_dir = self.catalog_root / target_domain / target_subdir
-            else:
-                target_dir = self.catalog_root / target_domain
+            # Complete proofs go to their domain subcategory directory
+            if not target_subdir:
+                raw_concept_name = getattr(concept, "name", "") or getattr(concept, "topic", "")
+                if raw_concept_name:
+                    clean_sub = re.sub(r'[^a-zA-Z0-9]+', '', raw_concept_name.title())
+                    target_subdir = clean_sub[:30] if clean_sub else "General"
+                else:
+                    target_subdir = "General"
+            target_dir = self.catalog_root / target_domain / target_subdir
             target_path = target_dir / source.name
         else:
             # Proofs with sorries go to Speculative/AutoResearch

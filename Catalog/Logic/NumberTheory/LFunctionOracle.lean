@@ -1,4 +1,4 @@
-import Catalog.Logic.PVsNp.PvsNPFoundations
+import Logic.PVsNp.PvsNPFoundations
 
 /-!
 # Exact Evaluation Oracles and Global Arithmetic Claims

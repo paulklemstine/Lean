@@ -1,5 +1,5 @@
 import Mathlib
-import Catalog.NumberTheory.PosetTheory.GL1Correspondence
+import NumberTheory.PosetTheory.GL1Correspondence
 import output-final_aristotle.Applications.PGL3CriticalLine
 
 /-!

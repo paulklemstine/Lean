@@ -1,5 +1,5 @@
 import MachineLearning.ShefferFunction.Lean.ShefferAlgebra
-import EML.Lean.SoftplusBasic
+-- import EML.Lean.SoftplusBasic
 import Mathlib
 
 /-! # CatalogBuild.EML.FutureTheorems

@@ -3,7 +3,7 @@ Copyright (c) 2025 Harmonic. All rights reserved.
 Released under Apache 2.0 license.
 -/
 import Mathlib
-import Pythagorean.CauchyBinet
+-- import Pythagorean.CauchyBinet
 
 /-!
 # Fermionic Plücker Coordinates and Quantum Matroid Geometry

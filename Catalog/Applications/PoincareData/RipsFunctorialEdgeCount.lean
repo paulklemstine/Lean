@@ -33,7 +33,7 @@
                                                nonexpanding map (adjacency form).
   * `edgeCount_le_of_injective_nonexpanding` — `edgeCount α r ≤ edgeCount β r`.
 -/
-import Catalog.Applications.PoincareData.MetricFiltration
+import Applications.PoincareData.MetricFiltration
 
 open Finset Set
 

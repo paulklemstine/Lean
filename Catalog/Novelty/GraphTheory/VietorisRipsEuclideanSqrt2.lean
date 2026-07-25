@@ -1,5 +1,5 @@
 import Mathlib
-import Catalog.Novelty.RamseyTheory.VietorisRipsCliqueBridge
+import Novelty.RamseyTheory.VietorisRipsCliqueBridge
 
 /-!
 # The canonical Euclidean √2 threshold: an all-or-nothing exponential jump

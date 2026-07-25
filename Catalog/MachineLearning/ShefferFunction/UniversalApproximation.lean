@@ -7,7 +7,7 @@ and vanishes nowhere, which are the hypotheses needed for Stone-Weierstrass.
 -/
 
 import Mathlib
-import ShefferAI.Lean.SoftplusBasic
+-- import ShefferAI.Lean.SoftplusBasic
 
 open Real
 

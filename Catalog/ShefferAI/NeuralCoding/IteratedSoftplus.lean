@@ -12,7 +12,7 @@ resolving Q24 from the Sheffer function program.
 -/
 
 import Mathlib
-import ShefferAI.Lean.SoftplusBasic
+-- import ShefferAI.Lean.SoftplusBasic
 import ShefferAI.Lean.AdvancedTheorems
 
 open Real

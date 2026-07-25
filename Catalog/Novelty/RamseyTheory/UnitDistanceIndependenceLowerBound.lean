@@ -1,8 +1,8 @@
 import Mathlib
-import Catalog.Novelty.NumberTheory.UnitDistanceGraph
-import Catalog.Novelty.RamseyTheory.IndependenceRatioLowerBound
-import Catalog.Novelty.GraphTheory.GreedyDegreeColoring
-import Catalog.Novelty.RamseyTheory.UnitDistanceChromaticBridge
+import Novelty.NumberTheory.UnitDistanceGraph
+import Novelty.RamseyTheory.IndependenceRatioLowerBound
+import Novelty.GraphTheory.GreedyDegreeColoring
+import Novelty.RamseyTheory.UnitDistanceChromaticBridge
 
 /-!
 # The Minimum Independence Ratio Constraint for unit-distance graphs

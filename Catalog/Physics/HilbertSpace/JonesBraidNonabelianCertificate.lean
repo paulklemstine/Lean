@@ -1,5 +1,5 @@
 import Mathlib
-import Catalog.Algebra.KnotAndBraidTheory.JonesTemperleyLiebBraid4
+import Algebra.KnotAndBraidTheory.JonesTemperleyLiebBraid4
 
 /-!
 # A non-abelianity certificate for Jones braid operators

@@ -1,4 +1,4 @@
-import Catalog.Computation.Computation.SelfModifyingHalt
+import Computation.Computation.SelfModifyingHalt
 import Mathlib.Computability.Reduce
 
 /-!

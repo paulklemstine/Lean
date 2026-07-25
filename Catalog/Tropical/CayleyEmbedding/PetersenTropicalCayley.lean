@@ -73,7 +73,7 @@ turns the even-valuation case into a sharp open conjecture.
 -- !-- end Lab Notes -- !--
 -/
 import Mathlib
-import Catalog.Tropical.IdempotentSemiring.Defs
+import Logic.GraphTheory.Defs
 
 open SimpleGraph
 

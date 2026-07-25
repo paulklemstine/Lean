@@ -2,7 +2,7 @@ import Logic.HilbertSpace.AdvancedTheorems
 import MachineLearning.ShefferFunction.Lean.FutureTheorems
 import Computation.Factoring.NewTheorems
 import MachineLearning.ShefferFunction.Lean.ShefferAlgebra
-import EML.Lean.SoftplusBasic
+-- import EML.Lean.SoftplusBasic
 import MachineLearning.ShefferFunction.Lean.UniversalApproximation
 import Mathlib
 

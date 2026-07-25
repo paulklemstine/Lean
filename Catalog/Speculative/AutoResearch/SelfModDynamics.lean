@@ -37,7 +37,7 @@ finite dynamical systems through the bridge lemma `run_eq_iter` (run = iterate o
 -/
 
 import Mathlib
-import Catalog.Computation.Computation.SelfModifyingHalt
+import Computation.Computation.SelfModifyingHalt
 
 open Function
 

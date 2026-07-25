@@ -35,7 +35,7 @@
   written `Multiplicative.ofAdd (k : ℤ)`, and `0` is the group identity `1`.
 -/
 import Mathlib
-import Catalog.Cryptography.KnotAndBraidTheory.BraidGroup
+import Cryptography.KnotAndBraidTheory.BraidGroup
 
 namespace BraidGroup
 namespace CognitiveBraids

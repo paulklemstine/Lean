@@ -1,6 +1,6 @@
 import Mathlib
-import Catalog.Logic.ProofComplexity.SimulationPreorder
-import Catalog.Logic.ProofComplexity.SimulationDegrees
+import Logic.ProofComplexity.SimulationPreorder
+import Logic.ProofComplexity.SimulationDegrees
 
 /-! # Lattice shape and parametric separation of the poset of p-degrees
 

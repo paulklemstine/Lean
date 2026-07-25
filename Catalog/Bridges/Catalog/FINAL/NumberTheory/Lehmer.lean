@@ -4,7 +4,7 @@ Released under Apache 2.0 license.
 -/
 import Mathlib
 import Logic.GraphTheory.Defs
-import Speculative.MahlerMeasure.Cyclotomic
+-- import Speculative.MahlerMeasure.Cyclotomic
 
 /-!
 # Lehmer's Polynomial and Certified Positivity

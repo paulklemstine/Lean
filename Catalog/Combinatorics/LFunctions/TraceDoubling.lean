@@ -1,4 +1,4 @@
-import Catalog.NumberTheory.PosetTheory.HyperbolicTraceArithmetic
+import NumberTheory.PosetTheory.HyperbolicTraceArithmetic
 
 /-!
 # Trace doubling on modular hyperbolic orbits

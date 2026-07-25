@@ -1,5 +1,5 @@
 import Mathlib
-import Catalog.Novelty.GraphTheory.PartialCube
+import Novelty.GraphTheory.PartialCube
 
 /-!
 # The hypercube `Qₙ` is `n`-regular (catalog `DaisyCube` model)

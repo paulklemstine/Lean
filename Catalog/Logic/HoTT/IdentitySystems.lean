@@ -49,7 +49,7 @@ Failure analysis: A naive attempt to prove `right_inv` by rewriting with the raw
 -/
 
 import Mathlib
-import Catalog.Logic.HoTT.Foundations
+import Logic.HoTT.Foundations
 
 universe u v w
 

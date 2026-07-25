@@ -1,5 +1,5 @@
 import Mathlib
-import Catalog.Novelty.InformationTheory.ThermodynamicsOfProof
+import Novelty.InformationTheory.ThermodynamicsOfProof
 
 /-!
 # Thermodynamics of Mathematical Proof — the group-theoretic ledger

@@ -13,7 +13,7 @@ system {σⁿ(x)}_{n≥0}, leveraging the general identity σⁿ(x) = log(n + e�
 -/
 
 import Mathlib
-import ShefferAI.Lean.SoftplusBasic
+-- import ShefferAI.Lean.SoftplusBasic
 import MachineLearning.ShefferFunction.Lean.ShefferAlgebra
 import ShefferAI.Lean.AdvancedTheorems
 import ShefferAI.Lean.GeneralIteratedSoftplus

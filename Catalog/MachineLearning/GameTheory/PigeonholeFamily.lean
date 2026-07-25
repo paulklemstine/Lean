@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 -/
 import Mathlib
 import Logic.GraphTheory.Defs
-import .lake.packages.mathlib.Mathlib.CategoryTheory.Abelian.Transfer
+import Mathlib.CategoryTheory.Abelian.Transfer
 
 /-!
 # Pigeonhole Witness Search Family

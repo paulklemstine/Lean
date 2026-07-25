@@ -1,5 +1,5 @@
 import Mathlib
-import Novelty.JigsawFoundations
+-- import Novelty.JigsawFoundations
 
 /-!
 # 3-SAT to Jigsaw Puzzle Reduction

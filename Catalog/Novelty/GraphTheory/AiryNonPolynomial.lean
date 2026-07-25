@@ -19,7 +19,7 @@ This is the precise sense in which "the Airy function is transcendental over
 not reducible to polynomial algebra.
 -/
 import Mathlib
-import Catalog.EML.PosetTheory.EMLDiffObstruction
+import EML.PosetTheory.EMLDiffObstruction
 
 open Polynomial
 

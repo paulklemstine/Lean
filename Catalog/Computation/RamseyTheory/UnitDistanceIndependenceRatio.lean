@@ -32,7 +32,7 @@ the best known lower bound for the independence ratio of the plane sits *below*
 * D. Cranston, L. Rabern, "The fractional chromatic number of the plane" (2017).
 -/
 import Mathlib
-import Catalog.Probability.GraphTheory.IndependentSet
+import Probability.GraphTheory.IndependentSet
 
 open Finset SimpleGraph
 

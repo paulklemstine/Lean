@@ -63,7 +63,7 @@ Synthesis (PI): "all even `m ≥ 2`" is not harder than "`m = 2`"; the difficult
 is entirely concentrated in the two-square case, and evaporates for `m ≥ 4`.
 -/
 import Mathlib
-import Catalog.Novelty.SumsMSquares.SumsOfMSquaresSet
+import Novelty.SumsMSquares.SumsOfMSquaresSet
 
 namespace SumsOfMSquares
 

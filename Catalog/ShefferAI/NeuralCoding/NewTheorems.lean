@@ -18,7 +18,7 @@ of the Sheffer algebra.
 -/
 
 import Mathlib
-import ShefferAI.Lean.SoftplusBasic
+-- import ShefferAI.Lean.SoftplusBasic
 import MachineLearning.ShefferFunction.Lean.ShefferAlgebra
 import ShefferAI.Lean.FutureTheorems
 import ShefferAI.Lean.AdvancedTheorems
