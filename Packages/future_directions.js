@@ -4541,7 +4541,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "id": "fd_0685",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.84,
     "research_mode": "prove",
     "source_exp_id": "seed",
@@ -5638,7 +5638,7 @@ window.FUTURE_DIRECTIONS = [
       "Probability"
     ],
     "id": "seed_250",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
