@@ -93,9 +93,9 @@ Synthesis (PI):
   phantom number measures lattice join-reducibility, not separation.
 -/
 import Mathlib
-import Catalog.Novelty.PosetTheory.PhantomTopology
-import Catalog.Novelty.PosetTheory.PhantomTopologyCollapse
-import Catalog.Novelty.PosetTheory.PhantomJoinIrreducible
+import Novelty.PosetTheory.PhantomTopology
+import Novelty.PosetTheory.PhantomTopologyCollapse
+import Novelty.PosetTheory.PhantomJoinIrreducible
 
 open Set
 

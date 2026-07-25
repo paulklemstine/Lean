@@ -15,7 +15,7 @@ of a finite certificate, and the search space is explicitly bounded.
 -/
 
 import Mathlib
-import Pythagorean.ClauseSpaceDefs
+-- import Pythagorean.ClauseSpaceDefs
 
 namespace ClauseSpace
 

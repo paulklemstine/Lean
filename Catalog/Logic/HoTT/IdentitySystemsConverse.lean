@@ -69,7 +69,7 @@ Failure analysis: A direct `def idSysElim := pf ▸ d` was rejected (`motive is 
 -/
 
 import Mathlib
-import Catalog.Logic.HoTT.IdentitySystems
+import Logic.HoTT.IdentitySystems
 
 universe u v w u' v'
 

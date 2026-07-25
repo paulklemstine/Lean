@@ -22,7 +22,7 @@ of SAW counts, and establishes the existence of the connective constant μ.
 -/
 
 import Mathlib
-import .lake.packages.mathlib.Mathlib.Analysis.Subadditive
+import Mathlib.Analysis.Subadditive
 
 open Real
 

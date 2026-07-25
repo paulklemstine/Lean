@@ -1,5 +1,5 @@
 import Logic.HilbertSpace.AdvancedTheorems
-import EML.Lean.SoftplusBasic
+-- import EML.Lean.SoftplusBasic
 import Mathlib
 
 /-! # CatalogBuild.EML.GeneralIteratedSoftplus

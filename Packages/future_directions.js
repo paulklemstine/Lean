@@ -1564,7 +1564,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Rucker: The Fourth Dimension as a Mathematical Playground"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d94c6678",
     "description": "Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in PA without revealing any step of the proof. Conjecture: Every theorem provable in Peano Arithmetic has a zero-knowledge proof whose communication complexity is polynomial in the length of the theorem statement (not the proof). This follows from the PCP theorem combined with the fact that PA-proofs can be arithmetized. The zero-knowledge protocol: (1) Prover commits to each proof step using a collision-resistant hash. (2) Verifier randomly challenges one proof step. (3) Prover opens that step and shows it follows from the axioms. Repeating O(k) times gives soundness error 2^{-k}. The proof is zero-knowledge because the verifier only sees one random step per challenge. Test: implement a zero-knowledge proof system for propositional tautologies and prove that a verifier learns nothing beyond the validity of the tautology. Impact: mathematicians can certify results without revealing their methods \u2014 a mathematical equivalent of sealed-bid auctions for proof strategies.",
     "domains": [
       "Novelty",
@@ -1573,10 +1573,11 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "id": "seed_108",
+    "phase": "A",
     "priority_score": 0.89,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
   },
@@ -2145,7 +2146,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry"
     ],
     "id": "seed_322",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
@@ -2562,7 +2563,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry"
     ],
     "id": "seed_317",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.87,
     "research_mode": "team",
     "source_exp_id": "seed",
@@ -5995,7 +5996,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "id": "seed_073",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",

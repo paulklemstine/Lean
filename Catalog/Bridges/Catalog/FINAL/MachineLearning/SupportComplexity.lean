@@ -1,5 +1,5 @@
 import Mathlib
-import .lake.packages.mathlib.Mathlib.Order.Radical
+import Mathlib.Order.Radical
 import MachineLearning.NumberTheory.ABCTriple
 
 /-!

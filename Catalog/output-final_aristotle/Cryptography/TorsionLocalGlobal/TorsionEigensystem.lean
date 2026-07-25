@@ -3,7 +3,7 @@ Copyright (c) 2025 Harmonic. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 -/
 import Mathlib
-import Catalog.NumberTheory.Langlands.HeckeFactorization
+import NumberTheory.Langlands.HeckeFactorization
 
 /-!
 # From torsion Hecke eigensystems to `ℓ`-adic eigensystems (the inverse-limit step)

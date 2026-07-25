@@ -1,5 +1,5 @@
-import Catalog.Applications.PoincareData.MetricFiltration
-import Catalog.Algebra.RamseyTheory.VietorisRipsCliqueExtremalDeepening
+import Applications.PoincareData.MetricFiltration
+import Algebra.RamseyTheory.VietorisRipsCliqueExtremalDeepening
 
 /-!
 # Stability and exact boundaries for finite Rips thresholds

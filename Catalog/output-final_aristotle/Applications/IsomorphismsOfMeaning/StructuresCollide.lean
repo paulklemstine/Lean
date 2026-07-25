@@ -1,5 +1,5 @@
 import Mathlib
-import Catalog.Applications.Pythagorean.StrongDivisibilitySequences
+import Applications.Pythagorean.StrongDivisibilitySequences
 
 /-! # Isomorphisms of Meaning: When Structures Collide
 

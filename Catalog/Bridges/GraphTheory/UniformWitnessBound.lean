@@ -1,6 +1,6 @@
 import Mathlib
-import Catalog.Bridges.PosetTheory.Foundations
-import Catalog.Bridges.CombinatorialBridge.CombinatorialBridge
+import Logic.HoTT.Foundations
+import Bridges.CombinatorialBridge.CombinatorialBridge
 
 /-! # The Uniform Witness Bound (corrected)
 

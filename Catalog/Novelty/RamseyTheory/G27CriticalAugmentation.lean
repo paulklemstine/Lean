@@ -1,7 +1,7 @@
 import Mathlib
-import Catalog.Novelty.RamseyTheory.IndependenceRatioChromatic
-import Catalog.Novelty.NumberTheory.UnitDistanceGraph
-import Catalog.Novelty.RamseyTheory.UnitDistanceChromaticBridge
+import Novelty.RamseyTheory.IndependenceRatioChromatic
+import Novelty.NumberTheory.UnitDistanceGraph
+import Novelty.RamseyTheory.UnitDistanceChromaticBridge
 
 /-!
 # The critical two-vertex augmentation of a `27`-vertex unit-distance graph

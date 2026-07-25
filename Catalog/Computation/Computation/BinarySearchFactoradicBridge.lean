@@ -1,4 +1,4 @@
-import Computation.BinarySearchVerified
+-- import Computation.BinarySearchVerified
 import Computation.FactorialNumberSystem.FactorialNumberSystem
 
 /-!

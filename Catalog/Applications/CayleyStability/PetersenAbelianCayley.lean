@@ -68,7 +68,7 @@ conjecture.
 -- !-- end Lab Notes -- !--
 -/
 import Mathlib
-import Catalog.Applications.CayleyStability.PetersenNonBipartite
+import Applications.CayleyStability.PetersenNonBipartite
 
 open SimpleGraph
 

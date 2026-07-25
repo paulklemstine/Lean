@@ -1,5 +1,5 @@
 import Mathlib
-import .lake.packages.mathlib.Mathlib.Analysis.Oscillation
+import Mathlib.Analysis.Oscillation
 
 /-!
 # From One Crossing to an Exponential Width Lower Bound

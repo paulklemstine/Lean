@@ -1,4 +1,4 @@
-import Catalog.Novelty.PosetTheory.Basic
+import Logic.BasicMonotoneCircuit.Basic
 
 /-!
 # The Anti-Fibonacci Sequence — Partial Sums and the Square Spectrum

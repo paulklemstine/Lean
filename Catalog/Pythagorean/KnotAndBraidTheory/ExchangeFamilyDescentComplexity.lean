@@ -31,7 +31,7 @@ focusing on certificate amplification profiles and product tensorization.
 * `factorial_upper_bound` — d^d upper bound on descent in dimension d
 -/
 import Mathlib
-import Pythagorean.ExchangeFamily
+-- import Pythagorean.ExchangeFamily
 
 open Finset
 

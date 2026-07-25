@@ -1,5 +1,5 @@
 import Mathlib
-import Catalog.Bridges.PosetTheory.GroupTheoryBridge
+import Bridges.PosetTheory.GroupTheoryBridge
 
 /-!
 # A periodic table of finite groups: invariants and obstructions

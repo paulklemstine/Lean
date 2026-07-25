@@ -1,4 +1,4 @@
-import Catalog.Bridges.NeuralCoding.PolyaTreeRecurrence
+import Bridges.NeuralCoding.PolyaTreeRecurrence
 
 /-! # Uniqueness of the Pólya tree sequence (Bridges)
 

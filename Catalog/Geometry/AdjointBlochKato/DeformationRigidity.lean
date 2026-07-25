@@ -32,7 +32,7 @@ faces of adjoint rigidity: zero tangent space, injectivity of the relation map, 
 infinitesimal families, and (for a square finite presentation) surjectivity/full rank.
 -/
 import Mathlib
-import Catalog.Logic.NeuralCoding.BettiWhittakerPeriods
+import Logic.NeuralCoding.BettiWhittakerPeriods
 
 namespace AdjointBlochKato
 

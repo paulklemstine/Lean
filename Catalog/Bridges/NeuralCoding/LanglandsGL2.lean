@@ -1,5 +1,5 @@
 import Mathlib
-import Bridges.LanglandsGL2Defs
+-- import Bridges.LanglandsGL2Defs
 
 /-!
 # Langlands Correspondence for GL₂ over ℚ: Theorems

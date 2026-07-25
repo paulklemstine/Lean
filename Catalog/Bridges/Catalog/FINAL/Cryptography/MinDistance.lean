@@ -19,7 +19,7 @@
 
 import Mathlib
 import Logic.GraphTheory.Defs
-import .lake.packages.mathlib.Mathlib.Algebra.MvPolynomial.SchwartzZippel
+import Mathlib.Algebra.MvPolynomial.SchwartzZippel
 
 open MvPolynomial Finset BigOperators
 

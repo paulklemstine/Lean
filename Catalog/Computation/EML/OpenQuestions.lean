@@ -3,7 +3,7 @@ import MachineLearning.ShefferFunction.Lean.ExtendedTheorems
 import MachineLearning.ShefferFunction.Lean.FutureTheorems
 import Computation.Factoring.NewTheorems
 import MachineLearning.ShefferFunction.Lean.ShefferAlgebra
-import EML.Lean.SoftplusBasic
+-- import EML.Lean.SoftplusBasic
 import Mathlib
 
 /-! # CatalogBuild.EML.OpenQuestions

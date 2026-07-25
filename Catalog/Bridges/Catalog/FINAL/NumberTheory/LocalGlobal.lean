@@ -11,7 +11,7 @@ It provides:
 -/
 import Mathlib
 import Logic.BasicMonotoneCircuit.Basic
-import Speculative.AutoResearch.NumberTheory.SumThreeCubes.Mod9
+-- import Speculative.AutoResearch.NumberTheory.SumThreeCubes.Mod9
 
 /-
 Global representability implies local representability: if n = x³+y³+z³ over ℤ,

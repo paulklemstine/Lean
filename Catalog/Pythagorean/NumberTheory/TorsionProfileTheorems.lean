@@ -29,7 +29,7 @@ of the invariant factors, connecting TDA torsion to number-theoretic structure.
 - Computational bounds on prime sieving
 -/
 import Mathlib
-import Pythagorean.TorsionProfileDefs
+-- import Pythagorean.TorsionProfileDefs
 
 open Finset Nat List
 

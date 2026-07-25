@@ -57,7 +57,7 @@ Critique (Critic): The Chernoff bound is non-vacuous (requires `λ ≥ 0`), the
 -/
 
 import Mathlib
-import Catalog.Tropical.MeasureTheory.Basic
+import Logic.BasicMonotoneCircuit.Basic
 
 namespace TropicalLDP
 

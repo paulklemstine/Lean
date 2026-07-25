@@ -1,4 +1,4 @@
-import Catalog.MachineLearning.HyperbolicNumberTheory.Foundations
+import Logic.HoTT.Foundations
 
 /-!
 # Arithmetic of modular traces and Pell conics

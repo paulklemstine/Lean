@@ -16,7 +16,7 @@ API theorem for further structural analysis.
 -/
 import Mathlib
 import Logic.GraphTheory.Defs
-import Speculative.OddPerfect.SigmaParity
+-- import Speculative.OddPerfect.SigmaParity
 
 open Finset Nat BigOperators OddPerfect
 

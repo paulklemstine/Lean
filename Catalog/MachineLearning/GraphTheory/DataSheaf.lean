@@ -29,7 +29,7 @@ with missing entries.
 -/
 
 import Mathlib
-import Catalog.MachineLearning.PosetTheory.CechComplex
+import MachineLearning.PosetTheory.CechComplex
 
 noncomputable section
 

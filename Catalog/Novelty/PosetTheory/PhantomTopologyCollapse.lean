@@ -73,8 +73,8 @@ Synthesis (PI):
   coarsens structure", but the coarsening is always the meet of just two sharper views.
 -/
 import Mathlib
-import Catalog.Novelty.PosetTheory.PhantomTopology
-import Catalog.Novelty.PosetTheory.PhantomTopologyNumber
+import Novelty.PosetTheory.PhantomTopology
+import Novelty.PosetTheory.PhantomTopologyNumber
 
 open Set
 

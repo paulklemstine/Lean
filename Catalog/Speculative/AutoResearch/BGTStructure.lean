@@ -26,7 +26,7 @@ growth machinery that underpins the general structure theorem.
 -/
 
 import Mathlib
-import Pythagorean.BGTDefs
+-- import Pythagorean.BGTDefs
 import Pythagorean.AbstractAlgebra.BGTGrowthHelpers
 
 open Finset Pointwise

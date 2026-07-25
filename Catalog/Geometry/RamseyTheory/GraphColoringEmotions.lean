@@ -55,7 +55,7 @@ minimum-palette count `3 * 2^n` and the six-palette count `6 * 20^n`.
 -- !-- End Lab Notes -- !--
 -/
 
-import Catalog.Novelty.RamseyTheory.FriendshipEmotionalChromaticNumber
+import Novelty.RamseyTheory.FriendshipEmotionalChromaticNumber
 
 namespace Catalog.Geometry.GraphColoringEmotions
 

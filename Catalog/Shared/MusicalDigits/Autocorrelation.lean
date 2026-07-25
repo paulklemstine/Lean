@@ -1,4 +1,4 @@
-import Catalog.Computation.GameTheory.FourierTransformInversion
+import Computation.GameTheory.FourierTransformInversion
 
 /-!
 # Cyclic autocorrelation and interval energy of digit melodies

@@ -29,7 +29,7 @@ Everything reduces to the per-step composition lemmas
 `HolderOnWith.comp` together with `Set.MapsTo.iterate`, by induction on `n`.
 -/
 
-import Catalog.Geometry.NumberTheory.QuasiSymmetricComposition
+import Geometry.NumberTheory.QuasiSymmetricComposition
 
 open MeasureTheory Set Function
 open scoped NNReal ENNReal

@@ -3,7 +3,7 @@ Copyright (c) 2026 Harmonic Research. All rights reserved.
 Released under Apache 2.0 license.
 -/
 import Mathlib
-import Catalog.Logic.ProofTheoryAndLogic.Propositional
+import Logic.ProofTheoryAndLogic.Propositional
 
 /-!
 # Theory genomes, semantic equivalence, and mutations

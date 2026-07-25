@@ -89,7 +89,7 @@ SYNTHESIS (PI).
   is the canonical faithful compression. See `FUTURE_DIRECTIONS.md`.
 -/
 import Mathlib
-import Catalog.Novelty.PosetTheory.LeftDivisibility
+import Novelty.PosetTheory.LeftDivisibility
 
 namespace MemoryEditing
 

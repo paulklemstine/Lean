@@ -34,7 +34,7 @@ The core argument for the subgroup theorem is elementary:
 -/
 
 import Mathlib
-import Pythagorean.ApproxSubgroupDefs
+-- import Pythagorean.ApproxSubgroupDefs
 
 open Finset Pointwise
 

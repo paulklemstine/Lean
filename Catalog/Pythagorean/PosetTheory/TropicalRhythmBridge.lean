@@ -1,5 +1,5 @@
 import Mathlib
-import Pythagorean.TropicalRhythmAlgebra
+-- import Pythagorean.TropicalRhythmAlgebra
 
 /-!
 # Tropical Rhythm Bridge: Crystallographic Symmetry ↔ Max-Plus Geometry

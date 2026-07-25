@@ -1,6 +1,6 @@
 import Mathlib
 import Logic.BasicMonotoneCircuit.Basic
-import .lake.packages.mathlib.Mathlib.Topology.Algebra.Affine
+import Mathlib.Topology.Algebra.Affine
 
 /-!
 # Sun's truncated Legendre-symbol determinant — main results

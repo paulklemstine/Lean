@@ -1,5 +1,5 @@
 import Mathlib
-import Catalog.Novelty.RamseyTheory.IndependenceRatioChromatic
+import Novelty.RamseyTheory.IndependenceRatioChromatic
 
 /-!
 # The independence ratio lower bound: `i(G) ≥ 1/χ(G)`

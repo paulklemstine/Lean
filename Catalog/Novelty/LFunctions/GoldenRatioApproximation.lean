@@ -1,5 +1,5 @@
 import Mathlib
-import Catalog.NumberTheory.PosetTheory.Irrationality
+import NumberTheory.PosetTheory.Irrationality
 
 /-!
 # The golden ratio is badly approximable (the sharp side of Hurwitz)

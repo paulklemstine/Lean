@@ -21,7 +21,7 @@ stronger than the previous ShefferAlg ⊆ C∞ ∩ Lip.
 -/
 
 import Mathlib
-import ShefferAI.Lean.SoftplusBasic
+-- import ShefferAI.Lean.SoftplusBasic
 import MachineLearning.ShefferFunction.Lean.ShefferAlgebra
 import ShefferAI.Lean.OpenQuestions
 

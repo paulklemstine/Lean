@@ -32,7 +32,7 @@ The result is an effective, machine-checkable certificate system.
 -/
 
 import Mathlib
-import Pythagorean.PF2Defs
+-- import Pythagorean.PF2Defs
 
 open Polynomial Finset
 

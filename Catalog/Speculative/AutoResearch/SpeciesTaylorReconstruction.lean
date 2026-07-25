@@ -38,7 +38,7 @@ Three independent extensions are formalized:
 -/
 import Mathlib
 import output-final_aristotle.Applications.Bridges.SpeciesAnalyticBridge
-import Catalog.Speculative.AutoResearch.SpeciesTaylorCalculus
+import Speculative.AutoResearch.SpeciesTaylorCalculus
 
 open scoped BigOperators
 open PowerSeries Finset

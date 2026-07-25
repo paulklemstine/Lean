@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-25T19:50:53.569498+00:00",
+  "last_updated": "2026-07-25T19:42:27.006897+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -36706,9 +36706,9 @@
       "bridge_count": 0,
       "cycle_n": 1,
       "domain": "Tropical",
-      "duration_seconds": 5576.063349723816,
-      "end_time": 1785009008.3620608,
-      "files_integrated": 5,
+      "duration_seconds": 5083.908684015274,
+      "end_time": 1785008516.207395,
+      "files_integrated": 4,
       "job_id": "7b875dce",
       "outcome_quality": 0.71,
       "phase": "complete",
@@ -36740,7 +36740,7 @@
       "theorem_novelty_duplicate": 0,
       "theorem_novelty_new": 7,
       "theorem_novelty_strengthening": 0,
-      "timestamp": "2026-07-25T19:50:53.347377+00:00",
+      "timestamp": "2026-07-25T19:42:26.851256+00:00",
       "title": "ArXiv paper: Properties of the Tropical Characteristic Polynomial of Symmetric Matrices"
     }
   ]

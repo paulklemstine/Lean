@@ -17,7 +17,7 @@ New formally verified theorems extending the Sheffer function program to 90+ res
 -/
 
 import Mathlib
-import ShefferAI.Lean.SoftplusBasic
+-- import ShefferAI.Lean.SoftplusBasic
 import MachineLearning.ShefferFunction.Lean.ShefferAlgebra
 import ShefferAI.Lean.UniversalApproximation
 import ShefferAI.Lean.FutureTheorems

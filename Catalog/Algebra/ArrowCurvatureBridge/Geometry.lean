@@ -25,7 +25,7 @@ any "averaging" aggregation rule on preferences necessarily loses information.
 * Amari, S. (2016). Information Geometry and Its Applications.
 -/
 import Mathlib
-import .lake.packages.mathlib.Mathlib.CategoryTheory.Comma.Arrow
+import Mathlib.CategoryTheory.Comma.Arrow
 
 open Finset BigOperators Real
 

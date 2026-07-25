@@ -24,8 +24,8 @@ The main theorem `tropical_buchi_elgot_equiv` follows cleanly from these.
 
 import Mathlib
 import Logic.GraphTheory.Defs
-import .lake.packages.mathlib.Mathlib.Algebra.Category.ModuleCat.Algebra
-import .lake.packages.mathlib.Mathlib.Order.UpperLower.Closure
+import Mathlib.Algebra.Category.ModuleCat.Algebra
+import Mathlib.Order.UpperLower.Closure
 import Tropical.WeightedMSO.ProductAutomaton
 import Speculative.AutoResearch.Tropical.WeightedMSO.FormulaToAutomaton
 

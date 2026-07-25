@@ -25,7 +25,7 @@ supports, extending the disjoint-support uniqueness machinery from
 * `totalOverlapComplexity_eq_zero_iff` — complexity 0 ↔ disjoint supports
 -/
 
-import Catalog.Pythagorean.TropicalBridge.TropicalKernelRigidity
+import Bridges.Pythagorean.TropicalBridge.TropicalKernelRigidity
 
 open Finset BigOperators
 

@@ -1,5 +1,5 @@
 import Mathlib
-import Catalog.Tropical.NeuralNetworks.TropicalDegreeRobustness
+import Tropical.NeuralNetworks.TropicalDegreeRobustness
 
 /-! # Maslov Dequantization Isometry & Robustness Transfer
 

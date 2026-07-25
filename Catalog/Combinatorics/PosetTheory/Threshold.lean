@@ -1,6 +1,6 @@
 import Mathlib
-import Catalog.Novelty.PosetTheory.OrderParameter
-import Catalog.Novelty.NeuralCoding.Dimension
+import Novelty.PosetTheory.OrderParameter
+import Novelty.NeuralCoding.Dimension
 
 /-!
 # Threshold laws in counted proof spaces

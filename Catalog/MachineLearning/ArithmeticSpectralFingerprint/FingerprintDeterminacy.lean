@@ -14,7 +14,7 @@
 
 import Mathlib
 import Logic.GraphTheory.Defs
-import Speculative.ArithmeticSpectralFingerprint.TraceTransfer
+-- import Speculative.ArithmeticSpectralFingerprint.TraceTransfer
 
 open Matrix
 

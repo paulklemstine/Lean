@@ -1,4 +1,4 @@
-import .lake.packages.mathlib.Mathlib.Algebra.Polynomial.Derivative
+import Mathlib.Algebra.Polynomial.Derivative
 import Mathlib
 
 /-!

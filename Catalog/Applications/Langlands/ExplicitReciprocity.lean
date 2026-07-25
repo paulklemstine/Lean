@@ -49,7 +49,7 @@ Synthesis (PI): GL(1) Langlands over `ℚ`, made explicit: the dictionary betwee
 and Galois representations *is* the cyclotomic reciprocity law, value-by-value.
 -/
 import Mathlib
-import Catalog.NumberTheory.PosetTheory.GL1Correspondence
+import NumberTheory.PosetTheory.GL1Correspondence
 
 open scoped NumberField
 open IsCyclotomicExtension.Rat IsCyclotomicExtension Polynomial

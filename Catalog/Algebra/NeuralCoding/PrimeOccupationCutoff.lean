@@ -1,4 +1,4 @@
-import Catalog.Algebra.NeuralCoding.HolographicPrimes
+import Algebra.NeuralCoding.HolographicPrimes
 
 /-!
 # Quantitative occupation-cutoff errors for finite prime partitions
