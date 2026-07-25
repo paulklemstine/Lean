@@ -94,7 +94,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "P vs NP Problem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "901b537c",
     "description": "The key insight is that the holographic principle in physics (AdS/CFT) can be rederived from quantum error correction. If the boundary CFT is a quantum error-correcting code with parameters [[n, k, d]], then the bulk AdS geometry emerges from the code's encoding. Conjecture: The Ryu-Takayanagi formula S(A) = Area(gamma_A) / (4G) is equivalent to the quantum Singleton bound d <= n - k + 1 applied to the boundary code, where the code distance d equals the minimal geodesic length through the bulk. Why now: recent work by Pastawski, Preskill, and Harrow (2015) showed that the AdS/CFT correspondence can be modeled by tensor networks (HaPPY code), but the converse \u2014 deriving AdS geometry FROM the code \u2014 has not been proven. Test: for the [[5,1,3]] code (the smallest perfect code), show that the code's Tanner graph IS the Penrose diagram of AdS_2, and the code distance 3 equals the geodesic length through the bulk. Impact: spacetime IS a quantum error-correcting code. Gravity is not a force \u2014 it's the logical operator of a quantum code.",
     "domains": [
       "Physics",
@@ -102,10 +102,11 @@ window.FUTURE_DIRECTIONS = [
       "Cryptography"
     ],
     "id": "seed_103",
+    "phase": "A",
     "priority_score": 0.96,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Gravity as Quantum Error Correction: Spacetime from Codes"
   },
@@ -1737,18 +1738,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Homotopy Type Theory to HoTT Bridge: Univalent Foundations for Proof Transfer"
   },
   {
-    "consumed_by_exp_id": "794ada5c",
+    "consumed_by_exp_id": "",
     "description": "Prove that tropical curve counts equal classical Gromov-Witten invariants for toric surfaces. Formalize the correspondence theorem: each tropical curve lifts to a unique complex curve in the toric surface. Compute the tropical GW invariants for P^2.",
     "domains": [
       "Tropical",
       "Algebra"
     ],
     "id": "seed_318",
-    "phase": "A",
     "priority_score": 0.89,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "",
     "title": "Tropical Curve Counting: Gromov-Witten Invariants"
   },
@@ -2202,7 +2202,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Perfect Numbers: Structure of Even Perfects"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b59af725",
     "description": "Formalize the spectral theorem for bounded self-adjoint operators on Hilbert spaces. Prove the min-max theorem for eigenvalues. Construct the functional calculus and prove the spectral mapping theorem. Apply to quantum mechanical observables.",
     "domains": [
       "Analysis",
@@ -2210,10 +2210,11 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "id": "fd_0662",
+    "phase": "A",
     "priority_score": 0.87,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-24T14:34:16.697773+00:00",
     "title": "Spectral Theory: Self-Adjoint Operators"
   },
@@ -7361,17 +7362,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Sums of Kloosterman sums formed with modular symbols"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7b875dce",
     "description": "Investigate the ArXiv paper 'Properties of the Tropical Characteristic Polynomial of Symmetric Matrices' and formalize its key results. Abstract: We investigate the combinatorial structure of the tropical characteristic polynomial of symmetric matrices using the tropical permanents of their principal submatrices. We establish new inequalities for the leading coefficients of the tropical characteristic polynomial, revealing concavity properties of the coefficient sequence and yielding necessary conditions for a sequence to arise as the coefficient sequence of the tropical characteristic polynomial of a symmetric matrix. These results provide a deeper understanding of the structure of tropical characteristic polynomials associated with symmetric matrices.",
     "domains": [
       "Algebra",
       "Tropical"
     ],
     "id": "fd_0089",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.10922v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T14:59:48.946358+00:00",
     "title": "ArXiv paper: Properties of the Tropical Characteristic Polynomial of Symmetric Matrices"
   },
