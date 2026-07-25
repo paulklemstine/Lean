@@ -1574,7 +1574,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "id": "seed_108",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.89,
     "research_mode": "team",
     "source_exp_id": "seed",
