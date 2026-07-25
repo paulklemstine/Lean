@@ -1,325 +1,649 @@
-# PAC-Bayes Generalization Bounds as a Variational Geometry of Learning
+# Finite PAC–Bayes Variational Bounds and Gaussian Perturbation Certificates
+
+**Aristotle**  
+**July 25, 2026**
 
 ## Abstract
 
-We develop a formally verified mathematical framework for PAC-Bayes generalization bounds, treating them as variational inequalities on posterior perturbation families. Our contributions include: (1) formal proofs of McAllester and Catoni bound properties, including monotonicity, subadditivity, and well-definedness; (2) explicit Gaussian posterior specialization with computable KL divergence formulas and certificate soundness; (3) asymptotic tightness showing the PAC-Bayes rate is Θ(1/n) for linear classifiers; and (4) a cross-domain robustness-to-generalization transfer theorem connecting tropical certified robustness to PAC-Bayes guarantees. All theorems are machine-verified in Lean 4 with Mathlib, providing absolute certainty of correctness. We also provide verified algorithms for computing explicit Gaussian PAC-Bayes certificates and demonstrate their behavior through comprehensive computational experiments.
+This paper develops a self-contained finite-space foundation for PAC–Bayes generalization analysis and its specialization to isotropic Gaussian perturbations. For a finite nonempty hypothesis space with strictly positive prior and posterior masses, we define expectation, relative entropy, exponential partition functions, and Gibbs tilts. We prove positivity and normalization of the tilt, Gibbs’ inequality, an exact entropy identity for exponential tilting, the finite Donsker–Varadhan change-of-measure inequality, and equality at the Gibbs posterior. From a prior-weighted exponential-moment certificate we derive a risk inequality holding uniformly over all admissible posteriors. We then analyze the scalar McAllester and Catoni formulas, including their gaps, monotonicity, denominator conditions, and upper-envelope properties. For Gaussian perturbations $Q=\mathcal N(w,\sigma_q^2I)$ relative to $P=\mathcal N(0,\sigma_p^2I)$, we give the explicit KL decomposition into mean-shift and variance-mismatch costs, prove its nonnegativity and equal-variance reduction, and insert it into a computable McAllester certificate. Finally, we establish vanishing fixed-complexity penalties and an explicit equal-variance rate. The results isolate the deterministic variational core from the sample-level probabilistic argument. They provide the ingredients for finite posterior-uniform certification while making clear that sample-level concentration, measure-theoretic extensions, and matching lower bounds remain separate tasks.
 
 ## 1. Introduction
 
-### 1.1 Motivation
+PAC–Bayes theory studies randomized predictors by comparing a data-dependent posterior distribution $Q$ with a reference prior distribution $P$. Its characteristic feature is a risk bound that applies simultaneously to a broad class of posteriors. The complexity of selecting $Q$ is quantified by the Kullback–Leibler divergence $\operatorname{KL}(Q\|P)$ rather than by a direct count of parameters.
 
-PAC-Bayes bounds (McAllester, 1999; Catoni, 2007) provide data-dependent generalization guarantees for stochastic predictors. Unlike classical VC-dimension bounds, PAC-Bayes certificates depend on the learned posterior distribution, making them adaptive to the actual complexity of the solution found by the learning algorithm.
+The theory has two conceptually distinct layers. The first is probabilistic: one proves, under random sampling, that a suitable exponential moment is controlled with high probability. The second is variational: on that event, a change-of-measure inequality converts the prior-weighted moment into a posterior-uniform risk statement. Keeping these layers separate clarifies exactly which conclusions follow from algebra and which require assumptions on data and losses.
 
-Despite their practical importance, PAC-Bayes bounds have remained largely informal — stated in papers with proof sketches, but without machine verification. This leaves open the possibility of subtle errors, particularly in the measure-theoretic arguments underlying the change-of-measure inequality.
+We focus first on the finite setting, where the mechanism can be presented without measure-theoretic overhead. The key inequality is
 
-### 1.2 Contributions
+$$
+\mathbb E_Q[a]
+\leq
+\operatorname{KL}(Q\|P)+
+\log\mathbb E_P[e^a].
+$$
 
-We present a formally verified PAC-Bayes framework organized around five key results:
+The exponentially tilted distribution is shown to attain equality. This yields a complete finite variational theory from the elementary logarithmic inequality $\log x\leq x-1$.
 
-1. **McAllester Bound Properties** — We prove that the McAllester bound is well-defined, monotone in KL divergence, and that the generalization gap equals a computable square-root term.
+We next study two scalar PAC–Bayes expressions. McAllester’s form adds a square-root complexity penalty to empirical risk. Catoni’s form applies a nonlinear exponential transform controlled by an inverse temperature. The scalar results establish structural facts about these formulas and state precisely how a valid moment certificate turns either expression into a true-risk bound.
 
-2. **Catoni Bound Properties** — We prove the denominator positivity condition, monotonicity in both empirical risk and KL divergence, and the universal upper bound.
+Finally, we consider Gaussian perturbations of a parameter vector. This specialization is particularly relevant to neural networks, where a trained vector $w$ may be randomized by isotropic Gaussian noise. The resulting KL divergence is explicit and decomposes naturally into a mean-shift term and a variance-mismatch term. Substitution produces a directly computable certificate.
 
-3. **Gaussian Specialization** — We derive the closed-form KL divergence for Gaussian posteriors, prove non-negativity via the log inequality, and construct a verified certificate algorithm.
+The scope is deliberately precise. The finite change-of-measure theorem and its moment-to-risk consequence are established under strict positivity. The Gaussian expressions are analyzed as explicit scalar quantities. Vanishing penalties are proved for fixed parameters. A full sample-level theorem would additionally require an i.i.d. loss model, a concentration estimate, and a high-probability construction of the moment certificate. Likewise, asymptotic tightness for a classifier family would require a matching lower bound under a specified data model; only the relevant upper-bound consistency ingredient is provided here.
 
-4. **Asymptotic Tightness** — We prove that for linear classifiers with Gaussian perturbation, the PAC-Bayes complexity term is Θ(1/n), matching information-theoretic lower bounds.
+## 2. Finite probability distributions and information cost
 
-5. **Robustness Transfer** — We prove that certified margin stability converts to PAC-Bayes empirical risk control, bridging tropical robustness theory and statistical learning.
+Let $H$ be a finite nonempty set. A strictly positive probability mass function on $H$ is a function $q:H\to\mathbb R$ such that $q(h)>0$ for all $h\in H$ and
 
-### 1.3 Related Work
+$$
+\sum_{h\in H}q(h)=1.
+$$
 
-PAC-Bayes theory originates with McAllester (1999) and was substantially developed by Catoni (2007), Seeger (2002), and Langford & Shawe-Taylor (2003). Gaussian perturbation bounds for neural networks were advanced by Neyshabur et al. (2017) and Dziugaite & Roy (2017). The connection between robustness and generalization has been explored by Xu & Mannor (2012) and more recently through PAC-Bayes lenses by Viallard et al. (2021).
+For a real observable $x:H\to\mathbb R$, define expectation under $q$ by
 
-Our work is distinguished by: (a) full machine verification of all results; (b) explicit compositional certificate structures; and (c) the cross-domain bridge from tropical robustness to PAC-Bayes bounds.
+$$
+\mathbb E_q[x]
+:=
+\sum_{h\in H}q(h)x(h).
+$$
 
-## 2. Definitions and Notation
+For strictly positive probability mass functions $q$ and $p$, define the Kullback–Leibler divergence
 
-### 2.1 Core Structures
+$$
+\operatorname{KL}(q\|p)
+:=
+\sum_{h\in H}q(h)
+\log\frac{q(h)}{p(h)}.
+$$
 
-**Definition 2.1** (PAC-Bayes Certificate). A PAC-Bayes certificate is a tuple (empRisk, complexity, bound, confidence) where:
-- `empRisk ∈ ℝ` is the empirical Gibbs risk
-- `complexity ∈ ℝ` is the KL-based penalty term  
-- `bound ∈ ℝ` is the generalization bound
-- `confidence ∈ [0,1]` is the probability of validity
-- Validity: `empRisk + complexity ≤ bound`
+Given a prior $p$ and a score $a:H\to\mathbb R$, define the exponential partition function
 
-**Definition 2.2** (Gaussian Posterior Family). A Gaussian posterior family in dimension d is parameterized by:
-- Center `w ∈ ℝ^d` (learned parameters)
-- Prior scale `σp > 0` (prior standard deviation)
-- Posterior scale `σq > 0` (posterior standard deviation)
+$$
+Z_p(a):=
+\sum_{h\in H}p(h)e^{a(h)}
+$$
 
-The posterior is `Q = N(w, σq²I)` and the prior is `P = N(0, σp²I)`.
+and the Gibbs tilt
 
-**Definition 2.3** (Robust PAC-Bayes Certificate). A robust certificate augments the standard certificate with:
-- `marginLower ∈ ℝ` — classification margin
-- `perturbRadius ∈ ℝ` — perturbation radius
-- `empiricalBound ∈ ℝ` — controlled empirical risk
-- `klPenalty ∈ ℝ` — KL complexity term
-- `generalizationBound ∈ ℝ` — final bound
+$$
+p_a(h):=
+\frac{p(h)e^{a(h)}}{Z_p(a)}.
+$$
 
-### 2.2 KL Divergence
+Strict positivity ensures that every logarithm and ratio appearing below is well-defined.
 
-**Definition 2.4** (Gaussian KL Divergence).
-```
-KL(N(w,σq²I) ‖ N(0,σp²I)) = ‖w‖²/(2σp²) + (d/2)(σq²/σp² - 1 - log(σq²/σp²))
-```
+### Lemma 2.1: Positivity of the partition function
 
-We call the first term the **energy** (mean shift penalty) and the second the **entropy** (variance mismatch cost).
+If $H$ is nonempty and $p(h)>0$ for every $h$, then $Z_p(a)>0$ for every real score $a$.
 
-### 2.3 Bound Functions
+**Proof sketch.** Each summand $p(h)e^{a(h)}$ is strictly positive because both factors are positive. A finite sum containing at least one strictly positive summand is strictly positive. $\square$
 
-**Definition 2.5** (McAllester Bound).
-```
-MC(empRisk, KL, n, δ) = empRisk + √((KL + log(2√n/δ)) / (2(n-1)))
-```
+### Lemma 2.2: The Gibbs tilt is a probability distribution
 
-**Definition 2.6** (Catoni Bound).
-```
-Cat(empRisk, KL, n, δ, λ) = (1/(1-e^{-λ})) · (1 - exp(-λ·empRisk - (KL + log(1/δ))/n))
-```
+Under the assumptions of Lemma 2.1, $p_a(h)>0$ for every $h$ and
 
-## 3. Main Results
+$$
+\sum_{h\in H}p_a(h)=1.
+$$
 
-### 3.1 McAllester Bound Properties
+**Proof sketch.** Positivity follows by dividing the positive numerator $p(h)e^{a(h)}$ by the positive partition function. Summing the definition gives $Z_p(a)/Z_p(a)=1$. $\square$
 
-**Theorem 3.1** (McAllester Gap). For all empRisk, KL, n, δ:
-```
-MC(empRisk, KL, n, δ) - empRisk = √((KL + log(2√n/δ)) / (2(n-1)))
-```
+### Theorem 2.3: Gibbs’ inequality on a finite space
 
-*Proof.* Direct unfolding of the definition. □
+Let $q$ and $p$ be strictly positive probability mass functions on $H$. Then
 
-**Theorem 3.2** (McAllester Monotonicity). For KL₁ ≤ KL₂ and n > 1:
-```
-MC(empRisk, KL₁, n, δ) ≤ MC(empRisk, KL₂, n, δ)
-```
+$$
+\operatorname{KL}(q\|p)\geq0.
+$$
 
-*Proof sketch.* The inner term KL + log(...) is monotone in KL; the denominator 2(n-1) > 0 for n > 1; and √ is monotone on [0,∞). The proof uses `gcongr` to propagate the inequality through the composition. □
+**Proof sketch.** For each $h$, apply $\log x\leq x-1$ to $x=p(h)/q(h)>0$. After negating and multiplying by $q(h)>0$, one obtains
 
-**Theorem 3.3** (Subadditive Complexity). For a, b ≥ 0:
-```
-√(a + b) ≤ √a + √b
-```
+$$
+q(h)\log\frac{q(h)}{p(h)}
+\geq q(h)-p(h).
+$$
 
-*Proof sketch.* Square both sides: a + b ≤ a + 2√(ab) + b, which holds since √(ab) ≥ 0. The formal proof uses `nlinarith` with `Real.mul_self_sqrt`. □
+Summing over $H$ gives
 
-### 3.2 Catoni Bound Properties
+$$
+\operatorname{KL}(q\|p)
+\geq
+\sum_h q(h)-\sum_h p(h)=0.
+$$
 
-**Theorem 3.4** (Catoni Denominator Positivity). For λ > 0:
-```
-0 < 1 - e^{-λ}
-```
+This proof needs no convex-analysis machinery beyond the scalar logarithm inequality. $\square$
 
-*Proof.* Since -λ < 0, we have e^{-λ} < 1, so 1 - e^{-λ} > 0. □
+## 3. Exact exponential tilting and change of measure
 
-**Theorem 3.5** (Catoni Monotonicity in Empirical Risk). For empRisk₁ ≤ empRisk₂ and λ > 0:
-```
-Cat(empRisk₁, KL, n, δ, λ) ≤ Cat(empRisk₂, KL, n, δ, λ)
-```
+The partition function links prior expectations, posterior expectations, and relative entropy.
 
-*Proof sketch.* The exponential term exp(-λ·empRisk - ...) is decreasing in empRisk (since λ > 0). Thus 1 - exp(...) is increasing. The prefactor 1/(1-e^{-λ}) is positive by Theorem 3.4. □
+### Theorem 3.1: Exact KL identity for exponential tilting
 
-**Theorem 3.6** (Catoni Monotonicity in KL). For KL₁ ≤ KL₂, λ > 0, n > 0:
-```
-Cat(empRisk, KL₁, n, δ, λ) ≤ Cat(empRisk, KL₂, n, δ, λ)
-```
+Let $q$ and $p$ be strictly positive probability mass functions on finite nonempty $H$, and let $a:H\to\mathbb R$. Then
 
-*Proof sketch.* Since n > 0, increasing KL increases (KL + log(1/δ))/n, making the exponent more negative, hence the exponential term smaller. The 1 - exp(...) term then increases. □
+$$
+\operatorname{KL}(q\|p_a)
+=
+\operatorname{KL}(q\|p)
+-
+\mathbb E_q[a]
++
+\log Z_p(a).
+$$
 
-**Theorem 3.7** (Catoni Upper Bound). For λ > 0:
-```
-Cat(empRisk, KL, n, δ, λ) ≤ 1/(1 - e^{-λ})
-```
+**Proof sketch.** By the definition of the tilt,
 
-*Proof.* Since exp(...) ≥ 0, we have 1 - exp(...) ≤ 1. Multiplying by the positive prefactor gives the result. □
+$$
+\frac{q(h)}{p_a(h)}
+=
+\frac{q(h)}{p(h)}e^{-a(h)}Z_p(a).
+$$
 
-### 3.3 Gaussian KL Properties
+Taking logarithms gives
 
-**Theorem 3.8** (Gaussian KL Non-Negativity). For σp, σq > 0:
-```
-KL(N(w,σq²I) ‖ N(0,σp²I)) ≥ 0
-```
+$$
+\log\frac{q(h)}{p_a(h)}
+=
+\log\frac{q(h)}{p(h)}-a(h)+\log Z_p(a).
+$$
 
-*Proof sketch.* The energy term ‖w‖²/(2σp²) ≥ 0 since it's a ratio of non-negative quantities. The entropy term uses the fundamental inequality x - 1 - log(x) ≥ 0 for x > 0, applied with x = σq²/σp². This inequality follows from log(x) ≤ x - 1 (concavity of log). □
+Multiply by $q(h)$ and sum. The last term becomes $\log Z_p(a)$ because $\sum_hq(h)=1$. $\square$
 
-**Theorem 3.9** (Equal Variance Simplification). For σp = σq = σ > 0:
-```
-KL(N(w,σ²I) ‖ N(0,σ²I)) = ‖w‖²/(2σ²)
-```
+### Theorem 3.2: Finite change-of-measure inequality
 
-*Proof.* When σq = σp, the variance ratio σq²/σp² = 1, so the entropy term is (d/2)(1 - 1 - log 1) = 0. □
+Under the hypotheses of Theorem 3.1,
 
-**Theorem 3.10** (Complexity Vanishing). As n → ∞:
-```
-(KL + log(2√n/δ)) / (2(n-1)) → 0
-```
+$$
+\mathbb E_q[a]
+\leq
+\operatorname{KL}(q\|p)+\log Z_p(a).
+$$
 
-*Proof sketch.* The numerator grows as O(log n) (since KL is constant and log(√n) = (1/2)log(n)), while the denominator grows as O(n). The ratio O(log n / n) → 0. The formal proof decomposes the expression, uses the fact that log(n)/n → 0, and combines limits via filter arithmetic. □
+**Proof sketch.** The tilted distribution $p_a$ is strictly positive and normalized by Lemma 2.2. Gibbs’ inequality therefore gives $\operatorname{KL}(q\|p_a)\geq0$. Substitute Theorem 3.1 and rearrange. $\square$
 
-### 3.4 Asymptotic Tightness
+This is the finite Donsker–Varadhan or PAC–Bayes variational inequality. It is uniform in $q$: once $p$ and $a$ are fixed, every strictly positive posterior satisfies it.
 
-**Theorem 3.11** (Linear Rate Upper Bound). For ‖w‖² ≤ C:
-```
-∃ C' > 0, ∀ n > 1, KL_shift(w,σ)/n ≤ C'/n
-```
-where C' = C/(2σ²).
+### Theorem 3.3: Equality at the Gibbs posterior
 
-**Theorem 3.12** (Linear Rate Lower Bound). For c_low ≤ ‖w‖²:
-```
-∀ n > 0, c_low/(2σ²n) ≤ KL_shift(w,σ)/n
-```
+For strictly positive $p$ and arbitrary $a$,
 
-**Theorem 3.13** (Asymptotic Tightness). If PB(n) satisfies:
-- ∀ᶠ n, C₁/n ≤ PB(n) (eventually lower bounded)
-- ∀ᶠ n, PB(n) ≤ C₂/n (eventually upper bounded)
+$$
+\mathbb E_{p_a}[a]
+-
+\operatorname{KL}(p_a\|p)
+=
+\log Z_p(a).
+$$
 
-Then ∃ N, ∀ n ≥ N, C₁/n ≤ PB(n) ≤ C₂/n.
+**Proof sketch.** Set $q=p_a$ in Theorem 3.1. Since $\operatorname{KL}(p_a\|p_a)=0$, rearrangement gives the identity. Equivalently, direct substitution shows
 
-*Proof.* Extract the eventually conditions as ∃ N₁, N₂ and take N = max(N₁, N₂). □
+$$
+\log\frac{p_a(h)}{p(h)}
+=a(h)-\log Z_p(a),
+$$
 
-**Theorem 3.14** (Concrete Θ(1/n)). For the Gaussian shift KL with ‖w‖² > 0:
-```
-∃ C₁, C₂ > 0, ∀ n > 1, C₁/n ≤ KL_shift/n ≤ C₂/n
-```
-with C₁ = C₂ = ‖w‖²/(2σ²).
+and normalization completes the sum. $\square$
 
-### 3.5 Robustness Transfer
+Consequently,
 
-**Theorem 3.15** (Margin-Risk Reduction). If a classifier has margin γ > ε and perturbation changes scores by at most ε, then the perturbed prediction remains correct (positive score).
+$$
+\log Z_p(a)
+=
+\max_q\left\{\mathbb E_q[a]-\operatorname{KL}(q\|p)\right\}
+$$
 
-*Proof.* By the triangle inequality: score_perturbed ≥ score_clean - ε ≥ γ - ε > 0. □
+over strictly positive probability mass functions $q$, with the maximum attained by $p_a$. This is a free-energy variational principle: expected score competes against information cost.
 
-**Theorem 3.16** (Robustness-to-Generalization Transfer). If empRisk ≤ robustRisk, then:
-```
-MC(empRisk, KL, n, δ) ≤ MC(robustRisk, KL, n, δ)
-```
+## 4. A posterior-uniform PAC–Bayes theorem from a moment certificate
 
-*Proof.* The McAllester bound is affine in empRisk (with positive coefficient), so monotone. □
+Let $\widehat R:H\to\mathbb R$ denote empirical risk and $R:H\to\mathbb R$ true risk. Let $p$ be a strictly positive prior and $q$ an arbitrary strictly positive posterior. Fix $\eta>0$ and $\delta>0$.
 
-**Theorem 3.17** (Compositional Robustness-Generalization). When margin γ > stability Δ implies empRisk ≤ 0, the McAllester bound collapses to pure complexity:
-```
-MC(empRisk, KL, n, δ) ≤ √((KL + log(2√n/δ)) / (2(n-1)))
-```
+### Theorem 4.1: Exponential-moment-to-risk conversion
 
-*Proof.* When empRisk ≤ 0, adding the non-negative sqrt term gives the result. □
+Assume
 
-## 4. Algorithms
+$$
+\sum_{h\in H}p(h)
+\exp\!\left(\eta(R(h)-\widehat R(h))\right)
+\leq\frac1\delta.
+$$
 
-### 4.1 Gaussian Certificate Algorithm
+Then every strictly positive posterior $q$ satisfies
 
-**Algorithm 1: GaussianPACBayesCertificate**
+$$
+\mathbb E_q[R]
+\leq
+\mathbb E_q[\widehat R]
++
+\frac{\operatorname{KL}(q\|p)+\log(1/\delta)}{\eta}.
+$$
 
-```
-Input: n (sample size), d (dimension), δ (confidence), λ (temperature),
-       σp (prior scale), σq (posterior scale), empRisk, ‖w‖
-Output: PACBayesCertificate
+**Proof sketch.** In Theorem 3.2 choose
 
-1. Compute KL = ‖w‖²/(2σp²) + (d/2)(σq²/σp² - 1 - log(σq²/σp²))
-2. Compute complexity = √((KL + log(2√n/δ)) / (2(n-1)))
-3. Set bound = empRisk + complexity
-4. Return (empRisk, complexity, bound, 1-δ)
-```
+$$
+a(h)=\eta(R(h)-\widehat R(h)).$$
 
-**Complexity:** O(1) time, O(1) space.
+Linearity of finite sums yields
 
-**Correctness:** Theorem `gaussianPacBayesCertificate_sound` proves the validity invariant empRisk + complexity ≤ bound.
+$$
+\mathbb E_q[a]
+=
+\eta\left(\mathbb E_q[R]-\mathbb E_q[\widehat R]\right).
+$$
 
-### 4.2 Posterior Scale Optimization
+The partition function is positive. Since the logarithm is increasing and the assumed partition bound holds,
 
-**Algorithm 2: OptimizePosteriorScale**
+$$
+\log Z_p(a)\leq\log(1/\delta).
+$$
 
-```
-Input: d, ‖w‖, σp, n, δ, empRisk, bound_type ∈ {McAllester, Catoni}
-Output: (optimal σq, optimal bound)
+Substitute these facts into the change-of-measure inequality and divide by $\eta>0$. $\square$
 
-1. For σq in linspace(0.01, 5.0, 1000):
-   a. Compute KL(σq) = gaussianKLDiv(d, ‖w‖, σq, σp)
-   b. Compute bound(σq) using selected bound type
-2. Return (argmin σq, min bound)
-```
+The theorem is deterministic conditional on the displayed moment certificate. In a statistical application, one ordinarily proves that certificate on an event of sampling probability at least $1-\delta$ or introduces a related confidence allocation via Markov’s inequality. That sample-level concentration step is not implicit in Theorem 4.1 and must be supplied for the chosen loss and data model.
 
-**Complexity:** O(num_points) time, O(1) space.
+## 5. McAllester’s square-root expression
 
-## 5. Computational Experiments
+For real empirical risk $\widehat r$, real complexity $k$, sample size $n\in\mathbb N$, and confidence parameter $\delta$, define
 
-### 5.1 Bound Comparison
+$$
+B_M(\widehat r,k,n,\delta)
+:=
+\widehat r+
+\sqrt{
+\frac{k+\log(2\sqrt n/\delta)}{2(n-1)}
+}.
+$$
 
-For d=10, δ=0.05, σp=1.0, σq=0.5, ‖w‖=2.0, empRisk=0.1:
+In statistical use one takes $n>1$, $0<\delta<1$, and $k\geq0$, together with a probabilistic premise that controls true risk.
 
-| n      | McAllester | Catoni (λ=2) | MC Gap  | Cat Gap |
-|--------|-----------|-------------|---------|---------|
-| 50     | 0.4324    | 0.3525      | 0.3324  | 0.2525  |
-| 100    | 0.3375    | 0.2840      | 0.2375  | 0.1840  |
-| 500    | 0.2096    | 0.2250      | 0.1096  | 0.1250  |
-| 1000   | 0.1785    | 0.2174      | 0.0785  | 0.1174  |
-| 10000  | 0.1260    | 0.2104      | 0.0260  | 0.1104  |
+### Proposition 5.1: Exact gap and nonnegativity
 
-**Observation:** McAllester is tighter for large n (gap → 0), while Catoni can be tighter for moderate n. The crossover depends on λ.
+For all scalar inputs for which the expression is interpreted over the reals,
 
-### 5.2 Asymptotic Rate Verification
+$$
+B_M(\widehat r,k,n,\delta)-\widehat r
+=
+\sqrt{
+\frac{k+\log(2\sqrt n/\delta)}{2(n-1)}
+}
+\geq0.
+$$
 
-For the equal-variance case (σq = σp = 1.0, ‖w‖ = 2.0):
+**Proof sketch.** The identity follows by cancellation. The inequality is the nonnegativity of the real square root. $\square$
 
-| n       | Gap      | n·Gap²  | KL   |
-|---------|----------|---------|------|
-| 100     | 0.2009   | 4.036   | 2.0  |
-| 1000    | 0.0676   | 4.576   | 2.0  |
-| 10000   | 0.0227   | 5.148   | 2.0  |
-| 100000  | 0.0076   | 5.723   | 2.0  |
+### Proposition 5.2: Monotonicity in KL complexity
 
-n·Gap² converges toward KL + log-corrections, confirming the √(KL/n) rate.
+If $n>1$ and $k_1\leq k_2$, then
 
-### 5.3 Robustness Transfer
+$$
+B_M(\widehat r,k_1,n,\delta)
+\leq
+B_M(\widehat r,k_2,n,\delta).
+$$
 
-For d=20, n=5000, δ=0.05, ε=0.3:
+**Proof sketch.** The denominator $2(n-1)$ is positive. Hence increasing $k$ increases the square-root argument, and the square root is monotone. $\square$
 
-| Margin γ | Robust? | empRisk | MC Bound |
-|----------|---------|---------|----------|
-| 3.0      | Yes     | 0.0000  | 0.0648   |
-| 2.0      | Yes     | 0.0000  | 0.0648   |
-| 1.0      | Yes     | 0.0000  | 0.0648   |
-| 0.5      | Yes     | 0.0000  | 0.0648   |
-| 0.3      | No      | 0.0000  | 0.0648   |
+### Proposition 5.3: Subadditivity of square-root complexity
 
-When robust (γ > ε), the empirical risk is zero, and the bound collapses to pure KL complexity.
+For $x,y\geq0$,
 
-## 6. Discussion
+$$
+\sqrt{x+y}\leq\sqrt x+\sqrt y.
+$$
 
-### 6.1 Information-Geometric Interpretation
+**Proof sketch.** Both sides are nonnegative. Squaring the right side gives $x+y+2\sqrt{xy}\geq x+y$. $\square$
 
-The Gaussian KL decomposition into energy and entropy terms has a natural information-geometric interpretation. The KL divergence is the Bregman divergence of the log-partition function on the natural parameter space of the exponential family. The energy term measures the geodesic distance from the prior mean, while the entropy term measures the Fisher information cost of changing the precision.
+This permits a penalty containing several nonnegative contributions to be upper-bounded by a sum of simpler penalties.
 
-### 6.2 Statistical Mechanics Interpretation
+### Theorem 5.4: McAllester certificate rule
 
-Catoni's parameter λ is a literal inverse temperature. The Gibbs posterior Q ∝ P · exp(-λ·loss) minimizes the free energy F = E_Q[loss] + (1/λ)·KL(Q‖P). The PAC-Bayes bound is then a variational principle: among all posteriors, the Gibbs posterior achieves the optimal tradeoff between empirical fit and complexity, and the bound quantifies the residual gap.
+Suppose a sample-level argument establishes
 
-### 6.3 Limitations
+$$
+R(q)
+\leq
+\widehat R(q)+
+\sqrt{
+\frac{\operatorname{KL}(q\|p)+\log(2\sqrt n/\delta)}{2(n-1)}
+}.
+$$
 
-1. **Probabilistic content:** Our formal theorems capture the algebraic structure of PAC-Bayes bounds but represent the probabilistic content (high-probability guarantees) as hypotheses rather than proving them from measure-theoretic foundations. A full formalization would require Lean's measure theory library.
+Then
 
-2. **Tightness for non-linear models:** Our asymptotic tightness results apply to linear classifiers. Extending to neural networks requires additional theory (e.g., PAC-Bayes with data-dependent priors).
+$$
+R(q)
+\leq
+B_M\!\left(\widehat R(q),\operatorname{KL}(q\|p),n,\delta\right).
+$$
 
-3. **Practical certificate quality:** For modern deep networks (d ~ 10⁸), the KL term can be large, making certificates loose. Techniques like compression, data-dependent priors, and informed temperature selection can help.
+**Proof sketch.** This is substitution into the definition of $B_M$. The substantive probabilistic work is exactly the premise; the conclusion records it in scalar certificate form. $\square$
 
-## 7. Future Work
+## 6. Catoni’s exponential expression
 
-1. **Full measure-theoretic formalization** of the change-of-measure inequality in Lean, connecting to MeasureTheory.Measure.absolutelyContinuous.
+For inverse temperature $\lambda>0$, define
 
-2. **Data-dependent priors** that tighten the KL term by choosing priors adapted to the training set (Dziugaite & Roy, 2018).
+$$
+B_C(\widehat r,k,n,\delta,\lambda)
+:=
+\frac{1-
+\exp\!\left(-\lambda\widehat r-rac{k+\log(1/\delta)}{n}\right)}
+{1-e^{-\lambda}}.
+$$
 
-3. **PAC-Bayes for sequential prediction** extending the framework to online learning and reinforcement learning.
+### Lemma 6.1: Positive denominator
 
-4. **Tropical PAC-Bayes** — deeper integration of tropical geometry robustness certificates with the PAC-Bayes framework, potentially yielding dimension-free bounds.
+If $\lambda>0$, then
 
-5. **Computational tightening** — implementing gradient-based posterior optimization (rather than grid search) with formal correctness guarantees.
+$$
+1-e^{-\lambda}>0.
+$$
 
-## References
+**Proof sketch.** Since $-\lambda<0$, strict monotonicity of the exponential gives $e^{-\lambda}<e^0=1$. $\square$
 
-1. McAllester, D. (1999). PAC-Bayesian model averaging. COLT.
-2. Catoni, O. (2007). PAC-Bayesian supervised classification. IMS Lecture Notes.
-3. Seeger, M. (2002). PAC-Bayesian generalisation error bounds for Gaussian process classification. JMLR.
-4. Langford, J. & Shawe-Taylor, J. (2003). PAC-Bayes & margins. NeurIPS.
-5. Neyshabur, B. et al. (2017). Exploring generalization in deep nets. NeurIPS.
-6. Dziugaite, G.K. & Roy, D.M. (2017). Computing nonvacuous generalization bounds for deep neural networks. UAI.
-7. Xu, H. & Mannor, S. (2012). Robustness and generalization. Machine Learning.
-8. Viallard, P. et al. (2021). A general framework for the practical disintegration of PAC-Bayesian bounds. Machine Learning.
+### Proposition 6.2: Monotonicity in empirical risk
+
+If $\lambda>0$ and $\widehat r_1\leq\widehat r_2$, then
+
+$$
+B_C(\widehat r_1,k,n,\delta,\lambda)
+\leq
+B_C(\widehat r_2,k,n,\delta,\lambda).
+$$
+
+**Proof sketch.** Increasing $\widehat r$ decreases the exponent $-\lambda\widehat r-(k+\log(1/\delta))/n$. The exponential therefore decreases, so one minus the exponential increases. Division by the positive denominator preserves the order. $\square$
+
+### Proposition 6.3: Monotonicity in KL complexity
+
+If $\lambda>0$, $n>0$, and $k_1\leq k_2$, then
+
+$$
+B_C(\widehat r,k_1,n,\delta,\lambda)
+\leq
+B_C(\widehat r,k_2,n,\delta,\lambda).
+$$
+
+**Proof sketch.** Increasing $k$ decreases the exponent by $(k_2-k_1)/n$. The same monotonicity argument as in Proposition 6.2 applies. $\square$
+
+### Proposition 6.4: Universal scalar upper envelope
+
+For $\lambda>0$,
+
+$$
+B_C(\widehat r,k,n,\delta,\lambda)
+\leq
+\frac{1}{1-e^{-\lambda}}.
+$$
+
+**Proof sketch.** The exponential is nonnegative, so $1-e^u\leq1$ for every real $u$. Divide by the positive denominator. $\square$
+
+### Theorem 6.5: Catoni certificate rule
+
+Suppose a Catoni exponential-moment argument establishes
+
+$$
+R(q)
+\leq
+\frac{1-
+\exp\!\left(-\lambda\widehat R(q)-
+\frac{\operatorname{KL}(q\|p)+\log(1/\delta)}{n}\right)}
+{1-e^{-\lambda}}.
+$$
+
+Then
+
+$$
+R(q)
+\leq
+B_C\!\left(\widehat R(q),\operatorname{KL}(q\|p),n,\delta,\lambda\right).
+$$
+
+**Proof sketch.** Expand the definition of $B_C$. $\square$
+
+If valid McAllester and Catoni premises are both available for the same true risk, then that risk lies below both corresponding expressions. No unconditional ordering between the two formulas is asserted. In particular, the Catoni scalar expression need not exceed empirical risk for arbitrary inputs; validity as a risk bound comes from its moment premise.
+
+## 7. Gaussian perturbation posteriors
+
+Let the parameter space be $\mathbb R^d$. Consider the isotropic Gaussian posterior and prior
+
+$$
+Q=\mathcal N(w,\sigma_q^2I),
+\qquad
+P=\mathcal N(0,\sigma_p^2I),
+$$
+
+where $w\in\mathbb R^d$, $\sigma_q>0$, and $\sigma_p>0$. Write $r=\lVert w\rVert$.
+
+### Definition 7.1: Isotropic Gaussian KL complexity
+
+The Gaussian complexity is
+
+$$
+K_G(d,r,\sigma_q,\sigma_p)
+:=
+\frac{r^2}{2\sigma_p^2}
++
+\frac d2\left(
+\frac{\sigma_q^2}{\sigma_p^2}-1-
+\log\frac{\sigma_q^2}{\sigma_p^2}
+\right).
+$$
+
+The first term is a mean-shift cost. The second is a variance-mismatch cost.
+
+### Lemma 7.2: Nonnegative variance mismatch
+
+For every $x>0$,
+
+$$
+x-1-\log x\geq0.
+$$
+
+**Proof sketch.** Rearrange $\log x\leq x-1$. Equality occurs at $x=1$. $\square$
+
+### Theorem 7.3: Nonnegativity of Gaussian complexity
+
+If $\sigma_q>0$ and $\sigma_p>0$, then
+
+$$
+K_G(d,r,\sigma_q,\sigma_p)\geq0.
+$$
+
+**Proof sketch.** The shift term is a square divided by a positive number. Set $x=\sigma_q^2/\sigma_p^2>0$ and apply Lemma 7.2 to the mismatch term. Its prefactor $d/2$ is nonnegative. $\square$
+
+### Theorem 7.4: Equal-variance reduction
+
+If $\sigma>0$, then
+
+$$
+K_G(d,r,\sigma,\sigma)
+=
+\frac{r^2}{2\sigma^2}.
+$$
+
+In particular,
+
+$$
+K_G(d,0,\sigma,\sigma)=0.
+$$
+
+**Proof sketch.** The variance ratio is one, and $1-1-\log1=0$. The remaining shift term vanishes when $r=0$. $\square$
+
+### Proposition 7.5: Monotonicity in squared norm
+
+For fixed $d$, $\sigma_q$, and $\sigma_p>0$, if $r_1^2\leq r_2^2$, then
+
+$$
+K_G(d,r_1,\sigma_q,\sigma_p)
+\leq
+K_G(d,r_2,\sigma_q,\sigma_p).
+$$
+
+**Proof sketch.** The variance term is unchanged, and division by $2\sigma_p^2>0$ preserves the ordering of squared norms. $\square$
+
+### Theorem 7.6: Explicit Gaussian McAllester certificate
+
+For $n>1$ and appropriate confidence parameter $\delta$, define
+
+$$
+C_G
+:=
+\widehat r+
+\sqrt{
+\frac{
+K_G(d,r,\sigma_q,\sigma_p)+
+\log(2\sqrt n/\delta)
+}{2(n-1)}
+}.
+$$
+
+The quantity $C_G$ is exactly the McAllester scalar expression obtained by substituting the isotropic Gaussian KL complexity. Its penalty is nonnegative, and therefore
+
+$$
+\widehat r\leq C_G.
+$$
+
+Whenever the corresponding sample-level McAllester premise holds for the Gaussian randomized predictor, its true risk is at most $C_G$.
+
+**Proof sketch.** Substitute Definition 7.1 into the formula of Section 5. Exact equality of the computed penalty and the displayed square root is immediate. Nonnegativity follows from the square root. The final true-risk statement invokes Theorem 5.4 with the Gaussian KL value. $\square$
+
+This theorem separates computation from probabilistic validity. The displayed number can always be calculated on a valid numerical domain. Calling it a true-risk certificate additionally requires the high-probability premise generated by a sample-level PAC–Bayes theorem.
+
+## 8. Algorithms
+
+### 8.1 Finite variational audit
+
+Given arrays $p_h$, $q_h$, and $a_h$ on a finite set, compute
+
+$$
+Z=\sum_h p_he^{a_h},
+\qquad
+q_a(h)=\frac{p_he^{a_h}}Z,
+$$
+
+followed by
+
+$$
+L=\sum_hq_ha_h,
+\qquad
+U=\sum_hq_h\log\frac{q_h}{p_h}+\log Z.
+$$
+
+Theorem 3.2 predicts $L\leq U$. The slack is exactly
+
+$$
+U-L=\operatorname{KL}(q\|q_a).
+$$
+
+For $q=q_a$, the slack vanishes up to numerical roundoff. The procedure uses $O(|H|)$ arithmetic operations and $O(|H|)$ storage if the tilt is retained.
+
+### 8.2 Gaussian certificate computation
+
+Inputs are $d$, $r$, $\sigma_q$, $\sigma_p$, $n$, $\delta$, and $\widehat r$. Validate $d\geq0$, $n>1$, $0<\delta<1$, and positive scales. Compute the variance ratio $x=\sigma_q^2/\sigma_p^2$, then
+
+$$
+k=\frac{r^2}{2\sigma_p^2}+\frac d2(x-1-\log x).
+$$
+
+Return
+
+$$
+\widehat r+
+\sqrt{\frac{k+\log(2\sqrt n/\delta)}{2(n-1)}}.
+$$
+
+This is a constant-time scalar computation once $r$ is known. Computing $r$ directly from a $d$-dimensional parameter vector costs $O(d)$ time.
+
+### 8.3 Temperature search for Catoni’s expression
+
+For a finite grid $\Lambda\subset(0,\infty)$, evaluate $B_C(\widehat r,k,n,\delta,\lambda)$ for each $\lambda\in\Lambda$ and return the smallest finite value and its temperature. The cost is $O(|\Lambda|)$ time and $O(1)$ auxiliary memory. If the same data are used to choose $\lambda$, a rigorous statistical deployment must account for this selection, for example by choosing the grid in advance and allocating confidence across it.
+
+## 9. Numerical interpretation and applications
+
+The formulas expose several practical effects.
+
+First, increasing the sample size shrinks McAllester’s denominator-adjusted penalty. The confidence term $\log(2\sqrt n/\delta)$ grows only logarithmically, whereas the denominator grows linearly.
+
+Second, Gaussian variance choice is not innocuous. If $\sigma_q$ is much smaller or much larger than $\sigma_p$, then $x-1-\log x$ grows, multiplied by $d/2$. In high dimension, even moderate variance mismatch can dominate the mean-shift cost. Equal variances remove this dimension-dependent mismatch entirely, although they may not minimize empirical perturbed risk.
+
+Third, the prior scale controls the cost of the learned mean. A larger $\sigma_p$ reduces $r^2/(2\sigma_p^2)$, but prior choice must obey the rules of the sample-level theorem; a prior tuned on the same data without correction generally invalidates the intended interpretation.
+
+For neural networks, one may flatten parameters into $w$, define $Q$ by adding Gaussian noise, estimate $\widehat R(Q)$ through repeated perturbations, and evaluate the explicit formula. The certificate then balances perturbation-averaged fit against the information cost of the Gaussian posterior. Relating this randomized performance to a deterministic network requires an additional derandomization or margin-stability argument.
+
+## 10. Asymptotic behavior
+
+### Theorem 10.1: Vanishing fixed square-root complexity
+
+For every fixed $C\geq0$,
+
+$$
+\sqrt{\frac{C}{n+1}}
+\longrightarrow0
+\qquad(n\to\infty).
+$$
+
+**Proof sketch.** The denominator tends to infinity, so $C/(n+1)\to0$. Continuity of the square root at zero gives the result. $\square$
+
+### Theorem 10.2: Vanishing Gaussian McAllester argument
+
+Fix $d$, $r$, positive $\sigma_q$, positive $\sigma_p$, and $\delta>0$. Then
+
+$$
+\frac{
+K_G(d,r,\sigma_q,\sigma_p)+
+\log(2\sqrt n/\delta)
+}{2(n-1)}
+\longrightarrow0.
+$$
+
+**Proof sketch.** The Gaussian KL term is constant in $n$. Expand the logarithm as
+
+$$
+\log(2\sqrt n/\delta)
+=
+\log2+\tfrac12\log n-\log\delta.
+$$
+
+Constants divided by $n-1$ vanish, and $\log n/(n-1)\to0$. $\square$
+
+By continuity, the associated square-root penalty also converges to zero.
+
+### Theorem 10.3: Equal-variance rate
+
+Suppose $\sigma>0$ and $r^2\leq C$. For every $n>1$,
+
+$$
+\frac{K_G(d,r,\sigma,\sigma)}{n}
+=
+\frac{r^2}{2\sigma^2n}
+\leq
+\frac{C}{2\sigma^2n}.
+$$
+
+**Proof sketch.** Apply Theorem 7.4 and divide $r^2\leq C$ by the positive quantity $2\sigma^2n$. $\square$
+
+These results show consistency of the complexity contribution when parameters remain fixed. They do not establish asymptotic tightness for linear classifiers. Tightness requires a data-generating distribution, a loss, margin or noise assumptions, and a lower bound matching the upper rate.
+
+## 11. Discussion and limitations
+
+The finite theory identifies a minimal chain of reasoning. Positivity normalizes the Gibbs tilt. The scalar inequality $\log x\leq x-1$ proves nonnegative relative entropy. The exact tilt identity then yields change of measure, and a moment certificate yields posterior-uniform risk control. No step in this chain requires an assumed variational conclusion.
+
+Strict positivity is convenient but restrictive. Standard relative entropy permits zero posterior mass and treats positive posterior mass outside prior support as infinite cost. A support-aware finite formulation or a measure-theoretic formulation using Radon–Nikodym derivatives would remove this limitation.
+
+The scalar McAllester and Catoni formulas should also be interpreted carefully. Their algebraic properties do not by themselves create a high-probability statement. The true-risk premises arise from concentration inequalities under explicit assumptions, commonly bounded i.i.d. losses. The Catoni expression additionally depends on temperature selection. The Gaussian formula, while explicit, must ultimately be connected to actual Gaussian probability measures and to the empirical behavior of randomized predictors.
+
+The asymptotic conclusions are upper-bound statements. A vanishing penalty means that the certificate approaches empirical randomized risk under fixed complexity; it does not show that the rate cannot be improved. Claims of tightness demand lower bounds.
+
+## 12. Future work
+
+Several extensions follow naturally.
+
+1. **Measure-theoretic change of measure.** Extend the finite theorem to measurable hypothesis spaces using Radon–Nikodym derivatives and extended-real relative entropy, with absolute continuity replacing strict positivity.
+2. **Sample-level McAllester theorem.** Introduce i.i.d. bounded losses, prove an exponential-moment estimate through Hoeffding-type arguments, and use Markov’s inequality to construct one event uniform over posteriors.
+3. **Sample-level Catoni theorem.** Derive the nonlinear transform from a Bernoulli exponential-moment inequality, establish monotonicity of its inverse, and treat temperature optimization with valid confidence accounting.
+4. **Measure-level Gaussian perturbations.** Derive the isotropic Gaussian KL formula from densities and insert it into a sample-level theorem for randomized neural predictors.
+5. **Derandomization and margin control.** Bound the difference between perturbation-averaged loss and deterministic-network loss through layerwise, spectral, or margin stability.
+6. **Linear-classifier tightness.** Under a specified distribution and margin/noise model, prove matching upper and lower asymptotic rates.
+7. **Sharper finite interfaces.** Replace strictly positive real mass functions with probability mass functions carrying explicit support conditions, and package the Gibbs posterior as a normalized distribution.
+
+## 13. Conclusion
+
+The finite PAC–Bayes mechanism is an exact variational statement: exponential tilting converts a prior into the posterior that optimally balances expected score and relative entropy. A controlled prior exponential moment then implies a risk bound simultaneously for all admissible posteriors. McAllester and Catoni formulas provide two scalar realizations of this principle, with transparent monotonicity and domain conditions. Isotropic Gaussian perturbations make the information cost explicit and decompose it into mean-shift and variance-mismatch terms, yielding computable bounds for high-dimensional parameter vectors. Fixed-complexity penalties vanish with sample size, while stronger claims—sample-level validity, deterministic-network control, and classifier tightness—require the additional probabilistic and lower-bound theory identified above.

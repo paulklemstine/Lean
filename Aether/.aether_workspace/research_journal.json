@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "f017f3a3",
-      "domain": "Applications",
-      "key_insight": "# Future directions\n\n## What this phase establishes\n\nThe Lean development proves two foundational chains:\n\n1. `Sperner1D.lean` proves the parity form of one-dimensional Sperner, derives existence of a",
-      "quality_score": 0.63,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-19T02:06:49",
-      "title": "Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theory"
-    },
-    {
       "cycle_id": "99a8a1e3",
       "domain": "Cryptography",
       "key_insight": "# Future Directions\n\nThe formal results establish the one-dimensional Borsuk–Ulam kernel and also show why it is not, by itself, Arrow's theorem.\n\n1. **Formalize the actual Arrow domain.** Define fini",
@@ -2501,6 +2491,16 @@
       "theorem_count": 4,
       "timestamp": "2026-07-25T10:53:08",
       "title": "[Reset] Fresh approach in Shared"
+    },
+    {
+      "cycle_id": "aa1e249d",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions\n\n## What is formally established\n\nThe accompanying Lean files isolate three rigorous components related to *The\nEndpoint Cardinality of Discrete Cube Skeleta*:\n\n1. **Discrete midpo",
+      "quality_score": 0.59,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-25T14:09:51",
+      "title": "ArXiv paper: The Endpoint Cardinality of Discrete Cube Skeleta"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-25T10:53:08",
+  "last_updated": "2026-07-25T14:09:51",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "21c08839",
-        "quality": 0.73,
-        "theorems": 0,
-        "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
-      },
-      {
         "cycle_id": "99a8a1e3",
         "quality": 0.66,
         "theorems": 10,
@@ -3389,6 +3383,12 @@
         "quality": 0.68,
         "theorems": 21,
         "title": "Lattice-LWE: Formal Equivalence Between Decision-LWE and Search-LWE"
+      },
+      {
+        "cycle_id": "aa1e249d",
+        "quality": 0.59,
+        "theorems": 11,
+        "title": "ArXiv paper: The Endpoint Cardinality of Discrete Cube Skeleta"
       }
     ],
     "Geometry": [

@@ -29,13 +29,22 @@ family with inverse temperature λ, connecting PAC-Bayes to statistical
 mechanics (the posterior is a Gibbs measure, KL is free-energy excess).
 -/
 import Mathlib
-import MachineLearning.PACBayes.Defs
 
 open Real BigOperators Finset Filter
 
 noncomputable section
 
 namespace PACBayes
+
+/-- The usual scalar McAllester upper bound. -/
+def mcAllesterBound (empRisk kl : ℝ) (n : ℕ) (δ : ℝ) : ℝ :=
+  empRisk + Real.sqrt ((kl + Real.log (2 * Real.sqrt n / δ)) /
+    (2 * ((n : ℝ) - 1)))
+
+/-- Catoni's exponential PAC--Bayes upper bound. -/
+def catoniBound (empRisk kl : ℝ) (n : ℕ) (δ lam : ℝ) : ℝ :=
+  (1 / (1 - Real.exp (-lam))) *
+    (1 - Real.exp (-lam * empRisk - (kl + Real.log (1 / δ)) / (n : ℝ)))
 
 /-! ## Section 1: McAllester Bound Properties -/
 
@@ -182,13 +191,17 @@ theorem catoni_bound_le_denom_inv (empRisk kl : ℝ) (n : ℕ) (δ lam : ℝ)
 
 /-! ## Section 3: Comparison Between Bounds -/
 
-/-- For any valid PAC-Bayes configuration, both bounds provide upper bounds
-on the true risk. This theorem connects them through their shared structure. -/
-theorem both_bounds_ge_empRisk (empRisk kl : ℝ) (n : ℕ) (δ lam : ℝ)
-    (_hlam : 0 < lam) (_hkl : 0 ≤ kl) :
-    empRisk ≤ mcAllesterBound empRisk kl n δ ∧
-    empRisk ≤ mcAllesterBound empRisk kl n δ := by
-  constructor <;> exact mcAllester_bound_ge_empRisk _ _ _ _
+/-- If the McAllester and Catoni moment arguments have both supplied their
+respective scalar certificates, the true risk satisfies both resulting bounds.
+This corrected statement does not claim that the Catoni bound is always above
+the empirical risk (which is false without additional assumptions). -/
+theorem both_bounds_bound_trueRisk
+    (empRisk trueRisk kl : ℝ) (n : ℕ) (δ lam : ℝ)
+    (hMcAllester : trueRisk ≤ mcAllesterBound empRisk kl n δ)
+    (hCatoni : trueRisk ≤ catoniBound empRisk kl n δ lam) :
+    trueRisk ≤ mcAllesterBound empRisk kl n δ ∧
+      trueRisk ≤ catoniBound empRisk kl n δ lam := by
+  exact ⟨hMcAllester, hCatoni⟩
 
 end PACBayes
 
