@@ -10469,17 +10469,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Future directions from cycle 6622cac1"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2ae125a9",
     "description": "# Future directions\n\nThe repaired repeated-summand rule is now completely classified: its unique trajectory is `a n = 2n + 1`. The formal development also proves strict monotonicity, identifies its range with all odd natural numbers, and gives the exact cardinality of every finite prefix. The following are the main remaining extensions.\n\n1. **Distinct-summand repair.** Replace repeated-index pair sums by sums from distinct earlier indices. Determine the resulting greedy trajectory and classify its growth.\n2. **Higher-order forbidden sums.** Forbid sums of exactly `r` earlier values (with or without repetition). Establish existence, uniqueness, and quantitative growth as a function of `r`.\n3. **Alternative seeds.** Start from an arbitrary positive seed instead of one. Classify when the process becomes an arithmetic progression and when transient behavior persists.\n4. **Finite-prefix sumset structure.** Prove exact descriptions and cardinalities for the restricted pair-sum sets of the canonical trajectory.\n5. **Asymptotic density.** Upgrade the exact range classification to a filter-based proof that the value set has natural density `1/2`.\n6. **Stability under weakened greediness.** Study trajectories that select any admissible value within a fixed additive error of the least one, and bound their lower and upper densities.\n",
     "domains": [
       "Pythagorean",
       "Logic"
     ],
     "id": "fd_0616",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "ddd2821f",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-23T18:46:02.662365+00:00",
     "title": "The repaired repeated-summand rule is now completely classified: its unique traj"
   },
