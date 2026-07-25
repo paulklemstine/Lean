@@ -1529,5 +1529,6 @@
   "905765f9": "reset_fresh_approach_in_shared.json",
   "1aa4bedd": "pac_bayes_generalization_bounds.json",
   "1163ea67": "entropy_power_inequality_sharp_version.json",
-  "9f0b015d": "proof_automation_custom_lean_4_tactics.json"
+  "9f0b015d": "proof_automation_custom_lean_4_tactics.json",
+  "ee9035cd": "tropical_hodge_theory.json"
 }

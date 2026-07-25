@@ -696,23 +696,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Riemann Hypothesis: Zero-Free Regions"
   },
   {
-    "consumed_by_exp_id": "9f0b015d",
-    "description": "Develop custom Lean 4 tactics for common proof patterns in the Catalog: a tropical_simp tactic for min-plus simplification, a number_theory_decide for small cases, and a spectral_bound for eigenvalue estimates. Prove each tactic is sound.",
-    "domains": [
-      "Logic",
-      "Computation",
-      "Bridges"
-    ],
-    "id": "fd_0697",
-    "phase": "B",
-    "priority_score": 0.92,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-24T14:34:16.697852+00:00",
-    "title": "Proof Automation: Custom Lean 4 Tactics"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Prove specific cases of Langlands functoriality: the transfer from GL(2) to GL(3), or symmetric power liftings. Formalize automorphic representations and L-functions in Lean 4.",
     "domains": [
@@ -9129,6 +9112,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Cycle 9f0b015d (Q=0.740) proved 19 theorems in Logic but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Develop custom Lean 4 tactics for common proof patterns in the Catalog: a tropical_simp tactic for min-plus simplification, a number_theory_decide for small cases, and a spectral_bound for eigenvalue ",
+    "domains": [
+      "Logic"
+    ],
+    "id": "sorry_fill_9f0b015d_b261ac4c",
+    "priority_score": 0.79,
+    "research_mode": "team",
+    "source_exp_id": "9f0b015d",
+    "status": "available",
+    "timestamp": "2026-07-25T15:27:37.119131+00:00",
+    "title": "Close Proofs: Proof Automation: Custom Lean 4 Tactics"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find a formula for the probability that two elements chosen uniformly at random generate the symmetric group S_n. Formalize known asymptotic results and connect to the theory of random permutations.",
     "domains": [
       "Algebra",
@@ -10009,6 +10006,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-25T14:09:47.358166+00:00",
     "title": "The accompanying Lean files isolate three rigorous components related to *The"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n1. **Tropical normal forms.** Replace the current theorem-driven simplifier with a reflected syntax for finite min-plus polynomials, prove evaluation preservation for normalization, and prove uniqueness of canonical antichain normal forms. This would let the tactic decide substantially more identities than local rewriting.\n\n2. **Faster primality certificates.** The verified test currently tries every divisor below `n`. Restrict trial division to `d \u2264 \u221an`, prove the complementary-factor lemma, and add certificate-producing support for concrete divisibility, coprimality, congruences, and bounded Diophantine goals.\n\n3. **Richer spectral certificates.** Generalize the row-sum argument from real square matrices to complex matrices and finite index types. Add Gershgorin discs with centers `A i i`, column-sum bounds, weighted norms, and strict diagonal-dominance certificates for nonsingularity.\n\n4. **Composable automation.** Add a dispatcher that recognizes the goal shape and invokes the appropriate certified procedure, while retaining trace output that identifies the exact soundness theorem and generated certificate.\n\n5. **Performance evaluation.** Build a benchmark suite from existing Catalog goals, recording success rate and elaboration time against plain `simp`, `norm_num`, and direct theorem application.",
+    "domains": [
+      "Pythagorean",
+      "Tropical"
+    ],
+    "id": "fd_0729",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "9f0b015d",
+    "status": "available",
+    "timestamp": "2026-07-25T15:27:33.128662+00:00",
+    "title": "1. **Tropical normal forms.** Replace the current theorem-driven simplifier with"
   },
   {
     "consumed_by_exp_id": "",

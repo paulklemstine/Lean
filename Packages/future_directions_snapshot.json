@@ -937,27 +937,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "9f0b015d",
-    "description": "Develop custom Lean 4 tactics for common proof patterns in the Catalog: a tropical_simp tactic for min-plus simplification, a number_theory_decide for small cases, and a spectral_bound for eigenvalue estimates. Prove each tactic is sound.",
-    "domain_bridges": [],
-    "domains": [
-      "Logic",
-      "Computation",
-      "Bridges"
-    ],
-    "id": "fd_0697",
-    "lineage_refs": [],
-    "priority_score": 0.92,
-    "proof_strategy": "",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-24T14:34:16.697852+00:00",
-    "title": "Proof Automation: Custom Lean 4 Tactics"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Prove specific cases of Langlands functoriality: the transfer from GL(2) to GL(3), or symmetric power liftings. Formalize automorphic representations and L-functions in Lean 4.",
     "domain_bridges": [],
@@ -4084,26 +4063,6 @@
     "status": "available",
     "timestamp": "",
     "title": "Yamabe Problem: Non-Compact Case"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "ee9035cd",
-    "description": "Prove a tropical analog of the Hodge decomposition. Formalize tropical (p,q)-forms, the tropical Laplacian, and harmonic theory on balanced weighted polyhedral complexes.",
-    "domain_bridges": [],
-    "domains": [
-      "Tropical",
-      "Geometry"
-    ],
-    "id": "seed_242",
-    "lineage_refs": [],
-    "priority_score": 0.86,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Tropical Hodge Theory"
   },
   {
     "ambition_level": "extension",
@@ -8840,25 +8799,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'On the maximum size of $B_3$-free families' and formalize its key results. Abstract: A family $\\mathcal{G}$ of sets is a weak copy of the poset $(P,\\leqslant)$ if there exists a bijection $ι:P\\rightarrow \\mathcal{G}$ with $ι(p)\\subset ι(q)$ whenever $p\\leqslant q$. $\\mathcal{G}$ is a strong copy if $ι(p)\\subset ι(q)$ if and only if $p\\leqslant q$ holds. A family is weak (strong) $P$-free if it does not contain any weak (strong) copies of $P$. For a poset $P$, let $e(P)$ ($e^*(P)$) denote the most number of middle layers of $2^{[n]}$ that does not contain a weak (strong) copy of $P$. Ellis, Ivan, and Leader were the first to show the existence of posets $P$ for which there exists a positive real $\\varepsilon_P$ such that $La(n,P)\\ge (e(P)+\\varepsilon_P)\\binom{n}{\\lfloor n/2}$ and $La^*(n,P)\\ge (e^*(P)+\\varepsilon_P)\\binom{n}{\\lfloor n/2}$ holds, where $La(n,P)$ ($La^*(n,P)$) denotes the maximum size of a weak (strong) $P$-free family $\\mathcal{F}\\subseteq 2^{[n]}$. More precisely, they showed that $P=B_d$ are such posets for all $d\\ge 4$, where $B_d$ is the Boolean latt",
-    "domain_bridges": [],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0013",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.11753v1",
-    "status": "available",
-    "timestamp": "2026-07-15T07:28:27.663774+00:00",
-    "title": "ArXiv paper: On the maximum size of $B_3$-free families"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'The chain replacement of a poset flow' and formalize its key results. Abstract: We introduce the chain replacement of a poset flow: it is obtained by considering the simplicial nerves of the posets of strictly increasing chains in the given poset, ordered by refinement. It maps finite posets to q-cofibrant flows and inclusions of finite posets to q-cofibrations. Using the combinatorial properties of the chain replacement, we prove that pushouts along the chain replacement of an order-reflecting inclusion of finite posets preserve spaces of execution paths. By introducing the Hurewicz model structure on flows (or H-model structure), we deduce the same property for any q-cofibrant replacement of an order-reflecting inclusion of finite posets.",
     "domain_bridges": [],
     "domains": [
@@ -9057,25 +8997,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'On lower bounds for canonical heights of the map $φ(X,Y)=(Y,X+Y^D+b)$' and formalize its key results. Abstract: We give a lower bound for the canonical height associated to Hénon maps $φ(X,Y)=(Y,X+Y^D+B)$ of non-periodic points when $D>2,$ extending previous work for $D=2$ in \\cite{Ingram1}.",
-    "domain_bridges": [],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0029",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.12668v1",
-    "status": "available",
-    "timestamp": "2026-07-15T19:19:58.832974+00:00",
-    "title": "ArXiv paper: On lower bounds for canonical heights of the map $φ(X,Y)=(Y,X+Y^D+b)$"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Solomon zeta functions over arithmetic orders' and formalize its key results. Abstract: We prove an effective version of Solomon's first conjecture for lattices over orders in finite-dimensional semisimple algebras over nonarchimedean local fields. We express the quotient of a partial Solomon zeta function by the corresponding maximal-order zeta function as a finite sum whose terms are determined by finite module-theoretic data and weighted by polynomials defined using the Möbius function of finite submodule posets. The resulting expression is independent of the chosen maximal overorder. Our proof is purely algebraic and is first formulated for the refined Bushnell--Reiner zeta functions. As an application, we obtain explicit formulas for the Solomon zeta functions of all lattices over $\\mathbb{Z}_p[\\mathbb{Z}/p\\mathbb{Z}]$, including non-projective lattices.",
     "domain_bridges": [],
     "domains": [
@@ -9131,44 +9052,6 @@
     "status": "available",
     "timestamp": "2026-07-15T20:11:34.288805+00:00",
     "title": "ArXiv paper: Stable Limit DAHA of type $(C^{\\vee},C)$ and Stable Limit Koornwinder Polynomials"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Odd Parts of Derivative Period Polynomials and a Logarithmic Transition Scale' and formalize its key results. Abstract: Let $f$ be a normalized level-one Hecke eigenform of even weight $k$, and let $Q_{f,m}$ be the period polynomial formed from the critical values of the $m$-th derivative of its completed $L$-function. We study the odd part $Q^-_{f,m}(z)=(Q_{f,m}(z)-Q_{f,m}(-z))/2$, retaining the zero at the origin forced by oddness. A unit-circle theorem for the full polynomial does not settle this problem: taking an odd part can create off-circle zeros even when the original polynomial has all of its zeros on the unit circle. We prove that there is an absolute $K_0$ such that, for every even $k\\ge K_0$, every normalized level-one Hecke eigenform $f$ of weight $k$, and every integer $m\\ge0$, the nonzero zeros of $Q^-_{f,m}$ off the unit circle, if any, form a single real reciprocal quartet $\\{\\pm b,\\pm b^{-1}\\}$ with $0<b<1$. For each fixed weight, all nonzero zeros are simple and lie on the unit circle once $m$ is sufficiently large. Hence any failure of the real-or-unit-circle containment is confined",
-    "domain_bridges": [],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0033",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.12378v1",
-    "status": "available",
-    "timestamp": "2026-07-15T20:28:24.578636+00:00",
-    "title": "ArXiv paper: Odd Parts of Derivative Period Polynomials and a Logarithmic Transition Scale"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Cover numbers by graph families bounded by certain graph parameters' and formalize its key results. Abstract: The cover number of a graph by a graph class $\\mathcal P$ is the least number of $\\mathcal P$-graphs necessary to cover its edges. A classical theorem of Harary, Hsu and Miller gives an exact formula for the cover number by the class of graphs with chromatic number at most $k$. We investigate analogous questions for the case of the fractional chromatic number $χ_f$ and the local chromatic number $ψ$. We prove that an analogous formula cannot hold in the case of the cover number by graphs of fractional chromatic number at most $β$, and find a lower and an upper bound, that gives rise to interesting asymptotic questions. We also investigate this cover number for small specific graphs. In the case of the cover number by graphs with local chromatic number at most $k$, we find an upper bound in terms of $ψ$, and a lower bound in terms of $ω$.",
-    "domain_bridges": [],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0034",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.12353v1",
-    "status": "available",
-    "timestamp": "2026-07-15T20:45:32.400264+00:00",
-    "title": "ArXiv paper: Cover numbers by graph families bounded by certain graph parameters"
   },
   {
     "ambition_level": "extension",
@@ -9353,25 +9236,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Curious identities involving Legendre polynomials and Apéry-like numbers' and formalize its key results. Abstract: In this paper, we establish some curious identities involving Legendre polynomials and the first kind of Apéry-like numbers. As applications, many new supercongruences are deduced.",
-    "domain_bridges": [],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0051",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.12330v1",
-    "status": "available",
-    "timestamp": "2026-07-15T20:45:36.266548+00:00",
-    "title": "ArXiv paper: Curious identities involving Legendre polynomials and Apéry-like numbers"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'On Transformer Dynamics' and formalize its key results. Abstract: We develop a geometric framework in which the token dynamics of a transformer are modeled by a system of interacting particles on a Riemannian manifold $\\mathcal M$, the attention mechanism being encoded by a time-independent two-body interaction law, that is, a section of the pullback bundle $π_2^{*}(T\\mathcal M)$ over $\\mathcal M\\times\\mathcal M$. Within this framework we isolate two features that a family of interaction laws must possess in order to model language: it must realize generic nonlocal and nonreciprocal forces, and it must parametrize vector fields on a high-dimensional manifold efficiently. We show that both features are achieved simultaneously in a transformer model. Our main theorem produces a finitely parametrized family of interaction laws, independent of the manifold and of its dimension, that is universal: it realizes an arbitrary prescribed attention digraph. Moreover, we show that the cost of realizing a given attention digraph is governed not by $\\dim\\mathcal M",
     "domain_bridges": [],
     "domains": [
@@ -9407,25 +9271,6 @@
     "status": "available",
     "timestamp": "2026-07-16T03:19:02.464129+00:00",
     "title": "ArXiv paper: On the Second Moment of $ L (1/2, \\mathrm{As}(f) \\times φ)$"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Domination-packing ratio for planar and unit disk graphs' and formalize its key results. Abstract: The domination number $γ(G)$ of a graph $G$ is the smallest possible size of a vertex set that intersects every radius-$1$ ball of $G$, and the packing number $ρ(G)$ is the maximum number of pairwise vertex-disjoint radius-$1$ balls. We prove that $\\frac{γ(G)}{ρ(G)}\\le 5$ for every planar graph and $\\frac{γ(G)}{ρ(G)} \\le \\frac{18\\sqrt3}π\\approx 9.924$ for every unit disk graph, thus yielding Erdős-Pósa-type bounds for the hypergraph of radius-$1$ balls in the two graph classes. This improves upon results of Gutiérrez and Paul, and Dúcz and Gujgiczer, who in turn lowered bounds of Bonamy, Csikós, Gujgiczer and Yuditsky, and Böhme and Mohar. For both graph classes, the best known lower bound on the optimal constant remains $3$.",
-    "domain_bridges": [],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0057",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.13424v1",
-    "status": "available",
-    "timestamp": "2026-07-16T03:36:34.295975+00:00",
-    "title": "ArXiv paper: Domination-packing ratio for planar and unit disk graphs"
   },
   {
     "ambition_level": "extension",
@@ -9589,25 +9434,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Sufficient conditions for $(K_2 \\cup kK_1)$-free graphs to be Hamilton-connected' and formalize its key results. Abstract: The toughness of a non-complete graph $G$, denoted $τ(G)$, is defined as \\[ τ(G) = \\min\\left\\{ \\frac{|S|}{ω(G-S)} : S \\subseteq V(G),\\ ω(G-S) \\geq 2 \\right\\}, \\] where $ω(G-S)$ is the number of components of $G - S$. For a complete graph $G$, we define $τ(G) = \\infty$. A graph $G$ is $t$-tough if $τ(G) \\geq t$. For a positive integer $k$, a graph $G$ is $(K_2 \\cup kK_1)$-free if it contains no induced subgraph isomorphic to $K_2 \\cup kK_1$. Recently, Liu \\cite{liu} showed that every $2k$-connected $(K_2 \\cup kK_1)$-free graph $G$ with $τ(G) > 1$ is Hamilton-connected. In this paper, we strengthen this result by proving that every $(k+1)$-connected $(K_2 \\cup kK_1)$-free graph $G$ with $τ(G) > 1$ and minimum degree $δ(G) \\geq 2k$ is Hamilton-connected. Moreover, by imposing restrictions to the independence number $α(G)$, we prove that every $k$-connected $(K_2 \\cup kK_1)$-free graph $G$ of order $n$ with $2k+1 \\leq α(G) < \\frac{n}{2}$ and $δ(G) \\geq 2k$ is Hamilton-connected, and that t",
-    "domain_bridges": [],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0074",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.11373v1",
-    "status": "available",
-    "timestamp": "2026-07-16T10:53:48.349640+00:00",
-    "title": "ArXiv paper: Sufficient conditions for $(K_2 \\cup kK_1)$-free graphs to be Hamilton-connected"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'On Small Doubling in Right-Ordered Groups and Baumslag-Solitar Groups-II' and formalize its key results. Abstract: Recently, Mohan et al. [Results Math. 80 (2025), No. 4, 122] answered Freiman's $3k-4$ conjecture in right-ordered groups under certain restrictions. In this paper, we take a step further by investigating the structure of nonempty subsets $S$ of a right-ordered group satisfying the small doubling condition $|S^2| = 3|S|-3$. Moreover, we provide a complete characterization of all nonempty finite subsets $S$ of the Baumslag-Solitar group $\\mathrm{BS}(1,q)$ (with $q \\in \\mathbb{Z}$ and $q \\neq -1$) for which $|S^2| = 3|S|-3$ and the identity element is the minimum of $S$.",
     "domain_bridges": [],
     "domains": [
@@ -9623,26 +9449,6 @@
     "status": "available",
     "timestamp": "2026-07-16T11:25:22.149755+00:00",
     "title": "ArXiv paper: On Small Doubling in Right-Ordered Groups and Baumslag-Solitar Groups-II"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Bounded-Support Additive Latin Transversals via Color-Counted Matching' and formalize its key results. Abstract: We consider the following additive Latin transversal problem. Given a multiset $A=(a_1,\\dots,a_k)$ of elements of $\\mathbb Z_m$ and a set $B\\subseteq\\mathbb Z_m$ of cardinality $k$, the task is to order $B$ as $b_1,\\dots,b_k$ so that the sums $a_i+b_i$ are pairwise distinct. When $k=m$, Hall proved that a solution exists if and only if $\\sum_{i=1}^m a_i\\equiv 0 \\pmod m$; moreover, his theorem yields a polynomial-time construction. Alon proved that a solution always exists when $m$ is prime and $k<m$, but no polynomial-time construction is known in general. Our main algorithmic contribution is a direct randomized algorithm for Color-Counted Matching: given an edge-colored graph and prescribed target counts for the colors, find a matching using exactly the prescribed number of edges of each color. If $q$ is the sum of the target counts and $h$ is the number of colors, our base-$(q+1)$ reduction to Exact Red Matching, combined with the algorithm of Mulmuley-Vazirani-Vazirani, gives a rand",
-    "domain_bridges": [],
-    "domains": [
-      "Computation",
-      "Pythagorean"
-    ],
-    "id": "fd_0078",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.11241v1",
-    "status": "available",
-    "timestamp": "2026-07-16T11:56:23.621922+00:00",
-    "title": "ArXiv paper: Bounded-Support Additive Latin Transversals via Color-Counted Matching"
   },
   {
     "ambition_level": "extension",
@@ -9702,25 +9508,6 @@
     "status": "available",
     "timestamp": "2026-07-16T13:00:57.755694+00:00",
     "title": "ArXiv paper: Disproofs of two conjectures concerning nondeficient numbers"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Positivity and tails of Jacobi theta series' and formalize its key results. Abstract: Using elementary $q$-series manipulations, we establish a positivity property for the tails of the Jacobi theta series. Specifically, for integers $k\\ge 1$ and $n\\ge 0$, define \\[ \\sum_{n\\ge0}\\sum_{m\\in\\mathbb{Z}}J_{k,n}(m)z^m q^{n} = \\frac{(-1)^k q^{-\\binom{k+1}{2}}}{(z)_{\\infty}(q/z)_\\infty} \\sum_{j\\ge k}(-1)^jq^{\\binom{j+1}{2}}z^{-j}(1-z^{2j+1}), \\] where $(a)_\\infty:=\\prod_{n\\ge0}(1-aq^n)$ denotes the $q$-shifted factorial. We prove that for all integers $k\\ge 1$ and $n\\ge 0$, the coefficients $J_{k,n}(m)$ are positive for all integers $-(k+n)\\le m\\le k+n$.",
-    "domain_bridges": [],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0085",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.10968v1",
-    "status": "available",
-    "timestamp": "2026-07-16T13:51:47.387924+00:00",
-    "title": "ArXiv paper: Positivity and tails of Jacobi theta series"
   },
   {
     "ambition_level": "extension",
@@ -9937,26 +9724,6 @@
     "status": "available",
     "timestamp": "2026-07-16T10:05:38.552774+00:00",
     "title": "ArXiv paper: Fractal uncertainty principle over $\\mathbb{Q}_p$"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Polynomial-Time Evaluation of Aardal-Lenstra Denumerants via Constant Term Method' and formalize its key results. Abstract: Aardal and Lenstra systematically studied hard knapsack problems of the form $a_1x_1+\\cdots+a_nx_n=b$, where $a_i=p_iM+r_iN$, $(M,N)$ is a coprime pair of positive integers, and the integers $|p_i|, |r_i|$ are small relative to $M$ and $N$. We investigate the corresponding challenging denumerant problem (i.e., counting the number of nonnegative integer solutions) and present a polynomial-time algorithm. This eliminates the computational bottlenecks caused by large values of $M$, $N$ and $b$. The proposed algorithm achieves a time complexity of $O(n^4Δ^2\\log n\\logΔ)$, which depends solely on the parameters $n$ and $Δ=\\max_{i,j}|r_i p_j - r_j p_i|$. Moreover, we consider the problem of expressing a general vector $(a_1,\\dots,a_n)$ in the above form using the LLL algorithm.",
-    "domain_bridges": [],
-    "domains": [
-      "Computation",
-      "Pythagorean"
-    ],
-    "id": "fd_0105",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.11477v1",
-    "status": "available",
-    "timestamp": "2026-07-16T10:38:19.903223+00:00",
-    "title": "ArXiv paper: Polynomial-Time Evaluation of Aardal-Lenstra Denumerants via Constant Term Method"
   },
   {
     "ambition_level": "extension",
@@ -10318,25 +10085,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Local and global average degree in bipartite graphs' and formalize its key results. Abstract: Let $F_{\\mathrm{bip}}(n)$ denote the maximum, over all $n$-vertex bipartite graphs without isolated vertices, of the ratio of the minimum local average degree to the global average degree. We prove that $F_{\\mathrm{bip}}(n)=\\frac14\\sqrt n+\\frac38+o(1)$. This answers a problem posed by Tuza.",
-    "domain_bridges": [],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0144",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.14038v1",
-    "status": "available",
-    "timestamp": "2026-07-16T17:10:28.704063+00:00",
-    "title": "ArXiv paper: Local and global average degree in bipartite graphs"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Transformation Semigroup Perspective on the Magma Monoid' and formalize its key results. Abstract: The monoid of all binary operations was first introduced by H. S. Kim and J. Neggers in 2008. Since then, different aspects and applications of this monoid were studied, while several questions about its semigroup-theoretic properties remain unanswered. We employ a transformation semigroup perspective to fully characterize principal left and right ideals, idempotent and regular elements of this monoid, as well as provide precise combinatorial enumerations of them. This approach gives a general framework for most of the existing results on ideals in the magma monoid. We also answer several open questions posed in the 2023 PhD dissertation of A. Rafieipour. Finally, we correct an error regarding the description of the center of the magma monoid from the 2011 paper of H. F. Fayomi.",
     "domain_bridges": [],
     "domains": [
@@ -10496,46 +10244,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Beyond the Riemann Hypothesis bounds: A pair-correlation approach to the least prime in arithmetic progression and the smallest quadratic non-residue' and formalize its key results. Abstract: The Generalized Riemann Hypothesis (GRH) has long defined the expected bounds for the smallest prime in an arithmetic progression and the least quadratic non-residue. However, this hypothesis primarily addresses the horizontal location of non-trivial zeros. In this paper, we show that incorporating the vertical spacing--or pair-correlation--of these zeros allows us to surpass these classical bounds. By combining these two zero-distribution perspectives, we establish sharper estimates for both problems under GRH and specific pair-correlation hypotheses, thereby providing a new link between pair-correlation phenomena for Dirichlet L-functions and these two classical problems.",
-    "domain_bridges": [],
-    "domains": [
-      "Pythagorean",
-      "Computation"
-    ],
-    "id": "fd_0158",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.14515v1",
-    "status": "available",
-    "timestamp": "2026-07-17T02:00:26.348823+00:00",
-    "title": "ArXiv paper: Beyond the Riemann Hypothesis bounds: A pair-correlation approach to the least prime in arithmetic progression and the smallest quadratic non-residue"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Semitotal domination in unit disk graphs' and formalize its key results. Abstract: A set $S \\subseteq V$ is called a {\\em semitotal dominating set} of $G=(V,E)$ if every vertex in $V \\setminus S$ is adjacent to at least one vertex in $S$, and every vertex in $S$ is within distance 2 of another vertex in $S$. The corresponding decision problem is NP-complete even for unit disk graphs. In this paper, we present a 5-factor approximation algorithm for the Minimum Semitotal Domination problem on unit disk graphs in the graph-based input model. The algorithm processes the layers of a Breadth-First-Search tree and constructs a maximal independent set whose vertices satisfy the semitotal condition. For a graph with $n$ vertices and $m$ edges, the algorithm runs in $O(n + m)$ time, and hence in $O(n^2)$ time in the worst case. This improves the previously known 5.75-approximation algorithm with $O(n^3)$ running time.",
-    "domain_bridges": [],
-    "domains": [
-      "Computation",
-      "MachineLearning"
-    ],
-    "id": "fd_0159",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.14467v1",
-    "status": "available",
-    "timestamp": "2026-07-17T02:17:28.732470+00:00",
-    "title": "ArXiv paper: Semitotal domination in unit disk graphs"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Generalization of Ramanujan's Continued Fractions for Even Order' and formalize its key results. Abstract: In this paper, we derive three generalized continued fractions of any even order $k$ with the aid of a general continued fraction identity of Ramanujan and we establish general theta function identities for these continued fractions. As an application of continued fraction of order seventy-six, we obtain partition theoretic identities and some vanishing coefficient results.",
     "domain_bridges": [],
     "domains": [
@@ -10551,45 +10259,6 @@
     "status": "available",
     "timestamp": "2026-07-17T00:31:43.190969+00:00",
     "title": "ArXiv paper: Generalization of Ramanujan's Continued Fractions for Even Order"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Hardness of Vertex Splitting: Cographs, Chordal Graphs, and Beyond' and formalize its key results. Abstract: Vertex splitting replaces a vertex (v) by two nonadjacent vertices whose neighborhoods together equal (N(v)). A split is \\emph{exclusive} if these neighborhoods are disjoint and \\emph{shallow} if no newly created vertex is split again. For a graph property (Π), \\textsc{(Π)-Vertex Splitting} asks whether at most (k) splits can transform a graph (G) into one satisfying (Π). We continue the systematic study of this operation and settle several open problems. First, we prove that \\textsc{Cograph Vertex Splitting} is \\textsf{NP}-complete, even on graphs of girth at least 5, resolving a question of Firbas and Sorge (ISAAC 2024). More generally, \\textsc{(P_t)-free Vertex Splitting} is \\textsf{NP}-complete for every fixed (t\\geq 4). We also prove that \\textsc{Chordal Vertex Splitting} and \\textsc{Unit-Interval Vertex Splitting} are \\textsf{NP}-complete, resolving two questions of Abu-Khzam, Chakraborty, Isenmann, and Oijid (IWOCA 2026). Our hardness results extend to the exclusive and shallow ",
-    "domain_bridges": [],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0163",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.13517v1",
-    "status": "available",
-    "timestamp": "2026-07-17T00:50:43.952244+00:00",
-    "title": "ArXiv paper: Hardness of Vertex Splitting: Cographs, Chordal Graphs, and Beyond"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Towards a characterization of idempotent Schur multipliers' and formalize its key results. Abstract: It is conjectured that every idempotent Schur multiplier can be written as a finite sum of contractive idempotents. This conjecture is equivalent to the statement that any boolean matrix $A$ with factorization norm $\\lVert A\\rVert_{γ_2}$ at most $γ$ can be expressed as a signed sum $$A = \\sum_{i=1}^L \\pm B_i,$$ where, up to permutation of rows and columns, each $B_i$ is a blow-up of an identity matrix, and $L$ depends only on $γ$. In this note we show that if $A$ is an $n\\times n$ boolean matrix with $\\lVert A\\rVert_{γ_2} \\le γ$, then it admits such an expression with $L = 2^{O(γ^9) + \\log^*\\! n}$, where $\\log^*$ is the iterated logarithm function. As an application, any sequence of matrices with bounded factorization norm belongs to the complexity class $\\mathrm{P}^\\mathrm{EQ}$ of communication problems with polylogarithmic equality-oracle complexity.",
-    "domain_bridges": [],
-    "domains": [
-      "Pythagorean",
-      "Computation"
-    ],
-    "id": "fd_0164",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.14316v1",
-    "status": "available",
-    "timestamp": "2026-07-17T01:26:03.097278+00:00",
-    "title": "ArXiv paper: Towards a characterization of idempotent Schur multipliers"
   },
   {
     "ambition_level": "extension",
@@ -10890,25 +10559,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Discrete Einstein metrics on unicyclic graphs' and formalize its key results. Abstract: In earlier work with Cheng and Hua we showed that on a finite tree the discrete Einstein metrics of the Lin--Lu--Yau curvature are the Perron eigenvector of an edge-indexed Ricci matrix. We extend this theory to unicyclic graphs. We determine exactly when the tree picture persists -- the balanced regime, where the spectrum becomes periodic rather than Dirichlet-type -- and compute it in closed form for bare cycles and for regular suns (cycles with pendant leaves); for a single decorated vertex on a long cycle it persists up to an explicit golden-ratio threshold. Beyond this regime the problem is piecewise-linear, and phenomena impossible on a tree appear: the Einstein metric can be non-unique, or absent -- a triangle with a pendant leaf carries none. For the regular suns we prove that it exists and is unique.",
-    "domain_bridges": [],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0190",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.14748v1",
-    "status": "available",
-    "timestamp": "2026-07-17T08:20:26.165530+00:00",
-    "title": "ArXiv paper: Discrete Einstein metrics on unicyclic graphs"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Minimal degree of an isogeny between a supersingular elliptic curve and its conjugate' and formalize its key results. Abstract: Let $E$ be a supersingular elliptic curve defined over $\\bar{\\mathbb{F}}_p$ and $E^{(p)}$ be its conjugate. We give a bound on the minimal degree of an isogeny from $E$ to $E^{(p)}$ depending on $p$, and show that this bound is both asymptotically optimal as well as sharp in many cases. This bound is obtained by developing a new technique to compute the degree of certain isogenies from a supersingular elliptic curve to its conjugate, and we present extensive computations of the successive minima of the lattice containing these isogenies. Following this, we give several conjectures supported by the data we have obtained, including some on the set of primes $p$ for which the bound we give in this article is attained.",
     "domain_bridges": [],
     "domains": [
@@ -10944,25 +10594,6 @@
     "status": "available",
     "timestamp": "2026-07-17T08:52:32.545530+00:00",
     "title": "ArXiv paper: The First Moment of Dirichlet L-functions over Generators of the Character Group"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'The optimal $χ$-bound for $\\{P_6, \\text{dart}, K_4\\}$-free graphs' and formalize its key results. Abstract: A \\textit{diamond} is a graph obtained from \\(K_4\\) by removing an edge, and a \\textit{dart} is a graph obtained from a diamond by adding a pendant edge to a vertex of degree 3. We prove that every $\\{P_6, \\text{dart}, K_4\\}$-free graph is 6-colorable. This improves the previous bound of 7 due to Hong and Xu \\cite{HongXu2025} and resolves their open question on the optimality of the bound. Our result also extends a theorem of Karthick and Mishra~\\cite{KarthickMishra2018}, who proved 6-colorability for the class of \\(\\{P_6, \\text{diamond}, K_4\\}\\)-free graphs.",
-    "domain_bridges": [],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0193",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.14667v1",
-    "status": "available",
-    "timestamp": "2026-07-17T09:08:14.870404+00:00",
-    "title": "ArXiv paper: The optimal $χ$-bound for $\\{P_6, \\text{dart}, K_4\\}$-free graphs"
   },
   {
     "ambition_level": "extension",
@@ -11028,25 +10659,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'On the Log-Concavity of the D'Arcais Polynomials for Normalised Functions' and formalize its key results. Abstract: A sequence $(a_n)_{n \\in \\mathbb{N}}$ of non-negative real numbers is called log-concave at $n$ if $a_n^2 \\geq a_{n+1}a_{n-1}$. This property has been generalised in various ways to families of polynomials. We introduce a new variant and show that certain types of D'Arcais polynomials have the respective properties at certain points.",
-    "domain_bridges": [],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0203",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.14961v1",
-    "status": "available",
-    "timestamp": "2026-07-17T07:01:34.261580+00:00",
-    "title": "ArXiv paper: On the Log-Concavity of the D'Arcais Polynomials for Normalised Functions"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'HJ numbers revisited' and formalize its key results. Abstract: We improve the bounds on the Hales-Jewett numbers to a tower of exponentiations. Earlier it was $WaW$ (that is, iterations of towers which are themselves iterated exponentiations). We improve the inductive step there (induction on the size of the alphabet, $|Λ|$) to 2-exponentiations, instead of towers. In the longer work in typing, (A) We present this inductive step as a partition theorem in its own right; (but in this preliminary version we make it just serve the bound on HJ numbers). (B) We shall deal with the density version of Hales-Jewett with similar bound. We are also dealing with the Graham-Rothschild Theorem and the Affine Ramsey Theorem and the polynomial case, and give background.",
     "domain_bridges": [],
     "domains": [
@@ -11062,25 +10674,6 @@
     "status": "available",
     "timestamp": "2026-07-17T07:32:53.951032+00:00",
     "title": "ArXiv paper: HJ numbers revisited"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Several families of incommensurable noncompact hyperbolic Coxeter polytopes' and formalize its key results. Abstract: We classify all 141 finite-volume hyperbolic Coxeter five-dimensional polytopes with eight facets, of which 125 are noncompact. Using maximal-cusp density and a noncompact analog of Bogachev-Douba-Raimbault's argument, we construct infinitely many pairwise incommensurable noncompact Coxeter polytopes in dimensions 4, 5, 6, 7, and 9, with the number of commensurability classes growing at least exponentially in volume.",
-    "domain_bridges": [],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0208",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.14715v1",
-    "status": "available",
-    "timestamp": "2026-07-17T08:20:29.584439+00:00",
-    "title": "ArXiv paper: Several families of incommensurable noncompact hyperbolic Coxeter polytopes"
   },
   {
     "ambition_level": "grand_challenge",
@@ -11490,28 +11083,6 @@
     "status": "available",
     "timestamp": "2026-07-20T03:35:25.814685+00:00",
     "title": "ArXiv paper: Nonnegative Bakry--Émery Curvature on Bounded-Degree Graphs Implies Volume Doubling and Poincaré Inequalities"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions: Agreement Subtrees in Multiple Phylogenetic Trees\n\n## 1. Compatibility-sensitive state compression\n\n**Conjecture.** For each fixed leaf number `a`, the number of restrictions to an `a`-leaf set arising from unrooted binary phylogenetic trees is exponentially smaller, in the exponent, than the crude count of arbitrary families of subsets of those leaves. Moreover, this saving can be expressed through a canonical encoding by compatible quartet signatures.\n\nThe key insight is that edge splits of a tree are pairwise compatible, whereas the powerset bound treats them as independent bits. A canonical compatible encoding should expose the information discarded by that crude estimate.\n\n**Why now?** The restriction algebra and its universal powerset bound isolate compatibility as the only missing ingredient in the counting layer. This gives a precise benchmark against which a sharper state count can be measured.\n\n## 2. Connected-family gluing beyond chains\n\n**Conjecture.** Let a finite hypergraph index subfamilies of phylogenetic trees, with each hyperedge carrying a common induced subtree on the same leaf set. If the intersection graph of the hyperedges is connected, then the union of all indexed trees has that common induced subtree. Conversely, disconnectedness is the only obstruction valid for arbitrary split systems.\n\nThe key insight is that equality of restriction witnesses propagates along overlaps exactly as a locally constant function propagates on a connected space.\n\n**Why now?** Chain gluing establishes the path case. Recasting the result for arbitrary connected overlap graphs would create a reusable local-to-global principle and clarify its relation to sheaf-style consistency.\n\n## 3. Fourfold exponential bound from iterative signature refinement\n\n**Conjecture.** There is an explicit recurrence based on four rounds of compatible-signature refinement whose terminal value bounds the leaf number sufficient to force an `n`-leaf common agreement subtree among `k` unrooted binary phylogenetic trees.\n\nThe key insight is that each refinement round should remove one layer of dependence—leaf placement, split compatibility, tree identity, and family identity—so that four nested exponential losses suffice.\n\n**Why now?** The abstract quartet-transfer theorem already shows that any such MAST bound immediately bounds the common-quartet threshold. What remains is a quantitative compatible-tree argument, not additional threshold logic.\n\n## 4. Exponential lower bound via quartet codes\n\n**Conjecture.** Families of binary phylogenetic trees can be encoded as error-correcting codes in quartet-signature space so that large pairwise distance prevents a common quartet, yielding an exponential lower bound for the least leaf number forcing a common quartet. The optimal exponential rate equals a packing rate in a constrained ternary code.\n\nThe key insight is that each four-leaf set admits three resolved quartet types, while consistency among overlapping quartets imposes code constraints analogous to local parity checks.\n\n**Why now?** The common-agreement predicate supplies an exact equality notion for restrictions. This makes it possible to formulate avoidance as distance in a finite signature space and to compare probabilistic tree constructions with coding-theoretic bounds.\n\n## 5. Exact small-parameter thresholds\n\n**Conjecture.** For every fixed number of trees `k ≤ 4`, the least leaf number forcing a common quartet is attained by a family whose quartet signatures form a maximally distant code, and all extremal families are generated by finitely many relabelling orbits.\n\nThe key insight is that small instances combine hereditary restriction with finite group symmetry, so orbit reduction should replace exhaustive enumeration by a structured classification.\n\n**Why now?** The established heredity and pairwise-characterization results sharply reduce the predicates that a finite search must test, while the coding interpretation suggests which extremal configurations to classify.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Computation",
-      "Physics",
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0539",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.18044v1",
-    "status": "available",
-    "timestamp": "2026-07-21T03:53:11.223878+00:00",
-    "title": "**Conjecture.** For each fixed leaf number `a`, the number of restrictions to an"
   },
   {
     "ambition_level": "extension",
@@ -12885,25 +12456,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\n1. **Variable branching alphabets.** Generalize binary profiles to a fixed `b`-ary alphabet and prove that normalization by `log b` again bounds dimension by `1` and realizes rational free-level densities.\n\n2. **Aperiodic pruning.** Replace periodic residue sets by arbitrary sets of free levels. Relate upper box dimension to the limsup of free-level densities and lower box dimension to the corresponding liminf.\n\n3. **Search policy and cost.** Enrich `SearchInstance` with an exploration order, failed-branch costs, and terminal nodes. The present non-determination theorem shows that these semantic data are necessary before dimension can imply proof-search time or shortest-proof length.\n\n4. **Finite-sample bounds.** Extend the exact complete-period result to explicit error bounds at arbitrary depths. The existing free-count sandwich suggests an error of order `R.card / n`.\n\n5. **Entropy formulation.** Express dimension as normalized entropy growth for nonuniform profiles and investigate subadditive hypotheses under which the limiting entropy exists.\n\n6. **Monotonicity under pruning.** Develop operations on search profiles (intersection, union, and levelwise restriction) and prove corresponding dimension inequalities, allowing modular comparison of proof-search strategies.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Logic"
-    ],
-    "id": "fd_0331",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "64b7f63b",
-    "status": "available",
-    "timestamp": "2026-07-18T14:44:07.401295+00:00",
-    "title": "1. **Variable branching alphabets.** Generalize binary profiles to a fixed `b`-a"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "# Future Directions: Tropical Cryptocurrency\n\n## 1. Exact recession dimension of generic fibers\n\n**Conjecture.** For a generic family of `r` min-plus keys on `k` coordinates with `r < k`, every nonempty digest fiber has a polyhedral cell whose recession cone has dimension exactly `k-r`, and this lower bound is sharp on a dense open set of keys and messages.\n\nThe key insight is that each output component can constrain one independently active coordinate, while all remaining coordinate directions can escape without changing any minimum. **Why now?** The universal collision-ray theorem establishes the first nonzero recession direction for every fiber; the next test is whether the entire expected `k-r`-dimensional cone can be constructed and whether genericity makes the bound exact.\n\n## 2. Hall-type criterion for multidirectional collision cones\n\n**Conjecture.** Let each tropical hash component have a set of active minimizing coordinates at a message. The fiber contains a coordinate cone of dimension at least `d` if and only if the union of these active sets admits a transversal whose complement has cardinality at least `d`.\n\nThe key insight is that collision directions are governed not merely by the number of outputs, but by the combinatorics of which coordinates can certify their minima. **Why now?** Selecting one minimizer per component proved one escaping direction; replacing this selection by a system-of-distinct-representatives analysis should expose the full local fiber geometry.\n\n## 3. Sharp bounded-alphabet collision threshold\n\n**Conjecture.** For messages in `{0,1,…,B}^k` and integer keys, every `r`-component min-plus digest with `r < k` has a collision whenever `B` exceeds an explicit key-spread parameter, and this dependence on the spread is asymptotically optimal.\n\nThe key insight is that the real collision ray survives in a bounded alphabet exactly until it reaches the boundary, so security is controlled by slack at unused coordinates rather than by tropical nonlinearity. **Why now?** The unrestricted theorem identifies the unique obstruction introduced by bounded messages: an unused coordinate may have no legal positive increment.\n\n## 4. Complexity transition for nonce-restricted tropical mining\n\n**Conjecture.** Tropical preimage search is polynomial-time for nonce families described by difference constraints, but becomes NP-complete when the nonce language permits arbitrary binary linear constraints, even for a fixed number of digest components.\n\nThe key insight is that each tropical output condition is a union of linear regions indexed by active coordinates; tractability depends on whether the nonce language preserves shortest-path structure or can encode disjunctive choices. **Why now?** Unrestricted inversion and collision construction are explicit, so any computational hardness must arise from the geometry of the admissible nonce family rather than from the min-plus hash itself.\n",
     "domain_bridges": [],
     "domains": [
@@ -13399,6 +12951,46 @@
     "status": "available",
     "timestamp": "2026-07-25T14:09:47.358166+00:00",
     "title": "The accompanying Lean files isolate three rigorous components related to *The"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n1. **Tropical normal forms.** Replace the current theorem-driven simplifier with a reflected syntax for finite min-plus polynomials, prove evaluation preservation for normalization, and prove uniqueness of canonical antichain normal forms. This would let the tactic decide substantially more identities than local rewriting.\n\n2. **Faster primality certificates.** The verified test currently tries every divisor below `n`. Restrict trial division to `d ≤ √n`, prove the complementary-factor lemma, and add certificate-producing support for concrete divisibility, coprimality, congruences, and bounded Diophantine goals.\n\n3. **Richer spectral certificates.** Generalize the row-sum argument from real square matrices to complex matrices and finite index types. Add Gershgorin discs with centers `A i i`, column-sum bounds, weighted norms, and strict diagonal-dominance certificates for nonsingularity.\n\n4. **Composable automation.** Add a dispatcher that recognizes the goal shape and invokes the appropriate certified procedure, while retaining trace output that identifies the exact soundness theorem and generated certificate.\n\n5. **Performance evaluation.** Build a benchmark suite from existing Catalog goals, recording success rate and elaboration time against plain `simp`, `norm_num`, and direct theorem application.",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Tropical"
+    ],
+    "id": "fd_0729",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "9f0b015d",
+    "status": "available",
+    "timestamp": "2026-07-25T15:27:33.128662+00:00",
+    "title": "1. **Tropical normal forms.** Replace the current theorem-driven simplifier with"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## Results established\n\nThe formal development proves the finite-dimensional closed-form Hodge theorem for consecutive real cochain maps. Harmonic forms are defined intrinsically as closed forms orthogonal to the range of the preceding coboundary. Every closed form is exact plus harmonic, the decomposition is unique, and the harmonic representative is invariant under adding an exact form.\n\nA deliberately overstrong conjecture was disproved: not every cochain is exact plus harmonic. A two-dimensional complex gives an explicit counterexample, showing why the full decomposition of an arbitrary cochain requires a coexact term.\n\n## Next conjectures\n\n1. **Full three-summand decomposition.** For finite-dimensional cochain spaces with adjoints, prove\n   `Cᵏ = range d_{k-1} ⊕ ker Δₖ ⊕ range dₖ†`,\n   with pairwise orthogonality and uniqueness.\n\n2. **Laplacian characterization.** Define `Δₖ = d_{k-1} d_{k-1}† + dₖ† dₖ` and prove\n   `ker Δₖ = ker dₖ ∩ ker d_{k-1}†` using positivity of the weighted inner product.\n\n3. **Balanced polyhedral realization.** Construct cochain spaces from oriented cells of a finite balanced weighted polyhedral complex, prove incidence nilpotence, and transport positive cell weights to Hilbert structures.\n\n4. **Bigraded tropical forms.** Replace a single middle-degree cochain space by `(p,q)` superforms, formalize both differentials, and prove the corresponding bicomplex identities.\n\n5. **Cohomology equivalence.** Package the invariant harmonic representative as a linear equivalence between tropical cohomology and the harmonic subspace.\n\n6. **Weighted graph specialization.** Instantiate the abstract theorem for weighted graph incidence matrices and identify degree-zero harmonic forms with functions constant on connected components.\n\n7. **Infinite locally finite complexes.** Investigate which closed-range hypotheses recover the decomposition for Hilbert completions; without closed range, only closure-of-range statements should be expected.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Pythagorean"
+    ],
+    "id": "fd_0730",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "ee9035cd",
+    "status": "available",
+    "timestamp": "2026-07-25T15:27:40.510269+00:00",
+    "title": "The formal development proves the finite-dimensional closed-form Hodge theorem f"
   },
   {
     "ambition_level": "extension",

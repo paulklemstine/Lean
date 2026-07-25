@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "d0cb2642",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions\n\n1. **Joint distributions and correlated cards.**  The expected payoff of additive unit bets depends only on marginals.  Formalize a finite probability space and prove this margina",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 20,
-      "timestamp": "2026-07-20T20:48:21",
-      "title": "Deepening: Godel's Casino: Incomplete but Winnable Games"
-    },
-    {
       "cycle_id": "4505be0f",
       "domain": "Combinatorics",
       "key_insight": "# Future Directions\n\n## 1. Sharp remainder bounds for arbitrary observation windows\n\n**Conjecture.** Let a periodic Born-probability sequence have period `k`. For every observation length `N`, its Ces",
@@ -499,29 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-25T14:09:59",
       "title": "PAC-Bayes Generalization Bounds"
+    },
+    {
+      "cycle_id": "9f0b015d",
+      "domain": "Logic",
+      "key_insight": "# Future Directions\n\n1. **Tropical normal forms.** Replace the current theorem-driven simplifier with a reflected syntax for finite min-plus polynomials, prove evaluation preservation for normalizatio",
+      "quality_score": 0.74,
+      "sorry_count": 1,
+      "theorem_count": 19,
+      "timestamp": "2026-07-25T15:27:37",
+      "title": "Proof Automation: Custom Lean 4 Tactics"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "eb62b00a",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions\n\n- Formalize matrix representability of finite matroids over `ZMod 3` and prove that it is preserved by deletion and contraction.\n- Connect the abstract theorem `matroid_wqo_gives_",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-19T02:26:34",
-      "title": "Matroid Minors and the Graph Theorem: Robertson-Seymour for Matroids"
-    },
-    {
-      "cycle_id": "f59cf451",
-      "domain": "Computation",
-      "key_insight": "# Future directions\n\n1. **Represent whole chords, not individual pitch classes.** Use 12-dimensional binary or\n   duration-weighted chroma vectors. Distances between these vectors are not all equal, s",
-      "quality_score": 0.63,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-07-19T02:44:40",
-      "title": "Persistent Homology of Musical Harmony: The Topology of Bach"
-    },
     {
       "cycle_id": "4c2c71e5",
       "domain": "MachineLearning",
@@ -2501,27 +2481,29 @@
       "theorem_count": 0,
       "timestamp": "2026-07-25T14:10:26",
       "title": "Entropy Power Inequality: Sharp Version"
+    },
+    {
+      "cycle_id": "9f0b015d",
+      "domain": "Logic",
+      "key_insight": "# Future Directions\n\n1. **Tropical normal forms.** Replace the current theorem-driven simplifier with a reflected syntax for finite min-plus polynomials, prove evaluation preservation for normalizatio",
+      "quality_score": 0.74,
+      "sorry_count": 1,
+      "theorem_count": 19,
+      "timestamp": "2026-07-25T15:27:37",
+      "title": "Proof Automation: Custom Lean 4 Tactics"
+    },
+    {
+      "cycle_id": "ee9035cd",
+      "domain": "Tropical",
+      "key_insight": "# Future directions\n\n## Results established\n\nThe formal development proves the finite-dimensional closed-form Hodge theorem for consecutive real cochain maps. Harmonic forms are defined intrinsically",
+      "quality_score": 0.68,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-07-25T15:27:41",
+      "title": "Tropical Hodge Theory"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "e24b36f0",
-      "domain": "NumberTheory",
-      "name": "negaValue_nil",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "e24b36f0",
-      "domain": "NumberTheory",
-      "name": "digit_injective",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "e24b36f0",
-      "domain": "NumberTheory",
-      "name": "negaValue_cons_emod",
-      "quality": 0.84
-    },
     {
       "cycle_id": "3511fbf3",
       "domain": "Computation",
@@ -2803,17 +2785,28 @@
       "domain": "Physics",
       "name": "encoding_separation",
       "quality": 0.7
+    },
+    {
+      "cycle_id": "9f0b015d",
+      "domain": "Logic",
+      "name": "regev_rounding_bit1",
+      "quality": 0.74
+    },
+    {
+      "cycle_id": "9f0b015d",
+      "domain": "Logic",
+      "name": "regev_rounding_bit1",
+      "quality": 0.74
+    },
+    {
+      "cycle_id": "9f0b015d",
+      "domain": "Logic",
+      "name": "encoding_separation",
+      "quality": 0.74
     }
   ],
-  "last_updated": "2026-07-25T14:10:26",
+  "last_updated": "2026-07-25T15:27:41",
   "open_questions": [
-    {
-      "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
-      "cycle_id": "dcd7a4b2",
-      "domain": "Tropical",
-      "sorry_count": 3,
-      "timestamp": "2026-07-17T13:29:21"
-    },
     {
       "context": "",
       "cycle_id": "186c9eac",
@@ -3016,6 +3009,13 @@
       "domain": "Shared",
       "sorry_count": 1,
       "timestamp": "2026-07-25T10:53:08"
+    },
+    {
+      "context": "-    sorry+  have hchecked := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hn2⟩)",
+      "cycle_id": "9f0b015d",
+      "domain": "Logic",
+      "sorry_count": 1,
+      "timestamp": "2026-07-25T15:27:37"
     }
   ],
   "research_threads": {
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "7fb32c18",
-        "quality": 0.65,
-        "theorems": 13,
-        "title": "Speculative: Category Theory as the DNA of Mathematics"
-      },
-      {
         "cycle_id": "11a0fcb2",
         "quality": 0.74,
         "theorems": 23,
@@ -3513,6 +3507,12 @@
         "quality": 0.6,
         "theorems": 18,
         "title": "The formal development establishes a concrete genuinely non-strict bicategory: i"
+      },
+      {
+        "cycle_id": "9f0b015d",
+        "quality": 0.74,
+        "theorems": 19,
+        "title": "Proof Automation: Custom Lean 4 Tactics"
       }
     ],
     "MachineLearning": [
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "408bb225",
-        "quality": 0.76,
-        "theorems": 12,
-        "title": "The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
-      },
-      {
         "cycle_id": "dcd7a4b2",
         "quality": 0.75,
         "theorems": 0,
@@ -4009,6 +4003,12 @@
         "quality": 0.5,
         "theorems": 14,
         "title": "Close Proofs: Speculative: Mathematics as a Phase Transition"
+      },
+      {
+        "cycle_id": "ee9035cd",
+        "quality": 0.68,
+        "theorems": 13,
+        "title": "Tropical Hodge Theory"
       }
     ]
   }
