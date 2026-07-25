@@ -1,43 +1,45 @@
-# Computational Evidence — Hydrogen Spectral Theory
+# Computational evidence
 
-This note records the small-case checks performed before formalizing the
-theorems in `HydrogenSpectrum.lean`, `HydrogenSelectionRules.lean`, and
-`HydrogenAngularEigen.lean`.
+## Small cases
 
-## 1. Bohr energy levels `Eₙ = -1/n²` (Rydberg units)
+In Rydberg units the first four bound levels are
 
-| n | Eₙ = -1/n² |
-|---|------------|
-| 1 | -1         |
-| 2 | -1/4       |
-| 3 | -1/9       |
-| 4 | -1/16      |
-| 5 | -1/25      |
+| principal number `n` | `-1/n²` |
+|---:|---:|
+| 1 | -1 |
+| 2 | -1/4 |
+| 3 | -1/9 |
+| 4 | -1/16 |
 
-Confirms: strictly increasing toward 0, ground state `E₁ = -1`, all values in
-`[-1, 0)`. Accumulation point is `0` (the ionization threshold).
+These exact calculations are machine-checked by `first_four_bound_energies` in
+`HydrogenSpectralConnector.lean`.  They increase and remain negative, consistent
+with convergence to the ionization threshold zero; the universal monotonicity
+and convergence claims are also proved there.
 
-## 2. Rydberg / transition gaps `1/m² - 1/n²`
+For orbital angular momentum, allowed `Δl = ±1` transitions alternate parity:
+`0 → 1 → 2 → 3`.  A two-step path returns to the initial parity, while a
+three-step path changes it.  The theorem `dipole_walk_parity` proves this for
+every finite path, not merely these examples.
 
-For `m = 1` (Lyman) and `m = 2` (Balmer):
+## OEIS search
 
-- `E_{2→1} = 1 - 1/4 = 3/4`
-- `E_{3→2} = 1/4 - 1/9 = 5/36`
+The shell degeneracies `1, 4, 9, 16, ...` are the square numbers, OEIS A000290.
+The present connector focuses on transition-graph parity rather than reproving
+the standard shell-degeneracy sum.
 
-Both positive, confirming `photon_energy_pos`, and each `< 1/m²`
-(`3/4 < 1`, `5/36 < 1/4`), confirming `photon_energy_lt_series_limit`.
+## Counterexample hunt
 
-## 3. Shell degeneracy `∑_{l=0}^{n-1}(2l+1) = n²`
+Potential edge cases are `l = 0`, equal endpoints, and walks that backtrack.
+The condition `Δl = ±1` excludes equal-`l` edges, including `0 → 0`; backtracking
+gives an even closed walk and is correctly permitted.  No odd closed walk can
+occur, as proved by `no_odd_closed_dipole_walk`.
 
-Computed `(∑_{l<n}(2l+1), n²)` for `n = 0..4`:
-`[(0,0), (1,1), (4,4), (9,9), (16,16)]` — exact match (sum of first `n` odd
-numbers is `n²`). This is the orbital degeneracy of shell `n`. (OEIS A000290,
-the squares; partial sums of A005408, the odd numbers.)
+## Table of path parity
 
-## 4. Selection-rule sanity checks
-
-- `dipoleAllowed 1 0 0 0` (2p → 1s, Lyman-α): allowed (Δl = 1, Δm = 0). ✓
-- `dipoleAllowed l l m m'`: always false (Δl = 0 forbidden). ✓
-- Any allowed transition has `l + l'` odd (parity flip). ✓
-
-All checks were performed with `#eval` over `ℚ`/`ℕ` and then proved in Lean.
+| number of dipole steps | endpoint parity relation |
+|---:|:---|
+| 0 | same |
+| 1 | different |
+| 2 | same |
+| 3 | different |
+| `k` | different exactly when `k` is odd |

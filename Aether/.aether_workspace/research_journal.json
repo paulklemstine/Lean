@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "e3542946",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions\n\n## 1. Quantitative Complexity–Dissipation Tradeoff\n\n**Conjecture.** For a family of finite decision processes with bounded error, any\nimplementation whose expected running time is",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-20T05:49:00",
-      "title": "Speculative: Computational Complexity as Physical Law"
-    },
-    {
       "cycle_id": "dd6a308e",
       "domain": "Pythagorean",
       "key_insight": "# Future Directions for Finite Cop-Win Elimination\n\n## 1. Order-independent asynchronous elimination\n\n**Conjecture.** Let a finite candidate system be governed by a monotone contracting parallel updat",
@@ -499,29 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-25T06:37:20",
       "title": "Cross-Reality-Entropy: Second Law of Thermodynamics for Multiversal Ensembles"
+    },
+    {
+      "cycle_id": "f853fcd6",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions: Matroid Correspondences\n\n## 1. Representability transfer through linear correspondences\n\nLet a matroid correspondence be induced by a linear relation between two finite-dimensiona",
+      "quality_score": 0.73,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-25T09:20:47",
+      "title": "ArXiv paper: Matroid correspondence"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "ac5fc431",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\n## 1. Uniform finite-ring criterion for elementary reversibility\n\n**Conjecture.** An elementary binary cellular automaton is reversible on every finite periodic ring if and only i",
-      "quality_score": 0.69,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-18T23:29:11",
-      "title": "Galois Theory of Cellular Automata: Which Rules Have Reversible Dynamics?"
-    },
-    {
-      "cycle_id": "bcb31ca6",
-      "domain": "Bridges",
-      "key_insight": "# Future directions\n\n1. **Exact fiber cardinality.** Upgrade the explicit injection of `2^n` seeds to an equality characterizing the entire fiber `{x ∈ (0,1) | f^[n] x = y}`. This requires proving eve",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-18T23:29:22",
-      "title": "Deepening: Cryptography from Chaos: Encrypting with the Logistic Map"
-    },
     {
       "cycle_id": "cf69678e",
       "domain": "Combinatorics",
@@ -2501,27 +2481,29 @@
       "theorem_count": 0,
       "timestamp": "2026-07-25T06:37:20",
       "title": "Cross-Reality-Entropy: Second Law of Thermodynamics for Multiversal Ensembles"
+    },
+    {
+      "cycle_id": "f90ec3a1",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n## What the formalization establishes\n\n`Logic/StrangeLoops.lean` proves the abstract semantic core of the first incompleteness argument. Given a sentence `g` whose meaning is equi",
+      "quality_score": 0.69,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-07-25T09:20:43",
+      "title": "Strange Loops: Self-Reference and Gödel's Incompleteness"
+    },
+    {
+      "cycle_id": "f853fcd6",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions: Matroid Correspondences\n\n## 1. Representability transfer through linear correspondences\n\nLet a matroid correspondence be induced by a linear relation between two finite-dimensiona",
+      "quality_score": 0.73,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-25T09:20:47",
+      "title": "ArXiv paper: Matroid correspondence"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "4bc3344b",
-      "domain": "MachineLearning",
-      "name": "is",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "4bc3344b",
-      "domain": "MachineLearning",
-      "name": "quoted_evaluator_is_structurally_conscious",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "4bc3344b",
-      "domain": "MachineLearning",
-      "name": "leftInverse_iterate",
-      "quality": 0.72
-    },
     {
       "cycle_id": "09546bb0",
       "domain": "Tropical",
@@ -2803,9 +2785,27 @@
       "domain": "Geometry",
       "name": "cupTurns_cons2",
       "quality": 0.75
+    },
+    {
+      "cycle_id": "f853fcd6",
+      "domain": "Bridges",
+      "name": "for",
+      "quality": 0.73
+    },
+    {
+      "cycle_id": "f853fcd6",
+      "domain": "Bridges",
+      "name": "pull_isLowerSet",
+      "quality": 0.73
+    },
+    {
+      "cycle_id": "f853fcd6",
+      "domain": "Bridges",
+      "name": "pull_comp",
+      "quality": 0.73
     }
   ],
-  "last_updated": "2026-07-25T06:37:20",
+  "last_updated": "2026-07-25T09:20:47",
   "open_questions": [
     {
       "context": "+    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; +    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; +    ∀ i < k, c i = ",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "eb62b00a",
-        "quality": 0.7,
-        "theorems": 0,
-        "title": "Matroid Minors and the Graph Theorem: Robertson-Seymour for Matroids"
-      },
-      {
         "cycle_id": "50f62832",
         "quality": 0.68,
         "theorems": 11,
@@ -3203,6 +3197,12 @@
         "quality": 0.63,
         "theorems": 0,
         "title": "ArXiv paper: Several families of incommensurable noncompact hyperbolic Coxeter p"
+      },
+      {
+        "cycle_id": "f853fcd6",
+        "quality": 0.73,
+        "theorems": 14,
+        "title": "ArXiv paper: Matroid correspondence"
       }
     ],
     "Combinatorics": [
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "3df39c71",
-        "quality": 0.72,
-        "theorems": 13,
-        "title": "ArXiv paper: On Agreement Subtrees in Multiple Pylogenetic Trees"
-      },
-      {
         "cycle_id": "24111e1f",
         "quality": 0.7,
         "theorems": 24,
@@ -3637,6 +3631,12 @@
         "quality": 0.64,
         "theorems": 16,
         "title": "ArXiv paper: On Agreement Subtrees in Multiple Pylogenetic Trees"
+      },
+      {
+        "cycle_id": "f90ec3a1",
+        "quality": 0.69,
+        "theorems": 12,
+        "title": "Strange Loops: Self-Reference and Gödel's Incompleteness"
       }
     ],
     "NumberTheory": [

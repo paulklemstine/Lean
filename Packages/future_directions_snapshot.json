@@ -2669,27 +2669,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "f90ec3a1",
-    "description": "Prove that any sufficiently powerful formal system necessarily contains strange loops: statements that refer to their own unprovability. Formalize Gödel's first incompleteness theorem as a fixed-point in the lattice of provability predicates. Explore whether consciousness arises from tangled hierarchies of self-referential symbols.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Logic",
-      "Computation"
-    ],
-    "id": "seed_253",
-    "lineage_refs": [],
-    "priority_score": 0.9,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Strange Loops: Self-Reference and Gödel's Incompleteness"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Prove that any theory of everything in physics must be a (2,infinity)-category with duals. Formalize the cobordism hypothesis as a universal property and show that TQFTs, CFTs, and string theories are all shadows of a single object in this higher category. Determine whether the resulting theory is computable or contains oracle information.",
     "domain_bridges": [],
@@ -11087,26 +11066,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "f853fcd6",
-    "description": "Investigate the ArXiv paper 'Matroid correspondence' and formalize its key results. Abstract: Motivated by algebraic correspondences and linear operators associated with volume and Lorentzian polynomials, we introduce matroid correspondences and their polymatroid analogues. A matroid correspondence defines a functor between poset categories of matroids whose morphisms are matroid quotients, and various standard functors, including deletion, contraction, free extension, truncation, intersection, union, and pullback, arise in this way. We show that these correspondences preserve representability and algebraicity under natural hypotheses. In the polymatroid setting, we establish compatibility with multisymmetric lifts. Finally, we relate this construction to the supports of linear operators with Lorentzian symbols.",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Bridges"
-    ],
-    "id": "fd_0137",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.13783v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-16T17:27:41.805947+00:00",
-    "title": "ArXiv paper: Matroid correspondence"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Independent Sets in Multiset Profile Graphs via Weighted Local Covers' and formalize its key results. Abstract: The discrete simplex consists of the nonnegative integer vectors $a=(a_1,\\ldots,a_q)$ whose coordinates sum to $d$. Equivalently, its vertices are the multiplicity profiles of size-$d$ multisets over $q$ symbols. Two vertices are adjacent when one is obtained from the other by decreasing one coordinate by one and increasing another coordinate by one. We study the maximum size $α_q(d)$ of an independent set in this graph. Our upper bounds cover the graph by translated smaller graphs and assign them nonnegative weights. For fixed $q$, the weights depend on only finitely many capped profiles, so one finite rational linear system can prove a bound for every sufficiently large $d$. The method gives new proofs of the known cases $q=3$ and $q=4$ and determines $α_q(d)$ exactly for $q=5$ and $q=7$ in every degree. It also determines the largest classes of natural additive colorings for general $q$. In the opposite regime, with $d$ fixed and $q$ growing, it solves degree five for $q\\ge7$, gives",
     "domain_bridges": [],
@@ -14848,6 +14807,46 @@
     "status": "available",
     "timestamp": "2026-07-25T06:37:16.230778+00:00",
     "title": "Let branch weights evolve under a stochastic transport kernel while each branch "
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## What the formalization establishes\n\n`Logic/StrangeLoops.lean` proves the abstract semantic core of the first incompleteness argument. Given a sentence `g` whose meaning is equivalent to its own unprovability and a provability predicate satisfying semantic reflection, `g` is true and unprovable; consequently, semantic completeness fails.\n\nIt also treats provability predicates as monotone operators on propositions. The induced unprovability transform is order-reversing, and comparable fixed points are proved logically equivalent. Two bold stronger conjectures are disproved by explicit countermodels:\n\n1. Monotonicity and completeness of the proposition lattice do **not** guarantee a fixed point of `g ↦ ¬ P g`; the identity operator has none.\n2. Merely possessing a self-unprovability fixed point does **not** force syntactic incompleteness; the constantly true operator is complete and has such a fixed point, but is inconsistent.\n\nThese results isolate diagonalization and soundness/reflection as genuinely load-bearing hypotheses.\n\n## Next mathematical steps\n\n1. **Arithmetized syntax.** Define a concrete first-order language, Gödel coding, substitution, derivability, and representability. Prove the diagonal lemma rather than assuming its fixed-point output.\n2. **Weaker hypotheses.** Replace full semantic reflection with the usual consistency or 1-consistency assumptions. Formalize the distinction between Gödel's original theorem and Rosser's strengthening.\n3. **Second incompleteness.** State Hilbert–Bernays derivability conditions internally and derive the unprovability of a suitable consistency sentence.\n4. **Modal provability logic.** Connect the abstract operator formulation to GL, including Löb's theorem and fixed-point uniqueness under provable equivalence.\n5. **Order theory.** Generalize the antichain theorem from `Prop` to complemented or pseudocomplemented lattices with an antitone transform, and characterize when fixed points can exist.\n6. **Constructive foundations.** Determine exactly where classical reasoning is necessary. The fixed-point incompleteness argument itself is constructive, while the antichain result currently uses double-negation elimination.\n7. **Mechanized countermodel catalog.** Classify all operators on finite Heyting/Boolean algebras and compare fixed-point existence, monotonicity, reflection, consistency, and completeness.\n\n## Limits concerning consciousness\n\nNo theorem here asserts that consciousness arises from self-reference. “Consciousness” and “tangled hierarchy” have no agreed mathematical specification in the supplied framing, and Gödel-style self-reference alone does not justify a causal or explanatory claim about consciousness. A formal investigation would first require an explicit computational or semantic model and an operationally testable consciousness predicate. Until then, the connection remains philosophical rather than a proposition suitable for machine-checked proof.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "fd_0720",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "f90ec3a1",
+    "status": "available",
+    "timestamp": "2026-07-25T09:20:38.898832+00:00",
+    "title": "`Logic/StrangeLoops.lean` proves the abstract semantic core of the first incompl"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Matroid Correspondences\n\n## 1. Representability transfer through linear correspondences\n\nLet a matroid correspondence be induced by a linear relation between two finite-dimensional vector configurations over a field. If every fibre is obtained by restriction, projection, and addition of freely placed vectors, then universal pullback along the correspondence preserves representability over that field.\n\nThe key insight is that the order-extension law should admit a linear witness whose projections simultaneously certify both the quotient relation and representability.\n\nWhy now? The order-theoretic pullback theorem isolates the exact functorial step, so the remaining question is a sharply delimited lifting problem for linear representations.\n\n## 2. Algebraicity under dominant rational correspondences\n\nFor algebraic matroids over a fixed base field, a correspondence induced by a dominant rational correspondence of irreducible varieties preserves algebraicity whenever the generic fibres are geometrically integral.\n\nThe key insight is that extension of quotient witnesses should be governed by specialization of transcendence bases along generic fibres.\n\nWhy now? Universal pullback already transports the relevant lower-set structure; geometric integrality is a testable condition intended to prevent new algebraic dependencies from appearing in a fibre.\n\n## 3. Multisymmetric lifts commute with polymatroid pullback\n\nFor every integral polymatroid correspondence satisfying the exchange-extension law, multisymmetric lift commutes with universal pullback, up to canonical relabelling of the cloned ground set.\n\nThe key insight is that cloning an element converts integer rank increments into ordinary exchange steps, and the extension witnesses should lift clone by clone.\n\nWhy now? The relational composition and intersection laws identify the coherence conditions that any proposed clone-level construction must satisfy, providing several independent falsification tests.\n\n## 4. Lorentzian symbols generate order correspondences\n\nThe support relation of every multihomogeneous linear operator with Lorentzian symbol defines an order correspondence between the quotient orders of the matroids carried by homogeneous Lorentzian supports.\n\nThe key insight is that the M-convex exchange property of a Lorentzian support should supply exactly the upward extension witness required by the correspondence law.\n\nWhy now? The abstract extension axiom has been separated from representability and polynomial coefficients, making it possible to test the conjecture first on supports and only afterward recover analytic positivity.\n\n## 5. Finite obstruction transport without ambient well-quasi-ordering\n\nSuppose a matroid correspondence has finite fibres and a finite lifting property for strict minors. Then the pullback of every class with finitely many excluded minors also has finitely many excluded minors, without assuming that the entire source minor order is well-quasi-ordered.\n\nThe key insight is that each target obstruction should have only finitely many minimal source lifts, and all source obstructions should arise among those lifts.\n\nWhy now? The established intersection result shows that global well-quasi-ordering is not always necessary; finite lifting is a concrete local replacement whose necessity can be probed by explicit correspondences.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0721",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "f853fcd6",
+    "status": "available",
+    "timestamp": "2026-07-25T09:20:46.739115+00:00",
+    "title": "Let a matroid correspondence be induced by a linear relation between two finite-"
   },
   {
     "ambition_level": "extension",

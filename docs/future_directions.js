@@ -1983,23 +1983,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "One-Way Functions: Existence and Hierarchy"
   },
   {
-    "consumed_by_exp_id": "f90ec3a1",
-    "description": "Prove that any sufficiently powerful formal system necessarily contains strange loops: statements that refer to their own unprovability. Formalize G\u00f6del's first incompleteness theorem as a fixed-point in the lattice of provability predicates. Explore whether consciousness arises from tangled hierarchies of self-referential symbols.",
-    "domains": [
-      "Novelty",
-      "Logic",
-      "Computation"
-    ],
-    "id": "seed_253",
-    "phase": "B",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Strange Loops: Self-Reference and G\u00f6del's Incompleteness"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Prove that any theory of everything in physics must be a (2,infinity)-category with duals. Formalize the cobordism hypothesis as a universal property and show that TQFTs, CFTs, and string theories are all shadows of a single object in this higher category. Determine whether the resulting theory is computable or contains oracle information.",
     "domains": [
@@ -11088,6 +11071,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-25T06:37:16.230778+00:00",
     "title": "Let branch weights evolve under a stochastic transport kernel while each branch "
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## What the formalization establishes\n\n`Logic/StrangeLoops.lean` proves the abstract semantic core of the first incompleteness argument. Given a sentence `g` whose meaning is equivalent to its own unprovability and a provability predicate satisfying semantic reflection, `g` is true and unprovable; consequently, semantic completeness fails.\n\nIt also treats provability predicates as monotone operators on propositions. The induced unprovability transform is order-reversing, and comparable fixed points are proved logically equivalent. Two bold stronger conjectures are disproved by explicit countermodels:\n\n1. Monotonicity and completeness of the proposition lattice do **not** guarantee a fixed point of `g \u21a6 \u00ac P g`; the identity operator has none.\n2. Merely possessing a self-unprovability fixed point does **not** force syntactic incompleteness; the constantly true operator is complete and has such a fixed point, but is inconsistent.\n\nThese results isolate diagonalization and soundness/reflection as genuinely load-bearing hypotheses.\n\n## Next mathematical steps\n\n1. **Arithmetized syntax.** Define a concrete first-order language, G\u00f6del coding, substitution, derivability, and representability. Prove the diagonal lemma rather than assuming its fixed-point output.\n2. **Weaker hypotheses.** Replace full semantic reflection with the usual consistency or 1-consistency assumptions. Formalize the distinction between G\u00f6del's original theorem and Rosser's strengthening.\n3. **Second incompleteness.** State Hilbert\u2013Bernays derivability conditions internally and derive the unprovability of a suitable consistency sentence.\n4. **Modal provability logic.** Connect the abstract operator formulation to GL, including L\u00f6b's theorem and fixed-point uniqueness under provable equivalence.\n5. **Order theory.** Generalize the antichain theorem from `Prop` to complemented or pseudocomplemented lattices with an antitone transform, and characterize when fixed points can exist.\n6. **Constructive foundations.** Determine exactly where classical reasoning is necessary. The fixed-point incompleteness argument itself is constructive, while the antichain result currently uses double-negation elimination.\n7. **Mechanized countermodel catalog.** Classify all operators on finite Heyting/Boolean algebras and compare fixed-point existence, monotonicity, reflection, consistency, and completeness.\n\n## Limits concerning consciousness\n\nNo theorem here asserts that consciousness arises from self-reference. \u201cConsciousness\u201d and \u201ctangled hierarchy\u201d have no agreed mathematical specification in the supplied framing, and G\u00f6del-style self-reference alone does not justify a causal or explanatory claim about consciousness. A formal investigation would first require an explicit computational or semantic model and an operationally testable consciousness predicate. Until then, the connection remains philosophical rather than a proposition suitable for machine-checked proof.\n",
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "fd_0720",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "f90ec3a1",
+    "status": "available",
+    "timestamp": "2026-07-25T09:20:38.898832+00:00",
+    "title": "`Logic/StrangeLoops.lean` proves the abstract semantic core of the first incompl"
   },
   {
     "consumed_by_exp_id": "",
