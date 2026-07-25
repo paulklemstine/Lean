@@ -975,7 +975,7 @@
       "depth_estimate": 3,
       "description": "Proves the tropical analogue of the Hahn-Banach separation theorem for disjoint tropical convex polyhedra in ℝ^n.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Tropical"
       ],
@@ -1015,7 +1015,7 @@
       "depth_estimate": 3,
       "description": "Formalizes Nishinou-Siebert correspondence theorem relating algebraic curves in toric varieties to tropical curves in Euclidean space.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Tropical"
       ],
@@ -1055,7 +1055,7 @@
       "depth_estimate": 3,
       "description": "Proves that the unique tropical eigenvalue of a square min-plus matrix equals the minimum cycle mean of its associated weighted directed graph.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Tropical"
       ],
@@ -1095,7 +1095,7 @@
       "depth_estimate": 3,
       "description": "Derives upper and lower bounds comparing Kapranov rank, tropical rank, and factor rank for tropical matrices.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Tropical"
       ],
@@ -1135,7 +1135,7 @@
       "depth_estimate": 3,
       "description": "Proves functional identity showing every feedforward ReLU neural network is representable as a tropical rational function.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Tropical"
       ],
@@ -5708,55 +5708,6 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
-        "Erdős sumset conjecture",
-        "Szemerédi's theorem",
-        "Probabilistic method in combinatorics"
-      ],
-      "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "We conjecture that the constant 3 appearing in the threshold (3+o(1))(log n)/(log(1/δ)) for sumset avoidance in δ-dense subsets of [n] is optimal. Specifically, for any fixed δ ∈ (0,1) and any ε > 0, there should exist arbitrarily large n such that every subset S ⊆ [n] with |S| ≥ δn necessarily contains some sumset A+B where A,B ⊆ ℕ satisfy min{|A|,|B|} ≥ (3-ε)(log n)/(log(1/δ)). This would establish that the random construction used in the paper cannot be improved asymptotically.",
-      "domain_bridges": [
-        "Discrete probability theory",
-        "Extremal set theory",
-        "Asymptotic combinatorics"
-      ],
-      "domain_quality_penalty": 1.0,
-      "domains": [
-        "Pythagorean",
-        "Algebra"
-      ],
-      "github_issue": 0,
-      "id": "fd_0212",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "theorem sumset_avoidance_threshold_optimal\n  (δ : ℝ) (hδ : 0 < δ ∧ δ < 1) (ε : ℝ) (hε : 0 < ε ∧ ε < 3) :\n  ∃ (c : ℝ) (hc : 0 < c), ∀ n : ℕ, n ≥ c →\n  ∀ (S : Finset ℕ), S ⊆ Finset.range n →\n  (S.card ≥ δ * n) →\n  ∃ (A B : Finset ℕ), \n    (A ∪ B : Finset ℕ).Nonempty →\n    (A.card ≥ (3 - ε) * (Real.log n / Real.log (1/δ))) →\n    (B.card ≥ (3 - ε) * (Real.log n / Real.log (1/δ))) →\n    ((A + B : Finset ℕ) ⊆ S):\n  sorry",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.8,
-      "proof_strategy": "The conjecture would likely require a constructive approach or refined probabilistic analysis. One strategy would be to explicitly construct, for each ε > 0, a family of sets S (perhaps deterministic or using altered probability distributions) where every sumset A+B with min{|A|,|B|} ≥ (3-ε)(log n)/(log(1/δ)) must intersect the complement of S. A second approach would use the second moment method or concentration inequalities to show that random sets with density δ cannot avoid all such large sumsets when the threshold drops below 3(log n)/(log(1/δ)).",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source": "",
-      "source_exp_id": "2607.15269v1",
-      "source_path": "http://arxiv.org/abs/2607.15269v1",
-      "status": "available",
-      "thread_id": "",
-      "timestamp": "2026-07-17T12:29:49.501452+00:00",
-      "title": "Optimality of the Constant 3 in Dense Sets Without Large Sumsets"
-    },
-    {
-      "ambition_level": "grand_challenge",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [
         "math.CO (spectral graph theory)",
         "math.AG (Brill-Noether theory on graphs)",
         "math.MG (geometry of numbers)"
@@ -5799,55 +5750,6 @@
       "thread_id": "",
       "timestamp": "2026-07-17T12:34:11.111826+00:00",
       "title": "Cheeger-type bound for covering radius implies Brill-Noether existence at half-canonical degree"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [
-        "https://arxiv.org/abs/2109.13305",
-        "https://arxiv.org/abs/2206.10289",
-        "https://arxiv.org/abs/2307.06441"
-      ],
-      "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "For every fixed density δ∈(0,1) and every integer t≥2 there is a constant C(t,δ)>0 such that for all sufficiently large n one can find a subset S⊂[n] of size at least δn that contains no t‑fold sumset A₁+⋯+A_t with each |A_i|≥C(t,δ)·(log n)/(log(1/δ))^{1/(t−1)}.  This conjecture generalises the extremal result of Serra‑Szegedy and the recent construction for t=2, and it is compatible with the lower‑bound phenomenon proved by Hernández‑and‑Hetzel.",
-      "domain_bridges": [
-        "Finite combinatorics",
-        "Ramsey theory",
-        "Probabilistic method"
-      ],
-      "domain_quality_penalty": 1.0,
-      "domains": [
-        "Pythagorean",
-        "Algebra"
-      ],
-      "github_issue": 0,
-      "id": "fd_0214",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "theorem dense_set_without_large_t_sumsets \\{δ : ℝ\\} (hδ : 0 < δ) (hδ1 : δ < 1) (t : ℕ) (hgt : t ≥  eventos) (n : ℕ) : \\exists (S : Finset ℕ),\\n  S.card ≥ ⌊δ * n⌋ ∧\\n  ∀ (A₁ : Finset ℕ) (A₂ : Finset ℕ) ... (A_t : Finset ℕ),\\n    (∀ i, (Finset.card (A_i) ≥ C * (log ↑n) / (log (1/δ))^(1/(t-1)))) →\\n    ¬ (A₁.sumset A₂ ... A_t ⊆ S)  -- proof to be provided by probabilistic argument",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.8,
-      "proof_strategy": "Use the probabilistic method: select each element of [n] independently with probability δ to form a random set S.  For any fixed t‑tuple of subsets A₁,…,A_t ⊂ ℕ with |A_i| ≥ C·(log n)/(log(1/δ))^{1/(t−1)}, the sumset A₁+⋯+A_t is a set of size at least exp(Ω(log n)) = n^{Ω(1)} in the worst case.  A Chernoff bound shows that the probability that all these sum‑elements lie outside S is at most exp(−Ω(δ·|A₁+⋯+A_t|)).  A union bound over all such t‑tuples (there are at most n^{tC(log n)/(log(1/δ))}) keeps the failure probability bounded away from 1 if C is chosen small enough.  Thus with positive probability S satisfies the desired property, proving existence.  A deterministic construction could be obtained by the method of conditional expectations.",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source": "",
-      "source_exp_id": "2607.15269v1",
-      "source_path": "http://arxiv.org/abs/2607.15269v1",
-      "status": "available",
-      "thread_id": "",
-      "timestamp": "2026-07-17T12:35:07.930478+00:00",
-      "title": "Existence of Dense Sets without Large t‑Fold Sumsets"
     },
     {
       "ambition_level": "extension",
@@ -6128,56 +6030,6 @@
       "thread_id": "",
       "timestamp": "2026-07-17T13:03:31.081362+00:00",
       "title": "Avoidance of t-fold sumsets in dense subsets of [n]"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [
-        "Kővári–Sós–Turán theorem (KST)",
-        "Bose–Burton theorem",
-        "Erdős–Stone theorem for matroids",
-        "Sidon sets in vector spaces"
-      ],
-      "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "For all integers s,t with 2 ≤ s ≤ t and prime power q, any simple rank-n GF(q)-representable matroid with no M(K_{s,t})-restriction satisfies |E(M)| ≤ (c_{q,s,t} + o(1))·q^{(1-1/s)n} for a constant c_{q,s,t}, and this bound is tight. In particular, for binary matroids (q=2) with no M(K_{2,t})-restriction, the maximum number of elements is exactly Θ_t(2^{n/2}).",
-      "domain_bridges": [
-        "extremal graph theory ↔ extremal matroid theory",
-        "forbidden substructure problems in graphs ↔ forbidden restrictions in matroids",
-        "asymptotic extremal functions with geometric constraints"
-      ],
-      "domain_quality_penalty": 1.0,
-      "domains": [
-        "Pythagorean",
-        "Algebra"
-      ],
-      "github_issue": 0,
-      "id": "fd_0221",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "theorem kst_conjecture {q s t : ℕ} [prime_power q] [2 ≤ s] [s ≤ t] (n : ℕ) :\n  let c_qst : ℝ := 1 / (s - 1 : ℝ) * (q - 1 : ℝ) / (q : ℝ) ^ (1/s : ℝ) * (q : ℝ) ^ (n/s : ℝ)\n  ∀ M : GF_representable_matroid q,\n    simple M → rank M = n → ¬(K_{s,t} ↭ M) →\n    |E M| ≤ (c_qst + 0) * q ^ ((1 - 1/s : ℝ) * n : ℝ)",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.8,
-      "proof_strategy": "The paper establishes the O-q,s,t bound. The conjecture adds: (1) matching lower bounds via explicit constructions (generalizing binary Sidon sets to arbitrary GF(q)), (2) precise asymptotic equivalence rather than big-O notation. Approach combines Fourier-analytic counting over finite fields, spectral methods on representable matroids, and extremal combinatorics of partial geometries.",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source": "",
-      "source_exp_id": "2607.15226v1",
-      "source_path": "http://arxiv.org/abs/2607.15226v1",
-      "status": "available",
-      "thread_id": "",
-      "timestamp": "2026-07-17T13:04:27.023831+00:00",
-      "title": "The Kővari-Sós-Turán Conjecture for GF(q)-representable Matroids: Sharp Asymptotic Bound"
     },
     {
       "ambition_level": "extension",
@@ -6766,102 +6618,6 @@
       "thread_id": "",
       "timestamp": "2026-07-17T22:29:08.291028+00:00",
       "title": "Arithmetic on the Moebius Band: A Number System with a Twist"
-    },
-    {
-      "ambition_level": "grand_challenge",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [
-        "Baker's Brill-Noether theory on graphs (2008)",
-        "Cheeger inequality in spectral graph theory",
-        "covering radius in periodic sets"
-      ],
-      "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "For sufficiently large connected k-regular graphs, if the Cheeger constant of a periodic set with respect to the energy quadratic form exceeds a logarithmic threshold, then the asymptotic Brill-Noether conjecture holds at the half-canonical degree up to a constant factor.",
-      "domain_bridges": [
-        "spectral expansion properties to divisor class existence",
-        "geometry of numbers techniques to graph combinatorics"
-      ],
-      "domain_quality_penalty": 1.0,
-      "domains": [
-        "Pythagorean",
-        "Algebra"
-      ],
-      "github_issue": 0,
-      "id": "fd_0241",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "Theorem: For all sufficiently large n, if G is a k-regular graph and there exists a periodic set S ⊆ G with Cheeger(S, Q) ≥ c log n (where Q is the energy quadratic form), then G satisfies the Brill-Noether existence conjecture at the half-canonical degree up to a constant factor.",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.8,
-      "proof_strategy": "Demonstrate that the Cheeger bound enforces sufficient expansion in the energy form, enabling the construction of required divisors via covering radius arguments and periodicity.",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source": "",
-      "source_exp_id": "2607.15213v1",
-      "source_path": "http://arxiv.org/abs/2607.15213v1",
-      "status": "available",
-      "thread_id": "",
-      "timestamp": "2026-07-17T23:12:05.059062+00:00",
-      "title": "Cheeger Inequality Implies Asymptotic Brill-Noether Existence at Half-Canonical Degree"
-    },
-    {
-      "ambition_level": "grand_challenge",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [
-        "JLMNR",
-        "CFS"
-      ],
-      "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "The minimum integer t such that every equinumerous t-coloring of [t·n] contains a rainbow k-term arithmetic progression is bounded above by a quadratic function of k; i.e., there exists a constant C such that for all sufficiently large k, T_k ≤ C·k^2.",
-      "domain_bridges": [
-        "Ramsey Theory",
-        "Additive Combinatorics",
-        "Finite Coloring"
-      ],
-      "domain_quality_penalty": 1.0,
-      "domains": [
-        "Pythagorean",
-        "Algebra"
-      ],
-      "github_issue": 0,
-      "id": "fd_0242",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "theorem conjecture_Tk_O_k2 : ∀ (k : ℕ), 3 ≤ k → ∃ (C : ℕ), ∀ (t : ℕ), t ≤ C * k ^ 2 → ∃ (n : ℕ) (col : Fin t → ℕ), Equinumerous t col ∧ ¬ HasRainbowAP k col n",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.8,
-      "proof_strategy": "Disprove by constructing, for arbitrarily large k, an equinumerous coloring of an interval of length O(k^2) that contains no rainbow k-term arithmetic progression, showing that any O(k^2) bound fails.",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source": "",
-      "source_exp_id": "2607.15116v1",
-      "source_path": "http://arxiv.org/abs/2607.15116v1",
-      "status": "available",
-      "thread_id": "",
-      "timestamp": "2026-07-17T23:12:29.709802+00:00",
-      "title": "Conjecture: T_k = O(k^2)"
     },
     {
       "ambition_level": "grand_challenge",
@@ -8091,7 +7847,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\n## What was established\n\n`Tropical/TropicalFOne/FixedPointEuler.lean` proves a precise finite-orbit theorem supporting one robust numerical part of the proposed tropical–F₁ picture:\n\n- Mathlib's tropical semiring on `WithTop ℝ` has underlying addition `min` and multiplication ordinary addition.\n- For finite toric orbit data with orbit dimension `ambientDim - coneDim`, the additive Euler sum is exactly the number of full-dimensional cones (zero-dimensional torus orbits).\n- Given an equivalence between polytope vertices and fixed cones, this Euler sum equals the formal F₁-point count.\n- This count is multiplicative under products.\n- Standard simplices give the projective-space family `χ = n+1`; products give `(m+1)(n+1)`.\n\n## Important scope limitation\n\nThis does **not** prove that the category of tropical schemes is equivalent to a category of F₁-schemes, nor a tensor/base-change correspondence. Those assertions are not a single well-posed theorem until particular definitions and functors are fixed. Several inequivalent frameworks for F₁-geometry and tropical schemes exist, so a rigorous categorical claim must name one framework on each side.\n\nThe broader lattice-point claim also requires correction: lattice-point count generally does not equal toric degree. For `[0,d]`, these are `d+1` and `d`. The standard valid statements involve normalized volume/degree and Ehrhart polynomials/section counts.\n\n## Next formalization milestones\n\n1. **Full fan data.** Replace the compressed finite orbit model by rational polyhedral fans, define cones, faces, completeness, and maximal cones, and prove the orbit-dimension formula from fan geometry.\n2. **Euler characteristic proper.** Connect `ToricOrbitData.euler` to Mathlib's topological compactly supported Euler characteristic (or build the required constructible-additivity theory) and prove `χ_c((ℂˣ)^d)=0` for `d>0`.\n3. **Polytope–fan duality.** Formalize normal fans and prove that vertices of a full-dimensional lattice polytope correspond to maximal cones of its normal fan.\n4. **Toric realization.** Construct affine monoid algebras `ℤ[M]`, glue them over fan faces, and identify the resulting scheme with the toric variety attached to the fan.\n5. **Choose an F₁ framework.** A tractable route is Deitmar monoid schemes. Define base extension via monoid algebras and prove that base extension of the monoid scheme attached to a fan yields its toric scheme over `ℤ`.\n6. **Correct enumerative bridge.** Formalize the equality between degree and normalized polytope volume, and the equality between lattice-point counts in dilates and dimensions of spaces of sections (Ehrhart/Hilbert correspondence).\n7. **Categorical comparison.** Only after objects, morphisms, and base extension are fixed should one formulate a functor between a restricted tropical category and fan/monoid schemes. Expect an equivalence only for a carefully delimited toric or idempotent subcategory, not all tropical and all F₁-schemes.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Geometry",
         "Tropical"
@@ -9403,7 +9159,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions: Tropical Cryptocurrency\n\n## 1. Exact recession dimension of generic fibers\n\n**Conjecture.** For a generic family of `r` min-plus keys on `k` coordinates with `r < k`, every nonempty digest fiber has a polyhedral cell whose recession cone has dimension exactly `k-r`, and this lower bound is sharp on a dense open set of keys and messages.\n\nThe key insight is that each output component can constrain one independently active coordinate, while all remaining coordinate directions can escape without changing any minimum. **Why now?** The universal collision-ray theorem establishes the first nonzero recession direction for every fiber; the next test is whether the entire expected `k-r`-dimensional cone can be constructed and whether genericity makes the bound exact.\n\n## 2. Hall-type criterion for multidirectional collision cones\n\n**Conjecture.** Let each tropical hash component have a set of active minimizing coordinates at a message. The fiber contains a coordinate cone of dimension at least `d` if and only if the union of these active sets admits a transversal whose complement has cardinality at least `d`.\n\nThe key insight is that collision directions are governed not merely by the number of outputs, but by the combinatorics of which coordinates can certify their minima. **Why now?** Selecting one minimizer per component proved one escaping direction; replacing this selection by a system-of-distinct-representatives analysis should expose the full local fiber geometry.\n\n## 3. Sharp bounded-alphabet collision threshold\n\n**Conjecture.** For messages in `{0,1,…,B}^k` and integer keys, every `r`-component min-plus digest with `r < k` has a collision whenever `B` exceeds an explicit key-spread parameter, and this dependence on the spread is asymptotically optimal.\n\nThe key insight is that the real collision ray survives in a bounded alphabet exactly until it reaches the boundary, so security is controlled by slack at unused coordinates rather than by tropical nonlinearity. **Why now?** The unrestricted theorem identifies the unique obstruction introduced by bounded messages: an unused coordinate may have no legal positive increment.\n\n## 4. Complexity transition for nonce-restricted tropical mining\n\n**Conjecture.** Tropical preimage search is polynomial-time for nonce families described by difference constraints, but becomes NP-complete when the nonce language permits arbitrary binary linear constraints, even for a fixed number of digest components.\n\nThe key insight is that each tropical output condition is a union of linear regions indexed by active coordinates; tractability depends on whether the nonce language preserves shortest-path structure or can encode disjunctive choices. **Why now?** Unrestricted inversion and collision construction are explicit, so any computational hardness must arise from the geometry of the admissible nonce family rather than from the min-plus hash itself.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Tropical",
         "Pythagorean"
@@ -13787,7 +13543,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Determinant values on lattices' and formalize its key results. Abstract: We study the distribution of determinant values on lattices in $\\operatorname{M}_d(\\mathbb R)$ for $d\\ge 2$. Let $Λ<\\operatorname{M}_d(\\mathbb R)$ be a lattice whose elements all have algebraic entries. We prove that if $\\det (Λ)$ is not contained in a scalar multiple of $\\mathbb Z$, then for every $a<b$, $$ \\#\\{v\\inΛ:\\|v\\| <T,\\ a<\\operatorname{det} v<b,\\ \\operatorname{det} v\\ne0\\} \\sim \\frac{C_d}{\\operatorname{covol}(Λ)} (b-a)T^{d(d-1)} $$ as $T\\to \\infty$, where $\\|\\cdot\\|$ is the Frobenius norm and $C_d>0$ depends only on $d$. For such a lattice, under an isotropic noncoincidence hypothesis, automatic for $d=2,3$ and satisfied for all diagonal lattices when $d\\ge 4$, we also obtain an asymptotic formula for the determinant-zero lattice points. The same conclusions hold for the broader class of Diophantine lattices, under the corresponding hypotheses. For $d=2$, our result recovers the Eskin-Margulis-Mozes theorem on the quantitative Oppenheim problem for quadratic forms of signature",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Algebra",
         "Pythagorean",
@@ -17494,7 +17250,7 @@
       "depth_estimate": 3,
       "description": "Formalize tropical curves as metric graphs. Prove the tropical Riemann-Roch theorem via chip-firing: r(D) - r(K-D) = deg(D) - g + 1. Construct explicit divisor classes on complete graphs and prove Baker-Norine's theorem.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Tropical",
         "Algebra",
@@ -17536,7 +17292,7 @@
       "depth_estimate": 3,
       "description": "Formalize tropical convex sets and tropical polytopes. Prove the tropical analogue of the Minkowski-Weyl theorem. Show that tropical linear programming is solvable in polynomial time. Connect to mean payoff games.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Tropical",
         "Computation",
@@ -17978,129 +17734,6 @@
       "thread_id": "th_a7f3b0fe",
       "timestamp": "2026-07-25T14:09:47.358166+00:00",
       "title": "The accompanying Lean files isolate three rigorous components related to *The"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [],
-      "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "Investigate the ArXiv paper 'Adjacency-degree algebras and spectral determination of graphs' and formalize its key results. Abstract: McKay proved that the spectra of all polynomial functions of the adjacency matrix $A$ and the diagonal degree matrix $D$ determine a tree. We prove a principal version of this theorem. Let $\\mathcal A(G)=\\langle I,A_G,D_G\\rangle$ and let $M_G=\\mathcal A(G)\\mathbf1$ be the cyclic module generated by the all-ones vector. For connected graphs the ideal $\\mathcal A(G)J\\mathcal A(G)$, where $J=\\mathbf1\\mathbf1^T$, acts on $M_G$ as the full endomorphism algebra. We show that every forest satisfies $M_G=U_G$, the automorphism-orbit module, and that the induced algebra on the orbit quotient of a tree is a full matrix algebra. It follows that the scalar moments $\\mathbf1^Tw(A_T,D_T)\\mathbf1$ determine every tree. For general graphs these moments are degree-decorated caterpillar homomorphism counts. The resulting moment-rigidity class lies inside the amenable, compact, refinable hierarchy of color refinement, and its first small-order failures are ten-vertex integral switchings invisible to $M_G",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Algebra",
-        "Physics"
-      ],
-      "github_issue": 0,
-      "id": "fd_0735",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "Bypassed",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.8,
-      "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source": "",
-      "source_exp_id": "2607.21494v1",
-      "source_path": "http://arxiv.org/abs/2607.21494v1",
-      "status": "available",
-      "thread_id": "",
-      "timestamp": "2026-07-25T18:17:40.769572+00:00",
-      "title": "ArXiv paper: Adjacency-degree algebras and spectral determination of graphs"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [],
-      "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "Investigate the ArXiv paper 'The Frankl--Tokushige product conjectures for $r$-cross-intersecting families' and formalize its key results. Abstract: We settle the uniform and biased product conjectures of Frankl and Tokushige for $r$-cross-intersecting families. Let $r\\geq2$, let $0\\leq k_i\\leq(r-1)n/r$, and let $\\mathcal{F}_i\\subseteq\\binom{[n]}{k_i}$ be $r$-cross-intersecting. We prove the sharp inequality $$\\prod_{i=1}^r\\frac{|\\mathcal{F}_i|}{\\binom{n}{k_i}}\\leq \\prod_{i=1}^r\\frac{k_i}{n},$$ with equality attained by the corresponding levels of a common $1$-star. As a consequence, we obtain the analogous $p_i$-biased measure theorem for $0\\leq p_i\\leq(r-1)/r$, $$ \\prod_{i=1}^rμ_{p_i}(\\mathcal{F}_i)\\leq \\prod_{i=1}^r p_i.$$The main difficulty is that unequal parameters do not determine a single common target level; instead, the target levels $\\ell_1,\\ldots,\\ell_r$ must satisfy $\\sum_{i=1}^r \\ell_i=(r-1)n$. We overcome this asymmetry in three steps. An ordered-partition coupling gives a sharp additive inequality for every such choice of target levels. A star-calibrated upper-shadow inequality relates the density of a family on its",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Algebra",
-        "Pythagorean"
-      ],
-      "github_issue": 0,
-      "id": "fd_0736",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "Bypassed",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.8,
-      "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source": "",
-      "source_exp_id": "2607.21589v1",
-      "source_path": "http://arxiv.org/abs/2607.21589v1",
-      "status": "available",
-      "thread_id": "",
-      "timestamp": "2026-07-25T18:17:43.826009+00:00",
-      "title": "ArXiv paper: The Frankl--Tokushige product conjectures for $r$-cross-intersecting families"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "# Future Directions\n\n## 1. Cycle-exchange theorem for symmetric tropical permanents\n\nFor every finite symmetric max-plus matrix, principal tropical permanents satisfy the two-set exchange inequality used to derive coefficient concavity, with the intermediate sets obtained by alternating-cycle surgery on optimal permutations.\n\nThe key insight is that symmetry reverses every directed optimal cycle without changing its weight, creating the parity needed to splice two principal cycle covers.\n\nWhy now? The coefficient theory has isolated this exchange statement as the only matrix-specific input needed for all adjacent and all-gap inequalities, so it is a sharply testable combinatorial target.\n\n## 2. Realization of integral concave coefficient vectors\n\nEvery integral discretely concave vector with normalized zeroth coefficient is the leading coefficient vector of the tropical characteristic polynomial of a symmetric matrix after addition of an affine function of the degree.\n\nThe key insight is that affine normalization preserves concavity, while diagonal and paired off-diagonal blocks may encode successive slope drops independently.\n\nWhy now? Concavity and affine invariance give necessary conditions with an explicit obstruction; determining whether they are also sufficient would turn the inequalities into a complete recognition theorem.\n\n## 3. Valuated delta-matroid structure\n\nThe principal-permanent weight function of every symmetric tropical matrix is a valuated even delta-matroid after adjoining one parity-correcting element when necessary.\n\nThe key insight is that principal cycle covers vary in cardinality by symmetric exchanges rather than fixed-rank matroid exchanges, placing them naturally in delta-matroid geometry.\n\nWhy now? The proved two-layer exchange framework already has the shape of a valuated exchange axiom, but its variable-cardinality geometry remains unexplained.\n\n## 4. Newton-polygon spectral rigidity\n\nIf every interior coefficient inequality is strict, then the tropical characteristic polynomial has one distinct breakpoint for every adjacent coefficient pair, and these breakpoints vary monotonically and Lipschitz-continuously under entrywise perturbations of the symmetric matrix.\n\nThe key insight is that strict decrease of consecutive coefficient slopes forbids merged Newton-polygon segments, while each principal permanent is a maximum of finitely many linear forms.\n\nWhy now? Global slope ordering has been reduced to local concavity, making strictness and perturbation stability the next falsifiable spectral consequences.\n\n## 5. Boundary classification without symmetry\n\nFor nonsymmetric matrices of order at most four, failure of coefficient concavity is equivalent to the presence of a directed cycle-cover obstruction that cannot be paired with its reversal.\n\nThe key insight is that the symmetric proof mechanism fails at a precise combinatorial boundary: reversal preserves the vertex set but not the weight.\n\nWhy now? The midpoint-spike obstruction demonstrates that unrestricted coefficient sequences are impossible under exchange, while small-order directed cycle covers permit an exhaustive structural classification of how exchange can fail.\n",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Algebra",
-        "Geometry"
-      ],
-      "github_issue": 0,
-      "id": "fd_0737",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.75,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source": "",
-      "source_exp_id": "7b875dce",
-      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/7b875dce",
-      "status": "available",
-      "thread_id": "th_419fc6ff",
-      "timestamp": "2026-07-25T19:42:22.529183+00:00",
-      "title": "For every finite symmetric max-plus matrix, principal tropical permanents satisf"
     },
     {
       "ambition_level": "extension",
@@ -22099,7 +21732,7 @@
       "depth_estimate": 3,
       "description": "Prove the tropical Riemann-Roch theorem: for a tropical curve of genus g and a divisor D of degree d, the tropical rank r(D) satisfies r(D) - r(K-D) = d - g + 1. Formalize chip-firing and Baker-Norine theory.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Tropical",
         "Algebra",
@@ -22141,7 +21774,7 @@
       "depth_estimate": 3,
       "description": "Prove that a general tropical curve of genus g has a divisor of degree d and rank r iff the Brill-Noether number ρ = g - (r+1)(g-d+r) ≥ 0. Formalize the connection to classical algebraic geometry.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Tropical",
         "Geometry",
@@ -22183,7 +21816,7 @@
       "depth_estimate": 3,
       "description": "Extend the tropical Satake isomorphism from GL_2 to GL_n. Prove that it defines a bijection between min-plus Hecke operators and W-invariant tropical polynomials, connecting representation theory to combinatorics.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Tropical",
         "Algebra",
@@ -22225,7 +21858,7 @@
       "depth_estimate": 3,
       "description": "Prove that the tropicalization functor preserves intersection numbers. Formalize tropical varieties as polyhedral complexes and establish the tropical Bézout theorem with explicit bounds.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Tropical",
         "Geometry"
@@ -22266,7 +21899,7 @@
       "depth_estimate": 3,
       "description": "Prove a tropical analogue of Helly's theorem: characterize when tropical convex sets have non-empty intersection. Formalize tropical convex hulls and their connection to optimization.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Tropical",
         "Geometry",
@@ -22552,7 +22185,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "a31e0b39",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -22580,7 +22213,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "",
       "title": "Game of Life Universality"
@@ -23060,7 +22693,7 @@
       "depth_estimate": 3,
       "description": "Model EML network training in the tropical limit (large weights) as a gradient flow on the tropical projective torus. Conjecture: In the tropical limit, the EML training dynamics converge to a piecewise-linear gradient flow whose fixed points correspond to tropical rational functions that minimize the tropical loss. Test: prove convergence for a single EML neuron trained on 3 data points in the tropical limit. Impact: bridges neural network optimization and tropical geometry.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "EML",
         "Tropical",
@@ -23354,7 +22987,7 @@
       "depth_estimate": 3,
       "description": "Tropical geometry replaces + with max and * with +. Stereographic projection maps spheres to planes. What is the tropical stereographic projection? Define it as: map a tropical point (x1 + ... + xn) on the tropical projective space to a tropical hyperplane via an analogous pole construction. Conjecture: The tropical stereographic projection is a tropical rational function of degree 2 (a tropical Mobius transformation). Test: construct it explicitly for TP^1 -> TR^1 and prove it is a tropical homeomorphism. Impact: connects tropical geometry and conformal geometry.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Geometry",
         "Tropical",
@@ -24607,11 +24240,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "d94c6678",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -24626,7 +24259,7 @@
       ],
       "github_issue": 0,
       "id": "seed_108",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-25T19:42:39.683641+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -24641,7 +24274,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "",
       "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
@@ -25214,7 +24847,7 @@
       "depth_estimate": 3,
       "description": "Bitcoin mining requires finding a nonce n such that SHA256(block_header || n) < target. What if we replaced SHA256 with a tropical hash? Define tropical SHA as: TSHA(m) = min over all i of (m_i + h_i) where m = (m_1,...,m_k) is the message, h = (h_1,...,h_k) is the tropical hash key, and all operations are in the min-plus semiring (a tropical plus b = min(a,b), a tropical times b = a + b). Conjecture: TSHA is a one-way function in the tropical sense: computing TSHA(m) given m and h is O(k) (trivial), but finding m given TSHA(m) and h is NP-hard (it reduces to a tropical shortest path problem). More precisely, the tropical preimage problem — given y and h, find m such that min_i(m_i + h_i) = y — requires checking O(e^{k}) tropical paths in the worst case. But there's a twist: tropical hash collisions are COMMON because min(a,b) = min(b,a). To fix this, define TSHA2(m) = (min_i(m_i + h_i), min_i(m_i + h'_i)) where h and h' are two independent tropical keys. Conjecture: TSHA2 is collision-resistant with probability 1 - O(1/k). Test: implement TSHA and TSHA2, measure collision resistance, and compare mining difficulty to SHA256 for block sizes k = 32, 64, 128. Impact: a cryptocurrency where mining is solving tropical optimization problems instead of brute-force hash searches — mining IS mathematics.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Novelty",
         "Tropical",
@@ -25727,7 +25360,7 @@
       "depth_estimate": 3,
       "description": "The field with one element F_1 is a hypothetical object that would explain why the Weil conjectures have the form they do — as if there were a field with q^0 = 1 element. Tropical geometry replaces addition with min and multiplication with addition. What if these two ideas are the SAME? Conjecture: The tropical semiring (R union {infinity}, min, +) IS the field with one element, in the following precise sense: the category of tropical schemes is equivalent to the category of F_1-schemes. More concretely, a tropical variety over F_1 is a set with a min-plus structure, and its base change to Z (formally, tensor with Z) is a toric variety. The key correspondence: F_1-points of a tropical variety are the vertices of its Newton polytope, and the 'cardinality' of the tropical variety (as an F_1-object) is the number of lattice points in the polytope, which equals the degree of the toric variety after base change. Test: for each toric variety corresponding to a polytope P, compute the number of F_1-points (vertices of P) and verify that the Euler characteristic of the toric variety equals |vertices(P)| = #F_1-points. Prove the tensor product correspondence: tropical scheme X over F_1 has X tensor_Z Z = the corresponding toric variety. Impact: F_1 and tropical geometry are two faces of the same coin. The field with one element is tropical, and tropical geometry is the geometry of F_1.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Novelty",
         "Tropical",
@@ -28222,7 +27855,7 @@
       "depth_estimate": 3,
       "description": "Tropical arithmetic (min-plus algebra) replaces + with min and * with +. A tropical matrix A over Z union {infinity} acts on vectors by tropical matrix multiplication: (A tropimes v)_i = min_j (A_{ij} + v_j). Tropical matrices have eigenvalues in the max-plus sense: lambda is a tropical eigenvalue if A tropimes v = lambda + v for some v. Conjecture: tropical matrix multiplication is a one-way function suitable for cryptography. Specifically, the 'tropical discrete logarithm problem' (TDLP) is: given a tropical matrix A and B = A^{otimes k} (tropical matrix power), find k. The tropical matrix power A^{otimes k} is computed in O(n^3 * log(k)) time (by repeated squaring), but recovering k from (A, A^{otimes k}) is hard because the tropical eigenvalues satisfy lambda(A^{otimes k}) = k * lambda(A) (tropical eigenvalues are additive under power), so k = lambda(A^{otimes k}) / lambda(A). But this only works if lambda(A) != 0 (in the tropical sense, lambda(A) != infinity). Conjecture: the tropical Diffie-Hellman key exchange is secure: Alice sends A^{otimes a}, Bob sends A^{otimes b}, and the shared key is A^{otimes ab}. Breaking this requires solving the TDLP, which is believed to be hard for random tropical matrices of size n >= 10. Test: implement the tropical DH key exchange and measure the key generation time vs matrix size. Attempt to break it with known attacks (tropical eigenvalue computation, shortest path algorithms). Impact: tropical arithmetic provides a new foundation for post-quantum cryptography.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Novelty",
         "Cryptography",
@@ -30116,7 +29749,7 @@
       "depth_estimate": 3,
       "description": "Characterize solutions to x⊕y = z in the tropical semiring. Formalize tropical varieties and prove a Kapranov-type theorem for tropical Fermat curves.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Tropical",
         "Algebra"
@@ -30198,7 +29831,7 @@
       "depth_estimate": 3,
       "description": "Develop a large deviation principle for max-plus probability measures. Prove that max-plus random walks satisfy an LDP with rate function given by the Legendre-Fenchel transform.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Tropical",
         "Probability"
@@ -33232,7 +32865,7 @@
       "depth_estimate": 3,
       "description": "Prove that the tropical amoeba of a Laurent polynomial is the negative logarithm of its zero set. Show that the Ronkin function is convex and piecewise-linear on the amoeba complement. Connect tropical amoebas to tropical geometry via the Maslov dequantization.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Tropical",
         "Geometry"
@@ -33314,7 +32947,7 @@
       "depth_estimate": 3,
       "description": "Prove that tropical curve counts equal classical Gromov-Witten invariants for toric surfaces. Formalize the correspondence theorem: each tropical curve lifts to a unique complex curve in the toric surface. Compute the tropical GW invariants for P^2.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Tropical",
         "Algebra"
@@ -33355,7 +32988,7 @@
       "depth_estimate": 3,
       "description": "Develop a tropical scheme theory where ideals are replaced by tropical ideals (subsemimodules of the tropical polynomial semiring closed under tropical linear combinations). Prove a tropical Buchberger algorithm exists and characterize tropical Groebner bases.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Tropical",
         "Computation"
@@ -33396,7 +33029,7 @@
       "depth_estimate": 3,
       "description": "Prove that the Bergman fan of a matroid M equals the tropical linear space of the matroid's circuit ideal. Formalize the connection between matroid connectivity and the topology of the Bergman fan. Show that nested matroids give tropical linear subspaces.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Tropical",
         "Computation"
@@ -33437,7 +33070,7 @@
       "depth_estimate": 3,
       "description": "Construct a Diffie-Hellman key exchange over the tropical semiring (min-plus algebra). Prove that the tropical matrix product problem is NP-hard for matrices over the min-plus semiring. Analyze security against known tropical cryptanalysis techniques.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Tropical",
         "Cryptography"
@@ -34137,7 +33770,7 @@
       "depth_estimate": 3,
       "description": "Model EML network training in the tropical limit (large weights) as piecewise-linear optimization. Prove that gradient descent on tropical EML functions converges to a tropical rational function that minimizes the tropical loss. Derive convergence rates and compare to ReLU networks.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "EML",
         "Tropical",
@@ -34794,7 +34427,7 @@
       "depth_estimate": 3,
       "description": "Prove that the tropicalization of a variety V over a non-Archimedean field is the limit of V as the valuation goes to infinity. Bridge: the tropical fundamental theorem states that the tropicalization of V equals the corner locus of the tropical polynomial. Show that tropical intersection numbers equal classical intersection numbers (tropical Bezout).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Bridges",
         "Tropical"
@@ -35163,7 +34796,7 @@
       "depth_estimate": 3,
       "description": "Formalize the tropical semiring (R ∪ {-∞}, max, +). Prove that tropical matrix multiplication is associative and that the tropical determinant equals the weight of the maximum-weight permutation. Show that tropical eigenvalues are roots of the characteristic polynomial in the tropical sense. Prove the tropical Perron-Frobenius theorem.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Tropical",
         "Algebra"
@@ -35204,7 +34837,7 @@
       "depth_estimate": 3,
       "description": "Prove tropical versions of classical convexity theorems: tropical Helly (if every n+1 sets in a tropical Helly family intersect, then all intersect), tropical Caratheodory (every point in the tropical convex hull of S is in the tropical convex hull of at most n+1 points from S), and tropical Radon (every set of n+2 points can be partitioned into two sets with intersecting tropical convex hulls).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Tropical",
         "Geometry"
@@ -35245,7 +34878,7 @@
       "depth_estimate": 3,
       "description": "Formalize tropical differential equations as constraints on the valuation of power series. Prove the tropical fundamental theorem of differential algebra: the tropicalization of a differential ideal equals the tropical differential ideal of the tropicalization. Show that tropical solutions provide lower bounds on the growth of classical solutions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Tropical",
         "Computation"
@@ -35286,7 +34919,7 @@
       "depth_estimate": 3,
       "description": "Prove that the tropical moduli space of genus-g curves M_g^trop is a metric graph with vertices corresponding to combinatorial types. Show that M_g^trop is the Berkovich skeleton of the classical M_g. Prove that the tropical Torelli map factors through the tropical Jacobian and that its fibers are finite.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Tropical",
         "Geometry"
@@ -35327,7 +34960,7 @@
       "depth_estimate": 3,
       "description": "Formalize tropical linear programming: maximize c^T ⊗ x subject to A ⊗ x ≤ b in the tropical semiring. Prove that the tropical simplex method finds the optimum in strongly polynomial time. Show that the tropical dual equals the classical dual under the Log transformation. Prove complementary slackness in the tropical setting.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Tropical",
         "Computation"
@@ -35368,7 +35001,7 @@
       "depth_estimate": 3,
       "description": "Define tropical schemes as semiring schemes over the tropical semiring. Prove that the tropical scheme associated to a tropical polynomial is the corner locus. Show that the structure sheaf of a tropical scheme satisfies the tropical gluing axiom. Connect to the Grothendieck scheme-theoretic approach to tropical geometry.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Tropical",
         "Algebra"
@@ -36309,7 +35942,7 @@
       "depth_estimate": 3,
       "description": "Arrow's impossibility theorem states no ranked voting system is fair. Reformulate in tropical mathematics: a social welfare function is a tropical linear map f: T^n → T satisfying the tropical analog of Arrow's axioms. Prove: the tropical dictator function f(x_1,...,x_n) = x_1 is the unique tropical social welfare function. Show: this reduces to Arrow's theorem in the classical limit. Conjecture: tropical voting allows non-dictatorial functions that satisfy weaker axioms (tropical IIA + tropical Pareto).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Novelty",
         "Tropical"
@@ -37826,7 +37459,7 @@
       "depth_estimate": 3,
       "description": "Cycle dcd7a4b2 (Q=0.750) proved 0 theorems in Tropical but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION — simulta",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Tropical"
       ],
@@ -42855,6 +42488,154 @@
       "title": "ArXiv paper: Aperiodicity and subword complexity in the binary expansion of powers of three"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Erdős sumset conjecture",
+        "Szemerédi's theorem",
+        "Probabilistic method in combinatorics"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "We conjecture that the constant 3 appearing in the threshold (3+o(1))(log n)/(log(1/δ)) for sumset avoidance in δ-dense subsets of [n] is optimal. Specifically, for any fixed δ ∈ (0,1) and any ε > 0, there should exist arbitrarily large n such that every subset S ⊆ [n] with |S| ≥ δn necessarily contains some sumset A+B where A,B ⊆ ℕ satisfy min{|A|,|B|} ≥ (3-ε)(log n)/(log(1/δ)). This would establish that the random construction used in the paper cannot be improved asymptotically.",
+      "domain_bridges": [
+        "Discrete probability theory",
+        "Extremal set theory",
+        "Asymptotic combinatorics"
+      ],
+      "domain_quality_penalty": 1.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_0212",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem sumset_avoidance_threshold_optimal\n  (δ : ℝ) (hδ : 0 < δ ∧ δ < 1) (ε : ℝ) (hε : 0 < ε ∧ ε < 3) :\n  ∃ (c : ℝ) (hc : 0 < c), ∀ n : ℕ, n ≥ c →\n  ∀ (S : Finset ℕ), S ⊆ Finset.range n →\n  (S.card ≥ δ * n) →\n  ∃ (A B : Finset ℕ), \n    (A ∪ B : Finset ℕ).Nonempty →\n    (A.card ≥ (3 - ε) * (Real.log n / Real.log (1/δ))) →\n    (B.card ≥ (3 - ε) * (Real.log n / Real.log (1/δ))) →\n    ((A + B : Finset ℕ) ⊆ S):\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "The conjecture would likely require a constructive approach or refined probabilistic analysis. One strategy would be to explicitly construct, for each ε > 0, a family of sets S (perhaps deterministic or using altered probability distributions) where every sumset A+B with min{|A|,|B|} ≥ (3-ε)(log n)/(log(1/δ)) must intersect the complement of S. A second approach would use the second moment method or concentration inequalities to show that random sets with density δ cannot avoid all such large sumsets when the threshold drops below 3(log n)/(log(1/δ)).",
+      "prune_reason": "quality_below_threshold",
+      "pruned_at": "2026-07-25T19:42:26.691166+00:00",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.15269v1",
+      "source_path": "http://arxiv.org/abs/2607.15269v1",
+      "status": "pruned",
+      "thread_id": "",
+      "timestamp": "2026-07-17T12:29:49.501452+00:00",
+      "title": "Optimality of the Constant 3 in Dense Sets Without Large Sumsets"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "https://arxiv.org/abs/2109.13305",
+        "https://arxiv.org/abs/2206.10289",
+        "https://arxiv.org/abs/2307.06441"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For every fixed density δ∈(0,1) and every integer t≥2 there is a constant C(t,δ)>0 such that for all sufficiently large n one can find a subset S⊂[n] of size at least δn that contains no t‑fold sumset A₁+⋯+A_t with each |A_i|≥C(t,δ)·(log n)/(log(1/δ))^{1/(t−1)}.  This conjecture generalises the extremal result of Serra‑Szegedy and the recent construction for t=2, and it is compatible with the lower‑bound phenomenon proved by Hernández‑and‑Hetzel.",
+      "domain_bridges": [
+        "Finite combinatorics",
+        "Ramsey theory",
+        "Probabilistic method"
+      ],
+      "domain_quality_penalty": 1.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_0214",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem dense_set_without_large_t_sumsets \\{δ : ℝ\\} (hδ : 0 < δ) (hδ1 : δ < 1) (t : ℕ) (hgt : t ≥  eventos) (n : ℕ) : \\exists (S : Finset ℕ),\\n  S.card ≥ ⌊δ * n⌋ ∧\\n  ∀ (A₁ : Finset ℕ) (A₂ : Finset ℕ) ... (A_t : Finset ℕ),\\n    (∀ i, (Finset.card (A_i) ≥ C * (log ↑n) / (log (1/δ))^(1/(t-1)))) →\\n    ¬ (A₁.sumset A₂ ... A_t ⊆ S)  -- proof to be provided by probabilistic argument",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Use the probabilistic method: select each element of [n] independently with probability δ to form a random set S.  For any fixed t‑tuple of subsets A₁,…,A_t ⊂ ℕ with |A_i| ≥ C·(log n)/(log(1/δ))^{1/(t−1)}, the sumset A₁+⋯+A_t is a set of size at least exp(Ω(log n)) = n^{Ω(1)} in the worst case.  A Chernoff bound shows that the probability that all these sum‑elements lie outside S is at most exp(−Ω(δ·|A₁+⋯+A_t|)).  A union bound over all such t‑tuples (there are at most n^{tC(log n)/(log(1/δ))}) keeps the failure probability bounded away from 1 if C is chosen small enough.  Thus with positive probability S satisfies the desired property, proving existence.  A deterministic construction could be obtained by the method of conditional expectations.",
+      "prune_reason": "quality_below_threshold",
+      "pruned_at": "2026-07-25T19:42:26.691179+00:00",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.15269v1",
+      "source_path": "http://arxiv.org/abs/2607.15269v1",
+      "status": "pruned",
+      "thread_id": "",
+      "timestamp": "2026-07-17T12:35:07.930478+00:00",
+      "title": "Existence of Dense Sets without Large t‑Fold Sumsets"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Kővári–Sós–Turán theorem (KST)",
+        "Bose–Burton theorem",
+        "Erdős–Stone theorem for matroids",
+        "Sidon sets in vector spaces"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For all integers s,t with 2 ≤ s ≤ t and prime power q, any simple rank-n GF(q)-representable matroid with no M(K_{s,t})-restriction satisfies |E(M)| ≤ (c_{q,s,t} + o(1))·q^{(1-1/s)n} for a constant c_{q,s,t}, and this bound is tight. In particular, for binary matroids (q=2) with no M(K_{2,t})-restriction, the maximum number of elements is exactly Θ_t(2^{n/2}).",
+      "domain_bridges": [
+        "extremal graph theory ↔ extremal matroid theory",
+        "forbidden substructure problems in graphs ↔ forbidden restrictions in matroids",
+        "asymptotic extremal functions with geometric constraints"
+      ],
+      "domain_quality_penalty": 1.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_0221",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem kst_conjecture {q s t : ℕ} [prime_power q] [2 ≤ s] [s ≤ t] (n : ℕ) :\n  let c_qst : ℝ := 1 / (s - 1 : ℝ) * (q - 1 : ℝ) / (q : ℝ) ^ (1/s : ℝ) * (q : ℝ) ^ (n/s : ℝ)\n  ∀ M : GF_representable_matroid q,\n    simple M → rank M = n → ¬(K_{s,t} ↭ M) →\n    |E M| ≤ (c_qst + 0) * q ^ ((1 - 1/s : ℝ) * n : ℝ)",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "The paper establishes the O-q,s,t bound. The conjecture adds: (1) matching lower bounds via explicit constructions (generalizing binary Sidon sets to arbitrary GF(q)), (2) precise asymptotic equivalence rather than big-O notation. Approach combines Fourier-analytic counting over finite fields, spectral methods on representable matroids, and extremal combinatorics of partial geometries.",
+      "prune_reason": "quality_below_threshold",
+      "pruned_at": "2026-07-25T19:42:26.691185+00:00",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.15226v1",
+      "source_path": "http://arxiv.org/abs/2607.15226v1",
+      "status": "pruned",
+      "thread_id": "",
+      "timestamp": "2026-07-17T13:04:27.023831+00:00",
+      "title": "The Kővari-Sós-Turán Conjecture for GF(q)-representable Matroids: Sharp Asymptotic Bound"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -43058,6 +42839,102 @@
       "thread_id": "th_8ffcfe37",
       "timestamp": "2026-07-17T18:03:41.102617+00:00",
       "title": "The formal result in `AffineDuality.lean` isolates a precise bridge between fini"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Baker's Brill-Noether theory on graphs (2008)",
+        "Cheeger inequality in spectral graph theory",
+        "covering radius in periodic sets"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For sufficiently large connected k-regular graphs, if the Cheeger constant of a periodic set with respect to the energy quadratic form exceeds a logarithmic threshold, then the asymptotic Brill-Noether conjecture holds at the half-canonical degree up to a constant factor.",
+      "domain_bridges": [
+        "spectral expansion properties to divisor class existence",
+        "geometry of numbers techniques to graph combinatorics"
+      ],
+      "domain_quality_penalty": 1.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_0241",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "Theorem: For all sufficiently large n, if G is a k-regular graph and there exists a periodic set S ⊆ G with Cheeger(S, Q) ≥ c log n (where Q is the energy quadratic form), then G satisfies the Brill-Noether existence conjecture at the half-canonical degree up to a constant factor.",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Demonstrate that the Cheeger bound enforces sufficient expansion in the energy form, enabling the construction of required divisors via covering radius arguments and periodicity.",
+      "prune_reason": "quality_below_threshold",
+      "pruned_at": "2026-07-25T19:42:26.691188+00:00",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.15213v1",
+      "source_path": "http://arxiv.org/abs/2607.15213v1",
+      "status": "pruned",
+      "thread_id": "",
+      "timestamp": "2026-07-17T23:12:05.059062+00:00",
+      "title": "Cheeger Inequality Implies Asymptotic Brill-Noether Existence at Half-Canonical Degree"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "JLMNR",
+        "CFS"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The minimum integer t such that every equinumerous t-coloring of [t·n] contains a rainbow k-term arithmetic progression is bounded above by a quadratic function of k; i.e., there exists a constant C such that for all sufficiently large k, T_k ≤ C·k^2.",
+      "domain_bridges": [
+        "Ramsey Theory",
+        "Additive Combinatorics",
+        "Finite Coloring"
+      ],
+      "domain_quality_penalty": 1.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_0242",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem conjecture_Tk_O_k2 : ∀ (k : ℕ), 3 ≤ k → ∃ (C : ℕ), ∀ (t : ℕ), t ≤ C * k ^ 2 → ∃ (n : ℕ) (col : Fin t → ℕ), Equinumerous t col ∧ ¬ HasRainbowAP k col n",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Disprove by constructing, for arbitrarily large k, an equinumerous coloring of an interval of length O(k^2) that contains no rainbow k-term arithmetic progression, showing that any O(k^2) bound fails.",
+      "prune_reason": "quality_below_threshold",
+      "pruned_at": "2026-07-25T19:42:26.691183+00:00",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.15116v1",
+      "source_path": "http://arxiv.org/abs/2607.15116v1",
+      "status": "pruned",
+      "thread_id": "",
+      "timestamp": "2026-07-17T23:12:29.709802+00:00",
+      "title": "Conjecture: T_k = O(k^2)"
     },
     {
       "ambition_level": "extension",
@@ -52165,6 +52042,129 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Investigate the ArXiv paper 'Adjacency-degree algebras and spectral determination of graphs' and formalize its key results. Abstract: McKay proved that the spectra of all polynomial functions of the adjacency matrix $A$ and the diagonal degree matrix $D$ determine a tree. We prove a principal version of this theorem. Let $\\mathcal A(G)=\\langle I,A_G,D_G\\rangle$ and let $M_G=\\mathcal A(G)\\mathbf1$ be the cyclic module generated by the all-ones vector. For connected graphs the ideal $\\mathcal A(G)J\\mathcal A(G)$, where $J=\\mathbf1\\mathbf1^T$, acts on $M_G$ as the full endomorphism algebra. We show that every forest satisfies $M_G=U_G$, the automorphism-orbit module, and that the induced algebra on the orbit quotient of a tree is a full matrix algebra. It follows that the scalar moments $\\mathbf1^Tw(A_T,D_T)\\mathbf1$ determine every tree. For general graphs these moments are degree-decorated caterpillar homomorphism counts. The resulting moment-rigidity class lies inside the amenable, compact, refinable hierarchy of color refinement, and its first small-order failures are ten-vertex integral switchings invisible to $M_G",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Physics"
+      ],
+      "github_issue": 0,
+      "id": "fd_0735",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "Bypassed",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+      "prune_reason": "quality_below_threshold",
+      "pruned_at": "2026-07-25T19:42:26.691193+00:00",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.21494v1",
+      "source_path": "http://arxiv.org/abs/2607.21494v1",
+      "status": "pruned",
+      "thread_id": "",
+      "timestamp": "2026-07-25T18:17:40.769572+00:00",
+      "title": "ArXiv paper: Adjacency-degree algebras and spectral determination of graphs"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Investigate the ArXiv paper 'The Frankl--Tokushige product conjectures for $r$-cross-intersecting families' and formalize its key results. Abstract: We settle the uniform and biased product conjectures of Frankl and Tokushige for $r$-cross-intersecting families. Let $r\\geq2$, let $0\\leq k_i\\leq(r-1)n/r$, and let $\\mathcal{F}_i\\subseteq\\binom{[n]}{k_i}$ be $r$-cross-intersecting. We prove the sharp inequality $$\\prod_{i=1}^r\\frac{|\\mathcal{F}_i|}{\\binom{n}{k_i}}\\leq \\prod_{i=1}^r\\frac{k_i}{n},$$ with equality attained by the corresponding levels of a common $1$-star. As a consequence, we obtain the analogous $p_i$-biased measure theorem for $0\\leq p_i\\leq(r-1)/r$, $$ \\prod_{i=1}^rμ_{p_i}(\\mathcal{F}_i)\\leq \\prod_{i=1}^r p_i.$$The main difficulty is that unequal parameters do not determine a single common target level; instead, the target levels $\\ell_1,\\ldots,\\ell_r$ must satisfy $\\sum_{i=1}^r \\ell_i=(r-1)n$. We overcome this asymmetry in three steps. An ordered-partition coupling gives a sharp additive inequality for every such choice of target levels. A star-calibrated upper-shadow inequality relates the density of a family on its",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Pythagorean"
+      ],
+      "github_issue": 0,
+      "id": "fd_0736",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "Bypassed",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+      "prune_reason": "quality_below_threshold",
+      "pruned_at": "2026-07-25T19:42:26.691190+00:00",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.21589v1",
+      "source_path": "http://arxiv.org/abs/2607.21589v1",
+      "status": "pruned",
+      "thread_id": "",
+      "timestamp": "2026-07-25T18:17:43.826009+00:00",
+      "title": "ArXiv paper: The Frankl--Tokushige product conjectures for $r$-cross-intersecting families"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "# Future Directions\n\n## 1. Cycle-exchange theorem for symmetric tropical permanents\n\nFor every finite symmetric max-plus matrix, principal tropical permanents satisfy the two-set exchange inequality used to derive coefficient concavity, with the intermediate sets obtained by alternating-cycle surgery on optimal permutations.\n\nThe key insight is that symmetry reverses every directed optimal cycle without changing its weight, creating the parity needed to splice two principal cycle covers.\n\nWhy now? The coefficient theory has isolated this exchange statement as the only matrix-specific input needed for all adjacent and all-gap inequalities, so it is a sharply testable combinatorial target.\n\n## 2. Realization of integral concave coefficient vectors\n\nEvery integral discretely concave vector with normalized zeroth coefficient is the leading coefficient vector of the tropical characteristic polynomial of a symmetric matrix after addition of an affine function of the degree.\n\nThe key insight is that affine normalization preserves concavity, while diagonal and paired off-diagonal blocks may encode successive slope drops independently.\n\nWhy now? Concavity and affine invariance give necessary conditions with an explicit obstruction; determining whether they are also sufficient would turn the inequalities into a complete recognition theorem.\n\n## 3. Valuated delta-matroid structure\n\nThe principal-permanent weight function of every symmetric tropical matrix is a valuated even delta-matroid after adjoining one parity-correcting element when necessary.\n\nThe key insight is that principal cycle covers vary in cardinality by symmetric exchanges rather than fixed-rank matroid exchanges, placing them naturally in delta-matroid geometry.\n\nWhy now? The proved two-layer exchange framework already has the shape of a valuated exchange axiom, but its variable-cardinality geometry remains unexplained.\n\n## 4. Newton-polygon spectral rigidity\n\nIf every interior coefficient inequality is strict, then the tropical characteristic polynomial has one distinct breakpoint for every adjacent coefficient pair, and these breakpoints vary monotonically and Lipschitz-continuously under entrywise perturbations of the symmetric matrix.\n\nThe key insight is that strict decrease of consecutive coefficient slopes forbids merged Newton-polygon segments, while each principal permanent is a maximum of finitely many linear forms.\n\nWhy now? Global slope ordering has been reduced to local concavity, making strictness and perturbation stability the next falsifiable spectral consequences.\n\n## 5. Boundary classification without symmetry\n\nFor nonsymmetric matrices of order at most four, failure of coefficient concavity is equivalent to the presence of a directed cycle-cover obstruction that cannot be paired with its reversal.\n\nThe key insight is that the symmetric proof mechanism fails at a precise combinatorial boundary: reversal preserves the vertex set but not the weight.\n\nWhy now? The midpoint-spike obstruction demonstrates that unrestricted coefficient sequences are impossible under exchange, while small-order directed cycle covers permit an exhaustive structural classification of how exchange can fail.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.1,
+      "domains": [
+        "Algebra",
+        "Geometry"
+      ],
+      "github_issue": 0,
+      "id": "fd_0737",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "quality_below_threshold",
+      "pruned_at": "2026-07-25T19:42:26.691192+00:00",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "7b875dce",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/7b875dce",
+      "status": "pruned",
+      "thread_id": "th_419fc6ff",
+      "timestamp": "2026-07-25T19:42:22.529183+00:00",
+      "title": "For every finite symmetric max-plus matrix, principal tropical permanents satisf"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
       "consumed_by_exp_id": "",
@@ -53819,6 +53819,7 @@
     "cross_domain_bridge",
     "cross_domain_bridge",
     "abduction_followup",
-    "cross_domain_bridge"
+    "cross_domain_bridge",
+    "famous_subtask"
   ]
 }

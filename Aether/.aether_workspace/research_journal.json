@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "82c8c57a",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions: Coherent All-Stage Objects\n\n## 1. Coordinate-deletion limits over arbitrary coefficient objects\n\nLet `A` be an abelian group and let the `n`th stage be `A^{n+1}`, with bonding map",
-      "quality_score": 0.71,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-20T23:22:31",
-      "title": "Close Proofs: The Mega-Sphere: All Dimensions at Once"
-    },
-    {
       "cycle_id": "fbb9076c",
       "domain": "Logic",
       "key_insight": "# Future Directions: Thermodynamics of Mathematical Proof\n\n## 1. Fiber-entropy law for proof normalization\n\nFor every finite terminating normalization system equipped with a probability law on proof t",
@@ -499,19 +489,19 @@
       "theorem_count": 12,
       "timestamp": "2026-07-25T18:17:21",
       "title": "Gravity as Quantum Error Correction: Spacetime from Codes"
+    },
+    {
+      "cycle_id": "7b875dce",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions\n\n## 1. Cycle-exchange theorem for symmetric tropical permanents\n\nFor every finite symmetric max-plus matrix, principal tropical permanents satisfy the two-set exchange inequality u",
+      "quality_score": 0.71,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-07-25T19:42:26",
+      "title": "ArXiv paper: Properties of the Tropical Characteristic Polynomial of Symmetric Matrices"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "fa73eeee",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions\n\n## 1. Locally uniform joint removal of prime and occupation cutoffs\n\n**Conjecture.** On every compact subset of the half-plane `Re(s) > 1`, finite\nprime occupation products conver",
-      "quality_score": 0.76,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-19T04:29:12",
-      "title": "**Conjecture.** There is a natural joint scaling of the prime cutoff `x`, occupa"
-    },
     {
       "cycle_id": "8201cdaf",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 12,
       "timestamp": "2026-07-25T18:17:21",
       "title": "Gravity as Quantum Error Correction: Spacetime from Codes"
+    },
+    {
+      "cycle_id": "7b875dce",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions\n\n## 1. Cycle-exchange theorem for symmetric tropical permanents\n\nFor every finite symmetric max-plus matrix, principal tropical permanents satisfy the two-set exchange inequality u",
+      "quality_score": 0.71,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-07-25T19:42:26",
+      "title": "ArXiv paper: Properties of the Tropical Characteristic Polynomial of Symmetric Matrices"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "43fa6482",
-      "domain": "Applications",
-      "name": "but",
-      "quality": 0.77
-    },
-    {
-      "cycle_id": "43fa6482",
-      "domain": "Applications",
-      "name": "strengthens",
-      "quality": 0.77
-    },
-    {
-      "cycle_id": "43fa6482",
-      "domain": "Applications",
-      "name": "card_bitRegister",
-      "quality": 0.77
-    },
     {
       "cycle_id": "c612ec41",
       "domain": "Cryptography",
@@ -2803,9 +2785,27 @@
       "domain": "Physics",
       "name": "geodesic_identity_iff_s",
       "quality": 0.77
+    },
+    {
+      "cycle_id": "7b875dce",
+      "domain": "Tropical",
+      "name": "says",
+      "quality": 0.71
+    },
+    {
+      "cycle_id": "7b875dce",
+      "domain": "Tropical",
+      "name": "translate_tropical_sum",
+      "quality": 0.71
+    },
+    {
+      "cycle_id": "7b875dce",
+      "domain": "Tropical",
+      "name": "principal_coefficients_concave",
+      "quality": 0.71
     }
   ],
-  "last_updated": "2026-07-25T18:17:21",
+  "last_updated": "2026-07-25T19:42:26",
   "open_questions": [
     {
       "context": "",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "dcd7a4b2",
-        "quality": 0.75,
-        "theorems": 0,
-        "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
-      },
-      {
         "cycle_id": "0daa61af",
         "quality": 0.72,
         "theorems": 18,
@@ -4009,6 +4003,12 @@
         "quality": 0.68,
         "theorems": 13,
         "title": "Tropical Hodge Theory"
+      },
+      {
+        "cycle_id": "7b875dce",
+        "quality": 0.71,
+        "theorems": 13,
+        "title": "ArXiv paper: Properties of the Tropical Characteristic Polynomial of Symmetric M"
       }
     ]
   }
