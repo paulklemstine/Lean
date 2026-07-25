@@ -1761,7 +1761,7 @@ window.FUTURE_DIRECTIONS = [
       "Probability"
     ],
     "id": "dir_50_47_b33c0bd5",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "batch_50_injection",
@@ -1991,7 +1991,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "id": "seed_253",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "seed",
@@ -6039,17 +6039,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Fermat's Last Theorem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1163ea67",
     "description": "Prove the sharp entropy power inequality for all dimensions with equality conditions. Connect to the Brunn-Minkowski inequality and prove stability versions.",
     "domains": [
       "Bridges",
       "Probability"
     ],
     "id": "seed_250",
+    "phase": "A",
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Entropy Power Inequality: Sharp Version"
   },
@@ -8336,7 +8337,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges"
     ],
     "id": "fd_0137",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.13783v1",
@@ -10315,7 +10316,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry"
     ],
     "id": "fd_0238",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "5102d77c",
