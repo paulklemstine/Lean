@@ -5344,7 +5344,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "905765f9",
     "description": "Domain Shared has declined by 0.164 over recent cycles (recent avg=0.696 vs prior=0.860). Take a completely fresh approach — different proof techniques, new definitions, or a different subfield within this domain. Avoid repeating approaches that have been producing diminishing returns.",
     "domain_bridges": [],
     "domains": [
@@ -5356,7 +5356,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "auto_reset",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-17T13:45:52.051601+00:00",
     "title": "[Reset] Fresh approach in Shared"
   },

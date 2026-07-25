@@ -2292,17 +2292,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Homotopy Groups of Spheres: Low-Dimensional"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "928798aa",
     "description": "Formalize the hydrogen atom Hamiltonian in Lean 4. Prove the spectrum is {-1/n\u00b2 : n \u2208 \u2115+} \u222a [0,\u221e). Construct the spherical harmonics as eigenfunctions of the angular momentum operator. Prove the selection rules for transitions.",
     "domains": [
       "Physics",
       "Analysis"
     ],
     "id": "fd_0680",
+    "phase": "A",
     "priority_score": 0.88,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-24T14:34:16.697822+00:00",
     "title": "Quantum Mechanics: Spectral Theory of Hydrogen"
   },
@@ -4006,16 +4007,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Moonshot: The Mathematics of Dyson's Intelligence Explosion"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "905765f9",
     "description": "Domain Shared has declined by 0.164 over recent cycles (recent avg=0.696 vs prior=0.860). Take a completely fresh approach \u2014 different proof techniques, new definitions, or a different subfield within this domain. Avoid repeating approaches that have been producing diminishing returns.",
     "domains": [
       "Shared"
     ],
     "id": "auto_reset_Shared_98cb9029",
+    "phase": "A",
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "auto_reset",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-17T13:45:52.051601+00:00",
     "title": "[Reset] Fresh approach in Shared"
   },
