@@ -1,261 +1,178 @@
 #!/usr/bin/env python3
+"""Numerical demonstrations for rational exponential--logarithmic expressions.
+
+The calculations illustrate expression evaluation and bounded searches. They do
+not prove algebraicity, transcendence, or conjectural multiplication elimination.
 """
-demo.py — Numerical exploration of EML transcendence and Schanuel's conjecture.
+from __future__ import annotations
 
-Demonstrates the key quantities studied in this research cycle:
-1. The EML function eml(x,y) = exp(x) - log(y)
-2. Algebraic independence of {e, e^e}
-3. The transcendence cascade: e, e^e, e^(e^e), ...
-4. The number exp(exp(1)) + log(2) ≈ 16.045
-"""
+from dataclasses import dataclass
+from decimal import Decimal, getcontext
+from itertools import product
+from math import comb
+from typing import Dict, Iterable, List, Mapping, Sequence, Tuple, Union
 
-import math
+getcontext().prec = 60
 
-def eml(x: float, y: float) -> float:
-    """EML function: eml(x,y) = exp(x) - log(y)"""
-    return math.exp(x) - math.log(y)
 
-def schanuel_tuple(z: list[float]) -> list[float]:
-    """Compute the Schanuel combined tuple (z₁,...,zₙ,e^z₁,...,e^zₙ)."""
-    return z + [math.exp(zi) for zi in z]
+@dataclass(frozen=True)
+class Const:
+    value: Decimal
 
-def exp_tower(n: int) -> float:
-    """Compute the n-th element of the exponential tower: 1, e, e^e, e^(e^e), ..."""
-    result = 1.0
-    for _ in range(n):
-        if result > 700:
-            return float('inf')
-        result = math.exp(result)
+
+@dataclass(frozen=True)
+class Var:
+    pass
+
+
+@dataclass(frozen=True)
+class Exp:
+    child: "Expr"
+
+
+@dataclass(frozen=True)
+class Log:
+    child: "Expr"
+
+
+@dataclass(frozen=True)
+class Add:
+    left: "Expr"
+    right: "Expr"
+
+
+@dataclass(frozen=True)
+class Mul:
+    left: "Expr"
+    right: "Expr"
+
+
+Expr = Union[Const, Var, Exp, Log, Add, Mul]
+BivariatePolynomial = Dict[Tuple[int, int], int]
+
+
+def evaluate(expr: Expr, x: Decimal = Decimal(0)) -> Decimal:
+    """Recursively evaluate an expression tree at x using Decimal arithmetic."""
+    if isinstance(expr, Const):
+        return expr.value
+    if isinstance(expr, Var):
+        return x
+    if isinstance(expr, Exp):
+        return evaluate(expr.child, x).exp()
+    if isinstance(expr, Log):
+        value = evaluate(expr.child, x)
+        if value <= 0:
+            raise ValueError("This numerical demo evaluates log only on positive inputs")
+        return value.ln()
+    if isinstance(expr, Add):
+        return evaluate(expr.left, x) + evaluate(expr.right, x)
+    if isinstance(expr, Mul):
+        return evaluate(expr.left, x) * evaluate(expr.right, x)
+    raise TypeError(f"Unknown expression node: {expr!r}")
+
+
+def node_count(expr: Expr) -> int:
+    """Return the number of nodes in an expression tree."""
+    if isinstance(expr, (Const, Var)):
+        return 1
+    if isinstance(expr, (Exp, Log)):
+        return 1 + node_count(expr.child)
+    if isinstance(expr, (Add, Mul)):
+        return 1 + node_count(expr.left) + node_count(expr.right)
+    raise TypeError(f"Unknown expression node: {expr!r}")
+
+
+def horner(coefficients: Sequence[int], x: Decimal) -> Decimal:
+    """Evaluate c_0 + c_1*x + ... by Horner's rule."""
+    result = Decimal(0)
+    for coefficient in reversed(coefficients):
+        result = result * x + Decimal(coefficient)
     return result
 
-def main():
-    e = math.e
-    
-    print("=" * 70)
-    print("EML NUMBER TRANSCENDENCE — NUMERICAL DEMONSTRATIONS")
-    print("=" * 70)
-    
-    # 1. The key numbers
-    print("\n📊 KEY NUMBERS STUDIED:")
-    print(f"  e = exp(1)         = {e:.15f}")
-    print(f"  e^e = exp(exp(1))  = {e**e:.15f}")
-    print(f"  log(2)             = {math.log(2):.15f}")
-    print(f"  e^e + log(2)       = {e**e + math.log(2):.15f}")
-    print(f"  e^e + e            = {e**e + e:.15f}")
-    
-    # 2. Schanuel's conjecture applied to z = [1, e]
-    print("\n🔬 SCHANUEL'S CONJECTURE FOR z = [1, e]:")
-    z = [1.0, e]
-    st = schanuel_tuple(z)
-    print(f"  z = {z}")
-    print(f"  Combined tuple: {[f'{x:.6f}' for x in st]}")
-    print(f"  Slots: inl(0)={st[0]:.6f}, inl(1)={st[1]:.6f}, "
-          f"inr(0)={st[2]:.6f}, inr(1)={st[3]:.6f}")
-    print(f"  Note: inl(1) = inr(0) = e (both ≈ {e:.6f})")
-    print(f"  → Embedding MUST select {{e, e^e}} = {{{e:.6f}, {e**e:.6f}}}")
-    print(f"  → {e:.6f} and {e**e:.6f} are algebraically independent over ℚ")
-    
-    # 3. The EML function at key points
-    print("\n📐 EML FUNCTION VALUES:")
-    test_points = [
-        (1, 1, "eml(1,1) = e - 0 = e"),
-        (e, 1, "eml(e,1) = e^e"),
-        (1, e, "eml(1,e) = e - 1"),
-        (0, 1, "eml(0,1) = 1"),
-        (e, math.exp(-e), "eml(e, exp(-e)) = e^e + e"),
-    ]
-    for x, y, desc in test_points:
-        val = eml(x, y)
-        print(f"  {desc:40s} ≈ {val:.10f}")
-    
-    # 4. The exponential tower
-    print("\n🗼 EXPONENTIAL TOWER (all transcendental under Schanuel):")
-    for n in range(6):
-        val = exp_tower(n)
-        if val < 1e300:
-            print(f"  exp^{n}(1) = {val:.10f}")
-        else:
-            print(f"  exp^{n}(1) = (too large, > 10^300)")
-    
-    # 5. Algebraic independence test
-    print("\n🧪 ALGEBRAIC INDEPENDENCE ILLUSTRATION:")
-    print("  If e and e^e were algebraically dependent, there would exist")
-    print("  a polynomial P(X,Y) ∈ ℚ[X,Y] with P(e, e^e) = 0.")
-    print()
-    print("  Testing low-degree polynomial relations P(e, e^e):")
-    for (a, b, c, d) in [(1, -1, 0, 0), (0, 1, -1, 0), (1, 0, 0, -1),
-                          (1, 1, -1, 0), (2, -1, 0, 1)]:
-        val = a + b * e + c * e**e + d * e * e**e
-        desc = f"{a} + {b}·e + {c}·e^e + {d}·e·e^e"
-        print(f"  {desc:35s} = {val:+.10f}")
-    print("  → None vanish: consistent with algebraic independence")
-    
-    # 6. Schanuel for z = [1, e, log(2)]
-    print("\n🔬 SCHANUEL FOR z = [1, e, log(2)]:")
-    z3 = [1.0, e, math.log(2)]
-    st3 = schanuel_tuple(z3)
-    print(f"  z = [1, e, log(2)]")
-    print(f"  Combined 6-tuple:")
-    labels = ["1", "e", "log(2)", "exp(1)=e", "exp(e)=e^e", "exp(log(2))=2"]
-    for i, (label, val) in enumerate(zip(labels, st3)):
-        print(f"    slot {i}: {label:20s} = {val:.10f}")
-    print(f"  Distinct values: {{1, e, log(2), e^e, 2}}")
-    print(f"  Must select 3 algebraically independent from 6 slots")
-    print(f"  → Only option: {{e, log(2), e^e}}")
-    print(f"  → e^e + log(2) = {e**e + math.log(2):.10f} is transcendental")
-    
-    print("\n" + "=" * 70)
-    print("ALL RESULTS CONDITIONAL ON SCHANUEL'S CONJECTURE")
-    print("=" * 70)
+
+def bounded_relation_search(
+    value: Decimal, degree: int, coefficient_bound: int, keep: int = 5
+) -> List[Tuple[Decimal, Tuple[int, ...]]]:
+    """Return the smallest residuals among bounded nonzero integer polynomials."""
+    if degree < 0 or coefficient_bound < 1 or keep < 1:
+        raise ValueError("Require degree >= 0, coefficient_bound >= 1, and keep >= 1")
+    candidates: List[Tuple[Decimal, Tuple[int, ...]]] = []
+    choices = range(-coefficient_bound, coefficient_bound + 1)
+    for coefficients in product(choices, repeat=degree + 1):
+        if all(c == 0 for c in coefficients) or coefficients[-1] == 0:
+            continue
+        residual = abs(horner(coefficients, value))
+        candidates.append((residual, coefficients))
+    candidates.sort(key=lambda item: (item[0], item[1]))
+    return candidates[:keep]
+
+
+def substitute_sum(coefficients: Sequence[int]) -> BivariatePolynomial:
+    """Expand p(X+Y) as a map (power of X, power of Y) -> coefficient."""
+    result: BivariatePolynomial = {}
+    for total_degree, coefficient in enumerate(coefficients):
+        for x_degree in range(total_degree + 1):
+            y_degree = total_degree - x_degree
+            term = coefficient * comb(total_degree, x_degree)
+            if term:
+                key = (x_degree, y_degree)
+                result[key] = result.get(key, 0) + term
+    return {key: value for key, value in result.items() if value != 0}
+
+
+def specialize_y_zero(polynomial: Mapping[Tuple[int, int], int]) -> Tuple[int, ...]:
+    """Recover the coefficients of Q(X,0)."""
+    max_degree = max((i for (i, j) in polynomial if j == 0), default=0)
+    return tuple(polynomial.get((i, 0), 0) for i in range(max_degree + 1))
+
+
+def format_polynomial(coefficients: Sequence[int]) -> str:
+    terms = [f"{c:+d}*T^{i}" for i, c in enumerate(coefficients) if c]
+    return " ".join(terms).lstrip("+") or "0"
+
+
+def featured_expression() -> Expr:
+    return Add(Exp(Exp(Const(Decimal(1)))), Log(Const(Decimal(2))))
+
+
+def demonstrate_evaluation() -> None:
+    expr = featured_expression()
+    exp_exp_one = evaluate(Exp(Exp(Const(Decimal(1)))))
+    log_two = evaluate(Log(Const(Decimal(2))))
+    value = evaluate(expr)
+    print("Featured expression: exp(exp(1)) + log(2)")
+    print(f"Tree nodes: {node_count(expr)}")
+    print(f"exp(exp(1)) = {exp_exp_one}")
+    print(f"log(2)       = {log_two}")
+    print(f"sum          = {value}\n")
+
+
+def demonstrate_relation_search() -> None:
+    value = evaluate(featured_expression())
+    print("Small bounded polynomial-relation search")
+    print("degree <= 3, coefficients in [-3, 3]")
+    for residual, coefficients in bounded_relation_search(value, 3, 3, keep=5):
+        print(f"residual={residual:.8E}  p(T)={format_polynomial(coefficients)}")
+    print("This finite search is illustrative and is not a transcendence test.\n")
+
+
+def demonstrate_substitution() -> None:
+    coefficients = (2, -3, 1)  # p(T) = T^2 - 3T + 2
+    expanded = substitute_sum(coefficients)
+    recovered = specialize_y_zero(expanded)
+    print("Substitution witness for injectivity")
+    print(f"p coefficients, low to high: {coefficients}")
+    print(f"nonzero coefficients of p(X+Y): {dict(sorted(expanded.items()))}")
+    print(f"coefficients after setting Y=0: {recovered}")
+    assert recovered == coefficients
+    print("Specialization recovers p exactly.\n")
+
+
+def main() -> None:
+    demonstrate_evaluation()
+    demonstrate_relation_search()
+    demonstrate_substitution()
+
 
 if __name__ == "__main__":
     main()
-
-
-#!/usr/bin/env python3
-"""
-Visualization: The Exponential Transcendence Cascade.
-
-Shows the growth of the iterated exponential tower and
-the Schanuel tuple structure for z = [1, e].
-"""
-
-import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
-import numpy as np
-import math
-
-
-def exp_tower(n: int) -> float:
-    """Compute exp^n(1)."""
-    result = 1.0
-    for _ in range(n):
-        if result > 700:
-            return float('inf')
-        result = math.exp(result)
-    return result
-
-
-def plot_schanuel_tuple():
-    """Visualize the Schanuel tuple for z = [1, e] and the embedding constraints."""
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-    
-    # Left: Schanuel tuple slots
-    ax = axes[0]
-    e = math.e
-    slots = {
-        'inl(0)': 1.0,
-        'inl(1)': e,
-        'inr(0)': e,
-        'inr(1)': e**e,
-    }
-    
-    colors_map = {
-        'inl(0)': '#ff6b6b',  # red - algebraic (excluded)
-        'inl(1)': '#4ecdc4',  # teal - exp(1) = e
-        'inr(0)': '#4ecdc4',  # teal - same value as inl(1)
-        'inr(1)': '#45b7d1',  # blue - exp(exp(1)) = e^e
-    }
-    
-    x_positions = [0, 1, 2, 3]
-    bars = ax.bar(x_positions, list(slots.values()), 
-                  color=[colors_map[k] for k in slots.keys()],
-                  edgecolor='black', linewidth=1.5, width=0.6)
-    
-    ax.set_xticks(x_positions)
-    ax.set_xticklabels(list(slots.keys()), fontsize=11)
-    ax.set_ylabel('Value', fontsize=12)
-    ax.set_title('Schanuel Tuple for z = [1, e]', fontsize=14, fontweight='bold')
-    
-    # Annotate values
-    for i, (k, v) in enumerate(slots.items()):
-        label = '1\n(algebraic)' if k == 'inl(0)' else f'{v:.4f}'
-        ax.annotate(label, (i, v), textcoords="offset points",
-                    xytext=(0, 10), ha='center', fontsize=10)
-    
-    # Cross out inl(0)
-    ax.plot([0], [0.5], 'rx', markersize=20, markeredgewidth=3)
-    
-    # Draw connection between inl(1) and inr(0)
-    ax.annotate('', xy=(2, e + 0.3), xytext=(1, e + 0.3),
-                arrowprops=dict(arrowstyle='<->', color='orange', lw=2))
-    ax.text(1.5, e + 0.6, 'same value!', ha='center', fontsize=10, 
-            color='orange', fontweight='bold')
-    
-    # Legend
-    patches = [
-        mpatches.Patch(color='#ff6b6b', label='Excluded (algebraic)'),
-        mpatches.Patch(color='#4ecdc4', label='Value = e ≈ 2.718'),
-        mpatches.Patch(color='#45b7d1', label='Value = e^e ≈ 15.154'),
-    ]
-    ax.legend(handles=patches, loc='upper left', fontsize=9)
-    
-    # Right: Tower growth (log scale)
-    ax2 = axes[1]
-    tower_values = []
-    tower_labels = []
-    for n in range(1, 5):
-        val = exp_tower(n)
-        if val < 1e300:
-            tower_values.append(val)
-            tower_labels.append(f'exp^{n}(1)')
-    
-    bars2 = ax2.bar(range(len(tower_values)), tower_values,
-                    color=['#4ecdc4', '#45b7d1', '#f7dc6f', '#e74c3c'],
-                    edgecolor='black', linewidth=1.5, width=0.6)
-    
-    ax2.set_xticks(range(len(tower_values)))
-    ax2.set_xticklabels(tower_labels, fontsize=11)
-    ax2.set_ylabel('Value (log scale)', fontsize=12)
-    ax2.set_yscale('log')
-    ax2.set_title('Exponential Tower Growth\n(All transcendental under Schanuel)',
-                   fontsize=14, fontweight='bold')
-    
-    for i, v in enumerate(tower_values):
-        ax2.annotate(f'{v:.2f}', (i, v), textcoords="offset points",
-                     xytext=(0, 10), ha='center', fontsize=10)
-    
-    plt.tight_layout()
-    plt.savefig('transcendence_cascade.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: transcendence_cascade.png")
-
-
-def plot_eml_surface():
-    """Plot the EML function eml(x,y) = exp(x) - log(y)."""
-    fig = plt.figure(figsize=(10, 8))
-    ax = fig.add_subplot(111, projection='3d')
-    
-    x = np.linspace(-2, 3, 100)
-    y = np.linspace(0.1, 5, 100)
-    X, Y = np.meshgrid(x, y)
-    Z = np.exp(X) - np.log(Y)
-    
-    surf = ax.plot_surface(X, Y, Z, cmap='viridis', alpha=0.8,
-                           linewidth=0, antialiased=True)
-    
-    # Mark key transcendental points
-    e = math.e
-    points = [
-        (1, 1, e, 'eml(1,1)=e'),
-        (e, 1, e**e, 'eml(e,1)=e^e'),
-    ]
-    for px, py, pz, label in points:
-        ax.scatter([px], [py], [pz], color='red', s=100, zorder=5)
-        ax.text(px, py, pz + 1, label, fontsize=9, color='red')
-    
-    ax.set_xlabel('x', fontsize=12)
-    ax.set_ylabel('y', fontsize=12)
-    ax.set_zlabel('eml(x,y)', fontsize=12)
-    ax.set_title('EML Function: eml(x,y) = exp(x) - log(y)\nRed dots: transcendental values',
-                 fontsize=13, fontweight='bold')
-    
-    fig.colorbar(surf, shrink=0.5, aspect=5)
-    plt.savefig('eml_surface.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: eml_surface.png")
-
-
-if __name__ == "__main__":
-    plot_schanuel_tuple()
-    plot_eml_surface()
