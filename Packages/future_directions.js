@@ -167,20 +167,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Proves that neural network agents operating in self-referential training loops inevitably replace original memory traces with synthesized hallucinations.",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "scifi_50_13_5e09766d",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "scifi_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:07:57.444627+00:00",
-    "title": "Memory-Overwrite-Manifold: Topologically Inevitable Memory Alteration in Closed Feedback Loops"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Constructs a closed 4D topological boundary that prevents spatial translation of any object contained within, regardless of kinetic energy.",
     "domains": [
       "Geometry"
@@ -192,62 +178,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-23T20:07:57.493087+00:00",
     "title": "SCP-Containment-Topology: Non-Euclidean Geometric Lock for Anomalous Objects"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Proves the exact critical agent density threshold at which individual autonomous agents undergo a phase transition into a unified high-order consciousness.",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "scifi_50_16_f095d009",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "scifi_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:07:57.592753+00:00",
-    "title": "Hive-Mind-Manifold: Topological Phase Transitions in Collective Super-Organism Intelligence"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Proves that a neural agent's identity vector remains invariant under continuous substrate migration (mind uploading).",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "scifi_50_18_42608cb6",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "scifi_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:07:57.689455+00:00",
-    "title": "Synthetic-Soul-Invariant: Topological Conservation Laws of Neural Identity"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Constructs artificial neural architectures capable of directly processing 11-dimensional spatial tensors without dimensional reduction loss.",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "scifi_50_19_ae8889d5",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "scifi_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:07:57.739465+00:00",
-    "title": "Hyper-Awareness: 11-Dimensional Perception Vectors in Synthetic Neural Nets"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Proves that offline memory consolidation during neural 'sleep' cycles corresponds to traversing strange attractors in weight space.",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "scifi_50_20_a29589f0",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "scifi_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:07:57.787730+00:00",
-    "title": "Dream-State-Generative: Chaos Attractors in Sleeping Neural Architectures"
   },
   {
     "consumed_by_exp_id": "",
@@ -1008,76 +938,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-23T20:05:23.277230+00:00",
     "title": "Zero-Knowledge: Soundness and Completeness of zk-SNARK Circuits"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Computes exact maximum region count formulas for depth-L ReLU neural network input space partitioning.",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "dir_50_21_95017769",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "batch_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:05:23.373381+00:00",
-    "title": "Neural-Manifold: Exact Piecewise Linear Partition Bounds for ReLU Networks"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Proves exponential decay rate bounds on the singular values of Softmax self-attention matrices in deep Transformer layers.",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "dir_50_22_f2606f7f",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "batch_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:05:23.422786+00:00",
-    "title": "Transformer-Geometry: Attention Matrix Singular Value Decay Bounds"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Proves global 1-Lipschitz continuity for Eikonal-regularized neural network implicit surface representations.",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "dir_50_23_63dfbbf2",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "batch_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:05:23.471391+00:00",
-    "title": "Neural-Implicit: Lipschitz Bounds on Neural Signed Distance Functions"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Proves exponential convergence of gradient descent optimization on infinite-width neural networks matching NTK dynamic regime.",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "dir_50_24_741e80f2",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "batch_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:05:23.520731+00:00",
-    "title": "Gradient-Flow: Convergence of Overparameterized Networks to Neural Tangent Kernel"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Derives tight uniform generalization error bounds for Vision Transformers via empirical Rademacher complexity.",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "dir_50_25_f3b8e217",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "batch_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:05:23.568298+00:00",
-    "title": "Generalization-Bound: Rademacher Complexity Bounds for Vision Transformers"
   },
   {
     "consumed_by_exp_id": "",
@@ -4882,22 +4742,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "ML Generalization Bounds: Rademacher Complexity of Neural Networks"
-  },
-  {
-    "consumed_by_exp_id": "830d234a",
-    "description": "Formalize the policy gradient theorem: the gradient of the expected return equals E[psi(s,a) * Q^pi(s,a)] where psi is the score function. Prove that policy gradient methods converge to a local optimum under the compatible function approximation theorem. Show that the variance of the gradient estimate is O(1/epsilon) for epsilon-greedy exploration.",
-    "domains": [
-      "MachineLearning",
-      "Computation"
-    ],
-    "id": "seed_378",
-    "phase": "complete",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "ML Reinforcement Learning: Convergence of Policy Gradient Methods"
   },
   {
     "consumed_by_exp_id": "",
@@ -8817,21 +8661,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-25T22:18:10.774110+00:00",
     "title": "The completed formalization establishes an exact finite-support implementation o"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\n- Construct the classical Airy function in Lean as the distinguished decaying solution of `y'' = x y`, and prove the integral and Christoffel\u2013Darboux representations of the Airy kernel.\n- Upgrade `AiryGramApproximation` to quadrature schemes whose kernels converge in Hilbert\u2013Schmidt and trace norm on half-lines.\n- Develop Fredholm determinants of trace-class integral operators and define the Tracy\u2013Widom distribution by `det(I - K_Ai)`.\n- Prove positivity, monotonicity, continuity, and tail estimates for the resulting distribution function.\n- Formalize random Hermitian matrices, ordered eigenvalues, Wigner entry hypotheses, and the `n^(2/3)` soft-edge rescaling.\n- Develop resolvent identities, local semicircle laws, eigenvalue rigidity, and Green-function comparison estimates.\n- Instantiate `edgeCDFConverges_of_sandwich` with comparison ensembles to transfer the Gaussian Tracy\u2013Widom limit to non-Gaussian Wigner ensembles.\n",
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_0731",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "311c4349",
-    "status": "available",
-    "timestamp": "2026-07-25T23:20:29.072128+00:00",
-    "title": "Future directions from cycle 311c4349"
   },
   {
     "consumed_by_exp_id": "",
