@@ -1,88 +1,194 @@
-# Why Neural Networks Learn: The Hidden Kernel That Governs Training
+# When a Neural Network Becomes a Kernel
 
-## A Frozen Mirror Inside Every Neural Network
+## The hidden geometry of wide-network training
 
-Somewhere in the early 2010s, deep learning crossed a threshold. Networks with millions of parameters began to solve problems that had resisted decades of engineering — translating languages, recognizing faces, diagnosing diseases. But here was the paradox: nobody could explain *why* training worked. The mathematics of optimization said that gradient descent should get trapped in terrible local minima, that the loss landscape should be a nightmarish labyrinth. Instead, neural networks sailed through it as if guided by an invisible hand.
+A modern neural network may contain millions or billions of adjustable parameters. During training, all of those numbers move, layer after layer, in response to errors on the data. From close up, the process looks impossibly complicated: a nonlinear function changes because a high-dimensional parameter vector follows a sequence of gradients, and each gradient depends on the current network.
 
-In 2018, three researchers at EPFL — Arthur Jacot, Franck Gabriel, and Clément Hongler — discovered what that invisible hand was. They called it the **Neural Tangent Kernel**, and it revealed that behind the apparent complexity of neural network training, a surprisingly elegant mathematical structure was hiding in plain sight.
+Yet in an important regime, this turbulent picture has a remarkably calm mathematical core. A sufficiently wide network, moved by sufficiently small steps, can behave like a fixed linear machine in prediction space. Its effective engine is the **neural tangent kernel** (NTK): a matrix that records how similarly the network's outputs respond to infinitesimal changes in its parameters.
 
-## The Fingerprint of a Network at Birth
+The idea is not that a neural network is linear in its inputs. It usually is not. The idea is that, near its initial parameters, it can be approximately linear in its *parameters*. If the parameter sensitivities barely change during training, then a single matrix computed from those sensitivities controls the whole trajectory. Training becomes kernel gradient descent, and convergence becomes a question about contraction by a positive semidefinite matrix.
 
-Imagine you've just initialized a neural network. Its parameters are random noise — it knows nothing. But already, at this very moment, the network has encoded a particular way of comparing any two inputs. If you feed it two images, say a photo of a cat and a photo of a dog, the network's random parameters define a kind of "similarity score" between them — not based on what the images look like to a human, but based on how sensitively the network's output changes when you tweak each parameter.
+This article develops that finite-data mechanism from beginning to end. It identifies what is always true, what needs an additional spectral assumption, and how bounded movement makes the fixed-kernel picture quantitatively plausible.
 
-This similarity score is the Neural Tangent Kernel. Mathematically, it's defined as an inner product: take the gradient of the network's output with respect to all parameters for input *x*, do the same for input *y*, and compute the dot product. The result, *K(x, y)*, measures how "aligned" the two inputs are in the network's internal parameter space.
+## From parameters to a geometry on examples
 
-What Jacot and colleagues proved is that this kernel — computed once, at initialization — essentially *controls the entire training process*. For sufficiently wide networks, the kernel barely changes during training. The network learns, but its fingerprint stays frozen.
+Suppose a model has $p$ real parameters and is evaluated on $n$ training examples. At the current parameter value, form an $n\times p$ Jacobian matrix $J$. Its entry $J_{ia}$ measures how the prediction on example $i$ changes when parameter $a$ is nudged.
 
-## The Geometry of Descent
+The row $J_i$ is therefore a feature vector attached to example $i$, but its coordinates are not ordinary input features. They are *sensitivity features*: directions in which the model can change that example's prediction.
 
-To understand why this matters, think about what gradient descent actually does. At each step, the network looks at its current errors on the training data — a vector of residuals — and nudges its parameters to reduce those errors. The key insight is that these residuals evolve according to a simple linear rule:
+The neural tangent kernel is the Gram matrix of these rows:
 
-**At each step, the residual gets multiplied by the matrix (I - ηK).**
+$$
+K_{ik}=\sum_{a=1}^{p}J_{ia}J_{ka}.
+$$
 
-Here, *I* is the identity matrix, *η* is the learning rate, and *K* is the NTK matrix evaluated on all pairs of training points. This is not an approximation — it is an exact algebraic identity for the linearized model, and a near-exact description for wide networks.
+If $K_{ik}$ is large and positive, examples $i$ and $k$ tend to move together under a parameter update. If it is negative, their local responses oppose one another. If it vanishes, their sensitivity vectors are orthogonal.
 
-This means that training a neural network is, in the right limit, equivalent to solving a system of linear equations using an iterative method that dates back to the 19th century. The "deep learning revolution" is, at its core, kernel regression with a particular kernel.
+This definition immediately gives the **Symmetry Theorem**: for every pair of examples,
 
-The formalized proof of this residual iteration formula (see @file[Catalog/MachineLearning/NTKConvergence.lean], theorem `NTKDynamics.residual_eq_pow_mulVec`) establishes this identity rigorously by mathematical induction: after *t* steps of gradient descent, the residual equals *(I - ηK)^t* applied to the initial error vector. No approximations, no hand-waving.
+$$
+K_{ik}=K_{ki}.
+$$
 
-## The Contraction Principle: Why Training Converges
+More importantly, it gives positivity. For any residual vector $r\in\mathbb{R}^n$, define the kernel action by
 
-Once you see training as repeated multiplication by a matrix, convergence becomes a question about that matrix's properties. If every time you multiply by *(I - ηK)*, the residual vector gets shorter — if the matrix is *contractive* — then the errors shrink geometrically toward zero.
+$$
+(Kr)_i=\sum_{k=1}^{n}K_{ik}r_k
+$$
 
-The contraction bound (theorem `NTKDynamics.contraction_bound`) makes this precise: if there exists a constant *c < 1* such that ‖(I - ηK)v‖ ≤ c‖v‖ for every vector *v*, then after *t* steps, the residual norm satisfies:
+and the parameter-space gradient induced by $r$ by
 
-**‖u_t‖ ≤ c^t · ‖u₀‖**
+$$
+g_a=\sum_{i=1}^{n}J_{ia}r_i.
+$$
 
-This is exponential convergence. If *c = 0.9*, then after 100 steps the error is down to about 0.003% of its initial value. If *c = 0.5*, it takes only about 20 steps to reduce the error by a factor of a million.
+Then the **Energy Identity** states
 
-The beauty of this result is its generality. It doesn't depend on the network architecture, the data distribution, or the loss function in any specific way. It depends only on the spectral properties of the kernel matrix — on whether the learning rate is chosen so that the eigenvalues of *(I - ηK)* all lie strictly inside the unit disk.
+$$
+r^{\mathsf T}Kr=\sum_{a=1}^{p}g_a^2=\lVert J^{\mathsf T}r\rVert_2^2.
+$$
 
-## When You Reach the Bottom
+This is simply a rearrangement of finite sums, but it is the structural heart of the theory. The right side is a sum of squares, so it can never be negative. Thus the **Gram Positivity Theorem** says that every neural tangent kernel is positive semidefinite:
 
-What happens when the iteration converges — when the network reaches a fixed point? The fixed point theorem (theorem `NTKDynamics.fixed_point_kernel_null`) gives a clean answer: if *u* is a fixed point of the map *u ↦ u - ηKu*, then *Ku = 0*. The residual must lie in the null space of the kernel matrix.
+$$
+r^{\mathsf T}Kr\ge 0\qquad\text{for every }r\in\mathbb{R}^n.
+$$
 
-For a positive definite kernel (which the NTK is, generically), the null space is trivial: only the zero vector. This means convergence implies *exact interpolation* — the network fits the training data perfectly. This explains the puzzling empirical observation that overparameterized networks routinely achieve zero training loss: the mathematics guarantees it.
+Positivity is automatic; strict positivity is not. If the Jacobian cannot respond to some pattern of errors, then $J^{\mathsf T}r=0$ for a nonzero $r$, and the kernel has a null direction. This distinction will matter for convergence.
 
-## A Kernel Born from Geometry
+## The bridge from gradient descent to kernel motion
 
-Why is the NTK matrix always well-behaved? Because it is a **Gram matrix** — a matrix of inner products. The proof of positive semidefiniteness (theorem `ntkMatrix_posSemidef`) shows that for any vector *v*:
+Why should this Gram matrix govern learning? Consider a residual vector $r$, for example target minus prediction. The associated parameter gradient is $g=J^{\mathsf T}r$. A linearized parameter step changes the prediction on example $i$ by the inner product of $J_i$ with $g$. The **Jacobian–Kernel Correspondence** states exactly that
 
-**v^T K v = Σⱼ (Σᵢ vᵢ · ∂f/∂θⱼ(xᵢ))² ≥ 0**
+$$
+\sum_{a=1}^{p}J_{ia}g_a=(Kr)_i.
+$$
 
-This is a sum of squares — manifestly non-negative. No matter what the network architecture is, no matter what the training data is, the NTK matrix can never have negative eigenvalues. This structural guarantee is what makes the convergence theory robust.
+In matrix notation, the statement is the familiar identity $J(J^{\mathsf T}r)=(JJ^{\mathsf T})r$. It explains the role of the kernel: parameters mediate the update, but after eliminating them, prediction space sees only $K=JJ^{\mathsf T}$.
 
-The symmetry of the kernel (theorem `ntkMatrix_symmetric`) is equally fundamental: *K(x, y) = K(y, x)* for all inputs. This follows from the commutativity of the dot product in parameter space. Together, symmetry and positive semidefiniteness mean that the NTK matrix is always a valid covariance structure — the same kind of mathematical object that governs Gaussian processes.
+Let $y\in\mathbb{R}^n$ be the target vector, $f_t\in\mathbb{R}^n$ the predictions after $t$ steps, and $\eta$ the learning rate. Fixed-kernel training is
 
-## Architecture Doesn't Matter (In the Limit)
+$$
+f_{t+1}=f_t+\eta K(y-f_t).
+$$
 
-Perhaps the most profound consequence is the **universality principle** (theorem `ntk_universality`): two completely different network architectures that happen to produce the same NTK matrix will have identical training dynamics. A convolutional network and a transformer, if their tangent kernels coincide, will learn exactly the same function from the same data.
+Writing $r_t=y-f_t$, subtraction gives the **Residual Recurrence Theorem**:
 
-This means that the NTK is the *sufficient statistic* of the architecture for training purposes. In the infinite-width limit, the details of how you wire up your neurons — skip connections, attention heads, pooling layers — all collapse into a single object: the kernel. Understanding kernels is understanding training.
+$$
+r_{t+1}=(I-\eta K)r_t.
+$$
 
-## The Perturbation Question
+Consequently, the **Trajectory Representation Theorem** gives the complete solution
 
-Real networks don't have infinite width, and their kernels do change during training — just a little. The perturbation analysis (theorem `ntk_single_step_perturbation`) quantifies exactly what happens when the kernel drifts: the difference between dynamics under kernel *K₁* versus kernel *K₂* is:
+$$
+r_t=(I-\eta K)^t r_0,
+$$
 
-**(I - ηK₁)u - (I - ηK₂)u = η(K₂ - K₁)u**
+where $r_0=y-f_0$. No approximation is involved in these two statements once fixed-kernel training has been defined. They expose the entire optimization problem as repeated application of one linear residual operator.
 
-This linear relationship means that small kernel perturbations produce proportionally small deviations. The "lazy training" regime — where the kernel stays approximately constant — is not a fragile knife-edge but a robust basin of attraction.
+## Geometric convergence—and its real hypothesis
 
-## What This Means for the Future of AI
+Define the squared error energy by $\lVert r\rVert_2^2=\sum_i r_i^2$. Suppose there is a number $q\ge 0$ such that every vector contracts in one step:
 
-The NTK theory has reshaped how researchers think about deep learning. It provides a complete mathematical framework for understanding when and why training succeeds, makes precise predictions about generalization, and connects the mysterious world of deep networks to the well-understood theory of kernel methods.
+$$
+\lVert(I-\eta K)v\rVert_2^2\le q\lVert v\rVert_2^2
+\qquad\text{for every }v\in\mathbb{R}^n.
+$$
 
-But it also has limits. The infinite-width regime describes networks that are "lazy learners" — they don't learn new features during training. Real networks, especially modern large language models, clearly do learn features. The frontier of research lies in understanding the transition from the kernel regime (where the NTK governs everything) to the "rich" or "feature learning" regime (where the kernel evolves substantially during training). This transition, governed by the ratio of network width to training time, is where the most interesting behavior lives.
+Then the **Geometric Residual Theorem** states that
 
-The mathematical foundations laid here — residual iteration, contraction bounds, spectral analysis, perturbation theory — provide the rigorous scaffold on which this deeper understanding will be built. Every advance in understanding why neural networks learn begins with the observation that, at their core, they are kernel machines that have forgotten they are kernel machines.
+$$
+\lVert r_t\rVert_2^2\le q^t\lVert r_0\rVert_2^2.
+$$
 
-## A Bridge Between Worlds
+The proof is induction in its purest form. The first step multiplies the energy by at most $q$; applying the same bound repeatedly multiplies it by at most $q^t$. When $0\le q<1$, the training error tends to zero geometrically.
 
-The NTK sits at a remarkable crossroads of mathematics. It connects:
+For an NTK $K=JJ^{\mathsf T}$, this becomes the **NTK Training Theorem**: if the residual operator $I-\eta JJ^{\mathsf T}$ has the uniform squared-norm contraction factor $q$, then
 
-- **Linear algebra** (matrix iteration, spectral theory) to **optimization** (gradient descent convergence)
-- **Kernel methods** (reproducing kernel Hilbert spaces) to **neural networks** (parameterized function approximation)
-- **Random matrix theory** (kernel at random initialization) to **probability** (concentration in high dimensions)
-- **Functional analysis** (operator theory) to **machine learning** (generalization bounds)
+$$
+\lVert y-f_t\rVert_2^2\le q^t\lVert y-f_0\rVert_2^2.
+$$
 
-What started as an empirical observation — "wide networks train easily" — has been transformed into a precise mathematical theory with clean definitions, sharp theorems, and rigorous proofs. The kernel was always there, hidden in the gradients, waiting to be found.
+The wording matters. Positive semidefiniteness alone does not guarantee $q<1$. A zero eigenvalue preserves some residual component forever. An excessively large learning rate can make a positive eigenmode oscillate with increasing magnitude. If the relevant eigenvalues of $K$ lie between $\lambda_{\min}>0$ and $\lambda_{\max}$, then choosing $0<\eta<2/\lambda_{\max}$ yields
+
+$$
+q=\max_{\lambda\in\operatorname{spec}(K)}|1-\eta\lambda|^2<1.
+$$
+
+Thus the geometry of the Jacobian supplies nonnegative eigenvalues, while spectral coverage and step size supply strict convergence.
+
+## Why the kernel can remain nearly frozen
+
+A real neural network does not generally keep the same Jacobian. Its parameters move, so $J$ and $K$ move too. The fixed-kernel account needs a stability estimate.
+
+Take two Jacobians $J^{(0)}$ and $J^{(1)}$. Assume every entry of both has magnitude at most $B$, and every entry changes by at most $\delta$:
+
+$$
+|J^{(0)}_{ia}|\le B,\qquad |J^{(1)}_{ia}|\le B,
+\qquad |J^{(1)}_{ia}-J^{(0)}_{ia}|\le\delta.
+$$
+
+Then the **Entrywise NTK Stability Theorem** states that each kernel entry obeys
+
+$$
+|K^{(1)}_{ik}-K^{(0)}_{ik}|\le 2pB\delta.
+$$
+
+To see why, split the change in one product:
+
+$$
+J^{(1)}_{ia}J^{(1)}_{ka}-J^{(0)}_{ia}J^{(0)}_{ka}
+=J^{(1)}_{ia}(J^{(1)}_{ka}-J^{(0)}_{ka})
++J^{(0)}_{ka}(J^{(1)}_{ia}-J^{(0)}_{ia}).
+$$
+
+Each term has magnitude at most $B\delta$, so each parameter coordinate contributes at most $2B\delta$. Summing over $p$ coordinates gives the bound.
+
+The factor $p$ is not a defect; it reveals the need for width normalization. In common wide-network parameterizations, individual Jacobian entries shrink with width, and the combination $pB\delta$ may remain bounded or vanish.
+
+A pathwise version makes the learning-rate dependence explicit. Suppose a scalar parameter coordinate $\theta$ starts at $\theta_0$, the Jacobian entries are bounded by $B$, and they satisfy the Lipschitz estimate
+
+$$
+|J(\theta)_{ia}-J(\theta_0)_{ia}|\le L|\theta-\theta_0|.
+$$
+
+If after $t$ steps the path remains within
+
+$$
+|\theta_t-\theta_0|\le t\eta G,
+$$
+
+then the **Near-Constancy Along Training Theorem** gives
+
+$$
+|K(\theta_t)_{ik}-K(\theta_0)_{ik}|
+\le 2pBLt\eta G.
+$$
+
+Small steps, short paths, smooth Jacobians, and appropriate width scaling therefore keep the kernel close to its initial value.
+
+## A small spectrum with a large lesson
+
+A three-coordinate example makes the convergence mechanism visible. Imagine that the sensitivity directions have been chosen so that the kernel has eigenvalues $1$, $2$, and $3$. Along these three special residual patterns, multiplication by $K$ simply scales by the corresponding eigenvalue. Choose learning rate $\eta=1/2$. The residual update then has multipliers $1/2$, $0$, and $-1/2$.
+
+The three modes tell different stories. The first shrinks by half at every step. The second disappears immediately because the step lands exactly on its target. The third also shrinks by half in magnitude, but flips sign each time: an overshoot, then a smaller overshoot in the opposite direction. Since squared magnitude ignores the sign, every surviving mode loses at least three quarters of its energy per step. Thus $q=1/4$, and the total squared residual obeys
+
+$$
+\lVert r_t\rVert_2^2\le 4^{-t}\lVert r_0\rVert_2^2.
+$$
+
+Now add a fourth thought experiment: a zero eigenvalue. Its residual multiplier is $1$, regardless of how small the positive learning rate is. That error component never changes. This is why a singular kernel may fit part of a target perfectly while leaving another part untouched. The relevant question is not merely whether the kernel is nonnegative, but whether the target residual lies in the range that the sensitivity features can reach.
+
+The example also suggests how practitioners can diagnose training. Estimate the largest kernel eigenvalue to avoid unstable steps, examine the smallest nonzero eigenvalues to identify slow directions, and test whether the target has a component in the numerical nullspace. These are statements about an $n\times n$ matrix on examples, even when the original model has vastly more than $n$ parameters. The kernel converts parameter abundance into sample geometry.
+
+## What the infinite-width slogan really means
+
+The often-heard slogan “an infinitely wide neural network is a kernel method” compresses several logically distinct facts.
+
+First, the Jacobian always creates a symmetric positive semidefinite Gram kernel. Second, linearized gradient descent always projects to the kernel residual recurrence. Third, contraction of that recurrence yields geometric convergence. Fourth, bounded Jacobian drift controls how far the changing empirical kernel can move from its initial value.
+
+Infinite width enters not into the finite-dimensional algebra, but into the probabilistic and scaling arguments that can make drift small and the initial random kernel close to a deterministic limit. Once those ingredients hold, network predictions track kernel regression. The deterministic core tells us exactly what such a limit theorem must supply.
+
+This separation also clarifies the boundary between “lazy” learning and feature learning. In the lazy regime, the sensitivity features $J_i$ barely rotate or stretch, so training mainly adjusts coefficients in an almost fixed feature space. Beyond that regime, kernel drift becomes order one, and representation change is no longer a perturbation—it is the phenomenon.
+
+The NTK lens therefore does more than simplify a difficult dynamical system. It gives a diagnostic language. Gram positivity says which motions cannot increase energy infinitesimally. The residual spectrum predicts speed and identifies unreachable error patterns. The drift bound measures when yesterday's geometry remains useful tomorrow. Together, these ideas turn a vast parameter update into a comprehensible story: a geometry on examples, a linear recurrence, a contraction rate, and a controlled departure from the frozen world.
