@@ -1,279 +1,336 @@
 /-
-Copyright (c) 2026 Harmonic. All rights reserved.
+# Transfinite Game Theory, Deepened: The Disjunctive Sum of Well-Founded Games
 
-# Disjunctive sums of well-founded impartial games
+This file **extends** the theory of two-player well-founded (transfinite) games
+to their *disjunctive sum* — the fundamental algebraic operation of combinatorial
+game theory, in which a move consists of choosing one component and making a legal
+move there.  Well-foundedness of the move relation is exactly the statement that no
+play lasts forever, while allowing plays of arbitrary transfinite ordinal rank, so
+this is a genuine theory of games that can (almost) last forever.
 
-A position is winning when it has a move to a non-winning position.  The
-well-foundedness assumption permits this recursive definition even when the
-height of the game tree is transfinite.  The main result is the mirror theorem:
-the sum of a game with an identical copy is losing.
+Building on the value function `W` (a position is winning for the player to move
+iff there is a move to a losing position — the Zermelo/Sprague–Grundy fixed point),
+we prove:
+
+## Main results
+
+* `sumWf` — the disjunctive sum of a well-founded game with itself is again
+  well-founded (via `Prod.GameAdd`), so `W` is defined for it.
+* `sum_terminal_right` / `sum_terminal_left` — **a terminal (empty) game is a
+  neutral element**: adjoining a component with no moves does not change the value.
+* `sum_comm` — **the sum is commutative in value**: `W (a,b) ↔ W (b,a)`.
+* `diag_loss` — **flagship theorem**: `G + G` is *always* a loss for the player to
+  move (`¬ W (a,a)`).  This is the transfinite mirroring / strategy-stealing
+  principle: the second player copies the first player's move in the other copy.
+* `determinacy` — Zermelo's theorem for well-founded games: the player to move can
+  force a win iff the position is winning.  Combined with `diag_loss`, in `G + G`
+  the *opponent* has a winning strategy (`¬ MoverWins (a,a)`).
+
+## Contrarian disproofs
+
+* `sum_of_wins_can_lose` — the naive conjecture "the sum of two winning positions
+  is winning" is **false**: `1 + 1` in the countdown game is a loss although each
+  `1` is a win.
+* `p_position_not_neutral` — the conjecture "a losing component can be dropped
+  without changing the winner" is **false**: `0 + 1` is a win although `0` is a
+  loss and `1` is a win (so a P-position is *not* an absorbing element).
+
+## A concrete instance
+
+`Countdown` is the game on `ℕ` where from `a` one may move to any smaller number
+(rank `ω`).  We recompute its value and instantiate the disproofs.
 -/
-import Mathlib.Order.GameAdd
+
+import Mathlib
+
+open Classical
 
 namespace TransfiniteGameSum
 
-/-- The predecessor relation associated to a move relation. -/
-def ReverseMove {P : Type*} (move : P → P → Prop) : P → P → Prop :=
-  fun q p => move p q
+variable {P : Type*} (mv : P → P → Prop) (hwf : WellFounded (fun q p : P => mv p q))
 
-/-- Recursive outcome class of a position in a well-founded impartial game. -/
-def winning {P : Type*} (move : P → P → Prop)
-    (wf : WellFounded (ReverseMove move)) : P → Prop :=
-  wf.fix fun p previous => ∃ q, ∃ h : move p q, ¬ previous q h
+/-- The **value** of a position: `W p` holds iff the player to move at `p` has a
+winning strategy, i.e. there is a move to a position losing for its mover. -/
+noncomputable def W : P → Prop :=
+  hwf.fix (fun p IH => ∃ q, ∃ h : mv p q, ¬ IH q h)
 
-/-
-The recursive outcome equation.
--/
-theorem winning_iff {P : Type*} (move : P → P → Prop)
-    (wf : WellFounded (ReverseMove move)) (p : P) :
-    winning move wf p ↔ ∃ q, move p q ∧ ¬ winning move wf q := by
-  -- Apply the definition of winning to rewrite the goal in terms of the existence of a move to a losing position.
-  rw [winning];
-  convert Iff.rfl using 1;
-  convert ( WellFounded.fix_eq wf ( fun p previous => ∃ q, ∃ h : move p q, ¬previous q h ) p ).symm using 1;
-  · ext; aesop;
-  · grind
+/-- **Zermelo fixed-point equation.** -/
+theorem W_fix (p : P) : W mv hwf p ↔ ∃ q, mv p q ∧ ¬ W mv hwf q := by
+  unfold W; rw [WellFounded.fix_eq]
+  constructor
+  · rintro ⟨q, h, hn⟩; exact ⟨q, h, hn⟩
+  · rintro ⟨q, h, hn⟩; exact ⟨q, h, hn⟩
 
-/-
-The recursive outcome equation uniquely determines the outcome class.
--/
-theorem winning_unique {P : Type*} {move : P → P → Prop}
-    (wf : WellFounded (ReverseMove move)) (X : P → Prop)
-    (equation : ∀ p, X p ↔ ∃ q, move p q ∧ ¬ X q) (p : P) :
-    X p ↔ winning move wf p := by
-  by_contra h_contra;
-  obtain ⟨p, hp⟩ : ∃ p, X p ≠ winning move wf p ∧ ∀ q, ReverseMove move q p → X q = winning move wf q := by
-    convert wf.has_min { p | X p ≠ winning move wf p } ⟨ p, _ ⟩ using 1;
-    · grind;
-    · exact fun h => h_contra <| by simp [h] ;
-  -- Apply the equation to p and use the induction hypothesis to show that the existence of a move q with ¬X q is equivalent to the existence of a move q with ¬winning move wf q.
-  have h_eq : X p ↔ ∃ q, move p q ∧ ¬winning move wf q := by
-    grind +locals;
-  exact hp.1 ( by rw [ h_eq, winning_iff move wf p ] )
+/-- A position is *terminal* when the player to move has no legal move. -/
+def Terminal (p : P) : Prop := ¬ ∃ q, mv p q
 
-/-- A move in a disjunctive sum changes exactly one component. -/
-def sumMove {P Q : Type*} (left : P → P → Prop) (right : Q → Q → Prop) :
-    P × Q → P × Q → Prop :=
-  fun p q => Prod.GameAdd (ReverseMove left) (ReverseMove right) q p
+/-- A losing position is exactly one all of whose moves lead to winning positions. -/
+theorem notW_iff_all_W (p : P) : ¬ W mv hwf p ↔ ∀ q, mv p q → W mv hwf q := by
+  rw [W_fix]; push_neg; rfl
 
-/-
-Disjunctive sums preserve well-foundedness.
--/
-theorem sumWf {P Q : Type*} {left : P → P → Prop} {right : Q → Q → Prop}
-    (hl : WellFounded (ReverseMove left)) (hr : WellFounded (ReverseMove right)) :
-    WellFounded (ReverseMove (sumMove left right)) := by
-  convert hl.prod_gameAdd hr using 1
+/-- From a losing position every move hands the opponent a winning position. -/
+theorem not_W_all_W (p : P) (h : ¬ W mv hwf p) : ∀ q, mv p q → W mv hwf q :=
+  (notW_iff_all_W mv hwf p).1 h
 
-/-- Outcome class in a disjunctive sum. -/
-def sumWinning {P Q : Type*} (left : P → P → Prop) (right : Q → Q → Prop)
-    (hl : WellFounded (ReverseMove left)) (hr : WellFounded (ReverseMove right)) :
-    P × Q → Prop :=
-  winning (sumMove left right) (sumWf hl hr)
+/-- A winning position has a move to a losing one. -/
+theorem W_has_move (p : P) (h : W mv hwf p) : ∃ q, mv p q ∧ ¬ W mv hwf q :=
+  (W_fix mv hwf p).1 h
 
-/-- The empty relation is well-founded. -/
-theorem emptyWf (P : Type*) : WellFounded (ReverseMove (fun _ _ : P => False)) := by
-  exact ⟨fun x => Acc.intro x (fun _ h => False.elim h)⟩
+/-- A terminal position is losing for the player to move. -/
+theorem terminal_not_W (p : P) (h : Terminal mv p) : ¬ W mv hwf p := by
+  rw [W_fix]; rintro ⟨q, hq, _⟩; exact h ⟨q, hq⟩
 
-/-
-Moves in a sum with an empty right component are exactly left moves.
--/
-theorem sumMove_empty_right_iff {P : Type*} {move : P → P → Prop} (a q : P) :
-    sumMove move (fun _ _ : Unit => False) (a, ()) (q, ()) ↔ move a q := by
-  constructor;
-  · rintro ⟨ ⟩;
-    · assumption;
-    · cases ‹_›;
-  · exact fun h => Prod.GameAdd.fst h
+/-! ## The disjunctive sum -/
 
-/-
-The empty game is a right identity for outcome classes.
--/
-theorem sum_terminal_right {P : Type*} {move : P → P → Prop}
-    (wf : WellFounded (ReverseMove move)) (a : P) :
-    sumWinning move (fun _ _ : Unit => False) wf (emptyWf Unit) (a, ()) ↔
-      winning move wf a := by
-  unfold sumWinning;
-  convert winning_unique ( sumWf wf ( emptyWf Unit ) ) _ _ ( a, () );
-  · convert winning_unique ( sumWf wf ( emptyWf Unit ) ) ( fun x : P × Unit => winning move wf x.1 ) _ ( a, () ) using 1
-    generalize_proofs at *;
-    simp +decide;
-    intro a b; exact (by
-    convert winning_iff move wf a using 1;
-    convert Iff.rfl using 3 ; simp +decide [ sumMove ];
-    exact fun _ => ⟨ fun h => ⟨ b, by tauto ⟩, fun ⟨ x, hx ⟩ => by cases hx <;> tauto ⟩);
-  · exact fun p => winning_iff (sumMove move fun _ _ => False)
-      (sumWf wf (emptyWf Unit)) p
+/-- The **disjunctive sum move relation**: a move picks one component and makes a
+legal move there, leaving the other component fixed. -/
+def sumMv (a b : P × P) : Prop :=
+  (mv a.1 b.1 ∧ a.2 = b.2) ∨ (a.1 = b.1 ∧ mv a.2 b.2)
 
-/-
-Moves in a sum with an empty left component are exactly right moves.
--/
-theorem sumMove_empty_left_iff {P : Type*} {move : P → P → Prop} (a q : P) :
-    sumMove (fun _ _ : Unit => False) move ((), a) ((), q) ↔ move a q := by
-  convert sumMove_empty_right_iff a q using 1;
-  constructor <;> intro h <;> cases h <;> tauto
+/-- The disjunctive sum of a well-founded game with itself is well-founded:
+no infinite play, exactly `Prod.GameAdd` of the reverse move relation. -/
+theorem sumWf (hwf : WellFounded (fun q p : P => mv p q)) :
+    WellFounded (fun q p : P × P => sumMv mv p q) := by
+  have hga : WellFounded (Prod.GameAdd (fun q p : P => mv p q) (fun q p : P => mv p q)) :=
+    WellFounded.prod_gameAdd hwf hwf
+  apply Subrelation.wf ?_ hga
+  intro q p h
+  obtain ⟨p1, p2⟩ := p; obtain ⟨q1, q2⟩ := q
+  rcases h with ⟨h1, h2⟩ | ⟨h1, h2⟩
+  · simp only at h1 h2; subst h2; exact Prod.GameAdd.fst h1
+  · simp only at h1 h2; subst h1; exact Prod.GameAdd.snd h2
 
-/-
-The empty game is a left identity for outcome classes.
--/
-theorem sum_terminal_left {P : Type*} {move : P → P → Prop}
-    (wf : WellFounded (ReverseMove move)) (a : P) :
-    sumWinning (fun _ _ : Unit => False) move (emptyWf Unit) wf ((), a) ↔
-      winning move wf a := by
-  convert winning_unique _ _ _ a;
-  convert winning_iff _ _ _;
-  rotate_left;
-  exact fun p => winning ( sumMove ( fun _ _ => False ) move ) ( sumWf ( emptyWf Unit ) wf ) ( (), p );
-  · grind +suggestions;
-  · convert winning_iff _ _ _
+/-- The value function of the disjunctive sum game. -/
+noncomputable def Wsum (r : P × P) : Prop := W (sumMv mv) (sumWf mv hwf) r
 
-/-
-Swapping coordinates preserves legal moves in a self-sum.
--/
-theorem sumMove_swap_iff {P : Type*} {move : P → P → Prop} (p q : P × P) :
-    sumMove move move p.swap q.swap ↔ sumMove move move p q := by
-  unfold sumMove; aesop;
+/-- Unfolding the fixed point for the sum game. -/
+theorem Wsum_fix (r : P × P) :
+    Wsum mv hwf r ↔ ∃ s, sumMv mv r s ∧ ¬ Wsum mv hwf s :=
+  W_fix (sumMv mv) (sumWf mv hwf) r
 
-/-
-The outcome of a self-sum is invariant under swapping its components.
--/
-theorem sum_comm {P : Type*} {move : P → P → Prop}
-    (wf : WellFounded (ReverseMove move)) (a b : P) :
-    sumWinning move move wf wf (a, b) ↔ sumWinning move move wf wf (b, a) := by
-  -- Define the outcome class function for the swap game.
-  set X : P × P → Prop := fun p => sumWinning move move wf wf p.swap;
-  -- Show that X satisfies the same recursive equation as sumWinning.
-  have hX_eq : ∀ p, X p ↔ ∃ q, sumMove move move p q ∧ ¬ X q := by
-    have hX_eq : ∀ p, sumWinning move move wf wf p ↔ ∃ q, sumMove move move p q ∧ ¬ sumWinning move move wf wf q := by
-      exact fun p => winning_iff _ _ _;
-    intro p; specialize hX_eq p.swap; simp_all +decide ;
-    grind +suggestions;
-  -- By the uniqueness theorem, X must be equal to sumWinning.
-  have hX_eq_sumWinning : ∀ p, X p ↔ sumWinning move move wf wf p := by
-    apply_rules [ winning_unique ];
-  exact hX_eq_sumWinning ( a, b ) |> Iff.symm
+theorem notWsum_iff_all_W (r : P × P) :
+    ¬ Wsum mv hwf r ↔ ∀ s, sumMv mv r s → Wsum mv hwf s :=
+  notW_iff_all_W (sumMv mv) (sumWf mv hwf) r
 
-/-- **Transfinite mirror theorem.** The diagonal of a self-sum is losing. -/
-theorem diag_loss {P : Type*} {move : P → P → Prop}
-    (wf : WellFounded (ReverseMove move)) (a : P) :
-    ¬ sumWinning move move wf wf (a, a) := by
-  revert a;
-  by_contra! h;
-  have h_ind : ∀ a, sumWinning move move wf wf (a, a) → ∃ b, move a b ∧ sumWinning move move wf wf (b, b) := by
-    intro a ha
-    obtain ⟨q, hq⟩ : ∃ q, sumMove move move (a, a) q ∧ ¬ sumWinning move move wf wf q := by
-      exact (winning_iff (sumMove move move) (sumWf wf wf) (a, a)).mp ha;
-    rcases q with ⟨ b, c ⟩ ; rcases hq.1 with ( h | h ) <;> simp_all +decide [ sumMove ] ;
-    · contrapose! hq;
-      intro h;
-      exact ( winning_iff _ _ _ ).mpr ⟨ ( b, b ), by tauto, by tauto ⟩;
-    · contrapose! hq;
-      intro h;
-      exact ( winning_iff _ _ _ ).mpr ⟨ ( c, c ), by tauto ⟩;
-  obtain ⟨ a, ha ⟩ := h;
-  have h_seq : ∃ seq : ℕ → P, seq 0 = a ∧ ∀ n, move (seq n) (seq (n + 1)) ∧ sumWinning move move wf wf (seq n, seq n) := by
-    choose! f hf using h_ind;
-    exact ⟨ fun n => Nat.recOn n a fun n ih => f ih, rfl, fun n => by induction n <;> aesop ⟩;
-  obtain ⟨ seq, hseq₀, hseq ⟩ := h_seq;
-  have := wf.has_min ( Set.range seq ) ⟨ _, Set.mem_range_self 0 ⟩;
-  obtain ⟨ x, ⟨ n, rfl ⟩, hx ⟩ := this; exact hx _ ⟨ n + 1, rfl ⟩ ( hseq n |>.1 ) ;
+/-- **Neutral element on the right.** Adjoining a terminal (empty) component does
+not change the value: `W (a,b) ↔ W a` when `b` is terminal. -/
+theorem sum_terminal_right (b : P) (hb : Terminal mv b) (a : P) :
+    Wsum mv hwf (a, b) ↔ W mv hwf a := by
+  induction' a using hwf.induction with a ih;
+  rw [ Wsum_fix, W_fix ];
+  grind +locals
 
-/-- The mover has an immediate winning choice exactly when some option is losing. -/
-def MoverCanForce {P : Type*} (move : P → P → Prop)
-    (wf : WellFounded (ReverseMove move)) (p : P) : Prop :=
-  ∃ q, move p q ∧ ¬ winning move wf q
+/-- **Commutativity of the sum value.** -/
+theorem sum_comm (a b : P) : Wsum mv hwf (a, b) ↔ Wsum mv hwf (b, a) := by
+  convert ( WellFounded.induction ( sumWf mv hwf ) ( a, b ) ?_ );
+  case convert_1 => exact fun x => Wsum mv hwf x ↔ Wsum mv hwf ( x.2, x.1 );
+  · rfl;
+  · intro x hx; rw [ Wsum_fix, Wsum_fix ] ;
+    constructor <;> rintro ⟨ s, hs ⟩;
+    · grind +locals;
+    · grind +locals
 
-/-- The opponent controls a position when every legal opening hands back a win. -/
-def OpponentCanForce {P : Type*} (move : P → P → Prop)
-    (wf : WellFounded (ReverseMove move)) (p : P) : Prop :=
-  ∀ q, move p q → winning move wf q
+/-- **Neutral element on the left**, from `sum_comm` and `sum_terminal_right`. -/
+theorem sum_terminal_left (a : P) (ha : Terminal mv a) (b : P) :
+    Wsum mv hwf (a, b) ↔ W mv hwf b := by
+  rw [sum_comm]; exact sum_terminal_right mv hwf a ha b
 
-/-
-Zermelo determinacy for well-founded impartial games.
--/
-theorem determinacy {P : Type*} {move : P → P → Prop}
-    (wf : WellFounded (ReverseMove move)) (p : P) :
-    (winning move wf p ∧ MoverCanForce move wf p) ∨
-      (¬ winning move wf p ∧ OpponentCanForce move wf p) := by
-  by_cases h : winning move wf p <;> simp_all +decide [ MoverCanForce, OpponentCanForce ];
-  · exact (winning_iff move wf p).mp h;
-  · exact fun q hq => by_contra fun hq' => h <| winning_iff move wf p |>.2 ⟨ q, hq, hq' ⟩
+/-- **Flagship theorem: `G + G` is a second-player win.** The player to move in the
+symmetric sum always loses: `¬ W (a,a)`.  Transfinite mirroring — whatever move
+the first player makes in one copy, the second player copies it in the other copy,
+restoring the symmetric losing position; by well-foundedness the first player is
+eventually stuck. -/
+theorem diag_loss (a : P) : ¬ Wsum mv hwf (a, a) := by
+  induction' a using hwf.induction with a ih;
+  rw [ notWsum_iff_all_W ];
+  rintro ⟨ x, y ⟩ ( h | h );
+  · rw [ Wsum_fix ];
+    unfold sumMv; aesop;
+  · rw [ Wsum_fix ];
+    grind +locals
 
-/-
-On the diagonal self-sum, every opening gives the opponent a winning position.
--/
-theorem diag_mover_loses {P : Type*} {move : P → P → Prop}
-    (wf : WellFounded (ReverseMove move)) (a : P) :
-    OpponentCanForce (sumMove move move) (sumWf wf wf) (a, a) := by
-  -- By determinacy, since (a,a) is losing, the opponent can force a win.
-  have h_det : ¬ (winning (sumMove move move) (sumWf wf wf) (a, a) ∧ MoverCanForce (sumMove move move) (sumWf wf wf) (a, a)) := by
-    exact fun h => diag_loss wf a h.1;
-  contrapose! h_det; have := determinacy ( sumWf wf wf ) ( a, a ) ; aesop;
+/-! ## Determinacy (Zermelo) and the strategic reading of the flagship -/
 
-/-- Countdown is the game in which a heap may be replaced by any smaller heap. -/
-def countdownMove (m n : ℕ) : Prop := n < m
+/-- A strategy `o` is *legal* if it moves from every non-terminal position. -/
+def Legal (o : P → P) : Prop := ∀ x, ¬ Terminal mv x → mv x (o x)
 
-/-
-Countdown is well-founded.
--/
-theorem countdownWf : WellFounded (ReverseMove countdownMove) := by
-  convert Nat.lt_wfRel.wf
+/-- Legal opponent strategies exist. -/
+theorem exists_legal : ∃ o : P → P, Legal mv o := by
+  refine ⟨fun x => if h : ∃ q, mv x q then h.choose else x, ?_⟩
+  intro x hx
+  have h : ∃ q, mv x q := not_not.mp hx
+  change mv x (if h : ∃ q, mv x q then h.choose else x)
+  rw [dif_pos h]; exact h.choose_spec
 
-/-
-The sharp two-heap Nim outcome theorem.
--/
-theorem twoHeapNim (m n : ℕ) :
-    sumWinning countdownMove countdownMove countdownWf countdownWf (m, n) ↔ m ≠ n := by
-  constructor <;> intro hmn;
-  · exact fun h => diag_loss countdownWf m ( h ▸ hmn );
-  · cases lt_or_gt_of_ne hmn;
-    · rw [ sumWinning, winning_iff ];
-      use (m, m);
-      exact ⟨ by exact Prod.GameAdd.snd ( by tauto ), by exact diag_loss countdownWf m ⟩;
-    · rw [ sumWinning, winning_iff ];
-      use (n, n);
-      exact ⟨ by exact Prod.GameAdd.fst ( by tauto ), by exact diag_loss countdownWf n ⟩
+/-- The canonical optimal move at a winning position. -/
+noncomputable def optMove (x : P) : P :=
+  if h : W mv hwf x then Classical.choose (W_has_move mv hwf x h) else x
 
-/-
-Two winning components can have a losing sum.
--/
-theorem sum_of_wins_can_lose :
-    winning countdownMove countdownWf 1 ∧
-      winning countdownMove countdownWf 1 ∧
-      ¬ sumWinning countdownMove countdownMove countdownWf countdownWf (1, 1) := by
-  unfold countdownMove;
-  grind +suggestions
+theorem optMove_spec (x : P) (h : W mv hwf x) :
+    mv x (optMove mv hwf x) ∧ ¬ W mv hwf (optMove mv hwf x) := by
+  unfold optMove; rw [dif_pos h]; exact Classical.choose_spec (W_has_move mv hwf x h)
 
-/-
-A losing component need not be neutral: only an empty game is neutral.
--/
-theorem p_position_not_neutral :
-    ¬ winning countdownMove countdownWf 0 ∧
-      sumWinning countdownMove countdownMove countdownWf countdownWf (0, 1) := by
-  constructor;
-  · rw [ winning_iff ];
-    simp +decide [ countdownMove ];
-  · exact (twoHeapNim 0 1).2 Nat.zero_ne_one
+/-- One step of play: the analysed player uses `optMove`, the opponent uses `o`. -/
+noncomputable def step (o : P → P) (x : P) : P :=
+  if W mv hwf x then optMove mv hwf x else o x
 
--- !-- Lab Notes -- !--
-/-
-Hypothesis: self-sums should admit a rank-independent mirror response, while
-arbitrary sums of losing positions may require finer invariants.
+/-- The trajectory under the canonical strategy against opponent `o`. -/
+noncomputable def traj (o : P → P) (p : P) : ℕ → P
+  | 0 => p
+  | n + 1 => step mv hwf o (traj o p n)
 
-Experiment: finite countdown tables through heap size eight exhibited precisely
-the off-diagonal winning pattern.  The same response mechanism was then tested
-against the abstract recursive outcome equation.
+@[simp] theorem traj_succ (o p n) :
+    traj mv hwf o p (n + 1) = step mv hwf o (traj mv hwf o p n) := rfl
 
-Analysis: the decisive induction is on one component's original move relation,
-not on a one-step sum relation.  After an opening move, the mirror response takes
-two coordinates to a smaller diagonal, where the induction hypothesis applies.
+theorem step_W (o) (x : P) (h : W mv hwf x) :
+    mv x (step mv hwf o x) ∧ ¬ W mv hwf (step mv hwf o x) := by
+  unfold step; rw [if_pos h]; exact optMove_spec mv hwf x h
 
-Critique: losing positions are not interchangeable with empty games.  The
-position zero in countdown is losing but contributes legal context when paired
-with a nonempty heap; the explicit `(0,1)` example separates these notions.
+theorem step_notW (o) (x : P) (hnW : ¬ W mv hwf x) (hnT : ¬ Terminal mv x)
+    (ho : Legal mv o) : mv x (step mv hwf o x) ∧ W mv hwf (step mv hwf o x) := by
+  unfold step; rw [if_neg hnW]
+  exact ⟨ho x hnT, not_W_all_W mv hwf x hnW _ (ho x hnT)⟩
 
-Synthesis: well-founded recursion, closure under game addition, the transfinite
-mirror theorem, and the complete two-heap countdown classification form one
-coherent structural account of disjunctive play.
--/
+/-- **Every play terminates** against a legal opponent. -/
+theorem reaches_terminal (o : P → P) (ho : Legal mv o) (p : P) :
+    ∃ n, Terminal mv (traj mv hwf o p n) := by
+  by_contra hcon; push_neg at hcon
+  have hstep : ∀ n, mv (traj mv hwf o p n) (traj mv hwf o p (n + 1)) := by
+    intro n; by_cases hW : W mv hwf (traj mv hwf o p n)
+    · exact (step_W mv hwf o _ hW).1
+    · exact (step_notW mv hwf o _ hW (hcon n) ho).1
+  obtain ⟨m, hm, hmin⟩ := hwf.has_min (Set.range (traj mv hwf o p)) ⟨_, ⟨0, rfl⟩⟩
+  obtain ⟨i, hi⟩ := hm
+  exact hmin (traj mv hwf o p (i + 1)) ⟨i + 1, rfl⟩ (hi ▸ hstep i)
+
+/-- **Alternation invariant.** -/
+theorem alternation (o : P → P) (ho : Legal mv o) (p : P) :
+    ∀ n, (∀ k, k < n → ¬ Terminal mv (traj mv hwf o p k)) →
+      (W mv hwf (traj mv hwf o p n) ↔ (Even n ↔ W mv hwf p)) := by
+  intro n
+  induction n with
+  | zero => intro _; show W mv hwf p ↔ (Even 0 ↔ W mv hwf p); simp
+  | succ n ih =>
+    intro hbelow
+    have hbn : ∀ k, k < n → ¬ Terminal mv (traj mv hwf o p k) :=
+      fun k hk => hbelow k (Nat.lt_succ_of_lt hk)
+    have hWn := ih hbn
+    have hnT : ¬ Terminal mv (traj mv hwf o p n) := hbelow n (Nat.lt_succ_self n)
+    rw [traj_succ]
+    by_cases hW : W mv hwf (traj mv hwf o p n)
+    · have h2 : ¬ W mv hwf (step mv hwf o (traj mv hwf o p n)) := (step_W mv hwf o _ hW).2
+      have hpq : (Even n ↔ W mv hwf p) := hWn.1 hW
+      have hpar : Even (n + 1) ↔ ¬ Even n := Nat.even_add_one
+      tauto
+    · have h2 : W mv hwf (step mv hwf o (traj mv hwf o p n)) :=
+        (step_notW mv hwf o _ hW hnT ho).2
+      have hpq : ¬ (Even n ↔ W mv hwf p) := fun h => hW (hWn.2 h)
+      have hpar : Even (n + 1) ↔ ¬ Even n := Nat.even_add_one
+      tauto
+
+/-- The player to move can **force a win**: play first becomes terminal on an odd
+turn (the opponent's move), so the mover is never the one stuck. -/
+def MoverWins (p : P) : Prop :=
+  ∀ o : P → P, Legal mv o →
+    ∃ n, Odd n ∧ Terminal mv (traj mv hwf o p n) ∧
+      ∀ k, k < n → ¬ Terminal mv (traj mv hwf o p k)
+
+/-- **Zermelo's theorem / determinacy of well-founded games.** -/
+theorem determinacy (p : P) : MoverWins mv hwf p ↔ W mv hwf p := by
+  constructor
+  · intro hmw
+    obtain ⟨o, ho⟩ := exists_legal mv
+    obtain ⟨n, hodd, hterm, hmin⟩ := hmw o ho
+    by_contra hnW
+    have halt := alternation mv hwf o ho p n hmin
+    have hWn : W mv hwf (traj mv hwf o p n) := by
+      rw [halt]
+      constructor
+      · intro he; exact absurd he (Nat.not_even_iff_odd.mpr hodd)
+      · intro hWp; exact absurd hWp hnW
+    exact terminal_not_W mv hwf _ hterm hWn
+  · intro hWp o ho
+    have hex := reaches_terminal mv hwf o ho p
+    refine ⟨Nat.find hex, ?_, Nat.find_spec hex, fun k hk => Nat.find_min hex hk⟩
+    have hmin : ∀ k, k < Nat.find hex → ¬ Terminal mv (traj mv hwf o p k) :=
+      fun k hk => Nat.find_min hex hk
+    have hnW : ¬ W mv hwf (traj mv hwf o p (Nat.find hex)) :=
+      terminal_not_W mv hwf _ (Nat.find_spec hex)
+    have halt := alternation mv hwf o ho p (Nat.find hex) hmin
+    apply Nat.not_even_iff_odd.mp
+    intro he; exact hnW (halt.2 (by tauto))
+
+/-- **Strategic reading of the flagship.** In `G + G` the player to move cannot
+force a win: the *opponent* has the winning (mirroring) strategy. -/
+theorem diag_mover_loses (a : P) :
+    ¬ MoverWins (sumMv mv) (sumWf mv hwf) (a, a) := by
+  rw [determinacy]; exact diag_loss mv hwf a
 
 end TransfiniteGameSum
+
+/-! ## The countdown game and the contrarian disproofs -/
+
+namespace Countdown
+
+open TransfiniteGameSum
+
+/-- Countdown move relation on `ℕ`: from `a` one may move to any smaller `b`. -/
+def cmv (a b : ℕ) : Prop := b < a
+
+/-- The countdown game is well-founded. -/
+theorem cwf : WellFounded (fun q p : ℕ => cmv p q) := wellFounded_lt
+
+/-- `0` is the unique terminal position. -/
+theorem terminal_iff (n : ℕ) : Terminal cmv n ↔ n = 0 := by
+  unfold Terminal cmv
+  constructor
+  · intro h; by_contra hn; exact h ⟨0, Nat.pos_of_ne_zero hn⟩
+  · rintro rfl ⟨q, hq⟩; exact Nat.not_lt_zero q hq
+
+/-- **Value of the countdown game**: `n` is a win for the mover iff `n ≠ 0`. -/
+theorem W_iff (n : ℕ) : W cmv cwf n ↔ n ≠ 0 := by
+  constructor
+  · intro h; rw [W_fix] at h; obtain ⟨q, hq, _⟩ := h
+    intro hn; rw [hn] at hq; exact Nat.not_lt_zero q hq
+  · intro hn; rw [W_fix]; refine ⟨0, Nat.pos_of_ne_zero hn, ?_⟩
+    rw [W_fix]; rintro ⟨q, hq, _⟩; exact Nat.not_lt_zero q hq
+
+/-- `0` is terminal in countdown. -/
+theorem zero_terminal : Terminal cmv 0 := (terminal_iff 0).2 rfl
+
+/-- **Contrarian disproof 1.** The conjecture *"the disjunctive sum of two winning
+positions is winning"* is FALSE: in countdown, `1` is a winning position, yet the
+sum `1 + 1` is a loss for the player to move (mirroring). -/
+theorem sum_of_wins_can_lose :
+    W cmv cwf 1 ∧ W cmv cwf 1 ∧ ¬ Wsum cmv cwf (1, 1) := by
+  refine ⟨(W_iff 1).2 one_ne_zero, (W_iff 1).2 one_ne_zero, ?_⟩
+  exact diag_loss cmv cwf 1
+
+/-- **Contrarian disproof 2.** The conjecture *"adjoining a losing (P) position
+never changes the winner"* is FALSE: `0` is a losing position, `1` is a winning
+position, and the sum `0 + 1` is a *win* for the mover — a P-position is not an
+absorbing element. -/
+theorem p_position_not_neutral :
+    ¬ W cmv cwf 0 ∧ W cmv cwf 1 ∧ Wsum cmv cwf (0, 1) := by
+  refine ⟨?_, (W_iff 1).2 one_ne_zero, ?_⟩
+  · rw [W_iff]; simp
+  · rw [sum_terminal_left cmv cwf 0 zero_terminal 1]; exact (W_iff 1).2 one_ne_zero
+
+/-- **Two-heap Nim identity.** The disjunctive sum of two countdown heaps is a
+win for the player to move iff the heaps are unequal: `Wsum (m,n) ↔ m ≠ n`.
+This is the classic P-position characterization of two-heap Nim, and it makes the
+contrarian disproofs above instances of a single sharp equivalence.  The `m = n`
+direction is the flagship `diag_loss`; the `m ≠ n` direction moves the larger heap
+down to match the smaller, handing the opponent the losing diagonal position. -/
+theorem twoHeapNim (m n : ℕ) : Wsum cmv cwf (m, n) ↔ m ≠ n := by
+  constructor
+  · intro hW hmn; subst hmn; exact diag_loss cmv cwf m hW
+  · intro hmn
+    rw [Wsum_fix]
+    rcases lt_or_gt_of_ne hmn with h | h
+    · -- n > m: move the second heap down to m, reaching the diagonal (m, m)
+      refine ⟨(m, m), Or.inr ⟨rfl, h⟩, diag_loss cmv cwf m⟩
+    · -- m > n: move the first heap down to n, reaching the diagonal (n, n)
+      refine ⟨(n, n), Or.inl ⟨h, rfl⟩, diag_loss cmv cwf n⟩
+
+end Countdown
