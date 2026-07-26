@@ -4950,7 +4950,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "id": "fd_0672",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.83,
     "research_mode": "prove",
     "source_exp_id": "seed",
@@ -7853,7 +7853,7 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "id": "seed_114",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.78,
     "research_mode": "team",
     "source_exp_id": "seed",
