@@ -874,7 +874,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b42bd325",
     "description": "The AdS/CFT correspondence says that a gravitational theory in the bulk of anti-de Sitter space is equivalent to a conformal field theory on the boundary. What if prime numbers have a holographic dual? Define the prime hologram: for each prime p, define its 'boundary' as the ring Z/pZ and its 'bulk' as the p-adic field Q_p. Conjecture: The Riemann zeta function zeta(s) = prod_p (1 - p^{-s})^{-1} is the holographic partition function: the product over primes (boundary) encodes the same information as the completed zeta function Xi(s) (bulk). The functional equation Xi(s) = Xi(1-s) is the holographic duality: bulk physics at depth s equals boundary physics at depth 1-s. The prime counting function pi(x) ~ x/log(x) is the bulk volume, while the Chebyshev function theta(x) = sum_{p<=x} log(p) is the boundary area. The AdS/CFT dictionary: bulk gravity mode at depth s <-> boundary CFT operator of dimension 1-s. Test: verify that the pair correlation of zeta zeros matches GUE random matrices (bulk = quantum gravity in AdS, boundary = CFT random matrix ensemble). Compute the 'prime partition function' Z(beta) = prod_p (1 - e^{-beta log p})^{-1} and show it equals the bulk partition function. Impact: the Riemann Hypothesis is equivalent to a holographic stability condition — zeros on the critical line means the bulk geometry is stable against perturbations.",
     "domain_bridges": [],
     "domains": [
@@ -889,7 +889,7 @@
     "proof_strategy": "Define the prime partition function Z(beta) = prod_p (1 - e^{-beta log p})^{-1}. Prove Z(beta) = zeta(s) where beta = Re(s)/log(p) in the saddle-point approximation. Define the holographic dictionary: bulk field phi_s(x) in AdS_3 <-> boundary CFT operator O_{1-s}(y) on S^1. Prove the correspondence: phi_s <-> (1 - p^{-s})^{-1} for each prime p. The functional equation Xi(s) = Xi(1-s) is the holographic duality. Prove: if all zeros of Xi(s) are on Re(s) = 1/2, then the bulk AdS geometry is stable (no tachyonic modes). Conversely, an off-critical-line zero at s = 1/2 + epsilon corresponds to a tachyonic instability in the bulk. Test: compute Z(beta) numerically and verify convergence to zeta(s).",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Holographic Primes: The Prime Number AdS/CFT Correspondence"
   },
@@ -1562,25 +1562,6 @@
     "status": "available",
     "timestamp": "",
     "title": "Quantum Hamiltonian Complexity: QMA-Completeness of the Local Hamiltonian Problem"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 060e882c (Q=0.792), which proved 13 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Determine exactly which spaces are classified up to homotopy by their fundamental group. Prove that for Eilenberg-MacLane spaces K(G,1), the fundamental group is a complete invariant. Construct examples where the fundamental group fails to classify.",
-    "domain_bridges": [],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "push_060e882c_f1b996fd",
-    "lineage_refs": [],
-    "priority_score": 0.8923099999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "060e882c",
-    "status": "available",
-    "timestamp": "2026-07-26T23:20:05.405693+00:00",
-    "title": "Deepening: Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
   },
   {
     "ambition_level": "extension",
@@ -2342,20 +2323,21 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 1f5ea34f (Q=0.777), which proved 16 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that specific EML numbers (like exp(exp(1)) + log(2)) are transcendental over Q. Formalize Schanuel's conjecture for EML functions and prove conditional results: if Schanuel's conjecture holds, then the class of EML numbers equals the class of EL numbers.",
+    "description": "Prove that specific EML numbers (like exp(exp(1)) + log(2)) are transcendental over Q. Formalize Schanuel's conjecture for EML functions and prove conditional results: if Schanuel's conjecture holds, then the class of EML numbers equals the class of EL numbers.",
     "domain_bridges": [],
     "domains": [
-      "Applications"
+      "EML",
+      "Algebra"
     ],
-    "id": "push_1f5ea34f_b2724b2b",
+    "id": "seed_339",
     "lineage_refs": [],
-    "priority_score": 0.87698,
+    "priority_score": 0.88,
     "proof_strategy": "",
     "research_mode": "team",
-    "source_exp_id": "1f5ea34f",
+    "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-07-26T23:20:00.420147+00:00",
-    "title": "Deepening: EML Number Theory: Transcendence and Algebraic Independence"
+    "timestamp": "",
+    "title": "EML Number Theory: Transcendence and Algebraic Independence"
   },
   {
     "ambition_level": "extension",
@@ -6485,6 +6467,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Determine exactly which spaces are classified up to homotopy by their fundamental group. Prove that for Eilenberg-MacLane spaces K(G,1), the fundamental group is a complete invariant. Construct examples where the fundamental group fails to classify.",
+    "domain_bridges": [],
+    "domains": [
+      "Bridges",
+      "Algebra"
+    ],
+    "id": "seed_298",
+    "lineage_refs": [],
+    "priority_score": 0.83,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "",
+    "title": "Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prove that any polynomial-time function can be securely computed in the presence of an honest majority. Formalize the GMW compiler and prove its universal composition property. Show that malicious security adds only polynomial overhead.",
     "domain_bridges": [],
     "domains": [
@@ -6867,7 +6869,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "dcd15145",
     "description": "Formalize the Erdős-Rényi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
     "domain_bridges": [],
     "domains": [
@@ -6880,7 +6882,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-24T14:34:16.697801+00:00",
     "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
   },
@@ -8929,6 +8931,46 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Adjacency-degree algebras and spectral determination of graphs' and formalize its key results. Abstract: McKay proved that the spectra of all polynomial functions of the adjacency matrix $A$ and the diagonal degree matrix $D$ determine a tree. We prove a principal version of this theorem. Let $\\mathcal A(G)=\\langle I,A_G,D_G\\rangle$ and let $M_G=\\mathcal A(G)\\mathbf1$ be the cyclic module generated by the all-ones vector. For connected graphs the ideal $\\mathcal A(G)J\\mathcal A(G)$, where $J=\\mathbf1\\mathbf1^T$, acts on $M_G$ as the full endomorphism algebra. We show that every forest satisfies $M_G=U_G$, the automorphism-orbit module, and that the induced algebra on the orbit quotient of a tree is a full matrix algebra. It follows that the scalar moments $\\mathbf1^Tw(A_T,D_T)\\mathbf1$ determine every tree. For general graphs these moments are degree-decorated caterpillar homomorphism counts. The resulting moment-rigidity class lies inside the amenable, compact, refinable hierarchy of color refinement, and its first small-order failures are ten-vertex integral switchings invisible to $M_G",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_0776",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2607.21494v1",
+    "status": "available",
+    "timestamp": "2026-07-26T23:20:15.793115+00:00",
+    "title": "ArXiv paper: Adjacency-degree algebras and spectral determination of graphs"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'The Frankl--Tokushige product conjectures for $r$-cross-intersecting families' and formalize its key results. Abstract: We settle the uniform and biased product conjectures of Frankl and Tokushige for $r$-cross-intersecting families. Let $r\\geq2$, let $0\\leq k_i\\leq(r-1)n/r$, and let $\\mathcal{F}_i\\subseteq\\binom{[n]}{k_i}$ be $r$-cross-intersecting. We prove the sharp inequality $$\\prod_{i=1}^r\\frac{|\\mathcal{F}_i|}{\\binom{n}{k_i}}\\leq \\prod_{i=1}^r\\frac{k_i}{n},$$ with equality attained by the corresponding levels of a common $1$-star. As a consequence, we obtain the analogous $p_i$-biased measure theorem for $0\\leq p_i\\leq(r-1)/r$, $$ \\prod_{i=1}^rμ_{p_i}(\\mathcal{F}_i)\\leq \\prod_{i=1}^r p_i.$$The main difficulty is that unequal parameters do not determine a single common target level; instead, the target levels $\\ell_1,\\ldots,\\ell_r$ must satisfy $\\sum_{i=1}^r \\ell_i=(r-1)n$. We overcome this asymmetry in three steps. An ordered-partition coupling gives a sharp additive inequality for every such choice of target levels. A star-calibrated upper-shadow inequality relates the density of a family on its",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0778",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2607.21589v1",
+    "status": "available",
+    "timestamp": "2026-07-26T23:20:18.855269+00:00",
+    "title": "ArXiv paper: The Frankl--Tokushige product conjectures for $r$-cross-intersecting families"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domain_bridges": [],
     "domains": [
@@ -10175,7 +10217,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "4a8509fd",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions: Jigsaw Complexity and Topology\n\n## 1. Geometric NP-completeness with four-sided pieces\n\nConjecture: deciding whether a finite multiset of non-rotatable square pieces with flat, tab, and blank edges tiles a prescribed rectangle is NP-complete, even when each non-flat edge carries one of only finitely many colors and every valid tiling has a fixed outer frame.\n\nThe key insight is that the assignment-level bijection should survive replacement of the abstract clause predicate by planar wire, crossover, fan-out, and clause gadgets whose unused interfaces are forced by the frame.\n\nWhy now? The exact witness correspondence isolates the sole missing burden: a polynomial-size geometric realization that introduces neither spurious assemblies nor lost satisfying assignments.\n\n## 2. Parsimonious counting hardness\n\nConjecture: there is a geometric gadget family for which the number of rectangular assemblies equals the number of satisfying assignments, up to a formula-independent symmetry factor computable in polynomial time.\n\nThe key insight is that witness preservation is stronger than equisatisfiability and naturally targets counting reductions; rigid framing should quotient out translations, rotations, and interchangeable copies.\n\nWhy now? The abstract construction already gives a canonical bijection of witness spaces, so every discrepancy in a geometric implementation can be localized to gadget automorphisms.\n\n## 3. Complementation as a free involution\n\nConjecture: for every framed puzzle not isomorphic to its global tab–blank complement, complementation acts freely on the disjoint union of the two assembly spaces, forcing their combined cardinality to be even.\n\nThe key insight is that simultaneous Boolean negation and literal-polarity reversal is an order-two transport of complete solution spaces, not merely a preservation of solvability.\n\nWhy now? Solvability invariance has been established, while the exact boundary between free orbits and self-dual fixed configurations is now explicit and testable.\n\n## 4. Homology-valued boundary obstruction\n\nConjecture: for puzzles assembled on an orientable surface, signed edge potentials define a cohomology class whose pairing with every noncontractible cycle must vanish; on a rectangle this reduces to tab–blank conservation, while on a torus it gives two independent flux obstructions.\n\nThe key insight is that local complementary cancellation is a discrete divergence law, and nontrivial first homology records flux that cannot be removed by pairing interior edges.\n\nWhy now? Existing strip and grid conservation laws provide the contractible base cases from which cycle decompositions and surface gluings can be developed.\n\n## 5. Topology of the solution complex\n\nConjecture: there are parsimonious jigsaw gadgets for which the cubical complex generated by single-variable flips deformation-retracts onto the corresponding SAT solution complex.\n\nThe key insight is that preserving witnesses alone captures vertices, whereas controlled local reconfiguration can preserve adjacency, connected components, and ultimately homotopy type.\n\nWhy now? A canonical vertex bijection is available; the next falsifiable step is to characterize exactly when one-variable changes correspond to bounded local rearrangements of pieces.\n",
     "domain_bridges": [],
     "domains": [
@@ -10188,7 +10230,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "154045db",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-18T12:48:42.770410+00:00",
     "title": "Conjecture: deciding whether a finite multiset of non-rotatable square pieces wi"
   },
@@ -10391,46 +10433,6 @@
     "status": "available",
     "timestamp": "2026-07-25T10:53:07.911660+00:00",
     "title": "For every nonexceptional composite index, the primitive part of the correspondin"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\nEach item below is a concrete formal target whose success or failure can be checked in Lean.\n\n1. **Classical Schanuel versus the concrete pair.** Prove\n   `SchanuelConjecture → AlgebraicIndependent ℚ concreteGenerators`, or formalize a\n   model of the classical conjecture in which this algebraic-independence statement\n   fails. This determines whether `EMLSchanuel.concrete_independence` is genuinely\n   stronger than the classical clause used here.\n\n2. **A named hypothesis for multiplication elimination.** State a precise\n   exponential-algebraic closedness principle and prove that it, together with\n   `SchanuelConjecture`, implies `EMLSchanuel.multiplication_elimination` for every\n   `RationalEML` expression. A counterexample expression would falsify the proposed\n   implication.\n\n3. **Separate transcendence of the concrete generators.** Under\n   `SchanuelConjecture`, prove both\n   `Transcendental ℚ (Real.exp (Real.exp 1))` and\n   `Transcendental ℚ (Real.log 2)`. Then test whether the same assumptions suffice\n   to prove algebraic independence of this pair.\n\n4. **Finite-arity EML/EL equivalence.** Define rational EML and EL terms over\n   `Fin n` by a conservative extension of the existing catalog syntax, and prove\n   that extensional multiplication elimination at every finite arity is equivalent\n   to equality of the corresponding represented-function classes.\n\n5. **General nonzero rational linear combinations.** For every finite family\n   `x : Fin n → ℝ` algebraically independent over `ℚ`, prove that any rational\n   linear combination with a nonzero coefficient vector is transcendental over\n   `ℚ`. The theorem in this development should follow as the `n = 2`, coefficient\n   vector `(1, 1)` instance.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0776",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "1f5ea34f",
-    "status": "available",
-    "timestamp": "2026-07-26T23:19:56.361114+00:00",
-    "title": "Each item below is a concrete formal target whose success or failure can be chec"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\n## Topological realization of the classification theorem\n\nThe completed result classifies **connected groupoids**, hence connected homotopy 1-types, by the automorphism group at a basepoint. A next step is to connect this directly to topological Eilenberg–MacLane spaces:\n\n1. Define a predicate expressing that a pointed space is a `K(G,1)` (path-connected, with fundamental group isomorphic to `G`, and all higher homotopy groups trivial).\n2. Formalize a 1-truncation or classifying-space realization functor between suitable spaces and groupoids.\n3. Prove that the unit from a connected 1-type to the realization of its fundamental groupoid is a homotopy equivalence.\n4. Deduce the familiar topological statement that two `K(G,1)` spaces are homotopy equivalent exactly when their fundamental groups are isomorphic.\n\n## Sharpening the boundary of completeness\n\nThe counterexample uses `Unit` and discrete `Bool`: both based fundamental groups are trivial, but their sets of path components differ. This suggests proving increasingly sharp classifications:\n\n- The fundamental **groupoid**, rather than one based fundamental group, records all path components and their fundamental groups.\n- For arbitrary 1-types, prove that equivalence of fundamental groupoids is a complete invariant.\n- Show that even the fundamental groupoid ceases to be complete once nontrivial higher homotopy is present; a standard target is to distinguish a point from a simply connected sphere using a higher homotopy group.\n\n## Additional examples\n\nUseful formally verified examples would include:\n\n- connected spaces with the same fundamental group but different second homotopy groups;\n- lens spaces with equal or related fundamental groups but distinct homotopy types;\n- products `K(G,1) × S^n`, illustrating exactly which information the fundamental group forgets;\n- classifying spaces `BG` for concrete finite groups, together with explicit computations of their fundamental groups.\n\n## Reusable library improvements\n\nThe development would become shorter and more general with reusable lemmas stating:\n\n- every connected groupoid is equivalent to the one-object groupoid of a vertex group;\n- endomorphisms and automorphisms are multiplicatively equivalent in any groupoid;\n- a homotopy between maps into a totally disconnected space is equality;\n- a homotopy equivalence between totally disconnected spaces induces an equivalence of underlying types.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Geometry",
-      "Logic"
-    ],
-    "id": "fd_0777",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "060e882c",
-    "status": "available",
-    "timestamp": "2026-07-26T23:20:04.744968+00:00",
-    "title": "The completed result classifies **connected groupoids**, hence connected homotop"
   },
   {
     "ambition_level": "extension",
@@ -10889,6 +10891,25 @@
     "status": "available",
     "timestamp": "",
     "title": "The Ramsey Theory of DNA: Subsequence Avoidance in Genetic Codes"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_0777",
+    "lineage_refs": [],
+    "priority_score": 0.7,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "oeis:212351",
+    "status": "available",
+    "timestamp": "2026-07-26T23:20:21.737784+00:00",
+    "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
   },
   {
     "ambition_level": "extension",
