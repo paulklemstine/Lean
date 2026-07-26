@@ -167,20 +167,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Proves that neural network agents operating in self-referential training loops inevitably replace original memory traces with synthesized hallucinations.",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "scifi_50_13_5e09766d",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "scifi_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:07:57.444627+00:00",
-    "title": "Memory-Overwrite-Manifold: Topologically Inevitable Memory Alteration in Closed Feedback Loops"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Constructs a closed 4D topological boundary that prevents spatial translation of any object contained within, regardless of kinetic energy.",
     "domains": [
       "Geometry"
@@ -192,62 +178,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-23T20:07:57.493087+00:00",
     "title": "SCP-Containment-Topology: Non-Euclidean Geometric Lock for Anomalous Objects"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Proves the exact critical agent density threshold at which individual autonomous agents undergo a phase transition into a unified high-order consciousness.",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "scifi_50_16_f095d009",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "scifi_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:07:57.592753+00:00",
-    "title": "Hive-Mind-Manifold: Topological Phase Transitions in Collective Super-Organism Intelligence"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Proves that a neural agent's identity vector remains invariant under continuous substrate migration (mind uploading).",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "scifi_50_18_42608cb6",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "scifi_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:07:57.689455+00:00",
-    "title": "Synthetic-Soul-Invariant: Topological Conservation Laws of Neural Identity"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Constructs artificial neural architectures capable of directly processing 11-dimensional spatial tensors without dimensional reduction loss.",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "scifi_50_19_ae8889d5",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "scifi_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:07:57.739465+00:00",
-    "title": "Hyper-Awareness: 11-Dimensional Perception Vectors in Synthetic Neural Nets"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Proves that offline memory consolidation during neural 'sleep' cycles corresponds to traversing strange attractors in weight space.",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "scifi_50_20_a29589f0",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "scifi_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:07:57.787730+00:00",
-    "title": "Dream-State-Generative: Chaos Attractors in Sleeping Neural Architectures"
   },
   {
     "consumed_by_exp_id": "",
@@ -1008,76 +938,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-23T20:05:23.277230+00:00",
     "title": "Zero-Knowledge: Soundness and Completeness of zk-SNARK Circuits"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Computes exact maximum region count formulas for depth-L ReLU neural network input space partitioning.",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "dir_50_21_95017769",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "batch_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:05:23.373381+00:00",
-    "title": "Neural-Manifold: Exact Piecewise Linear Partition Bounds for ReLU Networks"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Proves exponential decay rate bounds on the singular values of Softmax self-attention matrices in deep Transformer layers.",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "dir_50_22_f2606f7f",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "batch_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:05:23.422786+00:00",
-    "title": "Transformer-Geometry: Attention Matrix Singular Value Decay Bounds"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Proves global 1-Lipschitz continuity for Eikonal-regularized neural network implicit surface representations.",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "dir_50_23_63dfbbf2",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "batch_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:05:23.471391+00:00",
-    "title": "Neural-Implicit: Lipschitz Bounds on Neural Signed Distance Functions"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Proves exponential convergence of gradient descent optimization on infinite-width neural networks matching NTK dynamic regime.",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "dir_50_24_741e80f2",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "batch_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:05:23.520731+00:00",
-    "title": "Gradient-Flow: Convergence of Overparameterized Networks to Neural Tangent Kernel"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Derives tight uniform generalization error bounds for Vision Transformers via empirical Rademacher complexity.",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "dir_50_25_f3b8e217",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "batch_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:05:23.568298+00:00",
-    "title": "Generalization-Bound: Rademacher Complexity Bounds for Vision Transformers"
   },
   {
     "consumed_by_exp_id": "",
@@ -1893,7 +1753,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "id": "seed_085",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
@@ -2539,22 +2399,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Compactification of Moduli Spaces"
   },
   {
-    "consumed_by_exp_id": "25e8f86d",
-    "description": "Prove that in the infinite-width limit, neural network training under gradient descent converges to kernel regression with the Neural Tangent Kernel (NTK). Formalize the NTK as the Gram matrix of Jacobians and prove it stays nearly constant during training for small learning rates.",
-    "domains": [
-      "MachineLearning",
-      "Computation"
-    ],
-    "id": "seed_327",
-    "phase": "B",
-    "priority_score": 0.87,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Neural Tangent Kernel: Convergence of Gradient Descent"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Prove that there are no non-constant polynomials f,g,h over C such that f^n + g^n = h^n for n >= 3. Show this follows from the Mason-Stothers theorem. Formalize the polynomial ABC conjecture and derive Fermat as a corollary.",
     "domains": [
@@ -3084,17 +2928,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Reflective Type Theory: Proving Things About Proving Things"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "55a94506",
     "description": "Prove that the Fisher information metric on a statistical manifold satisfies the axioms of a Riemannian metric. Construct explicit connections between the Fisher metric and the Kullback-Leibler divergence. Bridge statistical inference to differential geometry.",
     "domains": [
       "Bridges",
       "Geometry"
     ],
     "id": "seed_296",
+    "phase": "A",
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Information-Geometric Bridge: Fisher Metric on Statistical Manifolds"
   },
@@ -4587,7 +4432,7 @@ window.FUTURE_DIRECTIONS = [
       "Analysis"
     ],
     "id": "seed_244",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
@@ -4900,22 +4745,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Generalization Bounds: Rademacher Complexity of Neural Networks"
   },
   {
-    "consumed_by_exp_id": "830d234a",
-    "description": "Formalize the policy gradient theorem: the gradient of the expected return equals E[psi(s,a) * Q^pi(s,a)] where psi is the score function. Prove that policy gradient methods converge to a local optimum under the compatible function approximation theorem. Show that the variance of the gradient estimate is O(1/epsilon) for epsilon-greedy exploration.",
-    "domains": [
-      "MachineLearning",
-      "Computation"
-    ],
-    "id": "seed_378",
-    "phase": "B",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "ML Reinforcement Learning: Convergence of Policy Gradient Methods"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Conjecture that P != NP has a physical interpretation: the universe's computational capacity is bounded by the polynomial hierarchy. Formalize this: any physical process that runs in polynomial time can be simulated by a polynomial-time Turing machine (Extended Church-Turing thesis). Show that if P = NP, then the second law of thermodynamics would be violated because Maxwell's demon could be implemented efficiently.",
     "domains": [
@@ -5121,7 +4950,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "id": "fd_0672",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.83,
     "research_mode": "prove",
     "source_exp_id": "seed",
@@ -6335,7 +6164,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Uncertainty Principle Is a Fourier Thing: Position-Momentum Duality"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d7591934",
     "description": "The Robertson-Seymour theorem states that the set of finite graphs is well-quasi-ordered by the minor relation: any infinite sequence of graphs contains two where one is a minor of the other. This implies that any minor-closed graph property is characterized by a finite set of forbidden minors. Conjecture: the same theorem holds for representable matroids over any finite field. Specifically, for any finite field F_q, the set of F_q-representable matroids is well-quasi-ordered by the matroid minor relation. This would generalize the Robertson-Seymour theorem from graphs (F_2-representable matroids) to all finite fields. The conjecture is known to fail for general matroids (by the existence of infinite antichains of non-representable matroids), but for F_q-representable matroids with q <= 3, it is open. Conjecture: for F_3 (ternary matroids), the set of excluded minors for representability is finite. The current known excluded minors for F_3 are: the Fano matroid F_7, its dual F_7*, and the non-Pappus matroid. Test: enumerate ternary matroids of rank 3 on 9 elements, verify that all but the known excluded minors are F_3-representable. Impact: Robertson-Seymour for matroids would unify graph minor theory and matroid theory under a single well-quasi-ordering theorem.",
     "domains": [
       "Novelty",
@@ -6343,10 +6172,11 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "id": "seed_172",
+    "phase": "A",
     "priority_score": 0.81,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Matroid Minors and the Graph Theorem: Robertson-Seymour for Matroids"
   },
@@ -8023,7 +7853,7 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "id": "seed_114",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.78,
     "research_mode": "team",
     "source_exp_id": "seed",
@@ -8836,21 +8666,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\n- Construct the classical Airy function in Lean as the distinguished decaying solution of `y'' = x y`, and prove the integral and Christoffel\u2013Darboux representations of the Airy kernel.\n- Upgrade `AiryGramApproximation` to quadrature schemes whose kernels converge in Hilbert\u2013Schmidt and trace norm on half-lines.\n- Develop Fredholm determinants of trace-class integral operators and define the Tracy\u2013Widom distribution by `det(I - K_Ai)`.\n- Prove positivity, monotonicity, continuity, and tail estimates for the resulting distribution function.\n- Formalize random Hermitian matrices, ordered eigenvalues, Wigner entry hypotheses, and the `n^(2/3)` soft-edge rescaling.\n- Develop resolvent identities, local semicircle laws, eigenvalue rigidity, and Green-function comparison estimates.\n- Instantiate `edgeCDFConverges_of_sandwich` with comparison ensembles to transfer the Gaussian Tracy\u2013Widom limit to non-Gaussian Wigner ensembles.\n",
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_0731",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "311c4349",
-    "status": "available",
-    "timestamp": "2026-07-25T23:20:29.072128+00:00",
-    "title": "Future directions from cycle 311c4349"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "# Future Directions: Holographic Proof Duality\n\n## What the formal results support\n\nThe verified core should be interpreted as an order-theoretic holographic principle, not as a literal dimension-reduction theorem. For a monotone endomorphism of a complete lattice, passage to the order dual exchanges least and greatest fixed points. Consequently, an inductive pre-fixed-point certificate in the bulk is exactly a coinductive post-fixed-point certificate on the dual boundary, and bounds on the inductive semantics translate in both directions.\n\n## What the formal results rule out\n\nTwo stronger conjectures fail without substantial extra hypotheses.\n\n1. **Automatic strict proof compression fails.** The canonical dualization of a local proof trace preserves its length exactly. Any nonempty trace therefore refutes a claim that dualization by itself always shortens proofs.\n2. **Universal lossless codimension-one encoding fails.** A set with `n+1` states cannot inject into one with `n` states. Thus topology, symmetry, redundancy, admissibility constraints, or a quotient notion of observational equivalence must do real work in any genuine dimensional reduction.\n\nThese no-go results separate three notions that the motivating slogan conflates: semantic duality, geometric dimension reduction, and syntactic proof compression. Only the first follows from order duality alone.\n\n## Concrete next problems\n\n### 1. Ranked well-founded systems\n\nDefine a category of ranked transition systems with:\n\n- a well-founded bulk relation;\n- a boundary observation map;\n- a bisimulation or logical-relation condition;\n- an explicit proof-cost model.\n\nThen characterize exactly when well-founded induction transports to coinduction on boundary observations. The finite cardinality obstruction shows that reconstruction should be required only up to observational equivalence, not equality of states.\n\n### 2. Finite Ramsey certificates\n\nFor the test case `R(3,3) = 6`, represent a two-coloring as a Boolean edge labeling of `K\u2086`. The standard vertex-neighborhood argument gives a compact local certificate: among five incident edges, three share a color; their three endpoints either contain an edge of that color or form a triangle of the other color. A useful next formalization would compare:\n\n- the ordinary finite/pigeonhole proof;\n- a boundary certificate consisting only of the star of one vertex plus the induced triangle;\n- a precisely defined certificate-size measure.\n\nThis would test genuine restriction-to-boundary compression rather than mere order reversal.\n\n### 3. Topological boundary data\n\nReplace bare finite state sets by simplicial complexes or finite CW complexes. Candidate hypotheses for lossless reconstruction include shellability, collapsibility, coskeletality, and unique extension from links. Any theorem should state the reconstruction equivalence and its cost separately.\n\n### 4. Fixed-point proof complexity\n\nEquip derivations with a syntax and cost semantics, then ask when the order-dual translation admits sharing or quotienting. The present length-preservation theorem is a baseline: strict compression can only arise from a nontrivial normalization, quotient, DAG representation, or boundary-specific admissibility theorem.\n\n### 5. Infinite systems\n\nInvestigate transfinite approximants of least and greatest fixed points. Complete-lattice duality remains available, but matching ordinal convergence stages may require continuity or cocontinuity assumptions. A meaningful \u201crank drops by one\u201d theorem would need an independently defined rank invariant and a proof that dual boundary formation changes it.\n\n## Methodological constraint\n\nFuture claims should always specify:\n\n- what \u201cdimension\u201d means;\n- what data constitute the boundary;\n- whether equivalence means equality, isomorphism, bisimulation, or observational equivalence;\n- what proof calculus and cost measure define \u201cshorter.\u201d\n\nWithout these choices, the universal conjecture is either false by cardinality or reduces to the valid but non-compressive order-duality theorem proved here.\n",
     "domains": [
       "Algebra",
@@ -8893,6 +8708,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-26T00:21:38.956122+00:00",
     "title": "`ZeroKnowledgeTheoremProving.lean` separates three facts that the proposed proto"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Neural Tangent Dynamics\n\n## 1. Uniform infinite-width kernel concentration\n\nFor fully connected networks with sub-Gaussian initialization and Lipschitz activation derivative, the empirical neural tangent kernel should remain uniformly within operator-norm error `O(m\u207b\u00b9\u141f\u00b2 polylog(m))` of its deterministic infinite-width limit throughout any fixed training horizon, with probability tending to one as width `m` grows.\n\nThe key insight is that deterministic Jacobian-drift bounds can be combined with initialization concentration and a covering argument over the training path.\n\nWhy now? The deterministic stability estimate identifies exactly which Jacobian concentration statement is needed and separates it from the optimization argument.\n\n## 2. Width-dependent convergence to kernel regression\n\nFor squared-loss gradient descent on a finite dataset whose limiting NTK has a positive spectral gap, a width-`m` network should track the corresponding kernel-regression trajectory with prediction error `O(m\u207b\u00b9\u141f\u00b2)` up to logarithmic factors, uniformly until interpolation.\n\nThe key insight is that contraction of the limiting residual operator prevents local kernel perturbations from accumulating linearly over training time.\n\nWhy now? The geometric residual theorem supplies a stable recurrence into which a quantitative kernel perturbation estimate can be inserted.\n\n## 3. Feature-learning threshold beyond the lazy regime\n\nThere should be a sharp scaling threshold in learning rate and initialization variance at which NTK drift changes from vanishing to order one, separating kernel-like training from genuine feature learning.\n\nThe key insight is that the product of Jacobian Lipschitz scale, path length, and effective width normalization is the natural dimensionless drift parameter.\n\nWhy now? The entrywise stability theorem makes this controlling product explicit and therefore suggests a falsifiable phase boundary.\n\n## 4. Low-rank data geometry and accelerated NTK convergence\n\nWhen the sample Jacobian lies near a low-dimensional subspace, a preconditioned kernel update should converge at a rate governed by the nonzero restricted spectrum rather than the ambient sample dimension, while preserving the same interpolating solution.\n\nThe key insight is that Gram positivity and null directions should be analyzed on the Jacobian image, where strict contraction may hold even when the full kernel is singular.\n\nWhy now? The present separation between positive semidefiniteness and contraction exposes null-space geometry as the precise obstruction to a global rate.\n\n## 5. Adaptive learning rates under controlled kernel drift\n\nA learning-rate schedule chosen from online estimates of the extremal NTK eigenvalues should preserve contraction and improve finite-time convergence without requiring the kernel to be exactly constant.\n\nThe key insight is that each time-varying residual step can be controlled by its own contraction factor, and the resulting error rate should be a product rather than a single geometric power.\n\nWhy now? Fixed-kernel convergence and quantitative drift control provide the two ingredients needed to formulate a robust nonautonomous extension.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0735",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "25e8f86d",
+    "status": "available",
+    "timestamp": "2026-07-26T02:25:21.290383+00:00",
+    "title": "For fully connected networks with sub-Gaussian initialization and Lipschitz acti"
   },
   {
     "consumed_by_exp_id": "",

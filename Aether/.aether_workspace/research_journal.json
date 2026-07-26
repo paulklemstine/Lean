@@ -1,26 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "95b84694",
-      "domain": "Bridges",
-      "key_insight": "# Future directions\n\nThe formalization makes the speculative claim precise for a finite formal library: gravitational weight is the number of direct users, proof length is a natural-number cost, and d",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-21T14:31:40",
-      "title": "Speculative: Anti-Gravity Mathematics — Theorems That Resist Proof"
-    },
-    {
-      "cycle_id": "977e8d8d",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions: Topology of Theorem Networks\n\n## 1. Labeled persistence and mathematical communities\n\n**Conjecture.** In a temporally filtered co-citation hypergraph, long-lived first-homology cl",
-      "quality_score": 0.74,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-07-21T14:31:45",
-      "title": "Speculative: Topological Data Analysis of Theorem Networks"
-    },
-    {
       "cycle_id": "2fdbedee",
       "domain": "Shared",
       "key_insight": "# Future Directions: Critical Geometry of Counted Proof Spaces\n\n## 1. Quasi-invariance of critical indices under efficient recoding\n\nLet two prefix-free encodings of the same deductive system translat",
@@ -499,29 +479,29 @@
       "theorem_count": 0,
       "timestamp": "2026-07-26T00:21:39",
       "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
+    },
+    {
+      "cycle_id": "25e8f86d",
+      "domain": "Computation",
+      "key_insight": "# Future Directions: Neural Tangent Dynamics\n\n## 1. Uniform infinite-width kernel concentration\n\nFor fully connected networks with sub-Gaussian initialization and Lipschitz activation derivative, the",
+      "quality_score": 0.76,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-26T02:25:29",
+      "title": "Neural Tangent Kernel: Convergence of Gradient Descent"
+    },
+    {
+      "cycle_id": "830d234a",
+      "domain": "Computation",
+      "key_insight": "# Future directions\n\nThe formal development proves the finite-action policy-gradient identity directly from coordinatewise score factorization, derives the mean-zero score and baseline invariance, est",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-07-26T02:25:34",
+      "title": "ML Reinforcement Learning: Convergence of Policy Gradient Methods"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "5b9ebbbb",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\n## What is proved\n\n`Catalog/Main.lean` formalizes finite symmetric Markov kernels and proves a chain\nfrom closed classes to the spectral obstruction to mixing:\n\n1. symmetry turns",
-      "quality_score": 0.58,
-      "sorry_count": 0,
-      "theorem_count": 46,
-      "timestamp": "2026-07-19T07:39:00",
-      "title": "The Spectral Gap of Sudoku: When Puzzles Become Phase Transitions"
-    },
-    {
-      "cycle_id": "d00870b3",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions: Subsequence Ramsey Theory for Genetic Words\n\n## 1. Sharp extremal law for repeated scattered words\n\nFor an alphabet of size `q`, determine the largest word length for which one ca",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-19T07:40:03",
-      "title": "The Ramsey Theory of DNA: Subsequence Avoidance in Genetic Codes"
-    },
     {
       "cycle_id": "77a52651",
       "domain": "Combinatorics",
@@ -2501,27 +2481,29 @@
       "theorem_count": 0,
       "timestamp": "2026-07-26T00:21:39",
       "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
+    },
+    {
+      "cycle_id": "25e8f86d",
+      "domain": "Computation",
+      "key_insight": "# Future Directions: Neural Tangent Dynamics\n\n## 1. Uniform infinite-width kernel concentration\n\nFor fully connected networks with sub-Gaussian initialization and Lipschitz activation derivative, the",
+      "quality_score": 0.76,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-26T02:25:29",
+      "title": "Neural Tangent Kernel: Convergence of Gradient Descent"
+    },
+    {
+      "cycle_id": "830d234a",
+      "domain": "Computation",
+      "key_insight": "# Future directions\n\nThe formal development proves the finite-action policy-gradient identity directly from coordinatewise score factorization, derives the mean-zero score and baseline invariance, est",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-07-26T02:25:34",
+      "title": "ML Reinforcement Learning: Convergence of Policy Gradient Methods"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "2f329d75",
-      "domain": "Bridges",
-      "name": "also",
-      "quality": 0.73
-    },
-    {
-      "cycle_id": "2f329d75",
-      "domain": "Bridges",
-      "name": "about",
-      "quality": 0.73
-    },
-    {
-      "cycle_id": "2f329d75",
-      "domain": "Bridges",
-      "name": "exactOracle_correct",
-      "quality": 0.73
-    },
     {
       "cycle_id": "07e03295",
       "domain": "Physics",
@@ -2803,9 +2785,27 @@
       "domain": "Cryptography",
       "name": "message_unique_from_noisy_encoding",
       "quality": 0.7
+    },
+    {
+      "cycle_id": "830d234a",
+      "domain": "Computation",
+      "name": "for",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "830d234a",
+      "domain": "Computation",
+      "name": "finite_policyGradient",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "830d234a",
+      "domain": "Computation",
+      "name": "score_mean_zero",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-26T00:21:39",
+  "last_updated": "2026-07-26T02:25:34",
   "open_questions": [
     {
       "context": "",
@@ -3269,18 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "cd0075c8",
-        "quality": 0.75,
-        "theorems": 0,
-        "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
-      },
-      {
-        "cycle_id": "ea115bd0",
-        "quality": 0.7,
-        "theorems": 0,
-        "title": "Speculative: Number Theory as Music Theory"
-      },
-      {
         "cycle_id": "decbe545",
         "quality": 0.64,
         "theorems": 8,
@@ -3327,6 +3315,18 @@
         "quality": 0.52,
         "theorems": 22,
         "title": "Game of Life Universality"
+      },
+      {
+        "cycle_id": "25e8f86d",
+        "quality": 0.76,
+        "theorems": 0,
+        "title": "Neural Tangent Kernel: Convergence of Gradient Descent"
+      },
+      {
+        "cycle_id": "830d234a",
+        "quality": 0.72,
+        "theorems": 8,
+        "title": "ML Reinforcement Learning: Convergence of Policy Gradient Methods"
       }
     ],
     "Cryptography": [
