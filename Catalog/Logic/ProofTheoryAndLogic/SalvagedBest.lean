@@ -1,1 +1,0 @@
-../../Logic/ConsciousnessasIntegratedInformationMath/SalvagedBest.lean

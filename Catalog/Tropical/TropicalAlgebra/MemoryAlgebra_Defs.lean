@@ -1,1 +1,0 @@
-../../Tropical/MemoryAlgebra/Defs.lean

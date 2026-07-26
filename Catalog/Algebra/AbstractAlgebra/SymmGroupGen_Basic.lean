@@ -1,1 +1,0 @@
-../../Algebra/SymmGroupGen/Basic.lean

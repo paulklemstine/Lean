@@ -1,1 +1,0 @@
-../../Pythagorean/SNFObstruction/Basic.lean

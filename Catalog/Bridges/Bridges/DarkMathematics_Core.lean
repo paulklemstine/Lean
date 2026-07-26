@@ -1,1 +1,0 @@
-../../Bridges/Speculative/DarkMathematics/Core.lean

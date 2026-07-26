@@ -1,1 +1,0 @@
-../../MachineLearning/TropicalGraph.lean

@@ -1,1 +1,0 @@
-../../Speculative/IdempotentCollapse/FixedPointCollapse.lean

@@ -1,1 +1,0 @@
-../../Bridges/BerggrenIsogeny/Duality.lean

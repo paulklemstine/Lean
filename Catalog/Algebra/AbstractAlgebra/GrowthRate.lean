@@ -1,1 +1,0 @@
-../../Algebra/SAWTropical/GrowthRate.lean

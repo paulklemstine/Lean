@@ -1,1 +1,0 @@
-../../Pythagorean/Hypergraph/SunflowerPruning.lean

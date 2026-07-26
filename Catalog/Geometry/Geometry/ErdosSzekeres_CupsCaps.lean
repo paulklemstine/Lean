@@ -1,1 +1,0 @@
-../../Geometry/ErdosSzekeres/CupsCaps.lean

@@ -1,1 +1,0 @@
-../../Pythagorean/TropicalLeafWitnesses/Theorems.lean

@@ -1,1 +1,0 @@
-../../Bridges/ThermodynamicGalois/GaloisDuality.lean

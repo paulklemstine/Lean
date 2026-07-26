@@ -1,9 +1,0 @@
---- BinomialGCDA080170PrimePower.lean
-+++ BinomialGCDA080170PrimePower.lean
-@@ -1,5 +1,5 @@
- import Mathlib
--import Catalog.Novelty.BinomialGCDA080170
-+import Novelty.BinomialGCDA080170
- 
- /-!
- 

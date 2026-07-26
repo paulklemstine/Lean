@@ -1,8 +1,0 @@
---- KarchmerWigderson.lean
-+++ KarchmerWigderson.lean
-@@ -1,4 +1,4 @@
--import Catalog.Novelty.CircuitComplexity.Basic
-+import Novelty.CircuitComplexity.Basic
- 
- /-!
- 

@@ -1,8 +1,0 @@
---- ColorClass.lean
-+++ ColorClass.lean
-@@ -1,4 +1,4 @@
--import Catalog.Novelty.Defs
-+import Catalog.Novelty.TotalRainbowForest.Defs
- 
- /-!
- 

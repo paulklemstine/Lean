@@ -1,1 +1,0 @@
-../../Bridges/QuotientOrbitCompression/Core.lean

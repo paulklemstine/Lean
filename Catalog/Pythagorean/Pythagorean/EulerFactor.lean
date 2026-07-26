@@ -1,1 +1,0 @@
-../../Pythagorean/HeckePacket/EulerFactor.lean

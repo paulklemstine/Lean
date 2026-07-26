@@ -1,1 +1,0 @@
-../../MachineLearning/Lychrel/Theorems.lean

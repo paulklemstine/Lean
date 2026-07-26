@@ -1,1 +1,0 @@
-../../Algebra/IdempotentClosure/Basic.lean

@@ -1,1 +1,0 @@
-../../Algebra/SumThreeCubes/Symmetry.lean

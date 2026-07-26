@@ -1,8 +1,0 @@
---- Median.lean
-+++ Median.lean
-@@ -1,4 +1,4 @@
--import Catalog.Novelty.PartialCube
-+import Catalog.Novelty.DaisyCubes.PartialCube
- 
- /-!
- 

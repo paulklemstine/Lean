@@ -1,1 +1,0 @@
-../../Speculative/RosettaStone/Applications.lean

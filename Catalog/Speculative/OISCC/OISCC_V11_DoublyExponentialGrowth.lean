@@ -1,1 +1,0 @@
-../../Speculative/OISCC/V11_DoublyExponentialGrowth.lean

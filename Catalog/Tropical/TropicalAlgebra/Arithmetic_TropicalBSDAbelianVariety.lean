@@ -1,1 +1,0 @@
-../../Tropical/Arithmetic/TropicalBSDAbelianVariety.lean

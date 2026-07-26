@@ -1,1 +1,0 @@
-../../Pythagorean/CayleyExpander/CharacterSumBounds.lean

@@ -1,1 +1,0 @@
-../../Algebra/Hadamard/Design.lean

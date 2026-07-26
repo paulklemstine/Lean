@@ -1,1 +1,0 @@
-../../Speculative/HurwitzQuaternions.lean

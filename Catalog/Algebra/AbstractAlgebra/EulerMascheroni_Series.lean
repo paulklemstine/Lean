@@ -1,1 +1,0 @@
-../../Algebra/EulerMascheroni/Series.lean

@@ -1,1 +1,0 @@
-../../Physics/BraidInvariant/BraidInvariant.lean

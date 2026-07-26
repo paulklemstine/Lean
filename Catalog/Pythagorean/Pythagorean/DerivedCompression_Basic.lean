@@ -1,1 +1,0 @@
-../../Pythagorean/DerivedCompression/Basic.lean

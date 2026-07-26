@@ -1,1 +1,0 @@
-../../MachineLearning/FixedPoint/Applications.lean

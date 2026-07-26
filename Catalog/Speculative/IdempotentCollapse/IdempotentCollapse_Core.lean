@@ -1,1 +1,0 @@
-../../Speculative/IdempotentCollapse/Core.lean

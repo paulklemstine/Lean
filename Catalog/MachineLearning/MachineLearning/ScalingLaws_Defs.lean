@@ -1,1 +1,0 @@
-../../MachineLearning/ScalingLaws/Defs.lean

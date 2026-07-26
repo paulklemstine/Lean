@@ -1,1 +1,0 @@
-../../Tropical/FutureDirectionsV2.lean

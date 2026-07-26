@@ -1,1 +1,0 @@
-../../Bridges/TropicalOperadicRealization/Theorems.lean

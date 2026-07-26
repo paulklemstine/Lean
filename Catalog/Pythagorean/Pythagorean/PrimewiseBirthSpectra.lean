@@ -1,1 +1,0 @@
-../../Pythagorean/PrimewiseBirthSpectra.lean

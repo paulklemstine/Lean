@@ -1,1 +1,0 @@
-../../Tropical/InformationTheory/Core.lean

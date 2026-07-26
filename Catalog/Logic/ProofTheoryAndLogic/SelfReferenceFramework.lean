@@ -1,1 +1,0 @@
-../../Logic/SelfReferenceFramework.lean

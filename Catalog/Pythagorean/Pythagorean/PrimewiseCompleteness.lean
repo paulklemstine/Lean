@@ -1,1 +1,0 @@
-../../Pythagorean/DerivedPersistence/PrimewiseCompleteness.lean

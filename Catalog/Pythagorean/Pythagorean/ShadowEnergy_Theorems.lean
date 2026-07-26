@@ -1,1 +1,0 @@
-../../Pythagorean/ShadowEnergy/Theorems.lean

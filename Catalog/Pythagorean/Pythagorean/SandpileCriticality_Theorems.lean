@@ -1,1 +1,0 @@
-../../Pythagorean/SandpileCriticality/Theorems.lean

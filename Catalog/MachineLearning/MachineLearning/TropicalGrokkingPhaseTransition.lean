@@ -1,1 +1,0 @@
-../../MachineLearning/TropicalGrokkingPhaseTransition.lean

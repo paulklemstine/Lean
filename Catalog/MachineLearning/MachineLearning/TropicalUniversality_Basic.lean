@@ -1,1 +1,0 @@
-../../MachineLearning/TropicalUniversality/Basic.lean

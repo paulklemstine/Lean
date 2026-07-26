@@ -1,1 +1,0 @@
-../../Algebra/BoundedDegreePolynomials/Basic.lean

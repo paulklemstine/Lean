@@ -1,1 +1,0 @@
-../../MachineLearning/Beal/Monotonicity.lean

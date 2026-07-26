@@ -1,1 +1,0 @@
-../../MachineLearning/SpectralProofUniversality/Defs.lean

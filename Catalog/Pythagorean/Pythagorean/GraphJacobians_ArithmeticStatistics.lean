@@ -1,1 +1,0 @@
-../../Pythagorean/GraphJacobians/ArithmeticStatistics.lean

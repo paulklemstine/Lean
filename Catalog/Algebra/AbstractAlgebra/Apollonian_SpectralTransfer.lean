@@ -1,1 +1,0 @@
-../../Algebra/Apollonian/SpectralTransfer.lean

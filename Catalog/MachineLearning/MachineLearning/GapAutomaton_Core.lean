@@ -1,1 +1,0 @@
-../../MachineLearning/GapAutomaton/Core.lean

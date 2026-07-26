@@ -1,1 +1,0 @@
-../../Pythagorean/TropicalEntanglement/Defs.lean

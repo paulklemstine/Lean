@@ -1,1 +1,0 @@
-../../Pythagorean/TropicalMorse/CycleBirth/ConcentrationUniversality.lean

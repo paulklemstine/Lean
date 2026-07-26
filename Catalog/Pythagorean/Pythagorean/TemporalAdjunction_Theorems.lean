@@ -1,1 +1,0 @@
-../../Pythagorean/TemporalAdjunction/Theorems.lean

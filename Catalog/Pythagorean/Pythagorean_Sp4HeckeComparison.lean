@@ -1,1 +1,0 @@
-../../Bridges/Pythagorean/Sp4HeckeComparison.lean

@@ -1,1 +1,0 @@
-../../Geometry/HyperbolicDisk/Core.lean

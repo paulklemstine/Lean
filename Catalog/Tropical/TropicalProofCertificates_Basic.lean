@@ -1,1 +1,0 @@
-../../Bridges/TropicalProofCertificates/Basic.lean

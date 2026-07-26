@@ -1,1 +1,0 @@
-../../Tropical/Geometry/Hypersurface.lean

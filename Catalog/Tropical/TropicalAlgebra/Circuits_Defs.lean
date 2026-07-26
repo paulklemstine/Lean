@@ -1,1 +1,0 @@
-../../Tropical/Circuits/Defs.lean

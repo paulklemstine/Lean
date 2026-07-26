@@ -1,1 +1,0 @@
-../../Pythagorean/DepthRigidityFull/Theorems.lean

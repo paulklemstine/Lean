@@ -1,1 +1,0 @@
-../../Physics/Classical/LightConeTheory.lean

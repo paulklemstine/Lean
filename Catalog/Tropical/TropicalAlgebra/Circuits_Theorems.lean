@@ -1,1 +1,0 @@
-../../Tropical/Circuits/Theorems.lean

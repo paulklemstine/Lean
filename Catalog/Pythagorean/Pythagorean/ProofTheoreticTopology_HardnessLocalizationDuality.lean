@@ -1,1 +1,0 @@
-../../Pythagorean/ProofTheoreticTopology/HardnessLocalizationDuality.lean

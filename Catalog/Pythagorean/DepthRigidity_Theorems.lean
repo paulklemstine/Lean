@@ -1,1 +1,0 @@
-../../Bridges/Pythagorean/DepthRigidity/Theorems.lean

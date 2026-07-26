@@ -1,1 +1,0 @@
-../../Tropical/TropicalSchurGL3.lean

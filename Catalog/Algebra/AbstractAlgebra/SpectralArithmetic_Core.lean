@@ -1,1 +1,0 @@
-../../Algebra/SpectralArithmetic/Core.lean

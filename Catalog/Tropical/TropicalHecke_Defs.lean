@@ -1,1 +1,0 @@
-../../Bridges/TropicalHecke/Defs.lean

@@ -1,1 +1,0 @@
-../../Pythagorean/ShadowIsoperimetry/Defs.lean

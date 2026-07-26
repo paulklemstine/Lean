@@ -1,1 +1,0 @@
-../../Pythagorean/CurvatureFlow/SpectralGap.lean

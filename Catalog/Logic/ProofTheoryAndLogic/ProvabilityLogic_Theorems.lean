@@ -1,1 +1,0 @@
-../../Logic/ProvabilityLogic/Theorems.lean

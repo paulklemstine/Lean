@@ -1,1 +1,0 @@
-../../Pythagorean/ClauseSpace/Theorems.lean

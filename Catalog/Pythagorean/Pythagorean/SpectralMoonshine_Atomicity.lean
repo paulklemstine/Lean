@@ -1,1 +1,0 @@
-../../Pythagorean/SpectralMoonshine/Atomicity.lean
