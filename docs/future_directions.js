@@ -3635,17 +3635,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Universal Approximation: Width vs Depth Trade-offs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "27eaed26",
     "description": "Conjecture that major theorems (G\u00f6del's incompleteness, Fermat's Last Theorem, ABC conjecture) correspond to phase transitions in proof space. Define an order parameter: the ratio of provable to unprovable statements of length \u2264 n. Prove that this ratio undergoes a sharp transition at some critical n_c (the G\u00f6del threshold). Predict: the distribution of theorem lengths follows a power law with exponent related to the Hausdorff dimension of proof space.",
     "domains": [
       "Novelty",
       "Logic"
     ],
     "id": "seed_383",
+    "phase": "A",
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Speculative: Theorems as Phase Transitions in Proof Space"
   },
@@ -5844,16 +5845,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: The Universe Computes Its Own Existence (Physics = Computation)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "27c8e30f",
     "description": "Cycle 905765f9 (Q=0.760) proved 4 theorems in Shared but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Domain Shared has declined by 0.164 over recent cycles (recent avg=0.696 vs prior=0.860). Take a completely fresh approach \u2014 different proof techniques, new definitions, or a different subfield within",
     "domains": [
       "Shared"
     ],
     "id": "sorry_fill_905765f9_b4c36e4b",
+    "phase": "A",
     "priority_score": 0.81,
     "research_mode": "team",
     "source_exp_id": "905765f9",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-25T10:53:08.634370+00:00",
     "title": "Close Proofs: [Reset] Fresh approach in Shared"
   },
