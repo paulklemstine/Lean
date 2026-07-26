@@ -975,7 +975,7 @@
       "depth_estimate": 3,
       "description": "Formalizes Campos-Griffiths-Morris-Sahasrabudhe exponential improvement on diagonal Ramsey bounds R(k,k) ≤ (4-ε)^k.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Combinatorics"
       ],
@@ -1095,7 +1095,7 @@
       "depth_estimate": 3,
       "description": "Proves the Alon-Boppana theorem establishing lower bounds λ_2 ≥ 2√(d-1) - o(1) for the second largest eigenvalue of d-regular graphs.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Combinatorics"
       ],
@@ -16181,7 +16181,7 @@
       "depth_estimate": 3,
       "description": "Formalize Ramsey's theorem and prove tight bounds: R(3,3)=6, R(3,4)=9, R(4,4)=18. Prove the Erdős-Szekeres bound R(s,t) ≤ C(s+t-2, s-1). Construct the best known lower bound via the probabilistic method. Formalize the Hales-Jewett theorem.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Combinatorics"
       ],
@@ -16221,7 +16221,7 @@
       "depth_estimate": 3,
       "description": "Formalize Frankl's conjecture and prove it for families of size ≤ 50 (Bošnjak-Marković). Prove the conjecture for families with a 3-element universe. Formalize the lattice-theoretic reformulation and Reimer's entropy approach.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Combinatorics",
         "Algebra"
@@ -16273,7 +16273,7 @@
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
-      "outcome_quality": 0.0,
+      "outcome_quality": 0.77,
       "parent_direction": "",
       "priority_score": 0.83,
       "proof_strategy": "",
@@ -16284,7 +16284,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-07-24T14:34:16.697799+00:00",
       "title": "Graph Coloring: Chromatic Polynomial Theory"
@@ -16303,7 +16303,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Erdős-Rényi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Combinatorics",
         "Probability"
@@ -16344,7 +16344,7 @@
       "depth_estimate": 3,
       "description": "Formalize Turán's theorem: ex(n, K_r) = (1-1/(r-1))n²/2. Prove the Kruskal-Katona theorem. Formalize Szemerédi's regularity lemma and prove the triangle removal lemma. Apply to prove Roth's theorem on 3-APs.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Combinatorics"
       ],
@@ -17050,7 +17050,7 @@
       "depth_estimate": 3,
       "description": "Formalize tropical curves as metric graphs. Prove the tropical Riemann-Roch theorem via chip-firing: r(D) - r(K-D) = deg(D) - g + 1. Construct explicit divisor classes on complete graphs and prove Baker-Norine's theorem.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Tropical",
         "Algebra",
@@ -17985,6 +17985,47 @@
       "thread_id": "th_891f3707",
       "timestamp": "2026-07-26T05:37:00.496290+00:00",
       "title": "**Conjecture.** Consider two lazy-training residual recursions with the same ini"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "# Future directions\n\n1. **Integer polynomial object.** Construct `chromaticPolynomial G : ℤ[X]`, prove its evaluation at every natural palette size equals `chromVal G`, and lift deletion–contraction from evaluations to polynomial equality.\n2. **Alternating coefficients.** Use deletion–contraction to prove the standard sign alternation and identify the leading coefficient and degree.\n3. **More graph operations.** Prove formulas for joins, vertex sums, forests, cycles, and complete multipartite graphs. The disjoint-union multiplicativity theorem is the first operation law.\n4. **Chromatic roots and bases.** Formalize expansion in falling-factorial and tree bases; investigate positivity statements in a precisely defined `T`-basis.\n5. **Claw-free positivity.** State the intended meaning of T-positivity, develop the required symmetric/quasisymmetric polynomial infrastructure, and formalize the claw-free theorem. This is substantially beyond natural-number evaluations alone.\n6. **Brooks' theorem.** Build on the existing greedy maximum-degree bound and exception calculations in `Catalog/Tropical/ChromaticPolynomial/Brooks.lean` to prove the full connected non-complete, non-odd-cycle theorem.\n7. **Planarity and four colors.** Replace an abstract planarity predicate with a graph embedding definition, then connect the already formalized colorability/chromatic-number equivalences to a formal proof of the Four Color Theorem.\n8. **Component factorization.** Iterate disjoint-union multiplicativity over connected components and derive that the chromatic polynomial factors as the product of component polynomials.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Tropical",
+        "Logic"
+      ],
+      "github_issue": 0,
+      "id": "fd_0740",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "078d5371",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/078d5371",
+      "status": "available",
+      "thread_id": "th_9a0d52fd",
+      "timestamp": "2026-07-26T05:37:06.060991+00:00",
+      "title": "1. **Integer polynomial object.** Construct `chromaticPolynomial G : ℤ[X]`, prov"
     },
     {
       "ambition_level": "extension",
@@ -20017,7 +20058,7 @@
       "depth_estimate": 3,
       "description": "Prove that a Hadamard matrix exists for every positive multiple of 4. Formalize known constructions (Sylvester, Paley, tensor products) and establish bounds on the smallest open order. Connect to combinatorial designs, error-correcting codes, and signal processing.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Combinatorics"
@@ -20260,7 +20301,7 @@
       "depth_estimate": 3,
       "description": "Find a formula for the probability that two elements chosen uniformly at random generate the symmetric group S_n. Formalize known asymptotic results and connect to the theory of random permutations.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Combinatorics",
@@ -21160,7 +21201,7 @@
       "depth_estimate": 3,
       "description": "Prove that for every finite union-closed family of sets (not all empty), some element belongs to at least half the sets. Formalize the lattice-theoretic reformulation and known partial results.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Combinatorics",
         "Algebra"
@@ -24424,7 +24465,7 @@
       "depth_estimate": 3,
       "description": "Borges' Library of Babel contains every possible 410-page book — approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog — a single volume that encodes the location of every other volume — and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces — every possible text exists, but finding meaning requires a guide.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Novelty",
         "Combinatorics",
@@ -27520,7 +27561,7 @@
       "depth_estimate": 3,
       "description": "Ramsey's theorem states that any 2-coloring of the edges of K_6 contains a monochromatic K_3 (a triangle of one color). Applied to DNA: any sequence of 4^6 + 1 = 4097 nucleotides must contain a repeated 6-mer (by pigeonhole). But Ramsey theory for subsequences is more subtle: what is the minimum length L(k) of a DNA sequence over {A, C, G, T} such that every subsequence of length k contains a repeated 4-mer? Conjecture: L(k) = Theta(k * 4^4 * log(4^4)) = Theta(k * 256 * 8) = Theta(k * 2048). More precisely, by the Lovasz local lemma, L(k) >= 4^{4k/5} for sequences that avoid repeated k-mers in all subsequences. Conjecture: for real genomes, the actual L(k) is much smaller because real DNA has low complexity regions (microsatellites, Alu repeats) that create forced repeats. Specifically, the human genome has L(4) ~ 1000 (any 1000 consecutive bases contain a repeated 4-mer in some subsequence), while the random genome has L(4) ~ 4^4 * log(4^4) ~ 5000. Test: compute L(k) for real genomes vs random genomes and verify the factor-of-5 compression. Impact: DNA avoids subsequential repeats in a way that Ramsey theory predicts, but real genomes are 5x more 'forced' than random sequences.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Novelty",
         "Computation",
@@ -27944,7 +27985,7 @@
       "depth_estimate": 3,
       "description": "Register allocation in a compiler assigns variables to CPU registers. The interference graph G has variables as vertices and edges between variables that are 'live' at the same time. Register allocation is equivalent to coloring G with k colors (k = number of registers). Conjecture: for SSA-form programs with n variables and maximum interference degree delta, the chromatic number chi(G) satisfies chi(G) = max(delta + 1, omega(G)) where omega(G) is the clique number. This is stronger than Brooks' theorem (which gives chi(G) <= delta + 1) because it predicts that chi(G) = delta + 1 ONLY when G contains a (delta+1)-clique. For typical programs: delta <= 5 and omega(G) <= 4, so chi(G) = delta + 1 <= 6. Conjecture: the optimal number of registers for SSA programs is at most delta + 1, and spill code (storing variables in memory instead of registers) is needed only when k < delta + 1. Moreover, the spill cost is minimized by spilling the vertex with maximum degree in the interference graph (a heuristic known as 'degree-based spilling'). Test: extract interference graphs from 100 real programs, compute chi(G) and delta, and verify chi(G) = max(delta + 1, omega(G)). Impact: register allocation is graph coloring with a precise formula for the chromatic number.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Novelty",
         "Computation",
@@ -28735,7 +28776,7 @@
       "depth_estimate": 3,
       "description": "Prove that every loopless graph requiring k+1 colors for a proper coloring contains K_{k+1} as a minor. Formalize known cases (k ≤ 5), the Wagner equivalence, and the connection to the Four Color Theorem.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Combinatorics",
         "Geometry"
@@ -28776,7 +28817,7 @@
       "depth_estimate": 3,
       "description": "Prove that the union of k k-uniform intersecting hypergraphs has chromatic number at most k. Formalize the linear hypergraph version and recent probabilistic approaches.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Combinatorics"
       ],
@@ -28857,7 +28898,7 @@
       "depth_estimate": 3,
       "description": "Prove that every tree admits a graceful labeling. Formalize known results for paths, caterpillars, and olive trees. Explore connections to decompositions of complete graphs.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Combinatorics",
         "Algebra"
@@ -28898,7 +28939,7 @@
       "depth_estimate": 3,
       "description": "Prove that every graph on at least 3 vertices is determined up to isomorphism by its deck of vertex-deleted subgraphs. Formalize Kelly's lemma and prove for specific graph classes.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Combinatorics",
         "Logic"
@@ -28939,7 +28980,7 @@
       "depth_estimate": 3,
       "description": "Prove that for n bases of an n-dimensional vector space, there is a way to arrange all n² elements into an n×n grid so that each row and column is a basis.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Combinatorics"
@@ -31631,7 +31672,7 @@
       "depth_estimate": 3,
       "description": "Compute the topological type of the Library of Babel: a space of all possible 410-page books. Prove that it is connected, totally disconnected under the Hamming metric, and has covering dimension 0. Determine the Kolmogorov complexity of a random book and prove that almost all books are incompressible.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Novelty",
         "Combinatorics",
@@ -37230,7 +37271,7 @@
       "depth_estimate": 3,
       "description": "Cycle 1a27f9f3 (Q=0.700) proved 15 theorems in Combinatorics but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Define a natural metric on the space of all mathematical statements and prove that the set of true statements has a fractal dimension. Show that this dimension is strictly between 0 and 1 (truth is sp",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Combinatorics"
       ],
@@ -38182,9 +38223,10 @@
     }
   ],
   "recent_domain_counts": {
-    "Algebra": 4,
+    "Algebra": 5,
     "Analysis": 3,
     "Bridges": 1,
+    "Combinatorics": 1,
     "Computation": 4,
     "Cryptography": 2,
     "EML": 1,
@@ -38197,28 +38239,20 @@
     "Speculative": 1
   },
   "recent_theme_keywords": {
-    "across": 1,
-    "architectures": 1,
     "beyond": 2,
-    "closure": 1,
+    "brooks'": 1,
+    "chromatic": 1,
+    "claw-free": 1,
+    "coloring": 1,
+    "complete": 1,
     "complexity": 2,
-    "composition": 1,
-    "compositions": 1,
-    "computation": 1,
-    "compute": 1,
     "concrete": 2,
     "conjecture": 3,
-    "converge": 1,
     "convergence": 5,
-    "depth-(d-1": 1,
-    "depth-d": 1,
-    "derivative": 1,
-    "derivatives": 1,
+    "cycle": 1,
+    "deletion-contraction": 1,
     "differential": 2,
-    "differentiation": 1,
-    "enabling": 1,
-    "equivalent": 2,
-    "establishes": 1,
+    "equivalent": 3,
     "exp(h": 1,
     "exp(x^2": 1,
     "exp-log": 1,
@@ -38227,13 +38261,16 @@
     "factors": 1,
     "finite": 1,
     "forces": 1,
-    "formalize": 8,
+    "formalize": 9,
+    "four-color": 1,
     "function": 1,
     "functions": 1,
     "g'/g": 1,
     "g'_1/g_1": 1,
     "general": 1,
     "gradient": 2,
+    "graph": 1,
+    "graphs": 1,
     "impact": 3,
     "insight": 1,
     "involving": 1,
@@ -38256,6 +38293,9 @@
     "numerical": 1,
     "operator": 1,
     "original": 1,
+    "planar": 1,
+    "polynomial": 1,
+    "polynomials": 1,
     "proof": 2,
     "properties": 1,
     "random": 3,
@@ -38276,18 +38316,20 @@
     "structure": 1,
     "structures": 1,
     "system": 1,
+    "t-positive": 1,
     "tangent": 3,
     "tautologies": 1,
     "tautology": 1,
     "terms": 1,
-    "theorem": 6,
-    "theory": 1,
+    "theorem": 7,
+    "theory": 2,
     "topological": 1,
     "topology": 1,
     "tracy-widom": 1,
     "training": 1,
     "underlying": 1,
     "universality": 3,
+    "unless": 1,
     "validity": 1,
     "variance": 1,
     "verified": 1,

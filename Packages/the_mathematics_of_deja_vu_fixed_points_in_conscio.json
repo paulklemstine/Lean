@@ -48,19 +48,22 @@
       "name": "Deterministic Logistic Orbit Iteration",
       "description": "Computes successive states x_(k+1)=r x_k(1-x_k). The method uses O(N) arithmetic operations for N transitions and O(N) memory when retaining the complete orbit, reducible to O(1) auxiliary memory when streaming.",
       "pseudocode": "INPUT r, x0, N\nSET orbit[0] ← x0\nFOR k ← 0 TO N-1\n    SET orbit[k+1] ← r × orbit[k] × (1-orbit[k])\nRETURN orbit",
-      "code": "from typing import Callable\n\ndef iterate_orbit(step: Callable[[float], float], x0: float, steps: int) -> list[float]:\n    \"\"\"Compute x_0 through x_steps.\"\"\"\n    if steps < 0:\n        raise ValueError(\"steps must be nonnegative\")\n    xs = [x0]\n    for _ in range(steps):\n        xs.append(step(xs[-1]))\n    return xs\n\nif __name__ == \"__main__\":\n    logistic = lambda x: 3.83 * x * (1.0 - x)\n    print(iterate_orbit(logistic, 0.5, 20))\n"
+      "code": "from typing import Callable\n\ndef iterate_orbit(step: Callable[[float], float], x0: float, steps: int) -> list[float]:\n    \"\"\"Compute x_0 through x_steps.\"\"\"\n    if steps < 0:\n        raise ValueError(\"steps must be nonnegative\")\n    xs = [x0]\n    for _ in range(steps):\n        xs.append(step(xs[-1]))\n    return xs\n\nif __name__ == \"__main__\":\n    logistic = lambda x: 3.83 * x * (1.0 - x)\n    print(iterate_orbit(logistic, 0.5, 20))\n",
+      "code_file": "visualizations/the_mathematics_of_deja_vu_fixed_points_in_conscio_deterministic_logistic_orbit_iteration.py"
     },
     {
       "name": "Finite-Tolerance Lagged Recurrence Scan",
       "description": "Compares each sampled state with up to P predecessors and records pairs whose absolute error is at most ε. Runtime is O(NP), storage is O(H) for H reported hits beyond the input, and every result is a numerical near return rather than a certificate of exact periodicity.",
       "pseudocode": "INPUT orbit x[0..N], maximum lag P, tolerance ε\nSET hits ← empty list\nFOR i ← 1 TO N\n    FOR p ← 1 TO min(P,i)\n        SET error ← |x[i]-x[i-p]|\n        IF error ≤ ε\n            APPEND (i,p,error) TO hits\nRETURN hits",
-      "code": "from dataclasses import dataclass\nfrom typing import Sequence\n\n@dataclass(frozen=True)\nclass ReturnCandidate:\n    index: int\n    lag: int\n    error: float\n\ndef near_returns(xs: Sequence[float], max_lag: int, tolerance: float) -> list[ReturnCandidate]:\n    \"\"\"Find finite-precision near returns; these are not exact period proofs.\"\"\"\n    if max_lag < 1 or tolerance < 0:\n        raise ValueError(\"invalid lag or tolerance\")\n    return [ReturnCandidate(i, p, abs(xs[i] - xs[i-p]))\n            for i in range(1, len(xs))\n            for p in range(1, min(i, max_lag) + 1)\n            if abs(xs[i] - xs[i-p]) <= tolerance]\n"
+      "code": "from dataclasses import dataclass\nfrom typing import Sequence\n\n@dataclass(frozen=True)\nclass ReturnCandidate:\n    index: int\n    lag: int\n    error: float\n\ndef near_returns(xs: Sequence[float], max_lag: int, tolerance: float) -> list[ReturnCandidate]:\n    \"\"\"Find finite-precision near returns; these are not exact period proofs.\"\"\"\n    if max_lag < 1 or tolerance < 0:\n        raise ValueError(\"invalid lag or tolerance\")\n    return [ReturnCandidate(i, p, abs(xs[i] - xs[i-p]))\n            for i in range(1, len(xs))\n            for p in range(1, min(i, max_lag) + 1)\n            if abs(xs[i] - xs[i-p]) <= tolerance]\n",
+      "code_file": "visualizations/the_mathematics_of_deja_vu_fixed_points_in_conscio_finite_tolerance_lagged_recurrence_scan.py"
     },
     {
       "name": "Exact Rational Fixed-Point Residual Evaluation",
       "description": "Represents the parameter and candidate states as rational numbers and evaluates L(x)-x without rounding. Each residual uses O(1) rational operations for these fixed-size inputs; bit complexity depends on numerator and denominator lengths.",
       "pseudocode": "INPUT rational candidate x\nSET y ← (383/100) × x × (1-x)\nRETURN y-x\nACCEPT x AS FIXED EXACTLY IF AND ONLY IF THE RETURNED RATIONAL IS 0",
-      "code": "from fractions import Fraction\n\ndef logistic_exact(x: Fraction) -> Fraction:\n    return Fraction(383, 100) * x * (1 - x)\n\ndef classified_fixed_points() -> tuple[Fraction, Fraction]:\n    points = (Fraction(0), Fraction(283, 383))\n    assert all(logistic_exact(x) == x for x in points)\n    return points\n\nif __name__ == \"__main__\":\n    print(classified_fixed_points())\n"
+      "code": "from fractions import Fraction\n\ndef logistic_exact(x: Fraction) -> Fraction:\n    return Fraction(383, 100) * x * (1 - x)\n\ndef classified_fixed_points() -> tuple[Fraction, Fraction]:\n    points = (Fraction(0), Fraction(283, 383))\n    assert all(logistic_exact(x) == x for x in points)\n    return points\n\nif __name__ == \"__main__\":\n    print(classified_fixed_points())\n",
+      "code_file": "visualizations/the_mathematics_of_deja_vu_fixed_points_in_conscio_exact_rational_fixed_point_residual_eval.py"
     }
   ],
   "visualizations": [

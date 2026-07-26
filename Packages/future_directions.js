@@ -4922,22 +4922,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Convex Geometry: Brunn-Minkowski Theory"
   },
   {
-    "consumed_by_exp_id": "078d5371",
-    "description": "Formalize chromatic polynomials and prove deletion-contraction. Prove the four-color theorem is equivalent to \u03c7(G) \u2264 4 for all planar G. Formalize Brooks' theorem: \u03c7(G) \u2264 \u0394(G) unless G is complete or an odd cycle. Prove the chromatic polynomial is T-positive for claw-free graphs.",
-    "domains": [
-      "Combinatorics",
-      "Algebra"
-    ],
-    "id": "fd_0672",
-    "phase": "complete",
-    "priority_score": 0.83,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-24T14:34:16.697799+00:00",
-    "title": "Graph Coloring: Chromatic Polynomial Theory"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize the self-attention mechanism as a kernel method. Prove that softmax attention is a universal approximator of sequence-to-sequence functions. Analyze the rank of attention matrices and prove the attention sink phenomenon for large context.",
     "domains": [
@@ -7832,7 +7816,7 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "id": "seed_114",
-    "phase": "B",
+    "phase": "complete",
     "priority_score": 0.78,
     "research_mode": "team",
     "source_exp_id": "seed",
@@ -8747,6 +8731,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-26T05:37:00.496290+00:00",
     "title": "**Conjecture.** Consider two lazy-training residual recursions with the same ini"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n1. **Integer polynomial object.** Construct `chromaticPolynomial G : \u2124[X]`, prove its evaluation at every natural palette size equals `chromVal G`, and lift deletion\u2013contraction from evaluations to polynomial equality.\n2. **Alternating coefficients.** Use deletion\u2013contraction to prove the standard sign alternation and identify the leading coefficient and degree.\n3. **More graph operations.** Prove formulas for joins, vertex sums, forests, cycles, and complete multipartite graphs. The disjoint-union multiplicativity theorem is the first operation law.\n4. **Chromatic roots and bases.** Formalize expansion in falling-factorial and tree bases; investigate positivity statements in a precisely defined `T`-basis.\n5. **Claw-free positivity.** State the intended meaning of T-positivity, develop the required symmetric/quasisymmetric polynomial infrastructure, and formalize the claw-free theorem. This is substantially beyond natural-number evaluations alone.\n6. **Brooks' theorem.** Build on the existing greedy maximum-degree bound and exception calculations in `Catalog/Tropical/ChromaticPolynomial/Brooks.lean` to prove the full connected non-complete, non-odd-cycle theorem.\n7. **Planarity and four colors.** Replace an abstract planarity predicate with a graph embedding definition, then connect the already formalized colorability/chromatic-number equivalences to a formal proof of the Four Color Theorem.\n8. **Component factorization.** Iterate disjoint-union multiplicativity over connected components and derive that the chromatic polynomial factors as the product of component polynomials.\n",
+    "domains": [
+      "Tropical",
+      "Logic"
+    ],
+    "id": "fd_0740",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "078d5371",
+    "status": "available",
+    "timestamp": "2026-07-26T05:37:06.060991+00:00",
+    "title": "1. **Integer polynomial object.** Construct `chromaticPolynomial G : \u2124[X]`, prov"
   },
   {
     "consumed_by_exp_id": "",
