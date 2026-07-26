@@ -652,7 +652,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Zeta Functions of Directed Graphs and the Graph Riemann Hypothesis"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b42bd325",
     "description": "The AdS/CFT correspondence says that a gravitational theory in the bulk of anti-de Sitter space is equivalent to a conformal field theory on the boundary. What if prime numbers have a holographic dual? Define the prime hologram: for each prime p, define its 'boundary' as the ring Z/pZ and its 'bulk' as the p-adic field Q_p. Conjecture: The Riemann zeta function zeta(s) = prod_p (1 - p^{-s})^{-1} is the holographic partition function: the product over primes (boundary) encodes the same information as the completed zeta function Xi(s) (bulk). The functional equation Xi(s) = Xi(1-s) is the holographic duality: bulk physics at depth s equals boundary physics at depth 1-s. The prime counting function pi(x) ~ x/log(x) is the bulk volume, while the Chebyshev function theta(x) = sum_{p<=x} log(p) is the boundary area. The AdS/CFT dictionary: bulk gravity mode at depth s <-> boundary CFT operator of dimension 1-s. Test: verify that the pair correlation of zeta zeros matches GUE random matrices (bulk = quantum gravity in AdS, boundary = CFT random matrix ensemble). Compute the 'prime partition function' Z(beta) = prod_p (1 - e^{-beta log p})^{-1} and show it equals the bulk partition function. Impact: the Riemann Hypothesis is equivalent to a holographic stability condition \u2014 zeros on the critical line means the bulk geometry is stable against perturbations.",
     "domains": [
       "Novelty",
@@ -661,10 +661,11 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "id": "seed_118",
+    "phase": "A",
     "priority_score": 0.91,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Holographic Primes: The Prime Number AdS/CFT Correspondence"
   },
@@ -1740,18 +1741,20 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Error Correction Threshold: The Eastin-Knill Theorem"
   },
   {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 1f5ea34f (Q=0.777), which proved 16 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that specific EML numbers (like exp(exp(1)) + log(2)) are transcendental over Q. Formalize Schanuel's conjecture for EML functions and prove conditional results: if Schanuel's conjecture holds, then the class of EML numbers equals the class of EL numbers.",
+    "consumed_by_exp_id": "1f5ea34f",
+    "description": "Prove that specific EML numbers (like exp(exp(1)) + log(2)) are transcendental over Q. Formalize Schanuel's conjecture for EML functions and prove conditional results: if Schanuel's conjecture holds, then the class of EML numbers equals the class of EL numbers.",
     "domains": [
-      "Applications"
+      "EML",
+      "Algebra"
     ],
-    "id": "push_1f5ea34f_684a17c4",
-    "priority_score": 0.87698,
+    "id": "seed_339",
+    "phase": "A",
+    "priority_score": 0.88,
     "research_mode": "team",
-    "source_exp_id": "1f5ea34f",
-    "status": "available",
-    "timestamp": "2026-07-26T23:29:07.048066+00:00",
-    "title": "Deepening: EML Number Theory: Transcendence and Algebraic Independence"
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "",
+    "title": "EML Number Theory: Transcendence and Algebraic Independence"
   },
   {
     "consumed_by_exp_id": "e4773f49",
@@ -5174,17 +5177,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quaternion Algebras and Rotations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "dcd15145",
     "description": "Formalize the Erd\u0151s-R\u00e9nyi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
     "domains": [
       "Combinatorics",
       "Probability"
     ],
     "id": "fd_0673",
+    "phase": "A",
     "priority_score": 0.82,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-24T14:34:16.697801+00:00",
     "title": "Random Graphs: Erd\u0151s-R\u00e9nyi Threshold Phenomena"
   },
@@ -6672,6 +6676,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Adjacency-degree algebras and spectral determination of graphs' and formalize its key results. Abstract: McKay proved that the spectra of all polynomial functions of the adjacency matrix $A$ and the diagonal degree matrix $D$ determine a tree. We prove a principal version of this theorem. Let $\\mathcal A(G)=\\langle I,A_G,D_G\\rangle$ and let $M_G=\\mathcal A(G)\\mathbf1$ be the cyclic module generated by the all-ones vector. For connected graphs the ideal $\\mathcal A(G)J\\mathcal A(G)$, where $J=\\mathbf1\\mathbf1^T$, acts on $M_G$ as the full endomorphism algebra. We show that every forest satisfies $M_G=U_G$, the automorphism-orbit module, and that the induced algebra on the orbit quotient of a tree is a full matrix algebra. It follows that the scalar moments $\\mathbf1^Tw(A_T,D_T)\\mathbf1$ determine every tree. For general graphs these moments are degree-decorated caterpillar homomorphism counts. The resulting moment-rigidity class lies inside the amenable, compact, refinable hierarchy of color refinement, and its first small-order failures are ten-vertex integral switchings invisible to $M_G",
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_0776",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.21494v1",
+    "status": "available",
+    "timestamp": "2026-07-26T23:29:22.547061+00:00",
+    "title": "ArXiv paper: Adjacency-degree algebras and spectral determination of graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'The Frankl--Tokushige product conjectures for $r$-cross-intersecting families' and formalize its key results. Abstract: We settle the uniform and biased product conjectures of Frankl and Tokushige for $r$-cross-intersecting families. Let $r\\geq2$, let $0\\leq k_i\\leq(r-1)n/r$, and let $\\mathcal{F}_i\\subseteq\\binom{[n]}{k_i}$ be $r$-cross-intersecting. We prove the sharp inequality $$\\prod_{i=1}^r\\frac{|\\mathcal{F}_i|}{\\binom{n}{k_i}}\\leq \\prod_{i=1}^r\\frac{k_i}{n},$$ with equality attained by the corresponding levels of a common $1$-star. As a consequence, we obtain the analogous $p_i$-biased measure theorem for $0\\leq p_i\\leq(r-1)/r$, $$ \\prod_{i=1}^r\u03bc_{p_i}(\\mathcal{F}_i)\\leq \\prod_{i=1}^r p_i.$$The main difficulty is that unequal parameters do not determine a single common target level; instead, the target levels $\\ell_1,\\ldots,\\ell_r$ must satisfy $\\sum_{i=1}^r \\ell_i=(r-1)n$. We overcome this asymmetry in three steps. An ordered-partition coupling gives a sharp additive inequality for every such choice of target levels. A star-calibrated upper-shadow inequality relates the density of a family on its",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0776",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.21589v1",
+    "status": "available",
+    "timestamp": "2026-07-26T23:29:25.624904+00:00",
+    "title": "ArXiv paper: The Frankl--Tokushige product conjectures for $r$-cross-intersecting families"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "NumberTheory",
@@ -7784,21 +7818,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-25T10:53:07.911660+00:00",
     "title": "For every nonexceptional composite index, the primitive part of the correspondin"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\nEach item below is a concrete formal target whose success or failure can be checked in Lean.\n\n1. **Classical Schanuel versus the concrete pair.** Prove\n   `SchanuelConjecture \u2192 AlgebraicIndependent \u211a concreteGenerators`, or formalize a\n   model of the classical conjecture in which this algebraic-independence statement\n   fails. This determines whether `EMLSchanuel.concrete_independence` is genuinely\n   stronger than the classical clause used here.\n\n2. **A named hypothesis for multiplication elimination.** State a precise\n   exponential-algebraic closedness principle and prove that it, together with\n   `SchanuelConjecture`, implies `EMLSchanuel.multiplication_elimination` for every\n   `RationalEML` expression. A counterexample expression would falsify the proposed\n   implication.\n\n3. **Separate transcendence of the concrete generators.** Under\n   `SchanuelConjecture`, prove both\n   `Transcendental \u211a (Real.exp (Real.exp 1))` and\n   `Transcendental \u211a (Real.log 2)`. Then test whether the same assumptions suffice\n   to prove algebraic independence of this pair.\n\n4. **Finite-arity EML/EL equivalence.** Define rational EML and EL terms over\n   `Fin n` by a conservative extension of the existing catalog syntax, and prove\n   that extensional multiplication elimination at every finite arity is equivalent\n   to equality of the corresponding represented-function classes.\n\n5. **General nonzero rational linear combinations.** For every finite family\n   `x : Fin n \u2192 \u211d` algebraically independent over `\u211a`, prove that any rational\n   linear combination with a nonzero coefficient vector is transcendental over\n   `\u211a`. The theorem in this development should follow as the `n = 2`, coefficient\n   vector `(1, 1)` instance.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0776",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "1f5ea34f",
-    "status": "available",
-    "timestamp": "2026-07-26T23:29:03.542852+00:00",
-    "title": "Each item below is a concrete formal target whose success or failure can be chec"
   },
   {
     "consumed_by_exp_id": "",
