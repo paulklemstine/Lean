@@ -412,6 +412,9 @@ window.PACKAGE_DB_INDEX = {json.dumps(package_db_index, indent=2, sort_keys=True
     # Write future research directions to separate file (lazy-loaded)
     append_future_directions(script_dir, os.path.join(script_dir, "future_directions.js"), catalog_root)
 
+    # Generate Catalog tree and sync .lean files for direct linking
+    generate_catalog_tree(script_dir, catalog_root)
+
     # Ensure .nojekyll exists for GitHub Pages
     nojekyll_path = os.path.join(script_dir, ".nojekyll")
     if not os.path.exists(nojekyll_path):
@@ -419,6 +422,67 @@ window.PACKAGE_DB_INDEX = {json.dumps(package_db_index, indent=2, sort_keys=True
         print("Created .nojekyll for GitHub Pages")
 
     os.chdir(original_dir)
+
+
+def generate_catalog_tree(script_dir, catalog_root):
+    """
+    Scans catalog_root/Catalog for all .lean files, copies them into script_dir/Catalog,
+    and writes catalog_tree.json with metadata and declaration lists for direct individual file fetching.
+    """
+    catalog_source = os.path.join(catalog_root, "Catalog")
+    if not os.path.exists(catalog_source):
+        print(f"Catalog directory not found at {catalog_source}")
+        return
+
+    catalog_dest = os.path.join(script_dir, "Catalog")
+    os.makedirs(catalog_dest, exist_ok=True)
+
+    tree = []
+    copied = 0
+    decl_regex = re.compile(r'^(?:theorem|lemma|def|example)\s+([a-zA-Z0-9_\']+)', re.MULTILINE)
+
+    stop_words = {"of", "in", "is", "to", "and", "or", "if", "as", "at", "by", "on", "it", "be", "so", "we", "do", "no", "my", "an", "me", "us", "up", "the", "a"}
+    for root, dirs, files in os.walk(catalog_source):
+        dirs[:] = [d for d in dirs if not d.startswith(".") and d != ".lake"]
+        for f in files:
+            if f.endswith(".lean") and not f.startswith("."):
+                abs_src = os.path.join(root, f)
+                rel_p = os.path.relpath(abs_src, catalog_source).replace("\\", "/")
+                sz = os.path.getsize(abs_src)
+                
+                try:
+                    with open(abs_src, 'r', encoding='utf-8', errors='ignore') as lf:
+                        code = lf.read()
+                    raw_decls = decl_regex.findall(code)
+                    decls = [d for d in raw_decls if len(d) > 2 and d.lower() not in stop_words]
+                except Exception:
+                    decls = []
+
+                tree.append({
+                    "path": rel_p,
+                    "name": f,
+                    "size": sz,
+                    "decls": decls
+                })
+
+                abs_dest = os.path.join(catalog_dest, rel_p)
+                os.makedirs(os.path.dirname(abs_dest), exist_ok=True)
+                if not os.path.exists(abs_dest) or os.path.getmtime(abs_src) > os.path.getmtime(abs_dest):
+                    import shutil
+                    shutil.copy2(abs_src, abs_dest)
+                    copied += 1
+
+    tree.sort(key=lambda x: x["path"])
+
+    tree_json_path = os.path.join(script_dir, "catalog_tree.json")
+    with open(tree_json_path, 'w', encoding='utf-8') as tf:
+        json.dump(tree, tf, separators=(',', ':'))
+
+    tree_js_path = os.path.join(script_dir, "catalog_tree.js")
+    with open(tree_js_path, 'w', encoding='utf-8') as jsf:
+        jsf.write(f"window.CATALOG_TREE = {json.dumps(tree, separators=(',', ':'))};")
+
+    print(f"Generated catalog_tree.json ({os.path.getsize(tree_json_path)/1024:.0f} KB) with {len(tree)} files from Catalog/ (copied/synced {copied} files)")
 
 
 def generate_graph_data(script_dir, package_index):

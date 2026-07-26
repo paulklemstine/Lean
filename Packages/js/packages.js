@@ -74,19 +74,25 @@ document.addEventListener('DOMContentLoaded', () => {
     // Package data cache: filename -> data
     if (!window.Aether.packageCache) window.Aether.packageCache = {};
 
-    // URL hash routing: #pkg=filename  →  load that package
+    // URL hash routing: #pkg=filename, #catalog/path, #directions
     // Listen for back/forward navigation
     window.addEventListener('hashchange', () => {
-        const m = window.location.hash.match(/^#pkg=(.+)$/);
+        const hash = window.location.hash;
+        const m = hash.match(/^#pkg=(.+)$/);
+        const catMatch = hash.match(/^#catalog(?:[\/=\?](.+))?$/i);
         if (m) {
             const filename = decodeURIComponent(m[1]);
             // Only reload if it's a different package
             if (!window.Aether.currentPackage || window.Aether.currentPackageFilename !== filename) {
                 if (window.loadPackage) window.loadPackage(filename);
             }
-        } else {
-            // No hash: return to welcome screen so back/forward works like normal
-            // page navigation.
+        } else if (catMatch || hash.toLowerCase().startsWith('#catalog') || hash.toLowerCase().startsWith('#lean-catalog')) {
+            const relPath = catMatch && catMatch[1] ? decodeURIComponent(catMatch[1]).replace(/^file=/, '') : null;
+            if (window.showLeanCatalog) window.showLeanCatalog(relPath);
+        } else if (hash === '#directions' || hash.startsWith('#directions')) {
+            if (window.showDirectionsView) window.showDirectionsView();
+        } else if (!hash || hash === '#') {
+            // No hash: return to welcome screen so back/forward works like normal page navigation
             if (window.showWelcome) window.showWelcome();
         }
     });
