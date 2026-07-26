@@ -61,7 +61,7 @@ structure of full size, never as a single self-referential volume.
 -/
 import Mathlib
 import Cryptography.LibraryOfBabel.Basic
-import Cryptography.RamseyTheory.KMerAvoidance
+import Cryptography.KMerAvoidance
 
 open Finset Fintype Function LibraryOfBabel
 

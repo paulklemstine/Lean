@@ -1,1 +1,0 @@
-../../Computation/TropicalLife/Basic.lean

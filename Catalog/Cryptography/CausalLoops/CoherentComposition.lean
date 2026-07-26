@@ -1,5 +1,5 @@
 import Mathlib
-import Cryptography.PosetTheory.BiOrderSeparation
+import Cryptography.BiOrderSeparation
 
 /-!
 # Coherent Composition Loops and Cryptographic Hybrids

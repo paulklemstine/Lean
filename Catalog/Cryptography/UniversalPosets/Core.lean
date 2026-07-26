@@ -1,5 +1,5 @@
 import Mathlib
-import Cryptography.PosetTheory.BiOrderSeparation
+import Cryptography.BiOrderSeparation
 
 /-!
 # Transitivity-preserving Boolean labels for finite posets

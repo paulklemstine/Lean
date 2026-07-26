@@ -1,5 +1,5 @@
 import Mathlib
-import Cryptography.NumberTheory.SchnorrIdentification
+import Cryptography.SchnorrIdentification
 
 /-!
 # Perfect HVZK as exact equality of event probabilities

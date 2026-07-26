@@ -1,5 +1,5 @@
 import Mathlib
-import Cryptography.Cryptography.MerkleDamgard
+import Cryptography.MerkleDamgard
 
 /-!
 # BB84 Privacy Amplification: the Leftover-Hash / Collision Bound

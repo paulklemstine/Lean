@@ -1,5 +1,5 @@
 import Mathlib
-import Cryptography.NumberTheory.SchnorrIdentification
+import Cryptography.SchnorrIdentification
 
 /-!
 # Knowledge soundness of the Schnorr Σ-protocol (extractor produces a real witness)

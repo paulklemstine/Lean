@@ -1,4 +1,4 @@
-import Shared.RamseyTheory.TheoremNetworkTopology
+import Catalog.Shared.TheoremNetworkTopology
 
 /-!
 # Topological limits for theorem co-citation networks
