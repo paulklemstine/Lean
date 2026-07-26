@@ -1753,7 +1753,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "id": "seed_085",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
@@ -4432,7 +4432,7 @@ window.FUTURE_DIRECTIONS = [
       "Analysis"
     ],
     "id": "seed_244",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
