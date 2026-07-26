@@ -81,3 +81,4 @@ theorem hartogs_polyQ (x : RatFunc ℚ) (hx : IsIntegral (Polynomial ℚ) x) :
   hartogs_dim_one x hx
 
 end PrismaticPurity.DimOne
+end .
