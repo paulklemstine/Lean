@@ -944,9 +944,9 @@ window.PACKAGE_INDEX = [
     "exp_id": "6a88207a",
     "filename": "the_mathematics_of_deja_vu_fixed_points_in_conscio.json",
     "pkg_num": 406,
-    "quality": "unrated",
-    "quality_score": null,
-    "quality_tier": "unrated",
+    "quality": "substantial",
+    "quality_score": 0.75,
+    "quality_tier": "silver",
     "title": "The Mathematics of D\u00e9j\u00e0 Vu: Recurrence, Observation, and Incidence"
   },
   {
@@ -16224,8 +16224,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "the_mathematics_of_deja_vu_fixed_points_in_conscio",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.75,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "The Mathematics of D\u00e9j\u00e0 Vu: Recurrence, Observation, and Incidence"
     }

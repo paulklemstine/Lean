@@ -7807,24 +7807,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Integrated Information via Tensor Networks"
   },
   {
-    "consumed_by_exp_id": "6a88207a",
-    "description": "Deja vu \u2014 the feeling that you've experienced something before \u2014 is a fixed point in a dynamical system. Model cognitive state as a function f: S -> S mapping current brain state to next brain state. A deja vu is a state s such that f^n(s) = s for some n > 0 \u2014 a periodic point of the cognitive dynamical system. Conjecture: By Sharkovsky's theorem, the existence of a period-3 orbit in the cognitive dynamics (three distinct states that cycle) implies chaos in the sense of Li-Yorke, meaning there exist uncountably many cognitive trajectories that are neither periodic nor convergent. Moreover, the set of deja vu states (periodic points of f) is dense in the cognitive state space S if f is continuous and S is an interval. The frequency of deja vu (occurring in ~70% of people) corresponds to the natural density of periodic points in a typical chaotic map. Test: model cognitive dynamics as a logistic map f(x) = rx(1-x) on [0,1] with parameter r chosen to match empirical deja vu frequencies. For r = 3.83 (period-3 window), compute the density of periodic points and compare to the 70% lifetime incidence. Impact: deja vu is not a glitch \u2014 it's a mathematical inevitability of continuous cognitive dynamics. Any continuous cognitive map with a period-3 orbit MUST have deja vu.",
-    "domains": [
-      "Novelty",
-      "Computation",
-      "Analysis",
-      "Speculative"
-    ],
-    "id": "seed_114",
-    "phase": "B",
-    "priority_score": 0.78,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Prime gaps \u2014 the spaces between consecutive primes \u2014 are like empty cells in a crossword puzzle. The gaps are 1, 2, 2, 4, 2, 4, 2, 4, 6, 2, 6, 4, 2, 4, 6, 6, 2, 6, 4, 2, ... (OEIS A001223). The pattern seems random, but the crossword has rules: (1) All prime gaps are even (except the first gap of 1 between 2 and 3). (2) A gap g can only appear at position n if n+g is prime and all of n+1, n+2, ..., n+g-1 are composite. (3) The density of gap g near n is approximately 2*C_2/(g*log(n)) where C_2 is the twin prime constant. Conjecture: The prime gap crossword is uniquely solvable \u2014 given the pattern of gaps up to N, the next prime is determined with probability 1 - O(1/log(N)). More precisely, the conditional probability that the next prime after p is p + g, given all primes up to p, is approximately 2*C_2/g * (1/log(p)) * product_{q prime, q | g} (q-1)/(q-2). This is the Hardy-Littlewood conjecture for prime gaps. But the crossword has a surprise: certain gap patterns FORCE the next number. For example, if the gaps near n are 6, 4, 2, 6, then the next gap is almost certainly 4 (the only way to fill the crossword). Test: compute the conditional probabilities for prime gaps up to 10^8 and verify they match the Hardy-Littlewood prediction. Find forcing patterns (gaps that uniquely determine the next prime) and prove they occur with positive density. Impact: prime gaps are not random \u2014 they are a solvable crossword puzzle with deterministic rules.",
     "domains": [
@@ -8746,6 +8728,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-26T05:37:06.060991+00:00",
     "title": "1. **Integer polynomial object.** Construct `chromaticPolynomial G : \u2124[X]`, prov"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## 1. Exact period-three certification at parameter 3.83\n\nConjecture: the logistic map `x \u21a6 3.83x(1-x)` has an attracting orbit of exact period three whose basin contains the critical point `1/2`.\n\nThe key insight is that exact cycle existence can be separated from attraction: isolate three roots of the third-iterate equation in disjoint rational intervals, exclude the fixed-point factors, and bound the product of derivatives on those intervals.\n\nWhy now? Exact interval invariance and the complete fixed-point classification are available, while numerical iteration sharply identifies three candidate isolating intervals and an attracting multiplier.\n\n## 2. Faithful-observation invariance for minimal period\n\nConjecture: a topological conjugacy preserves the complete minimal-period spectrum and induces a homeomorphism between each pair of exact-period strata.\n\nThe key insight is that semiconjugacy transports returns, injectivity reflects them, and continuity of the conjugacy should upgrade the resulting bijections to topological equivalences of strata.\n\nWhy now? Positive recurrence has been shown to be invariant under injective semiconjugacy; the next testable step is to retain minimality and topology simultaneously.\n\n## 3. A measure-theoretic incidence model\n\nConjecture: for a parameterized family of logistic maps equipped with a specified distribution of initial states and an explicit finite-resolution observation rule, lifetime observed-recurrence incidence is a measurable function of the parameter and resolution.\n\nThe key insight is that empirical incidence belongs to a probability space of subjects and observations, not to topological density of exact periodic points.\n\nWhy now? The constant-observation counterexample isolates faithfulness as indispensable, and the density counterexample shows that topology alone cannot produce a percentage.\n\n## 4. Period three and a scrambled invariant subsystem\n\nConjecture: every continuous interval self-map with an exact period-three orbit contains a compact invariant subsystem admitting a symbolic two-shift factor, yielding an uncountable Li\u2013Yorke scrambled set.\n\nThe key insight is to derive two covering intervals from the ordered three-cycle and encode their itineraries symbolically; the shift factor then supplies nonperiodic, nonconvergent trajectory pairs.\n\nWhy now? The fixed-point and period-two intermediate-value arguments establish the first pieces of the interval-covering mechanism, making the symbolic construction the natural next structural target.\n\n## 5. Density under the correct chaotic hypothesis\n\nConjecture: for a continuous interval map possessing a full two-branch horseshoe, periodic points are dense in the horseshoe's invariant set, though they need not be dense in the entire ambient interval.\n\nThe key insight is that periodic symbolic words are dense in the shift space, and the itinerary map should transfer this local density to the invariant subsystem without asserting a false global density theorem.\n\nWhy now? The continuous constant-map counterexample pinpoints the missing hypothesis, while the symbolic subsystem proposed above supplies a precise replacement.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0741",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "6a88207a",
+    "status": "available",
+    "timestamp": "2026-07-26T05:37:17.332888+00:00",
+    "title": "Conjecture: the logistic map `x \u21a6 3.83x(1-x)` has an attracting orbit of exact p"
   },
   {
     "consumed_by_exp_id": "",
