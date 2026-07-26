@@ -857,6 +857,39 @@ class PiAgentOrchestrator:
                         except Exception as e:
                             print(f"[Phase B] Failed to attach reasoning traces: {e}")
 
+                    # Programmatic Lean content fallback (No LLM tokens required)
+                    try:
+                        import json
+                        pkg_data = json.loads(pkg_text)
+                        
+                        # 1. Collect all Lean source code from files_placed
+                        combined_lean = []
+                        valid_lean_files = []
+                        for f_path_str in files_placed:
+                            f_path = Path(f_path_str)
+                            if f_path.exists() and f_path.suffix == ".lean":
+                                try:
+                                    rel_p = str(f_path.relative_to(self.catalog_root))
+                                except ValueError:
+                                    rel_p = f_path.name
+                                valid_lean_files.append(rel_p)
+                                combined_lean.append(f"-- File: {rel_p}\n" + f_path.read_text(encoding="utf-8", errors="replace"))
+                        
+                        # 2. Check if lean_proofs is missing, empty, or placeholder
+                        current_lp = str(pkg_data.get("lean_proofs", "") or "")
+                        if not current_lp.strip() or "Excluded" in current_lp or "not included" in current_lp.lower() or len(current_lp) < 50:
+                            if combined_lean:
+                                pkg_data["lean_proofs"] = "\n\n".join(combined_lean)
+                                print(f"[Phase B] {job.exp_id} Programmatically populated lean_proofs ({len(pkg_data['lean_proofs'])} chars)")
+                        
+                        # 3. Ensure lean_files list is populated
+                        if valid_lean_files and not pkg_data.get("lean_files"):
+                            pkg_data["lean_files"] = valid_lean_files
+                        
+                        pkg_text = json.dumps(pkg_data, indent=2)
+                    except Exception as pe_err:
+                        print(f"[Phase B] Programmatic Lean fallback error: {pe_err}")
+
                     am.store_package(job.exp_id, pkg_text)
                     print(f"[Phase B] {job.exp_id} PACKAGE.json stored in archive!")
                 else:

@@ -159,6 +159,24 @@ class ReasoningLog:
         })
         self._save()
 
+
+    def record_task_events(self, events: List[Dict[str, Any]]) -> None:
+        """Record execution events and thinking traces from Aristotle SDK."""
+        self._data["task_events"] = events[:100]  # Cap at 100 events
+        self._save()
+
+    def record_build_results(self, compiles: bool, error_count: int = 0, error_details: Optional[List[str]] = None) -> None:
+        """Record Lean compilation build results."""
+        self._data["build_compiles"] = compiles
+        self._data["build_error_count"] = error_count
+        self._data["build_error_details"] = error_details or []
+        self._save()
+
+    def record_files(self, file_list: List[str]) -> None:
+        """Record output file listings."""
+        self._data["output_files"] = file_list
+        self._save()
+
     def get_summary(self) -> Dict[str, Any]:
         """Return a compact summary for analysis."""
         checkpoints = self._data.get("checkpoints", [])

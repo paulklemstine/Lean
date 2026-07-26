@@ -2353,120 +2353,34 @@ class PiAgentClient:
         refs_section = ""
         if refs:
             refs_section = (
-                "### Attached Catalog References (read these first)\n"
-                + "\n".join(f"- `{r}`" for r in refs[:8])
+                "### Attached Catalog References\n"
+                + "\n".join(f"- `{r}`" for r in refs[:5])
                 + "\n"
             )
 
-        catalog_section = ""
-        if catalog_context:
-            catalog_section = f"\n### Broader Catalog Context\n{catalog_context}\n"
-
-        theorem_section = ""
-        if theorem_context:
-            theorem_section = f"\n### Recent Discoveries in Catalog\n{theorem_context}\n"
-
-        anti_trivial_block = textwrap.dedent("""\
-            ### Anti-Trivial Guardrails (non-negotiable)
-            The following are NOT acceptable as main results:
-            - Theorems of the form `theorem name {X : Type*} [Inhabited X] : True := by trivial`.
-            - Definition-only theorems or definitional equalities proved by `rfl`.
-            - Results whose entire proof is `simp`, `norm_num`, `decide`, or `native_decide`.
-            - Wrapper types that rename existing definitions.
-            - Re-proving existing catalog theorems with minor notation changes.
-            - **Circular proofs** (CRITICAL): a theorem that references itself
-              (directly or transitively) in its own proof. This is the #1 quality
-              failure. To prevent it:
-              1. Write each theorem's proof using ONLY lemmas that appear ABOVE it
-                 in the file (already defined/proved).
-              2. Never reference a theorem by name inside its own proof body.
-              3. If you need a result to prove itself, split it: prove a weaker
-                 lemma first (without referencing the target), then derive the
-                 target from the lemma.
-              4. Before outputting, scan each proof body for any reference to the
-                 theorem being proved — if found, REWRITE that proof.
-            - **Truncated/stubbed declarations**: theorem or lemma statements
-              with no proof body (no `:=` clause). Every declaration MUST have a
-              complete proof.
-
-            Every main theorem must use at least one insight-bearing tactic or
-            technique such as `induction`, `by_contra`, `field_simp`, `ring_nf`,
-            `omega`, `linarith`, `rcases`, or a custom helper lemma.
-
-            ### Compilation Verification (mandatory before output)
-            Before returning your output, mentally compile-check every file:
-            - Do all imports resolve?
-            - Does every `theorem`/`lemma` have a `:= by ...` proof?
-            - Are there any undefined references?
-            - Does any proof reference the theorem it's trying to prove?
-            If ANY file would not compile, fix it or remove the broken theorem
-            before returning. Do NOT output files with sorries in main theorems,
-            stubbed signatures, or circular dependencies.
-        """)
-
-        deliverables_block = textwrap.dedent("""\
-            ### Deliverables & Acceptance Criteria
-            1. **Lean 4 files** in the appropriate `Catalog/<domain>/` subtree.
-               - Prove as many theorems as you can complete with full proofs. Use your
-                 full compute budget — there is no limit on theorem count.
-               - **Every theorem MUST be fully proved** — 0 sorries, no stubbed signatures,
-                 no mid-proof cutoffs, no truncated declarations. Complete each proof
-                 before starting the next.
-               - Each file must be **self-contained** (compiles independently with its imports).
-               - Each file must contain `-- !-- Lab Notes -- !--` blocks documenting
-                 the team loop: Hypothesis, Experiment, Analysis, Critique, Synthesis.
-               - Docstrings and comments must be **publication-ready**: clear mathematical
-                 exposition, no mentions of machine verification, proof assistants, or
-                 formalism implementation details.
-            2. **FUTURE_DIRECTIONS.md** with 3–5 bold, falsifiable conjectures derived
-               from the cycle's findings. Each must have a "The key insight is..."
-               sentence and a "Why now?" justification. Write these as
-               self-contained, publishable-quality prose: never mention Lean,
-               proof assistants, machine verification, the Catalog, or other
-               formalism details that would spoil the text.
-
-            ### Strictly Forbidden in Phase A
-            - `ARTICLE.md`, `RESEARCH_PAPER.md`, `demo.py`, HTML widgets, `PACKAGE.json`.
-            - Prose for human readers other than Lab Notes and FUTURE_DIRECTIONS.md.
-            - Truncated proofs, stubbed signatures, or incomplete theorem declarations.
-            - Any `sorry` in a main theorem (auxiliary lemmas may use sorry ONLY if
-              clearly marked as work-in-progress in Lab Notes).
-        """)
-
         prompt = textwrap.dedent(f"""\
-            # Phase A Research Mission {prompt_version}: {concept.title}
+            # Research Mission: {concept.title}
 
-            ## Concept
-            **Domain**: {concept.domain}
-            **Research mode**: {concept.research_mode}
-            **Title**: {concept.title}
+            ## Assignment
+            **Domain**: {concept.domain} | **Mode**: {concept.research_mode}
             **Description**: {concept.concept_description}
-            **Mathematical framing**: {concept.mathematical_framing}
+            **Mathematical Framing**: {concept.mathematical_framing}
 
             {refs_section}
-            {catalog_section}
-            {theorem_section}
 
-            {depth_requirements}
+            ## Hard Constraints
+            1. Every theorem MUST be fully proved (0 sorries, no stubbed signatures).
+            2. No circular proofs (a theorem must never reference itself directly or transitively in its proof).
+            3. No trivial results (e.g. `True := by trivial`, `rfl`-only, `native_decide`-only).
+            4. All files must be self-contained and compilable with Lean 4 (mathlib4 v4.28.0).
+            5. Build directly on existing catalog definitions — do not re-invent.
 
-            {anti_trivial_block}
+            ## Output Requirements
+            Return ONLY:
+            1. `.lean` files in `Catalog/{concept.domain}/` with complete formal proofs.
+            2. `FUTURE_DIRECTIONS.md` with 3–5 concrete, falsifiable conjectures derived from your findings.
 
-            {deliverables_block}
-
-            ## Self-Critique Checklist (perform before final output)
-            Review your candidate output and answer each item. If the answer is
-            unsatisfactory, revise the output before returning it.
-
-            - [ ] No theorem is trivial (True, Inhabited-only, native_decide-only, etc.).
-            - [ ] Every main theorem has 0 sorries.
-            - [ ] At least one theorem imports or uses results from the attached catalog.
-            - [ ] Lab Notes blocks contain real hypotheses, results, insights, and failure analysis.
-            - [ ] FUTURE_DIRECTIONS.md conjectures are derived from this cycle's findings.
-            - [ ] Every future direction includes a "The key insight is..." sentence and a "Why now?" justification.
-
-            ## Output Format Reminder
-            Return `.lean` files and `FUTURE_DIRECTIONS.md` only. Focus all compute
-            on the mathematics.
+            Focus all compute budget on proving theorems.
         """)
         return prompt
 
@@ -2511,14 +2425,12 @@ class PiAgentClient:
                     f"**TARGET THEOREM**: {theorem_target}\n\n"
                     f"**PRECISE ASSIGNMENT**: Prove the theorem stated above, building on "
                     f"the catalog theorems listed in the references.\n\n"
-                    f"**PROOF STRATEGY**: "
+                    f"**PROOF STRATEGY**:\n"
                     f"1. Read the existing catalog theorems carefully — they are your foundation.\n"
                     f"2. Identify the key lemma needed. Often the main theorem follows from "
                     f"one clever intermediate result.\n"
-                    f"3. If the direct approach fails, try the contrapositive, a constructive "
-                    f"witness, or a structural induction.\n"
-                    f"4. If the direct approach fails, try the contrapositive, a constructive "
-                    f"witness, or structural induction.\n\n"
+                    f"3. If the direct approach fails, try the contrapositive or structural induction.\n"
+                    f"4. Consider the problem from the dual, constructive witness, or spectral perspective.\n\n"
                     f"**FAILURE MODE**: If you cannot prove the full statement, prove the strongest "
                     f"special case or lemma. State the remaining conjecture precisely."
                 )
@@ -2708,28 +2620,8 @@ class PiAgentClient:
                 research_journal=research_journal,
                 prompt_version=prompt_version,
             )
-            # Add self-score JSON instruction
-            p += textwrap.dedent("""
-                
-                ### MANDATORY PHASE A SELF-EVALUATION
-                Additionally, you MUST write a JSON file named `quality_score.json` in your output directory.
-                This file must contain a single JSON object with a brutally honest, rigorous multi-dimensional self-evaluation of your work.
-                Each metric must be a float between 0.0 and 1.0. Do NOT inflate your scores; penalize trivial proofs and sorries heavily.
-                Example format:
-                {
-                  "metrics": {
-                    "proof_depth": 0.85,
-                    "novelty": 0.90,
-                    "importance": 0.70,
-                    "usefulness": 0.75,
-                    "applications": 0.60,
-                    "catalog_anchoring": 0.80,
-                    "overall_score": 0.82
-                  },
-                  "rationale": "Brutally honest explanation of why the scores were given based on the specific results achieved. Note any shortcomings, trivialities, or missing proofs here."
-                }
-                Do NOT include any extra formatting, markdown code blocks, or text in `quality_score.json`.
-            """)
+            # Clean Phase A prompt
+            pass
             return p
         # phase == "A_full" (legacy) — fall through to the original full prompt
         return self._build_full_aristotle_prompt(
@@ -2781,120 +2673,34 @@ class PiAgentClient:
         refs_section = ""
         if refs:
             refs_section = (
-                "### Attached Catalog References (read these first)\n"
-                + "\n".join(f"- `{r}`" for r in refs[:8])
+                "### Attached Catalog References\n"
+                + "\n".join(f"- `{r}`" for r in refs[:5])
                 + "\n"
             )
 
-        catalog_section = ""
-        if catalog_context:
-            catalog_section = f"\n### Broader Catalog Context\n{catalog_context}\n"
-
-        theorem_section = ""
-        if theorem_context:
-            theorem_section = f"\n### Recent Discoveries in Catalog\n{theorem_context}\n"
-
-        anti_trivial_block = textwrap.dedent("""\
-            ### Anti-Trivial Guardrails (non-negotiable)
-            The following are NOT acceptable as main results:
-            - Theorems of the form `theorem name {X : Type*} [Inhabited X] : True := by trivial`.
-            - Definition-only theorems or definitional equalities proved by `rfl`.
-            - Results whose entire proof is `simp`, `norm_num`, `decide`, or `native_decide`.
-            - Wrapper types that rename existing definitions.
-            - Re-proving existing catalog theorems with minor notation changes.
-            - **Circular proofs** (CRITICAL): a theorem that references itself
-              (directly or transitively) in its own proof. This is the #1 quality
-              failure. To prevent it:
-              1. Write each theorem's proof using ONLY lemmas that appear ABOVE it
-                 in the file (already defined/proved).
-              2. Never reference a theorem by name inside its own proof body.
-              3. If you need a result to prove itself, split it: prove a weaker
-                 lemma first (without referencing the target), then derive the
-                 target from the lemma.
-              4. Before outputting, scan each proof body for any reference to the
-                 theorem being proved — if found, REWRITE that proof.
-            - **Truncated/stubbed declarations**: theorem or lemma statements
-              with no proof body (no `:=` clause). Every declaration MUST have a
-              complete proof.
-
-            Every main theorem must use at least one insight-bearing tactic or
-            technique such as `induction`, `by_contra`, `field_simp`, `ring_nf`,
-            `omega`, `linarith`, `rcases`, or a custom helper lemma.
-
-            ### Compilation Verification (mandatory before output)
-            Before returning your output, mentally compile-check every file:
-            - Do all imports resolve?
-            - Does every `theorem`/`lemma` have a `:= by ...` proof?
-            - Are there any undefined references?
-            - Does any proof reference the theorem it's trying to prove?
-            If ANY file would not compile, fix it or remove the broken theorem
-            before returning. Do NOT output files with sorries in main theorems,
-            stubbed signatures, or circular dependencies.
-        """)
-
-        deliverables_block = textwrap.dedent("""\
-            ### Deliverables & Acceptance Criteria
-            1. **Lean 4 files** in the appropriate `Catalog/<domain>/` subtree.
-               - Prove as many theorems as you can complete with full proofs. Use your
-                 full compute budget — there is no limit on theorem count.
-               - **Every theorem MUST be fully proved** — 0 sorries, no stubbed signatures,
-                 no mid-proof cutoffs, no truncated declarations. Complete each proof
-                 before starting the next.
-               - Each file must be **self-contained** (compiles independently with its imports).
-               - Each file must contain `-- !-- Lab Notes -- !--` blocks documenting
-                 the team loop: Hypothesis, Experiment, Analysis, Critique, Synthesis.
-               - Docstrings and comments must be **publication-ready**: clear mathematical
-                 exposition, no mentions of machine verification, proof assistants, or
-                 formalism implementation details.
-            2. **FUTURE_DIRECTIONS.md** with 3–5 bold, falsifiable conjectures derived
-               from the cycle's findings. Each must have a "The key insight is..."
-               sentence and a "Why now?" justification. Write these as
-               self-contained, publishable-quality prose: never mention Lean,
-               proof assistants, machine verification, the Catalog, or other
-               formalism details that would spoil the text.
-
-            ### Strictly Forbidden in Phase A
-            - `ARTICLE.md`, `RESEARCH_PAPER.md`, `demo.py`, HTML widgets, `PACKAGE.json`.
-            - Prose for human readers other than Lab Notes and FUTURE_DIRECTIONS.md.
-            - Truncated proofs, stubbed signatures, or incomplete theorem declarations.
-            - Any `sorry` in a main theorem (auxiliary lemmas may use sorry ONLY if
-              clearly marked as work-in-progress in Lab Notes).
-        """)
-
         prompt = textwrap.dedent(f"""\
-            # Phase A Research Mission {prompt_version}: {concept.title}
+            # Research Mission: {concept.title}
 
-            ## Concept
-            **Domain**: {concept.domain}
-            **Research mode**: {concept.research_mode}
-            **Title**: {concept.title}
+            ## Assignment
+            **Domain**: {concept.domain} | **Mode**: {concept.research_mode}
             **Description**: {concept.concept_description}
-            **Mathematical framing**: {concept.mathematical_framing}
+            **Mathematical Framing**: {concept.mathematical_framing}
 
             {refs_section}
-            {catalog_section}
-            {theorem_section}
 
-            {depth_requirements}
+            ## Hard Constraints
+            1. Every theorem MUST be fully proved (0 sorries, no stubbed signatures).
+            2. No circular proofs (a theorem must never reference itself directly or transitively in its proof).
+            3. No trivial results (e.g. `True := by trivial`, `rfl`-only, `native_decide`-only).
+            4. All files must be self-contained and compilable with Lean 4 (mathlib4 v4.28.0).
+            5. Build directly on existing catalog definitions — do not re-invent.
 
-            {anti_trivial_block}
+            ## Output Requirements
+            Return ONLY:
+            1. `.lean` files in `Catalog/{concept.domain}/` with complete formal proofs.
+            2. `FUTURE_DIRECTIONS.md` with 3–5 concrete, falsifiable conjectures derived from your findings.
 
-            {deliverables_block}
-
-            ## Self-Critique Checklist (perform before final output)
-            Review your candidate output and answer each item. If the answer is
-            unsatisfactory, revise the output before returning it.
-
-            - [ ] No theorem is trivial (True, Inhabited-only, native_decide-only, etc.).
-            - [ ] Every main theorem has 0 sorries.
-            - [ ] At least one theorem imports or uses results from the attached catalog.
-            - [ ] Lab Notes blocks contain real hypotheses, results, insights, and failure analysis.
-            - [ ] FUTURE_DIRECTIONS.md conjectures are derived from this cycle's findings.
-            - [ ] Every future direction includes a "The key insight is..." sentence and a "Why now?" justification.
-
-            ## Output Format Reminder
-            Return `.lean` files and `FUTURE_DIRECTIONS.md` only. Focus all compute
-            on the mathematics.
+            Focus all compute budget on proving theorems.
         """)
         return prompt
 

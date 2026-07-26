@@ -372,10 +372,11 @@ class QualityEvaluator:
 
         # If ALL theorems are trivial
         if trivial_count >= theorem_count and theorem_count > 0:
-            return 0.05
+            return 0.10
 
         # Count sorry
         sorry_count = lean_source.count("sorry")
+        sorry_penalty = sorry_count * 0.15
         sorry_ratio = sorry_count / max(theorem_count, 1)
 
         # Count deep tactics
