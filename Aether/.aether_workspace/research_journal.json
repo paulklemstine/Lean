@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "e5cc823f",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\n1. **Internal Cartesian-closed formulation.** Generalize the type-level Lawvere theorem to an arbitrary locally small Cartesian closed category using global elements and a categor",
-      "quality_score": 0.69,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-07-19T10:06:57",
-      "title": "Consciousness as Emergent Fixed Point"
-    },
-    {
       "cycle_id": "1c1d1205",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\n- Instantiate `SemanticSystem` with an arithmetized recursively enumerable proof system and derive `IsGodelCode` from a diagonal lemma.\n- Separate semantic soundness from syntacti",
@@ -2501,6 +2491,16 @@
       "theorem_count": 102,
       "timestamp": "2026-07-26T14:03:58",
       "title": "Moonshot: The Last Theorem — Formalizing the Heat Death of Mathematics"
+    },
+    {
+      "cycle_id": "c1a3ae41",
+      "domain": "Computation",
+      "key_insight": "# Future Directions\n\nThe following conjectures are concrete extensions of the binary-rate model in\n`Catalog/Computation/AlgorithmicFairnessImpossibility.lean`.\n\n1. **Approximate two-group tradeoff.**",
+      "quality_score": 0.69018,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-26T14:04:03",
+      "title": "Algorithmic Fairness: Individual vs Group Fairness Impossibility"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.75
     }
   ],
-  "last_updated": "2026-07-26T14:03:58",
+  "last_updated": "2026-07-26T14:04:03",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hn2⟩)",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "decbe545",
-        "quality": 0.64,
-        "theorems": 8,
-        "title": "ArXiv paper: Efficient Hamilton covers and linear arboricity of random graphs"
-      },
-      {
         "cycle_id": "3511fbf3",
         "quality": 0.73,
         "theorems": 20,
@@ -3327,6 +3321,12 @@
         "quality": 0.72,
         "theorems": 8,
         "title": "ML Reinforcement Learning: Convergence of Policy Gradient Methods"
+      },
+      {
+        "cycle_id": "c1a3ae41",
+        "quality": 0.69018,
+        "theorems": 14,
+        "title": "Algorithmic Fairness: Individual vs Group Fairness Impossibility"
       }
     ],
     "Cryptography": [
