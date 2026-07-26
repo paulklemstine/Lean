@@ -1565,24 +1565,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Rucker: The Fourth Dimension as a Mathematical Playground"
   },
   {
-    "consumed_by_exp_id": "d94c6678",
-    "description": "Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in PA without revealing any step of the proof. Conjecture: Every theorem provable in Peano Arithmetic has a zero-knowledge proof whose communication complexity is polynomial in the length of the theorem statement (not the proof). This follows from the PCP theorem combined with the fact that PA-proofs can be arithmetized. The zero-knowledge protocol: (1) Prover commits to each proof step using a collision-resistant hash. (2) Verifier randomly challenges one proof step. (3) Prover opens that step and shows it follows from the axioms. Repeating O(k) times gives soundness error 2^{-k}. The proof is zero-knowledge because the verifier only sees one random step per challenge. Test: implement a zero-knowledge proof system for propositional tautologies and prove that a verifier learns nothing beyond the validity of the tautology. Impact: mathematicians can certify results without revealing their methods \u2014 a mathematical equivalent of sealed-bid auctions for proof strategies.",
-    "domains": [
-      "Novelty",
-      "Cryptography",
-      "Logic",
-      "Computation"
-    ],
-    "id": "seed_108",
-    "phase": "B",
-    "priority_score": 0.89,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The Monster group M is the largest sporadic simple group, with order 2^46 * 3^20 * 5^9 * 7^6 * 11^2 * 13^3 * 17 * 19 * 23 * 29 * 31 * 41 * 47 * 59 * 71 (approximately 8 * 10^{53}). Monstrous moonshine says that the coefficients of the j-function encode the dimensions of representations of M. But the j-function is just the TIP of the iceberg. Conjecture: The full moonshine correspondence associates to each conjugacy class g in M a McKay-Thompson series T_g(q) = sum a_n(g) q^n that is a modular function of a specific level, and the product over all g in M of T_g(q) equals a modular form of weight |M|/24 that encodes the complete character table of M. The secret message: the Monster group IS a modular form, and every property of M (its order, its character table, its maximal subgroups) can be read off from the q-expansion of this product. Test: compute the first 100 coefficients of T_g(q) for each conjugacy class of M and verify they match the known character values. Prove that the product of all T_g(q) converges to a modular form. Impact: the Monster is not just connected to modular forms \u2014 it IS a modular form. The 194 conjugacy classes of M correspond to 194 modular forms, and their product encodes everything.",
     "domains": [
@@ -2564,7 +2546,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "id": "seed_327",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.87,
     "research_mode": "team",
     "source_exp_id": "seed",
@@ -4924,7 +4906,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "id": "seed_378",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
@@ -8893,6 +8875,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-26T00:21:29.488173+00:00",
     "title": "`Cryptography/McElieceConnector.lean` proves a cross-domain chain:"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## What was established\n\n`ZeroKnowledgeTheoremProving.lean` separates three facts that the proposed protocol conflates:\n\n1. **Naive random proof-line opening is generally not zero knowledge.** Opening every possible coordinate is perfectly witness-private exactly when valid witnesses are unique. A concrete one-bit relation exhibits leakage.\n2. **Independent repetition has an exact geometric soundness law.** If at most `e` of `n` challenges accept, `k` rounds accept with probability at most `(e/n)^k`. The special bound `2^{-k}` needs the additional premise `2e \u2264 n`.\n3. **Uniform additive masking is perfectly hiding.** Commitments `secret + mask` over `ZMod q`, with a uniform mask, have exactly the uniform distribution for every secret.\n\nThe formal counterpoint to the mission's raw-step protocol is particularly important: with one bad line among four, the escape probability is `(3/4)^k`, strictly larger than `(1/2)^k` for positive `k`. More generally, for every fixed `k`, a proof with `2k+2` possible checks and one bad line still escapes with probability greater than one half.\n\n## Next formal targets\n\n1. **Authenticated local openings.** Define a Merkle-tree commitment and prove that two inconsistent openings imply a hash collision. This replaces independent per-line masks, which do not by themselves bind the prover to one global proof.\n2. **Simulator for opened local constraints.** A hiding commitment alone is not a zero-knowledge protocol: openings reveal their plaintexts. Formalize transcript distributions and construct a simulator whose output distribution equals, or is computationally indistinguishable from, the verifier's view.\n3. **Knowledge/soundness definitions with adaptive provers.** Replace fixed accepting sets by interactive probabilistic strategies and prove sequential or parallel repetition under explicit independence assumptions.\n4. **Propositional proof relation.** Encode a concrete proof calculus, prove decidability of local inference checks, and connect accepted complete certificates to semantic tautologicity.\n5. **PCP composition.** The statement-length communication conjecture requires a locally testable encoding with constant rejection probability, not a raw PA derivation. A faithful formal development would need an explicit PCP theorem, query complexity, proof length, and communication accounting.\n6. **Complexity-theoretic assumptions.** Computational zero knowledge requires an explicit security parameter and commitment assumptions. Perfect one-time-pad hiding is information-theoretic but does not provide binding; a usable commitment must state and prove both properties in the appropriate model.\n7. **Clarify the conjecture's scope.** Polynomial communication in statement length, independent of proof length, is substantially stronger than the finite results proved here. It should be formulated with uniformity, prover running time, setup assumptions, and whether the claim concerns proofs, arguments, or interactive proofs.\n",
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "fd_0734",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "d94c6678",
+    "status": "available",
+    "timestamp": "2026-07-26T00:21:38.956122+00:00",
+    "title": "`ZeroKnowledgeTheoremProving.lean` separates three facts that the proposed proto"
   },
   {
     "consumed_by_exp_id": "",

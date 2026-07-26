@@ -335,7 +335,7 @@
       "depth_estimate": 3,
       "description": "Formally proves perfect completeness, knowledge soundness, and zero-knowledge properties of Quadratic Arithmetic Program (QAP) based zk-SNARKs.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Cryptography"
       ],
@@ -815,7 +815,7 @@
       "depth_estimate": 3,
       "description": "Formally proves upper bounds on ciphertext noise growth during homomorphic evaluation and bootstrapping steps in BGV/BFV FHE schemes.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Cryptography"
       ],
@@ -855,7 +855,7 @@
       "depth_estimate": 3,
       "description": "Formalizes radical isogeny evaluation algorithms on supersingular Montgomery elliptic curves over quadratic finite fields.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Cryptography"
       ],
@@ -895,7 +895,7 @@
       "depth_estimate": 3,
       "description": "Establishes formal security reduction for multilinear Diffie-Hellman assumptions in graded encoding schemes.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Cryptography"
       ],
@@ -935,7 +935,7 @@
       "depth_estimate": 3,
       "description": "Derives proven soundness error upper bounds for the Fast Reed-Solomon Interactive Oracle Proof of Proximity (FRI) protocol in zk-STARKs.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Cryptography"
       ],
@@ -5183,7 +5183,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Alternating adjacent-sum polytopes: transfer matrices and Ehrhart series' and formalize its key results. Abstract: We study a period-two family of adjacent-sum lattice polytopes whose consecutive-coordinate bounds alternate between $s$ and $s+1$. This provides a simple non-uniform deformation of the classical uniform model while retaining an explicit transfer-matrix structure. The lattice-point counts exhibit a parity split: the odd- and even-dimensional sequences have distinct rational generating functions with a common denominator. The odd-dimensional series satisfies a Möbius recurrence and admits an arctangent closed form, whereas the even-dimensional series obeys a coupled recurrence. Their common dominant pole determines the exponential growth in both parity classes. For the cyclic model obtained by adding a constraint between the first and last coordinates, the count becomes a matrix trace. The two cyclic parity classes again have rational generating functions with the same denominator; the even-dimensional numerator has a Jacobi-derivative form, while the odd-dimensional one is given by an ",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Cryptography"
       ],
@@ -17124,7 +17124,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Learning With Errors (LWE) problem. Prove Regev's quantum reduction: LWE is as hard as worst-case lattice problems (GapSVP). Construct the Dual-Regev encryption scheme and prove CPA security. Formalize the ring-LWE variant.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Cryptography",
         "Algebra",
@@ -17166,7 +17166,7 @@
       "depth_estimate": 3,
       "description": "Formalize the group law on elliptic curves over finite fields in Lean 4. Prove associativity via the chord-tangent construction. Implement and verify point multiplication. Prove Hasse's bound: |#E(F_p) - p - 1| ≤ 2√p.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Cryptography",
         "Algebra",
@@ -17208,7 +17208,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Schnorr identification protocol in Lean 4. Prove completeness, soundness, and honest-verifier zero-knowledge. Formalize the Fiat-Shamir heuristic for non-interactive proofs. Prove security in the random oracle model.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Cryptography",
         "Logic",
@@ -17460,7 +17460,7 @@
       "depth_estimate": 3,
       "description": "Formalize BCH and Reed-Solomon codes over finite fields. Prove the BCH bound on minimum distance. Construct the Berlekamp-Massey decoding algorithm and prove correctness. Apply to concrete error-correction scenarios.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Computation",
@@ -17708,7 +17708,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\n## What is formally established\n\nThe accompanying Lean files isolate three rigorous components related to *The\nEndpoint Cardinality of Discrete Cube Skeleta*:\n\n1. **Discrete midpoint injection.** Labelled left/right endpoints determine an\n   integer center because their sum is twice the center.\n2. **The complete one-dimensional endpoint bound.** If a finite lattice set\n   contains the two endpoints of a positive-radius interval about each point of\n   a finite center set, then `|centers| ≤ |points|²`.\n3. **A labelled two-coordinate projection bound.** A finite set of labelled\n   pairs has size at most the product of the sizes of its coordinate\n   projections; the same is proved for any jointly injective pair of labels.\n\nThe exponent formula from the paper is also checked at `(n,k)=(2,1)`, yielding\n`1-(2-1)/(2·2²)=7/8`.\n\n## Contrarian conjectures tested\n\n* **Disproved:** every one-dimensional endpoint cover obeys the stronger linear\n  bound `|centers| ≤ |points|`.  The certified example uses four endpoints and\n  covers six centers.\n* **Disproved:** the product in the two-coordinate projection inequality can be\n  replaced by the maximum projection cardinality.  The full `2 × 2` relation\n  has four objects and two labels in either coordinate.\n* **Proved:** despite the failed linear strengthening, the universal quadratic\n  endpoint bound does hold in dimension one.\n\n## Next formalization milestones\n\nThe present work does **not** claim a formal proof of the paper's full endpoint\nlower bound for arbitrary `0 ≤ k < n`, nor of the square-boundary `N^(7/8)`\nlower bound.  Reaching those results faithfully requires the following layers:\n\n1. Define axis-parallel `k`-faces and filled cube skeleta in `ℤ^n`, preferably\n   with coordinates indexed by `Fin n` and face directions represented by\n   finite coordinate sets.\n2. Generalize the labelled projection theorem to a finite hypergraph cover of\n   coordinate labels (the full finite Shearer inequality).\n3. Formalize the paper's midpoint multiplicity estimate, including all labels\n   needed to recover centers without accidental quotienting.\n4. Encode the large-radius/small-radius induction with an explicit\n   well-founded measure, avoiding dyadic pigeonholing.\n5. Derive the arbitrary `(n,k)` exponent and then specialize to square\n   boundaries.\n\nA useful intermediate target is the two-dimensional vertex case (`n=2,k=0`),\nwhich exercises coordinate bookkeeping and midpoint estimates without filled\nedges.  After that, the square-boundary case (`n=2,k=1`) is the first genuinely\nendpoint-sensitive test of the strong induction.\n\n## Cryptographic connection\n\nThe labelled projection lemmas are directly reusable in analyses where a set\nof transcripts or keys is encoded by several partial views: jointly\nidentifying views bound the transcript population by the product of the view\nalphabets.  The explicit counterexample warns that replacing this product by a\nsingle largest view is unsound without additional independence or structural\nhypotheses.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Cryptography",
         "Pythagorean"
@@ -17995,7 +17995,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\n## Scope of the completed formalization\n\n`Cryptography/McElieceConnector.lean` proves a cross-domain chain:\n\n1. **Hamming geometry → correctness.** Additive encryption is translation in a Hamming cube. Its distance from the encoded word equals the error weight, so disjoint Hamming balls imply unique recovery.\n2. **Probability/game hopping → IND-CPA bound.** Replacing a disguised Goppa key by a random-code key and then replacing the random-code game by an ideal fair-bit game gives an additive advantage bound by the real triangle inequality.\n3. **Combinatorics → a qualified quantum-search floor.** A binomial lower bound certifies at least `2^256` weight-119 errors for length 6960; under the explicitly stated quadratic-search model, this yields a `2^128` query floor.\n\n## Important limitation: NP-hardness was not proved\n\nThe requested unconditional theorem that distinguishing binary Goppa codes from random linear codes is NP-hard is not established here. It should not be presented as a known consequence of standard McEliece security assumptions. McEliece security is normally conditional on concrete decoding and code-indistinguishability assumptions; NP-hardness of worst-case generic syndrome decoding does not by itself imply hardness of distinguishing the structured key distribution, nor average-case IND-CPA security.\n\nThe Lean game-hop theorem therefore exposes two quantitative premises rather than hiding them: a Goppa-key replacement bound and a random-code decoding/message-hiding bound. This prevents an assumption from being mislabeled as an unconditional theorem.\n\n## Next formal steps\n\n1. Define finite probability distributions for key generation, encryption randomness, and adversary coins using Mathlib probability monads.\n2. Define a binary Goppa code from a support in `GF(2^m)` and a square-free Goppa polynomial, then connect its parity checks to the existing alternant/BCH minimum-distance theorem.\n3. Formalize correctness of a bounded-distance decoder as an actual partial function, not only uniqueness of the decoded word.\n4. Define IND-CPA as an experiment over probabilistic algorithms and prove the concrete game transition theorem from couplings or total-variation distance.\n5. State the Goppa indistinguishability and random syndrome-decoding assumptions with explicit security parameters and polynomial-time adversary classes.\n6. Formalize a reduction producing a distinguisher or decoder from an IND-CPA adversary, including runtime and advantage loss.\n7. For quantum analysis, replace the abstract quadratic-search condition by a quantum query model and a proved Grover lower bound. Separately analyze structured quantum algorithms; the present theorem deliberately does not claim that every quantum attack is unstructured search.\n8. Investigate accurately scoped complexity results: worst-case NP-completeness of syndrome decoding, parameter-preserving reductions, and precisely what additional average-case assumptions would be needed to reach the McEliece distribution.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Computation",
         "Cryptography"
@@ -18021,6 +18021,47 @@
       "thread_id": "th_bc1838a0",
       "timestamp": "2026-07-26T00:21:29.488173+00:00",
       "title": "`Cryptography/McElieceConnector.lean` proves a cross-domain chain:"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "# Future Directions\n\n## What was established\n\n`ZeroKnowledgeTheoremProving.lean` separates three facts that the proposed protocol conflates:\n\n1. **Naive random proof-line opening is generally not zero knowledge.** Opening every possible coordinate is perfectly witness-private exactly when valid witnesses are unique. A concrete one-bit relation exhibits leakage.\n2. **Independent repetition has an exact geometric soundness law.** If at most `e` of `n` challenges accept, `k` rounds accept with probability at most `(e/n)^k`. The special bound `2^{-k}` needs the additional premise `2e ≤ n`.\n3. **Uniform additive masking is perfectly hiding.** Commitments `secret + mask` over `ZMod q`, with a uniform mask, have exactly the uniform distribution for every secret.\n\nThe formal counterpoint to the mission's raw-step protocol is particularly important: with one bad line among four, the escape probability is `(3/4)^k`, strictly larger than `(1/2)^k` for positive `k`. More generally, for every fixed `k`, a proof with `2k+2` possible checks and one bad line still escapes with probability greater than one half.\n\n## Next formal targets\n\n1. **Authenticated local openings.** Define a Merkle-tree commitment and prove that two inconsistent openings imply a hash collision. This replaces independent per-line masks, which do not by themselves bind the prover to one global proof.\n2. **Simulator for opened local constraints.** A hiding commitment alone is not a zero-knowledge protocol: openings reveal their plaintexts. Formalize transcript distributions and construct a simulator whose output distribution equals, or is computationally indistinguishable from, the verifier's view.\n3. **Knowledge/soundness definitions with adaptive provers.** Replace fixed accepting sets by interactive probabilistic strategies and prove sequential or parallel repetition under explicit independence assumptions.\n4. **Propositional proof relation.** Encode a concrete proof calculus, prove decidability of local inference checks, and connect accepted complete certificates to semantic tautologicity.\n5. **PCP composition.** The statement-length communication conjecture requires a locally testable encoding with constant rejection probability, not a raw PA derivation. A faithful formal development would need an explicit PCP theorem, query complexity, proof length, and communication accounting.\n6. **Complexity-theoretic assumptions.** Computational zero knowledge requires an explicit security parameter and commitment assumptions. Perfect one-time-pad hiding is information-theoretic but does not provide binding; a usable commitment must state and prove both properties in the appropriate model.\n7. **Clarify the conjecture's scope.** Polynomial communication in statement length, independent of proof length, is substantially stronger than the finite results proved here. It should be formulated with uniformity, prover running time, setup assumptions, and whether the claim concerns proofs, arguments, or interactive proofs.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Computation",
+        "Logic"
+      ],
+      "github_issue": 0,
+      "id": "fd_0734",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "d94c6678",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/d94c6678",
+      "status": "available",
+      "thread_id": "th_b64e7ff6",
+      "timestamp": "2026-07-26T00:21:38.956122+00:00",
+      "title": "`ZeroKnowledgeTheoremProving.lean` separates three facts that the proposed proto"
     },
     {
       "ambition_level": "extension",
@@ -19087,7 +19128,7 @@
       "domain_bridges": [
         "Pythagorean <-> Cryptography"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Pythagorean",
         "Cryptography"
@@ -23106,7 +23147,7 @@
       "depth_estimate": 3,
       "description": "Use inverse stereographic projection S^n -> R^n as a cryptographic primitive. The forward map (point on sphere to plane) is easy, but recovering the original point from the plane projection requires the pole parameter. Conjecture: Finding the pole of stereographic projection from only (image set, projection point) is as hard as the shortest vector problem in a lattice. Test: formalize the reduction from SVP to pole-finding for n=2. Impact: a new geometric foundation for lattice-based cryptography.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Geometry",
         "Cryptography",
@@ -24072,7 +24113,7 @@
       "depth_estimate": 3,
       "description": "The key insight is that the Collatz map T(n) = n/2 if n even, 3n+1 if n odd, appears to be a one-way function: easy to compute forward (polynomial time), intractable to invert (finding a preimage requires exponential search). Conjecture: Under the assumption that the Collatz conjecture is true, the function f(a, n) = T^a(n) (a iterations starting from n) is a one-way function with security parameter a. The inversion problem — given (a, f(a,n)), find n — requires O(2^{a/log(a)}) steps. Why now: the Collatz map has been verified to converge for all n up to 2^68, providing empirical evidence for irreversibility. Test: prove that f(a,n) cannot be inverted in sub-exponential time under a reasonable computational model. Construct a collision-resistant hash function from iterated Collatz maps. Impact: a new class of cryptographic primitives based on dynamical systems irreversibility, not number-theoretic hardness.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Cryptography",
         "NumberTheory",
@@ -24550,7 +24591,7 @@
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
-      "outcome_quality": 0.0,
+      "outcome_quality": 0.71,
       "parent_direction": "",
       "priority_score": 0.89,
       "proof_strategy": "Arithmetize PA-proofs: encode each proof step as a polynomial equation over a finite field F_p. Apply the PCP theorem: every NP statement has a probabilistically checkable proof of constant query complexity. Convert the PCP to zero-knowledge using the Fiat-Shamir heuristic: the prover commits to the PCP oracle, the verifier sends a random challenge, and the prover responds with a proof that is zero-knowledge by the hiding property of the commitment. Prove soundness: a cheating prover must fool the verifier with probability at most 2^{-k}. Prove zero-knowledge: the simulator can generate indistinguishable transcripts without the proof. Test: implement for propositional resolution proofs of length up to 1000.",
@@ -24561,7 +24602,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "",
       "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
@@ -25134,7 +25175,7 @@
       "depth_estimate": 3,
       "description": "Bitcoin mining requires finding a nonce n such that SHA256(block_header || n) < target. What if we replaced SHA256 with a tropical hash? Define tropical SHA as: TSHA(m) = min over all i of (m_i + h_i) where m = (m_1,...,m_k) is the message, h = (h_1,...,h_k) is the tropical hash key, and all operations are in the min-plus semiring (a tropical plus b = min(a,b), a tropical times b = a + b). Conjecture: TSHA is a one-way function in the tropical sense: computing TSHA(m) given m and h is O(k) (trivial), but finding m given TSHA(m) and h is NP-hard (it reduces to a tropical shortest path problem). More precisely, the tropical preimage problem — given y and h, find m such that min_i(m_i + h_i) = y — requires checking O(e^{k}) tropical paths in the worst case. But there's a twist: tropical hash collisions are COMMON because min(a,b) = min(b,a). To fix this, define TSHA2(m) = (min_i(m_i + h_i), min_i(m_i + h'_i)) where h and h' are two independent tropical keys. Conjecture: TSHA2 is collision-resistant with probability 1 - O(1/k). Test: implement TSHA and TSHA2, measure collision resistance, and compare mining difficulty to SHA256 for block sizes k = 32, 64, 128. Impact: a cryptocurrency where mining is solving tropical optimization problems instead of brute-force hash searches — mining IS mathematics.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Novelty",
         "Tropical",
@@ -25390,7 +25431,7 @@
       "depth_estimate": 3,
       "description": "Einstein showed that gravity is the curvature of spacetime. But WHY does spacetime curve? Conjecture: Spacetime IS a quantum error-correcting code, and gravity IS the syndrome of that code. The code is a [[n,k,d]] stabilizer code where n = number of Planck areas on a spatial slice, k = number of logical qubits (which equals the Bekenstein-Hawking entropy S = A/4G in natural units), and d = code distance (which equals the minimal geodesic length through the bulk). The key identity: S(A) = Area(gamma_A) / (4G) is EXACTLY the quantum Singleton bound n - k <= 2(d-1) rearranged as k = n - 2d + 2 = A/(4G) when n = A/l_P^2 and d = L/(2l_P). This means the Bekenstein-Hawking entropy formula is a quantum coding theorem, and the holographic principle is a coding constraint. Test: for AdS_3 with boundary CFT_2, the code is a [[n, k, d]] = [[L/l_P, S, L/(2l_P)]] code. Verify that the Singleton bound n - k <= 2(d-1) becomes L/l_P - S <= L/l_P - 1, which simplifies to S >= 1 (trivially true). The NON-TRIVIAL content is that the Ryu-Takayanagi formula S = A/(4G) is the exact quantum information identity. Impact: spacetime is not curved by matter — spacetime IS a code, and matter IS a syndrome. Gravity is not a force; it's error correction.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Novelty",
         "Physics",
@@ -26874,7 +26915,7 @@
       "depth_estimate": 3,
       "description": "The logistic map f(x) = r*x*(1-x) for r = 4 exhibits chaotic dynamics: small changes in initial conditions lead to exponentially diverging trajectories (Lyapunov exponent lambda = log(2)). This sensitivity to initial conditions is exactly what a cryptosystem needs. Conjecture: The logistic map at r = 4 is a secure pseudorandom generator. Define the logistic cipher: key = (x_0, n) where x_0 in (0,1) is the seed and n is the number of iterations. The keystream is K = (f^n(x_0), f^{n+1}(x_0), ...) where f^n denotes the n-th iterate. The ciphertext is C = M XOR K where M is the plaintext. The security relies on two properties: (1) Sensitivity: a change of epsilon in x_0 leads to a change of O(1) in f^n(x_0) after n = O(log(1/epsilon)) iterations (exponential sensitivity). (2) Ergodicity: the distribution of f^n(x_0) converges to the invariant measure mu(x) = 1/(pi*sqrt(x*(1-x))) regardless of the initial condition. Conjecture: breaking the logistic cipher (recovering x_0 from K) is as hard as inverting the logistic map, which requires solving a degree-2^n polynomial (since f^n(x) is a polynomial of degree 2^n). This is exponential in n. Test: implement the logistic cipher, measure the period of the keystream (which should be at least 2^n for floating-point precision n), and verify that statistical tests (NIST SP 800-22) pass for n >= 64. Impact: chaos IS cryptography — the logistic map's sensitivity to initial conditions is the same property that makes encryption secure.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Novelty",
         "Cryptography",
@@ -28142,7 +28183,7 @@
       "depth_estimate": 3,
       "description": "Tropical arithmetic (min-plus algebra) replaces + with min and * with +. A tropical matrix A over Z union {infinity} acts on vectors by tropical matrix multiplication: (A tropimes v)_i = min_j (A_{ij} + v_j). Tropical matrices have eigenvalues in the max-plus sense: lambda is a tropical eigenvalue if A tropimes v = lambda + v for some v. Conjecture: tropical matrix multiplication is a one-way function suitable for cryptography. Specifically, the 'tropical discrete logarithm problem' (TDLP) is: given a tropical matrix A and B = A^{otimes k} (tropical matrix power), find k. The tropical matrix power A^{otimes k} is computed in O(n^3 * log(k)) time (by repeated squaring), but recovering k from (A, A^{otimes k}) is hard because the tropical eigenvalues satisfy lambda(A^{otimes k}) = k * lambda(A) (tropical eigenvalues are additive under power), so k = lambda(A^{otimes k}) / lambda(A). But this only works if lambda(A) != 0 (in the tropical sense, lambda(A) != infinity). Conjecture: the tropical Diffie-Hellman key exchange is secure: Alice sends A^{otimes a}, Bob sends A^{otimes b}, and the shared key is A^{otimes ab}. Breaking this requires solving the TDLP, which is believed to be hard for random tropical matrices of size n >= 10. Test: implement the tropical DH key exchange and measure the key generation time vs matrix size. Attempt to break it with known attacks (tropical eigenvalue computation, shortest path algorithms). Impact: tropical arithmetic provides a new foundation for post-quantum cryptography.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Novelty",
         "Cryptography",
@@ -29546,7 +29587,7 @@
       "depth_estimate": 3,
       "description": "Formalize the lattice of cryptographic hardness assumptions: one-way functions → pseudorandom generators → pseudorandom functions → secure encryption. Prove separation results.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Cryptography",
         "Computation"
@@ -29587,7 +29628,7 @@
       "depth_estimate": 3,
       "description": "Formalize the hardness reduction from worst-case lattice problems (GapSVP, SIVP) to the Learning with Errors problem with specific parameters.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Cryptography",
         "Computation"
@@ -29628,7 +29669,7 @@
       "depth_estimate": 3,
       "description": "Formalize the class group action on isogeny graphs of elliptic curves. Prove that CSIDH is a one-way function assuming hardness of computing isogenies.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Cryptography",
         "Algebra"
@@ -30948,7 +30989,7 @@
       "depth_estimate": 3,
       "description": "Prove a theorem about the minimum information an observer must collect to reconstruct a dynamic social network with bounded error. Formalize the privacy-utility tradeoff as a rate-distortion problem and prove that perfect surveillance and perfect privacy are mutually exclusive in finite networks.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Novelty",
         "Cryptography",
@@ -32578,7 +32619,7 @@
       "depth_estimate": 3,
       "description": "Prove that the Learning With Errors (LWE) problem is as hard as worst-case lattice problems. Formalize the Regev reduction from GapSVP to LWE and prove that the resulting encryption scheme is IND-CPA secure under the LWE assumption.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Cryptography",
         "Computation"
@@ -32619,7 +32660,7 @@
       "depth_estimate": 3,
       "description": "Construct and prove correct a zero-knowledge proof system for graph 3-colorability. Prove completeness, soundness, and zero-knowledge. Formalize the simulation paradigm and show that the simulator produces indistinguishable transcripts.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Cryptography",
         "Logic"
@@ -32660,7 +32701,7 @@
       "depth_estimate": 3,
       "description": "Formalize fully homomorphic encryption (FHE) schemes based on the ring-LWE problem. Prove correctness: Dec(Enc(m) + Enc(m')) = m + m'. Prove security under ring-LWE. Show that the Gentry bootstrapping procedure converts a somewhat homomorphic scheme into an FHE scheme. Compute the multiplicative depth before bootstrapping is needed.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Cryptography",
         "Computation"
@@ -32742,7 +32783,7 @@
       "depth_estimate": 3,
       "description": "Formalize the SIDH key exchange: two parties compute a shared secret from supersingular isogenies of elliptic curves. Prove that computing the isogeny from j-invariant is as hard as the quaternion isogeny path problem. Analyze the Castryck-Decru attack.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Cryptography",
         "Algebra"
@@ -32783,7 +32824,7 @@
       "depth_estimate": 3,
       "description": "Prove that any polynomial-time function can be securely computed in the presence of an honest majority. Formalize the GMW compiler and prove its universal composition property. Show that malicious security adds only polynomial overhead.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Cryptography",
         "Computation"
@@ -32824,7 +32865,7 @@
       "depth_estimate": 3,
       "description": "Prove tight upper bounds on the differential probability of an S-box. Formalize the wide-trail strategy used in AES: prove that the minimum number of active S-boxes in 4 rounds of AES is 25. Connect to the branch number of the MixColumns matrix.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Cryptography",
         "Algebra"
@@ -33357,7 +33398,7 @@
       "depth_estimate": 3,
       "description": "Construct a Diffie-Hellman key exchange over the tropical semiring (min-plus algebra). Prove that the tropical matrix product problem is NP-hard for matrices over the min-plus semiring. Analyze security against known tropical cryptanalysis techniques.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Tropical",
         "Cryptography"
@@ -34796,7 +34837,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Learning With Errors (LWE) problem and prove its reduction from worst-case lattice problems (GapSVP). Show that the Regev encryption scheme is IND-CPA secure under LWE. Prove that key exchange based on LWE achieves forward secrecy. Compute concrete security parameters for 128-bit security.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Cryptography",
         "Computation"
@@ -34837,7 +34878,7 @@
       "depth_estimate": 3,
       "description": "Formalize the definition of zero-knowledge proofs (interactive and non-interactive). Prove that graph 3-colorability has a zero-knowledge proof. Implement a simplified zk-SNARK circuit in Lean 4 and prove soundness. Bridge: connect to the PCP theorem (NP ⊆ PCP(poly, 1)).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Cryptography",
         "Logic"
@@ -34878,7 +34919,7 @@
       "depth_estimate": 3,
       "description": "Prove that if one-way functions exist, then collision-resistant hash functions exist. Formalize the Merkle-Damgard construction and prove it preserves collision resistance. Show that SHA-256's compression function can be modeled as a random oracle under the indifferentiability framework.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Cryptography",
         "Computation"
@@ -34919,7 +34960,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Weil pairing on an elliptic curve and prove its bilinearity. Show that the BLS signature scheme is existentially unforgeable under the computational Diffie-Hellman assumption in the pairing group. Prove that the pairing allows short aggregate signatures.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Cryptography",
         "Algebra"
@@ -34960,7 +35001,7 @@
       "depth_estimate": 3,
       "description": "Prove that Shamir's secret sharing scheme is information-theoretically secure: any t-1 shares reveal zero information about the secret. Formalize Feldman's verifiable secret sharing and prove that cheating dealers are caught. Show that the reconstruction threshold equals the degree of the polynomial plus one.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Cryptography",
         "Algebra"
@@ -35001,7 +35042,7 @@
       "depth_estimate": 3,
       "description": "Formalize the BB84 protocol and prove its unconditional security against arbitrary quantum attacks. Show that the quantum bit error rate threshold for secure key distillation is approximately 11%. Prove that privacy amplification via universal hashing reduces Eve's information to exponentially small.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Cryptography",
         "Physics"
@@ -35042,7 +35083,7 @@
       "depth_estimate": 3,
       "description": "Formalize the McEliece cryptosystem based on Goppa codes. Prove that decoding a random linear code is NP-hard (Berlekamp-McEliece-Tilborg). Show that distinguishing a Goppa code generator matrix from random is as hard as decoding. Compute parameters for 256-bit post-quantum security.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Cryptography",
         "Computation"
@@ -35779,7 +35820,7 @@
       "depth_estimate": 3,
       "description": "Conjecture that topological quantum error correcting codes can be derived from the homology of algebraic varieties. Formalize: the surface code is H_1 of the torus, the color code is H_1 of a 2-complex. Show that the distance of the code equals the systole of the underlying manifold. Predict: codes from higher-genus surfaces achieve distance O(sqrt(g)) where g is the genus.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Novelty",
         "Cryptography"
@@ -37817,103 +37858,117 @@
   "recent_domain_counts": {
     "Algebra": 3,
     "Analysis": 1,
-    "Computation": 1,
-    "Cryptography": 1,
+    "Computation": 2,
+    "Cryptography": 2,
     "Geometry": 1,
+    "Logic": 1,
     "MachineLearning": 1,
+    "Novelty": 1,
     "Physics": 1,
     "Probability": 1,
     "Speculative": 1
   },
   "recent_theme_keywords": {
-    "across": 1,
-    "ads/cft": 1,
-    "algebraic": 1,
-    "analysis": 1,
-    "analyze": 1,
-    "architectures": 1,
-    "assumption": 1,
-    "attacks": 1,
-    "beyond": 1,
-    "binary": 1,
-    "bottleneck": 1,
-    "boundary": 1,
-    "bounded": 1,
-    "bulk-boundary": 1,
-    "cases": 1,
-    "code-based": 1,
-    "coinduction": 1,
-    "coinductive": 1,
-    "complexity": 1,
+    "2^{-k}": 1,
+    "arithmetic": 1,
+    "arithmetized": 1,
+    "auctions": 1,
+    "axioms": 1,
+    "because": 1,
+    "beyond": 2,
+    "certify": 1,
+    "challenge": 1,
+    "challenges": 1,
+    "collision-resistant": 1,
+    "combined": 1,
+    "commits": 1,
+    "communication": 1,
+    "complexity": 2,
     "concrete": 2,
-    "conjecture": 1,
-    "connecting": 1,
-    "converge": 1,
+    "conjecture": 2,
     "convergence": 2,
-    "correspondence": 1,
-    "cryptography": 1,
-    "cryptosystem": 1,
-    "diagrams": 1,
-    "distance": 1,
-    "distinguishing": 1,
-    "distribution": 1,
-    "duality": 1,
-    "e.g": 1,
-    "ensembles": 1,
-    "equivalent": 1,
-    "finite": 1,
+    "convince": 1,
+    "convinces": 1,
+    "equivalent": 2,
+    "fermat's": 1,
+    "follows": 1,
     "formalize": 5,
-    "gaussian": 1,
-    "goppa": 1,
-    "gromov-hausdorff": 1,
-    "holographic": 1,
-    "homology": 1,
-    "impact": 1,
-    "ind-cpa": 1,
-    "induction": 1,
+    "impact": 2,
+    "implement": 1,
     "inductive": 1,
     "inspired": 1,
     "jacot-gabriel-hongler": 1,
     "kernel": 2,
+    "learns": 1,
+    "length": 1,
     "linear": 1,
-    "mathematical": 1,
-    "mathematics": 1,
+    "mathematical": 2,
+    "mathematicians": 1,
+    "mathematics": 2,
     "matrices": 1,
     "matrix": 1,
     "mceliece": 1,
+    "methods": 1,
     "n-1)-dimensional": 1,
     "n-dimensional": 1,
     "networks": 1,
     "neural": 1,
+    "nothing": 1,
     "np-hard": 1,
+    "pa-proofs": 1,
     "persistence": 1,
     "persistent": 1,
     "pipeline": 1,
+    "polynomial": 1,
     "principle": 1,
-    "proof": 1,
+    "proof": 2,
+    "proofs": 1,
+    "propositional": 1,
+    "protocol": 1,
+    "provable": 1,
+    "prove": 1,
+    "prover": 1,
+    "proving": 1,
     "quantum": 1,
     "ramsey": 1,
-    "random": 2,
+    "random": 3,
+    "randomly": 1,
     "regime": 1,
+    "repeating": 1,
     "resistance": 1,
+    "results": 1,
+    "revealing": 1,
     "s^{n-1}": 1,
+    "sealed-bid": 1,
     "security": 1,
     "shorter": 1,
+    "showing": 1,
     "solution": 1,
+    "someone": 1,
+    "soundness": 1,
     "spaces": 1,
     "stability": 1,
+    "statement": 1,
+    "strategies": 1,
     "structures": 1,
+    "system": 1,
     "tangent": 1,
+    "tautologies": 1,
+    "tautology": 1,
     "terms": 1,
-    "theorem": 3,
+    "theorem": 4,
     "theory": 1,
     "topological": 1,
     "topology": 1,
     "tracy-widom": 1,
     "underlying": 1,
     "universality": 2,
+    "validity": 1,
+    "verifier": 1,
     "verify": 1,
-    "well-founded": 1
+    "well-founded": 1,
+    "without": 1,
+    "zero-knowledge": 1
   },
   "selection_log": [
     "famous_subtask",
