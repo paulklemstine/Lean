@@ -1,311 +1,405 @@
-# Chromatic Counting, Deletion–Contraction, and the Sharpness of the Greedy Bound
+# Chromatic Counting Functions: Deletion–Contraction, Extremal Evaluations, and Component Factorization
 
-**Author:** Aristotle
-**Domain:** Tropical
-**Date:** 2026-06-26
+**Aristotle**  
+**26 July 2026**
 
 ## Abstract
 
-We develop the elementary but foundational theory of proper graph colorings through two
-complementary lenses: an *enumerative* lens centered on the chromatic counting function,
-and a *bounding* lens centered on the greedy degeneracy bound and its tight exceptions.
-On the enumerative side we define `chromCount G k`, the number of proper colorings of a
-finite simple graph $G$ with a palette of $k$ colors, compute it in closed form for the
-two extreme graphs (the edgeless graph yields $k^{|V|}$ and the complete graph yields the
-falling factorial $k^{\underline{|V|}}$), and prove the **deletion–contraction identity**
-in additive counting form,
-$P(G_{\text{del}}, k) = P(G, k) + \mathrm{contractCount}(G_{\text{del}}, u, v, k)$,
-which is the structural engine showing $P(G, \cdot)$ is a polynomial. We also record that
-$P(G,k)=0$ exactly when $G$ is not $k$-colorable. On the bounding side we prove the
-universal **greedy bound** $\chi(G) \le \Delta(G) + 1$ for every finite graph, and show
-that the two classical **Brooks exception families** — complete graphs and odd cycles —
-realize this bound with equality, with maximum degrees and chromatic numbers computed
-exactly. All results are formalized in Lean 4 over Mathlib. We close with a tropical
-reformulation, in which the additive deletion–contraction recursion becomes a max-plus
-recursion on log-counts, and a set of conjectures (full Brooks, integer-polynomial lift,
-and T-positivity for claw-free graphs) that the present development isolates sharply.
+For a finite simple graph $G$ and a nonnegative integer $q$, let $P(G,q)$ be the number of proper vertex colorings of $G$ by a palette of $q$ colors. This paper gives a self-contained development of the basic counting theory. We prove the empty-graph formula $P(E_n,q)=q^n$ and the complete-graph formula $P(K_n,q)=q^{\underline n}$. We define edge deletion and a concrete simple-graph contraction, then partition the proper colorings after deletion according to whether the endpoints of the deleted edge receive distinct or equal colors. An explicit restriction-and-extension bijection identifies the equal-color class with the proper colorings of the contraction. This yields
+
+$$
+P(G-e,q)=P(G,q)+P(G/e,q),
+$$
+
+and hence the traditional subtractive recurrence. We also prove multiplicativity under disjoint union,
+
+$$
+P(G\sqcup H,q)=P(G,q)P(H,q),
+$$
+
+and derive a bound on the contraction contribution. These results provide an exact recursive algorithm for chromatic counts. We discuss direct enumeration, deletion–contraction, component-aware evaluation, complexity, examples, applications, and the distinction between the established counting theory and broader goals involving polynomial coefficients, planar coloring, maximum-degree bounds, and basis positivity.
 
 ## 1. Introduction
 
-Graph coloring is the canonical model of conflict-free assignment: vertices are tasks,
-edges are conflicts, and a proper $k$-coloring is a clash-free assignment using $k$
-resources. Two questions dominate the theory. The *optimization* question asks for the
-chromatic number $\chi(G)$, the least number of colors admitting a proper coloring. The
-*enumeration* question asks for $P(G, k)$, the number of proper colorings with $k$ colors;
-as a function of $k$ this is the chromatic polynomial introduced by Birkhoff and Whitney.
+Graph coloring models assignments subject to pairwise incompatibility. A graph vertex may represent a region, task, radio transmitter, register candidate, or experimental condition; an edge records that its endpoints may not receive the same label. The familiar feasibility question asks whether a graph can be colored from a palette of a given size. The enumerative question asks how many such colorings exist.
 
-This paper formalizes the elementary core of both questions and the bridge between them.
-Section 2 builds the enumeration theory around `chromCount` and culminates in the additive
-deletion–contraction identity, the recursion that simultaneously proves polynomiality and
-computes the polynomial. Section 3 builds the optimization theory around the greedy bound
-$\chi \le \Delta + 1$ and its two tight families. Section 4 develops the tropical
-reformulation. Section 5 discusses applications and Section 6 lists future directions.
+The enumerative viewpoint records more information. A count distinguishes a rigid instance with a unique assignment from a flexible instance with many assignments, even when both need the same minimum number of colors. Counts also support sensitivity analysis: one may ask exactly how many assignments are gained by removing a constraint, or how independent subsystems combine.
 
-Throughout, $G = (V, E)$ is a finite simple graph, $V$ is a finite vertex type with
-decidable equality and decidable adjacency, $\Delta(G)$ denotes the maximum degree,
-$\chi(G)$ the chromatic number, $\top$ the complete graph, and $\bot$ the edgeless graph
-on a given vertex type. We write $[k] = \{0, 1, \dots, k-1\}$ for the palette (the type
-$\mathrm{Fin}\,k$).
+The fundamental relation is deletion–contraction. Given an edge $e$, delete it. Every proper coloring of the resulting graph either still separates the endpoints or gives them the same color. The first class is precisely the set of proper colorings before deletion. The second is naturally equivalent to the colorings of the graph in which the endpoints are merged. The recurrence follows by cardinality.
 
-## 2. The chromatic counting function and deletion–contraction
+Our treatment emphasizes finite sets and explicit bijections. This keeps the argument valid for every nonnegative palette size, including $q=0$, and clarifies the exact role of contraction. Although the notation $P(G,q)$ anticipates the chromatic polynomial, the results below require only its counting interpretation at natural values. Constructing an integer-coefficient polynomial object and proving equality of polynomial expressions is a further algebraic step.
 
-### 2.1 Definitions
+All arguments use only finite sets, elementary graph operations, and explicit correspondences between colorings. No interpolation or pre-existing polynomial theory is needed for the counting identities.
 
-**Definition 2.1 (Chromatic counting function, `chromCount`).**
-For a finite simple graph $G$ on vertex set $V$ and a natural number $k$, a *proper
-$k$-coloring* is a function $c : V \to [k]$ such that $c(u) \ne c(v)$ whenever $uv \in E$.
-We define
-$$P(G, k) \;=\; \mathrm{chromCount}(G, k) \;=\; \#\{\, c : V \to [k] \mid c \text{ is proper}\,\},$$
-the number of proper $k$-colorings of $G$. As a function of $k$ this is the chromatic
-polynomial of $G$ evaluated at $k$.
+The principal results are:
 
-**Definition 2.2 (Contraction count, `contractCount`).**
-Let $H$ be a finite simple graph and let $u, v$ be two distinct vertices. Define
-$$\mathrm{contractCount}(H, u, v, k) \;=\; \#\{\, c : V \to [k] \mid c \text{ is a proper coloring of } H \text{ and } c(u) = c(v)\,\}.$$
-That is, $\mathrm{contractCount}$ counts the proper colorings of $H$ that assign $u$ and
-$v$ the *same* color. When $H$ is the deletion of the edge $uv$, these are exactly the
-proper colorings of the contraction $H/uv$, because identifying $u$ with $v$ is precisely
-the requirement $c(u)=c(v)$.
+1. For the edgeless graph $E_n$, $P(E_n,q)=q^n$.
+2. For the complete graph $K_n$, $P(K_n,q)=q^{\underline n}$.
+3. For every edge $e$ of $G$, $P(G-e,q)=P(G,q)+P(G/e,q)$.
+4. For disjoint graphs $G$ and $H$, $P(G\sqcup H,q)=P(G,q)P(H,q)$.
+5. The contraction count satisfies $P(G/e,q)\le P(G-e,q)$.
 
-### 2.2 The two extremes
+After proving these statements, we turn them into algorithms and illustrate them numerically.
 
-**Proposition 2.3 (Edgeless graph, `chromCount_bot`).**
-For the edgeless graph $\bot$ on a finite vertex set $V$,
-$$P(\bot, k) = k^{|V|}.$$
+## 2. Definitions and conventions
 
-*Proof sketch.* An edgeless graph imposes no constraints, so every function
-$c : V \to [k]$ is proper. The number of such functions is $k^{|V|}$ by the product rule
-(each of the $|V|$ vertices independently chooses one of $k$ colors). Formally this is the
-cardinality of the function type $V \to \mathrm{Fin}\,k$. $\qquad\blacksquare$
+### 2.1 Finite simple graphs
 
-**Proposition 2.4 (Complete graph, `chromCount_top`).**
-For the complete graph $\top$ on a finite vertex set $V$,
-$$P(\top, k) = k^{\underline{|V|}} = k(k-1)(k-2)\cdots(k - |V| + 1),$$
-the falling factorial `k.descFactorial |V|`.
+A **finite simple graph** $G=(V,E)$ consists of a finite vertex set $V$ and an edge set $E$ made of unordered two-element subsets of $V$. Equivalently, adjacency is a symmetric, irreflexive relation: if $x$ is adjacent to $y$, then $y$ is adjacent to $x$, and no vertex is adjacent to itself. We write $x\sim_G y$ when $x$ and $y$ are adjacent.
 
-*Proof sketch.* In the complete graph every pair of vertices is adjacent, so a coloring is
-proper if and only if it is injective. The proper colorings are therefore exactly the
-injections $V \hookrightarrow [k]$, and the number of injections from a set of size $|V|$
-into a set of size $k$ is the falling factorial $k^{\underline{|V|}}$. In particular this
-is $0$ when $k < |V|$, recovering $\chi(\top) = |V|$. $\qquad\blacksquare$
+The **edgeless graph** $E_n$ has $n$ vertices and no edges. The **complete graph** $K_n$ has $n$ vertices and an edge between every pair of distinct vertices.
 
-Both closed forms are polynomials in $k$: $k^{|V|}$ and the degree-$|V|$ falling factorial.
-This is the first hint of polynomiality, made general by the next theorem.
+### 2.2 Proper colorings and chromatic counts
 
-### 2.3 Deletion–contraction
+Fix a finite color set $C$. A **proper $C$-coloring** of $G$ is a function
 
-**Theorem 2.5 (Additive deletion–contraction, `chromCount_deletion_contraction`).**
-Let $G$ be obtained from $G_{\text{del}}$ by adding a single edge $uv$ (equivalently,
-$G_{\text{del}}$ is the deletion $G - uv$). Then
-$$P(G_{\text{del}}, k) \;=\; P(G, k) \;+\; \mathrm{contractCount}(G_{\text{del}}, u, v, k).$$
+$$
+c:V\longrightarrow C
+$$
 
-*Proof sketch.* Partition the proper colorings of $G_{\text{del}}$ according to whether
-$c(u) \ne c(v)$ or $c(u) = c(v)$. The two classes are disjoint and exhaust all proper
-colorings of $G_{\text{del}}$, so their counts add.
-- A proper coloring of $G_{\text{del}}$ with $c(u) \ne c(v)$ is precisely a proper coloring
-  of $G = G_{\text{del}} + uv$: the only additional constraint imposed by the new edge $uv$
-  is exactly $c(u) \ne c(v)$, which already holds. Hence this class has size $P(G, k)$.
-- A proper coloring of $G_{\text{del}}$ with $c(u) = c(v)$ is, by Definition 2.2, counted by
-  $\mathrm{contractCount}(G_{\text{del}}, u, v, k)$; these are exactly the proper colorings of
-  the contraction $G/uv$.
+such that
 
-Adding the two class sizes gives the identity. $\qquad\blacksquare$
+$$
+x\sim_G y\quad\Longrightarrow\quad c(x)\ne c(y).
+$$
 
-The standard *subtractive* form $P(G, k) = P(G_{\text{del}}, k) - P(G/uv, k)$ is the same
-identity rearranged. The additive form is the natural statement over $\mathbb{N}$, where
-subtraction is truncating; rearranging to $\mathbb{Z}$ is part of the polynomial-lift
-program (Conjecture C2 in §6).
+When $C$ has $q$ elements, the number of proper colorings depends only on $q$, not on the names of the colors. We define the **chromatic counting function** by
 
-**Corollary 2.5.1 (Polynomiality, sketch).** Iterating Theorem 2.5, every chromatic count
-reduces to a $\mathbb{Z}$-linear combination of edgeless counts $k^{|V'|}$ (Proposition 2.3)
-on graphs $G'$ with strictly fewer edges. By induction on $|E|$, $k \mapsto P(G, k)$ agrees
-with a polynomial in $k$. The base case $|E| = 0$ is Proposition 2.3. This is the classical
-argument; the present development proves the recursion (Theorem 2.5) and base cases that
-drive it, leaving the explicit $\mathbb{Z}[X]$ lift as Conjecture C2.
+$$
+P(G,q)=\#\{c:V\to \{1,\ldots,q\}:c\text{ is proper}\}.
+$$
 
-### 2.4 The count detects colorability
+For $q=0$, the palette is empty. There is one function from the empty vertex set to the empty palette and no function from a nonempty vertex set to it, so the usual finite-set conventions handle this boundary case automatically.
 
-**Proposition 2.6 (`chromCount_eq_zero_iff`).**
-For a finite simple graph $G$ and $k \in \mathbb{N}$,
-$$P(G, k) = 0 \iff G \text{ is not } k\text{-colorable}.$$
-Equivalently, $\chi(G) = \min\{\, k \mid P(G, k) > 0 \,\}$.
+### 2.3 Falling factorials
 
-*Proof sketch.* $P(G, k)$ is the cardinality of the (finite) set of proper colorings; a
-finite set has cardinality $0$ iff it is empty, i.e. iff no proper $k$-coloring exists,
-which is the definition of $G$ not being $k$-colorable. The chromatic number is then the
-least $k$ for which the count is positive. $\qquad\blacksquare$
+For nonnegative integers $q$ and $n$, the **falling factorial** is
 
-Proposition 2.6 is the formal bridge from enumeration to optimization: the chromatic
-polynomial *contains* the chromatic number as its smallest non-root among the naturals.
+$$
+q^{\underline n}=q(q-1)(q-2)\cdots(q-n+1),
+$$
 
-## 3. The greedy bound and its tight exceptions
+with $q^{\underline 0}=1$. Combinatorially, $q^{\underline n}$ counts injections from an $n$-element set into a $q$-element set. If $n>q$, no injection exists and the count is zero.
 
-We now turn to the optimization side and bound $\chi(G)$ from above.
+### 2.4 Edge deletion
 
-### 3.1 The universal greedy bound
+Let $e=\{a,b\}$ be an edge of $G$. The **edge deletion** $G-e$ has the same vertex set as $G$ and all edges except $e$. Thus
 
-**Theorem 3.1 (Greedy / degeneracy bound, `colorable_maxDegree_add_one`).**
-Every finite simple graph $G$ is $(\Delta(G) + 1)$-colorable:
-$$G.\mathrm{Colorable}\,(\Delta(G) + 1).$$
+$$
+x\sim_{G-e}y
+$$
 
-*Proof sketch.* We prove, by induction on a finite vertex set $S$ (`Finset.induction`),
-that there is a coloring $c : V \to [\Delta(G)+1]$ proper on $S$. The empty case is
-trivial. For the inductive step, suppose $c$ is proper on $S$ and we add a new vertex $v$.
-The neighbors of $v$ lying in $S$ form a subset of the neighbor set $N(v)$, whose image
-under $c$ has cardinality at most $|N(v)| = \deg(v) \le \Delta(G) < \Delta(G) + 1$.
-Therefore the set of colors used by $v$'s already-colored neighbors does not exhaust the
-palette $[\Delta(G)+1]$ (a strict cardinality inequality: a function from a set of size
-$\le \Delta$ cannot surject onto a set of size $\Delta+1$), so a *free* color exists.
-Assign it to $v$ and keep the old colors elsewhere; the result is proper on $S \cup \{v\}$.
-Applying this with $S = V$ gives a proper coloring of all of $G$ with $\Delta(G)+1$ colors.
-$\qquad\blacksquare$
+holds exactly when $x\sim_G y$ and $\{x,y\}\ne\{a,b\}$.
 
-**Corollary 3.2 (`chromaticNumber_le_maxDegree_add_one`).**
-$\chi(G) \le \Delta(G) + 1$.
+### 2.5 Edge contraction
 
-*Proof sketch.* Immediate from Theorem 3.1 via the equivalence between
-`Colorable (n)` and `chromaticNumber ≤ n`. $\qquad\blacksquare$
+The **edge contraction** $G/e$ merges $a$ and $b$ into one vertex. One concrete construction keeps every vertex other than $b$ and uses $a$ as the representative of the merged vertex. Distinct retained vertices $x$ and $y$ are adjacent in $G/e$ when either they were adjacent in $G$, or one is $a$ and the other was adjacent to $b$ in $G$. Duplicate edges have no effect, and loops are excluded.
 
-### 3.2 First tight family: complete graphs
+This construction redirects every incidence of $b$ to $a$. It is isomorphic to the usual quotient construction that identifies $a$ and $b$, but it avoids ambiguity about representatives. The assumption that $e$ is an edge implies $a\ne b$.
 
-**Lemma 3.3 (`maxDegree_completeGraph`).**
-The complete graph $K_{n+1} = (\top : \mathrm{SimpleGraph}\,(\mathrm{Fin}\,(n+1)))$ has
-$\Delta(K_{n+1}) = n$.
+### 2.6 Disjoint union
 
-*Proof sketch.* In $\top$ every vertex is adjacent to all $n$ other vertices, so every
-degree equals $n$; the maximum over a nonempty vertex set is therefore $n$. (Formally one
-computes the degree image to be the singleton $\{n\}$ and reads off its maximum.)
-$\qquad\blacksquare$
+If $G=(V,E_G)$ and $H=(W,E_H)$ have disjoint vertex sets, their **disjoint union** $G\sqcup H$ has vertex set $V\sqcup W$. Adjacency inside each summand is inherited from its graph, and there are no edges between the summands.
 
-**Theorem 3.4 (First Brooks exception, `completeGraph_chromatic_eq_maxDegree_add_one`).**
-$$\chi(K_{n+1}) = \Delta(K_{n+1}) + 1 = n + 1.$$
+## 3. Extremal evaluations
 
-*Proof sketch.* By Proposition 2.4 (or directly), $K_{n+1}$ requires all $n+1$ vertices to
-take distinct colors, so $\chi(K_{n+1}) = n+1$ (the chromatic number of the top graph on
-$n+1$ vertices). By Lemma 3.3, $\Delta(K_{n+1}) = n$, hence $\Delta + 1 = n + 1 = \chi$.
-The greedy bound (Corollary 3.2) is therefore tight on complete graphs. $\qquad\blacksquare$
+We begin with the two graphs for which properness has the simplest possible meaning.
 
-### 3.3 Second tight family: odd cycles
+### Theorem 3.1 (Empty-Graph Formula)
 
-**Lemma 3.5 (`maxDegree_cycleGraph`).**
-The odd cycle $C_{2m+3}$ has $\Delta(C_{2m+3}) = 2$.
+For every $n,q\ge 0$, the edgeless graph $E_n$ satisfies
 
-*Proof sketch.* On a cycle each vertex $v$ has exactly two neighbors, $v-1$ and $v+1$
-(indices modulo $2m+3$), which are distinct because the cycle has length $\ge 3$. Hence
-every degree is $2$, and the maximum degree is $2$. (Formally one shows
-$N(v) = \{v-1, v+1\}$ has cardinality $2$ for all $v$, so the degree function is constant
-at $2$ and the max-degree image is $\{2\}$.) $\qquad\blacksquare$
+$$
+P(E_n,q)=q^n.
+$$
 
-**Theorem 3.6 (Second Brooks exception, `oddCycle_chromatic_eq_maxDegree_add_one`).**
-$$\chi(C_{2m+3}) = \Delta(C_{2m+3}) + 1 = 3.$$
+#### Proof sketch
 
-*Proof sketch.* An odd cycle is not bipartite (it contains an odd closed walk), so it is
-not $2$-colorable; three colors suffice (color around the ring $1,2,1,2,\dots$ and use $3$
-to absorb the wrap-around clash), giving $\chi(C_{2m+3}) = 3$. By Lemma 3.5,
-$\Delta(C_{2m+3}) = 2$, so $\Delta + 1 = 3 = \chi$. The greedy bound is tight on odd cycles.
-$\qquad\blacksquare$
+Because $E_n$ has no adjacent vertices, the properness condition imposes no restriction. Every function from its $n$ vertices to the $q$-element palette is proper. Each vertex has $q$ independent choices, giving $q^n$ functions. The formula includes $n=0$, where the unique empty function gives $q^0=1$. $\square$
 
-### 3.4 Brooks' theorem in context
+### Theorem 3.2 (Complete-Graph Formula)
 
-Theorems 3.4 and 3.6 show that the greedy bound is sharp on the two families that Brooks'
-classical theorem singles out. **Brooks' theorem** asserts the converse: for every
-*connected* graph $G$ that is neither a complete graph nor an odd cycle,
-$\chi(G) \le \Delta(G)$ — the extra color of the greedy bound can always be recycled. The
-present development proves the universal bound (Theorem 3.1) and both exception families
-with exact values (Theorems 3.4, 3.6); the "no other exceptions" direction is isolated as
-Conjecture C1 in §6, where the only missing ingredient is a vertex-ordering lemma.
+For every $n,q\ge 0$, the complete graph $K_n$ satisfies
 
-A worked example illustrates the odd-cycle obstruction. For $C_5$ (the pentagon, $m=1$),
-$\Delta = 2$ and the greedy bound promises $3$ colors. A $2$-coloring would force the
-pattern $1,2,1,2,?$ around the ring, and the fifth vertex is adjacent to both a $1$ and a
-$2$, so no $2$-coloring exists; $3$ colors suffice. Hence $\chi(C_5) = 3 = \Delta + 1$,
-in agreement with Theorem 3.6 at $m = 1$.
+$$
+P(K_n,q)=q^{\underline n}.
+$$
 
-## 4. A tropical reformulation
+#### Proof sketch
 
-The additive deletion–contraction identity (Theorem 2.5) becomes especially transparent
-under the **tropical (max-plus) dictionary**, in which ordinary addition $a + b$ is
-replaced by $\max(a, b)$ and ordinary multiplication $a \cdot b$ by $a + b$. Applying
-$\log$ to chromatic counts converts the exponential growth of $P(G, k)$ in the number of
-colors into a piecewise-linear shape.
+Every two distinct vertices of $K_n$ are adjacent, so a coloring is proper exactly when no two vertices receive the same color. Proper colorings are therefore injections from an $n$-element vertex set into a $q$-element palette. Ordering the vertices, there are $q$ choices for the first image, $q-1$ for the second, and so forth, producing $q^{\underline n}$. If $n>q$, no injection exists and the falling factorial count is zero. $\square$
 
-Concretely, for the edgeless graph Proposition 2.3 gives
-$\log P(\bot, k) = |V| \cdot \log k$, a linear function of $\log k$ with integer slope
-$|V|$; this is the tropical "quadratic"/monomial envelope that the catalog's tropical
-machinery recognizes. Under $\log$, the additive recursion of Theorem 2.5,
-$P(G_{\text{del}}, k) = P(G, k) + \mathrm{contractCount}(\cdots)$, turns into the
-*sandwich*
-$$\max\big(\log P(G,k),\ \log C\big) \;\le\; \log P(G_{\text{del}},k) \;\le\; \max\big(\log P(G,k),\ \log C\big) + \log 2,$$
-where $C = \mathrm{contractCount}(G_{\text{del}}, u, v, k)$, simply because for nonnegative
-reals $a, b$ one has $\max(a,b) \le a + b \le 2\max(a,b)$. This is the max-plus form of
-deletion–contraction: the log-count is pinned, up to a bounded $\log 2$ slack, to the
-maximum of the two child log-counts. Iterating produces a convex, piecewise-linear envelope
-with integer slopes $0, 1, \dots, |V|$ — the tropicalization of the chromatic polynomial.
+### Corollary 3.3
 
-This viewpoint motivates studying *T-positivity*: writing the chromatic polynomial in the
-falling-factorial (tropical $\sigma$) basis and asking when its coefficients are
-nonnegative. The conjecture (C3 in §6) is that **claw-free graphs** are T-positive,
-because claw-freeness forbids the local configuration that would create a sign cancellation
-in the $\sigma$-expansion. The tropical sandwich above is the structural reason to expect a
-clean piecewise-linear envelope, even though the positivity statement itself remains open.
+For $q\ge n$,
 
-## 5. Applications
+$$
+P(K_n,q)=\frac{q!}{(q-n)!}.
+$$
 
-- **Scheduling and resource allocation.** A proper $k$-coloring is a clash-free assignment
-  of $k$ resources (time slots, frequencies, registers). Theorem 3.1 gives a universal,
-  constructive guarantee: $\Delta + 1$ resources always suffice, achievable by a single
-  linear pass (greedy coloring). Brooks' exceptions (Theorems 3.4, 3.6) identify the only
-  topologies where this guarantee cannot be improved.
+This is merely the factorial form of the falling factorial. The product formulation remains combinatorially meaningful without separately treating $q<n$.
 
-- **Counting and reliability.** The chromatic counting function $P(G, k)$ (Definition 2.1)
-  quantifies the *number* of valid configurations, useful when one needs not merely
-  feasibility but a measure of robustness or a uniform random valid assignment. Proposition
-  2.6 makes feasibility a special case ($P > 0$).
+## 4. The coloring partition associated with an edge
 
-- **Algorithmic computation.** Theorem 2.5 is a divide-and-conquer recursion: repeatedly
-  delete-and-contract an edge until reaching edgeless graphs (Proposition 2.3). This yields
-  an exact algorithm for the chromatic polynomial and, via Proposition 2.6, for the
-  chromatic number. The companion `demo.py` implements precisely this recursion and checks
-  it against brute-force enumeration on complete graphs, odd cycles, paths, and random
-  graphs.
+Fix a finite simple graph $G$, an edge $e=\{a,b\}$, and a finite palette $C$. Consider the set $\mathcal C(G-e,C)$ of proper $C$-colorings of the deletion. Partition it into
 
-- **Structural mathematics.** The tropical reformulation (§4) connects chromatic
-  enumeration to max-plus convex geometry, a fertile setting for positivity and
-  log-concavity phenomena.
+$$
+\mathcal C_{\ne}=\{c\in\mathcal C(G-e,C):c(a)\ne c(b)\}
+$$
 
-## 6. Future directions
+and
 
-**C1. Full Brooks' theorem (removing the $+1$).** For every finite connected graph $G$
-that is neither a complete graph nor an odd cycle, $G.\mathrm{Colorable}\,\Delta(G)$, i.e.
-$\chi(G) \le \Delta(G)$. The universal bound (Theorem 3.1) and both tight families
-(Theorems 3.4, 3.6) are already in hand; the missing ingredient is a vertex-ordering lemma
-that recycles the slack color, so the target is sharply isolated.
+$$
+\mathcal C_{=}=\{c\in\mathcal C(G-e,C):c(a)=c(b)\}.
+$$
 
-**C2. Genuine integer polynomial with the DC recursion.** There is a map
-$P : \mathrm{SimpleGraph}\,V \to \mathbb{Z}[X]$ with $(P\,G).\mathrm{eval}(k) = P(G, k)$ for
-all $k$, satisfying $P\,G_{\text{del}} = P\,G + P(\text{contraction})$, with coefficients
-alternating in sign, $\deg = |V|$, and leading coefficient $1$. The additive $\mathbb{N}$
-recursion (Theorem 2.5) and base case $k^{|V|}$ (Proposition 2.3) pin down all
-coefficients by induction on the number of edges.
+Equality of colors is decidable in a finite palette, and every coloring belongs to exactly one class. Thus
 
-**C3. T-positivity for claw-free graphs.** For every claw-free graph $G$, the chromatic
-polynomial in the falling-factorial (tropical $\sigma$) basis has nonnegative coefficients;
-equivalently its tropicalization $x \mapsto \log P(G, \lceil e^x \rceil)$ is convex and
-piecewise-linear with integer slopes $0, 1, \dots, |V|$. The tropical deletion–contraction
-sandwich (§4) turns the count recursion into a max-plus recursion, and claw-freeness
-forbids the local configuration that would otherwise create a negative tropical coefficient.
+$$
+\#\mathcal C(G-e,C)=\#\mathcal C_{\ne}+\#\mathcal C_{=}.
+$$
 
-**C4. Multiplicativity and further structure.** Continue the program toward
-multiplicativity of the chromatic polynomial over disjoint unions and clique-sums, and
-toward log-concavity of the coefficient sequence, building on the tropical envelope of §4.
+The next two lemmas identify these terms.
 
-## 7. Conclusion
+### Lemma 4.1 (Distinct-Endpoint Class)
 
-We have formalized the elementary backbone of chromatic-polynomial theory: a counting
-function `chromCount` with closed forms on the edgeless and complete graphs, the additive
-deletion–contraction identity that makes it a polynomial and computes it, a zero-test that
-recovers the chromatic number, the universal greedy bound $\chi \le \Delta + 1$, and the
-exact tightness of that bound on the two Brooks exception families. A tropical
-reformulation recasts the recursion in max-plus form and frames the open positivity
-questions. Together these results give a self-contained, machine-checked foundation on
-which the conjectures of §6 can be built.
+The set $\mathcal C_{\ne}$ is exactly the set $\mathcal C(G,C)$ of proper $C$-colorings of $G$.
+
+#### Proof sketch
+
+A proper coloring of $G$ remains proper after an edge is deleted and, because $a$ and $b$ are adjacent in $G$, it gives them distinct colors. Conversely, a proper coloring of $G-e$ that gives $a$ and $b$ distinct colors satisfies the only constraint omitted during deletion. It therefore satisfies every edge constraint of $G$. $\square$
+
+### Lemma 4.2 (Equal-Endpoint Contraction Bijection)
+
+There is a bijection
+
+$$
+\mathcal C_{=}\cong \mathcal C(G/e,C).
+$$
+
+#### Proof sketch
+
+Given $c\in\mathcal C_{=}$, restrict $c$ to the retained vertices of $G/e$, omitting $b$. This restriction is proper. An ordinary retained edge was already constrained in $G-e$. If an edge of the contraction arises by redirecting an edge incident to $b$, its other endpoint has color different from $c(b)$; since $c(a)=c(b)$, it also has color different from the merged vertex’s color.
+
+Conversely, let $d$ be a proper coloring of $G/e$. Extend it to $G-e$ by assigning $d(a)$ to both $a$ and $b$, while preserving $d$ on every other vertex. The endpoints are equal by construction. Any edge not incident to $b$ is respected because it appears in the contraction. Any surviving edge incident to $b$ becomes an edge from its other endpoint to the merged representative $a$ in the contraction, so its endpoints receive different colors.
+
+Restriction followed by extension recovers the original equal-endpoint coloring because that coloring already satisfies $c(a)=c(b)$. Extension followed by restriction plainly recovers $d$. Hence the maps are inverse bijections. $\square$
+
+The concrete redirection definition of contraction is precisely what makes both directions transparent.
+
+## 5. Deletion–contraction
+
+### Theorem 5.1 (Deletion–Contraction)
+
+Let $G$ be a finite simple graph, let $e$ be an edge of $G$, and let $q\ge 0$. Then
+
+$$
+P(G-e,q)=P(G,q)+P(G/e,q).
+$$
+
+#### Proof sketch
+
+Partition the proper $q$-colorings of $G-e$ into the distinct-endpoint and equal-endpoint classes. Lemma 4.1 identifies the first class with the proper colorings of $G$. Lemma 4.2 identifies the second class bijectively with the proper colorings of $G/e$. The classes are disjoint and exhaustive, so their cardinalities add. $\square$
+
+### Corollary 5.2 (Subtractive Form)
+
+Under the same assumptions,
+
+$$
+P(G,q)=P(G-e,q)-P(G/e,q).
+$$
+
+#### Proof sketch
+
+Theorem 5.1 expresses $P(G-e,q)$ as a sum of two natural numbers. Subtract the contraction contribution, which is no larger than the sum. $\square$
+
+### Corollary 5.3 (Contraction Bound)
+
+Under the same assumptions,
+
+$$
+P(G/e,q)\le P(G-e,q).
+$$
+
+#### Proof sketch
+
+By Theorem 5.1, $P(G-e,q)$ is $P(G/e,q)$ plus the nonnegative integer $P(G,q)$. Equivalently, Lemma 4.2 embeds contraction colorings as the equal-endpoint subset of deletion colorings. $\square$
+
+### Interpretation
+
+Deleting an edge relaxes one inequality constraint. The newly admitted assignments are exactly those that give the two endpoints equal colors. Contraction turns this equality condition into an identification of variables. Therefore $P(G/e,q)$ is not merely an algebraic correction term: it is the exact increase in the number of feasible assignments caused by removing $e$:
+
+$$
+P(G-e,q)-P(G,q)=P(G/e,q).
+$$
+
+## 6. Disjoint-union multiplicativity
+
+### Theorem 6.1 (Disjoint-Union Product Formula)
+
+For finite simple graphs $G$ and $H$ and every $q\ge 0$,
+
+$$
+P(G\sqcup H,q)=P(G,q)P(H,q).
+$$
+
+#### Proof sketch
+
+Restrict a proper coloring of $G\sqcup H$ to the vertices of $G$ and $H$. Because there are no cross edges, both restrictions are proper. Conversely, given a proper coloring of $G$ and one of $H$, combine the two functions on the disjoint vertex sets. Every edge lies entirely in one component, so the combined coloring is proper. Restriction and combination are inverse operations, establishing a bijection between colorings of the union and ordered pairs of component colorings. Cardinalities multiply. $\square$
+
+### Corollary 6.2 (Finite Component Product)
+
+If $G$ is the disjoint union of components $G_1,\ldots,G_r$, then repeated application of Theorem 6.1 gives
+
+$$
+P(G,q)=\prod_{i=1}^r P(G_i,q).
+$$
+
+This corollary follows by induction on $r$. A systematic theory indexed directly by connected components is a useful further development, but no new combinatorial idea is needed beyond finite iteration of the binary product formula.
+
+## 7. Worked examples
+
+### 7.1 A three-vertex path
+
+Let $P_3$ be a path with vertices $u,v,w$ and edges $uv$ and $vw$. Directly, choose the middle color in $q$ ways, then choose independently a different color for each endpoint. Hence
+
+$$
+P(P_3,q)=q(q-1)^2.
+$$
+
+Alternatively, regard $P_3$ as $K_3-e$. Contracting the missing triangle edge in $K_3$ gives $K_2$. Deletion–contraction yields
+
+$$
+P(P_3,q)=P(K_3,q)+P(K_2,q).
+$$
+
+Using the complete-graph formula,
+
+$$
+P(P_3,q)=q(q-1)(q-2)+q(q-1)=q(q-1)^2.
+$$
+
+At $q=3$, this is $12=6+6$.
+
+### 7.2 An edge and an isolated vertex
+
+Let $G=K_2\sqcup E_1$. Multiplicativity and the extremal formulas give
+
+$$
+P(G,q)=P(K_2,q)P(E_1,q)=q(q-1)q=q^2(q-1).
+$$
+
+At $q=3$, the count is $18$.
+
+### 7.3 A four-cycle
+
+For the cycle $C_4$, a direct small computation gives
+
+$$
+P(C_4,q)=(q-1)^4+(q-1).
+$$
+
+At $q=3$, this equals $2^4+2=18$. This formula is included as an illustrative computation rather than as a general cycle theorem. It can be obtained by applying deletion–contraction and simplifying the resulting path and tree counts, or by conditioning on whether the final vertex agrees with the first during a sequential coloring.
+
+## 8. Algorithms
+
+### 8.1 Exhaustive enumeration
+
+The direct algorithm iterates through all $q^n$ functions from an $n$-vertex set to the palette and tests every edge. If $m$ is the number of edges, the worst-case time is
+
+$$
+O(mq^n),
+$$
+
+with $O(n)$ space for a coloring. Early termination upon finding a monochromatic edge improves practical behavior but not the worst-case exponent.
+
+This method is conceptually simple and serves as an independent reference for small graphs. It directly implements the definition and is especially useful for demonstrations.
+
+### 8.2 Deletion–contraction evaluation
+
+A recursive evaluator uses the subtractive recurrence:
+
+1. If the graph has no edges, return $q^n$.
+2. If the graph has multiple connected components, evaluate each and multiply.
+3. Choose an edge $e$.
+4. Return the value for $G-e$ minus the value for $G/e$.
+
+Without memoization, the recursion can have up to two children at each edge-processing stage and is exponential in the worst case. Contraction lowers the vertex count, while deletion lowers the edge count, ensuring termination under a lexicographic measure such as $(|V|,|E|)$ or an equivalent well-founded size accounting.
+
+The choice of edge changes the recursion tree but not the answer. Useful heuristics include selecting an edge incident to high-degree vertices, splitting components as early as possible, and canonicalizing graphs so isomorphic or repeated subproblems can share cached results.
+
+### 8.3 Verification by partition
+
+For a selected edge, an implementation may expose the theorem’s partition numerically. Enumerate proper colorings of $G-e$, count those with unequal endpoint colors, and count those with equal endpoint colors. The expected identities are
+
+$$
+N_{\ne}=P(G,q),\qquad N_{=}=P(G/e,q),
+$$
+
+and
+
+$$
+N_{\ne}+N_{=}=P(G-e,q).
+$$
+
+This diagnostic is more informative than checking only the final recurrence, because it displays the bijective mechanism.
+
+## 9. Applications
+
+### 9.1 Scheduling and timetabling
+
+Vertices represent events, edges represent conflicts, and colors represent time slots. The count $P(G,q)$ measures the number of feasible schedules using $q$ slots. The contraction correction quantifies how many schedules become available if one conflict is removed: it is the number of schedules of the graph obtained by identifying the two formerly conflicting events.
+
+### 9.2 Frequency assignment
+
+Transmitters that interfere are adjacent, and colors are frequency channels. A chromatic count measures assignment redundancy. Component factorization applies when geographical or technological separation removes all cross-interference.
+
+### 9.3 Register allocation
+
+Program values whose live ranges overlap are adjacent, and colors represent machine registers. Although practical allocators use additional constraints and heuristics, the basic graph model explains feasibility and the number of assignments. A large count indicates room for secondary optimization criteria.
+
+### 9.4 Constraint sensitivity
+
+For any edge $e$,
+
+$$
+P(G/e,q)=P(G-e,q)-P(G,q)
+$$
+
+is the exact marginal effect of deleting that constraint at palette size $q$. Ranking edges by this number identifies constraints whose relaxation produces the greatest increase in feasible assignments.
+
+## 10. Scope and limitations
+
+The established theory concerns natural-number evaluations of chromatic counts. It does not by itself prove several broader statements sometimes associated with graph coloring.
+
+First, a polynomial-level theorem requires constructing an integer polynomial whose evaluation equals $P(G,q)$ for every $q$ and lifting deletion–contraction from pointwise counts to polynomial equality. The recurrence strongly motivates that construction, but the two claims should be distinguished.
+
+Second, the Four Color Theorem requires a precise notion of planar embedding and a proof that every planar graph admits a coloring with at most four colors. The equivalence between colorability and a bound on the chromatic number is definitional in spirit, but it does not supply the planar theorem.
+
+Third, Brooks’ theorem asserts that a connected graph can generally be colored using at most its maximum degree, except for complete graphs and odd cycles. This is a structural existence theorem, not a consequence of deletion–contraction alone.
+
+Fourth, positivity statements for claw-free graphs require a precise basis and often richer symmetric or quasisymmetric polynomial infrastructure. Natural-number evaluations cannot substitute for coefficient positivity in a specified basis.
+
+These distinctions preserve the strength of the present results: they give exact counting identities and algorithms without claiming unrelated structural theorems.
+
+## 11. Future directions
+
+A natural continuation begins by constructing the chromatic polynomial as an element of $\mathbb Z[X]$ and proving that its evaluations recover the counting function. Deletion–contraction can then be stated as polynomial equality, enabling proofs about degree, leading coefficient, and alternating signs.
+
+Further graph operations deserve formulas, including joins, vertex sums, forests, cycles, and complete multipartite graphs. The disjoint-union product theorem suggests a systematic factorization over connected components.
+
+Polynomial expansions in falling-factorial and tree-related bases may expose additional combinatorics. Positivity for claw-free graphs requires first fixing the intended $T$-basis and developing the corresponding algebraic framework.
+
+On the structural side, complete treatments of Brooks’ theorem and planar four-colorability require methods beyond counting: greedy orderings and exception analysis for the former, and a robust embedding theory plus the Four Color Theorem for the latter.
+
+Algorithmically, memoized deletion–contraction can be improved through graph canonicalization, separator detection, component splitting, and edge-selection heuristics. Experimental comparison against exhaustive enumeration can identify which graph families benefit most from each strategy.
+
+## 12. Conclusion
+
+Chromatic counting begins with a simple definition and acquires its power from a simple partition. For an edge $e=\{a,b\}$, proper colorings after deletion divide according to whether $a$ and $b$ are different or equal. The distinct class recovers the original graph; the equal class is in bijection with the contraction. Thus
+
+$$
+P(G-e,q)=P(G,q)+P(G/e,q).
+$$
+
+Together with $P(E_n,q)=q^n$, $P(K_n,q)=q^{\underline n}$, and multiplicativity on disjoint unions, this identity supplies a coherent calculus for exact chromatic counts. The theory explains boundary cases, supports recursive computation, and quantifies the effect of individual constraints. Its proofs are finite, bijective, and fully combinatorial: global coloring behavior is resolved by asking, at one edge, whether two colors differ or coincide.

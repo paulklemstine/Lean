@@ -1545,5 +1545,7 @@
   "d94c6678": "zero_knowledge_theorem_proving_i_can_prove_fermats.json",
   "25e8f86d": "neural_tangent_kernel_convergence_of_gradient_desc.json",
   "830d234a": "ml_reinforcement_learning_convergence_of_policy_gr.json",
-  "ce71f394": "eml_differential_calculus_chain_rules_for_exp_log_.json"
+  "ce71f394": "eml_differential_calculus_chain_rules_for_exp_log_.json",
+  "735a1ab0": "neural_tangent_kernel_convergence.json",
+  "078d5371": "graph_coloring_chromatic_polynomial_theory.json"
 }

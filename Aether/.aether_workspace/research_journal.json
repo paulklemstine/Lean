@@ -1,26 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "2fdbedee",
-      "domain": "Shared",
-      "key_insight": "# Future Directions: Critical Geometry of Counted Proof Spaces\n\n## 1. Quasi-invariance of critical indices under efficient recoding\n\nLet two prefix-free encodings of the same deductive system translat",
-      "quality_score": 0.75,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-07-21T16:50:02",
-      "title": "Speculative: Theorems as Phase Transitions in Proof Space"
-    },
-    {
-      "cycle_id": "279ae676",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions\n\n- Develop Hartogs' theorem over an explicit axiomatic set theory without assuming a global choice principle. The present `HartogsType` formulation is type-theoretic and uses Mathl",
-      "quality_score": 0.76,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-21T18:47:58",
-      "title": "Rucker: Infinity and the Mind — Formalizing Different Sizes of Infinity"
-    },
-    {
       "cycle_id": "0268a2b5",
       "domain": "Shared",
       "key_insight": "# Future Directions: Four-Dimensional Geometry\n\n## 1. Embedding obstructions for closed three-manifolds — open-problem category\n\n**Conjecture.** A closed, connected, orientable smooth three-manifold e",
@@ -499,29 +479,29 @@
       "theorem_count": 8,
       "timestamp": "2026-07-26T02:25:34",
       "title": "ML Reinforcement Learning: Convergence of Policy Gradient Methods"
+    },
+    {
+      "cycle_id": "ce71f394",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Differential Structure of Exponential–Logarithmic Expressions\n\n## 1. Pole-order normal forms for all iterated derivatives\n\n**Conjecture.** For every integer `n ≥ 1`, the `n`th der",
+      "quality_score": 0.77,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-26T05:36:56",
+      "title": "EML Differential Calculus: Chain Rules for exp-log Compositions"
+    },
+    {
+      "cycle_id": "735a1ab0",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions: Neural Tangent Kernel Convergence\n\n## 1. Quantitative universality under approximately equal kernels\n\n**Conjecture.** Consider two lazy-training residual recursions with the same",
+      "quality_score": 0.75,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-07-26T05:37:01",
+      "title": "Neural Tangent Kernel: Convergence"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "91c16818",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\n## What was proved\n\n1. **Missingness is not itself a sheaf obstruction.** A partial database modeled as a partial function into a nonempty value type always has a total completion",
-      "quality_score": 0.71,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-19T08:21:38",
-      "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
-    },
-    {
-      "cycle_id": "6fa68166",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions\n\n## 1. Semantic equivalence and simple-homotopy type\n\n**Conjecture.** If two finite argumentation frameworks are strongly equivalent under preferred semantics, then the downward-cl",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-19T08:23:22",
-      "title": "The Topology of Argumentation: Why Debates Have Holes"
-    },
     {
       "cycle_id": "735120d5",
       "domain": "Combinatorics",
@@ -2501,45 +2481,29 @@
       "theorem_count": 38205,
       "timestamp": "2026-07-26T05:36:47",
       "title": "Information-Geometric Bridge: Fisher Metric on Statistical Manifolds"
+    },
+    {
+      "cycle_id": "ce71f394",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Differential Structure of Exponential–Logarithmic Expressions\n\n## 1. Pole-order normal forms for all iterated derivatives\n\n**Conjecture.** For every integer `n ≥ 1`, the `n`th der",
+      "quality_score": 0.77,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-26T05:36:56",
+      "title": "EML Differential Calculus: Chain Rules for exp-log Compositions"
+    },
+    {
+      "cycle_id": "735a1ab0",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions: Neural Tangent Kernel Convergence\n\n## 1. Quantitative universality under approximately equal kernels\n\n**Conjecture.** Consider two lazy-training residual recursions with the same",
+      "quality_score": 0.75,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-07-26T05:37:01",
+      "title": "Neural Tangent Kernel: Convergence"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "07e03295",
-      "domain": "Physics",
-      "name": "adjacency_mul_apply_eq_card",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "07e03295",
-      "domain": "Physics",
-      "name": "card_filter_univ_eq_one_iff_existsUnique",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "07e03295",
-      "domain": "Physics",
-      "name": "card_filter_univ_eq_zero_iff_not_exists",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "2f76a8a3",
-      "domain": "Logic",
-      "name": "eigenvalues",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "2f76a8a3",
-      "domain": "Logic",
-      "name": "isHermitian_eigenvalue_real",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "a4e412f3",
-      "domain": "Geometry",
-      "name": "in",
-      "quality": 0.75
-    },
     {
       "cycle_id": "a4e412f3",
       "domain": "Geometry",
@@ -2803,9 +2767,45 @@
       "domain": "Computation",
       "name": "score_mean_zero",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "ce71f394",
+      "domain": "Applications",
+      "name": "hasDerivAt_expLogProduct",
+      "quality": 0.77
+    },
+    {
+      "cycle_id": "ce71f394",
+      "domain": "Applications",
+      "name": "hasDerivAt_expLogProduct_factored",
+      "quality": 0.77
+    },
+    {
+      "cycle_id": "ce71f394",
+      "domain": "Applications",
+      "name": "proposed_factorization_counterexample",
+      "quality": 0.77
+    },
+    {
+      "cycle_id": "735a1ab0",
+      "domain": "MachineLearning",
+      "name": "residualIterate_norm_bound",
+      "quality": 0.75
+    },
+    {
+      "cycle_id": "735a1ab0",
+      "domain": "MachineLearning",
+      "name": "residualIterate_tendsto_zero",
+      "quality": 0.75
+    },
+    {
+      "cycle_id": "735a1ab0",
+      "domain": "MachineLearning",
+      "name": "frozen_ntk_converges_to_target",
+      "quality": 0.75
     }
   ],
-  "last_updated": "2026-07-26T05:36:47",
+  "last_updated": "2026-07-26T05:37:01",
   "open_questions": [
     {
       "context": "+    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; +    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; +    ∀ i < k, c i = ",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "3e9a9a06",
-        "quality": 0.69,
-        "theorems": 129,
-        "title": "Moonshot: Multiverse Set Theory — Mathematics Across Branches"
-      },
-      {
         "cycle_id": "3dce6722",
         "quality": 0.77,
         "theorems": 21,
@@ -3141,6 +3135,12 @@
         "quality": 0.75,
         "theorems": 20,
         "title": "EML Category: The Category of EML-Computable Maps"
+      },
+      {
+        "cycle_id": "ce71f394",
+        "quality": 0.77,
+        "theorems": 14,
+        "title": "EML Differential Calculus: Chain Rules for exp-log Compositions"
       }
     ],
     "Bridges": [
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "4c2c71e5",
-        "quality": 0.8,
-        "theorems": 46,
-        "title": "The Fourier Analysis of Collatz: Spectral Gaps in the 3n+1 Map"
-      },
-      {
         "cycle_id": "8797684d",
         "quality": 0.67,
         "theorems": 20,
@@ -3575,6 +3569,12 @@
         "quality": 0.57,
         "theorems": 21,
         "title": "Random-Matrix: Wigner Semicircle Law Convergence for Wigner Ensembles"
+      },
+      {
+        "cycle_id": "735a1ab0",
+        "quality": 0.75,
+        "theorems": 10,
+        "title": "Neural Tangent Kernel: Convergence"
       }
     ],
     "Novelty": [

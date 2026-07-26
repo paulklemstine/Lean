@@ -1,94 +1,202 @@
-# Why Neural Networks Learn: The Hidden Kernel Inside Every AI
+# When a Neural Network Becomes a Kernel Machine
 
-## The Mystery of Deep Learning
+## The quiet mathematics of lazy training
 
-Every time you ask an AI chatbot a question, every time your phone recognizes your face, every time a self-driving car navigates an intersection, a neural network is doing something remarkable — and until recently, no one fully understood why it works.
+A modern neural network may contain millions or billions of adjustable parameters. During training, those parameters move through an immense landscape, guided by gradients computed from data. The usual picture is one of ceaseless internal change: features emerge, representations reorganize, and the network gradually discovers a useful way to see the world.
 
-Neural networks learn by trial and error. They start with random guesses and gradually improve through a process called gradient descent, adjusting millions of tiny numerical knobs (called parameters or weights) to reduce errors on training data. But here's the puzzle that haunted researchers for decades: with millions of parameters, a neural network has so much flexibility that it could memorize any dataset perfectly — even random noise. So why does it generalize? Why does it learn genuine patterns instead of memorizing trivia?
+Yet there is another regime in which the network barely changes its internal geometry. Its parameters move, but the map from parameter motion to prediction motion remains essentially fixed. In this **lazy-training regime**, the apparent complexity of the network gives way to a remarkably simple law. On a finite training set, the errors follow a linear recurrence governed by a matrix called the **neural tangent kernel**, or NTK.
 
-The answer turns out to involve a beautiful mathematical object hidden inside every neural network — an object that connects deep learning to a century of mathematical theory about kernels, and reveals that the most successful AI systems in the world are, in a precise sense, doing something surprisingly simple.
+This reduction matters because linear dynamics can be understood exactly. It reveals when training converges, how quickly each component of the error disappears, and why very different architectures can follow precisely the same prediction trajectory. It also exposes the boundary of the conclusion: a positive semidefinite kernel is not enough by itself, because directions in its nullspace may never be corrected.
 
-## The Neural Tangent Kernel
+The central story is therefore not that every neural network is simple. It is that whenever the network’s tangent geometry freezes, its training behavior is controlled by a compact, architecture-independent dynamical principle.
 
-In 2018, three mathematicians at EPFL — Arthur Jacot, Franck Gabriel, and Clément Hongler — published a paper that changed how researchers think about neural networks. They discovered the **Neural Tangent Kernel** (NTK), a mathematical function that captures the essence of how a neural network learns.
+## From predictions to residuals
 
-The idea is elegant. A neural network is a function from inputs to outputs, parameterized by its weights. When you train the network, you're moving through a vast landscape of possible weight configurations, following the gradient of the loss function downhill. The NTK captures how much the network's predictions at two different inputs "talk to each other" during this descent.
+Suppose a model is evaluated on a finite training set. Collect its predictions into a vector $f_n$ after $n$ gradient steps, and collect the desired outputs into a target vector $y$. Define the residual by
 
-More precisely, the NTK between two inputs x and y is the inner product of the network's sensitivities: how much the prediction at x changes when you wiggle each parameter, dotted with how much the prediction at y changes. This simple construction has profound consequences.
+$$
+r_n=f_n-y.
+$$
 
-## The Lazy Regime: When Networks Simplify
+The residual is the model’s signed error on the entire training set. Reaching perfect interpolation means $r_n\to 0$, which is equivalent to $f_n\to y$.
 
-The key insight came when Jacot, Gabriel, and Hongler considered what happens when a neural network is very wide — when each layer has an enormous number of neurons. In this regime, something remarkable occurs: the NTK barely changes during training.
+In the frozen-kernel regime, one gradient step acts on the residual as
 
-Think of it this way. A very wide network is like a huge choir where each singer contributes only a tiny fraction of the total sound. When you train the network, each individual weight changes only a little. Because the NTK is computed from the collective behavior of all these weights, it remains nearly constant — "frozen" — throughout training.
+$$
+r_{n+1}=r_n-\eta K r_n=(I-\eta K)r_n,
+$$
 
-This frozen-kernel regime is called the **lazy regime**, and it transforms the complex, nonlinear dynamics of neural network training into something much simpler: a linear system driven by a fixed kernel.
+where $K$ is the empirical NTK, $I$ is the identity operator, and $\eta$ is the learning rate. The associated predictions are simply
 
-## From Chaos to Clockwork
+$$
+f_n=y+r_n.
+$$
 
-Here's where the mathematics becomes beautiful. When the NTK stays fixed, the training dynamics become a simple linear iteration. Let's call the training error at step t the "residual" u(t). Then:
+This is the decisive simplification. Instead of tracking every parameter, one studies repeated application of the fixed update operator $I-\eta K$.
 
-**u(t+1) = u(t) − η · K · u(t)**
+The recurrence is meaningful in any normed vector space, not only in ordinary Euclidean coordinates. That abstraction strips the argument down to its real engine: contraction.
 
-where η is the learning rate and K is the NTK matrix. This is just repeated multiplication by the matrix (I − ηK), and after t steps:
+## The geometric contraction law
 
-**u(t) = (I − ηK)^t · u(0)**
+Call an update map $S$ a contraction with factor $q$ if
 
-This formula is the heartbeat of NTK convergence theory. It says that the training error decays exponentially, like a vibrating string losing energy to damping. The rate of decay is governed by the eigenvalues of the kernel matrix K.
+$$
+\|S(r)\|\le q\|r\|
+$$
 
-If all eigenvalues of K are positive and the learning rate is small enough, every component of the error shrinks geometrically. The network converges to perfect interpolation of the training data, and the solution it finds is the unique kernel regression solution — the smoothest function (as measured by the kernel) that fits the data.
+for every residual $r$, where $0\le q<1$. If the residual trajectory is defined by $r_{n+1}=S(r_n)$, then repeated contraction gives the **Geometric Residual Bound**:
 
-## Universality: Architecture Doesn't Matter
+$$
+\|r_n\|\le q^n\|r_0\| \qquad \text{for every } n\ge 0.
+$$
 
-Perhaps the most striking consequence of NTK theory is **universality**: two neural networks with completely different architectures — different depths, activation functions, connectivity patterns — will have identical training dynamics if they happen to produce the same NTK matrix.
+The proof is a one-line idea repeated by induction. It is true at $n=0$. If it is true at step $n$, then
 
-This is counterintuitive. You might expect that a convolutional network and a fully connected network would learn in fundamentally different ways. But NTK theory says that, in the lazy regime, the only thing that matters is the kernel. The architecture determines which kernel you get, but once the kernel is fixed, the learning dynamics are universal.
+$$
+\|r_{n+1}\|\le q\|r_n\|\le q\bigl(q^n\|r_0\|\bigr)=q^{n+1}\|r_0\|.
+$$
 
-This has a precise mathematical formulation. If two dynamical systems share the same kernel matrix K and learning rate η, their residuals after t steps are identical, regardless of what generated those systems. The convergence depends on the spectrum of K alone.
+Because $q^n\to 0$ whenever $0\le q<1$, the residual converges to zero. This yields the **Frozen-NTK Convergence Theorem**: if the operator $I-\eta K$ obeys
 
-## The Geometry of Convergence
+$$
+\|r-\eta Kr\|\le q\|r\|
+$$
 
-The convergence story has a beautiful geometric interpretation. The update operator T = I − ηK maps the current error to the next error. Each application of T shrinks the error in every direction, like squeezing a rubber ball.
+for all $r$ and some $0\le q<1$, then the lazy-training predictions satisfy
 
-The quadratic expansion of the squared error reveals the mechanism:
+$$
+f_n\to y.
+$$
 
-**⟨Tu, Tu⟩ = ⟨u, u⟩ − 2η⟨u, Ku⟩ + η²⟨Ku, Ku⟩**
+Even better, the theorem provides a quantitative deadline. To guarantee $\|r_n\|\le \delta$, it suffices to choose $n$ so that $q^n\|r_0\|\le\delta$. For $0<q<1$ and $0<\delta<\|r_0\|$, one may take
 
-The middle term, −2η⟨u, Ku⟩, is the energy extracted by one step of gradient descent. When K is positive definite, this term is always negative — every step reduces the error. The last term, η²⟨Ku, Ku⟩, represents "overshooting" — moving too far downhill. When the learning rate η is small enough, the extraction term dominates, and the system converges.
+$$
+n\ge \frac{\log(\delta/\|r_0\|)}{\log q}.
+$$
 
-The fixed points of this system — the states where the error stops changing — satisfy Ku = 0. For a positive definite kernel, the only solution is u = 0: zero error, perfect interpolation.
+Both logarithms in this ratio are negative, so the bound is positive. The closer $q$ is to zero, the faster convergence occurs; the closer it is to one, the longer the tail.
 
-## The Positive Definiteness Guarantee
+## Every eigendirection has its own clock
 
-Why is the NTK matrix always at least positive semidefinite? Because it's a **Gram matrix** — a matrix of inner products. The NTK matrix entry K_{ij} equals ⟨∇f(x_i), ∇f(x_j)⟩, where ∇f(x) is the gradient of the network output with respect to all parameters, evaluated at input x.
+The contraction factor summarizes the worst case, but the kernel’s spectrum gives a sharper picture. Suppose $v$ is an eigenvector of $K$ with eigenvalue $\lambda$, so that
 
-Any matrix of inner products is positive semidefinite. For any vector v, the quadratic form v^T K v equals the squared norm of the linear combination Σ v_i ∇f(x_i). Squared norms are always non-negative.
+$$
+Kv=\lambda v.
+$$
 
-This structural guarantee means the NTK matrix can never have negative eigenvalues, which would cause the training dynamics to diverge. The worst case is a zero eigenvalue, corresponding to a direction in which the network cannot learn — but divergence is impossible.
+A single update sends this direction to
 
-## Tropical Walls and Feature Learning
+$$
+(I-\eta K)v=(1-\eta\lambda)v.
+$$
 
-The lazy regime isn't the whole story. Recent mathematical work on **tropical neural networks** — networks analyzed through the lens of tropical geometry — reveals that the lazy regime is separated from a richer **feature learning** regime by geometric boundaries called tropical walls.
+After $n$ steps, the **Exact Spectral Decay Theorem** states that
 
-Inside a tropical cell (a polyhedral region of input space), the network behaves linearly and the kernel formula freezes to a simple form. But when training pushes the network across a tropical wall, the active neurons change, the kernel shifts, and the network enters the feature learning regime where it can discover new representations.
+$$
+(I-\eta K)^n v=(1-\eta\lambda)^n v.
+$$
 
-This dichotomy — lazy inside cells, feature learning across walls — is the geometric heart of why neural networks can be both stable (converging reliably) and expressive (learning complex features).
+The proof again follows by induction: each step contributes one more factor of $1-\eta\lambda$.
 
-## What This Means for AI
+This formula turns training into a collection of scalar clocks. A component aligned with a large positive eigenvalue can decay rapidly, while a component aligned with a small positive eigenvalue may linger. If $|1-\eta\lambda|<1$, that component converges to zero. If the factor is negative, the component alternates sign while shrinking. If its absolute value exceeds one, the component grows and training is unstable.
 
-NTK theory provides the first rigorous foundation for understanding why neural networks converge during training. It explains several empirical observations:
+The equation also identifies a subtle failure mode. When $\lambda=0$, the factor equals $1$, regardless of the learning rate. The residual component in that null direction never moves. Thus positive semidefiniteness alone does not guarantee interpolation. Strict contraction requires every residual direction under consideration to be controlled.
 
-- **Why wider is better**: Wider networks are closer to the lazy regime, where convergence guarantees are strongest.
-- **Why learning rates matter**: Too large, and the overshooting term dominates; too small, and training is impractically slow.
-- **Why architectures are interchangeable**: In the lazy regime, the architecture only matters through the kernel it induces.
-- **Why overparameterization helps**: More parameters push the system toward the lazy regime, where the kernel stays fixed and convergence is guaranteed.
+For a positive eigenvalue, the scalar stability condition is
 
-But NTK theory also reveals the limits of the lazy regime. The most powerful neural networks — the ones that learn remarkable features like edge detectors in vision or syntactic structures in language — operate outside the lazy regime, in the feature learning zone. Understanding this transition zone remains one of the deepest open problems in the theory of deep learning.
+$$
+0<\eta\lambda<2.
+$$
 
-## The Road Ahead
+In a finite-dimensional self-adjoint setting, checking all eigenvalues turns the global contraction question into a spectral one. The present convergence principle assumes the contraction explicitly; the exact eigenvector formula explains what that assumption means mode by mode.
 
-The NTK convergence theorem is not the end of the story — it's the beginning. The key conjecture driving current research is that as network width m grows, the NTK at initialization converges to a deterministic limit kernel at rate O(1/√m). This has been proved for specific architectures but remains open in full generality.
+## When architecture disappears
 
-Beyond convergence, researchers are exploring how the NTK evolves during training in the feature learning regime, how it relates to the generalization properties of the trained network, and whether there are other hidden mathematical structures — beyond kernels — that govern deep learning.
+Neural networks can look radically different. One may be deep and narrow, another shallow and wide; one may have redundant parameters, another a highly symmetric representation. In the lazy regime, however, prediction dynamics depend on the architecture only through the frozen kernel, together with the learning rate, targets, and initialization.
 
-The discovery of the NTK shows that even in the most complex AI systems, mathematical structure lurks beneath the surface. The challenge now is to find the mathematics of feature learning — the theory that will explain not just that neural networks converge, but why they learn the right things.
+This gives the **Equal-Kernel Universality Theorem**. Consider two models with kernels $K_1$ and $K_2$, the same learning rate $\eta$, the same target $y$, and the same initial prediction. If
+
+$$
+K_1=K_2,
+$$
+
+then their residuals and predictions are identical at every training step.
+
+The reason is exact rather than asymptotic. Both models begin from the same residual and apply the same update map $I-\eta K$ repeatedly. Consequently, there is no opportunity for their prediction paths to diverge.
+
+An even more economical result is possible. Global equality of the two kernels is stronger than necessary. Suppose the two residual paths are $r_n^{(1)}$ and $r_n^{(2)}$, and assume that at every step their kernel actions agree:
+
+$$
+K_1r_n^{(1)}=K_2r_n^{(2)}.
+$$
+
+Then the **Pathwise Kernel Universality Theorem** says
+
+$$
+r_n^{(1)}=r_n^{(2)}
+$$
+
+for every $n$, provided the initial residual is shared. Indeed, if the residuals agree at step $n$ and the kernel actions also agree, subtracting $\eta$ times those actions produces equal residuals at step $n+1$.
+
+This pathwise version changes the conceptual unit of comparison. Two architectures need not implement the same operator everywhere in prediction space. They need only be indistinguishable on the states that training actually visits.
+
+## Tropical cells as rooms with fixed dynamics
+
+Where might an exactly frozen kernel come from? One concrete mechanism arises in piecewise-linear or tropical geometry. Parameter space can be divided into cells according to an activation or combinatorial pattern. Within one cell, the relevant Jacobian structure—and therefore the kernel matrix—may remain constant.
+
+Let $c(\theta)$ denote the cell containing a parameter vector $\theta$, let $K(\theta)$ be the associated kernel matrix, and let $\theta(t)$ be a training trajectory over $0\le t<T$. Assume the kernel is **cellwise constant**, meaning
+
+$$
+c(\theta)=c(\theta') \quad\Longrightarrow\quad K(\theta)=K(\theta').
+$$
+
+If the trajectory remains in its initial cell,
+
+$$
+c(\theta(t))=c(\theta(0)) \qquad \text{for all } 0\le t<T,
+$$
+
+then the **Tropical Cell Freezing Theorem** concludes that
+
+$$
+K(\theta(t))=K(\theta(0)) \qquad \text{for all } 0\le t<T.
+$$
+
+The argument is direct: every point on the path has the same cell label, and the kernel is constant on each cell. But its interpretation is powerful. A geometric condition—remaining inside one chamber—certifies an analytic condition—a frozen linear training law.
+
+This suggests picturing training as motion through a building. Inside a room, the floor is flat and the rules of motion are fixed. Crossing a wall changes the active pattern and may change the kernel. Lazy training is the period spent inside one room; feature learning begins when the trajectory encounters the architecture’s walls.
+
+## What the principle does—and does not—say
+
+The combined picture has three layers.
+
+First, geometry can freeze the kernel. Tropical cell confinement is one exact certificate.
+
+Second, the frozen kernel creates a linear residual recursion. Its eigenvalues determine the decay or growth of individual modes.
+
+Third, strict contraction makes the residual vanish geometrically and makes prediction converge to the target. Models sharing the same effective kernel action share the same trajectory.
+
+The result concerns predictions on a finite training set. It does not claim that the model parameters converge, that every positive semidefinite kernel contracts, or that an infinite-width or probabilistic limit has been established. These distinctions are essential. A model may possess parameter symmetries that allow movement without changing predictions, and a singular kernel may leave some errors untouched.
+
+Nor does universality mean that architecture never matters. Architecture determines the kernel, the initial predictions, whether the kernel remains frozen, and what happens away from the training set. The theorem says something more precise: once the frozen kernel, learning rate, target, and initialization are fixed, the training-set prediction trajectory is fixed as well.
+
+## A practical diagnostic
+
+For a finite dataset, the principle suggests a clean workflow:
+
+1. Form the initial residual $r_0=f_0-y$.
+2. Determine whether the kernel remains constant over the time interval of interest.
+3. Study the operator $I-\eta K$ or, when appropriate, the eigenvalues of $K$.
+4. Estimate a contraction factor $q<1$.
+5. Use $\|r_n\|\le q^n\|r_0\|$ to forecast convergence.
+6. Compare architectures through their kernel actions along the realized trajectories.
+
+These steps transform a large parameter-space problem into matrix dynamics on the training examples. In numerical experiments, one can directly plot $\|r_n\|$ beside the envelope $q^n\|r_0\|$, decompose the initial residual into eigenvectors, and watch each spectral component decay at its predicted rate.
+
+## The larger lesson
+
+The neural tangent kernel is often introduced as a bridge between neural networks and classical kernel methods. The frozen-dynamics viewpoint makes that bridge concrete. It says that a network can retain an elaborate parameterization while its observable training behavior collapses to repeated multiplication by one operator.
+
+The most striking consequence is universality through effective dynamics. Two architectures can be different in every visible engineering detail and still become the same learning system on a given dataset. Conversely, a tiny uncontrolled direction in the kernel can prevent exact interpolation no matter how impressive the architecture appears.
+
+Lazy training is therefore a study in mathematical compression. Geometry decides whether the kernel freezes. Spectrum decides how error modes evolve. Contraction decides convergence. And kernel action, rather than architectural appearance, decides the prediction path.

@@ -1,211 +1,505 @@
-# Neural Tangent Kernel Convergence in the Lazy Regime: A Formal Treatment
+# Frozen Neural Tangent Kernel Dynamics: Geometric Convergence, Spectral Decay, and Architecture Universality
+
+**Author:** Aristotle  
+**Date:** July 26, 2026
 
 ## Abstract
 
-We present a rigorous mathematical formalization of the core convergence theory for neural networks trained in the lazy (kernel) regime, following the framework introduced by Jacot, Gabriel, and Hongler (2018). We define the Neural Tangent Kernel (NTK) as a Gram matrix arising from the parameter-space Jacobian of a parameterized model, establish its fundamental algebraic properties (symmetry, positive semidefiniteness), and prove that discrete gradient descent driven by a fixed kernel converges geometrically under a contractivity condition. Our main results include: (1) the residual iteration formula expressing training error as a matrix power applied to the initial residual, (2) geometric decay bounds under contractivity, (3) a fixed-point characterization showing convergence implies kernel interpolation, (4) a perturbation bound for the lazy regime, (5) a quadratic expansion of the update operator, (6) the universality theorem showing architecture independence of training dynamics, and (7) positive semidefiniteness of the NTK matrix. All results are formalized and machine-verified in Lean 4 with Mathlib.
-
-**Keywords**: Neural Tangent Kernel, lazy regime, kernel convergence, gradient descent, Gram matrix, positive semidefiniteness, universality
+We isolate the deterministic dynamical core of neural tangent kernel training on a finite dataset. Predictions are represented in a normed vector space, and a frozen empirical kernel $K$ with learning rate $\eta$ induces the residual update $r_{n+1}=(I-\eta K)r_n$. We prove a geometric residual estimate for any pointwise contractive update and deduce convergence of frozen-kernel predictions to the target whenever $I-\eta K$ is a strict contraction. On an eigendirection of $K$, the residual is shown to evolve exactly by the scalar factor $(1-\eta\lambda)^n$, exposing the spectral origin of stability and the obstruction caused by kernel nullspaces. We then establish two architecture-universality principles: globally equal frozen kernels produce identical prediction trajectories, while equality of kernel actions only along the realized residual paths already suffices. Finally, we connect the analytic dynamics to piecewise-linear geometry: if a trajectory remains in one tropical cell and the kernel is cellwise constant, then the kernel is frozen throughout that interval. Together these results provide an architecture-independent convergence principle for lazy training, with explicit hypotheses and without requiring parameter convergence, positive definiteness alone, or an infinite-width limit.
 
 ## 1. Introduction
 
-The theory of the Neural Tangent Kernel (NTK), introduced by Jacot, Gabriel, and Hongler [1], provides a rigorous framework for understanding the training dynamics of overparameterized neural networks. The central insight is that, in the infinite-width limit, the NTK — defined as the inner product of parameter-space gradients evaluated at different inputs — converges to a deterministic kernel that remains approximately constant during training. This "lazy regime" reduces the nonlinear dynamics of neural network training to a linear kernel regression problem.
+Neural-network training is usually formulated in parameter space, whose dimension may be enormous. For a finite training set, however, the observable quantity of immediate interest is the vector of predictions on the examples. In a regime where the model’s parameter-to-output Jacobian remains effectively fixed, gradient descent induces a linear evolution in this prediction space. The Gram operator of that Jacobian is the empirical neural tangent kernel (NTK), and the resulting training regime is commonly called lazy training.
 
-Despite its importance, the NTK convergence theory has remained largely informal. We provide a complete formal treatment of the algebraic core of this theory, suitable for machine verification.
+The purpose of this paper is to state and derive the architecture-independent mathematics of that regime. The central object is not a particular network parameterization but the residual recursion
 
-### 1.1 Contributions
+$$
+r_{n+1}=r_n-\eta Kr_n.
+$$
 
-1. **NTKDynamics structure**: A self-contained formalization of kernel-driven gradient flow with learning rate positivity.
-2. **Residual iteration formula**: u(t) = (I - ηK)^t · u₀ (Theorem 2.1).
-3. **Contraction bound**: ‖u(t)‖ ≤ c^t · ‖u₀‖ under operator contractivity (Theorem 3.1).
-4. **Fixed point characterization**: Fixed points satisfy Ku = 0 (Theorem 4.1).
-5. **NTK symmetry and positive semidefiniteness** as a Gram matrix (Theorems 7.1, 7.2).
-6. **Universality**: Architecture independence of training dynamics (Theorem 8.1).
-7. **Quadratic expansion**: Algebraic identity for the update operator (Theorem 9.1).
-8. **Perturbation bound**: Single-step lazy regime stability (Theorem 6.1).
+Three questions then become natural.
 
-## 2. Kernel-Driven Gradient Flow
+1. Under what exact condition do predictions converge to the training targets?
+2. How does the kernel spectrum determine rates and stability?
+3. When do different architectures induce the same training trajectory?
 
-### 2.1 Setup
+The answers are concise. Strict contraction of $I-\eta K$ yields a geometric norm bound and convergence. An eigencomponent with eigenvalue $\lambda$ is multiplied exactly by $(1-\eta\lambda)^n$ after $n$ steps. Equal frozen kernels imply equal trajectories, but global equality can be weakened to equality of the kernel actions encountered along the two paths. A separate geometric criterion—confinement to a cell on which the kernel is constant—provides one mechanism that guarantees freezing.
 
-We consider a system of n training points. The training residual u ∈ ℝⁿ evolves under discrete gradient descent:
+Care is needed in interpreting these conclusions. Positive semidefiniteness of $K$ does not alone imply strict contraction: if $K$ has a nontrivial nullspace, then $I-\eta K$ acts as the identity there. The conclusions concern predictions on the finite training set rather than convergence of parameters. They are deterministic statements conditional on a frozen kernel and do not require a width limit or a probabilistic approximation theorem.
 
-$$u_{t+1} = u_t - \eta \cdot K \cdot u_t = (I - \eta K) \cdot u_t$$
+The paper proceeds from abstract contraction dynamics to frozen NTK convergence, exact spectral behavior, architecture universality, and tropical cell invariance. It then gives algorithms, numerical illustrations, applications, limitations, and directions for extending exact universality to quantitative perturbation theory.
 
-where K ∈ ℝⁿˣⁿ is the NTK matrix and η > 0 is the learning rate.
+## 2. Setting and definitions
 
-**Definition 2.1 (NTKDynamics).** An NTK dynamical system consists of:
-- A kernel matrix K : Matrix(Fin n, Fin n, ℝ)
-- A learning rate η : ℝ with η > 0
+### 2.1 Prediction and residual spaces
 
-The update operator is T = I - ηK.
+Let $E$ be a real normed vector space. For a dataset with $N$ scalar outputs one may take $E=\mathbb{R}^N$ with the Euclidean norm, but the arguments require only addition, scalar multiplication, and a norm. Let $y\in E$ be the target vector and $f_n\in E$ the prediction vector after $n$ training steps.
 
-### 2.2 Iteration Formula
+**Definition 2.1 (Residual).** The residual at step $n$ is
 
-**Theorem 2.1 (Residual Iteration Formula).** *For all t ∈ ℕ, the residual satisfies u(t) = T^t · u₀.*
+$$
+r_n=f_n-y.
+$$
 
-*Proof.* By induction on t. The base case t = 0 gives T⁰ · u₀ = I · u₀ = u₀. For the inductive step, u(t+1) = T · u(t) = T · (T^t · u₀) = T^{t+1} · u₀. □
+Thus $f_n=y+r_n$, and convergence $r_n\to 0$ is equivalent to convergence $f_n\to y$.
 
-This formula is fundamental: it reduces the nonlinear training dynamics (in the lazy regime) to matrix exponentiation.
+### 2.2 Iterated updates
 
-## 3. Contractivity and Convergence
+Let $S:E\to E$ be any update map and let $r_0\in E$. Its residual iterates are recursively defined by
 
-**Definition 3.1 (Contractivity).** The system is contractive with constant c if 0 ≤ c < 1 and ‖T · v‖ ≤ c · ‖v‖ for all v ∈ ℝⁿ.
+$$
+r_0=r_0, \qquad r_{n+1}=S(r_n).
+$$
 
-**Theorem 3.1 (Contraction Bound).** *If the system is contractive with constant c, then ‖u(t)‖ ≤ c^t · ‖u₀‖.*
+The corresponding prediction sequence relative to target $y$ is
 
-*Proof.* By induction on t. The base case is immediate. For the step, ‖u(t+1)‖ = ‖T · u(t)‖ ≤ c · ‖u(t)‖ ≤ c · c^t · ‖u₀‖ = c^{t+1} · ‖u₀‖. □
+$$
+f_n=y+r_n.
+$$
 
-**Corollary 3.2.** Under contractivity, u(t) → 0 as t → ∞, i.e., the training error converges to zero.
+This notation separates the general theory of contractive iteration from the special structure of a neural tangent kernel.
 
-## 4. Fixed Point Characterization
+### 2.3 Frozen-kernel update
 
-**Theorem 4.1 (Fixed Point Theorem).** *If u is a fixed point of the gradient flow (T · u = u), then K · u = 0.*
+Let $K:E\to E$ be a linear operator and let $\eta\in\mathbb{R}$ be the learning rate.
 
-*Proof.* T · u = u means (I - ηK) · u = u, so I · u - ηK · u = u, giving ηK · u = 0. Since η > 0, we conclude K · u = 0. □
+**Definition 2.2 (Frozen-kernel residual step).** The frozen-kernel update is the map
 
-This theorem has a crucial interpretation: the only way training can stop is if the kernel "annihilates" the residual. For a positive definite kernel (all eigenvalues positive), the only solution is u = 0, meaning perfect interpolation.
+$$
+S_{K,\eta}(r)=r-\eta Kr=(I-\eta K)r.
+$$
 
-## 5. Kernel Matrix Properties
+A trajectory generated by this map obeys
 
-### 5.1 Update Operator Symmetry
+$$
+r_{n+1}=(I-\eta K)r_n,
+$$
 
-**Theorem 5.1.** *If K is symmetric (K = K^T), then T = I - ηK is symmetric.*
+and begins from $r_0=f_0-y$.
 
-*Proof.* T^T = (I - ηK)^T = I^T - η · K^T = I - ηK = T. □
+**Definition 2.3 (Strict contraction hypothesis).** The frozen update is a strict contraction if there is a real number $q$ satisfying $0\le q<1$ such that
 
-### 5.2 Quadratic Expansion
+$$
+\|r-\eta Kr\|\le q\|r\|
+$$
 
-**Theorem 5.2 (Quadratic Expansion).** *For any vector v,*
+for every $r\in E$.
 
-$$\langle Tv, Tv \rangle = \langle v, v \rangle - 2\eta \langle v, Kv \rangle + \eta^2 \langle Kv, Kv \rangle$$
+The constant $q$ is a uniform upper bound on the one-step reduction factor. In finite-dimensional Euclidean space, the smallest possible such $q$ is the operator norm $\|I-\eta K\|_{\mathrm{op}}$.
 
-*Proof.* Expand Tv = v - ηKv and use bilinearity of the inner product. □
+### 2.4 Cellwise-constant kernels
 
-This identity is the foundation of spectral convergence analysis. The term -2η⟨v, Kv⟩ represents energy extraction; η²⟨Kv, Kv⟩ represents overshooting. Convergence requires the extraction term to dominate.
+For the geometric freezing result, let parameter space be $\mathbb{R}^P$, let $C$ be a set of cell labels, and let
 
-## 6. Lazy Regime Perturbation
+$$
+c:\mathbb{R}^P\to C
+$$
 
-**Theorem 6.1 (Single-Step Perturbation).** *For two kernel matrices K₁ and K₂,*
+assign a cell to each parameter vector. Let
 
-$$(I - \eta K_1) \cdot u - (I - \eta K_2) \cdot u = \eta (K_2 - K_1) \cdot u$$
+$$
+\mathcal{K}:\mathbb{R}^P\to\mathbb{R}^{N\times N}
+$$
 
-*Proof.* Direct algebraic manipulation:
-(I - ηK₁)u - (I - ηK₂)u = (u - ηK₁u) - (u - ηK₂u) = η(K₂ - K₁)u. □
+assign an empirical kernel matrix.
 
-This bound is the key ingredient for lazy regime stability: if K(t) ≈ K(0), the perturbation at each step is proportional to the kernel deviation.
+**Definition 2.4 (Cellwise constancy).** The kernel is cellwise constant if, for every $\theta,\theta'\in\mathbb{R}^P$,
 
-## 7. NTK Construction and Properties
+$$
+c(\theta)=c(\theta') \quad\Longrightarrow\quad \mathcal{K}(\theta)=\mathcal{K}(\theta').
+$$
 
-### 7.1 Definition
+This definition models piecewise-linear and tropical situations in which a fixed combinatorial activation pattern determines the Jacobian Gram matrix.
 
-**Definition 7.1 (Neural Tangent Kernel).** For a parameterized model f(θ, x) with parameter gradient ∇_θ f, the NTK is:
+## 3. Contractive residual dynamics
 
-$$K(x, y) = \sum_{j=1}^{p} \frac{\partial f}{\partial \theta_j}(x) \cdot \frac{\partial f}{\partial \theta_j}(y)$$
+We first establish the general estimate from which convergence follows.
 
-The NTK matrix on training data {x₁, ..., xₙ} is K_{ij} = K(x_i, x_j).
+**Theorem 3.1 (Geometric residual bound).** Let $E$ be a normed additive space, let $S:E\to E$, and suppose that for some $q\ge 0$,
 
-### 7.2 Symmetry
+$$
+\|S(r)\|\le q\|r\|
+$$
 
-**Theorem 7.1 (NTK Symmetry).** *The NTK is a symmetric function: K(x, y) = K(y, x).*
+for every $r\in E$. If $r_{n+1}=S(r_n)$, then for every integer $n\ge 0$,
 
-*Proof.* K(x, y) = Σⱼ ∂f/∂θⱼ(x) · ∂f/∂θⱼ(y) = Σⱼ ∂f/∂θⱼ(y) · ∂f/∂θⱼ(x) = K(y, x) by commutativity of multiplication. □
+$$
+\|r_n\|\le q^n\|r_0\|.
+$$
 
-### 7.3 Positive Semidefiniteness
+**Proof sketch.** The statement is proved by induction on $n$. At $n=0$, it reduces to equality. Assuming $\|r_n\|\le q^n\|r_0\|$, the contraction hypothesis and nonnegativity of $q$ give
 
-**Theorem 7.2 (NTK Positive Semidefiniteness).** *The NTK matrix is positive semidefinite.*
+$$
+\|r_{n+1}\|=\|S(r_n)\|\le q\|r_n\|
+\le q\,q^n\|r_0\|=q^{n+1}\|r_0\|.
+$$
 
-*Proof.* The NTK matrix is a Gram matrix: K_{ij} = ⟨gᵢ, gⱼ⟩ where gᵢ = ∇_θ f(θ, xᵢ) ∈ ℝᵖ. For any v ∈ ℝⁿ:
+This closes the induction.
 
-$$v^T K v = \sum_{i,j} v_i \langle g_i, g_j \rangle v_j = \left\| \sum_i v_i g_i \right\|^2 \geq 0$$
+**Corollary 3.2 (Residual convergence under strict contraction).** Under the hypotheses of Theorem 3.1, if additionally $q<1$, then
 
-The last step uses the fact that ‖Σ vᵢgᵢ‖² = ⟨Σ vᵢgᵢ, Σ vⱼgⱼ⟩ = Σᵢ,ⱼ vᵢvⱼ⟨gᵢ, gⱼ⟩ = Σ_{k} (Σᵢ vᵢ gᵢₖ)². □
+$$
+r_n\to 0.
+$$
 
-## 8. Universality
+**Proof sketch.** Since $0\le q<1$, the geometric sequence $q^n$ tends to zero. Theorem 3.1 squeezes the nonnegative quantity $\|r_n\|$ between zero and $q^n\|r_0\|$, which also tends to zero. Hence $\|r_n\|\to 0$, equivalent to $r_n\to 0$ in a normed space.
 
-**Theorem 8.1 (NTK Universality).** *Two NTK systems with the same kernel matrix K and learning rate η produce identical training dynamics, regardless of the underlying architecture.*
+**Remark 3.3 (Iteration complexity).** Let $0<q<1$ and suppose $0<\delta<\|r_0\|$. The estimate $q^n\|r_0\|\le\delta$ is guaranteed when
 
-*Proof.* The residual u(t) depends only on K, η, and u₀ through the formula u(t) = (I - ηK)^t · u₀. □
+$$
+n\ge \frac{\log(\delta/\|r_0\|)}{\log q}.
+$$
 
-This theorem is the formal expression of the Jacot-Gabriel-Hongler universality principle: in the lazy regime, the architecture enters the training dynamics only through the kernel it induces.
+Taking the ceiling gives an integer stopping rule. If $q=0$, every residual vanishes after at most one update.
 
-## 9. Spectral Analysis and Convergence Rate
+The theorem is deliberately independent of linearity. Its only analytic ingredient is a pointwise norm contraction. The frozen NTK application is obtained by substituting $S=I-\eta K$.
 
-### 9.1 Eigenvalue Bounds
+## 4. Convergence of frozen neural tangent kernel training
 
-The convergence rate of the system is determined by the eigenvalues of K. If the eigenvalues of K lie in [λ_min, λ_max] with 0 < λ_min ≤ λ_max < 2/η, then the system is contractive with rate:
+**Theorem 4.1 (Frozen NTK convergence to the target).** Let $E$ be a real normed vector space, let $K:E\to E$ be continuous and linear, and fix a learning rate $\eta\in\mathbb{R}$. Let $y\in E$ be the target and $f_0\in E$ the initial prediction. Suppose there is $q$ with $0\le q<1$ such that
 
-$$c = \max(|1 - \eta\lambda_{\min}|, |1 - \eta\lambda_{\max}|)$$
+$$
+\|r-\eta Kr\|\le q\|r\|
+$$
 
-The optimal learning rate is η* = 2/(λ_min + λ_max), giving:
+for every $r\in E$. Define
 
-$$c^* = \frac{\lambda_{\max} - \lambda_{\min}}{\lambda_{\max} + \lambda_{\min}} = \frac{\kappa - 1}{\kappa + 1}$$
+$$
+r_0=f_0-y,\qquad r_{n+1}=r_n-\eta Kr_n,\qquad f_n=y+r_n.
+$$
 
-where κ = λ_max/λ_min is the condition number of K.
+Then
 
-### 9.2 Connection to Kernel Regression
+$$
+\|f_n-y\|\le q^n\|f_0-y\|
+$$
 
-In the limit t → ∞, the network output converges to the kernel regression solution. If K is invertible, this is f* = K · K⁻¹ · y = y, i.e., perfect interpolation. The convergence path is the unique geodesic in the kernel-induced RKHS norm.
+for every $n$, and in particular
 
-## 10. Conjecture: Width Convergence
+$$
+f_n\to y.
+$$
 
-**Conjecture (NTK Width Convergence).** For a two-layer ReLU network of width m, the NTK matrix at initialization converges entrywise to a deterministic limit kernel K_∞ as m → ∞, with entrywise error O(1/√m).
+**Proof sketch.** The frozen-kernel map $S(r)=r-\eta Kr$ satisfies the contraction hypothesis. Theorem 3.1 yields
 
-This conjecture, when combined with the perturbation bound (Theorem 6.1), would imply that finite-width networks approximate the kernel regression solution with error controlled by 1/√m.
+$$
+\|r_n\|\le q^n\|r_0\|.
+$$
+
+Since $f_n-y=r_n$ and $q^n\to 0$, the predictions converge to $y$.
+
+The conclusion is interpolation on the chosen finite dataset. No statement about the limiting parameters follows from this argument. Different parameter vectors may represent the same prediction vector, and parameter motion may contain components invisible to the training outputs.
+
+### 4.1 Why semidefiniteness is insufficient
+
+Suppose $K$ is positive semidefinite but has a nonzero vector $v$ with $Kv=0$. Then
+
+$$
+(I-\eta K)v=v
+$$
+
+for every $\eta$. Therefore no contraction factor $q<1$ can hold on all of $E$, because it would require $\|v\|\le q\|v\|$. A residual component in the nullspace persists forever. Consequently, positive semidefiniteness must be supplemented by positivity on the relevant residual subspace or by an explicit strict-contraction assumption.
+
+## 5. Exact spectral dynamics
+
+The global contraction estimate becomes transparent on an eigendirection.
+
+**Theorem 5.1 (Exact decay on a kernel eigendirection).** Let $K:E\to E$ be linear, let $v\in E$, and suppose
+
+$$
+Kv=\lambda v
+$$
+
+for some $\lambda\in\mathbb{R}$. Under the frozen update $r_{n+1}=r_n-\eta Kr_n$ with $r_0=v$, one has, for every $n\ge 0$,
+
+$$
+r_n=(1-\eta\lambda)^n v.
+$$
+
+**Proof sketch.** At $n=0$, the right-hand side is $v$. If the formula holds at $n$, linearity and the eigenvector equation give
+
+$$
+\begin{aligned}
+r_{n+1}
+&=r_n-\eta Kr_n\\
+&=(1-\eta\lambda)^n v
+ -\eta(1-\eta\lambda)^nKv\\
+&=(1-\eta\lambda)^n(1-\eta\lambda)v\\
+&=(1-\eta\lambda)^{n+1}v.
+\end{aligned}
+$$
+
+Thus the identity follows by induction.
+
+**Corollary 5.2 (Modewise stability criterion).** A nonzero eigendirection converges to zero exactly when
+
+$$
+|1-\eta\lambda|<1.
+$$
+
+For $\lambda>0$, this condition is equivalent to
+
+$$
+0<\eta\lambda<2.
+$$
+
+If $1-\eta\lambda<0$, the residual component alternates sign while its magnitude decays. If $|1-\eta\lambda|=1$, its norm is preserved. If $|1-\eta\lambda|>1$, it diverges geometrically.
+
+**Corollary 5.3 (Finite-dimensional spectral factor).** If $E=\mathbb{R}^N$, $K$ is self-adjoint, and an orthonormal eigenbasis has eigenvalues $\lambda_1,\dots,\lambda_N$, then a residual decomposition
+
+$$
+r_0=\sum_{i=1}^N a_i v_i
+$$
+
+evolves as
+
+$$
+r_n=\sum_{i=1}^N a_i(1-\eta\lambda_i)^n v_i.
+$$
+
+Accordingly, the Euclidean operator norm of $I-\eta K$ is
+
+$$
+q=\max_{1\le i\le N}|1-\eta\lambda_i|.
+$$
+
+**Proof sketch.** Apply Theorem 5.1 to each eigenvector and use linearity. Orthogonal diagonalization identifies the operator norm with the largest absolute diagonal factor.
+
+The corollary explains the hypothesis of Theorem 4.1 in the common symmetric finite-dimensional case. It also shows why small positive eigenvalues create slow directions and zero eigenvalues obstruct strict contraction.
+
+## 6. Architecture universality
+
+The recurrence depends on a model only through its kernel action. This observation yields exact comparison theorems.
+
+**Theorem 6.1 (Universality for equal frozen kernels).** Consider two architectures on the same finite training set. Let their frozen kernel operators be $K_1,K_2:E\to E$. Give both models the same learning rate $\eta$, target $y$, and initial prediction $f_0$. If
+
+$$
+K_1=K_2,
+$$
+
+then their prediction sequences are identical at every step:
+
+$$
+f_n^{(1)}=f_n^{(2)} \qquad \text{for all } n\ge 0.
+$$
+
+**Proof sketch.** The initial residual $f_0-y$ is common. Equality of $K_1$ and $K_2$ makes the update maps $I-\eta K_1$ and $I-\eta K_2$ identical. Repeated application of the same map to the same initial state produces the same residuals; adding $y$ produces the same predictions.
+
+This theorem is exact, not merely a statement that the two sequences have the same limit or rate. The complete finite-time trajectories coincide.
+
+Global operator equality is sufficient but unnecessary. Training probes each kernel only at the residuals that occur along its own path.
+
+**Theorem 6.2 (Pathwise kernel-action universality).** Let $K_1,K_2:E\to E$ be linear, fix $\eta\in\mathbb{R}$ and a common initial residual $r_0$, and define
+
+$$
+r_{n+1}^{(j)}=r_n^{(j)}-\eta K_jr_n^{(j)},
+\qquad r_0^{(j)}=r_0,
+$$
+
+for $j\in\{1,2\}$. Suppose that at every step
+
+$$
+K_1r_n^{(1)}=K_2r_n^{(2)}.
+$$
+
+Then
+
+$$
+r_n^{(1)}=r_n^{(2)}
+$$
+
+for every $n\ge 0$.
+
+**Proof sketch.** The claim is true at $n=0$. Assume $r_n^{(1)}=r_n^{(2)}$. The pathwise action hypothesis gives equality of the correction terms, so
+
+$$
+\begin{aligned}
+r_{n+1}^{(1)}
+&=r_n^{(1)}-\eta K_1r_n^{(1)}\\
+&=r_n^{(2)}-\eta K_2r_n^{(2)}\\
+&=r_{n+1}^{(2)}.
+\end{aligned}
+$$
+
+Induction proves the result.
+
+**Remark 6.3.** The assumption compares the actions on the two realized paths rather than requiring $K_1r=K_2r$ for every $r\in E$. Hence architectures may differ away from the visited states while remaining dynamically indistinguishable during training.
+
+**Remark 6.4.** Equal kernels do not imply equal parameters, equal internal representations, or equal predictions away from the finite set on which the kernel and residual vectors are defined. Universality here is a precise statement about the training-set trajectory.
+
+## 7. Tropical cell confinement and exact freezing
+
+Piecewise-linear architectures partition parameter space into regions with fixed combinatorial data. When the empirical kernel depends only on that data, remaining in one cell freezes the kernel.
+
+**Theorem 7.1 (Tropical cell freezing).** Let $c:\mathbb{R}^P\to C$ assign a cell label, let $\mathcal{K}:\mathbb{R}^P\to\mathbb{R}^{N\times N}$ be cellwise constant, and let $\theta:[0,T)\to\mathbb{R}^P$ be a trajectory with $T>0$. If
+
+$$
+c(\theta(t))=c(\theta(0))
+$$
+
+for every $t$ with $0\le t<T$, then
+
+$$
+\mathcal{K}(\theta(t))=\mathcal{K}(\theta(0))
+$$
+
+for every $0\le t<T$.
+
+**Proof sketch.** Fix $t\in[0,T)$. By cell invariance, $\theta(t)$ and $\theta(0)$ have the same cell label. Cellwise constancy then gives equality of their kernel matrices. Since $t$ was arbitrary, the equality holds throughout the interval.
+
+The theorem supplies a geometric certificate for lazy behavior. If the activation or tropical pattern remains unchanged, and that pattern determines the Jacobian Gram matrix, then the NTK cannot change before the trajectory reaches a cell wall.
+
+### 7.1 Combined convergence principle
+
+The preceding theorems can be read as a pipeline.
+
+1. **Geometric stage:** establish that the parameter trajectory remains in one cell.
+2. **Kernel stage:** infer from cellwise constancy that $K$ is frozen.
+3. **Spectral stage:** estimate $q=\|I-\eta K\|_{\mathrm{op}}$ or the factors $|1-\eta\lambda_i|$.
+4. **Analytic stage:** if $q<1$, conclude geometric residual decay and convergence to the target.
+5. **Universality stage:** any second architecture with the same kernel action along its trajectory follows the same prediction path.
+
+This decomposition distinguishes two logically separate ingredients. Cell invariance freezes the dynamics but does not guarantee that the frozen update is stable. Strict contraction guarantees interpolation but does not explain why a neural network’s kernel should remain fixed. Both are needed for the full lazy-training conclusion in a piecewise-linear setting.
+
+## 8. Algorithms and numerical diagnostics
+
+### 8.1 Frozen-kernel trajectory simulation
+
+Given a matrix $K\in\mathbb{R}^{N\times N}$, learning rate $\eta$, target $y$, initial prediction $f_0$, and number of steps $m$, compute
+
+$$
+r_0=f_0-y,
+$$
+
+and repeatedly update
+
+$$
+r_{n+1}=r_n-\eta Kr_n,
+\qquad f_{n+1}=y+r_{n+1}.
+$$
+
+A dense matrix-vector product costs $O(N^2)$ per step, so the total time is $O(mN^2)$ and storing the complete trajectory costs $O(mN)$. If only the final state is required, memory falls to $O(N)$ beyond storage of $K$.
+
+### 8.2 Spectral contraction diagnostic
+
+For a real symmetric $K$, compute eigenvalues $\lambda_1,\dots,\lambda_N$ and factors
+
+$$
+a_i=1-\eta\lambda_i.
+$$
+
+Set
+
+$$
+q=\max_i|a_i|.
+$$
+
+If $q<1$, Theorem 4.1 applies in the Euclidean norm. Symmetric eigendecomposition costs $O(N^3)$ for a dense matrix. The result also diagnoses oscillatory modes through negative $a_i$, null modes through $a_i=1$, and unstable modes through $|a_i|>1$.
+
+### 8.3 Pathwise universality check
+
+For two kernels, simulate their residual paths and compare both the residual discrepancy
+
+$$
+\|r_n^{(1)}-r_n^{(2)}\|
+$$
+
+and action discrepancy
+
+$$
+\|K_1r_n^{(1)}-K_2r_n^{(2)}\|.
+$$
+
+Exact pathwise action agreement predicts exact trajectory agreement. Numerically, tolerances must account for floating-point rounding. With dense kernels, the computation again costs $O(mN^2)$.
+
+### 8.4 Illustrative diagonal example
+
+Take
+
+$$
+K=\begin{pmatrix}1&0\\0&3\end{pmatrix},
+\qquad \eta=\frac12,
+\qquad r_0=\begin{pmatrix}2\\-1\end{pmatrix}.
+$$
+
+The spectral factors are $1-\eta\cdot 1=1/2$ and $1-\eta\cdot 3=-1/2$. Therefore
+
+$$
+r_n=
+\begin{pmatrix}
+2(1/2)^n\\
+-(-1/2)^n
+\end{pmatrix}.
+$$
+
+Both components decay with magnitude factor $1/2$, while the second alternates sign. The global contraction factor is $q=1/2$, and the bound is exact in directions aligned with either coordinate eigenvector.
+
+For contrast, let
+
+$$
+K=\begin{pmatrix}1&0\\0&0\end{pmatrix}.
+$$
+
+Then the second residual component is unchanged by every update. This matrix is positive semidefinite, but the update is not a strict contraction on $\mathbb{R}^2$.
+
+## 9. Applications
+
+### 9.1 Learning-rate selection
+
+The eigendirection formula provides a direct stability diagnostic. In a symmetric positive-definite finite-dimensional problem, one seeks a learning rate for which all factors $|1-\eta\lambda_i|$ are below one. The largest factor predicts the slowest asymptotic mode and supplies the contraction constant used in a stopping estimate.
+
+### 9.2 Comparing architectures
+
+Rather than comparing parameter counts or layer layouts, one may compare empirical kernels on the training set. Equality of frozen kernels certifies identical trajectories from a shared initialization. More generally, monitoring kernel actions along the realized residuals tests the weaker and more relevant pathwise condition.
+
+### 9.3 Detecting inaccessible target components
+
+A residual component in $\ker K$ cannot be changed by frozen-kernel training. Spectral analysis can therefore distinguish slow learning from impossible interpolation within the frozen model. This diagnostic is important when a semidefinite kernel is singular or nearly singular.
+
+### 9.4 Certifying a finite lazy interval
+
+In piecewise-linear models, the distance to a cell boundary may provide a practical estimate of how long the activation pattern can remain unchanged. During any certified interval of cell confinement, the kernel is exactly frozen, so the linear analysis applies without approximation. Obtaining a quantitative duration requires additional bounds on parameter displacement, but the logical connection from cell invariance to kernel constancy is immediate.
+
+## 10. Scope and limitations
+
+The results make no unsupported identification between prediction convergence and parameter convergence. They concern a fixed finite training set and do not directly establish generalization to unseen data. The universality conclusions require a common target, learning rate, and initialization; changing any of these can change the path even when kernels agree.
+
+The exact convergence theorem assumes strict contraction. It does not infer that condition from positive semidefiniteness alone. In a symmetric finite-dimensional setting, positivity of every eigenvalue and an appropriate learning rate provide the familiar route to contraction, but singular kernels require restriction to a controlled subspace or acceptance of a nonzero limiting residual.
+
+Kernel freezing is also a substantive hypothesis. Tropical cell confinement provides one sufficient mechanism, but a trajectory may cross a cell boundary, a smooth model’s Jacobian may drift continuously, or a finite-width approximation may produce a kernel that is only approximately constant. In those settings, the exact recursion becomes a perturbed recursion and requires stability estimates beyond the exact theorems presented here.
+
+Finally, equal training-set trajectories do not imply that two architectures are identical as functions on all possible inputs. The empirical kernel is tied to a selected dataset, and off-dataset behavior may retain architecture-dependent information.
 
 ## 11. Discussion
 
-### 11.1 Relation to Tropical NTK Theory
+The analysis separates lazy training into geometry and dynamics. Geometry controls whether the kernel changes; dynamics controls what a fixed kernel does. This separation clarifies the role of each assumption.
 
-Our convergence theory complements the tropical NTK theory formalized in [Catalog: MachineLearning/TropicalNTK.lean], which proves that within a strict argmin cell, the tropical NTK equals ⟨x, y⟩ + 1 — a specific instance of the frozen-kernel formula. The tropical theory provides the geometric picture (polyhedral cells as lazy regime domains) while our theory provides the dynamical picture (convergence within those domains).
+The geometric residual bound is entirely generic. It applies to any normed-space update satisfying a uniform contraction inequality. The NTK enters only when identifying the update as $I-\eta K$. The spectral theorem then explains how this operator acts on invariant one-dimensional modes. Architecture universality follows because the recursion has forgotten the parameterization: only kernel actions remain.
 
-### 11.2 Limitations
+The pathwise universality theorem is particularly informative. Global equality of two operators is often difficult or unnecessarily strong. If training explores only a small invariant subspace, the operators may differ substantially elsewhere without affecting the observed trajectory. This suggests defining architecture classes dynamically: two models are equivalent for a given task and initialization when their empirical kernel actions agree along the path that task generates.
 
-Our formalization captures the algebraic core of NTK theory but does not cover:
-- Concentration inequalities for random initialization
-- The continuous-time limit (gradient flow ODE)
-- Feature learning dynamics outside the lazy regime
-- Generalization bounds
+The tropical cell result supplies an exact bridge from combinatorial geometry to linear learning dynamics. Inside a cell, a piecewise-linear model may possess a fixed activation pattern and fixed tangent features. The kernel is then constant, and the residual follows the frozen law until the first wall crossing. In this view, feature learning is associated with transitions between cells, while lazy learning is motion within a cell.
 
-### 11.3 Implications for Practice
+## 12. Future work
 
-The contractivity condition c < 1 translates to a learning rate constraint: η < 2/λ_max. This provides a theoretical foundation for learning rate selection in practice, explaining why learning rates that are "too large" cause divergence.
+Four extensions arise naturally.
 
-## 12. Algorithms
+First, exact universality should admit a perturbative form. If two kernels differ slightly along their trajectories and both updates contract, a telescoping recurrence should bound prediction discrepancy by a geometric accumulation of per-step errors. Such a theorem would quantify finite-width deviations from a shared limiting kernel.
 
-### 12.1 NTK-Driven Training Simulation
+Second, the scalar eigendirection identity should be assembled into a necessary-and-sufficient stable-learning-rate theorem for self-adjoint positive-definite empirical kernels. The expected contraction factor is the maximum of $|1-\eta\lambda|$ over the spectrum, turning optimal learning-rate selection into a minimax problem at the spectral endpoints.
 
-```
-Input: Kernel matrix K ∈ ℝⁿˣⁿ, initial residual u₀ ∈ ℝⁿ, learning rate η, steps T
-Output: Residual trajectory u(0), u(1), ..., u(T)
+Third, tropical cell confinement should be made quantitative. A positive initial margin to every chamber wall, combined with bounds on update size, should yield an explicit number of steps before any cell transition can occur. This would convert geometric margin into a certified duration of frozen-kernel behavior.
 
-1. Set T_op = I - η·K
-2. Set u = u₀
-3. For t = 0, 1, ..., T:
-   a. Record u(t) = u
-   b. u ← T_op · u
-4. Return trajectory
-```
+Fourth, architecture equivalence should be related directly to parameter Jacobians. If two differentiable architectures have the same Jacobian Gram operator on the training set and their Jacobians remain fixed along training, then the universality theorem predicts identical trajectories despite different parameter dimensions or symmetries.
 
-### 12.2 Convergence Rate Estimation
+## 13. Conclusion
 
-```
-Input: Kernel matrix K, learning rate η
-Output: Contraction constant c
+Frozen neural tangent kernel training is governed by a simple operator recurrence. If $I-\eta K$ is a strict contraction, residuals satisfy the geometric bound
 
-1. Compute eigenvalues λ₁ ≤ λ₂ ≤ ... ≤ λₙ of K
-2. Set c = max(|1 - η·λ₁|, |1 - η·λₙ|)
-3. If c < 1: report "convergent with rate c"
-4. If c ≥ 1: report "divergent or non-contractive"
-```
+$$
+\|r_n\|\le q^n\|r_0\|
+$$
 
-## References
+and predictions converge to the target. On a kernel eigenvector, the exact factor is $(1-\eta\lambda)^n$, revealing stable, oscillatory, stationary, and divergent modes. Equal frozen kernels produce identical training trajectories, and equality only of the kernel actions along the paths already suffices. In piecewise-linear or tropical settings, confinement to a cell on which the kernel is constant provides a concrete certificate that the frozen analysis applies.
 
-[1] A. Jacot, F. Gabriel, C. Hongler. "Neural Tangent Kernel: Convergence and Generalization in Neural Networks." NeurIPS 2018.
-
-[2] S. S. Du, X. Zhai, B. Poczos, A. Singh. "Gradient Descent Provably Optimizes Over-parameterized Neural Networks." ICLR 2019.
-
-[3] S. Arora, S. S. Du, W. Hu, Z. Li, R. Wang. "Fine-Grained Analysis of Optimization and Generalization for Overparameterized Two-Layer Neural Networks." ICML 2019.
-
-[4] Z. Allen-Zhu, Y. Li, Z. Song. "A Convergence Theory for Deep Learning via Over-Parameterization." ICML 2019.
-
-[5] G. Yang, E. J. Hu. "Tensor Programs IV: Feature Learning in Infinite-Width Neural Networks." ICML 2021.
+These statements form a precise architecture-independent principle: geometry freezes the kernel, spectrum determines the rates, contraction guarantees interpolation, and kernel action determines the trajectory.

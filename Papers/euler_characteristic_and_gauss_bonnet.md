@@ -1,0 +1,3 @@
+# Computational Evidence Justification
+
+Computational evidence is unnecessary for the principal results in this chapter. They are universal symbolic identities obtained from finite-sum rearrangement, integer cancellation, induction over subdivision histories, and exact algebraic consequences of the Euler characteristic. Testing selected triangulations could illustrate these identities but could neither distinguish nor materially support the universally quantified claims. Boundary cases are instead addressed directly by the proved zero-, positive-, sphere-, torus-, and higher-genus consequences.

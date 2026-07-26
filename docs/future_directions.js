@@ -1745,23 +1745,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Mobius Arithmetic: Number Theory on the Mobius Band"
   },
   {
-    "consumed_by_exp_id": "ce71f394",
-    "description": "The EML operator class (finite compositions of exp, log, +, *) has remarkable closure properties. Conjecture: The class of EML functions is closed under differentiation, and the derivative of any EML function of composition depth d is an EML function of composition depth at most d+1. Moreover, the derivative has a canonical EML chain rule form: (exp(h) * log(g))' = exp(h) * log(g) * (h' + g'/g). This factorization is the key structural insight: the derivative of an EML function factors through the original function itself, multiplied by a simple expression involving only the inner functions and their derivatives. This is stronger than the general Leibniz rule because the EML structure forces the derivative into a canonical form. For depth-d EML functions, the derivative can be written recursively as f' = f * (h'_1 + g'_1/g_1) where each h'_i and g'_i are depth-(d-1) EML functions. Test: compute the 3rd derivative of f(x) = exp(x^2) * log(x+1) and verify it can be written as an EML expression. Impact: establishes that EML functions form a differential algebra, enabling automatic EML differentiation for verified numerical computation.",
-    "domains": [
-      "EML",
-      "Analysis",
-      "Algebra"
-    ],
-    "id": "seed_085",
-    "phase": "B",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "EML Differential Calculus: Chain Rules for exp-log Compositions"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Sheaf theory studies how local data glues to form global objects. The stereographic projection gives S^n a two-chart atlas with Mobius transition maps. Define a new class of sheaves called stereographic sheaves where the gluing data is constrained by the conformal structure of the stereographic atlas. A stereographic sheaf on S^n is a sheaf F such that for each chart U_i of the stereographic cover, the restriction F|U_i is a sheaf on R^n, and the transition function F(U_0 cap U_1) is a sheaf morphism that commutes with the Mobius transition. Conjecture: The category of stereographic sheaves on S^n is a proper subcategory of all sheaves on S^n, characterized by the condition that Cech cohomology with respect to the stereographic cover satisfies a Mobius compatibility. This subcategory has better computational properties: H^k(S^n, F) can be computed from the transition function alone for stereographic sheaves, reducing the computation of sheaf cohomology on S^n to a single gluing datum. Test: prove the equivalence with locally constant sheaves on RP^n for n=2,3. Compute H^1(S^2, Z) = Z/2Z for the constant sheaf Z. Impact: a new computational tool for sheaf cohomology that exploits conformal structure, with applications to topological data analysis and differential equations on spheres.",
     "domains": [
@@ -2085,6 +2068,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T18:42:11.729178+00:00",
     "title": "Deepening: **Conjecture.** Let a family of decision procedures on inputs of length `n` irre"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle ce71f394 (Q=0.770), which proved 14 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The EML operator class (finite compositions of exp, log, +, *) has remarkable closure properties. Conjecture: The class of EML functions is closed under differentiation, and the derivative of any EML function of composition depth d is an EML function of composition depth at most d+1. Moreover, the d",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_ce71f394_8567d36c",
+    "priority_score": 0.87,
+    "research_mode": "team",
+    "source_exp_id": "ce71f394",
+    "status": "available",
+    "timestamp": "2026-07-26T05:36:56.554653+00:00",
+    "title": "Deepening: EML Differential Calculus: Chain Rules for exp-log Compositions"
   },
   {
     "consumed_by_exp_id": "",
@@ -2926,22 +2923,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Reflective Type Theory: Proving Things About Proving Things"
-  },
-  {
-    "consumed_by_exp_id": "55a94506",
-    "description": "Prove that the Fisher information metric on a statistical manifold satisfies the axioms of a Riemannian metric. Construct explicit connections between the Fisher metric and the Kullback-Leibler divergence. Bridge statistical inference to differential geometry.",
-    "domains": [
-      "Bridges",
-      "Geometry"
-    ],
-    "id": "seed_296",
-    "phase": "A",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Information-Geometric Bridge: Fisher Metric on Statistical Manifolds"
   },
   {
     "consumed_by_exp_id": "",
@@ -8726,6 +8707,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe finite categorical model now has a proved Fisher bilinear form, positive\ndefiniteness, score representation, and a global KL/Fisher sandwich. Natural next\nsteps are:\n\n1. Package `fisherForm p` as a Mathlib `InnerProductSpace` on the tangent\n   hyperplane `{v | \u2211 i, v i = 0}` and use it to define lengths and distances.\n2. Prove the differential statement directly: the Hessian at `q = p` of\n   `q \u21a6 KL(p \u2016 q)` restricted to tangent vectors is the Fisher form.\n3. Formalize smoothness of the open simplex and package the pointwise forms as a\n   smooth Riemannian metric tensor.\n4. Develop the square-root embedding `p \u21a6 (2 * sqrt (p i))\u1d62`, under which the\n   Fisher metric is induced by the Euclidean metric, and derive the associated\n   spherical geodesic distance.\n5. Extend from finite categorical distributions to dominated parametric families,\n   stating precise hypotheses that justify differentiating under the integral.\n6. Add monotonicity under stochastic maps (the data-processing principle for\n   Fisher information) and connect it to monotonicity of KL divergence.\n7. Study the dual exponential and mixture affine connections and prove their\n   duality with respect to the Fisher metric.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0737",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "55a94506",
+    "status": "available",
+    "timestamp": "2026-07-26T05:36:05.529162+00:00",
+    "title": "The finite categorical model now has a proved Fisher bilinear form, positive"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Differential Structure of Exponential\u2013Logarithmic Expressions\n\n## 1. Pole-order normal forms for all iterated derivatives\n\n**Conjecture.** For every integer `n \u2265 1`, the `n`th derivative of\n\\(e^{x^2}\\log(x+1)\\) has a unique representation\n\\[\ne^{x^2}\\left(P_n(x)\\log(x+1)+\\sum_{k=1}^{n}\\frac{Q_{n,k}(x)}{(x+1)^k}\\right),\n\\]\nwhere \\(P_n,Q_{n,k}\\) are integer polynomials satisfying an explicit triangular recurrence,\nand the term of pole order `n` is nonzero.\n\nThe key insight is that differentiation preserves the exponential shell while acting\ntriangularly on the logarithmic and pole-order components. **Why now?** The first three\nderivatives exhibit exactly this pattern, including strict one-step growth of the maximal\npole order.\n\n## 2. A depth-filtered differential algebra with reciprocals\n\n**Conjecture.** After adjoining a guarded reciprocal constructor to the EML expression\ngrammar, there is a depth measure for which symbolic differentiation is depth-preserving,\nwhile pole order supplies a second filtration that increases by at most one.\n\nThe key insight is that transcendental nesting and meromorphic singularity order measure\ndifferent kinds of complexity and should be tracked by a bifiltration. **Why now?** The\nexp-log factorization shows that reciprocals of both `g` and `log g` arise naturally, while\nthe explicit third derivative separates depth stability from increasing pole order.\n\n## 3. Divisor-sensitive logarithmic differentiation\n\n**Conjecture.** Every nonzero EML expression on an interval admits a finite stratification\nby its zero set such that, on each zero-free stratum, its logarithmic derivative has a\ncanonical recursively generated EML-rational normal form; crossing a zero adds a residue\nterm determined by the zero multiplicity.\n\nThe key insight is that the failure of global multiplicative factorization is controlled\nprecisely by zeros, rather than by differentiation itself. **Why now?** The corrected\nexp-log chain rule is valid exactly away from the divisors `g=0` and `log g=0`, and the\ncounterexample isolates the latter obstruction.\n\n## 4. Differential equations for coefficient arrays\n\n**Conjecture.** The polynomial arrays \\(P_n,Q_{n,k}\\) from the iterated-derivative normal\nform have bivariate exponential generating functions satisfying a first-order linear\npartial differential equation, from which degree, sign, and asymptotic coefficient laws\ncan be derived.\n\nThe key insight is that repeated differentiation defines a linear operator on a graded\nmodule of logarithmic-polar normal forms. **Why now?** The triangular recurrence implicit\nin the three-step computation is already structured enough to admit a generating-function\nencoding.\n\n## 5. Quantitative automatic differentiation without depth growth\n\n**Conjecture.** For fixed EML nesting depth and derivative order `n`, normalized symbolic\ndifferentiation can be performed with expression-DAG size polynomial in the input size and\n`n`, despite the exponential growth possible for unshared expression trees.\n\nThe key insight is that the exponential shell is reused under differentiation and the new\ncomplexity is concentrated in coefficient recurrences that can share subexpressions.\n**Why now?** Depth stability and the explicit factored derivatives identify the precise\ncommon subexpressions that a normalized DAG representation should preserve.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0738",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "ce71f394",
+    "status": "available",
+    "timestamp": "2026-07-26T05:36:50.826801+00:00",
+    "title": "**Conjecture.** For every integer `n \u2265 1`, the `n`th derivative of"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist \u2014 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 \u2014 they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures \u2014 combinatorial digit problems that are easy to state but may be as hard as factoring.",
     "domains": [
       "Novelty",
@@ -9199,6 +9210,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Crystallographic Groups and Music: The 17 Wallpaper Groups of Rhythm"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 55a94506 (Q=0.630) proved 38205 theorems in Bridges but left 22 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Prove that the Fisher information metric on a statistical manifold satisfies the axioms of a Riemannian metric. Construct explicit connections between the Fisher metric and the Kullback-Leibler diverg",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "sorry_fill_55a94506_fb01c909",
+    "priority_score": 0.68,
+    "research_mode": "team",
+    "source_exp_id": "55a94506",
+    "status": "available",
+    "timestamp": "2026-07-26T05:36:47.309939+00:00",
+    "title": "Close Proofs: Information-Geometric Bridge: Fisher Metric on Statistical Manifolds"
   },
   {
     "consumed_by_exp_id": "",

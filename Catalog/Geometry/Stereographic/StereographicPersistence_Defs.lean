@@ -1,0 +1,1 @@
+../../Geometry/StereographicPersistence/Defs.lean
