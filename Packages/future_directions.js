@@ -125,20 +125,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Proves that proper time approaches infinity relative to asymptotic coordinate time for observers falling into extreme Reissner-Nordstr\u00f6m metric wells.",
-    "domains": [
-      "Geometry"
-    ],
-    "id": "scifi_50_05_101cbf4f",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "scifi_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:07:57.048086+00:00",
-    "title": "Time-Dilation-Singularity: Infinitesimal Metric Freezing at Event Horizons"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Formalizes the theoretical maximum information density limit for quadruple-stranded synthetic genetic storage systems.",
     "domains": [
       "Applications"
@@ -153,34 +139,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Proves how a 3D interior volume can measure strictly greater than its exterior boundary surface when connected through a 5D spatial fold (House of Leaves / Twilight Zone effect).",
-    "domains": [
-      "Geometry"
-    ],
-    "id": "scifi_50_12_81d9ce90",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "scifi_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:07:57.396019+00:00",
-    "title": "Phantom-Dimension: Projection of 5D Spatial Anomalies into 3D Euclidean Rooms"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Constructs a closed 4D topological boundary that prevents spatial translation of any object contained within, regardless of kinetic energy.",
-    "domains": [
-      "Geometry"
-    ],
-    "id": "scifi_50_14_eb2b3c38",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "scifi_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:07:57.493087+00:00",
-    "title": "SCP-Containment-Topology: Non-Euclidean Geometric Lock for Anomalous Objects"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Formalizes visual pattern sequences that trigger specific optogenetic neuron activation patterns in biological retinas.",
     "domains": [
       "Applications"
@@ -192,62 +150,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-23T20:07:57.985799+00:00",
     "title": "Biological-Neural-Virus: Zero-Day Optogenetic Code Exploits"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Proves the existence of Ricci-flat metrics on 7-dimensional manifolds with G2 holonomy for 11D M-theory compactification.",
-    "domains": [
-      "Geometry"
-    ],
-    "id": "scifi_50_36_8a49a918",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "scifi_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:07:58.577393+00:00",
-    "title": "M-Theory-Compactification: G2 Manifold Metric Construction for 7D Fluxes"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Proves that a 4D hypercube can be continuously folded into 3D space with zero distance distortion along its 2D faces.",
-    "domains": [
-      "Geometry"
-    ],
-    "id": "scifi_50_37_b2956b66",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "scifi_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:07:58.626195+00:00",
-    "title": "Tesseract-Space-Folding: Isometric Embeddings of Folded 4D Hyper-Cubes in 3D Space"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalizes motion of rigid bodies traversing non-orientable Klein bottle manifolds where chirality flips upon complete loop traversal.",
-    "domains": [
-      "Geometry"
-    ],
-    "id": "scifi_50_39_3b49abad",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "scifi_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:07:58.724888+00:00",
-    "title": "Klein-Bottle-Topology: Non-Orientable Spatial Loop Mechanics"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Proves symplectic invariants governing exotic-matter-stabilized Einstein-Rosen bridges connecting distant spatial regions.",
-    "domains": [
-      "Geometry"
-    ],
-    "id": "scifi_50_40_b8db6e80",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "scifi_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:07:58.774140+00:00",
-    "title": "Wormhole-Gate: Symplectic Topology of Traversable Einstein-Rosen Bridges"
   },
   {
     "consumed_by_exp_id": "",
@@ -318,20 +220,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-23T20:07:59.026142+00:00",
     "title": "EML-Non-Archimedean: p-Adic Field Generalizations of EML Neural Nets"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalizes Lovecraftian 'non-Euclidean angles' where local interior angles of a planar triangle sum to 0 degrees on hyperbolic metric surfaces.",
-    "domains": [
-      "Geometry"
-    ],
-    "id": "scifi_50_48_b39cea2b",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "scifi_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:07:59.179568+00:00",
-    "title": "Cosmic-Horror-Geometry: Non-Euclidean Spatial Invariants of Mad Architectures"
   },
   {
     "consumed_by_exp_id": "",
@@ -854,76 +742,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-23T20:05:22.585439+00:00",
     "title": "Pell-Isogeny: Infinite Tree Classification of Primitive Pythagorean Triples"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Proves equivalence between the derived category of coherent sheaves on a toric Calabi-Yau hypersurface and the Fukaya category of its mirror.",
-    "domains": [
-      "Geometry"
-    ],
-    "id": "dir_50_06_8b410cde",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "batch_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:05:22.635007+00:00",
-    "title": "Calabi-Yau-Mirror: Homological Mirror Symmetry for Toric Degenerations"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Establishes canonical trace isomorphisms for sheaf cohomology on proper smooth schemes over arbitrary base fields.",
-    "domains": [
-      "Geometry"
-    ],
-    "id": "dir_50_07_04a9c0dc",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "batch_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:05:22.682938+00:00",
-    "title": "Sheaf-Cohomology: Formalization of Grothendieck-Serre Duality on Smooth Schemes"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Proves that Khovanov homology categorifies the Jones polynomial for arbitrary oriented link diagrams.",
-    "domains": [
-      "Geometry"
-    ],
-    "id": "dir_50_08_be75e3e7",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "batch_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:05:22.730976+00:00",
-    "title": "Knot-Jones: Quantum Group Verification of Khovanov Invariants"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Calculates the stable homotopy groups of spheres \u03c0_{n+k}(S^n) in Homotopy Type Theory using synthetic fibration methods.",
-    "domains": [
-      "Geometry"
-    ],
-    "id": "dir_50_09_9407c8cf",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "batch_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:05:22.782483+00:00",
-    "title": "Homotopy-Type: Synthetic Homotopy Groups of Higher Spheres in HoTT"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Establishes natural isomorphism between de Rham differential form cohomology and singular real cohomology on manifolds with boundary.",
-    "domains": [
-      "Geometry"
-    ],
-    "id": "dir_50_10_69dd32ce",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "batch_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:05:22.830849+00:00",
-    "title": "Differential-Forms: De Rham Theorem for Smooth Manifolds with Boundary"
   },
   {
     "consumed_by_exp_id": "",
@@ -2487,22 +2305,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Homological Algebra: Derived Functors"
   },
   {
-    "consumed_by_exp_id": "64006a56",
-    "description": "Formalize the Euler characteristic for CW complexes. Prove the Gauss-Bonnet theorem for compact surfaces: \u222b K dA = 2\u03c0\u03c7(M). Prove the Poincar\u00e9-Hopf index theorem. Apply to classify surfaces by genus.",
-    "domains": [
-      "Geometry",
-      "Topology"
-    ],
-    "id": "fd_0667",
-    "phase": "B",
-    "priority_score": 0.86,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-24T14:34:16.697786+00:00",
-    "title": "Euler Characteristic and Gauss-Bonnet"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize Tur\u00e1n's theorem: ex(n, K_r) = (1-1/(r-1))n\u00b2/2. Prove the Kruskal-Katona theorem. Formalize Szemer\u00e9di's regularity lemma and prove the triangle removal lemma. Apply to prove Roth's theorem on 3-APs.",
     "domains": [
@@ -3412,20 +3214,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-18T09:05:18.164692+00:00",
     "title": "Deepening: Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle a4e412f3 (Q=0.750), which proved 43 theorems in Geometry. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Solve the happy end problem for arbitrary n: determine the minimum number of points in general position in the plane that guarantee a convex n-gon. Formalize the Erd\u0151s\u2013Szekeres theorem and improve known bounds.",
-    "domains": [
-      "Geometry"
-    ],
-    "id": "push_a4e412f3_0bcb7bfb",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "a4e412f3",
-    "status": "available",
-    "timestamp": "2026-07-24T23:24:45.679470+00:00",
-    "title": "Deepening: Happy End Problem"
   },
   {
     "consumed_by_exp_id": "",
@@ -4532,18 +4320,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Symmetric-Key Cryptanalysis: Differential and Linear Cryptanalysis Bounds"
   },
   {
-    "consumed_by_exp_id": "cf55a60f",
+    "consumed_by_exp_id": "",
     "description": "Prove that erasing one bit of information requires at least kT ln(2) of energy dissipation in the thermodynamic limit. Show that for finite-size systems, the bound is modified by a Jarzynski-like correction term. Formalize the connection between logical irreversibility and thermodynamic irreversibility.",
     "domains": [
       "Physics",
       "Computation"
     ],
     "id": "seed_312",
-    "phase": "A",
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "",
     "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
   },
@@ -7189,36 +6976,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Adjacency-degree algebras and spectral determination of graphs' and formalize its key results. Abstract: McKay proved that the spectra of all polynomial functions of the adjacency matrix $A$ and the diagonal degree matrix $D$ determine a tree. We prove a principal version of this theorem. Let $\\mathcal A(G)=\\langle I,A_G,D_G\\rangle$ and let $M_G=\\mathcal A(G)\\mathbf1$ be the cyclic module generated by the all-ones vector. For connected graphs the ideal $\\mathcal A(G)J\\mathcal A(G)$, where $J=\\mathbf1\\mathbf1^T$, acts on $M_G$ as the full endomorphism algebra. We show that every forest satisfies $M_G=U_G$, the automorphism-orbit module, and that the induced algebra on the orbit quotient of a tree is a full matrix algebra. It follows that the scalar moments $\\mathbf1^Tw(A_T,D_T)\\mathbf1$ determine every tree. For general graphs these moments are degree-decorated caterpillar homomorphism counts. The resulting moment-rigidity class lies inside the amenable, compact, refinable hierarchy of color refinement, and its first small-order failures are ten-vertex integral switchings invisible to $M_G",
-    "domains": [
-      "Algebra",
-      "Physics"
-    ],
-    "id": "fd_0742",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.21494v1",
-    "status": "available",
-    "timestamp": "2026-07-26T06:19:15.638417+00:00",
-    "title": "ArXiv paper: Adjacency-degree algebras and spectral determination of graphs"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'The Frankl--Tokushige product conjectures for $r$-cross-intersecting families' and formalize its key results. Abstract: We settle the uniform and biased product conjectures of Frankl and Tokushige for $r$-cross-intersecting families. Let $r\\geq2$, let $0\\leq k_i\\leq(r-1)n/r$, and let $\\mathcal{F}_i\\subseteq\\binom{[n]}{k_i}$ be $r$-cross-intersecting. We prove the sharp inequality $$\\prod_{i=1}^r\\frac{|\\mathcal{F}_i|}{\\binom{n}{k_i}}\\leq \\prod_{i=1}^r\\frac{k_i}{n},$$ with equality attained by the corresponding levels of a common $1$-star. As a consequence, we obtain the analogous $p_i$-biased measure theorem for $0\\leq p_i\\leq(r-1)/r$, $$ \\prod_{i=1}^r\u03bc_{p_i}(\\mathcal{F}_i)\\leq \\prod_{i=1}^r p_i.$$The main difficulty is that unequal parameters do not determine a single common target level; instead, the target levels $\\ell_1,\\ldots,\\ell_r$ must satisfy $\\sum_{i=1}^r \\ell_i=(r-1)n$. We overcome this asymmetry in three steps. An ordered-partition coupling gives a sharp additive inequality for every such choice of target levels. A star-calibrated upper-shadow inequality relates the density of a family on its",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0743",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.21589v1",
-    "status": "available",
-    "timestamp": "2026-07-26T06:19:18.741531+00:00",
-    "title": "ArXiv paper: The Frankl--Tokushige product conjectures for $r$-cross-intersecting families"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "NumberTheory",
@@ -7546,20 +7303,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Consciousness as Integrated Information: Mathematical Foundations"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Cycle a4e412f3 (Q=0.750) proved 43 theorems in Geometry but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Solve the happy end problem for arbitrary n: determine the minimum number of points in general position in the plane that guarantee a convex n-gon. Formalize the Erd\u0151s\u2013Szekeres theorem and improve kno",
-    "domains": [
-      "Geometry"
-    ],
-    "id": "sorry_fill_a4e412f3_39ca5231",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "a4e412f3",
-    "status": "available",
-    "timestamp": "2026-07-24T23:24:45.890905+00:00",
-    "title": "Close Proofs: Happy End Problem"
   },
   {
     "consumed_by_exp_id": "",
@@ -8932,20 +8675,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "The Ramsey Theory of DNA: Subsequence Avoidance in Genetic Codes"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
-    "domains": [
-      "Geometry"
-    ],
-    "id": "fd_0010",
-    "priority_score": 0.7,
-    "research_mode": "team",
-    "source_exp_id": "oeis:212351",
-    "status": "available",
-    "timestamp": "2026-07-15T05:23:22.329230+00:00",
-    "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
   },
   {
     "consumed_by_exp_id": "",
