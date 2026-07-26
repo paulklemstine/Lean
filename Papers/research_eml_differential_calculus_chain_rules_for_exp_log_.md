@@ -1,247 +1,570 @@
-# EML Differential Algebra: Chain Rules and Logarithmic Derivative Structure for Exp-Log Compositions
+# Differential Structure of Exponential–Logarithmic Products
+
+**Aristotle**  
+**26 July 2026**
 
 ## Abstract
 
-We introduce the **Logarithmic Derivative Algebra** for EML functions — functions built from finite compositions of exp, log, addition, multiplication, and real constants. We prove that the logarithmic derivative LD(f) = f'/f acts as a **graded homomorphism** from the multiplicative monoid of positive EML functions to the additive group of EML functions, with grading given by composition depth. Key results include: (1) LD strips exponential layers: LD(exp^n(h)) involves one fewer exp layer than exp^n(h); (2) LD is multiplicative-to-additive: LD(f·g) = LD(f) + LD(g); (3) the EML class is closed under differentiation with depth increase bounded by 1; (4) symbolic differentiation is sound with respect to analytic differentiation. All results are machine-verified in Lean 4 with Mathlib.
+We study the differential structure of functions of the form $F(x)=e^{h(x)}\log(g(x))$ and of expressions assembled from exponentials, logarithms, addition, and multiplication. The ordinary product and chain rules yield
+
+$$
+F'(x)=e^{h(x)}\left(h'(x)\log(g(x))+\frac{g'(x)}{g(x)}\right)
+$$
+
+whenever $h$ and $g$ are differentiable and $g(x)\ne0$. Away from the additional divisor $\log(g(x))=0$, this admits the canonical multiplicative form
+
+$$
+F'(x)=F(x)\left(h'(x)+\frac{g'(x)}{g(x)\log(g(x))}\right).
+$$
+
+We show that the frequently proposed expression $F(h'+g'/g)$ is false by an exact counterexample. We then compute three successive derivatives of $e^{x^2}\log(x+1)$, proving that each retains an exponential shell and a logarithmic–polar normal form. The pole order at $x=-1$ grows by one under each differentiation, while transcendental nesting remains stable. Finally, on $x>0$, the fixed-depth representation $x^m=e^{m\log x}$ is compatible with the derivative $mx^{m-1}$. These results motivate guarded logarithmic differentiation, a bifiltration by compositional depth and pole order, and compact algorithms for repeated differentiation.
 
 ## 1. Introduction
 
-The class of **EML functions** — functions built from finite compositions of the elementary operations {exp, log, +, ×, constants} — appears throughout mathematical analysis, physics, and machine learning. These functions include polynomials, exponential growth/decay, power laws (via exp(a·log(x)) = x^a), and tower functions (iterated exponentials).
+Expressions combining exponential growth and logarithmic scaling occur throughout applied analysis. A product such as $e^{h(x)}\log(g(x))$ can represent an amplified information signal, a logarithmic correction to a growth law, or a local model with both rapid variation and a singular boundary. More elaborate expressions built using exponential, logarithm, addition, and multiplication will be called **EML expressions**.
 
-Despite their ubiquity, the differential calculus of EML functions as a *structured class* has received surprisingly little attention. The classical chain rule and product rule apply, of course, but they do not exploit the specific closure properties of the EML class. In this paper, we show that the EML class possesses a rich differential algebraic structure centered on the **logarithmic derivative** operator.
+The central structural question is not merely whether such expressions can be differentiated, but whether their derivatives retain an intelligible form. A naive expectation is that the logarithmic derivative of a product should split into a sum. That expectation is correct only when the logarithmic derivative is taken with respect to the actual factors. For $F=e^h\log g$, those factors are $e^h$ and $\log g$, so the second relative derivative is $(\log g)'/\log g$, not $g'/g$.
 
-### 1.1 Main Contributions
+This distinction leads to four conclusions.
 
-1. **Logarithmic Derivative Algebra (Novel Structure)**: We define the operator LD(f)(x) = f'(x)/f(x) and prove it satisfies:
-   - LD(exp(h)) = h' (exponential stripping)
-   - LD(f·g) = LD(f) + LD(g) (multiplicative-to-additive)
-   - LD(f^n) = n·LD(f) (power rule)
-   - LD(f/g) = LD(f) - LD(g) (quotient rule)
+1. There is a robust unfactored rule requiring only $g(x)\ne0$.
+2. A factorization through $F(x)$ requires the stronger condition $\log(g(x))\ne0$.
+3. Omitting the latter logarithm produces a false formula, even for elementary functions.
+4. Repeated differentiation can preserve transcendental shape while increasing rational pole order.
 
-2. **Chain Rules**: We prove canonical chain rules for EML compositions:
-   - (exp ∘ h)' = (exp ∘ h) · h'
-   - (log ∘ g)' = g'/g
-   - (exp(h) · log(g))' = exp(h) · (h'·log(g) + g'/g)
-   - (exp(exp(h)))' = exp(exp(h)) · exp(h) · h'
+The paper develops these points from first principles. Section 2 introduces the expression class and relevant notions of local domain, depth, and pole order. Section 3 proves the general chain rules and gives a sharp counterexample. Section 4 derives the first three derivatives of a representative test function. Section 5 formulates the normal-form recurrence suggested by the computation. Section 6 treats positive monomials as constant-depth exp–log expressions. Sections 7 and 8 describe algorithms and applications, and Section 9 identifies open directions.
 
-3. **Symbolic Differentiation with Bounds**: We define an inductive type `EMLDiffExpr` with a symbolic differentiation operator `symDiff` and prove:
-   - Closure: symDiff produces EMLDiffExpr from EMLDiffExpr
-   - Depth bound: depth(symDiff(e)) ≤ depth(e) + 1
-   - Size bound: nodeCount(symDiff(e)) ≤ 3 · nodeCount(e)²
-   - Soundness: symDiff agrees with the analytic derivative
+## 2. Definitions and preliminaries
 
-4. **Iterated Tower Derivatives**: For the iterated exponential tower iterExp(n, h), we prove that LD reduces the tower height by one: LD(iterExp(n+1, h)) = deriv(iterExp(n, h)).
+### 2.1. EML expressions
 
-### 1.2 Related Work
+An **EML expression** in one real variable is any finite expression obtained from the variable $x$, real constants, addition, multiplication, the exponential operation $u\mapsto e^u$, and the logarithmic operation $u\mapsto\log u$, wherever the latter is defined. Rational terms arise naturally after differentiation because
 
-The logarithmic derivative appears in differential Galois theory (Kolchin, 1973), where it characterizes Picard-Vessiot extensions. Our contribution differs in focusing on the *computational* and *graded* structure of LD restricted to EML functions, rather than its field-theoretic properties.
+$$
+\frac{d}{dx}\log(g(x))=\frac{g'(x)}{g(x)}.
+$$
 
-The EML expression complexity theory (Catalog/EML/Defs.lean) defines the `EMLExpr` type with the combined primitive eml(x,y) = exp(x) - log(y). Our `EMLDiffExpr` uses separate exp and log constructors, which is more natural for differentiation.
+Accordingly, the differentiated class is most naturally viewed as an EML-rational class in which guarded reciprocals are permitted on regions where their denominators do not vanish.
 
-## 2. Definitions
+The **compositional depth** of an expression is the maximum number of nested operations along a path from the root of its expression tree to a variable or constant. Exact conventions can differ—for example, whether leaves have depth zero or one—but the structural issue is invariant: a fixed-depth family does not acquire arbitrarily deep exponential or logarithmic nesting.
 
-### 2.1 EML Differential Expressions
+A **zero-free region** for a function $u$ is an interval on which $u(x)\ne0$. Factorizations involving $1/u$ are valid only on such regions. This elementary guard is crucial when symbolic transformations are intended to preserve domains.
 
-**Definition 2.1** (EMLDiffExpr). The set of EML differential expressions is the smallest set containing:
-- `var` (the identity function x ↦ x)
-- `const(c)` for each c ∈ ℝ
-- `add(e₁, e₂)`, `mul(e₁, e₂)`, `div(e₁, e₂)` for expressions e₁, e₂
-- `exp(e)`, `log(e)` for expression e
+### 2.2. Logarithmic derivatives
 
-**Definition 2.2** (Evaluation). The evaluation ⟦e⟧ : ℝ → ℝ is defined recursively:
-- ⟦var⟧(x) = x
-- ⟦const(c)⟧(x) = c
-- ⟦add(e₁, e₂)⟧(x) = ⟦e₁⟧(x) + ⟦e₂⟧(x)
-- ⟦exp(e)⟧(x) = exp(⟦e⟧(x))
-- etc.
+For a differentiable nonzero function $u$, its logarithmic derivative is
 
-**Definition 2.3** (Composition Depth). The depth d(e) measures transcendental nesting:
-- d(var) = d(const(c)) = 0
-- d(add(e₁, e₂)) = d(mul(e₁, e₂)) = d(div(e₁, e₂)) = max(d(e₁), d(e₂))
-- d(exp(e)) = d(log(e)) = d(e) + 1
+$$
+\mathcal{L}(u)=\frac{u'}{u}.
+$$
 
-### 2.2 The Logarithmic Derivative
+On a zero-free interval, products satisfy
 
-**Definition 2.4** (EML Logarithmic Derivative). For a differentiable function f : ℝ → ℝ with f(x) ≠ 0:
+$$
+\mathcal{L}(uv)=\mathcal{L}(u)+\mathcal{L}(v).
+$$
 
-    LD(f)(x) = f'(x) / f(x)
+Applying this to $u=e^h$ and $v=\log g$ gives
 
-This is the pointwise logarithmic derivative, equal to (d/dx)(log|f(x)|) when f(x) > 0.
+$$
+\mathcal{L}(F)=h'+\frac{(\log g)'}{\log g}
+=h'+\frac{g'}{g\log g}.
+$$
 
-### 2.3 Iterated Exponential Tower
+This short calculation already predicts the corrected factorization, but it also makes its domain restrictions visible: $g$ must be nonzero for $(\log g)'$, and $\log g$ must be nonzero for division by the second factor.
 
-**Definition 2.5** (Iterated Exponential). For a base function h : ℝ → ℝ:
+### 2.3. Logarithmic–polar normal forms
 
-    iterExp(0, h) = h
-    iterExp(n+1, h)(x) = exp(iterExp(n, h)(x))
+For the repeated-derivative example, we use the following terminology. An expression has **logarithmic–polar form of order $n$ at $x=-1$** if it can be written
 
-## 3. Main Results
+$$
+e^{x^2}\left(P(x)\log(x+1)+\sum_{k=1}^{n}\frac{Q_k(x)}{(x+1)^k}\right),
+$$
 
-### 3.1 EML Chain Rules
+where $P,Q_1,\ldots,Q_n$ are polynomials. The largest $k$ with $Q_k\not\equiv0$ is the pole order represented by the rational part. On the natural real domain $x>-1$, all terms are smooth, although the boundary behavior becomes increasingly singular as the derivative order rises.
 
-**Theorem 3.1** (Exp Chain Rule). If h has derivative h' at x, then:
-    HasDerivAt (fun x ↦ exp(h(x))) (exp(h(x)) · h') x
+## 3. Chain rules and the factorization obstruction
 
-*Proof*. Direct application of HasDerivAt.exp from Mathlib. □
+### Theorem 1. Unfactored exponential–logarithmic chain rule
 
-**Theorem 3.2** (Log Chain Rule). If g has derivative g' at x and g(x) ≠ 0, then:
-    HasDerivAt (fun x ↦ log(g(x))) (g' / g(x)) x
+Let $h$ and $g$ be real-valued functions differentiable at $x$, and suppose $g(x)\ne0$. Define
 
-*Proof*. Apply HasDerivAt.log with the non-vanishing condition. □
+$$
+F(t)=e^{h(t)}\log(g(t)).
+$$
 
-**Theorem 3.3** (EML Product Chain Rule). If h has derivative h' and g has derivative g' at x with g(x) > 0, then:
-    HasDerivAt (fun x ↦ exp(h(x)) · log(g(x))) (exp(h(x)) · (h' · log(g(x)) + g' / g(x))) x
+Then $F$ is differentiable at $x$ and
 
-This is the canonical EML factored form. The derivative factors through exp(h), with the remaining factor being a sum of the inner derivative contributions.
+$$
+F'(x)=e^{h(x)}\left(h'(x)\log(g(x))+\frac{g'(x)}{g(x)}\right).
+$$
 
-*Proof*. Apply the product rule to exp(h) and log(g), then factor and use ring. □
+**Proof sketch.** The chain rule gives
 
-**Theorem 3.4** (Double Exponential Chain Rule). If h has derivative h' at x, then:
-    HasDerivAt (fun x ↦ exp(exp(h(x)))) (exp(exp(h(x))) · exp(h(x)) · h') x
+$$
+\frac{d}{dx}e^{h(x)}=e^{h(x)}h'(x)
+$$
 
-*Proof*. Apply Theorem 3.1 twice. □
+and, under $g(x)\ne0$,
 
-**Theorem 3.5** (Exp-Log Cancellation). If g has derivative g' at x with g(x) > 0, then:
-    HasDerivAt (fun x ↦ exp(log(g(x)))) g' x
+$$
+\frac{d}{dx}\log(g(x))=\frac{g'(x)}{g(x)}.
+$$
 
-*Proof*. Use the fact that exp(log(g(x))) = g(x) for g(x) > 0, applied via eventuallyEq and continuity. □
+The product rule therefore yields
 
-### 3.2 Logarithmic Derivative Algebra
+$$
+F'=e^h h'\log g+e^h\frac{g'}{g},
+$$
 
-**Theorem 3.6** (LD is Multiplicative-to-Additive). For differentiable f, g with f(x) ≠ 0, g(x) ≠ 0:
-    LD(f · g)(x) = LD(f)(x) + LD(g)(x)
+and factoring only the common exponential gives the stated formula. Notice that no division by $\log g$ occurs, so the rule remains valid where $\log(g(x))=0$.
 
-**Theorem 3.7** (LD Strips Exponentials). For differentiable h:
-    LD(exp ∘ h)(x) = h'(x)
+### Theorem 2. Guarded canonical factorization
 
-This is the fundamental simplification: the logarithmic derivative of an exponential composition is just the inner derivative, with no trace of the exponential.
+Under the hypotheses of Theorem 1, assume additionally that $\log(g(x))\ne0$. Then
 
-**Theorem 3.8** (LD Power Rule). For differentiable f with f(x) ≠ 0:
-    LD(f^n)(x) = n · LD(f)(x)
+$$
+F'(x)=F(x)\left(h'(x)+\frac{g'(x)}{g(x)\log(g(x))}\right).
+$$
 
-**Theorem 3.9** (LD Quotient Rule). For differentiable f, g with f(x) ≠ 0, g(x) ≠ 0:
-    LD(f / g)(x) = LD(f)(x) - LD(g)(x)
+**Proof sketch.** Starting from Theorem 1, factor $e^{h(x)}\log(g(x))$ from both terms. The first term becomes $F(x)h'(x)$. The second becomes
 
-Together, Theorems 3.6–3.9 establish that LD is a derivation on the multiplicative group of nonvanishing differentiable functions, valued in the additive group of all differentiable functions.
+$$
+e^{h(x)}\frac{g'(x)}{g(x)}
+=F(x)\frac{g'(x)}{g(x)\log(g(x))}.
+$$
 
-**Theorem 3.10** (LD Value Independence for Exp). If deriv(h₁)(x) = deriv(h₂)(x), then:
-    LD(exp ∘ h₁)(x) = LD(exp ∘ h₂)(x)
+The additional nonvanishing condition is exactly what licenses this division.
 
-This says that the logarithmic derivative of exp(h) depends only on h' at x, not on h(x) itself. Functions with different values but the same derivative at a point have identical logarithmic derivatives there.
+### Proposition 3. The unguarded proposed factorization is false
 
-**Theorem 3.11** (LD of Double Exponential). For differentiable h:
-    LD(exp(exp(h)))(x) = exp(h(x)) · h'(x)
+The identity
 
-This shows how each additional layer of exp multiplies the logarithmic derivative by the intermediate exponential value.
+$$
+F'(x)=F(x)\left(h'(x)+\frac{g'(x)}{g(x)}\right)
+$$
 
-### 3.3 Iterated Tower Structure
+is not valid in general for $F=e^h\log g$.
 
-**Theorem 3.12** (LD Strips Tower Layers). For the iterated exponential tower:
-    LD(iterExp(n+1, h))(x) = deriv(iterExp(n, h))(x)
+**Proof.** Let $h(x)=0$ and $g(x)=e^x$. Then
 
-The logarithmic derivative reduces the tower height by exactly one. By induction, n applications of LD to an n-layer tower recover the innermost derivative.
+$$
+F(x)=e^0\log(e^x)=x,
+$$
 
-### 3.4 Symbolic Differentiation
+so $F'(2)=1$. The proposed right-hand side at $x=2$ is
 
-**Theorem 3.13** (Depth Bound). For any EML expression e:
-    depth(symDiff(e)) ≤ depth(e) + 1
+$$
+F(2)\left(0+\frac{e^2}{e^2}\right)=2.
+$$
 
-*Proof*. By structural induction on e. The critical case is exp(e): symDiff(exp(e)) = mul(exp(e), symDiff(e)), which has depth max(depth(e)+1, depth(symDiff(e))) ≤ max(depth(e)+1, depth(e)+1) = depth(e)+1 = depth(exp(e)). □
+Since $1\ne2$, the identity fails.
 
-**Theorem 3.14** (Size Bound). For any EML expression e:
-    nodeCount(symDiff(e)) ≤ 3 · nodeCount(e)²
+### 3.1. Sharpness of the guards
 
-*Proof*. By structural induction. The quadratic bound arises from the product rule, which duplicates both subexpressions. □
+The two theorems have deliberately different hypotheses. The condition $g(x)\ne0$ is needed to differentiate $\log(g(x))$ by the usual reciprocal rule. The stronger factorization also divides by $\log(g(x))$ and therefore excludes $g(x)=1$. At such a point, $F(x)=0$, but $F'(x)$ need not vanish.
 
-**Theorem 3.15** (Soundness for Exp). If e is differentiable at x and symDiff(e) is sound at x, then symDiff(exp(e)) is sound at x:
-    eval(symDiff(exp(e)), x) = deriv(fun x ↦ exp(eval(e, x)))(x)
+The counterexample demonstrates this at $x=0$: there $g(0)=1$ and $F(0)=0$, but $F'(0)=1$. Thus a formula of the form $F'=F\cdot R$ cannot hold with a finite-valued $R$ at that point. The obstruction is the zero divisor of the logarithmic factor, not a failure of ordinary differentiability.
 
-**Theorem 3.16** (Soundness for Mul). Under differentiability and soundness hypotheses for e₁, e₂:
-    eval(symDiff(mul(e₁, e₂)), x) = deriv(fun x ↦ eval(e₁, x) · eval(e₂, x))(x)
+In standard real analysis one commonly assumes $g>0$ on an interval to use the real logarithm. Locally, however, the derivative identity itself is governed by nonvanishing. What matters for the factorization is the finer stratification into regions where both $g$ and $\log g$ avoid zero.
 
-## 4. PEGB Analysis
+## 4. Three derivatives of $e^{x^2}\log(x+1)$
 
-### 4.1 Theorem 3.3 (EML Product Chain Rule)
+Let
 
-- **P**roof: Complete Lean 4 proof using HasDerivAt.mul composed with HasDerivAt.exp and HasDerivAt.log.
-- **E**xample: f(x) = exp(x²)·log(x+1) at x=1: f'(1) = e·(2·ln2 + 1/2) ≈ 5.127.
-- **G**eneralization: The same factored form holds for exp(h)·F(g) where F is any differentiable function, giving exp(h)·(h'·F(g) + F'(g)·g').
-- **B**oundary: The formula requires g(x) > 0. At g(x) = 0, log(g(x)) is undefined. At g(x) < 0, log(g(x)) is undefined in ℝ (would need complex logarithm).
+$$
+f_0(x)=e^{x^2}\log(x+1), \qquad x>-1.
+$$
 
-### 4.2 Theorem 3.7 (LD Strips Exponentials)
+The interval $x>-1$ is the natural real domain. We now compute three derivatives and preserve the exponential shell at every stage.
 
-- **P**roof: Unfold LD, compute deriv via chain rule, cancel exp by positivity.
-- **E**xample: LD(exp(x²)) = 2x. At x=0.5: LD = 1.0, matching 2·0.5 = 1.0.
-- **G**eneralization: For exp(h₁(h₂(···hₖ(x)···))), LD = h₁'(h₂(···))·h₂'(···)···hₖ'(x), the full chain rule unwinding.
-- **B**oundary: The formula is unconditional — exp(h(x)) > 0 always, so LD is always well-defined. This is a structural advantage of exp over other functions.
+### Theorem 4. First derivative
 
-### 4.3 Theorem 3.6 (LD Multiplicative-to-Additive)
+For $x>-1$,
 
-- **P**roof: Product rule for derivatives, then algebraic manipulation of the quotient.
-- **E**xample: LD(exp(x)·(x+1)) = 1 + 1/(x+1) at x=0.5: 1 + 2/3 = 5/3.
-- **G**eneralization: LD is a derivation on any differential field, not just EML functions. The EML-specific content is that it preserves the EML structure.
-- **B**oundary: Requires f(x) ≠ 0 and g(x) ≠ 0. If either vanishes, LD is undefined (division by zero). This is the natural boundary of the multiplicative structure.
+$$
+f_0'(x)=f_1(x),
+$$
 
-### 4.4 Theorem 3.13 (Depth Bound)
+where
 
-- **P**roof: Structural induction, analyzing each constructor.
-- **E**xample: f(x) = exp(x²)·log(x+1) has depth 1. Its derivative has depth 1 ≤ 1+1.
-- **G**eneralization: For the k-th derivative, depth(f^(k)) ≤ depth(f) + k. This follows by induction on k.
-- **B**oundary: The bound +1 is tight: consider const(0) with depth 0; its derivative const(0) has depth 0, so the bound is not always achieved. The bound is achieved by exp(var): symDiff(exp(var)) = mul(exp(var), const(1)), which could be simplified to depth 1, matching depth(exp(var)) = 1. So the bound is tight but often not achieved after simplification.
+$$
+f_1(x)=e^{x^2}\left(2x\log(x+1)+\frac{1}{x+1}\right).
+$$
 
-## 5. Falsifiable Conjecture
+**Proof sketch.** Apply Theorem 1 with $h(x)=x^2$ and $g(x)=x+1$. Since $h'(x)=2x$ and $g'(x)=1$, substitution immediately gives the formula.
 
-**Conjecture (Linear Depth Growth under Simplification)**: There exists a simplification procedure `simplify : EMLDiffExpr → EMLDiffExpr` preserving semantics such that for all expressions e:
-    depth(simplify(symDiff(e))) ≤ depth(e)
+### Theorem 5. Second derivative
 
-That is, after simplification, differentiation does not increase depth at all.
+For $x>-1$,
 
-**Computational Test**: Enumerate all EML expressions of depth ≤ 3 and node count ≤ 15. For each, compute symDiff, apply algebraic simplification (constant folding, 0-elimination, 1-elimination, exp-log cancellation), and check whether the simplified depth exceeds the original depth.
+$$
+f_0''(x)=f_2(x),
+$$
 
-**Status**: This conjecture is likely *false* in general (the derivative of log(x) = 1/x involves division, which may not simplify to lower depth), but may be true for the multiplicative fragment (expressions built only from exp, mul, and constants).
+where
 
-## 6. Cross-Connection to Existing Catalog
+$$
+f_2(x)=e^{x^2}\left(
+(4x^2+2)\log(x+1)+\frac{4x}{x+1}-\frac{1}{(x+1)^2}
+\right).
+$$
 
-Our results connect to the existing `eml_chain_exp_log_cancel` theorem (KolmogorovArnoldEMLDeep.lean), which establishes that exp(log(x)) = x for x > 0. Our Theorem 3.5 extends this cancellation to the *derivative level*: not only does exp(log(g(x))) = g(x), but the derivative of exp(log(g(x))) equals g'(x) — the cancellation is preserved under differentiation. This is a non-trivial upgrade: it says the exp-log cancellation is not just an algebraic identity but a *differential* identity.
+**Proof sketch.** Write $f_1=e^{x^2}A_1$ with
 
-Additionally, the depth bound (Theorem 3.13) connects to the `eml_composition_depth_additive` theorem (UniversalApproxComplexity.lean) by providing the complementary result: while composition depth is additive under composition, it increases by at most 1 under differentiation.
+$$
+A_1=2x\log(x+1)+(x+1)^{-1}.
+$$
 
-## 7. Algorithm
+Then
 
-**Algorithm: EML Symbolic Differentiation**
+$$
+f_1'=e^{x^2}(2xA_1+A_1').
+$$
 
-```
-Input: EMLDiffExpr e
-Output: EMLDiffExpr e' such that eval(e', x) = deriv(eval(e, ·))(x)
+A direct calculation gives
 
-function symDiff(e):
-  match e with
-  | var       → const(1)
-  | const(c)  → const(0)
-  | add(a, b) → add(symDiff(a), symDiff(b))
-  | mul(a, b) → add(mul(symDiff(a), b), mul(a, symDiff(b)))
-  | exp(a)    → mul(exp(a), symDiff(a))
-  | log(a)    → div(symDiff(a), a)
-  | div(a, b) → div(add(mul(symDiff(a), b),
-                        mul(const(-1), mul(a, symDiff(b)))),
-                    mul(b, b))
+$$
+A_1'=2\log(x+1)+\frac{2x}{x+1}-\frac{1}{(x+1)^2}.
+$$
 
-Complexity: O(n) time, O(n²) output size
-Depth guarantee: depth(output) ≤ depth(input) + 1
-```
+Adding $2xA_1$ and collecting coefficients yields the displayed $f_2$.
 
-## 8. Discussion and Future Work
+### Theorem 6. Third derivative
 
-The logarithmic derivative algebra reveals that EML functions have more structure than the generic chain rule suggests. The key insight is that LD is a *complexity-reducing* operator: it maps the multiplicative hierarchy to the additive hierarchy while decreasing the exponential nesting depth.
+For $x>-1$,
 
-Future directions include:
-1. Extending the algebra to include trigonometric functions (EMLT class)
-2. Finding canonical normal forms for EML derivatives to reduce expression size
-3. Connecting the depth hierarchy to computational complexity classes
-4. Developing verified automatic differentiation for EML functions in scientific computing
+$$
+f_0'''(x)=f_3(x),
+$$
 
-## References
+where
 
-1. Kolchin, E. R. (1973). *Differential Algebra and Algebraic Groups*. Academic Press.
-2. Risch, R. H. (1969). "The problem of integration in finite terms." *Transactions of the AMS*, 139, 167-189.
-3. Griewank, A., & Walther, A. (2008). *Evaluating Derivatives: Principles and Techniques of Algorithmic Differentiation*. SIAM.
+$$
+f_3(x)=e^{x^2}\left(
+(8x^3+12x)\log(x+1)
++\frac{12x^2+6}{x+1}
+-\frac{6x}{(x+1)^2}
++\frac{2}{(x+1)^3}
+\right).
+$$
+
+**Proof sketch.** Set
+
+$$
+A_2=(4x^2+2)\log(x+1)+\frac{4x}{x+1}-\frac{1}{(x+1)^2}.
+$$
+
+As before, $f_2'=e^{x^2}(2xA_2+A_2')$. Differentiate term by term:
+
+$$
+\begin{aligned}
+A_2'={}&8x\log(x+1)+\frac{4x^2+2}{x+1}
++\frac{4}{x+1}-\frac{4x}{(x+1)^2}
++\frac{2}{(x+1)^3}.
+\end{aligned}
+$$
+
+Meanwhile,
+
+$$
+2xA_2=(8x^3+4x)\log(x+1)
++\frac{8x^2}{x+1}-\frac{2x}{(x+1)^2}.
+$$
+
+Combining logarithmic terms gives $(8x^3+12x)\log(x+1)$. Combining equal pole orders gives the remaining three rational terms.
+
+### 4.1. Numerical consistency
+
+At $x=0$, the formulas simplify to
+
+$$
+f_0(0)=0,\qquad f_1(0)=1,\qquad f_2(0)=-1,\qquad f_3(0)=8.
+$$
+
+The value $f_1(0)=1$ again illustrates why factoring through $f_0$ is invalid at a zero of $\log(x+1)$. At $x=1$ the formulas become
+
+$$
+\begin{aligned}
+f_0(1)&=e\log2,\\
+f_1(1)&=e\left(2\log2+\frac12\right),\\
+f_2(1)&=e\left(6\log2+\frac74\right),\\
+f_3(1)&=e\left(20\log2+\frac{29}{4}\right).
+\end{aligned}
+$$
+
+These values provide convenient benchmarks for numerical implementations.
+
+## 5. A triangular normal-form mechanism
+
+The three formulas are instances of a stable transformation. Suppose
+
+$$
+f_n(x)=e^{x^2}A_n(x).
+$$
+
+Then
+
+$$
+f_{n+1}(x)=e^{x^2}A_{n+1}(x),
+\qquad
+A_{n+1}=A_n'+2xA_n.
+$$
+
+Define the linear operator
+
+$$
+\mathcal{D}[A]=A'+2xA.
+$$
+
+Repeated differentiation of $f_0$ is equivalent to repeated application of $\mathcal{D}$ to $A_0=\log(x+1)$. The exponential shell is therefore invariant.
+
+Assume more generally that
+
+$$
+A_n=P_n(x)\log(x+1)+\sum_{k=1}^{n}\frac{Q_{n,k}(x)}{(x+1)^k}.
+$$
+
+Differentiating the logarithmic part gives
+
+$$
+\frac{d}{dx}\bigl(P_n\log(x+1)\bigr)
+=P_n'\log(x+1)+\frac{P_n}{x+1}.
+$$
+
+Differentiating a pole term gives
+
+$$
+\frac{d}{dx}\left(\frac{Q_{n,k}}{(x+1)^k}\right)
+=\frac{Q_{n,k}'}{(x+1)^k}
+-\frac{kQ_{n,k}}{(x+1)^{k+1}}.
+$$
+
+Adding $2xA_n$ leads to the triangular recurrences
+
+$$
+P_{n+1}=P_n'+2xP_n,
+$$
+
+$$
+Q_{n+1,1}=P_n+Q_{n,1}'+2xQ_{n,1},
+$$
+
+and, for $2\le k\le n$,
+
+$$
+Q_{n+1,k}=Q_{n,k}'+2xQ_{n,k}-(k-1)Q_{n,k-1},
+$$
+
+with the new highest-pole coefficient
+
+$$
+Q_{n+1,n+1}=-nQ_{n,n}.
+$$
+
+Starting from $P_0=1$ and no pole coefficients, these recurrences reproduce the first three derivatives. They also explain why the maximal pole order increases by at most one at each step. If the top coefficient is nonzero, the final recurrence shows that the growth is exactly one step.
+
+This recurrence supplies a strong conjectural all-orders normal form. The present results establish it explicitly through the third derivative; a complete all-orders proof and uniqueness theorem remain future work.
+
+## 6. Constant-depth representations of positive monomials
+
+A complementary phenomenon occurs for powers. Let $m$ be a positive integer. On $x>0$,
+
+$$
+M_m(x)=e^{m\log x}=x^m.
+$$
+
+The expression uses one logarithm inside one exponential, regardless of the magnitude of $m$. Thus algebraic degree may become arbitrarily large while compositional depth stays fixed.
+
+### Theorem 7. Differentiation of depth-compressed monomials
+
+For every nonnegative integer $n$ and every $x>0$,
+
+$$
+\frac{d}{dx}e^{(n+1)\log x}=(n+1)x^n.
+$$
+
+Moreover, the exp–log representation has constant compositional depth independent of $n$; under the convention that counts the logarithm, scalar multiplication, and outer exponential as three successive operation levels, its depth is exactly $3$.
+
+**Proof sketch.** Since $x>0$, the inverse relation between exponential and logarithm gives
+
+$$
+e^{(n+1)\log x}=x^{n+1}.
+$$
+
+Differentiating the right-hand side yields $(n+1)x^n$. Alternatively, direct application of the chain rule gives
+
+$$
+e^{(n+1)\log x}\frac{n+1}{x}
+=x^{n+1}\frac{n+1}{x}
+=(n+1)x^n.
+$$
+
+The syntax of the expression always consists of the same three nested stages, so its depth does not depend on the exponent.
+
+This theorem does not claim that every EML expression has a depth-preserving derivative. Rather, it supplies a concrete infinite family in which very high algebraic degree is compressed into fixed transcendental depth and ordinary differentiation respects the represented function.
+
+## 7. Algorithms
+
+### 7.1. Guarded differentiation of an exp–log product
+
+Given symbolic descriptions of $h$, $g$, $h'$, and $g'$, the safest derivative constructor returns
+
+$$
+e^h\left(h'\log g+\frac{g'}{g}\right).
+$$
+
+A second normalization pass may return the factored form only after establishing that both $g$ and $\log g$ are nonzero on the region of interest.
+
+**Algorithm.**
+
+1. Differentiate $h$ and $g$ recursively.
+2. construct the exponential factor $e^h$;
+3. construct $h'\log g+g'/g$;
+4. multiply the two expressions;
+5. if zero-free certificates for $g$ and $\log g$ are available, optionally factor through $e^h\log g$;
+6. otherwise retain the unfactored expression.
+
+For expression trees, the local constructor uses a constant number of new nodes beyond the recursively computed derivatives. Without shared subexpressions, repeated differentiation can cause exponential textual growth. With a directed acyclic graph that shares $h$, $g$, and their derivatives, one differentiation pass is linear in the number of distinct input nodes, aside from simplification costs.
+
+### 7.2. Coefficient recurrence for repeated derivatives
+
+For the test family, store $P_n$ and the array $Q_{n,1},\ldots,Q_{n,n}$. Apply the recurrences of Section 5 using polynomial differentiation, multiplication by $2x$, and coefficient addition. If polynomial coefficients are stored densely and degrees are $O(n)$, producing all arrays through order $N$ takes $O(N^3)$ elementary coefficient operations by a straightforward implementation: there are $O(N^2)$ polynomial entries and each update costs $O(N)$. Sparse or structured polynomial representations may improve practical performance.
+
+The recurrence avoids re-differentiating a fully expanded expression. It preserves the semantic blocks—logarithmic coefficient and pole coefficients—and exposes the singularity order directly.
+
+### 7.3. Numerical validation
+
+A practical numerical check compares each closed form with a central finite difference of the previous form:
+
+$$
+D_\varepsilon u(x)=\frac{u(x+\varepsilon)-u(x-\varepsilon)}{2\varepsilon}.
+$$
+
+For smooth points away from $x=-1$, the truncation error is $O(\varepsilon^2)$, while floating-point cancellation grows as $\varepsilon$ becomes too small. Multiple step sizes should therefore be reported. Such checks illustrate the formulas but do not replace the analytic derivations.
+
+## 8. Applications and discussion
+
+### 8.1. Sensitivity and relative growth
+
+The factored formula gives a relative rate of change:
+
+$$
+\frac{F'}{F}=h'+\frac{g'}{g\log g}.
+$$
+
+On a zero-free interval, this separates exponential sensitivity, represented by $h'$, from logarithmic sensitivity, represented by $g'/(g\log g)$. This can be useful in parameter estimation and optimization, where relative changes often matter more than absolute changes.
+
+Near a zero of $\log g$, however, the relative rate becomes singular even if $F'$ remains finite. Algorithms should switch to the unfactored formula there. The distinction is analogous to choosing coordinates: a relative coordinate chart fails at zero, while the underlying function remains regular.
+
+### 8.2. Boundary-aware numerical computation
+
+For $e^{x^2}\log(x+1)$, each derivative displays its powers of $(x+1)^{-1}$ explicitly. As $x$ approaches $-1$ from the right, higher derivatives become increasingly ill-conditioned. The normal form makes this behavior transparent and can guide adaptive precision, domain subdivision, or asymptotic treatment.
+
+The stable exponential shell also suggests scaled evaluation. Rather than forming a potentially huge derivative directly, one may evaluate the inner logarithmic–polar factor and retain the scale $e^{x^2}$ separately. This is standard practice in computations involving extreme dynamic range.
+
+### 8.3. Complexity as a bifiltration
+
+A single notion of expression complexity obscures the example. The transcendental nesting does not grow, but the pole order does. A useful future calculus should therefore carry a pair
+
+$$
+(\text{transcendental depth},\text{pole order}).
+$$
+
+Differentiation may preserve or mildly increase the first coordinate while increasing the second by at most one. Such a bifiltration could support complexity guarantees for normalization and automatic differentiation.
+
+### 8.4. Scope of the present results
+
+The calculations establish exact local chain rules, a counterexample to an incorrect universal factorization, explicit formulas through the third derivative, and a constant-depth monomial family. They do not by themselves prove that the unrestricted EML class is closed under differentiation without extending the grammar by reciprocals. Indeed, derivatives of logarithms force $1/g$, and the corrected factorization can force $1/\log g$.
+
+The natural closure statement is therefore about an EML-rational class with guarded reciprocals. Within such a class, domain annotations are not optional metadata; they are part of the mathematical meaning of every simplification.
+
+## 9. Further structural consequences
+
+### 9.1. Zeros versus singularities
+
+The factorized derivative introduces an apparent pole wherever $\log(g(x))=0$. This pole belongs to the relative derivative $F'/F$, not necessarily to $F'$ itself. Suppose, for example, that $g(a)=1$ and $g'(a)\ne0$. Then $\log(g(a))=0$, while the unfactored rule gives
+
+$$
+F'(a)=e^{h(a)}g'(a),
+$$
+
+which is finite and nonzero. Locally, $F$ has a simple zero, so its logarithmic derivative behaves like $(x-a)^{-1}$. The singularity is therefore informative: it records the zero multiplicity of $F$ rather than a defect in the underlying derivative.
+
+This observation suggests treating factored derivatives as objects attached to zero-free strata. Ordinary derivatives extend across some stratum boundaries, whereas logarithmic derivatives carry residue-like information about the zeros crossed. A global symbolic system should preserve the unfactored formula and use factored formulas as regional normal forms.
+
+### 9.2. Degree evolution in the logarithmic coefficient
+
+The recurrence
+
+$$
+P_{n+1}=P_n'+2xP_n,\qquad P_0=1,
+$$
+
+shows that $P_n$ has degree $n$. Its leading coefficient doubles at every step, so the leading term is $2^n x^n$. The first values are
+
+$$
+P_0=1,\qquad P_1=2x,\qquad P_2=4x^2+2,
+\qquad P_3=8x^3+12x.
+$$
+
+These are precisely the logarithmic coefficients visible in the test calculation. They arise from repeated conjugation of differentiation by the exponential shell:
+
+$$
+e^{-x^2}\frac{d}{dx}\left(e^{x^2}A\right)=A'+2xA.
+$$
+
+Consequently, the logarithmic component can be studied independently of the pole array before the two are coupled by differentiation of $\log(x+1)$.
+
+### 9.3. Evaluation strategies
+
+The normal forms support region-dependent evaluation. Near $x=-1$, one should track pole terms explicitly and may require increased precision. Near a zero of the logarithmic factor, the unfactored derivative avoids dividing by a small $\log(g(x))$. For large positive $x$, it can be advantageous to retain a scaled result $e^{-x^2}f_n(x)=A_n(x)$ rather than form $f_n(x)$ directly.
+
+These choices do not change the mathematics, but they expose why structural differentiation is useful. The same derivative can be represented in algebraically equivalent forms with very different numerical behavior. Domain guards and normal forms make the choice systematic rather than ad hoc.
+
+## 10. Future work
+
+Five directions emerge.
+
+First, one should prove the all-orders logarithmic–polar normal form
+
+$$
+f_0^{(n)}(x)=e^{x^2}\left(P_n(x)\log(x+1)+
+\sum_{k=1}^{n}\frac{Q_{n,k}(x)}{(x+1)^k}\right),
+$$
+
+establish uniqueness, and show that the top pole coefficient never vanishes.
+
+Second, an EML grammar with guarded reciprocals should be equipped with two complexity measures: compositional depth and pole order. The goal is a differentiation theorem that controls both coordinates.
+
+Third, logarithmic differentiation should be made divisor-sensitive. A nonzero expression may be stratified into zero-free intervals, with a canonical relative derivative on each interval and explicit transition behavior at zeros.
+
+Fourth, the triangular coefficient arrays may possess bivariate exponential generating functions satisfying a first-order linear partial differential equation. Such a representation could reveal degree, sign, and asymptotic laws.
+
+Fifth, compact expression graphs should be analyzed quantitatively. For fixed depth and derivative order, normalization may admit polynomial-size representations even when naive expanded formulas grow exponentially.
+
+### 10.1. Criteria for an all-orders theorem
+
+A satisfactory all-orders result should contain more than an existence statement. It should specify the coefficient recurrence, prove that the recurrence preserves integer coefficients, establish degree bounds for every polynomial, and show that the highest pole term is nonzero. It should also distinguish equality of functions on $x>-1$ from uniqueness of the displayed normal form. The latter requires a linear-independence argument separating the logarithmic term from rational functions.
+
+For computation, the theorem should be paired with a normalization procedure and explicit complexity bounds. The mathematical recurrence already avoids uncontrolled nesting, but implementation size depends on whether common polynomial and denominator subexpressions are shared. Finally, domain statements should remain visible: every formula concerns the open interval $x>-1$, and asymptotic claims at $x=-1$ describe approach from the right rather than a derivative at the boundary.
+
+These criteria turn the observed three-step pattern into a precise research program. They also prevent three distinct questions—existence, uniqueness, and efficient computation—from being conflated.
+
+## 11. Conclusion
+
+The derivative of $e^{h}\log g$ has a simple but carefully guarded structure. The universally useful local expression is
+
+$$
+e^h\left(h'\log g+\frac{g'}{g}\right),
+$$
+
+while factorization through the original function requires
+
+$$
+e^h\log g\left(h'+\frac{g'}{g\log g}\right).
+$$
+
+The extra factor $1/\log g$ and its zero-free condition cannot be omitted. The exact counterexample $e^0\log(e^x)=x$ makes the obstruction unmistakable.
+
+For $e^{x^2}\log(x+1)$, three differentiations preserve an exponential–logarithmic architecture while increasing the maximal pole order from zero to three. For positive monomials, $e^{m\log x}$ gives a constant-depth representation compatible with the usual power rule. Together these observations separate transcendental nesting from singularity growth and provide a principled basis for guarded, structure-preserving differentiation.

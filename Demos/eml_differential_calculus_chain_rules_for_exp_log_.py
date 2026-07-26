@@ -1,288 +1,212 @@
 #!/usr/bin/env python3
+"""Numerical demonstrations for exponential--logarithmic chain rules.
+
+The script uses only Python's standard library.  It evaluates the first three
+closed-form derivatives of exp(x^2) log(x+1), compares them with central finite
+differences, exhibits the counterexample to an incorrect factorization, and
+checks fixed-depth exp--log representations of positive monomials.
 """
-EML Differential Algebra: Numerical Demonstrations
 
-Demonstrates the chain rules and logarithmic derivative algebra
-for EML (Exp-Log-Multiply) functions.
-"""
-import math
+from __future__ import annotations
 
+from dataclasses import dataclass
+from math import exp, isfinite, log
+from typing import Callable, Iterable, Sequence
 
-def exp(x: float) -> float:
-    return math.exp(x)
+RealFunction = Callable[[float], float]
 
 
-def log(x: float) -> float:
-    return math.log(x)
+@dataclass(frozen=True)
+class Check:
+    """One numerical comparison between an analytic and numerical value."""
+
+    label: str
+    x: float
+    analytic: float
+    numerical: float
+
+    @property
+    def absolute_error(self) -> float:
+        return abs(self.analytic - self.numerical)
+
+    @property
+    def relative_error(self) -> float:
+        scale = max(1.0, abs(self.analytic))
+        return self.absolute_error / scale
 
 
-def numerical_deriv(f, x: float, h: float = 1e-8) -> float:
-    """Central difference numerical derivative."""
-    return (f(x + h) - f(x - h)) / (2 * h)
+def central_difference(function: RealFunction, x: float, step: float = 1e-5) -> float:
+    """Return the second-order central-difference approximation to f'(x)."""
+    if step <= 0.0:
+        raise ValueError("step must be positive")
+    return (function(x + step) - function(x - step)) / (2.0 * step)
 
 
-def eml_log_deriv(f, x: float) -> float:
-    """Logarithmic derivative LD(f) = f'(x)/f(x)."""
-    return numerical_deriv(f, x) / f(x)
+def exp_log_product(h: RealFunction, g: RealFunction, x: float) -> float:
+    """Evaluate exp(h(x)) * log(g(x)); the demonstration uses g(x) > 0."""
+    gx = g(x)
+    if gx <= 0.0:
+        raise ValueError("the real logarithm requires g(x) > 0")
+    return exp(h(x)) * log(gx)
 
 
-# ─── Demo 1: EML Chain Rules ───────────────────────────────────────────────
-
-print("=" * 70)
-print("Demo 1: EML Chain Rules for Exp-Log Compositions")
-print("=" * 70)
-
-x0 = 1.0
-
-# Chain rule for exp(h): (exp ∘ h)' = exp(h) · h'
-h = lambda x: x ** 2
-h_prime = lambda x: 2 * x
-f_exp = lambda x: exp(h(x))
-
-analytic = exp(h(x0)) * h_prime(x0)
-numerical = numerical_deriv(f_exp, x0)
-print(f"\n1. exp(x²) at x={x0}:")
-print(f"   Analytic:  exp({h(x0)}) * {h_prime(x0)} = {analytic:.10f}")
-print(f"   Numerical: {numerical:.10f}")
-print(f"   Match: {abs(analytic - numerical) < 1e-5}")
-
-# Chain rule for log(g): (log ∘ g)' = g'/g
-g = lambda x: x + 1
-g_prime = lambda x: 1.0
-f_log = lambda x: log(g(x))
-
-analytic = g_prime(x0) / g(x0)
-numerical = numerical_deriv(f_log, x0)
-print(f"\n2. log(x+1) at x={x0}:")
-print(f"   Analytic:  {g_prime(x0)} / {g(x0)} = {analytic:.10f}")
-print(f"   Numerical: {numerical:.10f}")
-print(f"   Match: {abs(analytic - numerical) < 1e-5}")
-
-# Product chain rule: (exp(h) · log(g))' = exp(h) · (h'·log(g) + g'/g)
-f_prod = lambda x: exp(h(x)) * log(g(x))
-analytic = exp(h(x0)) * (h_prime(x0) * log(g(x0)) + g_prime(x0) / g(x0))
-numerical = numerical_deriv(f_prod, x0)
-print(f"\n3. exp(x²)·log(x+1) at x={x0}:")
-print(f"   Analytic:  exp({h(x0)}) * ({h_prime(x0)}*log({g(x0)}) + {g_prime(x0)}/{g(x0)})")
-print(f"            = {analytic:.10f}")
-print(f"   Numerical: {numerical:.10f}")
-print(f"   Match: {abs(analytic - numerical) < 1e-5}")
-
-# Double exp: (exp(exp(h)))' = exp(exp(h)) · exp(h) · h'
-f_dexp = lambda x: exp(exp(h(x)))
-analytic = exp(exp(h(x0))) * exp(h(x0)) * h_prime(x0)
-numerical = numerical_deriv(f_dexp, x0)
-print(f"\n4. exp(exp(x²)) at x={x0}:")
-print(f"   Analytic:  {analytic:.10f}")
-print(f"   Numerical: {numerical:.10f}")
-print(f"   Match: {abs(analytic - numerical) / abs(analytic) < 1e-5}")
+def unfactored_derivative(
+    h: RealFunction,
+    h_prime: RealFunction,
+    g: RealFunction,
+    g_prime: RealFunction,
+    x: float,
+) -> float:
+    """Evaluate exp(h) * (h' log(g) + g'/g)."""
+    gx = g(x)
+    if gx <= 0.0:
+        raise ValueError("the real logarithm requires g(x) > 0")
+    return exp(h(x)) * (h_prime(x) * log(gx) + g_prime(x) / gx)
 
 
-# ─── Demo 2: Logarithmic Derivative Algebra ────────────────────────────────
-
-print("\n" + "=" * 70)
-print("Demo 2: Logarithmic Derivative Algebra")
-print("=" * 70)
-
-x0 = 0.5
-
-# LD(exp(h)) = h'
-f1 = lambda x: exp(x ** 2)
-ld_exp = eml_log_deriv(f1, x0)
-h_prime_val = 2 * x0
-print(f"\n1. LD(exp(x²)) at x={x0}:")
-print(f"   LD = f'/f = {ld_exp:.10f}")
-print(f"   h' = 2x  = {h_prime_val:.10f}")
-print(f"   Match: {abs(ld_exp - h_prime_val) < 1e-5}")
-
-# LD(f·g) = LD(f) + LD(g)
-f = lambda x: exp(x)
-g = lambda x: x + 1
-fg = lambda x: f(x) * g(x)
-ld_fg = eml_log_deriv(fg, x0)
-ld_f = eml_log_deriv(f, x0)
-ld_g = eml_log_deriv(g, x0)
-print(f"\n2. LD(exp(x)·(x+1)) = LD(exp(x)) + LD(x+1) at x={x0}:")
-print(f"   LD(f·g) = {ld_fg:.10f}")
-print(f"   LD(f) + LD(g) = {ld_f:.10f} + {ld_g:.10f} = {ld_f + ld_g:.10f}")
-print(f"   Match: {abs(ld_fg - (ld_f + ld_g)) < 1e-5}")
-
-# LD(f^n) = n · LD(f)
-n = 3
-fn = lambda x: f(x) ** n
-ld_fn = eml_log_deriv(fn, x0)
-print(f"\n3. LD(exp(x)^{n}) = {n} · LD(exp(x)) at x={x0}:")
-print(f"   LD(f^{n}) = {ld_fn:.10f}")
-print(f"   {n}·LD(f)  = {n * ld_f:.10f}")
-print(f"   Match: {abs(ld_fn - n * ld_f) < 1e-5}")
-
-# LD(f/g) = LD(f) - LD(g)
-fdivg = lambda x: f(x) / g(x)
-ld_fdivg = eml_log_deriv(fdivg, x0)
-print(f"\n4. LD(exp(x)/(x+1)) = LD(exp(x)) - LD(x+1) at x={x0}:")
-print(f"   LD(f/g) = {ld_fdivg:.10f}")
-print(f"   LD(f) - LD(g) = {ld_f - ld_g:.10f}")
-print(f"   Match: {abs(ld_fdivg - (ld_f - ld_g)) < 1e-5}")
+def factored_derivative(
+    h: RealFunction,
+    h_prime: RealFunction,
+    g: RealFunction,
+    g_prime: RealFunction,
+    x: float,
+) -> float:
+    """Evaluate the guarded factorization F * (h' + g'/(g log(g)))."""
+    gx = g(x)
+    if gx <= 0.0:
+        raise ValueError("the real logarithm requires g(x) > 0")
+    log_gx = log(gx)
+    if log_gx == 0.0:
+        raise ValueError("the factored form is undefined when log(g(x)) = 0")
+    original = exp(h(x)) * log_gx
+    return original * (h_prime(x) + g_prime(x) / (gx * log_gx))
 
 
-# ─── Demo 3: 3rd Derivative of exp(x²)·log(x+1) ──────────────────────────
-
-print("\n" + "=" * 70)
-print("Demo 3: 3rd Derivative of f(x) = exp(x²)·log(x+1)")
-print("=" * 70)
-
-f = lambda x: exp(x ** 2) * log(x + 1)
-x0 = 0.5
-
-f1 = lambda x: numerical_deriv(f, x)
-f2 = lambda x: numerical_deriv(f1, x, h=1e-5)
-f3 = lambda x: numerical_deriv(f2, x, h=1e-4)
-
-print(f"\nAt x = {x0}:")
-print(f"  f(x)    = {f(x0):.10f}")
-print(f"  f'(x)   = {f1(x0):.10f}")
-print(f"  f''(x)  = {f2(x0):.10f}")
-print(f"  f'''(x) = {f3(x0):.10f}")
-
-# Verify f'''(x) can be expressed as an EML function (exp-log composition)
-# f'(x) = exp(x²) * (2x·log(x+1) + 1/(x+1))
-# This is already EML: product of exp(polynomial) with sum of log and rational terms
-print(f"\nf'(x) = exp(x²) · (2x·log(x+1) + 1/(x+1))")
-analytic_f1 = exp(x0**2) * (2*x0*log(x0+1) + 1/(x0+1))
-print(f"  Analytic f'({x0}) = {analytic_f1:.10f}")
-print(f"  Numerical f'({x0}) = {f1(x0):.10f}")
-print(f"  Match: {abs(analytic_f1 - f1(x0)) < 1e-5}")
-print(f"\n→ f'''(x) is a finite EML expression (verified numerically)")
+def f0(x: float) -> float:
+    """Evaluate exp(x^2) log(x+1) on x > -1."""
+    if x <= -1.0:
+        raise ValueError("f0 requires x > -1")
+    return exp(x * x) * log(x + 1.0)
 
 
-# ─── Demo 4: Iterated Logarithmic Derivative Stripping ────────────────────
+def f1(x: float) -> float:
+    """Evaluate the first derivative of f0."""
+    if x <= -1.0:
+        raise ValueError("f1 requires x > -1")
+    y = x + 1.0
+    return exp(x * x) * (2.0 * x * log(y) + 1.0 / y)
 
-print("\n" + "=" * 70)
-print("Demo 4: Iterated LD Strips Exp Layers")
-print("=" * 70)
 
-x0 = 0.3
+def f2(x: float) -> float:
+    """Evaluate the second derivative of f0."""
+    if x <= -1.0:
+        raise ValueError("f2 requires x > -1")
+    y = x + 1.0
+    inner = (4.0 * x * x + 2.0) * log(y) + 4.0 * x / y - 1.0 / (y * y)
+    return exp(x * x) * inner
 
-# Build tower: h(x) = x, exp(x), exp(exp(x)), exp(exp(exp(x)))
-tower = [lambda x: x]
-for i in range(3):
-    prev = tower[-1]
-    tower.append(lambda x, p=prev: exp(p(x)))
 
-print(f"\nAt x = {x0}:")
-for i, t in enumerate(tower):
-    print(f"  exp^{i}(x) = {t(x0):.10f}")
+def f3(x: float) -> float:
+    """Evaluate the third derivative of f0."""
+    if x <= -1.0:
+        raise ValueError("f3 requires x > -1")
+    y = x + 1.0
+    inner = (
+        (8.0 * x**3 + 12.0 * x) * log(y)
+        + (12.0 * x * x + 6.0) / y
+        - 6.0 * x / (y * y)
+        + 2.0 / (y**3)
+    )
+    return exp(x * x) * inner
 
-print(f"\nStripping exp layers with LD:")
-for i in range(len(tower) - 1, 0, -1):
-    ld = eml_log_deriv(tower[i], x0)
-    inner_deriv = numerical_deriv(tower[i-1], x0)
-    print(f"  LD(exp^{i}(x)) = {ld:.10f}, deriv(exp^{i-1}(x)) = {inner_deriv:.10f}, match: {abs(ld - inner_deriv) < 1e-3}")
+
+def derivative_checks(points: Iterable[float], step: float = 1e-5) -> list[Check]:
+    """Compare each closed form with a finite difference of its predecessor."""
+    checks: list[Check] = []
+    pairs: Sequence[tuple[str, RealFunction, RealFunction]] = (
+        ("f0' = f1", f0, f1),
+        ("f1' = f2", f1, f2),
+        ("f2' = f3", f2, f3),
+    )
+    for x in points:
+        if x - step <= -1.0:
+            raise ValueError("finite-difference stencil crosses x = -1")
+        for label, previous, closed_form in pairs:
+            checks.append(Check(label, x, closed_form(x), central_difference(previous, x, step)))
+    return checks
+
+
+def monomial_exp_log(power: int, x: float) -> float:
+    """Evaluate x^power as exp(power * log(x)) on the positive half-line."""
+    if power < 1:
+        raise ValueError("power must be a positive integer")
+    if x <= 0.0:
+        raise ValueError("the exp--log representation requires x > 0")
+    return exp(float(power) * log(x))
+
+
+def monomial_derivative_exp_log(power: int, x: float) -> float:
+    """Evaluate the analytic derivative of exp(power * log(x))."""
+    if power < 1 or x <= 0.0:
+        raise ValueError("power >= 1 and x > 0 are required")
+    return float(power) * x ** (power - 1)
+
+
+def print_counterexample() -> None:
+    """Display the exact shape of the failed proposed factorization at x=2."""
+    x = 2.0
+    h = lambda _: 0.0
+    hp = lambda _: 0.0
+    g = exp
+    gp = exp
+    actual = unfactored_derivative(h, hp, g, gp, x)
+    incorrect = exp_log_product(h, g, x) * (hp(x) + gp(x) / g(x))
+    corrected = factored_derivative(h, hp, g, gp, x)
+    print("Counterexample with h(x)=0 and g(x)=exp(x) at x=2")
+    print(f"  true derivative:                 {actual:.12g}")
+    print(f"  incorrect F*(h' + g'/g):        {incorrect:.12g}")
+    print(f"  corrected guarded factorization: {corrected:.12g}\n")
+
+
+def print_derivative_table() -> None:
+    """Display values and finite-difference errors for three derivatives."""
+    print("Closed forms versus central finite differences")
+    print("  identity       x         analytic          numerical       relative error")
+    for check in derivative_checks((-0.5, 0.0, 0.5, 1.0), 1e-5):
+        print(
+            f"  {check.label:9s} {check.x:6.2f} "
+            f"{check.analytic:17.9g} {check.numerical:17.9g} "
+            f"{check.relative_error:14.3e}"
+        )
+    print()
+
+
+def print_monomial_table() -> None:
+    """Compare fixed-depth exp--log powers and their derivatives."""
+    x = 1.7
+    step = 1e-5
+    print(f"Positive monomials represented as exp(m*log(x)) at x={x}")
+    print("  m       representation          x^m       derivative      finite diff")
+    for power in (1, 2, 5, 10, 25):
+        represented = monomial_exp_log(power, x)
+        ordinary = x**power
+        derivative = monomial_derivative_exp_log(power, x)
+        numerical = central_difference(lambda t, p=power: monomial_exp_log(p, t), x, step)
+        assert isfinite(represented) and isfinite(numerical)
+        print(
+            f" {power:2d} {represented:20.10g} {ordinary:12.6g} "
+            f"{derivative:15.7g} {numerical:15.7g}"
+        )
+    print()
+
+
+def main() -> None:
+    print_counterexample()
+    print_derivative_table()
+    print_monomial_table()
+    print("Benchmark values at x=0: "
+          f"f0={f0(0.0):g}, f1={f1(0.0):g}, f2={f2(0.0):g}, f3={f3(0.0):g}")
 
 
 if __name__ == "__main__":
-    print("\n" + "=" * 70)
-    print("All demonstrations completed successfully.")
-    print("=" * 70)
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Logarithmic Derivative Layer Stripping
-
-Shows how the logarithmic derivative strips exponential layers
-from tower functions exp^n(x).
-"""
-import numpy as np
-
-def numerical_deriv(f, x, h=1e-8):
-    return (f(x + h) - f(x - h)) / (2 * h)
-
-def log_deriv(f, x):
-    return numerical_deriv(f, x) / f(x)
-
-try:
-    import matplotlib
-    matplotlib.use('Agg')
-    import matplotlib.pyplot as plt
-
-    x = np.linspace(0.1, 1.5, 200)
-
-    # Build towers and their LDs
-    fig, axes = plt.subplots(2, 2, figsize=(12, 10))
-
-    # Tower functions
-    towers = [
-        lambda x: x,
-        lambda x: np.exp(x),
-        lambda x: np.exp(np.exp(x)),
-        lambda x: np.exp(np.exp(np.exp(x))),
-    ]
-    tower_names = ['h(x) = x', 'exp(x)', 'exp(exp(x))', 'exp(exp(exp(x)))']
-
-    # Plot towers
-    ax = axes[0, 0]
-    for i, (t, name) in enumerate(zip(towers[:3], tower_names[:3])):
-        y = np.array([t(xi) for xi in x])
-        y = np.clip(y, -100, 100)
-        ax.plot(x, y, label=name, linewidth=2)
-    ax.set_title('Exponential Towers', fontsize=14)
-    ax.set_xlabel('x')
-    ax.set_ylabel('f(x)')
-    ax.legend()
-    ax.set_ylim(-1, 30)
-    ax.grid(True, alpha=0.3)
-
-    # Plot LDs
-    ax = axes[0, 1]
-    for i in range(1, 4):
-        t = towers[i]
-        inner = towers[i-1]
-        ld_vals = np.array([log_deriv(t, xi) for xi in x])
-        inner_deriv = np.array([numerical_deriv(inner, xi) for xi in x])
-        ax.plot(x, ld_vals, label=f'LD({tower_names[i]})', linewidth=2)
-    ax.set_title('Logarithmic Derivatives (Layer Stripping)', fontsize=14)
-    ax.set_xlabel('x')
-    ax.set_ylabel('LD(f)(x)')
-    ax.legend()
-    ax.set_ylim(-1, 20)
-    ax.grid(True, alpha=0.3)
-
-    # LD = deriv of inner
-    ax = axes[1, 0]
-    t = towers[2]  # exp(exp(x))
-    ld_vals = np.array([log_deriv(t, xi) for xi in x])
-    inner_deriv = np.array([numerical_deriv(towers[1], xi) for xi in x])
-    ax.plot(x, ld_vals, 'b-', label='LD(exp(exp(x)))', linewidth=2)
-    ax.plot(x, inner_deriv, 'r--', label="deriv(exp(x)) = exp(x)", linewidth=2)
-    ax.set_title('LD Strips One Layer: LD(exp²(x)) = exp(x)·1', fontsize=14)
-    ax.set_xlabel('x')
-    ax.set_ylabel('value')
-    ax.legend()
-    ax.grid(True, alpha=0.3)
-
-    # Depth vs derivative order
-    ax = axes[1, 1]
-    orders = range(5)
-    # For exp(x²)·log(x+1): depth 1
-    depths = [1, 1, 1, 1, 1]  # depth stays at 1 for this expression
-    sizes = [9, 30, 119, 525, 2371]  # approximate node counts
-    ax2 = ax.twinx()
-    bars = ax.bar([o - 0.15 for o in orders], depths, 0.3, label='Depth', color='steelblue', alpha=0.7)
-    line = ax2.plot(list(orders), sizes, 'ro-', label='Node Count', linewidth=2)
-    ax.set_title('Derivative Order vs Complexity', fontsize=14)
-    ax.set_xlabel('Derivative Order k')
-    ax.set_ylabel('Depth', color='steelblue')
-    ax2.set_ylabel('Node Count', color='red')
-    ax.set_ylim(0, 3)
-    ax.legend(loc='upper left')
-    ax2.legend(loc='upper right')
-    ax.grid(True, alpha=0.3)
-
-    plt.suptitle('EML Logarithmic Derivative Algebra', fontsize=16, fontweight='bold')
-    plt.tight_layout()
-    plt.savefig('/workspace/request-project/viz_log_deriv.png', dpi=150, bbox_inches='tight')
-    print("Saved viz_log_deriv.png")
-
-except ImportError:
-    print("matplotlib not available, skipping visualization")
+    main()
