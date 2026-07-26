@@ -1,1 +1,0 @@
-../../Geometry/InformationGeometry/Defs.lean

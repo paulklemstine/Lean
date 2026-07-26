@@ -1,1 +1,0 @@
-../../Pythagorean/HaarRestrictedProduct/Theorems.lean

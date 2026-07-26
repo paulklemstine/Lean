@@ -1,1 +1,0 @@
-../../Tropical/ArithmeticUniversality/TropicalMorse.lean

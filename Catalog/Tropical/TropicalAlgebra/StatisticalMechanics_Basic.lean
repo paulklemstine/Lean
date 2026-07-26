@@ -1,1 +1,0 @@
-../../Tropical/StatisticalMechanics/Basic.lean

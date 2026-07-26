@@ -1,1 +1,0 @@
-../../Algebra/DependentUltraproduct/Defs.lean

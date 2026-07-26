@@ -1,1 +1,0 @@
-../../MachineLearning/SudokuPhaseTransition/Theorems.lean

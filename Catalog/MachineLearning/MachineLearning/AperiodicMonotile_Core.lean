@@ -1,1 +1,0 @@
-../../MachineLearning/AperiodicMonotile/Core.lean

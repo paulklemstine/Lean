@@ -1,1 +1,0 @@
-../../Bridges/ArithmeticMirrorSymmetry/Theorems.lean

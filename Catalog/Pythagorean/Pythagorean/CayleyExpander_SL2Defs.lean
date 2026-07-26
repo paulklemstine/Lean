@@ -1,1 +1,0 @@
-../../Pythagorean/CayleyExpander/SL2Defs.lean

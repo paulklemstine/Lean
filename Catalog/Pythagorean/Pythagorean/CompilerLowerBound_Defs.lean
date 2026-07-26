@@ -1,1 +1,0 @@
-../../Pythagorean/CompilerLowerBound/Defs.lean

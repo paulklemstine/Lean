@@ -1,1 +1,0 @@
-../../EML/PolynomialMethod/SchwartzZippel.lean

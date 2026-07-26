@@ -1,1 +1,0 @@
-../../MachineLearning/QuantizedResidualMDL.lean

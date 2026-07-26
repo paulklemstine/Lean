@@ -1,1 +1,0 @@
-../../MachineLearning/OrdinalCA/Theorems.lean

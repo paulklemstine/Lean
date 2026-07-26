@@ -1,1 +1,0 @@
-../../Pythagorean/EGraph/Extraction.lean

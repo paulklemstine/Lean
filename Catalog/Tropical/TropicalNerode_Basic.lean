@@ -1,1 +1,0 @@
-../../Bridges/TropicalNerode/Basic.lean

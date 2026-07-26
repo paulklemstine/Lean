@@ -1,1 +1,0 @@
-../../Tropical/HodgeShadow/TropicalCycleCorrespondence.lean

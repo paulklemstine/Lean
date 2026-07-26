@@ -1,1 +1,0 @@
-../../Shared/HopfEntanglement/Theorems.lean

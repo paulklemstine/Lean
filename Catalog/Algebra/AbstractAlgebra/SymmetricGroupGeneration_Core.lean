@@ -1,1 +1,0 @@
-../../Algebra/SymmetricGroupGeneration/Core.lean

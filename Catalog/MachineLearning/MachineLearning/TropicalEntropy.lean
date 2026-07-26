@@ -1,1 +1,0 @@
-../../MachineLearning/TropicalEntropy.lean

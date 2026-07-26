@@ -1,1 +1,0 @@
-../../Bridges/PriestleyDuality/Spectrum.lean

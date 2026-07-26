@@ -81,7 +81,6 @@ open Finset
 --   than definitions, so stating them as hypotheses is the faithful abstraction and
 --   not a triviality; the `K₃` instance certifies the hypotheses are satisfiable and
 --   the bound non-vacuous.
--- Synthesis (PI): constant-`1/3` supersaturation + Nosal endpoint, all sorry-free.
 
 /-- **Cubic domination.**  If `|μ| ≤ λ` then `μ³ ≥ -λ·μ²`.  This is the pointwise
 inequality that drives the power-trace estimate: a real number's cube cannot fall

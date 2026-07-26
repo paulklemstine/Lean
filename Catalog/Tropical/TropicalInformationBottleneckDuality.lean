@@ -1,1 +1,0 @@
-../../Bridges/EMLMachineLearning/TropicalInformationBottleneckDuality.lean

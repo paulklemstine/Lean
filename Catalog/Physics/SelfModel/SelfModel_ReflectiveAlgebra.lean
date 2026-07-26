@@ -1,1 +1,0 @@
-../../Physics/SelfModel/ReflectiveAlgebra.lean

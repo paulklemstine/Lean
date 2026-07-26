@@ -1,1 +1,0 @@
-../../Pythagorean/YonedaBisimulation/HennessyMilner.lean

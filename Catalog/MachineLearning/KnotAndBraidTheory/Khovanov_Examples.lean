@@ -1,1 +1,0 @@
-../../MachineLearning/Knot/Khovanov/Examples.lean

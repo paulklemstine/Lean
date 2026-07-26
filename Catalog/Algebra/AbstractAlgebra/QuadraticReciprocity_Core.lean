@@ -1,1 +1,0 @@
-../../Algebra/QuadraticReciprocity/Core.lean

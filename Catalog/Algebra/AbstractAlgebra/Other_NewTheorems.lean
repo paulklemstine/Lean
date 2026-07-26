@@ -1,1 +1,0 @@
-../../Algebra/Other/NewTheorems.lean

@@ -1,1 +1,0 @@
-../../Pythagorean/ArithmeticSandpile/Theorems.lean

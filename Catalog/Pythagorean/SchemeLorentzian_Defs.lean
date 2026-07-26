@@ -1,1 +1,0 @@
-../../Bridges/Pythagorean/SchemeLorentzian/Defs.lean

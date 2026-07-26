@@ -1,1 +1,0 @@
-../../MachineLearning/TropicalInfoGeometry/Basic.lean

@@ -1,1 +1,0 @@
-../../Geometry/VampireNumbers/Theorems.lean

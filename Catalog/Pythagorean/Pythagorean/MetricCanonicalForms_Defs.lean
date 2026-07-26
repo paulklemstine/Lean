@@ -1,1 +1,0 @@
-../../Pythagorean/TropicalBridge/MetricCanonicalForms/Defs.lean

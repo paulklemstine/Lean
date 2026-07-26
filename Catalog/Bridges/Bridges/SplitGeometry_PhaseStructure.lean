@@ -1,1 +1,0 @@
-../../Bridges/SplitGeometry/PhaseStructure.lean

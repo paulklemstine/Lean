@@ -1,1 +1,0 @@
-../../Tropical/Speculative/AutoResearch/HarmonicVarietyRateDistortion.lean

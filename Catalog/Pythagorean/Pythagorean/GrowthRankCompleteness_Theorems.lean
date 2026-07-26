@@ -1,1 +1,0 @@
-../../Pythagorean/GrowthRankCompleteness/Theorems.lean

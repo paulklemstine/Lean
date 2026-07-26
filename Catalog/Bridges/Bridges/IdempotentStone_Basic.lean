@@ -1,1 +1,0 @@
-../../Bridges/IdempotentStone/Basic.lean

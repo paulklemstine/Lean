@@ -1,1 +1,0 @@
-../../Geometry/InfiniteChess/TransfiniteGames.lean

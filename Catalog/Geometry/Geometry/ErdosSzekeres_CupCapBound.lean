@@ -1,1 +1,0 @@
-../../Geometry/ErdosSzekeres/CupCapBound.lean

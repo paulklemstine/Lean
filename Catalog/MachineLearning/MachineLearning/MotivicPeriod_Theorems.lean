@@ -1,1 +1,0 @@
-../../MachineLearning/MotivicPeriod/Theorems.lean

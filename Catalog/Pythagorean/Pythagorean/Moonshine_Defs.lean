@@ -1,1 +1,0 @@
-../../Pythagorean/Moonshine/Defs.lean

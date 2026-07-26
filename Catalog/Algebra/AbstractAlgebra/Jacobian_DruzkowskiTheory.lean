@@ -1,1 +1,0 @@
-../../Algebra/Jacobian/DruzkowskiTheory.lean

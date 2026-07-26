@@ -1,1 +1,0 @@
-../../Pythagorean/HeckePacket/PrimePowerHecke.lean

@@ -1,1 +1,0 @@
-../../Tropical/WeightedMSO/Algebra.lean

@@ -1,1 +1,0 @@
-../../Algebra/ArrowCurvatureBridge/Geometry.lean

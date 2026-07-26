@@ -1,1 +1,0 @@
-../../Computation/MegaSphere/Defs.lean

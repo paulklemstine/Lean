@@ -1,1 +1,0 @@
-../../Speculative/AutoResearch/CarmichaelComposite.lean

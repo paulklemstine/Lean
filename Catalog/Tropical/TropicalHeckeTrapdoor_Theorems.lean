@@ -1,1 +1,0 @@
-../../Bridges/TropicalHeckeTrapdoor/Theorems.lean

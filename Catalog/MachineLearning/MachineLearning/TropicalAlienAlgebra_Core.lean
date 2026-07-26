@@ -1,1 +1,0 @@
-../../MachineLearning/Speculative/TropicalAlienAlgebra/Core.lean

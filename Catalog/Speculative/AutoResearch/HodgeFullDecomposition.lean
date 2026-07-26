@@ -56,7 +56,6 @@ variable {p n q : ℕ}
 -- Hypothesis: The single up-Laplacian identity `⟨x, BᵀB x⟩ = ‖Bx‖²` should generalize to
 --   the two-map Hodge Laplacian `Dᵀ D + E Eᵀ`, splitting the energy into a "closed" and a
 --   "coclosed" channel, with the chain condition `∂∂ = 0` making the channels orthogonal.
--- Result: All six statements below are proven sorry-free.  `fullHodge_kernel` is the
 --   genuine discrete Hodge theorem (harmonic = closed ∧ coclosed), and the orthogonality
 --   `hodge_image_orthogonal` is the *only* place where `D * E = 0` is consumed.
 -- Insight: The whole decomposition rests on bilinearity of `dotProduct` plus the two

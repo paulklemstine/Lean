@@ -1,1 +1,0 @@
-../../Algebra/Factoring/Core.lean

@@ -1,1 +1,0 @@
-../../Pythagorean/ForbiddenMinor/Theorems.lean
