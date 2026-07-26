@@ -121,7 +121,7 @@ theorem signedGF_universal (c : ℤ → ℤ) (supp : Finset ℤ)
   ext k; by_cases hk : c k = 0 <;> simp_all +decide [ signedGF, Finset.sum_filter ] ;
   rw [ show univStates c supp = Finset.biUnion supp ( fun k => Finset.image ( fun j => ( k, j ) ) ( Finset.range ( Int.natAbs ( c k ) ) ) ) from rfl, Finset.sum_biUnion ];
   · rw [ Finset.sum_eq_single k ];
-    · cases abs_cases ( c k ) <;> simp +decide [*, Int.sign_eq_neg_one_of_neg];
+    · cases abs_cases ( c k ) <;> simp +decide [ *, Int.sign_eq_one_of_pos, Int.sign_eq_neg_one_of_neg ];
     · aesop;
     · exact fun h => False.elim <| h <| hsupp k hk;
   · exact fun x hx y hy hxy => Finset.disjoint_left.mpr fun z => by aesop;
@@ -135,7 +135,7 @@ theorem areaGF_representable (c : ℤ → ℤ) (supp : Finset ℤ)
     ∃ (states : Finset (ℤ × ℕ)) (a : ℤ × ℕ → ℤ),
       areaGF states a = c := by
   refine' ⟨ Finset.biUnion supp fun k => Finset.image ( fun j => ( k, j ) ) ( Finset.range ( Int.toNat ( c k ) ) ), fun p => p.1, funext fun m => _ ⟩;
-  by_cases hm : c m = 0 <;> simp_all +decide [areaGF];
+  by_cases hm : c m = 0 <;> simp_all +decide [ areaGF, hnn ];
   · grind;
   · rw [ show ( Finset.filter ( fun s => s.1 = m ) ( Finset.biUnion supp fun k => image ( fun j => ( k, j ) ) ( Finset.range ( c k |> Int.toNat ) ) ) ) = Finset.image ( fun j => ( m, j ) ) ( Finset.range ( c m |> Int.toNat ) ) from ?_, Finset.card_image_of_injective ] <;> norm_num [ Function.Injective ];
     · exact hnn m;
