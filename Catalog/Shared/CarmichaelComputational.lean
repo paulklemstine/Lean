@@ -57,9 +57,14 @@ lemma all_factors_from_divisors (n : ℕ) (hn : 3 ≤ n) (hn_comp : ¬Nat.Prime 
 lemma fib_gt_one' (n : ℕ) (hn : 3 ≤ n) : 1 < Nat.fib n := by
   exact lt_of_lt_of_le (by decide) (Nat.fib_mono hn)
 
-/-- Computational composite case on the verified interval `13 ≤ n ≤ 10000`.
-The explicit upper bound records exactly the range discharged by the imported
-finite verification; the unbounded tail requires additional number theory. -/
+/-- For the composite case of Carmichael's theorem:
+    If n is composite with n ≥ 13 and has a prime factor p,
+    then either p is primitive for F(n), or the entry point of p
+    strictly divides n (so p divides F(d) for proper d | n).
+
+    On the certified range `n ≤ 10000`, this is the composite case which,
+    together with `fib_primitive_divisor_prime`, proves the verified-range form
+    of Carmichael's theorem.  The unbounded tail remains a separate problem. -/
 theorem fib_composite_has_primitive (n : ℕ) (hn : 13 ≤ n) (hupper : n ≤ 10000)
     (hn_comp : ¬Nat.Prime n) :
     ∃ p, Nat.Prime p ∧ p ∣ Nat.fib n ∧
