@@ -47,19 +47,22 @@
       "name": "Vertex Automorphism Group Extraction",
       "description": "Filters a finite groupoid’s arrow list to the endomorphisms of a selected base object. In a groupoid all such arrows are invertible, so the result is the vertex group. A single scan costs O(M) for M arrows; constructing its k-by-k multiplication table costs O(k²).",
       "pseudocode": "INPUT: base object c and arrows (source,target,label).\nINITIALIZE vertexArrows as empty.\nFOR each arrow a:\n  IF source(a)=c AND target(a)=c, append a.\nRETURN vertexArrows with inherited composition.",
-      "code": "from typing import Dict, Hashable, Iterable, List, Tuple\n\ndef extract_vertex_group(base: Hashable, arrows: Iterable[Tuple[Hashable, Hashable, Hashable]]) -> List[Hashable]:\n    return [label for source, target, label in arrows if source == base and target == base]\n"
+      "code": "from typing import Dict, Hashable, Iterable, List, Tuple\n\ndef extract_vertex_group(base: Hashable, arrows: Iterable[Tuple[Hashable, Hashable, Hashable]]) -> List[Hashable]:\n    return [label for source, target, label in arrows if source == base and target == base]\n",
+      "code_file": "visualizations/topological_algebraic_bridge_fundamental_group_as__vertex_automorphism_group_extraction.py"
     },
     {
       "name": "Finite Vertex-Group Isomorphism Test",
       "description": "Searches for a bijection preserving two finite multiplication tables. The elementary exhaustive procedure costs O(k! k²) for groups of order k; it transparently implements the algebraic comparison to which connected-groupoid equivalence reduces.",
       "pseudocode": "INPUT: multiplication tables A and B.\nIF their orders differ, RETURN failure.\nFOR each identity-preserving permutation p:\n  FOR all x,y, test p(A[x,y])=B[p(x),p(y)].\n  IF all tests pass, RETURN p.\nRETURN failure.",
-      "code": "from itertools import permutations\nfrom typing import Optional, Sequence, Tuple\n\ndef find_group_isomorphism(a: Sequence[Sequence[int]], b: Sequence[Sequence[int]]) -> Optional[Tuple[int, ...]]:\n    n = len(a)\n    if len(b) != n: return None\n    for p in permutations(range(n)):\n        if p[0] == 0 and all(p[a[x][y]] == b[p[x]][p[y]] for x in range(n) for y in range(n)):\n            return p\n    return None\n"
+      "code": "from itertools import permutations\nfrom typing import Optional, Sequence, Tuple\n\ndef find_group_isomorphism(a: Sequence[Sequence[int]], b: Sequence[Sequence[int]]) -> Optional[Tuple[int, ...]]:\n    n = len(a)\n    if len(b) != n: return None\n    for p in permutations(range(n)):\n        if p[0] == 0 and all(p[a[x][y]] == b[p[x]][p[y]] for x in range(n) for y in range(n)):\n            return p\n    return None\n",
+      "code_file": "visualizations/topological_algebraic_bridge_fundamental_group_as__finite_vertex_group_isomorphism_test.py"
     },
     {
       "name": "Transport-Arrow Coordinate Construction",
       "description": "Runs breadth-first search on the object graph to choose a transport arrow from a base object to every reachable object. These choices encode an arrow h:a→b as u_b^{-1}hu_a in the vertex group. Graph traversal costs O(N+M), after which table-based encoding is constant time per arrow.",
       "pseudocode": "INPUT: connected finite groupoid and base c.\nRUN breadth-first search from c.\nFOR each newly reached object a, record a parent edge; compose parent edges to obtain u_a:c→a.\nENCODE each h:a→b as inverse(u_b) ∘ h ∘ u_a.\nRETURN transports and encodings.",
-      "code": "from collections import deque\nfrom typing import Dict, Hashable, Iterable, Optional, Tuple\n\ndef transport_tree(base: Hashable, edges: Iterable[Tuple[Hashable, Hashable, Hashable]]) -> Dict[Hashable, Tuple[Optional[Hashable], Optional[Hashable]]]:\n    adjacency: Dict[Hashable, list[Tuple[Hashable, Hashable]]] = {}\n    for a, b, label in edges:\n        adjacency.setdefault(a, []).append((b, label))\n        adjacency.setdefault(b, []).append((a, label))\n    parent = {base: (None, None)}; queue = deque([base])\n    while queue:\n        a = queue.popleft()\n        for b, label in adjacency.get(a, []):\n            if b not in parent: parent[b] = (a, label); queue.append(b)\n    return parent\n"
+      "code": "from collections import deque\nfrom typing import Dict, Hashable, Iterable, Optional, Tuple\n\ndef transport_tree(base: Hashable, edges: Iterable[Tuple[Hashable, Hashable, Hashable]]) -> Dict[Hashable, Tuple[Optional[Hashable], Optional[Hashable]]]:\n    adjacency: Dict[Hashable, list[Tuple[Hashable, Hashable]]] = {}\n    for a, b, label in edges:\n        adjacency.setdefault(a, []).append((b, label))\n        adjacency.setdefault(b, []).append((a, label))\n    parent = {base: (None, None)}; queue = deque([base])\n    while queue:\n        a = queue.popleft()\n        for b, label in adjacency.get(a, []):\n            if b not in parent: parent[b] = (a, label); queue.append(b)\n    return parent\n",
+      "code_file": "visualizations/topological_algebraic_bridge_fundamental_group_as__transport_arrow_coordinate_construction.py"
     }
   ],
   "visualizations": [
