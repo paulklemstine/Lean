@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-26T19:32:32.816296+00:00",
+  "last_updated": "2026-07-26T20:52:00.691181+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -37960,6 +37960,7 @@
       "outcome_quality": 0.6666666666666667,
       "phase": "A_only",
       "phase_a_prompt_version": "v24",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v24",
@@ -37988,6 +37989,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-26T19:32:32.703634+00:00",
       "title": "Rucker: The Lifebox \u2014 Information-Theoretic Identity"
+    },
+    {
+      "adversarial_agreement": "agree",
+      "adversarial_delta": 0.0113,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 5,
+      "domain": "Tropical",
+      "duration_seconds": 40807.45509314537,
+      "end_time": 1785099104.7607448,
+      "files_integrated": 3,
+      "job_id": "b3ca6b38",
+      "outcome_quality": 0.6900799999999998,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v19c",
+      "phase_b_skip_reason": "low_quality_near_miss",
+      "phase_b_skipped": true,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.54,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.6287,
+        "cross_domain": 0.9,
+        "grade": "substantial",
+        "importance": 0.5292,
+        "novelty": 0.77,
+        "proof_depth": 0.426,
+        "usefulness": 0.663
+      },
+      "quality_score": 0.6900799999999998,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1785058297.3056517,
+      "strategy_count": 0,
+      "theorem_count": 8,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 6,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-26T20:52:00.559310+00:00",
+      "title": "Tropical-Rank: Kapranov Rank vs Tropical Rank Equivalence Bounds"
     }
   ]
 }

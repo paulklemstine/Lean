@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "a88a4e5d",
-      "domain": "Applications",
-      "key_insight": "",
-      "quality_score": 0.6256666666666666,
-      "sorry_count": 1,
-      "theorem_count": 18,
-      "timestamp": "2026-07-19T11:52:43",
-      "title": "Cellular Automata at the Ordinals: Transfinite Computation"
-    },
-    {
       "cycle_id": "5f462d59",
       "domain": "Novelty",
       "key_insight": "# Future Directions: Surveillance Networks and Information Limits\n\n## 1. Entropy-sensitive dynamic converse\n\n**Conjecture.** For a nonuniform distribution on finite network histories and any randomize",
@@ -2501,6 +2491,16 @@
       "theorem_count": 18,
       "timestamp": "2026-07-26T19:32:32",
       "title": "Rucker: The Lifebox — Information-Theoretic Identity"
+    },
+    {
+      "cycle_id": "b3ca6b38",
+      "domain": "Tropical",
+      "key_insight": "# Future directions: tropical, Kapranov, and factor rank\n\nThe completed formalization proves that the three rank notions coincide at the\nrank-one threshold.  The following are concrete next targets; e",
+      "quality_score": 0.6900799999999998,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-07-26T20:52:00",
+      "title": "Tropical-Rank: Kapranov Rank vs Tropical Rank Equivalence Bounds"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.75
     }
   ],
-  "last_updated": "2026-07-26T19:32:32",
+  "last_updated": "2026-07-26T20:52:00",
   "open_questions": [
     {
       "context": "¬ Function.Surjective enumerate := by sorry",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "b01a1ab3",
-        "quality": 0.66,
-        "theorems": 14,
-        "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
-      },
-      {
         "cycle_id": "5df99ff8",
         "quality": 0.57,
         "theorems": 19,
@@ -4009,6 +4003,12 @@
         "quality": 0.72,
         "theorems": 22,
         "title": "Tropical Compactification of Moduli Spaces"
+      },
+      {
+        "cycle_id": "b3ca6b38",
+        "quality": 0.6900799999999998,
+        "theorems": 8,
+        "title": "Tropical-Rank: Kapranov Rank vs Tropical Rank Equivalence Bounds"
       }
     ]
   }
