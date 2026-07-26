@@ -3389,26 +3389,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "25e8f86d",
-    "description": "Prove that in the infinite-width limit, neural network training under gradient descent converges to kernel regression with the Neural Tangent Kernel (NTK). Formalize the NTK as the Gram matrix of Jacobians and prove it stays nearly constant during training for small learning rates.",
-    "domain_bridges": [],
-    "domains": [
-      "MachineLearning",
-      "Computation"
-    ],
-    "id": "seed_327",
-    "lineage_refs": [],
-    "priority_score": 0.87,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Neural Tangent Kernel: Convergence of Gradient Descent"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Prove that there are no non-constant polynomials f,g,h over C such that f^n + g^n = h^n for n >= 3. Show this follows from the Mason-Stothers theorem. Formalize the polynomial ABC conjecture and derive Fermat as a corollary.",
     "domain_bridges": [],
@@ -11873,6 +11853,26 @@
     "status": "available",
     "timestamp": "2026-07-26T00:21:38.956122+00:00",
     "title": "`ZeroKnowledgeTheoremProving.lean` separates three facts that the proposed proto"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Neural Tangent Dynamics\n\n## 1. Uniform infinite-width kernel concentration\n\nFor fully connected networks with sub-Gaussian initialization and Lipschitz activation derivative, the empirical neural tangent kernel should remain uniformly within operator-norm error `O(m⁻¹ᐟ² polylog(m))` of its deterministic infinite-width limit throughout any fixed training horizon, with probability tending to one as width `m` grows.\n\nThe key insight is that deterministic Jacobian-drift bounds can be combined with initialization concentration and a covering argument over the training path.\n\nWhy now? The deterministic stability estimate identifies exactly which Jacobian concentration statement is needed and separates it from the optimization argument.\n\n## 2. Width-dependent convergence to kernel regression\n\nFor squared-loss gradient descent on a finite dataset whose limiting NTK has a positive spectral gap, a width-`m` network should track the corresponding kernel-regression trajectory with prediction error `O(m⁻¹ᐟ²)` up to logarithmic factors, uniformly until interpolation.\n\nThe key insight is that contraction of the limiting residual operator prevents local kernel perturbations from accumulating linearly over training time.\n\nWhy now? The geometric residual theorem supplies a stable recurrence into which a quantitative kernel perturbation estimate can be inserted.\n\n## 3. Feature-learning threshold beyond the lazy regime\n\nThere should be a sharp scaling threshold in learning rate and initialization variance at which NTK drift changes from vanishing to order one, separating kernel-like training from genuine feature learning.\n\nThe key insight is that the product of Jacobian Lipschitz scale, path length, and effective width normalization is the natural dimensionless drift parameter.\n\nWhy now? The entrywise stability theorem makes this controlling product explicit and therefore suggests a falsifiable phase boundary.\n\n## 4. Low-rank data geometry and accelerated NTK convergence\n\nWhen the sample Jacobian lies near a low-dimensional subspace, a preconditioned kernel update should converge at a rate governed by the nonzero restricted spectrum rather than the ambient sample dimension, while preserving the same interpolating solution.\n\nThe key insight is that Gram positivity and null directions should be analyzed on the Jacobian image, where strict contraction may hold even when the full kernel is singular.\n\nWhy now? The present separation between positive semidefiniteness and contraction exposes null-space geometry as the precise obstruction to a global rate.\n\n## 5. Adaptive learning rates under controlled kernel drift\n\nA learning-rate schedule chosen from online estimates of the extremal NTK eigenvalues should preserve contraction and improve finite-time convergence without requiring the kernel to be exactly constant.\n\nThe key insight is that each time-varying residual step can be controlled by its own contraction factor, and the resulting error rate should be a product rather than a single geometric power.\n\nWhy now? Fixed-kernel convergence and quantitative drift control provide the two ingredients needed to formulate a robust nonautonomous extension.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0735",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "25e8f86d",
+    "status": "available",
+    "timestamp": "2026-07-26T02:25:21.290383+00:00",
+    "title": "For fully connected networks with sub-Gaussian initialization and Lipschitz acti"
   },
   {
     "ambition_level": "extension",
